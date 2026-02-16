@@ -4,7 +4,23 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Mic, ExternalLink, CheckCircle2, XCircle, Copy, ChevronDown, ChevronUp, Download, FileJson, Search, Wand2, RotateCcw, CloudUpload, Loader2, RefreshCw } from 'lucide-react';
+import {
+  Mic,
+  ExternalLink,
+  CheckCircle2,
+  XCircle,
+  Copy,
+  ChevronDown,
+  ChevronUp,
+  Download,
+  FileJson,
+  Search,
+  Wand2,
+  RotateCcw,
+  CloudUpload,
+  Loader2,
+  RefreshCw,
+} from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { getSetting, setSetting } from '@/services/settingsService';
 import { supabase } from '@/integrations/supabase/client';
@@ -15,16 +31,16 @@ import { Progress } from '@/components/ui/progress';
 import { ElevenLabsToolCard } from './ElevenLabsToolCard';
 import { ElevenLabsSetupWizard } from './ElevenLabsSetupWizard';
 import { useToolConfigProgress } from '@/hooks/useToolConfigProgress';
-import { 
-  voiceToolsRegistry, 
-  getCategories, 
-  getToolsByCategory, 
-  searchTools, 
+import {
+  voiceToolsRegistry,
+  getCategories,
+  getToolsByCategory,
+  searchTools,
   getTotalToolCount,
   formatToolForElevenLabs,
   exportAllToolsJSON,
   ELEC_MATE_SYSTEM_PROMPT,
-  type VoiceTool 
+  type VoiceTool,
 } from '@/config/voiceToolsRegistry';
 
 const SETTINGS_KEY = 'elevenlabs_agent_id';
@@ -48,28 +64,77 @@ interface SyncResult {
 
 // Navigation section enum values for reference
 const NAVIGATION_SECTIONS = [
-  'overview', 'dashboard', 'home',
-  'peoplehub', 'financehub', 'jobshub', 'safetyhub',
-  'employees', 'elecid', 'timesheets', 'comms', 'talentpool', 'vacancies',
-  'quotes', 'invoices', 'tenders', 'expenses', 'procurement', 'financials',
-  'reports', 'signatures', 'pricebook', 'jobpacks', 'jobs', 'jobboard',
-  'timeline', 'tracking', 'progresslogs', 'issues', 'testing', 'quality',
-  'clientportal', 'fleet', 'photogallery', 'rams', 'incidents', 'policies',
-  'contracts', 'training', 'briefings', 'compliance', 'settings'
+  'overview',
+  'dashboard',
+  'home',
+  'peoplehub',
+  'financehub',
+  'jobshub',
+  'safetyhub',
+  'employees',
+  'elecid',
+  'timesheets',
+  'comms',
+  'talentpool',
+  'vacancies',
+  'quotes',
+  'invoices',
+  'tenders',
+  'expenses',
+  'procurement',
+  'financials',
+  'reports',
+  'signatures',
+  'pricebook',
+  'jobpacks',
+  'jobs',
+  'jobboard',
+  'timeline',
+  'tracking',
+  'progresslogs',
+  'issues',
+  'testing',
+  'quality',
+  'clientportal',
+  'fleet',
+  'photogallery',
+  'rams',
+  'incidents',
+  'policies',
+  'contracts',
+  'training',
+  'briefings',
+  'compliance',
+  'settings',
 ];
 
 const DIALOG_OPTIONS = [
-  'quote', 'job', 'employee', 'invoice', 'expense', 
-  'timeentry', 'certification', 'order', 'supplier', 
-  'vacancy', 'jobpack', 'rams', 'tender', 'incident',
-  'training', 'briefing', 'skill', 'note', 'workhistory'
+  'quote',
+  'job',
+  'employee',
+  'invoice',
+  'expense',
+  'timeentry',
+  'certification',
+  'order',
+  'supplier',
+  'vacancy',
+  'jobpack',
+  'rams',
+  'tender',
+  'incident',
+  'training',
+  'briefing',
+  'skill',
+  'note',
+  'workhistory',
 ];
 
 // Generate full export for ElevenLabs
 const generateFullExport = () => {
   const totalTools = getTotalToolCount();
   const categories = getCategories();
-  
+
   return `# ELEC-MATE Voice Assistant Configuration for ElevenLabs
 # Generated: ${new Date().toISOString()}
 # Total Tools: ${totalTools}
@@ -88,11 +153,13 @@ ${ELEC_MATE_SYSTEM_PROMPT}
 Add each tool in the ElevenLabs "Client tools" section.
 Total: ${totalTools} tools across ${categories.length} categories.
 
-${categories.map(cat => {
-  const tools = getToolsByCategory(cat);
-  return `### ${cat} (${tools.length} tools)
-${tools.map(t => `- ${t.name}: ${t.description}`).join('\n')}`;
-}).join('\n\n')}
+${categories
+  .map((cat) => {
+    const tools = getToolsByCategory(cat);
+    return `### ${cat} (${tools.length} tools)
+${tools.map((t) => `- ${t.name}: ${t.description}`).join('\n')}`;
+  })
+  .join('\n\n')}
 
 ================================================================================
 ## NAVIGATION REFERENCE (${NAVIGATION_SECTIONS.length} sections)
@@ -128,17 +195,17 @@ ${exportAllToolsJSON()}
 const convertToolForCard = (tool: VoiceTool) => ({
   name: tool.name,
   description: tool.description,
-  parameters: tool.parameters.map(p => ({
+  parameters: tool.parameters.map((p) => ({
     name: p.name,
     type: p.type,
     description: p.description,
     required: p.required,
-    enum: p.enumValues
+    enum: p.enumValues,
   })),
   category: tool.category,
   waitForResponse: tool.waitForResponse,
   disableInterruptions: tool.disableInterruptions,
-  executionMode: tool.executionMode === 'wait' ? 'deferred' as const : 'immediate' as const
+  executionMode: tool.executionMode === 'wait' ? ('deferred' as const) : ('immediate' as const),
 });
 
 const VoiceSettingsPanel: React.FC = () => {
@@ -165,30 +232,33 @@ const VoiceSettingsPanel: React.FC = () => {
     updateLastToolIndex,
     isToolConfigured,
     getConfiguredCount,
-    resetProgress
+    resetProgress,
   } = useToolConfigProgress();
 
   const totalTools = getTotalToolCount();
   const categories = getCategories();
   const configuredCount = getConfiguredCount();
   const progressPercent = (configuredCount / totalTools) * 100;
-  
+
   // Get grouped tools by category
-  const groupedTools = categories.reduce((acc, cat) => {
-    acc[cat] = getToolsByCategory(cat);
-    return acc;
-  }, {} as Record<string, VoiceTool[]>);
+  const groupedTools = categories.reduce(
+    (acc, cat) => {
+      acc[cat] = getToolsByCategory(cat);
+      return acc;
+    },
+    {} as Record<string, VoiceTool[]>
+  );
 
   // Filter tools based on search and filter mode
   const getFilteredTools = () => {
     let tools = searchQuery ? searchTools(searchQuery) : voiceToolsRegistry;
-    
+
     if (filterMode === 'configured') {
-      tools = tools.filter(t => isToolConfigured(t.name));
+      tools = tools.filter((t) => isToolConfigured(t.name));
     } else if (filterMode === 'unconfigured') {
-      tools = tools.filter(t => !isToolConfigured(t.name));
+      tools = tools.filter((t) => !isToolConfigured(t.name));
     }
-    
+
     return tools;
   };
 
@@ -307,18 +377,21 @@ const VoiceSettingsPanel: React.FC = () => {
 
     try {
       // Call the elec-mate-merge edge function directly
-      const response = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/sync-elevenlabs-tools', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          apiKey: apiKey.trim(),
-          agentId: agentId.trim(),
-          tools: voiceToolsRegistry,
-          systemPrompt: syncIncludePrompt ? ELEC_MATE_SYSTEM_PROMPT : undefined,
-        }),
-      });
+      const response = await fetch(
+        'https://jtwygbeceundfgnkirof.supabase.co/functions/v1/sync-elevenlabs-tools',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            apiKey: apiKey.trim(),
+            agentId: agentId.trim(),
+            tools: voiceToolsRegistry,
+            systemPrompt: syncIncludePrompt ? ELEC_MATE_SYSTEM_PROMPT : undefined,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -392,7 +465,8 @@ const VoiceSettingsPanel: React.FC = () => {
           Voice Assistant Settings
         </CardTitle>
         <CardDescription>
-          Configure ELEC-MATE voice assistant powered by ElevenLabs - <strong>{totalTools} tools</strong>, {NAVIGATION_SECTIONS.length} navigation sections
+          Configure ELEC-MATE voice assistant powered by ElevenLabs -{' '}
+          <strong>{totalTools} tools</strong>, {NAVIGATION_SECTIONS.length} navigation sections
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -445,7 +519,15 @@ const VoiceSettingsPanel: React.FC = () => {
               )}
             </div>
             <p className="text-xs text-muted-foreground">
-              Get your API key from <a href="https://elevenlabs.io/app/settings/api-keys" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">ElevenLabs Settings</a>
+              Get your API key from{' '}
+              <a
+                href="https://elevenlabs.io/app/settings/api-keys"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-elec-yellow hover:underline"
+              >
+                ElevenLabs Settings
+              </a>
             </p>
           </div>
         </div>
@@ -496,9 +578,14 @@ const VoiceSettingsPanel: React.FC = () => {
 
           {/* Sync Result */}
           {syncResult && (
-            <div className={`rounded-lg p-3 ${syncResult.success ? 'bg-green-500/10 border border-green-500/30' : 'bg-red-500/10 border border-red-500/30'}`}>
-              <p className={`font-medium ${syncResult.success ? 'text-green-400' : 'text-red-400'}`}>
-                {syncResult.success ? '✓ ' : '✗ '}{syncResult.message}
+            <div
+              className={`rounded-lg p-3 ${syncResult.success ? 'bg-green-500/10 border border-green-500/30' : 'bg-red-500/10 border border-red-500/30'}`}
+            >
+              <p
+                className={`font-medium ${syncResult.success ? 'text-green-400' : 'text-red-400'}`}
+              >
+                {syncResult.success ? '✓ ' : '✗ '}
+                {syncResult.message}
               </p>
               <div className="mt-2 grid grid-cols-4 gap-2 text-center text-xs">
                 <div className="bg-green-500/20 rounded p-2">
@@ -541,7 +628,10 @@ const VoiceSettingsPanel: React.FC = () => {
         <div className="rounded-lg border p-4 bg-muted/30 space-y-3">
           <div className="flex items-center justify-between">
             <h4 className="font-medium">Configuration Progress</h4>
-            <Badge variant={progressPercent === 100 ? "default" : "secondary"} className={progressPercent === 100 ? "bg-green-500" : ""}>
+            <Badge
+              variant={progressPercent === 100 ? 'default' : 'secondary'}
+              className={progressPercent === 100 ? 'bg-green-500' : ''}
+            >
               {configuredCount} / {totalTools} tools
             </Badge>
           </div>
@@ -558,11 +648,7 @@ const VoiceSettingsPanel: React.FC = () => {
                 <RotateCcw className="h-3 w-3 mr-1" />
                 Reset
               </Button>
-              <Button
-                variant="default"
-                size="sm"
-                onClick={() => setShowWizard(true)}
-              >
+              <Button variant="default" size="sm" onClick={() => setShowWizard(true)}>
                 <Wand2 className="h-3 w-3 mr-1" />
                 Setup Wizard
               </Button>
@@ -577,27 +663,27 @@ const VoiceSettingsPanel: React.FC = () => {
             Quick Export to ElevenLabs
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => copyToClipboard(ELEC_MATE_SYSTEM_PROMPT, 'System prompt')}
               className="justify-start"
             >
               <Copy className="h-4 w-4 mr-2" />
               Copy System Prompt
             </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => copyToClipboard(exportAllToolsJSON(), 'Tools JSON')}
               className="justify-start"
             >
               <FileJson className="h-4 w-4 mr-2" />
               Copy All Tools (JSON)
             </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => copyToClipboard(generateFullExport(), 'Full configuration')}
               className="justify-start"
             >
@@ -606,14 +692,25 @@ const VoiceSettingsPanel: React.FC = () => {
             </Button>
           </div>
           <p className="text-xs text-muted-foreground">
-            Copy to ElevenLabs: System prompt → paste in System Prompt field, then use the Setup Wizard to add each tool
+            Copy to ElevenLabs: System prompt → paste in System Prompt field, then use the Setup
+            Wizard to add each tool
           </p>
         </div>
 
         <div className="rounded-lg border p-4 bg-muted/30">
           <h4 className="font-medium mb-2">Quick Setup Guide</h4>
           <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
-            <li>Create an agent at <a href="https://elevenlabs.io/app/conversational-ai" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline inline-flex items-center gap-1">ElevenLabs <ExternalLink className="h-3 w-3" /></a></li>
+            <li>
+              Create an agent at{' '}
+              <a
+                href="https://elevenlabs.io/app/conversational-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-elec-yellow hover:underline inline-flex items-center gap-1"
+              >
+                ElevenLabs <ExternalLink className="h-3 w-3" />
+              </a>
+            </li>
             <li>Use "Copy System Prompt" and paste into the System Prompt field</li>
             <li>Add each tool from the Tools section below (click to copy)</li>
             <li>Configure recommended settings (voice, stability, etc.)</li>
@@ -625,12 +722,12 @@ const VoiceSettingsPanel: React.FC = () => {
         <div className="rounded-lg border p-4">
           <h4 className="font-medium mb-3">Tool Categories ({categories.length})</h4>
           <div className="flex flex-wrap gap-2">
-            {categories.map(cat => {
+            {categories.map((cat) => {
               const count = getToolsByCategory(cat).length;
               return (
-                <Badge 
+                <Badge
                   key={cat}
-                  variant={selectedCategory === cat ? "default" : "outline"}
+                  variant={selectedCategory === cat ? 'default' : 'outline'}
                   className="cursor-pointer"
                   onClick={() => setSelectedCategory(selectedCategory === cat ? null : cat)}
                 >
@@ -644,7 +741,9 @@ const VoiceSettingsPanel: React.FC = () => {
         {/* Navigation Reference Card */}
         <div className="rounded-lg border p-4">
           <h4 className="font-medium mb-2">Navigation Sections ({NAVIGATION_SECTIONS.length})</h4>
-          <p className="text-xs text-muted-foreground mb-2">Voice can navigate to any of these sections using aliases:</p>
+          <p className="text-xs text-muted-foreground mb-2">
+            Voice can navigate to any of these sections using aliases:
+          </p>
           <div className="text-xs font-mono bg-muted p-2 rounded max-h-24 overflow-y-auto">
             {NAVIGATION_SECTIONS.join(', ')}
           </div>
@@ -676,22 +775,22 @@ const VoiceSettingsPanel: React.FC = () => {
               />
             </div>
             <div className="flex items-center gap-2 flex-wrap">
-              <Badge 
-                variant={filterMode === 'all' ? 'default' : 'outline'} 
+              <Badge
+                variant={filterMode === 'all' ? 'default' : 'outline'}
                 className="cursor-pointer"
                 onClick={() => setFilterMode('all')}
               >
                 All ({totalTools})
               </Badge>
-              <Badge 
-                variant={filterMode === 'configured' ? 'default' : 'outline'} 
+              <Badge
+                variant={filterMode === 'configured' ? 'default' : 'outline'}
                 className="cursor-pointer bg-green-500/20 text-green-400 border-green-500/30"
                 onClick={() => setFilterMode('configured')}
               >
                 ✓ Done ({configuredCount})
               </Badge>
-              <Badge 
-                variant={filterMode === 'unconfigured' ? 'default' : 'outline'} 
+              <Badge
+                variant={filterMode === 'unconfigured' ? 'default' : 'outline'}
                 className="cursor-pointer"
                 onClick={() => setFilterMode('unconfigured')}
               >
@@ -702,7 +801,9 @@ const VoiceSettingsPanel: React.FC = () => {
 
           {/* Showing X of Y indicator */}
           <div className="flex items-center justify-between text-sm text-muted-foreground border-b pb-2">
-            <span>Showing {filteredTools.length} of {totalTools} tools</span>
+            <span>
+              Showing {filteredTools.length} of {totalTools} tools
+            </span>
             {(searchQuery || filterMode !== 'all') && (
               <Button
                 variant="ghost"
@@ -724,7 +825,7 @@ const VoiceSettingsPanel: React.FC = () => {
                 <ElevenLabsToolCard
                   key={tool.name}
                   tool={convertToolForCard(tool)}
-                  index={voiceToolsRegistry.findIndex(t => t.name === tool.name)}
+                  index={voiceToolsRegistry.findIndex((t) => t.name === tool.name)}
                   totalTools={totalTools}
                   isConfigured={isToolConfigured(tool.name)}
                   onToggleConfigured={toggleToolConfigured}

@@ -19,8 +19,10 @@ export const SmartHomeModule6Section2Quiz = () => {
       <CardContent className="space-y-6">
         {!quizStarted ? (
           <div className="text-center space-y-4">
-            <p className="text-foreground">Test your knowledge of voice assistant integration with a 10-question quiz.</p>
-            <Button 
+            <p className="text-foreground">
+              Test your knowledge of voice assistant integration with a 10-question quiz.
+            </p>
+            <Button
               onClick={() => setQuizStarted(true)}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
             >

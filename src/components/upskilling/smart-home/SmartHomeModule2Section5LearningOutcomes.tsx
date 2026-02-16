@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule2Section5LearningOutcomes = () => {
   const outcomes = [
-    "Define what a hub is in smart home ecosystems",
-    "Compare hub-based and hubless systems",
-    "Explain the advantages of using a central hub",
-    "Identify limitations of hubless Wi-Fi-based systems",
-    "Recommend the right ecosystem type for different installation scenarios"
+    'Define what a hub is in smart home ecosystems',
+    'Compare hub-based and hubless systems',
+    'Explain the advantages of using a central hub',
+    'Identify limitations of hubless Wi-Fi-based systems',
+    'Recommend the right ecosystem type for different installation scenarios',
   ];
 
   return (

@@ -1,12 +1,11 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Plus, Award, AlertTriangle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import AddAssessmentDialog from "./AddAssessmentDialog";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, Clock, Plus, Award, AlertTriangle } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import AddAssessmentDialog from './AddAssessmentDialog';
 
 interface Assessment {
   id: string;
@@ -30,7 +29,9 @@ const AssessmentTrackingTab = () => {
 
   const fetchAssessments = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -41,23 +42,23 @@ const AssessmentTrackingTab = () => {
 
       if (error) throw error;
 
-      const typedAssessments: Assessment[] = (data || []).map(assessment => ({
+      const typedAssessments: Assessment[] = (data || []).map((assessment) => ({
         id: assessment.id,
         title: assessment.title,
         type: assessment.type,
         due_date: assessment.due_date,
         status: assessment.status as 'pending' | 'in_progress' | 'completed' | 'overdue',
         grade: assessment.grade,
-        feedback: assessment.feedback
+        feedback: assessment.feedback,
       }));
 
       setAssessments(typedAssessments);
     } catch (error) {
       console.error('Error fetching assessments:', error);
       toast({
-        title: "Error",
-        description: "Failed to load assessments",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to load assessments',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -66,24 +67,24 @@ const AssessmentTrackingTab = () => {
 
   const handleAddAssessment = async (assessmentData: any) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { error } = await supabase
-        .from('ojt_assessments')
-        .insert({
-          user_id: user.id,
-          title: assessmentData.title,
-          type: assessmentData.type,
-          due_date: assessmentData.dueDate,
-          status: 'pending'
-        });
+      const { error } = await supabase.from('ojt_assessments').insert({
+        user_id: user.id,
+        title: assessmentData.title,
+        type: assessmentData.type,
+        due_date: assessmentData.dueDate,
+        status: 'pending',
+      });
 
       if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "Assessment added successfully"
+        title: 'Success',
+        description: 'Assessment added successfully',
       });
 
       setIsAddDialogOpen(false);
@@ -91,27 +92,34 @@ const AssessmentTrackingTab = () => {
     } catch (error) {
       console.error('Error adding assessment:', error);
       toast({
-        title: "Error",
-        description: "Failed to add assessment",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to add assessment',
+        variant: 'destructive',
       });
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-100 text-green-800 border-green-200';
-      case 'in_progress': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'overdue': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-white/5 text-white/90 border-white/20';
+      case 'completed':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'in_progress':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'overdue':
+        return 'bg-red-100 text-red-800 border-red-200';
+      default:
+        return 'bg-white/5 text-white/90 border-white/20';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed': return <Award className="h-4 w-4" />;
-      case 'overdue': return <AlertTriangle className="h-4 w-4" />;
-      default: return <Clock className="h-4 w-4" />;
+      case 'completed':
+        return <Award className="h-4 w-4" />;
+      case 'overdue':
+        return <AlertTriangle className="h-4 w-4" />;
+      default:
+        return <Clock className="h-4 w-4" />;
     }
   };
 
@@ -119,7 +127,7 @@ const AssessmentTrackingTab = () => {
     return (
       <div className="space-y-6">
         <div className="animate-pulse space-y-4">
-          {[1, 2, 3].map(i => (
+          {[1, 2, 3].map((i) => (
             <Card key={i}>
               <CardContent className="p-6">
                 <div className="h-6 bg-white/30 rounded mb-2"></div>
@@ -164,7 +172,7 @@ const AssessmentTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-700">
-              {assessments.filter(a => a.status === 'completed').length}
+              {assessments.filter((a) => a.status === 'completed').length}
             </div>
           </CardContent>
         </Card>
@@ -176,7 +184,7 @@ const AssessmentTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-700">
-              {assessments.filter(a => a.status === 'in_progress').length}
+              {assessments.filter((a) => a.status === 'in_progress').length}
             </div>
           </CardContent>
         </Card>
@@ -188,7 +196,7 @@ const AssessmentTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-700">
-              {assessments.filter(a => a.status === 'overdue').length}
+              {assessments.filter((a) => a.status === 'overdue').length}
             </div>
           </CardContent>
         </Card>
@@ -214,7 +222,10 @@ const AssessmentTrackingTab = () => {
           ) : (
             <div className="space-y-4">
               {assessments.map((assessment) => (
-                <div key={assessment.id} className="flex items-center justify-between p-4 border rounded-lg">
+                <div
+                  key={assessment.id}
+                  className="flex items-center justify-between p-4 border rounded-lg"
+                >
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <h4 className="font-medium">{assessment.title}</h4>

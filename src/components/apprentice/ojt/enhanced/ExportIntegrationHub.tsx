@@ -1,16 +1,21 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Download, 
-  FileText, 
-  Database, 
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Download,
+  FileText,
+  Database,
   Settings,
   CheckCircle,
   Calendar,
@@ -18,142 +23,154 @@ import {
   BarChart3,
   Share,
   Link,
-  Cloud
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+  Cloud,
+} from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const ExportIntegrationHub = () => {
   const { toast } = useToast();
-  
-  const [exportFormat, setExportFormat] = useState("");
+
+  const [exportFormat, setExportFormat] = useState('');
   const [selectedData, setSelectedData] = useState<string[]>([]);
-  const [dateRange, setDateRange] = useState("");
+  const [dateRange, setDateRange] = useState('');
 
   // Mock export templates
   const exportTemplates = [
     {
-      id: "eal-portfolio",
-      name: "EAL Portfolio Export",
-      description: "Standard format for EAL qualification submissions",
-      format: "PDF + Excel",
-      includes: ["Portfolio items", "Evidence files", "Assessment records", "Time logs"]
+      id: 'eal-portfolio',
+      name: 'EAL Portfolio Export',
+      description: 'Standard format for EAL qualification submissions',
+      format: 'PDF + Excel',
+      includes: ['Portfolio items', 'Evidence files', 'Assessment records', 'Time logs'],
     },
     {
-      id: "city-guilds",
-      name: "City & Guilds Format",
-      description: "Compatible with City & Guilds requirements",
-      format: "PDF",
-      includes: ["Portfolio items", "Learning outcomes", "Witness testimonies"]
+      id: 'city-guilds',
+      name: 'City & Guilds Format',
+      description: 'Compatible with City & Guilds requirements',
+      format: 'PDF',
+      includes: ['Portfolio items', 'Learning outcomes', 'Witness testimonies'],
     },
     {
-      id: "training-provider",
-      name: "Training Provider Report",
-      description: "Comprehensive report for training providers",
-      format: "PDF + Data",
-      includes: ["All data", "Analytics", "Progress tracking", "Compliance status"]
+      id: 'training-provider',
+      name: 'Training Provider Report',
+      description: 'Comprehensive report for training providers',
+      format: 'PDF + Data',
+      includes: ['All data', 'Analytics', 'Progress tracking', 'Compliance status'],
     },
     {
-      id: "employer-review",
-      name: "Employer Review Pack",
-      description: "Summary for employer reviews",
-      format: "PDF",
-      includes: ["Progress summary", "Key achievements", "Skills development"]
-    }
+      id: 'employer-review',
+      name: 'Employer Review Pack',
+      description: 'Summary for employer reviews',
+      format: 'PDF',
+      includes: ['Progress summary', 'Key achievements', 'Skills development'],
+    },
   ];
 
   const integrationOptions = [
     {
-      id: "lms-moodle",
-      name: "Moodle LMS",
-      description: "Export to Moodle learning management system",
-      status: "Available",
-      icon: "📚"
+      id: 'lms-moodle',
+      name: 'Moodle LMS',
+      description: 'Export to Moodle learning management system',
+      status: 'Available',
+      icon: '📚',
     },
     {
-      id: "lms-blackboard",
-      name: "Blackboard Learn",
-      description: "Export to Blackboard learning platform",
-      status: "Available",
-      icon: "🖥️"
+      id: 'lms-blackboard',
+      name: 'Blackboard Learn',
+      description: 'Export to Blackboard learning platform',
+      status: 'Available',
+      icon: '🖥️',
     },
     {
-      id: "google-drive",
-      name: "Google Drive",
-      description: "Sync with Google Drive for backup",
-      status: "Available",
-      icon: "☁️"
+      id: 'google-drive',
+      name: 'Google Drive',
+      description: 'Sync with Google Drive for backup',
+      status: 'Available',
+      icon: '☁️',
     },
     {
-      id: "onedrive",
-      name: "Microsoft OneDrive",
-      description: "Sync with OneDrive for backup",
-      status: "Available",
-      icon: "📁"
-    }
+      id: 'onedrive',
+      name: 'Microsoft OneDrive',
+      description: 'Sync with OneDrive for backup',
+      status: 'Available',
+      icon: '📁',
+    },
   ];
 
   const dataCategories = [
-    { id: "training-time", label: "Training Time Logs", description: "All recorded training sessions" },
-    { id: "portfolio", label: "Portfolio Items", description: "Portfolio entries and submissions" },
-    { id: "evidence", label: "Evidence Files", description: "Uploaded evidence and media" },
-    { id: "assessments", label: "Assessment Records", description: "Assessment results and feedback" },
-    { id: "compliance", label: "Compliance Data", description: "Progress towards requirements" },
-    { id: "communication", label: "Tutor Communications", description: "Messages and feedback from tutors" }
+    {
+      id: 'training-time',
+      label: 'Training Time Logs',
+      description: 'All recorded training sessions',
+    },
+    { id: 'portfolio', label: 'Portfolio Items', description: 'Portfolio entries and submissions' },
+    { id: 'evidence', label: 'Evidence Files', description: 'Uploaded evidence and media' },
+    {
+      id: 'assessments',
+      label: 'Assessment Records',
+      description: 'Assessment results and feedback',
+    },
+    { id: 'compliance', label: 'Compliance Data', description: 'Progress towards requirements' },
+    {
+      id: 'communication',
+      label: 'Tutor Communications',
+      description: 'Messages and feedback from tutors',
+    },
   ];
 
   const recentExports = [
     {
       id: 1,
-      name: "Monthly Progress Report - January 2024",
-      format: "PDF",
-      date: "2024-01-31",
-      size: "2.4 MB",
-      status: "Completed"
+      name: 'Monthly Progress Report - January 2024',
+      format: 'PDF',
+      date: '2024-01-31',
+      size: '2.4 MB',
+      status: 'Completed',
     },
     {
       id: 2,
-      name: "EAL Portfolio Export",
-      format: "ZIP",
-      date: "2024-01-25",
-      size: "15.6 MB",
-      status: "Completed"
+      name: 'EAL Portfolio Export',
+      format: 'ZIP',
+      date: '2024-01-25',
+      size: '15.6 MB',
+      status: 'Completed',
     },
     {
       id: 3,
-      name: "Training Data Backup",
-      format: "JSON",
-      date: "2024-01-20",
-      size: "1.2 MB",
-      status: "Completed"
-    }
+      name: 'Training Data Backup',
+      format: 'JSON',
+      date: '2024-01-20',
+      size: '1.2 MB',
+      status: 'Completed',
+    },
   ];
 
   const handleExport = () => {
     if (!exportFormat || selectedData.length === 0) {
       toast({
-        title: "Missing Selection",
-        description: "Please select an export format and data to include.",
-        variant: "destructive"
+        title: 'Missing Selection',
+        description: 'Please select an export format and data to include.',
+        variant: 'destructive',
       });
       return;
     }
 
     toast({
-      title: "Export Started",
-      description: "Your export is being prepared. You'll receive a download link shortly."
+      title: 'Export Started',
+      description: "Your export is being prepared. You'll receive a download link shortly.",
     });
 
     // Reset form
-    setExportFormat("");
+    setExportFormat('');
     setSelectedData([]);
-    setDateRange("");
+    setDateRange('');
   };
 
   const handleDataSelection = (dataId: string, checked: boolean) => {
     if (checked) {
-      setSelectedData(prev => [...prev, dataId]);
+      setSelectedData((prev) => [...prev, dataId]);
     } else {
-      setSelectedData(prev => prev.filter(id => id !== dataId));
+      setSelectedData((prev) => prev.filter((id) => id !== dataId));
     }
   };
 
@@ -167,7 +184,7 @@ const ExportIntegrationHub = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
@@ -176,7 +193,7 @@ const ExportIntegrationHub = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
@@ -185,7 +202,7 @@ const ExportIntegrationHub = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
@@ -210,10 +227,18 @@ const ExportIntegrationHub = () => {
 
       <Tabs defaultValue="export" className="w-full">
         <TabsList className="w-full">
-          <TabsTrigger value="export" className="flex-1">Quick Export</TabsTrigger>
-          <TabsTrigger value="templates" className="flex-1">Templates</TabsTrigger>
-          <TabsTrigger value="integrations" className="flex-1">Integrations</TabsTrigger>
-          <TabsTrigger value="history" className="flex-1">Export History</TabsTrigger>
+          <TabsTrigger value="export" className="flex-1">
+            Quick Export
+          </TabsTrigger>
+          <TabsTrigger value="templates" className="flex-1">
+            Templates
+          </TabsTrigger>
+          <TabsTrigger value="integrations" className="flex-1">
+            Integrations
+          </TabsTrigger>
+          <TabsTrigger value="history" className="flex-1">
+            Export History
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="export" className="space-y-6">
@@ -263,7 +288,9 @@ const ExportIntegrationHub = () => {
                         <Checkbox
                           id={category.id}
                           checked={selectedData.includes(category.id)}
-                          onCheckedChange={(checked) => handleDataSelection(category.id, checked as boolean)}
+                          onCheckedChange={(checked) =>
+                            handleDataSelection(category.id, checked as boolean)
+                          }
                         />
                         <div className="grid gap-1.5 leading-none">
                           <Label
@@ -272,9 +299,7 @@ const ExportIntegrationHub = () => {
                           >
                             {category.label}
                           </Label>
-                          <p className="text-xs text-white">
-                            {category.description}
-                          </p>
+                          <p className="text-xs text-white">{category.description}</p>
                         </div>
                       </div>
                     ))}
@@ -297,22 +322,22 @@ const ExportIntegrationHub = () => {
                   <FileText className="h-4 w-4 mr-2" />
                   Export Monthly Report
                 </Button>
-                
+
                 <Button variant="outline" className="w-full justify-start">
                   <Target className="h-4 w-4 mr-2" />
                   Export Portfolio for Review
                 </Button>
-                
+
                 <Button variant="outline" className="w-full justify-start">
                   <BarChart3 className="h-4 w-4 mr-2" />
                   Export Progress Analytics
                 </Button>
-                
+
                 <Button variant="outline" className="w-full justify-start">
                   <Database className="h-4 w-4 mr-2" />
                   Backup All Data
                 </Button>
-                
+
                 <Button variant="outline" className="w-full justify-start">
                   <Calendar className="h-4 w-4 mr-2" />
                   Export Training Schedule
@@ -337,12 +362,12 @@ const ExportIntegrationHub = () => {
                     <CardContent className="p-4">
                       <h3 className="font-semibold mb-2">{template.name}</h3>
                       <p className="text-sm text-white mb-3">{template.description}</p>
-                      
+
                       <div className="space-y-2 mb-4">
                         <div className="flex items-center gap-2 text-sm">
                           <Badge variant="outline">{template.format}</Badge>
                         </div>
-                        
+
                         <div className="text-xs">
                           <span className="font-medium">Includes:</span>
                           <ul className="list-disc list-inside mt-1 space-y-1">
@@ -352,7 +377,7 @@ const ExportIntegrationHub = () => {
                           </ul>
                         </div>
                       </div>
-                      
+
                       <Button className="w-full">
                         <Download className="h-4 w-4 mr-2" />
                         Use Template
@@ -369,9 +394,7 @@ const ExportIntegrationHub = () => {
           <Card>
             <CardHeader>
               <CardTitle>Available Integrations</CardTitle>
-              <p className="text-sm text-white">
-                Connect with external systems and platforms
-              </p>
+              <p className="text-sm text-white">Connect with external systems and platforms</p>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -385,7 +408,7 @@ const ExportIntegrationHub = () => {
                           <p className="text-sm text-white">{integration.description}</p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center justify-between">
                         <Badge className="bg-green-500">{integration.status}</Badge>
                         <Button variant="outline" size="sm">
@@ -409,7 +432,10 @@ const ExportIntegrationHub = () => {
             <CardContent>
               <div className="space-y-4">
                 {recentExports.map((exportItem) => (
-                  <div key={exportItem.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div
+                    key={exportItem.id}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div className="flex items-center gap-3">
                       <FileText className="h-8 w-8 text-blue-600" />
                       <div>
@@ -421,7 +447,7 @@ const ExportIntegrationHub = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
                       <Badge className="bg-green-500">{exportItem.status}</Badge>
                       <Button size="sm" variant="outline">

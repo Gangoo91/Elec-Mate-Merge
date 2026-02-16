@@ -15,15 +15,8 @@ interface ClientStepProps {
  * Step 1: Client & Property Details
  * Touch-optimized inputs for mobile
  */
-export const ClientStep: React.FC<ClientStepProps> = ({
-  data,
-  onChange,
-  isMobile,
-}) => {
-  const inputClass = cn(
-    'transition-all duration-200',
-    isMobile ? 'h-14 text-base' : 'h-12'
-  );
+export const ClientStep: React.FC<ClientStepProps> = ({ data, onChange, isMobile }) => {
+  const inputClass = cn('transition-all duration-200', isMobile ? 'h-14 text-base' : 'h-12');
 
   return (
     <div className="space-y-6">

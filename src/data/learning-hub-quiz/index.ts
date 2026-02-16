@@ -17,7 +17,7 @@ export {
   earthFaultLoopQuestions,
   rcdTestingQuestions,
   prospectiveFaultQuestions,
-  functionalTestingQuestions
+  functionalTestingQuestions,
 };
 
 // Map assessment IDs to their question banks
@@ -29,7 +29,7 @@ const questionBankMap: Record<string, QuizQuestion[]> = {
   'earth-fault-loop': earthFaultLoopQuestions,
   'rcd-testing': rcdTestingQuestions,
   'prospective-fault': prospectiveFaultQuestions,
-  'functional-testing': functionalTestingQuestions
+  'functional-testing': functionalTestingQuestions,
 };
 
 /**
@@ -70,5 +70,5 @@ export const getQuestionsByDifficulty = (
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced'
 ): QuizQuestion[] => {
   const questions = questionBankMap[assessmentId] || [];
-  return questions.filter(q => q.difficulty === difficulty);
+  return questions.filter((q) => q.difficulty === difficulty);
 };

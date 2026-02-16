@@ -15,18 +15,15 @@ interface CareerSectionListProps {
   className?: string;
 }
 
-export const CareerSectionList: React.FC<CareerSectionListProps> = ({
-  children,
-  className,
-}) => {
+export const CareerSectionList: React.FC<CareerSectionListProps> = ({ children, className }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
       className={cn(
-        "bg-white/[0.03] rounded-2xl border border-white/10 overflow-hidden",
-        "divide-y divide-white/[0.06]",
+        'bg-white/[0.03] rounded-2xl border border-white/10 overflow-hidden',
+        'divide-y divide-white/[0.06]',
         className
       )}
     >

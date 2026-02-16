@@ -7,34 +7,34 @@ const IndustrialElectricalModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Fault-Finding Strategies and Logic Flow",
+      title: 'Fault-Finding Strategies and Logic Flow',
       icon: Search,
-      description: "Systematic approach to industrial fault diagnosis"
+      description: 'Systematic approach to industrial fault diagnosis',
     },
     {
       id: 2,
-      title: "Common Control Faults (Coils, Relays, Power)",
+      title: 'Common Control Faults (Coils, Relays, Power)',
       icon: Zap,
-      description: "Typical control system failures and diagnosis"
+      description: 'Typical control system failures and diagnosis',
     },
     {
       id: 3,
-      title: "Loop Testing and Continuity",
+      title: 'Loop Testing and Continuity',
       icon: TestTube,
-      description: "Circuit testing and continuity verification"
+      description: 'Circuit testing and continuity verification',
     },
     {
       id: 4,
-      title: "PLC Diagnostics and Alarms",
+      title: 'PLC Diagnostics and Alarms',
       icon: FileSearch,
-      description: "PLC system diagnostics and alarm analysis"
+      description: 'PLC system diagnostics and alarm analysis',
     },
     {
       id: 5,
-      title: "Root Cause Analysis and Reporting",
+      title: 'Root Cause Analysis and Reporting',
       icon: FileCheck,
-      description: "Investigation methods and documentation"
-    }
+      description: 'Investigation methods and documentation',
+    },
   ];
 
   return (

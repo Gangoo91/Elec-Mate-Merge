@@ -44,24 +44,27 @@ export function useEvidenceRequirements(options: UseEvidenceRequirementsOptions 
   }, []);
 
   // Fetch requirements for a specific category
-  const fetchRequirements = useCallback(async (catId?: string) => {
-    const targetCatId = catId || categoryId;
-    if (!targetCatId) return [];
+  const fetchRequirements = useCallback(
+    async (catId?: string) => {
+      const targetCatId = catId || categoryId;
+      if (!targetCatId) return [];
 
-    try {
-      const { data, error: fetchError } = await supabase
-        .from('unit_evidence_requirements')
-        .select('*')
-        .eq('category_id', targetCatId)
-        .order('assessment_criterion');
+      try {
+        const { data, error: fetchError } = await supabase
+          .from('unit_evidence_requirements')
+          .select('*')
+          .eq('category_id', targetCatId)
+          .order('assessment_criterion');
 
-      if (fetchError) throw fetchError;
-      return (data || []) as UnitEvidenceRequirement[];
-    } catch (err) {
-      console.error('Error fetching evidence requirements:', err);
-      return [];
-    }
-  }, [categoryId]);
+        if (fetchError) throw fetchError;
+        return (data || []) as UnitEvidenceRequirement[];
+      } catch (err) {
+        console.error('Error fetching evidence requirements:', err);
+        return [];
+      }
+    },
+    [categoryId]
+  );
 
   // Load data
   const loadData = useCallback(async () => {
@@ -69,10 +72,7 @@ export function useEvidenceRequirements(options: UseEvidenceRequirementsOptions 
     setError(null);
 
     try {
-      const [types, reqs] = await Promise.all([
-        fetchEvidenceTypes(),
-        fetchRequirements(),
-      ]);
+      const [types, reqs] = await Promise.all([fetchEvidenceTypes(), fetchRequirements()]);
 
       setEvidenceTypes(types);
       setRequirements(reqs);

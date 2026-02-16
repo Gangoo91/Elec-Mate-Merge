@@ -12,7 +12,8 @@ export const SmartHomeModule6Section2PracticalGuidance = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground leading-relaxed">
-          Successfully integrating voice assistants requires careful planning, compatibility checking, and proper client education. Here's your practical guide:
+          Successfully integrating voice assistants requires careful planning, compatibility
+          checking, and proper client education. Here's your practical guide:
         </p>
 
         {/* Pre-Installation Checklist */}
@@ -23,21 +24,30 @@ export const SmartHomeModule6Section2PracticalGuidance = () => {
           </div>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <span className="bg-green-400 text-green-900 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+              <span className="bg-green-400 text-green-900 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                1
+              </span>
               <p className="text-foreground text-sm">
-                <strong>Device Compatibility:</strong> Always verify that planned devices support the client's preferred voice assistant before purchase
+                <strong>Device Compatibility:</strong> Always verify that planned devices support
+                the client's preferred voice assistant before purchase
               </p>
             </div>
             <div className="flex items-start gap-3">
-              <span className="bg-green-400 text-green-900 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+              <span className="bg-green-400 text-green-900 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                2
+              </span>
               <p className="text-foreground text-sm">
-                <strong>Network Requirements:</strong> Ensure robust Wi-Fi coverage throughout installation areas, especially for cloud-dependent systems
+                <strong>Network Requirements:</strong> Ensure robust Wi-Fi coverage throughout
+                installation areas, especially for cloud-dependent systems
               </p>
             </div>
             <div className="flex items-start gap-3">
-              <span className="bg-green-400 text-green-900 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+              <span className="bg-green-400 text-green-900 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                3
+              </span>
               <p className="text-foreground text-sm">
-                <strong>Account Setup:</strong> Help clients create necessary accounts (Amazon, Google, Apple) and link them during installation
+                <strong>Account Setup:</strong> Help clients create necessary accounts (Amazon,
+                Google, Apple) and link them during installation
               </p>
             </div>
           </div>
@@ -51,7 +61,9 @@ export const SmartHomeModule6Section2PracticalGuidance = () => {
           </div>
           <div className="space-y-4">
             <div>
-              <h5 className="font-medium text-foreground mb-2">Device Not Responding to Voice Commands</h5>
+              <h5 className="font-medium text-foreground mb-2">
+                Device Not Responding to Voice Commands
+              </h5>
               <ul className="space-y-1 text-foreground text-sm ml-4">
                 <li>• Check device is properly connected to hub/Wi-Fi</li>
                 <li>• Verify device is "discoverable" in assistant app</li>
@@ -105,19 +117,27 @@ export const SmartHomeModule6Section2PracticalGuidance = () => {
           <div className="space-y-3">
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              <p className="text-foreground text-sm">Always test voice commands with the client present before completing installation</p>
+              <p className="text-foreground text-sm">
+                Always test voice commands with the client present before completing installation
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              <p className="text-foreground text-sm">Provide written documentation of device names and common commands</p>
+              <p className="text-foreground text-sm">
+                Provide written documentation of device names and common commands
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              <p className="text-foreground text-sm">Discuss privacy implications and provide guidance on voice recording settings</p>
+              <p className="text-foreground text-sm">
+                Discuss privacy implications and provide guidance on voice recording settings
+              </p>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              <p className="text-foreground text-sm">Schedule a follow-up call within one week to address any issues or questions</p>
+              <p className="text-foreground text-sm">
+                Schedule a follow-up call within one week to address any issues or questions
+              </p>
             </div>
           </div>
         </div>

@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m1s4-check1",
-    question: "What is the maximum RCD rating permitted for EV charging under BS 7671 Section 722?",
-    options: ["100mA", "300mA", "30mA", "10mA"],
+    id: 'evcharging-m1s4-check1',
+    question: 'What is the maximum RCD rating permitted for EV charging under BS 7671 Section 722?',
+    options: ['100mA', '300mA', '30mA', '10mA'],
     correctIndex: 2,
-    explanation: "BS 7671 Section 722 requires RCD protection with a maximum rating of 30mA for EV charging installations to provide adequate protection against electric shock."
+    explanation:
+      'BS 7671 Section 722 requires RCD protection with a maximum rating of 30mA for EV charging installations to provide adequate protection against electric shock.',
   },
   {
-    id: "evcharging-m1s4-check2",
-    question: "Which RCD type is preferred for EV charging installations?",
-    options: ["Type AC", "Type A", "Type B", "Type F"],
+    id: 'evcharging-m1s4-check2',
+    question: 'Which RCD type is preferred for EV charging installations?',
+    options: ['Type AC', 'Type A', 'Type B', 'Type F'],
     correctIndex: 2,
-    explanation: "Type B RCDs are preferred for EV charging as they can detect all fault current types including smooth DC, which may occur with certain EV charger configurations. Type A is the minimum requirement."
+    explanation:
+      'Type B RCDs are preferred for EV charging as they can detect all fault current types including smooth DC, which may occur with certain EV charger configurations. Type A is the minimum requirement.',
   },
   {
-    id: "evcharging-m1s4-check3",
-    question: "For which installations does G98 apply?",
-    options: ["All commercial installations", "Connections >16A per phase", "Connections ≤16A per phase", "Only DC rapid chargers"],
+    id: 'evcharging-m1s4-check3',
+    question: 'For which installations does G98 apply?',
+    options: [
+      'All commercial installations',
+      'Connections >16A per phase',
+      'Connections ≤16A per phase',
+      'Only DC rapid chargers',
+    ],
     correctIndex: 2,
-    explanation: "G98 applies to smaller connections of 16A or less per phase, covering most domestic single-phase installations and small commercial charging points up to approximately 11kW (3-phase)."
-  }
+    explanation:
+      'G98 applies to smaller connections of 16A or less per phase, covering most domestic single-phase installations and small commercial charging points up to approximately 11kW (3-phase).',
+  },
 ];
 
 const faqs = [
   {
-    question: "When do I need to use G99 instead of G98?",
-    answer: "G99 applies when the connection exceeds 16A per phase. This includes larger commercial installations and rapid chargers. G99 requires a formal application process, network impact assessment, and connection agreement with the DNO."
+    question: 'When do I need to use G99 instead of G98?',
+    answer:
+      'G99 applies when the connection exceeds 16A per phase. This includes larger commercial installations and rapid chargers. G99 requires a formal application process, network impact assessment, and connection agreement with the DNO.',
   },
   {
-    question: "Can I use a Type A RCD instead of Type B?",
-    answer: "Type A RCD is the minimum requirement under BS 7671 Section 722. However, Type B is preferred as it provides protection against smooth DC fault currents. Some EV chargers have built-in DC fault detection, allowing Type A upstream, but always check manufacturer requirements."
+    question: 'Can I use a Type A RCD instead of Type B?',
+    answer:
+      'Type A RCD is the minimum requirement under BS 7671 Section 722. However, Type B is preferred as it provides protection against smooth DC fault currents. Some EV chargers have built-in DC fault detection, allowing Type A upstream, but always check manufacturer requirements.',
   },
   {
-    question: "What additional measures are needed for PME supplies?",
-    answer: "PME (TN-C-S) supplies require risk assessment and may need additional protective measures such as insulation monitoring devices, enhanced equipotential bonding, alternative earthing arrangements, or PEN conductor integrity monitoring."
+    question: 'What additional measures are needed for PME supplies?',
+    answer:
+      'PME (TN-C-S) supplies require risk assessment and may need additional protective measures such as insulation monitoring devices, enhanced equipotential bonding, alternative earthing arrangements, or PEN conductor integrity monitoring.',
   },
   {
-    question: "How does the IET Code of Practice differ from BS 7671?",
-    answer: "BS 7671 sets mandatory requirements for electrical safety. The IET Code of Practice provides supplementary guidance specific to EV charging, including practical design recommendations, commissioning procedures, and best practice that goes beyond the minimum regulatory requirements."
-  }
+    question: 'How does the IET Code of Practice differ from BS 7671?',
+    answer:
+      'BS 7671 sets mandatory requirements for electrical safety. The IET Code of Practice provides supplementary guidance specific to EV charging, including practical design recommendations, commissioning procedures, and best practice that goes beyond the minimum regulatory requirements.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "You're installing a 22kW three-phase EV charger at a commercial premises with a PME supply. What earthing consideration is most critical?",
-  options: [
-    "Use standard TN-C-S earthing without modification",
-    "Risk assess the PME arrangement and consider additional protective measures",
-    "Install without earthing as the charger is plastic",
-    "Connect to water pipes only"
-  ],
-  correctAnswer: 1,
-  explanation: "BS 7671 Section 722.411.4.1 requires risk assessment for PME supplies. Additional measures may include insulation monitoring, enhanced bonding, or alternative earthing. Standard PME earthing may not be appropriate without assessment."
-  }
+    question:
+      "You're installing a 22kW three-phase EV charger at a commercial premises with a PME supply. What earthing consideration is most critical?",
+    options: [
+      'Use standard TN-C-S earthing without modification',
+      'Risk assess the PME arrangement and consider additional protective measures',
+      'Install without earthing as the charger is plastic',
+      'Connect to water pipes only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 7671 Section 722.411.4.1 requires risk assessment for PME supplies. Additional measures may include insulation monitoring, enhanced bonding, or alternative earthing. Standard PME earthing may not be appropriate without assessment.',
+  },
 ];
 
 const EVChargingModule1Section4 = () => {
   useSEO({
-    title: "Key Standards BS 7671, IET CoP, G98/G99 | EV Charging Module 1.4",
-    description: "Master the essential standards for EV charging installations including BS 7671 Section 722, IET Code of Practice, and grid connection requirements."
+    title: 'Key Standards BS 7671, IET CoP, G98/G99 | EV Charging Module 1.4',
+    description:
+      'Master the essential standards for EV charging installations including BS 7671 Section 722, IET Code of Practice, and grid connection requirements.',
   });
 
   return (
@@ -98,9 +113,7 @@ const EVChargingModule1Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Key Standards: BS 7671, IET CoP, G98/G99
           </h1>
-          <p className="text-white/80">
-            Essential standards and codes of practice for EV charging
-          </p>
+          <p className="text-white/80">Essential standards and codes of practice for EV charging</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +121,26 @@ const EVChargingModule1Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>BS 7671 722:</strong> EV-specific wiring requirements</li>
-              <li><strong>IET CoP:</strong> Detailed practical guidance</li>
-              <li><strong>G98/G99:</strong> Grid connection procedures</li>
+              <li>
+                <strong>BS 7671 722:</strong> EV-specific wiring requirements
+              </li>
+              <li>
+                <strong>IET CoP:</strong> Detailed practical guidance
+              </li>
+              <li>
+                <strong>G98/G99:</strong> Grid connection procedures
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> 30mA RCD, Type B preferred, PME assessment</li>
-              <li><strong>Use:</strong> G98 for ≤16A, G99 for larger installations</li>
+              <li>
+                <strong>Spot:</strong> 30mA RCD, Type B preferred, PME assessment
+              </li>
+              <li>
+                <strong>Use:</strong> G98 for ≤16A, G99 for larger installations
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +150,12 @@ const EVChargingModule1Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Apply BS 7671 Section 722 requirements",
-              "Implement IET Code of Practice recommendations",
-              "Navigate G98/G99 grid connection procedures",
-              "Understand interrelationships between standards",
-              "Select appropriate protection arrangements",
-              "Address PME supply considerations"
+              'Apply BS 7671 Section 722 requirements',
+              'Implement IET Code of Practice recommendations',
+              'Navigate G98/G99 grid connection procedures',
+              'Understand interrelationships between standards',
+              'Select appropriate protection arrangements',
+              'Address PME supply considerations',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,7 +176,8 @@ const EVChargingModule1Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Section 722 of BS 7671:2018+A2:2022 contains specific requirements for electric
-              vehicle charging installations, covering AC and DC charging points for all applications.
+              vehicle charging installations, covering AC and DC charging points for all
+              applications.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -180,10 +204,18 @@ const EVChargingModule1Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Key Protection Requirements:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>RCD protection:</strong> 30mA maximum, Type A minimum, Type B preferred</li>
-                <li><strong>Voltage drop:</strong> Maximum 5% from origin to charging point</li>
-                <li><strong>Isolation:</strong> Local switch within 2m of charging point</li>
-                <li><strong>Surge protection:</strong> SPD Type 2 recommended</li>
+                <li>
+                  <strong>RCD protection:</strong> 30mA maximum, Type A minimum, Type B preferred
+                </li>
+                <li>
+                  <strong>Voltage drop:</strong> Maximum 5% from origin to charging point
+                </li>
+                <li>
+                  <strong>Isolation:</strong> Local switch within 2m of charging point
+                </li>
+                <li>
+                  <strong>Surge protection:</strong> SPD Type 2 recommended
+                </li>
               </ul>
             </div>
           </div>
@@ -207,17 +239,29 @@ const EVChargingModule1Section4 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">RCD Types</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Type A:</strong> Minimum requirement, AC + pulsating DC</li>
-                  <li><strong>Type B:</strong> Preferred, detects all fault types</li>
-                  <li><strong>Type F:</strong> Enhanced frequency response</li>
+                  <li>
+                    <strong>Type A:</strong> Minimum requirement, AC + pulsating DC
+                  </li>
+                  <li>
+                    <strong>Type B:</strong> Preferred, detects all fault types
+                  </li>
+                  <li>
+                    <strong>Type F:</strong> Enhanced frequency response
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Earthing Systems</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>TN-S:</strong> Preferred for EV installations</li>
-                  <li><strong>TN-C-S (PME):</strong> Requires risk assessment</li>
-                  <li><strong>TT:</strong> Local earth electrode required</li>
+                  <li>
+                    <strong>TN-S:</strong> Preferred for EV installations
+                  </li>
+                  <li>
+                    <strong>TN-C-S (PME):</strong> Requires risk assessment
+                  </li>
+                  <li>
+                    <strong>TT:</strong> Local earth electrode required
+                  </li>
                 </ul>
               </div>
             </div>
@@ -225,8 +269,8 @@ const EVChargingModule1Section4 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
               <p className="text-sm text-white">
                 <strong className="text-elec-yellow">PME Supplies (722.411.4.1):</strong> Risk
-                assessment must consider location, equipment type, extraneous conductive parts,
-                and PEN conductor integrity. Additional measures may include insulation monitoring,
+                assessment must consider location, equipment type, extraneous conductive parts, and
+                PEN conductor integrity. Additional measures may include insulation monitoring,
                 enhanced bonding, or alternative earthing.
               </p>
             </div>
@@ -243,8 +287,8 @@ const EVChargingModule1Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The IET Code of Practice for Electric Vehicle Charging Equipment Installation
-              provides comprehensive guidance beyond BS 7671 minimum requirements.
+              The IET Code of Practice for Electric Vehicle Charging Equipment Installation provides
+              comprehensive guidance beyond BS 7671 minimum requirements.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -258,7 +302,9 @@ const EVChargingModule1Section4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Guidance</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Installation Guidance
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Physical mounting and accessibility</li>
                   <li>Cable management and protection</li>
@@ -271,9 +317,15 @@ const EVChargingModule1Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Smart Charging Topics:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Static load management:</strong> Fixed power allocation per point</li>
-                <li><strong>Dynamic load management:</strong> Real-time adjustment based on demand</li>
-                <li><strong>OCPP:</strong> Open Charge Point Protocol for interoperability</li>
+                <li>
+                  <strong>Static load management:</strong> Fixed power allocation per point
+                </li>
+                <li>
+                  <strong>Dynamic load management:</strong> Real-time adjustment based on demand
+                </li>
+                <li>
+                  <strong>OCPP:</strong> Open Charge Point Protocol for interoperability
+                </li>
               </ul>
             </div>
           </div>
@@ -289,8 +341,8 @@ const EVChargingModule1Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              G98 and G99 govern how EV charging installations connect to the distribution
-              network, ensuring grid stability and safety.
+              G98 and G99 govern how EV charging installations connect to the distribution network,
+              ensuring grid stability and safety.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -382,10 +434,18 @@ const EVChargingModule1Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong RCD type:</strong> — Check charger requirements for DC detection</li>
-                <li><strong>Ignoring PME risks:</strong> — Always assess external installations</li>
-                <li><strong>Late DNO notification:</strong> — Submit G98/G99 before installation</li>
-                <li><strong>Voltage drop exceeded:</strong> — Calculate for full cable run</li>
+                <li>
+                  <strong>Wrong RCD type:</strong> — Check charger requirements for DC detection
+                </li>
+                <li>
+                  <strong>Ignoring PME risks:</strong> — Always assess external installations
+                </li>
+                <li>
+                  <strong>Late DNO notification:</strong> — Submit G98/G99 before installation
+                </li>
+                <li>
+                  <strong>Voltage drop exceeded:</strong> — Calculate for full cable run
+                </li>
               </ul>
             </div>
           </div>
@@ -431,10 +491,7 @@ const EVChargingModule1Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

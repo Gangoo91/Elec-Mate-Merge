@@ -1,24 +1,30 @@
-import { useState, useRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { toast } from "sonner";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { CheckCircle } from "lucide-react";
-import { InstallationInput } from "./InstallationInput";
-import { InstallationProcessingView } from "./InstallationProcessingView";
-import { InstallationResults } from "./InstallationResults";
-import InstallationSuccess from "./InstallationSuccess";
-import { InstallationProjectDetails as ProjectDetailsType } from "@/types/installation-method";
-import { useInstallationMethodJobPolling } from "@/hooks/useInstallationMethodJobPolling";
-import { supabase } from "@/integrations/supabase/client";
-import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from "@/utils/circuit-context-generator";
-import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
-import { AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { toast } from 'sonner';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { CheckCircle } from 'lucide-react';
+import { InstallationInput } from './InstallationInput';
+import { InstallationProcessingView } from './InstallationProcessingView';
+import { InstallationResults } from './InstallationResults';
+import InstallationSuccess from './InstallationSuccess';
+import { InstallationProjectDetails as ProjectDetailsType } from '@/types/installation-method';
+import { useInstallationMethodJobPolling } from '@/hooks/useInstallationMethodJobPolling';
+import { supabase } from '@/integrations/supabase/client';
+import {
+  getStoredCircuitContext,
+  clearStoredCircuitContext,
+  type StoredCircuitContext,
+} from '@/utils/circuit-context-generator';
+import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
+import { AnimatePresence } from 'framer-motion';
 
 interface InstallationSpecialistInterfaceProps {
   designerContext?: any;
 }
 
-const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecialistInterfaceProps) => {
+const InstallationSpecialistInterface = ({
+  designerContext,
+}: InstallationSpecialistInterfaceProps) => {
   const routerLocation = useLocation();
 
   // Check if we're viewing saved results
@@ -37,23 +43,26 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
       const data = savedResultsState.outputData;
       return {
         ...data,
-        steps: data.steps?.map((step: any) => ({
-          stepNumber: step.stepNumber || step.step,
-          title: step.title,
-          content: step.content || step.description,
-          safety: step.safety || step.safetyNotes || [],
-          toolsRequired: step.toolsRequired || step.tools || step.equipmentNeeded || [],
-          materialsNeeded: step.materialsNeeded || step.materials || [],
-          estimatedDuration: step.estimatedDuration || (step.estimatedTime ? `${step.estimatedTime} mins` : undefined),
-          riskLevel: step.riskLevel || 'medium',
-          qualifications: step.qualifications,
-          linkedHazards: step.linkedHazards,
-          notes: step.notes,
-          assignedPersonnel: step.assignedPersonnel,
-          bsReferences: step.bsReferences,
-          inspectionCheckpoints: step.inspectionCheckpoints
-        })) || [],
-        _fullMethodStatement: data
+        steps:
+          data.steps?.map((step: any) => ({
+            stepNumber: step.stepNumber || step.step,
+            title: step.title,
+            content: step.content || step.description,
+            safety: step.safety || step.safetyNotes || [],
+            toolsRequired: step.toolsRequired || step.tools || step.equipmentNeeded || [],
+            materialsNeeded: step.materialsNeeded || step.materials || [],
+            estimatedDuration:
+              step.estimatedDuration ||
+              (step.estimatedTime ? `${step.estimatedTime} mins` : undefined),
+            riskLevel: step.riskLevel || 'medium',
+            qualifications: step.qualifications,
+            linkedHazards: step.linkedHazards,
+            notes: step.notes,
+            assignedPersonnel: step.assignedPersonnel,
+            bsReferences: step.bsReferences,
+            inspectionCheckpoints: step.inspectionCheckpoints,
+          })) || [],
+        _fullMethodStatement: data,
       };
     }
     return null;
@@ -66,13 +75,13 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
   const [projectInfo, setProjectInfo] = useState<ProjectDetailsType>({
     projectName: '',
     location: '',
-    installationType: 'domestic'
+    installationType: 'domestic',
   });
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [isCancelling, setIsCancelling] = useState(false);
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
-  const [initialPrompt, setInitialPrompt] = useState<string>("");
-  const [initialProjectName, setInitialProjectName] = useState<string>("");
+  const [initialPrompt, setInitialPrompt] = useState<string>('');
+  const [initialProjectName, setInitialProjectName] = useState<string>('');
 
   // Check for imported circuit context on mount
   useEffect(() => {
@@ -94,23 +103,27 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
   const handleDismissImportedContext = () => {
     setImportedContext(null);
   };
-  
+
   const {
-    job, 
-    isPolling, 
-    startPolling, 
+    job,
+    isPolling,
+    startPolling,
     stopPolling,
-    progress: jobProgress, 
+    progress: jobProgress,
     status: jobStatus,
     currentStep: jobCurrentStep,
     methodData: jobMethodData,
     qualityMetrics: jobQualityMetrics,
-    error: jobError
+    error: jobError,
   } = useInstallationMethodJobPolling(currentJobId);
-  
-  const lastProjectRef = useRef<{details: ProjectDetailsType, description: string} | null>(null);
 
-  const handleGenerate = async (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => {
+  const lastProjectRef = useRef<{ details: ProjectDetailsType; description: string } | null>(null);
+
+  const handleGenerate = async (
+    projectDetails: ProjectDetailsType,
+    description: string,
+    useFullMode: boolean
+  ) => {
     setGenerationStartTime(Date.now());
     setShowResults(true);
     setCelebrationShown(false);
@@ -121,10 +134,12 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
 
     try {
       // Create job using the job queue
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
-        toast.error("Authentication required", {
-          description: "Please log in to generate installation methods"
+        toast.error('Authentication required', {
+          description: 'Please log in to generate installation methods',
         });
         setIsGenerating(false);
         return;
@@ -134,8 +149,8 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
         body: {
           query: description,
           projectDetails,
-          designerContext: designerContext || null
-        }
+          designerContext: designerContext || null,
+        },
       });
 
       if (error || !data?.jobId) {
@@ -145,11 +160,10 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
       console.log('✅ Created installation method job:', data.jobId);
       setCurrentJobId(data.jobId);
       startPolling();
-
     } catch (error: any) {
       console.error('Generation error:', error);
-      toast.error("Generation Failed", {
-        description: error.message || "An unexpected error occurred"
+      toast.error('Generation Failed', {
+        description: error.message || 'An unexpected error occurred',
       });
       setIsGenerating(false);
       setShowResults(false);
@@ -158,48 +172,55 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
 
   // Handle job completion
   useEffect(() => {
-    console.log('🔍 Job Status Check:', { 
-      jobStatus, 
-      hasMethodData: !!jobMethodData, 
-      celebrationShown 
+    console.log('🔍 Job Status Check:', {
+      jobStatus,
+      hasMethodData: !!jobMethodData,
+      celebrationShown,
     });
-    
+
     if (jobStatus === 'complete' && jobMethodData && !celebrationShown) {
       console.log('✅ Setting method data and showing celebration');
-      
+
       // Map backend field names - pass through exact field names from backend
       const mappedData = {
         ...jobMethodData,
-        steps: jobMethodData.steps?.map((step: any) => ({
-          stepNumber: step.stepNumber || step.step,
-          title: step.title,
-          content: step.content || step.description,
-          safety: step.safety || step.safetyNotes || [],
-          toolsRequired: step.toolsRequired || step.tools || step.equipmentNeeded || [],
-          materialsNeeded: step.materialsNeeded || step.materials || [],
-          estimatedDuration: step.estimatedDuration || (step.estimatedTime ? `${step.estimatedTime} mins` : undefined),
-          riskLevel: step.riskLevel || 'medium',
-          qualifications: step.qualifications,
-          linkedHazards: step.linkedHazards,
-          notes: step.notes,
-          assignedPersonnel: step.assignedPersonnel,
-          bsReferences: step.bsReferences,
-          inspectionCheckpoints: step.inspectionCheckpoints
-        })) || [],
-        _fullMethodStatement: jobMethodData
+        steps:
+          jobMethodData.steps?.map((step: any) => ({
+            stepNumber: step.stepNumber || step.step,
+            title: step.title,
+            content: step.content || step.description,
+            safety: step.safety || step.safetyNotes || [],
+            toolsRequired: step.toolsRequired || step.tools || step.equipmentNeeded || [],
+            materialsNeeded: step.materialsNeeded || step.materials || [],
+            estimatedDuration:
+              step.estimatedDuration ||
+              (step.estimatedTime ? `${step.estimatedTime} mins` : undefined),
+            riskLevel: step.riskLevel || 'medium',
+            qualifications: step.qualifications,
+            linkedHazards: step.linkedHazards,
+            notes: step.notes,
+            assignedPersonnel: step.assignedPersonnel,
+            bsReferences: step.bsReferences,
+            inspectionCheckpoints: step.inspectionCheckpoints,
+          })) || [],
+        _fullMethodStatement: jobMethodData,
       };
 
       console.log('✅ Mapped method data:', mappedData);
       setMethodData(mappedData);
       setIsGenerating(false);
-      
+
       if (!celebrationShown) {
         setShowCelebration(true);
         setCelebrationShown(true);
       }
     } else if (jobStatus === 'failed' || jobStatus === 'cancelled') {
-      toast.error(jobStatus === 'cancelled' ? "Generation Cancelled" : "Generation Failed", {
-        description: jobError || (jobStatus === 'cancelled' ? "You cancelled the generation" : "An unexpected error occurred")
+      toast.error(jobStatus === 'cancelled' ? 'Generation Cancelled' : 'Generation Failed', {
+        description:
+          jobError ||
+          (jobStatus === 'cancelled'
+            ? 'You cancelled the generation'
+            : 'An unexpected error occurred'),
       });
       setIsGenerating(false);
       setShowResults(false);
@@ -225,11 +246,11 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
 
   const handleCancelGeneration = async () => {
     if (!currentJobId) return;
-    
+
     setIsCancelling(true);
     try {
       const { data, error } = await supabase.functions.invoke('cancel-installation-method-job', {
-        body: { jobId: currentJobId }
+        body: { jobId: currentJobId },
       });
 
       if (error) throw error;
@@ -238,11 +259,11 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
       setIsGenerating(false);
       setShowResults(false);
       setCurrentJobId(null);
-      toast.info("Generation cancelled");
+      toast.info('Generation cancelled');
     } catch (error: any) {
       console.error('Cancel error:', error);
-      toast.error("Failed to cancel generation", {
-        description: error.message
+      toast.error('Failed to cancel generation', {
+        description: error.message,
       });
     } finally {
       setIsCancelling(false);
@@ -292,12 +313,12 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
           />
         </>
       ) : isGenerating ? (
-        <InstallationProcessingView 
+        <InstallationProcessingView
           originalQuery={originalQuery}
           projectDetails={projectInfo}
           progress={{
             stage: jobQualityMetrics?.stage || 'initializing',
-            message: jobCurrentStep || 'Starting...'
+            message: jobCurrentStep || 'Starting...',
           }}
           startTime={generationStartTime}
           qualityMetrics={jobQualityMetrics}

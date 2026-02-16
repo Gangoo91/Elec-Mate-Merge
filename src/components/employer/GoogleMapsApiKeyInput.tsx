@@ -11,9 +11,9 @@ interface GoogleMapsApiKeyInputProps {
   description?: string;
 }
 
-export function GoogleMapsApiKeyInput({ 
-  title = "Enable Map View",
-  description = "Enter your Google Maps API key to enable the map."
+export function GoogleMapsApiKeyInput({
+  title = 'Enable Map View',
+  description = 'Enter your Google Maps API key to enable the map.',
 }: GoogleMapsApiKeyInputProps) {
   const [tokenInput, setTokenInput] = useState('');
   const [isSaving, setIsSaving] = useState(false);
@@ -51,7 +51,7 @@ export function GoogleMapsApiKeyInput({
           <h3 className="font-semibold text-lg">{title}</h3>
           <p className="text-sm text-muted-foreground">{description}</p>
         </div>
-        
+
         <div className="space-y-3">
           <Input
             placeholder="AIza..."
@@ -59,8 +59,8 @@ export function GoogleMapsApiKeyInput({
             onChange={(e) => setTokenInput(e.target.value)}
             className="h-12"
           />
-          <Button 
-            className="w-full h-12" 
+          <Button
+            className="w-full h-12"
             onClick={handleSave}
             disabled={!tokenInput.trim() || isSaving}
           >
@@ -74,10 +74,10 @@ export function GoogleMapsApiKeyInput({
             )}
           </Button>
         </div>
-        
-        <a 
-          href="https://console.cloud.google.com/google/maps-apis" 
-          target="_blank" 
+
+        <a
+          href="https://console.cloud.google.com/google/maps-apis"
+          target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 text-sm text-elec-yellow hover:underline"
         >

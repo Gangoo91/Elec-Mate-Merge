@@ -1,37 +1,44 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, CheckCircle, Battery, Zap, ArrowLeft, TrendingUp } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Star, CheckCircle, Battery, Zap, ArrowLeft, TrendingUp } from 'lucide-react';
 
 interface PowerToolsGuideProps {
   onBack: () => void;
 }
 
 const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
-  const [selectedPriority, setSelectedPriority] = useState<string>("");
-  const [selectedBudget, setSelectedBudget] = useState<string>("");
+  const [selectedPriority, setSelectedPriority] = useState<string>('');
+  const [selectedBudget, setSelectedBudget] = useState<string>('');
 
   const priorities = [
-    { id: "versatility", label: "Versatility", description: "Tools that handle multiple tasks" },
-    { id: "power", label: "Power", description: "Maximum performance for heavy work" },
-    { id: "portability", label: "Portability", description: "Lightweight and compact tools" },
-    { id: "battery", label: "Battery Life", description: "Long-lasting cordless operation" }
+    { id: 'versatility', label: 'Versatility', description: 'Tools that handle multiple tasks' },
+    { id: 'power', label: 'Power', description: 'Maximum performance for heavy work' },
+    { id: 'portability', label: 'Portability', description: 'Lightweight and compact tools' },
+    { id: 'battery', label: 'Battery Life', description: 'Long-lasting cordless operation' },
   ];
 
   const budgetRanges = [
-    { id: "starter", label: "Starter Kit (£200-400)", description: "Essential tools for apprentices" },
-    { id: "professional", label: "Professional (£400-800)", description: "Quality tools for daily use" },
-    { id: "premium", label: "Premium (£800+)", description: "Top-tier professional equipment" }
+    {
+      id: 'starter',
+      label: 'Starter Kit (£200-400)',
+      description: 'Essential tools for apprentices',
+    },
+    {
+      id: 'professional',
+      label: 'Professional (£400-800)',
+      description: 'Quality tools for daily use',
+    },
+    { id: 'premium', label: 'Premium (£800+)', description: 'Top-tier professional equipment' },
   ];
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4 mb-6">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={onBack}
           className="border-elec-yellow/30 hover:bg-elec-yellow/10"
         >
@@ -39,7 +46,9 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
           Back to Guides
         </Button>
         <div>
-          <h1 className="text-3xl font-bold text-elec-yellow">Power Tools for Electricians Guide</h1>
+          <h1 className="text-3xl font-bold text-elec-yellow">
+            Power Tools for Electricians Guide
+          </h1>
           <p className="text-muted-foreground">Build your perfect toolkit step by step</p>
         </div>
       </div>
@@ -55,47 +64,49 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
         <TabsContent value="priority" className="space-y-6">
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-elec-yellow">Essential Power Tools Priority List</CardTitle>
+              <CardTitle className="text-elec-yellow">
+                Essential Power Tools Priority List
+              </CardTitle>
               <p className="text-muted-foreground">Build your toolkit in the right order</p>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {[
-                  { 
-                    priority: 1, 
-                    tool: "Cordless Drill/Driver", 
-                    price: "£80-200", 
-                    reason: "Most used tool - drilling holes and driving screws",
-                    recommendation: "DeWalt DCD796 or Makita DHP484"
+                  {
+                    priority: 1,
+                    tool: 'Cordless Drill/Driver',
+                    price: '£80-200',
+                    reason: 'Most used tool - drilling holes and driving screws',
+                    recommendation: 'DeWalt DCD796 or Makita DHP484',
                   },
-                  { 
-                    priority: 2, 
-                    tool: "SDS Drill", 
-                    price: "£120-300", 
-                    reason: "Essential for masonry work and cable routing",
-                    recommendation: "Bosch GBH 2-28 F or DeWalt DCH273"
+                  {
+                    priority: 2,
+                    tool: 'SDS Drill',
+                    price: '£120-300',
+                    reason: 'Essential for masonry work and cable routing',
+                    recommendation: 'Bosch GBH 2-28 F or DeWalt DCH273',
                   },
-                  { 
-                    priority: 3, 
-                    tool: "Angle Grinder", 
-                    price: "£60-150", 
-                    reason: "Cutting trunking, conduit, and metalwork",
-                    recommendation: "Makita GA9020 or Bosch GWS 7-115"
+                  {
+                    priority: 3,
+                    tool: 'Angle Grinder',
+                    price: '£60-150',
+                    reason: 'Cutting trunking, conduit, and metalwork',
+                    recommendation: 'Makita GA9020 or Bosch GWS 7-115',
                   },
-                  { 
-                    priority: 4, 
-                    tool: "Reciprocating Saw", 
-                    price: "£100-250", 
-                    reason: "Versatile cutting tool for various materials",
-                    recommendation: "Milwaukee M18 FSX or DeWalt DCS388"
+                  {
+                    priority: 4,
+                    tool: 'Reciprocating Saw',
+                    price: '£100-250',
+                    reason: 'Versatile cutting tool for various materials',
+                    recommendation: 'Milwaukee M18 FSX or DeWalt DCS388',
                   },
-                  { 
-                    priority: 5, 
-                    tool: "Multi-tool", 
-                    price: "£80-200", 
-                    reason: "Precision cutting and detail work",
-                    recommendation: "Fein MultiMaster or Bosch GOP"
-                  }
+                  {
+                    priority: 5,
+                    tool: 'Multi-tool',
+                    price: '£80-200',
+                    reason: 'Precision cutting and detail work',
+                    recommendation: 'Fein MultiMaster or Bosch GOP',
+                  },
                 ].map((item, index) => (
                   <Card key={index} className="border-elec-yellow/20 bg-elec-dark/30">
                     <CardContent className="p-4">
@@ -126,53 +137,53 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                brand: "DeWalt",
+                brand: 'DeWalt',
                 rating: 4.8,
-                strengths: ["Durability", "Power", "Professional grade"],
-                weaknesses: ["Price", "Weight"],
-                bestFor: "Heavy-duty professional use",
-                priceRange: "££-£££"
+                strengths: ['Durability', 'Power', 'Professional grade'],
+                weaknesses: ['Price', 'Weight'],
+                bestFor: 'Heavy-duty professional use',
+                priceRange: '££-£££',
               },
               {
-                brand: "Makita",
+                brand: 'Makita',
                 rating: 4.7,
-                strengths: ["Reliability", "Ergonomics", "Battery life"],
-                weaknesses: ["Limited colour options"],
-                bestFor: "Daily professional use",
-                priceRange: "££-£££"
+                strengths: ['Reliability', 'Ergonomics', 'Battery life'],
+                weaknesses: ['Limited colour options'],
+                bestFor: 'Daily professional use',
+                priceRange: '££-£££',
               },
               {
-                brand: "Milwaukee",
+                brand: 'Milwaukee',
                 rating: 4.6,
-                strengths: ["Innovation", "Power", "Tool variety"],
-                weaknesses: ["Price", "Availability"],
-                bestFor: "Specialised applications",
-                priceRange: "£££"
+                strengths: ['Innovation', 'Power', 'Tool variety'],
+                weaknesses: ['Price', 'Availability'],
+                bestFor: 'Specialised applications',
+                priceRange: '£££',
               },
               {
-                brand: "Bosch Professional",
+                brand: 'Bosch Professional',
                 rating: 4.5,
-                strengths: ["Quality", "Precision", "German engineering"],
-                weaknesses: ["Price"],
-                bestFor: "Precision work",
-                priceRange: "££-£££"
+                strengths: ['Quality', 'Precision', 'German engineering'],
+                weaknesses: ['Price'],
+                bestFor: 'Precision work',
+                priceRange: '££-£££',
               },
               {
-                brand: "Ryobi",
+                brand: 'Ryobi',
                 rating: 4.2,
-                strengths: ["Value", "Range", "Starter-friendly"],
-                weaknesses: ["Durability", "Power"],
-                bestFor: "Apprentices and light use",
-                priceRange: "£"
+                strengths: ['Value', 'Range', 'Starter-friendly'],
+                weaknesses: ['Durability', 'Power'],
+                bestFor: 'Apprentices and light use',
+                priceRange: '£',
               },
               {
-                brand: "Festool",
+                brand: 'Festool',
                 rating: 4.9,
-                strengths: ["Precision", "Quality", "Dust extraction"],
-                weaknesses: ["Very expensive", "Overkill for basic work"],
-                bestFor: "Premium professional use",
-                priceRange: "££££"
-              }
+                strengths: ['Precision', 'Quality', 'Dust extraction'],
+                weaknesses: ['Very expensive', 'Overkill for basic work'],
+                bestFor: 'Premium professional use',
+                priceRange: '££££',
+              },
             ].map((brand, index) => (
               <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader>
@@ -183,7 +194,9 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                       <span className="text-foreground">{brand.rating}</span>
                     </div>
                   </div>
-                  <Badge variant="outline" className="w-fit">{brand.priceRange}</Badge>
+                  <Badge variant="outline" className="w-fit">
+                    {brand.priceRange}
+                  </Badge>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
@@ -237,7 +250,7 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                   <li>• Safe in wet conditions</li>
                   <li>• Battery systems across tool range</li>
                 </ul>
-                
+
                 <div className="flex items-center gap-2 text-red-400 mt-4">
                   <span className="font-medium">Considerations</span>
                 </div>
@@ -269,7 +282,7 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                   <li>• Often more powerful</li>
                   <li>• Unlimited runtime</li>
                 </ul>
-                
+
                 <div className="flex items-center gap-2 text-red-400 mt-4">
                   <span className="font-medium">Considerations</span>
                 </div>
@@ -286,13 +299,17 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <CardTitle className="text-elec-yellow">Battery Platform Strategy</CardTitle>
-              <p className="text-muted-foreground">Choose one brand's battery system and stick with it</p>
+              <p className="text-muted-foreground">
+                Choose one brand's battery system and stick with it
+              </p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
                   <h4 className="font-medium text-foreground mb-2">18V Systems</h4>
-                  <p className="text-sm text-muted-foreground mb-2">Best for most electrical work</p>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Best for most electrical work
+                  </p>
                   <ul className="text-xs text-muted-foreground space-y-1">
                     <li>• DeWalt XR</li>
                     <li>• Makita LXT</li>
@@ -300,10 +317,12 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                     <li>• Bosch Professional</li>
                   </ul>
                 </div>
-                
+
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
                   <h4 className="font-medium text-foreground mb-2">12V Systems</h4>
-                  <p className="text-sm text-muted-foreground mb-2">Compact tools for tight spaces</p>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Compact tools for tight spaces
+                  </p>
                   <ul className="text-xs text-muted-foreground space-y-1">
                     <li>• DeWalt MAX</li>
                     <li>• Makita CXT</li>
@@ -311,7 +330,7 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                     <li>• Bosch Professional</li>
                   </ul>
                 </div>
-                
+
                 <div className="p-4 bg-elec-dark/50 rounded-lg">
                   <h4 className="font-medium text-foreground mb-2">54V/FlexVolt</h4>
                   <p className="text-sm text-muted-foreground mb-2">Heavy-duty applications</p>
@@ -337,21 +356,27 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Clean after use</h4>
-                    <p className="text-sm text-muted-foreground">Remove dust and debris with compressed air</p>
+                    <p className="text-sm text-muted-foreground">
+                      Remove dust and debris with compressed air
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Check for damage</h4>
-                    <p className="text-sm text-muted-foreground">Inspect cords, cases, and chuck condition</p>
+                    <p className="text-sm text-muted-foreground">
+                      Inspect cords, cases, and chuck condition
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Store properly</h4>
-                    <p className="text-sm text-muted-foreground">Use cases and avoid extreme temperatures</p>
+                    <p className="text-sm text-muted-foreground">
+                      Use cases and avoid extreme temperatures
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -366,21 +391,27 @@ const PowerToolsGuide = ({ onBack }: PowerToolsGuideProps) => {
                   <Battery className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Proper charging</h4>
-                    <p className="text-sm text-muted-foreground">Use manufacturer's chargers only</p>
+                    <p className="text-sm text-muted-foreground">
+                      Use manufacturer's chargers only
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Battery className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Storage charge</h4>
-                    <p className="text-sm text-muted-foreground">Store at 40-60% charge for longevity</p>
+                    <p className="text-sm text-muted-foreground">
+                      Store at 40-60% charge for longevity
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Battery className="h-5 w-5 text-blue-400 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-foreground">Temperature control</h4>
-                    <p className="text-sm text-muted-foreground">Avoid extreme hot or cold conditions</p>
+                    <p className="text-sm text-muted-foreground">
+                      Avoid extreme hot or cold conditions
+                    </p>
                   </div>
                 </div>
               </CardContent>

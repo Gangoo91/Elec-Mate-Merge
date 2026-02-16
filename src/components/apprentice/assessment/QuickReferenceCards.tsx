@@ -1,14 +1,17 @@
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Badge } from '@/components/ui/badge';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Badge } from "@/components/ui/badge";
-import {
-  ChevronDown, Phone, Shield, FileText, AlertTriangle,
-  Scale, Zap, HardHat, TestTube,
-} from "lucide-react";
-import { referenceCards, type ReferenceCard } from "./data/regulationsReference";
+  ChevronDown,
+  Phone,
+  Shield,
+  FileText,
+  AlertTriangle,
+  Scale,
+  Zap,
+  HardHat,
+  TestTube,
+} from 'lucide-react';
+import { referenceCards, type ReferenceCard } from './data/regulationsReference';
 
 const iconMap: Record<string, React.ElementType> = {
   Phone,
@@ -22,12 +25,42 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 const colorMap: Record<string, { bg: string; border: string; text: string; triggerBg: string }> = {
-  red: { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-400', triggerBg: 'bg-red-500/10' },
-  green: { bg: 'bg-green-500/10', border: 'border-green-500/30', text: 'text-green-400', triggerBg: 'bg-green-500/10' },
-  yellow: { bg: 'bg-elec-yellow/10', border: 'border-elec-yellow/30', text: 'text-elec-yellow', triggerBg: 'bg-elec-yellow/10' },
-  blue: { bg: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-400', triggerBg: 'bg-blue-500/10' },
-  amber: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', triggerBg: 'bg-amber-500/10' },
-  orange: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-400', triggerBg: 'bg-orange-500/10' },
+  red: {
+    bg: 'bg-red-500/10',
+    border: 'border-red-500/30',
+    text: 'text-red-400',
+    triggerBg: 'bg-red-500/10',
+  },
+  green: {
+    bg: 'bg-green-500/10',
+    border: 'border-green-500/30',
+    text: 'text-green-400',
+    triggerBg: 'bg-green-500/10',
+  },
+  yellow: {
+    bg: 'bg-elec-yellow/10',
+    border: 'border-elec-yellow/30',
+    text: 'text-elec-yellow',
+    triggerBg: 'bg-elec-yellow/10',
+  },
+  blue: {
+    bg: 'bg-blue-500/10',
+    border: 'border-blue-500/30',
+    text: 'text-blue-400',
+    triggerBg: 'bg-blue-500/10',
+  },
+  amber: {
+    bg: 'bg-amber-500/10',
+    border: 'border-amber-500/30',
+    text: 'text-amber-400',
+    triggerBg: 'bg-amber-500/10',
+  },
+  orange: {
+    bg: 'bg-orange-500/10',
+    border: 'border-orange-500/30',
+    text: 'text-orange-400',
+    triggerBg: 'bg-orange-500/10',
+  },
 };
 
 const priorityColors: Record<string, string> = {
@@ -46,7 +79,9 @@ const renderContent = (card: ReferenceCard) => {
           {content.numbers.map((num, idx) => (
             <div key={idx} className="flex justify-between">
               <span className="text-white">{num.label}:</span>
-              <span className={`font-mono font-bold ${idx === 0 ? 'text-red-400' : 'text-white'}`}>{num.number}</span>
+              <span className={`font-mono font-bold ${idx === 0 ? 'text-red-400' : 'text-white'}`}>
+                {num.number}
+              </span>
             </div>
           ))}
         </div>
@@ -118,24 +153,28 @@ const renderContent = (card: ReferenceCard) => {
 const QuickReferenceCards = () => {
   return (
     <div className="space-y-3">
-      {referenceCards.map(card => {
+      {referenceCards.map((card) => {
         const Icon = iconMap[card.icon] || AlertTriangle;
         const colors = colorMap[card.color] || colorMap.blue;
 
         return (
           <Collapsible key={card.id}>
-            <CollapsibleTrigger className={`w-full flex items-center justify-between p-4 rounded-xl ${colors.triggerBg} border ${colors.border} touch-manipulation h-auto min-h-[44px]`}>
+            <CollapsibleTrigger
+              className={`w-full flex items-center justify-between p-4 rounded-xl ${colors.triggerBg} border ${colors.border} touch-manipulation h-auto min-h-[44px]`}
+            >
               <div className="flex items-center gap-2">
                 <Icon className={`h-4 w-4 ${colors.text}`} />
-                <span className={`${colors.text.replace('text-', 'text-').replace('-400', '-300').replace('text-elec-yellow', 'text-elec-yellow')} font-semibold text-sm`}>
+                <span
+                  className={`${colors.text.replace('text-', 'text-').replace('-400', '-300').replace('text-elec-yellow', 'text-elec-yellow')} font-semibold text-sm`}
+                >
                   {card.title}
                 </span>
               </div>
-              <ChevronDown className={`h-4 w-4 ${colors.text} transition-transform [[data-state=open]>&]:rotate-180`} />
+              <ChevronDown
+                className={`h-4 w-4 ${colors.text} transition-transform [[data-state=open]>&]:rotate-180`}
+              />
             </CollapsibleTrigger>
-            <CollapsibleContent>
-              {renderContent(card)}
-            </CollapsibleContent>
+            <CollapsibleContent>{renderContent(card)}</CollapsibleContent>
           </Collapsible>
         );
       })}

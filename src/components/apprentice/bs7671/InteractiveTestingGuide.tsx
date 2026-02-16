@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState, useEffect, useRef } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   ArrowLeft,
   ArrowRight,
@@ -16,14 +16,10 @@ import {
   HardHat,
   Flame,
   SearchX,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { BS7671Test } from "@/data/bs7671-testing/allBS7671Tests";
-import type { useBS7671Progress } from "./hooks/useBS7671Progress";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { BS7671Test } from '@/data/bs7671-testing/allBS7671Tests';
+import type { useBS7671Progress } from './hooks/useBS7671Progress';
 
 interface InteractiveTestingGuideProps {
   guide: BS7671Test;
@@ -61,7 +57,7 @@ const InteractiveTestingGuide = ({
     if (stepperRef.current) {
       const activePill = stepperRef.current.querySelector('[data-active="true"]');
       if (activePill) {
-        activePill.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        activePill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
     }
   }, [currentStep]);
@@ -95,29 +91,29 @@ const InteractiveTestingGuide = ({
 
   const getDifficultyConfig = (difficulty: string) => {
     switch (difficulty) {
-      case "Beginner":
+      case 'Beginner':
         return {
-          bg: "bg-green-500/10",
-          text: "text-green-400",
-          border: "border-green-500/30",
+          bg: 'bg-green-500/10',
+          text: 'text-green-400',
+          border: 'border-green-500/30',
         };
-      case "Intermediate":
+      case 'Intermediate':
         return {
-          bg: "bg-elec-yellow/10",
-          text: "text-elec-yellow",
-          border: "border-elec-yellow/30",
+          bg: 'bg-elec-yellow/10',
+          text: 'text-elec-yellow',
+          border: 'border-elec-yellow/30',
         };
-      case "Advanced":
+      case 'Advanced':
         return {
-          bg: "bg-red-500/10",
-          text: "text-red-400",
-          border: "border-red-500/30",
+          bg: 'bg-red-500/10',
+          text: 'text-red-400',
+          border: 'border-red-500/30',
         };
       default:
         return {
-          bg: "bg-blue-500/10",
-          text: "text-blue-400",
-          border: "border-blue-500/30",
+          bg: 'bg-blue-500/10',
+          text: 'text-blue-400',
+          border: 'border-blue-500/30',
         };
     }
   };
@@ -161,9 +157,7 @@ const InteractiveTestingGuide = ({
               {guide.title}
             </CardTitle>
             <p className="text-white">{guide.description}</p>
-            <span className="text-sm text-cyan-400 font-mono">
-              {guide.regulationClause}
-            </span>
+            <span className="text-sm text-cyan-400 font-mono">{guide.regulationClause}</span>
           </div>
         </CardHeader>
         <CardContent className="relative space-y-4">
@@ -191,21 +185,18 @@ const InteractiveTestingGuide = ({
           </div>
 
           {/* Step Stepper Pills */}
-          <div
-            ref={stepperRef}
-            className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide"
-          >
+          <div ref={stepperRef} className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {guide.steps.map((step, index) => {
               const isActive = index === currentStep;
               const isCompleted = progress.isStepComplete(guide.id, index);
 
-              let pillClasses = "";
+              let pillClasses = '';
               if (isActive) {
-                pillClasses = "bg-elec-yellow text-black font-bold border-elec-yellow";
+                pillClasses = 'bg-elec-yellow text-black font-bold border-elec-yellow';
               } else if (isCompleted) {
-                pillClasses = "bg-green-500/20 text-green-400 border-green-500/30";
+                pillClasses = 'bg-green-500/20 text-green-400 border-green-500/30';
               } else {
-                pillClasses = "bg-white/10 text-white border-white/10";
+                pillClasses = 'bg-white/10 text-white border-white/10';
               }
 
               return (
@@ -329,10 +320,7 @@ const InteractiveTestingGuide = ({
               </h4>
               <ul className="space-y-2">
                 {currentStepData.tips.map((tip, index) => (
-                  <li
-                    key={index}
-                    className="text-sm text-white flex items-start gap-2"
-                  >
+                  <li key={index} className="text-sm text-white flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0" />
                     {tip}
                   </li>
@@ -352,7 +340,7 @@ const InteractiveTestingGuide = ({
                   </div>
                   <ChevronDown
                     className={`h-4 w-4 text-red-400 transition-transform duration-200 ${
-                      troubleshootingOpen ? "rotate-180" : ""
+                      troubleshootingOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
@@ -361,10 +349,7 @@ const InteractiveTestingGuide = ({
                 <div className="mt-2 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
                   <ul className="space-y-3">
                     {currentStepData.troubleshooting.map((item, index) => (
-                      <li
-                        key={index}
-                        className="text-sm text-white flex items-start gap-2"
-                      >
+                      <li key={index} className="text-sm text-white flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
@@ -440,9 +425,7 @@ const InteractiveTestingGuide = ({
 
           {guide.testLimits.length > 0 && (
             <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
-              <h4 className="font-medium text-green-400 mb-3 text-sm">
-                Test Limits
-              </h4>
+              <h4 className="font-medium text-green-400 mb-3 text-sm">Test Limits</h4>
               <div className="space-y-2">
                 {guide.testLimits.map((limit, index) => (
                   <div
@@ -466,10 +449,7 @@ const InteractiveTestingGuide = ({
             </h4>
             <ul className="space-y-2">
               {guide.commonIssues.map((issue, index) => (
-                <li
-                  key={index}
-                  className="text-sm text-white flex items-start gap-2"
-                >
+                <li key={index} className="text-sm text-white flex items-start gap-2">
                   <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
                   {issue}
                 </li>

@@ -1,5 +1,11 @@
 import React, { useCallback } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { rcdTypeOptions } from '@/types/wiringTypes';
@@ -12,18 +18,31 @@ interface RcdDetailsCellsProps {
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
 }
 
-const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUpdate, onBulkUpdate }) => {
-  const handleRcdBsStandardChange = useCallback((value: string) => {
-    onUpdate(result.id, 'rcdBsStandard', value);
-  }, [result.id, onUpdate]);
+const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
+  result,
+  onUpdate,
+  onBulkUpdate,
+}) => {
+  const handleRcdBsStandardChange = useCallback(
+    (value: string) => {
+      onUpdate(result.id, 'rcdBsStandard', value);
+    },
+    [result.id, onUpdate]
+  );
 
-  const handleRcdTypeChange = useCallback((value: string) => {
-    onUpdate(result.id, 'rcdType', value);
-  }, [result.id, onUpdate]);
+  const handleRcdTypeChange = useCallback(
+    (value: string) => {
+      onUpdate(result.id, 'rcdType', value);
+    },
+    [result.id, onUpdate]
+  );
 
-  const handleRcdRatingChange = useCallback((value: string) => {
-    onUpdate(result.id, 'rcdRating', value);
-  }, [result.id, onUpdate]);
+  const handleRcdRatingChange = useCallback(
+    (value: string) => {
+      onUpdate(result.id, 'rcdRating', value);
+    },
+    [result.id, onUpdate]
+  );
 
   return (
     <>
@@ -37,14 +56,18 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
           <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
             <SelectValue placeholder="BS EN" />
           </SelectTrigger>
-          <SelectContent 
-            key={`rcdBsStandard-content-${result.id}`} 
+          <SelectContent
+            key={`rcdBsStandard-content-${result.id}`}
             position="popper"
             sideOffset={5}
             className="bg-background border border-border rounded-md z-[9999]"
           >
             {rcdBsStandardOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-xs text-neutral-100"
+              >
                 {option.label}
               </SelectItem>
             ))}
@@ -62,14 +85,18 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
           <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
             <SelectValue placeholder="Type" />
           </SelectTrigger>
-          <SelectContent 
-            key={`rcdType-content-${result.id}`} 
+          <SelectContent
+            key={`rcdType-content-${result.id}`}
             position="popper"
             sideOffset={5}
             className="bg-background border border-border rounded-md z-[9999]"
           >
             {rcdTypeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-xs text-neutral-100"
+              >
                 {option.label}
               </SelectItem>
             ))}
@@ -87,17 +114,27 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
           <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
             <SelectValue placeholder="mA" />
           </SelectTrigger>
-          <SelectContent 
-            key={`rcdRating-content-${result.id}`} 
+          <SelectContent
+            key={`rcdRating-content-${result.id}`}
             position="popper"
             sideOffset={5}
             className="bg-background border border-border rounded-md z-[9999]"
           >
-            <SelectItem value="10mA" className="text-xs text-neutral-100">10mA</SelectItem>
-            <SelectItem value="30mA" className="text-xs text-neutral-100">30mA</SelectItem>
-            <SelectItem value="100mA" className="text-xs text-neutral-100">100mA</SelectItem>
-            <SelectItem value="300mA" className="text-xs text-neutral-100">300mA</SelectItem>
-            <SelectItem value="500mA" className="text-xs text-neutral-100">500mA</SelectItem>
+            <SelectItem value="10mA" className="text-xs text-neutral-100">
+              10mA
+            </SelectItem>
+            <SelectItem value="30mA" className="text-xs text-neutral-100">
+              30mA
+            </SelectItem>
+            <SelectItem value="100mA" className="text-xs text-neutral-100">
+              100mA
+            </SelectItem>
+            <SelectItem value="300mA" className="text-xs text-neutral-100">
+              300mA
+            </SelectItem>
+            <SelectItem value="500mA" className="text-xs text-neutral-100">
+              500mA
+            </SelectItem>
           </SelectContent>
         </Select>
       </TableCell>

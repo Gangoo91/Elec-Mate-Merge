@@ -1,29 +1,26 @@
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Plus, Sparkles } from "lucide-react";
-import { useUniversalPortfolio, UniversalActivityData } from "@/hooks/portfolio/useUniversalPortfolio";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Plus, Sparkles } from 'lucide-react';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  useUniversalPortfolio,
+  UniversalActivityData,
+} from '@/hooks/portfolio/useUniversalPortfolio';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface UniversalPortfolioButtonProps {
   activityData: UniversalActivityData;
-  variant?: "default" | "outline" | "ghost";
-  size?: "default" | "sm" | "lg";
+  variant?: 'default' | 'outline' | 'ghost';
+  size?: 'default' | 'sm' | 'lg';
   showSmartLabel?: boolean;
   className?: string;
 }
 
 const UniversalPortfolioButton = ({
   activityData,
-  variant = "outline",
-  size = "sm",
+  variant = 'outline',
+  size = 'sm',
   showSmartLabel = true,
-  className = ""
+  className = '',
 }: UniversalPortfolioButtonProps) => {
   const { createUniversalPortfolioEntry, isProcessing } = useUniversalPortfolio();
   const [hasAdded, setHasAdded] = useState(false);
@@ -40,7 +37,7 @@ const UniversalPortfolioButton = ({
   const buttonContent = (
     <Button
       size={size}
-      variant={hasAdded ? "default" : variant}
+      variant={hasAdded ? 'default' : variant}
       onClick={handleAddToPortfolio}
       disabled={isProcessing || hasAdded}
       className={`gap-1 ${hasAdded ? 'text-green-400 border-green-400' : 'text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10'} ${className}`}
@@ -64,9 +61,7 @@ const UniversalPortfolioButton = ({
     return (
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger asChild>
-            {buttonContent}
-          </TooltipTrigger>
+          <TooltipTrigger asChild>{buttonContent}</TooltipTrigger>
           <TooltipContent>
             <p>Automatically categorises and adds smart skills</p>
           </TooltipContent>

@@ -1,45 +1,45 @@
-import { ArrowLeft, Scale, ClipboardCheck, FileText, ShieldCheck } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Scale, ClipboardCheck, FileText, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Confined Spaces Regulations 1997",
+    title: 'Confined Spaces Regulations 1997',
     icon: Scale,
     description:
-      "Regulations 1 to 5, the Approved Code of Practice L101, links to the Health and Safety at Work Act 1974, and the Management of Health and Safety at Work Regulations 1999",
+      'Regulations 1 to 5, the Approved Code of Practice L101, links to the Health and Safety at Work Act 1974, and the Management of Health and Safety at Work Regulations 1999',
   },
   {
     id: 2,
-    title: "Risk Assessment for Confined Spaces",
+    title: 'Risk Assessment for Confined Spaces',
     icon: ClipboardCheck,
     description:
-      "Identifying confined spaces on site, assessing the hazards present, and applying the hierarchy: avoid entry, implement a safe system of work, arrange emergency procedures",
+      'Identifying confined spaces on site, assessing the hazards present, and applying the hierarchy: avoid entry, implement a safe system of work, arrange emergency procedures',
   },
   {
     id: 3,
-    title: "Safe Systems of Work",
+    title: 'Safe Systems of Work',
     icon: FileText,
     description:
-      "Planning the work, supervision arrangements, competence requirements, communication protocols, equipment selection, and isolation procedures",
+      'Planning the work, supervision arrangements, competence requirements, communication protocols, equipment selection, and isolation procedures',
   },
   {
     id: 4,
-    title: "Permit-to-Work Systems",
+    title: 'Permit-to-Work Systems',
     icon: ShieldCheck,
     description:
-      "When a permit to work is required, permit content and format, defined roles and responsibilities, permit lifecycle management, and hot work permits",
+      'When a permit to work is required, permit content and format, defined roles and responsibilities, permit lifecycle management, and hot work permits',
   },
 ];
 
 export default function ConfinedSpacesModule2() {
   useSEO({
-    title: "Module 2: Legislation & Risk Assessment | Confined Spaces Awareness",
+    title: 'Module 2: Legislation & Risk Assessment | Confined Spaces Awareness',
     description:
-      "Study the Confined Spaces Regulations 1997, risk assessment processes, safe systems of work, and permit-to-work systems for confined space entry.",
+      'Study the Confined Spaces Regulations 1997, risk assessment processes, safe systems of work, and permit-to-work systems for confined space entry.',
   });
 
   return (

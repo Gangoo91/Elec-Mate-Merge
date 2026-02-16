@@ -1,106 +1,114 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { TrendingUp, TrendingDown, Target, Calendar, Brain, Zap, BarChart3, Users } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  TrendingUp,
+  TrendingDown,
+  Target,
+  Calendar,
+  Brain,
+  Zap,
+  BarChart3,
+  Users,
+} from 'lucide-react';
 
 const ProgressInsightsTab = () => {
   const progressMetrics = [
     {
-      category: "Technical Skills",
+      category: 'Technical Skills',
       current: 78,
       target: 85,
-      trend: "up",
+      trend: 'up',
       weeklyChange: +5,
-      prediction: "On track to meet target by next month"
+      prediction: 'On track to meet target by next month',
     },
     {
-      category: "Practical Experience", 
+      category: 'Practical Experience',
       current: 82,
       target: 80,
-      trend: "up",
+      trend: 'up',
       weeklyChange: +3,
-      prediction: "Exceeding expectations, maintain current pace"
+      prediction: 'Exceeding expectations, maintain current pace',
     },
     {
-      category: "Theory Knowledge",
+      category: 'Theory Knowledge',
       current: 65,
       target: 75,
-      trend: "down",
+      trend: 'down',
       weeklyChange: -2,
-      prediction: "Needs focused study, recommend 5 hours/week"
+      prediction: 'Needs focused study, recommend 5 hours/week',
     },
     {
-      category: "Professional Skills",
+      category: 'Professional Skills',
       current: 70,
       target: 75,
-      trend: "up",
+      trend: 'up',
       weeklyChange: +2,
-      prediction: "Steady improvement, on track for target"
-    }
+      prediction: 'Steady improvement, on track for target',
+    },
   ];
 
   const weeklyInsights = [
     {
-      type: "achievement",
-      title: "Milestone Reached",
-      description: "Completed 75% of Year 2 requirements",
-      impact: "positive"
+      type: 'achievement',
+      title: 'Milestone Reached',
+      description: 'Completed 75% of Year 2 requirements',
+      impact: 'positive',
     },
     {
-      type: "concern",
-      title: "Study Pattern Alert",
-      description: "Theory study time decreased by 30% this week",
-      impact: "negative"
+      type: 'concern',
+      title: 'Study Pattern Alert',
+      description: 'Theory study time decreased by 30% this week',
+      impact: 'negative',
     },
     {
-      type: "recommendation",
-      title: "Learning Opportunity",
-      description: "New commercial project available for portfolio",
-      impact: "neutral"
+      type: 'recommendation',
+      title: 'Learning Opportunity',
+      description: 'New commercial project available for portfolio',
+      impact: 'neutral',
     },
     {
-      type: "prediction",
-      title: "Assessment Readiness",
-      description: "EPA readiness increased to 73% based on current progress",
-      impact: "positive"
-    }
+      type: 'prediction',
+      title: 'Assessment Readiness',
+      description: 'EPA readiness increased to 73% based on current progress',
+      impact: 'positive',
+    },
   ];
 
   const benchmarkData = [
     {
-      metric: "OJT Hours Completed",
+      metric: 'OJT Hours Completed',
       yourValue: 156,
       cohortAverage: 142,
       topPerformers: 180,
-      status: "above-average"
+      status: 'above-average',
     },
     {
-      metric: "Portfolio Completeness",
+      metric: 'Portfolio Completeness',
       yourValue: 75,
       cohortAverage: 68,
       topPerformers: 85,
-      status: "above-average"
+      status: 'above-average',
     },
     {
-      metric: "Assessment Scores",
+      metric: 'Assessment Scores',
       yourValue: 78,
       cohortAverage: 75,
       topPerformers: 88,
-      status: "above-average"
+      status: 'above-average',
     },
     {
-      metric: "Study Hours/Week",
+      metric: 'Study Hours/Week',
       yourValue: 8,
       cohortAverage: 12,
       topPerformers: 16,
-      status: "below-average"
-    }
+      status: 'below-average',
+    },
   ];
 
   const getTrendIcon = (trend: string) => {
-    return trend === "up" ? (
+    return trend === 'up' ? (
       <TrendingUp className="h-4 w-4 text-green-500" />
     ) : (
       <TrendingDown className="h-4 w-4 text-red-500" />
@@ -109,20 +117,20 @@ const ProgressInsightsTab = () => {
 
   const getImpactColor = (impact: string) => {
     switch (impact) {
-      case "positive":
-        return "text-green-500";
-      case "negative":
-        return "text-red-500";
+      case 'positive':
+        return 'text-green-500';
+      case 'negative':
+        return 'text-red-500';
       default:
-        return "text-blue-500";
+        return 'text-blue-500';
     }
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case "above-average":
+      case 'above-average':
         return <Badge className="bg-green-600 text-white">Above Average</Badge>;
-      case "below-average":
+      case 'below-average':
         return <Badge className="bg-orange-600 text-white">Below Average</Badge>;
       default:
         return <Badge className="bg-blue-600 text-white">Average</Badge>;
@@ -139,9 +147,7 @@ const ProgressInsightsTab = () => {
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
             <div className="text-xl sm:text-2xl font-bold text-green-500">+15%</div>
-            <p className="text-xs text-white">
-              This month vs last
-            </p>
+            <p className="text-xs text-white">This month vs last</p>
           </CardContent>
         </Card>
 
@@ -152,9 +158,7 @@ const ProgressInsightsTab = () => {
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
             <div className="text-xl sm:text-2xl font-bold text-blue-500">8/12</div>
-            <p className="text-xs text-white">
-              Monthly targets hit
-            </p>
+            <p className="text-xs text-white">Monthly targets hit</p>
           </CardContent>
         </Card>
 
@@ -165,9 +169,7 @@ const ProgressInsightsTab = () => {
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
             <div className="text-xl sm:text-2xl font-bold text-purple-500">12th</div>
-            <p className="text-xs text-white">
-              Out of 45 apprentices
-            </p>
+            <p className="text-xs text-white">Out of 45 apprentices</p>
           </CardContent>
         </Card>
 
@@ -178,9 +180,7 @@ const ProgressInsightsTab = () => {
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
             <div className="text-xl sm:text-2xl font-bold text-elec-yellow">18m</div>
-            <p className="text-xs text-white">
-              Predicted finish
-            </p>
+            <p className="text-xs text-white">Predicted finish</p>
           </CardContent>
         </Card>
       </div>
@@ -201,8 +201,11 @@ const ProgressInsightsTab = () => {
                     <div className="flex items-center gap-2">
                       <span className="font-medium">{metric.category}</span>
                       {getTrendIcon(metric.trend)}
-                      <span className={`text-sm ${metric.trend === "up" ? "text-green-500" : "text-red-500"}`}>
-                        {metric.weeklyChange > 0 ? "+" : ""}{metric.weeklyChange}%
+                      <span
+                        className={`text-sm ${metric.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}
+                      >
+                        {metric.weeklyChange > 0 ? '+' : ''}
+                        {metric.weeklyChange}%
                       </span>
                     </div>
                     <span className="text-sm text-white">
@@ -210,9 +213,7 @@ const ProgressInsightsTab = () => {
                     </span>
                   </div>
                   <Progress value={metric.current} className="h-2" />
-                  <p className="text-xs text-white italic">
-                    AI Prediction: {metric.prediction}
-                  </p>
+                  <p className="text-xs text-white italic">AI Prediction: {metric.prediction}</p>
                 </div>
               ))}
             </div>
@@ -259,24 +260,24 @@ const ProgressInsightsTab = () => {
                   <span className="font-medium">{item.metric}</span>
                   {getStatusBadge(item.status)}
                 </div>
-                
+
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span>You: {item.yourValue}</span>
                     <span>Cohort Avg: {item.cohortAverage}</span>
                     <span>Top 10%: {item.topPerformers}</span>
                   </div>
-                  
+
                   <div className="relative">
                     <div className="w-full bg-muted rounded-full h-2">
-                      <div 
+                      <div
                         className="bg-blue-500 h-2 rounded-full relative"
                         style={{ width: `${(item.yourValue / item.topPerformers) * 100}%` }}
                       >
                         <div className="absolute right-0 top-0 h-2 w-1 bg-blue-700 rounded-full"></div>
                       </div>
                     </div>
-                    <div 
+                    <div
                       className="absolute top-0 h-2 w-1 bg-orange-500"
                       style={{ left: `${(item.cohortAverage / item.topPerformers) * 100}%` }}
                     ></div>
@@ -308,8 +309,8 @@ const ProgressInsightsTab = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            Your AI-powered progress insights provide real-time analysis of your learning journey, 
-            benchmark your performance against peers, and predict future outcomes. Stay motivated 
+            Your AI-powered progress insights provide real-time analysis of your learning journey,
+            benchmark your performance against peers, and predict future outcomes. Stay motivated
             with personalised recommendations and data-driven guidance for apprenticeship success.
           </p>
         </CardContent>

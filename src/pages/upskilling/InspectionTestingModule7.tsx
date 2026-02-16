@@ -8,13 +8,15 @@ const sections = [
   {
     id: 1,
     title: 'Polarity Testing Methods',
-    description: 'Understanding polarity testing techniques and equipment for verifying correct conductor connections',
+    description:
+      'Understanding polarity testing techniques and equipment for verifying correct conductor connections',
     icon: Plug,
   },
   {
     id: 2,
     title: 'Single-Phase Polarity Verification',
-    description: 'Verifying correct polarity of line, neutral and earth conductors in single-phase installations',
+    description:
+      'Verifying correct polarity of line, neutral and earth conductors in single-phase installations',
     icon: Zap,
   },
   {
@@ -26,13 +28,15 @@ const sections = [
   {
     id: 4,
     title: 'Functional Testing of Switchgear',
-    description: 'Verification of switchgear operation including isolators, contactors and control circuits',
+    description:
+      'Verification of switchgear operation including isolators, contactors and control circuits',
     icon: Settings,
   },
   {
     id: 5,
     title: 'Protective Device Operation Verification',
-    description: 'Testing and verifying correct operation of protective devices including MCBs, RCDs and fuses',
+    description:
+      'Testing and verifying correct operation of protective devices including MCBs, RCDs and fuses',
     icon: Shield,
   },
 ];
@@ -40,7 +44,8 @@ const sections = [
 export default function InspectionTestingModule7() {
   useSEO({
     title: 'Module 7: Polarity & Functional Testing | Inspection & Testing',
-    description: 'Learn polarity testing methods, single-phase and three-phase verification, switchgear functional testing, and protective device operation verification.',
+    description:
+      'Learn polarity testing methods, single-phase and three-phase verification, switchgear functional testing, and protective device operation verification.',
   });
 
   return (
@@ -74,7 +79,8 @@ export default function InspectionTestingModule7() {
             Polarity & Functional Testing
           </h1>
           <p className="text-white/80 text-sm sm:text-base">
-            Master polarity verification and functional testing techniques to ensure all electrical equipment operates safely and correctly
+            Master polarity verification and functional testing techniques to ensure all electrical
+            equipment operates safely and correctly
           </p>
         </div>
 

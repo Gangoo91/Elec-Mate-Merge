@@ -1,87 +1,122 @@
-import { ArrowLeft, Zap, AlertTriangle, FileText, Shield, Target } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, Zap, AlertTriangle, FileText, Shield, Target } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section3_1 = () => {
   useSEO(
-    "Introduction to Test Instruments - Level 2 Electrical Installation",
-    "Multimeter, IR tester, and continuity tester fundamentals for electrical testing"
+    'Introduction to Test Instruments - Level 2 Electrical Installation',
+    'Multimeter, IR tester, and continuity tester fundamentals for electrical testing'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "Which instrument measures AC and DC voltage?",
-      options: ["Continuity tester", "IR tester", "Multimeter", "Insulation tester"],
+      question: 'Which instrument measures AC and DC voltage?',
+      options: ['Continuity tester', 'IR tester', 'Multimeter', 'Insulation tester'],
       correctAnswer: 2,
-      explanation: "A multimeter is designed to measure AC and DC voltage, along with current and resistance."
+      explanation:
+        'A multimeter is designed to measure AC and DC voltage, along with current and resistance.',
     },
     {
       id: 2,
-      question: "What unit is insulation resistance measured in?",
-      options: ["Ohms", "Megaohms", "Volts", "Amperes"],
+      question: 'What unit is insulation resistance measured in?',
+      options: ['Ohms', 'Megaohms', 'Volts', 'Amperes'],
       correctAnswer: 1,
-      explanation: "Insulation resistance is measured in megaohms (MΩ) due to the high resistance values involved."
+      explanation:
+        'Insulation resistance is measured in megaohms (MΩ) due to the high resistance values involved.',
     },
     {
       id: 3,
-      question: "Before using an IR tester, what must you do?",
-      options: ["Switch circuit on", "Disconnect and isolate circuit", "Reduce test voltage", "Connect all equipment"],
+      question: 'Before using an IR tester, what must you do?',
+      options: [
+        'Switch circuit on',
+        'Disconnect and isolate circuit',
+        'Reduce test voltage',
+        'Connect all equipment',
+      ],
       correctAnswer: 1,
-      explanation: "The circuit must be disconnected and isolated before IR testing to prevent damage to equipment and ensure safety."
+      explanation:
+        'The circuit must be disconnected and isolated before IR testing to prevent damage to equipment and ensure safety.',
     },
     {
       id: 4,
-      question: "A continuity test shows 0 Ω. What does this mean?",
-      options: ["Circuit is broken", "Good continuity", "High resistance fault", "Insulation failure"],
+      question: 'A continuity test shows 0 Ω. What does this mean?',
+      options: [
+        'Circuit is broken',
+        'Good continuity',
+        'High resistance fault',
+        'Insulation failure',
+      ],
       correctAnswer: 1,
-      explanation: "A reading of 0 Ω (or very close to 0) indicates good continuity with no breaks in the circuit."
+      explanation:
+        'A reading of 0 Ω (or very close to 0) indicates good continuity with no breaks in the circuit.',
     },
     {
       id: 5,
-      question: "What is the typical insulation resistance value required by BS 7671 for new installations?",
-      options: ["0.5 MΩ", "1 MΩ", "10 MΩ", "100 MΩ"],
+      question:
+        'What is the typical insulation resistance value required by BS 7671 for new installations?',
+      options: ['0.5 MΩ', '1 MΩ', '10 MΩ', '100 MΩ'],
       correctAnswer: 1,
-      explanation: "BS 7671 requires a minimum insulation resistance of 1 MΩ for new installations."
+      explanation:
+        'BS 7671 requires a minimum insulation resistance of 1 MΩ for new installations.',
     },
     {
       id: 6,
-      question: "Why should instruments comply with GS38?",
-      options: ["To save battery life", "To ensure safety", "To improve insulation resistance", "To reduce testing time"],
+      question: 'Why should instruments comply with GS38?',
+      options: [
+        'To save battery life',
+        'To ensure safety',
+        'To improve insulation resistance',
+        'To reduce testing time',
+      ],
       correctAnswer: 1,
-      explanation: "GS38 compliance ensures safety through requirements like shrouded probes and fused leads."
+      explanation:
+        'GS38 compliance ensures safety through requirements like shrouded probes and fused leads.',
     },
     {
       id: 7,
-      question: "Which instrument is used to verify polarity at a socket outlet?",
-      options: ["Multimeter", "Continuity tester", "IR tester", "Earth loop tester"],
+      question: 'Which instrument is used to verify polarity at a socket outlet?',
+      options: ['Multimeter', 'Continuity tester', 'IR tester', 'Earth loop tester'],
       correctAnswer: 0,
-      explanation: "A multimeter can measure voltage and verify polarity at socket outlets."
+      explanation: 'A multimeter can measure voltage and verify polarity at socket outlets.',
     },
     {
       id: 8,
-      question: "What happens if you fail to zero a continuity tester?",
-      options: ["Nothing changes", "Results will include lead resistance", "The tester will not work", "Battery life is reduced"],
+      question: 'What happens if you fail to zero a continuity tester?',
+      options: [
+        'Nothing changes',
+        'Results will include lead resistance',
+        'The tester will not work',
+        'Battery life is reduced',
+      ],
       correctAnswer: 1,
-      explanation: "Failing to zero the continuity tester means the lead resistance will be included in the results, affecting accuracy."
+      explanation:
+        'Failing to zero the continuity tester means the lead resistance will be included in the results, affecting accuracy.',
     },
     {
       id: 9,
-      question: "Which test instrument applies high DC voltage to a circuit?",
-      options: ["Continuity tester", "Multimeter", "Insulation resistance tester", "Current clamp"],
+      question: 'Which test instrument applies high DC voltage to a circuit?',
+      options: ['Continuity tester', 'Multimeter', 'Insulation resistance tester', 'Current clamp'],
       correctAnswer: 2,
-      explanation: "The insulation resistance tester applies high DC voltage (250V, 500V, or 1000V) to test insulation quality."
+      explanation:
+        'The insulation resistance tester applies high DC voltage (250V, 500V, or 1000V) to test insulation quality.',
     },
     {
       id: 10,
-      question: "Why is it important to use the correct range on a multimeter?",
-      options: ["To make the numbers look smaller", "To protect the meter and get accurate readings", "To avoid checking resistance", "To save battery power"],
+      question: 'Why is it important to use the correct range on a multimeter?',
+      options: [
+        'To make the numbers look smaller',
+        'To protect the meter and get accurate readings',
+        'To avoid checking resistance',
+        'To save battery power',
+      ],
       correctAnswer: 1,
-      explanation: "Using the correct range protects the meter from damage and ensures accurate, readable measurements."
-    }
+      explanation:
+        'Using the correct range protects the meter from damage and ensures accurate, readable measurements.',
+    },
   ];
 
   return (
@@ -138,9 +173,15 @@ const Module6Section3_1 = () => {
               <div>
                 <p className="font-medium text-white mb-2">Spot / Use / Check</p>
                 <ul className="space-y-1.5">
-                  <li><strong>Spot:</strong> Wrong instrument, non-compliant probes</li>
-                  <li><strong>Use:</strong> Multimeter for voltage; IR tester for insulation</li>
-                  <li><strong>Check:</strong> Calibration certificates; GS38 markings</li>
+                  <li>
+                    <strong>Spot:</strong> Wrong instrument, non-compliant probes
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Multimeter for voltage; IR tester for insulation
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Calibration certificates; GS38 markings
+                  </li>
                 </ul>
               </div>
             </div>
@@ -154,10 +195,15 @@ const Module6Section3_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Electrical installation work relies on precise measurement and verification to ensure systems are safe, compliant, and functional. Test instruments are the foundation of this process, enabling electricians to check voltage, resistance, insulation quality, and continuity of circuits.
+                Electrical installation work relies on precise measurement and verification to
+                ensure systems are safe, compliant, and functional. Test instruments are the
+                foundation of this process, enabling electricians to check voltage, resistance,
+                insulation quality, and continuity of circuits.
               </p>
               <p>
-                In this subsection, we will introduce three key instruments: the Multimeter, Insulation Resistance (IR) Tester, and the Continuity Tester. These tools form the basis of electrical testing for apprentices and practicing electricians.
+                In this subsection, we will introduce three key instruments: the Multimeter,
+                Insulation Resistance (IR) Tester, and the Continuity Tester. These tools form the
+                basis of electrical testing for apprentices and practicing electricians.
               </p>
             </div>
           </section>
@@ -168,7 +214,9 @@ const Module6Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">By the end of this subsection, you will be able to:</p>
+            <p className="text-white/80 mb-4">
+              By the end of this subsection, you will be able to:
+            </p>
             <ul className="list-disc pl-6 space-y-2 text-white/80">
               <li>Describe the purpose of a multimeter, IR tester, and continuity tester.</li>
               <li>Identify the main parts and functions of each instrument.</li>
@@ -186,7 +234,9 @@ const Module6Section3_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                The multimeter is the most versatile electrical test instrument, capable of measuring multiple electrical parameters essential for installation and maintenance work.
+                The multimeter is the most versatile electrical test instrument, capable of
+                measuring multiple electrical parameters essential for installation and maintenance
+                work.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
@@ -213,7 +263,9 @@ const Module6Section3_1 = () => {
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
                 <p className="font-medium text-amber-400 mb-2">Critical Limitation</p>
                 <p className="text-sm">
-                  Multimeters are NOT suitable for insulation resistance checks as they cannot apply the high voltages (250V-1000V) required for proper insulation testing. Maximum test voltage is typically only 3-9V DC.
+                  Multimeters are NOT suitable for insulation resistance checks as they cannot apply
+                  the high voltages (250V-1000V) required for proper insulation testing. Maximum
+                  test voltage is typically only 3-9V DC.
                 </p>
               </div>
             </div>
@@ -222,7 +274,7 @@ const Module6Section3_1 = () => {
           <InlineCheck
             id="multimeter-check"
             question="What instrument would you use to measure current in a live circuit?"
-            options={["Continuity tester", "IR tester", "Multimeter", "Insulation tester"]}
+            options={['Continuity tester', 'IR tester', 'Multimeter', 'Insulation tester']}
             correctIndex={2}
             explanation="A multimeter is the appropriate instrument for measuring current in live circuits, with proper safety precautions."
           />
@@ -235,7 +287,9 @@ const Module6Section3_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                The IR tester is a specialised instrument designed to assess the quality and integrity of electrical insulation by applying high DC voltage and measuring the resulting resistance.
+                The IR tester is a specialised instrument designed to assess the quality and
+                integrity of electrical insulation by applying high DC voltage and measuring the
+                resulting resistance.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
@@ -261,7 +315,9 @@ const Module6Section3_1 = () => {
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-red-400 mb-2">Critical Safety Protocol</p>
                 <p className="text-sm">
-                  Always ensure complete circuit isolation before IR testing. Remove all electronic equipment, LED lamps, RCD devices, and surge protectors. High test voltages WILL damage sensitive equipment.
+                  Always ensure complete circuit isolation before IR testing. Remove all electronic
+                  equipment, LED lamps, RCD devices, and surge protectors. High test voltages WILL
+                  damage sensitive equipment.
                 </p>
               </div>
             </div>
@@ -270,7 +326,12 @@ const Module6Section3_1 = () => {
           <InlineCheck
             id="ir-tester-check"
             question="What does a reading of 0.1 Ω on a continuity tester indicate?"
-            options={["Circuit is broken", "Good continuity - very low resistance", "High resistance fault", "Insulation failure"]}
+            options={[
+              'Circuit is broken',
+              'Good continuity - very low resistance',
+              'High resistance fault',
+              'Insulation failure',
+            ]}
             correctIndex={1}
             explanation="A reading of 0.1 Ω indicates very good continuity with minimal resistance in the circuit path."
           />
@@ -283,7 +344,9 @@ const Module6Section3_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                The continuity tester verifies that electrical conductors form complete, unbroken paths with minimal resistance, essential for proper circuit operation and safety systems.
+                The continuity tester verifies that electrical conductors form complete, unbroken
+                paths with minimal resistance, essential for proper circuit operation and safety
+                systems.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
@@ -309,7 +372,9 @@ const Module6Section3_1 = () => {
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
                 <p className="font-medium text-blue-400 mb-2">Calibration and Accuracy</p>
                 <p className="text-sm">
-                  Always zero the continuity tester before each series of measurements to eliminate lead resistance. Use short, low-resistance test leads and maintain good contact pressure for accurate results.
+                  Always zero the continuity tester before each series of measurements to eliminate
+                  lead resistance. Use short, low-resistance test leads and maintain good contact
+                  pressure for accurate results.
                 </p>
               </div>
             </div>
@@ -318,7 +383,12 @@ const Module6Section3_1 = () => {
           <InlineCheck
             id="ir-safety-check"
             question="Why must sensitive equipment be disconnected before using an IR tester?"
-            options={["To save battery", "High voltage can damage sensitive equipment", "To get faster results", "To reduce test time"]}
+            options={[
+              'To save battery',
+              'High voltage can damage sensitive equipment',
+              'To get faster results',
+              'To reduce test time',
+            ]}
             correctIndex={1}
             explanation="IR testers apply high DC voltages (250V-1000V) that can damage sensitive electronic equipment, so it must be disconnected before testing."
           />
@@ -363,12 +433,19 @@ const Module6Section3_1 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="text-white/80 mb-4">
-                An apprentice electrician is asked to test a ring final circuit in a new domestic property. First, they use a continuity tester to verify the ring is complete by measuring R1+R2 from the consumer unit to each socket. They then use the IR tester to confirm insulation resistance exceeds 1 MΩ at 500V DC. Finally, they use a multimeter to check voltage at each socket outlet, verifying 230V ±10% and correct polarity before handover.
+                An apprentice electrician is asked to test a ring final circuit in a new domestic
+                property. First, they use a continuity tester to verify the ring is complete by
+                measuring R1+R2 from the consumer unit to each socket. They then use the IR tester
+                to confirm insulation resistance exceeds 1 MΩ at 500V DC. Finally, they use a
+                multimeter to check voltage at each socket outlet, verifying 230V ±10% and correct
+                polarity before handover.
               </p>
               <div className="grid sm:grid-cols-3 gap-3 mt-4">
                 <div className="p-3 bg-white/5 rounded border-l-2 border-amber-500/50">
                   <p className="font-medium text-white mb-1">Continuity Testing</p>
-                  <p className="text-xs text-white/70">Verified ring integrity using R1+R2 method</p>
+                  <p className="text-xs text-white/70">
+                    Verified ring integrity using R1+R2 method
+                  </p>
                 </div>
                 <div className="p-3 bg-white/5 rounded border-l-2 border-amber-500/50">
                   <p className="font-medium text-white mb-1">Insulation Testing</p>
@@ -390,16 +467,32 @@ const Module6Section3_1 = () => {
             </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-                <p className="font-medium text-white mb-2">Q: Can a multimeter test insulation resistance?</p>
-                <p className="text-sm text-white/80">A: No. A dedicated insulation resistance tester must be used as multimeters cannot apply the high voltages required.</p>
+                <p className="font-medium text-white mb-2">
+                  Q: Can a multimeter test insulation resistance?
+                </p>
+                <p className="text-sm text-white/80">
+                  A: No. A dedicated insulation resistance tester must be used as multimeters cannot
+                  apply the high voltages required.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-                <p className="font-medium text-white mb-2">Q: Why do we zero a continuity tester?</p>
-                <p className="text-sm text-white/80">A: To eliminate lead resistance and ensure accurate results by compensating for the resistance of the test leads themselves.</p>
+                <p className="font-medium text-white mb-2">
+                  Q: Why do we zero a continuity tester?
+                </p>
+                <p className="text-sm text-white/80">
+                  A: To eliminate lead resistance and ensure accurate results by compensating for
+                  the resistance of the test leads themselves.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-                <p className="font-medium text-white mb-2">Q: What's the difference between a continuity tester and a multimeter?</p>
-                <p className="text-sm text-white/80">A: A continuity tester is specialised for checking unbroken circuits, while a multimeter has broader applications including voltage, resistance, and current measurements.</p>
+                <p className="font-medium text-white mb-2">
+                  Q: What's the difference between a continuity tester and a multimeter?
+                </p>
+                <p className="text-sm text-white/80">
+                  A: A continuity tester is specialised for checking unbroken circuits, while a
+                  multimeter has broader applications including voltage, resistance, and current
+                  measurements.
+                </p>
               </div>
             </div>
           </section>
@@ -407,7 +500,9 @@ const Module6Section3_1 = () => {
           {/* Pocket Guide */}
           <section className="mb-10">
             <div className="p-5 rounded-lg bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border border-elec-yellow/30">
-              <h2 className="text-lg font-semibold text-white mb-4">Pocket Guide – Test Instruments</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">
+                Pocket Guide – Test Instruments
+              </h2>
               <div className="grid gap-2">
                 <div className="flex items-center gap-2">
                   <span className="text-green-500 font-bold">✅</span>
@@ -419,11 +514,15 @@ const Module6Section3_1 = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-500 font-bold">✅</span>
-                  <span className="text-white/90">Continuity Tester = Unbroken circuits, bonding, earthing.</span>
+                  <span className="text-white/90">
+                    Continuity Tester = Unbroken circuits, bonding, earthing.
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-500 font-bold">✅</span>
-                  <span className="text-white/90">Always check calibration and compliance before use.</span>
+                  <span className="text-white/90">
+                    Always check calibration and compliance before use.
+                  </span>
                 </div>
               </div>
             </div>
@@ -463,7 +562,9 @@ const Module6Section3_1 = () => {
               </div>
             </div>
             <p className="text-white/80">
-              Multimeters measure voltage, current, and resistance. Insulation Resistance Testers measure insulation quality using high DC voltage. Continuity Testers confirm unbroken paths in circuits. Correct tool selection ensures accuracy, safety, and compliance.
+              Multimeters measure voltage, current, and resistance. Insulation Resistance Testers
+              measure insulation quality using high DC voltage. Continuity Testers confirm unbroken
+              paths in circuits. Correct tool selection ensures accuracy, safety, and compliance.
             </p>
           </section>
 

@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { SubsectionProps } from './subsection1_1/types';
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Zap, CheckCircle, AlertTriangle, Info, Lightbulb } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Zap, CheckCircle, AlertTriangle, Info, Lightbulb } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
 const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
@@ -15,7 +14,8 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           Power Factor Correction and Energy Efficiency
         </h2>
         <p className="text-white">
-          Understanding power factor correction techniques and energy efficiency principles for electrical installations.
+          Understanding power factor correction techniques and energy efficiency principles for
+          electrical installations.
         </p>
       </div>
 
@@ -25,33 +25,39 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <h3 className="text-xl font-semibold mb-4">Power Factor Fundamentals</h3>
           <div className="space-y-4">
             <p>
-              Power factor is a measure of how efficiently electrical power is converted into useful work. 
-              It is defined as the ratio of real power (kW) to apparent power (kVA).
+              Power factor is a measure of how efficiently electrical power is converted into useful
+              work. It is defined as the ratio of real power (kW) to apparent power (kVA).
             </p>
-            
+
             <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4">
-              <h4 className="text-lg font-medium text-elec-yellow mb-2">Key Power Factor Concepts:</h4>
+              <h4 className="text-lg font-medium text-elec-yellow mb-2">
+                Key Power Factor Concepts:
+              </h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <strong>Unity Power Factor (1.0)</strong>: Ideal scenario where all power is used effectively
+                  <strong>Unity Power Factor (1.0)</strong>: Ideal scenario where all power is used
+                  effectively
                 </li>
                 <li>
-                  <strong>Lagging Power Factor</strong>: When current lags voltage, typical with inductive loads like motors
+                  <strong>Lagging Power Factor</strong>: When current lags voltage, typical with
+                  inductive loads like motors
                 </li>
                 <li>
-                  <strong>Leading Power Factor</strong>: When current leads voltage, typical with capacitive loads
+                  <strong>Leading Power Factor</strong>: When current leads voltage, typical with
+                  capacitive loads
                 </li>
                 <li>
-                  <strong>Poor Power Factor</strong>: Results in higher current draw, increased heat losses, and reduced system capacity
+                  <strong>Poor Power Factor</strong>: Results in higher current draw, increased heat
+                  losses, and reduced system capacity
                 </li>
               </ul>
             </div>
-            
+
             <div className="flex items-center gap-3 mt-3 bg-blue-500/10 p-3 rounded-md border border-blue-500/20">
               <Info className="h-5 w-5 text-blue-400 flex-shrink-0" />
               <p className="text-sm">
-                In the UK, electricity suppliers typically require commercial and industrial customers to maintain 
-                a power factor above 0.9 to avoid penalty charges.
+                In the UK, electricity suppliers typically require commercial and industrial
+                customers to maintain a power factor above 0.9 to avoid penalty charges.
               </p>
             </div>
           </div>
@@ -64,10 +70,10 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <h3 className="text-xl font-semibold mb-4">Power Factor Correction Techniques</h3>
           <div className="space-y-4">
             <p>
-              Power factor correction involves the installation of equipment to improve the power factor 
-              of a facility. This is typically achieved by adding capacitors to the system.
+              Power factor correction involves the installation of equipment to improve the power
+              factor of a facility. This is typically achieved by adding capacitors to the system.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
               <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4 space-y-2">
                 <div className="flex items-center gap-2">
@@ -75,25 +81,27 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <h4 className="font-medium">Fixed Power Factor Correction</h4>
                 </div>
                 <p className="text-sm">
-                  Permanently connected capacitors that provide a fixed amount of reactive power. 
+                  Permanently connected capacitors that provide a fixed amount of reactive power.
                   Suitable for installations with stable loads.
                 </p>
               </div>
-              
+
               <div className="bg-white/10 border border-elec-yellow/30 rounded-md p-4 space-y-2">
                 <div className="flex items-center gap-2">
                   <Lightbulb className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-medium">Automatic Power Factor Correction</h4>
                 </div>
                 <p className="text-sm">
-                  Utilises capacitor banks that switch in and out as required, based on real-time 
+                  Utilises capacitor banks that switch in and out as required, based on real-time
                   power factor measurements. Ideal for variable loads.
                 </p>
               </div>
             </div>
-            
+
             <div className="bg-white/10 p-4 rounded-md mt-4">
-              <h4 className="font-medium text-elec-yellow mb-2">Benefits of Power Factor Correction:</h4>
+              <h4 className="font-medium text-elec-yellow mb-2">
+                Benefits of Power Factor Correction:
+              </h4>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Reduced electricity bills by eliminating power factor penalties</li>
                 <li>Increased electrical system capacity</li>
@@ -109,13 +117,16 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       {/* Section 3: Energy Efficiency */}
       <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
-          <h3 className="text-xl font-semibold mb-4">Energy Efficiency in Electrical Installations</h3>
+          <h3 className="text-xl font-semibold mb-4">
+            Energy Efficiency in Electrical Installations
+          </h3>
           <div className="space-y-4">
             <p>
-              Beyond power factor correction, there are numerous strategies to improve the energy efficiency 
-              of electrical installations, helping to reduce electricity consumption and operating costs.
+              Beyond power factor correction, there are numerous strategies to improve the energy
+              efficiency of electrical installations, helping to reduce electricity consumption and
+              operating costs.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card className="border border-green-500/20 bg-white/10">
                 <CardContent className="pt-4">
@@ -128,7 +139,7 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </ul>
                 </CardContent>
               </Card>
-              
+
               <Card className="border border-green-500/20 bg-white/10">
                 <CardContent className="pt-4">
                   <h4 className="text-lg font-medium text-green-400 mb-2">Motor Efficiency</h4>
@@ -140,10 +151,12 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </ul>
                 </CardContent>
               </Card>
-              
+
               <Card className="border border-green-500/20 bg-white/10">
                 <CardContent className="pt-4">
-                  <h4 className="text-lg font-medium text-green-400 mb-2">Distribution Efficiency</h4>
+                  <h4 className="text-lg font-medium text-green-400 mb-2">
+                    Distribution Efficiency
+                  </h4>
                   <ul className="list-disc pl-5 space-y-1 text-sm">
                     <li>Use correctly sized conductors to minimise losses</li>
                     <li>Install high-efficiency transformers</li>
@@ -153,52 +166,57 @@ const Subsection9_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </CardContent>
               </Card>
             </div>
-            
+
             <div className="flex items-center gap-3 mt-3 bg-orange-500/10 p-3 rounded-md border border-orange-500/20">
               <AlertTriangle className="h-5 w-5 text-orange-500 flex-shrink-0" />
               <p className="text-sm">
-                From 2025, new non-domestic buildings in the UK will need to produce 27% less carbon 
-                emissions compared to current standards, making energy efficiency measures increasingly important.
+                From 2025, new non-domestic buildings in the UK will need to produce 27% less carbon
+                emissions compared to current standards, making energy efficiency measures
+                increasingly important.
               </p>
             </div>
           </div>
         </CardContent>
       </Card>
-      
+
       <Separator className="bg-elec-yellow/30" />
-      
+
       {/* UK Regulations and Standards */}
       <Card className="border-elec-yellow/20 bg-white/5">
         <CardContent className="pt-6">
           <h3 className="text-xl font-semibold mb-4">UK Regulations and Standards</h3>
           <div className="space-y-4">
             <p>
-              Several UK regulations and standards address energy efficiency and power quality in electrical installations:
+              Several UK regulations and standards address energy efficiency and power quality in
+              electrical installations:
             </p>
-            
+
             <ul className="list-disc pl-5 space-y-3">
               <li>
-                <strong>Part L of the Building Regulations</strong>: Sets minimum energy performance standards for new buildings 
-                and existing buildings undergoing major renovations
+                <strong>Part L of the Building Regulations</strong>: Sets minimum energy performance
+                standards for new buildings and existing buildings undergoing major renovations
               </li>
               <li>
-                <strong>BS EN 50160</strong>: Defines acceptable power quality parameters including voltage characteristics
+                <strong>BS EN 50160</strong>: Defines acceptable power quality parameters including
+                voltage characteristics
               </li>
               <li>
-                <strong>Energy Savings Opportunity Scheme (ESOS)</strong>: Mandatory energy assessment scheme for large organisations
+                <strong>Energy Savings Opportunity Scheme (ESOS)</strong>: Mandatory energy
+                assessment scheme for large organisations
               </li>
               <li>
-                <strong>Minimum Energy Efficiency Standards (MEES)</strong>: Sets minimum energy performance standards for commercial buildings
+                <strong>Minimum Energy Efficiency Standards (MEES)</strong>: Sets minimum energy
+                performance standards for commercial buildings
               </li>
             </ul>
           </div>
         </CardContent>
       </Card>
-      
+
       {/* Completion Button */}
       {!isCompleted && (
         <div className="pt-4">
-          <Button 
+          <Button
             onClick={markAsComplete}
             className="px-4 py-2 bg-elec-yellow text-elec-dark rounded hover:bg-yellow-400 transition-colors"
           >

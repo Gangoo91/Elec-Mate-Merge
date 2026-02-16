@@ -1,10 +1,16 @@
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { PoolCalculationInputs } from "@/lib/swimming-pool";
-import { Waves, Thermometer, Zap, Cable } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { MobileInput } from '@/components/ui/mobile-input';
+import {
+  MobileSelect,
+  MobileSelectContent,
+  MobileSelectItem,
+  MobileSelectTrigger,
+  MobileSelectValue,
+} from '@/components/ui/mobile-select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { PoolCalculationInputs } from '@/lib/swimming-pool';
+import { Waves, Thermometer, Zap, Cable } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface PoolInputsProps {
   inputs: PoolCalculationInputs;
@@ -14,41 +20,41 @@ interface PoolInputsProps {
 
 const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
   const poolTypes = {
-    private: "Private Domestic Pool",
-    public: "Public Swimming Pool", 
-    commercial: "Commercial Pool/Spa",
-    therapy: "Therapy/Medical Pool"
+    private: 'Private Domestic Pool',
+    public: 'Public Swimming Pool',
+    commercial: 'Commercial Pool/Spa',
+    therapy: 'Therapy/Medical Pool',
   };
 
   const filtrationSystems = {
-    sand: "Sand Filter",
-    cartridge: "Cartridge Filter",
-    de: "Diatomaceous Earth (DE)"
+    sand: 'Sand Filter',
+    cartridge: 'Cartridge Filter',
+    de: 'Diatomaceous Earth (DE)',
   };
 
   const heatingTypes = {
-    electric: "Electric Heater",
-    gas: "Gas Heater",
-    'heat-pump': "Heat Pump",
-    solar: "Solar Heating"
+    electric: 'Electric Heater',
+    gas: 'Gas Heater',
+    'heat-pump': 'Heat Pump',
+    solar: 'Solar Heating',
   };
 
   const earthingSystems = {
-    'TN-S': "TN-S (Separate neutral and earth)",
-    'TN-C-S': "TN-C-S (PME/CNE)",
-    'TT': "TT (Earth electrode)"
+    'TN-S': 'TN-S (Separate neutral and earth)',
+    'TN-C-S': 'TN-C-S (PME/CNE)',
+    TT: 'TT (Earth electrode)',
   };
 
   const installationMethods = {
-    underground: "Underground (Direct burial/Duct)",
-    overhead: "Overhead (Catenary wire)",
-    indoor: "Indoor (Through building)"
+    underground: 'Underground (Direct burial/Duct)',
+    overhead: 'Overhead (Catenary wire)',
+    indoor: 'Indoor (Through building)',
   };
 
   const zones = {
-    zone0: "Zone 0 (Inside pool/fountain)",
-    zone1: "Zone 1 (2m around pool edge)",
-    zone2: "Zone 2 (1.5m beyond zone 1)"
+    zone0: 'Zone 0 (Inside pool/fountain)',
+    zone1: 'Zone 1 (2m around pool edge)',
+    zone2: 'Zone 2 (1.5m beyond zone 1)',
   };
 
   return (
@@ -59,15 +65,20 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
           <Waves className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base lg:text-lg font-semibold text-white">Pool Details</h3>
         </div>
-        
+
         <div className="space-y-4">
-          <MobileSelect value={inputs.poolType} onValueChange={(value) => onInputChange('poolType', value)}>
+          <MobileSelect
+            value={inputs.poolType}
+            onValueChange={(value) => onInputChange('poolType', value)}
+          >
             <MobileSelectTrigger label="Pool Type">
               <MobileSelectValue />
             </MobileSelectTrigger>
             <MobileSelectContent>
               {Object.entries(poolTypes).map(([key, type]) => (
-                <MobileSelectItem key={key} value={key}>{type}</MobileSelectItem>
+                <MobileSelectItem key={key} value={key}>
+                  {type}
+                </MobileSelectItem>
               ))}
             </MobileSelectContent>
           </MobileSelect>
@@ -133,11 +144,11 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
           <Zap className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base lg:text-lg font-semibold text-white">Electrical Loads</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <MobileSelect 
-              value={(inputs.heaterPower / 1000).toString()} 
+            <MobileSelect
+              value={(inputs.heaterPower / 1000).toString()}
               onValueChange={(value) => onInputChange('heaterPower', parseFloat(value) * 1000)}
             >
               <MobileSelectTrigger label="Pool Heater Power">
@@ -154,8 +165,8 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
               </MobileSelectContent>
             </MobileSelect>
 
-            <MobileSelect 
-              value={(inputs.pumpPower / 1000).toString()} 
+            <MobileSelect
+              value={(inputs.pumpPower / 1000).toString()}
               onValueChange={(value) => onInputChange('pumpPower', parseFloat(value) * 1000)}
             >
               <MobileSelectTrigger label="Pump Motor Power">
@@ -173,8 +184,8 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
             </MobileSelect>
           </div>
 
-          <MobileSelect 
-            value={(inputs.lighting / 1000).toString()} 
+          <MobileSelect
+            value={(inputs.lighting / 1000).toString()}
             onValueChange={(value) => onInputChange('lighting', parseFloat(value) * 1000)}
           >
             <MobileSelectTrigger label="Pool Lighting">
@@ -192,46 +203,56 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
           </MobileSelect>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <MobileSelect value={inputs.filtrationSystem} onValueChange={(value) => onInputChange('filtrationSystem', value)}>
+            <MobileSelect
+              value={inputs.filtrationSystem}
+              onValueChange={(value) => onInputChange('filtrationSystem', value)}
+            >
               <MobileSelectTrigger label="Filtration System">
                 <MobileSelectValue />
               </MobileSelectTrigger>
               <MobileSelectContent>
                 {Object.entries(filtrationSystems).map(([key, type]) => (
-                  <MobileSelectItem key={key} value={key}>{type}</MobileSelectItem>
+                  <MobileSelectItem key={key} value={key}>
+                    {type}
+                  </MobileSelectItem>
                 ))}
               </MobileSelectContent>
             </MobileSelect>
 
-            <MobileSelect value={inputs.heatingType} onValueChange={(value) => onInputChange('heatingType', value)}>
+            <MobileSelect
+              value={inputs.heatingType}
+              onValueChange={(value) => onInputChange('heatingType', value)}
+            >
               <MobileSelectTrigger label="Heating Type">
                 <MobileSelectValue />
               </MobileSelectTrigger>
               <MobileSelectContent>
                 {Object.entries(heatingTypes).map(([key, type]) => (
-                  <MobileSelectItem key={key} value={key}>{type}</MobileSelectItem>
+                  <MobileSelectItem key={key} value={key}>
+                    {type}
+                  </MobileSelectItem>
                 ))}
               </MobileSelectContent>
             </MobileSelect>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Badge 
-              variant={inputs.hasUnderwaterLighting ? "default" : "outline"}
+            <Badge
+              variant={inputs.hasUnderwaterLighting ? 'default' : 'outline'}
               className={`cursor-pointer text-sm px-3 py-2 ${inputs.hasUnderwaterLighting ? 'bg-elec-yellow text-elec-dark' : ''}`}
               onClick={() => onInputChange('hasUnderwaterLighting', !inputs.hasUnderwaterLighting)}
             >
               Underwater Lighting
             </Badge>
-            <Badge 
-              variant={inputs.hasPoolCover ? "default" : "outline"}
+            <Badge
+              variant={inputs.hasPoolCover ? 'default' : 'outline'}
               className={`cursor-pointer text-sm px-3 py-2 ${inputs.hasPoolCover ? 'bg-elec-yellow text-elec-dark' : ''}`}
               onClick={() => onInputChange('hasPoolCover', !inputs.hasPoolCover)}
             >
               Pool Cover
             </Badge>
-            <Badge 
-              variant={inputs.hasEmergencyStop ? "default" : "outline"}
+            <Badge
+              variant={inputs.hasEmergencyStop ? 'default' : 'outline'}
               className={`cursor-pointer text-sm px-3 py-2 ${inputs.hasEmergencyStop ? 'bg-elec-yellow text-elec-dark' : ''}`}
               onClick={() => onInputChange('hasEmergencyStop', !inputs.hasEmergencyStop)}
             >
@@ -247,10 +268,13 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
           <Cable className="h-5 w-5 text-elec-yellow" />
           <h3 className="text-base lg:text-lg font-semibold text-white">Installation Details</h3>
         </div>
-        
+
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <MobileSelect value={inputs.supplyVoltage.toString()} onValueChange={(value) => onInputChange('supplyVoltage', parseInt(value))}>
+            <MobileSelect
+              value={inputs.supplyVoltage.toString()}
+              onValueChange={(value) => onInputChange('supplyVoltage', parseInt(value))}
+            >
               <MobileSelectTrigger label="Supply Voltage">
                 <MobileSelectValue />
               </MobileSelectTrigger>
@@ -260,37 +284,52 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
               </MobileSelectContent>
             </MobileSelect>
 
-            <MobileSelect value={inputs.earthingSystem} onValueChange={(value) => onInputChange('earthingSystem', value)}>
+            <MobileSelect
+              value={inputs.earthingSystem}
+              onValueChange={(value) => onInputChange('earthingSystem', value)}
+            >
               <MobileSelectTrigger label="Earthing System">
                 <MobileSelectValue />
               </MobileSelectTrigger>
               <MobileSelectContent>
                 {Object.entries(earthingSystems).map(([key, type]) => (
-                  <MobileSelectItem key={key} value={key}>{type}</MobileSelectItem>
+                  <MobileSelectItem key={key} value={key}>
+                    {type}
+                  </MobileSelectItem>
                 ))}
               </MobileSelectContent>
             </MobileSelect>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <MobileSelect value={inputs.installationMethod} onValueChange={(value) => onInputChange('installationMethod', value)}>
+            <MobileSelect
+              value={inputs.installationMethod}
+              onValueChange={(value) => onInputChange('installationMethod', value)}
+            >
               <MobileSelectTrigger label="Installation Method">
                 <MobileSelectValue />
               </MobileSelectTrigger>
               <MobileSelectContent>
                 {Object.entries(installationMethods).map(([key, type]) => (
-                  <MobileSelectItem key={key} value={key}>{type}</MobileSelectItem>
+                  <MobileSelectItem key={key} value={key}>
+                    {type}
+                  </MobileSelectItem>
                 ))}
               </MobileSelectContent>
             </MobileSelect>
 
-            <MobileSelect value={inputs.zone} onValueChange={(value) => onInputChange('zone', value)}>
+            <MobileSelect
+              value={inputs.zone}
+              onValueChange={(value) => onInputChange('zone', value)}
+            >
               <MobileSelectTrigger label="Installation Zone">
                 <MobileSelectValue />
               </MobileSelectTrigger>
               <MobileSelectContent>
                 {Object.entries(zones).map(([key, description]) => (
-                  <MobileSelectItem key={key} value={key}>{description}</MobileSelectItem>
+                  <MobileSelectItem key={key} value={key}>
+                    {description}
+                  </MobileSelectItem>
                 ))}
               </MobileSelectContent>
             </MobileSelect>
@@ -302,7 +341,9 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
               type="text"
               inputMode="decimal"
               value={inputs.ambientTemperature ?? ''}
-              onChange={(e) => onInputChange('ambientTemperature', parseFloat(e.target.value) || 20)}
+              onChange={(e) =>
+                onInputChange('ambientTemperature', parseFloat(e.target.value) || 20)
+              }
               placeholder="20"
               unit="°C"
               error={errors.ambientTemperature}
@@ -322,9 +363,7 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
 
       {errors.general && (
         <Alert className="border-red-500/20 bg-red-500/10">
-          <AlertDescription className="text-red-200">
-            {errors.general}
-          </AlertDescription>
+          <AlertDescription className="text-red-200">{errors.general}</AlertDescription>
         </Alert>
       )}
     </div>

@@ -1,45 +1,42 @@
-import { ArrowLeft, Cable, HardHat, DoorOpen, RefreshCw } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Cable, HardHat, DoorOpen, RefreshCw } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Electrical Materials & Cable Drums",
+    title: 'Electrical Materials & Cable Drums',
     icon: Cable,
     description:
-      "Cable drums, cable trays, distribution boards, transformers, and heavy electrical equipment",
+      'Cable drums, cable trays, distribution boards, transformers, and heavy electrical equipment',
   },
   {
     id: 2,
-    title: "Working in Construction Environments",
+    title: 'Working in Construction Environments',
     icon: HardHat,
-    description:
-      "Site conditions, PPE constraints, weather effects, and uneven ground",
+    description: 'Site conditions, PPE constraints, weather effects, and uneven ground',
   },
   {
     id: 3,
-    title: "Handling in Confined & Restricted Spaces",
+    title: 'Handling in Confined & Restricted Spaces',
     icon: DoorOpen,
-    description:
-      "Loft work, ceiling voids, under-floor access, risers, and restricted headroom",
+    description: 'Loft work, ceiling voids, under-floor access, risers, and restricted headroom',
   },
   {
     id: 4,
-    title: "Repetitive Handling & Cumulative Risk",
+    title: 'Repetitive Handling & Cumulative Risk',
     icon: RefreshCw,
-    description:
-      "Repetitive strain, fatigue management, job rotation, and micro-breaks",
+    description: 'Repetitive strain, fatigue management, job rotation, and micro-breaks',
   },
 ];
 
 export default function ManualHandlingModule4() {
   useSEO({
-    title: "Module 4: Workplace-Specific Handling | Manual Handling",
+    title: 'Module 4: Workplace-Specific Handling | Manual Handling',
     description:
-      "Handling electrical materials, construction environments, confined spaces, and managing repetitive handling and cumulative risk.",
+      'Handling electrical materials, construction environments, confined spaces, and managing repetitive handling and cumulative risk.',
   });
 
   return (
@@ -66,9 +63,7 @@ export default function ManualHandlingModule4() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-3">
-              <span className="text-emerald-400 text-xs font-semibold">
-                MODULE 4
-              </span>
+              <span className="text-emerald-400 text-xs font-semibold">MODULE 4</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -78,8 +73,8 @@ export default function ManualHandlingModule4() {
               Workplace-Specific Handling
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Handling electrical materials, construction site conditions,
-              confined spaces, and managing repetitive handling risks
+              Handling electrical materials, construction site conditions, confined spaces, and
+              managing repetitive handling risks
             </p>
           </div>
 

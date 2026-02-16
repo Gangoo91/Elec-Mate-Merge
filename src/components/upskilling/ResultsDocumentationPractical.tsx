@@ -11,19 +11,22 @@ export const ResultsDocumentationPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6 pt-0">
-        
         {/* Exercise 1: Certificate Completion */}
         <div className="space-y-4">
-          <h3 className="text-lg sm:text-xl font-semibold text-foreground">Exercise 1: Certificate Completion</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-foreground">
+            Exercise 1: Certificate Completion
+          </h3>
           <div className="bg-[#323232] rounded-lg p-3 sm:p-4 space-y-3">
             <div className="flex items-start gap-3">
               <FileCheck className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div className="space-y-3">
-                <h4 className="text-foreground font-medium text-sm sm:text-base">Scenario: Recording Test Results</h4>
+                <h4 className="text-foreground font-medium text-sm sm:text-base">
+                  Scenario: Recording Test Results
+                </h4>
                 <p className="text-foreground text-xs sm:text-sm leading-relaxed">
                   You've tested a 32A Type B MCB circuit and obtained the following readings:
                 </p>
-                
+
                 <div className="bg-elec-dark p-3 sm:p-4 rounded-md">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="space-y-2">
@@ -49,7 +52,7 @@ export const ResultsDocumentationPractical = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3">
                   <div className="bg-green-600/10 border border-green-600/20 rounded p-3">
                     <div className="flex items-start gap-2">
@@ -73,38 +76,51 @@ export const ResultsDocumentationPractical = () => {
 
         {/* Exercise 2: Failure Investigation */}
         <div className="space-y-4">
-          <h3 className="text-lg sm:text-xl font-semibold text-foreground">Exercise 2: Investigating Failed Results</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-foreground">
+            Exercise 2: Investigating Failed Results
+          </h3>
           <div className="bg-[#323232] rounded-lg p-3 sm:p-4 space-y-3">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div className="space-y-3">
-                <h4 className="text-foreground font-medium text-sm sm:text-base">Scenario: High Loop Impedance</h4>
+                <h4 className="text-foreground font-medium text-sm sm:text-base">
+                  Scenario: High Loop Impedance
+                </h4>
                 <p className="text-foreground text-xs sm:text-sm leading-relaxed">
-                  A 16A Type B MCB circuit shows Zs = 3.2Ω (limit is 2.87Ω). What actions are required?
+                  A 16A Type B MCB circuit shows Zs = 3.2Ω (limit is 2.87Ω). What actions are
+                  required?
                 </p>
-                
+
                 <div className="bg-red-600/10 border border-red-600/20 rounded p-3">
                   <h5 className="text-red-200 font-medium mb-2 text-sm">Investigation Steps:</h5>
                   <ol className="space-y-2 text-foreground text-xs sm:text-sm">
                     <li className="flex gap-3">
-                      <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                      <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        1
+                      </span>
                       Verify measurement accuracy - retest with calibrated equipment
                     </li>
                     <li className="flex gap-3">
-                      <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                      <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        2
+                      </span>
                       Check earth connections at distribution board and outlet
                     </li>
                     <li className="flex gap-3">
-                      <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                      <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        3
+                      </span>
                       Measure Ze separately to identify contribution
                     </li>
                     <li className="flex gap-3">
-                      <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
+                      <span className="w-6 h-6 bg-red-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        4
+                      </span>
                       Record actual readings and do not certify until resolved
                     </li>
                   </ol>
                 </div>
-                
+
                 <div className="bg-yellow-600/10 border border-yellow-600/20 rounded p-3">
                   <h5 className="text-yellow-200 font-medium mb-2 text-sm">Possible Solutions:</h5>
                   <ul className="text-foreground text-xs sm:text-sm space-y-1">
@@ -122,16 +138,20 @@ export const ResultsDocumentationPractical = () => {
 
         {/* Exercise 3: Digital Documentation */}
         <div className="space-y-4">
-          <h3 className="text-lg sm:text-xl font-semibold text-foreground">Exercise 3: Digital vs Manual Recording</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-foreground">
+            Exercise 3: Digital vs Manual Recording
+          </h3>
           <div className="bg-[#323232] rounded-lg p-3 sm:p-4 space-y-3">
             <div className="flex items-start gap-3">
               <Calculator className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div className="space-y-3">
-                <h4 className="text-foreground font-medium text-sm sm:text-base">Modern Documentation Methods</h4>
+                <h4 className="text-foreground font-medium text-sm sm:text-base">
+                  Modern Documentation Methods
+                </h4>
                 <p className="text-foreground text-xs sm:text-sm leading-relaxed">
                   Compare traditional manual recording with modern digital systems:
                 </p>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-blue-600/10 border border-blue-600/20 rounded p-3">
                     <h5 className="text-blue-200 font-medium mb-2 text-sm">Manual Recording</h5>
@@ -151,7 +171,7 @@ export const ResultsDocumentationPractical = () => {
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div className="bg-green-600/10 border border-green-600/20 rounded p-3">
                     <h5 className="text-green-200 font-medium mb-2 text-sm">Digital Systems</h5>
                     <div className="space-y-2">
@@ -179,53 +199,70 @@ export const ResultsDocumentationPractical = () => {
 
         {/* Exercise 4: Time Management */}
         <div className="space-y-4">
-          <h3 className="text-lg sm:text-xl font-semibold text-foreground">Exercise 4: Efficient Documentation Workflow</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-foreground">
+            Exercise 4: Efficient Documentation Workflow
+          </h3>
           <div className="bg-[#323232] rounded-lg p-3 sm:p-4 space-y-3">
             <div className="flex items-start gap-3">
               <Clock className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div className="space-y-3">
-                <h4 className="text-foreground font-medium text-sm sm:text-base">Streamlined Recording Process</h4>
+                <h4 className="text-foreground font-medium text-sm sm:text-base">
+                  Streamlined Recording Process
+                </h4>
                 <p className="text-foreground text-xs sm:text-sm leading-relaxed">
-                  Develop an efficient workflow to minimise documentation time while maintaining accuracy:
+                  Develop an efficient workflow to minimise documentation time while maintaining
+                  accuracy:
                 </p>
-                
+
                 <div className="bg-elec-dark p-3 sm:p-4 rounded-md">
-                  <h5 className="text-elec-yellow font-medium mb-3 text-sm">Recommended Workflow:</h5>
+                  <h5 className="text-elec-yellow font-medium mb-3 text-sm">
+                    Recommended Workflow:
+                  </h5>
                   <ol className="space-y-2 text-foreground text-xs sm:text-sm">
                     <li className="flex gap-3">
-                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        1
+                      </span>
                       Pre-populate certificate details before testing
                     </li>
                     <li className="flex gap-3">
-                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        2
+                      </span>
                       Use systematic circuit numbering and labelling
                     </li>
                     <li className="flex gap-3">
-                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        3
+                      </span>
                       Record results immediately after each test
                     </li>
                     <li className="flex gap-3">
-                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
+                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        4
+                      </span>
                       Check calculations and limits before moving on
                     </li>
                     <li className="flex gap-3">
-                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
+                      <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
+                        5
+                      </span>
                       Complete certificate review before leaving site
                     </li>
                   </ol>
                 </div>
-                
+
                 <div className="bg-green-600/10 border border-green-600/20 rounded p-3">
                   <p className="text-foreground text-xs sm:text-sm">
-                    <strong>Time-saving tip:</strong> Use standard templates and checklists to ensure nothing is missed 
-                    and reduce the mental load of remembering all requirements.
+                    <strong>Time-saving tip:</strong> Use standard templates and checklists to
+                    ensure nothing is missed and reduce the mental load of remembering all
+                    requirements.
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

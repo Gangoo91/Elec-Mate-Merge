@@ -3,10 +3,10 @@ import { FileText, CheckCircle } from 'lucide-react';
 
 export const BMSModule7Section1Summary = () => {
   const keyPoints = [
-    "IO lists capture every input/output and form the backbone of BMS design",
-    "Schematics show physical wiring and control sequences between devices", 
-    "Network topology defines how devices communicate (bus, star, hybrid)",
-    "Electricians support design integrity by following documentation and flagging inconsistencies"
+    'IO lists capture every input/output and form the backbone of BMS design',
+    'Schematics show physical wiring and control sequences between devices',
+    'Network topology defines how devices communicate (bus, star, hybrid)',
+    'Electricians support design integrity by following documentation and flagging inconsistencies',
   ];
 
   return (
@@ -19,7 +19,8 @@ export const BMSModule7Section1Summary = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p className="text-foreground mb-4">
-          This section covered the essential design phase requirements for successful BMS installations:
+          This section covered the essential design phase requirements for successful BMS
+          installations:
         </p>
         <ul className="space-y-3">
           {keyPoints.map((point, index) => (
@@ -31,8 +32,9 @@ export const BMSModule7Section1Summary = () => {
         </ul>
         <div className="bg-gradient-to-r from-elec-yellow/10 to-orange-500/10 border border-elec-yellow/20 rounded-lg p-4 mt-4">
           <p className="text-sm text-foreground">
-            <strong>Remember:</strong> Good design avoids missed devices, communication failures, and commissioning delays. 
-            Taking time to get design documentation right will prevent costly problems and ensure project success.
+            <strong>Remember:</strong> Good design avoids missed devices, communication failures,
+            and commissioning delays. Taking time to get design documentation right will prevent
+            costly problems and ensure project success.
           </p>
         </div>
       </CardContent>

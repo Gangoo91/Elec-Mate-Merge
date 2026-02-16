@@ -24,16 +24,8 @@ export const FieldTooltip: React.FC<FieldTooltipProps> = ({ content, regulation,
         <TooltipContent side="right" className="max-w-xs">
           <div className="space-y-2 text-xs">
             <p>{content}</p>
-            {regulation && (
-              <p className="text-yellow-500 font-medium">
-                BS 7671: {regulation}
-              </p>
-            )}
-            {example && (
-              <p className="text-muted-foreground italic">
-                Example: {example}
-              </p>
-            )}
+            {regulation && <p className="text-yellow-500 font-medium">BS 7671: {regulation}</p>}
+            {example && <p className="text-muted-foreground italic">Example: {example}</p>}
           </div>
         </TooltipContent>
       </Tooltip>

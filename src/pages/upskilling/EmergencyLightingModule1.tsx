@@ -7,28 +7,28 @@ const EmergencyLightingModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "Purpose and Legal Framework",
+      title: 'Purpose and Legal Framework',
       icon: Scale,
-      description: "Legal requirements and regulatory framework"
+      description: 'Legal requirements and regulatory framework',
     },
     {
       id: 2,
-      title: "Locations Where Emergency Lighting is Required",
+      title: 'Locations Where Emergency Lighting is Required',
       icon: MapPin,
-      description: "Building types and mandatory installation areas"
+      description: 'Building types and mandatory installation areas',
     },
     {
       id: 3,
-      title: "Types of Emergency Lighting Systems",
+      title: 'Types of Emergency Lighting Systems',
       icon: BookOpen,
-      description: "System categories and configuration options"
+      description: 'System categories and configuration options',
     },
     {
       id: 4,
-      title: "Overview of BS 5266 and Related Standards",
+      title: 'Overview of BS 5266 and Related Standards',
       icon: FileCheck,
-      description: "Key standards and compliance requirements"
-    }
+      description: 'Key standards and compliance requirements',
+    },
   ];
 
   return (

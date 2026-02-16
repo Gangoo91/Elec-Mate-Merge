@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface AutocompleteSuggestion {
   name: string;
@@ -24,11 +24,7 @@ export function useMaterialsAutocomplete(
   query: string,
   options: UseMaterialsAutocompleteOptions = {}
 ): UseMaterialsAutocompleteResult {
-  const {
-    debounceMs = 150,
-    minChars = 2,
-    maxSuggestions = 8
-  } = options;
+  const { debounceMs = 150, minChars = 2, maxSuggestions = 8 } = options;
 
   const [suggestions, setSuggestions] = useState<AutocompleteSuggestion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,8 +78,8 @@ export function useMaterialsAutocomplete(
           {
             body: {
               query: trimmedQuery,
-              limit: maxSuggestions
-            }
+              limit: maxSuggestions,
+            },
           }
         );
 
@@ -132,6 +128,6 @@ export function useMaterialsAutocomplete(
     suggestions,
     isLoading,
     error,
-    clearSuggestions
+    clearSuggestions,
   };
 }

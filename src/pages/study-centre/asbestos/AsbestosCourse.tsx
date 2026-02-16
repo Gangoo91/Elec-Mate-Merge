@@ -1,65 +1,84 @@
-import { ArrowLeft, Microscope, Scale, Search, HardHat, Siren, GraduationCap, AlertTriangle, BookOpen, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Microscope,
+  Scale,
+  Search,
+  HardHat,
+  Siren,
+  GraduationCap,
+  AlertTriangle,
+  BookOpen,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "What Is Asbestos?",
-    description: "History, fibre types, where asbestos is found, and the devastating health effects of exposure",
+    title: 'What Is Asbestos?',
+    description:
+      'History, fibre types, where asbestos is found, and the devastating health effects of exposure',
     icon: Microscope,
-    duration: "30 mins",
-    link: "../asbestos-awareness-module-1",
+    duration: '30 mins',
+    link: '../asbestos-awareness-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Legislation & the Duty to Manage",
-    description: "Control of Asbestos Regulations 2012, Regulation 4 duties, surveys, and the asbestos register",
+    title: 'Legislation & the Duty to Manage',
+    description:
+      'Control of Asbestos Regulations 2012, Regulation 4 duties, surveys, and the asbestos register',
     icon: Scale,
-    duration: "30 mins",
-    link: "../asbestos-awareness-module-2",
+    duration: '30 mins',
+    link: '../asbestos-awareness-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Identifying Asbestos-Containing Materials",
-    description: "Common ACMs in boards, insulation, coatings, and electrical installations — identification and presumption",
+    title: 'Identifying Asbestos-Containing Materials',
+    description:
+      'Common ACMs in boards, insulation, coatings, and electrical installations — identification and presumption',
     icon: Search,
-    duration: "30 mins",
-    link: "../asbestos-awareness-module-3",
+    duration: '30 mins',
+    link: '../asbestos-awareness-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Safe Working Practices & PPE",
-    description: "Work categories, risk assessment, RPE selection, decontamination, and controlled work techniques",
+    title: 'Safe Working Practices & PPE',
+    description:
+      'Work categories, risk assessment, RPE selection, decontamination, and controlled work techniques',
     icon: HardHat,
-    duration: "30 mins",
-    link: "../asbestos-awareness-module-4",
+    duration: '30 mins',
+    link: '../asbestos-awareness-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Emergency Procedures & Responsibilities",
-    description: "Accidental disturbance response, waste disposal, health surveillance, and legal duties",
+    title: 'Emergency Procedures & Responsibilities',
+    description:
+      'Accidental disturbance response, waste disposal, health surveillance, and legal duties',
     icon: Siren,
-    duration: "30 mins",
-    link: "../asbestos-awareness-module-5",
+    duration: '30 mins',
+    link: '../asbestos-awareness-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../asbestos-awareness-module-6",
+    duration: '30 mins',
+    link: '../asbestos-awareness-module-6',
     isExam: true,
   },
 ];
 
 export default function AsbestosCourse() {
   useSEO({
-    title: "Asbestos Awareness | General Upskilling",
-    description: "Complete asbestos awareness training covering fibre types, legislation, identification, safe working practices, emergency procedures, and mock exam preparation.",
+    title: 'Asbestos Awareness | General Upskilling',
+    description:
+      'Complete asbestos awareness training covering fibre types, legislation, identification, safe working practices, emergency procedures, and mock exam preparation.',
   });
 
   return (
@@ -96,7 +115,8 @@ export default function AsbestosCourse() {
                 Asbestos Awareness
               </h1>
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 max-w-2xl">
-                Identifying asbestos-containing materials and safe working procedures for all tradespeople
+                Identifying asbestos-containing materials and safe working procedures for all
+                tradespeople
               </p>
             </div>
           </div>

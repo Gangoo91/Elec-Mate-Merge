@@ -17,10 +17,10 @@ const DraftHeaderActions: React.FC<DraftHeaderActionsProps> = ({
   draftTimestamp,
   onLoadDraft,
   onStartNew,
-  hasUnsavedChanges = false
+  hasUnsavedChanges = false,
 }) => {
   const isMobile = useIsMobile();
-  
+
   if (!hasDraft) return null;
 
   if (isMobile) {

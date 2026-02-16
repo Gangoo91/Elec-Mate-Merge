@@ -1,30 +1,35 @@
-
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Progress } from "@/components/ui/progress";
-import { 
-  Calculator, 
-  Save, 
-  Share2, 
-  History, 
-  BookOpen, 
-  AlertTriangle, 
-  CheckCircle, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Progress } from '@/components/ui/progress';
+import {
+  Calculator,
+  Save,
+  Share2,
+  History,
+  BookOpen,
+  AlertTriangle,
+  CheckCircle,
   TrendingUp,
   Settings,
   Eye,
   EyeOff,
   RotateCcw,
-  Download
-} from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+  Download,
+} from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 import CalculatorDataManager from './CalculatorDataManager';
 import CalculatorEducationalContent from './CalculatorEducationalContent';
 
@@ -74,7 +79,7 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
   steps = [],
   onCalculate,
   showSteps = false,
-  showEducational = true
+  showEducational = true,
 }) => {
   const [inputs, setInputs] = useState<Record<string, any>>({});
   const [outputs, setOutputs] = useState<Record<string, any>>({});
@@ -86,13 +91,16 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
 
   useEffect(() => {
     // Initialize default values
-    const defaultInputs = fields.reduce((acc, field) => {
-      if (field.defaultValue !== undefined) {
-        acc[field.id] = field.defaultValue;
-      }
-      return acc;
-    }, {} as Record<string, any>);
-    
+    const defaultInputs = fields.reduce(
+      (acc, field) => {
+        if (field.defaultValue !== undefined) {
+          acc[field.id] = field.defaultValue;
+        }
+        return acc;
+      },
+      {} as Record<string, any>
+    );
+
     setInputs(defaultInputs);
   }, [fields]);
 
@@ -133,7 +141,7 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
     const errors: Record<string, string> = {};
     let isValid = true;
 
-    fields.forEach(field => {
+    fields.forEach((field) => {
       const error = validateField(field, inputs[field.id]);
       if (error) {
         errors[field.id] = error;
@@ -146,14 +154,14 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
   };
 
   const handleInputChange = (fieldId: string, value: any) => {
-    setInputs(prev => ({
+    setInputs((prev) => ({
       ...prev,
-      [fieldId]: value
+      [fieldId]: value,
     }));
 
     // Clear validation error for this field
     if (validationErrors[fieldId]) {
-      setValidationErrors(prev => {
+      setValidationErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[fieldId];
         return newErrors;
@@ -164,9 +172,9 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
   const handleCalculate = () => {
     if (!validateAllFields()) {
       toast({
-        title: "Validation Error",
-        description: "Please correct the highlighted fields before calculating.",
-        variant: "destructive"
+        title: 'Validation Error',
+        description: 'Please correct the highlighted fields before calculating.',
+        variant: 'destructive',
       });
       return;
     }
@@ -181,32 +189,35 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
         calculatorType,
         timestamp: new Date(),
         inputs: { ...inputs },
-        outputs: results
+        outputs: results,
       };
-      
-      setCalculationHistory(prev => [historyEntry, ...prev.slice(0, 9)]);
+
+      setCalculationHistory((prev) => [historyEntry, ...prev.slice(0, 9)]);
 
       toast({
-        title: "Calculation Complete",
-        description: "Results have been calculated successfully."
+        title: 'Calculation Complete',
+        description: 'Results have been calculated successfully.',
       });
     } catch (error) {
       toast({
-        title: "Calculation Error",
-        description: "An error occurred during calculation. Please check your inputs.",
-        variant: "destructive"
+        title: 'Calculation Error',
+        description: 'An error occurred during calculation. Please check your inputs.',
+        variant: 'destructive',
       });
     }
   };
 
   const handleReset = () => {
-    const defaultInputs = fields.reduce((acc, field) => {
-      if (field.defaultValue !== undefined) {
-        acc[field.id] = field.defaultValue;
-      }
-      return acc;
-    }, {} as Record<string, any>);
-    
+    const defaultInputs = fields.reduce(
+      (acc, field) => {
+        if (field.defaultValue !== undefined) {
+          acc[field.id] = field.defaultValue;
+        }
+        return acc;
+      },
+      {} as Record<string, any>
+    );
+
     setInputs(defaultInputs);
     setOutputs({});
     setValidationErrors({});
@@ -223,7 +234,7 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
       calculator: calculatorType,
       timestamp: new Date().toISOString(),
       inputs,
-      outputs
+      outputs,
     };
 
     const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
@@ -246,7 +257,7 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
           {field.label}
           {field.unit && <span className="text-sm text-muted-foreground">({field.unit})</span>}
         </Label>
-        
+
         {field.type === 'number' && (
           <Input
             id={field.id}
@@ -263,11 +274,13 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
             value={inputs[field.id] || field.defaultValue}
             onValueChange={(value) => handleInputChange(field.id, value)}
           >
-            <SelectTrigger className={`bg-elec-dark border-elec-yellow/20 ${error ? 'border-red-500' : ''}`}>
+            <SelectTrigger
+              className={`bg-elec-dark border-elec-yellow/20 ${error ? 'border-red-500' : ''}`}
+            >
               <SelectValue placeholder={field.helpText} />
             </SelectTrigger>
             <SelectContent className="bg-elec-dark border-elec-yellow/20">
-              {field.options?.map(option => (
+              {field.options?.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
@@ -329,7 +342,7 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
               </Button>
             </div>
           </div>
-          
+
           {showSteps && steps.length > 0 && (
             <div className="mt-4">
               <div className="flex justify-between items-center mb-2">
@@ -363,8 +376,8 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
                 <CardTitle>Input Parameters</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {fields.map(field => renderField(field))}
-                
+                {fields.map((field) => renderField(field))}
+
                 <div className="flex gap-2 pt-4 border-t border-elec-yellow/20">
                   <Button
                     onClick={handleCalculate}
@@ -375,17 +388,14 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
                   </Button>
                   {Object.keys(outputs).length > 0 && (
                     <>
-                      <Button
-                        variant="outline"
-                        onClick={exportResults}
-                      >
+                      <Button variant="outline" onClick={exportResults}>
                         <Download className="h-4 w-4" />
                       </Button>
                       <Button
                         variant="outline"
                         onClick={() => {
                           navigator.clipboard.writeText(JSON.stringify(outputs, null, 2));
-                          toast({ title: "Results copied to clipboard" });
+                          toast({ title: 'Results copied to clipboard' });
                         }}
                       >
                         <Share2 className="h-4 w-4" />
@@ -412,8 +422,13 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
                 ) : (
                   <div className="space-y-3">
                     {Object.entries(outputs).map(([key, value]) => (
-                      <div key={key} className="flex justify-between items-center p-3 border border-elec-yellow/20 rounded-lg">
-                        <span className="font-medium capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                      <div
+                        key={key}
+                        className="flex justify-between items-center p-3 border border-elec-yellow/20 rounded-lg"
+                      >
+                        <span className="font-medium capitalize">
+                          {key.replace(/([A-Z])/g, ' $1').trim()}
+                        </span>
                         <span className="text-elec-yellow font-mono">{value}</span>
                       </div>
                     ))}
@@ -434,23 +449,26 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
                 <div className="text-center py-8">
                   <TrendingUp className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <p className="text-muted-foreground">
-                    No calculation results available. Complete a calculation to see detailed analysis.
+                    No calculation results available. Complete a calculation to see detailed
+                    analysis.
                   </p>
                 </div>
               ) : (
                 <div className="space-y-6">
                   {/* Results Summary */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {Object.entries(outputs).slice(0, 3).map(([key, value]) => (
-                      <Card key={key} className="border-elec-yellow/10">
-                        <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-elec-yellow">{value}</div>
-                          <div className="text-sm text-muted-foreground capitalize">
-                            {key.replace(/([A-Z])/g, ' $1').trim()}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                    {Object.entries(outputs)
+                      .slice(0, 3)
+                      .map(([key, value]) => (
+                        <Card key={key} className="border-elec-yellow/10">
+                          <CardContent className="p-4 text-center">
+                            <div className="text-2xl font-bold text-elec-yellow">{value}</div>
+                            <div className="text-sm text-muted-foreground capitalize">
+                              {key.replace(/([A-Z])/g, ' $1').trim()}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
                   </div>
 
                   {/* Compliance Checks */}
@@ -459,7 +477,8 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
                     <Alert className="bg-green-500/10 border-green-500/30">
                       <CheckCircle className="h-4 w-4 text-green-400" />
                       <AlertDescription className="text-green-200">
-                        All calculated values appear to be within acceptable ranges for standard installations.
+                        All calculated values appear to be within acceptable ranges for standard
+                        installations.
                       </AlertDescription>
                     </Alert>
                   </div>
@@ -470,7 +489,9 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 p-3 border border-blue-500/30 rounded-lg bg-blue-500/10">
                         <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5" />
-                        <span className="text-sm">Consider using the next standard cable size for safety margin.</span>
+                        <span className="text-sm">
+                          Consider using the next standard cable size for safety margin.
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -482,13 +503,17 @@ const EnhancedCalculatorInterface: React.FC<EnhancedCalculatorInterfaceProps> = 
 
         <TabsContent value="data" className="mt-6">
           <CalculatorDataManager
-            currentCalculation={Object.keys(outputs).length > 0 ? {
-              id: Date.now().toString(),
-              calculatorType,
-              timestamp: new Date(),
-              inputs,
-              outputs
-            } : undefined}
+            currentCalculation={
+              Object.keys(outputs).length > 0
+                ? {
+                    id: Date.now().toString(),
+                    calculatorType,
+                    timestamp: new Date(),
+                    inputs,
+                    outputs,
+                  }
+                : undefined
+            }
             onLoadCalculation={loadCalculation}
           />
         </TabsContent>

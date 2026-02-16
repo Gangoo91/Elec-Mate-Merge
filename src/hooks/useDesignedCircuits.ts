@@ -51,7 +51,9 @@ export function useDesignedCircuits() {
   return useQuery({
     queryKey: ['designed-circuits'],
     queryFn: async (): Promise<DesignedCircuit[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase
@@ -68,15 +70,15 @@ export function useDesignedCircuits() {
       // Filter to only show circuit-designer sourced schedules
       // and parse the schedule_data
       return (data || [])
-        .filter(item => {
+        .filter((item) => {
           const scheduleData = item.schedule_data as any;
           return scheduleData?.source === 'circuit-designer';
         })
-        .map(item => ({
+        .map((item) => ({
           ...item,
-          schedule_data: item.schedule_data as DesignedCircuit['schedule_data']
+          schedule_data: item.schedule_data as DesignedCircuit['schedule_data'],
         }));
-    }
+    },
   });
 }
 
@@ -99,10 +101,10 @@ export function useDesignedCircuit(id: string) {
 
       return {
         ...data,
-        schedule_data: data.schedule_data as DesignedCircuit['schedule_data']
+        schedule_data: data.schedule_data as DesignedCircuit['schedule_data'],
       };
     },
-    enabled: !!id
+    enabled: !!id,
   });
 }
 
@@ -111,16 +113,13 @@ export function useDeleteDesignedCircuit() {
 
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('eic_schedules')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('eic_schedules').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['designed-circuits'] });
-    }
+    },
   });
 }
 
@@ -138,7 +137,7 @@ export function useUpdateDesignedCircuitStatus() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['designed-circuits'] });
-    }
+    },
   });
 }
 
@@ -149,13 +148,19 @@ export function useLinkDesignToCertificate() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ designId, certificateId }: { designId: string; certificateId: string }) => {
+    mutationFn: async ({
+      designId,
+      certificateId,
+    }: {
+      designId: string;
+      certificateId: string;
+    }) => {
       const { error } = await supabase
         .from('eic_schedules')
         .update({
           certificate_id: certificateId,
           status: 'completed',
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', designId);
 
@@ -163,7 +168,7 @@ export function useLinkDesignToCertificate() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['designed-circuits'] });
-    }
+    },
   });
 }
 
@@ -179,7 +184,7 @@ export function useArchiveDesign() {
         .from('eic_schedules')
         .update({
           status: 'archived',
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', designId);
 
@@ -187,6 +192,6 @@ export function useArchiveDesign() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['designed-circuits'] });
-    }
+    },
   });
 }

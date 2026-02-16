@@ -1,7 +1,6 @@
-
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export interface CareerProgress {
   id: string;
@@ -21,7 +20,9 @@ export const useCareerProgress = () => {
 
   const fetchProgress = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -35,9 +36,9 @@ export const useCareerProgress = () => {
     } catch (error) {
       console.error('Error fetching career progress:', error);
       toast({
-        title: "Error",
-        description: "Failed to load career progress",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to load career progress',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -46,7 +47,9 @@ export const useCareerProgress = () => {
 
   const updateProgress = async (careerPathId: string, progressData: Partial<CareerProgress>) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -62,33 +65,33 @@ export const useCareerProgress = () => {
 
       if (error) throw error;
 
-      setProgress(prev => {
-        const existing = prev.find(p => p.career_path_id === careerPathId);
+      setProgress((prev) => {
+        const existing = prev.find((p) => p.career_path_id === careerPathId);
         if (existing) {
-          return prev.map(p => p.career_path_id === careerPathId ? data : p);
+          return prev.map((p) => (p.career_path_id === careerPathId ? data : p));
         } else {
           return [data, ...prev];
         }
       });
 
       toast({
-        title: "Progress Updated",
-        description: "Your career progress has been saved",
+        title: 'Progress Updated',
+        description: 'Your career progress has been saved',
       });
 
       return data;
     } catch (error) {
       console.error('Error updating career progress:', error);
       toast({
-        title: "Error",
-        description: "Failed to update progress",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update progress',
+        variant: 'destructive',
       });
     }
   };
 
   const getProgressForPath = (careerPathId: string) => {
-    return progress.find(p => p.career_path_id === careerPathId);
+    return progress.find((p) => p.career_path_id === careerPathId);
   };
 
   useEffect(() => {

@@ -1,32 +1,33 @@
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { toast } from "sonner";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 interface BalanceChecklistProps {
   initialChecklist?: Record<string, boolean>;
 }
 
 const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
-  const [checklist, setChecklist] = useState(initialChecklist || {
-    item1: false,
-    item2: false,
-    item3: false,
-    item4: false,
-    item5: false,
-  });
+  const [checklist, setChecklist] = useState(
+    initialChecklist || {
+      item1: false,
+      item2: false,
+      item3: false,
+      item4: false,
+      item5: false,
+    }
+  );
 
   const handleChecklistChange = (key: keyof typeof checklist) => {
-    setChecklist(prev => ({
+    setChecklist((prev) => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: !prev[key],
     }));
 
     if (!checklist[key]) {
-      toast.success("Item added to your balance checklist");
+      toast.success('Item added to your balance checklist');
     }
   };
 
@@ -45,10 +46,10 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
         <CardContent className="p-4 space-y-4">
           <div className="space-y-3">
             <div className="flex items-start space-x-3">
-              <Checkbox 
-                id="item1" 
-                checked={checklist.item1} 
-                onCheckedChange={() => handleChecklistChange("item1")}
+              <Checkbox
+                id="item1"
+                checked={checklist.item1}
+                onCheckedChange={() => handleChecklistChange('item1')}
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item1">Establish a consistent work routine</Label>
@@ -57,12 +58,12 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-3">
-              <Checkbox 
-                id="item2" 
-                checked={checklist.item2} 
-                onCheckedChange={() => handleChecklistChange("item2")}
+              <Checkbox
+                id="item2"
+                checked={checklist.item2}
+                onCheckedChange={() => handleChecklistChange('item2')}
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item2">Schedule dedicated admin time</Label>
@@ -71,12 +72,12 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-3">
-              <Checkbox 
-                id="item3" 
-                checked={checklist.item3} 
-                onCheckedChange={() => handleChecklistChange("item3")}
+              <Checkbox
+                id="item3"
+                checked={checklist.item3}
+                onCheckedChange={() => handleChecklistChange('item3')}
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item3">Plan leisure activities</Label>
@@ -85,12 +86,12 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-3">
-              <Checkbox 
-                id="item4" 
-                checked={checklist.item4} 
-                onCheckedChange={() => handleChecklistChange("item4")}
+              <Checkbox
+                id="item4"
+                checked={checklist.item4}
+                onCheckedChange={() => handleChecklistChange('item4')}
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item4">Set device boundaries</Label>
@@ -99,12 +100,12 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start space-x-3">
-              <Checkbox 
-                id="item5" 
-                checked={checklist.item5} 
-                onCheckedChange={() => handleChecklistChange("item5")}
+              <Checkbox
+                id="item5"
+                checked={checklist.item5}
+                onCheckedChange={() => handleChecklistChange('item5')}
               />
               <div className="grid gap-1.5 leading-none">
                 <Label htmlFor="item5">Prioritise sufficient rest</Label>
@@ -114,11 +115,11 @@ const BalanceChecklist = ({ initialChecklist }: BalanceChecklistProps) => {
               </div>
             </div>
           </div>
-          
-          <Button 
+
+          <Button
             className="w-full bg-green-500 hover:bg-green-600 text-foreground"
             size="sm"
-            onClick={() => toast.success("Your balance checklist has been saved")}
+            onClick={() => toast.success('Your balance checklist has been saved')}
           >
             Save Progress
           </Button>

@@ -12,9 +12,9 @@ export const EmergencyLightingSummary4_3 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p className="leading-relaxed">
-          Battery sizing and autonomy duration are critical factors in emergency lighting system reliability. 
-          Correct calculations, accounting for real-world conditions and building-specific requirements, ensure 
-          occupant safety during evacuations.
+          Battery sizing and autonomy duration are critical factors in emergency lighting system
+          reliability. Correct calculations, accounting for real-world conditions and
+          building-specific requirements, ensure occupant safety during evacuations.
         </p>
 
         <div className="bg-gray-800/50 border border-gray-600/30 rounded-lg p-4">
@@ -23,13 +23,15 @@ export const EmergencyLightingSummary4_3 = () => {
             <div className="flex items-start gap-2">
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <p className="text-sm">
-                Autonomy duration must be based on evacuation time assessment, not arbitrary selection
+                Autonomy duration must be based on evacuation time assessment, not arbitrary
+                selection
               </p>
             </div>
             <div className="flex items-start gap-2">
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <p className="text-sm">
-                Battery capacity calculations must include correction factors for ageing, temperature, and efficiency
+                Battery capacity calculations must include correction factors for ageing,
+                temperature, and efficiency
               </p>
             </div>
             <div className="flex items-start gap-2">
@@ -58,11 +60,17 @@ export const EmergencyLightingSummary4_3 = () => {
           <div className="space-y-2 text-sm">
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">✓</span>
-              <span>Determine required autonomy duration based on building type and evacuation assessment</span>
+              <span>
+                Determine required autonomy duration based on building type and evacuation
+                assessment
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">✓</span>
-              <span>Calculate total load including luminaires, emergency drivers, and any conversion losses</span>
+              <span>
+                Calculate total load including luminaires, emergency drivers, and any conversion
+                losses
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">✓</span>
@@ -74,7 +82,9 @@ export const EmergencyLightingSummary4_3 = () => {
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">✓</span>
-              <span>For central systems, calculate and verify voltage drop to furthest luminaire</span>
+              <span>
+                For central systems, calculate and verify voltage drop to furthest luminaire
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-elec-yellow">✓</span>
@@ -93,8 +103,9 @@ export const EmergencyLightingSummary4_3 = () => {
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
           <p className="text-elec-yellow font-medium">
-            <strong>Compliance Standard:</strong> All battery sizing must comply with BS 5266-1 and BS EN 50171, 
-            with calculations documented and available for inspection during fire safety audits.
+            <strong>Compliance Standard:</strong> All battery sizing must comply with BS 5266-1 and
+            BS EN 50171, with calculations documented and available for inspection during fire
+            safety audits.
           </p>
         </div>
       </CardContent>

@@ -1,5 +1,11 @@
 import React, { useCallback } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { wiringTypeOptions } from '@/types/wiringTypes';
@@ -10,9 +16,12 @@ interface TypeOfWiringCellProps {
 }
 
 const TypeOfWiringCellComponent: React.FC<TypeOfWiringCellProps> = ({ result, onUpdate }) => {
-  const handleChange = useCallback((value: string) => {
-    onUpdate(result.id, 'typeOfWiring', value);
-  }, [result.id, onUpdate]);
+  const handleChange = useCallback(
+    (value: string) => {
+      onUpdate(result.id, 'typeOfWiring', value);
+    },
+    [result.id, onUpdate]
+  );
 
   return (
     <TableCell className="p-0 h-8 align-middle min-w-[120px] max-w-[120px]">
@@ -24,9 +33,16 @@ const TypeOfWiringCellComponent: React.FC<TypeOfWiringCellProps> = ({ result, on
         <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="Type" />
         </SelectTrigger>
-        <SelectContent key={`typeOfWiring-content-${result.id}`} className="max-h-60 max-w-[calc(100vw-2rem)] w-auto bg-background border border-border rounded-md z-[9999]">
+        <SelectContent
+          key={`typeOfWiring-content-${result.id}`}
+          className="max-h-60 max-w-[calc(100vw-2rem)] w-auto bg-background border border-border rounded-md z-[9999]"
+        >
           {wiringTypeOptions.map((option) => (
-            <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100 whitespace-normal break-words">
+            <SelectItem
+              key={option.value}
+              value={option.value}
+              className="text-xs text-neutral-100 whitespace-normal break-words"
+            >
               {option.label}
             </SelectItem>
           ))}

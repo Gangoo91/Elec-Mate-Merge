@@ -18,7 +18,7 @@ const quickCheckQuestions = [
   {
     id: 'mhor-employer-duties',
     question:
-      'Under the Manual Handling Operations Regulations 1992, what is the employer\'s FIRST duty regarding manual handling?',
+      "Under the Manual Handling Operations Regulations 1992, what is the employer's FIRST duty regarding manual handling?",
     options: [
       'Provide manual handling training to all employees',
       'Assess the risk of all manual handling operations',
@@ -50,7 +50,7 @@ const quickCheckQuestions = [
     options: ['10 kg', '16 kg', '20 kg', '25 kg'],
     correctIndex: 3,
     explanation:
-      'The HSE guideline figure for a man lifting close to the body at waist height under ideal conditions is 25 kg. For women in the same position, the guideline is 16 kg. These figures are reduced significantly when the load is held at arm\'s length, above shoulder height, or below knee level. These are guidelines, not legal limits — a risk assessment is always required.',
+      "The HSE guideline figure for a man lifting close to the body at waist height under ideal conditions is 25 kg. For women in the same position, the guideline is 16 kg. These figures are reduced significantly when the load is held at arm's length, above shoulder height, or below knee level. These are guidelines, not legal limits — a risk assessment is always required.",
   },
 ];
 
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'Is there a legal maximum weight that a person can lift at work?',
     answer:
-      'No. There is no single legal maximum weight limit in UK law. The Manual Handling Operations Regulations 1992 do not set absolute weight limits because the risk depends on many factors beyond weight alone — including the shape of the load, the height at which it is held, the distance it is carried, the individual\'s capability, and the environment. The HSE provides guideline figures (25 kg for men, 16 kg for women at waist height close to the body) as a starting point for risk assessment, but these are not legal limits. A 10 kg load could be hazardous if it is awkward, bulky, or lifted repeatedly, while a 30 kg load might be acceptable for a short, controlled lift by a strong individual under ideal conditions. A suitable and sufficient risk assessment is always required.',
+      "No. There is no single legal maximum weight limit in UK law. The Manual Handling Operations Regulations 1992 do not set absolute weight limits because the risk depends on many factors beyond weight alone — including the shape of the load, the height at which it is held, the distance it is carried, the individual's capability, and the environment. The HSE provides guideline figures (25 kg for men, 16 kg for women at waist height close to the body) as a starting point for risk assessment, but these are not legal limits. A 10 kg load could be hazardous if it is awkward, bulky, or lifted repeatedly, while a 30 kg load might be acceptable for a short, controlled lift by a strong individual under ideal conditions. A suitable and sufficient risk assessment is always required.",
   },
   {
     question: 'What is the MAC tool and when should I use it?',
@@ -71,8 +71,7 @@ const faqs = [
       'Yes. Under the Manual Handling Operations Regulations 1992, employees have a duty to make full and proper use of any systems of work provided by their employer for manual handling. However, employees also have a right under the Health and Safety at Work Act 1974 not to be put at risk of injury. If you believe a manual handling task poses a risk of injury that has not been adequately assessed or controlled, you should raise the concern with your supervisor or safety representative. You should not be disciplined for refusing to carry out a task that you reasonably believe poses a serious and imminent risk of injury. The employer must then reassess the task and put appropriate controls in place.',
   },
   {
-    question:
-      'How often should manual handling risk assessments be reviewed?',
+    question: 'How often should manual handling risk assessments be reviewed?',
     answer:
       'Manual handling risk assessments should be reviewed whenever there is a significant change in the operation — for example, a change in the load, the working environment, the equipment used, or the people carrying out the task. They should also be reviewed if an injury or near-miss occurs during a manual handling operation, if new information about risks becomes available, or if there is any reason to believe the existing assessment is no longer valid. As a general rule, assessments should be reviewed at least annually, even if no specific trigger has occurred. The assessment must remain suitable and sufficient — if circumstances change, the assessment must be updated to reflect those changes.',
   },
@@ -108,12 +107,11 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'The HSE guideline weight for a woman lifting close to the body at waist height is:',
+    question: 'The HSE guideline weight for a woman lifting close to the body at waist height is:',
     options: ['10 kg', '16 kg', '20 kg', '25 kg'],
     correctAnswer: 1,
     explanation:
-      'The HSE guideline figure for a woman lifting close to the body at waist height under ideal conditions is 16 kg. For a man in the same position, the guideline is 25 kg. These figures are significantly reduced when the load is held at arm\'s length (7 kg for women, 10 kg for men at waist height) or when lifting above shoulder height or below knee level.',
+      "The HSE guideline figure for a woman lifting close to the body at waist height under ideal conditions is 16 kg. For a man in the same position, the guideline is 25 kg. These figures are significantly reduced when the load is held at arm's length (7 kg for women, 10 kg for men at waist height) or when lifting above shoulder height or below knee level.",
   },
   {
     id: 4,
@@ -131,8 +129,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'Which of the following is NOT one of the five TILEO assessment factors?',
+    question: 'Which of the following is NOT one of the five TILEO assessment factors?',
     options: ['Task', 'Individual', 'Legislation', 'Environment'],
     correctAnswer: 2,
     explanation:
@@ -140,8 +137,7 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question:
-      'During a team lift, who should give the commands to coordinate the lift?',
+    question: 'During a team lift, who should give the commands to coordinate the lift?',
     options: [
       'Everyone should lift at the same time without specific commands',
       'The strongest person in the team',
@@ -215,15 +211,17 @@ export default function CscsCardModule3Section3() {
             <PackageOpen className="h-7 w-7 text-green-400" />
           </div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 mb-3 mx-auto">
-            <span className="text-green-400 text-xs font-semibold">MODULE 3 &middot; SECTION 3</span>
+            <span className="text-green-400 text-xs font-semibold">
+              MODULE 3 &middot; SECTION 3
+            </span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Manual Handling Assessment
           </h1>
           <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
             The Manual Handling Operations Regulations 1992, TILEO assessment factors, HSE guideline
-            weights, safe lifting technique, reducing risks, team handling, common injuries, and record
-            keeping
+            weights, safe lifting technique, reducing risks, team handling, common injuries, and
+            record keeping
           </p>
         </header>
 
@@ -247,7 +245,8 @@ export default function CscsCardModule3Section3() {
             <p className="text-green-400/90 text-base font-medium mb-2">On Site</p>
             <ul className="text-base text-white space-y-1.5">
               <li>
-                <strong>Plan:</strong> Think before you lift &mdash; check weight, route, destination
+                <strong>Plan:</strong> Think before you lift &mdash; check weight, route,
+                destination
               </li>
               <li>
                 <strong>Technique:</strong> Bend knees, straight back, load close, lift with legs
@@ -290,20 +289,23 @@ export default function CscsCardModule3Section3() {
           <div className="border-l-2 border-green-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                The <strong>Manual Handling Operations Regulations 1992 (MHOR)</strong>, as amended in
-                2002, are the primary piece of UK legislation governing manual handling at work. They
-                apply to any workplace activity that involves transporting or supporting a load by hand
-                or by bodily force. This includes <strong>lifting, lowering, pushing, pulling, carrying,
-                moving, holding, and restraining</strong> any object, person, or animal.
+                The <strong>Manual Handling Operations Regulations 1992 (MHOR)</strong>, as amended
+                in 2002, are the primary piece of UK legislation governing manual handling at work.
+                They apply to any workplace activity that involves transporting or supporting a load
+                by hand or by bodily force. This includes{' '}
+                <strong>
+                  lifting, lowering, pushing, pulling, carrying, moving, holding, and restraining
+                </strong>{' '}
+                any object, person, or animal.
               </p>
 
               <p>
-                Manual handling injuries account for over a third of all workplace injuries reported to
-                the HSE each year. In the construction industry, the figure is even higher &mdash;
-                electricians regularly handle cable drums, distribution boards, conduit bundles, trunking
-                lengths, and heavy tools that all present manual handling risks. Understanding these
-                regulations is essential for both the CSCS HS&amp;E test and for protecting yourself on
-                site.
+                Manual handling injuries account for over a third of all workplace injuries reported
+                to the HSE each year. In the construction industry, the figure is even higher
+                &mdash; electricians regularly handle cable drums, distribution boards, conduit
+                bundles, trunking lengths, and heavy tools that all present manual handling risks.
+                Understanding these regulations is essential for both the CSCS HS&amp;E test and for
+                protecting yourself on site.
               </p>
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
@@ -340,22 +342,23 @@ export default function CscsCardModule3Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Follow any training and instructions provided on safe manual handling techniques
+                      Follow any training and instructions provided on safe manual handling
+                      techniques
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Report any hazardous manual handling activities, near-misses, or injuries to the
-                      employer or supervisor
+                      Report any hazardous manual handling activities, near-misses, or injuries to
+                      the employer or supervisor
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Inform the employer of any pre-existing health conditions that may affect their
-                      ability to carry out manual handling safely &mdash; such as back problems,
-                      pregnancy, or joint conditions
+                      Inform the employer of any pre-existing health conditions that may affect
+                      their ability to carry out manual handling safely &mdash; such as back
+                      problems, pregnancy, or joint conditions
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -370,13 +373,15 @@ export default function CscsCardModule3Section3() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-green-400">Scope of &ldquo;Manual Handling&rdquo;:</strong>{' '}
+                  <strong className="text-green-400">
+                    Scope of &ldquo;Manual Handling&rdquo;:
+                  </strong>{' '}
                   Manual handling is not limited to lifting heavy objects. The regulations cover any
                   activity involving transporting or supporting a load by hand or bodily force. This
-                  includes pushing a loaded trolley, pulling a cable through conduit, carrying tools up
-                  a ladder, holding a distribution board in position while it is being fixed, lowering
-                  materials from a scaffold, and even restraining an animal. If bodily force is used to
-                  move or support a load, it is manual handling.
+                  includes pushing a loaded trolley, pulling a cable through conduit, carrying tools
+                  up a ladder, holding a distribution board in position while it is being fixed,
+                  lowering materials from a scaffold, and even restraining an animal. If bodily
+                  force is used to move or support a load, it is manual handling.
                 </p>
               </div>
             </div>
@@ -393,9 +398,10 @@ export default function CscsCardModule3Section3() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 When a manual handling operation cannot be avoided, the employer must carry out a
-                suitable and sufficient risk assessment. The <strong>TILEO</strong> framework provides a
-                structured approach to identifying and evaluating the risk factors involved. Each letter
-                represents one of the five key assessment areas that must be considered.
+                suitable and sufficient risk assessment. The <strong>TILEO</strong> framework
+                provides a structured approach to identifying and evaluating the risk factors
+                involved. Each letter represents one of the five key assessment areas that must be
+                considered.
               </p>
 
               {/* TILEO Assessment Framework Diagram */}
@@ -411,8 +417,8 @@ export default function CscsCardModule3Section3() {
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Task</p>
                     <p className="text-[11px] text-white/70">
-                      What is the activity? Holding, twisting, stooping, reaching, carrying distance,
-                      repetition, rest periods
+                      What is the activity? Holding, twisting, stooping, reaching, carrying
+                      distance, repetition, rest periods
                     </p>
                   </div>
 
@@ -484,8 +490,8 @@ export default function CscsCardModule3Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      How far must the load be carried? Long carrying distances significantly increase
-                      the risk of fatigue and injury
+                      How far must the load be carried? Long carrying distances significantly
+                      increase the risk of fatigue and injury
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -506,9 +512,7 @@ export default function CscsCardModule3Section3() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Individual Factors in Detail
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Individual Factors in Detail</p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -533,7 +537,8 @@ export default function CscsCardModule3Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Has the individual received adequate training in safe manual handling techniques?
+                      Has the individual received adequate training in safe manual handling
+                      techniques?
                     </span>
                   </li>
                 </ul>
@@ -609,10 +614,10 @@ export default function CscsCardModule3Section3() {
               <p>
                 The HSE provides guideline weights as a starting point for manual handling risk
                 assessment. These are <strong>not legal limits</strong> &mdash; they are guideline
-                figures that indicate the level of risk under ideal conditions. If all conditions are
-                ideal (good posture, good grip, stable environment, no twisting), loads at or below
-                these guideline weights present a low risk of injury for most people. Above these
-                figures, a more detailed assessment is required.
+                figures that indicate the level of risk under ideal conditions. If all conditions
+                are ideal (good posture, good grip, stable environment, no twisting), loads at or
+                below these guideline weights present a low risk of injury for most people. Above
+                these figures, a more detailed assessment is required.
               </p>
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
@@ -692,9 +697,9 @@ export default function CscsCardModule3Section3() {
                 <div className="text-sm text-white/80 space-y-2">
                   <p>
                     The <strong className="text-white">MAC tool</strong> is a free, practical risk
-                    assessment tool published by the HSE. It helps assessors evaluate the most common
-                    risk factors in lifting, carrying, and team handling operations using a simple
-                    colour-coded system.
+                    assessment tool published by the HSE. It helps assessors evaluate the most
+                    common risk factors in lifting, carrying, and team handling operations using a
+                    simple colour-coded system.
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
                     <div className="bg-green-500/15 border border-green-500/30 p-2 rounded text-center">
@@ -725,14 +730,14 @@ export default function CscsCardModule3Section3() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-green-400">Important:</strong> The guideline weights assume
-                  ideal conditions &mdash; a compact load held close to the body, a good grip, a
-                  stable standing position, no twisting, and a smooth floor surface. If any of these
-                  conditions are not met, the guideline weight should be reduced. For example, if
-                  twisting is involved, the guideline figures should be reduced by approximately 10%
-                  to 20%. If the handler is seated, the figures should be reduced by approximately
-                  30%. These guidelines apply to infrequent lifting; for repetitive operations, the
-                  figures should be reduced further.
+                  <strong className="text-green-400">Important:</strong> The guideline weights
+                  assume ideal conditions &mdash; a compact load held close to the body, a good
+                  grip, a stable standing position, no twisting, and a smooth floor surface. If any
+                  of these conditions are not met, the guideline weight should be reduced. For
+                  example, if twisting is involved, the guideline figures should be reduced by
+                  approximately 10% to 20%. If the handler is seated, the figures should be reduced
+                  by approximately 30%. These guidelines apply to infrequent lifting; for repetitive
+                  operations, the figures should be reduced further.
                 </p>
               </div>
             </div>
@@ -748,10 +753,10 @@ export default function CscsCardModule3Section3() {
           <div className="border-l-2 border-green-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Even when a manual handling operation has been assessed and the risk reduced as far as
-                is reasonably practicable, correct lifting technique remains essential. Poor technique
-                is one of the most common causes of manual handling injury, particularly to the lower
-                back. The following eight-step approach should be used for every lift.
+                Even when a manual handling operation has been assessed and the risk reduced as far
+                as is reasonably practicable, correct lifting technique remains essential. Poor
+                technique is one of the most common causes of manual handling injury, particularly
+                to the lower back. The following eight-step approach should be used for every lift.
               </p>
 
               {/* Safe Lifting Technique Diagram */}
@@ -767,7 +772,8 @@ export default function CscsCardModule3Section3() {
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Plan</p>
                     <p className="text-[11px] text-white/70">
-                      Think before lifting. Check the weight, route, and destination. Remove obstacles.
+                      Think before lifting. Check the weight, route, and destination. Remove
+                      obstacles.
                     </p>
                   </div>
 
@@ -778,7 +784,8 @@ export default function CscsCardModule3Section3() {
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Position Feet</p>
                     <p className="text-[11px] text-white/70">
-                      Feet shoulder-width apart, one foot slightly forward for balance and stability.
+                      Feet shoulder-width apart, one foot slightly forward for balance and
+                      stability.
                     </p>
                   </div>
 
@@ -848,20 +855,23 @@ export default function CscsCardModule3Section3() {
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Set Down</p>
                     <p className="text-[11px] text-white/70">
-                      Set the load down carefully, then adjust position. Reverse the lifting technique.
+                      Set the load down carefully, then adjust position. Reverse the lifting
+                      technique.
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">Practical Demonstration Approach</p>
+                <p className="text-sm font-medium text-white mb-3">
+                  Practical Demonstration Approach
+                </p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Before any lift, test the weight of the load by rocking it gently or lifting one
-                      corner &mdash; this tells you whether you can manage it alone or need help
+                      Before any lift, test the weight of the load by rocking it gently or lifting
+                      one corner &mdash; this tells you whether you can manage it alone or need help
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -881,16 +891,16 @@ export default function CscsCardModule3Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      If you need to place the load at a low level, do not bend your back &mdash; use
-                      the same knee-bending technique in reverse to lower the load to the ground
+                      If you need to place the load at a low level, do not bend your back &mdash;
+                      use the same knee-bending technique in reverse to lower the load to the ground
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       If the load is too heavy, too awkward, or the route is too difficult, stop and
-                      reassess &mdash; get help, use a mechanical aid, or break the load into smaller
-                      portions
+                      reassess &mdash; get help, use a mechanical aid, or break the load into
+                      smaller portions
                     </span>
                   </li>
                 </ul>
@@ -920,15 +930,17 @@ export default function CscsCardModule3Section3() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Holding the load away from the body</strong>{' '}
-                      &mdash; dramatically increases the effective force on the spine. At arm&rsquo;s
-                      length, the spinal loading can be five times greater than holding the load close
+                      &mdash; dramatically increases the effective force on the spine. At
+                      arm&rsquo;s length, the spinal loading can be five times greater than holding
+                      the load close
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Jerking or snatching the load</strong> &mdash;
-                      sudden forces overload muscles and ligaments that are not prepared for the strain
+                      sudden forces overload muscles and ligaments that are not prepared for the
+                      strain
                     </span>
                   </li>
                 </ul>
@@ -948,10 +960,10 @@ export default function CscsCardModule3Section3() {
           <div className="border-l-2 border-green-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Once a manual handling risk assessment has been completed, the employer must reduce the
-                risk of injury so far as is reasonably practicable. There are many practical measures
-                available, ranging from mechanical aids to task redesign. The most effective approach
-                combines several measures together.
+                Once a manual handling risk assessment has been completed, the employer must reduce
+                the risk of injury so far as is reasonably practicable. There are many practical
+                measures available, ranging from mechanical aids to task redesign. The most
+                effective approach combines several measures together.
               </p>
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
@@ -965,15 +977,15 @@ export default function CscsCardModule3Section3() {
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
-                          <strong className="text-white">Trolleys</strong> &mdash; flat-bed, cage, and
-                          stair-climbing varieties for moving loads across sites
+                          <strong className="text-white">Trolleys</strong> &mdash; flat-bed, cage,
+                          and stair-climbing varieties for moving loads across sites
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
-                          <strong className="text-white">Sack trucks</strong> &mdash; ideal for moving
-                          heavy, compact items such as cable drums or distribution boards
+                          <strong className="text-white">Sack trucks</strong> &mdash; ideal for
+                          moving heavy, compact items such as cable drums or distribution boards
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
@@ -992,23 +1004,23 @@ export default function CscsCardModule3Section3() {
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
-                          <strong className="text-white">Hoists and cranes</strong> &mdash; for lifting
-                          heavy loads to height, such as steel beams or large equipment
+                          <strong className="text-white">Hoists and cranes</strong> &mdash; for
+                          lifting heavy loads to height, such as steel beams or large equipment
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
-                          <strong className="text-white">Vacuum lifters</strong> &mdash; for handling
-                          sheet materials, glass panels, and smooth-surfaced items
+                          <strong className="text-white">Vacuum lifters</strong> &mdash; for
+                          handling sheet materials, glass panels, and smooth-surfaced items
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
                           <strong className="text-white">Scissor lifts and platform trucks</strong>{' '}
-                          &mdash; adjustable height platforms that bring loads to the correct working
-                          level
+                          &mdash; adjustable height platforms that bring loads to the correct
+                          working level
                         </span>
                       </li>
                     </ul>
@@ -1023,8 +1035,8 @@ export default function CscsCardModule3Section3() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Reduce the load weight or size</strong> &mdash;
-                      break bulk deliveries into smaller, more manageable packages. For example, order
-                      cable on smaller drums rather than one large drum
+                      break bulk deliveries into smaller, more manageable packages. For example,
+                      order cable on smaller drums rather than one large drum
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1040,15 +1052,16 @@ export default function CscsCardModule3Section3() {
                     <span>
                       <strong className="text-white">Reduce carrying distances</strong> &mdash;
                       position storage areas close to the point of use. Arrange deliveries to the
-                      floor where the work is taking place, not to a central store on the ground floor
+                      floor where the work is taking place, not to a central store on the ground
+                      floor
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Adjust working heights</strong> &mdash; use
-                      adjustable workbenches, platforms, or raised storage to avoid lifting from floor
-                      level or above shoulder height
+                      adjustable workbenches, platforms, or raised storage to avoid lifting from
+                      floor level or above shoulder height
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1063,8 +1076,8 @@ export default function CscsCardModule3Section3() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Use team lifting</strong> &mdash; where a load
-                      is too heavy or awkward for one person, organise team handling with a designated
-                      coordinator
+                      is too heavy or awkward for one person, organise team handling with a
+                      designated coordinator
                     </span>
                   </li>
                 </ul>
@@ -1072,13 +1085,13 @@ export default function CscsCardModule3Section3() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-green-400">Electricians on Site:</strong> Common electrical
-                  loads that benefit from mechanical aids include cable drums (which can weigh over
-                  50 kg), distribution boards, lengths of conduit and trunking, transformer units,
-                  motor starters, and battery backup systems. Always check whether a trolley, sack
-                  truck, or hoist is available before attempting to move heavy items by hand. If the
-                  load is too heavy to manage safely, do not attempt it &mdash; ask for help or
-                  request appropriate equipment.
+                  <strong className="text-green-400">Electricians on Site:</strong> Common
+                  electrical loads that benefit from mechanical aids include cable drums (which can
+                  weigh over 50 kg), distribution boards, lengths of conduit and trunking,
+                  transformer units, motor starters, and battery backup systems. Always check
+                  whether a trolley, sack truck, or hoist is available before attempting to move
+                  heavy items by hand. If the load is too heavy to manage safely, do not attempt it
+                  &mdash; ask for help or request appropriate equipment.
                 </p>
               </div>
             </div>
@@ -1094,11 +1107,11 @@ export default function CscsCardModule3Section3() {
           <div className="border-l-2 border-green-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                When a load is too heavy or too awkward for one person to handle safely, team lifting
-                may be appropriate. However, team handling introduces its own risks &mdash; poor
-                coordination, uneven load sharing, and communication failures can cause injuries to
-                multiple workers simultaneously. Effective team handling requires careful planning and
-                clear communication.
+                When a load is too heavy or too awkward for one person to handle safely, team
+                lifting may be appropriate. However, team handling introduces its own risks &mdash;
+                poor coordination, uneven load sharing, and communication failures can cause
+                injuries to multiple workers simultaneously. Effective team handling requires
+                careful planning and clear communication.
               </p>
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
@@ -1117,7 +1130,8 @@ export default function CscsCardModule3Section3() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       The load is too bulky, long, or awkwardly shaped for one person to control
-                      &mdash; for example, long lengths of trunking, large boards, or sheet materials
+                      &mdash; for example, long lengths of trunking, large boards, or sheet
+                      materials
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1138,9 +1152,7 @@ export default function CscsCardModule3Section3() {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Coordinating the Team Lift
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Coordinating the Team Lift</p>
                 <div className="space-y-2">
                   {[
                     'Appoint ONE person to direct the lift — this person gives all commands and coordinates the team',
@@ -1170,10 +1182,11 @@ export default function CscsCardModule3Section3() {
                   <p>
                     Team lifting does <strong className="text-white">not</strong> simply divide the
                     load weight equally among the team members. Research shows that in a two-person
-                    lift, each person bears approximately <strong className="text-white">two-thirds
-                    </strong> of what they would carry individually &mdash; not half. This is because
-                    of coordination difficulties, uneven grip positions, and the additional effort
-                    required to synchronise movements.
+                    lift, each person bears approximately{' '}
+                    <strong className="text-white">two-thirds</strong> of what they would carry
+                    individually &mdash; not half. This is because of coordination difficulties,
+                    uneven grip positions, and the additional effort required to synchronise
+                    movements.
                   </p>
                   <p>
                     As the team size increases beyond two or three people, the efficiency decreases
@@ -1198,10 +1211,11 @@ export default function CscsCardModule3Section3() {
             <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Manual handling injuries are among the most common workplace injuries in the UK,
-                accounting for over a third of all injuries reported under RIDDOR. In the construction
-                industry, the problem is particularly acute due to the heavy, awkward loads that
-                workers regularly handle. These injuries can be debilitating, career-ending, and
-                extremely costly &mdash; both to the individual worker and to the industry as a whole.
+                accounting for over a third of all injuries reported under RIDDOR. In the
+                construction industry, the problem is particularly acute due to the heavy, awkward
+                loads that workers regularly handle. These injuries can be debilitating,
+                career-ending, and extremely costly &mdash; both to the individual worker and to the
+                industry as a whole.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4">
@@ -1215,9 +1229,9 @@ export default function CscsCardModule3Section3() {
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
                         <strong className="text-white">Disc herniation</strong> (&ldquo;slipped
-                        disc&rdquo;) &mdash; the soft centre of an intervertebral disc pushes through
-                        the outer ring, pressing on spinal nerves and causing severe pain, numbness,
-                        or weakness
+                        disc&rdquo;) &mdash; the soft centre of an intervertebral disc pushes
+                        through the outer ring, pressing on spinal nerves and causing severe pain,
+                        numbness, or weakness
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -1231,9 +1245,9 @@ export default function CscsCardModule3Section3() {
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
-                        <strong className="text-white">Ligament sprain</strong> &mdash; overstretching
-                        or tearing of the ligaments that support the spine, causing chronic pain and
-                        instability
+                        <strong className="text-white">Ligament sprain</strong> &mdash;
+                        overstretching or tearing of the ligaments that support the spine, causing
+                        chronic pain and instability
                       </span>
                     </li>
                   </ul>
@@ -1249,24 +1263,24 @@ export default function CscsCardModule3Section3() {
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
                         <strong className="text-white">Upper limb disorders</strong> &mdash;
-                        repetitive strain injuries to the wrists, elbows, and shoulders from repeated
-                        manual handling, gripping, and carrying
+                        repetitive strain injuries to the wrists, elbows, and shoulders from
+                        repeated manual handling, gripping, and carrying
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
-                        <strong className="text-white">Hernias</strong> &mdash; a weakness or tear in
-                        the abdominal wall, often caused by straining during heavy lifting. Inguinal
-                        hernias are particularly common
+                        <strong className="text-white">Hernias</strong> &mdash; a weakness or tear
+                        in the abdominal wall, often caused by straining during heavy lifting.
+                        Inguinal hernias are particularly common
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
                         <strong className="text-white">Joint injuries</strong> &mdash; damage to the
-                        knees, hips, ankles, and shoulders from carrying heavy loads, particularly on
-                        uneven surfaces or stairs
+                        knees, hips, ankles, and shoulders from carrying heavy loads, particularly
+                        on uneven surfaces or stairs
                       </span>
                     </li>
                   </ul>
@@ -1286,23 +1300,23 @@ export default function CscsCardModule3Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      The average manual handling injury results in 16 days off work &mdash;
-                      some injuries require months or years of rehabilitation
+                      The average manual handling injury results in 16 days off work &mdash; some
+                      injuries require months or years of rehabilitation
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Employers face costs including sick pay, replacement labour, lost productivity,
-                      potential HSE enforcement action, and civil compensation claims
+                      Employers face costs including sick pay, replacement labour, lost
+                      productivity, potential HSE enforcement action, and civil compensation claims
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      For the individual worker, a serious back injury can mean chronic pain, reduced
-                      earning capacity, and in severe cases, the end of a career in the construction
-                      industry
+                      For the individual worker, a serious back injury can mean chronic pain,
+                      reduced earning capacity, and in severe cases, the end of a career in the
+                      construction industry
                     </span>
                   </li>
                 </ul>
@@ -1334,8 +1348,8 @@ export default function CscsCardModule3Section3() {
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
                       <strong className="text-white">Mechanical aids</strong> &mdash; provide and
-                      maintain trolleys, hoists, sack trucks, and other equipment to reduce the
-                      need for manual lifting
+                      maintain trolleys, hoists, sack trucks, and other equipment to reduce the need
+                      for manual lifting
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1349,9 +1363,9 @@ export default function CscsCardModule3Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      <strong className="text-white">Health surveillance</strong> &mdash; monitor the
-                      health of workers who regularly carry out manual handling tasks, and act early
-                      if problems are identified
+                      <strong className="text-white">Health surveillance</strong> &mdash; monitor
+                      the health of workers who regularly carry out manual handling tasks, and act
+                      early if problems are identified
                     </span>
                   </li>
                 </ul>
@@ -1371,9 +1385,9 @@ export default function CscsCardModule3Section3() {
               <p>
                 The Manual Handling Operations Regulations 1992 require employers to record the
                 findings of their risk assessments and to provide adequate training to workers who
-                carry out manual handling operations. Good record keeping demonstrates compliance with
-                the law, provides a reference for future assessments, and is essential evidence in the
-                event of an inspection, investigation, or compensation claim.
+                carry out manual handling operations. Good record keeping demonstrates compliance
+                with the law, provides a reference for future assessments, and is essential evidence
+                in the event of an inspection, investigation, or compensation claim.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -1421,9 +1435,10 @@ export default function CscsCardModule3Section3() {
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
-                      Employers must provide <strong className="text-white">adequate training</strong>{' '}
-                      to all workers who carry out manual handling operations &mdash; this should be
-                      practical and task-specific, not just a classroom presentation
+                      Employers must provide{' '}
+                      <strong className="text-white">adequate training</strong> to all workers who
+                      carry out manual handling operations &mdash; this should be practical and
+                      task-specific, not just a classroom presentation
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -1471,8 +1486,8 @@ export default function CscsCardModule3Section3() {
                     <span>
                       Any manual handling injury that results in the worker being incapacitated for
                       more than seven consecutive days must be reported to the HSE under{' '}
-                      <strong className="text-white">RIDDOR</strong> (Reporting of Injuries, Diseases
-                      and Dangerous Occurrences Regulations 2013)
+                      <strong className="text-white">RIDDOR</strong> (Reporting of Injuries,
+                      Diseases and Dangerous Occurrences Regulations 2013)
                     </span>
                   </li>
                   <li className="flex items-start gap-2">

@@ -1,5 +1,4 @@
-
-import ResourceCard from "@/components/mental-health/ResourceCard";
+import ResourceCard from '@/components/mental-health/ResourceCard';
 
 interface ResourceItem {
   title: string;
@@ -18,7 +17,7 @@ const BalanceResources = ({ resources }: BalanceResourcesProps) => {
       <h3 className="text-lg font-medium mb-3">UK Support Resources</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {resources.map((resource, index) => (
-          <ResourceCard 
+          <ResourceCard
             key={index}
             title={resource.title}
             description={resource.description}

@@ -1,12 +1,7 @@
 import React, { useMemo } from 'react';
 import { AlertTriangle, CheckCircle, Info, Zap } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import {
   calculatePhaseBalance,
   calculateNeutralCurrent,
@@ -70,20 +65,13 @@ export const PhaseBalanceIndicator: React.FC<PhaseBalanceIndicatorProps> = ({
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Badge
-              variant="outline"
-              className={`${colorClass} cursor-help ${className}`}
-            >
+            <Badge variant="outline" className={`${colorClass} cursor-help ${className}`}>
               <StatusIcon className="h-3 w-3 mr-1" />
               {balanceResult.imbalancePercent}%
             </Badge>
           </TooltipTrigger>
           <TooltipContent side="top" className="max-w-xs">
-            <PhaseBalanceTooltip
-              balance={balanceResult}
-              neutral={neutralResult}
-              loads={loads}
-            />
+            <PhaseBalanceTooltip balance={balanceResult} neutral={neutralResult} loads={loads} />
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -106,16 +94,35 @@ export const PhaseBalanceIndicator: React.FC<PhaseBalanceIndicatorProps> = ({
 
       {/* Phase bars visualization */}
       <div className="space-y-1.5 mb-3">
-        <PhaseBar phase="L1" value={loads.L1} max={Math.max(loads.L1, loads.L2, loads.L3)} color="bg-red-500" />
-        <PhaseBar phase="L2" value={loads.L2} max={Math.max(loads.L1, loads.L2, loads.L3)} color="bg-yellow-500" />
-        <PhaseBar phase="L3" value={loads.L3} max={Math.max(loads.L1, loads.L2, loads.L3)} color="bg-blue-500" />
+        <PhaseBar
+          phase="L1"
+          value={loads.L1}
+          max={Math.max(loads.L1, loads.L2, loads.L3)}
+          color="bg-red-500"
+        />
+        <PhaseBar
+          phase="L2"
+          value={loads.L2}
+          max={Math.max(loads.L1, loads.L2, loads.L3)}
+          color="bg-yellow-500"
+        />
+        <PhaseBar
+          phase="L3"
+          value={loads.L3}
+          max={Math.max(loads.L1, loads.L2, loads.L3)}
+          color="bg-blue-500"
+        />
       </div>
 
       {/* Stats row */}
       <div className="flex items-center justify-between text-xs">
-        <span>Imbalance: <strong>{balanceResult.imbalancePercent}%</strong></span>
+        <span>
+          Imbalance: <strong>{balanceResult.imbalancePercent}%</strong>
+        </span>
         {showNeutral && neutralResult && (
-          <span>Est. Neutral: <strong>{neutralResult.estimatedAmps}A</strong></span>
+          <span>
+            Est. Neutral: <strong>{neutralResult.estimatedAmps}A</strong>
+          </span>
         )}
       </div>
 
@@ -202,9 +209,7 @@ const PhaseBalanceTooltip: React.FC<{
     )}
 
     {balance.recommendation && (
-      <div className="border-t pt-1 text-amber-500">
-        {balance.recommendation}
-      </div>
+      <div className="border-t pt-1 text-amber-500">{balance.recommendation}</div>
     )}
   </div>
 );

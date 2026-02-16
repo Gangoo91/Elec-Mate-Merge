@@ -13,7 +13,9 @@ export const ResultsDocumentationIntro = () => {
       <CardContent>
         <div className="space-y-4 text-foreground text-sm sm:text-base">
           <p>
-            This final section explains how to record Zs, Ze, and PFC values accurately—and what to do if results fall outside acceptable limits. Proper documentation is legally required and critical for ongoing safety.
+            This final section explains how to record Zs, Ze, and PFC values accurately—and what to
+            do if results fall outside acceptable limits. Proper documentation is legally required
+            and critical for ongoing safety.
           </p>
           <div className="bg-elec-dark p-4 rounded-md border-l-4 border-elec-yellow">
             <p className="text-elec-yellow font-semibold">Legal Requirement:</p>

@@ -2,16 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  Phone,
-  Mail,
-  FileText,
-  Home,
-  ChevronRight,
-  Plus,
-  MoreVertical,
-  Clock,
-} from 'lucide-react';
+import { Phone, Mail, FileText, Home, ChevronRight, Plus, MoreVertical, Clock } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,7 +41,7 @@ const getAvatarGradient = (name: string): string => {
 const getInitials = (name: string): string => {
   return name
     .split(' ')
-    .map(n => n[0])
+    .map((n) => n[0])
     .join('')
     .toUpperCase()
     .slice(0, 2);
@@ -217,7 +208,10 @@ export const CustomerListRow = ({
             <MoreVertical className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-xl border-white/10">
+        <DropdownMenuContent
+          align="end"
+          className="w-48 bg-card/95 backdrop-blur-xl border-white/10"
+        >
           <DropdownMenuItem
             onClick={(e) => {
               e.stopPropagation();

@@ -37,7 +37,12 @@ export type QuizTrend = 'improving' | 'declining' | 'stable' | 'no-data';
 
 export function useProgressInsights() {
   const { stats, isLoading: dataLoading } = useApprenticeData();
-  const { results: quizResults, getPerformanceByCategory, getOverallStats, isLoading: quizLoading } = useQuizResults();
+  const {
+    results: quizResults,
+    getPerformanceByCategory,
+    getOverallStats,
+    isLoading: quizLoading,
+  } = useQuizResults();
   const { getSetProgress, loading: flashcardLoading } = useFlashcardProgress();
 
   const loading = dataLoading || quizLoading || flashcardLoading;
@@ -51,13 +56,13 @@ export function useProgressInsights() {
 
   // Strongest and weakest categories
   const strongestCategory = useMemo(() => {
-    const attempted = quizCategories.filter(c => c.score > 0);
+    const attempted = quizCategories.filter((c) => c.score > 0);
     if (attempted.length === 0) return null;
     return [...attempted].sort((a, b) => b.score - a.score)[0];
   }, [quizCategories]);
 
   const weakestCategory = useMemo(() => {
-    const attempted = quizCategories.filter(c => c.score > 0);
+    const attempted = quizCategories.filter((c) => c.score > 0);
     if (attempted.length < 2) return null;
     return [...attempted].sort((a, b) => a.score - b.score)[0];
   }, [quizCategories]);
@@ -110,10 +115,9 @@ export function useProgressInsights() {
   // Computed overall progress
   const overallPercent = useMemo(() => {
     const quizScore = Math.min(quizStats.totalQuizzes * 5, 100);
-    const masteredSets = flashcardInsights.filter(s => s.progressPercent >= 80).length;
-    const flashcardScore = flashcardSets.length > 0
-      ? (masteredSets / flashcardSets.length) * 100
-      : 0;
+    const masteredSets = flashcardInsights.filter((s) => s.progressPercent >= 80).length;
+    const flashcardScore =
+      flashcardSets.length > 0 ? (masteredSets / flashcardSets.length) * 100 : 0;
     const ojtScore = stats.ojtHours.percentComplete;
     return Math.round(quizScore * 0.4 + flashcardScore * 0.3 + ojtScore * 0.3);
   }, [quizStats, flashcardInsights, stats.ojtHours.percentComplete]);
@@ -128,17 +132,23 @@ export function useProgressInsights() {
       insights.push('Your quiz scores are improving -- your hard work is paying off.');
     }
     if (strongestCategory && strongestCategory.score >= 80) {
-      insights.push(`${strongestCategory.subject} is your strongest area at ${strongestCategory.score}%.`);
+      insights.push(
+        `${strongestCategory.subject} is your strongest area at ${strongestCategory.score}%.`
+      );
     }
     if (totalMasteredCards > 0) {
       const pct = Math.round((totalMasteredCards / totalFlashcards) * 100);
-      insights.push(`You've mastered ${totalMasteredCards} of ${totalFlashcards} flashcards (${pct}%).`);
+      insights.push(
+        `You've mastered ${totalMasteredCards} of ${totalFlashcards} flashcards (${pct}%).`
+      );
     }
     if (quizTrend === 'declining') {
       insights.push('Your recent quiz scores have dipped. A revision session could help.');
     }
     if (daysSinceLastQuiz !== null && daysSinceLastQuiz >= 7) {
-      insights.push(`It's been ${daysSinceLastQuiz} days since your last quiz. Time for a refresher?`);
+      insights.push(
+        `It's been ${daysSinceLastQuiz} days since your last quiz. Time for a refresher?`
+      );
     }
 
     return insights[0] || null;
@@ -185,7 +195,9 @@ export function useProgressInsights() {
     }
 
     // 4. Least studied flashcard set
-    const leastStudied = [...flashcardInsights].sort((a, b) => a.progressPercent - b.progressPercent)[0];
+    const leastStudied = [...flashcardInsights].sort(
+      (a, b) => a.progressPercent - b.progressPercent
+    )[0];
     if (leastStudied && leastStudied.progressPercent < 50) {
       recs.push({
         id: 'study-flashcards',
@@ -202,7 +214,7 @@ export function useProgressInsights() {
       recs.push({
         id: 'career-step',
         title: 'Plan your next qualification',
-        description: 'NVQ Level 3, AM2, or 18th Edition -- see what\'s next for you.',
+        description: "NVQ Level 3, AM2, or 18th Edition -- see what's next for you.",
         actionLabel: 'View career path',
         actionPath: '/apprentice/professional-development',
         priority: 5,

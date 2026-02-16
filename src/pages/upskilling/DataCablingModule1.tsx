@@ -7,28 +7,28 @@ const DataCablingModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "What is Structured Cabling?",
+      title: 'What is Structured Cabling?',
       icon: Network,
-      description: "Introduction to structured cabling systems"
+      description: 'Introduction to structured cabling systems',
     },
     {
       id: 2,
-      title: "Topologies: Star, Bus, Ring, Mesh",
+      title: 'Topologies: Star, Bus, Ring, Mesh',
       icon: Wifi,
-      description: "Network topology types and configurations"
+      description: 'Network topology types and configurations',
     },
     {
       id: 3,
-      title: "Passive vs Active Hardware",
+      title: 'Passive vs Active Hardware',
       icon: Cpu,
-      description: "Understanding passive and active network components"
+      description: 'Understanding passive and active network components',
     },
     {
       id: 4,
-      title: "Network Speed, Bandwidth, and Future Proofing",
+      title: 'Network Speed, Bandwidth, and Future Proofing',
       icon: TrendingUp,
-      description: "Performance requirements and planning ahead"
-    }
+      description: 'Performance requirements and planning ahead',
+    },
   ];
 
   return (

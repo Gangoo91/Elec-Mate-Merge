@@ -22,6 +22,10 @@ export interface ReadinessComponent {
   weight: number;
   status: ReadinessStatus;
   detail?: string;
+  /** For portfolio: number of ACs claimed (user-entered) */
+  claimedCount?: number;
+  /** For portfolio: number of ACs with real evidence backing */
+  validatedCount?: number;
 }
 
 export interface ReadinessGap {
@@ -64,29 +68,78 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
     setError(null);
 
     try {
-      // 1. Portfolio AC coverage
+      // 1. Portfolio AC coverage — cross-validated
+      // Only count ACs where the portfolio item has real evidence backing:
+      //   - at least 1 evidence file (evidence_count > 0 or storage_urls non-empty), OR
+      //   - supervisor verified, OR
+      //   - AI validation score >= 60
       let portfolioScore = 0;
       let portfolioDetail = '0 ACs evidenced';
+      let claimedACCount = 0;
+      let validatedACCount = 0;
       try {
-        const [{ data: allACs }, { data: portfolioItems }] = await Promise.all([
-          supabase.rpc('get_qualification_acs', {
-            p_qualification_code: qualificationCode,
-          }),
-          supabase
-            .from('portfolio_items')
-            .select('assessment_criteria_met')
-            .eq('user_id', user.id),
-        ]);
+        const [{ data: allACs }, { data: portfolioItems }, { data: validations }] =
+          await Promise.all([
+            supabase.rpc('get_qualification_acs', {
+              p_qualification_code: qualificationCode,
+            }),
+            supabase
+              .from('portfolio_items')
+              .select(
+                'id, assessment_criteria_met, evidence_count, storage_urls, is_supervisor_verified'
+              )
+              .eq('user_id', user.id),
+            supabase
+              .from('evidence_quality_validations')
+              .select('portfolio_item_id, overall_score')
+              .eq('user_id', user.id)
+              .gte('overall_score', 60),
+          ]);
 
-        const totalACs = allACs?.length || 0;
-        const evidencedACs = new Set<string>();
-        portfolioItems?.forEach((item: { assessment_criteria_met: string[] | null }) => {
-          item.assessment_criteria_met?.forEach((ac: string) => evidencedACs.add(ac));
+        // Build set of portfolio item IDs with passing AI validation
+        const aiValidatedIds = new Set<string>();
+        validations?.forEach((v: { portfolio_item_id: string }) => {
+          if (v.portfolio_item_id) aiValidatedIds.add(v.portfolio_item_id);
         });
 
+        const totalACs = allACs?.length || 0;
+        const claimedACs = new Set<string>();
+        const validatedACs = new Set<string>();
+
+        portfolioItems?.forEach(
+          (item: {
+            id: string;
+            assessment_criteria_met: string[] | null;
+            evidence_count: number | null;
+            storage_urls: any[] | null;
+            is_supervisor_verified: boolean | null;
+          }) => {
+            const acs = item.assessment_criteria_met || [];
+            acs.forEach((ac: string) => claimedACs.add(ac));
+
+            // Check if this item has real backing evidence
+            const hasFiles =
+              (item.evidence_count ?? 0) > 0 ||
+              (Array.isArray(item.storage_urls) && item.storage_urls.length > 0);
+            const isVerified = item.is_supervisor_verified === true;
+            const hasAIValidation = aiValidatedIds.has(item.id);
+
+            if (hasFiles || isVerified || hasAIValidation) {
+              acs.forEach((ac: string) => validatedACs.add(ac));
+            }
+          }
+        );
+
+        claimedACCount = claimedACs.size;
+        validatedACCount = validatedACs.size;
+
         if (totalACs > 0) {
-          portfolioScore = Math.round((evidencedACs.size / totalACs) * 100);
-          portfolioDetail = `${evidencedACs.size}/${totalACs} ACs evidenced`;
+          // Score is based on validated ACs, not just claimed
+          portfolioScore = Math.round((validatedACCount / totalACs) * 100);
+          portfolioDetail =
+            claimedACCount !== validatedACCount
+              ? `${validatedACCount}/${totalACs} ACs validated (${claimedACCount} claimed)`
+              : `${validatedACCount}/${totalACs} ACs evidenced`;
         }
       } catch {
         /* non-critical */
@@ -107,8 +160,7 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
         if (validations?.length) {
           qualityScore = Math.round(
             validations.reduce(
-              (sum: number, v: { overall_score: number }) =>
-                sum + v.overall_score,
+              (sum: number, v: { overall_score: number }) => sum + v.overall_score,
               0
             ) / validations.length
           );
@@ -137,8 +189,7 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
           discussionCount = sessions.length;
           discussionScore = Math.round(
             sessions.reduce(
-              (sum: number, s: { overall_score: number }) =>
-                sum + s.overall_score,
+              (sum: number, s: { overall_score: number }) => sum + s.overall_score,
               0
             ) / sessions.length
           );
@@ -196,10 +247,8 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
         if (quizResults?.length) {
           knowledgeCount = quizResults.length;
           knowledgeScore = Math.round(
-            quizResults.reduce(
-              (sum: number, r: { score: number }) => sum + r.score,
-              0
-            ) / quizResults.length
+            quizResults.reduce((sum: number, r: { score: number }) => sum + r.score, 0) /
+              quizResults.length
           );
           knowledgeDetail = `Avg ${knowledgeScore}% from ${quizResults.length} tests`;
 
@@ -210,8 +259,16 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
           if (latest.category_breakdown && typeof latest.category_breakdown === 'object') {
             let worstPct = 101;
             Object.entries(latest.category_breakdown).forEach(([cat, data]) => {
-              if (data && typeof data === 'object' && 'total' in data && (data as { total: number }).total > 0) {
-                const pct = ((data as { correct: number; total: number }).correct / (data as { total: number }).total) * 100;
+              if (
+                data &&
+                typeof data === 'object' &&
+                'total' in data &&
+                (data as { total: number }).total > 0
+              ) {
+                const pct =
+                  ((data as { correct: number; total: number }).correct /
+                    (data as { total: number }).total) *
+                  100;
                 if (pct < worstPct) {
                   worstPct = pct;
                   weakestCategory = cat;
@@ -226,19 +283,17 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
 
       // Calculate overall
       const overallScore = Math.round(
-        portfolioScore * 0.35 +
-          qualityScore * 0.25 +
-          discussionScore * 0.2 +
-          knowledgeScore * 0.2
+        portfolioScore * 0.35 + qualityScore * 0.25 + discussionScore * 0.2 + knowledgeScore * 0.2
       );
 
       // Build gaps
       const gaps: ReadinessGap[] = [];
 
       if (portfolioScore < 70) {
-        const needed = portfolioScore < 40
-          ? 'You need significant evidence — try adding 2-3 portfolio entries per week covering different assessment criteria'
-          : 'You\'re getting close — review which ACs are missing and target those with your next evidence uploads';
+        const needed =
+          portfolioScore < 40
+            ? 'You need significant evidence — try adding 2-3 portfolio entries per week covering different assessment criteria'
+            : "You're getting close — review which ACs are missing and target those with your next evidence uploads";
         gaps.push({
           area: 'Portfolio Coverage',
           description: `${portfolioDetail} — your portfolio needs to evidence at least 70% of assessment criteria to pass the gateway`,
@@ -251,17 +306,20 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
           area: 'Evidence Quality',
           description: `${qualityDetail} — assessors expect clear, specific evidence that directly maps to criteria`,
           priority: qualityScore < 40 ? 'high' : 'medium',
-          action: qualityScore < 40
-            ? 'Your evidence needs more detail — include specific examples, measurements, and outcomes for each entry'
-            : 'Focus on adding reflection and technical reasoning to your evidence to push quality above 70%',
+          action:
+            qualityScore < 40
+              ? 'Your evidence needs more detail — include specific examples, measurements, and outcomes for each entry'
+              : 'Focus on adding reflection and technical reasoning to your evidence to push quality above 70%',
         });
       }
       if (qualityScore === 0) {
         gaps.push({
           area: 'Evidence Quality',
-          description: 'No evidence has been validated yet — you won\'t know if your evidence meets the standard until it\'s checked',
+          description:
+            "No evidence has been validated yet — you won't know if your evidence meets the standard until it's checked",
           priority: 'medium',
-          action: 'Run the AI Evidence Validator on your portfolio entries to get feedback before your assessor sees them',
+          action:
+            'Run the AI Evidence Validator on your portfolio entries to get feedback before your assessor sees them',
         });
       }
       if (discussionScore < 60 && discussionScore > 0) {
@@ -280,15 +338,15 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
       if (discussionScore === 0) {
         gaps.push({
           area: 'Professional Discussion',
-          description: 'No mock discussions attempted — the professional discussion is a major EPA component worth practising',
+          description:
+            'No mock discussions attempted — the professional discussion is a major EPA component worth practising',
           priority: 'low',
-          action: 'Start a mock discussion to see the kind of questions you\'ll face — the AI will score you against real grade descriptors',
+          action:
+            "Start a mock discussion to see the kind of questions you'll face — the AI will score you against real grade descriptors",
         });
       }
       if (knowledgeScore < 60 && knowledgeScore > 0) {
-        const catAdvice = weakestCategory
-          ? ` — your weakest area is "${weakestCategory}"`
-          : '';
+        const catAdvice = weakestCategory ? ` — your weakest area is "${weakestCategory}"` : '';
         gaps.push({
           area: 'Knowledge Test',
           description: `${knowledgeCount} test${knowledgeCount !== 1 ? 's' : ''} averaging ${knowledgeScore}%${catAdvice}`,
@@ -301,9 +359,11 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
       if (knowledgeScore === 0) {
         gaps.push({
           area: 'Knowledge Test',
-          description: 'No mock tests attempted — the knowledge test covers technical theory you\'ll need for your EPA',
+          description:
+            "No mock tests attempted — the knowledge test covers technical theory you'll need for your EPA",
           priority: 'low',
-          action: 'Take a mock knowledge test to identify which technical areas need revision before your real assessment',
+          action:
+            'Take a mock knowledge test to identify which technical areas need revision before your real assessment',
         });
       }
 
@@ -322,6 +382,8 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
             weight: 0.35,
             status: getStatus(portfolioScore),
             detail: portfolioDetail,
+            claimedCount: claimedACCount,
+            validatedCount: validatedACCount,
           },
           evidenceQuality: {
             label: 'Evidence Quality',
@@ -353,25 +415,20 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
 
       // Save snapshot
       try {
-        const { error: snapError } = await supabase
-          .from('epa_readiness_snapshots')
-          .insert({
-            user_id: user.id,
-            qualification_code: qualificationCode,
-            overall_score: overallScore,
-            overall_status: result.overallStatus,
-            portfolio_coverage_pct: portfolioScore,
-            ksb_completion_pct: 0,
-            evidence_quality_avg: qualityScore,
-            mock_discussion_avg: discussionScore,
-            mock_knowledge_avg: knowledgeScore,
-            component_details: result.components as unknown as Record<
-              string,
-              unknown
-            >,
-            gaps: gaps as unknown as Record<string, unknown>[],
-            calculated_at: new Date().toISOString(),
-          });
+        const { error: snapError } = await supabase.from('epa_readiness_snapshots').insert({
+          user_id: user.id,
+          qualification_code: qualificationCode,
+          overall_score: overallScore,
+          overall_status: result.overallStatus,
+          portfolio_coverage_pct: portfolioScore,
+          ksb_completion_pct: 0,
+          evidence_quality_avg: qualityScore,
+          mock_discussion_avg: discussionScore,
+          mock_knowledge_avg: knowledgeScore,
+          component_details: result.components as unknown as Record<string, unknown>,
+          gaps: gaps as unknown as Record<string, unknown>[],
+          calculated_at: new Date().toISOString(),
+        });
         if (snapError) {
           console.error('Failed to save readiness snapshot:', snapError);
         }
@@ -381,8 +438,7 @@ export function useEPAReadiness(qualificationCode?: string, qualificationId?: st
 
       return result;
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : 'Failed to calculate readiness';
+      const message = err instanceof Error ? err.message : 'Failed to calculate readiness';
       console.error('EPA readiness error:', err);
       setError(message);
       return null;

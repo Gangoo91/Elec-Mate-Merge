@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
@@ -28,27 +35,26 @@ export const AutocompleteInput = React.forwardRef<HTMLInputElement, Autocomplete
     }, [value]);
 
     // Check if suggestions are categorized
-    const isCategorized = suggestions.length > 0 && typeof suggestions[0] === 'object' && 'category' in suggestions[0];
+    const isCategorized =
+      suggestions.length > 0 && typeof suggestions[0] === 'object' && 'category' in suggestions[0];
 
     // Filter suggestions based on input
     const filteredSuggestions = React.useMemo(() => {
       const query = inputValue?.toLowerCase() || '';
-      
+
       if (isCategorized) {
         const categorized = suggestions as CircuitDescriptionCategory[];
-        
+
         if (!query || query.length < 1) {
           // Show first 5 categories when empty
           return categorized.slice(0, 5);
         }
-        
+
         // Filter items within categories
         return categorized
           .map((category) => ({
             category: category.category,
-            items: category.items.filter((item) =>
-              item.toLowerCase().includes(query)
-            ),
+            items: category.items.filter((item) => item.toLowerCase().includes(query)),
           }))
           .filter((category) => category.items.length > 0);
       } else {
@@ -57,9 +63,7 @@ export const AutocompleteInput = React.forwardRef<HTMLInputElement, Autocomplete
         if (!query || query.length < 1) {
           return flat.slice(0, 10);
         }
-        return flat.filter((suggestion) =>
-          suggestion.toLowerCase().includes(query)
-        );
+        return flat.filter((suggestion) => suggestion.toLowerCase().includes(query));
       }
     }, [inputValue, suggestions, isCategorized]);
 
@@ -84,8 +88,8 @@ export const AutocompleteInput = React.forwardRef<HTMLInputElement, Autocomplete
       }, 200);
     };
 
-    const hasResults = isCategorized 
-      ? (filteredSuggestions as CircuitDescriptionCategory[]).some(cat => cat.items.length > 0)
+    const hasResults = isCategorized
+      ? (filteredSuggestions as CircuitDescriptionCategory[]).some((cat) => cat.items.length > 0)
       : filteredSuggestions.length > 0;
 
     return (
@@ -132,7 +136,7 @@ export const AutocompleteInput = React.forwardRef<HTMLInputElement, Autocomplete
                 {isCategorized ? (
                   // Render categorized suggestions
                   (filteredSuggestions as CircuitDescriptionCategory[]).map((category) => (
-                    <CommandGroup 
+                    <CommandGroup
                       key={category.category}
                       heading={category.category}
                       className="px-2 py-2"

@@ -1,121 +1,132 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Award, 
-  Calendar, 
-  CheckCircle, 
-  Clock, 
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Award,
+  Calendar,
+  CheckCircle,
+  Clock,
   AlertTriangle,
   Target,
   BookOpen,
   FileText,
   TrendingUp,
-  BarChart3
-} from "lucide-react";
+  BarChart3,
+} from 'lucide-react';
 
 const AssessmentComplianceTracker = () => {
   // Mock assessment data
   const assessments = [
     {
       id: 1,
-      title: "Unit 301 - Electrical Installation",
-      type: "Practical Assessment",
-      dueDate: "2024-02-15",
-      status: "Completed",
-      grade: "Merit",
-      completedDate: "2024-01-20",
-      feedback: "Good practical skills demonstrated"
+      title: 'Unit 301 - Electrical Installation',
+      type: 'Practical Assessment',
+      dueDate: '2024-02-15',
+      status: 'Completed',
+      grade: 'Merit',
+      completedDate: '2024-01-20',
+      feedback: 'Good practical skills demonstrated',
     },
     {
       id: 2,
-      title: "Unit 302 - Electrical Science",
-      type: "Theory Exam",
-      dueDate: "2024-02-20",
-      status: "In Progress",
+      title: 'Unit 302 - Electrical Science',
+      type: 'Theory Exam',
+      dueDate: '2024-02-20',
+      status: 'In Progress',
       grade: null,
       completedDate: null,
-      feedback: null
+      feedback: null,
     },
     {
       id: 3,
-      title: "Health & Safety Assessment",
-      type: "Written Assessment",
-      dueDate: "2024-02-25",
-      status: "Not Started",
+      title: 'Health & Safety Assessment',
+      type: 'Written Assessment',
+      dueDate: '2024-02-25',
+      status: 'Not Started',
       grade: null,
       completedDate: null,
-      feedback: null
-    }
+      feedback: null,
+    },
   ];
 
   const complianceItems = [
     {
       id: 1,
-      requirement: "Off-the-Job Training Hours",
+      requirement: 'Off-the-Job Training Hours',
       target: 832,
       current: 245,
-      deadline: "2024-08-15",
-      status: "On Track",
-      type: "Training Hours"
+      deadline: '2024-08-15',
+      status: 'On Track',
+      type: 'Training Hours',
     },
     {
       id: 2,
-      requirement: "Portfolio Submissions",
+      requirement: 'Portfolio Submissions',
       target: 20,
       current: 15,
-      deadline: "2024-07-30",
-      status: "Ahead",
-      type: "Portfolio"
+      deadline: '2024-07-30',
+      status: 'Ahead',
+      type: 'Portfolio',
     },
     {
       id: 3,
-      requirement: "Witness Testimonies",
+      requirement: 'Witness Testimonies',
       target: 5,
       current: 2,
-      deadline: "2024-06-15",
-      status: "Behind",
-      type: "Documentation"
-    }
+      deadline: '2024-06-15',
+      status: 'Behind',
+      type: 'Documentation',
+    },
   ];
 
   const milestones = [
     {
       id: 1,
-      title: "First Year Review",
-      date: "2024-03-01",
-      status: "Upcoming",
-      requirements: ["Complete 208 training hours", "Submit 5 portfolio items", "Pass health & safety assessment"]
+      title: 'First Year Review',
+      date: '2024-03-01',
+      status: 'Upcoming',
+      requirements: [
+        'Complete 208 training hours',
+        'Submit 5 portfolio items',
+        'Pass health & safety assessment',
+      ],
     },
     {
       id: 2,
-      title: "Mid-Point Assessment",
-      date: "2024-06-01",
-      status: "Planned",
-      requirements: ["Complete 416 training hours", "Submit 10 portfolio items", "Complete all theory assessments"]
+      title: 'Mid-Point Assessment',
+      date: '2024-06-01',
+      status: 'Planned',
+      requirements: [
+        'Complete 416 training hours',
+        'Submit 10 portfolio items',
+        'Complete all theory assessments',
+      ],
     },
     {
       id: 3,
-      title: "Final Assessment",
-      date: "2024-08-15",
-      status: "Planned",
-      requirements: ["Complete all 832 training hours", "Submit complete portfolio", "Pass final practical assessment"]
-    }
+      title: 'Final Assessment',
+      date: '2024-08-15',
+      status: 'Planned',
+      requirements: [
+        'Complete all 832 training hours',
+        'Submit complete portfolio',
+        'Pass final practical assessment',
+      ],
+    },
   ];
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case "Completed":
+      case 'Completed':
         return <Badge className="bg-green-500">Completed</Badge>;
-      case "In Progress":
+      case 'In Progress':
         return <Badge className="bg-blue-500">In Progress</Badge>;
-      case "Not Started":
+      case 'Not Started':
         return <Badge className="bg-white/15">Not Started</Badge>;
-      case "Overdue":
+      case 'Overdue':
         return <Badge className="bg-red-500">Overdue</Badge>;
       default:
         return <Badge variant="secondary">{status}</Badge>;
@@ -124,13 +135,13 @@ const AssessmentComplianceTracker = () => {
 
   const getComplianceStatusBadge = (status: string) => {
     switch (status) {
-      case "On Track":
+      case 'On Track':
         return <Badge className="bg-green-500">On Track</Badge>;
-      case "Ahead":
+      case 'Ahead':
         return <Badge className="bg-blue-500">Ahead</Badge>;
-      case "Behind":
+      case 'Behind':
         return <Badge className="bg-orange-500">Behind</Badge>;
-      case "At Risk":
+      case 'At Risk':
         return <Badge className="bg-red-500">At Risk</Badge>;
       default:
         return <Badge variant="secondary">{status}</Badge>;
@@ -139,11 +150,11 @@ const AssessmentComplianceTracker = () => {
 
   const getMilestoneStatusBadge = (status: string) => {
     switch (status) {
-      case "Completed":
+      case 'Completed':
         return <Badge className="bg-green-500">Completed</Badge>;
-      case "Upcoming":
+      case 'Upcoming':
         return <Badge className="bg-orange-500">Upcoming</Badge>;
-      case "Planned":
+      case 'Planned':
         return <Badge className="bg-blue-500">Planned</Badge>;
       default:
         return <Badge variant="secondary">{status}</Badge>;
@@ -164,7 +175,7 @@ const AssessmentComplianceTracker = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
@@ -173,7 +184,7 @@ const AssessmentComplianceTracker = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
@@ -182,7 +193,7 @@ const AssessmentComplianceTracker = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="text-center">
@@ -207,10 +218,18 @@ const AssessmentComplianceTracker = () => {
 
       <Tabs defaultValue="assessments" className="w-full">
         <TabsList className="w-full">
-          <TabsTrigger value="assessments" className="flex-1">Assessments</TabsTrigger>
-          <TabsTrigger value="compliance" className="flex-1">Compliance</TabsTrigger>
-          <TabsTrigger value="milestones" className="flex-1">Milestones</TabsTrigger>
-          <TabsTrigger value="analytics" className="flex-1">Analytics</TabsTrigger>
+          <TabsTrigger value="assessments" className="flex-1">
+            Assessments
+          </TabsTrigger>
+          <TabsTrigger value="compliance" className="flex-1">
+            Compliance
+          </TabsTrigger>
+          <TabsTrigger value="milestones" className="flex-1">
+            Milestones
+          </TabsTrigger>
+          <TabsTrigger value="analytics" className="flex-1">
+            Analytics
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="assessments" className="space-y-6">
@@ -237,7 +256,7 @@ const AssessmentComplianceTracker = () => {
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-white">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
@@ -256,7 +275,7 @@ const AssessmentComplianceTracker = () => {
                         </div>
                       )}
                     </div>
-                    
+
                     {assessment.feedback && (
                       <div className="mt-3 p-3 bg-muted rounded-lg">
                         <p className="text-sm">{assessment.feedback}</p>
@@ -288,16 +307,18 @@ const AssessmentComplianceTracker = () => {
                       </div>
                       {getComplianceStatusBadge(item.status)}
                     </div>
-                    
+
                     <div className="space-y-3">
                       <div>
                         <div className="flex justify-between text-sm mb-1">
                           <span>Progress</span>
-                          <span>{item.current} / {item.target}</span>
+                          <span>
+                            {item.current} / {item.target}
+                          </span>
                         </div>
                         <Progress value={calculateProgress(item.current, item.target)} />
                       </div>
-                      
+
                       <div className="flex items-center gap-1 text-sm text-white">
                         <Calendar className="h-3 w-3" />
                         Deadline: {item.deadline}
@@ -332,7 +353,7 @@ const AssessmentComplianceTracker = () => {
                       </div>
                       {getMilestoneStatusBadge(milestone.status)}
                     </div>
-                    
+
                     <div>
                       <h4 className="font-medium mb-2">Requirements:</h4>
                       <ul className="space-y-1">

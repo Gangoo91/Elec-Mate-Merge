@@ -95,7 +95,12 @@ export function LinkPreview({ url, className, onRemove }: LinkPreviewProps) {
 
   if (loading) {
     return (
-      <div className={cn('flex gap-3 p-3 rounded-lg border border-border bg-muted/30 max-w-sm', className)}>
+      <div
+        className={cn(
+          'flex gap-3 p-3 rounded-lg border border-border bg-muted/30 max-w-sm',
+          className
+        )}
+      >
         <Skeleton className="w-16 h-16 rounded shrink-0" />
         <div className="flex-1 space-y-2">
           <Skeleton className="h-4 w-3/4" />
@@ -112,10 +117,7 @@ export function LinkPreview({ url, className, onRemove }: LinkPreviewProps) {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(
-          'flex items-center gap-2 text-sm text-blue-500 hover:underline',
-          className
-        )}
+        className={cn('flex items-center gap-2 text-sm text-blue-500 hover:underline', className)}
       >
         <LinkIcon className="h-4 w-4" />
         <span className="truncate">{url}</span>
@@ -163,13 +165,9 @@ export function LinkPreview({ url, className, onRemove }: LinkPreviewProps) {
           </span>
           <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity ml-auto shrink-0" />
         </div>
-        {preview.title && (
-          <h4 className="font-medium text-sm line-clamp-2">{preview.title}</h4>
-        )}
+        {preview.title && <h4 className="font-medium text-sm line-clamp-2">{preview.title}</h4>}
         {preview.description && (
-          <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
-            {preview.description}
-          </p>
+          <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{preview.description}</p>
         )}
       </div>
       {onRemove && (

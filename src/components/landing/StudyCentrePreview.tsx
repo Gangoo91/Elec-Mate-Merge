@@ -49,11 +49,10 @@ export const StudyCentrePreview = () => {
             <BookOpen className="w-4 h-4 text-blue-400" />
             <span className="text-sm font-medium text-blue-400">Study Centre</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Learn, Train & Upskill
-          </h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Learn, Train & Upskill</h2>
           <p className="text-white/70 max-w-2xl mx-auto">
-            6,800+ practice questions across apprentice courses, 18th Edition, AM2 prep, and specialist upskilling modules.
+            6,800+ practice questions across apprentice courses, 18th Edition, AM2 prep, and
+            specialist upskilling modules.
           </p>
         </motion.div>
 
@@ -100,10 +99,7 @@ export const StudyCentrePreview = () => {
               <h3 className="text-xl font-semibold text-white mb-6">Why Study With Us</h3>
               <div className="space-y-4">
                 {features.map((feature) => (
-                  <div
-                    key={feature.title}
-                    className="flex items-start gap-4"
-                  >
+                  <div key={feature.title} className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
                       <feature.icon className="w-5 h-5 text-blue-400" />
                     </div>
@@ -119,7 +115,8 @@ export const StudyCentrePreview = () => {
             <div className="flex items-center gap-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
               <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
               <p className="text-sm text-white/80">
-                <span className="font-semibold text-green-400">93% pass rate</span> for users who complete our practice tests
+                <span className="font-semibold text-green-400">93% pass rate</span> for users who
+                complete our practice tests
               </p>
             </div>
 

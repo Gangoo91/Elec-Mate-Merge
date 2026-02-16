@@ -1,24 +1,27 @@
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Zap } from "lucide-react";
-import { useCalculator } from "./useCalculator";
-import PowerFactorInputs from "./PowerFactorInputs";
-import PowerFactorResult from "./PowerFactorResult";
-import PowerFactorInfo from "./PowerFactorInfo";
-import ValidationIndicator from "../ValidationIndicator";
-import CalculationReport from "../CalculationReport";
-import CalculationHistory, { type CalculationEntry } from "../calculation-history/CalculationHistory";
-import QuickCalculationPresets, { type PresetScenario } from "../smart-features/QuickCalculationPresets";
-import SmartInputSuggestions from "../smart-features/SmartInputSuggestions";
-import { useToast } from "@/components/ui/use-toast";
-import { useEffect, useState, useRef } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Zap } from 'lucide-react';
+import { useCalculator } from './useCalculator';
+import PowerFactorInputs from './PowerFactorInputs';
+import PowerFactorResult from './PowerFactorResult';
+import PowerFactorInfo from './PowerFactorInfo';
+import ValidationIndicator from '../ValidationIndicator';
+import CalculationReport from '../CalculationReport';
+import CalculationHistory, {
+  type CalculationEntry,
+} from '../calculation-history/CalculationHistory';
+import QuickCalculationPresets, {
+  type PresetScenario,
+} from '../smart-features/QuickCalculationPresets';
+import SmartInputSuggestions from '../smart-features/SmartInputSuggestions';
+import { useToast } from '@/components/ui/use-toast';
+import { useEffect, useState, useRef } from 'react';
 
 const PowerFactorCalculator = () => {
   const { toast } = useToast();
   const historyRef = useRef<any>(null);
   const [calculationInputs, setCalculationInputs] = useState<any>({});
   const [calculationResults, setCalculationResults] = useState<any>({});
-  
+
   const {
     activePower,
     setActivePower,
@@ -40,18 +43,18 @@ const PowerFactorCalculator = () => {
     resetCalculator,
     targetPF,
     setTargetPF,
-    capacitorKVAr
+    capacitorKVAr,
   } = useCalculator();
 
   // Enhanced calculation with history saving
   const handleCalculate = () => {
     calculatePowerFactor();
-    
+
     if (!activePower) {
       toast({
-        title: "Input Required",
-        description: "Please fill in the required fields to calculate power factor.",
-        variant: "destructive",
+        title: 'Input Required',
+        description: 'Please fill in the required fields to calculate power factor.',
+        variant: 'destructive',
       });
       return;
     }
@@ -62,15 +65,15 @@ const PowerFactorCalculator = () => {
       apparentPower,
       current,
       voltage,
-      calculationMethod
+      calculationMethod,
     };
-    
+
     setCalculationInputs(inputs);
-    
+
     if (powerFactor) {
       const results = { powerFactor };
       setCalculationResults(results);
-      
+
       // Save to history
       if (historyRef.current) {
         historyRef.current.saveCalculation(inputs, results, validation?.isValid || false);
@@ -80,39 +83,39 @@ const PowerFactorCalculator = () => {
 
   const handlePresetSelect = (preset: PresetScenario) => {
     const inputs = preset.inputs;
-    
+
     if (inputs.activePower) setActivePower(inputs.activePower);
     if (inputs.apparentPower) setApparentPower(inputs.apparentPower);
     if (inputs.voltage) setVoltage(inputs.voltage);
     if (inputs.current) setCurrent(inputs.current);
-    
+
     // Set calculation method based on preset inputs
     if (inputs.voltage && inputs.current) {
       setCalculationMethod('currentVoltage');
     } else {
       setCalculationMethod('power');
     }
-    
+
     toast({
-      title: "Preset Applied",
+      title: 'Preset Applied',
       description: `${preset.name} scenario loaded successfully.`,
-      variant: "default",
+      variant: 'default',
     });
   };
 
   const handleHistoryRestore = (entry: CalculationEntry) => {
     const inputs = entry.inputs;
-    
+
     if (inputs.activePower) setActivePower(inputs.activePower);
     if (inputs.apparentPower) setApparentPower(inputs.apparentPower);
     if (inputs.voltage) setVoltage(inputs.voltage);
     if (inputs.current) setCurrent(inputs.current);
     if (inputs.calculationMethod) setCalculationMethod(inputs.calculationMethod);
-    
+
     toast({
-      title: "Calculation Restored",
-      description: "Previous calculation has been loaded.",
-      variant: "default",
+      title: 'Calculation Restored',
+      description: 'Previous calculation has been loaded.',
+      variant: 'default',
     });
   };
 
@@ -131,7 +134,8 @@ const PowerFactorCalculator = () => {
             <CardTitle>Power Factor Calculator</CardTitle>
           </div>
           <CardDescription>
-            Calculate power factor using active/apparent power or current/voltage measurements with BS 7671 validation.
+            Calculate power factor using active/apparent power or current/voltage measurements with
+            BS 7671 validation.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -156,7 +160,7 @@ const PowerFactorCalculator = () => {
                 calculatePowerFactor={handleCalculate}
                 resetCalculator={handleReset}
               />
-              
+
               {/* Smart Input Suggestions */}
               {calculationMethod === 'power' && (
                 <>
@@ -174,7 +178,7 @@ const PowerFactorCalculator = () => {
                   />
                 </>
               )}
-              
+
               {calculationMethod === 'currentVoltage' && (
                 <>
                   <SmartInputSuggestions
@@ -192,7 +196,7 @@ const PowerFactorCalculator = () => {
                 </>
               )}
             </div>
-            
+
             {/* Result Section */}
             <div className="space-y-4">
               <div className="rounded-md bg-white/10 p-6 min-h-[200px] flex items-center justify-center">
@@ -200,7 +204,7 @@ const PowerFactorCalculator = () => {
               </div>
               <PowerFactorInfo />
             </div>
-            
+
             {/* Quick Presets */}
             <div className="space-y-4">
               <QuickCalculationPresets

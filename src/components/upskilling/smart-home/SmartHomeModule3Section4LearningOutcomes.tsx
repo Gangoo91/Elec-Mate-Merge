@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule3Section4LearningOutcomes = () => {
   const outcomes = [
-    "Identify different lighting load types (resistive, inductive, capacitive)",
-    "Match appropriate control types to different lamp technologies",
-    "Explain why compatibility matters for safety and performance",
-    "Recognise common problems when mismatching loads and controls",
-    "Apply best practices for selecting controls in smart lighting installations"
+    'Identify different lighting load types (resistive, inductive, capacitive)',
+    'Match appropriate control types to different lamp technologies',
+    'Explain why compatibility matters for safety and performance',
+    'Recognise common problems when mismatching loads and controls',
+    'Apply best practices for selecting controls in smart lighting installations',
   ];
 
   return (
@@ -19,7 +19,9 @@ export const SmartHomeModule3Section4LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground">
-        <p className="mb-4 text-foreground">By the end of this section, learners will be able to:</p>
+        <p className="mb-4 text-foreground">
+          By the end of this section, learners will be able to:
+        </p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3">

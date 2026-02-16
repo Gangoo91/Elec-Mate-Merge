@@ -1,10 +1,42 @@
 import React, { useState } from 'react';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { HelpCircle, Search, Book, ExternalLink, Rocket, Shield, Zap, FileCheck, BookOpen, Lightbulb, AlertTriangle, CheckCircle2, Clock, ListChecks, User, Briefcase, Calendar, Camera, Database, Save, Cable, PenTool, Brain, Users } from 'lucide-react';
+import {
+  HelpCircle,
+  Search,
+  Book,
+  ExternalLink,
+  Rocket,
+  Shield,
+  Zap,
+  FileCheck,
+  BookOpen,
+  Lightbulb,
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
+  ListChecks,
+  User,
+  Briefcase,
+  Calendar,
+  Camera,
+  Database,
+  Save,
+  Cable,
+  PenTool,
+  Brain,
+  Users,
+} from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -23,7 +55,8 @@ const helpArticles = [
         badge: 'Essential - Start Here',
         estimatedTime: '5-10 minutes',
         tags: ['profile', 'setup', 'beginner', 'essential'],
-        content: 'Your inspector profile is required for professional certificates and legally compliant reports:',
+        content:
+          'Your inspector profile is required for professional certificates and legally compliant reports:',
         steps: [
           'Navigate to Settings (gear icon, top right) or Profile section',
           'Add personal details: Full name, qualifications, certifications',
@@ -34,14 +67,14 @@ const helpArticles = [
           'Enter registration scheme details (NICEIC, NAPIT, ELECSA, etc.)',
           'Add insurance information including policy number and expiry',
           'Create your digital signature (draw or generate)',
-          'Review completion percentage - aim for 100%'
+          'Review completion percentage - aim for 100%',
         ],
         tips: [
           'Profile data auto-populates in all certificates',
           'Digital signature can be drawn on touchscreen or generated from typed name',
           'Keep insurance details current - system alerts before expiry',
-          'Multiple signature profiles supported for different scenarios'
-        ]
+          'Multiple signature profiles supported for different scenarios',
+        ],
       },
       {
         title: 'Creating Your Digital Signature',
@@ -56,14 +89,14 @@ const helpArticles = [
           'Preview signature before saving',
           'Click "Save Signature" to store in profile',
           'Multiple signatures can be saved for different purposes',
-          'Set a default signature or choose per-certificate'
+          'Set a default signature or choose per-certificate',
         ],
         tips: [
           'Draw method works best on tablets with stylus',
           'Generated signatures look professional and consistent',
           'Can edit/replace signature anytime without affecting old certificates',
-          'Signature data stored securely offline using IndexedDB'
-        ]
+          'Signature data stored securely offline using IndexedDB',
+        ],
       },
       {
         title: 'Creating Your First EICR',
@@ -78,13 +111,13 @@ const helpArticles = [
           'Complete supply characteristics (earthing arrangement, Ze, supply type)',
           'Work through each tab sequentially: Details → Schedule → Testing → Inspector',
           'Save regularly using Ctrl+S or the Save button',
-          'The system auto-saves every 30 seconds to prevent data loss'
+          'The system auto-saves every 30 seconds to prevent data loss',
         ],
         tips: [
           'Complete required fields marked with * before moving to the next tab',
           'Use Tab key to navigate quickly between fields',
-          'The system validates entries against BS 7671 requirements automatically'
-        ]
+          'The system validates entries against BS 7671 requirements automatically',
+        ],
       },
       {
         title: 'Using AI Board Scanning',
@@ -101,7 +134,7 @@ const helpArticles = [
           'AI detects: MCB/RCBO types and ratings (6A-63A), circuit descriptions, manufacturer/model',
           'AI can detect busbar arrangement, connections, and missing/damaged devices',
           'Review detected circuits and make any necessary corrections',
-          'Confirm and import circuits into your EICR'
+          'Confirm and import circuits into your EICR',
         ],
         tips: [
           'Take photos in good lighting for best results',
@@ -109,10 +142,10 @@ const helpArticles = [
           'Double-check detected ratings match physical installation',
           'Supports both new and older consumer unit layouts',
           'Confidence scores shown for each detection - manual override always available',
-          'Combine with Scribble to Table for fastest data entry workflow'
-        ]
-      }
-    ]
+          'Combine with Scribble to Table for fastest data entry workflow',
+        ],
+      },
+    ],
   },
   {
     category: 'AI Features',
@@ -127,7 +160,8 @@ const helpArticles = [
         badge: 'AI-Powered',
         estimatedTime: '3-5 minutes per defect',
         tags: ['AI', 'photo', 'analysis', 'classification', 'fault', 'defect'],
-        content: 'Validates inspector decisions, suggests classifications, provides BS7671 references automatically:',
+        content:
+          'Validates inspector decisions, suggests classifications, provides BS7671 references automatically:',
         steps: [
           'Take photo of any defect, fault, or installation concern on site',
           'Upload photo to an observation in your EICR/EIC form',
@@ -137,7 +171,7 @@ const helpArticles = [
           'AI gives: Photo quality feedback (lighting, focus, angle)',
           'Review AI suggestions carefully - you maintain final decision authority',
           'Accept or modify suggestions before saving to your certificate',
-          'AI explanation can be included in observation notes for client clarity'
+          'AI explanation can be included in observation notes for client clarity',
         ],
         tips: [
           'AI is a decision-support tool, not a replacement for inspector judgement and experience',
@@ -146,8 +180,8 @@ const helpArticles = [
           'AI learns common installation types and improves over time',
           'Excellent for training junior inspectors on classification rationale and reasoning',
           'Works offline once photos are captured - analysis queued until online',
-          'Confidence scores indicate AI certainty - lower scores warrant manual review'
-        ]
+          'Confidence scores indicate AI certainty - lower scores warrant manual review',
+        ],
       },
       {
         title: 'Scribble to Table - Text Circuit Parser',
@@ -155,7 +189,8 @@ const helpArticles = [
         badge: 'AI Time-Saver',
         estimatedTime: '2-4 minutes',
         tags: ['AI', 'scribble', 'text', 'parser', 'time-saver', 'handwriting', 'circuits'],
-        content: 'Convert handwritten notes or typed circuit lists into structured test data instantly using AI parsing:',
+        content:
+          'Convert handwritten notes or typed circuit lists into structured test data instantly using AI parsing:',
         steps: [
           'Access "Scribble to Table" from Schedule of Testing page (mobile: menu button, desktop: toolbar)',
           'Write or paste circuit details in natural language or structured format',
@@ -164,7 +199,7 @@ const helpArticles = [
           'AI automatically extracts: Circuit number, description, cable sizes (live/CPC), device type, and rating',
           'Review detected circuits in the preview table',
           'Edit any incorrect detections before importing (click cells to edit)',
-          'Click "Add X Circuits to Table" to import all circuits at once'
+          'Click "Add X Circuits to Table" to import all circuits at once',
         ],
         tips: [
           'Works with handwritten notes - take photo and paste OCR text',
@@ -174,10 +209,10 @@ const helpArticles = [
           'Saves 5-10 minutes per certificate vs manual entry',
           'Confidence indicator shows parsing accuracy per field',
           'Perfect for converting existing paper records to digital format',
-          'Combine with AI Board Scanner for complete automation workflow'
-        ]
-      }
-    ]
+          'Combine with AI Board Scanner for complete automation workflow',
+        ],
+      },
+    ],
   },
   {
     category: 'Customer Management',
@@ -201,14 +236,14 @@ const helpArticles = [
           'Link existing certificates or create new ones',
           'Set up certificate expiry reminders',
           'View customer history and previous reports',
-          'Export customer data for invoicing/CRM'
+          'Export customer data for invoicing/CRM',
         ],
         tips: [
           'Customers auto-populate in certificate forms',
           'Search by name, address, or certificate number',
           'Track certificate status: Draft, Issued, Expired',
-          'Bulk operations supported for reminders'
-        ]
+          'Bulk operations supported for reminders',
+        ],
       },
       {
         title: 'Certificate Expiry Tracking',
@@ -224,15 +259,15 @@ const helpArticles = [
           'Mark certificates as: Contacted, Booked, or Completed',
           'Export expiry lists for mail merge/email campaigns',
           'Set up automatic reminder notifications',
-          'Link directly to new certificate creation from expiry list'
+          'Link directly to new certificate creation from expiry list',
         ],
         tips: [
           'Batch update multiple certificates at once',
           'Track response rates to optimise follow-up timing',
-          'Dashboard widget shows upcoming expirations'
-        ]
-      }
-    ]
+          'Dashboard widget shows upcoming expirations',
+        ],
+      },
+    ],
   },
   {
     category: 'Inspection Process',
@@ -252,13 +287,13 @@ const helpArticles = [
           'C2 (Potentially Dangerous): Not immediately dangerous but requires urgent improvement. Examples: inadequate bonding, loose connections',
           'C3 (Improvement Recommended): Does not meet current standards but not dangerous. Examples: lack of RCD protection, old wiring',
           'Satisfactory: Meets BS 7671 requirements and is in good condition',
-          'N/A: Not applicable to this installation'
+          'N/A: Not applicable to this installation',
         ],
         tips: [
           'Always provide detailed observations for C1, C2, and C3 classifications',
           'Reference specific BS 7671 regulations in observations',
-          'Use AI Photo Analysis to validate your classification decisions'
-        ]
+          'Use AI Photo Analysis to validate your classification decisions',
+        ],
       },
       {
         title: 'Schedule of Inspections',
@@ -273,13 +308,13 @@ const helpArticles = [
           'Add observations for any defects or non-compliances',
           'Include photographs where relevant',
           'Reference applicable BS 7671 regulations',
-          'Use the search function to quickly find specific items'
+          'Use the search function to quickly find specific items',
         ],
         tips: [
-          'Complete all sections - don\'t skip items',
+          "Complete all sections - don't skip items",
           'Be thorough in observations - they must be clear and actionable',
-          'Include location details for each observation'
-        ]
+          'Include location details for each observation',
+        ],
       },
       {
         title: 'Adding Observations',
@@ -294,16 +329,16 @@ const helpArticles = [
           'Include specific location (e.g., "Kitchen ring circuit, socket outlet near sink")',
           'Reference relevant BS 7671 regulation (e.g., "411.3.3 - RCD protection required")',
           'Add recommended remedial action',
-          'Attach photos and use AI analysis for validation'
+          'Attach photos and use AI analysis for validation',
         ],
         tips: [
           'Be specific - avoid vague descriptions',
           'Use technical but understandable language',
           'Always include regulation references for credibility',
-          'AI Photo Analysis can suggest classifications and provide regulation references'
-        ]
-      }
-    ]
+          'AI Photo Analysis can suggest classifications and provide regulation references',
+        ],
+      },
+    ],
   },
   {
     category: 'Testing',
@@ -323,13 +358,13 @@ const helpArticles = [
           'Method 2: Tests by sub-circuit with individual circuit breakers. Provides more detailed results per circuit.',
           'Method 3: Tests by individual circuit with all others disconnected. Most accurate and detailed method.',
           'Choose method based on installation size and report requirements',
-          'Method 3 is recommended for comprehensive EICRs'
+          'Method 3 is recommended for comprehensive EICRs',
         ],
         tips: [
           'Record test method used in your report',
           'Method 3 provides best fault-finding capability',
-          'Consider installation size when selecting method'
-        ]
+          'Consider installation size when selecting method',
+        ],
       },
       {
         title: 'Insulation Resistance Testing',
@@ -343,13 +378,13 @@ const helpArticles = [
           'Test between live conductors and earth',
           'Test between live conductors (line-to-neutral)',
           'Disconnect sensitive equipment before testing',
-          'Record all readings on the schedule of test results'
+          'Record all readings on the schedule of test results',
         ],
         tips: [
           'Values below 2MΩ warrant investigation',
           'Moisture can significantly reduce readings',
-          'Ensure all switches and control devices are closed during test'
-        ]
+          'Ensure all switches and control devices are closed during test',
+        ],
       },
       {
         title: 'Earth Fault Loop Impedance (Zs)',
@@ -364,14 +399,14 @@ const helpArticles = [
           'Zs = Ze + (R1 + R2) for verification',
           'System will automatically validate against BS 7671 Table 41.3',
           'Values exceeding limits indicate inadequate earth fault protection',
-          'Use the Zs Calculator tool for instant compliance checking'
+          'Use the Zs Calculator tool for instant compliance checking',
         ],
         tips: [
           'Test at socket outlets using plug-in tester',
           'Verify using measured Ze and R1+R2 values',
           'High Zs values may require circuit investigation or device upgrade',
-          'Zs Calculator provides temperature correction and safety margin analysis'
-        ]
+          'Zs Calculator provides temperature correction and safety margin analysis',
+        ],
       },
       {
         title: 'RCD Testing Requirements',
@@ -385,15 +420,15 @@ const helpArticles = [
           'Test at 50% of rated current: Should NOT trip',
           'Test both positive and negative half cycles',
           'Record all trip times',
-          'Check mechanical operation using test button'
+          'Check mechanical operation using test button',
         ],
         tips: [
           'RCDs must trip within specified times or be replaced',
           'Always test mechanical test button monthly',
-          '30mA RCDs required for socket outlets and bathrooms'
-        ]
-      }
-    ]
+          '30mA RCDs required for socket outlets and bathrooms',
+        ],
+      },
+    ],
   },
   {
     category: 'Tools & Calculators',
@@ -417,15 +452,15 @@ const helpArticles = [
           'Safety margin percentage calculation',
           'Compliance Status: Pass/Fail with colour coding',
           'Regulation References: Direct links to BS7671 clauses',
-          'Practical Guidance: Troubleshooting high Zs readings'
+          'Practical Guidance: Troubleshooting high Zs readings',
         ],
         tips: [
           'Save calculations for later reference',
           'Compare multiple circuits side-by-side',
           'Export results to PDF for client reports',
           'Mobile-optimised for on-site use',
-          'Tabs: Calculator, Results, Guidance, Regulations, Settings'
-        ]
+          'Tabs: Calculator, Results, Guidance, Regulations, Settings',
+        ],
       },
       {
         title: 'Cable Capacity Calculator',
@@ -441,15 +476,15 @@ const helpArticles = [
           'Calculates: Minimum cable size (mm²), current carrying capacity',
           'Voltage drop (V and %), BS7671 compliance status',
           'Derating factors applied automatically',
-          'Multiple installation methods supported'
+          'Multiple installation methods supported',
         ],
         tips: [
           'Compare different cable sizes for cost optimisation',
           'Consider future load increases in design',
           'Check voltage drop especially for long runs',
           'Export sizing calculations for design documentation',
-          'Tabs: Calculator, Analysis, Guide, Compliance, Examples'
-        ]
+          'Tabs: Calculator, Analysis, Guide, Compliance, Examples',
+        ],
       },
       {
         title: 'Learning Hub & BS7671 Reference',
@@ -463,16 +498,16 @@ const helpArticles = [
           'Fault Finding: Diagnostic flowcharts for common issues',
           'Quiz Mode: Test your knowledge, track progress',
           'Interactive Diagrams: Visual guides to test methods',
-          'Access via main menu "Learning Hub" or tools section'
+          'Access via main menu "Learning Hub" or tools section',
         ],
         tips: [
           'Bookmark frequently-referenced regulations',
           'Use AI Regulation Search for natural language queries',
           'Complete quizzes to earn CPD tracking (future feature)',
-          'Download procedures for offline reference'
-        ]
-      }
-    ]
+          'Download procedures for offline reference',
+        ],
+      },
+    ],
   },
   {
     category: 'Advanced Features',
@@ -493,15 +528,15 @@ const helpArticles = [
           'Data syncs to cloud when connection restored',
           'Conflict resolution handles simultaneous edits',
           'Manual sync trigger available in settings',
-          'What\'s stored offline: Form drafts, photos, profiles, signatures, customer database',
-          'Also stored: Regulation reference library, calculator history'
+          "What's stored offline: Form drafts, photos, profiles, signatures, customer database",
+          'Also stored: Regulation reference library, calculator history',
         ],
         tips: [
           'Green cloud icon = synced, orange = pending, red = sync failed',
           'Large photos may take time to sync on slow connections',
           'Check sync status before closing app on-site',
-          'Manual "Clear All Data" available in settings (use with caution)'
-        ]
+          'Manual "Clear All Data" available in settings (use with caution)',
+        ],
       },
       {
         title: 'Auto-Save & Data Recovery',
@@ -516,16 +551,16 @@ const helpArticles = [
           'Manual save: Ctrl+S (or Save button)',
           '"Unsaved changes" warning before navigation',
           'Settings: Enable/disable auto-save, change interval (15s, 30s, 60s, 120s)',
-          'View storage usage and clear old drafts'
+          'View storage usage and clear old drafts',
         ],
         tips: [
           'Yellow indicator shows unsaved changes',
           'Green checkmark confirms save completed',
           'Drafts persist until manually deleted or certificate completed',
-          'Each certificate type has separate draft storage'
-        ]
-      }
-    ]
+          'Each certificate type has separate draft storage',
+        ],
+      },
+    ],
   },
   {
     category: 'Regulations & Reference',
@@ -547,8 +582,8 @@ const helpArticles = [
           'Part 4: Protection for Safety (earthing, bonding, fault protection)',
           'Part 5: Selection and Erection of Equipment',
           'Part 6: Inspection and Testing (your primary reference for EICRs)',
-          'Part 7: Special Installations or Locations (bathrooms, swimming pools, etc.)'
-        ]
+          'Part 7: Special Installations or Locations (bathrooms, swimming pools, etc.)',
+        ],
       },
       {
         title: 'Common Regulation References',
@@ -563,8 +598,8 @@ const helpArticles = [
           '543.1: Protective conductor sizes',
           '612.3: Insulation resistance test requirements',
           '612.6: Earth fault loop impedance requirements',
-          '701: Bathrooms and shower rooms special requirements'
-        ]
+          '701: Bathrooms and shower rooms special requirements',
+        ],
       },
       {
         title: 'Using AI Regulation Search',
@@ -578,11 +613,11 @@ const helpArticles = [
           'Example: "RCD requirements for bathroom"',
           'AI will find relevant regulations and explain them',
           'Copy regulation references into your observations',
-          'Use for quick lookup during inspections'
-        ]
-      }
-    ]
-  }
+          'Use for quick lookup during inspections',
+        ],
+      },
+    ],
+  },
 ];
 
 const quickReference = [
@@ -609,55 +644,84 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [internalOpen, setInternalOpen] = useState(false);
-  
+
   const isOpen = open !== undefined ? open : internalOpen;
   const setIsOpen = onOpenChange || setInternalOpen;
 
-  const filteredArticles = helpArticles.map(category => ({
-    ...category,
-    items: category.items.filter(
-      item =>
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (item.steps?.some(step => step.toLowerCase().includes(searchQuery.toLowerCase())) ?? false) ||
-        ((item as any).tags?.some((tag: string) => tag.toLowerCase().includes(searchQuery.toLowerCase())) ?? false)
-    )
-  })).filter(category => selectedCategory ? category.category === selectedCategory : category.items.length > 0);
+  const filteredArticles = helpArticles
+    .map((category) => ({
+      ...category,
+      items: category.items.filter(
+        (item) =>
+          item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (item.steps?.some((step) => step.toLowerCase().includes(searchQuery.toLowerCase())) ??
+            false) ||
+          ((item as any).tags?.some((tag: string) =>
+            tag.toLowerCase().includes(searchQuery.toLowerCase())
+          ) ??
+            false)
+      ),
+    }))
+    .filter((category) =>
+      selectedCategory ? category.category === selectedCategory : category.items.length > 0
+    );
 
   const resultCount = filteredArticles.reduce((sum, cat) => sum + cat.items.length, 0);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetContent className="w-full sm:max-w-2xl overflow-y-auto bg-gradient-to-b from-neutral-900 to-neutral-950">
-        <SheetHeader className={cn("space-y-3", isMobile && "space-y-2")}>
-          <SheetTitle className={cn("flex items-center gap-3", isMobile ? "text-lg gap-2" : "text-2xl")}>
-            <div className={cn("rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center", isMobile ? "w-8 h-8" : "w-10 h-10")}>
-              <Book className={cn(isMobile ? "h-4 w-4" : "h-5 w-5", "text-blue-400")} />
+        <SheetHeader className={cn('space-y-3', isMobile && 'space-y-2')}>
+          <SheetTitle
+            className={cn('flex items-center gap-3', isMobile ? 'text-lg gap-2' : 'text-2xl')}
+          >
+            <div
+              className={cn(
+                'rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center',
+                isMobile ? 'w-8 h-8' : 'w-10 h-10'
+              )}
+            >
+              <Book className={cn(isMobile ? 'h-4 w-4' : 'h-5 w-5', 'text-blue-400')} />
             </div>
             Help & Documentation
           </SheetTitle>
-          <SheetDescription className={cn(isMobile ? "text-sm" : "text-base")}>
+          <SheetDescription className={cn(isMobile ? 'text-sm' : 'text-base')}>
             Comprehensive guides for BS 7671 compliant electrical inspections
           </SheetDescription>
         </SheetHeader>
 
-        <div className={cn("space-y-6 mt-6", isMobile && "space-y-4")}>
+        <div className={cn('space-y-6 mt-6', isMobile && 'space-y-4')}>
           {/* Search Section */}
-          <div className={cn("space-y-3", isMobile && "space-y-2")}>
+          <div className={cn('space-y-3', isMobile && 'space-y-2')}>
             <div className="relative">
               {!searchQuery && (
-                <Search className={cn("absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none", isMobile ? "h-3.5 w-3.5" : "h-4 w-4")} />
+                <Search
+                  className={cn(
+                    'absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none',
+                    isMobile ? 'h-3.5 w-3.5' : 'h-4 w-4'
+                  )}
+                />
               )}
               <Input
-                placeholder={isMobile ? "Search help..." : "Search help articles or regulations..."}
+                placeholder={isMobile ? 'Search help...' : 'Search help articles or regulations...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={cn("bg-card/50 border-border", isMobile && "h-10 text-sm", !searchQuery && "pl-10")}
+                className={cn(
+                  'bg-card/50 border-border',
+                  isMobile && 'h-10 text-sm',
+                  !searchQuery && 'pl-10'
+                )}
               />
             </div>
             {searchQuery && (
-              <p className={cn("text-xs text-muted-foreground flex items-center gap-2", isMobile && "text-[10px]")}>
-                <CheckCircle2 className={cn(isMobile ? "h-2.5 w-2.5" : "h-3 w-3")} />
+              <p
+                className={cn(
+                  'text-xs text-muted-foreground flex items-center gap-2',
+                  isMobile && 'text-[10px]'
+                )}
+              >
+                <CheckCircle2 className={cn(isMobile ? 'h-2.5 w-2.5' : 'h-3 w-3')} />
                 Found {resultCount} article{resultCount !== 1 ? 's' : ''} matching "{searchQuery}"
               </p>
             )}
@@ -667,9 +731,12 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
                   variant="outline"
                   size="sm"
                   onClick={() => setSelectedCategory(null)}
-                  className={cn(selectedCategory === null ? 'bg-blue-500/20 border-blue-500/50' : '', isMobile && "min-h-[44px] text-xs whitespace-nowrap")}
+                  className={cn(
+                    selectedCategory === null ? 'bg-blue-500/20 border-blue-500/50' : '',
+                    isMobile && 'min-h-[44px] text-xs whitespace-nowrap'
+                  )}
                 >
-                  {isMobile ? "All" : "All Categories"}
+                  {isMobile ? 'All' : 'All Categories'}
                 </Button>
                 {helpArticles.map((cat) => (
                   <Button
@@ -677,7 +744,10 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
                     variant="outline"
                     size="sm"
                     onClick={() => setSelectedCategory(cat.category)}
-                    className={cn(selectedCategory === cat.category ? 'bg-blue-500/20 border-blue-500/50' : '', isMobile && "min-h-[44px] text-xs whitespace-nowrap")}
+                    className={cn(
+                      selectedCategory === cat.category ? 'bg-blue-500/20 border-blue-500/50' : '',
+                      isMobile && 'min-h-[44px] text-xs whitespace-nowrap'
+                    )}
                   >
                     {cat.category}
                   </Button>
@@ -687,57 +757,123 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
           </div>
 
           {/* Help Articles */}
-          <div className={cn("space-y-4", isMobile && "space-y-3")}>
+          <div className={cn('space-y-4', isMobile && 'space-y-3')}>
             {filteredArticles.length > 0 ? (
               filteredArticles.map((category, idx) => (
-                <Card key={idx} className={`bg-gradient-to-br ${category.color} ${category.borderColor} border overflow-hidden`}>
-                  <CardHeader className={cn("pb-3", isMobile && "p-3 pb-2")}>
+                <Card
+                  key={idx}
+                  className={`bg-gradient-to-br ${category.color} ${category.borderColor} border overflow-hidden`}
+                >
+                  <CardHeader className={cn('pb-3', isMobile && 'p-3 pb-2')}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className={cn(`rounded-lg bg-gradient-to-br ${category.color} border ${category.borderColor} flex items-center justify-center`, isMobile ? "w-8 h-8" : "w-10 h-10")}>
-                          <category.icon className={cn(isMobile ? "h-4 w-4" : "h-5 w-5", category.iconColor)} />
+                        <div
+                          className={cn(
+                            `rounded-lg bg-gradient-to-br ${category.color} border ${category.borderColor} flex items-center justify-center`,
+                            isMobile ? 'w-8 h-8' : 'w-10 h-10'
+                          )}
+                        >
+                          <category.icon
+                            className={cn(isMobile ? 'h-4 w-4' : 'h-5 w-5', category.iconColor)}
+                          />
                         </div>
-                        <CardTitle className={cn(isMobile ? "text-base" : "text-lg")}>{category.category}</CardTitle>
+                        <CardTitle className={cn(isMobile ? 'text-base' : 'text-lg')}>
+                          {category.category}
+                        </CardTitle>
                       </div>
-                      <Badge variant="secondary" className={cn("text-xs", isMobile && "px-1.5 py-0.5 text-[10px]")}>
+                      <Badge
+                        variant="secondary"
+                        className={cn('text-xs', isMobile && 'px-1.5 py-0.5 text-[10px]')}
+                      >
                         {category.items.length} article{category.items.length !== 1 ? 's' : ''}
                       </Badge>
                     </div>
                   </CardHeader>
-                  <CardContent className={cn("space-y-4", isMobile && "space-y-3 p-3 pt-0")}>
+                  <CardContent className={cn('space-y-4', isMobile && 'space-y-3 p-3 pt-0')}>
                     {category.items.map((item, itemIdx) => (
-                      <div key={itemIdx} className={cn("space-y-3 p-4 rounded-lg bg-card/50 border border-border/50", isMobile && "p-3 space-y-2")}>
+                      <div
+                        key={itemIdx}
+                        className={cn(
+                          'space-y-3 p-4 rounded-lg bg-card/50 border border-border/50',
+                          isMobile && 'p-3 space-y-2'
+                        )}
+                      >
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex items-start gap-3 flex-1">
-                            <item.icon className={cn(`${category.iconColor} flex-shrink-0 mt-0.5`, isMobile ? "h-4 w-4" : "h-5 w-5")} />
+                            <item.icon
+                              className={cn(
+                                `${category.iconColor} flex-shrink-0 mt-0.5`,
+                                isMobile ? 'h-4 w-4' : 'h-5 w-5'
+                              )}
+                            />
                             <div className="space-y-1 flex-1">
                               <div className="flex items-center gap-2 flex-wrap">
-                                <h4 className={cn("font-semibold", isMobile ? "text-xs" : "text-sm")}>{item.title}</h4>
+                                <h4
+                                  className={cn('font-semibold', isMobile ? 'text-xs' : 'text-sm')}
+                                >
+                                  {item.title}
+                                </h4>
                                 {item.badge && (
-                                  <Badge variant="outline" className={cn("text-xs", isMobile && "px-1.5 py-0.5 text-[10px]")}>
+                                  <Badge
+                                    variant="outline"
+                                    className={cn(
+                                      'text-xs',
+                                      isMobile && 'px-1.5 py-0.5 text-[10px]'
+                                    )}
+                                  >
                                     {item.badge}
                                   </Badge>
                                 )}
                                 {'estimatedTime' in item && (item as any).estimatedTime && (
-                                  <span className={cn("text-xs text-muted-foreground flex items-center gap-1", isMobile && "text-[10px]")}>
-                                    <Clock className={cn(isMobile ? "h-2.5 w-2.5" : "h-3 w-3")} />
+                                  <span
+                                    className={cn(
+                                      'text-xs text-muted-foreground flex items-center gap-1',
+                                      isMobile && 'text-[10px]'
+                                    )}
+                                  >
+                                    <Clock className={cn(isMobile ? 'h-2.5 w-2.5' : 'h-3 w-3')} />
                                     {(item as any).estimatedTime}
                                   </span>
                                 )}
                               </div>
-                              <p className={cn("text-sm text-muted-foreground leading-relaxed", isMobile && "text-xs")}>
+                              <p
+                                className={cn(
+                                  'text-sm text-muted-foreground leading-relaxed',
+                                  isMobile && 'text-xs'
+                                )}
+                              >
                                 {item.content}
                               </p>
                             </div>
                           </div>
                         </div>
                         {item.steps && (
-                          <div className={cn("space-y-2 ml-8", isMobile && "ml-5")}>
-                            <p className={cn("text-xs font-medium text-muted-foreground uppercase tracking-wide", isMobile && "text-[10px]")}>Step-by-step:</p>
-                            <ol className={cn("space-y-2", isMobile && "space-y-1.5")}>
+                          <div className={cn('space-y-2 ml-8', isMobile && 'ml-5')}>
+                            <p
+                              className={cn(
+                                'text-xs font-medium text-muted-foreground uppercase tracking-wide',
+                                isMobile && 'text-[10px]'
+                              )}
+                            >
+                              Step-by-step:
+                            </p>
+                            <ol className={cn('space-y-2', isMobile && 'space-y-1.5')}>
                               {item.steps.map((step, stepIdx) => (
-                                <li key={stepIdx} className={cn("text-sm text-muted-foreground flex gap-3", isMobile && "text-xs gap-2")}>
-                                  <span className={cn("text-xs font-bold text-blue-400 flex-shrink-0 w-5", isMobile && "text-[10px] w-4")}>{stepIdx + 1}.</span>
+                                <li
+                                  key={stepIdx}
+                                  className={cn(
+                                    'text-sm text-muted-foreground flex gap-3',
+                                    isMobile && 'text-xs gap-2'
+                                  )}
+                                >
+                                  <span
+                                    className={cn(
+                                      'text-xs font-bold text-blue-400 flex-shrink-0 w-5',
+                                      isMobile && 'text-[10px] w-4'
+                                    )}
+                                  >
+                                    {stepIdx + 1}.
+                                  </span>
                                   <span className="leading-relaxed">{step}</span>
                                 </li>
                               ))}
@@ -745,14 +881,25 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
                           </div>
                         )}
                         {'tips' in item && (item as any).tips && (
-                          <div className={cn("space-y-2 ml-8", isMobile && "ml-5")}>
-                            <p className={cn("text-xs font-medium text-amber-400 uppercase tracking-wide flex items-center gap-1", isMobile && "text-[10px]")}>
-                              <Lightbulb className={cn(isMobile ? "h-2.5 w-2.5" : "h-3 w-3")} />
+                          <div className={cn('space-y-2 ml-8', isMobile && 'ml-5')}>
+                            <p
+                              className={cn(
+                                'text-xs font-medium text-amber-400 uppercase tracking-wide flex items-center gap-1',
+                                isMobile && 'text-[10px]'
+                              )}
+                            >
+                              <Lightbulb className={cn(isMobile ? 'h-2.5 w-2.5' : 'h-3 w-3')} />
                               Pro Tips:
                             </p>
-                            <ul className={cn("space-y-1.5", isMobile && "space-y-1")}>
+                            <ul className={cn('space-y-1.5', isMobile && 'space-y-1')}>
                               {(item as any).tips.map((tip: string, tipIdx: number) => (
-                                <li key={tipIdx} className={cn("text-xs text-muted-foreground flex gap-2 leading-relaxed", isMobile && "text-[10px]")}>
+                                <li
+                                  key={tipIdx}
+                                  className={cn(
+                                    'text-xs text-muted-foreground flex gap-2 leading-relaxed',
+                                    isMobile && 'text-[10px]'
+                                  )}
+                                >
                                   <span className="text-amber-400">•</span>
                                   {tip}
                                 </li>
@@ -767,15 +914,29 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
               ))
             ) : (
               <Card className="bg-card/50 border-border">
-                <CardContent className={cn("text-center py-12 text-muted-foreground space-y-2", isMobile && "py-8")}>
-                  <Search className={cn("mx-auto opacity-50", isMobile ? "h-8 w-8" : "h-12 w-12")} />
-                  <p className={cn("font-medium", isMobile ? "text-xs" : "text-sm")}>No articles found matching "{searchQuery}"</p>
-                  <p className={cn(isMobile ? "text-[10px]" : "text-xs")}>Try a different search term or browse all categories</p>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => { setSearchQuery(''); setSelectedCategory(null); }}
-                    className={cn("mt-3", isMobile && "min-h-[44px] text-xs")}
+                <CardContent
+                  className={cn(
+                    'text-center py-12 text-muted-foreground space-y-2',
+                    isMobile && 'py-8'
+                  )}
+                >
+                  <Search
+                    className={cn('mx-auto opacity-50', isMobile ? 'h-8 w-8' : 'h-12 w-12')}
+                  />
+                  <p className={cn('font-medium', isMobile ? 'text-xs' : 'text-sm')}>
+                    No articles found matching "{searchQuery}"
+                  </p>
+                  <p className={cn(isMobile ? 'text-[10px]' : 'text-xs')}>
+                    Try a different search term or browse all categories
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedCategory(null);
+                    }}
+                    className={cn('mt-3', isMobile && 'min-h-[44px] text-xs')}
                   >
                     Clear Search
                   </Button>
@@ -788,21 +949,50 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
 
           {/* Quick Reference */}
           <Card className="bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border-emerald-500/30">
-            <CardHeader className={cn(isMobile && "p-3")}>
+            <CardHeader className={cn(isMobile && 'p-3')}>
               <div className="flex items-center gap-3">
-                <div className={cn("rounded-lg bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 flex items-center justify-center", isMobile ? "w-8 h-8" : "w-10 h-10")}>
-                  <BookOpen className={cn(isMobile ? "h-4 w-4" : "h-5 w-5", "text-emerald-400")} />
+                <div
+                  className={cn(
+                    'rounded-lg bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 flex items-center justify-center',
+                    isMobile ? 'w-8 h-8' : 'w-10 h-10'
+                  )}
+                >
+                  <BookOpen className={cn(isMobile ? 'h-4 w-4' : 'h-5 w-5', 'text-emerald-400')} />
                 </div>
-                <CardTitle className={cn(isMobile ? "text-base" : "text-lg")}>Quick Reference Values</CardTitle>
+                <CardTitle className={cn(isMobile ? 'text-base' : 'text-lg')}>
+                  Quick Reference Values
+                </CardTitle>
               </div>
-              <CardDescription className={cn(isMobile && "text-xs")}>Common BS 7671 test limits and requirements</CardDescription>
+              <CardDescription className={cn(isMobile && 'text-xs')}>
+                Common BS 7671 test limits and requirements
+              </CardDescription>
             </CardHeader>
-            <CardContent className={cn(isMobile && "p-3 pt-0")}>
-              <div className={cn("grid gap-2", isMobile && "grid-cols-1")}>
+            <CardContent className={cn(isMobile && 'p-3 pt-0')}>
+              <div className={cn('grid gap-2', isMobile && 'grid-cols-1')}>
                 {quickReference.map((ref, idx) => (
-                  <div key={idx} className={cn("p-3 rounded-lg bg-card/50 border border-border/50", isMobile && "p-2")}>
-                    <p className={cn("font-medium text-muted-foreground mb-1", isMobile ? "text-[10px]" : "text-xs")}>{ref.title}</p>
-                    <p className={cn("font-semibold text-emerald-400", isMobile ? "text-xs" : "text-sm")}>{ref.value}</p>
+                  <div
+                    key={idx}
+                    className={cn(
+                      'p-3 rounded-lg bg-card/50 border border-border/50',
+                      isMobile && 'p-2'
+                    )}
+                  >
+                    <p
+                      className={cn(
+                        'font-medium text-muted-foreground mb-1',
+                        isMobile ? 'text-[10px]' : 'text-xs'
+                      )}
+                    >
+                      {ref.title}
+                    </p>
+                    <p
+                      className={cn(
+                        'font-semibold text-emerald-400',
+                        isMobile ? 'text-xs' : 'text-sm'
+                      )}
+                    >
+                      {ref.value}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -810,10 +1000,21 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
           </Card>
 
           {/* Footer Note */}
-          <div className={cn("bg-gradient-to-r from-blue-500/10 to-cyan-500/10 p-4 rounded-lg border border-blue-500/30", isMobile && "p-3")}>
-            <p className={cn("text-xs text-muted-foreground leading-relaxed", isMobile && "text-[10px]")}>
-              <strong className="text-blue-400">Need more help?</strong> All tools and features are designed to comply with BS 7671:2018+A2:2022 requirements. 
-              For complex scenarios, use the AI Regulation Search or consult the full regulations.
+          <div
+            className={cn(
+              'bg-gradient-to-r from-blue-500/10 to-cyan-500/10 p-4 rounded-lg border border-blue-500/30',
+              isMobile && 'p-3'
+            )}
+          >
+            <p
+              className={cn(
+                'text-xs text-muted-foreground leading-relaxed',
+                isMobile && 'text-[10px]'
+              )}
+            >
+              <strong className="text-blue-400">Need more help?</strong> All tools and features are
+              designed to comply with BS 7671:2018+A2:2022 requirements. For complex scenarios, use
+              the AI Regulation Search or consult the full regulations.
             </p>
           </div>
         </div>

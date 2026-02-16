@@ -1,14 +1,9 @@
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Separator } from '@/components/ui/separator';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   MapPin,
   Building2,
@@ -21,9 +16,9 @@ import {
   Eye,
   CheckCircle2,
   Star,
-} from "lucide-react";
-import { formatDistanceToNow, format } from "date-fns";
-import type { InternalVacancy } from "./InternalVacancyCard";
+} from 'lucide-react';
+import { formatDistanceToNow, format } from 'date-fns';
+import type { InternalVacancy } from './InternalVacancyCard';
 
 interface VacancyDetailsSheetProps {
   open: boolean;
@@ -42,12 +37,13 @@ export function VacancyDetailsSheet({
 }: VacancyDetailsSheetProps) {
   if (!vacancy) return null;
 
-  const companyInitials = vacancy.employer?.company_name
-    ?.split(' ')
-    .map(n => n[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2) || '??';
+  const companyInitials =
+    vacancy.employer?.company_name
+      ?.split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2) || '??';
 
   const formatSalary = () => {
     if (!vacancy.salary_min && !vacancy.salary_max) return null;
@@ -55,19 +51,22 @@ export function VacancyDetailsSheet({
     const period = vacancy.salary_period === 'annual' ? ' per year' : ' per hour';
 
     if (vacancy.salary_min && vacancy.salary_max) {
-      const min = vacancy.salary_period === 'annual'
-        ? `£${(vacancy.salary_min).toLocaleString()}`
-        : `£${vacancy.salary_min}`;
-      const max = vacancy.salary_period === 'annual'
-        ? `£${(vacancy.salary_max).toLocaleString()}`
-        : `£${vacancy.salary_max}`;
+      const min =
+        vacancy.salary_period === 'annual'
+          ? `£${vacancy.salary_min.toLocaleString()}`
+          : `£${vacancy.salary_min}`;
+      const max =
+        vacancy.salary_period === 'annual'
+          ? `£${vacancy.salary_max.toLocaleString()}`
+          : `£${vacancy.salary_max}`;
       return `${min} - ${max}${period}`;
     }
 
     if (vacancy.salary_min) {
-      const val = vacancy.salary_period === 'annual'
-        ? `£${(vacancy.salary_min).toLocaleString()}`
-        : `£${vacancy.salary_min}`;
+      const val =
+        vacancy.salary_period === 'annual'
+          ? `£${vacancy.salary_min.toLocaleString()}`
+          : `£${vacancy.salary_min}`;
       return `From ${val}${period}`;
     }
 
@@ -225,11 +224,7 @@ export function VacancyDetailsSheet({
                 Apply Now
               </Button>
             ) : (
-              <Button
-                className="flex-1 h-12 gap-2"
-                variant="secondary"
-                disabled
-              >
+              <Button className="flex-1 h-12 gap-2" variant="secondary" disabled>
                 <CheckCircle2 className="h-4 w-4" />
                 Already Applied
               </Button>

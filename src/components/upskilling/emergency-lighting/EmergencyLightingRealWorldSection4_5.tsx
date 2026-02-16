@@ -13,27 +13,30 @@ export const EmergencyLightingRealWorldSection4_5 = () => {
       <CardContent className="space-y-4">
         <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-4">
           <h4 className="font-semibold text-blue-300 mb-3">Manchester University Campus Upgrade</h4>
-          
+
           <div className="space-y-3">
             <div className="bg-elec-dark p-3 rounded border border-gray-600">
               <h5 className="font-medium text-foreground mb-2">The Challenge</h5>
               <p className="text-foreground text-sm">
-                The university campus comprised 12 buildings with over 850 emergency luminaires spread across teaching 
-                blocks, laboratories, libraries, and student accommodation. The estates team spent several days each 
-                month conducting manual tests, taking two staff members away from other critical maintenance duties.
+                The university campus comprised 12 buildings with over 850 emergency luminaires
+                spread across teaching blocks, laboratories, libraries, and student accommodation.
+                The estates team spent several days each month conducting manual tests, taking two
+                staff members away from other critical maintenance duties.
               </p>
               <p className="text-foreground text-sm mt-2">
-                Paper logbooks were difficult to maintain consistently, and during a fire inspection, the university 
-                received a warning notice due to incomplete records for several buildings. The compliance risk and 
-                labour burden made a business case for upgrading the system.
+                Paper logbooks were difficult to maintain consistently, and during a fire
+                inspection, the university received a warning notice due to incomplete records for
+                several buildings. The compliance risk and labour burden made a business case for
+                upgrading the system.
               </p>
             </div>
-            
+
             <div className="bg-elec-dark p-3 rounded border border-gray-600">
               <h5 className="font-medium text-foreground mb-2">The Solution</h5>
               <p className="text-foreground text-sm mb-3">
-                A wireless remote testing system was selected due to the difficulty of installing data cabling across 
-                multiple buildings, some of which were listed structures where cable routing would be problematic.
+                A wireless remote testing system was selected due to the difficulty of installing
+                data cabling across multiple buildings, some of which were listed structures where
+                cable routing would be problematic.
               </p>
               <div className="bg-black/30 p-3 rounded text-sm space-y-2">
                 <div className="flex justify-between text-foreground">
@@ -58,7 +61,7 @@ export const EmergencyLightingRealWorldSection4_5 = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-green-900/20 border border-green-600/30 rounded p-3">
               <h5 className="font-medium text-green-300 mb-2">The Results</h5>
               <div className="space-y-3">
@@ -85,11 +88,15 @@ export const EmergencyLightingRealWorldSection4_5 = () => {
                 </div>
 
                 <div>
-                  <p className="text-foreground text-sm font-semibold mb-1">Compliance Improvements</p>
+                  <p className="text-foreground text-sm font-semibold mb-1">
+                    Compliance Improvements
+                  </p>
                   <div className="text-foreground text-sm space-y-1">
                     <div className="flex items-start gap-2">
                       <span className="text-green-400">✓</span>
-                      <span>100% test completion rate (previously 85-90% due to staff absence)</span>
+                      <span>
+                        100% test completion rate (previously 85-90% due to staff absence)
+                      </span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="text-green-400">✓</span>
@@ -122,8 +129,8 @@ export const EmergencyLightingRealWorldSection4_5 = () => {
                       <span>7.6 years</span>
                     </div>
                     <div className="text-foreground text-xs mt-2 italic">
-                      Note: Does not include avoided compliance penalties, improved audit readiness, or reduced 
-                      risk from undetected failures
+                      Note: Does not include avoided compliance penalties, improved audit readiness,
+                      or reduced risk from undetected failures
                     </div>
                   </div>
                 </div>
@@ -133,35 +140,39 @@ export const EmergencyLightingRealWorldSection4_5 = () => {
             <div className="bg-blue-900/20 border border-blue-600/30 rounded p-3">
               <h5 className="font-medium text-blue-300 mb-2">Operational Benefits</h5>
               <p className="text-foreground text-sm mb-2">
-                Beyond the direct cost savings, the estates team reported several additional benefits:
+                Beyond the direct cost savings, the estates team reported several additional
+                benefits:
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-start gap-2">
                   <span className="text-blue-400">→</span>
                   <span className="text-foreground">
-                    <span className="text-foreground font-medium">Proactive Maintenance:</span> Battery degradation trends 
-                    identified before complete failure, allowing planned replacement during term breaks
+                    <span className="text-foreground font-medium">Proactive Maintenance:</span>{' '}
+                    Battery degradation trends identified before complete failure, allowing planned
+                    replacement during term breaks
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-blue-400">→</span>
                   <span className="text-foreground">
-                    <span className="text-foreground font-medium">Mobile Access:</span> Facilities managers could check 
-                    system status remotely via smartphone app, even when off-site
+                    <span className="text-foreground font-medium">Mobile Access:</span> Facilities
+                    managers could check system status remotely via smartphone app, even when
+                    off-site
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-blue-400">→</span>
                   <span className="text-foreground">
-                    <span className="text-foreground font-medium">Audit Confidence:</span> Electronic records eliminated 
-                    concerns about lost or incomplete logbooks
+                    <span className="text-foreground font-medium">Audit Confidence:</span>{' '}
+                    Electronic records eliminated concerns about lost or incomplete logbooks
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-blue-400">→</span>
                   <span className="text-foreground">
-                    <span className="text-foreground font-medium">Staff Satisfaction:</span> Maintenance team no longer 
-                    burdened with repetitive manual testing, allowing focus on higher-value tasks
+                    <span className="text-foreground font-medium">Staff Satisfaction:</span>{' '}
+                    Maintenance team no longer burdened with repetitive manual testing, allowing
+                    focus on higher-value tasks
                   </span>
                 </div>
               </div>
@@ -175,36 +186,42 @@ export const EmergencyLightingRealWorldSection4_5 = () => {
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow mt-1">•</span>
               <span>
-                <span className="font-medium">Wireless systems are ideal for multi-building sites</span> where 
-                cabling would be expensive or impractical, especially in listed or heritage buildings
+                <span className="font-medium">
+                  Wireless systems are ideal for multi-building sites
+                </span>{' '}
+                where cabling would be expensive or impractical, especially in listed or heritage
+                buildings
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow mt-1">•</span>
               <span>
-                <span className="font-medium">Present full ROI including compliance benefits,</span> not just labour 
-                savings — avoiding enforcement action was a major driver for this project
+                <span className="font-medium">Present full ROI including compliance benefits,</span>{' '}
+                not just labour savings — avoiding enforcement action was a major driver for this
+                project
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow mt-1">•</span>
               <span>
-                <span className="font-medium">Train multiple staff members</span> to ensure system knowledge isn't 
-                lost during staff turnover — university trained four estates team members
+                <span className="font-medium">Train multiple staff members</span> to ensure system
+                knowledge isn't lost during staff turnover — university trained four estates team
+                members
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow mt-1">•</span>
               <span>
-                <span className="font-medium">Schedule installation during vacation periods</span> to minimise 
-                disruption to teaching and learning activities
+                <span className="font-medium">Schedule installation during vacation periods</span>{' '}
+                to minimise disruption to teaching and learning activities
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow mt-1">•</span>
               <span>
-                <span className="font-medium">Visual inspections still essential</span> — system detected luminaire 
-                failures but couldn't identify physical damage from student activity in corridors
+                <span className="font-medium">Visual inspections still essential</span> — system
+                detected luminaire failures but couldn't identify physical damage from student
+                activity in corridors
               </span>
             </li>
           </ul>

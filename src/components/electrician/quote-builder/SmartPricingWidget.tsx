@@ -1,21 +1,25 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  Clock, 
-  Package, 
-  Lightbulb, 
-  AlertCircle, 
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  TrendingUp,
+  TrendingDown,
+  Clock,
+  Package,
+  Lightbulb,
+  AlertCircle,
   Star,
-  Calculator
-} from "lucide-react";
-import { EnhancedMaterialItem, SmartPricingCalculator, PricingSettings } from "@/data/electrician/enhancedPricingData";
+  Calculator,
+} from 'lucide-react';
+import {
+  EnhancedMaterialItem,
+  SmartPricingCalculator,
+  PricingSettings,
+} from '@/data/electrician/enhancedPricingData';
 
 interface SmartPricingWidgetProps {
   material: EnhancedMaterialItem;
@@ -25,37 +29,40 @@ interface SmartPricingWidgetProps {
   settings?: Partial<PricingSettings>;
 }
 
-export const SmartPricingWidget = ({ 
-  material, 
-  quantity, 
-  onQuantityChange, 
+export const SmartPricingWidget = ({
+  material,
+  quantity,
+  onQuantityChange,
   onAddToQuote,
-  settings = {}
+  settings = {},
 }: SmartPricingWidgetProps) => {
   const [showBreakdown, setShowBreakdown] = useState(false);
-  
+
   const pricing = SmartPricingCalculator.calculatePrice(material, quantity, settings);
   const suggestion = SmartPricingCalculator.suggestOptimalQuantity(material, quantity);
-  
+
   const getConfidenceBadge = () => {
     const colors = {
-      high: "bg-green-500/20 text-green-300 border-green-500/50",
-      medium: "bg-yellow-500/20 text-yellow-300 border-yellow-500/50", 
-      low: "bg-red-500/20 text-red-300 border-red-500/50"
+      high: 'bg-green-500/20 text-green-300 border-green-500/50',
+      medium: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/50',
+      low: 'bg-red-500/20 text-red-300 border-red-500/50',
     };
-    
+
     return (
       <Badge className={colors[material.confidenceLevel]}>
         {material.confidenceLevel} confidence
       </Badge>
     );
   };
-  
+
   const getDifficultyIcon = () => {
     switch (material.installationDifficulty) {
-      case 'easy': return <span className="text-green-400">●</span>;
-      case 'medium': return <span className="text-yellow-400">●</span>;
-      case 'hard': return <span className="text-red-400">●</span>;
+      case 'easy':
+        return <span className="text-green-400">●</span>;
+      case 'medium':
+        return <span className="text-yellow-400">●</span>;
+      case 'hard':
+        return <span className="text-red-400">●</span>;
     }
   };
 
@@ -78,7 +85,7 @@ export const SmartPricingWidget = ({
             {getConfidenceBadge()}
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-4">
           {/* Pricing Display */}
           <div className="grid grid-cols-2 gap-4">
@@ -94,15 +101,11 @@ export const SmartPricingWidget = ({
                 </div>
               )}
             </div>
-            
+
             <div>
               <Label className="text-xs text-elec-light/80">Total Cost</Label>
-              <div className="text-xl font-bold text-foreground">
-                £{pricing.total.toFixed(2)}
-              </div>
-              <div className="text-xs text-elec-light/60">
-                inc. VAT
-              </div>
+              <div className="text-xl font-bold text-foreground">£{pricing.total.toFixed(2)}</div>
+              <div className="text-xs text-elec-light/60">inc. VAT</div>
             </div>
           </div>
 
@@ -117,7 +120,11 @@ export const SmartPricingWidget = ({
                       variant="ghost"
                       size="sm"
                       className="text-xs text-elec-yellow hover:text-elec-dark hover:bg-elec-yellow"
-                      onClick={() => typeof suggestion === 'object' ? onQuantityChange(suggestion.suggested) : undefined}
+                      onClick={() =>
+                        typeof suggestion === 'object'
+                          ? onQuantityChange(suggestion.suggested)
+                          : undefined
+                      }
                     >
                       <Lightbulb className="h-3 w-3 mr-1" />
                       Suggest {typeof suggestion === 'object' ? suggestion.suggested : quantity}
@@ -129,7 +136,7 @@ export const SmartPricingWidget = ({
                 </Tooltip>
               )}
             </div>
-            
+
             <div className="flex items-center gap-2">
               <Input
                 type="number"
@@ -140,7 +147,7 @@ export const SmartPricingWidget = ({
               />
               <span className="text-sm text-elec-light/80">{material.unit}</span>
             </div>
-            
+
             {pricing.wasteQuantity > 0 && (
               <div className="text-xs text-elec-light/60">
                 + {pricing.wasteQuantity.toFixed(1)} {material.unit} waste allowance
@@ -156,7 +163,9 @@ export const SmartPricingWidget = ({
             </div>
             <div className="flex items-center gap-1">
               {getDifficultyIcon()}
-              <span className="text-elec-light/80 capitalize">{material.installationDifficulty}</span>
+              <span className="text-elec-light/80 capitalize">
+                {material.installationDifficulty}
+              </span>
             </div>
             <div className="flex items-center gap-1">
               <Package className="h-3 w-3 text-elec-light/60" />
@@ -185,13 +194,17 @@ export const SmartPricingWidget = ({
           {showBreakdown && (
             <div className="space-y-2 text-xs bg-card/30 p-3 rounded border border-elec-yellow/10">
               <div className="flex justify-between">
-                <span>Base price ({quantity} × £{material.defaultPrice.toFixed(2)})</span>
+                <span>
+                  Base price ({quantity} × £{material.defaultPrice.toFixed(2)})
+                </span>
                 <span>£{(material.defaultPrice * quantity).toFixed(2)}</span>
               </div>
               {pricing.discountApplied > 0 && (
                 <div className="flex justify-between text-green-400">
                   <span>Quantity discount (-{pricing.discountApplied}%)</span>
-                  <span>-£{((material.defaultPrice * quantity) - (pricing.basePrice * quantity)).toFixed(2)}</span>
+                  <span>
+                    -£{(material.defaultPrice * quantity - pricing.basePrice * quantity).toFixed(2)}
+                  </span>
                 </div>
               )}
               {pricing.wasteQuantity > 0 && (
@@ -221,7 +234,11 @@ export const SmartPricingWidget = ({
               <Label className="text-xs text-elec-light/80">Alternative Options</Label>
               <div className="flex flex-wrap gap-1">
                 {material.alternatives.slice(0, 3).map((altId) => (
-                  <Badge key={altId} variant="outline" className="text-xs cursor-pointer hover:bg-elec-yellow/20">
+                  <Badge
+                    key={altId}
+                    variant="outline"
+                    className="text-xs cursor-pointer hover:bg-elec-yellow/20"
+                  >
                     {altId.replace(/[_-]/g, ' ')}
                   </Badge>
                 ))}

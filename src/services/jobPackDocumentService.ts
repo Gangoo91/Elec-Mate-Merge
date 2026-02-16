@@ -31,12 +31,12 @@ export const getJobPackDocuments = async (jobPackId: string): Promise<JobPackDoc
     .select('*')
     .eq('job_pack_id', jobPackId)
     .order('created_at', { ascending: false });
-  
+
   if (error) {
     console.error('Error fetching job pack documents:', error);
     throw error;
   }
-  
+
   return (data || []) as JobPackDocument[];
 };
 
@@ -48,42 +48,41 @@ export const createJobPackDocument = async (
     .insert(document)
     .select()
     .single();
-  
+
   if (error) {
     console.error('Error creating job pack document:', error);
     throw error;
   }
-  
+
   return data as JobPackDocument;
 };
 
 export const deleteJobPackDocument = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('employer_job_pack_documents')
-    .delete()
-    .eq('id', id);
-  
+  const { error } = await supabase.from('employer_job_pack_documents').delete().eq('id', id);
+
   if (error) {
     console.error('Error deleting job pack document:', error);
     return false;
   }
-  
+
   return true;
 };
 
 // Acknowledgement operations
-export const getJobPackAcknowledgements = async (jobPackId: string): Promise<JobPackAcknowledgement[]> => {
+export const getJobPackAcknowledgements = async (
+  jobPackId: string
+): Promise<JobPackAcknowledgement[]> => {
   const { data, error } = await supabase
     .from('employer_job_pack_acknowledgements')
     .select('*')
     .eq('job_pack_id', jobPackId)
     .order('acknowledged_at', { ascending: false });
-  
+
   if (error) {
     console.error('Error fetching job pack acknowledgements:', error);
     throw error;
   }
-  
+
   return (data || []) as JobPackAcknowledgement[];
 };
 
@@ -95,12 +94,12 @@ export const createJobPackAcknowledgement = async (
     .insert(acknowledgement)
     .select()
     .single();
-  
+
   if (error) {
     console.error('Error creating job pack acknowledgement:', error);
     throw error;
   }
-  
+
   return data as JobPackAcknowledgement;
 };
 
@@ -112,20 +111,16 @@ export const uploadJobPackFile = async (
 ): Promise<string> => {
   const fileExt = file.name.split('.').pop();
   const fileName = `${jobPackId}/${documentType.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.${fileExt}`;
-  
-  const { data, error } = await supabase.storage
-    .from('job-pack-documents')
-    .upload(fileName, file);
-  
+
+  const { data, error } = await supabase.storage.from('job-pack-documents').upload(fileName, file);
+
   if (error) {
     console.error('Error uploading file:', error);
     throw error;
   }
-  
-  const { data: urlData } = supabase.storage
-    .from('job-pack-documents')
-    .getPublicUrl(data.path);
-  
+
+  const { data: urlData } = supabase.storage.from('job-pack-documents').getPublicUrl(data.path);
+
   return urlData.publicUrl;
 };
 
@@ -148,15 +143,15 @@ export const COMMON_CERTIFICATIONS = [
 // Get suggested certifications based on hazards
 export const getSuggestedCertifications = (hazards: string[]): string[] => {
   const suggested = new Set<string>();
-  
+
   // Always suggest basic certs
   suggested.add('ECS Card');
-  
-  COMMON_CERTIFICATIONS.forEach(cert => {
-    if (cert.hazards.some(h => hazards.includes(h))) {
+
+  COMMON_CERTIFICATIONS.forEach((cert) => {
+    if (cert.hazards.some((h) => hazards.includes(h))) {
       suggested.add(cert.name);
     }
   });
-  
+
   return Array.from(suggested);
 };

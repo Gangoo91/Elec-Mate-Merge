@@ -7,14 +7,14 @@ const CableSeparationQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Why should power and data cables be routed separately where possible?";
+  const question = 'Why should power and data cables be routed separately where possible?';
   const options = [
-    "To make the installation look more organised",
+    'To make the installation look more organised',
     "It's easier to identify different cable types",
-    "To avoid electromagnetic interference affecting data transmission",
-    "Power cables generate more heat than data cables"
+    'To avoid electromagnetic interference affecting data transmission',
+    'Power cables generate more heat than data cables',
   ];
-  const correctAnswer = "To avoid electromagnetic interference affecting data transmission";
+  const correctAnswer = 'To avoid electromagnetic interference affecting data transmission';
 
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswer(answer);
@@ -38,7 +38,7 @@ const CableSeparationQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <Button
@@ -49,8 +49,8 @@ const CableSeparationQuickCheck = () => {
                   ? option === correctAnswer
                     ? 'bg-green-900/20 border-green-600 text-green-200'
                     : selectedAnswer === option
-                    ? 'bg-red-900/20 border-red-600 text-red-200'
-                    : 'bg-gray-800 border-gray-600 text-gray-400'
+                      ? 'bg-red-900/20 border-red-600 text-red-200'
+                      : 'bg-gray-800 border-gray-600 text-gray-400'
                   : 'text-gray-300 hover:text-foreground hover:border-elec-yellow'
               }`}
               onClick={() => !showResult && handleAnswerSelect(option)}
@@ -73,11 +73,11 @@ const CableSeparationQuickCheck = () => {
         </div>
 
         {showResult && (
-          <div className={`p-4 rounded-lg border ${
-            isCorrect
-              ? 'bg-green-900/20 border-green-600'
-              : 'bg-red-900/20 border-red-600'
-          }`}>
+          <div
+            className={`p-4 rounded-lg border ${
+              isCorrect ? 'bg-green-900/20 border-green-600' : 'bg-red-900/20 border-red-600'
+            }`}
+          >
             <div className="flex items-start gap-3">
               {isCorrect ? (
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -85,18 +85,15 @@ const CableSeparationQuickCheck = () => {
                 <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               )}
               <div className="flex-1">
-                <p className={`font-semibold mb-2 ${
-                  isCorrect ? 'text-green-200' : 'text-red-200'
-                }`}>
+                <p
+                  className={`font-semibold mb-2 ${isCorrect ? 'text-green-200' : 'text-red-200'}`}
+                >
                   {isCorrect ? 'Correct!' : 'Not quite right.'}
                 </p>
-                <p className={`text-sm ${
-                  isCorrect ? 'text-green-100' : 'text-red-100'
-                }`}>
-                  {isCorrect 
-                    ? "Perfect! Power cables generate electromagnetic fields that can interfere with data transmission, causing communication errors, reduced speeds, or connection drops. Separation prevents this interference and ensures reliable smart home system operation."
-                    : "The main reason for cable separation is to prevent electromagnetic interference (EMI). Power cables create electromagnetic fields that can disrupt data signals, leading to communication problems, reduced network performance, and unreliable smart home functionality."
-                  }
+                <p className={`text-sm ${isCorrect ? 'text-green-100' : 'text-red-100'}`}>
+                  {isCorrect
+                    ? 'Perfect! Power cables generate electromagnetic fields that can interfere with data transmission, causing communication errors, reduced speeds, or connection drops. Separation prevents this interference and ensures reliable smart home system operation.'
+                    : 'The main reason for cable separation is to prevent electromagnetic interference (EMI). Power cables create electromagnetic fields that can disrupt data signals, leading to communication problems, reduced network performance, and unreliable smart home functionality.'}
                 </p>
               </div>
             </div>

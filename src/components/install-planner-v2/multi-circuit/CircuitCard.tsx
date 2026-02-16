@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Trash2, Edit, Power, Zap, FileText } from "lucide-react";
-import { FullCircuitDesign } from "../types";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Trash2, Edit, Power, Zap, FileText } from 'lucide-react';
+import { FullCircuitDesign } from '../types';
 
 interface CircuitCardProps {
   circuit: FullCircuitDesign;
@@ -21,14 +21,14 @@ interface CircuitCardProps {
   };
 }
 
-export const CircuitCard = ({ 
-  circuit, 
-  circuitNumber, 
-  onEdit, 
+export const CircuitCard = ({
+  circuit,
+  circuitNumber,
+  onEdit,
   onDelete,
   onGenerateSchematic,
   loadingSchematic,
-  calculationResult 
+  calculationResult,
 }: CircuitCardProps) => {
   return (
     <Card className="bg-background hover:bg-accent/5 border-2 border-border hover:border-primary/40 transition-all hover:shadow-lg">
@@ -38,12 +38,14 @@ export const CircuitCard = ({
           <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center">
             <span className="text-xl sm:text-2xl font-bold text-primary">C{circuitNumber}</span>
           </div>
-          
+
           {/* Circuit info */}
           <div className="flex-1 min-w-0 w-full sm:w-auto">
             <h3 className="text-lg sm:text-xl font-bold mb-1 truncate">{circuit.name}</h3>
-            <p className="text-sm text-muted-foreground mb-3 capitalize">{circuit.loadType.replace('-', ' ')}</p>
-            
+            <p className="text-sm text-muted-foreground mb-3 capitalize">
+              {circuit.loadType.replace('-', ' ')}
+            </p>
+
             {/* Compact details grid */}
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div className="flex items-center gap-2">
@@ -62,22 +64,22 @@ export const CircuitCard = ({
               </div>
             </div>
           </div>
-          
+
           {/* Large, touch-friendly action buttons */}
           <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="h-11 w-full sm:w-11 flex-1 sm:flex-initial hover:bg-primary/10 hover:text-primary hover:border-primary/50" 
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-11 w-full sm:w-11 flex-1 sm:flex-initial hover:bg-primary/10 hover:text-primary hover:border-primary/50"
               onClick={onEdit}
             >
               <Edit className="h-5 w-5 sm:h-4 sm:w-4" />
               <span className="sm:hidden ml-2">Edit</span>
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="h-11 w-full sm:w-11 flex-1 sm:flex-initial text-destructive hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50" 
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-11 w-full sm:w-11 flex-1 sm:flex-initial text-destructive hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50"
               onClick={onDelete}
             >
               <Trash2 className="h-5 w-5 sm:h-4 sm:w-4" />
@@ -85,7 +87,7 @@ export const CircuitCard = ({
             </Button>
           </div>
         </div>
-        
+
         {/* Calculation results section */}
         {calculationResult && (
           <div className="mt-4 pt-4 border-t border-border space-y-3">
@@ -107,12 +109,14 @@ export const CircuitCard = ({
                 <p className="font-bold text-sm">{calculationResult.zs.toFixed(3)}Ω</p>
               </div>
             </div>
-            
-            <Badge 
-              variant={calculationResult.compliant ? "default" : "destructive"}
+
+            <Badge
+              variant={calculationResult.compliant ? 'default' : 'destructive'}
               className="w-full justify-center h-8 text-sm"
             >
-              {calculationResult.compliant ? "✓ BS 7671 Compliant" : "⚠ Non-Compliant - Review Required"}
+              {calculationResult.compliant
+                ? '✓ BS 7671 Compliant'
+                : '⚠ Non-Compliant - Review Required'}
             </Badge>
           </div>
         )}

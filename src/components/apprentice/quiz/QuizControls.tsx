@@ -1,6 +1,5 @@
-
-import { Button } from "@/components/ui/button";
-import { QuizControlsProps } from "@/types/quiz";
+import { Button } from '@/components/ui/button';
+import { QuizControlsProps } from '@/types/quiz';
 
 const QuizControls = ({
   isAnswered,
@@ -8,7 +7,7 @@ const QuizControls = ({
   answeredCount,
   totalQuestions,
   onNext,
-  onSubmit
+  onSubmit,
 }: QuizControlsProps) => {
   return (
     <div className="flex justify-between items-center">
@@ -19,7 +18,7 @@ const QuizControls = ({
       </div>
       <div className="flex gap-2">
         {!isLastQuestion ? (
-          <Button 
+          <Button
             onClick={onNext}
             disabled={!isAnswered}
             className={`
@@ -29,7 +28,7 @@ const QuizControls = ({
             Next Question
           </Button>
         ) : (
-          <Button 
+          <Button
             onClick={onNext}
             disabled={!isAnswered}
             className={`
@@ -39,9 +38,9 @@ const QuizControls = ({
             See Results
           </Button>
         )}
-        
+
         {answeredCount > 0 && (
-          <Button 
+          <Button
             onClick={onSubmit}
             variant="outline"
             className="border-elec-yellow/30 hover:bg-elec-yellow/10"

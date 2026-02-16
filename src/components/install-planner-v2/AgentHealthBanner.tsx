@@ -1,5 +1,5 @@
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 interface AgentHealthBannerProps {
   unhealthyAgents: string[];
@@ -7,12 +7,12 @@ interface AgentHealthBannerProps {
 }
 
 const AGENT_NAMES: Record<string, string> = {
-  'designer': 'Circuit Designer',
+  designer: 'Circuit Designer',
   'cost-engineer': 'Cost Engineer',
-  'installer': 'Installation Specialist',
+  installer: 'Installation Specialist',
   'health-safety': 'Health & Safety',
-  'commissioning': 'Testing & Commissioning',
-  'project-manager': 'Project Manager'
+  commissioning: 'Testing & Commissioning',
+  'project-manager': 'Project Manager',
 };
 
 export const AgentHealthBanner = ({ unhealthyAgents, onDismiss }: AgentHealthBannerProps) => {
@@ -32,7 +32,7 @@ export const AgentHealthBanner = ({ unhealthyAgents, onDismiss }: AgentHealthBan
       <AlertTriangle className="h-4 w-4" />
       <AlertDescription className="text-sm">
         <span className="font-semibold">Some agents temporarily unavailable:</span>{' '}
-        {unhealthyAgents.map(agent => AGENT_NAMES[agent] || agent).join(', ')}
+        {unhealthyAgents.map((agent) => AGENT_NAMES[agent] || agent).join(', ')}
         {'. '}
         <span className="text-muted-foreground">You can still use other agents.</span>
       </AlertDescription>

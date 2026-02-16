@@ -17,11 +17,12 @@ export const EmergencyLightingRealWorldSection3_1 = () => {
             The Challenge
           </h3>
           <p className="text-foreground mb-4">
-            A college in Birmingham installed emergency lighting with 1-hour batteries throughout their campus. 
-            During an evacuation drill, it became clear that full evacuation of the site could take over an hour 
-            due to the number of students and complex building layout with multiple wings and levels.
+            A college in Birmingham installed emergency lighting with 1-hour batteries throughout
+            their campus. During an evacuation drill, it became clear that full evacuation of the
+            site could take over an hour due to the number of students and complex building layout
+            with multiple wings and levels.
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
               <h4 className="text-red-400 font-medium mb-2 flex items-center gap-2">
@@ -36,7 +37,7 @@ export const EmergencyLightingRealWorldSection3_1 = () => {
                 <li>• Poor uniformity in older building sections</li>
               </ul>
             </div>
-            
+
             <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
               <h4 className="text-orange-400 font-medium mb-2 flex items-center gap-2">
                 <Clock className="h-4 w-4" />
@@ -58,9 +59,9 @@ export const EmergencyLightingRealWorldSection3_1 = () => {
             The Solution
           </h3>
           <p className="text-foreground mb-4">
-            After consultation with the emergency services and risk assessment review, all luminaires were upgraded 
-            to 3-hour units. Additionally, lux levels were increased in critical areas and uniformity was improved 
-            through additional fittings.
+            After consultation with the emergency services and risk assessment review, all
+            luminaires were upgraded to 3-hour units. Additionally, lux levels were increased in
+            critical areas and uniformity was improved through additional fittings.
           </p>
 
           <div className="grid md:grid-cols-3 gap-4">
@@ -72,7 +73,7 @@ export const EmergencyLightingRealWorldSection3_1 = () => {
                 <li>• Improved battery monitoring systems</li>
               </ul>
             </div>
-            
+
             <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
               <h4 className="text-green-400 font-medium mb-2">Lux Enhancement</h4>
               <ul className="text-sm space-y-1">
@@ -81,7 +82,7 @@ export const EmergencyLightingRealWorldSection3_1 = () => {
                 <li>• Stairwells: 2 lux for safety</li>
               </ul>
             </div>
-            
+
             <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
               <h4 className="text-purple-400 font-medium mb-2">Additional Fittings</h4>
               <ul className="text-sm space-y-1">
@@ -98,7 +99,7 @@ export const EmergencyLightingRealWorldSection3_1 = () => {
             <CheckCircle className="h-5 w-5" />
             Results and Benefits
           </h3>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h4 className="text-foreground font-medium mb-3">Performance Improvements</h4>
@@ -121,7 +122,7 @@ export const EmergencyLightingRealWorldSection3_1 = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="text-foreground font-medium mb-3">Stakeholder Benefits</h4>
               <ul className="space-y-2 text-sm">

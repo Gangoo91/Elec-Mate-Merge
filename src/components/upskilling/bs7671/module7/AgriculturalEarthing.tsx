@@ -6,7 +6,9 @@ const AgriculturalEarthing = () => {
     <Card className="bg-gradient-to-r from-green-900/20 to-elec-gray border-green-600/30">
       <CardHeader>
         <CardTitle className="text-foreground">Agricultural Earthing & Bonding</CardTitle>
-        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">Livestock Safety</Badge>
+        <Badge variant="secondary" className="w-fit bg-green-600 text-foreground">
+          Livestock Safety
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">

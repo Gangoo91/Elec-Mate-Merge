@@ -1,12 +1,51 @@
-
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Plus, BarChart3, Zap, Camera, Grid, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Pen, ChevronDown, TestTube, Mic, Check, CheckCircle } from 'lucide-react';
+import {
+  Plus,
+  BarChart3,
+  Zap,
+  Camera,
+  Grid,
+  Shield,
+  X,
+  PenTool,
+  FileText,
+  Wrench,
+  ClipboardList,
+  ClipboardCheck,
+  Wand2,
+  Sparkles,
+  MoreVertical,
+  Layout,
+  Table,
+  Trash2,
+  Pen,
+  ChevronDown,
+  TestTube,
+  Mic,
+  Check,
+  CheckCircle,
+} from 'lucide-react';
 import { TestResult } from '@/types/testResult';
-import { DistributionBoard, MAIN_BOARD_ID, createDefaultBoard, generateBoardId, getNextSubBoardName } from '@/types/distributionBoard';
-import { migrateToMultiBoard, getCircuitsForBoard, formatBoardsForFormData } from '@/utils/boardMigration';
+import {
+  DistributionBoard,
+  MAIN_BOARD_ID,
+  createDefaultBoard,
+  generateBoardId,
+  getNextSubBoardName,
+} from '@/types/distributionBoard';
+import {
+  migrateToMultiBoard,
+  getCircuitsForBoard,
+  formatBoardsForFormData,
+} from '@/utils/boardMigration';
 import BoardSection, { BoardToolCallbacks } from '../testing/BoardSection';
 import BoardManagement from '../testing/BoardManagement';
 import EnhancedTestResultDesktopTable from '../EnhancedTestResultDesktopTable';
@@ -48,60 +87,65 @@ interface EICScheduleOfTestingProps {
  * DebouncedInput - Input with local state and debounced updates
  * Prevents focus loss on mobile by not triggering parent re-renders on every keystroke
  */
-const DebouncedInput = React.memo(({
-  value,
-  onChange,
-  className,
-  style,
-  ...props
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  className?: string;
-  style?: React.CSSProperties;
-  [key: string]: any;
-}) => {
-  const [localValue, setLocalValue] = React.useState(value || '');
-  const debounceTimerRef = React.useRef<NodeJS.Timeout>();
+const DebouncedInput = React.memo(
+  ({
+    value,
+    onChange,
+    className,
+    style,
+    ...props
+  }: {
+    value: string;
+    onChange: (value: string) => void;
+    className?: string;
+    style?: React.CSSProperties;
+    [key: string]: any;
+  }) => {
+    const [localValue, setLocalValue] = React.useState(value || '');
+    const debounceTimerRef = React.useRef<NodeJS.Timeout>();
 
-  // Sync local value when prop changes
-  React.useEffect(() => {
-    setLocalValue(value || '');
-  }, [value]);
+    // Sync local value when prop changes
+    React.useEffect(() => {
+      setLocalValue(value || '');
+    }, [value]);
 
-  // Debounced onChange handler
-  const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setLocalValue(newValue);
+    // Debounced onChange handler
+    const handleChange = React.useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = e.target.value;
+        setLocalValue(newValue);
 
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
+        if (debounceTimerRef.current) {
+          clearTimeout(debounceTimerRef.current);
+        }
 
-    debounceTimerRef.current = setTimeout(() => {
-      onChange(newValue);
-    }, 300);
-  }, [onChange]);
+        debounceTimerRef.current = setTimeout(() => {
+          onChange(newValue);
+        }, 300);
+      },
+      [onChange]
+    );
 
-  // Cleanup timer on unmount
-  React.useEffect(() => {
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-    };
-  }, []);
+    // Cleanup timer on unmount
+    React.useEffect(() => {
+      return () => {
+        if (debounceTimerRef.current) {
+          clearTimeout(debounceTimerRef.current);
+        }
+      };
+    }, []);
 
-  return (
-    <input
-      value={localValue}
-      onChange={handleChange}
-      className={className}
-      style={style}
-      {...props}
-    />
-  );
-});
+    return (
+      <input
+        value={localValue}
+        onChange={handleChange}
+        className={className}
+        style={style}
+        {...props}
+      />
+    );
+  }
+);
 
 DebouncedInput.displayName = 'DebouncedInput';
 
@@ -123,7 +167,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
   const [showBulkInfillDialog, setShowBulkInfillDialog] = useState(false);
   const [showQuickFillPanel, setShowQuickFillPanel] = useState(false);
-  const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(null);
+  const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(
+    null
+  );
   const [activeToolPanel, setActiveToolPanel] = useState<'ai' | 'smart' | null>(null);
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
   const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
@@ -131,756 +177,853 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
   // Voice tool call handler - connects ElevenLabs agent to component state
   // Handles fill_eic tool with actions: add_circuit, update_field, next, previous, select, remove
-  const handleVoiceToolCall = useCallback((toolName: string, params: Record<string, unknown>): string => {
-    console.log('[Voice] Tool call:', toolName, params);
+  const handleVoiceToolCall = useCallback(
+    (toolName: string, params: Record<string, unknown>): string => {
+      console.log('[Voice] Tool call:', toolName, params);
 
-    // Handle stop_session tool
-    if (toolName === 'stop_session') {
-      setTimeout(() => stopVoiceRef.current?.(), 500);
-      return 'Stopping voice session. Goodbye!';
-    }
-
-    // Handle bulk_fill_circuits tool (legacy)
-    if (toolName === 'bulk_fill_circuits') {
-      const field = params.field as string;
-      const value = params.value as string;
-      const onlyEmpty = params.only_empty as boolean | undefined;
-      const resolvedField = resolveFieldName(field) || field;
-      const resolvedValue = resolveDropdownValue(resolvedField, value);
-
-      setTestResults(prev => prev.map(circuit => {
-        // Skip if only_empty is true and field already has a value
-        if (onlyEmpty && circuit[resolvedField as keyof typeof circuit]) {
-          return circuit;
-        }
-        return { ...circuit, [resolvedField]: resolvedValue };
-      }));
-
-      toast.success(`Set ${resolvedField} to ${resolvedValue} on all circuits`);
-      return `Set ${resolvedField} to ${resolvedValue} on all ${testResults.length} circuits`;
-    }
-
-    // ========== FIELD-SPECIFIC TOOLS (new) ==========
-    // Map tool names to their target field - COMPLETE coverage of all columns
-    const fieldToolMap: Record<string, string> = {
-      // Dropdown fields
-      'set_wiring_type': 'typeOfWiring',           // Column 3
-      'set_reference_method': 'referenceMethod',   // Column 4
-      'set_live_size': 'liveSize',                 // Column 6
-      'set_cpc_size': 'cpcSize',                   // Column 7
-      'set_bs_standard': 'bsStandard',             // Column 8
-      'set_device_type': 'protectiveDeviceType',   // Column 9
-      'set_device_curve': 'protectiveDeviceCurve', // Device curve
-      'set_device_rating': 'protectiveDeviceRating', // Column 10
-      'set_rcd_bs_standard': 'rcdBsStandard',      // Column 13
-      'set_rcd_type': 'rcdType',                   // Column 14
-      'set_rcd_ma_rating': 'rcdRating',            // Column 15
-      'set_insulation_voltage': 'insulationTestVoltage', // Column 22
-      'set_insulation_ln': 'insulationLiveNeutral', // Column 23
-      'set_insulation_le': 'insulationLiveEarth',  // Column 24
-      'set_polarity': 'polarity',                  // Column 25
-      'set_rcd_test_button': 'rcdTestButton',      // Column 28
-      'set_afdd_test': 'afddTest',                 // Column 29
-      'set_functional_test': 'functionalTesting',  // Functional
-      'set_phase_type': 'phaseType',               // Phase type
-      'set_phase_rotation': 'phaseRotation',       // Phase rotation
-      // Numeric/text fields
-      'set_circuit_number': 'circuitNumber',           // Column 1
-      'set_circuit_description': 'circuitDescription', // Column 2
-      'set_points_served': 'pointsServed',         // Column 5
-      'set_ka_rating': 'protectiveDeviceKaRating', // Column 11
-      'set_max_zs': 'maxZs',                       // Column 12
-      'set_rcd_amp_rating': 'rcdRatingA',          // Column 16
-      'set_ring_r1': 'ringR1',                     // Column 18
-      'set_ring_rn': 'ringRn',                     // Column 19
-      'set_ring_r2': 'ringR2',                     // Column 20
-      'set_r1r2': 'r1r2',                          // Column 21
-      'set_r2': 'r2',                              // R2 only
-      'set_insulation_ne': 'insulationNeutralEarth', // Insulation N-E
-      'set_zs': 'zs',                              // Column 26
-      'set_rcd_trip_time': 'rcdOneX',              // Column 27
-      'set_rcd_5x_time': 'rcdFiveX',               // 5x trip time
-      'set_pfc': 'pfc',                            // PFC
-      'set_pfc_ln': 'pfcLiveNeutral',              // PFC L-N
-      'set_pfc_le': 'pfcLiveEarth',                // PFC L-E
-      'set_notes': 'notes',                        // Column 30
-      'set_phase_balance_l1': 'phaseBalanceL1',    // Three-phase L1
-      'set_phase_balance_l2': 'phaseBalanceL2',    // Three-phase L2
-      'set_phase_balance_l3': 'phaseBalanceL3',    // Three-phase L3
-      'set_line_voltage': 'lineToLineVoltage',     // Line voltage
-    };
-
-    // Handle field-specific set_* tools
-    if (fieldToolMap[toolName]) {
-      const field = fieldToolMap[toolName];
-      const value = params.value as string;
-      const circuitNum = params.circuit_number as number | undefined;
-      const resolvedValue = resolveDropdownValue(field, value);
-
-      const targetIndex = circuitNum !== undefined
-        ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation?.startsWith(`${circuitNum} -`) || r.circuitDesignation === `C${circuitNum}`)
-        : selectedCircuitIndex;
-
-      if (targetIndex >= 0 && targetIndex < testResults.length) {
-        setTestResults(prev => {
-          const updated = [...prev];
-          updated[targetIndex] = { ...updated[targetIndex], [field]: resolvedValue };
-          return updated;
-        });
-        toast.success(`Set ${field} to ${resolvedValue}`);
-        return `Set ${field} to ${resolvedValue} on circuit ${targetIndex + 1}`;
+      // Handle stop_session tool
+      if (toolName === 'stop_session') {
+        setTimeout(() => stopVoiceRef.current?.(), 500);
+        return 'Stopping voice session. Goodbye!';
       }
-      return 'No circuit selected - add a circuit first';
-    }
 
-    // Handle set_ring_readings (multiple fields)
-    if (toolName === 'set_ring_readings') {
-      const r1 = params.r1 as string;
-      const rn = params.rn as string;
-      const r2 = params.r2 as string;
-      const circuitNum = params.circuit_number as number | undefined;
+      // Handle bulk_fill_circuits tool (legacy)
+      if (toolName === 'bulk_fill_circuits') {
+        const field = params.field as string;
+        const value = params.value as string;
+        const onlyEmpty = params.only_empty as boolean | undefined;
+        const resolvedField = resolveFieldName(field) || field;
+        const resolvedValue = resolveDropdownValue(resolvedField, value);
 
-      const targetIndex = circuitNum !== undefined
-        ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation?.startsWith(`${circuitNum} -`) || r.circuitDesignation === `C${circuitNum}`)
-        : selectedCircuitIndex;
+        setTestResults((prev) =>
+          prev.map((circuit) => {
+            // Skip if only_empty is true and field already has a value
+            if (onlyEmpty && circuit[resolvedField as keyof typeof circuit]) {
+              return circuit;
+            }
+            return { ...circuit, [resolvedField]: resolvedValue };
+          })
+        );
 
-      if (targetIndex >= 0 && targetIndex < testResults.length) {
-        setTestResults(prev => {
-          const updated = [...prev];
-          updated[targetIndex] = {
-            ...updated[targetIndex],
-            ringR1: r1,
-            ringRn: rn,
-            ringR2: r2,
-          };
-          return updated;
-        });
-        toast.success(`Set ring readings: r1=${r1}, rn=${rn}, r2=${r2}`);
-        return `Set ring readings on circuit ${targetIndex + 1}: r1=${r1}Ω, rn=${rn}Ω, r2=${r2}Ω`;
+        toast.success(`Set ${resolvedField} to ${resolvedValue} on all circuits`);
+        return `Set ${resolvedField} to ${resolvedValue} on all ${testResults.length} circuits`;
       }
-      return 'No circuit selected - add a circuit first';
-    }
 
-    // Handle set_phase_balance (multiple fields - L1, L2, L3)
-    if (toolName === 'set_phase_balance') {
-      const l1 = params.l1 as string;
-      const l2 = params.l2 as string;
-      const l3 = params.l3 as string;
-      const circuitNum = params.circuit_number as number | undefined;
+      // ========== FIELD-SPECIFIC TOOLS (new) ==========
+      // Map tool names to their target field - COMPLETE coverage of all columns
+      const fieldToolMap: Record<string, string> = {
+        // Dropdown fields
+        set_wiring_type: 'typeOfWiring', // Column 3
+        set_reference_method: 'referenceMethod', // Column 4
+        set_live_size: 'liveSize', // Column 6
+        set_cpc_size: 'cpcSize', // Column 7
+        set_bs_standard: 'bsStandard', // Column 8
+        set_device_type: 'protectiveDeviceType', // Column 9
+        set_device_curve: 'protectiveDeviceCurve', // Device curve
+        set_device_rating: 'protectiveDeviceRating', // Column 10
+        set_rcd_bs_standard: 'rcdBsStandard', // Column 13
+        set_rcd_type: 'rcdType', // Column 14
+        set_rcd_ma_rating: 'rcdRating', // Column 15
+        set_insulation_voltage: 'insulationTestVoltage', // Column 22
+        set_insulation_ln: 'insulationLiveNeutral', // Column 23
+        set_insulation_le: 'insulationLiveEarth', // Column 24
+        set_polarity: 'polarity', // Column 25
+        set_rcd_test_button: 'rcdTestButton', // Column 28
+        set_afdd_test: 'afddTest', // Column 29
+        set_functional_test: 'functionalTesting', // Functional
+        set_phase_type: 'phaseType', // Phase type
+        set_phase_rotation: 'phaseRotation', // Phase rotation
+        // Numeric/text fields
+        set_circuit_number: 'circuitNumber', // Column 1
+        set_circuit_description: 'circuitDescription', // Column 2
+        set_points_served: 'pointsServed', // Column 5
+        set_ka_rating: 'protectiveDeviceKaRating', // Column 11
+        set_max_zs: 'maxZs', // Column 12
+        set_rcd_amp_rating: 'rcdRatingA', // Column 16
+        set_ring_r1: 'ringR1', // Column 18
+        set_ring_rn: 'ringRn', // Column 19
+        set_ring_r2: 'ringR2', // Column 20
+        set_r1r2: 'r1r2', // Column 21
+        set_r2: 'r2', // R2 only
+        set_insulation_ne: 'insulationNeutralEarth', // Insulation N-E
+        set_zs: 'zs', // Column 26
+        set_rcd_trip_time: 'rcdOneX', // Column 27
+        set_rcd_5x_time: 'rcdFiveX', // 5x trip time
+        set_pfc: 'pfc', // PFC
+        set_pfc_ln: 'pfcLiveNeutral', // PFC L-N
+        set_pfc_le: 'pfcLiveEarth', // PFC L-E
+        set_notes: 'notes', // Column 30
+        set_phase_balance_l1: 'phaseBalanceL1', // Three-phase L1
+        set_phase_balance_l2: 'phaseBalanceL2', // Three-phase L2
+        set_phase_balance_l3: 'phaseBalanceL3', // Three-phase L3
+        set_line_voltage: 'lineToLineVoltage', // Line voltage
+      };
 
-      const targetIndex = circuitNum !== undefined
-        ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation?.startsWith(`${circuitNum} -`) || r.circuitDesignation === `C${circuitNum}`)
-        : selectedCircuitIndex;
+      // Handle field-specific set_* tools
+      if (fieldToolMap[toolName]) {
+        const field = fieldToolMap[toolName];
+        const value = params.value as string;
+        const circuitNum = params.circuit_number as number | undefined;
+        const resolvedValue = resolveDropdownValue(field, value);
 
-      if (targetIndex >= 0 && targetIndex < testResults.length) {
-        setTestResults(prev => {
-          const updated = [...prev];
-          updated[targetIndex] = {
-            ...updated[targetIndex],
-            phaseBalanceL1: l1,
-            phaseBalanceL2: l2,
-            phaseBalanceL3: l3,
-          };
-          return updated;
-        });
-        toast.success(`Set phase balance: L1=${l1}A, L2=${l2}A, L3=${l3}A`);
-        return `Set phase balance on circuit ${targetIndex + 1}: L1=${l1}A, L2=${l2}A, L3=${l3}A`;
-      }
-      return 'No circuit selected - add a circuit first';
-    }
+        const targetIndex =
+          circuitNum !== undefined
+            ? testResults.findIndex(
+                (r) =>
+                  r.circuitNumber === String(circuitNum) ||
+                  r.circuitDesignation?.startsWith(`${circuitNum} -`) ||
+                  r.circuitDesignation === `C${circuitNum}`
+              )
+            : selectedCircuitIndex;
 
-    // ========== BULK SET TOOLS ==========
-    const bulkToolMap: Record<string, { field: string; both?: string }> = {
-      'bulk_set_polarity': { field: 'polarity' },
-      'bulk_set_wiring_type': { field: 'typeOfWiring' },
-      'bulk_set_reference_method': { field: 'referenceMethod' },
-      'bulk_set_insulation_voltage': { field: 'insulationTestVoltage' },
-      'bulk_set_insulation_readings': { field: 'insulationLiveEarth', both: 'insulationLiveNeutral' },
-      'bulk_set_functional_test': { field: 'functionalTesting' },
-      'bulk_set_rcd_test_button': { field: 'rcdTestButton' },
-    };
-
-    if (bulkToolMap[toolName]) {
-      const { field, both } = bulkToolMap[toolName];
-      const value = params.value as string;
-      const resolvedValue = resolveDropdownValue(field, value);
-
-      setTestResults(prev => prev.map(circuit => {
-        const updates: Record<string, string> = { [field]: resolvedValue };
-        if (both) {
-          updates[both] = resolvedValue;
-        }
-        return { ...circuit, ...updates };
-      }));
-
-      toast.success(`Set ${field} to ${resolvedValue} on all ${testResults.length} circuits`);
-      return `Set ${field} to ${resolvedValue} on all ${testResults.length} circuits`;
-    }
-
-    // ========== CIRCUIT MANAGEMENT TOOLS ==========
-    if (toolName === 'add_circuit') {
-      const circuitType = params.circuit_type as string || 'other';
-      const description = params.description as string || '';
-      const nextNum = (testResults.length + 1).toString();
-      const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
-
-      setTestResults(prev => [...prev, newCircuit]);
-      setSelectedCircuitIndex(testResults.length);
-      toast.success(`Added ${newCircuit.circuitType} circuit C${nextNum}`);
-      return `Added ${newCircuit.circuitType} circuit ${nextNum} with all defaults filled`;
-    }
-
-    if (toolName === 'delete_circuit') {
-      const circuitNum = params.circuit_number as number | undefined;
-      const removeIdx = circuitNum !== undefined
-        ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation?.startsWith(`${circuitNum} -`) || r.circuitDesignation === `C${circuitNum}`)
-        : selectedCircuitIndex;
-
-      if (removeIdx >= 0 && removeIdx < testResults.length) {
-        const removed = testResults[removeIdx];
-        setTestResults(prev => {
-          const filtered = prev.filter((_, i) => i !== removeIdx);
-          return filtered.map((circuit, i) => {
-            const newNum = (i + 1).toString();
-            const desc = circuit.circuitDescription || circuit.circuitType || 'Circuit';
-            return { ...circuit, circuitNumber: newNum, circuitDesignation: `C${newNum}` };
+        if (targetIndex >= 0 && targetIndex < testResults.length) {
+          setTestResults((prev) => {
+            const updated = [...prev];
+            updated[targetIndex] = { ...updated[targetIndex], [field]: resolvedValue };
+            return updated;
           });
+          toast.success(`Set ${field} to ${resolvedValue}`);
+          return `Set ${field} to ${resolvedValue} on circuit ${targetIndex + 1}`;
+        }
+        return 'No circuit selected - add a circuit first';
+      }
+
+      // Handle set_ring_readings (multiple fields)
+      if (toolName === 'set_ring_readings') {
+        const r1 = params.r1 as string;
+        const rn = params.rn as string;
+        const r2 = params.r2 as string;
+        const circuitNum = params.circuit_number as number | undefined;
+
+        const targetIndex =
+          circuitNum !== undefined
+            ? testResults.findIndex(
+                (r) =>
+                  r.circuitNumber === String(circuitNum) ||
+                  r.circuitDesignation?.startsWith(`${circuitNum} -`) ||
+                  r.circuitDesignation === `C${circuitNum}`
+              )
+            : selectedCircuitIndex;
+
+        if (targetIndex >= 0 && targetIndex < testResults.length) {
+          setTestResults((prev) => {
+            const updated = [...prev];
+            updated[targetIndex] = {
+              ...updated[targetIndex],
+              ringR1: r1,
+              ringRn: rn,
+              ringR2: r2,
+            };
+            return updated;
+          });
+          toast.success(`Set ring readings: r1=${r1}, rn=${rn}, r2=${r2}`);
+          return `Set ring readings on circuit ${targetIndex + 1}: r1=${r1}Ω, rn=${rn}Ω, r2=${r2}Ω`;
+        }
+        return 'No circuit selected - add a circuit first';
+      }
+
+      // Handle set_phase_balance (multiple fields - L1, L2, L3)
+      if (toolName === 'set_phase_balance') {
+        const l1 = params.l1 as string;
+        const l2 = params.l2 as string;
+        const l3 = params.l3 as string;
+        const circuitNum = params.circuit_number as number | undefined;
+
+        const targetIndex =
+          circuitNum !== undefined
+            ? testResults.findIndex(
+                (r) =>
+                  r.circuitNumber === String(circuitNum) ||
+                  r.circuitDesignation?.startsWith(`${circuitNum} -`) ||
+                  r.circuitDesignation === `C${circuitNum}`
+              )
+            : selectedCircuitIndex;
+
+        if (targetIndex >= 0 && targetIndex < testResults.length) {
+          setTestResults((prev) => {
+            const updated = [...prev];
+            updated[targetIndex] = {
+              ...updated[targetIndex],
+              phaseBalanceL1: l1,
+              phaseBalanceL2: l2,
+              phaseBalanceL3: l3,
+            };
+            return updated;
+          });
+          toast.success(`Set phase balance: L1=${l1}A, L2=${l2}A, L3=${l3}A`);
+          return `Set phase balance on circuit ${targetIndex + 1}: L1=${l1}A, L2=${l2}A, L3=${l3}A`;
+        }
+        return 'No circuit selected - add a circuit first';
+      }
+
+      // ========== BULK SET TOOLS ==========
+      const bulkToolMap: Record<string, { field: string; both?: string }> = {
+        bulk_set_polarity: { field: 'polarity' },
+        bulk_set_wiring_type: { field: 'typeOfWiring' },
+        bulk_set_reference_method: { field: 'referenceMethod' },
+        bulk_set_insulation_voltage: { field: 'insulationTestVoltage' },
+        bulk_set_insulation_readings: {
+          field: 'insulationLiveEarth',
+          both: 'insulationLiveNeutral',
+        },
+        bulk_set_functional_test: { field: 'functionalTesting' },
+        bulk_set_rcd_test_button: { field: 'rcdTestButton' },
+      };
+
+      if (bulkToolMap[toolName]) {
+        const { field, both } = bulkToolMap[toolName];
+        const value = params.value as string;
+        const resolvedValue = resolveDropdownValue(field, value);
+
+        setTestResults((prev) =>
+          prev.map((circuit) => {
+            const updates: Record<string, string> = { [field]: resolvedValue };
+            if (both) {
+              updates[both] = resolvedValue;
+            }
+            return { ...circuit, ...updates };
+          })
+        );
+
+        toast.success(`Set ${field} to ${resolvedValue} on all ${testResults.length} circuits`);
+        return `Set ${field} to ${resolvedValue} on all ${testResults.length} circuits`;
+      }
+
+      // ========== CIRCUIT MANAGEMENT TOOLS ==========
+      if (toolName === 'add_circuit') {
+        const circuitType = (params.circuit_type as string) || 'other';
+        const description = (params.description as string) || '';
+        const nextNum = (testResults.length + 1).toString();
+        const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
+
+        setTestResults((prev) => [...prev, newCircuit]);
+        setSelectedCircuitIndex(testResults.length);
+        toast.success(`Added ${newCircuit.circuitType} circuit C${nextNum}`);
+        return `Added ${newCircuit.circuitType} circuit ${nextNum} with all defaults filled`;
+      }
+
+      if (toolName === 'delete_circuit') {
+        const circuitNum = params.circuit_number as number | undefined;
+        const removeIdx =
+          circuitNum !== undefined
+            ? testResults.findIndex(
+                (r) =>
+                  r.circuitNumber === String(circuitNum) ||
+                  r.circuitDesignation?.startsWith(`${circuitNum} -`) ||
+                  r.circuitDesignation === `C${circuitNum}`
+              )
+            : selectedCircuitIndex;
+
+        if (removeIdx >= 0 && removeIdx < testResults.length) {
+          const removed = testResults[removeIdx];
+          setTestResults((prev) => {
+            const filtered = prev.filter((_, i) => i !== removeIdx);
+            return filtered.map((circuit, i) => {
+              const newNum = (i + 1).toString();
+              const desc = circuit.circuitDescription || circuit.circuitType || 'Circuit';
+              return { ...circuit, circuitNumber: newNum, circuitDesignation: `C${newNum}` };
+            });
+          });
+          if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
+            setSelectedCircuitIndex((prev) => Math.max(0, prev - 1));
+          }
+          toast.success(`Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}`);
+          return `Deleted circuit and renumbered remaining circuits`;
+        }
+        return 'No circuits to delete';
+      }
+
+      if (toolName === 'select_circuit') {
+        const num = params.circuit_number as number;
+        const idx = testResults.findIndex(
+          (r) =>
+            r.circuitNumber === String(num) ||
+            r.circuitDesignation?.startsWith(`${num} -`) ||
+            r.circuitDesignation === `C${num}`
+        );
+        if (idx >= 0) {
+          setSelectedCircuitIndex(idx);
+          toast.info(`Selected circuit ${num}`);
+          return `Selected circuit ${num}`;
+        }
+        return `Circuit ${num} not found`;
+      }
+
+      if (toolName === 'next_circuit') {
+        if (selectedCircuitIndex < testResults.length - 1) {
+          const newIndex = selectedCircuitIndex + 1;
+          setSelectedCircuitIndex(newIndex);
+          toast.info(`Now on circuit ${newIndex + 1}`);
+          return `Moved to circuit ${newIndex + 1}`;
+        }
+        return 'Already on the last circuit';
+      }
+
+      if (toolName === 'previous_circuit') {
+        if (selectedCircuitIndex > 0) {
+          const newIndex = selectedCircuitIndex - 1;
+          setSelectedCircuitIndex(newIndex);
+          toast.info(`Now on circuit ${newIndex + 1}`);
+          return `Moved to circuit ${newIndex + 1}`;
+        }
+        return 'Already on the first circuit';
+      }
+
+      if (toolName === 'get_status') {
+        const circuitNum = (params.circuit_number as number) || selectedCircuitIndex + 1;
+        const circuit = testResults.find(
+          (r) =>
+            r.circuitNumber === String(circuitNum) ||
+            r.circuitDesignation?.startsWith(`${circuitNum} -`) ||
+            r.circuitDesignation === `C${circuitNum}`
+        );
+
+        if (!circuit)
+          return `Circuit ${circuitNum} not found. ${testResults.length} total circuits.`;
+
+        const missing: string[] = [];
+        if (!circuit.r1r2) missing.push('R1+R2');
+        if (!circuit.zs) missing.push('Zs');
+        if (!circuit.insulationLiveEarth && !circuit.insulationResistance)
+          missing.push('insulation');
+        if (!circuit.polarity || circuit.polarity === '') missing.push('polarity');
+
+        const hasRcd =
+          circuit.protectiveDeviceType === 'RCBO' || circuit.protectiveDeviceType === 'RCD';
+        if (hasRcd && !circuit.rcdOneX) missing.push('RCD trip time');
+
+        if (missing.length === 0) {
+          toast.success(`Circuit ${circuitNum} is complete!`);
+          return `Circuit ${circuitNum} complete. ${testResults.length} total circuits.`;
+        }
+
+        const missingList = missing.join(', ');
+        toast.info(`Circuit ${circuitNum} needs: ${missingList}`);
+        return `Circuit ${circuitNum} needs: ${missingList}`;
+      }
+
+      if (toolName === 'validate_tests') {
+        const issues: string[] = [];
+        testResults.forEach((circuit, idx) => {
+          const num = idx + 1;
+          const ir = parseFloat(circuit.insulationLiveEarth || circuit.insulationResistance || '0');
+          if (ir > 0 && ir < 1.0) issues.push(`C${num}: IR too low`);
+          const zs = parseFloat(circuit.zs || '0');
+          const maxZs = parseFloat(circuit.maxZs || '0');
+          if (zs > 0 && maxZs > 0 && zs >= maxZs) issues.push(`C${num}: Zs exceeds max`);
+          const polarity = (circuit.polarity || '').toLowerCase();
+          if (polarity === 'incorrect') issues.push(`C${num}: INCORRECT POLARITY`);
+          const rcdTime = parseFloat(circuit.rcdOneX || '0');
+          if (rcdTime > 300) issues.push(`C${num}: RCD too slow`);
         });
-        if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
-          setSelectedCircuitIndex(prev => Math.max(0, prev - 1));
+
+        if (issues.length === 0) {
+          toast.success('All tests passed!');
+          return 'All circuits passed validation';
         }
-        toast.success(`Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}`);
-        return `Deleted circuit and renumbered remaining circuits`;
-      }
-      return 'No circuits to delete';
-    }
-
-    if (toolName === 'select_circuit') {
-      const num = params.circuit_number as number;
-      const idx = testResults.findIndex(r =>
-        r.circuitNumber === String(num) ||
-        r.circuitDesignation?.startsWith(`${num} -`) ||
-        r.circuitDesignation === `C${num}`
-      );
-      if (idx >= 0) {
-        setSelectedCircuitIndex(idx);
-        toast.info(`Selected circuit ${num}`);
-        return `Selected circuit ${num}`;
-      }
-      return `Circuit ${num} not found`;
-    }
-
-    if (toolName === 'next_circuit') {
-      if (selectedCircuitIndex < testResults.length - 1) {
-        const newIndex = selectedCircuitIndex + 1;
-        setSelectedCircuitIndex(newIndex);
-        toast.info(`Now on circuit ${newIndex + 1}`);
-        return `Moved to circuit ${newIndex + 1}`;
-      }
-      return 'Already on the last circuit';
-    }
-
-    if (toolName === 'previous_circuit') {
-      if (selectedCircuitIndex > 0) {
-        const newIndex = selectedCircuitIndex - 1;
-        setSelectedCircuitIndex(newIndex);
-        toast.info(`Now on circuit ${newIndex + 1}`);
-        return `Moved to circuit ${newIndex + 1}`;
-      }
-      return 'Already on the first circuit';
-    }
-
-    if (toolName === 'get_status') {
-      const circuitNum = params.circuit_number as number || selectedCircuitIndex + 1;
-      const circuit = testResults.find(r =>
-        r.circuitNumber === String(circuitNum) ||
-        r.circuitDesignation?.startsWith(`${circuitNum} -`) ||
-        r.circuitDesignation === `C${circuitNum}`
-      );
-
-      if (!circuit) return `Circuit ${circuitNum} not found. ${testResults.length} total circuits.`;
-
-      const missing: string[] = [];
-      if (!circuit.r1r2) missing.push('R1+R2');
-      if (!circuit.zs) missing.push('Zs');
-      if (!circuit.insulationLiveEarth && !circuit.insulationResistance) missing.push('insulation');
-      if (!circuit.polarity || circuit.polarity === '') missing.push('polarity');
-
-      const hasRcd = circuit.protectiveDeviceType === 'RCBO' || circuit.protectiveDeviceType === 'RCD';
-      if (hasRcd && !circuit.rcdOneX) missing.push('RCD trip time');
-
-      if (missing.length === 0) {
-        toast.success(`Circuit ${circuitNum} is complete!`);
-        return `Circuit ${circuitNum} complete. ${testResults.length} total circuits.`;
+        toast.warning(`Found ${issues.length} issue(s)`);
+        return `Issues: ${issues.join(', ')}`;
       }
 
-      const missingList = missing.join(', ');
-      toast.info(`Circuit ${circuitNum} needs: ${missingList}`);
-      return `Circuit ${circuitNum} needs: ${missingList}`;
-    }
+      // Handle fill_schedule_of_tests / fill_eic / fill_eicr tools (the single tool for all EIC actions)
+      if (
+        toolName === 'fill_schedule_of_tests' ||
+        toolName === 'fill_eic' ||
+        toolName === 'fill_eicr'
+      ) {
+        const action = params.action as string;
 
-    if (toolName === 'validate_tests') {
-      const issues: string[] = [];
-      testResults.forEach((circuit, idx) => {
-        const num = idx + 1;
-        const ir = parseFloat(circuit.insulationLiveEarth || circuit.insulationResistance || '0');
-        if (ir > 0 && ir < 1.0) issues.push(`C${num}: IR too low`);
-        const zs = parseFloat(circuit.zs || '0');
-        const maxZs = parseFloat(circuit.maxZs || '0');
-        if (zs > 0 && maxZs > 0 && zs >= maxZs) issues.push(`C${num}: Zs exceeds max`);
-        const polarity = (circuit.polarity || '').toLowerCase();
-        if (polarity === 'incorrect') issues.push(`C${num}: INCORRECT POLARITY`);
-        const rcdTime = parseFloat(circuit.rcdOneX || '0');
-        if (rcdTime > 300) issues.push(`C${num}: RCD too slow`);
-      });
+        switch (action) {
+          case 'add_circuit': {
+            const circuitType = (params.circuit_type as string) || 'other';
+            const description = (params.description as string) || '';
+            const nextNum = (testResults.length + 1).toString();
 
-      if (issues.length === 0) {
-        toast.success('All tests passed!');
-        return 'All circuits passed validation';
-      }
-      toast.warning(`Found ${issues.length} issue(s)`);
-      return `Issues: ${issues.join(', ')}`;
-    }
+            // Create circuit with ALL 32 fields pre-filled using BS7671 defaults
+            const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
 
-    // Handle fill_schedule_of_tests / fill_eic / fill_eicr tools (the single tool for all EIC actions)
-    if (toolName === 'fill_schedule_of_tests' || toolName === 'fill_eic' || toolName === 'fill_eicr') {
-      const action = params.action as string;
-
-      switch (action) {
-        case 'add_circuit': {
-          const circuitType = params.circuit_type as string || 'other';
-          const description = params.description as string || '';
-          const nextNum = (testResults.length + 1).toString();
-
-          // Create circuit with ALL 32 fields pre-filled using BS7671 defaults
-          const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
-
-          setTestResults(prev => [...prev, newCircuit]);
-          setSelectedCircuitIndex(testResults.length);
-          toast.success(`Added ${newCircuit.circuitType} circuit C${nextNum}`);
-          return `Added ${newCircuit.circuitType} circuit ${nextNum} with all defaults filled`;
-        }
-
-        case 'update_field': {
-          const field = params.field as string;
-          let value = params.value as string;
-          const circuitNum = params.circuit_number as number | undefined;
-
-          // Resolve spoken field name to actual property name
-          const resolvedField = resolveFieldName(field) || field;
-
-          // Resolve dropdown values (e.g., "OK" -> "Correct" for polarity)
-          value = resolveDropdownValue(resolvedField, value);
-
-          const targetIndex = circuitNum !== undefined
-            ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
-            : selectedCircuitIndex;
-
-          if (targetIndex >= 0 && targetIndex < testResults.length) {
-            setTestResults(prev => {
-              const updated = [...prev];
-              updated[targetIndex] = { ...updated[targetIndex], [resolvedField]: value };
-              return updated;
-            });
-            toast.success(`Set ${resolvedField} to ${value}`);
-            return `Set ${resolvedField} to ${value} on circuit ${targetIndex + 1}`;
-          }
-          return 'No circuit selected - add a circuit first';
-        }
-
-        case 'update_multiple_fields': {
-          const fields = params.fields as Record<string, string>;
-          const circuitNum = params.circuit_number as number | undefined;
-
-          if (!fields || typeof fields !== 'object') {
-            return 'No fields provided for update';
+            setTestResults((prev) => [...prev, newCircuit]);
+            setSelectedCircuitIndex(testResults.length);
+            toast.success(`Added ${newCircuit.circuitType} circuit C${nextNum}`);
+            return `Added ${newCircuit.circuitType} circuit ${nextNum} with all defaults filled`;
           }
 
-          const targetIndex = circuitNum !== undefined
-            ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
-            : selectedCircuitIndex;
+          case 'update_field': {
+            const field = params.field as string;
+            let value = params.value as string;
+            const circuitNum = params.circuit_number as number | undefined;
 
-          if (targetIndex >= 0 && targetIndex < testResults.length) {
-            setTestResults(prev => {
-              const updated = [...prev];
-              const circuit = { ...updated[targetIndex] };
-              for (const [field, value] of Object.entries(fields)) {
-                const resolvedField = resolveFieldName(field) || field;
-                const resolvedValue = resolveDropdownValue(resolvedField, value);
-                (circuit as Record<string, unknown>)[resolvedField] = resolvedValue;
+            // Resolve spoken field name to actual property name
+            const resolvedField = resolveFieldName(field) || field;
+
+            // Resolve dropdown values (e.g., "OK" -> "Correct" for polarity)
+            value = resolveDropdownValue(resolvedField, value);
+
+            const targetIndex =
+              circuitNum !== undefined
+                ? testResults.findIndex(
+                    (r) =>
+                      r.circuitNumber === String(circuitNum) ||
+                      r.circuitDesignation === `C${circuitNum}`
+                  )
+                : selectedCircuitIndex;
+
+            if (targetIndex >= 0 && targetIndex < testResults.length) {
+              setTestResults((prev) => {
+                const updated = [...prev];
+                updated[targetIndex] = { ...updated[targetIndex], [resolvedField]: value };
+                return updated;
+              });
+              toast.success(`Set ${resolvedField} to ${value}`);
+              return `Set ${resolvedField} to ${value} on circuit ${targetIndex + 1}`;
+            }
+            return 'No circuit selected - add a circuit first';
+          }
+
+          case 'update_multiple_fields': {
+            const fields = params.fields as Record<string, string>;
+            const circuitNum = params.circuit_number as number | undefined;
+
+            if (!fields || typeof fields !== 'object') {
+              return 'No fields provided for update';
+            }
+
+            const targetIndex =
+              circuitNum !== undefined
+                ? testResults.findIndex(
+                    (r) =>
+                      r.circuitNumber === String(circuitNum) ||
+                      r.circuitDesignation === `C${circuitNum}`
+                  )
+                : selectedCircuitIndex;
+
+            if (targetIndex >= 0 && targetIndex < testResults.length) {
+              setTestResults((prev) => {
+                const updated = [...prev];
+                const circuit = { ...updated[targetIndex] };
+                for (const [field, value] of Object.entries(fields)) {
+                  const resolvedField = resolveFieldName(field) || field;
+                  const resolvedValue = resolveDropdownValue(resolvedField, value);
+                  (circuit as Record<string, unknown>)[resolvedField] = resolvedValue;
+                }
+                updated[targetIndex] = circuit;
+                return updated;
+              });
+              const fieldList = Object.keys(fields).join(', ');
+              toast.success(`Updated ${Object.keys(fields).length} fields`);
+              return `Updated fields: ${fieldList} on circuit ${targetIndex + 1}`;
+            }
+            return 'No circuit selected';
+          }
+
+          case 'next':
+          case 'next_circuit': {
+            if (selectedCircuitIndex < testResults.length - 1) {
+              const newIndex = selectedCircuitIndex + 1;
+              setSelectedCircuitIndex(newIndex);
+              toast.info(`Now on circuit ${newIndex + 1}`);
+              return `Moved to circuit ${newIndex + 1}`;
+            }
+            return 'Already on the last circuit';
+          }
+
+          case 'previous':
+          case 'previous_circuit': {
+            if (selectedCircuitIndex > 0) {
+              const newIndex = selectedCircuitIndex - 1;
+              setSelectedCircuitIndex(newIndex);
+              toast.info(`Now on circuit ${newIndex + 1}`);
+              return `Moved to circuit ${newIndex + 1}`;
+            }
+            return 'Already on the first circuit';
+          }
+
+          case 'select':
+          case 'select_circuit': {
+            const num = params.circuit_number as number;
+            const idx = testResults.findIndex(
+              (r) => r.circuitNumber === String(num) || r.circuitDesignation === `C${num}`
+            );
+            if (idx >= 0) {
+              setSelectedCircuitIndex(idx);
+              toast.info(`Selected circuit ${num}`);
+              return `Selected circuit ${num}`;
+            }
+            return `Circuit ${num} not found`;
+          }
+
+          case 'delete_circuit': {
+            const circuitNum = params.circuit_number as number | undefined;
+            const removeIdx =
+              circuitNum !== undefined
+                ? testResults.findIndex(
+                    (r) =>
+                      r.circuitNumber === String(circuitNum) ||
+                      r.circuitDesignation === `C${circuitNum}`
+                  )
+                : selectedCircuitIndex;
+
+            if (removeIdx >= 0 && removeIdx < testResults.length) {
+              const removed = testResults[removeIdx];
+              setTestResults((prev) => {
+                // Remove the circuit
+                const filtered = prev.filter((_, i) => i !== removeIdx);
+                // Renumber all remaining circuits
+                return filtered.map((circuit, i) => ({
+                  ...circuit,
+                  circuitNumber: (i + 1).toString(),
+                  circuitDesignation: `C${i + 1}`,
+                }));
+              });
+              // Adjust selected index if needed
+              if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
+                setSelectedCircuitIndex((prev) => Math.max(0, prev - 1));
               }
-              updated[targetIndex] = circuit;
-              return updated;
-            });
-            const fieldList = Object.keys(fields).join(', ');
-            toast.success(`Updated ${Object.keys(fields).length} fields`);
-            return `Updated fields: ${fieldList} on circuit ${targetIndex + 1}`;
+              toast.success(
+                `Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}, renumbered remaining`
+              );
+              return `Deleted circuit and renumbered remaining circuits`;
+            }
+            return 'No circuits to delete';
           }
-          return 'No circuit selected';
-        }
 
-        case 'next':
-        case 'next_circuit': {
-          if (selectedCircuitIndex < testResults.length - 1) {
-            const newIndex = selectedCircuitIndex + 1;
-            setSelectedCircuitIndex(newIndex);
-            toast.info(`Now on circuit ${newIndex + 1}`);
-            return `Moved to circuit ${newIndex + 1}`;
-          }
-          return 'Already on the last circuit';
-        }
+          case 'move_circuit': {
+            const circuitNum = params.circuit_number as number | undefined;
+            const toPosition = params.to_position as number | undefined;
 
-        case 'previous':
-        case 'previous_circuit': {
-          if (selectedCircuitIndex > 0) {
-            const newIndex = selectedCircuitIndex - 1;
-            setSelectedCircuitIndex(newIndex);
-            toast.info(`Now on circuit ${newIndex + 1}`);
-            return `Moved to circuit ${newIndex + 1}`;
-          }
-          return 'Already on the first circuit';
-        }
+            if (circuitNum === undefined || toPosition === undefined) {
+              return 'Need both circuit_number and to_position for move';
+            }
 
-        case 'select':
-        case 'select_circuit': {
-          const num = params.circuit_number as number;
-          const idx = testResults.findIndex(r =>
-            r.circuitNumber === String(num) || r.circuitDesignation === `C${num}`
-          );
-          if (idx >= 0) {
-            setSelectedCircuitIndex(idx);
-            toast.info(`Selected circuit ${num}`);
-            return `Selected circuit ${num}`;
-          }
-          return `Circuit ${num} not found`;
-        }
+            const fromIdx = testResults.findIndex(
+              (r) =>
+                r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`
+            );
+            const toIdx = toPosition - 1;
 
-        case 'delete_circuit': {
-          const circuitNum = params.circuit_number as number | undefined;
-          const removeIdx = circuitNum !== undefined
-            ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
-            : selectedCircuitIndex;
+            if (fromIdx < 0 || fromIdx >= testResults.length) {
+              return `Circuit ${circuitNum} not found`;
+            }
+            if (toIdx < 0 || toIdx >= testResults.length) {
+              return `Invalid position ${toPosition}`;
+            }
+            if (fromIdx === toIdx) {
+              return `Circuit ${circuitNum} is already at position ${toPosition}`;
+            }
 
-          if (removeIdx >= 0 && removeIdx < testResults.length) {
-            const removed = testResults[removeIdx];
-            setTestResults(prev => {
-              // Remove the circuit
-              const filtered = prev.filter((_, i) => i !== removeIdx);
-              // Renumber all remaining circuits
-              return filtered.map((circuit, i) => ({
+            setTestResults((prev) => {
+              const updated = [...prev];
+              const [movedCircuit] = updated.splice(fromIdx, 1);
+              updated.splice(toIdx, 0, movedCircuit);
+              return updated.map((circuit, i) => ({
                 ...circuit,
                 circuitNumber: (i + 1).toString(),
                 circuitDesignation: `C${i + 1}`,
               }));
             });
-            // Adjust selected index if needed
-            if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
-              setSelectedCircuitIndex(prev => Math.max(0, prev - 1));
+
+            setSelectedCircuitIndex(toIdx);
+            toast.success(`Moved circuit to position ${toPosition}, renumbered all circuits`);
+            return `Moved circuit ${circuitNum} to position ${toPosition}`;
+          }
+
+          case 'complete': {
+            toast.success('Schedule of tests complete!');
+            return 'Schedule marked as complete';
+          }
+
+          case 'select_board': {
+            const boardName = params.board_name as string;
+            if (!boardName) return 'Need board name to select';
+            const board = distributionBoards.find(
+              (b) =>
+                b.name.toLowerCase().includes(boardName.toLowerCase()) ||
+                b.reference?.toLowerCase().includes(boardName.toLowerCase()) ||
+                b.id.toLowerCase().includes(boardName.toLowerCase())
+            );
+            if (board) {
+              setExpandedBoards(new Set([board.id]));
+              toast.success(`Switched to ${board.name}`);
+              return `Selected board: ${board.name}`;
             }
-            toast.success(`Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}, renumbered remaining`);
-            return `Deleted circuit and renumbered remaining circuits`;
-          }
-          return 'No circuits to delete';
-        }
-
-        case 'move_circuit': {
-          const circuitNum = params.circuit_number as number | undefined;
-          const toPosition = params.to_position as number | undefined;
-
-          if (circuitNum === undefined || toPosition === undefined) {
-            return 'Need both circuit_number and to_position for move';
+            return `Board "${boardName}" not found. Available: ${distributionBoards.map((b) => b.name).join(', ')}`;
           }
 
-          const fromIdx = testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`);
-          const toIdx = toPosition - 1;
+          case 'get_missing_tests':
+          case 'get_status': {
+            const circuitNum = (params.circuit_number as number) || selectedCircuitIndex + 1;
+            const circuit = testResults.find(
+              (r) =>
+                r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`
+            );
+            if (!circuit) return `Circuit ${circuitNum} not found`;
 
-          if (fromIdx < 0 || fromIdx >= testResults.length) {
-            return `Circuit ${circuitNum} not found`;
-          }
-          if (toIdx < 0 || toIdx >= testResults.length) {
-            return `Invalid position ${toPosition}`;
-          }
-          if (fromIdx === toIdx) {
-            return `Circuit ${circuitNum} is already at position ${toPosition}`;
-          }
-
-          setTestResults(prev => {
-            const updated = [...prev];
-            const [movedCircuit] = updated.splice(fromIdx, 1);
-            updated.splice(toIdx, 0, movedCircuit);
-            return updated.map((circuit, i) => ({
-              ...circuit,
-              circuitNumber: (i + 1).toString(),
-              circuitDesignation: `C${i + 1}`,
-            }));
-          });
-
-          setSelectedCircuitIndex(toIdx);
-          toast.success(`Moved circuit to position ${toPosition}, renumbered all circuits`);
-          return `Moved circuit ${circuitNum} to position ${toPosition}`;
-        }
-
-        case 'complete': {
-          toast.success('Schedule of tests complete!');
-          return 'Schedule marked as complete';
-        }
-
-        case 'select_board': {
-          const boardName = params.board_name as string;
-          if (!boardName) return 'Need board name to select';
-          const board = distributionBoards.find(b =>
-            b.name.toLowerCase().includes(boardName.toLowerCase()) ||
-            b.reference?.toLowerCase().includes(boardName.toLowerCase()) ||
-            b.id.toLowerCase().includes(boardName.toLowerCase())
-          );
-          if (board) {
-            setExpandedBoards(new Set([board.id]));
-            toast.success(`Switched to ${board.name}`);
-            return `Selected board: ${board.name}`;
-          }
-          return `Board "${boardName}" not found. Available: ${distributionBoards.map(b => b.name).join(', ')}`;
-        }
-
-        case 'get_missing_tests':
-        case 'get_status': {
-          const circuitNum = params.circuit_number as number || selectedCircuitIndex + 1;
-          const circuit = testResults.find(r =>
-            r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`
-          );
-          if (!circuit) return `Circuit ${circuitNum} not found`;
-
-          const missing: string[] = [];
-          if (!circuit.r1r2) missing.push('R1+R2');
-          if (!circuit.zs) missing.push('Zs');
-          if (!circuit.insulationLiveEarth && !circuit.insulationResistance) missing.push('insulation');
-          if (!circuit.polarity || circuit.polarity === '') missing.push('polarity');
-
-          const hasRcd = circuit.protectiveDeviceType === 'RCBO' || circuit.protectiveDeviceType === 'RCD';
-          if (hasRcd && !circuit.rcdOneX) missing.push('RCD trip time');
-
-          if (circuit.circuitType?.toLowerCase().includes('ring')) {
-            if (!circuit.ringR1) missing.push('ring R1');
-            if (!circuit.ringRn) missing.push('ring Rn');
-            if (!circuit.ringR2) missing.push('ring R2');
-          }
-
-          if (missing.length === 0) {
-            toast.success(`Circuit ${circuitNum} complete!`);
-            return `Circuit ${circuitNum} has all required tests`;
-          }
-          toast.info(`Circuit ${circuitNum} needs: ${missing.join(', ')}`);
-          return `Circuit ${circuitNum} needs: ${missing.join(', ')}`;
-        }
-
-        // BULK CIRCUIT OPERATIONS - Fill same value across ALL circuits
-        case 'update_all_circuits':
-        case 'set_field_all_circuits': {
-          const field = params.field as string;
-          let value = params.value as string;
-          if (!field || !value) return 'Need field and value for bulk update';
-
-          const resolvedField = resolveFieldName(field) || field;
-          value = resolveDropdownValue(resolvedField, value);
-
-          setTestResults(prev => prev.map(circuit => ({
-            ...circuit,
-            [resolvedField]: value
-          })));
-
-          toast.success(`Set ${resolvedField} to ${value} for all ${testResults.length} circuits`);
-          return `Set ${resolvedField} to ${value} for all ${testResults.length} circuits`;
-        }
-
-        case 'set_circuit_field': {
-          const circuitNum = params.circuit_number as number;
-          const field = params.field as string;
-          let value = params.value as string;
-          if (!circuitNum || !field || !value) return 'Need circuit_number, field, and value';
-
-          const resolvedField = resolveFieldName(field) || field;
-          value = resolveDropdownValue(resolvedField, value);
-
-          const idx = circuitNum - 1;
-          if (idx < 0 || idx >= testResults.length) {
-            return `Circuit ${circuitNum} not found`;
-          }
-
-          setTestResults(prev => prev.map((circuit, i) =>
-            i === idx ? { ...circuit, [resolvedField]: value } : circuit
-          ));
-
-          toast.success(`Set C${circuitNum} ${resolvedField} to ${value}`);
-          return `Set circuit ${circuitNum} ${resolvedField} to ${value}`;
-        }
-
-        case 'set_multiple_fields': {
-          const circuitNum = params.circuit_number as number | undefined;
-          const targetIdx = circuitNum !== undefined ? circuitNum - 1 : selectedCircuitIndex;
-
-          if (targetIdx < 0 || targetIdx >= testResults.length) {
-            return 'Invalid circuit number';
-          }
-
-          const fieldUpdates: Record<string, string> = {};
-          const fieldKeys = ['zs', 'r1r2', 'polarity', 'insulationTestVoltage', 'insulationLiveEarth', 'insulationLiveNeutral', 'rcdOneX', 'pfc'];
-
-          for (const key of fieldKeys) {
-            const value = params[key] as string | undefined;
-            if (value) {
-              const resolvedField = resolveFieldName(key) || key;
-              fieldUpdates[resolvedField] = resolveDropdownValue(resolvedField, value);
-            }
-          }
-
-          if (Object.keys(fieldUpdates).length === 0) {
-            return 'No fields provided to update';
-          }
-
-          setTestResults(prev => prev.map((circuit, i) =>
-            i === targetIdx ? { ...circuit, ...fieldUpdates } : circuit
-          ));
-
-          const fieldCount = Object.keys(fieldUpdates).length;
-          toast.success(`Updated ${fieldCount} fields on C${targetIdx + 1}`);
-          return `Updated ${fieldCount} fields on circuit ${targetIdx + 1}`;
-        }
-
-        case 'get_circuits_status': {
-          const statusLines = testResults.map((circuit, i) => {
             const missing: string[] = [];
-            if (!circuit.zs) missing.push('Zs');
             if (!circuit.r1r2) missing.push('R1+R2');
-            if (!circuit.insulationTestVoltage) missing.push('IR voltage');
-            if (!circuit.insulationLiveEarth && !circuit.insulationResistance) missing.push('IR reading');
-            if (!circuit.polarity) missing.push('polarity');
+            if (!circuit.zs) missing.push('Zs');
+            if (!circuit.insulationLiveEarth && !circuit.insulationResistance)
+              missing.push('insulation');
+            if (!circuit.polarity || circuit.polarity === '') missing.push('polarity');
 
-            const hasRcd = circuit.protectiveDeviceType === 'RCBO' || circuit.protectiveDeviceType === 'RCD';
-            if (hasRcd && !circuit.rcdOneX) missing.push('RCD time');
+            const hasRcd =
+              circuit.protectiveDeviceType === 'RCBO' || circuit.protectiveDeviceType === 'RCD';
+            if (hasRcd && !circuit.rcdOneX) missing.push('RCD trip time');
 
-            const status = missing.length === 0 ? 'Complete' : `Missing: ${missing.join(', ')}`;
-            return `C${i + 1}: ${status}`;
-          });
+            if (circuit.circuitType?.toLowerCase().includes('ring')) {
+              if (!circuit.ringR1) missing.push('ring R1');
+              if (!circuit.ringRn) missing.push('ring Rn');
+              if (!circuit.ringR2) missing.push('ring R2');
+            }
 
-          const completeCount = statusLines.filter(s => s.includes('Complete')).length;
-          toast.info(`${completeCount}/${testResults.length} circuits complete`);
-          return statusLines.join('\n');
-        }
-
-        // SUB-BOARD OPERATIONS
-        case 'add_circuit_to_board': {
-          const boardName = params.board as string;
-          const circuitType = params.type as string || 'other';
-          const description = params.description as string || '';
-
-          const board = distributionBoards.find(b =>
-            b.name.toLowerCase().includes(boardName.toLowerCase()) ||
-            b.reference?.toLowerCase().includes(boardName.toLowerCase()) ||
-            b.id.toLowerCase().includes(boardName.toLowerCase())
-          );
-
-          if (!board) {
-            return `Board "${boardName}" not found. Available: ${distributionBoards.map(b => b.name).join(', ')}`;
+            if (missing.length === 0) {
+              toast.success(`Circuit ${circuitNum} complete!`);
+              return `Circuit ${circuitNum} has all required tests`;
+            }
+            toast.info(`Circuit ${circuitNum} needs: ${missing.join(', ')}`);
+            return `Circuit ${circuitNum} needs: ${missing.join(', ')}`;
           }
 
-          const boardCircuits = testResults.filter(c => c.boardId === board.id);
-          const nextNum = (boardCircuits.length + 1).toString();
-          const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
-          newCircuit.boardId = board.id;
+          // BULK CIRCUIT OPERATIONS - Fill same value across ALL circuits
+          case 'update_all_circuits':
+          case 'set_field_all_circuits': {
+            const field = params.field as string;
+            let value = params.value as string;
+            if (!field || !value) return 'Need field and value for bulk update';
 
-          setTestResults(prev => [...prev, newCircuit]);
-          setExpandedBoards(new Set([board.id]));
-          toast.success(`Added circuit to ${board.name}`);
-          return `Added ${circuitType} circuit to ${board.name}`;
-        }
+            const resolvedField = resolveFieldName(field) || field;
+            value = resolveDropdownValue(resolvedField, value);
 
-        case 'set_board_field_all_circuits': {
-          const boardName = params.board as string;
-          const field = params.field as string;
-          let value = params.value as string;
+            setTestResults((prev) =>
+              prev.map((circuit) => ({
+                ...circuit,
+                [resolvedField]: value,
+              }))
+            );
 
-          const board = distributionBoards.find(b =>
-            b.name.toLowerCase().includes(boardName.toLowerCase()) ||
-            b.reference?.toLowerCase().includes(boardName.toLowerCase()) ||
-            b.id.toLowerCase().includes(boardName.toLowerCase())
-          );
-
-          if (!board) {
-            return `Board "${boardName}" not found`;
+            toast.success(
+              `Set ${resolvedField} to ${value} for all ${testResults.length} circuits`
+            );
+            return `Set ${resolvedField} to ${value} for all ${testResults.length} circuits`;
           }
 
-          const resolvedField = resolveFieldName(field) || field;
-          value = resolveDropdownValue(resolvedField, value);
+          case 'set_circuit_field': {
+            const circuitNum = params.circuit_number as number;
+            const field = params.field as string;
+            let value = params.value as string;
+            if (!circuitNum || !field || !value) return 'Need circuit_number, field, and value';
 
-          const boardCircuitCount = testResults.filter(c => c.boardId === board.id).length;
+            const resolvedField = resolveFieldName(field) || field;
+            value = resolveDropdownValue(resolvedField, value);
 
-          setTestResults(prev => prev.map(circuit =>
-            circuit.boardId === board.id
-              ? { ...circuit, [resolvedField]: value }
-              : circuit
-          ));
+            const idx = circuitNum - 1;
+            if (idx < 0 || idx >= testResults.length) {
+              return `Circuit ${circuitNum} not found`;
+            }
 
-          toast.success(`Set ${resolvedField} to ${value} for all ${boardCircuitCount} circuits on ${board.name}`);
-          return `Set ${resolvedField} to ${value} for all ${boardCircuitCount} circuits on ${board.name}`;
-        }
+            setTestResults((prev) =>
+              prev.map((circuit, i) =>
+                i === idx ? { ...circuit, [resolvedField]: value } : circuit
+              )
+            );
 
-        case 'get_board_status': {
-          const boardName = params.board as string | undefined;
+            toast.success(`Set C${circuitNum} ${resolvedField} to ${value}`);
+            return `Set circuit ${circuitNum} ${resolvedField} to ${value}`;
+          }
 
-          const boardsToCheck = boardName
-            ? distributionBoards.filter(b =>
+          case 'set_multiple_fields': {
+            const circuitNum = params.circuit_number as number | undefined;
+            const targetIdx = circuitNum !== undefined ? circuitNum - 1 : selectedCircuitIndex;
+
+            if (targetIdx < 0 || targetIdx >= testResults.length) {
+              return 'Invalid circuit number';
+            }
+
+            const fieldUpdates: Record<string, string> = {};
+            const fieldKeys = [
+              'zs',
+              'r1r2',
+              'polarity',
+              'insulationTestVoltage',
+              'insulationLiveEarth',
+              'insulationLiveNeutral',
+              'rcdOneX',
+              'pfc',
+            ];
+
+            for (const key of fieldKeys) {
+              const value = params[key] as string | undefined;
+              if (value) {
+                const resolvedField = resolveFieldName(key) || key;
+                fieldUpdates[resolvedField] = resolveDropdownValue(resolvedField, value);
+              }
+            }
+
+            if (Object.keys(fieldUpdates).length === 0) {
+              return 'No fields provided to update';
+            }
+
+            setTestResults((prev) =>
+              prev.map((circuit, i) =>
+                i === targetIdx ? { ...circuit, ...fieldUpdates } : circuit
+              )
+            );
+
+            const fieldCount = Object.keys(fieldUpdates).length;
+            toast.success(`Updated ${fieldCount} fields on C${targetIdx + 1}`);
+            return `Updated ${fieldCount} fields on circuit ${targetIdx + 1}`;
+          }
+
+          case 'get_circuits_status': {
+            const statusLines = testResults.map((circuit, i) => {
+              const missing: string[] = [];
+              if (!circuit.zs) missing.push('Zs');
+              if (!circuit.r1r2) missing.push('R1+R2');
+              if (!circuit.insulationTestVoltage) missing.push('IR voltage');
+              if (!circuit.insulationLiveEarth && !circuit.insulationResistance)
+                missing.push('IR reading');
+              if (!circuit.polarity) missing.push('polarity');
+
+              const hasRcd =
+                circuit.protectiveDeviceType === 'RCBO' || circuit.protectiveDeviceType === 'RCD';
+              if (hasRcd && !circuit.rcdOneX) missing.push('RCD time');
+
+              const status = missing.length === 0 ? 'Complete' : `Missing: ${missing.join(', ')}`;
+              return `C${i + 1}: ${status}`;
+            });
+
+            const completeCount = statusLines.filter((s) => s.includes('Complete')).length;
+            toast.info(`${completeCount}/${testResults.length} circuits complete`);
+            return statusLines.join('\n');
+          }
+
+          // SUB-BOARD OPERATIONS
+          case 'add_circuit_to_board': {
+            const boardName = params.board as string;
+            const circuitType = (params.type as string) || 'other';
+            const description = (params.description as string) || '';
+
+            const board = distributionBoards.find(
+              (b) =>
+                b.name.toLowerCase().includes(boardName.toLowerCase()) ||
+                b.reference?.toLowerCase().includes(boardName.toLowerCase()) ||
+                b.id.toLowerCase().includes(boardName.toLowerCase())
+            );
+
+            if (!board) {
+              return `Board "${boardName}" not found. Available: ${distributionBoards.map((b) => b.name).join(', ')}`;
+            }
+
+            const boardCircuits = testResults.filter((c) => c.boardId === board.id);
+            const nextNum = (boardCircuits.length + 1).toString();
+            const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
+            newCircuit.boardId = board.id;
+
+            setTestResults((prev) => [...prev, newCircuit]);
+            setExpandedBoards(new Set([board.id]));
+            toast.success(`Added circuit to ${board.name}`);
+            return `Added ${circuitType} circuit to ${board.name}`;
+          }
+
+          case 'set_board_field_all_circuits': {
+            const boardName = params.board as string;
+            const field = params.field as string;
+            let value = params.value as string;
+
+            const board = distributionBoards.find(
+              (b) =>
+                b.name.toLowerCase().includes(boardName.toLowerCase()) ||
+                b.reference?.toLowerCase().includes(boardName.toLowerCase()) ||
+                b.id.toLowerCase().includes(boardName.toLowerCase())
+            );
+
+            if (!board) {
+              return `Board "${boardName}" not found`;
+            }
+
+            const resolvedField = resolveFieldName(field) || field;
+            value = resolveDropdownValue(resolvedField, value);
+
+            const boardCircuitCount = testResults.filter((c) => c.boardId === board.id).length;
+
+            setTestResults((prev) =>
+              prev.map((circuit) =>
+                circuit.boardId === board.id ? { ...circuit, [resolvedField]: value } : circuit
+              )
+            );
+
+            toast.success(
+              `Set ${resolvedField} to ${value} for all ${boardCircuitCount} circuits on ${board.name}`
+            );
+            return `Set ${resolvedField} to ${value} for all ${boardCircuitCount} circuits on ${board.name}`;
+          }
+
+          case 'get_board_status': {
+            const boardName = params.board as string | undefined;
+
+            const boardsToCheck = boardName
+              ? distributionBoards.filter(
+                  (b) =>
+                    b.name.toLowerCase().includes(boardName.toLowerCase()) ||
+                    b.id.toLowerCase().includes(boardName.toLowerCase())
+                )
+              : distributionBoards;
+
+            if (boardsToCheck.length === 0) {
+              return `Board "${boardName}" not found`;
+            }
+
+            const statusLines = boardsToCheck.map((board) => {
+              const boardCircuits = testResults.filter((c) => c.boardId === board.id);
+              const complete = boardCircuits.filter(
+                (c) => c.zs && c.polarity && (c.insulationLiveEarth || c.insulationResistance)
+              ).length;
+
+              return `${board.name}: ${complete}/${boardCircuits.length} circuits complete`;
+            });
+
+            return statusLines.join('\n');
+          }
+
+          case 'scan_board': {
+            const boardName = params.board as string;
+            const board = distributionBoards.find(
+              (b) =>
                 b.name.toLowerCase().includes(boardName.toLowerCase()) ||
                 b.id.toLowerCase().includes(boardName.toLowerCase())
-              )
-            : distributionBoards;
+            );
 
-          if (boardsToCheck.length === 0) {
-            return `Board "${boardName}" not found`;
+            if (!board) {
+              return `Board "${boardName}" not found`;
+            }
+
+            // Open the photo capture for this board
+            setExpandedBoards(new Set([board.id]));
+            setShowPhotoCapture(true);
+            toast.info(`Opening scanner for ${board.name}`);
+            return `Opening board scanner for ${board.name}. Please take a photo of the board.`;
           }
 
-          const statusLines = boardsToCheck.map(board => {
-            const boardCircuits = testResults.filter(c => c.boardId === board.id);
-            const complete = boardCircuits.filter(c =>
-              c.zs && c.polarity && (c.insulationLiveEarth || c.insulationResistance)
-            ).length;
-
-            return `${board.name}: ${complete}/${boardCircuits.length} circuits complete`;
-          });
-
-          return statusLines.join('\n');
+          default:
+            console.log('[Voice] Unknown action:', action);
+            return `Unknown action: ${action}`;
         }
-
-        case 'scan_board': {
-          const boardName = params.board as string;
-          const board = distributionBoards.find(b =>
-            b.name.toLowerCase().includes(boardName.toLowerCase()) ||
-            b.id.toLowerCase().includes(boardName.toLowerCase())
-          );
-
-          if (!board) {
-            return `Board "${boardName}" not found`;
-          }
-
-          // Open the photo capture for this board
-          setExpandedBoards(new Set([board.id]));
-          setShowPhotoCapture(true);
-          toast.info(`Opening scanner for ${board.name}`);
-          return `Opening board scanner for ${board.name}. Please take a photo of the board.`;
-        }
-
-        default:
-          console.log('[Voice] Unknown action:', action);
-          return `Unknown action: ${action}`;
       }
-    }
 
-    console.log('[Voice] Unknown tool:', toolName, params);
-    return `Unknown tool: ${toolName}`;
-  }, [testResults, selectedCircuitIndex, distributionBoards]);
+      console.log('[Voice] Unknown tool:', toolName, params);
+      return `Unknown tool: ${toolName}`;
+    },
+    [testResults, selectedCircuitIndex, distributionBoards]
+  );
 
   // Ref to allow voice tool handler to stop the session
   const stopVoiceRef = useRef<(() => Promise<void>) | null>(null);
 
-  const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice, stopVoice } = useInlineVoice({
+  const {
+    isConnecting: voiceConnecting,
+    isActive: voiceActive,
+    toggleVoice,
+    stopVoice,
+  } = useInlineVoice({
     onToolCall: handleVoiceToolCall,
   });
 
@@ -888,48 +1031,49 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   stopVoiceRef.current = stopVoice;
 
   // Create board-specific tool callbacks
-  const createBoardTools = useCallback((boardId: string): BoardToolCallbacks => ({
-    onScanBoard: () => {
-      setActiveBoardId(boardId);
-      setShowPhotoCapture(true);
-    },
-    onScanTestResults: () => {
-      setActiveBoardId(boardId);
-      setShowTestResultsScan(true);
-    },
-    onScribbleToTable: () => {
-      setActiveBoardId(boardId);
-      setShowScribbleDialog(true);
-    },
-    onSmartAutoFill: () => {
-      setActiveBoardId(boardId);
-      setShowSmartAutoFillDialog(true);
-    },
-    onQuickRcdPresets: () => {
-      setActiveBoardId(boardId);
-      setShowRcdPresetsDialog(true);
-    },
-    onBulkInfill: () => {
-      setActiveBoardId(boardId);
-      setShowBulkInfillDialog(true);
-    },
-    onVoiceToggle: toggleVoice,
-    voiceActive,
-    voiceConnecting,
-  }), [toggleVoice, voiceActive, voiceConnecting]);
+  const createBoardTools = useCallback(
+    (boardId: string): BoardToolCallbacks => ({
+      onScanBoard: () => {
+        setActiveBoardId(boardId);
+        setShowPhotoCapture(true);
+      },
+      onScanTestResults: () => {
+        setActiveBoardId(boardId);
+        setShowTestResultsScan(true);
+      },
+      onScribbleToTable: () => {
+        setActiveBoardId(boardId);
+        setShowScribbleDialog(true);
+      },
+      onSmartAutoFill: () => {
+        setActiveBoardId(boardId);
+        setShowSmartAutoFillDialog(true);
+      },
+      onQuickRcdPresets: () => {
+        setActiveBoardId(boardId);
+        setShowRcdPresetsDialog(true);
+      },
+      onBulkInfill: () => {
+        setActiveBoardId(boardId);
+        setShowBulkInfillDialog(true);
+      },
+      onVoiceToggle: toggleVoice,
+      voiceActive,
+      voiceConnecting,
+    }),
+    [toggleVoice, voiceActive, voiceConnecting]
+  );
 
   // Calculate completion stats for progress indicator
   const { completedCount, progressPercent, pendingCount } = useMemo(() => {
-    const completed = testResults.filter(r =>
-      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+    const completed = testResults.filter(
+      (r) => r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
     ).length;
-    const percent = testResults.length > 0
-      ? Math.round((completed / testResults.length) * 100)
-      : 0;
+    const percent = testResults.length > 0 ? Math.round((completed / testResults.length) * 100) : 0;
     return {
       completedCount: completed,
       progressPercent: percent,
-      pendingCount: testResults.length - completed
+      pendingCount: testResults.length - completed,
     };
   }, [testResults]);
 
@@ -941,7 +1085,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     };
     loadViewPref();
   }, []);
-  
+
   // Use mobile optimized view on mobile devices in portrait mode
   const useMobileView = orientation.isMobile && !orientation.isLandscape;
 
@@ -954,7 +1098,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   // Initialize boards and test results from form data
   useEffect(() => {
     // Migrate to multi-board structure (handles both legacy and new format)
-    const { distributionBoards: migratedBoards, scheduleOfTests: migratedCircuits } = migrateToMultiBoard(formData);
+    const { distributionBoards: migratedBoards, scheduleOfTests: migratedCircuits } =
+      migrateToMultiBoard(formData);
     setDistributionBoards(migratedBoards);
 
     if (migratedCircuits && migratedCircuits.length > 0) {
@@ -967,7 +1112,11 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         // Ensure every circuit has a unique ID (fix for null/missing IDs from older saves)
         const id = result.id || crypto.randomUUID();
 
-        if (needsCurve && result.protectiveDeviceCurve && !validCurves.includes(result.protectiveDeviceCurve)) {
+        if (
+          needsCurve &&
+          result.protectiveDeviceCurve &&
+          !validCurves.includes(result.protectiveDeviceCurve)
+        ) {
           return { ...result, id, protectiveDeviceCurve: '' };
         } else if (!needsCurve && result.protectiveDeviceCurve) {
           return { ...result, id, protectiveDeviceCurve: '' };
@@ -1023,7 +1172,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         rcdBsStandard: '',
         rcdType: '',
         rcdRatingA: '',
-        boardId: MAIN_BOARD_ID
+        boardId: MAIN_BOARD_ID,
       };
       setTestResults([initialResult]);
     }
@@ -1064,7 +1213,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     // Add boardId to the circuit
     const circuitWithBoard: TestResult = {
       ...newResult,
-      boardId: boardId
+      boardId: boardId,
     };
     const updatedResults = [...testResults, circuitWithBoard];
     setTestResults(updatedResults);
@@ -1081,7 +1230,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     );
     const updatedBoards = [...distributionBoards, newBoard];
     setDistributionBoards(updatedBoards);
-    setExpandedBoards(prev => new Set([...prev, newBoard.id]));
+    setExpandedBoards((prev) => new Set([...prev, newBoard.id]));
 
     // Save boards to formData
     const formDataUpdate = formatBoardsForFormData(updatedBoards, testResults);
@@ -1098,22 +1247,22 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       return;
     }
 
-    const boardToRemove = distributionBoards.find(b => b.id === boardId);
+    const boardToRemove = distributionBoards.find((b) => b.id === boardId);
     const boardCircuits = getCircuitsForBoard(testResults, boardId);
 
     // Move circuits to main board
-    const updatedResults = testResults.map(c =>
+    const updatedResults = testResults.map((c) =>
       c.boardId === boardId ? { ...c, boardId: MAIN_BOARD_ID } : c
     );
 
     // Remove the board
     const updatedBoards = distributionBoards
-      .filter(b => b.id !== boardId)
+      .filter((b) => b.id !== boardId)
       .map((b, index) => ({ ...b, order: index }));
 
     setDistributionBoards(updatedBoards);
     setTestResults(updatedResults);
-    setExpandedBoards(prev => {
+    setExpandedBoards((prev) => {
       const next = new Set(prev);
       next.delete(boardId);
       return next;
@@ -1125,11 +1274,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       onUpdate(key, value);
     });
 
-    toast.success(`${boardToRemove?.name || 'Board'} removed. ${boardCircuits.length > 0 ? `${boardCircuits.length} circuit(s) moved to Main CU.` : ''}`);
+    toast.success(
+      `${boardToRemove?.name || 'Board'} removed. ${boardCircuits.length > 0 ? `${boardCircuits.length} circuit(s) moved to Main CU.` : ''}`
+    );
   };
 
   const handleUpdateBoard = (boardId: string, field: keyof DistributionBoard, value: any) => {
-    const updatedBoards = distributionBoards.map(b =>
+    const updatedBoards = distributionBoards.map((b) =>
       b.id === boardId ? { ...b, [field]: value, updatedAt: new Date() } : b
     );
     setDistributionBoards(updatedBoards);
@@ -1142,7 +1293,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   };
 
   const toggleBoardExpanded = (boardId: string) => {
-    setExpandedBoards(prev => {
+    setExpandedBoards((prev) => {
       const next = new Set(prev);
       if (next.has(boardId)) {
         next.delete(boardId);
@@ -1178,10 +1329,19 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       // Derive combined BS Standard (e.g., "MCB (BS EN 60898)")
       const incomingType: string = circuit.protective_device?.type || '';
       const upper = incomingType.toUpperCase();
-      const baseType = upper.includes('RCBO') ? 'RCBO' : upper.includes('RCD') ? 'RCD' : upper.includes('MCB') ? 'MCB' : upper.includes('FUSE') ? 'Fuse' : incomingType;
+      const baseType = upper.includes('RCBO')
+        ? 'RCBO'
+        : upper.includes('RCD')
+          ? 'RCD'
+          : upper.includes('MCB')
+            ? 'MCB'
+            : upper.includes('FUSE')
+              ? 'Fuse'
+              : incomingType;
       const incomingBs: string = circuit.protective_device?.bs_standard || '';
       const bsFromType = getDefaultBsStandard(baseType || 'MCB');
-      const finalBs = incomingBs && incomingBs.includes('(') ? incomingBs : (bsFromType || incomingBs);
+      const finalBs =
+        incomingBs && incomingBs.includes('(') ? incomingBs : bsFromType || incomingBs;
 
       return {
         id: nextId,
@@ -1225,12 +1385,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         pfcLiveNeutral: '',
         pfcLiveEarth: '',
         functionalTesting: circuit.tests?.functional_testing || '',
-        notes: `AI detected from test results (${circuit.confidence} confidence) - Please verify. ${circuit.notes || ''}`.trim(),
+        notes:
+          `AI detected from test results (${circuit.confidence} confidence) - Please verify. ${circuit.notes || ''}`.trim(),
         autoFilled: true,
         typeOfWiring: '',
         rcdBsStandard: '',
         rcdType: '',
-        rcdRatingA: ''
+        rcdRatingA: '',
       };
     });
 
@@ -1246,7 +1407,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   // Utility function to fix protective device terminology
   const fixProtectiveDeviceType = (type: string): string => {
     if (!type) return type;
-    
+
     // Map Type 1/2/3 to Type B/C/D (UK standard)
     if (type.includes('Type 1') || type.includes('Type1')) {
       return type.replace(/Type ?1/gi, 'Type B');
@@ -1262,10 +1423,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
   // Helper to check if a row is blank
   const isBlankRow = (result: TestResult): boolean => {
-    return !result.circuitDescription && 
-           !result.protectiveDeviceType && 
-           !result.protectiveDeviceRating &&
-           !result.liveSize;
+    return (
+      !result.circuitDescription &&
+      !result.protectiveDeviceType &&
+      !result.protectiveDeviceRating &&
+      !result.liveSize
+    );
   };
 
   // Normalise AI circuit values to match UI Select options
@@ -1308,11 +1471,11 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
     const deviceType = fixProtectiveDeviceType(circuit.protectiveDeviceType || '');
     const baseDeviceType = getDeviceBaseType(deviceType);
-    
+
     // Normalise live size and ALWAYS apply correct T&E CPC sizing
     const canonicalLiveSize = normaliseCableSize(circuit.liveSize || '');
     const correctCpcSize = twinAndEarthCpcFor(canonicalLiveSize);
-    
+
     const combinedBs = getDefaultBsStandard(baseDeviceType);
     return {
       ...circuit,
@@ -1322,35 +1485,40 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       protectiveDeviceType: baseDeviceType,
       protectiveDeviceRating: normaliseRating(circuit.protectiveDeviceRating || ''),
       protectiveDeviceKaRating: circuit.protectiveDeviceKaRating || '6kA',
-      bsStandard: circuit.bsStandard && circuit.bsStandard.includes('(') ? circuit.bsStandard : combinedBs
+      bsStandard:
+        circuit.bsStandard && circuit.bsStandard.includes('(') ? circuit.bsStandard : combinedBs,
     };
   };
 
   // Calculate maxZs from device details (with 80% derating applied)
-  const calculateMaxZsForCircuit = (
-    bsStandard: string, 
-    curve: string, 
-    rating: string
-  ): string => {
+  const calculateMaxZsForCircuit = (bsStandard: string, curve: string, rating: string): string => {
     if (!bsStandard || !rating) return '';
-    
+
     const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, rating);
     return maxZs !== null ? maxZs.toFixed(2) : '';
   };
 
   // Convert Circuit[] format to Partial<TestResult>[] format
   const convertCircuitsToTestResults = (circuits: any[]): Partial<TestResult>[] => {
-    return circuits.map(circuit => ({
+    return circuits.map((circuit) => ({
       id: crypto.randomUUID(),
       circuitDescription: circuit.label || '',
       protectiveDeviceType: circuit.device || 'MCB',
       bsStandard: getDefaultBsStandard(circuit.device || 'MCB'),
       protectiveDeviceRating: circuit.rating?.toString() || '',
-      circuitType: circuit.label?.toLowerCase().includes('socket') ? 'Sockets' : 
-                   circuit.label?.toLowerCase().includes('light') ? 'Lighting' : '',
-      liveSize: circuit.rating && circuit.rating <= 10 ? '1.5' :
-                circuit.rating && circuit.rating <= 20 ? '2.5' :
-                circuit.rating && circuit.rating <= 32 ? '4.0' : '2.5',
+      circuitType: circuit.label?.toLowerCase().includes('socket')
+        ? 'Sockets'
+        : circuit.label?.toLowerCase().includes('light')
+          ? 'Lighting'
+          : '',
+      liveSize:
+        circuit.rating && circuit.rating <= 10
+          ? '1.5'
+          : circuit.rating && circuit.rating <= 20
+            ? '2.5'
+            : circuit.rating && circuit.rating <= 32
+              ? '4.0'
+              : '2.5',
       referenceMethod: 'C',
       protectiveDeviceKaRating: '6kA',
       // Three-phase detection
@@ -1399,11 +1567,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         const isRingCircuit = circuitType.toLowerCase().includes('ring');
         const isSocketCircuit = circuitType.toLowerCase().includes('socket');
         const isBathroomCircuit = circuitDesc.toLowerCase().includes('bathroom');
-        const isOutdoorCircuit = circuitDesc.toLowerCase().includes('outdoor') ||
-                                  circuitDesc.toLowerCase().includes('garden');
+        const isOutdoorCircuit =
+          circuitDesc.toLowerCase().includes('outdoor') ||
+          circuitDesc.toLowerCase().includes('garden');
 
-        const isRCBOOrRCD = normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
-                            normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCBO');
+        const isRCBOOrRCD =
+          normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
+          normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCBO');
         const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
 
         // Determine phase type (default to 1P if not specified)
@@ -1421,7 +1591,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
           protectiveDeviceRating: normalisedCircuit.protectiveDeviceRating,
           protectiveDeviceKaRating: normalisedCircuit.protectiveDeviceKaRating,
-          protectiveDevice: `${normalisedCircuit.protectiveDeviceType} ${normalisedCircuit.protectiveDeviceRating}`.trim(),
+          protectiveDevice:
+            `${normalisedCircuit.protectiveDeviceType} ${normalisedCircuit.protectiveDeviceRating}`.trim(),
           protectiveDeviceLocation: 'Consumer Unit',
           bsStandard: normalisedCircuit.bsStandard,
           maxZs: calculateMaxZsForCircuit(
@@ -1433,7 +1604,11 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
           insulationTestVoltage: '500V',
           polarity: 'Satisfactory',
-          pointsServed: calculatePointsServed(circuitDesc, circuitType, normalisedCircuit.protectiveDeviceType),
+          pointsServed: calculatePointsServed(
+            circuitDesc,
+            circuitType,
+            normalisedCircuit.protectiveDeviceType
+          ),
           rcdRating: requiresRCD ? '30mA' : '',
           functionalTesting: 'Satisfactory',
           notes: `AI detected from board scan - Please verify all values`,
@@ -1462,11 +1637,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       const isRingCircuit = circuitType.toLowerCase().includes('ring');
       const isSocketCircuit = circuitType.toLowerCase().includes('socket');
       const isBathroomCircuit = circuitDesc.toLowerCase().includes('bathroom');
-      const isOutdoorCircuit = circuitDesc.toLowerCase().includes('outdoor') ||
-                                circuitDesc.toLowerCase().includes('garden');
+      const isOutdoorCircuit =
+        circuitDesc.toLowerCase().includes('outdoor') ||
+        circuitDesc.toLowerCase().includes('garden');
 
-      const isRCBOOrRCD = circuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
-                          circuit.protectiveDeviceType.toUpperCase().includes('RCBO');
+      const isRCBOOrRCD =
+        circuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
+        circuit.protectiveDeviceType.toUpperCase().includes('RCBO');
       const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
 
       // Determine phase type (default to 1P if not specified)
@@ -1486,7 +1663,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         protectiveDeviceType: circuit.protectiveDeviceType,
         protectiveDeviceRating: circuit.protectiveDeviceRating,
         protectiveDeviceKaRating: circuit.protectiveDeviceKaRating,
-        protectiveDevice: `${circuit.protectiveDeviceType} ${circuit.protectiveDeviceRating}`.trim(),
+        protectiveDevice:
+          `${circuit.protectiveDeviceType} ${circuit.protectiveDeviceRating}`.trim(),
         protectiveDeviceLocation: 'Consumer Unit',
         bsStandard: circuit.bsStandard,
         r1r2: '',
@@ -1538,8 +1716,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   };
 
   const handleCreateCircuit = (
-    useAutoFill: boolean = false, 
-    circuitType?: string, 
+    useAutoFill: boolean = false,
+    circuitType?: string,
     suggestions?: Partial<TestResult>
   ) => {
     const baseResult: TestResult = {
@@ -1589,22 +1767,24 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       rcdType: '',
       rcdRatingA: '',
       phaseType: '1P',
-      autoFilled: useAutoFill
+      autoFilled: useAutoFill,
     };
 
     // Apply auto-fill suggestions if provided
-    const newResult = suggestions ? {
-      ...baseResult,
-      ...suggestions,
-      circuitDescription: circuitType || '',
-      type: circuitType || '',
-      autoFilled: true
-    } : baseResult;
+    const newResult = suggestions
+      ? {
+          ...baseResult,
+          ...suggestions,
+          circuitDescription: circuitType || '',
+          type: circuitType || '',
+          autoFilled: true,
+        }
+      : baseResult;
     const updatedResults = [...testResults, newResult];
     setTestResults(updatedResults);
     onUpdate('scheduleOfTests', updatedResults);
     setShowAutoFillPrompt(false);
-    
+
     if (useAutoFill) {
       setTimeout(() => {
         const autoFillSection = document.querySelector('[data-autofill-section]');
@@ -1617,51 +1797,58 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
   const undoDelete = useCallback(() => {
     if (!lastDeleted) return;
-    
-    setTestResults(prev => {
+
+    setTestResults((prev) => {
       const updatedResults = [...prev];
       updatedResults.splice(lastDeleted.index, 0, lastDeleted.circuit);
       onUpdate('scheduleOfTests', updatedResults);
       return updatedResults;
     });
-    
+
     setLastDeleted(null);
     toast.success('Circuit restored');
   }, [lastDeleted, onUpdate]);
 
-  const removeTestResult = useCallback((id: string) => {
-    setTestResults(prev => {
-      const index = prev.findIndex(result => result.id === id);
-      if (index === -1) return prev;
-      
-      const deletedCircuit = prev[index];
-      setLastDeleted({ circuit: deletedCircuit, index });
-      
-      const updatedResults = prev.filter(result => result.id !== id);
-      onUpdate('scheduleOfTests', updatedResults);
-      
-      toast.success('Circuit deleted', {
-        description: `Circuit ${deletedCircuit.circuitNumber || deletedCircuit.circuitDesignation} removed`,
-        action: {
-          label: 'Undo',
-          onClick: () => {
-            setTestResults(current => {
-              const restored = [...current];
-              restored.splice(index, 0, deletedCircuit);
-              onUpdate('scheduleOfTests', restored);
-              return restored;
-            });
-            setLastDeleted(null);
+  const removeTestResult = useCallback(
+    (id: string) => {
+      setTestResults((prev) => {
+        const index = prev.findIndex((result) => result.id === id);
+        if (index === -1) return prev;
+
+        const deletedCircuit = prev[index];
+        setLastDeleted({ circuit: deletedCircuit, index });
+
+        const updatedResults = prev.filter((result) => result.id !== id);
+        onUpdate('scheduleOfTests', updatedResults);
+
+        toast.success('Circuit deleted', {
+          description: `Circuit ${deletedCircuit.circuitNumber || deletedCircuit.circuitDesignation} removed`,
+          action: {
+            label: 'Undo',
+            onClick: () => {
+              setTestResults((current) => {
+                const restored = [...current];
+                restored.splice(index, 0, deletedCircuit);
+                onUpdate('scheduleOfTests', restored);
+                return restored;
+              });
+              setLastDeleted(null);
+            },
           },
-        },
+        });
+
+        return updatedResults;
       });
-      
-      return updatedResults;
-    });
-  }, [onUpdate]);
+    },
+    [onUpdate]
+  );
 
   const removeAllTestResults = () => {
-    if (window.confirm('Are you sure you want to remove all test results? This action cannot be undone.')) {
+    if (
+      window.confirm(
+        'Are you sure you want to remove all test results? This action cannot be undone.'
+      )
+    ) {
       setTestResults([]);
       onUpdate('scheduleOfTests', []);
     }
@@ -1670,45 +1857,64 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   // Bulk infill handler
   const handleBulkInfill = (value: string, mode: 'all' | 'empty') => {
     const fillableFields: (keyof TestResult)[] = [
-      'typeOfWiring', 'referenceMethod', 'pointsServed',
-      'liveSize', 'cpcSize',
-      'bsStandard', 'protectiveDeviceType', 'protectiveDeviceCurve', 
-      'protectiveDeviceRating', 'protectiveDeviceKaRating', 'maxZs',
-      'rcdBsStandard', 'rcdType', 'rcdRating', 'rcdRatingA',
-      'ringR1', 'ringRn', 'ringR2',
-      'r1r2', 'r2',
-      'insulationTestVoltage', 'insulationLiveNeutral', 'insulationLiveEarth',
-      'polarity', 'zs',
-      'rcdOneX', 'rcdTestButton', 'afddTest',
-      'pfc', 'notes'
+      'typeOfWiring',
+      'referenceMethod',
+      'pointsServed',
+      'liveSize',
+      'cpcSize',
+      'bsStandard',
+      'protectiveDeviceType',
+      'protectiveDeviceCurve',
+      'protectiveDeviceRating',
+      'protectiveDeviceKaRating',
+      'maxZs',
+      'rcdBsStandard',
+      'rcdType',
+      'rcdRating',
+      'rcdRatingA',
+      'ringR1',
+      'ringRn',
+      'ringR2',
+      'r1r2',
+      'r2',
+      'insulationTestVoltage',
+      'insulationLiveNeutral',
+      'insulationLiveEarth',
+      'polarity',
+      'zs',
+      'rcdOneX',
+      'rcdTestButton',
+      'afddTest',
+      'pfc',
+      'notes',
     ];
 
     let updatedCount = 0;
-    
+
     // Build updated results in a single pass
-    const updatedResults = testResults.map(result => {
+    const updatedResults = testResults.map((result) => {
       let updatedResult = { ...result };
       let hasChanges = false;
-      
-      fillableFields.forEach(field => {
+
+      fillableFields.forEach((field) => {
         const currentValue = result[field];
         const isEmpty = !currentValue || currentValue.toString().trim() === '';
-        
+
         if (mode === 'all' || (mode === 'empty' && isEmpty)) {
           (updatedResult as any)[field] = value;
           updatedCount++;
           hasChanges = true;
         }
       });
-      
+
       // Clear autoFilled flag if any changes made
       if (hasChanges && result.autoFilled) {
         updatedResult.autoFilled = false;
       }
-      
+
       return updatedResult;
     });
-    
+
     // Single state update
     setTestResults(updatedResults);
     onUpdate('scheduleOfTests', updatedResults);
@@ -1717,82 +1923,88 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     setShowBulkInfillDialog(false);
   };
 
-  const updateTestResult = useCallback((id: string, field: keyof TestResult, value: string) => {
-    if (!id) return; // Guard against null/undefined IDs matching all rows
-    setTestResults(prev => {
-      const updatedResults = prev.map(result => {
-        if (result.id === id) {
-          const updatedResult = { ...result, [field]: value };
-          
-          if (result.autoFilled && field !== 'autoFilled') {
-            updatedResult.autoFilled = false;
-          }
-          
-          if (field === 'circuitNumber' && value) {
-            updatedResult.circuitDesignation = `C${value}`;
-          }
-          
-          // Maintain legacy field synchronisation
-          if (field === 'liveSize') {
-            updatedResult.cableSize = value;
-          } else if (field === 'protectiveDeviceRating') {
-            updatedResult.protectiveDevice = value;
-          } else if (field === 'cableSize') {
-            updatedResult.liveSize = value;
-          } else if (field === 'protectiveDevice') {
-            updatedResult.protectiveDeviceRating = value.replace(/\D/g, '');
-          }
-          
-          return updatedResult;
-        }
-        return result;
-      });
-      onUpdate('scheduleOfTests', updatedResults);
-      return updatedResults;
-    });
-  }, [onUpdate]);
+  const updateTestResult = useCallback(
+    (id: string, field: keyof TestResult, value: string) => {
+      if (!id) return; // Guard against null/undefined IDs matching all rows
+      setTestResults((prev) => {
+        const updatedResults = prev.map((result) => {
+          if (result.id === id) {
+            const updatedResult = { ...result, [field]: value };
 
-  const handleBulkUpdate = useCallback((id: string, updates: Partial<TestResult>) => {
-    if (!id) return; // Guard against null/undefined IDs matching all rows
-    setTestResults(prev => {
-      const updatedResults = prev.map(result => {
-        if (result.id === id) {
-          const updatedResult = { ...result, ...updates };
-          
-          if (updates.circuitNumber) {
-            updatedResult.circuitDesignation = `C${updates.circuitNumber}`;
+            if (result.autoFilled && field !== 'autoFilled') {
+              updatedResult.autoFilled = false;
+            }
+
+            if (field === 'circuitNumber' && value) {
+              updatedResult.circuitDesignation = `C${value}`;
+            }
+
+            // Maintain legacy field synchronisation
+            if (field === 'liveSize') {
+              updatedResult.cableSize = value;
+            } else if (field === 'protectiveDeviceRating') {
+              updatedResult.protectiveDevice = value;
+            } else if (field === 'cableSize') {
+              updatedResult.liveSize = value;
+            } else if (field === 'protectiveDevice') {
+              updatedResult.protectiveDeviceRating = value.replace(/\D/g, '');
+            }
+
+            return updatedResult;
           }
-          
-          // Maintain legacy field synchronisation
-          if (updates.liveSize) {
-            updatedResult.cableSize = updates.liveSize;
-          }
-          if (updates.protectiveDeviceRating) {
-            updatedResult.protectiveDevice = updates.protectiveDeviceRating;
-          }
-          if (updates.cableSize) {
-            updatedResult.liveSize = updates.cableSize;
-          }
-          if (updates.protectiveDevice) {
-            updatedResult.protectiveDeviceRating = updates.protectiveDevice.replace(/\D/g, '');
-          }
-          
-          return updatedResult;
-        }
-        return result;
+          return result;
+        });
+        onUpdate('scheduleOfTests', updatedResults);
+        return updatedResults;
       });
-      onUpdate('scheduleOfTests', updatedResults);
-      return updatedResults;
-    });
-  }, [onUpdate]);
+    },
+    [onUpdate]
+  );
+
+  const handleBulkUpdate = useCallback(
+    (id: string, updates: Partial<TestResult>) => {
+      if (!id) return; // Guard against null/undefined IDs matching all rows
+      setTestResults((prev) => {
+        const updatedResults = prev.map((result) => {
+          if (result.id === id) {
+            const updatedResult = { ...result, ...updates };
+
+            if (updates.circuitNumber) {
+              updatedResult.circuitDesignation = `C${updates.circuitNumber}`;
+            }
+
+            // Maintain legacy field synchronisation
+            if (updates.liveSize) {
+              updatedResult.cableSize = updates.liveSize;
+            }
+            if (updates.protectiveDeviceRating) {
+              updatedResult.protectiveDevice = updates.protectiveDeviceRating;
+            }
+            if (updates.cableSize) {
+              updatedResult.liveSize = updates.cableSize;
+            }
+            if (updates.protectiveDevice) {
+              updatedResult.protectiveDeviceRating = updates.protectiveDevice.replace(/\D/g, '');
+            }
+
+            return updatedResult;
+          }
+          return result;
+        });
+        onUpdate('scheduleOfTests', updatedResults);
+        return updatedResults;
+      });
+    },
+    [onUpdate]
+  );
 
   // Bulk field update - sets a single field to the same value for all test results
   const handleBulkFieldUpdate = (field: keyof TestResult, value: string) => {
-    const updatedResults = testResults.map(result => ({
+    const updatedResults = testResults.map((result) => ({
       ...result,
       [field]: value,
       // Clear autoFilled flag when user makes bulk changes
-      autoFilled: result.autoFilled ? false : result.autoFilled
+      autoFilled: result.autoFilled ? false : result.autoFilled,
     }));
     setTestResults(updatedResults);
     onUpdate('scheduleOfTests', updatedResults);
@@ -1838,7 +2050,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             <div className="p-4 bg-green-500/20 border-b border-green-500/30">
               <div className="flex items-center justify-center gap-2">
                 <Mic className="h-4 w-4 text-green-400 animate-pulse" />
-                <span className="text-sm text-green-400 font-medium">Voice Active - Say "Add circuit" or test values</span>
+                <span className="text-sm text-green-400 font-medium">
+                  Voice Active - Say "Add circuit" or test values
+                </span>
               </div>
             </div>
           )}
@@ -1847,14 +2061,15 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           <div className="pb-4">
             {distributionBoards
               .sort((a, b) => a.order - b.order)
-              .map(board => {
+              .map((board) => {
                 const boardCircuits = getCircuitsForBoard(testResults, board.id);
-                const boardCompletedCount = boardCircuits.filter(r =>
-                  r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+                const boardCompletedCount = boardCircuits.filter(
+                  (r) => r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
                 ).length;
-                const boardProgressPercent = boardCircuits.length > 0
-                  ? Math.round((boardCompletedCount / boardCircuits.length) * 100)
-                  : 0;
+                const boardProgressPercent =
+                  boardCircuits.length > 0
+                    ? Math.round((boardCompletedCount / boardCircuits.length) * 100)
+                    : 0;
                 const isComplete = boardProgressPercent === 100;
 
                 return (
@@ -1887,30 +2102,50 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                               fill="none"
                               strokeDasharray={`${boardProgressPercent * 1.26} 126`}
                               strokeLinecap="round"
-                              className={isComplete ? "text-green-500" : "text-elec-yellow"}
+                              className={isComplete ? 'text-green-500' : 'text-elec-yellow'}
                             />
                           </svg>
-                          <div className={`absolute inset-0 flex items-center justify-center text-sm font-bold ${isComplete ? "text-green-400" : "text-elec-yellow"}`}>
-                            {isComplete ? <CheckCircle className="h-5 w-5" /> : <Zap className="h-5 w-5" />}
+                          <div
+                            className={`absolute inset-0 flex items-center justify-center text-sm font-bold ${isComplete ? 'text-green-400' : 'text-elec-yellow'}`}
+                          >
+                            {isComplete ? (
+                              <CheckCircle className="h-5 w-5" />
+                            ) : (
+                              <Zap className="h-5 w-5" />
+                            )}
                           </div>
                         </div>
 
                         {/* Board Info */}
                         <div className="flex-1 min-w-0">
-                          <h3 className={`font-semibold text-base ${isComplete ? "text-green-400" : "text-foreground"}`}>
+                          <h3
+                            className={`font-semibold text-base ${isComplete ? 'text-green-400' : 'text-foreground'}`}
+                          >
                             {board.name}
                           </h3>
                           <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                            <span>{boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''}</span>
+                            <span>
+                              {boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''}
+                            </span>
                             <span>·</span>
-                            <span className={isComplete ? "text-green-400 font-medium" : boardProgressPercent > 0 ? "text-elec-yellow font-medium" : ""}>
+                            <span
+                              className={
+                                isComplete
+                                  ? 'text-green-400 font-medium'
+                                  : boardProgressPercent > 0
+                                    ? 'text-elec-yellow font-medium'
+                                    : ''
+                              }
+                            >
                               {boardProgressPercent}% complete
                             </span>
                           </div>
                         </div>
 
                         {/* Chevron */}
-                        <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${expandedBoards.has(board.id) ? 'rotate-180' : ''}`} />
+                        <ChevronDown
+                          className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${expandedBoards.has(board.id) ? 'rotate-180' : ''}`}
+                        />
                       </button>
                     </CollapsibleTrigger>
 
@@ -1920,7 +2155,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                         {/* Board Reference & Location */}
                         <div className="grid grid-cols-2 gap-3">
                           <div>
-                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">Reference</label>
+                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
+                              Reference
+                            </label>
                             <DebouncedInput
                               type="text"
                               value={board.reference || ''}
@@ -1931,7 +2168,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                             />
                           </div>
                           <div>
-                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">Location</label>
+                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
+                              Location
+                            </label>
                             <DebouncedInput
                               type="text"
                               value={board.location || ''}
@@ -1946,7 +2185,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                         {/* ZDB & IPF Row */}
                         <div className="grid grid-cols-2 gap-3">
                           <div>
-                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">Z<sub>DB</sub> (Ω)</label>
+                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
+                              Z<sub>DB</sub> (Ω)
+                            </label>
                             <div className="relative">
                               <DebouncedInput
                                 type="text"
@@ -1957,11 +2198,15 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                                 style={{ fontSize: '16px' }}
                               />
-                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">Ω</span>
+                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
+                                Ω
+                              </span>
                             </div>
                           </div>
                           <div>
-                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">I<sub>PF</sub> (kA)</label>
+                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
+                              I<sub>PF</sub> (kA)
+                            </label>
                             <div className="relative">
                               <DebouncedInput
                                 type="text"
@@ -1972,7 +2217,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                                 style={{ fontSize: '16px' }}
                               />
-                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">kA</span>
+                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
+                                kA
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -1984,7 +2231,11 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-                              handleUpdateBoard(board.id, 'confirmedCorrectPolarity', !board.confirmedCorrectPolarity);
+                              handleUpdateBoard(
+                                board.id,
+                                'confirmedCorrectPolarity',
+                                !board.confirmedCorrectPolarity
+                              );
                             }}
                             className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                               board.confirmedCorrectPolarity
@@ -1992,8 +2243,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 : 'bg-card border border-border/50 text-muted-foreground'
                             }`}
                           >
-                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
-                              {board.confirmedCorrectPolarity && <Check className="h-3 w-3 text-white" />}
+                            <div
+                              className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}
+                            >
+                              {board.confirmedCorrectPolarity && (
+                                <Check className="h-3 w-3 text-white" />
+                              )}
                             </div>
                             <span className="pointer-events-none">Polarity</span>
                           </button>
@@ -2002,7 +2257,11 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-                              handleUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence);
+                              handleUpdateBoard(
+                                board.id,
+                                'confirmedPhaseSequence',
+                                !board.confirmedPhaseSequence
+                              );
                             }}
                             className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                               board.confirmedPhaseSequence
@@ -2010,8 +2269,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 : 'bg-card border border-border/50 text-muted-foreground'
                             }`}
                           >
-                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
-                              {board.confirmedPhaseSequence && <Check className="h-3 w-3 text-white" />}
+                            <div
+                              className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}
+                            >
+                              {board.confirmedPhaseSequence && (
+                                <Check className="h-3 w-3 text-white" />
+                              )}
                             </div>
                             <span className="pointer-events-none">Phase Seq</span>
                           </button>
@@ -2042,7 +2305,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 : 'bg-card border border-border/50 text-muted-foreground'
                             }`}
                           >
-                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground'}`}>
+                            <div
+                              className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground'}`}
+                            >
                               {board.spdNA && <Check className="h-3 w-3 text-black" />}
                             </div>
                             <span className="pointer-events-none">N/A</span>
@@ -2069,7 +2334,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                         : 'bg-card border border-border/50 text-muted-foreground'
                                     }`}
                                   >
-                                    <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${isChecked ? 'bg-blue-500 border-blue-500' : 'border-muted-foreground'}`}>
+                                    <div
+                                      className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${isChecked ? 'bg-blue-500 border-blue-500' : 'border-muted-foreground'}`}
+                                    >
                                       {isChecked && <Check className="h-3 w-3 text-white" />}
                                     </div>
                                     <span className="pointer-events-none">{type}</span>
@@ -2086,7 +2353,11 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                  handleUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
+                                  handleUpdateBoard(
+                                    board.id,
+                                    'spdOperationalStatus',
+                                    !board.spdOperationalStatus
+                                  );
                                 }}
                                 className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                                   board.spdOperationalStatus
@@ -2094,8 +2365,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                     : 'bg-card border border-border/50 text-muted-foreground'
                                 }`}
                               >
-                                <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
-                                  {board.spdOperationalStatus && <Check className="h-3 w-3 text-white" />}
+                                <div
+                                  className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}
+                                >
+                                  {board.spdOperationalStatus && (
+                                    <Check className="h-3 w-3 text-white" />
+                                  )}
                                 </div>
                                 <span className="pointer-events-none">SPD OK</span>
                               </button>
@@ -2108,7 +2383,10 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                       <div className="-mx-4 grid grid-cols-[1fr_1fr_48px] gap-2 p-4 bg-background border-y border-border/30">
                         <Button
                           className="h-12 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
-                          onClick={() => { setActiveBoardId(board.id); setShowPhotoCapture(true); }}
+                          onClick={() => {
+                            setActiveBoardId(board.id);
+                            setShowPhotoCapture(true);
+                          }}
                         >
                           <Camera className="h-5 w-5 mr-2" />
                           AI Scan
@@ -2125,8 +2403,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                             voiceActive
                               ? 'bg-green-500 text-white'
                               : voiceConnecting
-                              ? 'bg-yellow-500 text-black animate-pulse'
-                              : 'bg-purple-600 text-white'
+                                ? 'bg-yellow-500 text-black animate-pulse'
+                                : 'bg-purple-600 text-white'
                           }`}
                           onClick={toggleVoice}
                           disabled={voiceConnecting}
@@ -2191,7 +2469,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                       {board.id !== MAIN_BOARD_ID && (
                         <div className="p-3 bg-card/30 border-t border-border/20 flex justify-between items-center">
                           <span className="text-xs text-muted-foreground">
-                            {boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''} in this board
+                            {boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''} in
+                            this board
                           </span>
                           <Button
                             variant="ghost"
@@ -2229,7 +2508,11 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 onClick={toggleMobileView}
                 className="h-9 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
               >
-                {mobileViewType === 'table' ? <Layout className="h-3.5 w-3.5" /> : <Table className="h-3.5 w-3.5" />}
+                {mobileViewType === 'table' ? (
+                  <Layout className="h-3.5 w-3.5" />
+                ) : (
+                  <Table className="h-3.5 w-3.5" />
+                )}
                 Switch to {mobileViewType === 'table' ? 'Card' : 'Table'} View
               </Button>
             </div>
@@ -2296,12 +2579,16 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     voiceActive
                       ? 'bg-green-600 hover:bg-green-700 border-green-400/30 text-white'
                       : voiceConnecting
-                      ? 'bg-yellow-600 animate-pulse border-yellow-400/30 text-white'
-                      : 'bg-white/5 border-white/20 hover:bg-white/10 text-white'
+                        ? 'bg-yellow-600 animate-pulse border-yellow-400/30 text-white'
+                        : 'bg-white/5 border-white/20 hover:bg-white/10 text-white'
                   }`}
                 >
                   <Mic className={`h-4 w-4 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
-                  {voiceActive ? 'Tap to Stop' : voiceConnecting ? 'Connecting...' : 'Voice Assistant'}
+                  {voiceActive
+                    ? 'Tap to Stop'
+                    : voiceConnecting
+                      ? 'Connecting...'
+                      : 'Voice Assistant'}
                 </Button>
 
                 <Button
@@ -2358,7 +2645,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           <div className="space-y-4" data-autofill-section>
             {distributionBoards
               .sort((a, b) => a.order - b.order)
-              .map(board => {
+              .map((board) => {
                 const boardCircuits = getCircuitsForBoard(testResults, board.id);
                 return (
                   <BoardSection
@@ -2370,9 +2657,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     onRemoveBoard={handleRemoveBoard}
                     onAddCircuit={() => addCircuitToBoard(board.id)}
                     circuitCount={boardCircuits.length}
-                    completedCount={boardCircuits.filter(r =>
-                      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
-                    ).length}
+                    completedCount={
+                      boardCircuits.filter(
+                        (r) =>
+                          r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+                      ).length
+                    }
                     showTools={true}
                     tools={createBoardTools(board.id)}
                   >
@@ -2484,7 +2774,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       )}
 
       {/* Dialogs - Render outside conditional blocks */}
-      
+
       {/* AI Board Scanner - Unified Overlay */}
       {showPhotoCapture && (
         <BoardScannerOverlay
@@ -2559,7 +2849,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       <SmartAutoFillPromptDialog
         open={showAutoFillPrompt}
         onOpenChange={setShowAutoFillPrompt}
-        onUseAutoFill={(circuitType, suggestions) => handleCreateCircuit(true, circuitType, suggestions)}
+        onUseAutoFill={(circuitType, suggestions) =>
+          handleCreateCircuit(true, circuitType, suggestions)
+        }
         onSkip={() => handleCreateCircuit(false)}
         circuitNumber={newCircuitNumber}
       />
@@ -2580,10 +2872,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               </Button>
             </div>
             <div className="tool-sheet-content">
-              <MobileSmartAutoFill
-                testResults={testResults}
-                onUpdate={handleBulkUpdate}
-              />
+              <MobileSmartAutoFill testResults={testResults} onUpdate={handleBulkUpdate} />
             </div>
           </div>
         </>
@@ -2606,9 +2895,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             </div>
             <div className="tool-sheet-content">
               <QuickRcdPresets
-                testResults={testResults.map(r => ({ id: r.id, circuitDesignation: r.circuitDesignation }))}
+                testResults={testResults.map((r) => ({
+                  id: r.id,
+                  circuitDesignation: r.circuitDesignation,
+                }))}
                 onApplyToCircuits={(circuitIds, preset) => {
-                  const updatedResults = testResults.map(result => {
+                  const updatedResults = testResults.map((result) => {
                     if (circuitIds.includes(result.id)) {
                       return {
                         ...result,

@@ -4,7 +4,29 @@ import { motion } from 'framer-motion';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Loader2, Edit, Trash2, Download, ArrowLeft, CheckCircle, Clock, FileText, Send, Receipt, User, MapPin, Calendar, Phone, Mail, AlertTriangle, XCircle, Bell, MailOpen, Eye, ChevronRight } from 'lucide-react';
+import {
+  Loader2,
+  Edit,
+  Trash2,
+  Download,
+  ArrowLeft,
+  CheckCircle,
+  Clock,
+  FileText,
+  Send,
+  Receipt,
+  User,
+  MapPin,
+  Calendar,
+  Phone,
+  Mail,
+  AlertTriangle,
+  XCircle,
+  Bell,
+  MailOpen,
+  Eye,
+  ChevronRight,
+} from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet';
@@ -19,7 +41,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 import { format, differenceInDays, isPast } from 'date-fns';
 import { cn } from '@/lib/utils';
 
@@ -44,7 +66,9 @@ const QuoteViewPage = () => {
 
   const formatCurrency = (amount: number | undefined | null) => {
     const safeAmount = typeof amount === 'number' && !isNaN(amount) ? amount : 0;
-    return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(safeAmount);
+    return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
+      safeAmount
+    );
   };
 
   useEffect(() => {
@@ -56,29 +80,32 @@ const QuoteViewPage = () => {
       }
 
       try {
-        const { data, error } = await supabase
-          .from('quotes')
-          .select('*')
-          .eq('id', id)
-          .single();
+        const { data, error } = await supabase.from('quotes').select('*').eq('id', id).single();
 
         if (error) throw error;
 
         if (!data) {
           setError(true);
           toast({
-            title: "Quote Not Found",
+            title: 'Quote Not Found',
             description: "The quote you're looking for doesn't exist or has been deleted.",
-            variant: "destructive"
+            variant: 'destructive',
           });
         } else {
           const transformedQuote: Quote = {
             id: data.id,
             quoteNumber: data.quote_number,
-            client: typeof data.client_data === 'string' ? JSON.parse(data.client_data) : data.client_data,
+            client:
+              typeof data.client_data === 'string'
+                ? JSON.parse(data.client_data)
+                : data.client_data,
             items: typeof data.items === 'string' ? JSON.parse(data.items) : data.items,
             settings: typeof data.settings === 'string' ? JSON.parse(data.settings) : data.settings,
-            jobDetails: data.job_details ? (typeof data.job_details === 'string' ? JSON.parse(data.job_details) : data.job_details) : undefined,
+            jobDetails: data.job_details
+              ? typeof data.job_details === 'string'
+                ? JSON.parse(data.job_details)
+                : data.job_details
+              : undefined,
             subtotal: data.subtotal || 0,
             overhead: data.overhead || 0,
             profit: data.profit || 0,
@@ -118,7 +145,7 @@ const QuoteViewPage = () => {
             .single();
 
           if (viewData) {
-            setEmailTracking(prev => ({
+            setEmailTracking((prev) => ({
               ...prev,
               email_opened_at: viewData.email_opened_at,
               email_open_count: viewData.email_open_count || 0,
@@ -129,9 +156,9 @@ const QuoteViewPage = () => {
         console.error('Error loading quote:', err);
         setError(true);
         toast({
-          title: "Error",
-          description: "Failed to load quote. Please try again.",
-          variant: "destructive"
+          title: 'Error',
+          description: 'Failed to load quote. Please try again.',
+          variant: 'destructive',
         });
       } finally {
         setLoading(false);
@@ -147,23 +174,23 @@ const QuoteViewPage = () => {
     setIsDownloading(true);
     try {
       const effectiveCompanyProfile = companyProfile || {
-        id: "default",
-        user_id: "default",
-        company_name: "Your Electrical Company",
-        company_email: "contact@yourcompany.com",
-        company_phone: "0123 456 7890",
-        company_address: "123 Business Street, London",
-        primary_color: "#1e40af",
-        secondary_color: "#3b82f6",
-        currency: "GBP",
-        locale: "en-GB",
-        vat_number: "GB123456789",
-        payment_terms: "Payment due within 30 days",
+        id: 'default',
+        user_id: 'default',
+        company_name: 'Your Electrical Company',
+        company_email: 'contact@yourcompany.com',
+        company_phone: '0123 456 7890',
+        company_address: '123 Business Street, London',
+        primary_color: '#1e40af',
+        secondary_color: '#3b82f6',
+        currency: 'GBP',
+        locale: 'en-GB',
+        vat_number: 'GB123456789',
+        payment_terms: 'Payment due within 30 days',
         created_at: new Date(),
         updated_at: new Date(),
       };
 
-      const { data, error } = await supabase.functions.invoke("generate-pdf-monkey", {
+      const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: { quote, companyProfile: effectiveCompanyProfile },
       });
 
@@ -176,8 +203,8 @@ const QuoteViewPage = () => {
         const maxAttempts = 18;
         for (let i = 0; i < maxAttempts; i++) {
           await new Promise((resolve) => setTimeout(resolve, 5000));
-          const { data: statusData } = await supabase.functions.invoke("generate-pdf-monkey", {
-            body: { mode: "status", documentId },
+          const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
+            body: { mode: 'status', documentId },
           });
           if (statusData?.downloadUrl) {
             downloadUrl = statusData.downloadUrl;
@@ -188,26 +215,26 @@ const QuoteViewPage = () => {
 
       if (downloadUrl) {
         await supabase
-          .from("quotes")
+          .from('quotes')
           .update({
             pdf_document_id: documentId,
             pdf_url: downloadUrl,
             pdf_generated_at: new Date().toISOString(),
             pdf_version: (quote.pdf_version || 0) + 1,
           })
-          .eq("id", quote.id);
+          .eq('id', quote.id);
 
-        window.open(downloadUrl, "_blank");
-        toast({ title: "PDF ready", description: "Opening in new tab", variant: "success" });
+        window.open(downloadUrl, '_blank');
+        toast({ title: 'PDF ready', description: 'Opening in new tab', variant: 'success' });
       } else {
-        throw new Error("Failed to generate PDF");
+        throw new Error('Failed to generate PDF');
       }
     } catch (error: any) {
-      console.error("PDF generation error:", error);
+      console.error('PDF generation error:', error);
       toast({
-        title: "PDF generation failed",
-        description: error.message || "Please try again",
-        variant: "destructive",
+        title: 'PDF generation failed',
+        description: error.message || 'Please try again',
+        variant: 'destructive',
       });
     } finally {
       setIsDownloading(false);
@@ -219,15 +246,12 @@ const QuoteViewPage = () => {
 
     setIsDeleting(true);
     try {
-      const { error } = await supabase
-        .from('quotes')
-        .delete()
-        .eq('id', quote.id);
+      const { error } = await supabase.from('quotes').delete().eq('id', quote.id);
 
       if (error) throw error;
 
       toast({
-        title: "Quote Deleted",
+        title: 'Quote Deleted',
         description: `Quote ${quote.quoteNumber} has been deleted successfully.`,
       });
 
@@ -235,9 +259,9 @@ const QuoteViewPage = () => {
     } catch (err) {
       console.error('Error deleting quote:', err);
       toast({
-        title: "Error",
-        description: "Failed to delete quote. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to delete quote. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsDeleting(false);
@@ -255,9 +279,9 @@ const QuoteViewPage = () => {
     } catch (err) {
       console.error('Error converting to invoice:', err);
       toast({
-        title: "Error",
-        description: "Failed to convert quote to invoice.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to convert quote to invoice.',
+        variant: 'destructive',
       });
     } finally {
       setIsConverting(false);
@@ -269,19 +293,21 @@ const QuoteViewPage = () => {
 
     setIsSendingReminder(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) {
         toast({
-          title: "Not authenticated",
-          description: "Please log in to send reminders",
-          variant: "destructive"
+          title: 'Not authenticated',
+          description: 'Please log in to send reminders',
+          variant: 'destructive',
         });
         return;
       }
 
       const { data, error } = await supabase.functions.invoke('send-quote-reminder', {
         body: { quoteId: quote.id, reminderType: 'gentle' },
-        headers: { Authorization: `Bearer ${session.access_token}` }
+        headers: { Authorization: `Bearer ${session.access_token}` },
       });
 
       if (error) {
@@ -289,21 +315,21 @@ const QuoteViewPage = () => {
       }
 
       // Update local tracking state
-      setEmailTracking(prev => ({
+      setEmailTracking((prev) => ({
         ...prev,
         reminder_count: (prev?.reminder_count || 0) + 1,
       }));
 
       toast({
-        title: "Reminder Sent",
-        description: data?.message || "Follow-up reminder sent to client",
+        title: 'Reminder Sent',
+        description: data?.message || 'Follow-up reminder sent to client',
       });
     } catch (err: any) {
       console.error('Error sending reminder:', err);
       toast({
-        title: "Failed to send reminder",
-        description: err.message || "Please try again",
-        variant: "destructive"
+        title: 'Failed to send reminder',
+        description: err.message || 'Please try again',
+        variant: 'destructive',
       });
     } finally {
       setIsSendingReminder(false);
@@ -317,7 +343,7 @@ const QuoteViewPage = () => {
         gradient: 'from-emerald-500/20 via-emerald-600/10 to-transparent',
         badge: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
         label: 'Accepted',
-        icon: CheckCircle
+        icon: CheckCircle,
       };
     }
     if (quote?.acceptance_status === 'declined') {
@@ -325,7 +351,7 @@ const QuoteViewPage = () => {
         gradient: 'from-red-500/20 via-red-600/10 to-transparent',
         badge: 'bg-red-500/20 text-red-400 border-red-500/30',
         label: 'Declined',
-        icon: XCircle
+        icon: XCircle,
       };
     }
     if (quote?.expiryDate && isPast(new Date(quote.expiryDate))) {
@@ -333,7 +359,7 @@ const QuoteViewPage = () => {
         gradient: 'from-amber-500/20 via-amber-600/10 to-transparent',
         badge: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
         label: 'Expired',
-        icon: AlertTriangle
+        icon: AlertTriangle,
       };
     }
     if (quote?.status === 'sent') {
@@ -341,14 +367,14 @@ const QuoteViewPage = () => {
         gradient: 'from-blue-500/20 via-blue-600/10 to-transparent',
         badge: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
         label: 'Sent',
-        icon: Send
+        icon: Send,
       };
     }
     return {
       gradient: 'from-zinc-500/20 via-zinc-600/10 to-transparent',
       badge: 'bg-zinc-500/20 text-zinc-400 border-zinc-500/30',
       label: 'Draft',
-      icon: FileText
+      icon: FileText,
     };
   };
 
@@ -382,9 +408,7 @@ const QuoteViewPage = () => {
           <p className="text-muted-foreground">
             The quote you're looking for doesn't exist or may have been deleted.
           </p>
-          <Button onClick={() => navigate('/electrician/quotes')}>
-            View All Quotes
-          </Button>
+          <Button onClick={() => navigate('/electrician/quotes')}>View All Quotes</Button>
         </div>
       </div>
     );
@@ -392,16 +416,18 @@ const QuoteViewPage = () => {
 
   const StatusIcon = statusInfo?.icon || FileText;
   const isExpired = quote.expiryDate && isPast(new Date(quote.expiryDate));
-  const daysUntilExpiry = quote.expiryDate ? differenceInDays(new Date(quote.expiryDate), new Date()) : null;
+  const daysUntilExpiry = quote.expiryDate
+    ? differenceInDays(new Date(quote.expiryDate), new Date())
+    : null;
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.04 } }
+    show: { opacity: 1, transition: { staggerChildren: 0.04 } },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 500, damping: 30 } }
+    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 500, damping: 30 } },
   };
 
   return (
@@ -431,13 +457,20 @@ const QuoteViewPage = () => {
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <div className={cn(
-            "w-9 h-9 rounded-xl flex items-center justify-center",
-            quote.acceptance_status === 'accepted' ? 'bg-emerald-500' :
-            quote.acceptance_status === 'declined' ? 'bg-red-500' :
-            isExpired ? 'bg-amber-500' :
-            quote.status === 'sent' ? 'bg-blue-500' : 'bg-zinc-500'
-          )}>
+          <div
+            className={cn(
+              'w-9 h-9 rounded-xl flex items-center justify-center',
+              quote.acceptance_status === 'accepted'
+                ? 'bg-emerald-500'
+                : quote.acceptance_status === 'declined'
+                  ? 'bg-red-500'
+                  : isExpired
+                    ? 'bg-amber-500'
+                    : quote.status === 'sent'
+                      ? 'bg-blue-500'
+                      : 'bg-zinc-500'
+            )}
+          >
             <StatusIcon className="h-5 w-5 text-white" />
           </div>
           <div className="flex-1 min-w-0">
@@ -453,7 +486,10 @@ const QuoteViewPage = () => {
       <div className="px-4 py-4 space-y-4">
         {/* Status Banner */}
         {quote.acceptance_status === 'accepted' && (
-          <motion.div variants={itemVariants} className="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 overflow-hidden">
+          <motion.div
+            variants={itemVariants}
+            className="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 overflow-hidden"
+          >
             <div className="flex items-center gap-3 p-3.5">
               <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
                 <CheckCircle className="h-5 w-5 text-white" />
@@ -485,7 +521,10 @@ const QuoteViewPage = () => {
         )}
 
         {quote.invoice_raised && (
-          <motion.div variants={itemVariants} className="flex items-center gap-3 p-3.5 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-3 p-3.5 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20"
+          >
             <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
               <Receipt className="h-5 w-5 text-black" />
             </div>
@@ -508,7 +547,11 @@ const QuoteViewPage = () => {
               className="flex items-center gap-3 p-3.5 w-full touch-manipulation active:bg-white/[0.04] transition-colors"
             >
               <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0">
-                {isDownloading ? <Loader2 className="h-5 w-5 text-white animate-spin" /> : <Download className="h-5 w-5 text-white" />}
+                {isDownloading ? (
+                  <Loader2 className="h-5 w-5 text-white animate-spin" />
+                ) : (
+                  <Download className="h-5 w-5 text-white" />
+                )}
               </div>
               <div className="flex-1 min-w-0 text-left">
                 <p className="text-[15px] font-medium text-white">Download PDF</p>
@@ -527,7 +570,7 @@ const QuoteViewPage = () => {
               </div>
               <QuoteSendDropdown
                 quote={quote}
-                onSuccess={() => toast({ title: "Quote sent", variant: "success" })}
+                onSuccess={() => toast({ title: 'Quote sent', variant: 'success' })}
                 disabled={!quote.client?.email || !quote.id}
                 className="h-9 px-4"
               />
@@ -572,7 +615,11 @@ const QuoteViewPage = () => {
               className="flex items-center gap-3 p-3.5 w-full rounded-2xl bg-emerald-500/10 border border-emerald-500/20 touch-manipulation active:bg-emerald-500/20 transition-colors"
             >
               <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
-                {isConverting ? <Loader2 className="h-5 w-5 text-white animate-spin" /> : <Receipt className="h-5 w-5 text-white" />}
+                {isConverting ? (
+                  <Loader2 className="h-5 w-5 text-white animate-spin" />
+                ) : (
+                  <Receipt className="h-5 w-5 text-white" />
+                )}
               </div>
               <div className="flex-1 min-w-0 text-left">
                 <p className="text-[15px] font-medium text-emerald-400">Convert to Invoice</p>
@@ -584,64 +631,95 @@ const QuoteViewPage = () => {
         )}
 
         {/* Email Tracking - Show for sent quotes awaiting response */}
-        {quote.status === 'sent' && quote.acceptance_status === 'pending' && emailTracking?.first_sent_at && (
-          <motion.div variants={itemVariants}>
-            <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
-              Email Tracking
-            </p>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <div className="grid grid-cols-4 divide-x divide-white/[0.06]">
-                <div className="p-3 text-center">
-                  <Send className="h-4 w-4 mx-auto mb-1 text-blue-400" />
-                  <p className="text-[11px] text-white/40">Sent</p>
-                  <p className="text-[13px] font-semibold text-white">
-                    {format(new Date(emailTracking.first_sent_at), 'd MMM')}
+        {quote.status === 'sent' &&
+          quote.acceptance_status === 'pending' &&
+          emailTracking?.first_sent_at && (
+            <motion.div variants={itemVariants}>
+              <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+                Email Tracking
+              </p>
+              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+                <div className="grid grid-cols-4 divide-x divide-white/[0.06]">
+                  <div className="p-3 text-center">
+                    <Send className="h-4 w-4 mx-auto mb-1 text-blue-400" />
+                    <p className="text-[11px] text-white/40">Sent</p>
+                    <p className="text-[13px] font-semibold text-white">
+                      {format(new Date(emailTracking.first_sent_at), 'd MMM')}
+                    </p>
+                  </div>
+                  <div className="p-3 text-center">
+                    <Eye className="h-4 w-4 mx-auto mb-1 text-white/40" />
+                    <p className="text-[11px] text-white/40">Opens</p>
+                    <p
+                      className={cn(
+                        'text-[13px] font-semibold',
+                        emailTracking.email_opened_at ? 'text-blue-400' : 'text-white/30'
+                      )}
+                    >
+                      {emailTracking.email_opened_at ? emailTracking.email_open_count || 1 : '—'}
+                    </p>
+                  </div>
+                  <div className="p-3 text-center">
+                    <Bell className="h-4 w-4 mx-auto mb-1 text-white/40" />
+                    <p className="text-[11px] text-white/40">Reminders</p>
+                    <p
+                      className={cn(
+                        'text-[13px] font-semibold',
+                        (emailTracking.reminder_count || 0) > 0 ? 'text-purple-400' : 'text-white'
+                      )}
+                    >
+                      {emailTracking.reminder_count || 0}/2
+                    </p>
+                  </div>
+                  <div className="p-3 text-center">
+                    <Clock className="h-4 w-4 mx-auto mb-1 text-white/40" />
+                    <p className="text-[11px] text-white/40">Expires</p>
+                    <p
+                      className={cn(
+                        'text-[13px] font-semibold',
+                        isExpired
+                          ? 'text-red-400'
+                          : daysUntilExpiry !== null && daysUntilExpiry <= 3
+                            ? 'text-amber-400'
+                            : 'text-white'
+                      )}
+                    >
+                      {isExpired
+                        ? 'Expired'
+                        : daysUntilExpiry === 0
+                          ? 'Today'
+                          : `${daysUntilExpiry}d`}
+                    </p>
+                  </div>
+                </div>
+                <div className="px-4 py-3 border-t border-white/[0.06] bg-white/[0.02]">
+                  <p className="text-[12px] text-center text-white/40">
+                    {emailTracking.email_opened_at ? (
+                      <span className="text-blue-400">
+                        Client viewed your quote — awaiting decision
+                      </span>
+                    ) : (
+                      'Auto-reminders at 3 & 7 days if no response'
+                    )}
                   </p>
                 </div>
-                <div className="p-3 text-center">
-                  <Eye className="h-4 w-4 mx-auto mb-1 text-white/40" />
-                  <p className="text-[11px] text-white/40">Opens</p>
-                  <p className={cn("text-[13px] font-semibold", emailTracking.email_opened_at ? 'text-blue-400' : 'text-white/30')}>
-                    {emailTracking.email_opened_at ? (emailTracking.email_open_count || 1) : '—'}
-                  </p>
-                </div>
-                <div className="p-3 text-center">
-                  <Bell className="h-4 w-4 mx-auto mb-1 text-white/40" />
-                  <p className="text-[11px] text-white/40">Reminders</p>
-                  <p className={cn("text-[13px] font-semibold", (emailTracking.reminder_count || 0) > 0 ? 'text-purple-400' : 'text-white')}>
-                    {emailTracking.reminder_count || 0}/2
-                  </p>
-                </div>
-                <div className="p-3 text-center">
-                  <Clock className="h-4 w-4 mx-auto mb-1 text-white/40" />
-                  <p className="text-[11px] text-white/40">Expires</p>
-                  <p className={cn("text-[13px] font-semibold", isExpired ? 'text-red-400' : daysUntilExpiry !== null && daysUntilExpiry <= 3 ? 'text-amber-400' : 'text-white')}>
-                    {isExpired ? 'Expired' : daysUntilExpiry === 0 ? 'Today' : `${daysUntilExpiry}d`}
-                  </p>
-                </div>
+                {!isExpired && (emailTracking.reminder_count || 0) < 2 && (
+                  <button
+                    onClick={handleSendReminder}
+                    disabled={isSendingReminder}
+                    className="flex items-center justify-center gap-2 w-full p-3.5 border-t border-white/[0.06] touch-manipulation active:bg-white/[0.04] transition-colors"
+                  >
+                    {isSendingReminder ? (
+                      <Loader2 className="h-4 w-4 animate-spin text-white/50" />
+                    ) : (
+                      <Bell className="h-4 w-4 text-white/50" />
+                    )}
+                    <span className="text-[15px] font-medium text-white">Send Reminder</span>
+                  </button>
+                )}
               </div>
-              <div className="px-4 py-3 border-t border-white/[0.06] bg-white/[0.02]">
-                <p className="text-[12px] text-center text-white/40">
-                  {emailTracking.email_opened_at ? (
-                    <span className="text-blue-400">Client viewed your quote — awaiting decision</span>
-                  ) : (
-                    'Auto-reminders at 3 & 7 days if no response'
-                  )}
-                </p>
-              </div>
-              {!isExpired && (emailTracking.reminder_count || 0) < 2 && (
-                <button
-                  onClick={handleSendReminder}
-                  disabled={isSendingReminder}
-                  className="flex items-center justify-center gap-2 w-full p-3.5 border-t border-white/[0.06] touch-manipulation active:bg-white/[0.04] transition-colors"
-                >
-                  {isSendingReminder ? <Loader2 className="h-4 w-4 animate-spin text-white/50" /> : <Bell className="h-4 w-4 text-white/50" />}
-                  <span className="text-[15px] font-medium text-white">Send Reminder</span>
-                </button>
-              )}
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
 
         {/* Client Details */}
         <motion.div variants={itemVariants}>
@@ -654,12 +732,17 @@ const QuoteViewPage = () => {
                 <User className="h-5 w-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[15px] font-medium text-white">{quote.client?.name || 'No client name'}</p>
+                <p className="text-[15px] font-medium text-white">
+                  {quote.client?.name || 'No client name'}
+                </p>
                 <p className="text-[13px] text-white/50">Client Name</p>
               </div>
             </div>
             {quote.client?.email && (
-              <a href={`mailto:${quote.client.email}`} className="flex items-center gap-3 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors">
+              <a
+                href={`mailto:${quote.client.email}`}
+                className="flex items-center gap-3 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors"
+              >
                 <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0">
                   <Mail className="h-5 w-5 text-white" />
                 </div>
@@ -671,7 +754,10 @@ const QuoteViewPage = () => {
               </a>
             )}
             {quote.client?.phone && (
-              <a href={`tel:${quote.client.phone}`} className="flex items-center gap-3 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors">
+              <a
+                href={`tel:${quote.client.phone}`}
+                className="flex items-center gap-3 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors"
+              >
                 <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
                   <Phone className="h-5 w-5 text-white" />
                 </div>
@@ -704,9 +790,13 @@ const QuoteViewPage = () => {
             </p>
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
               {quote.jobDetails.title && (
-                <h3 className="text-[15px] font-semibold text-white mb-2">{quote.jobDetails.title}</h3>
+                <h3 className="text-[15px] font-semibold text-white mb-2">
+                  {quote.jobDetails.title}
+                </h3>
               )}
-              <p className="text-[14px] text-white/70 whitespace-pre-wrap">{quote.jobDetails.description}</p>
+              <p className="text-[14px] text-white/70 whitespace-pre-wrap">
+                {quote.jobDetails.description}
+              </p>
               {quote.jobDetails.location && (
                 <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/[0.06]">
                   <MapPin className="h-4 w-4 text-white/40" />
@@ -728,20 +818,36 @@ const QuoteViewPage = () => {
                 <Calendar className="h-5 w-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[15px] font-medium text-white">{format(new Date(quote.createdAt), 'dd MMM yyyy')}</p>
+                <p className="text-[15px] font-medium text-white">
+                  {format(new Date(quote.createdAt), 'dd MMM yyyy')}
+                </p>
                 <p className="text-[13px] text-white/50">Created</p>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3.5">
-              <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0", isExpired ? 'bg-red-500' : 'bg-amber-500')}>
+              <div
+                className={cn(
+                  'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
+                  isExpired ? 'bg-red-500' : 'bg-amber-500'
+                )}
+              >
                 <Clock className="h-5 w-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className={cn("text-[15px] font-medium", isExpired ? 'text-red-400' : 'text-white')}>
+                <p
+                  className={cn(
+                    'text-[15px] font-medium',
+                    isExpired ? 'text-red-400' : 'text-white'
+                  )}
+                >
                   {format(new Date(quote.expiryDate), 'dd MMM yyyy')}
                 </p>
                 <p className="text-[13px] text-white/50">
-                  {isExpired ? 'Expired' : daysUntilExpiry !== null && daysUntilExpiry <= 7 ? `${daysUntilExpiry} days left` : 'Valid Until'}
+                  {isExpired
+                    ? 'Expired'
+                    : daysUntilExpiry !== null && daysUntilExpiry <= 7
+                      ? `${daysUntilExpiry} days left`
+                      : 'Valid Until'}
                 </p>
               </div>
             </div>
@@ -758,13 +864,17 @@ const QuoteViewPage = () => {
               <div key={index} className="p-3.5">
                 <div className="flex justify-between items-start gap-3">
                   <div className="flex-1 min-w-0">
-                    <p className="text-[15px] font-medium text-white leading-tight">{item.name || item.description}</p>
+                    <p className="text-[15px] font-medium text-white leading-tight">
+                      {item.name || item.description}
+                    </p>
                     <p className="text-[13px] text-white/50 mt-0.5">
                       {item.quantity} × {formatCurrency(item.unitPrice || item.price)}
                     </p>
                   </div>
                   <p className="text-[15px] font-semibold text-elec-yellow whitespace-nowrap">
-                    {formatCurrency(item.total || (item.quantity * (item.unitPrice || item.price || 0)))}
+                    {formatCurrency(
+                      item.total || item.quantity * (item.unitPrice || item.price || 0)
+                    )}
                   </p>
                 </div>
               </div>
@@ -802,7 +912,9 @@ const QuoteViewPage = () => {
             )}
             <div className="flex justify-between pt-3 border-t border-white/[0.06]">
               <span className="text-[16px] font-semibold text-white">Total</span>
-              <span className="text-[18px] font-bold text-elec-yellow">{formatCurrency(quote.total)}</span>
+              <span className="text-[18px] font-bold text-elec-yellow">
+                {formatCurrency(quote.total)}
+              </span>
             </div>
           </div>
         </motion.div>
@@ -826,12 +938,14 @@ const QuoteViewPage = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Quote {quote.quoteNumber}?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the quote
-              and all associated data.
+              This action cannot be undone. This will permanently delete the quote and all
+              associated data.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting} className="rounded-xl">Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeleting} className="rounded-xl">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}

@@ -29,7 +29,7 @@ export const GDPRQuickCheck = () => {
         <p className="text-emerald-100 font-medium">
           Why must installers consider GDPR when installing CCTV?
         </p>
-        
+
         {!showFeedback ? (
           <div className="space-y-3">
             <Button
@@ -39,7 +39,7 @@ export const GDPRQuickCheck = () => {
             >
               It's a technical requirement for camera functionality
             </Button>
-            
+
             <Button
               variant="outline"
               className="w-full justify-start text-left border-gray-600 hover:border-emerald-400 hover:bg-emerald-900/20"
@@ -47,7 +47,7 @@ export const GDPRQuickCheck = () => {
             >
               CCTV records personal data, requiring privacy compliance and legal obligations
             </Button>
-            
+
             <Button
               variant="outline"
               className="w-full justify-start text-left border-gray-600 hover:border-emerald-400 hover:bg-emerald-900/20"
@@ -58,29 +58,35 @@ export const GDPRQuickCheck = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className={`p-4 rounded-lg border-2 ${
-              selectedAnswer === 'privacy-legal' 
-                ? 'border-green-500 bg-green-900/20' 
-                : 'border-red-500 bg-red-900/20'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border-2 ${
+                selectedAnswer === 'privacy-legal'
+                  ? 'border-green-500 bg-green-900/20'
+                  : 'border-red-500 bg-red-900/20'
+              }`}
+            >
               <div className="flex items-center gap-2 mb-2">
                 {selectedAnswer === 'privacy-legal' ? (
                   <CheckCircle className="h-5 w-5 text-green-400" />
                 ) : (
                   <XCircle className="h-5 w-5 text-red-400" />
                 )}
-                <span className={`font-semibold ${
-                  selectedAnswer === 'privacy-legal' ? 'text-green-300' : 'text-red-300'
-                }`}>
+                <span
+                  className={`font-semibold ${
+                    selectedAnswer === 'privacy-legal' ? 'text-green-300' : 'text-red-300'
+                  }`}
+                >
                   {selectedAnswer === 'privacy-legal' ? 'Correct!' : 'Not quite right'}
                 </span>
               </div>
               <p className="text-gray-300 text-sm">
-                <strong>GDPR compliance</strong> is essential because CCTV systems record personal data (images of people). This requires proper signage, data protection measures, storage limitations, and clear lawful basis for processing.
+                <strong>GDPR compliance</strong> is essential because CCTV systems record personal
+                data (images of people). This requires proper signage, data protection measures,
+                storage limitations, and clear lawful basis for processing.
               </p>
             </div>
-            
-            <Button 
+
+            <Button
               onClick={resetQuiz}
               variant="ghost"
               className="text-emerald-400 hover:text-emerald-300"

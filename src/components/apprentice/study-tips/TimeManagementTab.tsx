@@ -1,96 +1,141 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Calendar, Target, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Clock, Calendar, Target, CheckCircle } from 'lucide-react';
 
 const TimeManagementTab = () => {
   const scheduleTemplates = [
     {
-      title: "Daily Routine (30-45 minutes)",
+      title: 'Daily Routine (30-45 minutes)',
       icon: Clock,
-      color: "border-blue-500/20 bg-blue-500/10",
+      color: 'border-blue-500/20 bg-blue-500/10',
       activities: [
-        { time: "10 mins", activity: "Review yesterday's notes", description: "Quick recap to refresh memory" },
-        { time: "20 mins", activity: "New material or practice questions", description: "Main learning activity" },
-        { time: "10 mins", activity: "Quick quiz or flashcards", description: "Test understanding" },
-        { time: "5 mins", activity: "Plan tomorrow's session", description: "Set goals for next day" }
-      ]
+        {
+          time: '10 mins',
+          activity: "Review yesterday's notes",
+          description: 'Quick recap to refresh memory',
+        },
+        {
+          time: '20 mins',
+          activity: 'New material or practice questions',
+          description: 'Main learning activity',
+        },
+        {
+          time: '10 mins',
+          activity: 'Quick quiz or flashcards',
+          description: 'Test understanding',
+        },
+        {
+          time: '5 mins',
+          activity: "Plan tomorrow's session",
+          description: 'Set goals for next day',
+        },
+      ],
     },
     {
-      title: "Weekly Goals",
+      title: 'Weekly Goals',
       icon: Calendar,
-      color: "border-green-500/20 bg-green-500/10",
+      color: 'border-green-500/20 bg-green-500/10',
       activities: [
-        { time: "Monday", activity: "New regulations/theory", description: "Learn new concepts" },
-        { time: "Tuesday", activity: "Calculations practice", description: "Apply formulas and methods" },
-        { time: "Wednesday", activity: "Review and consolidate", description: "Connect concepts together" },
-        { time: "Thursday", activity: "Mock exam questions", description: "Test exam readiness" },
-        { time: "Friday", activity: "Weekend revision planning", description: "Organise weekend study" }
-      ]
-    }
+        { time: 'Monday', activity: 'New regulations/theory', description: 'Learn new concepts' },
+        {
+          time: 'Tuesday',
+          activity: 'Calculations practice',
+          description: 'Apply formulas and methods',
+        },
+        {
+          time: 'Wednesday',
+          activity: 'Review and consolidate',
+          description: 'Connect concepts together',
+        },
+        { time: 'Thursday', activity: 'Mock exam questions', description: 'Test exam readiness' },
+        {
+          time: 'Friday',
+          activity: 'Weekend revision planning',
+          description: 'Organise weekend study',
+        },
+      ],
+    },
   ];
 
   const timeManagementTips = [
     {
-      category: "Planning",
+      category: 'Planning',
       tips: [
-        { tip: "Use a study calendar", explanation: "Mark exam dates, deadlines, and study sessions" },
-        { tip: "Set SMART goals", explanation: "Specific, Measurable, Achievable, Relevant, Time-bound" },
-        { tip: "Break large topics down", explanation: "Divide complex subjects into manageable chunks" },
-        { tip: "Plan regular reviews", explanation: "Schedule time to revisit previous material" }
-      ]
+        {
+          tip: 'Use a study calendar',
+          explanation: 'Mark exam dates, deadlines, and study sessions',
+        },
+        {
+          tip: 'Set SMART goals',
+          explanation: 'Specific, Measurable, Achievable, Relevant, Time-bound',
+        },
+        {
+          tip: 'Break large topics down',
+          explanation: 'Divide complex subjects into manageable chunks',
+        },
+        { tip: 'Plan regular reviews', explanation: 'Schedule time to revisit previous material' },
+      ],
     },
     {
-      category: "Execution",
+      category: 'Execution',
       tips: [
-        { tip: "Use the 2-minute rule", explanation: "If it takes less than 2 minutes, do it now" },
-        { tip: "Eliminate distractions", explanation: "Put phone away, find quiet space, use website blockers" },
-        { tip: "Study at your peak time", explanation: "Identify when you're most alert and focused" },
-        { tip: "Take regular breaks", explanation: "Use Pomodoro technique or similar structured breaks" }
-      ]
+        { tip: 'Use the 2-minute rule', explanation: 'If it takes less than 2 minutes, do it now' },
+        {
+          tip: 'Eliminate distractions',
+          explanation: 'Put phone away, find quiet space, use website blockers',
+        },
+        {
+          tip: 'Study at your peak time',
+          explanation: "Identify when you're most alert and focused",
+        },
+        {
+          tip: 'Take regular breaks',
+          explanation: 'Use Pomodoro technique or similar structured breaks',
+        },
+      ],
     },
     {
-      category: "Tracking",
+      category: 'Tracking',
       tips: [
-        { tip: "Log study hours", explanation: "Track actual time spent studying vs planned" },
-        { tip: "Monitor progress", explanation: "Regular self-testing to measure improvement" },
-        { tip: "Adjust as needed", explanation: "Modify schedule based on what's working" },
-        { tip: "Celebrate milestones", explanation: "Reward yourself for achieving study goals" }
-      ]
-    }
+        { tip: 'Log study hours', explanation: 'Track actual time spent studying vs planned' },
+        { tip: 'Monitor progress', explanation: 'Regular self-testing to measure improvement' },
+        { tip: 'Adjust as needed', explanation: "Modify schedule based on what's working" },
+        { tip: 'Celebrate milestones', explanation: 'Reward yourself for achieving study goals' },
+      ],
+    },
   ];
 
   const studyEnvironment = [
     {
-      aspect: "Physical Space",
+      aspect: 'Physical Space',
       recommendations: [
-        "Good lighting - preferably natural light",
-        "Comfortable chair and desk height",
-        "Minimal clutter and distractions",
-        "All materials within reach",
-        "Quiet environment or noise-cancelling headphones"
-      ]
+        'Good lighting - preferably natural light',
+        'Comfortable chair and desk height',
+        'Minimal clutter and distractions',
+        'All materials within reach',
+        'Quiet environment or noise-cancelling headphones',
+      ],
     },
     {
-      aspect: "Digital Setup",
+      aspect: 'Digital Setup',
       recommendations: [
-        "Multiple monitors if available",
-        "Good internet connection for online resources",
-        "PDF reader for regulations and guides",
-        "Calculator app or physical calculator",
-        "Note-taking app or traditional notebooks"
-      ]
+        'Multiple monitors if available',
+        'Good internet connection for online resources',
+        'PDF reader for regulations and guides',
+        'Calculator app or physical calculator',
+        'Note-taking app or traditional notebooks',
+      ],
     },
     {
-      aspect: "Study Materials",
+      aspect: 'Study Materials',
       recommendations: [
-        "BS 7671 18th Edition",
-        "On-Site Guide",
-        "Guidance Note 3",
-        "Practice exam papers",
-        "Coloured pens for highlighting and diagrams"
-      ]
-    }
+        'BS 7671 18th Edition',
+        'On-Site Guide',
+        'Guidance Note 3',
+        'Practice exam papers',
+        'Coloured pens for highlighting and diagrams',
+      ],
+    },
   ];
 
   return (
@@ -112,7 +157,7 @@ const TimeManagementTab = () => {
                     <IconComponent className="h-6 w-6 text-blue-400" />
                     <h3 className="text-xl font-semibold text-white">{template.title}</h3>
                   </div>
-                  
+
                   <div className="space-y-3">
                     {template.activities.map((activity, activityIndex) => (
                       <div key={activityIndex} className="bg-black/20 rounded-lg p-3">

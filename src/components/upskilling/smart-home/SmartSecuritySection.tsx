@@ -19,8 +19,8 @@ export const SmartSecuritySection = () => {
           <div className="bg-red-600/10 p-4 rounded-lg border border-red-600/30">
             <h4 className="text-red-400 font-semibold mb-3">What You'll Learn</h4>
             <p className="text-sm text-gray-300">
-              How smart security systems work together, why integration matters more than individual devices, 
-              and how automation improves both security and convenience.
+              How smart security systems work together, why integration matters more than individual
+              devices, and how automation improves both security and convenience.
             </p>
           </div>
 
@@ -31,49 +31,54 @@ export const SmartSecuritySection = () => {
                 <div className="bg-elec-gray p-3 rounded">
                   <p className="text-red-400 font-semibold text-sm mb-1">How Smart Locks Work</p>
                   <p className="text-xs text-gray-400">
-                    Use Bluetooth, Wi-Fi, or Z-Wave to communicate. Your phone acts as the key, 
-                    automatically unlocking when you approach (geofencing) and locking when you leave.
+                    Use Bluetooth, Wi-Fi, or Z-Wave to communicate. Your phone acts as the key,
+                    automatically unlocking when you approach (geofencing) and locking when you
+                    leave.
                   </p>
                 </div>
                 <div className="bg-elec-gray p-3 rounded">
                   <p className="text-red-400 font-semibold text-sm mb-1">Access Control Benefits</p>
                   <p className="text-xs text-gray-400">
-                    Create temporary codes for visitors (cleaner gets access 2-4 PM Tuesdays only). 
-                    Track who enters and when - perfect for families with teenagers or rental properties.
+                    Create temporary codes for visitors (cleaner gets access 2-4 PM Tuesdays only).
+                    Track who enters and when - perfect for families with teenagers or rental
+                    properties.
                   </p>
                 </div>
                 <div className="bg-elec-gray p-3 rounded">
                   <p className="text-red-400 font-semibold text-sm mb-1">Emergency Features</p>
                   <p className="text-xs text-gray-400">
-                    Duress codes (different from normal code) silently alert security services. 
-                    Low battery warnings prevent lockouts. Manual override ensures access during power cuts.
+                    Duress codes (different from normal code) silently alert security services. Low
+                    battery warnings prevent lockouts. Manual override ensures access during power
+                    cuts.
                   </p>
                 </div>
               </div>
             </div>
 
             <div>
-              <h4 className="text-foreground font-semibold text-lg mb-4">Integrated Security Systems</h4>
+              <h4 className="text-foreground font-semibold text-lg mb-4">
+                Integrated Security Systems
+              </h4>
               <div className="space-y-3">
                 <div className="bg-elec-gray p-3 rounded">
                   <p className="text-red-400 font-semibold text-sm mb-1">Camera Integration</p>
                   <p className="text-xs text-gray-400">
-                    Motion detection triggers recording + live alerts to your phone. 
-                    Night vision and AI person detection reduce false alarms from pets or weather.
+                    Motion detection triggers recording + live alerts to your phone. Night vision
+                    and AI person detection reduce false alarms from pets or weather.
                   </p>
                 </div>
                 <div className="bg-elec-gray p-3 rounded">
                   <p className="text-red-400 font-semibold text-sm mb-1">Automated Responses</p>
                   <p className="text-xs text-gray-400">
-                    When motion detected: cameras record, lights turn on, siren activates, phone alerts sent. 
-                    All happens in 2-3 seconds without human intervention.
+                    When motion detected: cameras record, lights turn on, siren activates, phone
+                    alerts sent. All happens in 2-3 seconds without human intervention.
                   </p>
                 </div>
                 <div className="bg-elec-gray p-3 rounded">
                   <p className="text-red-400 font-semibold text-sm mb-1">Professional Monitoring</p>
                   <p className="text-xs text-gray-400">
-                    Security company receives instant alerts with live video feed. 
-                    They verify threats and dispatch police/fire services, reducing false alarm fees.
+                    Security company receives instant alerts with live video feed. They verify
+                    threats and dispatch police/fire services, reducing false alarm fees.
                   </p>
                 </div>
               </div>
@@ -87,7 +92,9 @@ export const SmartSecuritySection = () => {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-foreground font-semibold text-xs mb-1">Traditional System Response:</p>
+                <p className="text-foreground font-semibold text-xs mb-1">
+                  Traditional System Response:
+                </p>
                 <ul className="text-xs text-gray-300 space-y-1">
                   <li>• Motion sensor triggers siren (3-5 seconds)</li>
                   <li>• Neighbours may or may not respond</li>
@@ -121,46 +128,60 @@ export const SmartSecuritySection = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-elec-gray p-4 rounded-lg">
-              <p className="text-foreground font-semibold text-sm mb-2">Q: What advantage do smart locks have over traditional locks?</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Q: What advantage do smart locks have over traditional locks?
+              </p>
               <p className="text-xs text-gray-400 mb-3">Think beyond just keyless entry...</p>
               {showAnswers && (
                 <div className="text-xs text-orange-400 bg-orange-600/20 p-2 rounded">
-                  ✓ Remote control, temporary access codes, activity logging, and geofencing automation
+                  ✓ Remote control, temporary access codes, activity logging, and geofencing
+                  automation
                 </div>
               )}
             </div>
-            
+
             <div className="bg-elec-gray p-4 rounded-lg">
-              <p className="text-foreground font-semibold text-sm mb-2">Q: How does system integration improve security?</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Q: How does system integration improve security?
+              </p>
               <p className="text-xs text-gray-400 mb-3">What happens when devices work together?</p>
               {showAnswers && (
                 <div className="text-xs text-orange-400 bg-orange-600/20 p-2 rounded">
-                  ✓ Coordinated responses - motion triggers cameras, lights, alerts, and monitoring simultaneously
+                  ✓ Coordinated responses - motion triggers cameras, lights, alerts, and monitoring
+                  simultaneously
                 </div>
               )}
             </div>
-            
+
             <div className="bg-elec-gray p-4 rounded-lg">
-              <p className="text-foreground font-semibold text-sm mb-2">Q: What is a duress code?</p>
-              <p className="text-xs text-gray-400 mb-3">How can smart locks help in emergency situations?</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Q: What is a duress code?
+              </p>
+              <p className="text-xs text-gray-400 mb-3">
+                How can smart locks help in emergency situations?
+              </p>
               {showAnswers && (
                 <div className="text-xs text-orange-400 bg-orange-600/20 p-2 rounded">
-                  ✓ A special code that unlocks the door but silently alerts security services to danger
+                  ✓ A special code that unlocks the door but silently alerts security services to
+                  danger
                 </div>
               )}
             </div>
-            
+
             <div className="bg-elec-gray p-4 rounded-lg">
-              <p className="text-foreground font-semibold text-sm mb-2">Q: Why is professional monitoring valuable?</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Q: Why is professional monitoring valuable?
+              </p>
               <p className="text-xs text-gray-400 mb-3">What's the benefit over self-monitoring?</p>
               {showAnswers && (
                 <div className="text-xs text-orange-400 bg-orange-600/20 p-2 rounded">
-                  ✓ 24/7 verification of threats, faster police response, and reduced false alarm penalties
+                  ✓ 24/7 verification of threats, faster police response, and reduced false alarm
+                  penalties
                 </div>
               )}
             </div>
           </div>
-          
+
           <div className="text-center">
             <button
               onClick={() => setShowAnswers(!showAnswers)}

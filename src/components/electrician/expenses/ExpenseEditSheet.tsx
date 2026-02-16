@@ -10,7 +10,7 @@ import {
   Loader2,
   Check,
   AlertCircle,
-  Maximize2
+  Maximize2,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import {
@@ -33,7 +33,11 @@ import {
   DEFAULT_MILEAGE_RATE,
   getCategoryConfig,
 } from '@/types/expense';
-import { uploadReceipt, getSignedReceiptUrl, isValidReceiptUrl } from '@/services/expenseReceiptService';
+import {
+  uploadReceipt,
+  getSignedReceiptUrl,
+  isValidReceiptUrl,
+} from '@/services/expenseReceiptService';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import {
@@ -69,18 +73,66 @@ const CATEGORY_ICONS: Record<string, React.ElementType> = {
 
 // Colour classes for category buttons
 const COLOUR_CLASSES: Record<string, { bg: string; text: string; border: string }> = {
-  'orange-500': { bg: 'bg-orange-500/15 hover:bg-orange-500/25', text: 'text-orange-400', border: 'border-orange-500/30' },
-  'amber-500': { bg: 'bg-amber-500/15 hover:bg-amber-500/25', text: 'text-amber-400', border: 'border-amber-500/30' },
-  'red-500': { bg: 'bg-red-500/15 hover:bg-red-500/25', text: 'text-red-400', border: 'border-red-500/30' },
-  'cyan-500': { bg: 'bg-cyan-500/15 hover:bg-cyan-500/25', text: 'text-cyan-400', border: 'border-cyan-500/30' },
-  'purple-500': { bg: 'bg-purple-500/15 hover:bg-purple-500/25', text: 'text-purple-400', border: 'border-purple-500/30' },
-  'green-500': { bg: 'bg-green-500/15 hover:bg-green-500/25', text: 'text-green-400', border: 'border-green-500/30' },
-  'teal-500': { bg: 'bg-teal-500/15 hover:bg-teal-500/25', text: 'text-teal-400', border: 'border-teal-500/30' },
-  'slate-500': { bg: 'bg-slate-500/15 hover:bg-slate-500/25', text: 'text-slate-400', border: 'border-slate-500/30' },
-  'indigo-500': { bg: 'bg-indigo-500/15 hover:bg-indigo-500/25', text: 'text-indigo-400', border: 'border-indigo-500/30' },
-  'pink-500': { bg: 'bg-pink-500/15 hover:bg-pink-500/25', text: 'text-pink-400', border: 'border-pink-500/30' },
-  'rose-500': { bg: 'bg-rose-500/15 hover:bg-rose-500/25', text: 'text-rose-400', border: 'border-rose-500/30' },
-  'gray-500': { bg: 'bg-gray-500/15 hover:bg-gray-500/25', text: 'text-gray-400', border: 'border-gray-500/30' },
+  'orange-500': {
+    bg: 'bg-orange-500/15 hover:bg-orange-500/25',
+    text: 'text-orange-400',
+    border: 'border-orange-500/30',
+  },
+  'amber-500': {
+    bg: 'bg-amber-500/15 hover:bg-amber-500/25',
+    text: 'text-amber-400',
+    border: 'border-amber-500/30',
+  },
+  'red-500': {
+    bg: 'bg-red-500/15 hover:bg-red-500/25',
+    text: 'text-red-400',
+    border: 'border-red-500/30',
+  },
+  'cyan-500': {
+    bg: 'bg-cyan-500/15 hover:bg-cyan-500/25',
+    text: 'text-cyan-400',
+    border: 'border-cyan-500/30',
+  },
+  'purple-500': {
+    bg: 'bg-purple-500/15 hover:bg-purple-500/25',
+    text: 'text-purple-400',
+    border: 'border-purple-500/30',
+  },
+  'green-500': {
+    bg: 'bg-green-500/15 hover:bg-green-500/25',
+    text: 'text-green-400',
+    border: 'border-green-500/30',
+  },
+  'teal-500': {
+    bg: 'bg-teal-500/15 hover:bg-teal-500/25',
+    text: 'text-teal-400',
+    border: 'border-teal-500/30',
+  },
+  'slate-500': {
+    bg: 'bg-slate-500/15 hover:bg-slate-500/25',
+    text: 'text-slate-400',
+    border: 'border-slate-500/30',
+  },
+  'indigo-500': {
+    bg: 'bg-indigo-500/15 hover:bg-indigo-500/25',
+    text: 'text-indigo-400',
+    border: 'border-indigo-500/30',
+  },
+  'pink-500': {
+    bg: 'bg-pink-500/15 hover:bg-pink-500/25',
+    text: 'text-pink-400',
+    border: 'border-pink-500/30',
+  },
+  'rose-500': {
+    bg: 'bg-rose-500/15 hover:bg-rose-500/25',
+    text: 'text-rose-400',
+    border: 'border-rose-500/30',
+  },
+  'gray-500': {
+    bg: 'bg-gray-500/15 hover:bg-gray-500/25',
+    text: 'text-gray-400',
+    border: 'border-gray-500/30',
+  },
 };
 
 type EditStep = 'form' | 'category' | 'receipt';
@@ -93,7 +145,13 @@ interface ExpenseEditSheetProps {
   onDelete: (id: string) => void;
 }
 
-export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete }: ExpenseEditSheetProps) {
+export function ExpenseEditSheet({
+  expense,
+  open,
+  onOpenChange,
+  onSave,
+  onDelete,
+}: ExpenseEditSheetProps) {
   const [step, setStep] = useState<EditStep>('form');
   const [formData, setFormData] = useState<Partial<UpdateExpenseInput>>({
     id: expense.id,
@@ -157,7 +215,7 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
   };
 
   const handleCategorySelect = (category: ExpenseCategory) => {
-    setFormData(prev => ({ ...prev, category }));
+    setFormData((prev) => ({ ...prev, category }));
     setStep('form');
   };
 
@@ -168,7 +226,7 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
       if (result.error || !result.url) {
         throw new Error(result.error || 'Failed to upload receipt');
       }
-      setFormData(prev => ({ ...prev, receipt_url: result.url }));
+      setFormData((prev) => ({ ...prev, receipt_url: result.url }));
       toast({
         title: 'Receipt uploaded',
         description: 'Your receipt has been attached to this expense',
@@ -193,7 +251,7 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
   };
 
   const handleRemoveReceipt = () => {
-    setFormData(prev => ({ ...prev, receipt_url: null }));
+    setFormData((prev) => ({ ...prev, receipt_url: null }));
   };
 
   const handleSubmit = async () => {
@@ -243,7 +301,10 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[90vh] sm:h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[90vh] sm:h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
@@ -267,8 +328,12 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                   <X className="h-5 w-5" />
                 </Button>
               )}
-              <SheetTitle className="text-lg font-semibold flex-1 text-center px-2">{getStepTitle()}</SheetTitle>
-              <SheetDescription className="sr-only">Edit expense details, change category, or attach a receipt</SheetDescription>
+              <SheetTitle className="text-lg font-semibold flex-1 text-center px-2">
+                {getStepTitle()}
+              </SheetTitle>
+              <SheetDescription className="sr-only">
+                Edit expense details, change category, or attach a receipt
+              </SheetDescription>
               {canGoBack ? (
                 <Button
                   variant="ghost"
@@ -302,13 +367,18 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                     <button
                       onClick={() => setStep('category')}
                       className={cn(
-                        "w-full flex items-center gap-3 p-3 rounded-xl border touch-manipulation active:scale-[0.98] transition-all",
+                        'w-full flex items-center gap-3 p-3 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
                         colours.bg,
                         colours.border
                       )}
                     >
-                      <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center", colours.bg)}>
-                        <CategoryIcon className={cn("h-5 w-5", colours.text)} />
+                      <div
+                        className={cn(
+                          'w-10 h-10 rounded-lg flex items-center justify-center',
+                          colours.bg
+                        )}
+                      >
+                        <CategoryIcon className={cn('h-5 w-5', colours.text)} />
                       </div>
                       <span className="font-medium text-foreground">{categoryConfig.label}</span>
                       <ChevronLeft className="h-4 w-4 text-muted-foreground ml-auto rotate-180" />
@@ -319,9 +389,7 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                   <div className="space-y-2">
                     <Label htmlFor="amount">Amount</Label>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl font-semibold text-muted-foreground">
-                        £
-                      </span>
+                      <span className="text-2xl font-semibold text-muted-foreground">£</span>
                       <Input
                         id="amount"
                         type="number"
@@ -330,7 +398,12 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                         min="0"
                         placeholder="0.00"
                         value={formData.amount || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, amount: parseFloat(e.target.value) || 0 }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            amount: parseFloat(e.target.value) || 0,
+                          }))
+                        }
                         className="h-14 text-2xl font-semibold touch-manipulation flex-1"
                       />
                     </div>
@@ -343,7 +416,7 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                       id="date"
                       type="date"
                       value={formData.date || ''}
-                      onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
                       className="h-12 touch-manipulation text-base"
                     />
                     {formData.date && (
@@ -360,7 +433,7 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                       id="vendor"
                       placeholder="e.g. Screwfix, Shell, Toolstation"
                       value={formData.vendor || ''}
-                      onChange={(e) => setFormData(prev => ({ ...prev, vendor: e.target.value }))}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, vendor: e.target.value }))}
                       className="h-11 touch-manipulation"
                     />
                   </div>
@@ -372,7 +445,9 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                       id="description"
                       placeholder="What was this expense for?"
                       value={formData.description || ''}
-                      onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, description: e.target.value }))
+                      }
                       className="touch-manipulation min-h-[80px]"
                     />
                   </div>
@@ -471,9 +546,7 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                   <div className="space-y-2">
                     <Label htmlFor="vat">VAT Amount (optional)</Label>
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-medium text-muted-foreground">
-                        £
-                      </span>
+                      <span className="text-lg font-medium text-muted-foreground">£</span>
                       <Input
                         id="vat"
                         type="number"
@@ -482,7 +555,12 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                         min="0"
                         placeholder="0.00"
                         value={formData.vat_amount || ''}
-                        onChange={(e) => setFormData(prev => ({ ...prev, vat_amount: parseFloat(e.target.value) || undefined }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            vat_amount: parseFloat(e.target.value) || undefined,
+                          }))
+                        }
                         className="h-11 touch-manipulation flex-1"
                       />
                     </div>
@@ -504,10 +582,10 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                           onChange={(e) => {
                             const miles = parseFloat(e.target.value) || 0;
                             const rate = formData.mileage_rate || DEFAULT_MILEAGE_RATE;
-                            setFormData(prev => ({
+                            setFormData((prev) => ({
                               ...prev,
                               mileage_miles: miles,
-                              amount: Math.round(miles * rate * 100) / 100
+                              amount: Math.round(miles * rate * 100) / 100,
                             }));
                           }}
                           className="h-11 touch-manipulation"
@@ -520,7 +598,9 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                             id="from"
                             placeholder="Start location"
                             value={formData.mileage_from || ''}
-                            onChange={(e) => setFormData(prev => ({ ...prev, mileage_from: e.target.value }))}
+                            onChange={(e) =>
+                              setFormData((prev) => ({ ...prev, mileage_from: e.target.value }))
+                            }
                             className="h-11 touch-manipulation"
                           />
                         </div>
@@ -530,7 +610,9 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                             id="to"
                             placeholder="End location"
                             value={formData.mileage_to || ''}
-                            onChange={(e) => setFormData(prev => ({ ...prev, mileage_to: e.target.value }))}
+                            onChange={(e) =>
+                              setFormData((prev) => ({ ...prev, mileage_to: e.target.value }))
+                            }
                             className="h-11 touch-manipulation"
                           />
                         </div>
@@ -548,7 +630,9 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                     </div>
                     <Switch
                       checked={formData.tax_deductible ?? true}
-                      onCheckedChange={(checked) => setFormData(prev => ({ ...prev, tax_deductible: checked }))}
+                      onCheckedChange={(checked) =>
+                        setFormData((prev) => ({ ...prev, tax_deductible: checked }))
+                      }
                     />
                   </div>
                 </motion.div>
@@ -569,7 +653,8 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                   <div className="space-y-2">
                     {EXPENSE_CATEGORIES.map((category) => {
                       const Icon = CATEGORY_ICONS[category.id] || MoreHorizontal;
-                      const catColours = COLOUR_CLASSES[category.colour] || COLOUR_CLASSES['gray-500'];
+                      const catColours =
+                        COLOUR_CLASSES[category.colour] || COLOUR_CLASSES['gray-500'];
                       const isSelected = formData.category === category.id;
 
                       return (
@@ -577,36 +662,34 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                           key={category.id}
                           onClick={() => handleCategorySelect(category.id)}
                           className={cn(
-                            "w-full flex items-center gap-4 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all",
-                            "bg-white/[0.02] border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.15]",
-                            isSelected && "ring-2 ring-elec-yellow bg-elec-yellow/5"
+                            'w-full flex items-center gap-4 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
+                            'bg-white/[0.02] border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.15]',
+                            isSelected && 'ring-2 ring-elec-yellow bg-elec-yellow/5'
                           )}
                         >
-                          <div className={cn(
-                            "w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0",
-                            catColours.bg
-                          )}>
-                            <Icon className={cn("h-5 w-5", catColours.text)} />
+                          <div
+                            className={cn(
+                              'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
+                              catColours.bg
+                            )}
+                          >
+                            <Icon className={cn('h-5 w-5', catColours.text)} />
                           </div>
                           <div className="flex-1 text-left">
-                            <span className="font-medium text-foreground">
-                              {category.label}
-                            </span>
+                            <span className="font-medium text-foreground">{category.label}</span>
                             {category.taxNote && (
                               <span className="text-xs text-muted-foreground ml-2">
                                 ({category.taxNote})
                               </span>
                             )}
                           </div>
-                          <div className={cn(
-                            "w-5 h-5 rounded-full border-2 flex items-center justify-center",
-                            isSelected
-                              ? "border-elec-yellow bg-elec-yellow"
-                              : "border-white/20"
-                          )}>
-                            {isSelected && (
-                              <div className="w-2 h-2 rounded-full bg-black" />
+                          <div
+                            className={cn(
+                              'w-5 h-5 rounded-full border-2 flex items-center justify-center',
+                              isSelected ? 'border-elec-yellow bg-elec-yellow' : 'border-white/20'
                             )}
+                          >
+                            {isSelected && <div className="w-2 h-2 rounded-full bg-black" />}
                           </div>
                         </button>
                       );
@@ -677,7 +760,9 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                           </div>
                           <div className="text-left">
                             <p className="font-semibold text-foreground">Upload from Gallery</p>
-                            <p className="text-sm text-muted-foreground">Choose an existing photo</p>
+                            <p className="text-sm text-muted-foreground">
+                              Choose an existing photo
+                            </p>
                           </div>
                         </div>
                       </button>

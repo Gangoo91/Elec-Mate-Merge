@@ -1,87 +1,138 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section7_1 = () => {
   useSEO(
-    "Why Certification Is Required (BS 7671 Compliance) - Level 2 Module 6 Section 7.1",
-    "Understanding the legal requirement for electrical certification under BS 7671 and EAWR 1989"
+    'Why Certification Is Required (BS 7671 Compliance) - Level 2 Module 6 Section 7.1',
+    'Understanding the legal requirement for electrical certification under BS 7671 and EAWR 1989'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the main purpose of electrical certification?",
-      options: ["To charge more money", "To prove safety and compliance with regulations", "To create paperwork", "To satisfy customers"],
+      question: 'What is the main purpose of electrical certification?',
+      options: [
+        'To charge more money',
+        'To prove safety and compliance with regulations',
+        'To create paperwork',
+        'To satisfy customers',
+      ],
       correctAnswer: 1,
-      explanation: "Certification provides legal evidence that installations meet safety standards and comply with BS 7671 and EAWR 1989."
+      explanation:
+        'Certification provides legal evidence that installations meet safety standards and comply with BS 7671 and EAWR 1989.',
     },
     {
       id: 2,
-      question: "Which UK regulation requires all electrical systems to be safe?",
-      options: ["Health and Safety at Work Act", "Electricity at Work Regulations 1989", "Building Regulations", "Wiring Regulations"],
+      question: 'Which UK regulation requires all electrical systems to be safe?',
+      options: [
+        'Health and Safety at Work Act',
+        'Electricity at Work Regulations 1989',
+        'Building Regulations',
+        'Wiring Regulations',
+      ],
       correctAnswer: 1,
-      explanation: "The Electricity at Work Regulations 1989 (EAWR) make it a legal duty to ensure electrical systems are constructed and maintained safely."
+      explanation:
+        'The Electricity at Work Regulations 1989 (EAWR) make it a legal duty to ensure electrical systems are constructed and maintained safely.',
     },
     {
       id: 3,
-      question: "Which standard sets out the certification requirements for electrical work?",
-      options: ["BS 7671", "BS 5839", "BS 6423", "BS 1363"],
+      question: 'Which standard sets out the certification requirements for electrical work?',
+      options: ['BS 7671', 'BS 5839', 'BS 6423', 'BS 1363'],
       correctAnswer: 0,
-      explanation: "BS 7671 (The Wiring Regulations) sets out the technical requirements for electrical installations, including mandatory testing and certification."
+      explanation:
+        'BS 7671 (The Wiring Regulations) sets out the technical requirements for electrical installations, including mandatory testing and certification.',
     },
     {
       id: 4,
-      question: "Why is certification important for insurers and building control?",
-      options: ["It looks professional", "It provides evidence of compliance and due diligence", "It's required by law", "It helps with marketing"],
+      question: 'Why is certification important for insurers and building control?',
+      options: [
+        'It looks professional',
+        'It provides evidence of compliance and due diligence',
+        "It's required by law",
+        'It helps with marketing',
+      ],
       correctAnswer: 1,
-      explanation: "Certification provides insurers and building control with evidence that proper testing was conducted and safety standards were met."
+      explanation:
+        'Certification provides insurers and building control with evidence that proper testing was conducted and safety standards were met.',
     },
     {
       id: 5,
-      question: "What key details are included on a certificate?",
-      options: ["Only test results", "Installation details, test results, and competent person signatures", "Just the electrician's name", "Equipment serial numbers only"],
+      question: 'What key details are included on a certificate?',
+      options: [
+        'Only test results',
+        'Installation details, test results, and competent person signatures',
+        "Just the electrician's name",
+        'Equipment serial numbers only',
+      ],
       correctAnswer: 1,
-      explanation: "Certificates include installation details, test results, and signatures of competent persons to ensure accountability and traceability."
+      explanation:
+        'Certificates include installation details, test results, and signatures of competent persons to ensure accountability and traceability.',
     },
     {
       id: 6,
-      question: "True or False: Certification is optional for small alterations.",
-      options: ["True", "False"],
+      question: 'True or False: Certification is optional for small alterations.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. All electrical work including alterations and additions must be certified, though minor works may use different certificate types."
+      explanation:
+        'False. All electrical work including alterations and additions must be certified, though minor works may use different certificate types.',
     },
     {
       id: 7,
-      question: "Why must a certificate include the signature of a competent person?",
-      options: ["For legal requirement", "To provide accountability and traceability", "To look official", "For insurance purposes"],
+      question: 'Why must a certificate include the signature of a competent person?',
+      options: [
+        'For legal requirement',
+        'To provide accountability and traceability',
+        'To look official',
+        'For insurance purposes',
+      ],
       correctAnswer: 1,
-      explanation: "Signatures establish accountability and ensure responsibility is clear and traceable for the work carried out."
+      explanation:
+        'Signatures establish accountability and ensure responsibility is clear and traceable for the work carried out.',
     },
     {
       id: 8,
-      question: "What are the legal consequences of failing to issue a certificate?",
-      options: ["Minor paperwork issues", "Prosecution, fines, insurance denial, and personal liability", "Customer complaints", "Nothing serious"],
+      question: 'What are the legal consequences of failing to issue a certificate?',
+      options: [
+        'Minor paperwork issues',
+        'Prosecution, fines, insurance denial, and personal liability',
+        'Customer complaints',
+        'Nothing serious',
+      ],
       correctAnswer: 1,
-      explanation: "Failing to certify can result in prosecution, fines, imprisonment, insurance denial, and personal liability for damages."
+      explanation:
+        'Failing to certify can result in prosecution, fines, imprisonment, insurance denial, and personal liability for damages.',
     },
     {
       id: 9,
-      question: "What must be completed before a new installation can be energised?",
-      options: ["Payment from client", "Building control approval", "Certification", "Material delivery"],
+      question: 'What must be completed before a new installation can be energised?',
+      options: [
+        'Payment from client',
+        'Building control approval',
+        'Certification',
+        'Material delivery',
+      ],
       correctAnswer: 2,
-      explanation: "Certification must be complete before energising any new installation to ensure it meets safety standards."
+      explanation:
+        'Certification must be complete before energising any new installation to ensure it meets safety standards.',
     },
     {
       id: 10,
-      question: "In the real-world example, what mistake left the contractor personally liable for damages?",
-      options: ["Using wrong cables", "Failing to issue an Electrical Installation Certificate", "Poor workmanship", "Late completion"],
+      question:
+        'In the real-world example, what mistake left the contractor personally liable for damages?',
+      options: [
+        'Using wrong cables',
+        'Failing to issue an Electrical Installation Certificate',
+        'Poor workmanship',
+        'Late completion',
+      ],
       correctAnswer: 1,
-      explanation: "The contractor failed to issue an EIC, leaving no documentation to prove compliance, resulting in personal liability for fire damages."
-    }
+      explanation:
+        'The contractor failed to issue an EIC, leaving no documentation to prove compliance, resulting in personal liability for fire damages.',
+    },
   ];
 
   return (
@@ -151,7 +202,11 @@ const Module6Section7_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Electrical certification is not optional paperwork — it is a legal requirement. Every new installation, alteration, or addition must be verified, tested, and formally recorded to prove compliance with BS 7671 and the Electricity at Work Regulations 1989 (EAWR). Certification protects users, clients, and electricians by providing evidence that the work was carried out to the required standard.
+                Electrical certification is not optional paperwork — it is a legal requirement.
+                Every new installation, alteration, or addition must be verified, tested, and
+                formally recorded to prove compliance with BS 7671 and the Electricity at Work
+                Regulations 1989 (EAWR). Certification protects users, clients, and electricians by
+                providing evidence that the work was carried out to the required standard.
               </p>
             </div>
           </section>
@@ -164,23 +219,47 @@ const Module6Section7_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Certification exists to prove that an installation is safe, compliant, and fit for use. It confirms that testing has been carried out and that results meet the requirements of BS 7671. Certificates also provide a record for clients, insurers, and building control authorities. Without certification, there is no proof that the installation has been tested or meets legal requirements.
+                Certification exists to prove that an installation is safe, compliant, and fit for
+                use. It confirms that testing has been carried out and that results meet the
+                requirements of BS 7671. Certificates also provide a record for clients, insurers,
+                and building control authorities. Without certification, there is no proof that the
+                installation has been tested or meets legal requirements.
               </p>
 
               <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-400/50">
                 <h4 className="font-medium text-blue-300 mb-2">Key Functions of Certification:</h4>
                 <ul className="text-sm text-white/70 space-y-1">
-                  <li>• <strong>Legal Evidence:</strong> Proves compliance with statutory requirements</li>
-                  <li>• <strong>Safety Assurance:</strong> Confirms the installation is safe to energise and use</li>
-                  <li>• <strong>Quality Record:</strong> Documents that proper procedures were followed</li>
-                  <li>• <strong>Future Reference:</strong> Provides baseline data for maintenance and troubleshooting</li>
-                  <li>• <strong>Insurance Validation:</strong> Supports insurance claims and coverage</li>
-                  <li>• <strong>Building Control Approval:</strong> Satisfies local authority requirements</li>
+                  <li>
+                    • <strong>Legal Evidence:</strong> Proves compliance with statutory requirements
+                  </li>
+                  <li>
+                    • <strong>Safety Assurance:</strong> Confirms the installation is safe to
+                    energise and use
+                  </li>
+                  <li>
+                    • <strong>Quality Record:</strong> Documents that proper procedures were
+                    followed
+                  </li>
+                  <li>
+                    • <strong>Future Reference:</strong> Provides baseline data for maintenance and
+                    troubleshooting
+                  </li>
+                  <li>
+                    • <strong>Insurance Validation:</strong> Supports insurance claims and coverage
+                  </li>
+                  <li>
+                    • <strong>Building Control Approval:</strong> Satisfies local authority
+                    requirements
+                  </li>
                 </ul>
               </div>
 
               <p>
-                The certification process creates a formal audit trail that follows the installation throughout its life. This documentation becomes particularly valuable when modifications are needed, faults develop, or when the property changes ownership. It also serves as evidence of due diligence if accidents occur, protecting both the electrician and the client from legal liability.
+                The certification process creates a formal audit trail that follows the installation
+                throughout its life. This documentation becomes particularly valuable when
+                modifications are needed, faults develop, or when the property changes ownership. It
+                also serves as evidence of due diligence if accidents occur, protecting both the
+                electrician and the client from legal liability.
               </p>
             </div>
           </section>
@@ -188,7 +267,12 @@ const Module6Section7_1 = () => {
           <InlineCheck
             id="purpose-check"
             question="What is the main purpose of electrical certification?"
-            options={["To create paperwork", "To prove that an installation is safe, compliant, and fit for use", "To charge more money", "To satisfy building control"]}
+            options={[
+              'To create paperwork',
+              'To prove that an installation is safe, compliant, and fit for use',
+              'To charge more money',
+              'To satisfy building control',
+            ]}
             correctIndex={1}
             explanation="Certification exists to prove that an installation is safe, compliant, and fit for use, providing evidence that testing has been carried out and meets BS 7671 requirements."
           />
@@ -201,7 +285,12 @@ const Module6Section7_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                BS 7671 sets out the technical requirements for electrical installations, including mandatory testing and certification. The Electricity at Work Regulations 1989 (EAWR) go further, making it a legal duty to ensure electrical systems are constructed and maintained safely. Certification is the formal evidence that these duties have been met. This means that certification is not just good practice — it is a legal obligation.
+                BS 7671 sets out the technical requirements for electrical installations, including
+                mandatory testing and certification. The Electricity at Work Regulations 1989 (EAWR)
+                go further, making it a legal duty to ensure electrical systems are constructed and
+                maintained safely. Certification is the formal evidence that these duties have been
+                met. This means that certification is not just good practice — it is a legal
+                obligation.
               </p>
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
@@ -227,11 +316,16 @@ const Module6Section7_1 = () => {
               </div>
 
               <p>
-                The relationship between BS 7671 and EAWR is crucial to understand. While BS 7671 is a British Standard (not law), compliance with it is widely accepted as demonstrating compliance with the legal requirements of EAWR. This means that following BS 7671 provides a recognised defence against prosecution under EAWR.
+                The relationship between BS 7671 and EAWR is crucial to understand. While BS 7671 is
+                a British Standard (not law), compliance with it is widely accepted as demonstrating
+                compliance with the legal requirements of EAWR. This means that following BS 7671
+                provides a recognised defence against prosecution under EAWR.
               </p>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50">
-                <h4 className="font-medium text-amber-300 mb-2">Legal Consequences of Non-Compliance:</h4>
+                <h4 className="font-medium text-amber-300 mb-2">
+                  Legal Consequences of Non-Compliance:
+                </h4>
                 <ul className="text-sm text-white/70 space-y-1">
                   <li>• Prosecution under EAWR with unlimited fines</li>
                   <li>• Personal imprisonment for up to 6 months</li>
@@ -247,7 +341,12 @@ const Module6Section7_1 = () => {
           <InlineCheck
             id="legal-framework-check"
             question="Which UK regulation makes it a legal duty to ensure electrical systems are safe?"
-            options={["BS 7671", "Building Regulations", "Electricity at Work Regulations 1989", "Health and Safety at Work Act"]}
+            options={[
+              'BS 7671',
+              'Building Regulations',
+              'Electricity at Work Regulations 1989',
+              'Health and Safety at Work Act',
+            ]}
             correctIndex={2}
             explanation="The Electricity at Work Regulations 1989 (EAWR) make it a legal duty to ensure electrical systems are constructed and maintained safely."
           />
@@ -260,11 +359,17 @@ const Module6Section7_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Certificates provide accountability by showing who carried out or supervised the work and when it was tested. They include details of the installation, the test results, and the signatures of competent persons. This ensures that responsibility is clear and traceable. In the event of a fault or incident, the certificate is a vital piece of evidence that can protect both the electrician and the client.
+                Certificates provide accountability by showing who carried out or supervised the
+                work and when it was tested. They include details of the installation, the test
+                results, and the signatures of competent persons. This ensures that responsibility
+                is clear and traceable. In the event of a fault or incident, the certificate is a
+                vital piece of evidence that can protect both the electrician and the client.
               </p>
 
               <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-400/50">
-                <h4 className="font-medium text-orange-300 mb-2">Accountability Elements in Certification:</h4>
+                <h4 className="font-medium text-orange-300 mb-2">
+                  Accountability Elements in Certification:
+                </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
                   <div>
                     <strong>Designer Accountability:</strong>
@@ -286,7 +391,10 @@ const Module6Section7_1 = () => {
               </div>
 
               <p>
-                The signature of a competent person on a certificate carries significant legal weight. It represents a professional declaration that the work has been carried out to the required standards and that the signer takes responsibility for the quality and safety of the installation.
+                The signature of a competent person on a certificate carries significant legal
+                weight. It represents a professional declaration that the work has been carried out
+                to the required standards and that the signer takes responsibility for the quality
+                and safety of the installation.
               </p>
 
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-400/50">
@@ -305,7 +413,12 @@ const Module6Section7_1 = () => {
           <InlineCheck
             id="accountability-check"
             question="Why is the signature of a competent person an essential part of certification?"
-            options={["To make it look official", "To provide accountability and traceability", "For legal requirement only", "To satisfy insurers"]}
+            options={[
+              'To make it look official',
+              'To provide accountability and traceability',
+              'For legal requirement only',
+              'To satisfy insurers',
+            ]}
             correctIndex={1}
             explanation="Signatures ensure that responsibility is clear and traceable, providing accountability by showing who carried out or supervised the work."
           />
@@ -318,7 +431,11 @@ const Module6Section7_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Failing to provide certification has serious consequences. Work may be deemed non-compliant and illegal. Clients may refuse payment, insurers may deny cover, and building control may reject the installation. In the event of an accident, the electrician could face prosecution, fines, or even imprisonment if no certification exists to prove compliance.
+                Failing to provide certification has serious consequences. Work may be deemed
+                non-compliant and illegal. Clients may refuse payment, insurers may deny cover, and
+                building control may reject the installation. In the event of an accident, the
+                electrician could face prosecution, fines, or even imprisonment if no certification
+                exists to prove compliance.
               </p>
 
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
@@ -344,7 +461,10 @@ const Module6Section7_1 = () => {
               </div>
 
               <p>
-                The legal consequences can be severe and long-lasting. Under the Electricity at Work Regulations 1989, failure to ensure electrical safety can result in prosecution with unlimited fines and potential imprisonment. These are criminal sanctions that can have lifetime impacts on career prospects and professional standing.
+                The legal consequences can be severe and long-lasting. Under the Electricity at Work
+                Regulations 1989, failure to ensure electrical safety can result in prosecution with
+                unlimited fines and potential imprisonment. These are criminal sanctions that can
+                have lifetime impacts on career prospects and professional standing.
               </p>
             </div>
           </section>
@@ -352,7 +472,12 @@ const Module6Section7_1 = () => {
           <InlineCheck
             id="consequences-check"
             question="What could happen to an electrician who energises a new installation without certification?"
-            options={["Nothing serious", "Minor paperwork issues", "Prosecution, fines, or imprisonment, plus liability for damages", "Client complaints only"]}
+            options={[
+              'Nothing serious',
+              'Minor paperwork issues',
+              'Prosecution, fines, or imprisonment, plus liability for damages',
+              'Client complaints only',
+            ]}
             correctIndex={2}
             explanation="Without certification, electricians face prosecution, fines, or imprisonment, plus personal liability for any damages as there's no proof of compliance."
           />
@@ -366,19 +491,28 @@ const Module6Section7_1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Use Correct Certificate Type</h4>
-                <p className="text-sm text-white/70">Always use the correct certificate type (EIC, MWC, or EICR) for the work carried out.</p>
+                <p className="text-sm text-white/70">
+                  Always use the correct certificate type (EIC, MWC, or EICR) for the work carried
+                  out.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Complete All Sections</h4>
-                <p className="text-sm text-white/70">Make sure all sections of the certificate are completed clearly and accurately.</p>
+                <p className="text-sm text-white/70">
+                  Make sure all sections of the certificate are completed clearly and accurately.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">No Energising Without Certification</h4>
-                <p className="text-sm text-white/70">Never energise a new installation until certification is complete.</p>
+                <p className="text-sm text-white/70">
+                  Never energise a new installation until certification is complete.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Part of the Installation</h4>
-                <p className="text-sm text-white/70">Treat certification as part of the installation, not an optional extra.</p>
+                <p className="text-sm text-white/70">
+                  Treat certification as part of the installation, not an optional extra.
+                </p>
               </div>
             </div>
           </section>
@@ -391,14 +525,22 @@ const Module6Section7_1 = () => {
             </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
-                <h4 className="font-medium text-red-300 mb-2">Certification Failure Leads to Personal Liability</h4>
+                <h4 className="font-medium text-red-300 mb-2">
+                  Certification Failure Leads to Personal Liability
+                </h4>
                 <p className="text-sm text-white/70">
-                  A small electrical contractor completed a new shop fit-out but failed to issue an Electrical Installation Certificate. Months later, a fire broke out in the premises. During the investigation, the contractor had no documentation to prove that the installation complied with BS 7671. The insurance company refused the claim, and the contractor was held personally liable for damages running into tens of thousands of pounds.
+                  A small electrical contractor completed a new shop fit-out but failed to issue an
+                  Electrical Installation Certificate. Months later, a fire broke out in the
+                  premises. During the investigation, the contractor had no documentation to prove
+                  that the installation complied with BS 7671. The insurance company refused the
+                  claim, and the contractor was held personally liable for damages running into tens
+                  of thousands of pounds.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
                 <p className="text-sm text-white/70">
-                  <strong className="text-green-300">Lesson:</strong> Certification protects electricians legally and financially as much as it protects the client.
+                  <strong className="text-green-300">Lesson:</strong> Certification protects
+                  electricians legally and financially as much as it protects the client.
                 </p>
               </div>
             </div>
@@ -412,16 +554,27 @@ const Module6Section7_1 = () => {
             </h2>
             <div className="space-y-4">
               <div className="border-b border-white/10 pb-4">
-                <h3 className="font-medium text-white mb-2">Q: Is certification required for all electrical work?</h3>
-                <p className="text-sm text-white/70">A: Yes. All new installations, alterations, and additions must be certified.</p>
+                <h3 className="font-medium text-white mb-2">
+                  Q: Is certification required for all electrical work?
+                </h3>
+                <p className="text-sm text-white/70">
+                  A: Yes. All new installations, alterations, and additions must be certified.
+                </p>
               </div>
               <div className="border-b border-white/10 pb-4">
-                <h3 className="font-medium text-white mb-2">Q: Does BS 7671 itself have the force of law?</h3>
-                <p className="text-sm text-white/70">A: BS 7671 is not law, but compliance with it is widely recognised as the standard for meeting legal duties under EAWR 1989.</p>
+                <h3 className="font-medium text-white mb-2">
+                  Q: Does BS 7671 itself have the force of law?
+                </h3>
+                <p className="text-sm text-white/70">
+                  A: BS 7671 is not law, but compliance with it is widely recognised as the standard
+                  for meeting legal duties under EAWR 1989.
+                </p>
               </div>
               <div>
                 <h3 className="font-medium text-white mb-2">Q: Who can sign a certificate?</h3>
-                <p className="text-sm text-white/70">A: Only a competent person who carried out or supervised the work and testing.</p>
+                <p className="text-sm text-white/70">
+                  A: Only a competent person who carried out or supervised the work and testing.
+                </p>
               </div>
             </div>
           </section>
@@ -431,7 +584,11 @@ const Module6Section7_1 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="font-semibold text-white mb-3">Recap</h2>
               <p className="text-sm text-white/80">
-                Certification is a legal requirement under BS 7671 and EAWR 1989. It proves that installations have been tested, meet safety standards, and are compliant. Certificates provide accountability by recording test results, installation details, and signatures. Without certification, electricians risk prosecution, unpaid work, invalid insurance, and reputational damage.
+                Certification is a legal requirement under BS 7671 and EAWR 1989. It proves that
+                installations have been tested, meet safety standards, and are compliant.
+                Certificates provide accountability by recording test results, installation details,
+                and signatures. Without certification, electricians risk prosecution, unpaid work,
+                invalid insurance, and reputational damage.
               </p>
             </div>
           </section>

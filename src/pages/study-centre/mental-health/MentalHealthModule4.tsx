@@ -1,40 +1,45 @@
-import { ArrowLeft, Eye, UtensilsCrossed, Heart, ShieldAlert } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Eye, UtensilsCrossed, Heart, ShieldAlert } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Psychosis & Schizophrenia",
+    title: 'Psychosis & Schizophrenia',
     icon: Eye,
-    description: "Hallucinations, delusions, disordered thinking, first episode psychosis, drug-induced psychosis, how to support safely",
+    description:
+      'Hallucinations, delusions, disordered thinking, first episode psychosis, drug-induced psychosis, how to support safely',
   },
   {
     id: 2,
-    title: "Eating Disorders",
+    title: 'Eating Disorders',
     icon: UtensilsCrossed,
-    description: "Anorexia, bulimia, binge eating disorder, OSFED, male prevalence, physical risks, workplace recognition, BEAT helpline",
+    description:
+      'Anorexia, bulimia, binge eating disorder, OSFED, male prevalence, physical risks, workplace recognition, BEAT helpline',
   },
   {
     id: 3,
-    title: "Personality Disorders & Complex Needs",
+    title: 'Personality Disorders & Complex Needs',
     icon: Heart,
-    description: "BPD/EUPD, emotional dysregulation, trauma-informed approach, validation, consistency, boundaries, specialist support",
+    description:
+      'BPD/EUPD, emotional dysregulation, trauma-informed approach, validation, consistency, boundaries, specialist support',
   },
   {
     id: 4,
-    title: "Trauma, PTSD & Adverse Experiences",
+    title: 'Trauma, PTSD & Adverse Experiences',
     icon: ShieldAlert,
-    description: "Trauma types, PTSD symptoms, complex PTSD, trauma in construction, trauma-informed approach, EMDR and trauma-focused CBT",
+    description:
+      'Trauma types, PTSD symptoms, complex PTSD, trauma in construction, trauma-informed approach, EMDR and trauma-focused CBT',
   },
 ];
 
 export default function MentalHealthModule4() {
   useSEO({
-    title: "Module 4: Psychosis, Eating Disorders & Complex Needs | Mental Health First Aid",
-    description: "Understanding psychosis, eating disorders, personality disorders, trauma and PTSD in workplace settings.",
+    title: 'Module 4: Psychosis, Eating Disorders & Complex Needs | Mental Health First Aid',
+    description:
+      'Understanding psychosis, eating disorders, personality disorders, trauma and PTSD in workplace settings.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function MentalHealthModule4() {
               Psychosis, Eating Disorders &amp; Complex Needs
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Understanding less common but serious mental health conditions, trauma responses and how to provide appropriate support
+              Understanding less common but serious mental health conditions, trauma responses and
+              how to provide appropriate support
             </p>
           </div>
 

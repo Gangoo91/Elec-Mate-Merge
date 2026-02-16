@@ -1,10 +1,10 @@
-import { useState, useCallback } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { useState, useCallback } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Search,
   CheckCircle,
@@ -22,12 +22,12 @@ import {
   Trash2,
   XCircle,
   AlertTriangle,
-  Filter
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { toast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { format } from "date-fns";
+  Filter,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { format } from 'date-fns';
 import {
   useJobTests,
   useJobTestStats,
@@ -39,17 +39,23 @@ import {
   type CreateJobTestInput,
   type TestType,
   type TestResult,
-  TEST_TYPE_CONFIG
-} from "@/hooks/useJobTests";
-import { useJobs } from "@/hooks/useJobs";
-import { useEmployees } from "@/hooks/useEmployees";
+  TEST_TYPE_CONFIG,
+} from '@/hooks/useJobTests';
+import { useJobs } from '@/hooks/useJobs';
+import { useEmployees } from '@/hooks/useEmployees';
 
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { SwipeableRow } from "@/components/ui/swipeable-row";
-import { MobileBottomSheet } from "@/components/mobile/MobileBottomSheet";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { SwipeableRow } from '@/components/ui/swipeable-row';
+import { MobileBottomSheet } from '@/components/mobile/MobileBottomSheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -59,27 +65,27 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 const testTypeIcons: Record<TestType, React.ElementType> = {
-  "Continuity": Zap,
-  "Insulation Resistance": Zap,
-  "Polarity": CheckCircle,
-  "Earth Fault Loop Impedance": Zap,
-  "RCD": ClipboardCheck,
-  "Prospective Fault Current": AlertTriangle,
-  "Ring Final Circuit": Zap,
-  "Functional Test": ClipboardCheck,
-  "Visual Inspection": Eye,
-  "Other": FileCheck,
+  Continuity: Zap,
+  'Insulation Resistance': Zap,
+  Polarity: CheckCircle,
+  'Earth Fault Loop Impedance': Zap,
+  RCD: ClipboardCheck,
+  'Prospective Fault Current': AlertTriangle,
+  'Ring Final Circuit': Zap,
+  'Functional Test': ClipboardCheck,
+  'Visual Inspection': Eye,
+  Other: FileCheck,
 };
 
 const resultColors: Record<TestResult, string> = {
-  "Pending": "bg-warning/20 text-warning",
-  "Pass": "bg-success/20 text-success",
-  "Fail": "bg-destructive/20 text-destructive",
-  "N/A": "bg-muted text-muted-foreground",
-  "Limited": "bg-orange-500/20 text-orange-400",
+  Pending: 'bg-warning/20 text-warning',
+  Pass: 'bg-success/20 text-success',
+  Fail: 'bg-destructive/20 text-destructive',
+  'N/A': 'bg-muted text-muted-foreground',
+  Limited: 'bg-orange-500/20 text-orange-400',
 };
 
 function TestingWorkflowSkeleton() {
@@ -90,12 +96,12 @@ function TestingWorkflowSkeleton() {
         <Skeleton className="h-12 w-full" />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[1, 2, 3, 4].map(i => (
+        {[1, 2, 3, 4].map((i) => (
           <Skeleton key={i} className="h-24" />
         ))}
       </div>
       <div className="space-y-3">
-        {[1, 2, 3].map(i => (
+        {[1, 2, 3].map((i) => (
           <Skeleton key={i} className="h-32" />
         ))}
       </div>
@@ -105,24 +111,24 @@ function TestingWorkflowSkeleton() {
 
 export function TestingWorkflowSection() {
   const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [resultFilter, setResultFilter] = useState<TestResult | null>(null);
   const [selectedTest, setSelectedTest] = useState<JobTest | null>(null);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showRecordSheet, setShowRecordSheet] = useState(false);
   const [recordTestId, setRecordTestId] = useState<string | null>(null);
-  const [recordReading, setRecordReading] = useState("");
-  const [recordResult, setRecordResult] = useState<TestResult>("Pass");
-  const [recordNotes, setRecordNotes] = useState("");
+  const [recordReading, setRecordReading] = useState('');
+  const [recordResult, setRecordResult] = useState<TestResult>('Pass');
+  const [recordNotes, setRecordNotes] = useState('');
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   // Form state
   const [formData, setFormData] = useState<Partial<CreateJobTestInput>>({
-    job_id: "",
-    test_type: "Continuity",
-    circuit_ref: "",
-    circuit_description: "",
-    result: "Pending",
+    job_id: '',
+    test_type: 'Continuity',
+    circuit_ref: '',
+    circuit_description: '',
+    result: 'Pending',
     photos: [],
   });
 
@@ -138,16 +144,16 @@ export function TestingWorkflowSection() {
 
   const handleRefresh = useCallback(async () => {
     await refetch();
-    toast({ title: "Tests refreshed" });
+    toast({ title: 'Tests refreshed' });
   }, [refetch]);
 
   const handleRecord = (testId: string) => {
-    const test = tests.find(t => t.id === testId);
+    const test = tests.find((t) => t.id === testId);
     if (test) {
       setRecordTestId(testId);
-      setRecordReading(test.reading || "");
-      setRecordResult("Pass");
-      setRecordNotes(test.notes || "");
+      setRecordReading(test.reading || '');
+      setRecordResult('Pass');
+      setRecordNotes(test.notes || '');
       setShowRecordSheet(true);
     }
   };
@@ -162,8 +168,8 @@ export function TestingWorkflowSection() {
       });
       setShowRecordSheet(false);
       setRecordTestId(null);
-      setRecordReading("");
-      setRecordNotes("");
+      setRecordReading('');
+      setRecordNotes('');
     }
   };
 
@@ -173,7 +179,11 @@ export function TestingWorkflowSection() {
 
   const handleCreate = async () => {
     if (!formData.job_id || !formData.test_type) {
-      toast({ title: "Error", description: "Please fill in required fields", variant: "destructive" });
+      toast({
+        title: 'Error',
+        description: 'Please fill in required fields',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -195,16 +205,16 @@ export function TestingWorkflowSection() {
 
   const resetForm = () => {
     setFormData({
-      job_id: "",
-      test_type: "Continuity",
-      circuit_ref: "",
-      circuit_description: "",
-      result: "Pending",
+      job_id: '',
+      test_type: 'Continuity',
+      circuit_ref: '',
+      circuit_description: '',
+      result: 'Pending',
       photos: [],
     });
   };
 
-  const filteredTests = tests.filter(test => {
+  const filteredTests = tests.filter((test) => {
     const matchesSearch =
       test.circuit_ref?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       test.circuit_description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -215,17 +225,20 @@ export function TestingWorkflowSection() {
   });
 
   // Group tests by job for better organisation
-  const testsByJob = filteredTests.reduce((acc, test) => {
-    const jobId = test.job_id;
-    if (!acc[jobId]) {
-      acc[jobId] = {
-        job: test.job,
-        tests: []
-      };
-    }
-    acc[jobId].tests.push(test);
-    return acc;
-  }, {} as Record<string, { job: JobTest['job']; tests: JobTest[] }>);
+  const testsByJob = filteredTests.reduce(
+    (acc, test) => {
+      const jobId = test.job_id;
+      if (!acc[jobId]) {
+        acc[jobId] = {
+          job: test.job,
+          tests: [],
+        };
+      }
+      acc[jobId].tests.push(test);
+      return acc;
+    },
+    {} as Record<string, { job: JobTest['job']; tests: JobTest[] }>
+  );
 
   if (isLoading) {
     return <TestingWorkflowSkeleton />;
@@ -249,7 +262,9 @@ export function TestingWorkflowSection() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl md:text-2xl font-bold text-foreground">Testing & Sign-off</h1>
-            <p className="text-sm text-muted-foreground">Electrical test results and verification</p>
+            <p className="text-sm text-muted-foreground">
+              Electrical test results and verification
+            </p>
           </div>
           <Button onClick={() => setShowCreateSheet(true)} className="touch-feedback">
             <Plus className="h-4 w-4 mr-2" />
@@ -266,7 +281,7 @@ export function TestingWorkflowSection() {
               placeholder="Search tests..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn("w-full bg-elec-gray h-12", !searchQuery && "pl-9")}
+              className={cn('w-full bg-elec-gray h-12', !searchQuery && 'pl-9')}
             />
           </div>
           {isMobile && (
@@ -281,12 +296,12 @@ export function TestingWorkflowSection() {
               }
               title="Filter by Result"
               options={[
-                { value: "Pending", label: "Pending", count: stats?.pending || 0 },
-                { value: "Pass", label: "Pass", count: stats?.pass || 0 },
-                { value: "Fail", label: "Fail", count: stats?.fail || 0 },
+                { value: 'Pending', label: 'Pending', count: stats?.pending || 0 },
+                { value: 'Pass', label: 'Pass', count: stats?.pass || 0 },
+                { value: 'Fail', label: 'Fail', count: stats?.fail || 0 },
               ]}
               selected={resultFilter ? [resultFilter] : []}
-              onSelectionChange={(vals) => setResultFilter(vals[0] as TestResult || null)}
+              onSelectionChange={(vals) => setResultFilter((vals[0] as TestResult) || null)}
             />
           )}
         </div>
@@ -296,10 +311,10 @@ export function TestingWorkflowSection() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         <Card
           className={cn(
-            "bg-elec-gray cursor-pointer transition-all touch-feedback",
-            resultFilter === "Pending" && "ring-2 ring-warning"
+            'bg-elec-gray cursor-pointer transition-all touch-feedback',
+            resultFilter === 'Pending' && 'ring-2 ring-warning'
           )}
-          onClick={() => setResultFilter(resultFilter === "Pending" ? null : "Pending")}
+          onClick={() => setResultFilter(resultFilter === 'Pending' ? null : 'Pending')}
         >
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
@@ -313,10 +328,10 @@ export function TestingWorkflowSection() {
         </Card>
         <Card
           className={cn(
-            "bg-elec-gray cursor-pointer transition-all touch-feedback",
-            resultFilter === "Pass" && "ring-2 ring-success"
+            'bg-elec-gray cursor-pointer transition-all touch-feedback',
+            resultFilter === 'Pass' && 'ring-2 ring-success'
           )}
-          onClick={() => setResultFilter(resultFilter === "Pass" ? null : "Pass")}
+          onClick={() => setResultFilter(resultFilter === 'Pass' ? null : 'Pass')}
         >
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
@@ -330,10 +345,10 @@ export function TestingWorkflowSection() {
         </Card>
         <Card
           className={cn(
-            "bg-elec-gray cursor-pointer transition-all touch-feedback",
-            resultFilter === "Fail" && "ring-2 ring-destructive"
+            'bg-elec-gray cursor-pointer transition-all touch-feedback',
+            resultFilter === 'Fail' && 'ring-2 ring-destructive'
           )}
-          onClick={() => setResultFilter(resultFilter === "Fail" ? null : "Fail")}
+          onClick={() => setResultFilter(resultFilter === 'Fail' ? null : 'Fail')}
         >
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
@@ -349,7 +364,9 @@ export function TestingWorkflowSection() {
           <CardContent className="p-3 md:p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xl md:text-2xl font-bold text-elec-yellow">{stats?.passRate || 0}%</p>
+                <p className="text-xl md:text-2xl font-bold text-elec-yellow">
+                  {stats?.passRate || 0}%
+                </p>
                 <p className="text-xs md:text-sm text-muted-foreground">Pass Rate</p>
               </div>
               <Award className="h-6 w-6 md:h-8 md:w-8 text-elec-yellow opacity-70" />
@@ -363,9 +380,13 @@ export function TestingWorkflowSection() {
         <Card className="bg-elec-gray">
           <CardContent className="p-6 md:p-8 text-center">
             <FileCheck className="h-10 w-10 md:h-12 md:w-12 text-foreground/30 mx-auto mb-4" />
-            <h3 className="text-base md:text-lg font-semibold text-foreground">No test results yet</h3>
+            <h3 className="text-base md:text-lg font-semibold text-foreground">
+              No test results yet
+            </h3>
             <p className="text-sm text-muted-foreground mt-1 mb-4">
-              {resultFilter ? `No ${resultFilter.toLowerCase()} tests` : "Start recording electrical test results"}
+              {resultFilter
+                ? `No ${resultFilter.toLowerCase()} tests`
+                : 'Start recording electrical test results'}
             </p>
             <Button onClick={() => setShowCreateSheet(true)}>
               <Plus className="h-4 w-4 mr-2" />
@@ -382,21 +403,23 @@ export function TestingWorkflowSection() {
             <CardHeader className="p-3 md:p-4 pb-2">
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-sm md:text-base">{job?.title || "Unknown Job"}</CardTitle>
+                  <CardTitle className="text-sm md:text-base">
+                    {job?.title || 'Unknown Job'}
+                  </CardTitle>
                   <p className="text-xs text-muted-foreground">{job?.client}</p>
                 </div>
                 <div className="flex gap-1">
                   <Badge className="bg-success/20 text-success text-[10px]">
-                    {jobTests.filter(t => t.result === "Pass").length} Pass
+                    {jobTests.filter((t) => t.result === 'Pass').length} Pass
                   </Badge>
-                  {jobTests.filter(t => t.result === "Fail").length > 0 && (
+                  {jobTests.filter((t) => t.result === 'Fail').length > 0 && (
                     <Badge className="bg-destructive/20 text-destructive text-[10px]">
-                      {jobTests.filter(t => t.result === "Fail").length} Fail
+                      {jobTests.filter((t) => t.result === 'Fail').length} Fail
                     </Badge>
                   )}
-                  {jobTests.filter(t => t.result === "Pending").length > 0 && (
+                  {jobTests.filter((t) => t.result === 'Pending').length > 0 && (
                     <Badge className="bg-warning/20 text-warning text-[10px]">
-                      {jobTests.filter(t => t.result === "Pending").length} Pending
+                      {jobTests.filter((t) => t.result === 'Pending').length} Pending
                     </Badge>
                   )}
                 </div>
@@ -411,60 +434,70 @@ export function TestingWorkflowSection() {
                   <div
                     key={test.id}
                     className={cn(
-                      "p-3 rounded-lg border cursor-pointer transition-all",
-                      test.result === "Fail" && "border-destructive/30 bg-destructive/5",
-                      test.result === "Pass" && "border-success/30 bg-success/5",
-                      test.result === "Pending" && "border-warning/30 bg-warning/5",
-                      (test.result === "N/A" || test.result === "Limited") && "border-border bg-muted/30"
+                      'p-3 rounded-lg border cursor-pointer transition-all',
+                      test.result === 'Fail' && 'border-destructive/30 bg-destructive/5',
+                      test.result === 'Pass' && 'border-success/30 bg-success/5',
+                      test.result === 'Pending' && 'border-warning/30 bg-warning/5',
+                      (test.result === 'N/A' || test.result === 'Limited') &&
+                        'border-border bg-muted/30'
                     )}
                     onClick={() => setSelectedTest(test)}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={cn(
-                        "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
-                        test.result === "Pass" && "bg-success/20",
-                        test.result === "Fail" && "bg-destructive/20",
-                        test.result === "Pending" && "bg-warning/20",
-                        (test.result === "N/A" || test.result === "Limited") && "bg-muted"
-                      )}>
-                        <TestIcon className={cn(
-                          "h-4 w-4",
-                          test.result === "Pass" && "text-success",
-                          test.result === "Fail" && "text-destructive",
-                          test.result === "Pending" && "text-warning",
-                          (test.result === "N/A" || test.result === "Limited") && "text-muted-foreground"
-                        )} />
+                      <div
+                        className={cn(
+                          'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0',
+                          test.result === 'Pass' && 'bg-success/20',
+                          test.result === 'Fail' && 'bg-destructive/20',
+                          test.result === 'Pending' && 'bg-warning/20',
+                          (test.result === 'N/A' || test.result === 'Limited') && 'bg-muted'
+                        )}
+                      >
+                        <TestIcon
+                          className={cn(
+                            'h-4 w-4',
+                            test.result === 'Pass' && 'text-success',
+                            test.result === 'Fail' && 'text-destructive',
+                            test.result === 'Pending' && 'text-warning',
+                            (test.result === 'N/A' || test.result === 'Limited') &&
+                              'text-muted-foreground'
+                          )}
+                        />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-medium text-sm text-foreground">{test.test_type}</span>
-                          <Badge className={resultColors[test.result] + " text-[10px]"}>
+                          <span className="font-medium text-sm text-foreground">
+                            {test.test_type}
+                          </span>
+                          <Badge className={resultColors[test.result] + ' text-[10px]'}>
                             {test.result}
                           </Badge>
                           {test.verified_at && (
-                            <Badge variant="outline" className="text-[10px] border-success/30 text-success">
+                            <Badge
+                              variant="outline"
+                              className="text-[10px] border-success/30 text-success"
+                            >
                               Verified
                             </Badge>
                           )}
                         </div>
                         <div className="flex items-center gap-3 mt-1 text-[10px] text-muted-foreground flex-wrap">
-                          {test.circuit_ref && (
-                            <span>Circuit: {test.circuit_ref}</span>
-                          )}
+                          {test.circuit_ref && <span>Circuit: {test.circuit_ref}</span>}
                           {test.reading && (
                             <span className="font-medium text-foreground">
-                              {test.reading}{config?.unit}
+                              {test.reading}
+                              {config?.unit}
                             </span>
                           )}
                           {test.test_date && (
                             <span className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
-                              {format(new Date(test.test_date), "dd MMM")}
+                              {format(new Date(test.test_date), 'dd MMM')}
                             </span>
                           )}
                         </div>
                       </div>
-                      {test.result === "Pending" && (
+                      {test.result === 'Pending' && (
                         <Button
                           size="sm"
                           onClick={(e) => {
@@ -481,21 +514,21 @@ export function TestingWorkflowSection() {
                 );
 
                 // Wrap with swipeable on mobile for pending tests
-                if (isMobile && test.result === "Pending") {
+                if (isMobile && test.result === 'Pending') {
                   return (
                     <SwipeableRow
                       key={test.id}
                       rightAction={{
                         icon: <CheckCircle className="h-6 w-6" />,
-                        label: "Pass",
-                        onClick: () => recordTestResult.mutate({ id: test.id, result: "Pass" }),
-                        variant: "success"
+                        label: 'Pass',
+                        onClick: () => recordTestResult.mutate({ id: test.id, result: 'Pass' }),
+                        variant: 'success',
                       }}
                       leftAction={{
                         icon: <XCircle className="h-6 w-6" />,
-                        label: "Fail",
-                        onClick: () => recordTestResult.mutate({ id: test.id, result: "Fail" }),
-                        variant: "destructive"
+                        label: 'Fail',
+                        onClick: () => recordTestResult.mutate({ id: test.id, result: 'Fail' }),
+                        variant: 'destructive',
                       }}
                     >
                       {testRow}
@@ -527,13 +560,13 @@ export function TestingWorkflowSection() {
                 <Label>Job *</Label>
                 <Select
                   value={formData.job_id}
-                  onValueChange={(v) => setFormData(prev => ({ ...prev, job_id: v }))}
+                  onValueChange={(v) => setFormData((prev) => ({ ...prev, job_id: v }))}
                 >
                   <SelectTrigger className="h-12 bg-elec-gray">
                     <SelectValue placeholder="Select a job" />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-gray border-elec-gray">
-                    {jobs.map(job => (
+                    {jobs.map((job) => (
                       <SelectItem key={job.id} value={job.id}>
                         {job.title} - {job.client}
                       </SelectItem>
@@ -547,14 +580,18 @@ export function TestingWorkflowSection() {
                 <Label>Test Type *</Label>
                 <Select
                   value={formData.test_type}
-                  onValueChange={(v) => setFormData(prev => ({ ...prev, test_type: v as TestType }))}
+                  onValueChange={(v) =>
+                    setFormData((prev) => ({ ...prev, test_type: v as TestType }))
+                  }
                 >
                   <SelectTrigger className="h-12 bg-elec-gray">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-gray border-elec-gray">
-                    {Object.keys(TEST_TYPE_CONFIG).map(type => (
-                      <SelectItem key={type} value={type}>{type}</SelectItem>
+                    {Object.keys(TEST_TYPE_CONFIG).map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -565,8 +602,10 @@ export function TestingWorkflowSection() {
                 <div className="space-y-2">
                   <Label>Circuit Ref</Label>
                   <Input
-                    value={formData.circuit_ref || ""}
-                    onChange={(e) => setFormData(prev => ({ ...prev, circuit_ref: e.target.value }))}
+                    value={formData.circuit_ref || ''}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, circuit_ref: e.target.value }))
+                    }
                     placeholder="e.g., C1, DB1-1"
                     className="h-12 bg-elec-gray"
                   />
@@ -575,8 +614,10 @@ export function TestingWorkflowSection() {
                   <Label>Test Date</Label>
                   <Input
                     type="date"
-                    value={formData.test_date || ""}
-                    onChange={(e) => setFormData(prev => ({ ...prev, test_date: e.target.value }))}
+                    value={formData.test_date || ''}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, test_date: e.target.value }))
+                    }
                     className="h-12 bg-elec-gray"
                   />
                 </div>
@@ -586,8 +627,10 @@ export function TestingWorkflowSection() {
               <div className="space-y-2">
                 <Label>Circuit Description</Label>
                 <Input
-                  value={formData.circuit_description || ""}
-                  onChange={(e) => setFormData(prev => ({ ...prev, circuit_description: e.target.value }))}
+                  value={formData.circuit_description || ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, circuit_description: e.target.value }))
+                  }
                   placeholder="e.g., Kitchen ring, Lighting circuit"
                   className="h-12 bg-elec-gray"
                 />
@@ -597,14 +640,16 @@ export function TestingWorkflowSection() {
               <div className="space-y-2">
                 <Label>Tested By</Label>
                 <Select
-                  value={formData.tested_by || ""}
-                  onValueChange={(v) => setFormData(prev => ({ ...prev, tested_by: v || undefined }))}
+                  value={formData.tested_by || ''}
+                  onValueChange={(v) =>
+                    setFormData((prev) => ({ ...prev, tested_by: v || undefined }))
+                  }
                 >
                   <SelectTrigger className="h-12 bg-elec-gray">
                     <SelectValue placeholder="Select tester" />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-gray border-elec-gray">
-                    {employees.map(emp => (
+                    {employees.map((emp) => (
                       <SelectItem key={emp.id} value={emp.id}>
                         {emp.name}
                       </SelectItem>
@@ -618,8 +663,10 @@ export function TestingWorkflowSection() {
                 <div className="space-y-2">
                   <Label>Instrument Used</Label>
                   <Input
-                    value={formData.instrument_used || ""}
-                    onChange={(e) => setFormData(prev => ({ ...prev, instrument_used: e.target.value }))}
+                    value={formData.instrument_used || ''}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, instrument_used: e.target.value }))
+                    }
                     placeholder="e.g., Megger MFT1741"
                     className="h-12 bg-elec-gray"
                   />
@@ -627,8 +674,10 @@ export function TestingWorkflowSection() {
                 <div className="space-y-2">
                   <Label>Serial Number</Label>
                   <Input
-                    value={formData.instrument_serial || ""}
-                    onChange={(e) => setFormData(prev => ({ ...prev, instrument_serial: e.target.value }))}
+                    value={formData.instrument_serial || ''}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, instrument_serial: e.target.value }))
+                    }
                     placeholder="Serial #"
                     className="h-12 bg-elec-gray"
                   />
@@ -639,8 +688,8 @@ export function TestingWorkflowSection() {
               <div className="space-y-2">
                 <Label>Notes</Label>
                 <Textarea
-                  value={formData.notes || ""}
-                  onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
+                  value={formData.notes || ''}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, notes: e.target.value }))}
                   placeholder="Any additional notes..."
                   className="min-h-[80px] bg-elec-gray"
                 />
@@ -682,20 +731,26 @@ export function TestingWorkflowSection() {
               <div className="space-y-2">
                 <Label>Result *</Label>
                 <div className="grid grid-cols-2 gap-2">
-                  {(["Pass", "Fail", "N/A", "Limited"] as TestResult[]).map(result => (
+                  {(['Pass', 'Fail', 'N/A', 'Limited'] as TestResult[]).map((result) => (
                     <Button
                       key={result}
-                      variant={recordResult === result ? "default" : "outline"}
+                      variant={recordResult === result ? 'default' : 'outline'}
                       onClick={() => setRecordResult(result)}
                       className={cn(
-                        "h-14 text-base font-semibold",
-                        recordResult === result && result === "Pass" && "bg-success hover:bg-success/90",
-                        recordResult === result && result === "Fail" && "bg-destructive hover:bg-destructive/90",
-                        recordResult === result && (result === "N/A" || result === "Limited") && "bg-muted"
+                        'h-14 text-base font-semibold',
+                        recordResult === result &&
+                          result === 'Pass' &&
+                          'bg-success hover:bg-success/90',
+                        recordResult === result &&
+                          result === 'Fail' &&
+                          'bg-destructive hover:bg-destructive/90',
+                        recordResult === result &&
+                          (result === 'N/A' || result === 'Limited') &&
+                          'bg-muted'
                       )}
                     >
-                      {result === "Pass" && <CheckCircle className="h-5 w-5 mr-2" />}
-                      {result === "Fail" && <XCircle className="h-5 w-5 mr-2" />}
+                      {result === 'Pass' && <CheckCircle className="h-5 w-5 mr-2" />}
+                      {result === 'Fail' && <XCircle className="h-5 w-5 mr-2" />}
                       {result}
                     </Button>
                   ))}
@@ -730,9 +785,9 @@ export function TestingWorkflowSection() {
               <Button
                 onClick={handleConfirmRecord}
                 className={cn(
-                  "w-full h-14 text-base font-semibold",
-                  recordResult === "Pass" && "bg-success hover:bg-success/90",
-                  recordResult === "Fail" && "bg-destructive hover:bg-destructive/90"
+                  'w-full h-14 text-base font-semibold',
+                  recordResult === 'Pass' && 'bg-success hover:bg-success/90',
+                  recordResult === 'Fail' && 'bg-destructive hover:bg-destructive/90'
                 )}
                 disabled={recordTestResult.isPending}
               >
@@ -759,16 +814,16 @@ export function TestingWorkflowSection() {
                     <Zap className="h-5 w-5 text-elec-yellow" />
                     Test Details
                   </SheetTitle>
-                  <Badge className={resultColors[selectedTest.result]}>
-                    {selectedTest.result}
-                  </Badge>
+                  <Badge className={resultColors[selectedTest.result]}>{selectedTest.result}</Badge>
                 </div>
               </SheetHeader>
 
               <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
                 {/* Test Info */}
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-foreground">{selectedTest.test_type}</h3>
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {selectedTest.test_type}
+                  </h3>
                   {selectedTest.circuit_description && (
                     <p className="text-sm text-foreground/70">{selectedTest.circuit_description}</p>
                   )}
@@ -777,7 +832,9 @@ export function TestingWorkflowSection() {
                 {/* Job Info */}
                 <Card className="bg-elec-gray">
                   <CardContent className="p-4">
-                    <h4 className="font-semibold text-foreground mb-2">{selectedTest.job?.title}</h4>
+                    <h4 className="font-semibold text-foreground mb-2">
+                      {selectedTest.job?.title}
+                    </h4>
                     <p className="text-sm text-foreground/70">{selectedTest.job?.client}</p>
                   </CardContent>
                 </Card>
@@ -794,7 +851,8 @@ export function TestingWorkflowSection() {
                     <div className="bg-elec-gray p-3 rounded-lg">
                       <p className="text-xs text-foreground/70 mb-1">Reading</p>
                       <p className="font-semibold text-foreground">
-                        {selectedTest.reading}{TEST_TYPE_CONFIG[selectedTest.test_type]?.unit}
+                        {selectedTest.reading}
+                        {TEST_TYPE_CONFIG[selectedTest.test_type]?.unit}
                       </p>
                     </div>
                   )}
@@ -802,7 +860,7 @@ export function TestingWorkflowSection() {
                     <div className="bg-elec-gray p-3 rounded-lg">
                       <p className="text-xs text-foreground/70 mb-1">Test Date</p>
                       <p className="font-semibold text-foreground">
-                        {format(new Date(selectedTest.test_date), "dd MMM yyyy")}
+                        {format(new Date(selectedTest.test_date), 'dd MMM yyyy')}
                       </p>
                     </div>
                   )}
@@ -815,13 +873,17 @@ export function TestingWorkflowSection() {
                   {selectedTest.instrument_used && (
                     <div className="bg-elec-gray p-3 rounded-lg">
                       <p className="text-xs text-foreground/70 mb-1">Instrument</p>
-                      <p className="font-semibold text-foreground">{selectedTest.instrument_used}</p>
+                      <p className="font-semibold text-foreground">
+                        {selectedTest.instrument_used}
+                      </p>
                     </div>
                   )}
                   {selectedTest.instrument_serial && (
                     <div className="bg-elec-gray p-3 rounded-lg">
                       <p className="text-xs text-foreground/70 mb-1">Serial #</p>
-                      <p className="font-semibold text-foreground">{selectedTest.instrument_serial}</p>
+                      <p className="font-semibold text-foreground">
+                        {selectedTest.instrument_serial}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -852,7 +914,7 @@ export function TestingWorkflowSection() {
 
               {/* Footer */}
               <div className="p-4 border-t border-border bg-background space-y-2">
-                {selectedTest.result === "Pending" && (
+                {selectedTest.result === 'Pending' && (
                   <Button
                     onClick={() => {
                       setSelectedTest(null);
@@ -864,7 +926,7 @@ export function TestingWorkflowSection() {
                     Record Result
                   </Button>
                 )}
-                {selectedTest.result !== "Pending" && !selectedTest.verified_at && (
+                {selectedTest.result !== 'Pending' && !selectedTest.verified_at && (
                   <Button
                     onClick={() => handleVerify(selectedTest.id)}
                     className="w-full h-14 text-base font-semibold bg-success hover:bg-success/90"
@@ -910,9 +972,7 @@ export function TestingWorkflowSection() {
               onClick={handleDelete}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              {deleteJobTest.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              ) : null}
+              {deleteJobTest.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -925,5 +985,7 @@ export function TestingWorkflowSection() {
     <PullToRefresh onRefresh={handleRefresh} className="h-full">
       {content}
     </PullToRefresh>
-  ) : content;
+  ) : (
+    content
+  );
 }

@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { X, Sparkles, Loader2, ZoomIn, CheckCircle, AlertTriangle, AlertCircle, HelpCircle, ArrowRight, FolderOutput } from 'lucide-react';
-import { InspectionPhoto } from '@/types/inspection';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  X,
+  Sparkles,
+  Loader2,
+  ZoomIn,
+  CheckCircle,
+  AlertTriangle,
+  AlertCircle,
+  HelpCircle,
+  ArrowRight,
+  FolderOutput,
+} from 'lucide-react';
+import { InspectionPhoto } from '@/types/inspection';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { Progress } from '@/components/ui/progress';
 import AIAnalysisConfirmDialog from './AIAnalysisConfirmDialog';
 import AIAnalysisSummaryCard from './AIAnalysisSummaryCard';
@@ -39,11 +50,11 @@ interface InspectionPhotoGalleryProps {
 
 // Map defect codes to photo documentation categories
 const defectCodeToCategoryMap: Record<string, string> = {
-  'C1': 'hazard_identification',
-  'C2': 'hazard_identification',
-  'C3': 'site_condition',
-  'FI': 'site_condition',
-  'LIM': 'site_condition',
+  C1: 'hazard_identification',
+  C2: 'hazard_identification',
+  C3: 'site_condition',
+  FI: 'site_condition',
+  LIM: 'site_condition',
   'N/A': 'other',
 };
 
@@ -161,7 +172,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
           <div key={photo.id} className="space-y-2">
             {/* Photo Thumbnail */}
             <div className="relative">
-              <div 
+              <div
                 className="relative group w-32 sm:w-40 md:w-48 aspect-square rounded-lg overflow-hidden bg-muted border-2 border-border cursor-pointer hover:border-primary transition-all"
                 onClick={() => setSelectedPhoto(photo)}
               >
@@ -171,7 +182,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
-                
+
                 {/* AI Agreement Badge Overlay */}
                 {photo.aiAnalysis && (
                   <div className="absolute top-2 right-2">
@@ -277,11 +288,17 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                 alt="Inspection evidence"
                 className="w-full max-w-md sm:max-w-lg mx-auto max-h-[25vh] sm:max-h-[30vh] object-contain rounded-lg border"
               />
-              
+
               {selectedPhoto.aiAnalysis ? (
                 <>
                   {/* Agreement Status Alert */}
-                  <Alert variant={selectedPhoto.aiAnalysis.qualityAssurance?.agreesWithInspector ? "default" : "warning"}>
+                  <Alert
+                    variant={
+                      selectedPhoto.aiAnalysis.qualityAssurance?.agreesWithInspector
+                        ? 'default'
+                        : 'warning'
+                    }
+                  >
                     <AlertTitle className="flex items-center gap-2">
                       {selectedPhoto.aiAnalysis.qualityAssurance?.agreesWithInspector ? (
                         <>
@@ -301,105 +318,132 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                   </Alert>
 
                   {/* Challenge Card - If disagreeing */}
-                  {!selectedPhoto.aiAnalysis.qualityAssurance?.agreesWithInspector && 
-                   selectedPhoto.aiAnalysis.qualityAssurance?.suggestedClassification && (
-                    <Card className="border-elec-yellow/40 bg-elec-yellow/5">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-base flex items-center gap-2">
-                          <Sparkles className="h-4 w-4 text-elec-yellow" />
-                          AI Suggestion
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-3">
-                        <div className="flex items-center gap-4">
-                          <div className="flex-1">
-                            <p className="text-xs text-muted-foreground mb-1.5">Inspector classified as:</p>
-                            <Badge variant="outline" className="text-sm">
-                              {selectedPhoto.faultCode || 'Unknown'}
-                            </Badge>
+                  {!selectedPhoto.aiAnalysis.qualityAssurance?.agreesWithInspector &&
+                    selectedPhoto.aiAnalysis.qualityAssurance?.suggestedClassification && (
+                      <Card className="border-elec-yellow/40 bg-elec-yellow/5">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-base flex items-center gap-2">
+                            <Sparkles className="h-4 w-4 text-elec-yellow" />
+                            AI Suggestion
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          <div className="flex items-center gap-4">
+                            <div className="flex-1">
+                              <p className="text-xs text-muted-foreground mb-1.5">
+                                Inspector classified as:
+                              </p>
+                              <Badge variant="outline" className="text-sm">
+                                {selectedPhoto.faultCode || 'Unknown'}
+                              </Badge>
+                            </div>
+                            <ArrowRight className="h-5 w-5 text-elec-yellow shrink-0" />
+                            <div className="flex-1">
+                              <p className="text-xs text-muted-foreground mb-1.5">AI suggests:</p>
+                              <Badge className="text-sm bg-elec-yellow text-black">
+                                {selectedPhoto.aiAnalysis.qualityAssurance.suggestedClassification}
+                              </Badge>
+                            </div>
                           </div>
-                          <ArrowRight className="h-5 w-5 text-elec-yellow shrink-0" />
-                          <div className="flex-1">
-                            <p className="text-xs text-muted-foreground mb-1.5">AI suggests:</p>
-                            <Badge className="text-sm bg-elec-yellow text-black">
-                              {selectedPhoto.aiAnalysis.qualityAssurance.suggestedClassification}
-                            </Badge>
-                          </div>
-                        </div>
-                        {selectedPhoto.aiAnalysis.qualityAssurance.reasonForChallenge && (
-                          <div className="pt-3 border-t border-elec-yellow/20">
-                            <p className="text-xs text-muted-foreground mb-1">Reasoning:</p>
-                            <p className="text-sm leading-relaxed">
-                              {selectedPhoto.aiAnalysis.qualityAssurance.reasonForChallenge}
-                            </p>
-                          </div>
-                        )}
-                      </CardContent>
-                    </Card>
-                  )}
+                          {selectedPhoto.aiAnalysis.qualityAssurance.reasonForChallenge && (
+                            <div className="pt-3 border-t border-elec-yellow/20">
+                              <p className="text-xs text-muted-foreground mb-1">Reasoning:</p>
+                              <p className="text-sm leading-relaxed">
+                                {selectedPhoto.aiAnalysis.qualityAssurance.reasonForChallenge}
+                              </p>
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    )}
 
                   {/* Regulation References */}
-                  {selectedPhoto.aiAnalysis.regulations && selectedPhoto.aiAnalysis.regulations.length > 0 && (
-                    <div className="space-y-2">
-                      <h4 className="font-semibold text-sm">Regulation References</h4>
+                  {selectedPhoto.aiAnalysis.regulations &&
+                    selectedPhoto.aiAnalysis.regulations.length > 0 && (
                       <div className="space-y-2">
-                        {selectedPhoto.aiAnalysis.regulations.map((reg: any, idx: number) => (
-                          <Card key={idx}>
-                            <CardContent className="p-3">
-                              <div className="flex items-start gap-3">
-                                <Badge variant="outline" className="shrink-0">{reg.code}</Badge>
-                                <div className="flex-1 space-y-1">
-                                  {reg.title && <p className="font-medium text-sm">{reg.title}</p>}
-                                  <p className="text-xs text-muted-foreground">
-                                    <strong>Requirement:</strong> {reg.requirement}
-                                  </p>
-                                  <p className="text-xs">
-                                    <strong>Assessment:</strong> {reg.assessment}
-                                  </p>
+                        <h4 className="font-semibold text-sm">Regulation References</h4>
+                        <div className="space-y-2">
+                          {selectedPhoto.aiAnalysis.regulations.map((reg: any, idx: number) => (
+                            <Card key={idx}>
+                              <CardContent className="p-3">
+                                <div className="flex items-start gap-3">
+                                  <Badge variant="outline" className="shrink-0">
+                                    {reg.code}
+                                  </Badge>
+                                  <div className="flex-1 space-y-1">
+                                    {reg.title && (
+                                      <p className="font-medium text-sm">{reg.title}</p>
+                                    )}
+                                    <p className="text-xs text-muted-foreground">
+                                      <strong>Requirement:</strong> {reg.requirement}
+                                    </p>
+                                    <p className="text-xs">
+                                      <strong>Assessment:</strong> {reg.assessment}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        ))}
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
                   {/* Visual Observations & Guidance */}
                   <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="observations">
-                      <AccordionTrigger className="text-sm font-semibold">Visual Analysis</AccordionTrigger>
+                      <AccordionTrigger className="text-sm font-semibold">
+                        Visual Analysis
+                      </AccordionTrigger>
                       <AccordionContent>
                         <div className="space-y-3">
                           {selectedPhoto.aiAnalysis.observations?.safetyFeatures?.length > 0 && (
                             <div>
-                              <h5 className="text-xs font-medium text-success mb-1">✓ Safety Features Present</h5>
+                              <h5 className="text-xs font-medium text-success mb-1">
+                                ✓ Safety Features Present
+                              </h5>
                               <ul className="text-xs space-y-1">
-                                {selectedPhoto.aiAnalysis.observations.safetyFeatures.map((item: string, i: number) => (
-                                  <li key={i} className="text-muted-foreground">✓ {item}</li>
-                                ))}
+                                {selectedPhoto.aiAnalysis.observations.safetyFeatures.map(
+                                  (item: string, i: number) => (
+                                    <li key={i} className="text-muted-foreground">
+                                      ✓ {item}
+                                    </li>
+                                  )
+                                )}
                               </ul>
                             </div>
                           )}
-                          
+
                           {selectedPhoto.aiAnalysis.observations?.concerns?.length > 0 && (
                             <div>
-                              <h5 className="text-xs font-medium text-destructive mb-1">⚠️ Concerns Observed</h5>
+                              <h5 className="text-xs font-medium text-destructive mb-1">
+                                ⚠️ Concerns Observed
+                              </h5>
                               <ul className="text-xs space-y-1">
-                                {selectedPhoto.aiAnalysis.observations.concerns.map((item: string, i: number) => (
-                                  <li key={i} className="text-muted-foreground">⚠️ {item}</li>
-                                ))}
+                                {selectedPhoto.aiAnalysis.observations.concerns.map(
+                                  (item: string, i: number) => (
+                                    <li key={i} className="text-muted-foreground">
+                                      ⚠️ {item}
+                                    </li>
+                                  )
+                                )}
                               </ul>
                             </div>
                           )}
-                          
+
                           {selectedPhoto.aiAnalysis.observations?.cannotVerify?.length > 0 && (
                             <div>
-                              <h5 className="text-xs font-medium text-muted-foreground mb-1">🔍 Cannot Verify from Photo</h5>
+                              <h5 className="text-xs font-medium text-muted-foreground mb-1">
+                                🔍 Cannot Verify from Photo
+                              </h5>
                               <ul className="text-xs space-y-1">
-                                {selectedPhoto.aiAnalysis.observations.cannotVerify.map((item: string, i: number) => (
-                                  <li key={i} className="text-muted-foreground">• {item}</li>
-                                ))}
+                                {selectedPhoto.aiAnalysis.observations.cannotVerify.map(
+                                  (item: string, i: number) => (
+                                    <li key={i} className="text-muted-foreground">
+                                      • {item}
+                                    </li>
+                                  )
+                                )}
                               </ul>
                             </div>
                           )}
@@ -408,29 +452,45 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                     </AccordionItem>
 
                     <AccordionItem value="guidance">
-                      <AccordionTrigger className="text-sm font-semibold">Inspector Guidance</AccordionTrigger>
+                      <AccordionTrigger className="text-sm font-semibold">
+                        Inspector Guidance
+                      </AccordionTrigger>
                       <AccordionContent>
                         <div className="space-y-3">
-                          <p className="text-xs">{selectedPhoto.aiAnalysis.inspectorGuidance?.message}</p>
-                          
-                          {selectedPhoto.aiAnalysis.inspectorGuidance?.additionalChecks?.length > 0 && (
+                          <p className="text-xs">
+                            {selectedPhoto.aiAnalysis.inspectorGuidance?.message}
+                          </p>
+
+                          {selectedPhoto.aiAnalysis.inspectorGuidance?.additionalChecks?.length >
+                            0 && (
                             <div>
-                              <h5 className="text-xs font-medium mb-2">Additional On-Site Checks:</h5>
+                              <h5 className="text-xs font-medium mb-2">
+                                Additional On-Site Checks:
+                              </h5>
                               <ul className="text-xs space-y-1">
-                                {selectedPhoto.aiAnalysis.inspectorGuidance.additionalChecks.map((check: string, i: number) => (
-                                  <li key={i} className="text-muted-foreground">• {check}</li>
-                                ))}
+                                {selectedPhoto.aiAnalysis.inspectorGuidance.additionalChecks.map(
+                                  (check: string, i: number) => (
+                                    <li key={i} className="text-muted-foreground">
+                                      • {check}
+                                    </li>
+                                  )
+                                )}
                               </ul>
                             </div>
                           )}
-                          
-                          {selectedPhoto.aiAnalysis.inspectorGuidance?.questionsToConsider?.length > 0 && (
+
+                          {selectedPhoto.aiAnalysis.inspectorGuidance?.questionsToConsider?.length >
+                            0 && (
                             <div>
                               <h5 className="text-xs font-medium mb-2">Questions to Consider:</h5>
                               <ul className="text-xs space-y-1">
-                                {selectedPhoto.aiAnalysis.inspectorGuidance.questionsToConsider.map((q: string, i: number) => (
-                                  <li key={i} className="text-muted-foreground">• {q}</li>
-                                ))}
+                                {selectedPhoto.aiAnalysis.inspectorGuidance.questionsToConsider.map(
+                                  (q: string, i: number) => (
+                                    <li key={i} className="text-muted-foreground">
+                                      • {q}
+                                    </li>
+                                  )
+                                )}
                               </ul>
                             </div>
                           )}
@@ -440,39 +500,48 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                   </Accordion>
 
                   {/* Photo Quality Warning */}
-                  {selectedPhoto.aiAnalysis.photoQuality && !selectedPhoto.aiAnalysis.photoQuality.adequate && (
-                    <Alert variant="destructive">
-                      <AlertTriangle className="h-4 w-4" />
-                      <AlertTitle className="text-sm">Photo Quality Issues</AlertTitle>
-                      <AlertDescription>
-                        <ul className="text-xs mt-2 space-y-1">
-                          {selectedPhoto.aiAnalysis.photoQuality.issues?.map((issue: string, i: number) => (
-                            <li key={i}>• {issue}</li>
-                          ))}
-                        </ul>
-                        <p className="text-xs mt-2">Consider retaking photo for more accurate AI verification.</p>
-                      </AlertDescription>
-                    </Alert>
-                  )}
+                  {selectedPhoto.aiAnalysis.photoQuality &&
+                    !selectedPhoto.aiAnalysis.photoQuality.adequate && (
+                      <Alert variant="destructive">
+                        <AlertTriangle className="h-4 w-4" />
+                        <AlertTitle className="text-sm">Photo Quality Issues</AlertTitle>
+                        <AlertDescription>
+                          <ul className="text-xs mt-2 space-y-1">
+                            {selectedPhoto.aiAnalysis.photoQuality.issues?.map(
+                              (issue: string, i: number) => (
+                                <li key={i}>• {issue}</li>
+                              )
+                            )}
+                          </ul>
+                          <p className="text-xs mt-2">
+                            Consider retaking photo for more accurate AI verification.
+                          </p>
+                        </AlertDescription>
+                      </Alert>
+                    )}
 
                   {/* Confidence Meter */}
                   <div className="flex items-center gap-3">
                     <span className="text-xs font-medium">AI Confidence:</span>
                     <Progress value={selectedPhoto.aiAnalysis.confidence || 0} className="flex-1" />
-                    <span className="text-xs font-medium">{Math.round(selectedPhoto.aiAnalysis.confidence || 0)}%</span>
+                    <span className="text-xs font-medium">
+                      {Math.round(selectedPhoto.aiAnalysis.confidence || 0)}%
+                    </span>
                   </div>
 
                   {/* Disclaimer */}
                   <Alert>
                     <AlertDescription className="text-xs">
-                      <strong>AI Assistance Only:</strong> AI provides a second opinion. Final classification responsibility remains with the qualified inspector.
+                      <strong>AI Assistance Only:</strong> AI provides a second opinion. Final
+                      classification responsibility remains with the qualified inspector.
                     </AlertDescription>
                   </Alert>
                 </>
               ) : (
                 <Alert>
                   <AlertDescription className="text-sm">
-                    No AI analysis available. Click the Sparkles button to run quality assurance check.
+                    No AI analysis available. Click the Sparkles button to run quality assurance
+                    check.
                   </AlertDescription>
                 </Alert>
               )}

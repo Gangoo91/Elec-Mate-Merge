@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Calendar,
+  Clock,
   MapPin,
   Save,
   X,
@@ -82,6 +83,7 @@ export function DiaryEntrySheet({
   const [issuesOrQuestions, setIssuesOrQuestions] = useState('');
   const [moodRating, setMoodRating] = useState<number | null>(null);
   const [photos, setPhotos] = useState<string[]>([]);
+  const [hoursSpent, setHoursSpent] = useState<string>('');
   const [isUploading, setIsUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -127,6 +129,7 @@ export function DiaryEntrySheet({
       setIssuesOrQuestions('');
       setMoodRating(null);
       setPhotos([]);
+      setHoursSpent('');
     }
   }, [existingEntry, open]);
 
@@ -210,6 +213,7 @@ export function DiaryEntrySheet({
     if (!siteName.trim()) return;
     setIsSaving(true);
 
+    const parsedHours = hoursSpent ? parseFloat(hoursSpent) : null;
     const entry: NewDiaryEntry = {
       date,
       site_name: siteName.trim(),
@@ -221,6 +225,7 @@ export function DiaryEntrySheet({
       mood_rating: moodRating,
       photos,
       linked_portfolio_id: existingEntry?.linked_portfolio_id || null,
+      hours_spent: parsedHours && parsedHours > 0 ? parsedHours : null,
     };
 
     await onSave(entry);
@@ -322,6 +327,26 @@ export function DiaryEntrySheet({
                   className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow/20"
                 />
               </div>
+
+              {/* Hours spent — auto-logs OJT */}
+              {!isEditing && (
+                <div className="px-4 py-2.5 border-t border-white/[0.04]">
+                  <label className="text-[11px] text-white/80 mb-1 flex items-center gap-1.5">
+                    <Clock className="h-3 w-3" /> Hours spent (optional — auto-logs OJT)
+                  </label>
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    step="0.5"
+                    min="0"
+                    max="24"
+                    value={hoursSpent}
+                    onChange={(e) => setHoursSpent(e.target.value)}
+                    placeholder="e.g. 7.5"
+                    className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow/20"
+                  />
+                </div>
+              )}
             </div>
 
             {/* === SECTION 2: What You Did (tasks only) === */}
@@ -498,9 +523,7 @@ export function DiaryEntrySheet({
             {/* === SECTION 6: Evidence === */}
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
               <div className="px-4 pt-3.5 pb-2.5 flex items-center gap-2.5 border-l-2 border-l-purple-400/40 ml-0.5">
-                <span className="text-[13px] font-bold text-white/90 tracking-wide">
-                  Evidence
-                </span>
+                <span className="text-[13px] font-bold text-white/90 tracking-wide">Evidence</span>
                 <span className="text-[10px] text-white/60 ml-auto">
                   {photos.length}/{MAX_PHOTOS}
                 </span>

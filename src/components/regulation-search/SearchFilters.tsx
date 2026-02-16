@@ -1,8 +1,13 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Search, Filter, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -32,7 +37,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
   setFilterCategory,
   filterFrequency,
   setFilterFrequency,
-  resultCount
+  resultCount,
 }) => {
   const clearAllFilters = () => {
     setSearchTerm('');
@@ -42,8 +47,12 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
     setFilterFrequency('all');
   };
 
-  const hasActiveFilters = searchTerm || filterPart !== 'all' || filterDifficulty !== 'all' || 
-                          filterCategory !== 'all' || filterFrequency !== 'all';
+  const hasActiveFilters =
+    searchTerm ||
+    filterPart !== 'all' ||
+    filterDifficulty !== 'all' ||
+    filterCategory !== 'all' ||
+    filterFrequency !== 'all';
 
   return (
     <div className="space-y-4">
@@ -57,7 +66,10 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
           placeholder="Search regulations, keywords, or numbers..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className={cn("bg-muted border-border text-foreground placeholder-gray-400", !searchTerm && "pl-10")}
+          className={cn(
+            'bg-muted border-border text-foreground placeholder-gray-400',
+            !searchTerm && 'pl-10'
+          )}
         />
         {searchTerm && (
           <Button
@@ -77,75 +89,75 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
           <Filter className="h-4 w-4 text-gray-400" />
           <span className="text-sm text-gray-400 font-medium">Filters:</span>
         </div>
-        
+
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
-        <Select value={filterPart} onValueChange={setFilterPart}>
-          <SelectTrigger className="bg-muted border-border text-foreground">
-            <SelectValue placeholder="Part" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Parts</SelectItem>
-            <SelectItem value="1">Part 1</SelectItem>
-            <SelectItem value="4">Part 4</SelectItem>
-            <SelectItem value="5">Part 5</SelectItem>
-            <SelectItem value="6">Part 6</SelectItem>
-            <SelectItem value="7">Part 7</SelectItem>
-          </SelectContent>
-        </Select>
+          <Select value={filterPart} onValueChange={setFilterPart}>
+            <SelectTrigger className="bg-muted border-border text-foreground">
+              <SelectValue placeholder="Part" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Parts</SelectItem>
+              <SelectItem value="1">Part 1</SelectItem>
+              <SelectItem value="4">Part 4</SelectItem>
+              <SelectItem value="5">Part 5</SelectItem>
+              <SelectItem value="6">Part 6</SelectItem>
+              <SelectItem value="7">Part 7</SelectItem>
+            </SelectContent>
+          </Select>
 
-        <Select value={filterDifficulty} onValueChange={setFilterDifficulty}>
-          <SelectTrigger className="bg-muted border-border text-foreground">
-            <SelectValue placeholder="Difficulty" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Levels</SelectItem>
-            <SelectItem value="beginner">Beginner</SelectItem>
-            <SelectItem value="intermediate">Intermediate</SelectItem>
-            <SelectItem value="advanced">Advanced</SelectItem>
-          </SelectContent>
-        </Select>
+          <Select value={filterDifficulty} onValueChange={setFilterDifficulty}>
+            <SelectTrigger className="bg-muted border-border text-foreground">
+              <SelectValue placeholder="Difficulty" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Levels</SelectItem>
+              <SelectItem value="beginner">Beginner</SelectItem>
+              <SelectItem value="intermediate">Intermediate</SelectItem>
+              <SelectItem value="advanced">Advanced</SelectItem>
+            </SelectContent>
+          </Select>
 
-        <Select value={filterCategory} onValueChange={setFilterCategory}>
-          <SelectTrigger className="bg-muted border-border text-foreground">
-            <SelectValue placeholder="Category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-            <SelectItem value="testing">Testing</SelectItem>
-            <SelectItem value="protection">Protection</SelectItem>
-            <SelectItem value="installation">Installation</SelectItem>
-            <SelectItem value="special-locations">Special Locations</SelectItem>
-            <SelectItem value="earthing">Earthing</SelectItem>
-            <SelectItem value="cables">Cables</SelectItem>
-            <SelectItem value="equipment">Equipment</SelectItem>
-          </SelectContent>
-        </Select>
+          <Select value={filterCategory} onValueChange={setFilterCategory}>
+            <SelectTrigger className="bg-muted border-border text-foreground">
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value="testing">Testing</SelectItem>
+              <SelectItem value="protection">Protection</SelectItem>
+              <SelectItem value="installation">Installation</SelectItem>
+              <SelectItem value="special-locations">Special Locations</SelectItem>
+              <SelectItem value="earthing">Earthing</SelectItem>
+              <SelectItem value="cables">Cables</SelectItem>
+              <SelectItem value="equipment">Equipment</SelectItem>
+            </SelectContent>
+          </Select>
 
-        <Select value={filterFrequency} onValueChange={setFilterFrequency}>
-          <SelectTrigger className="bg-muted border-border text-foreground">
-            <SelectValue placeholder="Frequency" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="common">Common</SelectItem>
-            <SelectItem value="frequent">Frequent</SelectItem>
-            <SelectItem value="occasional">Occasional</SelectItem>
-          </SelectContent>
-        </Select>
+          <Select value={filterFrequency} onValueChange={setFilterFrequency}>
+            <SelectTrigger className="bg-muted border-border text-foreground">
+              <SelectValue placeholder="Frequency" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="common">Common</SelectItem>
+              <SelectItem value="frequent">Frequent</SelectItem>
+              <SelectItem value="occasional">Occasional</SelectItem>
+            </SelectContent>
+          </Select>
 
-        <div className="col-span-2 md:col-span-1">
-          {hasActiveFilters && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={clearAllFilters}
-              className="w-full border-gray-600 text-gray-300 hover:bg-gray-700"
-            >
-              <X className="h-4 w-4 mr-2" />
-              Clear All
-            </Button>
-          )}
-        </div>
+          <div className="col-span-2 md:col-span-1">
+            {hasActiveFilters && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={clearAllFilters}
+                className="w-full border-gray-600 text-gray-300 hover:bg-gray-700"
+              >
+                <X className="h-4 w-4 mr-2" />
+                Clear All
+              </Button>
+            )}
+          </div>
         </div>
       </div>
 

@@ -1,11 +1,23 @@
-import { ArrowLeft, BookOpen, Shield, Link2, Zap, CircleDot, FileCheck, ToggleRight, Eye, GraduationCap } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookOpen,
+  Shield,
+  Link2,
+  Zap,
+  CircleDot,
+  FileCheck,
+  ToggleRight,
+  Eye,
+  GraduationCap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Inspection & Testing Course - Electrical Upskilling";
-const DESCRIPTION = "Master electrical inspection and testing with our comprehensive BS 7671 compliant course. 8 modules covering safe isolation, continuity, insulation resistance, earth fault loop, RCD testing, and certification.";
+const TITLE = 'Inspection & Testing Course - Electrical Upskilling';
+const DESCRIPTION =
+  'Master electrical inspection and testing with our comprehensive BS 7671 compliant course. 8 modules covering safe isolation, continuity, insulation resistance, earth fault loop, RCD testing, and certification.';
 
 const InspectionTesting = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
@@ -20,68 +32,68 @@ const InspectionTesting = () => {
   }> = [
     {
       id: 1,
-      title: "Introduction to Inspection & Testing",
-      description: "Purpose, legal requirements, BS 7671 overview, test equipment and safety",
-      duration: "45 mins",
+      title: 'Introduction to Inspection & Testing',
+      description: 'Purpose, legal requirements, BS 7671 overview, test equipment and safety',
+      duration: '45 mins',
       icon: BookOpen,
     },
     {
       id: 2,
-      title: "Safe Isolation Procedures",
-      description: "Isolation principles, lock-off/tag-out, proving dead, re-energisation",
-      duration: "50 mins",
+      title: 'Safe Isolation Procedures',
+      description: 'Isolation principles, lock-off/tag-out, proving dead, re-energisation',
+      duration: '50 mins',
       icon: Shield,
     },
     {
       id: 3,
-      title: "Continuity Testing",
-      description: "R1+R2, ring final circuits, bonding conductors, measurement techniques",
-      duration: "55 mins",
+      title: 'Continuity Testing',
+      description: 'R1+R2, ring final circuits, bonding conductors, measurement techniques',
+      duration: '55 mins',
       icon: Link2,
     },
     {
       id: 4,
-      title: "Insulation Resistance Testing",
-      description: "Test voltages, procedures, SERDs, interpreting results, troubleshooting",
-      duration: "55 mins",
+      title: 'Insulation Resistance Testing',
+      description: 'Test voltages, procedures, SERDs, interpreting results, troubleshooting',
+      duration: '55 mins',
       icon: Zap,
     },
     {
       id: 5,
-      title: "Earth Fault Loop Impedance",
-      description: "Zs and Ze testing, maximum values, PFC calculation, RCD circuits",
-      duration: "60 mins",
+      title: 'Earth Fault Loop Impedance',
+      description: 'Zs and Ze testing, maximum values, PFC calculation, RCD circuits',
+      duration: '60 mins',
       icon: CircleDot,
     },
     {
       id: 6,
-      title: "RCD Testing",
-      description: "RCD types, trip time testing, ramp testing, selective discrimination",
-      duration: "45 mins",
+      title: 'RCD Testing',
+      description: 'RCD types, trip time testing, ramp testing, selective discrimination',
+      duration: '45 mins',
       icon: FileCheck,
     },
     {
       id: 7,
-      title: "Polarity & Functional Testing",
-      description: "Polarity verification, three-phase rotation, switchgear operation",
-      duration: "45 mins",
+      title: 'Polarity & Functional Testing',
+      description: 'Polarity verification, three-phase rotation, switchgear operation',
+      duration: '45 mins',
       icon: ToggleRight,
     },
     {
       id: 8,
-      title: "Visual Inspection & Documentation",
-      description: "Inspection checklists, EICs, PIRs, Minor Works certificates",
-      duration: "50 mins",
+      title: 'Visual Inspection & Documentation',
+      description: 'Inspection checklists, EICs, PIRs, Minor Works certificates',
+      duration: '50 mins',
       icon: Eye,
     },
     {
-      id: "exam",
-      title: "Mock Exam",
-      description: "Test your knowledge with 30 questions from a bank of 300",
-      duration: "45 mins",
+      id: 'exam',
+      title: 'Mock Exam',
+      description: 'Test your knowledge with 30 questions from a bank of 300',
+      duration: '45 mins',
       icon: GraduationCap,
       isExam: true,
-    }
+    },
   ];
 
   return (
@@ -106,9 +118,7 @@ const InspectionTesting = () => {
       <div className="px-4 sm:px-6 py-6 sm:py-8">
         {/* Course Header */}
         <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Inspection & Testing
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Inspection & Testing</h1>
           <p className="text-white/80 text-sm sm:text-base">
             Master electrical inspection and testing procedures to BS 7671
           </p>
@@ -119,7 +129,11 @@ const InspectionTesting = () => {
           {modules.map((module, index) => (
             <ModuleCard
               key={module.id}
-              to={module.isExam ? `../inspection-testing-mock-exam` : `../inspection-testing/module-${module.id}`}
+              to={
+                module.isExam
+                  ? `../inspection-testing-mock-exam`
+                  : `../inspection-testing/module-${module.id}`
+              }
               moduleNumber={typeof module.id === 'number' ? module.id : 0}
               title={module.title}
               description={module.description}

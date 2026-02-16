@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,17 +21,17 @@ const ContinuityCPCTestCard = () => {
     r1r2Reading: '',
     maxPermissible: '',
     result: 'pending',
-    notes: ''
+    notes: '',
   });
 
   const handleAddTest = () => {
     if (currentTest.circuitRef && currentTest.r1r2Reading) {
       const reading = parseFloat(currentTest.r1r2Reading);
       const maxValue = parseFloat(currentTest.maxPermissible);
-      
+
       const result: CPCTestResult = {
         ...currentTest,
-        result: maxValue && reading <= maxValue ? 'pass' : reading > maxValue ? 'fail' : 'pending'
+        result: maxValue && reading <= maxValue ? 'pass' : reading > maxValue ? 'fail' : 'pending',
       };
 
       setTestResults([...testResults, result]);
@@ -41,7 +40,7 @@ const ContinuityCPCTestCard = () => {
         r1r2Reading: '',
         maxPermissible: '',
         result: 'pending',
-        notes: ''
+        notes: '',
       });
     }
   };
@@ -70,11 +69,21 @@ const ContinuityCPCTestCard = () => {
               <h4 className="font-medium text-blue-400">Test Procedure</h4>
             </div>
             <div className="space-y-2 text-sm text-white">
-              <p><strong>1.</strong> Ensure circuit is safely isolated and secured</p>
-              <p><strong>2.</strong> At distribution board, temporarily connect line and CPC together</p>
-              <p><strong>3.</strong> Test between line and CPC at furthest point of circuit</p>
-              <p><strong>4.</strong> Record highest reading (this is your R1+R2 value)</p>
-              <p><strong>5.</strong> Compare with maximum permissible values</p>
+              <p>
+                <strong>1.</strong> Ensure circuit is safely isolated and secured
+              </p>
+              <p>
+                <strong>2.</strong> At distribution board, temporarily connect line and CPC together
+              </p>
+              <p>
+                <strong>3.</strong> Test between line and CPC at furthest point of circuit
+              </p>
+              <p>
+                <strong>4.</strong> Record highest reading (this is your R1+R2 value)
+              </p>
+              <p>
+                <strong>5.</strong> Compare with maximum permissible values
+              </p>
             </div>
           </div>
 
@@ -86,7 +95,7 @@ const ContinuityCPCTestCard = () => {
                 id="circuitRef"
                 placeholder="e.g., C1, C2, etc."
                 value={currentTest.circuitRef}
-                onChange={(e) => setCurrentTest({...currentTest, circuitRef: e.target.value})}
+                onChange={(e) => setCurrentTest({ ...currentTest, circuitRef: e.target.value })}
               />
             </div>
             <div className="space-y-2">
@@ -97,7 +106,7 @@ const ContinuityCPCTestCard = () => {
                 step="0.01"
                 placeholder="0.00"
                 value={currentTest.r1r2Reading}
-                onChange={(e) => setCurrentTest({...currentTest, r1r2Reading: e.target.value})}
+                onChange={(e) => setCurrentTest({ ...currentTest, r1r2Reading: e.target.value })}
               />
             </div>
             <div className="space-y-2">
@@ -108,7 +117,7 @@ const ContinuityCPCTestCard = () => {
                 step="0.01"
                 placeholder="1.67 for ring circuits"
                 value={currentTest.maxPermissible}
-                onChange={(e) => setCurrentTest({...currentTest, maxPermissible: e.target.value})}
+                onChange={(e) => setCurrentTest({ ...currentTest, maxPermissible: e.target.value })}
               />
             </div>
             <div className="space-y-2">
@@ -117,12 +126,12 @@ const ContinuityCPCTestCard = () => {
                 id="notes"
                 placeholder="Additional observations"
                 value={currentTest.notes}
-                onChange={(e) => setCurrentTest({...currentTest, notes: e.target.value})}
+                onChange={(e) => setCurrentTest({ ...currentTest, notes: e.target.value })}
               />
             </div>
           </div>
 
-          <Button 
+          <Button
             onClick={handleAddTest}
             className="w-full bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/30"
             disabled={!currentTest.circuitRef || !currentTest.r1r2Reading}
@@ -145,15 +154,15 @@ const ContinuityCPCTestCard = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                           <div className="font-medium text-foreground">{test.circuitRef}</div>
-                          <div className="text-sm text-white">
-                            R1+R2: {test.r1r2Reading}Ω
-                          </div>
-                          <div className="text-sm text-white">
-                            Max: {test.maxPermissible}Ω
-                          </div>
-                          <Badge 
+                          <div className="text-sm text-white">R1+R2: {test.r1r2Reading}Ω</div>
+                          <div className="text-sm text-white">Max: {test.maxPermissible}Ω</div>
+                          <Badge
                             variant={test.result === 'pass' ? 'default' : 'destructive'}
-                            className={test.result === 'pass' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}
+                            className={
+                              test.result === 'pass'
+                                ? 'bg-green-500/20 text-green-400'
+                                : 'bg-red-500/20 text-red-400'
+                            }
                           >
                             {test.result.toUpperCase()}
                           </Badge>
@@ -168,9 +177,7 @@ const ContinuityCPCTestCard = () => {
                         </Button>
                       </div>
                       {test.notes && (
-                        <div className="mt-2 text-sm text-white/80">
-                          Notes: {test.notes}
-                        </div>
+                        <div className="mt-2 text-sm text-white/80">Notes: {test.notes}</div>
                       )}
                     </CardContent>
                   </Card>

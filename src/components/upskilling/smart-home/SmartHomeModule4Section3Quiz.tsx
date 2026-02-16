@@ -10,109 +10,92 @@ export const SmartHomeModule4Section3Quiz = () => {
 
   const questions = [
     {
-      question: "Why is indoor air quality important?",
+      question: 'Why is indoor air quality important?',
       options: [
-        "It only affects temperature comfort",
-        "It affects health, comfort, and productivity",
-        "It only matters in industrial buildings",
-        "It has no measurable impact"
+        'It only affects temperature comfort',
+        'It affects health, comfort, and productivity',
+        'It only matters in industrial buildings',
+        'It has no measurable impact',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What is the ideal indoor humidity range?",
-      options: [
-        "20-30%",
-        "40-60%",
-        "70-80%",
-        "80-90%"
-      ],
-      correct: 1
+      question: 'What is the ideal indoor humidity range?',
+      options: ['20-30%', '40-60%', '70-80%', '80-90%'],
+      correct: 1,
     },
     {
-      question: "What problems occur if humidity is too high?",
+      question: 'What problems occur if humidity is too high?',
       options: [
-        "Static electricity increases",
-        "Mould growth and dust mites proliferate",
-        "Air becomes too dry",
-        "CO₂ levels rise"
+        'Static electricity increases',
+        'Mould growth and dust mites proliferate',
+        'Air becomes too dry',
+        'CO₂ levels rise',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "What is the effect of high CO₂ levels on occupants?",
+      question: 'What is the effect of high CO₂ levels on occupants?',
       options: [
-        "Improved concentration",
-        "Reduced concentration and drowsiness",
-        "Better sleep quality",
-        "No noticeable effects"
+        'Improved concentration',
+        'Reduced concentration and drowsiness',
+        'Better sleep quality',
+        'No noticeable effects',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "At what CO₂ level is ventilation usually increased?",
-      options: [
-        "500 ppm",
-        "1000 ppm",
-        "1500 ppm",
-        "2000 ppm"
-      ],
-      correct: 1
+      question: 'At what CO₂ level is ventilation usually increased?',
+      options: ['500 ppm', '1000 ppm', '1500 ppm', '2000 ppm'],
+      correct: 1,
     },
     {
-      question: "Name two pollutants detected by air quality sensors.",
-      options: [
-        "Oxygen and nitrogen",
-        "PM2.5 and VOCs",
-        "Water vapour and CO₂",
-        "Heat and light"
-      ],
-      correct: 1
+      question: 'Name two pollutants detected by air quality sensors.',
+      options: ['Oxygen and nitrogen', 'PM2.5 and VOCs', 'Water vapour and CO₂', 'Heat and light'],
+      correct: 1,
     },
     {
-      question: "How can HVAC respond to poor indoor air quality?",
+      question: 'How can HVAC respond to poor indoor air quality?',
       options: [
-        "Only by changing temperature",
-        "Increase ventilation and activate filtration",
-        "Turn off all systems",
-        "Reduce air circulation"
+        'Only by changing temperature',
+        'Increase ventilation and activate filtration',
+        'Turn off all systems',
+        'Reduce air circulation',
       ],
-      correct: 1
+      correct: 1,
     },
     {
       question: "True or False: Sensor placement doesn't affect accuracy.",
-      options: [
-        "True",
-        "False"
-      ],
-      correct: 1
+      options: ['True', 'False'],
+      correct: 1,
     },
     {
-      question: "Give one benefit of environmental sensors in energy management.",
+      question: 'Give one benefit of environmental sensors in energy management.',
       options: [
-        "They increase energy consumption",
-        "Demand-controlled ventilation reduces unnecessary HVAC operation",
-        "They have no energy impact",
-        "They only work during winter"
+        'They increase energy consumption',
+        'Demand-controlled ventilation reduces unnecessary HVAC operation',
+        'They have no energy impact',
+        'They only work during winter',
       ],
-      correct: 1
+      correct: 1,
     },
     {
-      question: "An office reports drowsy staff and poor focus. The CO₂ sensor shows 1500 ppm. What action should the HVAC system take?",
+      question:
+        'An office reports drowsy staff and poor focus. The CO₂ sensor shows 1500 ppm. What action should the HVAC system take?',
       options: [
-        "Reduce ventilation to save energy",
-        "Increase fresh air supply and boost ventilation",
-        "Turn off air conditioning",
-        "No action needed"
+        'Reduce ventilation to save energy',
+        'Increase fresh air supply and boost ventilation',
+        'Turn off air conditioning',
+        'No action needed',
       ],
-      correct: 1
-    }
+      correct: 1,
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
     setSelectedAnswers({
       ...selectedAnswers,
-      [currentQuestion]: answerIndex
+      [currentQuestion]: answerIndex,
     });
   };
 
@@ -135,7 +118,7 @@ export const SmartHomeModule4Section3Quiz = () => {
   if (showResults) {
     const score = calculateScore();
     const percentage = Math.round((score / questions.length) * 100);
-    
+
     return (
       <Card className="bg-elec-gray border-gray-700">
         <CardHeader>
@@ -148,16 +131,15 @@ export const SmartHomeModule4Section3Quiz = () => {
           <div className="text-4xl font-bold text-elec-yellow">
             {score}/{questions.length}
           </div>
-          <div className="text-xl text-foreground">
-            {percentage}% Correct
-          </div>
+          <div className="text-xl text-foreground">{percentage}% Correct</div>
           <div className="text-gray-300">
-            {percentage >= 80 ? "Excellent work!" : percentage >= 60 ? "Good effort!" : "Keep studying!"}
+            {percentage >= 80
+              ? 'Excellent work!'
+              : percentage >= 60
+                ? 'Good effort!'
+                : 'Keep studying!'}
           </div>
-          <Button 
-            onClick={resetQuiz}
-            className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
-          >
+          <Button onClick={resetQuiz} className="bg-elec-yellow text-elec-dark hover:bg-yellow-600">
             Retake Quiz
           </Button>
         </CardContent>
@@ -175,14 +157,19 @@ export const SmartHomeModule4Section3Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex gap-1">
             {questions.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index === currentQuestion ? 'bg-elec-yellow' : 
-                  selectedAnswers[index] !== undefined ? 'bg-green-400' : 'bg-gray-600'
+                  index === currentQuestion
+                    ? 'bg-elec-yellow'
+                    : selectedAnswers[index] !== undefined
+                      ? 'bg-green-400'
+                      : 'bg-gray-600'
                 }`}
               />
             ))}
@@ -193,7 +180,7 @@ export const SmartHomeModule4Section3Quiz = () => {
           <h3 className="text-lg font-semibold text-foreground mb-4">
             {questions[currentQuestion].question}
           </h3>
-          
+
           <div className="space-y-3">
             {questions[currentQuestion].options.map((option, index) => (
               <Button
@@ -222,7 +209,7 @@ export const SmartHomeModule4Section3Quiz = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-          
+
           {currentQuestion === questions.length - 1 ? (
             <Button
               onClick={() => setShowResults(true)}

@@ -1,8 +1,7 @@
-
-import { useState, useRef, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { useState, useRef, useCallback } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 import {
   Upload,
   X,
@@ -15,12 +14,12 @@ import {
   CheckCircle,
   AlertCircle,
   Trash2,
-  Eye
-} from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { useToast } from "@/hooks/use-toast";
-import { PortfolioFile } from "@/types/portfolio";
+  Eye,
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { PortfolioFile } from '@/types/portfolio';
 
 interface EvidenceUploaderProps {
   files: PortfolioFile[];
@@ -47,7 +46,7 @@ const ACCEPTED_TYPES = [
   'application/pdf',
   'application/msword',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  'video/mp4'
+  'video/mp4',
 ];
 
 const MAX_FILE_SIZE_MB = 10;
@@ -56,7 +55,8 @@ const getFileIcon = (type: string) => {
   if (type.startsWith('image/')) return <Image className="h-5 w-5 text-blue-400" />;
   if (type.startsWith('video/')) return <Video className="h-5 w-5 text-purple-400" />;
   if (type.includes('pdf')) return <FileText className="h-5 w-5 text-red-400" />;
-  if (type.includes('word') || type.includes('document')) return <FileText className="h-5 w-5 text-blue-500" />;
+  if (type.includes('word') || type.includes('document'))
+    return <FileText className="h-5 w-5 text-blue-500" />;
   return <File className="h-5 w-5 text-white" />;
 };
 
@@ -75,7 +75,7 @@ export const EvidenceUploader = ({
   maxFiles = 10,
   maxFileSize = MAX_FILE_SIZE_MB,
   acceptedTypes = ACCEPTED_TYPES,
-  className = ""
+  className = '',
 }: EvidenceUploaderProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -105,36 +105,37 @@ export const EvidenceUploader = ({
     const filePath = `${user.id}/${entryId || 'temp'}/${fileId}.${fileExt}`;
 
     // Add to uploading state
-    setUploadingFiles(prev => [...prev, {
-      id: fileId,
-      file,
-      progress: 0,
-      status: 'uploading'
-    }]);
+    setUploadingFiles((prev) => [
+      ...prev,
+      {
+        id: fileId,
+        file,
+        progress: 0,
+        status: 'uploading',
+      },
+    ]);
 
     try {
       const { data, error } = await supabase.storage
         .from('portfolio-evidence')
         .upload(filePath, file, {
           cacheControl: '3600',
-          upsert: false
+          upsert: false,
         });
 
       if (error) throw error;
 
       // Get public URL
-      const { data: urlData } = supabase.storage
-        .from('portfolio-evidence')
-        .getPublicUrl(data.path);
+      const { data: urlData } = supabase.storage.from('portfolio-evidence').getPublicUrl(data.path);
 
       // Update uploading state to success
-      setUploadingFiles(prev => prev.map(uf =>
-        uf.id === fileId ? { ...uf, progress: 100, status: 'success' } : uf
-      ));
+      setUploadingFiles((prev) =>
+        prev.map((uf) => (uf.id === fileId ? { ...uf, progress: 100, status: 'success' } : uf))
+      );
 
       // Remove from uploading after delay
       setTimeout(() => {
-        setUploadingFiles(prev => prev.filter(uf => uf.id !== fileId));
+        setUploadingFiles((prev) => prev.filter((uf) => uf.id !== fileId));
       }, 1500);
 
       return {
@@ -143,23 +144,23 @@ export const EvidenceUploader = ({
         type: file.type,
         size: file.size,
         url: urlData.publicUrl,
-        uploadDate: new Date().toISOString()
+        uploadDate: new Date().toISOString(),
       };
     } catch (error: any) {
       console.error('Upload error:', error);
-      setUploadingFiles(prev => prev.map(uf =>
-        uf.id === fileId ? { ...uf, status: 'error', error: error.message } : uf
-      ));
+      setUploadingFiles((prev) =>
+        prev.map((uf) => (uf.id === fileId ? { ...uf, status: 'error', error: error.message } : uf))
+      );
 
       toast({
-        title: "Upload failed",
-        description: error.message || "Failed to upload file",
-        variant: "destructive"
+        title: 'Upload failed',
+        description: error.message || 'Failed to upload file',
+        variant: 'destructive',
       });
 
       // Remove from uploading after delay
       setTimeout(() => {
-        setUploadingFiles(prev => prev.filter(uf => uf.id !== fileId));
+        setUploadingFiles((prev) => prev.filter((uf) => uf.id !== fileId));
       }, 3000);
 
       return null;
@@ -173,9 +174,9 @@ export const EvidenceUploader = ({
       const validationError = validateFile(file);
       if (validationError) {
         toast({
-          title: "Invalid file",
+          title: 'Invalid file',
           description: validationError,
-          variant: "destructive"
+          variant: 'destructive',
         });
         continue;
       }
@@ -191,11 +192,14 @@ export const EvidenceUploader = ({
     }
   };
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    handleFiles(e.dataTransfer.files);
-  }, [files]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+      handleFiles(e.dataTransfer.files);
+    },
+    [files]
+  );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -220,7 +224,7 @@ export const EvidenceUploader = ({
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       // In a real implementation, you'd show a camera preview
       // For now, we'll just open the file picker with capture attribute
-      stream.getTracks().forEach(track => track.stop());
+      stream.getTracks().forEach((track) => track.stop());
       if (fileInputRef.current) {
         fileInputRef.current.setAttribute('capture', 'environment');
         fileInputRef.current.click();
@@ -238,19 +242,17 @@ export const EvidenceUploader = ({
         // Extract path from URL
         const match = fileToDelete.url.match(/portfolio-evidence\/(.+)$/);
         if (match) {
-          await supabase.storage
-            .from('portfolio-evidence')
-            .remove([match[1]]);
+          await supabase.storage.from('portfolio-evidence').remove([match[1]]);
         }
       } catch (error) {
         console.error('Error deleting file:', error);
       }
     }
 
-    onFilesChange(files.filter(f => f.id !== fileToDelete.id));
+    onFilesChange(files.filter((f) => f.id !== fileToDelete.id));
     toast({
-      title: "File removed",
-      description: `${fileToDelete.name} has been deleted`
+      title: 'File removed',
+      description: `${fileToDelete.name} has been deleted`,
     });
   };
 
@@ -269,9 +271,10 @@ export const EvidenceUploader = ({
         onDragLeave={handleDragLeave}
         className={`
           relative border-2 border-dashed rounded-xl p-6 text-center transition-all duration-200
-          ${isDragging
-            ? 'border-elec-yellow bg-elec-yellow/10'
-            : 'border-elec-yellow/30 hover:border-elec-yellow/50 bg-elec-card/50'
+          ${
+            isDragging
+              ? 'border-elec-yellow bg-elec-yellow/10'
+              : 'border-elec-yellow/30 hover:border-elec-yellow/50 bg-elec-card/50'
           }
         `}
       >
@@ -295,9 +298,7 @@ export const EvidenceUploader = ({
             <p className="text-base font-medium text-elec-light">
               {isDragging ? 'Drop files here' : 'Drag and drop files'}
             </p>
-            <p className="text-sm text-elec-light/60 mt-1">
-              or click to browse
-            </p>
+            <p className="text-sm text-elec-light/60 mt-1">or click to browse</p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-2">
@@ -332,29 +333,21 @@ export const EvidenceUploader = ({
       {/* Uploading Files */}
       {uploadingFiles.length > 0 && (
         <div className="space-y-2">
-          {uploadingFiles.map(uf => (
+          {uploadingFiles.map((uf) => (
             <Card key={uf.id} className="p-3 bg-elec-card border-elec-yellow/20">
               <div className="flex items-center gap-3">
                 {uf.status === 'uploading' && (
                   <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
                 )}
-                {uf.status === 'success' && (
-                  <CheckCircle className="h-5 w-5 text-green-400" />
-                )}
-                {uf.status === 'error' && (
-                  <AlertCircle className="h-5 w-5 text-red-400" />
-                )}
+                {uf.status === 'success' && <CheckCircle className="h-5 w-5 text-green-400" />}
+                {uf.status === 'error' && <AlertCircle className="h-5 w-5 text-red-400" />}
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-elec-light truncate">
-                    {uf.file.name}
-                  </p>
+                  <p className="text-sm font-medium text-elec-light truncate">{uf.file.name}</p>
                   {uf.status === 'uploading' && (
                     <Progress value={uf.progress} className="h-1 mt-1" />
                   )}
-                  {uf.status === 'error' && (
-                    <p className="text-xs text-red-400 mt-1">{uf.error}</p>
-                  )}
+                  {uf.status === 'error' && <p className="text-xs text-red-400 mt-1">{uf.error}</p>}
                 </div>
               </div>
             </Card>
@@ -370,7 +363,7 @@ export const EvidenceUploader = ({
           </p>
 
           <div className="grid gap-2">
-            {files.map(file => (
+            {files.map((file) => (
               <Card
                 key={file.id}
                 className="p-3 bg-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors"
@@ -379,11 +372,7 @@ export const EvidenceUploader = ({
                   {/* Thumbnail or Icon */}
                   {file.type.startsWith('image/') && file.url ? (
                     <div className="w-10 h-10 rounded overflow-hidden bg-white/5 shrink-0">
-                      <img
-                        src={file.url}
-                        alt={file.name}
-                        className="w-full h-full object-cover"
-                      />
+                      <img src={file.url} alt={file.name} className="w-full h-full object-cover" />
                     </div>
                   ) : (
                     <div className="w-10 h-10 rounded bg-white/5 flex items-center justify-center shrink-0">
@@ -393,12 +382,8 @@ export const EvidenceUploader = ({
 
                   {/* File Info */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-elec-light truncate">
-                      {file.name}
-                    </p>
-                    <p className="text-xs text-elec-light/60">
-                      {formatFileSize(file.size)}
-                    </p>
+                    <p className="text-sm font-medium text-elec-light truncate">{file.name}</p>
+                    <p className="text-xs text-elec-light/60">{formatFileSize(file.size)}</p>
                   </div>
 
                   {/* Actions */}
@@ -454,10 +439,7 @@ export const EvidenceUploader = ({
                 className="max-w-full max-h-[85vh] object-contain mx-auto rounded-lg"
               />
             ) : previewUrl.match(/\.pdf(\?|$)/i) ? (
-              <iframe
-                src={previewUrl}
-                className="w-full h-[85vh] rounded-lg bg-white"
-              />
+              <iframe src={previewUrl} className="w-full h-[85vh] rounded-lg bg-white" />
             ) : previewUrl.match(/\.mp4(\?|$)/i) ? (
               <video
                 src={previewUrl}

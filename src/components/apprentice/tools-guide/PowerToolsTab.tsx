@@ -1,109 +1,108 @@
-
-import ToolCard from "./ToolCard";
-import { CircuitBoard, Lightbulb, Zap } from "lucide-react";
+import ToolCard from './ToolCard';
+import { CircuitBoard, Lightbulb, Zap } from 'lucide-react';
 
 const PowerToolsTab = () => {
   const drillTools = [
     {
-      name: "18V cordless drill/driver",
-      description: "Essential for most electrical installation work",
-      priceRange: "£80-200",
-      priority: "essential" as const,
-      ukStandard: "Two-speed gearbox"
+      name: '18V cordless drill/driver',
+      description: 'Essential for most electrical installation work',
+      priceRange: '£80-200',
+      priority: 'essential' as const,
+      ukStandard: 'Two-speed gearbox',
     },
     {
-      name: "Lithium-ion batteries (2x minimum)",
-      description: "One charging whilst one in use",
-      priceRange: "£30-60 each",
-      priority: "essential" as const,
-      ukStandard: "3.0Ah+ capacity"
+      name: 'Lithium-ion batteries (2x minimum)',
+      description: 'One charging whilst one in use',
+      priceRange: '£30-60 each',
+      priority: 'essential' as const,
+      ukStandard: '3.0Ah+ capacity',
     },
     {
-      name: "Fast charger (1-hour type)",
-      description: "Minimise downtime with quick charging",
-      priceRange: "£40-80",
-      priority: "recommended" as const
+      name: 'Fast charger (1-hour type)',
+      description: 'Minimise downtime with quick charging',
+      priceRange: '£40-80',
+      priority: 'recommended' as const,
     },
     {
-      name: "HSS drill bit set (1-13mm)",
-      description: "High-speed steel for metalwork",
-      priceRange: "£15-30",
-      priority: "essential" as const,
-      ukStandard: "Cobalt tipped preferred"
+      name: 'HSS drill bit set (1-13mm)',
+      description: 'High-speed steel for metalwork',
+      priceRange: '£15-30',
+      priority: 'essential' as const,
+      ukStandard: 'Cobalt tipped preferred',
     },
     {
-      name: "Screwdriver bit set with holder",
-      description: "PZ1, PZ2, PH1, PH2, flat bits with magnetic holder",
-      priceRange: "£10-25",
-      priority: "essential" as const
-    }
+      name: 'Screwdriver bit set with holder',
+      description: 'PZ1, PZ2, PH1, PH2, flat bits with magnetic holder',
+      priceRange: '£10-25',
+      priority: 'essential' as const,
+    },
   ];
 
   const inspectionTools = [
     {
-      name: "LED inspection torch (rechargeable)",
-      description: "Essential for fault-finding and dark areas",
-      priceRange: "£15-40",
-      priority: "essential" as const,
-      ukStandard: "1000+ lumens"
+      name: 'LED inspection torch (rechargeable)',
+      description: 'Essential for fault-finding and dark areas',
+      priceRange: '£15-40',
+      priority: 'essential' as const,
+      ukStandard: '1000+ lumens',
     },
     {
-      name: "Telescopic inspection mirror",
-      description: "See behind panels and in tight spaces",
-      priceRange: "£8-20",
-      priority: "recommended" as const
+      name: 'Telescopic inspection mirror',
+      description: 'See behind panels and in tight spaces',
+      priceRange: '£8-20',
+      priority: 'recommended' as const,
     },
     {
-      name: "Magnetic pick-up tool (telescopic)",
-      description: "Retrieve dropped screws and small parts",
-      priceRange: "£5-15",
-      priority: "recommended" as const,
-      ukStandard: "4.5kg lift capacity"
+      name: 'Magnetic pick-up tool (telescopic)',
+      description: 'Retrieve dropped screws and small parts',
+      priceRange: '£5-15',
+      priority: 'recommended' as const,
+      ukStandard: '4.5kg lift capacity',
     },
     {
-      name: "Cable fishing rods (fiberglass)",
-      description: "Pull cables through conduit and voids",
-      priceRange: "£20-50",
-      priority: "optional" as const,
-      ukStandard: "10m+ length"
+      name: 'Cable fishing rods (fiberglass)',
+      description: 'Pull cables through conduit and voids',
+      priceRange: '£20-50',
+      priority: 'optional' as const,
+      ukStandard: '10m+ length',
     },
     {
-      name: "Digital borescope/inspection camera",
-      description: "Advanced inspections in inaccessible areas",
-      priceRange: "£50-200",
-      priority: "optional" as const,
-      ukStandard: "5mm+ cable diameter"
-    }
+      name: 'Digital borescope/inspection camera',
+      description: 'Advanced inspections in inaccessible areas',
+      priceRange: '£50-200',
+      priority: 'optional' as const,
+      ukStandard: '5mm+ cable diameter',
+    },
   ];
 
   const specialistTools = [
     {
-      name: "Angle grinder (115mm)",
-      description: "Cutting trunking, conduit, and metalwork",
-      priceRange: "£40-100",
-      priority: "optional" as const,
-      ukStandard: "Safety guard essential"
+      name: 'Angle grinder (115mm)',
+      description: 'Cutting trunking, conduit, and metalwork',
+      priceRange: '£40-100',
+      priority: 'optional' as const,
+      ukStandard: 'Safety guard essential',
     },
     {
-      name: "SDS drill (corded)",
-      description: "Heavy-duty drilling in masonry",
-      priceRange: "£60-150",
-      priority: "optional" as const,
-      ukStandard: "3-function minimum"
+      name: 'SDS drill (corded)',
+      description: 'Heavy-duty drilling in masonry',
+      priceRange: '£60-150',
+      priority: 'optional' as const,
+      ukStandard: '3-function minimum',
     },
     {
-      name: "Reciprocating saw",
-      description: "Cutting in tight spaces and demolition work",
-      priceRange: "£50-120",
-      priority: "optional" as const
+      name: 'Reciprocating saw',
+      description: 'Cutting in tight spaces and demolition work',
+      priceRange: '£50-120',
+      priority: 'optional' as const,
     },
     {
-      name: "Cable puller/winch",
-      description: "Heavy cable installation in long runs",
-      priceRange: "£100-300",
-      priority: "optional" as const,
-      ukStandard: "1000kg+ capacity"
-    }
+      name: 'Cable puller/winch',
+      description: 'Heavy cable installation in long runs',
+      priceRange: '£100-300',
+      priority: 'optional' as const,
+      ukStandard: '1000kg+ capacity',
+    },
   ];
 
   return (
@@ -111,8 +110,8 @@ const PowerToolsTab = () => {
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold text-elec-yellow">Power Tools</h2>
         <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
-          Whilst your employer often provides larger power tools, having some basics of your own gives you flexibility
-          and ensures you're never without essential equipment.
+          Whilst your employer often provides larger power tools, having some basics of your own
+          gives you flexibility and ensures you're never without essential equipment.
         </p>
       </div>
 
@@ -152,26 +151,31 @@ const PowerToolsTab = () => {
         </h3>
         <div className="space-y-2 text-sm text-white/80 leading-relaxed">
           <p>
-            <strong className="text-red-300">PAT Testing:</strong> All portable electrical tools must be PAT tested annually (or as per company policy).
-            Keep records and labels up to date.
+            <strong className="text-red-300">PAT Testing:</strong> All portable electrical tools
+            must be PAT tested annually (or as per company policy). Keep records and labels up to
+            date.
           </p>
           <p>
-            <strong className="text-red-300">Daily Checks:</strong> Inspect tools before use - check casings, cables, and switches.
-            Damaged tools must be immediately taken out of service.
+            <strong className="text-red-300">Daily Checks:</strong> Inspect tools before use - check
+            casings, cables, and switches. Damaged tools must be immediately taken out of service.
           </p>
           <p>
-            <strong className="text-red-300">110V on Sites:</strong> Many construction sites require 110V tools for safety.
-            Check site requirements and use appropriate transformers if needed.
+            <strong className="text-red-300">110V on Sites:</strong> Many construction sites require
+            110V tools for safety. Check site requirements and use appropriate transformers if
+            needed.
           </p>
           <p>
-            <strong className="text-red-300">Battery Care:</strong> Store batteries at room temperature, charge regularly, and replace when capacity drops significantly.
-            Quality batteries last 3-5 years with proper care.
+            <strong className="text-red-300">Battery Care:</strong> Store batteries at room
+            temperature, charge regularly, and replace when capacity drops significantly. Quality
+            batteries last 3-5 years with proper care.
           </p>
         </div>
       </div>
 
       <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-        <h3 className="text-lg font-medium text-green-300 mb-2">Investment Timeline for Apprentices</h3>
+        <h3 className="text-lg font-medium text-green-300 mb-2">
+          Investment Timeline for Apprentices
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
             <h4 className="font-medium text-green-200 mb-2">Year 1-2: Basics (£150-250)</h4>

@@ -1,13 +1,22 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Lightbulb, Calculator, CheckCircle, AlertTriangle, ArrowRight } from 'lucide-react';
-import { getCableCapacity, getCableSizeForRating, installationMethods } from '@/utils/regulationChecker/cableCapacityCalculator';
+import {
+  getCableCapacity,
+  getCableSizeForRating,
+  installationMethods,
+} from '@/utils/regulationChecker/cableCapacityCalculator';
 import { cableSizeOptions } from '@/types/cableTypes';
 
 export const CableSelectionGuidance = () => {
@@ -17,7 +26,7 @@ export const CableSelectionGuidance = () => {
   const [isRingCircuit, setIsRingCircuit] = useState(false);
   const [ambientTemp, setAmbientTemp] = useState('40');
   const [groupingFactor, setGroupingFactor] = useState('1.0');
-  
+
   const [recommendation, setRecommendation] = useState<{
     minimumSize: string;
     recommendedSize: string;
@@ -31,37 +40,37 @@ export const CableSelectionGuidance = () => {
     const protection = parseFloat(protectionRating) || 0;
     const grouping = parseFloat(groupingFactor) || 1.0;
     const ambient = parseFloat(ambientTemp) || 40;
-    
+
     // Apply correction factors
     const ambientFactor = ambient <= 30 ? 1.15 : ambient <= 40 ? 1.0 : 0.91;
     const correctedLoad = Math.max(load, protection) / (ambientFactor * grouping);
-    
+
     const minimumSize = getCableSizeForRating(correctedLoad, installationMethod, isRingCircuit);
-    
+
     // Find next size up for safety margin
-    const minIndex = cableSizeOptions.findIndex(cable => cable.label === minimumSize);
+    const minIndex = cableSizeOptions.findIndex((cable) => cable.label === minimumSize);
     const recommendedIndex = Math.min(minIndex + 1, cableSizeOptions.length - 1);
     const recommendedSize = cableSizeOptions[recommendedIndex]?.label || minimumSize;
-    
+
     const capacity = getCableCapacity(
-      cableSizeOptions.find(c => c.label === recommendedSize)?.value || '2.5mm', 
-      installationMethod, 
+      cableSizeOptions.find((c) => c.label === recommendedSize)?.value || '2.5mm',
+      installationMethod,
       isRingCircuit
     );
-    
+
     const reasoning = [];
     if (load > 0) reasoning.push(`Load current: ${load}A`);
     if (protection > 0) reasoning.push(`Protection rating: ${protection}A`);
     if (ambientFactor !== 1.0) reasoning.push(`Ambient temperature correction: ${ambientFactor}`);
     if (grouping !== 1.0) reasoning.push(`Grouping factor: ${grouping}`);
     if (isRingCircuit) reasoning.push('Ring circuit configuration doubles effective capacity');
-    
+
     setRecommendation({
       minimumSize,
       recommendedSize,
       capacity: capacity * ambientFactor * grouping,
       compliance: capacity * ambientFactor * grouping >= Math.max(load, protection),
-      reasoning
+      reasoning,
     });
   };
 
@@ -87,7 +96,7 @@ export const CableSelectionGuidance = () => {
                 className="bg-card border-border text-foreground"
               />
             </div>
-            
+
             <div>
               <Label className="text-foreground">Protection Rating (A)</Label>
               <Input
@@ -98,25 +107,27 @@ export const CableSelectionGuidance = () => {
                 className="bg-card border-border text-foreground"
               />
             </div>
-            
+
             <div>
               <Label className="text-foreground">Installation Method</Label>
               <Select value={installationMethod} onValueChange={setInstallationMethod}>
-                 <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
+                <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {Object.entries(installationMethods).map(([key, method]) => (
-                    <SelectItem key={key} value={key}>{method.label}</SelectItem>
+                    <SelectItem key={key} value={key}>
+                      {method.label}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div>
               <Label className="text-foreground">Ambient Temperature (°C)</Label>
               <Select value={ambientTemp} onValueChange={setAmbientTemp}>
-                 <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
+                <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -127,7 +138,7 @@ export const CableSelectionGuidance = () => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div>
               <Label className="text-foreground">Grouping Factor</Label>
               <Select value={groupingFactor} onValueChange={setGroupingFactor}>
@@ -142,7 +153,7 @@ export const CableSelectionGuidance = () => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -151,18 +162,20 @@ export const CableSelectionGuidance = () => {
                 onChange={(e) => setIsRingCircuit(e.target.checked)}
                 className="w-4 h-4 text-elec-yellow bg-muted border-border rounded focus:ring-elec-yellow"
               />
-              <Label htmlFor="ringCircuit" className="text-foreground">Ring Final Circuit</Label>
+              <Label htmlFor="ringCircuit" className="text-foreground">
+                Ring Final Circuit
+              </Label>
             </div>
           </div>
-          
-          <Button 
+
+          <Button
             onClick={handleCalculateRecommendation}
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-bold"
           >
             <Calculator className="h-4 w-4 mr-2" />
             Get Cable Recommendation
           </Button>
-          
+
           {recommendation && (
             <div className="mt-6 p-6 bg-card rounded-lg border border-border">
               <div className="flex items-center gap-3 mb-4">
@@ -175,24 +188,28 @@ export const CableSelectionGuidance = () => {
                   {recommendation.compliance ? 'Compliant Design' : 'Non-Compliant Design'}
                 </h3>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/30">
                   <h4 className="font-semibold text-blue-400 mb-2">Minimum Size</h4>
                   <p className="text-2xl font-bold text-foreground">{recommendation.minimumSize}</p>
                 </div>
-                
+
                 <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/30">
                   <h4 className="font-semibold text-green-400 mb-2">Recommended Size</h4>
-                  <p className="text-2xl font-bold text-foreground">{recommendation.recommendedSize}</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {recommendation.recommendedSize}
+                  </p>
                 </div>
-                
+
                 <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/30">
                   <h4 className="font-semibold text-yellow-400 mb-2">Effective Capacity</h4>
-                  <p className="text-2xl font-bold text-foreground">{Math.round(recommendation.capacity)}A</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {Math.round(recommendation.capacity)}A
+                  </p>
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <h4 className="font-semibold text-foreground">Design Considerations:</h4>
                 {recommendation.reasoning.map((reason, index) => (
@@ -224,7 +241,7 @@ export const CableSelectionGuidance = () => {
                 <li>• Consider cost vs performance trade-offs</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-red-500/10 rounded-lg border border-red-500/30">
               <h4 className="font-semibold text-red-400 mb-2">✗ Common Mistakes</h4>
               <ul className="text-sm text-gray-300 space-y-1">
@@ -236,7 +253,7 @@ export const CableSelectionGuidance = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/30">
             <h4 className="font-semibold text-blue-400 mb-2">Key Regulations</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">

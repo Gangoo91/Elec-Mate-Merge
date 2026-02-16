@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,73 +9,73 @@ export const PracticalGuidanceSection: React.FC = () => {
       step: 1,
       title: 'Isolate Circuit Safely',
       description: 'Switch off circuit breaker and verify isolation',
-      safety: 'Always use approved voltage indicator'
+      safety: 'Always use approved voltage indicator',
     },
     {
       step: 2,
       title: 'Measure Ze at Origin',
       description: 'Test between line and earth at main switch',
-      safety: 'Ensure all RCDs are in operation'
+      safety: 'Ensure all RCDs are in operation',
     },
     {
       step: 3,
       title: 'Measure R1+R2',
       description: 'Test continuity of live and earth conductors',
-      safety: 'Link live and earth at remote end'
+      safety: 'Link live and earth at remote end',
     },
     {
       step: 4,
       title: 'Calculate Zs',
       description: 'Add Ze and R1+R2 values together',
-      safety: 'Apply temperature correction if required'
+      safety: 'Apply temperature correction if required',
     },
     {
       step: 5,
       title: 'Verify Compliance',
       description: 'Compare result with maximum Zs values',
-      safety: 'Consider 80% derating factor applied'
-    }
+      safety: 'Consider 80% derating factor applied',
+    },
   ];
 
   const commonIssues = [
     {
       issue: 'High Ze Values',
       causes: ['Poor DNO earth electrode', 'Corroded connections', 'Long supply cable'],
-      solutions: ['Contact DNO if >0.8Ω', 'Check main earth connection', 'Consider TT system']
+      solutions: ['Contact DNO if >0.8Ω', 'Check main earth connection', 'Consider TT system'],
     },
     {
       issue: 'High R1+R2 Values',
       causes: ['Long cable runs', 'Small conductor CSA', 'Poor connections'],
-      solutions: ['Increase cable size', 'Shorten cable route', 'Check all connections']
+      solutions: ['Increase cable size', 'Shorten cable route', 'Check all connections'],
     },
     {
       issue: 'Zs Exceeds Limits',
       causes: ['Wrong protective device', 'Installation design issue', 'Measurement error'],
-      solutions: ['Change to Type B MCB', 'Install RCD', 'Re-check measurements']
-    }
+      solutions: ['Change to Type B MCB', 'Install RCD', 'Re-check measurements'],
+    },
   ];
 
   const practicalTips = [
     {
       icon: Target,
       title: 'Measurement Accuracy',
-      tip: 'Use calibrated test equipment and ensure good probe contact'
+      tip: 'Use calibrated test equipment and ensure good probe contact',
     },
     {
       icon: Zap,
       title: 'Temperature Effects',
-      tip: 'Conductors heat up in operation - apply 80% derating factor'
+      tip: 'Conductors heat up in operation - apply 80% derating factor',
     },
     {
       icon: CheckCircle,
       title: 'Documentation',
-      tip: 'Record all measurements on appropriate test certificates'
+      tip: 'Record all measurements on appropriate test certificates',
     },
     {
       icon: AlertTriangle,
       title: 'RCD Circuits',
-      tip: 'RCD protection may permit higher Zs values - check manufacturer data'
-    }
+      tip: 'RCD protection may permit higher Zs values - check manufacturer data',
+    },
   ];
 
   return (
@@ -128,7 +127,7 @@ export const PracticalGuidanceSection: React.FC = () => {
                   <AlertTriangle className="h-4 w-4 text-red-400" />
                   {item.issue}
                 </h4>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6">
                   <div>
                     <h5 className="text-gray-300 font-medium text-sm mb-2">Common Causes:</h5>
@@ -141,7 +140,7 @@ export const PracticalGuidanceSection: React.FC = () => {
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h5 className="text-gray-300 font-medium text-sm mb-2">Solutions:</h5>
                     <ul className="space-y-1">
@@ -154,7 +153,7 @@ export const PracticalGuidanceSection: React.FC = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 {index < commonIssues.length - 1 && (
                   <div className="border-t border-neutral-600 pt-3"></div>
                 )}

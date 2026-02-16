@@ -12,13 +12,18 @@ const SmartHomeModule7Section2Intro = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 text-base leading-relaxed">
-          Installing smart home devices is only half the job. <strong className="text-foreground">Commissioning</strong> — the process of testing, configuring, and pairing devices — ensures the system works as designed and meets client expectations. Poor commissioning leads to unreliable systems, frustrated clients, and costly call-backs.
+          Installing smart home devices is only half the job.{' '}
+          <strong className="text-foreground">Commissioning</strong> — the process of testing,
+          configuring, and pairing devices — ensures the system works as designed and meets client
+          expectations. Poor commissioning leads to unreliable systems, frustrated clients, and
+          costly call-backs.
         </p>
-        
+
         <p className="text-gray-300 text-base leading-relaxed">
-          This section covers pairing procedures, system setup, and best practice testing protocols that professional electricians need to master for successful smart home installations.
+          This section covers pairing procedures, system setup, and best practice testing protocols
+          that professional electricians need to master for successful smart home installations.
         </p>
-        
+
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
           <h4 className="font-semibold text-elec-yellow mb-2">Why Commissioning Matters</h4>
           <ul className="space-y-2 text-gray-300 text-sm">

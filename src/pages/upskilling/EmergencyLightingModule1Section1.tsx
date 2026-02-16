@@ -1,72 +1,88 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m1s1-check1",
-    question: "Which legislation places primary responsibility on the 'responsible person' for fire safety?",
-    options: ["Building Regulations", "Health and Safety at Work Act", "Regulatory Reform (Fire Safety) Order 2005", "BS 5266-1"],
+    id: 'emergencylighting-m1s1-check1',
+    question:
+      "Which legislation places primary responsibility on the 'responsible person' for fire safety?",
+    options: [
+      'Building Regulations',
+      'Health and Safety at Work Act',
+      'Regulatory Reform (Fire Safety) Order 2005',
+      'BS 5266-1',
+    ],
     correctIndex: 2,
-    explanation: "The Regulatory Reform (Fire Safety) Order 2005 (RRO) places duties on the 'responsible person' (typically the employer or building owner) to carry out fire risk assessments and implement appropriate fire safety measures, including emergency lighting."
+    explanation:
+      "The Regulatory Reform (Fire Safety) Order 2005 (RRO) places duties on the 'responsible person' (typically the employer or building owner) to carry out fire risk assessments and implement appropriate fire safety measures, including emergency lighting.",
   },
   {
-    id: "emergencylighting-m1s1-check2",
-    question: "What is the minimum illumination level for escape routes under BS 5266-1?",
-    options: ["0.5 lux", "1 lux", "2 lux", "5 lux"],
+    id: 'emergencylighting-m1s1-check2',
+    question: 'What is the minimum illumination level for escape routes under BS 5266-1?',
+    options: ['0.5 lux', '1 lux', '2 lux', '5 lux'],
     correctIndex: 1,
-    explanation: "BS 5266-1 specifies a minimum of 1 lux at floor level along the centre line of escape routes. Anti-panic areas require 0.5 lux minimum across the area."
+    explanation:
+      'BS 5266-1 specifies a minimum of 1 lux at floor level along the centre line of escape routes. Anti-panic areas require 0.5 lux minimum across the area.',
   },
   {
-    id: "emergencylighting-m1s1-check3",
-    question: "What is the required emergency lighting duration for most occupied premises?",
-    options: ["1 hour", "2 hours", "3 hours", "4 hours"],
+    id: 'emergencylighting-m1s1-check3',
+    question: 'What is the required emergency lighting duration for most occupied premises?',
+    options: ['1 hour', '2 hours', '3 hours', '4 hours'],
     correctIndex: 2,
-    explanation: "Most premises require 3-hour duration emergency lighting under BS 5266-1. Some premises like sleeping accommodation may require longer durations of up to 3 hours."
-  }
+    explanation:
+      'Most premises require 3-hour duration emergency lighting under BS 5266-1. Some premises like sleeping accommodation may require longer durations of up to 3 hours.',
+  },
 ];
 
 const faqs = [
   {
     question: "Who is the 'responsible person' under the RRO 2005?",
-    answer: "The responsible person is typically the employer, owner, or person with control of the premises. They must carry out fire risk assessments and ensure appropriate fire safety measures are in place, including adequate emergency lighting."
+    answer:
+      'The responsible person is typically the employer, owner, or person with control of the premises. They must carry out fire risk assessments and ensure appropriate fire safety measures are in place, including adequate emergency lighting.',
   },
   {
-    question: "Is emergency lighting legally required in all buildings?",
-    answer: "Emergency lighting is legally required in workplaces, public buildings, and HMOs. Domestic dwellings are generally exempt unless they're HMOs or have communal areas. The fire risk assessment determines the specific requirements."
+    question: 'Is emergency lighting legally required in all buildings?',
+    answer:
+      "Emergency lighting is legally required in workplaces, public buildings, and HMOs. Domestic dwellings are generally exempt unless they're HMOs or have communal areas. The fire risk assessment determines the specific requirements.",
   },
   {
     question: "What's the difference between Building Regulations and BS 5266?",
-    answer: "Building Regulations (Approved Document B) sets minimum legal requirements for new buildings. BS 5266-1 is a British Standard providing detailed technical guidance and is often referenced by Building Regulations and enforcing authorities."
+    answer:
+      'Building Regulations (Approved Document B) sets minimum legal requirements for new buildings. BS 5266-1 is a British Standard providing detailed technical guidance and is often referenced by Building Regulations and enforcing authorities.',
   },
   {
-    question: "Can I face prosecution for inadequate emergency lighting?",
-    answer: "Yes. Under the RRO 2005, failing to provide adequate emergency lighting can result in enforcement notices, prohibition notices, or prosecution. Penalties include unlimited fines and up to 2 years imprisonment for serious breaches."
-  }
+    question: 'Can I face prosecution for inadequate emergency lighting?',
+    answer:
+      'Yes. Under the RRO 2005, failing to provide adequate emergency lighting can result in enforcement notices, prohibition notices, or prosecution. Penalties include unlimited fines and up to 2 years imprisonment for serious breaches.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A fire risk assessor finds a building has inadequate emergency lighting. Under which legislation would enforcement action most likely be taken?",
-  options: [
-    "Building Regulations Part B",
-    "BS 5266-1:2016",
-    "Regulatory Reform (Fire Safety) Order 2005",
-    "Health and Safety at Work Act 1974"
-  ],
-  correctAnswer: 2,
-  explanation: "The RRO 2005 is the primary enforcement legislation for fire safety in occupied premises. Fire and Rescue Authorities can take enforcement action including prosecution under this Order for inadequate emergency lighting."
-  }
+    question:
+      'A fire risk assessor finds a building has inadequate emergency lighting. Under which legislation would enforcement action most likely be taken?',
+    options: [
+      'Building Regulations Part B',
+      'BS 5266-1:2016',
+      'Regulatory Reform (Fire Safety) Order 2005',
+      'Health and Safety at Work Act 1974',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The RRO 2005 is the primary enforcement legislation for fire safety in occupied premises. Fire and Rescue Authorities can take enforcement action including prosecution under this Order for inadequate emergency lighting.',
+  },
 ];
 
 const EmergencyLightingModule1Section1 = () => {
   useSEO({
-    title: "Purpose and Legal Framework | Emergency Lighting Module 1.1",
-    description: "Learn about emergency lighting legal requirements, Regulatory Reform (Fire Safety) Order 2005, Building Regulations, and BS 5266-1 compliance."
+    title: 'Purpose and Legal Framework | Emergency Lighting Module 1.1',
+    description:
+      'Learn about emergency lighting legal requirements, Regulatory Reform (Fire Safety) Order 2005, Building Regulations, and BS 5266-1 compliance.',
   });
 
   return (
@@ -108,17 +124,29 @@ const EmergencyLightingModule1Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>RRO 2005:</strong> Primary fire safety legislation</li>
-              <li><strong>BS 5266-1:</strong> Technical standard for design</li>
-              <li><strong>Duration:</strong> 3 hours standard requirement</li>
+              <li>
+                <strong>RRO 2005:</strong> Primary fire safety legislation
+              </li>
+              <li>
+                <strong>BS 5266-1:</strong> Technical standard for design
+              </li>
+              <li>
+                <strong>Duration:</strong> 3 hours standard requirement
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Values</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Escape routes:</strong> Minimum 1 lux</li>
-              <li><strong>Anti-panic:</strong> Minimum 0.5 lux</li>
-              <li><strong>Activation:</strong> Within 5 seconds</li>
+              <li>
+                <strong>Escape routes:</strong> Minimum 1 lux
+              </li>
+              <li>
+                <strong>Anti-panic:</strong> Minimum 0.5 lux
+              </li>
+              <li>
+                <strong>Activation:</strong> Within 5 seconds
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +156,12 @@ const EmergencyLightingModule1Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify key emergency lighting legislation",
-              "Understand RRO 2005 responsibilities",
-              "Apply BS 5266-1 requirements",
-              "Recognise Building Regulations requirements",
-              "Determine duration requirements",
-              "Understand enforcement powers"
+              'Identify key emergency lighting legislation',
+              'Understand RRO 2005 responsibilities',
+              'Apply BS 5266-1 requirements',
+              'Recognise Building Regulations requirements',
+              'Determine duration requirements',
+              'Understand enforcement powers',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -160,7 +188,9 @@ const EmergencyLightingModule1Section1 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Responsible Person Duties</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Responsible Person Duties
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Carry out fire risk assessment</li>
                   <li>Implement fire safety measures</li>
@@ -201,19 +231,37 @@ const EmergencyLightingModule1Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Illumination Levels</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Escape routes:</strong> 1 lux minimum at floor</li>
-                  <li><strong>Anti-panic areas:</strong> 0.5 lux minimum</li>
-                  <li><strong>High-risk task:</strong> 10% of normal or 15 lux</li>
-                  <li><strong>Uniformity ratio:</strong> Maximum 40:1</li>
+                  <li>
+                    <strong>Escape routes:</strong> 1 lux minimum at floor
+                  </li>
+                  <li>
+                    <strong>Anti-panic areas:</strong> 0.5 lux minimum
+                  </li>
+                  <li>
+                    <strong>High-risk task:</strong> 10% of normal or 15 lux
+                  </li>
+                  <li>
+                    <strong>Uniformity ratio:</strong> Maximum 40:1
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Duration Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Duration Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Standard:</strong> 3 hours</li>
-                  <li><strong>Sleeping risk:</strong> 3 hours</li>
-                  <li><strong>High-risk task:</strong> As risk assessment</li>
-                  <li><strong>Activation:</strong> Within 5 seconds</li>
+                  <li>
+                    <strong>Standard:</strong> 3 hours
+                  </li>
+                  <li>
+                    <strong>Sleeping risk:</strong> 3 hours
+                  </li>
+                  <li>
+                    <strong>High-risk task:</strong> As risk assessment
+                  </li>
+                  <li>
+                    <strong>Activation:</strong> Within 5 seconds
+                  </li>
                 </ul>
               </div>
             </div>
@@ -269,12 +317,22 @@ const EmergencyLightingModule1Section1 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Compliance Failures</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Compliance Failures
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>No testing records:</strong> — Maintain log book to BS 5266-8</li>
-                <li><strong>Inadequate coverage:</strong> — Survey escape routes with lux meter</li>
-                <li><strong>Failed luminaires:</strong> — Implement monthly functional tests</li>
-                <li><strong>Insufficient duration:</strong> — Verify battery capacity annually</li>
+                <li>
+                  <strong>No testing records:</strong> — Maintain log book to BS 5266-8
+                </li>
+                <li>
+                  <strong>Inadequate coverage:</strong> — Survey escape routes with lux meter
+                </li>
+                <li>
+                  <strong>Failed luminaires:</strong> — Implement monthly functional tests
+                </li>
+                <li>
+                  <strong>Insufficient duration:</strong> — Verify battery capacity annually
+                </li>
               </ul>
             </div>
           </div>
@@ -320,10 +378,7 @@ const EmergencyLightingModule1Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

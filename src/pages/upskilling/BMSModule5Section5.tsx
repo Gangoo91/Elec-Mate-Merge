@@ -1,68 +1,88 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "gateway-translator",
-    question: "Why are gateways often compared to translators?",
-    options: ["Because they both need electricity", "Because they convert between different protocols/languages", "Because they are expensive"],
+    id: 'gateway-translator',
+    question: 'Why are gateways often compared to translators?',
+    options: [
+      'Because they both need electricity',
+      'Because they convert between different protocols/languages',
+      'Because they are expensive',
+    ],
     correctIndex: 1,
-    explanation: "Gateways convert data between different communication protocols - just like translators convert between human languages. Both enable communication between parties that would otherwise not understand each other."
+    explanation:
+      'Gateways convert data between different communication protocols - just like translators convert between human languages. Both enable communication between parties that would otherwise not understand each other.',
   },
   {
-    id: "modbus-bacnet-gateway",
-    question: "When would a Modbus-to-BACnet gateway be used?",
-    options: ["Connecting Wi-Fi to Ethernet", "Connecting energy meters (Modbus) to a BMS (BACnet)", "Connecting fire alarms to security"],
+    id: 'modbus-bacnet-gateway',
+    question: 'When would a Modbus-to-BACnet gateway be used?',
+    options: [
+      'Connecting Wi-Fi to Ethernet',
+      'Connecting energy meters (Modbus) to a BMS (BACnet)',
+      'Connecting fire alarms to security',
+    ],
     correctIndex: 1,
-    explanation: "Energy meters typically communicate via Modbus, while BMS systems often use BACnet. The gateway allows the BMS to read energy consumption data from Modbus meters for centralised monitoring."
+    explanation:
+      'Energy meters typically communicate via Modbus, while BMS systems often use BACnet. The gateway allows the BMS to read energy consumption data from Modbus meters for centralised monitoring.',
   },
   {
-    id: "gateway-future-proof",
-    question: "Why do gateways make buildings more future-proof?",
-    options: ["They eliminate maintenance", "They allow mixing different vendors and protocols", "They reduce electricity consumption"],
+    id: 'gateway-future-proof',
+    question: 'Why do gateways make buildings more future-proof?',
+    options: [
+      'They eliminate maintenance',
+      'They allow mixing different vendors and protocols',
+      'They reduce electricity consumption',
+    ],
     correctIndex: 1,
-    explanation: "Gateways enable future-proofing by allowing integration of new devices from different vendors without replacing existing infrastructure. You can upgrade gradually and choose the best products for each application."
-  }
+    explanation:
+      'Gateways enable future-proofing by allowing integration of new devices from different vendors without replacing existing infrastructure. You can upgrade gradually and choose the best products for each application.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Are gateways a potential single point of failure?",
-    answer: "Yes, if the gateway fails, communication between protocols stops. Consider redundant configurations for critical systems and ensure regular backups and maintenance schedules."
+    question: 'Are gateways a potential single point of failure?',
+    answer:
+      'Yes, if the gateway fails, communication between protocols stops. Consider redundant configurations for critical systems and ensure regular backups and maintenance schedules.',
   },
   {
-    question: "How much delay do gateways add to communication?",
-    answer: "Modern gateways add minimal delay (typically <100ms). However, large data volumes or underpowered gateways can increase latency. Size gateways appropriately for peak data periods."
+    question: 'How much delay do gateways add to communication?',
+    answer:
+      'Modern gateways add minimal delay (typically <100ms). However, large data volumes or underpowered gateways can increase latency. Size gateways appropriately for peak data periods.',
   },
   {
-    question: "Who configures gateways - electricians or integrators?",
-    answer: "Electricians install and wire gateways. Integrators handle configuration, protocol mapping, and commissioning. Both roles are essential for successful implementation."
-  }
+    question: 'Who configures gateways - electricians or integrators?',
+    answer:
+      'Electricians install and wire gateways. Integrators handle configuration, protocol mapping, and commissioning. Both roles are essential for successful implementation.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "What is the primary function of a protocol gateway in a building automation system?",
-  options: [
-    "To provide backup power during outages",
-    "To convert data between different communication protocols",
-    "To increase network speed and bandwidth",
-    "To store historical building data"
-  ],
-  correctAnswer: 1,
-  explanation: "A protocol gateway's primary function is to convert data between different communication protocols, enabling devices that speak different 'languages' to communicate through a unified BMS."
-  }
+    question: 'What is the primary function of a protocol gateway in a building automation system?',
+    options: [
+      'To provide backup power during outages',
+      'To convert data between different communication protocols',
+      'To increase network speed and bandwidth',
+      'To store historical building data',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A protocol gateway's primary function is to convert data between different communication protocols, enabling devices that speak different 'languages' to communicate through a unified BMS.",
+  },
 ];
 
 const BMSModule5Section5 = () => {
   useSEO({
-    title: "Gateways and Interoperability | BMS Course",
-    description: "Learn about protocol conversion, system integration, and gateway installation for building automation."
+    title: 'Gateways and Interoperability | BMS Course',
+    description:
+      'Learn about protocol conversion, system integration, and gateway installation for building automation.',
   });
 
   return (
@@ -70,7 +90,12 @@ const BMSModule5Section5 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
@@ -99,17 +124,29 @@ const BMSModule5Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Gateway:</strong> Protocol translator between systems</li>
-              <li><strong>Purpose:</strong> Unify different building systems</li>
-              <li><strong>Key benefit:</strong> Vendor independence and flexibility</li>
+              <li>
+                <strong>Gateway:</strong> Protocol translator between systems
+              </li>
+              <li>
+                <strong>Purpose:</strong> Unify different building systems
+              </li>
+              <li>
+                <strong>Key benefit:</strong> Vendor independence and flexibility
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Device with multiple protocol ports</li>
-              <li><strong>Use:</strong> Modbus meters to BACnet BMS</li>
-              <li><strong>Use:</strong> KNX lighting to central BMS</li>
+              <li>
+                <strong>Spot:</strong> Device with multiple protocol ports
+              </li>
+              <li>
+                <strong>Use:</strong> Modbus meters to BACnet BMS
+              </li>
+              <li>
+                <strong>Use:</strong> KNX lighting to central BMS
+              </li>
             </ul>
           </div>
         </div>
@@ -119,10 +156,10 @@ const BMSModule5Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand gateway functions and benefits",
-              "Identify common gateway applications",
-              "Explain interoperability advantages",
-              "Apply gateway installation best practices"
+              'Understand gateway functions and benefits',
+              'Identify common gateway applications',
+              'Explain interoperability advantages',
+              'Apply gateway installation best practices',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -142,8 +179,8 @@ const BMSModule5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A gateway is a device that converts messages from one protocol into another.
-              It allows subsystems using different "languages" to share data with the BMS.
+              A gateway is a device that converts messages from one protocol into another. It allows
+              subsystems using different "languages" to share data with the BMS.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -164,9 +201,10 @@ const BMSModule5Section5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Practical Example:</p>
               <p className="text-sm text-white">
-                A building with BACnet HVAC controllers, Modbus energy meters, and KNX lighting controls.
-                A gateway allows the BMS operator to see all data in one place - room temperatures from BACnet,
-                power consumption from Modbus, and lighting status from KNX - all displayed together.
+                A building with BACnet HVAC controllers, Modbus energy meters, and KNX lighting
+                controls. A gateway allows the BMS operator to see all data in one place - room
+                temperatures from BACnet, power consumption from Modbus, and lighting status from
+                KNX - all displayed together.
               </p>
             </div>
 
@@ -203,14 +241,15 @@ const BMSModule5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Gateways are essential for connecting different building systems. Here are the most common
-              applications you'll encounter in practice.
+              Gateways are essential for connecting different building systems. Here are the most
+              common applications you'll encounter in practice.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-blue-400/80 mb-2">Modbus to BACnet Gateway</p>
               <p className="text-sm text-white mb-2">
-                Energy meters and power monitoring equipment typically use Modbus, while BMS systems prefer BACnet.
+                Energy meters and power monitoring equipment typically use Modbus, while BMS systems
+                prefer BACnet.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
@@ -237,7 +276,8 @@ const BMSModule5Section5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-purple-400/80 mb-2">KNX to BACnet Gateway</p>
               <p className="text-sm text-white mb-2">
-                KNX lighting and blind controls integrated into larger BMS systems for unified management.
+                KNX lighting and blind controls integrated into larger BMS systems for unified
+                management.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
@@ -250,7 +290,9 @@ const BMSModule5Section5 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-orange-400/80 mb-1">Data Points Exposed:</p>
+                  <p className="text-xs font-medium text-orange-400/80 mb-1">
+                    Data Points Exposed:
+                  </p>
                   <ul className="text-sm text-white space-y-1">
                     <li>Lighting on/off status per zone</li>
                     <li>Dimming levels (0-100%)</li>
@@ -262,7 +304,9 @@ const BMSModule5Section5 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DALI to KNX/BACnet Gateway</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                DALI to KNX/BACnet Gateway
+              </p>
               <p className="text-sm text-white mb-2">
                 Individual LED luminaire control via DALI integrated into wider building automation.
               </p>
@@ -277,8 +321,9 @@ const BMSModule5Section5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Multi-Protocol Controllers:</p>
               <p className="text-sm text-white">
-                Some advanced gateways support multiple conversions simultaneously - handling Modbus-to-BACnet,
-                KNX-to-BACnet, and DALI-to-BACnet in a single device, reducing panel space and complexity.
+                Some advanced gateways support multiple conversions simultaneously - handling
+                Modbus-to-BACnet, KNX-to-BACnet, and DALI-to-BACnet in a single device, reducing
+                panel space and complexity.
               </p>
             </div>
           </div>
@@ -294,7 +339,8 @@ const BMSModule5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Understanding gateway benefits helps you explain value to clients and make informed system design decisions.
+              Understanding gateway benefits helps you explain value to clients and make informed
+              system design decisions.
             </p>
 
             <div className="my-6">
@@ -334,7 +380,9 @@ const BMSModule5Section5 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow/80 mb-1">Capital Savings</p>
-                <p className="text-white text-xs">Keep existing controllers, avoid proprietary lock-in</p>
+                <p className="text-white text-xs">
+                  Keep existing controllers, avoid proprietary lock-in
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-orange-400/80 mb-1">Operational Savings</p>
@@ -349,9 +397,9 @@ const BMSModule5Section5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-purple-400/80 mb-2">Scalability</p>
               <p className="text-sm text-white">
-                Simplifies adding new subsystems later without replacing everything.
-                Phase 1 might cover basic HVAC and lighting, while Phase 2 adds security,
-                expanded energy monitoring, and water meters - all through the same gateway infrastructure.
+                Simplifies adding new subsystems later without replacing everything. Phase 1 might
+                cover basic HVAC and lighting, while Phase 2 adds security, expanded energy
+                monitoring, and water meters - all through the same gateway infrastructure.
               </p>
             </div>
 
@@ -423,21 +471,27 @@ const BMSModule5Section5 = () => {
 
         {/* Quiz */}
         <section className="mb-10 mt-10">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-5-section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: KNX Topology
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-5-section-6">
               Next: Network Planning
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

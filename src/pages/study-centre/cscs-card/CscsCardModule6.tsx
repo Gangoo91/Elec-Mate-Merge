@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by CSCS HS&E test assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by CSCS HS&E test assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Understand the CSCS Card Scheme",
+    title: 'Understand the CSCS Card Scheme',
     description:
-      "Know the different card types, colour codes, who needs which card, and the application process. The HS&E test is a mandatory requirement for all CSCS card applications.",
+      'Know the different card types, colour codes, who needs which card, and the application process. The HS&E test is a mandatory requirement for all CSCS card applications.',
   },
   {
-    title: "Master the Risk Assessment Process",
+    title: 'Master the Risk Assessment Process',
     description:
-      "The 5-step risk assessment process and the hierarchy of controls appear frequently in the HS&E test. Understand each step and be able to apply them to realistic site scenarios.",
+      'The 5-step risk assessment process and the hierarchy of controls appear frequently in the HS&E test. Understand each step and be able to apply them to realistic site scenarios.',
   },
   {
-    title: "Know Your PPE",
+    title: 'Know Your PPE',
     description:
-      "Understand the different types of PPE, when each is required, correct fitting and maintenance, and the split of responsibilities between employers and employees under the PPE Regulations 2022.",
+      'Understand the different types of PPE, when each is required, correct fitting and maintenance, and the split of responsibilities between employers and employees under the PPE Regulations 2022.',
   },
   {
-    title: "Learn the Key Regulations",
+    title: 'Learn the Key Regulations',
     description:
-      "HASAWA 1974, CDM 2015, COSHH 2002, Work at Height Regulations 2005, and Manual Handling Operations Regulations 1992. Know the key duties and requirements of each.",
+      'HASAWA 1974, CDM 2015, COSHH 2002, Work at Height Regulations 2005, and Manual Handling Operations Regulations 1992. Know the key duties and requirements of each.',
   },
   {
-    title: "Study Behavioural Case Studies",
+    title: 'Study Behavioural Case Studies',
     description:
-      "The HS&E test includes scenario-based questions about what you should do in specific situations. Practise identifying the safest course of action rather than the quickest.",
+      'The HS&E test includes scenario-based questions about what you should do in specific situations. Practise identifying the safest course of action rather than the quickest.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question — answer what you can confidently first.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question — answer what you can confidently first.',
   },
 ];
 
 export default function CscsCardModule6() {
   useSEO({
-    title: "CSCS Card Preparation Mock Exam | Module 6",
+    title: 'CSCS Card Preparation Mock Exam | Module 6',
     description:
-      "Test your CSCS HS&E knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your CSCS HS&E knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -98,12 +108,10 @@ export default function CscsCardModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Put your CSCS HS&amp;E knowledge to the test under timed exam conditions.
-              Questions are drawn from a 200-question bank covering all five content modules.
+              Put your CSCS HS&amp;E knowledge to the test under timed exam conditions. Questions
+              are drawn from a 200-question bank covering all five content modules.
             </p>
           </div>
 
@@ -115,7 +123,9 @@ export default function CscsCardModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real CSCS HS&amp;E test conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real CSCS HS&amp;E test conditions
+                  </p>
                 </div>
               </div>
 
@@ -130,9 +140,7 @@ export default function CscsCardModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -148,11 +156,11 @@ export default function CscsCardModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Introduction to CSCS & the HS&E Test", count: 40 },
-                  { module: "Module 2", name: "General Health & Safety", count: 40 },
-                  { module: "Module 3", name: "Working at Height & Manual Handling", count: 40 },
-                  { module: "Module 4", name: "Hazardous Substances & Environmental", count: 40 },
-                  { module: "Module 5", name: "Specialist Knowledge & Site Safety", count: 40 },
+                  { module: 'Module 1', name: 'Introduction to CSCS & the HS&E Test', count: 40 },
+                  { module: 'Module 2', name: 'General Health & Safety', count: 40 },
+                  { module: 'Module 3', name: 'Working at Height & Manual Handling', count: 40 },
+                  { module: 'Module 4', name: 'Hazardous Substances & Environmental', count: 40 },
+                  { module: 'Module 5', name: 'Specialist Knowledge & Site Safety', count: 40 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -204,9 +212,7 @@ export default function CscsCardModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

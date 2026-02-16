@@ -3,10 +3,10 @@ import { CheckCircle2, Wrench } from 'lucide-react';
 
 export const EmergencyLightingSummary2_2 = () => {
   const practicalGuidance = [
-    "Walk the space after installation to identify shadows or blind spots.",
-    "Always use fittings certified for emergency use, not standard luminaires.",
-    "Ensure the emergency supply is separate and reliable.",
-    "Keep the emergency lighting logbook on-site and up to date for compliance inspections."
+    'Walk the space after installation to identify shadows or blind spots.',
+    'Always use fittings certified for emergency use, not standard luminaires.',
+    'Ensure the emergency supply is separate and reliable.',
+    'Keep the emergency lighting logbook on-site and up to date for compliance inspections.',
   ];
 
   return (

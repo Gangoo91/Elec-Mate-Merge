@@ -1,58 +1,69 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { FileText, Download, Eye, Star } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { FileText, Download, Eye, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const DocumentationTab = () => {
   const documentCategories = [
     {
-      category: "Electrical Certificates",
+      category: 'Electrical Certificates',
       count: 12,
       documents: [
-        { name: "Electrical Installation Certificate", type: "BS 7671", popular: true },
-        { name: "Minor Works Certificate", type: "BS 7671", popular: true },
-        { name: "Electrical Installation Condition Report", type: "EICR", popular: false },
-        { name: "Periodic Inspection Report", type: "BS 7671", popular: false }
-      ]
+        { name: 'Electrical Installation Certificate', type: 'BS 7671', popular: true },
+        { name: 'Minor Works Certificate', type: 'BS 7671', popular: true },
+        { name: 'Electrical Installation Condition Report', type: 'EICR', popular: false },
+        { name: 'Periodic Inspection Report', type: 'BS 7671', popular: false },
+      ],
     },
     {
-      category: "Risk Assessments",
+      category: 'Risk Assessments',
       count: 8,
       documents: [
-        { name: "Generic Electrical RAMS", type: "Safety", popular: true },
-        { name: "Domestic Installation RAMS", type: "Safety", popular: true },
-        { name: "Commercial Electrical RAMS", type: "Safety", popular: false },
-        { name: "Emergency Call-out RAMS", type: "Safety", popular: false }
-      ]
+        { name: 'Generic Electrical RAMS', type: 'Safety', popular: true },
+        { name: 'Domestic Installation RAMS', type: 'Safety', popular: true },
+        { name: 'Commercial Electrical RAMS', type: 'Safety', popular: false },
+        { name: 'Emergency Call-out RAMS', type: 'Safety', popular: false },
+      ],
     },
     {
-      category: "Business Documents",
+      category: 'Business Documents',
       count: 15,
       documents: [
-        { name: "Professional Quote Template", type: "Business", popular: true },
-        { name: "Invoice Template", type: "Business", popular: true },
-        { name: "Contract of Employment", type: "HR", popular: false },
-        { name: "Subcontractor Agreement", type: "Legal", popular: false }
-      ]
+        { name: 'Professional Quote Template', type: 'Business', popular: true },
+        { name: 'Invoice Template', type: 'Business', popular: true },
+        { name: 'Contract of Employment', type: 'HR', popular: false },
+        { name: 'Subcontractor Agreement', type: 'Legal', popular: false },
+      ],
     },
     {
-      category: "Health & Safety",
+      category: 'Health & Safety',
       count: 10,
       documents: [
-        { name: "Site Safety Checklist", type: "Safety", popular: true },
-        { name: "Accident Report Form", type: "Safety", popular: false },
-        { name: "Tool Inspection Log", type: "Maintenance", popular: false },
-        { name: "PPE Inspection Record", type: "Safety", popular: false }
-      ]
-    }
+        { name: 'Site Safety Checklist', type: 'Safety', popular: true },
+        { name: 'Accident Report Form', type: 'Safety', popular: false },
+        { name: 'Tool Inspection Log', type: 'Maintenance', popular: false },
+        { name: 'PPE Inspection Record', type: 'Safety', popular: false },
+      ],
+    },
   ];
 
   const quickActions = [
-    { action: "Download Certificates", description: "Access BS 7671 compliant certificates", link: "/electrician-tools/document-templates" },
-    { action: "Create RAMS", description: "Generate risk assessment documents", link: "/electrician-tools/site-safety" },
-    { action: "View All Templates", description: "Browse complete document library", link: "/electrician-tools/document-templates" }
+    {
+      action: 'Download Certificates',
+      description: 'Access BS 7671 compliant certificates',
+      link: '/electrician-tools/document-templates',
+    },
+    {
+      action: 'Create RAMS',
+      description: 'Generate risk assessment documents',
+      link: '/electrician-tools/site-safety',
+    },
+    {
+      action: 'View All Templates',
+      description: 'Browse complete document library',
+      link: '/electrician-tools/document-templates',
+    },
   ];
 
   return (
@@ -94,7 +105,10 @@ const DocumentationTab = () => {
             <CardContent>
               <div className="space-y-3">
                 {category.documents.map((doc, docIndex) => (
-                  <div key={docIndex} className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg">
+                  <div
+                    key={docIndex}
+                    className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg"
+                  >
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <h4 className="font-medium text-foreground text-sm">{doc.name}</h4>

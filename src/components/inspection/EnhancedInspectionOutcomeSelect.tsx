@@ -8,7 +8,16 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'FI' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'FI'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -26,29 +35,29 @@ const primaryOutcomes = [
     label: 'OK',
     icon: Check,
     activeClass: 'bg-green-500 text-white border-green-500',
-    inactiveClass: 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20'
+    inactiveClass: 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20',
   },
   {
     value: 'C1' as const,
     label: 'C1',
     icon: X,
     activeClass: 'bg-red-500 text-white border-red-500',
-    inactiveClass: 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20'
+    inactiveClass: 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20',
   },
   {
     value: 'C2' as const,
     label: 'C2',
     icon: AlertCircle,
     activeClass: 'bg-orange-500 text-white border-orange-500',
-    inactiveClass: 'bg-orange-500/10 border-orange-500/30 text-orange-400 hover:bg-orange-500/20'
+    inactiveClass: 'bg-orange-500/10 border-orange-500/30 text-orange-400 hover:bg-orange-500/20',
   },
   {
     value: 'C3' as const,
     label: 'C3',
     icon: AlertTriangle,
     activeClass: 'bg-yellow-500 text-black border-yellow-500',
-    inactiveClass: 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20'
-  }
+    inactiveClass: 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20',
+  },
 ];
 
 // Secondary outcomes (less common)
@@ -58,38 +67,37 @@ const secondaryOutcomes = [
     label: 'FI',
     icon: Search,
     activeClass: 'bg-blue-400 text-white border-blue-400',
-    inactiveClass: 'bg-blue-400/10 border-blue-400/30 text-blue-300 hover:bg-blue-400/20'
+    inactiveClass: 'bg-blue-400/10 border-blue-400/30 text-blue-300 hover:bg-blue-400/20',
   },
   {
     value: 'not-applicable' as const,
     label: 'N/A',
     icon: Circle,
     activeClass: 'bg-gray-500 text-white border-gray-500',
-    inactiveClass: 'bg-white/5 border-white/20 text-white/50 hover:bg-white/10'
+    inactiveClass: 'bg-white/5 border-white/20 text-white/50 hover:bg-white/10',
   },
   {
     value: 'not-verified' as const,
     label: 'N/V',
     icon: FileText,
     activeClass: 'bg-blue-500 text-white border-blue-500',
-    inactiveClass: 'bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20'
+    inactiveClass: 'bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20',
   },
   {
     value: 'limitation' as const,
     label: 'LIM',
     icon: Info,
     activeClass: 'bg-purple-500 text-white border-purple-500',
-    inactiveClass: 'bg-purple-500/10 border-purple-500/30 text-purple-400 hover:bg-purple-500/20'
-  }
+    inactiveClass: 'bg-purple-500/10 border-purple-500/30 text-purple-400 hover:bg-purple-500/20',
+  },
 ];
 
 const EnhancedInspectionOutcomeSelect = ({
   itemId,
   currentOutcome,
   onOutcomeChange,
-  compact = false
+  compact = false,
 }: EnhancedInspectionOutcomeSelectProps) => {
-
   const handleChipClick = (value: InspectionItem['outcome']) => {
     // Haptic feedback on mobile
     if ('vibrate' in navigator) {
@@ -118,9 +126,9 @@ const EnhancedInspectionOutcomeSelect = ({
               type="button"
               onClick={() => handleChipClick(chip.value)}
               className={cn(
-                "px-2 py-1 rounded-lg text-xs font-medium",
-                "border transition-all touch-manipulation",
-                "active:scale-95",
+                'px-2 py-1 rounded-lg text-xs font-medium',
+                'border transition-all touch-manipulation',
+                'active:scale-95',
                 isActive ? chip.activeClass : chip.inactiveClass
               )}
             >
@@ -147,10 +155,10 @@ const EnhancedInspectionOutcomeSelect = ({
               type="button"
               onClick={() => handleChipClick(chip.value)}
               className={cn(
-                "flex-1 flex items-center justify-center gap-1.5",
-                "h-11 rounded-xl text-sm font-medium",
-                "border transition-all touch-manipulation",
-                "active:scale-95",
+                'flex-1 flex items-center justify-center gap-1.5',
+                'h-11 rounded-xl text-sm font-medium',
+                'border transition-all touch-manipulation',
+                'active:scale-95',
                 isActive ? chip.activeClass : chip.inactiveClass
               )}
             >
@@ -173,10 +181,10 @@ const EnhancedInspectionOutcomeSelect = ({
               type="button"
               onClick={() => handleChipClick(chip.value)}
               className={cn(
-                "flex-1 flex items-center justify-center gap-1.5",
-                "h-11 rounded-xl text-sm font-medium",
-                "border transition-all touch-manipulation",
-                "active:scale-95",
+                'flex-1 flex items-center justify-center gap-1.5',
+                'h-11 rounded-xl text-sm font-medium',
+                'border transition-all touch-manipulation',
+                'active:scale-95',
                 isActive ? chip.activeClass : chip.inactiveClass
               )}
             >

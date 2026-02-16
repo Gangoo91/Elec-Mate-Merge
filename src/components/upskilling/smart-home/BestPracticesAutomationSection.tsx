@@ -12,8 +12,8 @@ export const BestPracticesAutomationSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Successful automation requires careful planning and gradual implementation. These proven practices 
-          ensure systems enhance rather than complicate daily life.
+          Successful automation requires careful planning and gradual implementation. These proven
+          practices ensure systems enhance rather than complicate daily life.
         </p>
 
         <div className="grid gap-4">
@@ -117,8 +117,8 @@ export const BestPracticesAutomationSection = () => {
 
         <div className="bg-green-900/20 border border-green-600/50 p-4 rounded-lg">
           <p className="text-green-200 text-sm">
-            <strong>Golden Rule:</strong> Automation should be invisible when working correctly. If users 
-            frequently notice or need to override the system, it needs refinement.
+            <strong>Golden Rule:</strong> Automation should be invisible when working correctly. If
+            users frequently notice or need to override the system, it needs refinement.
           </p>
         </div>
       </CardContent>

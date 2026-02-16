@@ -7,12 +7,12 @@ export const BridgeLatencyQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Why might bridges add latency to smart home systems?";
+  const question = 'Why might bridges add latency to smart home systems?';
   const options = [
     { id: 'a', text: 'They make devices more expensive', correct: false },
     { id: 'b', text: 'They add an extra step in communication', correct: true },
     { id: 'c', text: 'They use more electricity', correct: false },
-    { id: 'd', text: 'They require larger cables', correct: false }
+    { id: 'd', text: 'They require larger cables', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -34,7 +34,7 @@ export const BridgeLatencyQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option) => (
             <div
@@ -52,13 +52,13 @@ export const BridgeLatencyQuickCheck = () => {
             >
               <div className="flex items-center justify-between">
                 <span className="text-gray-300">{option.text}</span>
-                {showResult && selectedAnswer === option.id && (
-                  option.correct ? (
+                {showResult &&
+                  selectedAnswer === option.id &&
+                  (option.correct ? (
                     <CheckCircle className="h-5 w-5 text-green-400" />
                   ) : (
                     <XCircle className="h-5 w-5 text-red-400" />
-                  )
-                )}
+                  ))}
               </div>
             </div>
           ))}
@@ -67,7 +67,9 @@ export const BridgeLatencyQuickCheck = () => {
         {showResult && (
           <div className="mt-4 p-4 bg-amber-900/10 border border-amber-600/20 rounded-lg">
             <p className="text-amber-200 text-sm">
-              <strong>Explanation:</strong> Bridges add latency because they introduce an additional step in the communication process. Commands must be translated between protocols and routed through the bridge, increasing total response time.
+              <strong>Explanation:</strong> Bridges add latency because they introduce an additional
+              step in the communication process. Commands must be translated between protocols and
+              routed through the bridge, increasing total response time.
             </p>
           </div>
         )}

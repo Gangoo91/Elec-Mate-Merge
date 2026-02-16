@@ -1,10 +1,10 @@
-import { Quote } from "@/types/quote";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Receipt, User, Calendar, ArrowRight, FileText, Eye } from "lucide-react";
-import { format, isPast } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { Quote } from '@/types/quote';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Receipt, User, Calendar, ArrowRight, FileText, Eye } from 'lucide-react';
+import { format, isPast } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 interface LinkedInvoicesPanelProps {
   invoices: Quote[];
@@ -14,9 +14,9 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
   const navigate = useNavigate();
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
     }).format(amount);
   };
 
@@ -24,7 +24,7 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
     const status = invoice.invoice_status;
     const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
 
-    if (isOverdue || status === "overdue") {
+    if (isOverdue || status === 'overdue') {
       return (
         <Badge variant="destructive" className="text-xs">
           Overdue
@@ -32,15 +32,18 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
       );
     }
 
-    if (status === "sent") {
+    if (status === 'sent') {
       return (
-        <Badge variant="secondary" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
+        <Badge
+          variant="secondary"
+          className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30"
+        >
           Sent
         </Badge>
       );
     }
 
-    if (status === "draft") {
+    if (status === 'draft') {
       return (
         <Badge variant="outline" className="text-xs">
           Draft
@@ -48,7 +51,7 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
       );
     }
 
-    if (status === "paid") {
+    if (status === 'paid') {
       return (
         <Badge variant="success" className="text-xs">
           Paid
@@ -69,9 +72,7 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
           <div className="text-center py-8 space-y-2">
             <Receipt className="h-12 w-12 text-muted-foreground mx-auto opacity-50" />
             <p className="text-muted-foreground">No invoices raised yet</p>
-            <p className="text-xs text-muted-foreground">
-              Raised invoices will appear here
-            </p>
+            <p className="text-xs text-muted-foreground">Raised invoices will appear here</p>
           </div>
         </CardContent>
       </Card>
@@ -102,22 +103,23 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
                     Quote #{invoice.quoteNumber}
                   </Badge>
                   <ArrowRight className="h-3 w-3" />
-                  <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
+                  <Badge
+                    variant="default"
+                    className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30"
+                  >
                     <Receipt className="h-3 w-3 mr-1" />
                     {invoice.invoice_number}
                   </Badge>
                 </div>
-                
-                <div className="flex items-center gap-2">
-                  {getStatusBadge(invoice)}
-                </div>
-                
+
+                <div className="flex items-center gap-2">{getStatusBadge(invoice)}</div>
+
                 <div className="flex items-center gap-2 text-sm">
                   <User className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium truncate">{invoice.client.name}</span>
                 </div>
               </div>
-              
+
               <div className="text-lg font-bold text-elec-yellow shrink-0 ml-4">
                 {formatCurrency(invoice.total)}
               </div>
@@ -128,13 +130,13 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
               {invoice.invoice_date && (
                 <div className="flex items-center gap-1.5">
                   <Calendar className="h-3.5 w-3.5" />
-                  <span>{format(new Date(invoice.invoice_date), "dd/MM/yyyy")}</span>
+                  <span>{format(new Date(invoice.invoice_date), 'dd/MM/yyyy')}</span>
                 </div>
               )}
               {invoice.invoice_due_date && (
                 <div className="flex items-center gap-1.5">
                   <Calendar className="h-3.5 w-3.5" />
-                  <span>Due: {format(new Date(invoice.invoice_due_date), "dd/MM/yyyy")}</span>
+                  <span>Due: {format(new Date(invoice.invoice_due_date), 'dd/MM/yyyy')}</span>
                 </div>
               )}
             </div>

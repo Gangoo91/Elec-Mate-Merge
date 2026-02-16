@@ -1,13 +1,20 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { 
-  Award, MapPin, Clock, PoundSterling, 
-  TrendingUp, ExternalLink, Users, Calendar, Check
-} from "lucide-react";
-import { AccreditationOption } from "../../../apprentice/career/accreditation/enhancedAccreditationData";
-import { isValidUrl } from "@/utils/urlUtils";
-import { cn } from "@/lib/utils";
-import { getBrandInfo, getLogoUrl, getInitials } from "./accreditationBranding";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Award,
+  MapPin,
+  Clock,
+  PoundSterling,
+  TrendingUp,
+  ExternalLink,
+  Users,
+  Calendar,
+  Check,
+} from 'lucide-react';
+import { AccreditationOption } from '../../../apprentice/career/accreditation/enhancedAccreditationData';
+import { isValidUrl } from '@/utils/urlUtils';
+import { cn } from '@/lib/utils';
+import { getBrandInfo, getLogoUrl, getInitials } from './accreditationBranding';
 
 interface AccreditationCardProps {
   accreditation: AccreditationOption;
@@ -20,13 +27,15 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      "Competent Person Schemes": "bg-purple-500/20 border-purple-500/30 text-purple-300",
-      "Professional Engineering Bodies": "bg-blue-500/20 border-blue-500/30 text-blue-300",
-      "Trade Associations": "bg-green-500/20 border-green-500/30 text-green-300",
-      "Safety & Health Bodies": "bg-red-500/20 border-red-500/30 text-red-300",
-      "Project & Construction Management": "bg-amber-500/20 border-amber-500/30 text-amber-300",
+      'Competent Person Schemes': 'bg-purple-500/20 border-purple-500/30 text-purple-300',
+      'Professional Engineering Bodies': 'bg-blue-500/20 border-blue-500/30 text-blue-300',
+      'Trade Associations': 'bg-green-500/20 border-green-500/30 text-green-300',
+      'Safety & Health Bodies': 'bg-red-500/20 border-red-500/30 text-red-300',
+      'Project & Construction Management': 'bg-amber-500/20 border-amber-500/30 text-amber-300',
     };
-    return colors[category as keyof typeof colors] || "bg-white/10 border-white/20 text-foreground/80";
+    return (
+      colors[category as keyof typeof colors] || 'bg-white/10 border-white/20 text-foreground/80'
+    );
   };
 
   const getPopularityColor = (popularity: number) => {
@@ -36,22 +45,22 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
   };
 
   return (
-    <div 
+    <div
       className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.01] h-full cursor-pointer"
       onClick={() => onViewDetails(accreditation)}
     >
       {/* Header section with logo and title */}
       <div className="relative overflow-hidden h-32 sm:h-36 bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent">
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-        
+
         {/* Logo section */}
         <div className="absolute top-3 left-3">
-          <div 
+          <div
             className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2 bg-white/10 backdrop-blur-sm"
             style={{ borderColor: brandInfo.brandColor }}
           >
             {logoUrl ? (
-              <img 
+              <img
                 src={logoUrl}
                 alt={`${accreditation.accreditationBody} logo`}
                 className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
@@ -70,7 +79,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
                 }}
               />
             ) : (
-              <span 
+              <span
                 className="text-sm sm:text-base font-bold text-foreground"
                 style={{ backgroundColor: brandInfo.brandColor + '20' }}
               >
@@ -81,7 +90,10 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
         </div>
         {/* Level Badge - positioned at bottom of header */}
         <div className="absolute bottom-3 left-3">
-          <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
+          <Badge
+            variant="outline"
+            className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs"
+          >
             {accreditation.level}
           </Badge>
         </div>
@@ -126,7 +138,8 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
               <MapPin className="h-3 w-3" />
               <span className="truncate">
                 {accreditation.locations.slice(0, 2).join(', ')}
-                {accreditation.locations.length > 2 && ` +${accreditation.locations.length - 2} more`}
+                {accreditation.locations.length > 2 &&
+                  ` +${accreditation.locations.length - 2} more`}
               </span>
             </div>
           )}
@@ -157,7 +170,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
             <Calendar className="h-3 w-3" />
             <span className="truncate">{accreditation.renewalPeriod || 'No renewal'}</span>
           </div>
-          
+
           <div className="flex items-center gap-2">
             <Button
               size="sm"

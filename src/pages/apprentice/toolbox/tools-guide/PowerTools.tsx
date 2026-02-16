@@ -1,15 +1,42 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Zap, Star, Shield, CircuitBoard } from "lucide-react";
-import PowerToolsTab from "@/components/apprentice/tools-guide/PowerToolsTab";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Zap, Star, Shield, CircuitBoard } from 'lucide-react';
+import PowerToolsTab from '@/components/apprentice/tools-guide/PowerToolsTab';
 
 const PowerTools = () => {
   const quickStats = [
-    { label: "Tool Categories", value: "3", icon: CircuitBoard, color: "text-blue-400", bg: "from-blue-500/10 to-blue-500/5", border: "border-blue-500/30" },
-    { label: "Essential Tools", value: "8+", icon: Zap, color: "text-elec-yellow", bg: "from-elec-yellow/10 to-elec-yellow/5", border: "border-elec-yellow/30" },
-    { label: "Safety Focus", value: "100%", icon: Shield, color: "text-green-400", bg: "from-green-500/10 to-green-500/5", border: "border-green-500/30" },
-    { label: "UK Standards", value: "PAT", icon: Star, color: "text-purple-400", bg: "from-purple-500/10 to-purple-500/5", border: "border-purple-500/30" }
+    {
+      label: 'Tool Categories',
+      value: '3',
+      icon: CircuitBoard,
+      color: 'text-blue-400',
+      bg: 'from-blue-500/10 to-blue-500/5',
+      border: 'border-blue-500/30',
+    },
+    {
+      label: 'Essential Tools',
+      value: '8+',
+      icon: Zap,
+      color: 'text-elec-yellow',
+      bg: 'from-elec-yellow/10 to-elec-yellow/5',
+      border: 'border-elec-yellow/30',
+    },
+    {
+      label: 'Safety Focus',
+      value: '100%',
+      icon: Shield,
+      color: 'text-green-400',
+      bg: 'from-green-500/10 to-green-500/5',
+      border: 'border-green-500/30',
+    },
+    {
+      label: 'UK Standards',
+      value: 'PAT',
+      icon: Star,
+      color: 'text-purple-400',
+      bg: 'from-purple-500/10 to-purple-500/5',
+      border: 'border-purple-500/30',
+    },
   ];
 
   return (
@@ -23,7 +50,8 @@ const PowerTools = () => {
           Power Tools Guide
         </h1>
         <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Essential power tools for electrical apprentices. From cordless drills to inspection equipment - everything you need for professional work.
+          Essential power tools for electrical apprentices. From cordless drills to inspection
+          equipment - everything you need for professional work.
         </p>
         <SmartBackButton />
       </div>

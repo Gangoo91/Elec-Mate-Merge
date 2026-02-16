@@ -1,134 +1,136 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Making Final Fixes to Accessories - Module 4.5.7 | Level 2 Electrical Course";
-const DESCRIPTION = "Master professional final fixing techniques for electrical accessories. Learn proper alignment, securing methods, and compliance with BS 7671 for high-quality installations.";
+const TITLE = 'Making Final Fixes to Accessories - Module 4.5.7 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Master professional final fixing techniques for electrical accessories. Learn proper alignment, securing methods, and compliance with BS 7671 for high-quality installations.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Why is it important to follow manufacturer torque settings on terminals?",
-    options: ["To save time", "To prevent over-tightening damage and ensure secure connections", "To use less tools", "To reduce material costs"],
+    question: 'Why is it important to follow manufacturer torque settings on terminals?',
+    options: [
+      'To save time',
+      'To prevent over-tightening damage and ensure secure connections',
+      'To use less tools',
+      'To reduce material costs',
+    ],
     correctIndex: 1,
-    explanation: "Manufacturer torque settings ensure optimal connection security without damaging terminals or conductors, preventing both loose connections and over-tightening damage."
+    explanation:
+      'Manufacturer torque settings ensure optimal connection security without damaging terminals or conductors, preventing both loose connections and over-tightening damage.',
   },
   {
     id: 2,
-    question: "Name one way to ensure accessories are level when fixed.",
-    options: ["Use measuring tape", "Use spirit level", "Use plumb line", "Visual estimation"],
+    question: 'Name one way to ensure accessories are level when fixed.',
+    options: ['Use measuring tape', 'Use spirit level', 'Use plumb line', 'Visual estimation'],
     correctIndex: 1,
-    explanation: "A spirit level is the standard tool for ensuring accessories are properly aligned and level during installation."
+    explanation:
+      'A spirit level is the standard tool for ensuring accessories are properly aligned and level during installation.',
   },
   {
     id: 3,
-    question: "What precaution should you take when handling decorative faceplates?",
-    options: ["Use power tools", "Wear clean gloves", "Work quickly", "Use maximum force"],
+    question: 'What precaution should you take when handling decorative faceplates?',
+    options: ['Use power tools', 'Wear clean gloves', 'Work quickly', 'Use maximum force'],
     correctIndex: 1,
-    explanation: "Clean gloves prevent fingerprints, scratches, and contamination on decorative faceplates, maintaining their appearance and finish quality."
-  }
+    explanation:
+      'Clean gloves prevent fingerprints, scratches, and contamination on decorative faceplates, maintaining their appearance and finish quality.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the main purpose of final fixing?",
+    question: 'What is the main purpose of final fixing?',
     options: [
-      "To run new cables",
-      "To secure and align electrical accessories",
-      "To design the wiring layout",
-      "To test circuit breakers"
+      'To run new cables',
+      'To secure and align electrical accessories',
+      'To design the wiring layout',
+      'To test circuit breakers',
     ],
     correctAnswer: 1,
-    explanation: "Final fixing is the process of securely mounting and aligning electrical accessories in their final positions."
+    explanation:
+      'Final fixing is the process of securely mounting and aligning electrical accessories in their final positions.',
   },
   {
     id: 2,
-    question: "True or False: Over-tightening screws on accessories can cause damage.",
-    options: [
-      "True",
-      "False",
-      "Only on plastic accessories",
-      "Only on metal accessories"
-    ],
+    question: 'True or False: Over-tightening screws on accessories can cause damage.',
+    options: ['True', 'False', 'Only on plastic accessories', 'Only on metal accessories'],
     correctAnswer: 0,
-    explanation: "True - Over-tightening can crack faceplates, strip threads, distort mounting boxes, and damage internal components."
+    explanation:
+      'True - Over-tightening can crack faceplates, strip threads, distort mounting boxes, and damage internal components.',
   },
   {
     id: 3,
-    question: "Why should gloves be worn when handling decorative faceplates?",
+    question: 'Why should gloves be worn when handling decorative faceplates?',
     options: [
-      "For electrical safety",
-      "To avoid fingerprints and scratches",
-      "To improve grip",
-      "To prevent static discharge"
+      'For electrical safety',
+      'To avoid fingerprints and scratches',
+      'To improve grip',
+      'To prevent static discharge',
     ],
     correctAnswer: 1,
-    explanation: "Clean gloves prevent fingerprints, scratches, and contamination that would affect the appearance of decorative finishes."
+    explanation:
+      'Clean gloves prevent fingerprints, scratches, and contamination that would affect the appearance of decorative finishes.',
   },
   {
     id: 4,
-    question: "What tool can be used to ensure a socket is level?",
-    options: [
-      "Multimeter",
-      "Spirit level",
-      "Screwdriver",
-      "Wire strippers"
-    ],
+    question: 'What tool can be used to ensure a socket is level?',
+    options: ['Multimeter', 'Spirit level', 'Screwdriver', 'Wire strippers'],
     correctAnswer: 1,
-    explanation: "A spirit level ensures accessories are properly aligned and level during installation."
+    explanation:
+      'A spirit level ensures accessories are properly aligned and level during installation.',
   },
   {
     id: 5,
-    question: "Which regulation covers the correct mounting heights for accessible installations?",
-    options: [
-      "BS 7671",
-      "Building Regulations Part M",
-      "BS EN 60309",
-      "BS 5839"
-    ],
+    question: 'Which regulation covers the correct mounting heights for accessible installations?',
+    options: ['BS 7671', 'Building Regulations Part M', 'BS EN 60309', 'BS 5839'],
     correctAnswer: 1,
-    explanation: "Building Regulations Part M specifies accessibility requirements including mounting heights for switches and sockets."
+    explanation:
+      'Building Regulations Part M specifies accessibility requirements including mounting heights for switches and sockets.',
   },
   {
     id: 6,
-    question: "What should you check on all earth connections before final fixing?",
+    question: 'What should you check on all earth connections before final fixing?',
     options: [
-      "Voltage level",
-      "Current capacity",
-      "That they are continuous and secure",
-      "Wire colour"
+      'Voltage level',
+      'Current capacity',
+      'That they are continuous and secure',
+      'Wire colour',
     ],
     correctAnswer: 2,
-    explanation: "Earth connections must be continuous and secure to provide effective protection in fault conditions."
+    explanation:
+      'Earth connections must be continuous and secure to provide effective protection in fault conditions.',
   },
   {
     id: 7,
-    question: "Name one method of correcting uneven mounting surfaces.",
+    question: 'Name one method of correcting uneven mounting surfaces.',
     options: [
-      "Use spacers or shims",
-      "Force the accessory flat",
-      "Use longer screws",
-      "Ignore the problem"
+      'Use spacers or shims',
+      'Force the accessory flat',
+      'Use longer screws',
+      'Ignore the problem',
     ],
     correctAnswer: 0,
-    explanation: "Spacers or shims allow accessories to be mounted flush and level on uneven surfaces."
+    explanation:
+      'Spacers or shims allow accessories to be mounted flush and level on uneven surfaces.',
   },
   {
     id: 8,
-    question: "Why is double-checking terminal tightness after fixing important?",
+    question: 'Why is double-checking terminal tightness after fixing important?',
     options: [
-      "To test the circuit",
-      "Handling during fixing can loosen screws",
-      "To check polarity",
-      "To verify colour coding"
+      'To test the circuit',
+      'Handling during fixing can loosen screws',
+      'To check polarity',
+      'To verify colour coding',
     ],
     correctAnswer: 1,
-    explanation: "Movement and handling during the fixing process can cause terminals to loosen, requiring re-checking and re-tightening."
-  }
+    explanation:
+      'Movement and handling during the fixing process can cause terminals to loosen, requiring re-checking and re-tightening.',
+  },
 ];
 
 const Module4Section5_7 = () => {
@@ -166,7 +168,8 @@ const Module4Section5_7 = () => {
               Making Final Fixes to Accessories
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Master professional final fixing techniques to ensure electrical accessories are securely fitted, correctly aligned, and meet all safety and aesthetic requirements.
+              Master professional final fixing techniques to ensure electrical accessories are
+              securely fitted, correctly aligned, and meet all safety and aesthetic requirements.
             </p>
           </header>
 
@@ -176,17 +179,28 @@ const Module4Section5_7 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">In 30 Seconds</p>
                 <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
-                  <li>Final fixing secures accessories in place with correct alignment and positioning</li>
+                  <li>
+                    Final fixing secures accessories in place with correct alignment and positioning
+                  </li>
                   <li>Proper technique ensures safety, reliability, and professional appearance</li>
-                  <li>Compliance with BS 7671 and Building Regulations is essential for certification</li>
+                  <li>
+                    Compliance with BS 7671 and Building Regulations is essential for certification
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">Spot it / Use it</p>
                 <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
-                  <li><strong>Spot:</strong> Mounting boxes, accessory types, alignment requirements</li>
-                  <li><strong>Use:</strong> Correct tools, proper techniques, manufacturer specifications</li>
-                  <li><strong>Check:</strong> Secure fixing, level alignment, tight terminations</li>
+                  <li>
+                    <strong>Spot:</strong> Mounting boxes, accessory types, alignment requirements
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Correct tools, proper techniques, manufacturer
+                    specifications
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Secure fixing, level alignment, tight terminations
+                  </li>
                 </ul>
               </div>
             </div>
@@ -199,11 +213,26 @@ const Module4Section5_7 = () => {
               Learning Outcomes
             </h2>
             <ul className="text-white/80 space-y-2 leading-relaxed list-disc pl-6">
-              <li>Prepare accessories and mounting boxes systematically for professional final fixing procedures</li>
-              <li>Securely fit and align electrical accessories to manufacturer specifications and industry standards</li>
-              <li>Ensure all terminations are tight and conductors are correctly positioned for long-term reliability</li>
-              <li>Avoid damage to accessories during installation while maintaining quality and appearance standards</li>
-              <li>Follow manufacturer instructions and relevant standards including BS 7671 and Building Regulations</li>
+              <li>
+                Prepare accessories and mounting boxes systematically for professional final fixing
+                procedures
+              </li>
+              <li>
+                Securely fit and align electrical accessories to manufacturer specifications and
+                industry standards
+              </li>
+              <li>
+                Ensure all terminations are tight and conductors are correctly positioned for
+                long-term reliability
+              </li>
+              <li>
+                Avoid damage to accessories during installation while maintaining quality and
+                appearance standards
+              </li>
+              <li>
+                Follow manufacturer instructions and relevant standards including BS 7671 and
+                Building Regulations
+              </li>
             </ul>
           </section>
 
@@ -220,7 +249,9 @@ const Module4Section5_7 = () => {
                 <p className="font-medium text-white mb-2">First-fix Completion Check</p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
                   <li>All cabling installed and tested for continuity and polarity</li>
-                  <li>Containment systems (conduit, trunking, tray) properly installed and secured</li>
+                  <li>
+                    Containment systems (conduit, trunking, tray) properly installed and secured
+                  </li>
                   <li>Back boxes mounted flush, level, and at correct centres</li>
                   <li>Wall finishes completed with no damage to electrical installations</li>
                 </ul>
@@ -265,7 +296,9 @@ const Module4Section5_7 = () => {
               Professional Termination Standards and Verification
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Correct termination techniques ensure electrical safety and long-term reliability:</p>
+              <p>
+                Correct termination techniques ensure electrical safety and long-term reliability:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Stripping Length Verification</p>
@@ -316,7 +349,10 @@ const Module4Section5_7 = () => {
               Professional Alignment and Securing Techniques
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Precise alignment and secure fixing ensure professional appearance and long-term performance:</p>
+              <p>
+                Precise alignment and secure fixing ensure professional appearance and long-term
+                performance:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Spirit Level Application</p>
@@ -399,10 +435,16 @@ const Module4Section5_7 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Standard Socket Outlet Installation</p>
                 <ol className="text-sm space-y-1 list-decimal pl-4">
-                  <li>Verify circuit isolation and test conductors for correct polarity and continuity</li>
+                  <li>
+                    Verify circuit isolation and test conductors for correct polarity and continuity
+                  </li>
                   <li>Check mounting box is flush, level, and free from debris or damage</li>
-                  <li>Prepare conductors to correct strip length as per manufacturer specification</li>
-                  <li>Insert conductors into appropriate terminals: Live (L), Neutral (N), Earth (E)</li>
+                  <li>
+                    Prepare conductors to correct strip length as per manufacturer specification
+                  </li>
+                  <li>
+                    Insert conductors into appropriate terminals: Live (L), Neutral (N), Earth (E)
+                  </li>
                   <li>Tighten terminals to specified torque, typically 0.8-1.2Nm</li>
                   <li>Fold conductors neatly into box ensuring no stress on terminations</li>
                   <li>Position accessory flush against wall using spirit level for alignment</li>
@@ -419,7 +461,9 @@ const Module4Section5_7 = () => {
                   <li>Verify isolation and check conductor identification at switch position</li>
                   <li>Install appropriate sleeving on switched live conductors if required</li>
                   <li>Connect conductors according to switching circuit requirements</li>
-                  <li>For two-way switching, verify common and strappers are correctly identified</li>
+                  <li>
+                    For two-way switching, verify common and strappers are correctly identified
+                  </li>
                   <li>Ensure no neutral conductors are switched in any switching arrangement</li>
                   <li>Position switch mechanism checking orientation and alignment</li>
                   <li>Test switching operation in all positions before completing installation</li>
@@ -433,7 +477,12 @@ const Module4Section5_7 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="text-lg font-semibold text-white mb-2">Summary</h2>
               <p className="text-white/80 leading-relaxed">
-                Final fixing ensures that electrical accessories are securely fitted, correctly aligned, and meet all safety and aesthetic requirements. Care, precision, and compliance with standards at this stage make the difference between a professional installation and one that appears rushed or unfinished. Proper technique prevents failures, reduces callbacks, and demonstrates the electrician's commitment to quality and safety standards.
+                Final fixing ensures that electrical accessories are securely fitted, correctly
+                aligned, and meet all safety and aesthetic requirements. Care, precision, and
+                compliance with standards at this stage make the difference between a professional
+                installation and one that appears rushed or unfinished. Proper technique prevents
+                failures, reduces callbacks, and demonstrates the electrician's commitment to
+                quality and safety standards.
               </p>
             </div>
           </section>
@@ -441,7 +490,9 @@ const Module4Section5_7 = () => {
           {/* Quiz */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
-            <p className="text-white/70 mb-6">Test your understanding of final fixing techniques and requirements.</p>
+            <p className="text-white/70 mb-6">
+              Test your understanding of final fixing techniques and requirements.
+            </p>
             <Quiz questions={quizQuestions} />
           </section>
 

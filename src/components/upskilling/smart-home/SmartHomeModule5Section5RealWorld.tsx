@@ -12,42 +12,48 @@ export const SmartHomeModule5Section5RealWorld = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-          <h4 className="text-foreground font-semibold mb-3">Manchester Family Smart Lighting Integration</h4>
+          <h4 className="text-foreground font-semibold mb-3">
+            Manchester Family Smart Lighting Integration
+          </h4>
           <p className="text-sm mb-3">
-            A family home in Manchester integrated PIR sensors with their comprehensive smart lighting 
-            system, creating multiple automated responses for security, convenience, and emergency 
-            situations. The installation demonstrates practical integration of lighting scenes with 
-            security systems and emergency protocols.
+            A family home in Manchester integrated PIR sensors with their comprehensive smart
+            lighting system, creating multiple automated responses for security, convenience, and
+            emergency situations. The installation demonstrates practical integration of lighting
+            scenes with security systems and emergency protocols.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Security Integration Response</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Security Integration Response
+            </h4>
             <div className="space-y-3">
               <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
-                <p className="text-blue-400 font-semibold text-sm mb-1">Night Security Activation</p>
+                <p className="text-blue-400 font-semibold text-sm mb-1">
+                  Night Security Activation
+                </p>
                 <p className="text-xs text-foreground">
-                  When motion was detected in the garden at night, three coordinated responses 
-                  activated automatically: exterior floodlights illuminated the detection area, 
-                  CCTV cameras began recording with enhanced night vision, and interior hallway 
-                  lights switched on to simulate occupancy.
+                  When motion was detected in the garden at night, three coordinated responses
+                  activated automatically: exterior floodlights illuminated the detection area, CCTV
+                  cameras began recording with enhanced night vision, and interior hallway lights
+                  switched on to simulate occupancy.
                 </p>
               </div>
               <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
                 <p className="text-orange-400 font-semibold text-sm mb-1">Occupancy Simulation</p>
                 <p className="text-xs text-foreground">
-                  During family holidays, the "Away Mode" scene activated random lighting patterns 
-                  throughout the house, including living room lights in the evening, bedroom lights 
-                  at bedtime hours, and bathroom lights for brief periods to create realistic 
+                  During family holidays, the "Away Mode" scene activated random lighting patterns
+                  throughout the house, including living room lights in the evening, bedroom lights
+                  at bedtime hours, and bathroom lights for brief periods to create realistic
                   occupancy patterns.
                 </p>
               </div>
               <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
                 <p className="text-green-400 font-semibold text-sm mb-1">Deterrent Effectiveness</p>
                 <p className="text-xs text-foreground">
-                  The visible security lighting response and simulated occupancy successfully 
-                  deterred attempted intrusions, with the bright activation causing would-be 
+                  The visible security lighting response and simulated occupancy successfully
+                  deterred attempted intrusions, with the bright activation causing would-be
                   intruders to leave the property immediately on multiple occasions.
                 </p>
               </div>
@@ -55,31 +61,34 @@ export const SmartHomeModule5Section5RealWorld = () => {
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Emergency Response System</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Emergency Response System
+            </h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-red-400 font-semibold text-sm mb-1">Fire Safety Protocol</p>
                 <p className="text-xs text-foreground">
-                  In the emergency profile, smoke alarm activation triggered all lights to flash 
-                  red three times, then illuminated a sequential pathway from all bedrooms to 
-                  the front door, with stairway lighting at maximum brightness to guide safe 
-                  evacuation.
+                  In the emergency profile, smoke alarm activation triggered all lights to flash red
+                  three times, then illuminated a sequential pathway from all bedrooms to the front
+                  door, with stairway lighting at maximum brightness to guide safe evacuation.
                 </p>
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
-                <p className="text-yellow-400 font-semibold text-sm mb-1">Medical Emergency Response</p>
+                <p className="text-yellow-400 font-semibold text-sm mb-1">
+                  Medical Emergency Response
+                </p>
                 <p className="text-xs text-foreground">
-                  The medical emergency scene activated all interior lights to full brightness, 
-                  illuminated the pathway to the front door, and switched on exterior porch 
-                  lights to assist emergency services in locating the property quickly.
+                  The medical emergency scene activated all interior lights to full brightness,
+                  illuminated the pathway to the front door, and switched on exterior porch lights
+                  to assist emergency services in locating the property quickly.
                 </p>
               </div>
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-cyan-400 font-semibold text-sm mb-1">Power Outage Backup</p>
                 <p className="text-xs text-foreground">
-                  During a neighbourhood power cut, battery backup systems automatically activated 
-                  emergency lighting in hallways and stairwells, while solar-charged garden 
-                  lights continued perimeter security illumination throughout the night.
+                  During a neighbourhood power cut, battery backup systems automatically activated
+                  emergency lighting in hallways and stairwells, while solar-charged garden lights
+                  continued perimeter security illumination throughout the night.
                 </p>
               </div>
             </div>
@@ -123,7 +132,9 @@ export const SmartHomeModule5Section5RealWorld = () => {
         </div>
 
         <div className="bg-purple-600/10 p-4 rounded-lg border border-purple-600/30">
-          <h4 className="text-purple-400 font-semibold mb-3">Installation and Configuration Insights</h4>
+          <h4 className="text-purple-400 font-semibold mb-3">
+            Installation and Configuration Insights
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-foreground font-semibold text-sm mb-2">Challenges Encountered:</p>

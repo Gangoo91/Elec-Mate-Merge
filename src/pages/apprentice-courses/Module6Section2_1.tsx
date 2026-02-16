@@ -1,137 +1,137 @@
-import { ArrowLeft, Eye, FileText, Target } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, Eye, FileText, Target } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section2_1 = () => {
   useSEO(
-    "What to Look for During Visual Checks - Level 2 Electrical Installation",
-    "Comprehensive guide to visual inspection procedures and identifying defects in electrical installations"
+    'What to Look for During Visual Checks - Level 2 Electrical Installation',
+    'Comprehensive guide to visual inspection procedures and identifying defects in electrical installations'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the main purpose of a visual inspection?",
+      question: 'What is the main purpose of a visual inspection?',
       options: [
-        "To test electrical continuity",
-        "To identify defects before testing",
-        "To measure insulation resistance",
-        "To calculate load requirements"
+        'To test electrical continuity',
+        'To identify defects before testing',
+        'To measure insulation resistance',
+        'To calculate load requirements',
       ],
       correctAnswer: 1,
-      explanation: "Visual inspection is carried out first to identify obvious defects, hazards, and poor workmanship before any electrical testing begins."
+      explanation:
+        'Visual inspection is carried out first to identify obvious defects, hazards, and poor workmanship before any electrical testing begins.',
     },
     {
       id: 2,
-      question: "Which regulation outlines cable routing safe zones?",
-      options: [
-        "BS 5839",
-        "BS 7671",
-        "Building Regs Part L",
-        "BS 6004"
-      ],
+      question: 'Which regulation outlines cable routing safe zones?',
+      options: ['BS 5839', 'BS 7671', 'Building Regs Part L', 'BS 6004'],
       correctAnswer: 1,
-      explanation: "BS 7671 (The IET Wiring Regulations) specifies the safe zones for cable installation in walls, floors, and ceilings."
+      explanation:
+        'BS 7671 (The IET Wiring Regulations) specifies the safe zones for cable installation in walls, floors, and ceilings.',
     },
     {
       id: 3,
-      question: "Name two defects to look for on socket outlets.",
+      question: 'Name two defects to look for on socket outlets.',
       options: [
-        "Colour and size",
-        "Cracks and scorch marks",
-        "Brand and model",
-        "Age and warranty"
+        'Colour and size',
+        'Cracks and scorch marks',
+        'Brand and model',
+        'Age and warranty',
       ],
       correctAnswer: 1,
-      explanation: "Physical damage like cracks and signs of overheating such as scorch marks indicate potential safety hazards that must be addressed."
+      explanation:
+        'Physical damage like cracks and signs of overheating such as scorch marks indicate potential safety hazards that must be addressed.',
     },
     {
       id: 4,
-      question: "True or False: Minor scratches on accessories must always be recorded.",
+      question: 'True or False: Minor scratches on accessories must always be recorded.',
       options: [
-        "True - all defects must be recorded",
-        "False - only safety-affecting defects",
-        "True - for insurance purposes",
-        "False - scratches are acceptable"
+        'True - all defects must be recorded',
+        'False - only safety-affecting defects',
+        'True - for insurance purposes',
+        'False - scratches are acceptable',
       ],
       correctAnswer: 1,
-      explanation: "Only defects that affect safety, functionality, or compliance need to be recorded. Minor cosmetic issues that don't impact safety are not required to be documented."
+      explanation:
+        "Only defects that affect safety, functionality, or compliance need to be recorded. Minor cosmetic issues that don't impact safety are not required to be documented.",
     },
     {
       id: 5,
-      question: "What safety device must be present in bathrooms and outdoor circuits?",
+      question: 'What safety device must be present in bathrooms and outdoor circuits?',
       options: [
-        "MCB (Miniature Circuit Breaker)",
-        "RCBO (RCD + MCB combined)",
-        "RCD (Residual Current Device)",
-        "SPD (Surge Protection Device)"
+        'MCB (Miniature Circuit Breaker)',
+        'RCBO (RCD + MCB combined)',
+        'RCD (Residual Current Device)',
+        'SPD (Surge Protection Device)',
       ],
       correctAnswer: 2,
-      explanation: "RCDs are mandatory in bathrooms and outdoor circuits to provide additional protection against electric shock in higher-risk environments."
+      explanation:
+        'RCDs are mandatory in bathrooms and outdoor circuits to provide additional protection against electric shock in higher-risk environments.',
     },
     {
       id: 6,
-      question: "What is a key sign of poor workmanship in trunking installation?",
+      question: 'What is a key sign of poor workmanship in trunking installation?',
       options: [
-        "Straight alignment",
-        "Proper joint connections",
-        "Uneven runs or missing fixings",
-        "Adequate cable capacity"
+        'Straight alignment',
+        'Proper joint connections',
+        'Uneven runs or missing fixings',
+        'Adequate cable capacity',
       ],
       correctAnswer: 2,
-      explanation: "Uneven trunking runs and missing fixings indicate poor installation practices that can lead to mechanical stress and potential failures."
+      explanation:
+        'Uneven trunking runs and missing fixings indicate poor installation practices that can lead to mechanical stress and potential failures.',
     },
     {
       id: 7,
-      question: "Why should earthing conductors be inspected?",
+      question: 'Why should earthing conductors be inspected?',
       options: [
-        "To check conductor size",
-        "To ensure safety and compliance",
-        "To verify insulation colour",
-        "To measure resistance"
+        'To check conductor size',
+        'To ensure safety and compliance',
+        'To verify insulation colour',
+        'To measure resistance',
       ],
       correctAnswer: 1,
-      explanation: "Earthing conductors are critical for safety, providing a path for fault currents and ensuring effective operation of protective devices."
+      explanation:
+        'Earthing conductors are critical for safety, providing a path for fault currents and ensuring effective operation of protective devices.',
     },
     {
       id: 8,
-      question: "At what stage should visual inspections be carried out?",
+      question: 'At what stage should visual inspections be carried out?',
       options: [
-        "After all testing is complete",
-        "Before any testing or energising",
-        "Only during commissioning",
-        "When faults are suspected"
+        'After all testing is complete',
+        'Before any testing or energising',
+        'Only during commissioning',
+        'When faults are suspected',
       ],
       correctAnswer: 1,
-      explanation: "Visual inspection must be the first step, carried out before any electrical testing or energising to identify obvious hazards and defects safely."
+      explanation:
+        'Visual inspection must be the first step, carried out before any electrical testing or energising to identify obvious hazards and defects safely.',
     },
     {
       id: 9,
-      question: "Which locations require IP-rated protection?",
+      question: 'Which locations require IP-rated protection?',
       options: [
-        "All domestic locations",
-        "Bathrooms and outdoor areas",
-        "Only industrial installations",
-        "Bedrooms and lounges"
+        'All domestic locations',
+        'Bathrooms and outdoor areas',
+        'Only industrial installations',
+        'Bedrooms and lounges',
       ],
       correctAnswer: 1,
-      explanation: "Locations exposed to moisture, dust, or other environmental factors require appropriate IP-rated equipment for protection against ingress."
+      explanation:
+        'Locations exposed to moisture, dust, or other environmental factors require appropriate IP-rated equipment for protection against ingress.',
     },
     {
       id: 10,
-      question: "What tool is essential for ensuring no stage of inspection is missed?",
-      options: [
-        "Multimeter",
-        "Insulation tester",
-        "A checklist",
-        "RCD tester"
-      ],
+      question: 'What tool is essential for ensuring no stage of inspection is missed?',
+      options: ['Multimeter', 'Insulation tester', 'A checklist', 'RCD tester'],
       correctAnswer: 2,
-      explanation: "A systematic checklist ensures all required inspection points are covered and nothing is overlooked during the visual inspection process."
-    }
+      explanation:
+        'A systematic checklist ensures all required inspection points are covered and nothing is overlooked during the visual inspection process.',
+    },
   ];
 
   return (
@@ -166,7 +166,8 @@ const Module6Section2_1 = () => {
               What to Look for During Visual Checks
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Comprehensive guide to visual inspection procedures and identifying defects in electrical installations
+              Comprehensive guide to visual inspection procedures and identifying defects in
+              electrical installations
             </p>
           </header>
 
@@ -189,9 +190,16 @@ const Module6Section2_1 = () => {
               <div>
                 <p className="font-medium text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Spot:</strong> Damaged enclosures, exposed conductors, poor workmanship</li>
-                  <li><strong>Use:</strong> Adequate lighting, systematic checklist, BS 7671 requirements</li>
-                  <li><strong>Check:</strong> Never assume safety - always verify</li>
+                  <li>
+                    <strong>Spot:</strong> Damaged enclosures, exposed conductors, poor workmanship
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Adequate lighting, systematic checklist, BS 7671
+                    requirements
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Never assume safety - always verify
+                  </li>
                 </ul>
               </div>
             </div>
@@ -205,10 +213,13 @@ const Module6Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Visual inspection is the first stage of ensuring an electrical installation is safe, compliant, and fit for use. Before any testing is carried out, installers must carefully check for obvious defects, hazards, and poor workmanship.
+                Visual inspection is the first stage of ensuring an electrical installation is safe,
+                compliant, and fit for use. Before any testing is carried out, installers must
+                carefully check for obvious defects, hazards, and poor workmanship.
               </p>
               <p>
-                A thorough visual inspection reduces the likelihood of electrical faults, improves safety, and ensures compliance with BS 7671.
+                A thorough visual inspection reduces the likelihood of electrical faults, improves
+                safety, and ensures compliance with BS 7671.
               </p>
             </div>
           </section>
@@ -239,14 +250,18 @@ const Module6Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                The first priority during visual inspection is checking the physical condition of all electrical equipment and accessories. This includes examining sockets, switches, distribution boards, and other electrical components.
+                The first priority during visual inspection is checking the physical condition of
+                all electrical equipment and accessories. This includes examining sockets, switches,
+                distribution boards, and other electrical components.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-3">Equipment Condition Checks:</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-white mb-1"><strong>Socket Outlets and Switches:</strong></p>
+                    <p className="text-white mb-1">
+                      <strong>Socket Outlets and Switches:</strong>
+                    </p>
                     <ul className="text-sm list-disc pl-5 space-y-1">
                       <li>Check for cracks, breaks, or damage to the faceplate or mounting box</li>
                       <li>Look for scorch marks or discolouration indicating overheating</li>
@@ -254,7 +269,9 @@ const Module6Section2_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-white mb-1"><strong>Enclosures and Distribution Boards:</strong></p>
+                    <p className="text-white mb-1">
+                      <strong>Enclosures and Distribution Boards:</strong>
+                    </p>
                     <ul className="text-sm list-disc pl-5 space-y-1">
                       <li>Check for missing covers or damaged enclosure integrity</li>
                       <li>Look for signs of moisture ingress or corrosion</li>
@@ -269,7 +286,12 @@ const Module6Section2_1 = () => {
               <InlineCheck
                 id="equipment-condition-check"
                 question="What are the main signs of damage to look for on electrical accessories?"
-                options={["Age and manufacturer", "Cracks, breaks, and scorch marks", "Colour and style", "Installation date"]}
+                options={[
+                  'Age and manufacturer',
+                  'Cracks, breaks, and scorch marks',
+                  'Colour and style',
+                  'Installation date',
+                ]}
                 correctIndex={1}
                 explanation="Physical damage like cracks, breaks, and scorch marks indicate potential safety hazards that require immediate attention."
               />
@@ -284,14 +306,18 @@ const Module6Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Cable integrity is fundamental to electrical safety. During visual inspection, particular attention must be paid to the condition of cable insulation, sheathing, and mechanical protection.
+                Cable integrity is fundamental to electrical safety. During visual inspection,
+                particular attention must be paid to the condition of cable insulation, sheathing,
+                and mechanical protection.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-3">Cable and Conductor Inspection:</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-white mb-1"><strong>Cable Condition:</strong></p>
+                    <p className="text-white mb-1">
+                      <strong>Cable Condition:</strong>
+                    </p>
                     <ul className="text-sm list-disc pl-5 space-y-1">
                       <li>Look for cuts, nicks, or damage to cable sheathing or insulation</li>
                       <li>Check for exposed live conductors or damaged protective covering</li>
@@ -299,7 +325,9 @@ const Module6Section2_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-white mb-1"><strong>Cable Support and Installation:</strong></p>
+                    <p className="text-white mb-1">
+                      <strong>Cable Support and Installation:</strong>
+                    </p>
                     <ul className="text-sm list-disc pl-5 space-y-1">
                       <li>Ensure cables are properly supported at appropriate intervals</li>
                       <li>Check that cables are not under mechanical strain or stress</li>
@@ -314,7 +342,12 @@ const Module6Section2_1 = () => {
               <InlineCheck
                 id="cable-integrity-check"
                 question="Why is it important to check cable support and strain relief?"
-                options={["For aesthetic appearance", "To prevent mechanical damage and maintain electrical integrity", "To comply with building regulations", "To reduce installation costs"]}
+                options={[
+                  'For aesthetic appearance',
+                  'To prevent mechanical damage and maintain electrical integrity',
+                  'To comply with building regulations',
+                  'To reduce installation costs',
+                ]}
                 correctIndex={1}
                 explanation="Proper cable support prevents mechanical stress that could damage conductors or connections, maintaining both safety and electrical integrity."
               />
@@ -329,13 +362,19 @@ const Module6Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Visual inspection must verify that all components are correctly selected for their intended application and installed according to manufacturer instructions and BS 7671 requirements.
+                Visual inspection must verify that all components are correctly selected for their
+                intended application and installed according to manufacturer instructions and BS
+                7671 requirements.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
-                <p className="font-medium text-white mb-3">Selection and Installation Verification:</p>
+                <p className="font-medium text-white mb-3">
+                  Selection and Installation Verification:
+                </p>
                 <ul className="text-sm list-disc pl-5 space-y-1">
-                  <li>Confirm accessories are correctly rated for their intended current and voltage</li>
+                  <li>
+                    Confirm accessories are correctly rated for their intended current and voltage
+                  </li>
                   <li>Verify protective devices match cable ratings and installation methods</li>
                   <li>Check appropriate IP ratings for location (bathrooms, outdoor areas)</li>
                   <li>Ensure proper ventilation and heat dissipation arrangements</li>
@@ -347,7 +386,7 @@ const Module6Section2_1 = () => {
               <InlineCheck
                 id="selection-installation-check"
                 question="Which regulation requires specific IP ratings in bathroom zones?"
-                options={["BS 5839", "BS 7671", "Building Regulations", "HSE Guidance"]}
+                options={['BS 5839', 'BS 7671', 'Building Regulations', 'HSE Guidance']}
                 correctIndex={1}
                 explanation="BS 7671 specifies IP rating requirements for different zones in locations containing a bath or shower."
               />
@@ -362,14 +401,18 @@ const Module6Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Effective earthing and bonding systems are critical for electrical safety. Visual inspection must confirm that all earthing and bonding connections are present, accessible, and properly implemented.
+                Effective earthing and bonding systems are critical for electrical safety. Visual
+                inspection must confirm that all earthing and bonding connections are present,
+                accessible, and properly implemented.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-3">Earthing and Bonding Systems:</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-white mb-1"><strong>Main Earthing Arrangements:</strong></p>
+                    <p className="text-white mb-1">
+                      <strong>Main Earthing Arrangements:</strong>
+                    </p>
                     <ul className="text-sm list-disc pl-5 space-y-1">
                       <li>Verify presence and condition of main earthing conductor</li>
                       <li>Check earth electrode connection is secure and accessible</li>
@@ -377,7 +420,9 @@ const Module6Section2_1 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-white mb-1"><strong>Main Equipotential Bonding:</strong></p>
+                    <p className="text-white mb-1">
+                      <strong>Main Equipotential Bonding:</strong>
+                    </p>
                     <ul className="text-sm list-disc pl-5 space-y-1">
                       <li>Water service pipes - bonding within 600mm of entry</li>
                       <li>Gas installation pipes - bonding at meter position</li>
@@ -390,7 +435,8 @@ const Module6Section2_1 = () => {
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
                 <p className="font-medium text-amber-400 mb-2">Critical Safety Point</p>
                 <p className="text-sm">
-                  Missing or inadequate earthing and bonding can result in dangerous touch voltages during fault conditions. Always verify all required connections are present.
+                  Missing or inadequate earthing and bonding can result in dangerous touch voltages
+                  during fault conditions. Always verify all required connections are present.
                 </p>
               </div>
             </div>
@@ -399,7 +445,12 @@ const Module6Section2_1 = () => {
               <InlineCheck
                 id="earthing-bonding-check"
                 question="What metallic services require main bonding connections?"
-                options={["Only water pipes", "Water, gas, oil, and structural steelwork", "Only gas pipes", "Only central heating pipes"]}
+                options={[
+                  'Only water pipes',
+                  'Water, gas, oil, and structural steelwork',
+                  'Only gas pipes',
+                  'Only central heating pipes',
+                ]}
                 correctIndex={1}
                 explanation="All extraneous-conductive-parts including water, gas, oil pipes and structural steelwork require main equipotential bonding."
               />
@@ -414,11 +465,15 @@ const Module6Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                BS 7671 specifies safe zones for cable installation to reduce the risk of inadvertent damage during building work. Visual inspection must verify compliance with these critical safety requirements.
+                BS 7671 specifies safe zones for cable installation to reduce the risk of
+                inadvertent damage during building work. Visual inspection must verify compliance
+                with these critical safety requirements.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
-                <p className="font-medium text-white mb-3">Permitted Safe Zones (BS 7671 Section 522):</p>
+                <p className="font-medium text-white mb-3">
+                  Permitted Safe Zones (BS 7671 Section 522):
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-medium text-white mb-2">Horizontal Zones:</p>
@@ -444,7 +499,12 @@ const Module6Section2_1 = () => {
               <InlineCheck
                 id="safe-zones-check"
                 question="Which zones are permitted for concealed cables in walls?"
-                options={["Anywhere in the wall", "150mm from corners and within 150mm of ceiling/floor", "Only in metal conduit", "Only behind socket outlets"]}
+                options={[
+                  'Anywhere in the wall',
+                  '150mm from corners and within 150mm of ceiling/floor',
+                  'Only in metal conduit',
+                  'Only behind socket outlets',
+                ]}
                 correctIndex={1}
                 explanation="BS 7671 allows concealed cables in walls within 150mm of the top, bottom, or corner of the wall or within 150mm of accessories."
               />
@@ -459,7 +519,8 @@ const Module6Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Poor workmanship can compromise both safety and compliance. Visual inspection should identify installation practices that do not meet professional standards.
+                Poor workmanship can compromise both safety and compliance. Visual inspection should
+                identify installation practices that do not meet professional standards.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
@@ -479,7 +540,12 @@ const Module6Section2_1 = () => {
               <InlineCheck
                 id="workmanship-check"
                 question="What indicates poor workmanship in cable management systems?"
-                options={["Perfect alignment", "Uneven runs and missing fixings", "Proper labelling", "Adequate support"]}
+                options={[
+                  'Perfect alignment',
+                  'Uneven runs and missing fixings',
+                  'Proper labelling',
+                  'Adequate support',
+                ]}
                 correctIndex={1}
                 explanation="Poor workmanship is indicated by uneven trunking runs, missing fixings, loose accessories, and inadequate cable support."
               />
@@ -494,7 +560,8 @@ const Module6Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Modern electrical installations include various safety devices mandated by BS 7671. Visual inspection must confirm these devices are present and correctly installed.
+                Modern electrical installations include various safety devices mandated by BS 7671.
+                Visual inspection must confirm these devices are present and correctly installed.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-pink-500/50">
@@ -513,7 +580,9 @@ const Module6Section2_1 = () => {
           {/* Pocket Guide */}
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-              <h2 className="text-lg font-semibold text-white mb-4">Pocket Guide – Key Visual Checks</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">
+                Pocket Guide – Key Visual Checks
+              </h2>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Essential Safety Checks</p>
@@ -546,18 +615,38 @@ const Module6Section2_1 = () => {
               Recap
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p><strong>Key Learning Points:</strong></p>
+              <p>
+                <strong>Key Learning Points:</strong>
+              </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Visual inspections are the foundation of electrical safety - they must be thorough and systematic</li>
-                <li>Seven critical areas: equipment condition, cable integrity, selection/installation, earthing/bonding, safe zones, workmanship, safety devices</li>
-                <li>Environmental factors significantly affect installation longevity and safety</li>
-                <li>Professional competence and systematic approach are essential for effective inspection</li>
+                <li>
+                  Visual inspections are the foundation of electrical safety - they must be thorough
+                  and systematic
+                </li>
+                <li>
+                  Seven critical areas: equipment condition, cable integrity,
+                  selection/installation, earthing/bonding, safe zones, workmanship, safety devices
+                </li>
+                <li>
+                  Environmental factors significantly affect installation longevity and safety
+                </li>
+                <li>
+                  Professional competence and systematic approach are essential for effective
+                  inspection
+                </li>
               </ul>
 
-              <p className="mt-4"><strong>Critical Safety Messages:</strong></p>
+              <p className="mt-4">
+                <strong>Critical Safety Messages:</strong>
+              </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Never energise installations based on visual inspection alone - testing is also required</li>
-                <li>Stop immediately if immediate danger is discovered and make the installation safe</li>
+                <li>
+                  Never energise installations based on visual inspection alone - testing is also
+                  required
+                </li>
+                <li>
+                  Stop immediately if immediate danger is discovered and make the installation safe
+                </li>
                 <li>Question everything - if something appears unusual, investigate further</li>
               </ul>
             </div>

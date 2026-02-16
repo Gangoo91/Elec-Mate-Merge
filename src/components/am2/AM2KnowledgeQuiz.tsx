@@ -46,7 +46,10 @@ const CATEGORIES: AM2Question['category'][] = [
 
 const QUESTION_COUNTS = [15, 20, 30];
 
-const DIFFICULTY_WEIGHTS: Record<Difficulty, { basic: number; intermediate: number; advanced: number }> = {
+const DIFFICULTY_WEIGHTS: Record<
+  Difficulty,
+  { basic: number; intermediate: number; advanced: number }
+> = {
   basic: { basic: 0.8, intermediate: 0.2, advanced: 0 },
   intermediate: { basic: 0.2, intermediate: 0.6, advanced: 0.2 },
   advanced: { basic: 0.1, intermediate: 0.3, advanced: 0.6 },
@@ -84,7 +87,9 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
 
   // Results state
   const [score, setScore] = useState(0);
-  const [categoryScores, setCategoryScores] = useState<Record<string, { correct: number; total: number }>>({});
+  const [categoryScores, setCategoryScores] = useState<
+    Record<string, { correct: number; total: number }>
+  >({});
 
   const { saveScore } = useAM2Readiness();
   const { user } = useAuth();
@@ -248,9 +253,7 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
 
         {/* Question Count */}
         <div className="space-y-2">
-          <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
-            Questions
-          </h3>
+          <h3 className="text-xs font-semibold text-white uppercase tracking-wider">Questions</h3>
           <div className="flex gap-2">
             {QUESTION_COUNTS.map((c) => (
               <button
@@ -507,7 +510,12 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
             </div>
           </div>
 
-          <p className={cn('text-lg font-bold', passed ? 'text-emerald-400' : score >= 50 ? 'text-amber-400' : 'text-red-400')}>
+          <p
+            className={cn(
+              'text-lg font-bold',
+              passed ? 'text-emerald-400' : score >= 50 ? 'text-amber-400' : 'text-red-400'
+            )}
+          >
             {passed ? 'Well done!' : score >= 50 ? 'Nearly there' : 'Keep studying'}
           </p>
 
@@ -531,7 +539,8 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
             })
             .map(([cat, s]) => {
               const pct = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
-              const barColour = pct >= 70 ? 'bg-emerald-500' : pct >= 50 ? 'bg-amber-500' : 'bg-red-500';
+              const barColour =
+                pct >= 70 ? 'bg-emerald-500' : pct >= 50 ? 'bg-amber-500' : 'bg-red-500';
               return (
                 <div key={cat} className="space-y-1">
                   <div className="flex items-center justify-between">
@@ -539,7 +548,11 @@ export function AM2KnowledgeQuiz({ onSessionComplete }: AM2KnowledgeQuizProps) {
                     <span
                       className={cn(
                         'text-xs font-bold',
-                        pct >= 70 ? 'text-emerald-400' : pct >= 50 ? 'text-amber-400' : 'text-red-400'
+                        pct >= 70
+                          ? 'text-emerald-400'
+                          : pct >= 50
+                            ? 'text-amber-400'
+                            : 'text-red-400'
                       )}
                     >
                       {pct}% ({s.correct}/{s.total})

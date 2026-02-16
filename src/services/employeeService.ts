@@ -23,16 +23,13 @@ export interface Employee {
 }
 
 export const getEmployees = async (): Promise<Employee[]> => {
-  const { data, error } = await supabase
-    .from('employer_employees')
-    .select('*')
-    .order('name');
-  
+  const { data, error } = await supabase.from('employer_employees').select('*').order('name');
+
   if (error) {
     console.error('Error fetching employees:', error);
     throw error;
   }
-  
+
   return data || [];
 };
 
@@ -42,12 +39,12 @@ export const getEmployeeById = async (id: string): Promise<Employee | null> => {
     .select('*')
     .eq('id', id)
     .single();
-  
+
   if (error) {
     console.error('Error fetching employee:', error);
     return null;
   }
-  
+
   return data;
 };
 
@@ -59,12 +56,12 @@ export const createEmployee = async (
     .insert(employee)
     .select()
     .single();
-  
+
   if (error) {
     console.error('Error creating employee:', error);
     throw error;
   }
-  
+
   return data;
 };
 
@@ -78,26 +75,23 @@ export const updateEmployee = async (
     .eq('id', id)
     .select()
     .single();
-  
+
   if (error) {
     console.error('Error updating employee:', error);
     return null;
   }
-  
+
   return data;
 };
 
 export const deleteEmployee = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('employer_employees')
-    .delete()
-    .eq('id', id);
-  
+  const { error } = await supabase.from('employer_employees').delete().eq('id', id);
+
   if (error) {
     console.error('Error deleting employee:', error);
     return false;
   }
-  
+
   return true;
 };
 
@@ -107,11 +101,11 @@ export const getActiveEmployees = async (): Promise<Employee[]> => {
     .select('*')
     .eq('status', 'Active')
     .order('name');
-  
+
   if (error) {
     console.error('Error fetching active employees:', error);
     throw error;
   }
-  
+
   return data || [];
 };

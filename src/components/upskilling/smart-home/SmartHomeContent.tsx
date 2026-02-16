@@ -16,19 +16,23 @@ export const SmartHomeContent = () => {
           <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
             <h4 className="text-foreground font-semibold mb-3">What is a Smart Home?</h4>
             <p className="text-sm mb-3">
-              A smart home is a residence equipped with interconnected devices and systems that use internet 
-              connectivity, sensors, and automation to monitor, control, and optimise various household functions 
-              including lighting, heating, ventilation, security, and entertainment systems.
+              A smart home is a residence equipped with interconnected devices and systems that use
+              internet connectivity, sensors, and automation to monitor, control, and optimise
+              various household functions including lighting, heating, ventilation, security, and
+              entertainment systems.
             </p>
             <p className="text-sm">
-              These systems can be controlled remotely via smartphones, tablets, or voice commands, and can 
-              learn from user behaviour to automatically adjust settings for optimal comfort, security, and energy efficiency.
+              These systems can be controlled remotely via smartphones, tablets, or voice commands,
+              and can learn from user behaviour to automatically adjust settings for optimal
+              comfort, security, and energy efficiency.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div>
-              <h4 className="text-foreground font-semibold text-lg mb-4">Traditional vs Smart Homes</h4>
+              <h4 className="text-foreground font-semibold text-lg mb-4">
+                Traditional vs Smart Homes
+              </h4>
               <div className="space-y-3">
                 <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
                   <p className="text-red-400 font-semibold text-sm mb-1">Traditional Homes</p>
@@ -54,13 +58,17 @@ export const SmartHomeContent = () => {
             </div>
 
             <div>
-              <h4 className="text-foreground font-semibold text-lg mb-4">Key Components Overview</h4>
+              <h4 className="text-foreground font-semibold text-lg mb-4">
+                Key Components Overview
+              </h4>
               <div className="space-y-3">
                 <div className="bg-elec-dark p-3 rounded flex items-start gap-3">
                   <Wifi className="h-5 w-5 text-blue-400 mt-0.5" />
                   <div>
                     <p className="text-foreground font-semibold text-sm">Communication Protocols</p>
-                    <p className="text-xs text-gray-400">Zigbee, Z-Wave, Wi-Fi, Bluetooth, Thread</p>
+                    <p className="text-xs text-gray-400">
+                      Zigbee, Z-Wave, Wi-Fi, Bluetooth, Thread
+                    </p>
                   </div>
                 </div>
                 <div className="bg-elec-dark p-3 rounded flex items-start gap-3">
@@ -136,7 +144,9 @@ export const SmartHomeContent = () => {
           </div>
 
           <div className="bg-elec-dark p-4 rounded-lg">
-            <h4 className="text-elec-yellow font-semibold mb-3">Protocol Selection Considerations</h4>
+            <h4 className="text-elec-yellow font-semibold mb-3">
+              Protocol Selection Considerations
+            </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <p className="text-foreground font-semibold text-sm mb-2">Range Requirements:</p>
@@ -182,19 +192,35 @@ export const SmartHomeContent = () => {
               <div className="space-y-3">
                 <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
                   <p className="text-green-400 font-semibold text-sm mb-1">Energy Efficiency</p>
-                  <p className="text-xs text-gray-300">Automated lighting, heating, and cooling systems can reduce energy consumption by 20-30% through intelligent scheduling and occupancy detection.</p>
+                  <p className="text-xs text-gray-300">
+                    Automated lighting, heating, and cooling systems can reduce energy consumption
+                    by 20-30% through intelligent scheduling and occupancy detection.
+                  </p>
                 </div>
                 <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
                   <p className="text-blue-400 font-semibold text-sm mb-1">Enhanced Security</p>
-                  <p className="text-xs text-gray-300">Integrated CCTV, smart locks, motion sensors, and alarm systems provide comprehensive security monitoring and remote access control.</p>
+                  <p className="text-xs text-gray-300">
+                    Integrated CCTV, smart locks, motion sensors, and alarm systems provide
+                    comprehensive security monitoring and remote access control.
+                  </p>
                 </div>
                 <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
-                  <p className="text-purple-400 font-semibold text-sm mb-1">Convenience & Comfort</p>
-                  <p className="text-xs text-gray-300">Voice control, automated routines, and predictive adjustments create personalised living environments that adapt to user preferences.</p>
+                  <p className="text-purple-400 font-semibold text-sm mb-1">
+                    Convenience & Comfort
+                  </p>
+                  <p className="text-xs text-gray-300">
+                    Voice control, automated routines, and predictive adjustments create
+                    personalised living environments that adapt to user preferences.
+                  </p>
                 </div>
                 <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
-                  <p className="text-orange-400 font-semibold text-sm mb-1">Accessibility Support</p>
-                  <p className="text-xs text-gray-300">Voice control, automated assistance, and remote monitoring capabilities particularly benefit elderly or disabled users.</p>
+                  <p className="text-orange-400 font-semibold text-sm mb-1">
+                    Accessibility Support
+                  </p>
+                  <p className="text-xs text-gray-300">
+                    Voice control, automated assistance, and remote monitoring capabilities
+                    particularly benefit elderly or disabled users.
+                  </p>
                 </div>
               </div>
             </div>
@@ -204,23 +230,35 @@ export const SmartHomeContent = () => {
               <div className="space-y-3">
                 <div className="bg-elec-dark p-3 rounded">
                   <p className="text-foreground font-semibold text-sm mb-1">Climate Control</p>
-                  <p className="text-xs text-gray-400">Smart thermostats, zone control, window sensors, automated ventilation</p>
+                  <p className="text-xs text-gray-400">
+                    Smart thermostats, zone control, window sensors, automated ventilation
+                  </p>
                 </div>
                 <div className="bg-elec-dark p-3 rounded">
                   <p className="text-foreground font-semibold text-sm mb-1">Lighting Systems</p>
-                  <p className="text-xs text-gray-400">Automated dimming, colour control, occupancy sensing, circadian rhythm lighting</p>
+                  <p className="text-xs text-gray-400">
+                    Automated dimming, colour control, occupancy sensing, circadian rhythm lighting
+                  </p>
                 </div>
                 <div className="bg-elec-dark p-3 rounded">
                   <p className="text-foreground font-semibold text-sm mb-1">Security & Access</p>
-                  <p className="text-xs text-gray-400">Smart locks, video doorbells, CCTV integration, alarm systems</p>
+                  <p className="text-xs text-gray-400">
+                    Smart locks, video doorbells, CCTV integration, alarm systems
+                  </p>
                 </div>
                 <div className="bg-elec-dark p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-1">Entertainment & Media</p>
-                  <p className="text-xs text-gray-400">Multi-room audio, smart TVs, streaming integration, voice control</p>
+                  <p className="text-foreground font-semibold text-sm mb-1">
+                    Entertainment & Media
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    Multi-room audio, smart TVs, streaming integration, voice control
+                  </p>
                 </div>
                 <div className="bg-elec-dark p-3 rounded">
                   <p className="text-foreground font-semibold text-sm mb-1">Appliance Control</p>
-                  <p className="text-xs text-gray-400">Smart kitchen appliances, washing machines, robotic vacuum cleaners</p>
+                  <p className="text-xs text-gray-400">
+                    Smart kitchen appliances, washing machines, robotic vacuum cleaners
+                  </p>
                 </div>
               </div>
             </div>
@@ -243,41 +281,75 @@ export const SmartHomeContent = () => {
               <div className="space-y-3">
                 <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
                   <p className="text-red-400 font-semibold text-sm mb-1">Interoperability Issues</p>
-                  <p className="text-xs text-gray-300">Different manufacturers often use incompatible protocols, making device integration complex and limiting consumer choice.</p>
+                  <p className="text-xs text-gray-300">
+                    Different manufacturers often use incompatible protocols, making device
+                    integration complex and limiting consumer choice.
+                  </p>
                 </div>
                 <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
-                  <p className="text-red-400 font-semibold text-sm mb-1">Security Vulnerabilities</p>
-                  <p className="text-xs text-gray-300">Connected devices can be entry points for cyber attacks if not properly secured with strong passwords and regular updates.</p>
+                  <p className="text-red-400 font-semibold text-sm mb-1">
+                    Security Vulnerabilities
+                  </p>
+                  <p className="text-xs text-gray-300">
+                    Connected devices can be entry points for cyber attacks if not properly secured
+                    with strong passwords and regular updates.
+                  </p>
                 </div>
                 <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
                   <p className="text-red-400 font-semibold text-sm mb-1">High Initial Costs</p>
-                  <p className="text-xs text-gray-300">Smart devices and professional installation can require significant upfront investment, though costs are decreasing over time.</p>
+                  <p className="text-xs text-gray-300">
+                    Smart devices and professional installation can require significant upfront
+                    investment, though costs are decreasing over time.
+                  </p>
                 </div>
                 <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
-                  <p className="text-red-400 font-semibold text-sm mb-1">Complexity & Learning Curve</p>
-                  <p className="text-xs text-gray-300">Multiple apps, configuration requirements, and troubleshooting can overwhelm non-technical users.</p>
+                  <p className="text-red-400 font-semibold text-sm mb-1">
+                    Complexity & Learning Curve
+                  </p>
+                  <p className="text-xs text-gray-300">
+                    Multiple apps, configuration requirements, and troubleshooting can overwhelm
+                    non-technical users.
+                  </p>
                 </div>
               </div>
             </div>
 
             <div>
-              <h4 className="text-foreground font-semibold text-lg mb-4">Implementation Strategies</h4>
+              <h4 className="text-foreground font-semibold text-lg mb-4">
+                Implementation Strategies
+              </h4>
               <div className="space-y-3">
                 <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
                   <p className="text-green-400 font-semibold text-sm mb-1">Phased Approach</p>
-                  <p className="text-xs text-gray-300">Start with basic systems (lighting, heating) and gradually expand to more complex integrations.</p>
+                  <p className="text-xs text-gray-300">
+                    Start with basic systems (lighting, heating) and gradually expand to more
+                    complex integrations.
+                  </p>
                 </div>
                 <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
-                  <p className="text-blue-400 font-semibold text-sm mb-1">Protocol Standardisation</p>
-                  <p className="text-xs text-gray-300">Choose devices supporting emerging standards like Matter/Thread for better future compatibility.</p>
+                  <p className="text-blue-400 font-semibold text-sm mb-1">
+                    Protocol Standardisation
+                  </p>
+                  <p className="text-xs text-gray-300">
+                    Choose devices supporting emerging standards like Matter/Thread for better
+                    future compatibility.
+                  </p>
                 </div>
                 <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
-                  <p className="text-purple-400 font-semibold text-sm mb-1">Professional Installation</p>
-                  <p className="text-xs text-gray-300">Consider professional setup for complex systems to ensure proper configuration and security.</p>
+                  <p className="text-purple-400 font-semibold text-sm mb-1">
+                    Professional Installation
+                  </p>
+                  <p className="text-xs text-gray-300">
+                    Consider professional setup for complex systems to ensure proper configuration
+                    and security.
+                  </p>
                 </div>
                 <div className="bg-yellow-600/20 p-3 rounded border border-yellow-600/40">
                   <p className="text-yellow-400 font-semibold text-sm mb-1">Security First</p>
-                  <p className="text-xs text-gray-300">Implement strong passwords, regular updates, and network segmentation from the start.</p>
+                  <p className="text-xs text-gray-300">
+                    Implement strong passwords, regular updates, and network segmentation from the
+                    start.
+                  </p>
                 </div>
               </div>
             </div>

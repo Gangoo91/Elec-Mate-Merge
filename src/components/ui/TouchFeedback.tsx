@@ -233,10 +233,7 @@ interface TouchListItemProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const TouchListItem = forwardRef<HTMLDivElement, TouchListItemProps>(
-  (
-    { left, right, primary, secondary, divider = false, className, ...props },
-    ref
-  ) => {
+  ({ left, right, primary, secondary, divider = false, className, ...props }, ref) => {
     return (
       <div
         ref={ref}
@@ -250,11 +247,7 @@ export const TouchListItem = forwardRef<HTMLDivElement, TouchListItemProps>(
         {left && <div className="shrink-0">{left}</div>}
         <div className="flex-1 min-w-0">
           <div className="font-medium truncate">{primary}</div>
-          {secondary && (
-            <div className="text-sm text-muted-foreground truncate">
-              {secondary}
-            </div>
-          )}
+          {secondary && <div className="text-sm text-muted-foreground truncate">{secondary}</div>}
         </div>
         {right && <div className="shrink-0">{right}</div>}
       </div>

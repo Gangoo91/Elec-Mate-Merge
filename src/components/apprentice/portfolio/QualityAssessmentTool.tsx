@@ -1,19 +1,18 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertCircle, XCircle, Eye, Download, RefreshCw } from "lucide-react";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { downloadAssessmentReport } from "@/services/assessmentReportService";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, AlertCircle, XCircle, Eye, Download, RefreshCw } from 'lucide-react';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { downloadAssessmentReport } from '@/services/assessmentReportService';
 
 interface AssessmentCriteria {
   id: string;
   category: string;
   criteria: string;
   weight: number;
-  status: "excellent" | "good" | "needs-improvement" | "missing";
+  status: 'excellent' | 'good' | 'needs-improvement' | 'missing';
   feedback: string;
 }
 
@@ -21,75 +20,86 @@ const QualityAssessmentTool = () => {
   const { toast } = useToast();
   const [isRunningAssessment, setIsRunningAssessment] = useState(false);
   const [assessmentComplete, setAssessmentComplete] = useState(true);
-  
+
   const [criteria, setCriteria] = useState<AssessmentCriteria[]>([
     {
-      id: "evidence-quality",
-      category: "Evidence Quality",
-      criteria: "Clear, high-quality photos and documentation",
+      id: 'evidence-quality',
+      category: 'Evidence Quality',
+      criteria: 'Clear, high-quality photos and documentation',
       weight: 20,
-      status: "good",
-      feedback: "Good photo quality overall, but ensure all images are well-lit and show details clearly."
+      status: 'good',
+      feedback:
+        'Good photo quality overall, but ensure all images are well-lit and show details clearly.',
     },
     {
-      id: "learning-reflection",
-      category: "Learning Reflection",
-      criteria: "Thoughtful reflection on learning and development",
+      id: 'learning-reflection',
+      category: 'Learning Reflection',
+      criteria: 'Thoughtful reflection on learning and development',
       weight: 15,
-      status: "excellent",
-      feedback: "Excellent reflective writing showing deep understanding of learning process."
+      status: 'excellent',
+      feedback: 'Excellent reflective writing showing deep understanding of learning process.',
     },
     {
-      id: "technical-competence",
-      category: "Technical Competence",
-      criteria: "Demonstration of technical skills and knowledge",
+      id: 'technical-competence',
+      category: 'Technical Competence',
+      criteria: 'Demonstration of technical skills and knowledge',
       weight: 25,
-      status: "good",
-      feedback: "Strong technical evidence, consider adding more complex installation examples."
+      status: 'good',
+      feedback: 'Strong technical evidence, consider adding more complex installation examples.',
     },
     {
-      id: "safety-compliance",
-      category: "Safety Compliance",
-      criteria: "Evidence of safe working practices",
+      id: 'safety-compliance',
+      category: 'Safety Compliance',
+      criteria: 'Evidence of safe working practices',
       weight: 20,
-      status: "needs-improvement",
-      feedback: "Include more evidence of risk assessments and method statements."
+      status: 'needs-improvement',
+      feedback: 'Include more evidence of risk assessments and method statements.',
     },
     {
-      id: "professional-behaviour",
-      category: "Professional Behaviour",
-      criteria: "Evidence of professional and communication skills",
+      id: 'professional-behaviour',
+      category: 'Professional Behaviour',
+      criteria: 'Evidence of professional and communication skills',
       weight: 10,
-      status: "good",
-      feedback: "Good examples of customer interaction and teamwork."
+      status: 'good',
+      feedback: 'Good examples of customer interaction and teamwork.',
     },
     {
-      id: "progression-evidence",
-      category: "Progression Evidence",
-      criteria: "Clear progression from basic to advanced skills",
+      id: 'progression-evidence',
+      category: 'Progression Evidence',
+      criteria: 'Clear progression from basic to advanced skills',
       weight: 10,
-      status: "missing",
-      feedback: "Add more examples showing skill development over time."
-    }
+      status: 'missing',
+      feedback: 'Add more examples showing skill development over time.',
+    },
   ]);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "excellent": return <CheckCircle className="h-4 w-4 text-green-400" />;
-      case "good": return <CheckCircle className="h-4 w-4 text-blue-400" />;
-      case "needs-improvement": return <AlertCircle className="h-4 w-4 text-yellow-400" />;
-      case "missing": return <XCircle className="h-4 w-4 text-red-400" />;
-      default: return <AlertCircle className="h-4 w-4 text-white" />;
+      case 'excellent':
+        return <CheckCircle className="h-4 w-4 text-green-400" />;
+      case 'good':
+        return <CheckCircle className="h-4 w-4 text-blue-400" />;
+      case 'needs-improvement':
+        return <AlertCircle className="h-4 w-4 text-yellow-400" />;
+      case 'missing':
+        return <XCircle className="h-4 w-4 text-red-400" />;
+      default:
+        return <AlertCircle className="h-4 w-4 text-white" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "excellent": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "good": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "needs-improvement": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "missing": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-white/10 text-white border-white/30";
+      case 'excellent':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'good':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'needs-improvement':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'missing':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/30';
     }
   };
 
@@ -97,43 +107,47 @@ const QualityAssessmentTool = () => {
     const scores = {
       excellent: 100,
       good: 80,
-      "needs-improvement": 60,
-      missing: 0
+      'needs-improvement': 60,
+      missing: 0,
     };
-    
+
     const totalWeight = criteria.reduce((sum, item) => sum + item.weight, 0);
     const weightedScore = criteria.reduce((sum, item) => {
-      return sum + (scores[item.status] * item.weight / 100);
+      return sum + (scores[item.status] * item.weight) / 100;
     }, 0);
-    
+
     return Math.round((weightedScore / totalWeight) * 100);
   };
 
   const runAssessment = async () => {
     setIsRunningAssessment(true);
-    
+
     // Simulate assessment process
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     // Randomly update some criteria for demo purposes
-    const updatedCriteria = criteria.map(item => {
+    const updatedCriteria = criteria.map((item) => {
       const randomUpdate = Math.random();
       if (randomUpdate > 0.7) {
-        const statuses: Array<"excellent" | "good" | "needs-improvement" | "missing"> = 
-          ["excellent", "good", "needs-improvement", "missing"];
+        const statuses: Array<'excellent' | 'good' | 'needs-improvement' | 'missing'> = [
+          'excellent',
+          'good',
+          'needs-improvement',
+          'missing',
+        ];
         const newStatus = statuses[Math.floor(Math.random() * statuses.length)];
         return { ...item, status: newStatus };
       }
       return item;
     });
-    
+
     setCriteria(updatedCriteria);
     setIsRunningAssessment(false);
     setAssessmentComplete(true);
-    
+
     toast({
-      title: "Assessment Complete",
-      description: "Your portfolio has been analysed and scored.",
+      title: 'Assessment Complete',
+      description: 'Your portfolio has been analysed and scored.',
     });
   };
 
@@ -141,8 +155,8 @@ const QualityAssessmentTool = () => {
     const overallScore = calculateOverallScore();
     downloadAssessmentReport(criteria, overallScore);
     toast({
-      title: "Report Downloaded",
-      description: "Your portfolio assessment report has been generated.",
+      title: 'Report Downloaded',
+      description: 'Your portfolio assessment report has been generated.',
     });
   };
 
@@ -164,10 +178,13 @@ const QualityAssessmentTool = () => {
           </div>
           <Progress value={overallScore} className="h-3" />
           <p className="text-xs text-white mt-1">
-            {overallScore >= 80 ? "Excellent - Ready for assessment" :
-             overallScore >= 70 ? "Good - Minor improvements needed" :
-             overallScore >= 60 ? "Satisfactory - Some work required" :
-             "Needs significant improvement"}
+            {overallScore >= 80
+              ? 'Excellent - Ready for assessment'
+              : overallScore >= 70
+                ? 'Good - Minor improvements needed'
+                : overallScore >= 60
+                  ? 'Satisfactory - Some work required'
+                  : 'Needs significant improvement'}
           </p>
         </div>
 
@@ -179,11 +196,13 @@ const QualityAssessmentTool = () => {
                   {getStatusIcon(item.status)}
                   <div>
                     <h5 className="font-medium text-white text-sm">{item.criteria}</h5>
-                    <p className="text-xs text-white">{item.category} • {item.weight}% weight</p>
+                    <p className="text-xs text-white">
+                      {item.category} • {item.weight}% weight
+                    </p>
                   </div>
                 </div>
                 <Badge className={`text-xs ${getStatusColor(item.status)}`}>
-                  {item.status.replace("-", " ")}
+                  {item.status.replace('-', ' ')}
                 </Badge>
               </div>
               <p className="text-xs text-white pl-7">{item.feedback}</p>
@@ -192,11 +211,7 @@ const QualityAssessmentTool = () => {
         </div>
 
         <div className="mt-6 flex gap-3">
-          <Button 
-            className="flex-1" 
-            onClick={runAssessment}
-            disabled={isRunningAssessment}
-          >
+          <Button className="flex-1" onClick={runAssessment} disabled={isRunningAssessment}>
             {isRunningAssessment ? (
               <>
                 <RefreshCw className="h-4 w-4 mr-1 animate-spin" />
@@ -209,8 +224,8 @@ const QualityAssessmentTool = () => {
               </>
             )}
           </Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="flex-1"
             onClick={exportReport}
             disabled={!assessmentComplete}

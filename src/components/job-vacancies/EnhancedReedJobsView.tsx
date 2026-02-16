@@ -1,15 +1,14 @@
-
-import React, { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import EnhancedJobCard from "./EnhancedJobCard";
-import JobPagination from "./JobPagination";
-import EnhancedJobSearch from "./EnhancedJobSearch";
-import AIJobInsights from "./AIJobInsights";
-import IntelligentJobSearch from "./IntelligentJobSearch";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Brain, Zap, TrendingUp, Clock, Search } from "lucide-react";
+import React, { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import EnhancedJobCard from './EnhancedJobCard';
+import JobPagination from './JobPagination';
+import EnhancedJobSearch from './EnhancedJobSearch';
+import AIJobInsights from './AIJobInsights';
+import IntelligentJobSearch from './IntelligentJobSearch';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Brain, Zap, TrendingUp, Clock, Search } from 'lucide-react';
 
 interface EnhancedJobListing {
   id: string;
@@ -60,12 +59,21 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
   const [totalResults, setTotalResults] = useState(0);
   const [aiInsights, setAiInsights] = useState<any>(null);
   const [lastSearchTime, setLastSearchTime] = useState<number>(0);
-  const [activeTab, setActiveTab] = useState<"enhanced" | "intelligent">("intelligent");
-  
+  const [activeTab, setActiveTab] = useState<'enhanced' | 'intelligent'>('intelligent');
+
   const [suggestedSkills] = useState([
-    "18th Edition", "PAT Testing", "EICR", "NICEIC", "JIB Card",
-    "Emergency Lighting", "Fire Alarms", "Solar PV", "EV Charging",
-    "Industrial Wiring", "Domestic Installation", "Commercial"
+    '18th Edition',
+    'PAT Testing',
+    'EICR',
+    'NICEIC',
+    'JIB Card',
+    'Emergency Lighting',
+    'Fire Alarms',
+    'Solar PV',
+    'EV Charging',
+    'Industrial Wiring',
+    'Domestic Installation',
+    'Commercial',
   ]);
 
   // Enhanced Reed search (existing functionality)
@@ -73,7 +81,7 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
     const searchStartTime = Date.now();
     setIsLoading(true);
     setAiInsights(null);
-    
+
     try {
       const reedRequest = {
         keywords: filters.keywords,
@@ -82,21 +90,21 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
         permanent: filters.jobType === 'full-time' || !filters.jobType,
         temp: filters.jobType === 'contract',
         fullTime: filters.jobType === 'full-time' || !filters.jobType,
-        partTime: filters.jobType === 'part-time'
+        partTime: filters.jobType === 'part-time',
       };
-      
+
       const { data, error } = await supabase.functions.invoke('reed-job-listings', {
         body: reedRequest,
       });
-      
+
       if (error) throw new Error(error.message);
       if (data.error) throw new Error(data.error);
-      
+
       let fetchedJobs = data.jobs || [];
       setTotalResults(data.totalResults || 0);
       setTotalPages(Math.ceil((data.totalResults || 0) / 100));
       setCurrentPage(data.currentPage || 1);
-      
+
       // Apply client-side filtering
       if (filters.salaryMin || filters.salaryMax || filters.skills.length > 0) {
         fetchedJobs = fetchedJobs.filter((job: any) => {
@@ -109,25 +117,23 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
               if (filters.salaryMax && minSalary > parseInt(filters.salaryMax)) return false;
             }
           }
-          
+
           if (filters.skills.length > 0) {
             const jobText = (job.title + ' ' + job.description).toLowerCase();
-            return filters.skills.some(skill => 
-              jobText.includes(skill.toLowerCase())
-            );
+            return filters.skills.some((skill) => jobText.includes(skill.toLowerCase()));
           }
-          
+
           return true;
         });
       }
-      
+
       setJobs(fetchedJobs);
       setLastSearchTime(Date.now() - searchStartTime);
-      
+
       if (fetchedJobs.length === 0) {
         toast({
-          title: "No jobs found",
-          description: "Try different search criteria or check the intelligent search tab",
+          title: 'No jobs found',
+          description: 'Try different search criteria or check the intelligent search tab',
         });
       } else {
         toast({
@@ -135,11 +141,11 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
           description: `Loaded in ${Date.now() - searchStartTime}ms`,
         });
       }
-      
+
       // AI Enhancement
       if (filters.aiEnhanced && fetchedJobs.length > 0) {
         setIsAIProcessing(true);
-        
+
         setTimeout(async () => {
           try {
             const aiResponse = await supabase.functions.invoke('ai-job-aggregator', {
@@ -148,18 +154,18 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
                 userPreferences: {
                   experienceLevel: filters.experienceLevel,
                   skills: filters.skills,
-                  jobType: filters.jobType
+                  jobType: filters.jobType,
                 },
-                searchQuery: filters.keywords
+                searchQuery: filters.keywords,
               },
             });
-            
+
             if (aiResponse.data && !aiResponse.error) {
               setJobs(aiResponse.data.enhancedJobs || fetchedJobs);
               setAiInsights(aiResponse.data.aiInsights);
-              
+
               toast({
-                title: "AI Enhancement Complete",
+                title: 'AI Enhancement Complete',
                 description: `Enhanced ${aiResponse.data.enhancedJobs?.length || 0} jobs with smart insights`,
               });
             }
@@ -170,13 +176,12 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
           }
         }, 100);
       }
-      
     } catch (error) {
       console.error('Error fetching jobs:', error);
       toast({
-        title: "Search Error",
-        description: error instanceof Error ? error.message : "Failed to fetch job listings",
-        variant: "destructive",
+        title: 'Search Error',
+        description: error instanceof Error ? error.message : 'Failed to fetch job listings',
+        variant: 'destructive',
       });
       setJobs([]);
     } finally {
@@ -185,16 +190,16 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
   }, []);
 
   useEffect(() => {
-    if (activeTab === "enhanced") {
+    if (activeTab === 'enhanced') {
       fetchReedJobsRapid({
-        keywords: "electrician,electrical engineer,electrical technician",
-        location: "United Kingdom",
-        jobType: "",
-        experienceLevel: "",
-        salaryMin: "",
-        salaryMax: "",
+        keywords: 'electrician,electrical engineer,electrical technician',
+        location: 'United Kingdom',
+        jobType: '',
+        experienceLevel: '',
+        salaryMin: '',
+        salaryMax: '',
         skills: [],
-        aiEnhanced: true
+        aiEnhanced: true,
       });
     }
   }, [fetchReedJobsRapid, activeTab]);
@@ -207,14 +212,14 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     const currentFilters = {
-      keywords: "electrician,electrical engineer,electrical technician",
-      location: "United Kingdom",
-      jobType: "",
-      experienceLevel: "",
-      salaryMin: "",
-      salaryMax: "",
+      keywords: 'electrician,electrical engineer,electrical technician',
+      location: 'United Kingdom',
+      jobType: '',
+      experienceLevel: '',
+      salaryMin: '',
+      salaryMax: '',
       skills: [],
-      aiEnhanced: true
+      aiEnhanced: true,
     };
     fetchReedJobsRapid(currentFilters, page);
     window.scrollTo(0, 0);
@@ -224,14 +229,17 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
     setSelectedJob(jobId);
     const jobElement = document.getElementById(`job-${jobId}`);
     if (jobElement) {
-      jobElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      jobElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   };
 
   return (
     <div className="space-y-6">
       {/* Tab Navigation */}
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "enhanced" | "intelligent")}>
+      <Tabs
+        value={activeTab}
+        onValueChange={(value) => setActiveTab(value as 'enhanced' | 'intelligent')}
+      >
         <TabsList className="grid w-full grid-cols-2 mb-6">
           <TabsTrigger value="intelligent" className="text-base py-3">
             <Brain className="h-4 w-4 mr-2" />
@@ -251,7 +259,8 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
               🚀 AI-Powered Multi-Site Job Search
             </h3>
             <p className="text-xs text-green-700">
-              Search across Reed, Indeed, Totaljobs and more with AI-generated queries and smart matching
+              Search across Reed, Indeed, Totaljobs and more with AI-generated queries and smart
+              matching
             </p>
           </div>
           <IntelligentJobSearch />
@@ -284,7 +293,7 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
           )}
 
           {/* Enhanced Search */}
-          <EnhancedJobSearch 
+          <EnhancedJobSearch
             onSearch={handleSearch}
             isLoading={isLoading}
             suggestedSkills={suggestedSkills}
@@ -309,9 +318,7 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
           )}
 
           {/* AI Insights */}
-          {aiInsights && (
-            <AIJobInsights insights={aiInsights} isLoading={isAIProcessing} />
-          )}
+          {aiInsights && <AIJobInsights insights={aiInsights} isLoading={isAIProcessing} />}
 
           {/* Job Listings */}
           {isLoading ? (
@@ -322,7 +329,7 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
             </div>
           ) : jobs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {jobs.map(job => (
+              {jobs.map((job) => (
                 <EnhancedJobCard
                   key={job.id}
                   job={job}
@@ -347,7 +354,7 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <JobPagination 
+            <JobPagination
               currentPage={currentPage}
               totalPages={totalPages}
               paginate={handlePageChange}

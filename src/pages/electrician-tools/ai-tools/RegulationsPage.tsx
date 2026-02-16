@@ -1,7 +1,7 @@
-import { ArrowLeft, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import RegulationsAssistant from "@/components/electrician-tools/ai-tools/RegulationsAssistant";
+import { ArrowLeft, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import RegulationsAssistant from '@/components/electrician-tools/ai-tools/RegulationsAssistant';
 
 const RegulationsPage = () => {
   return (

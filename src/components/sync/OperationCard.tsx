@@ -3,16 +3,16 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { QueueOperation, offlineQueue } from '@/utils/offlineQueue';
-import { 
-  FileText, 
-  Clock, 
-  RefreshCw, 
-  AlertCircle, 
-  Trash2, 
+import {
+  FileText,
+  Clock,
+  RefreshCw,
+  AlertCircle,
+  Trash2,
   ChevronDown,
   Copy,
   Plus,
-  XCircle
+  XCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { responsiveBody } from '@/styles/typography-utilities';
@@ -70,10 +70,14 @@ export const OperationCard = ({ operation, onUpdate }: OperationCardProps) => {
 
   const getOperationIcon = () => {
     switch (operation.type) {
-      case 'create': return Plus;
-      case 'update': return RefreshCw;
-      case 'delete': return Trash2;
-      default: return FileText;
+      case 'create':
+        return Plus;
+      case 'update':
+        return RefreshCw;
+      case 'delete':
+        return Trash2;
+      default:
+        return FileText;
     }
   };
 
@@ -82,27 +86,29 @@ export const OperationCard = ({ operation, onUpdate }: OperationCardProps) => {
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
     const diffMins = Math.floor(diffMs / 60000);
-    
+
     if (diffMins < 1) return { relative: 'Just now', color: 'text-muted-foreground' };
-    if (diffMins < 60) return { 
-      relative: `${diffMins} min${diffMins > 1 ? 's' : ''} ago`,
-      color: diffMins > 30 ? 'text-amber-500' : 'text-muted-foreground'
-    };
-    
+    if (diffMins < 60)
+      return {
+        relative: `${diffMins} min${diffMins > 1 ? 's' : ''} ago`,
+        color: diffMins > 30 ? 'text-amber-500' : 'text-muted-foreground',
+      };
+
     const diffHours = Math.floor(diffMins / 60);
-    if (diffHours < 24) return { 
-      relative: `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`,
-      color: diffHours > 1 ? 'text-red-500' : 'text-amber-500'
-    };
-    
+    if (diffHours < 24)
+      return {
+        relative: `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`,
+        color: diffHours > 1 ? 'text-red-500' : 'text-amber-500',
+      };
+
     return {
-      relative: date.toLocaleDateString('en-GB', { 
-        day: 'numeric', 
-        month: 'short', 
-        hour: '2-digit', 
-        minute: '2-digit' 
+      relative: date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
       }),
-      color: 'text-red-500'
+      color: 'text-red-500',
     };
   };
 
@@ -160,18 +166,22 @@ export const OperationCard = ({ operation, onUpdate }: OperationCardProps) => {
 
   return (
     <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
-      <Card className={cn(
-        'transition-all duration-200 hover:shadow-md',
-        statusConfig.border,
-        isExpanded && 'ring-2 ring-primary/20'
-      )}>
+      <Card
+        className={cn(
+          'transition-all duration-200 hover:shadow-md',
+          statusConfig.border,
+          isExpanded && 'ring-2 ring-primary/20'
+        )}
+      >
         <CardContent className="p-3 sm:p-4">
           <div className="flex items-start gap-3">
             {/* Status Icon */}
-            <div className={cn(
-              'flex-shrink-0 p-2 rounded-lg bg-muted/50',
-              'hidden sm:flex items-center justify-center'
-            )}>
+            <div
+              className={cn(
+                'flex-shrink-0 p-2 rounded-lg bg-muted/50',
+                'hidden sm:flex items-center justify-center'
+              )}
+            >
               <StatusIcon className={cn('h-5 w-5', statusConfig.iconColor)} />
             </div>
 
@@ -179,8 +189,8 @@ export const OperationCard = ({ operation, onUpdate }: OperationCardProps) => {
             <div className="flex-1 min-w-0 space-y-2 sm:space-y-3">
               {/* Header */}
               <div className="flex flex-wrap items-start gap-2">
-                <Badge 
-                  variant="outline" 
+                <Badge
+                  variant="outline"
                   className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20"
                 >
                   <OperationIcon className="h-3 w-3 mr-1" />
@@ -214,7 +224,10 @@ export const OperationCard = ({ operation, onUpdate }: OperationCardProps) => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="h-3 w-3 flex-shrink-0" />
-                  <span className={timestamp.color} title={new Date(operation.timestamp).toLocaleString()}>
+                  <span
+                    className={timestamp.color}
+                    title={new Date(operation.timestamp).toLocaleString()}
+                  >
                     Queued {timestamp.relative}
                   </span>
                 </div>
@@ -223,15 +236,13 @@ export const OperationCard = ({ operation, onUpdate }: OperationCardProps) => {
               {/* Actions */}
               <div className="flex flex-wrap gap-2 pt-1">
                 <CollapsibleTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    className="h-8 text-xs"
-                  >
-                    <ChevronDown className={cn(
-                      'h-3 w-3 mr-1 transition-transform',
-                      isExpanded && 'rotate-180'
-                    )} />
+                  <Button variant="ghost" size="sm" className="h-8 text-xs">
+                    <ChevronDown
+                      className={cn(
+                        'h-3 w-3 mr-1 transition-transform',
+                        isExpanded && 'rotate-180'
+                      )}
+                    />
                     Details
                   </Button>
                 </CollapsibleTrigger>
@@ -262,12 +273,16 @@ export const OperationCard = ({ operation, onUpdate }: OperationCardProps) => {
                     <AlertDialogHeader>
                       <AlertDialogTitle>Remove Operation?</AlertDialogTitle>
                       <AlertDialogDescription>
-                        This will permanently remove this operation from the queue. Any unsaved changes will be lost.
+                        This will permanently remove this operation from the queue. Any unsaved
+                        changes will be lost.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={handleRemove} className="bg-red-500 hover:bg-red-600">
+                      <AlertDialogAction
+                        onClick={handleRemove}
+                        className="bg-red-500 hover:bg-red-600"
+                      >
                         Remove
                       </AlertDialogAction>
                     </AlertDialogFooter>
@@ -288,15 +303,16 @@ export const OperationCard = ({ operation, onUpdate }: OperationCardProps) => {
                   </pre>
                 </div>
               </div>
-              
+
               {operation.retryCount > 0 && (
                 <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <AlertCircle className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
                   <div className={cn(responsiveBody.small)}>
                     <p className="font-medium text-amber-500 mb-1">Retry Information</p>
                     <p className="text-muted-foreground">
-                      This operation has been attempted {operation.retryCount} time{operation.retryCount > 1 ? 's' : ''}.
-                      {operation.retryCount >= 3 
+                      This operation has been attempted {operation.retryCount} time
+                      {operation.retryCount > 1 ? 's' : ''}.
+                      {operation.retryCount >= 3
                         ? ' Maximum retry limit reached. Manual intervention required.'
                         : ' It will be retried automatically when online.'}
                     </p>

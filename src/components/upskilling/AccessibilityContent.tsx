@@ -1,4 +1,3 @@
-
 import { Eye, AlertTriangle, FileText, Tag, Shield, Wrench, CheckCircle, Info } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -12,29 +11,34 @@ export const AccessibilityContent = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-8">
-        
         {/* Why Accessibility Matters */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-elec-yellow">Why Accessibility Matters</h3>
           <p className="text-foreground leading-relaxed text-base sm:text-lg">
-            Inspection and testing cannot be done thoroughly—or safely—if you can't reach key parts of the installation. Inaccessible boards, switches, isolators, or junctions may hide defects and prevent complete testing.
+            Inspection and testing cannot be done thoroughly—or safely—if you can't reach key parts
+            of the installation. Inaccessible boards, switches, isolators, or junctions may hide
+            defects and prevent complete testing.
           </p>
           <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
             <p className="text-blue-200 font-medium">
-              BS 7671 requires that equipment be "readily accessible for inspection, testing, and maintenance."
+              BS 7671 requires that equipment be "readily accessible for inspection, testing, and
+              maintenance."
             </p>
           </div>
           <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
             <p className="text-red-200 font-medium flex items-center gap-2">
               <Shield className="h-4 w-4" />
-              Legal Implication: Inadequate accessibility can result in incomplete certification and potential liability issues.
+              Legal Implication: Inadequate accessibility can result in incomplete certification and
+              potential liability issues.
             </p>
           </div>
         </div>
 
         {/* Accessibility Requirements Detail */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">Detailed Accessibility Requirements</h3>
+          <h3 className="text-lg font-semibold text-elec-yellow">
+            Detailed Accessibility Requirements
+          </h3>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
               <h4 className="text-foreground font-semibold mb-3 flex items-center gap-2">
@@ -104,25 +108,29 @@ export const AccessibilityContent = () => {
           <div className="space-y-3">
             {[
               {
-                step: "1. Visual Survey",
-                description: "Walk through the installation and identify all distribution boards, isolators, and key test points",
-                details: "Document locations and assess initial accessibility without attempting access"
+                step: '1. Visual Survey',
+                description:
+                  'Walk through the installation and identify all distribution boards, isolators, and key test points',
+                details:
+                  'Document locations and assess initial accessibility without attempting access',
               },
               {
-                step: "2. Physical Access Check",
-                description: "Attempt to safely access each identified component",
-                details: "Check for obstructions, adequate working space, and lighting conditions"
+                step: '2. Physical Access Check',
+                description: 'Attempt to safely access each identified component',
+                details: 'Check for obstructions, adequate working space, and lighting conditions',
               },
               {
-                step: "3. Safety Assessment",
-                description: "Evaluate risks associated with accessing each component",
-                details: "Consider height, proximity to live parts, environmental hazards, and required PPE"
+                step: '3. Safety Assessment',
+                description: 'Evaluate risks associated with accessing each component',
+                details:
+                  'Consider height, proximity to live parts, environmental hazards, and required PPE',
               },
               {
-                step: "4. Documentation",
-                description: "Record any limitations or safety concerns identified",
-                details: "Photograph inaccessible areas and note specific remedial actions required"
-              }
+                step: '4. Documentation',
+                description: 'Record any limitations or safety concerns identified',
+                details:
+                  'Photograph inaccessible areas and note specific remedial actions required',
+              },
             ].map((step, index) => (
               <div key={index} className="bg-[#323232] rounded-lg p-4">
                 <h4 className="text-foreground font-semibold mb-2">{step.step}</h4>
@@ -135,7 +143,9 @@ export const AccessibilityContent = () => {
 
         {/* What to Do If Access Is Restricted */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">What to Do If Access Is Restricted</h3>
+          <h3 className="text-lg font-semibold text-elec-yellow">
+            What to Do If Access Is Restricted
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
               <h4 className="text-foreground font-semibold mb-2 flex items-center gap-2">
@@ -176,7 +186,7 @@ export const AccessibilityContent = () => {
             <Tag className="h-4 w-4" />
             Comprehensive Labelling Requirements Under BS 7671
           </h3>
-          
+
           <div className="space-y-4">
             {/* Essential Labels */}
             <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
@@ -257,7 +267,9 @@ export const AccessibilityContent = () => {
 
         {/* Label Quality and Durability */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">Label Quality and Durability Standards</h3>
+          <h3 className="text-lg font-semibold text-elec-yellow">
+            Label Quality and Durability Standards
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -286,7 +298,9 @@ export const AccessibilityContent = () => {
 
         {/* Why Proper Labelling Is Crucial */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">Why Proper Labelling Is Crucial</h3>
+          <h3 className="text-lg font-semibold text-elec-yellow">
+            Why Proper Labelling Is Crucial
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
@@ -294,14 +308,18 @@ export const AccessibilityContent = () => {
                   <FileText className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-foreground font-medium">Safety During Testing</p>
-                    <p className="text-foreground text-sm">Prevents incorrect assumptions and ensures safe isolation procedures</p>
+                    <p className="text-foreground text-sm">
+                      Prevents incorrect assumptions and ensures safe isolation procedures
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <FileText className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-foreground font-medium">Time Efficiency</p>
-                    <p className="text-foreground text-sm">Reduces time spent tracing circuits and identifying components</p>
+                    <p className="text-foreground text-sm">
+                      Reduces time spent tracing circuits and identifying components
+                    </p>
                   </div>
                 </div>
               </div>
@@ -310,14 +328,18 @@ export const AccessibilityContent = () => {
                   <FileText className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-foreground font-medium">Future Maintenance</p>
-                    <p className="text-foreground text-sm">Essential for ongoing maintenance, fault-finding, and modifications</p>
+                    <p className="text-foreground text-sm">
+                      Essential for ongoing maintenance, fault-finding, and modifications
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <FileText className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-foreground font-medium">Legal Compliance</p>
-                    <p className="text-foreground text-sm">Supports certification accuracy and professional accountability</p>
+                    <p className="text-foreground text-sm">
+                      Supports certification accuracy and professional accountability
+                    </p>
                   </div>
                 </div>
               </div>
@@ -327,21 +349,38 @@ export const AccessibilityContent = () => {
 
         {/* Practical Labelling Assessment */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-elec-yellow">Practical Labelling Assessment Process</h3>
+          <h3 className="text-lg font-semibold text-elec-yellow">
+            Practical Labelling Assessment Process
+          </h3>
           <div className="space-y-3">
             {[
               {
-                phase: "Initial Survey",
-                tasks: ["Identify all distribution boards and control panels", "Check for presence of circuit schedules", "Verify main switch identification", "Look for obvious missing labels"]
+                phase: 'Initial Survey',
+                tasks: [
+                  'Identify all distribution boards and control panels',
+                  'Check for presence of circuit schedules',
+                  'Verify main switch identification',
+                  'Look for obvious missing labels',
+                ],
               },
               {
-                phase: "Detailed Verification",
-                tasks: ["Cross-reference labels with actual circuits", "Test label accuracy by switching circuits", "Check label durability and legibility", "Verify special system warnings are present"]
+                phase: 'Detailed Verification',
+                tasks: [
+                  'Cross-reference labels with actual circuits',
+                  'Test label accuracy by switching circuits',
+                  'Check label durability and legibility',
+                  'Verify special system warnings are present',
+                ],
               },
               {
-                phase: "Documentation Review",
-                tasks: ["Compare labels with installation certificates", "Check compliance with current standards", "Identify discrepancies or updates needed", "Record non-conformities for client attention"]
-              }
+                phase: 'Documentation Review',
+                tasks: [
+                  'Compare labels with installation certificates',
+                  'Check compliance with current standards',
+                  'Identify discrepancies or updates needed',
+                  'Record non-conformities for client attention',
+                ],
+              },
             ].map((phase, index) => (
               <div key={index} className="bg-[#323232] rounded-lg p-4">
                 <h4 className="text-foreground font-semibold mb-2">{phase.phase}</h4>
@@ -357,7 +396,6 @@ export const AccessibilityContent = () => {
             ))}
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

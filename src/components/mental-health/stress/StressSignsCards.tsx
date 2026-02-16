@@ -1,5 +1,4 @@
-
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from '@/components/ui/card';
 
 const StressSignsCards = () => {
   return (
@@ -16,7 +15,7 @@ const StressSignsCards = () => {
           </ul>
         </CardContent>
       </Card>
-      
+
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="p-4">
           <h3 className="text-lg font-medium mb-3">Mental Signs of Stress</h3>

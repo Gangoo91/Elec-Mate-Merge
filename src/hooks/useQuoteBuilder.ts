@@ -11,15 +11,17 @@ import { logger, generateRequestId } from '@/utils/logger';
 export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Quote) => {
   const { saveQuote } = useQuoteStorage();
   const { companyProfile, refetch } = useCompanyProfile();
-  
-  const [quote, setQuote] = useState<Partial<Quote>>(initialQuote || {
-    id: uuidv4(),
-    quoteNumber: '', // Will be generated when needed
-    items: [],
-    status: 'draft',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
+
+  const [quote, setQuote] = useState<Partial<Quote>>(
+    initialQuote || {
+      id: uuidv4(),
+      quoteNumber: '', // Will be generated when needed
+      items: [],
+      status: 'draft',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  );
 
   const [currentStep, setCurrentStep] = useState(0);
   const [priceAdjustment, setPriceAdjustment] = useState(0); // Percentage adjustment (0-20)
@@ -31,10 +33,13 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       if (!quote.quoteNumber) {
         try {
           const newQuoteNumber = await generateSequentialQuoteNumber();
-          setQuote(prev => ({ ...prev, quoteNumber: newQuoteNumber }));
+          setQuote((prev) => ({ ...prev, quoteNumber: newQuoteNumber }));
         } catch (error) {
           console.warn('Failed to generate sequential quote number, using fallback');
-          setQuote(prev => ({ ...prev, quoteNumber: `${new Date().getFullYear()}/T${Date.now().toString().slice(-6)}` }));
+          setQuote((prev) => ({
+            ...prev,
+            quoteNumber: `${new Date().getFullYear()}/T${Date.now().toString().slice(-6)}`,
+          }));
         }
       }
     };
@@ -44,7 +49,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
   const updateClient = useCallback((client: QuoteClient) => {
     console.log('updateClient called with:', client);
-    setQuote(prev => {
+    setQuote((prev) => {
       const updated = { ...prev, client, updatedAt: new Date() };
       console.log('Quote updated to:', updated);
       return updated;
@@ -53,7 +58,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
   const updateJobDetails = useCallback((jobDetails: JobDetails) => {
     console.log('updateJobDetails called with:', jobDetails);
-    setQuote(prev => {
+    setQuote((prev) => {
       const updated = { ...prev, jobDetails, updatedAt: new Date() };
       console.log('Quote updated to:', updated);
       return updated;
@@ -61,7 +66,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   }, []);
 
   const updateSettings = useCallback((settings: QuoteSettings) => {
-    setQuote(prev => ({ ...prev, settings, updatedAt: new Date() }));
+    setQuote((prev) => ({ ...prev, settings, updatedAt: new Date() }));
   }, []);
 
   const addItem = useCallback((item: Omit<QuoteItem, 'id' | 'totalPrice'>) => {
@@ -70,8 +75,8 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       id: uuidv4(),
       totalPrice: item.quantity * item.unitPrice,
     };
-    
-    setQuote(prev => ({
+
+    setQuote((prev) => ({
       ...prev,
       items: [...(prev.items || []), newItem],
       updatedAt: new Date(),
@@ -79,11 +84,16 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   }, []);
 
   const updateItem = useCallback((itemId: string, updates: Partial<QuoteItem>) => {
-    setQuote(prev => ({
+    setQuote((prev) => ({
       ...prev,
-      items: prev.items?.map(item => 
-        item.id === itemId 
-          ? { ...item, ...updates, totalPrice: (updates.quantity ?? item.quantity) * (updates.unitPrice ?? item.unitPrice) }
+      items: prev.items?.map((item) =>
+        item.id === itemId
+          ? {
+              ...item,
+              ...updates,
+              totalPrice:
+                (updates.quantity ?? item.quantity) * (updates.unitPrice ?? item.unitPrice),
+            }
           : item
       ),
       updatedAt: new Date(),
@@ -91,39 +101,42 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   }, []);
 
   const removeItem = useCallback((itemId: string) => {
-    setQuote(prev => ({
+    setQuote((prev) => ({
       ...prev,
-      items: prev.items?.filter(item => item.id !== itemId),
+      items: prev.items?.filter((item) => item.id !== itemId),
       updatedAt: new Date(),
     }));
   }, []);
 
-  const processItemsForDisplay = useCallback((items: QuoteItem[], settings: QuoteSettings): QuoteItem[] => {
-    if (!settings.showMaterialsBreakdown) {
-      // Group all materials into one line
-      const materialsItems = items.filter(item => item.category === 'materials');
-      const nonMaterialsItems = items.filter(item => item.category !== 'materials');
-      
-      if (materialsItems.length > 0) {
-        const totalMaterialsCost = materialsItems.reduce((sum, item) => sum + item.totalPrice, 0);
-        
-        const groupedMaterial: QuoteItem = {
-          id: 'materials-grouped',
-          description: 'Materials & Supplies',
-          quantity: 1,
-          unit: 'lot',
-          unitPrice: totalMaterialsCost,
-          totalPrice: totalMaterialsCost,
-          category: 'materials',
-          notes: `Includes ${materialsItems.length} items`
-        };
-        
-        return [...nonMaterialsItems, groupedMaterial];
+  const processItemsForDisplay = useCallback(
+    (items: QuoteItem[], settings: QuoteSettings): QuoteItem[] => {
+      if (!settings.showMaterialsBreakdown) {
+        // Group all materials into one line
+        const materialsItems = items.filter((item) => item.category === 'materials');
+        const nonMaterialsItems = items.filter((item) => item.category !== 'materials');
+
+        if (materialsItems.length > 0) {
+          const totalMaterialsCost = materialsItems.reduce((sum, item) => sum + item.totalPrice, 0);
+
+          const groupedMaterial: QuoteItem = {
+            id: 'materials-grouped',
+            description: 'Materials & Supplies',
+            quantity: 1,
+            unit: 'lot',
+            unitPrice: totalMaterialsCost,
+            totalPrice: totalMaterialsCost,
+            category: 'materials',
+            notes: `Includes ${materialsItems.length} items`,
+          };
+
+          return [...nonMaterialsItems, groupedMaterial];
+        }
       }
-    }
-    
-    return items; // Return as-is if breakdown enabled
-  }, []);
+
+      return items; // Return as-is if breakdown enabled
+    },
+    []
+  );
 
   const calculateTotals = useCallback(() => {
     if (!quote.items || !quote.settings) return quote;
@@ -133,7 +146,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
     // Calculate subtotal - profit and overhead are now built into unit prices
     const subtotal = displayItems.reduce((sum, item) => sum + item.totalPrice, 0);
-    
+
     // Calculate VAT on the subtotal (which already includes profit and overhead)
     const vatAmount = quote.settings.vatRegistered ? subtotal * (quote.settings.vatRate / 100) : 0;
     const total = subtotal + vatAmount;
@@ -143,15 +156,15 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       items: displayItems,
       subtotal,
       overhead: 0, // No longer calculated separately
-      profit: 0,   // No longer calculated separately
+      profit: 0, // No longer calculated separately
       vatAmount,
       total,
     };
   }, [quote, processItemsForDisplay]);
 
   const nextStep = useCallback(() => {
-    setCurrentStep(prev => Math.min(prev + 1, 2));
-    
+    setCurrentStep((prev) => Math.min(prev + 1, 2));
+
     // Scroll to the Card content, not the page top
     const cardElement = document.querySelector('[data-quote-step="content"]');
     if (cardElement) {
@@ -162,8 +175,8 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   }, []);
 
   const prevStep = useCallback(() => {
-    setCurrentStep(prev => Math.max(prev - 1, 0));
-    
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
+
     // Scroll to the Card content, not the page top
     const cardElement = document.querySelector('[data-quote-step="content"]');
     if (cardElement) {
@@ -177,7 +190,9 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     if (isGenerating) return; // Prevent multiple clicks
 
     const requestId = generateRequestId();
-    logger.api('quotes/generate', requestId).start({ quoteId: quote.id, quoteNumber: quote.quoteNumber });
+    logger
+      .api('quotes/generate', requestId)
+      .start({ quoteId: quote.id, quoteNumber: quote.quoteNumber });
     logger.action('Generate quote', 'quotes', { quoteId: quote.id });
 
     setIsGenerating(true);
@@ -185,32 +200,41 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       const finalQuote = calculateTotals();
 
       // Validate quote before generation
-      if (!finalQuote.client || !finalQuote.items || finalQuote.items.length === 0 || !finalQuote.settings) {
+      if (
+        !finalQuote.client ||
+        !finalQuote.items ||
+        finalQuote.items.length === 0 ||
+        !finalQuote.settings
+      ) {
         logger.warn('Quote validation failed', {
           hasClient: !!finalQuote.client,
           hasJobDetails: !!finalQuote.jobDetails,
           itemCount: finalQuote.items?.length || 0,
-          hasSettings: !!finalQuote.settings
+          hasSettings: !!finalQuote.settings,
         });
         toast({
-          title: "Cannot Generate Quote",
-          description: "Please complete all required fields before generating the quote.",
-          variant: "destructive"
+          title: 'Cannot Generate Quote',
+          description: 'Please complete all required fields before generating the quote.',
+          variant: 'destructive',
         });
         return;
       }
 
       // Validate job details
-      if (!finalQuote.jobDetails || !finalQuote.jobDetails.title || !finalQuote.jobDetails.description) {
+      if (
+        !finalQuote.jobDetails ||
+        !finalQuote.jobDetails.title ||
+        !finalQuote.jobDetails.description
+      ) {
         logger.warn('Quote job details validation failed', {
           hasJobDetails: !!finalQuote.jobDetails,
           hasTitle: !!finalQuote.jobDetails?.title,
-          hasDescription: !!finalQuote.jobDetails?.description
+          hasDescription: !!finalQuote.jobDetails?.description,
         });
         toast({
-          title: "Missing Job Details",
-          description: "Please complete the Job Title and Job Description in the Job Details step.",
-          variant: "destructive"
+          title: 'Missing Job Details',
+          description: 'Please complete the Job Title and Job Description in the Job Details step.',
+          variant: 'destructive',
         });
         return;
       }
@@ -221,7 +245,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         quoteNumber: finalQuote.quoteNumber,
         clientName: finalQuote.client?.name,
         itemCount: finalQuote.items?.length,
-        total: finalQuote.total
+        total: finalQuote.total,
       });
 
       // Update quote with expiry - keep as draft until explicitly sent
@@ -235,14 +259,16 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       console.log('Quote Generation - Quote updated with draft status', {
         id: updatedQuote.id,
         status: updatedQuote.status,
-        expiryDate: updatedQuote.expiryDate
+        expiryDate: updatedQuote.expiryDate,
       });
 
       setQuote(updatedQuote);
 
       // Fetch FRESH company profile directly - don't rely on React state which has stale closure
       console.log('PDF Generation - Fetching fresh company profile from database');
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       let freshCompanyProfile = companyProfile;
 
       if (user) {
@@ -261,7 +287,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         name: freshCompanyProfile?.company_name,
         email: freshCompanyProfile?.company_email,
         hasLogo: !!freshCompanyProfile?.logo_url,
-        logoUrl: freshCompanyProfile?.logo_url?.substring(0, 50) + '...'
+        logoUrl: freshCompanyProfile?.logo_url?.substring(0, 50) + '...',
       });
 
       // Generate PDF using PDF Monkey
@@ -274,14 +300,14 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
           itemsCount: updatedQuote.items?.length,
           hasClient: !!updatedQuote.client?.name,
           hasJobDetails: !!updatedQuote.jobDetails?.title,
-          total: updatedQuote.total
+          total: updatedQuote.total,
         });
 
         const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
           body: {
             quote: updatedQuote,
-            companyProfile: freshCompanyProfile
-          }
+            companyProfile: freshCompanyProfile,
+          },
         });
 
         if (error) {
@@ -295,17 +321,17 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         } else if (data?.documentId) {
           logger.info('PDF still processing', { documentId: data.documentId });
           toast({
-            title: "PDF Processing",
-            description: "Your PDF is being generated. It will open shortly.",
-            variant: "default"
+            title: 'PDF Processing',
+            description: 'Your PDF is being generated. It will open shortly.',
+            variant: 'default',
           });
         }
       } catch (pdfError) {
         logger.error('PDF generation failed', pdfError, { quoteId: updatedQuote.id, requestId });
         toast({
-          title: "PDF Generation Failed",
-          description: "Could not generate PDF. The quote has been saved.",
-          variant: "destructive"
+          title: 'PDF Generation Failed',
+          description: 'Could not generate PDF. The quote has been saved.',
+          variant: 'destructive',
         });
       }
 
@@ -316,16 +342,19 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       if (saved) {
         logger.api('quotes/save', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
         toast({
-          title: "Quote Generated Successfully",
+          title: 'Quote Generated Successfully',
           description: `Quote ${updatedQuote.quoteNumber} has been generated and saved.`,
-          variant: "success"
+          variant: 'success',
         });
       } else {
-        logger.warn('Quote save failed', { quoteId: updatedQuote.id, quoteNumber: updatedQuote.quoteNumber });
+        logger.warn('Quote save failed', {
+          quoteId: updatedQuote.id,
+          quoteNumber: updatedQuote.quoteNumber,
+        });
         toast({
-          title: "Quote Generated",
+          title: 'Quote Generated',
           description: `Quote ${updatedQuote.quoteNumber} has been generated but could not be saved. Please try again from the quotes page.`,
-          variant: "destructive"
+          variant: 'destructive',
         });
       }
 
@@ -340,14 +369,22 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     } catch (error) {
       logger.api('quotes/generate', requestId).error(error, { quoteId: quote.id });
       toast({
-        title: "Generation Failed",
-        description: "There was an error generating the quote. Please try again.",
-        variant: "destructive"
+        title: 'Generation Failed',
+        description: 'There was an error generating the quote. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
     }
-  }, [quote, currentStep, isGenerating, onQuoteGenerated, saveQuote, companyProfile, calculateTotals]);
+  }, [
+    quote,
+    currentStep,
+    isGenerating,
+    onQuoteGenerated,
+    saveQuote,
+    companyProfile,
+    calculateTotals,
+  ]);
 
   const resetQuote = useCallback(async () => {
     try {
@@ -375,9 +412,12 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   }, []);
 
   // Price adjustment helper
-  const calculateAdjustedPrice = useCallback((basePrice: number) => {
-    return basePrice * (1 + priceAdjustment / 100);
-  }, [priceAdjustment]);
+  const calculateAdjustedPrice = useCallback(
+    (basePrice: number) => {
+      return basePrice * (1 + priceAdjustment / 100);
+    },
+    [priceAdjustment]
+  );
 
   return {
     quote: calculateTotals(),

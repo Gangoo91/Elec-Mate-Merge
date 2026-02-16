@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Eye, Users, Clock, TrendingUp } from "lucide-react";
-import { ClientType } from "./ClientTypeSelector";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Eye, Users, Clock, TrendingUp } from 'lucide-react';
+import { ClientType } from './ClientTypeSelector';
 
 interface LivePreviewProps {
   content: string;
@@ -18,14 +18,14 @@ const LivePreview = ({
   readingLevel,
   clientType,
   includeAnalogy,
-  emphasizeSafety
+  emphasizeSafety,
 }: LivePreviewProps) => {
   const getReadabilityScore = (text: string) => {
     if (!text) return 0;
     const words = text.split(/\s+/).length;
-    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+    const sentences = text.split(/[.!?]+/).filter((s) => s.trim().length > 0).length;
     const avgWordsPerSentence = words / Math.max(sentences, 1);
-    
+
     // Simple readability approximation
     if (avgWordsPerSentence < 10) return 95; // Very easy
     if (avgWordsPerSentence < 15) return 85; // Easy
@@ -42,15 +42,20 @@ const LivePreview = ({
 
   const readabilityScore = getReadabilityScore(content);
   const readTime = getEstimatedReadTime(content);
-  const wordCount = content.split(/\s+/).filter(word => word.length > 0).length;
+  const wordCount = content.split(/\s+/).filter((word) => word.length > 0).length;
 
   const getClientTypeIcon = (type: ClientType) => {
     switch (type) {
-      case "homeowner": return "🏠";
-      case "business": return "🏢";
-      case "landlord": return "🏘️";
-      case "contractor": return "🔧";
-      default: return "👤";
+      case 'homeowner':
+        return '🏠';
+      case 'business':
+        return '🏢';
+      case 'landlord':
+        return '🏘️';
+      case 'contractor':
+        return '🔧';
+      default:
+        return '👤';
     }
   };
 
@@ -110,14 +115,12 @@ const LivePreview = ({
           <div className="bg-muted/30 rounded-lg p-3 max-h-32 overflow-y-auto">
             <p className="text-xs text-foreground line-clamp-6">
               {content.substring(0, 200)}
-              {content.length > 200 && "..."}
+              {content.length > 200 && '...'}
             </p>
           </div>
         ) : (
           <div className="bg-muted/30 rounded-lg p-3 text-center">
-            <p className="text-xs text-foreground">
-              Preview will appear here as you type
-            </p>
+            <p className="text-xs text-foreground">Preview will appear here as you type</p>
           </div>
         )}
 
@@ -125,19 +128,30 @@ const LivePreview = ({
         <div className="space-y-1">
           <div className="flex justify-between text-xs">
             <span className="text-foreground">Readability</span>
-            <span className={`font-medium ${
-              readabilityScore >= 80 ? "text-green-400" :
-              readabilityScore >= 60 ? "text-yellow-400" : "text-red-400"
-            }`}>
-              {readabilityScore >= 80 ? "Excellent" :
-               readabilityScore >= 60 ? "Good" : "Needs work"}
+            <span
+              className={`font-medium ${
+                readabilityScore >= 80
+                  ? 'text-green-400'
+                  : readabilityScore >= 60
+                    ? 'text-yellow-400'
+                    : 'text-red-400'
+              }`}
+            >
+              {readabilityScore >= 80
+                ? 'Excellent'
+                : readabilityScore >= 60
+                  ? 'Good'
+                  : 'Needs work'}
             </span>
           </div>
           <div className="w-full bg-muted/50 rounded-full h-1.5">
-            <div 
+            <div
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                readabilityScore >= 80 ? "bg-green-400" :
-                readabilityScore >= 60 ? "bg-yellow-400" : "bg-red-400"
+                readabilityScore >= 80
+                  ? 'bg-green-400'
+                  : readabilityScore >= 60
+                    ? 'bg-yellow-400'
+                    : 'bg-red-400'
               }`}
               style={{ width: `${readabilityScore}%` }}
             />

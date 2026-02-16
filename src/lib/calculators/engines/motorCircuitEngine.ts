@@ -47,7 +47,7 @@ const MOTOR_FLC_THREE_PHASE_400V = {
   55: 104.0,
   75: 140.0,
   90: 168.0,
-  110: 205.0
+  110: 205.0,
 };
 
 export function calculateMotorCircuit(params: {
@@ -65,18 +65,19 @@ export function calculateMotorCircuit(params: {
     voltage,
     phases,
     powerFactor = 0.85,
-    efficiency = 0.90,
+    efficiency = 0.9,
     startingMethod = 'DOL',
     cableLength = 10,
-    ambientTemp = 30
+    ambientTemp = 30,
   } = params;
 
   // Calculate Full Load Current
   let fullLoadCurrent: number;
   if (phases === 'three') {
     // Use lookup table for common motors
-    fullLoadCurrent = MOTOR_FLC_THREE_PHASE_400V[motorRating as keyof typeof MOTOR_FLC_THREE_PHASE_400V] 
-      || (motorRating * 1000) / (Math.sqrt(3) * voltage * powerFactor * efficiency);
+    fullLoadCurrent =
+      MOTOR_FLC_THREE_PHASE_400V[motorRating as keyof typeof MOTOR_FLC_THREE_PHASE_400V] ||
+      (motorRating * 1000) / (Math.sqrt(3) * voltage * powerFactor * efficiency);
   } else {
     fullLoadCurrent = (motorRating * 1000) / (voltage * powerFactor * efficiency);
   }
@@ -84,7 +85,7 @@ export function calculateMotorCircuit(params: {
   // Calculate starting current based on starting method
   let startingCurrent: number;
   let startingMultiplier: number;
-  
+
   switch (startingMethod) {
     case 'DOL':
       startingMultiplier = 6.5; // Direct-on-line: 6-8x FLC
@@ -99,7 +100,7 @@ export function calculateMotorCircuit(params: {
       startingMultiplier = 1.5; // Variable speed drive: 1.5-2x FLC
       break;
   }
-  
+
   startingCurrent = fullLoadCurrent * startingMultiplier;
 
   // Design current for cable sizing (Reg 552.1.1)
@@ -126,7 +127,7 @@ export function calculateMotorCircuit(params: {
 
   // Protection device selection (Reg 552.1.2)
   let protectionDevice: MotorCircuitDesign['protectionDevice'];
-  
+
   if (motorRating <= 5.5) {
     // Small motors: RCBO or motor-rated MCB
     protectionDevice = {
@@ -134,7 +135,7 @@ export function calculateMotorCircuit(params: {
       rating: Math.ceil(fullLoadCurrent * 1.5), // 150% for motor starting
       curve: 'D', // Type D for motor inrush
       overloadSetting: fullLoadCurrent * 1.15, // 115% FLC
-      breakingCapacity: 6 // kA
+      breakingCapacity: 6, // kA
     };
   } else {
     // Larger motors: MCCB with adjustable overload
@@ -142,7 +143,7 @@ export function calculateMotorCircuit(params: {
       type: 'mccb',
       rating: Math.ceil(fullLoadCurrent * 1.5),
       overloadSetting: fullLoadCurrent * 1.15,
-      breakingCapacity: 10 // kA
+      breakingCapacity: 10, // kA
     };
   }
 
@@ -191,7 +192,7 @@ export function calculateMotorCircuit(params: {
     voltageDropAtRun: Number(voltageDropRunPercent.toFixed(2)),
     compliant,
     regulations,
-    recommendations
+    recommendations,
   };
 }
 
@@ -203,22 +204,22 @@ export function recommendStartingMethod(motorRating: number): {
   if (motorRating <= 4) {
     return {
       method: 'DOL',
-      reason: 'Small motor - Direct-on-Line starting is cost-effective and simple'
+      reason: 'Small motor - Direct-on-Line starting is cost-effective and simple',
     };
   } else if (motorRating <= 15) {
     return {
       method: 'star-delta',
-      reason: 'Medium motor - Star-Delta reduces starting current to ~33% of DOL'
+      reason: 'Medium motor - Star-Delta reduces starting current to ~33% of DOL',
     };
   } else if (motorRating <= 30) {
     return {
       method: 'soft-start',
-      reason: 'Larger motor - Soft-start provides controlled acceleration'
+      reason: 'Larger motor - Soft-start provides controlled acceleration',
     };
   } else {
     return {
       method: 'VSD',
-      reason: 'Large motor - VSD offers energy efficiency and precise control'
+      reason: 'Large motor - VSD offers energy efficiency and precise control',
     };
   }
 }

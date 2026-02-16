@@ -1,24 +1,19 @@
-import { useState, useEffect } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useState, useEffect } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   Send,
   Loader2,
@@ -37,16 +32,16 @@ import {
   Sparkles,
   FileText,
   Plus,
-} from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { motion, AnimatePresence } from "framer-motion";
-import { useApplyToVacancy } from "@/hooks/useInternalVacancies";
-import { useElecIdProfile } from "@/hooks/useElecIdProfile";
-import { getUserCVs, UserCV } from "@/services/elecIdService";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
-import { useNavigate } from "react-router-dom";
-import type { InternalVacancy } from "./InternalVacancyCard";
+} from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useApplyToVacancy } from '@/hooks/useInternalVacancies';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
+import { getUserCVs, UserCV } from '@/services/elecIdService';
+import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
+import type { InternalVacancy } from './InternalVacancyCard';
 
 interface ApplyToVacancyDialogProps {
   open: boolean;
@@ -58,15 +53,27 @@ interface ApplyToVacancyDialogProps {
 // Verification tier badge component
 const VerificationBadge = ({ tier }: { tier: string }) => {
   const tierConfig: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
-    basic: { label: "Basic", color: "bg-slate-500/20 text-slate-300 border-slate-500/30", icon: <Shield className="h-3 w-3" /> },
-    verified: { label: "Verified", color: "bg-blue-500/20 text-blue-300 border-blue-500/30", icon: <BadgeCheck className="h-3 w-3" /> },
-    premium: { label: "Premium", color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30", icon: <Award className="h-3 w-3" /> },
+    basic: {
+      label: 'Basic',
+      color: 'bg-slate-500/20 text-slate-300 border-slate-500/30',
+      icon: <Shield className="h-3 w-3" />,
+    },
+    verified: {
+      label: 'Verified',
+      color: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+      icon: <BadgeCheck className="h-3 w-3" />,
+    },
+    premium: {
+      label: 'Premium',
+      color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+      icon: <Award className="h-3 w-3" />,
+    },
   };
 
   const config = tierConfig[tier] || tierConfig.basic;
 
   return (
-    <Badge className={cn("text-xs", config.color)}>
+    <Badge className={cn('text-xs', config.color)}>
       {config.icon}
       <span className="ml-1">{config.label}</span>
     </Badge>
@@ -81,14 +88,14 @@ export function ApplyToVacancyDialog({
 }: ApplyToVacancyDialogProps) {
   const navigate = useNavigate();
   const { profile: elecIdProfile, isLoading: profileLoading } = useElecIdProfile();
-  const [coverLetter, setCoverLetter] = useState("");
+  const [coverLetter, setCoverLetter] = useState('');
   const [shareProfile, setShareProfile] = useState(true);
   const [showProfilePreview, setShowProfilePreview] = useState(false);
   const [isGeneratingCoverLetter, setIsGeneratingCoverLetter] = useState(false);
 
   // CV selection state
   const [userCVs, setUserCVs] = useState<UserCV[]>([]);
-  const [selectedCvId, setSelectedCvId] = useState<string>("");
+  const [selectedCvId, setSelectedCvId] = useState<string>('');
   const [loadingCVs, setLoadingCVs] = useState(false);
 
   const applyMutation = useApplyToVacancy();
@@ -149,16 +156,16 @@ export function ApplyToVacancyDialog({
       if (data?.content) {
         setCoverLetter(data.content);
         toast({
-          title: "Cover Letter Generated",
-          description: "AI has written a personalised cover letter for you. Feel free to edit it!",
+          title: 'Cover Letter Generated',
+          description: 'AI has written a personalised cover letter for you. Feel free to edit it!',
         });
       }
     } catch (error: any) {
       console.error('Error generating cover letter:', error);
       toast({
-        title: "Generation Failed",
-        description: "Could not generate cover letter. Please try again or write your own.",
-        variant: "destructive",
+        title: 'Generation Failed',
+        description: 'Could not generate cover letter. Please try again or write your own.',
+        variant: 'destructive',
       });
     } finally {
       setIsGeneratingCoverLetter(false);
@@ -180,32 +187,33 @@ export function ApplyToVacancyDialog({
       });
 
       toast({
-        title: "Application Submitted",
+        title: 'Application Submitted',
         description: `Your application for "${vacancy.title}" has been sent to ${vacancy.employer?.company_name || 'the employer'}.${selectedCv ? ' Your CV was attached.' : ''}`,
       });
 
-      setCoverLetter("");
-      setSelectedCvId("");
+      setCoverLetter('');
+      setSelectedCvId('');
       onOpenChange(false);
       onSuccess?.();
     } catch (error: any) {
-      console.error("Error applying:", error);
+      console.error('Error applying:', error);
       toast({
-        title: "Application Failed",
-        description: error.message || "Failed to submit your application. Please try again.",
-        variant: "destructive",
+        title: 'Application Failed',
+        description: error.message || 'Failed to submit your application. Please try again.',
+        variant: 'destructive',
       });
     }
   };
 
   if (!vacancy) return null;
 
-  const companyInitials = vacancy.employer?.company_name
-    ?.split(' ')
-    .map(n => n[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2) || 'EM';
+  const companyInitials =
+    vacancy.employer?.company_name
+      ?.split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2) || 'EM';
 
   const formatSalary = () => {
     if (!vacancy.salary_min && !vacancy.salary_max) return null;
@@ -213,19 +221,22 @@ export function ApplyToVacancyDialog({
     const period = vacancy.salary_period === 'annual' ? '/yr' : '/hr';
 
     if (vacancy.salary_min && vacancy.salary_max) {
-      const min = vacancy.salary_period === 'annual'
-        ? `£${(vacancy.salary_min / 1000).toFixed(0)}k`
-        : `£${vacancy.salary_min}`;
-      const max = vacancy.salary_period === 'annual'
-        ? `£${(vacancy.salary_max / 1000).toFixed(0)}k`
-        : `£${vacancy.salary_max}`;
+      const min =
+        vacancy.salary_period === 'annual'
+          ? `£${(vacancy.salary_min / 1000).toFixed(0)}k`
+          : `£${vacancy.salary_min}`;
+      const max =
+        vacancy.salary_period === 'annual'
+          ? `£${(vacancy.salary_max / 1000).toFixed(0)}k`
+          : `£${vacancy.salary_max}`;
       return `${min} - ${max}${period}`;
     }
 
     if (vacancy.salary_min) {
-      const val = vacancy.salary_period === 'annual'
-        ? `£${(vacancy.salary_min / 1000).toFixed(0)}k`
-        : `£${vacancy.salary_min}`;
+      const val =
+        vacancy.salary_period === 'annual'
+          ? `£${(vacancy.salary_min / 1000).toFixed(0)}k`
+          : `£${vacancy.salary_min}`;
       return `From ${val}${period}`;
     }
 
@@ -333,10 +344,12 @@ export function ApplyToVacancyDialog({
                   className="mt-3 w-full h-11 flex items-center justify-between text-sm text-emerald-300 active:text-emerald-200 transition-colors touch-manipulation rounded-lg px-2 -mx-2 active:bg-emerald-500/10"
                 >
                   <span>What will be shared with employer</span>
-                  <ChevronDown className={cn(
-                    "h-4 w-4 transition-transform",
-                    showProfilePreview && "rotate-180"
-                  )} />
+                  <ChevronDown
+                    className={cn(
+                      'h-4 w-4 transition-transform',
+                      showProfilePreview && 'rotate-180'
+                    )}
+                  />
                 </button>
 
                 {/* Profile Preview */}
@@ -344,7 +357,7 @@ export function ApplyToVacancyDialog({
                   {showProfilePreview && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
+                      animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
@@ -355,31 +368,34 @@ export function ApplyToVacancyDialog({
                           <div className="flex items-center gap-2 text-sm">
                             <CreditCard className="h-4 w-4 text-emerald-400" />
                             <span className="text-muted-foreground">ECS Card:</span>
-                            <span className="text-foreground font-medium">{elecIdProfile.ecs_card_type}</span>
+                            <span className="text-foreground font-medium">
+                              {elecIdProfile.ecs_card_type}
+                            </span>
                           </div>
                         )}
 
                         {/* Specialisations */}
-                        {elecIdProfile.specialisations && elecIdProfile.specialisations.length > 0 && (
-                          <div className="flex items-start gap-2 text-sm">
-                            <Wrench className="h-4 w-4 text-emerald-400 mt-0.5" />
-                            <div>
-                              <span className="text-muted-foreground">Specialisations:</span>
-                              <div className="flex flex-wrap gap-1.5 mt-1.5">
-                                {elecIdProfile.specialisations.slice(0, 4).map((spec, i) => (
-                                  <Badge key={i} variant="outline" className="text-xs h-6">
-                                    {spec}
-                                  </Badge>
-                                ))}
-                                {elecIdProfile.specialisations.length > 4 && (
-                                  <Badge variant="outline" className="text-xs h-6">
-                                    +{elecIdProfile.specialisations.length - 4} more
-                                  </Badge>
-                                )}
+                        {elecIdProfile.specialisations &&
+                          elecIdProfile.specialisations.length > 0 && (
+                            <div className="flex items-start gap-2 text-sm">
+                              <Wrench className="h-4 w-4 text-emerald-400 mt-0.5" />
+                              <div>
+                                <span className="text-muted-foreground">Specialisations:</span>
+                                <div className="flex flex-wrap gap-1.5 mt-1.5">
+                                  {elecIdProfile.specialisations.slice(0, 4).map((spec, i) => (
+                                    <Badge key={i} variant="outline" className="text-xs h-6">
+                                      {spec}
+                                    </Badge>
+                                  ))}
+                                  {elecIdProfile.specialisations.length > 4 && (
+                                    <Badge variant="outline" className="text-xs h-6">
+                                      +{elecIdProfile.specialisations.length - 4} more
+                                    </Badge>
+                                  )}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        )}
+                          )}
 
                         {/* Bio */}
                         {elecIdProfile.bio && (
@@ -387,7 +403,9 @@ export function ApplyToVacancyDialog({
                             <Briefcase className="h-4 w-4 text-emerald-400 mt-0.5" />
                             <div>
                               <span className="text-muted-foreground">Bio:</span>
-                              <p className="text-foreground line-clamp-2 mt-0.5">{elecIdProfile.bio}</p>
+                              <p className="text-foreground line-clamp-2 mt-0.5">
+                                {elecIdProfile.bio}
+                              </p>
                             </div>
                           </div>
                         )}
@@ -423,7 +441,8 @@ export function ApplyToVacancyDialog({
                 <div>
                   <p className="font-semibold text-destructive">Elec-ID Required</p>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Please complete your Elec-ID profile before applying. Your profile helps employers verify your credentials.
+                    Please complete your Elec-ID profile before applying. Your profile helps
+                    employers verify your credentials.
                   </p>
                 </div>
               </div>
@@ -536,9 +555,8 @@ export function ApplyToVacancyDialog({
             />
             <p className="text-xs text-muted-foreground">
               {elecIdProfile
-                ? "Use AI to write a personalised cover letter based on your Elec-ID, or write your own."
-                : "A personalised cover letter can help you stand out from other applicants."
-              }
+                ? 'Use AI to write a personalised cover letter based on your Elec-ID, or write your own.'
+                : 'A personalised cover letter can help you stand out from other applicants.'}
             </p>
           </div>
 

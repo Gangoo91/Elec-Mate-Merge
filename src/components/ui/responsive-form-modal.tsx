@@ -1,20 +1,20 @@
-import * as React from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import * as React from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/drawer';
+import { cn } from '@/lib/utils';
 
 interface ResponsiveFormModalProps {
   open?: boolean;
@@ -47,12 +47,7 @@ const ResponsiveFormModalContext = React.createContext<{ isMobile: boolean }>({
   isMobile: false,
 });
 
-function ResponsiveFormModal({
-  open,
-  onOpenChange,
-  children,
-  trigger,
-}: ResponsiveFormModalProps) {
+function ResponsiveFormModal({ open, onOpenChange, children, trigger }: ResponsiveFormModalProps) {
   const isMobile = useIsMobile();
 
   if (isMobile) {
@@ -76,20 +71,12 @@ function ResponsiveFormModal({
   );
 }
 
-function ResponsiveFormModalContent({
-  children,
-  className,
-}: ResponsiveFormModalContentProps) {
+function ResponsiveFormModalContent({ children, className }: ResponsiveFormModalContentProps) {
   const { isMobile } = React.useContext(ResponsiveFormModalContext);
 
   if (isMobile) {
     return (
-      <DrawerContent
-        className={cn(
-          "max-h-[95vh] flex flex-col",
-          className
-        )}
-      >
+      <DrawerContent className={cn('max-h-[95vh] flex flex-col', className)}>
         {children}
       </DrawerContent>
     );
@@ -97,56 +84,33 @@ function ResponsiveFormModalContent({
 
   return (
     <DialogContent
-      className={cn(
-        "max-w-lg max-h-[90vh] overflow-hidden flex flex-col p-0",
-        className
-      )}
+      className={cn('max-w-lg max-h-[90vh] overflow-hidden flex flex-col p-0', className)}
     >
       {children}
     </DialogContent>
   );
 }
 
-function ResponsiveFormModalHeader({
-  children,
-  className,
-}: ResponsiveFormModalHeaderProps) {
+function ResponsiveFormModalHeader({ children, className }: ResponsiveFormModalHeaderProps) {
   const { isMobile } = React.useContext(ResponsiveFormModalContext);
 
   if (isMobile) {
-    return (
-      <DrawerHeader className={cn("px-5 pt-2 pb-4", className)}>
-        {children}
-      </DrawerHeader>
-    );
+    return <DrawerHeader className={cn('px-5 pt-2 pb-4', className)}>{children}</DrawerHeader>;
   }
 
-  return (
-    <DialogHeader className={cn("px-6 pt-6 pb-4", className)}>
-      {children}
-    </DialogHeader>
-  );
+  return <DialogHeader className={cn('px-6 pt-6 pb-4', className)}>{children}</DialogHeader>;
 }
 
-function ResponsiveFormModalTitle({
-  children,
-  className,
-}: ResponsiveFormModalTitleProps) {
+function ResponsiveFormModalTitle({ children, className }: ResponsiveFormModalTitleProps) {
   const { isMobile } = React.useContext(ResponsiveFormModalContext);
 
   if (isMobile) {
     return (
-      <DrawerTitle className={cn("flex items-center gap-2", className)}>
-        {children}
-      </DrawerTitle>
+      <DrawerTitle className={cn('flex items-center gap-2', className)}>{children}</DrawerTitle>
     );
   }
 
-  return (
-    <DialogTitle className={cn("flex items-center gap-2", className)}>
-      {children}
-    </DialogTitle>
-  );
+  return <DialogTitle className={cn('flex items-center gap-2', className)}>{children}</DialogTitle>;
 }
 
 function ResponsiveFormModalBody({
@@ -156,29 +120,17 @@ function ResponsiveFormModalBody({
   children: React.ReactNode;
   className?: string;
 }) {
-  return (
-    <div
-      className={cn(
-        "flex-1 overflow-y-auto px-5 sm:px-6",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
+  return <div className={cn('flex-1 overflow-y-auto px-5 sm:px-6', className)}>{children}</div>;
 }
 
-function ResponsiveFormModalFooter({
-  children,
-  className,
-}: ResponsiveFormModalFooterProps) {
+function ResponsiveFormModalFooter({ children, className }: ResponsiveFormModalFooterProps) {
   const { isMobile } = React.useContext(ResponsiveFormModalContext);
 
   return (
     <div
       className={cn(
-        "border-t border-border bg-card/80 backdrop-blur-sm",
-        isMobile ? "p-4 pb-safe" : "p-6",
+        'border-t border-border bg-card/80 backdrop-blur-sm',
+        isMobile ? 'p-4 pb-safe' : 'p-6',
         className
       )}
     >

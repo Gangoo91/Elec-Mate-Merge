@@ -1,12 +1,11 @@
-
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
   ResponsiveDialogHeader,
   ResponsiveDialogTitle,
   ResponsiveDialogBody,
-} from "@/components/ui/responsive-dialog";
-import TimeEntryForm from "../TimeEntryForm";
+} from '@/components/ui/responsive-dialog';
+import TimeEntryForm from '../TimeEntryForm';
 
 export interface TimeEntryDialogProps {
   isOpen: boolean;
@@ -27,10 +26,7 @@ export const TimeEntryDialog = ({ isOpen, onClose, onSubmit }: TimeEntryDialogPr
           </p>
         </ResponsiveDialogHeader>
         <ResponsiveDialogBody>
-          <TimeEntryForm
-            onAddEntry={onSubmit}
-            onCancel={onClose}
-          />
+          <TimeEntryForm onAddEntry={onSubmit} onCancel={onClose} />
         </ResponsiveDialogBody>
       </ResponsiveDialogContent>
     </ResponsiveDialog>

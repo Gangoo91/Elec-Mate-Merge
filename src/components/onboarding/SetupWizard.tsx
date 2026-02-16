@@ -49,14 +49,14 @@ export function SetupWizard({ isOpen, onComplete, onSkip }: SetupWizardProps) {
     // Auto-save current step data
     try {
       await saveData(formData);
-      setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
+      setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
     } catch (error) {
       console.error('Failed to save data:', error);
     }
   };
 
   const handleBack = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 0));
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
   const handleSkip = async () => {
@@ -103,10 +103,7 @@ export function SetupWizard({ isOpen, onComplete, onSkip }: SetupWizardProps) {
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.2 }}
           >
-            <CurrentStepComponent
-              formData={formData}
-              onChange={setFormData}
-            />
+            <CurrentStepComponent formData={formData} onChange={setFormData} />
           </motion.div>
         </AnimatePresence>
       </div>

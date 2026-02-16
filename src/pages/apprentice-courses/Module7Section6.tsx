@@ -1,44 +1,44 @@
-import { ArrowLeft, FileText, ClipboardCheck, AlertTriangle, Wrench, TestTube } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, FileText, ClipboardCheck, AlertTriangle, Wrench, TestTube } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Recording Observations and Test Findings Clearly",
-    description: "Documenting fault diagnosis findings and test results",
+    number: 'Subsection 1',
+    title: 'Recording Observations and Test Findings Clearly',
+    description: 'Documenting fault diagnosis findings and test results',
     icon: FileText,
-    href: "6-1"
+    href: '6-1',
   },
   {
-    number: "Subsection 2",
-    title: "Reporting Faults to Supervisors or Duty Holders",
-    description: "Proper communication of fault conditions and findings",
+    number: 'Subsection 2',
+    title: 'Reporting Faults to Supervisors or Duty Holders',
+    description: 'Proper communication of fault conditions and findings',
     icon: ClipboardCheck,
-    href: "6-2"
+    href: '6-2',
   },
   {
-    number: "Subsection 3",
-    title: "Temporary Isolation or Making Safe",
-    description: "Emergency safety measures for dangerous fault conditions",
+    number: 'Subsection 3',
+    title: 'Temporary Isolation or Making Safe',
+    description: 'Emergency safety measures for dangerous fault conditions',
     icon: AlertTriangle,
-    href: "6-3"
+    href: '6-3',
   },
   {
-    number: "Subsection 4",
-    title: "Rectifying Minor Faults Within Scope (Loose Connections, Miswiring)",
-    description: "Simple fault repairs within Level 2 competence",
+    number: 'Subsection 4',
+    title: 'Rectifying Minor Faults Within Scope (Loose Connections, Miswiring)',
+    description: 'Simple fault repairs within Level 2 competence',
     icon: Wrench,
-    href: "6-4"
+    href: '6-4',
   },
   {
-    number: "Subsection 5",
-    title: "Following Up with Re-Testing or Certification (Awareness)",
-    description: "Understanding verification requirements after fault repair",
+    number: 'Subsection 5',
+    title: 'Following Up with Re-Testing or Certification (Awareness)',
+    description: 'Understanding verification requirements after fault repair',
     icon: TestTube,
-    href: "6-5"
-  }
+    href: '6-5',
+  },
 ];
 
 const Section6 = () => {

@@ -1,11 +1,10 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Heart, BookmarkCheck, Trash2 } from "lucide-react";
-import { useCareerBookmarks } from "@/hooks/career/useCareerBookmarks";
-import { careerSections } from "@/components/apprentice/career/SectionData";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Heart, BookmarkCheck, Trash2 } from 'lucide-react';
+import { useCareerBookmarks } from '@/hooks/career/useCareerBookmarks';
+import { careerSections } from '@/components/apprentice/career/SectionData';
 
 interface FavoritesPanelProps {
   onSelectPath?: (pathId: string) => void;
@@ -16,17 +15,22 @@ const FavoritesPanel: React.FC<FavoritesPanelProps> = ({ onSelectPath }) => {
 
   // Mock career paths data - in a real app this would come from a proper data source
   const careerPaths = [
-    { id: "qualified-electrician", title: "Qualified Electrician", category: "Foundation" },
-    { id: "approved-electrician", title: "Approved Electrician", category: "Professional" },
-    { id: "specialist-electrician", title: "Specialist Electrician", category: "Expert" },
-    { id: "electrical-contractor", title: "Electrical Contractor", category: "Business" },
-    { id: "electrical-supervisor", title: "Electrical Supervisor", category: "Management" },
-    { id: "electrical-engineer", title: "Electrical Engineer", category: "Technical" },
+    { id: 'qualified-electrician', title: 'Qualified Electrician', category: 'Foundation' },
+    { id: 'approved-electrician', title: 'Approved Electrician', category: 'Professional' },
+    { id: 'specialist-electrician', title: 'Specialist Electrician', category: 'Expert' },
+    { id: 'electrical-contractor', title: 'Electrical Contractor', category: 'Business' },
+    { id: 'electrical-supervisor', title: 'Electrical Supervisor', category: 'Management' },
+    { id: 'electrical-engineer', title: 'Electrical Engineer', category: 'Technical' },
   ];
 
   const getPathDetails = (careerPathId: string) => {
-    return careerPaths.find(path => path.id === careerPathId) || 
-           { id: careerPathId, title: careerPathId.replace(/-/g, ' '), category: "Other" };
+    return (
+      careerPaths.find((path) => path.id === careerPathId) || {
+        id: careerPathId,
+        title: careerPathId.replace(/-/g, ' '),
+        category: 'Other',
+      }
+    );
   };
 
   if (loading) {
@@ -81,7 +85,10 @@ const FavoritesPanel: React.FC<FavoritesPanelProps> = ({ onSelectPath }) => {
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <h4 className="font-medium text-foreground capitalize">{pathDetails.title}</h4>
-                    <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow text-xs">
+                    <Badge
+                      variant="outline"
+                      className="border-elec-yellow/40 text-elec-yellow text-xs"
+                    >
                       {pathDetails.category}
                     </Badge>
                   </div>
@@ -89,7 +96,7 @@ const FavoritesPanel: React.FC<FavoritesPanelProps> = ({ onSelectPath }) => {
                     Added {new Date(bookmark.created_at).toLocaleDateString()}
                   </p>
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   {onSelectPath && (
                     <Button

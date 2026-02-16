@@ -12,7 +12,8 @@ export const BMSModule4Section3Summary = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          This section covered the essential aspects of access control integration in Building Management Systems.
+          This section covered the essential aspects of access control integration in Building
+          Management Systems.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -21,33 +22,42 @@ export const BMSModule4Section3Summary = () => {
               <Shield className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold mb-2">Access Control in BMS</h4>
-                <p className="text-sm text-gray-300">Regulates building entry and integrates with the BMS for efficiency and safety.</p>
+                <p className="text-sm text-gray-300">
+                  Regulates building entry and integrates with the BMS for efficiency and safety.
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 p-4 bg-gray-800 rounded-lg">
               <Zap className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold mb-2">Door Relays</h4>
-                <p className="text-sm text-gray-300">Control electromagnetic locks or strikes, configured as fail-safe or fail-secure.</p>
+                <p className="text-sm text-gray-300">
+                  Control electromagnetic locks or strikes, configured as fail-safe or fail-secure.
+                </p>
               </div>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-4 bg-gray-800 rounded-lg">
               <Network className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold mb-2">System Integration</h4>
-                <p className="text-sm text-gray-300">Integration with fire alarms, CCTV, and time-logging expands system value.</p>
+                <p className="text-sm text-gray-300">
+                  Integration with fire alarms, CCTV, and time-logging expands system value.
+                </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 p-4 bg-gray-800 rounded-lg">
               <AlertTriangle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="font-semibold mb-2">Professional Installation</h4>
-                <p className="text-sm text-gray-300">Electricians must install, wire, label, and test access control devices to ensure security and safety.</p>
+                <p className="text-sm text-gray-300">
+                  Electricians must install, wire, label, and test access control devices to ensure
+                  security and safety.
+                </p>
               </div>
             </div>
           </div>

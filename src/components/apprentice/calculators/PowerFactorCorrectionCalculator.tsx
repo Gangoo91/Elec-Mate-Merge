@@ -1,11 +1,15 @@
-import { useState, useMemo } from "react";
-import { Zap, Info, BookOpen, ChevronDown, PoundSterling, AlertTriangle, CheckCircle } from "lucide-react";
+import { useState, useMemo } from 'react';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+  Zap,
+  Info,
+  BookOpen,
+  ChevronDown,
+  PoundSterling,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -15,7 +19,7 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 interface CorrectionResult {
   currentPF: number;
@@ -35,23 +39,25 @@ interface CorrectionResult {
 }
 
 // Standard capacitor bank sizes (kVAr)
-const standardCapacitorSizes = [5, 10, 15, 20, 25, 30, 40, 50, 60, 75, 100, 125, 150, 200, 250, 300, 400, 500];
+const standardCapacitorSizes = [
+  5, 10, 15, 20, 25, 30, 40, 50, 60, 75, 100, 125, 150, 200, 250, 300, 400, 500,
+];
 
 const PowerFactorCorrectionCalculator = () => {
   const config = CALCULATOR_CONFIG['power'];
 
   // Inputs
-  const [inputMethod, setInputMethod] = useState<"kw-pf" | "kva-kvar">("kw-pf");
-  const [realPower, setRealPower] = useState<string>("");
-  const [currentPowerFactor, setCurrentPowerFactor] = useState<string>("0.75");
-  const [currentKVA, setCurrentKVA] = useState<string>("");
-  const [currentKVAR, setCurrentKVAR] = useState<string>("");
-  const [targetPowerFactor, setTargetPowerFactor] = useState<string>("0.95");
-  const [supplyVoltage, setSupplyVoltage] = useState<string>("400");
-  const [phases, setPhases] = useState<string>("3");
-  const [electricityRate, setElectricityRate] = useState<string>("0.30");
-  const [reactiveCharge, setReactiveCharge] = useState<string>("0.005");
-  const [operatingHours, setOperatingHours] = useState<string>("2000");
+  const [inputMethod, setInputMethod] = useState<'kw-pf' | 'kva-kvar'>('kw-pf');
+  const [realPower, setRealPower] = useState<string>('');
+  const [currentPowerFactor, setCurrentPowerFactor] = useState<string>('0.75');
+  const [currentKVA, setCurrentKVA] = useState<string>('');
+  const [currentKVAR, setCurrentKVAR] = useState<string>('');
+  const [targetPowerFactor, setTargetPowerFactor] = useState<string>('0.95');
+  const [supplyVoltage, setSupplyVoltage] = useState<string>('400');
+  const [phases, setPhases] = useState<string>('3');
+  const [electricityRate, setElectricityRate] = useState<string>('0.30');
+  const [reactiveCharge, setReactiveCharge] = useState<string>('0.005');
+  const [operatingHours, setOperatingHours] = useState<string>('2000');
 
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
@@ -62,7 +68,7 @@ const PowerFactorCorrectionCalculator = () => {
     let kVACurrent: number;
     let kVARCurrent: number;
 
-    if (inputMethod === "kw-pf") {
+    if (inputMethod === 'kw-pf') {
       kW = parseFloat(realPower);
       pfCurrent = parseFloat(currentPowerFactor);
       if (!kW || !pfCurrent || pfCurrent <= 0 || pfCurrent > 1) return null;
@@ -94,8 +100,8 @@ const PowerFactorCorrectionCalculator = () => {
     const kVARRequired = kVARCurrent - kVARTarget;
 
     // Current reduction (kVA reduction means current reduction at same voltage)
-    const currentCurrent = kVACurrent * 1000 / (Math.sqrt(3) * voltage);
-    const currentTarget = kVATarget * 1000 / (Math.sqrt(3) * voltage);
+    const currentCurrent = (kVACurrent * 1000) / (Math.sqrt(3) * voltage);
+    const currentTarget = (kVATarget * 1000) / (Math.sqrt(3) * voltage);
     const currentSaved = currentCurrent - currentTarget;
     const percentageReduction = ((kVACurrent - kVATarget) / kVACurrent) * 100;
 
@@ -104,7 +110,8 @@ const PowerFactorCorrectionCalculator = () => {
     const annualSavings = reactiveEnergySaved * reactiveRate;
 
     // Select next standard capacitor size up
-    const capacitorBankSize = standardCapacitorSizes.find(size => size >= kVARRequired) ||
+    const capacitorBankSize =
+      standardCapacitorSizes.find((size) => size >= kVARRequired) ||
       Math.ceil(kVARRequired / 50) * 50;
 
     // Recommend stages for large banks (typically 4-6 stages)
@@ -115,13 +122,13 @@ const PowerFactorCorrectionCalculator = () => {
     // Warnings
     const warnings: string[] = [];
     if (kVARRequired > 500) {
-      warnings.push("Large correction required - consider staged automatic switching");
+      warnings.push('Large correction required - consider staged automatic switching');
     }
     if (pfTarget > 0.98) {
-      warnings.push("Very high target PF may cause leading power factor at light loads");
+      warnings.push('Very high target PF may cause leading power factor at light loads');
     }
     if (kW < 50 && kVARRequired > 20) {
-      warnings.push("For small loads, verify cost-benefit of correction equipment");
+      warnings.push('For small loads, verify cost-benefit of correction equipment');
     }
 
     return {
@@ -140,41 +147,52 @@ const PowerFactorCorrectionCalculator = () => {
       stagesRecommended,
       warnings,
     };
-  }, [inputMethod, realPower, currentPowerFactor, currentKVA, currentKVAR, targetPowerFactor, supplyVoltage, electricityRate, reactiveCharge, operatingHours]);
+  }, [
+    inputMethod,
+    realPower,
+    currentPowerFactor,
+    currentKVA,
+    currentKVAR,
+    targetPowerFactor,
+    supplyVoltage,
+    electricityRate,
+    reactiveCharge,
+    operatingHours,
+  ]);
 
   const reset = () => {
-    setInputMethod("kw-pf");
-    setRealPower("");
-    setCurrentPowerFactor("0.75");
-    setCurrentKVA("");
-    setCurrentKVAR("");
-    setTargetPowerFactor("0.95");
-    setSupplyVoltage("400");
-    setPhases("3");
-    setElectricityRate("0.30");
-    setReactiveCharge("0.005");
-    setOperatingHours("2000");
+    setInputMethod('kw-pf');
+    setRealPower('');
+    setCurrentPowerFactor('0.75');
+    setCurrentKVA('');
+    setCurrentKVAR('');
+    setTargetPowerFactor('0.95');
+    setSupplyVoltage('400');
+    setPhases('3');
+    setElectricityRate('0.30');
+    setReactiveCharge('0.005');
+    setOperatingHours('2000');
   };
 
   const hasValidInputs = () => {
-    if (inputMethod === "kw-pf") {
+    if (inputMethod === 'kw-pf') {
       return realPower && currentPowerFactor && targetPowerFactor;
     }
     return currentKVA && currentKVAR && targetPowerFactor;
   };
 
   const inputMethodOptions = [
-    { value: "kw-pf", label: "kW and Power Factor" },
-    { value: "kva-kvar", label: "kVA and kVAR readings" },
+    { value: 'kw-pf', label: 'kW and Power Factor' },
+    { value: 'kva-kvar', label: 'kVA and kVAR readings' },
   ];
 
   const targetPFOptions = [
-    { value: "0.90", label: "0.90 (Minimum acceptable)" },
-    { value: "0.92", label: "0.92 (Typical target)" },
-    { value: "0.95", label: "0.95 (Recommended)" },
-    { value: "0.97", label: "0.97 (Excellent)" },
-    { value: "0.98", label: "0.98 (Near unity)" },
-    { value: "1.00", label: "1.00 (Unity - theoretical)" },
+    { value: '0.90', label: '0.90 (Minimum acceptable)' },
+    { value: '0.92', label: '0.92 (Typical target)' },
+    { value: '0.95', label: '0.95 (Recommended)' },
+    { value: '0.97', label: '0.97 (Excellent)' },
+    { value: '0.98', label: '0.98 (Near unity)' },
+    { value: '1.00', label: '1.00 (Unity - theoretical)' },
   ];
 
   return (
@@ -189,12 +207,12 @@ const PowerFactorCorrectionCalculator = () => {
         <CalculatorSelect
           label="Input Method"
           value={inputMethod}
-          onChange={(v) => setInputMethod(v as "kw-pf" | "kva-kvar")}
+          onChange={(v) => setInputMethod(v as 'kw-pf' | 'kva-kvar')}
           options={inputMethodOptions}
         />
 
         {/* Inputs based on method */}
-        {inputMethod === "kw-pf" ? (
+        {inputMethod === 'kw-pf' ? (
           <>
             <CalculatorInput
               label="Real Power (kW)"
@@ -306,7 +324,7 @@ const PowerFactorCorrectionCalculator = () => {
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-sm text-white/60">Capacitor Bank Required</span>
               <span className="text-sm font-medium text-green-400">
-                {result.stagesRecommended > 1 ? `${result.stagesRecommended} stages` : "Fixed"}
+                {result.stagesRecommended > 1 ? `${result.stagesRecommended} stages` : 'Fixed'}
               </span>
             </div>
 
@@ -314,7 +332,9 @@ const PowerFactorCorrectionCalculator = () => {
               <p className="text-sm text-white/60 mb-1">Required Correction</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
                 {result.requiredKVAR.toFixed(1)} kVAR
               </div>
@@ -387,7 +407,9 @@ const PowerFactorCorrectionCalculator = () => {
                 <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 shrink-0" />
                 <div className="space-y-1">
                   {result.warnings.map((warning, idx) => (
-                    <p key={idx} className="text-sm text-orange-200/80">{warning}</p>
+                    <p key={idx} className="text-sm text-orange-200/80">
+                      {warning}
+                    </p>
                   ))}
                 </div>
               </div>
@@ -398,7 +420,9 @@ const PowerFactorCorrectionCalculator = () => {
           <div className="calculator-card p-4">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="h-4 w-4 text-amber-400" />
-              <span className="text-sm font-medium text-white/80">Capacitor Bank Specification</span>
+              <span className="text-sm font-medium text-white/80">
+                Capacitor Bank Specification
+              </span>
             </div>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between p-2 rounded-lg bg-white/5">
@@ -407,12 +431,16 @@ const PowerFactorCorrectionCalculator = () => {
               </div>
               <div className="flex justify-between p-2 rounded-lg bg-white/5">
                 <span className="text-white/60">System Voltage</span>
-                <span className="text-white font-medium">{supplyVoltage}V {phases === "3" ? "3-phase" : "1-phase"}</span>
+                <span className="text-white font-medium">
+                  {supplyVoltage}V {phases === '3' ? '3-phase' : '1-phase'}
+                </span>
               </div>
               <div className="flex justify-between p-2 rounded-lg bg-white/5">
                 <span className="text-white/60">Switching</span>
                 <span className="text-white font-medium">
-                  {result.stagesRecommended === 1 ? "Fixed" : `Automatic ${result.stagesRecommended}-stage`}
+                  {result.stagesRecommended === 1
+                    ? 'Fixed'
+                    : `Automatic ${result.stagesRecommended}-stage`}
                 </span>
               </div>
               <div className="flex justify-between p-2 rounded-lg bg-white/5">
@@ -428,21 +456,23 @@ const PowerFactorCorrectionCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">How It Worked Out</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    How It Worked Out
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showGuidance && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-3 text-sm">
                   <div className="p-3 rounded-lg bg-white/5">
                     <p className="text-white/60 mb-1">Power triangle relationship</p>
-                    <p className="text-white font-mono text-xs">
-                      kVA² = kW² + kVAR²
-                    </p>
+                    <p className="text-white font-mono text-xs">kVA² = kW² + kVAR²</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/5">
                     <p className="text-white/60 mb-1">Required correction</p>
@@ -450,13 +480,15 @@ const PowerFactorCorrectionCalculator = () => {
                       kVAR correction = kVAR current - kVAR target
                     </p>
                     <p className="text-white/80 text-xs mt-1">
-                      = {result.currentKVAR.toFixed(1)} - {result.targetKVAR.toFixed(1)} = {result.requiredKVAR.toFixed(1)} kVAR
+                      = {result.currentKVAR.toFixed(1)} - {result.targetKVAR.toFixed(1)} ={' '}
+                      {result.requiredKVAR.toFixed(1)} kVAR
                     </p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/5">
                     <p className="text-white/60 mb-1">kVAR at target PF</p>
                     <p className="text-white/80 text-xs">
-                      tan(arccos({result.targetPF})) × {result.currentKW.toFixed(1)} kW = {result.targetKVAR.toFixed(1)} kVAR
+                      tan(arccos({result.targetPF})) × {result.currentKW.toFixed(1)} kW ={' '}
+                      {result.targetKVAR.toFixed(1)} kVAR
                     </p>
                   </div>
                 </div>
@@ -474,22 +506,28 @@ const PowerFactorCorrectionCalculator = () => {
               <BookOpen className="h-4 w-4 text-amber-400" />
               <span className="text-sm sm:text-base font-medium text-amber-300">PFC Guidance</span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/70 transition-transform duration-200",
-              showReference && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0">
             <div className="space-y-3 text-sm text-amber-200/80">
-              <p><strong className="text-amber-300">Why Correct Power Factor?</strong></p>
+              <p>
+                <strong className="text-amber-300">Why Correct Power Factor?</strong>
+              </p>
               <ul className="space-y-1 ml-4">
                 <li>• Avoid reactive power charges (typically £0.003-0.01/kVARh)</li>
                 <li>• Reduce cable losses (I²R)</li>
                 <li>• Free up transformer capacity</li>
                 <li>• Improve voltage regulation</li>
               </ul>
-              <p><strong className="text-amber-300">Typical Power Factors:</strong></p>
+              <p>
+                <strong className="text-amber-300">Typical Power Factors:</strong>
+              </p>
               <ul className="space-y-1 ml-4">
                 <li>• Motors (part load): 0.5-0.7</li>
                 <li>• Motors (full load): 0.8-0.9</li>
@@ -498,17 +536,25 @@ const PowerFactorCorrectionCalculator = () => {
                 <li>• Welders: 0.5-0.7</li>
               </ul>
 
-              <p className="pt-2 border-t border-white/10"><strong className="text-amber-300">BS 7671 / IET Guidance:</strong></p>
+              <p className="pt-2 border-t border-white/10">
+                <strong className="text-amber-300">BS 7671 / IET Guidance:</strong>
+              </p>
               <ul className="space-y-1 ml-4 text-xs">
-                <li>• <strong>Section 331:</strong> Consider power factor when sizing cables</li>
-                <li>• <strong>Section 555:</strong> PFC equipment must be rated for harmonics</li>
+                <li>
+                  • <strong>Section 331:</strong> Consider power factor when sizing cables
+                </li>
+                <li>
+                  • <strong>Section 555:</strong> PFC equipment must be rated for harmonics
+                </li>
                 <li>• Target PF of 0.95+ avoids most utility penalties</li>
                 <li>• Over-correction (leading PF) can cause voltage rise</li>
               </ul>
 
               <div className="mt-2 p-2 bg-red-500/10 border border-red-500/20 rounded-lg">
                 <p className="text-xs text-red-300">
-                  <strong>Warning:</strong> Always install detuned reactors (5% or 7%) with capacitors to avoid harmonic resonance with VFDs, LED drivers, and switch-mode power supplies.
+                  <strong>Warning:</strong> Always install detuned reactors (5% or 7%) with
+                  capacitors to avoid harmonic resonance with VFDs, LED drivers, and switch-mode
+                  power supplies.
                 </p>
               </div>
             </div>

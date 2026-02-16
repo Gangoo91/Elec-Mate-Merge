@@ -1,212 +1,214 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "System Monitoring and Performance Analysis - Renewable Energy Module 7";
+const TITLE = 'System Monitoring and Performance Analysis - Renewable Energy Module 7';
 const DESCRIPTION =
-  "Master renewable energy system monitoring, performance metrics, data analysis techniques, and remote monitoring platforms for optimising system operation and identifying issues.";
+  'Master renewable energy system monitoring, performance metrics, data analysis techniques, and remote monitoring platforms for optimising system operation and identifying issues.';
 
 const quickCheckQuestions = [
   {
-    id: "mon-perf-qc1",
-    question: "What is the Performance Ratio (PR) of a solar PV system?",
+    id: 'mon-perf-qc1',
+    question: 'What is the Performance Ratio (PR) of a solar PV system?',
     options: [
-      "The ratio of actual to theoretical maximum energy output",
-      "The ratio of peak power to average power",
-      "The ratio of DC to AC power",
-      "The ratio of summer to winter output",
+      'The ratio of actual to theoretical maximum energy output',
+      'The ratio of peak power to average power',
+      'The ratio of DC to AC power',
+      'The ratio of summer to winter output',
     ],
     correctIndex: 0,
     explanation:
-      "Performance Ratio compares actual energy produced to the theoretical maximum based on irradiance and system capacity, typically expressed as a percentage. A well-maintained system should achieve PR above 80%.",
+      'Performance Ratio compares actual energy produced to the theoretical maximum based on irradiance and system capacity, typically expressed as a percentage. A well-maintained system should achieve PR above 80%.',
   },
   {
-    id: "mon-perf-qc2",
-    question: "What is a typical expected annual degradation rate for crystalline silicon PV modules?",
-    options: ["0.1-0.2%", "0.3-0.5%", "0.5-0.8%", "1.0-1.5%"],
+    id: 'mon-perf-qc2',
+    question:
+      'What is a typical expected annual degradation rate for crystalline silicon PV modules?',
+    options: ['0.1-0.2%', '0.3-0.5%', '0.5-0.8%', '1.0-1.5%'],
     correctIndex: 2,
     explanation:
-      "Crystalline silicon modules typically degrade at 0.5-0.8% per year. Higher degradation rates may indicate quality issues or environmental factors requiring investigation.",
+      'Crystalline silicon modules typically degrade at 0.5-0.8% per year. Higher degradation rates may indicate quality issues or environmental factors requiring investigation.',
   },
   {
-    id: "mon-perf-qc3",
-    question: "What does string-level monitoring enable that system-level monitoring cannot?",
+    id: 'mon-perf-qc3',
+    question: 'What does string-level monitoring enable that system-level monitoring cannot?',
     options: [
-      "Total energy measurement",
-      "Grid export measurement",
-      "Identification of underperforming strings",
-      "Weather data collection",
+      'Total energy measurement',
+      'Grid export measurement',
+      'Identification of underperforming strings',
+      'Weather data collection',
     ],
     correctIndex: 2,
     explanation:
-      "String-level monitoring measures individual string currents and voltages, enabling identification of specific underperforming strings rather than just overall system issues.",
+      'String-level monitoring measures individual string currents and voltages, enabling identification of specific underperforming strings rather than just overall system issues.',
   },
   {
-    id: "mon-perf-qc4",
-    question: "What minimum irradiance level is typically required for meaningful PV performance testing?",
-    options: ["100 W/m²", "200 W/m²", "500 W/m²", "800 W/m²"],
+    id: 'mon-perf-qc4',
+    question:
+      'What minimum irradiance level is typically required for meaningful PV performance testing?',
+    options: ['100 W/m²', '200 W/m²', '500 W/m²', '800 W/m²'],
     correctIndex: 2,
     explanation:
-      "A minimum of 500 W/m² is typically required for meaningful performance testing, though 700-800 W/m² is preferred. Lower irradiance levels introduce significant measurement uncertainty.",
+      'A minimum of 500 W/m² is typically required for meaningful performance testing, though 700-800 W/m² is preferred. Lower irradiance levels introduce significant measurement uncertainty.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is Specific Yield in solar PV system performance?",
+    question: 'What is Specific Yield in solar PV system performance?',
     options: [
-      "Power output per module",
-      "Annual energy per kWp installed",
-      "Efficiency percentage",
-      "Peak power rating",
+      'Power output per module',
+      'Annual energy per kWp installed',
+      'Efficiency percentage',
+      'Peak power rating',
     ],
     correctAnswer: 1,
     explanation:
-      "Specific Yield measures annual energy production per kilowatt-peak of installed capacity (kWh/kWp/year), enabling comparison between systems of different sizes.",
+      'Specific Yield measures annual energy production per kilowatt-peak of installed capacity (kWh/kWp/year), enabling comparison between systems of different sizes.',
   },
   {
     id: 2,
-    question: "What communication protocol is commonly used for inverter monitoring?",
-    options: ["HTTP only", "Modbus RTU/TCP", "Bluetooth only", "USB only"],
+    question: 'What communication protocol is commonly used for inverter monitoring?',
+    options: ['HTTP only', 'Modbus RTU/TCP', 'Bluetooth only', 'USB only'],
     correctAnswer: 1,
     explanation:
-      "Modbus RTU (serial) and Modbus TCP (Ethernet) are widely used industrial protocols for inverter communication, supported by most manufacturers and monitoring platforms.",
+      'Modbus RTU (serial) and Modbus TCP (Ethernet) are widely used industrial protocols for inverter communication, supported by most manufacturers and monitoring platforms.',
   },
   {
     id: 3,
-    question: "What does a sudden drop in string current while voltage remains normal indicate?",
+    question: 'What does a sudden drop in string current while voltage remains normal indicate?',
     options: [
-      "Inverter failure",
-      "Grid fault",
-      "Partial shading or soiling",
-      "Complete string failure",
+      'Inverter failure',
+      'Grid fault',
+      'Partial shading or soiling',
+      'Complete string failure',
     ],
     correctAnswer: 2,
     explanation:
-      "Reduced current with normal voltage typically indicates partial shading or localised soiling, as the shaded cells limit current while unaffected cells maintain voltage.",
+      'Reduced current with normal voltage typically indicates partial shading or localised soiling, as the shaded cells limit current while unaffected cells maintain voltage.',
   },
   {
     id: 4,
-    question: "What is the purpose of weather normalisation in performance analysis?",
+    question: 'What is the purpose of weather normalisation in performance analysis?',
     options: [
-      "To predict weather patterns",
-      "To compare performance across different conditions",
-      "To adjust tariff rates",
-      "To schedule maintenance",
+      'To predict weather patterns',
+      'To compare performance across different conditions',
+      'To adjust tariff rates',
+      'To schedule maintenance',
     ],
     correctAnswer: 1,
     explanation:
-      "Weather normalisation adjusts performance data for irradiance and temperature variations, enabling fair comparison of performance across different time periods and weather conditions.",
+      'Weather normalisation adjusts performance data for irradiance and temperature variations, enabling fair comparison of performance across different time periods and weather conditions.',
   },
   {
     id: 5,
-    question: "What does high inverter clipping indicate about system design?",
+    question: 'What does high inverter clipping indicate about system design?',
     options: [
-      "Undersized array",
-      "Oversized inverter",
-      "Oversized array relative to inverter",
-      "Faulty MPPT",
+      'Undersized array',
+      'Oversized inverter',
+      'Oversized array relative to inverter',
+      'Faulty MPPT',
     ],
     correctAnswer: 2,
     explanation:
-      "Inverter clipping occurs when the array generates more DC power than the inverter can convert, indicating the DC/AC ratio may be higher than optimal, though some clipping is acceptable.",
+      'Inverter clipping occurs when the array generates more DC power than the inverter can convert, indicating the DC/AC ratio may be higher than optimal, though some clipping is acceptable.',
   },
   {
     id: 6,
-    question: "What monitoring data is essential for warranty claims?",
+    question: 'What monitoring data is essential for warranty claims?',
     options: [
-      "Visual inspection photos only",
-      "Timestamped performance data and environmental conditions",
-      "Customer testimonials",
-      "Installation date only",
+      'Visual inspection photos only',
+      'Timestamped performance data and environmental conditions',
+      'Customer testimonials',
+      'Installation date only',
     ],
     correctAnswer: 1,
     explanation:
-      "Warranty claims require timestamped evidence of underperformance along with environmental data (irradiance, temperature) to demonstrate issues occurred under valid test conditions.",
+      'Warranty claims require timestamped evidence of underperformance along with environmental data (irradiance, temperature) to demonstrate issues occurred under valid test conditions.',
   },
   {
     id: 7,
-    question: "What is the typical data logging interval for commercial PV monitoring?",
-    options: ["1 second", "5 minutes", "1 hour", "1 day"],
+    question: 'What is the typical data logging interval for commercial PV monitoring?',
+    options: ['1 second', '5 minutes', '1 hour', '1 day'],
     correctAnswer: 1,
     explanation:
-      "Five-minute intervals provide adequate resolution for performance analysis whilst managing data storage requirements. Higher resolution may be used for fault diagnosis.",
+      'Five-minute intervals provide adequate resolution for performance analysis whilst managing data storage requirements. Higher resolution may be used for fault diagnosis.',
   },
   {
     id: 8,
-    question: "What does availability percentage measure?",
+    question: 'What does availability percentage measure?',
     options: [
-      "Energy production efficiency",
-      "Time system was operational vs total time",
-      "Grid connection quality",
-      "Weather suitability",
+      'Energy production efficiency',
+      'Time system was operational vs total time',
+      'Grid connection quality',
+      'Weather suitability',
     ],
     correctAnswer: 1,
     explanation:
-      "Availability measures the percentage of time a system was operational and able to generate power, excluding periods of fault, maintenance, or forced outage.",
+      'Availability measures the percentage of time a system was operational and able to generate power, excluding periods of fault, maintenance, or forced outage.',
   },
   {
     id: 9,
-    question: "What temperature coefficient information is needed for performance analysis?",
+    question: 'What temperature coefficient information is needed for performance analysis?',
     options: [
-      "Ambient temperature only",
-      "Power temperature coefficient (typically negative)",
-      "Inverter temperature",
-      "Cable temperature",
+      'Ambient temperature only',
+      'Power temperature coefficient (typically negative)',
+      'Inverter temperature',
+      'Cable temperature',
     ],
     correctAnswer: 1,
     explanation:
-      "The power temperature coefficient (typically -0.3% to -0.5% per degree C for silicon) is needed to normalise performance data to standard test conditions (25°C cell temperature).",
+      'The power temperature coefficient (typically -0.3% to -0.5% per degree C for silicon) is needed to normalise performance data to standard test conditions (25°C cell temperature).',
   },
   {
     id: 10,
-    question: "What trend indicates potential inverter capacitor degradation?",
+    question: 'What trend indicates potential inverter capacitor degradation?',
     options: [
-      "Increased morning output",
-      "Gradual reduction in efficiency over time",
-      "Higher output in winter",
-      "Stable efficiency readings",
+      'Increased morning output',
+      'Gradual reduction in efficiency over time',
+      'Higher output in winter',
+      'Stable efficiency readings',
     ],
     correctAnswer: 1,
     explanation:
-      "Gradually declining inverter efficiency over time often indicates capacitor degradation, a common age-related failure mode requiring proactive replacement before complete failure.",
+      'Gradually declining inverter efficiency over time often indicates capacitor degradation, a common age-related failure mode requiring proactive replacement before complete failure.',
   },
 ];
 
 const faqs = [
   {
-    question: "How often should I review monitoring data for a residential system?",
+    question: 'How often should I review monitoring data for a residential system?',
     answer:
-      "For residential systems, weekly automated reports supplemented by monthly detailed reviews are typically sufficient. Set up automatic alerts for significant production drops (e.g., greater than 20% below expected) to catch issues promptly without constant manual monitoring.",
+      'For residential systems, weekly automated reports supplemented by monthly detailed reviews are typically sufficient. Set up automatic alerts for significant production drops (e.g., greater than 20% below expected) to catch issues promptly without constant manual monitoring.',
   },
   {
-    question: "What causes discrepancies between monitoring data and meter readings?",
+    question: 'What causes discrepancies between monitoring data and meter readings?',
     answer:
-      "Common causes include monitoring system calibration errors, meter accuracy tolerances, different measurement points (DC vs AC, gross vs net), timing differences in data capture, and communication dropouts causing data gaps. Regular cross-checking helps identify systematic errors.",
+      'Common causes include monitoring system calibration errors, meter accuracy tolerances, different measurement points (DC vs AC, gross vs net), timing differences in data capture, and communication dropouts causing data gaps. Regular cross-checking helps identify systematic errors.',
   },
   {
-    question: "How do I calculate expected output for performance comparison?",
+    question: 'How do I calculate expected output for performance comparison?',
     answer:
-      "Expected output = System capacity (kWp) x Irradiance (kWh/m²) x Performance Ratio. Use local irradiance data from weather stations or satellite services, and apply appropriate PR values (typically 0.75-0.85 for well-designed systems).",
+      'Expected output = System capacity (kWp) x Irradiance (kWh/m²) x Performance Ratio. Use local irradiance data from weather stations or satellite services, and apply appropriate PR values (typically 0.75-0.85 for well-designed systems).',
   },
   {
-    question: "What monitoring features should I specify for new installations?",
+    question: 'What monitoring features should I specify for new installations?',
     answer:
-      "Specify string-level current monitoring, environmental sensors (irradiance, temperature), remote access capability, automatic alert generation, data export functionality, and minimum 5-year data retention. For commercial systems, add revenue-grade metering and API access.",
+      'Specify string-level current monitoring, environmental sensors (irradiance, temperature), remote access capability, automatic alert generation, data export functionality, and minimum 5-year data retention. For commercial systems, add revenue-grade metering and API access.',
   },
   {
-    question: "How do I identify the cause of gradual performance decline?",
+    question: 'How do I identify the cause of gradual performance decline?',
     answer:
-      "Compare Performance Ratio trends over time, normalised for weather. Check for new shading sources, soiling patterns, module degradation patterns, and inverter efficiency trends. String-level data helps isolate whether issues are system-wide or localised.",
+      'Compare Performance Ratio trends over time, normalised for weather. Check for new shading sources, soiling patterns, module degradation patterns, and inverter efficiency trends. String-level data helps isolate whether issues are system-wide or localised.',
   },
   {
-    question: "What performance data should be included in O&M reports?",
+    question: 'What performance data should be included in O&M reports?',
     answer:
-      "Include actual vs expected energy, Performance Ratio, availability percentage, fault summary, maintenance completed, irradiance data, string performance comparison, inverter efficiency, and trend analysis. Commercial reports often include financial performance metrics.",
+      'Include actual vs expected energy, Performance Ratio, availability percentage, fault summary, maintenance completed, irradiance data, string performance comparison, inverter efficiency, and trend analysis. Commercial reports often include financial performance metrics.',
   },
 ];
 
@@ -237,7 +239,8 @@ const RenewableEnergyModule7Section1 = () => {
           System Monitoring & Performance Analysis
         </h1>
         <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
-          Understanding monitoring systems, performance metrics, and data analysis for renewable energy installations
+          Understanding monitoring systems, performance metrics, and data analysis for renewable
+          energy installations
         </p>
       </div>
 
@@ -246,22 +249,26 @@ const RenewableEnergyModule7Section1 = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
             <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">In 30 Seconds:</span> Performance Ratio compares actual vs theoretical output to assess system health
+              <span className="font-semibold text-elec-yellow">In 30 Seconds:</span> Performance
+              Ratio compares actual vs theoretical output to assess system health
             </p>
           </div>
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
             <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Spot it:</span> PR above 80% indicates a well-designed and maintained system
+              <span className="font-semibold text-elec-yellow">Spot it:</span> PR above 80%
+              indicates a well-designed and maintained system
             </p>
           </div>
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
             <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Use it:</span> String-level monitoring isolates faults to specific strings
+              <span className="font-semibold text-elec-yellow">Use it:</span> String-level
+              monitoring isolates faults to specific strings
             </p>
           </div>
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
             <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Key Metric:</span> Specific Yield (kWh/kWp/year) enables cross-system comparison
+              <span className="font-semibold text-elec-yellow">Key Metric:</span> Specific Yield
+              (kWh/kWp/year) enables cross-system comparison
             </p>
           </div>
         </div>
@@ -272,12 +279,12 @@ const RenewableEnergyModule7Section1 = () => {
         <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
         <div className="space-y-2">
           {[
-            "Understand key performance metrics for renewable systems",
-            "Interpret monitoring data to identify issues",
-            "Configure and use remote monitoring platforms",
-            "Calculate Performance Ratio and Specific Yield",
-            "Apply weather normalisation techniques",
-            "Generate meaningful performance reports",
+            'Understand key performance metrics for renewable systems',
+            'Interpret monitoring data to identify issues',
+            'Configure and use remote monitoring platforms',
+            'Calculate Performance Ratio and Specific Yield',
+            'Apply weather normalisation techniques',
+            'Generate meaningful performance reports',
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
@@ -296,16 +303,27 @@ const RenewableEnergyModule7Section1 = () => {
           </div>
           <div className="space-y-3 text-white/80 text-sm leading-relaxed">
             <p>
-              Effective system monitoring relies on understanding and tracking key performance indicators that reveal system health and highlight potential issues.
+              Effective system monitoring relies on understanding and tracking key performance
+              indicators that reveal system health and highlight potential issues.
             </p>
             <p>
-              <span className="text-white font-medium">Performance Ratio (PR):</span> The ratio of actual energy output to theoretical maximum based on measured irradiance. Calculated as PR = (Actual Energy / (Irradiance x Capacity x Time)) x 100%. Well-designed systems achieve PR greater than 80%. This accounts for all losses including temperature, soiling, inverter, and wiring losses.
+              <span className="text-white font-medium">Performance Ratio (PR):</span> The ratio of
+              actual energy output to theoretical maximum based on measured irradiance. Calculated
+              as PR = (Actual Energy / (Irradiance x Capacity x Time)) x 100%. Well-designed systems
+              achieve PR greater than 80%. This accounts for all losses including temperature,
+              soiling, inverter, and wiring losses.
             </p>
             <p>
-              <span className="text-white font-medium">Specific Yield:</span> Annual energy production per unit of installed capacity (kWh/kWp/year). UK typical range is 800-1,100 kWh/kWp/year. Varies significantly with location and orientation, useful for comparing sites and validating designs. Track year-on-year to identify degradation.
+              <span className="text-white font-medium">Specific Yield:</span> Annual energy
+              production per unit of installed capacity (kWh/kWp/year). UK typical range is
+              800-1,100 kWh/kWp/year. Varies significantly with location and orientation, useful for
+              comparing sites and validating designs. Track year-on-year to identify degradation.
             </p>
             <p>
-              <span className="text-white font-medium">System Availability:</span> Percentage of time the system was operational and able to generate. Target availability is greater than 98%. This excludes scheduled maintenance windows and tracks fault frequency and duration. Important for O&M contract KPIs.
+              <span className="text-white font-medium">System Availability:</span> Percentage of
+              time the system was operational and able to generate. Target availability is greater
+              than 98%. This excludes scheduled maintenance windows and tracks fault frequency and
+              duration. Important for O&M contract KPIs.
             </p>
           </div>
         </section>
@@ -320,16 +338,29 @@ const RenewableEnergyModule7Section1 = () => {
           </div>
           <div className="space-y-3 text-white/80 text-sm leading-relaxed">
             <p>
-              Modern monitoring systems collect data from multiple sources to provide comprehensive visibility of system performance and health.
+              Modern monitoring systems collect data from multiple sources to provide comprehensive
+              visibility of system performance and health.
             </p>
             <p>
-              <span className="text-white font-medium">Data Collection Points:</span> Inverter data includes DC input, AC output, efficiency, temperatures, and fault codes. String monitoring provides individual string currents and voltages. Energy meters record generation, export, and import measurements. Environmental sensors capture irradiance, module temperature, and ambient temperature.
+              <span className="text-white font-medium">Data Collection Points:</span> Inverter data
+              includes DC input, AC output, efficiency, temperatures, and fault codes. String
+              monitoring provides individual string currents and voltages. Energy meters record
+              generation, export, and import measurements. Environmental sensors capture irradiance,
+              module temperature, and ambient temperature.
             </p>
             <p>
-              <span className="text-white font-medium">Communication Protocols:</span> Modbus RTU is serial communication over RS485, widely supported. Modbus TCP is Ethernet-based and standard for commercial systems. SunSpec provides standardised data models for interoperability. Manufacturer protocols are proprietary systems from SolarEdge, Enphase, and others.
+              <span className="text-white font-medium">Communication Protocols:</span> Modbus RTU is
+              serial communication over RS485, widely supported. Modbus TCP is Ethernet-based and
+              standard for commercial systems. SunSpec provides standardised data models for
+              interoperability. Manufacturer protocols are proprietary systems from SolarEdge,
+              Enphase, and others.
             </p>
             <p>
-              <span className="text-white font-medium">Monitoring Levels:</span> System level provides total generation and export for basic monitoring. Inverter level shows per-inverter performance for fault isolation. String level enables detailed diagnosis through individual string data. Module level offers maximum visibility through per-panel optimisation.
+              <span className="text-white font-medium">Monitoring Levels:</span> System level
+              provides total generation and export for basic monitoring. Inverter level shows
+              per-inverter performance for fault isolation. String level enables detailed diagnosis
+              through individual string data. Module level offers maximum visibility through
+              per-panel optimisation.
             </p>
           </div>
         </section>
@@ -344,16 +375,27 @@ const RenewableEnergyModule7Section1 = () => {
           </div>
           <div className="space-y-3 text-white/80 text-sm leading-relaxed">
             <p>
-              Raw monitoring data must be processed and analysed to extract meaningful insights about system performance and identify developing issues.
+              Raw monitoring data must be processed and analysed to extract meaningful insights
+              about system performance and identify developing issues.
             </p>
             <p>
-              <span className="text-white font-medium">Weather Normalisation:</span> Adjusting performance data for environmental conditions enables fair comparison. Irradiance correction normalises to standard 1000 W/m². Temperature correction applies module temperature coefficients. Reference cells provide calibrated irradiance measurements, whilst satellite data offers an alternative when sensors are unavailable.
+              <span className="text-white font-medium">Weather Normalisation:</span> Adjusting
+              performance data for environmental conditions enables fair comparison. Irradiance
+              correction normalises to standard 1000 W/m². Temperature correction applies module
+              temperature coefficients. Reference cells provide calibrated irradiance measurements,
+              whilst satellite data offers an alternative when sensors are unavailable.
             </p>
             <p>
-              <span className="text-white font-medium">Trend Analysis:</span> Rolling averages smooth daily variations for trend identification. Year-on-year comparison accounts for seasonal and weather variations. Degradation tracking monitors long-term performance decline, and anomaly detection identifies sudden changes requiring investigation.
+              <span className="text-white font-medium">Trend Analysis:</span> Rolling averages
+              smooth daily variations for trend identification. Year-on-year comparison accounts for
+              seasonal and weather variations. Degradation tracking monitors long-term performance
+              decline, and anomaly detection identifies sudden changes requiring investigation.
             </p>
             <p>
-              <span className="text-white font-medium">Comparative Analysis:</span> String comparison identifies underperforming strings. Inverter comparison spots efficiency variations. Fleet benchmarking compares similar systems, and design validation compares actual versus predicted yield.
+              <span className="text-white font-medium">Comparative Analysis:</span> String
+              comparison identifies underperforming strings. Inverter comparison spots efficiency
+              variations. Fleet benchmarking compares similar systems, and design validation
+              compares actual versus predicted yield.
             </p>
           </div>
         </section>
@@ -368,16 +410,30 @@ const RenewableEnergyModule7Section1 = () => {
           </div>
           <div className="space-y-3 text-white/80 text-sm leading-relaxed">
             <p>
-              Effective alert systems provide early warning of issues without overwhelming operators with false alarms.
+              Effective alert systems provide early warning of issues without overwhelming operators
+              with false alarms.
             </p>
             <p>
-              <span className="text-white font-medium">Alert Categories:</span> Critical alerts cover complete system failure and safety issues requiring immediate response. Warning alerts address significant underperformance and component faults requiring same-day response. Advisory alerts note minor issues and developing trends for scheduled review. Informational alerts provide status updates and scheduled events requiring no action.
+              <span className="text-white font-medium">Alert Categories:</span> Critical alerts
+              cover complete system failure and safety issues requiring immediate response. Warning
+              alerts address significant underperformance and component faults requiring same-day
+              response. Advisory alerts note minor issues and developing trends for scheduled
+              review. Informational alerts provide status updates and scheduled events requiring no
+              action.
             </p>
             <p>
-              <span className="text-white font-medium">Common Alert Thresholds:</span> Performance drop alerts trigger at greater than 10-20% below expected after weather normalisation. String current imbalance alerts at greater than 5% variation between parallel strings. Communication loss alerts after greater than 1 hour without data. Inverter efficiency alerts when below 95% of rated specification.
+              <span className="text-white font-medium">Common Alert Thresholds:</span> Performance
+              drop alerts trigger at greater than 10-20% below expected after weather normalisation.
+              String current imbalance alerts at greater than 5% variation between parallel strings.
+              Communication loss alerts after greater than 1 hour without data. Inverter efficiency
+              alerts when below 95% of rated specification.
             </p>
             <p>
-              <span className="text-white font-medium">Response Procedures:</span> Acknowledge alert and review monitoring data. Check for obvious causes such as weather, grid outage, or scheduled work. Review historical data for patterns or previous occurrences. Attempt remote diagnosis or reset if applicable, then schedule site visit if issue cannot be resolved remotely.
+              <span className="text-white font-medium">Response Procedures:</span> Acknowledge alert
+              and review monitoring data. Check for obvious causes such as weather, grid outage, or
+              scheduled work. Review historical data for patterns or previous occurrences. Attempt
+              remote diagnosis or reset if applicable, then schedule site visit if issue cannot be
+              resolved remotely.
             </p>
           </div>
         </section>
@@ -392,16 +448,27 @@ const RenewableEnergyModule7Section1 = () => {
           </div>
           <div className="space-y-3 text-white/80 text-sm leading-relaxed">
             <p>
-              Regular performance reports provide stakeholders with system status information and support maintenance planning and warranty claims.
+              Regular performance reports provide stakeholders with system status information and
+              support maintenance planning and warranty claims.
             </p>
             <p>
-              <span className="text-white font-medium">Report Contents:</span> Executive summary covers key metrics and highlights. Energy production section shows actual vs expected with variance analysis. Performance indicators include PR, availability, and efficiency trends. Environmental data provides irradiance, temperatures, and weather summary. Fault summary lists alarms raised with duration and resolution.
+              <span className="text-white font-medium">Report Contents:</span> Executive summary
+              covers key metrics and highlights. Energy production section shows actual vs expected
+              with variance analysis. Performance indicators include PR, availability, and
+              efficiency trends. Environmental data provides irradiance, temperatures, and weather
+              summary. Fault summary lists alarms raised with duration and resolution.
             </p>
             <p>
-              <span className="text-white font-medium">Report Frequency:</span> Operational reports are weekly or monthly focusing on production, faults, and actions. Performance reports are monthly or quarterly covering KPIs, trends, and analysis. Annual reports provide comprehensive yearly reviews.
+              <span className="text-white font-medium">Report Frequency:</span> Operational reports
+              are weekly or monthly focusing on production, faults, and actions. Performance reports
+              are monthly or quarterly covering KPIs, trends, and analysis. Annual reports provide
+              comprehensive yearly reviews.
             </p>
             <p>
-              <span className="text-white font-medium">Documentation Requirements:</span> Maintain calibration records for all sensors. Document any data quality issues affecting analysis. Keep historical data for warranty claims and long-term trend analysis. Ensure reports meet O&M contract requirements.
+              <span className="text-white font-medium">Documentation Requirements:</span> Maintain
+              calibration records for all sensors. Document any data quality issues affecting
+              analysis. Keep historical data for warranty claims and long-term trend analysis.
+              Ensure reports meet O&M contract requirements.
             </p>
           </div>
         </section>
@@ -414,13 +481,22 @@ const RenewableEnergyModule7Section1 = () => {
           </h3>
           <div className="space-y-2 text-white/80 text-sm">
             <p>
-              <span className="text-white font-medium">Setting up effective monitoring:</span> Ensure sensors are correctly calibrated and positioned. Configure appropriate alert thresholds based on system characteristics. Establish clear escalation procedures and responsibilities for alert response.
+              <span className="text-white font-medium">Setting up effective monitoring:</span>{' '}
+              Ensure sensors are correctly calibrated and positioned. Configure appropriate alert
+              thresholds based on system characteristics. Establish clear escalation procedures and
+              responsibilities for alert response.
             </p>
             <p>
-              <span className="text-white font-medium">Data quality management:</span> Regularly verify data against independent measurements such as meter readings. Address communication gaps promptly. Maintain calibration records for sensors and document any data quality issues affecting analysis.
+              <span className="text-white font-medium">Data quality management:</span> Regularly
+              verify data against independent measurements such as meter readings. Address
+              communication gaps promptly. Maintain calibration records for sensors and document any
+              data quality issues affecting analysis.
             </p>
             <p>
-              <span className="text-white font-medium">Using data for maintenance planning:</span> Track component-level performance to identify degradation before failure. Use historical fault data to predict maintenance needs. Schedule preventive maintenance based on trends rather than just calendar intervals.
+              <span className="text-white font-medium">Using data for maintenance planning:</span>{' '}
+              Track component-level performance to identify degradation before failure. Use
+              historical fault data to predict maintenance needs. Schedule preventive maintenance
+              based on trends rather than just calendar intervals.
             </p>
           </div>
         </div>
@@ -439,10 +515,7 @@ const RenewableEnergyModule7Section1 = () => {
         </section>
 
         {/* Quiz */}
-        <Quiz
-          title="System Monitoring Quiz"
-          questions={quizQuestions}
-        />
+        <Quiz title="System Monitoring Quiz" questions={quizQuestions} />
 
         {/* Bottom Navigation */}
         <div className="flex justify-between items-center pt-4 border-t border-white/10">

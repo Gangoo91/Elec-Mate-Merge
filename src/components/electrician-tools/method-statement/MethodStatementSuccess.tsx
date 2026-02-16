@@ -1,8 +1,16 @@
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle2, FileText, Clock, AlertTriangle, Layers, Sparkles, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
-import confetti from "canvas-confetti";
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  CheckCircle2,
+  FileText,
+  Clock,
+  AlertTriangle,
+  Layers,
+  Sparkles,
+  ArrowRight,
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import {
   Dialog,
   DialogContent,
@@ -10,7 +18,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
 interface MethodStatementSuccessProps {
   stepsCount: number;
@@ -33,7 +41,7 @@ const MethodStatementSuccess = ({
   projectName,
   open,
   onOpenChange,
-  onViewResults
+  onViewResults,
 }: MethodStatementSuccessProps) => {
   useEffect(() => {
     if (!open) return;
@@ -60,9 +68,9 @@ const MethodStatementSuccess = ({
         spread: 360,
         origin: {
           x: randomInRange(0.2, 0.8),
-          y: Math.random() - 0.2
+          y: Math.random() - 0.2,
         },
-        colors: ['#10b981', '#34d399', '#6ee7b7', '#fbbf24', '#f59e0b']
+        colors: ['#10b981', '#34d399', '#6ee7b7', '#fbbf24', '#f59e0b'],
       });
     }, 200);
 
@@ -76,10 +84,14 @@ const MethodStatementSuccess = ({
 
   const getRiskColor = (level: string) => {
     switch (level?.toLowerCase()) {
-      case 'low': return 'text-emerald-400';
-      case 'medium': return 'text-amber-400';
-      case 'high': return 'text-red-400';
-      default: return 'text-white/60';
+      case 'low':
+        return 'text-emerald-400';
+      case 'medium':
+        return 'text-amber-400';
+      case 'high':
+        return 'text-red-400';
+      default:
+        return 'text-white/60';
     }
   };
 
@@ -96,7 +108,7 @@ const MethodStatementSuccess = ({
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 15 }}
               className="flex justify-center"
             >
               <div className="relative">
@@ -160,12 +172,18 @@ const MethodStatementSuccess = ({
             </div>
 
             {/* Risk Level */}
-            <div className={`rounded-xl p-3 border text-center ${
-              riskLevel?.toLowerCase() === 'low' ? 'bg-emerald-500/10 border-emerald-500/20' :
-              riskLevel?.toLowerCase() === 'medium' ? 'bg-amber-500/10 border-amber-500/20' :
-              'bg-red-500/10 border-red-500/20'
-            }`}>
-              <p className={`text-xl font-bold uppercase ${getRiskColor(riskLevel)}`}>{riskLevel}</p>
+            <div
+              className={`rounded-xl p-3 border text-center ${
+                riskLevel?.toLowerCase() === 'low'
+                  ? 'bg-emerald-500/10 border-emerald-500/20'
+                  : riskLevel?.toLowerCase() === 'medium'
+                    ? 'bg-amber-500/10 border-amber-500/20'
+                    : 'bg-red-500/10 border-red-500/20'
+              }`}
+            >
+              <p className={`text-xl font-bold uppercase ${getRiskColor(riskLevel)}`}>
+                {riskLevel}
+              </p>
               <p className="text-xs text-white/50 uppercase tracking-wide">Risk Level</p>
             </div>
           </motion.div>
@@ -184,9 +202,7 @@ const MethodStatementSuccess = ({
               <p className="text-sm font-medium text-white">~3 hours saved</p>
               <p className="text-xs text-white/50">vs manual creation</p>
             </div>
-            <p className="text-xs text-emerald-400/70">
-              Generated in {generationTime}s
-            </p>
+            <p className="text-xs text-emerald-400/70">Generated in {generationTime}s</p>
           </motion.div>
         </div>
 
@@ -209,9 +225,7 @@ const MethodStatementSuccess = ({
               View Method Statement
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <p className="text-xs text-white/40 text-center mt-3">
-              BS 7671:2018+A3:2024 Compliant
-            </p>
+            <p className="text-xs text-white/40 text-center mt-3">BS 7671:2018+A3:2024 Compliant</p>
           </motion.div>
         </DialogFooter>
       </DialogContent>

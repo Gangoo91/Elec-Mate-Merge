@@ -1,9 +1,22 @@
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { Target, Users, MapPin, TrendingUp, Search, BarChart3, Lightbulb, AlertCircle } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import {
+  MobileAccordion,
+  MobileAccordionContent,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+} from '@/components/ui/mobile-accordion';
+import {
+  Target,
+  Users,
+  MapPin,
+  TrendingUp,
+  Search,
+  BarChart3,
+  Lightbulb,
+  AlertCircle,
+} from 'lucide-react';
 
 const MarketResearchCard = () => {
   return (
@@ -13,8 +26,9 @@ const MarketResearchCard = () => {
         <AlertCircle className="h-4 w-4 text-elec-yellow" />
         <AlertTitle className="text-elec-yellow">Critical Success Factor</AlertTitle>
         <AlertDescription>
-          Successful electrical contractors spend 10-15% of their time on market research. Understanding your local market 
-          and ideal customers is the foundation of sustainable business growth.
+          Successful electrical contractors spend 10-15% of their time on market research.
+          Understanding your local market and ideal customers is the foundation of sustainable
+          business growth.
         </AlertDescription>
       </Alert>
 
@@ -45,10 +59,9 @@ const MarketResearchCard = () => {
 
       {/* Mobile Accordions */}
       <MobileAccordion type="single" collapsible className="space-y-4">
-        
         {/* Market Analysis */}
         <MobileAccordionItem value="market-analysis">
-          <MobileAccordionTrigger 
+          <MobileAccordionTrigger
             icon={<Search className="h-5 w-5 text-elec-yellow" />}
             className="bg-elec-card border-elec-yellow/20"
           >
@@ -58,9 +71,10 @@ const MarketResearchCard = () => {
             <Card className="border-t-0 rounded-t-none border-elec-yellow/20 bg-elec-card">
               <CardContent className="p-6 space-y-4">
                 <p className="text-muted-foreground">
-                  Understanding your local electrical services market is crucial for positioning your business effectively.
+                  Understanding your local electrical services market is crucial for positioning
+                  your business effectively.
                 </p>
-                
+
                 <div className="space-y-3">
                   <div className="border-l-4 border-elec-yellow pl-4">
                     <h4 className="font-semibold mb-2">Demographic Research</h4>
@@ -68,10 +82,12 @@ const MarketResearchCard = () => {
                       <li>• Use ONS data to identify household income levels in your area</li>
                       <li>• Research new housing developments and renovation activity</li>
                       <li>• Identify commercial and industrial growth areas</li>
-                      <li>• Map out areas with older housing stock (more electrical work needed)</li>
+                      <li>
+                        • Map out areas with older housing stock (more electrical work needed)
+                      </li>
                     </ul>
                   </div>
-                  
+
                   <div className="border-l-4 border-elec-yellow pl-4">
                     <h4 className="font-semibold mb-2">Seasonal Patterns</h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -89,7 +105,7 @@ const MarketResearchCard = () => {
 
         {/* Customer Personas */}
         <MobileAccordionItem value="customer-personas">
-          <MobileAccordionTrigger 
+          <MobileAccordionTrigger
             icon={<Users className="h-5 w-5 text-elec-yellow" />}
             className="bg-elec-card border-elec-yellow/20"
           >
@@ -99,9 +115,10 @@ const MarketResearchCard = () => {
             <Card className="border-t-0 rounded-t-none border-elec-yellow/20 bg-elec-card">
               <CardContent className="p-6 space-y-4">
                 <p className="text-muted-foreground">
-                  Develop detailed profiles of your ideal customers to focus your marketing efforts effectively.
+                  Develop detailed profiles of your ideal customers to focus your marketing efforts
+                  effectively.
                 </p>
-                
+
                 <div className="grid gap-4">
                   <div className="bg-elec-gray/50 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
@@ -115,7 +132,7 @@ const MarketResearchCard = () => {
                       <li>• Decision factors: Quality, reliability, local reputation</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-elec-gray/50 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge variant="yellow">Secondary</Badge>
@@ -128,7 +145,7 @@ const MarketResearchCard = () => {
                       <li>• Opportunity: Ongoing contracts, multiple properties</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-elec-gray/50 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge variant="success">Tertiary</Badge>
@@ -149,7 +166,7 @@ const MarketResearchCard = () => {
 
         {/* Competitor Analysis */}
         <MobileAccordionItem value="competitor-analysis">
-          <MobileAccordionTrigger 
+          <MobileAccordionTrigger
             icon={<BarChart3 className="h-5 w-5 text-elec-yellow" />}
             className="bg-elec-card border-elec-yellow/20"
           >
@@ -159,9 +176,10 @@ const MarketResearchCard = () => {
             <Card className="border-t-0 rounded-t-none border-elec-yellow/20 bg-elec-card">
               <CardContent className="p-6 space-y-4">
                 <p className="text-muted-foreground">
-                  Understand your competition to identify opportunities and differentiate your services.
+                  Understand your competition to identify opportunities and differentiate your
+                  services.
                 </p>
-                
+
                 <div className="space-y-4">
                   <div className="border-l-4 border-elec-yellow pl-4">
                     <h4 className="font-semibold mb-2">Research Methods</h4>
@@ -173,7 +191,7 @@ const MarketResearchCard = () => {
                       <li>• Mystery shop their quote process</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-elec-gray/50 p-4 rounded-lg">
                     <h4 className="font-semibold mb-3">Key Areas to Compare</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
@@ -203,7 +221,7 @@ const MarketResearchCard = () => {
 
         {/* Market Opportunities */}
         <MobileAccordionItem value="market-opportunities">
-          <MobileAccordionTrigger 
+          <MobileAccordionTrigger
             icon={<Lightbulb className="h-5 w-5 text-elec-yellow" />}
             className="bg-elec-card border-elec-yellow/20"
           >
@@ -213,17 +231,21 @@ const MarketResearchCard = () => {
             <Card className="border-t-0 rounded-t-none border-elec-yellow/20 bg-elec-card">
               <CardContent className="p-6 space-y-4">
                 <p className="text-muted-foreground">
-                  Identify and target underserved market segments to establish a competitive advantage.
+                  Identify and target underserved market segments to establish a competitive
+                  advantage.
                 </p>
-                
+
                 <div className="space-y-4">
                   <div className="bg-elec-gray/50 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-3 text-elec-yellow">High-Growth Opportunities</h4>
+                    <h4 className="font-semibold mb-3 text-elec-yellow">
+                      High-Growth Opportunities
+                    </h4>
                     <div className="grid gap-3">
                       <div className="border-l-2 border-green-500 pl-3">
                         <h5 className="font-medium">Smart Home Technology</h5>
                         <p className="text-sm text-muted-foreground">
-                          Growing demand for home automation, smart lighting, and integrated systems.
+                          Growing demand for home automation, smart lighting, and integrated
+                          systems.
                         </p>
                       </div>
                       <div className="border-l-2 border-blue-500 pl-3">
@@ -235,19 +257,22 @@ const MarketResearchCard = () => {
                       <div className="border-l-2 border-purple-500 pl-3">
                         <h5 className="font-medium">Energy Efficiency Upgrades</h5>
                         <p className="text-sm text-muted-foreground">
-                          LED conversions, efficient heating systems, and renewable energy integration.
+                          LED conversions, efficient heating systems, and renewable energy
+                          integration.
                         </p>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="border-l-4 border-elec-yellow pl-4">
                     <h4 className="font-semibold mb-2">Market Gap Analysis</h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
                       <li>• Look for services no local competitors offer</li>
                       <li>• Identify complaints in competitor reviews as opportunities</li>
                       <li>• Consider 24/7 emergency services if not widely available</li>
-                      <li>• Explore partnerships with builders, architects, or property developers</li>
+                      <li>
+                        • Explore partnerships with builders, architects, or property developers
+                      </li>
                       <li>• Consider female-friendly services for safety-conscious customers</li>
                     </ul>
                   </div>
@@ -256,7 +281,6 @@ const MarketResearchCard = () => {
             </Card>
           </MobileAccordionContent>
         </MobileAccordionItem>
-
       </MobileAccordion>
     </div>
   );

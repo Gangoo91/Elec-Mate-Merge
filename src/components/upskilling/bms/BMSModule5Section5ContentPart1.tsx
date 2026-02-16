@@ -15,7 +15,7 @@ export const BMSModule5Section5ContentPart1 = () => {
           <p className="text-foreground">
             A gateway is a device that converts messages from one protocol into another.
           </p>
-          
+
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
               <h4 className="font-semibold text-elec-yellow mb-2">Translation Function</h4>
@@ -23,14 +23,14 @@ export const BMSModule5Section5ContentPart1 = () => {
                 It allows subsystems using different "languages" to share data with the BMS.
               </p>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
               <h4 className="font-semibold text-elec-yellow mb-2">Essential Integration</h4>
               <p className="text-foreground text-sm">
                 Without gateways, devices on different protocols would remain isolated.
               </p>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
               <h4 className="font-semibold text-elec-yellow mb-2">System Unity</h4>
               <p className="text-foreground text-sm">
@@ -43,9 +43,10 @@ export const BMSModule5Section5ContentPart1 = () => {
         <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-4">
           <h4 className="font-semibold text-blue-300 mb-2">Practical Example</h4>
           <p className="text-foreground text-sm">
-            Imagine a building with BACnet HVAC controllers, Modbus energy meters, and KNX lighting controls. 
-            A gateway allows the BMS operator to see all this data in one place - room temperatures from BACnet, 
-            power consumption from Modbus, and lighting status from KNX - all displayed together on a single screen.
+            Imagine a building with BACnet HVAC controllers, Modbus energy meters, and KNX lighting
+            controls. A gateway allows the BMS operator to see all this data in one place - room
+            temperatures from BACnet, power consumption from Modbus, and lighting status from KNX -
+            all displayed together on a single screen.
           </p>
         </div>
 

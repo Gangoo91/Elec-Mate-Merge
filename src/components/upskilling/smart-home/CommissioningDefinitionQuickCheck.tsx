@@ -9,12 +9,12 @@ const CommissioningDefinitionQuickCheck = () => {
 
   const question = "What does 'commissioning' mean in a smart home context?";
   const options = [
-    "Installing the physical devices",
-    "The process of making a system fully operational", 
-    "Selling smart home products to clients",
-    "Designing the system layout"
+    'Installing the physical devices',
+    'The process of making a system fully operational',
+    'Selling smart home products to clients',
+    'Designing the system layout',
   ];
-  const correctAnswer = "The process of making a system fully operational";
+  const correctAnswer = 'The process of making a system fully operational';
 
   const handleSubmit = () => {
     setShowAnswer(true);
@@ -32,7 +32,7 @@ const CommissioningDefinitionQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -44,11 +44,11 @@ const CommissioningDefinitionQuickCheck = () => {
                   ? option === correctAnswer
                     ? 'bg-green-600/20 border-green-600 text-green-100'
                     : option === selectedAnswer && !isCorrect
-                    ? 'bg-red-600/20 border-red-600 text-red-100'
-                    : 'border-gray-600 text-gray-400'
+                      ? 'bg-red-600/20 border-red-600 text-red-100'
+                      : 'border-gray-600 text-gray-400'
                   : selectedAnswer === option
-                  ? 'bg-blue-600/20 border-blue-600 text-blue-100'
-                  : 'border-gray-600 text-gray-300 hover:bg-gray-700'
+                    ? 'bg-blue-600/20 border-blue-600 text-blue-100'
+                    : 'border-gray-600 text-gray-300 hover:bg-gray-700'
               }`}
             >
               {option}
@@ -63,11 +63,11 @@ const CommissioningDefinitionQuickCheck = () => {
         )}
 
         {showAnswer && (
-          <div className={`p-3 rounded-md border ${
-            isCorrect 
-              ? 'bg-green-600/10 border-green-600/30' 
-              : 'bg-red-600/10 border-red-600/30'
-          }`}>
+          <div
+            className={`p-3 rounded-md border ${
+              isCorrect ? 'bg-green-600/10 border-green-600/30' : 'bg-red-600/10 border-red-600/30'
+            }`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {isCorrect ? (
                 <CheckCircle className="h-4 w-4 text-green-400" />
@@ -79,7 +79,9 @@ const CommissioningDefinitionQuickCheck = () => {
               </span>
             </div>
             <p className="text-gray-300 text-sm">
-              Commissioning is the comprehensive process of making a smart home system fully operational, including pairing devices, testing functionality, programming routines, and documenting results.
+              Commissioning is the comprehensive process of making a smart home system fully
+              operational, including pairing devices, testing functionality, programming routines,
+              and documenting results.
             </p>
           </div>
         )}

@@ -1,13 +1,24 @@
-import { ArrowLeft, CheckCircle, AlertTriangle, XCircle, Shield, Zap, Eye, Clock, AlertCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  CheckCircle,
+  AlertTriangle,
+  XCircle,
+  Shield,
+  Zap,
+  Eye,
+  Clock,
+  AlertCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Common Mistakes and How to Avoid Them - Level 2 Electrical Course";
-const DESCRIPTION = "Learn from common isolation failures to prevent electrical accidents. Understand mistakes, consequences, and prevention strategies for safe electrical work.";
+const TITLE = 'Common Mistakes and How to Avoid Them - Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn from common isolation failures to prevent electrical accidents. Understand mistakes, consequences, and prevention strategies for safe electrical work.';
 
 const Section5_5 = () => {
   useSEO(TITLE, DESCRIPTION);
@@ -15,119 +26,129 @@ const Section5_5 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "Why is it unsafe to rely on switch positions or labels?",
+      question: 'Why is it unsafe to rely on switch positions or labels?',
       options: [
-        "They might be outdated or incorrect",
-        "Switches can fail mechanically", 
-        "Labels can be damaged",
-        "All of the above"
+        'They might be outdated or incorrect',
+        'Switches can fail mechanically',
+        'Labels can be damaged',
+        'All of the above',
       ],
       correctAnswer: 3,
-      explanation: "Switch positions and labels can be unreliable due to outdated information, mechanical failures, damage, or incorrect installation. Always verify through proper testing."
+      explanation:
+        'Switch positions and labels can be unreliable due to outdated information, mechanical failures, damage, or incorrect installation. Always verify through proper testing.',
     },
     {
       id: 2,
-      question: "What type of tester must be used for proving dead?",
+      question: 'What type of tester must be used for proving dead?',
       options: [
-        "Digital multimeter",
-        "GS38-compliant two-pole voltage tester",
-        "Neon screwdriver tester",
-        "Clamp meter"
+        'Digital multimeter',
+        'GS38-compliant two-pole voltage tester',
+        'Neon screwdriver tester',
+        'Clamp meter',
       ],
       correctAnswer: 1,
-      explanation: "Only a GS38-compliant two-pole voltage tester should be used for proving dead, as it meets the specific safety requirements for electrical isolation testing."
+      explanation:
+        'Only a GS38-compliant two-pole voltage tester should be used for proving dead, as it meets the specific safety requirements for electrical isolation testing.',
     },
     {
       id: 3,
-      question: "What is the danger of sharing a lock-off key?",
+      question: 'What is the danger of sharing a lock-off key?',
       options: [
-        "It violates company policy",
-        "It breaks the chain of individual accountability",
-        "Keys can be lost more easily",
-        "It's inefficient"
+        'It violates company policy',
+        'It breaks the chain of individual accountability',
+        'Keys can be lost more easily',
+        "It's inefficient",
       ],
       correctAnswer: 1,
-      explanation: "Sharing lock-off keys breaks the chain of individual accountability. Each worker must control their own safety through personal locks and keys."
+      explanation:
+        'Sharing lock-off keys breaks the chain of individual accountability. Each worker must control their own safety through personal locks and keys.',
     },
     {
       id: 4,
-      question: "Why is it important to retest your tester after use?",
+      question: 'Why is it important to retest your tester after use?',
       options: [
-        "To save battery life",
+        'To save battery life',
         "To confirm the tester didn't fail during testing",
-        "To reset the tester settings",
-        "Company procedure requirement"
+        'To reset the tester settings',
+        'Company procedure requirement',
       ],
       correctAnswer: 1,
-      explanation: "Retesting the tester after use confirms it didn't fail during the isolation testing process, which could have given false 'dead' readings."
+      explanation:
+        "Retesting the tester after use confirms it didn't fail during the isolation testing process, which could have given false 'dead' readings.",
     },
     {
       id: 5,
       question: "True or False: Multimeters are acceptable for safe isolation if you're careful.",
-      options: ["True", "False"],
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Multimeters are not suitable for proving dead regardless of how careful you are. Only GS38-compliant two-pole voltage testers should be used."
+      explanation:
+        'False. Multimeters are not suitable for proving dead regardless of how careful you are. Only GS38-compliant two-pole voltage testers should be used.',
     },
     {
       id: 6,
-      question: "What should you do if you discover a circuit is mislabelled?",
+      question: 'What should you do if you discover a circuit is mislabelled?',
       options: [
-        "Continue working and ignore it",
-        "Report it and update the labelling system",
-        "Just remember it for next time",
-        "Leave it for someone else to fix"
+        'Continue working and ignore it',
+        'Report it and update the labelling system',
+        'Just remember it for next time',
+        'Leave it for someone else to fix',
       ],
       correctAnswer: 1,
-      explanation: "Mislabelled circuits are a serious safety hazard. Report immediately and ensure the labelling system is corrected to prevent future incidents."
+      explanation:
+        'Mislabelled circuits are a serious safety hazard. Report immediately and ensure the labelling system is corrected to prevent future incidents.',
     },
     {
       id: 7,
-      question: "Which conductors must be tested during safe isolation?",
+      question: 'Which conductors must be tested during safe isolation?',
       options: [
-        "Only the live conductor",
-        "Live and neutral only",
-        "Live, neutral, and earth",
-        "Just the main live feed"
+        'Only the live conductor',
+        'Live and neutral only',
+        'Live, neutral, and earth',
+        'Just the main live feed',
       ],
       correctAnswer: 2,
-      explanation: "All conductors (live, neutral, and earth) must be tested to ensure complete isolation and detect any potential faults or backfeed situations."
+      explanation:
+        'All conductors (live, neutral, and earth) must be tested to ensure complete isolation and detect any potential faults or backfeed situations.',
     },
     {
       id: 8,
-      question: "When working in teams, how many locks should be applied?",
+      question: 'When working in teams, how many locks should be applied?',
       options: [
-        "One lock from the team leader",
-        "One lock per team",
-        "One lock per person working",
-        "Two locks maximum"
+        'One lock from the team leader',
+        'One lock per team',
+        'One lock per person working',
+        'Two locks maximum',
       ],
       correctAnswer: 2,
-      explanation: "Each person working must apply their own individual lock to maintain personal control over their safety and prevent work continuing without their knowledge."
+      explanation:
+        'Each person working must apply their own individual lock to maintain personal control over their safety and prevent work continuing without their knowledge.',
     },
     {
       id: 9,
-      question: "What is the main consequence of rushing isolation procedures?",
+      question: 'What is the main consequence of rushing isolation procedures?',
       options: [
-        "Slightly delayed work completion",
-        "Increased risk of potentially fatal mistakes",
-        "Equipment might get damaged",
-        "Paperwork complications"
+        'Slightly delayed work completion',
+        'Increased risk of potentially fatal mistakes',
+        'Equipment might get damaged',
+        'Paperwork complications',
       ],
       correctAnswer: 1,
-      explanation: "Rushing isolation procedures significantly increases the risk of making potentially fatal mistakes. The time saved is never worth the life-threatening risks involved."
+      explanation:
+        'Rushing isolation procedures significantly increases the risk of making potentially fatal mistakes. The time saved is never worth the life-threatening risks involved.',
     },
     {
       id: 10,
-      question: "Why should isolation mistakes be reported even if no harm occurred?",
+      question: 'Why should isolation mistakes be reported even if no harm occurred?',
       options: [
-        "For insurance purposes only",
-        "To blame the person responsible",
-        "To learn from near-misses and prevent future incidents",
-        "It's not necessary if no harm occurred"
+        'For insurance purposes only',
+        'To blame the person responsible',
+        'To learn from near-misses and prevent future incidents',
+        "It's not necessary if no harm occurred",
       ],
       correctAnswer: 2,
-      explanation: "Near-miss incidents provide valuable learning opportunities to prevent future accidents. Reporting them helps improve safety culture and procedures for everyone."
-    }
+      explanation:
+        'Near-miss incidents provide valuable learning opportunities to prevent future accidents. Reporting them helps improve safety culture and procedures for everyone.',
+    },
   ];
 
   return (
@@ -135,7 +156,11 @@ const Section5_5 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -199,15 +224,21 @@ const Section5_5 = () => {
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">Understand the consequences of incorrect procedures</span>
+              <span className="text-white">
+                Understand the consequences of incorrect procedures
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">Learn how to prevent errors through habits, training, and checks</span>
+              <span className="text-white">
+                Learn how to prevent errors through habits, training, and checks
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">Develop professional discipline and safety awareness</span>
+              <span className="text-white">
+                Develop professional discipline and safety awareness
+              </span>
             </li>
           </ul>
         </Card>
@@ -215,13 +246,16 @@ const Section5_5 = () => {
         {/* Section 1: Not locking off */}
         <div className="mb-8 border-l-4 border-red-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
+            <div className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              1
+            </div>
             <h2 className="text-lg sm:text-xl font-semibold text-white">Not locking off</h2>
           </div>
-          
+
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
             <p className="text-white mb-4">
-              <strong>The mistake:</strong> Just switching off the breaker or isolator without applying a physical lock.
+              <strong>The mistake:</strong> Just switching off the breaker or isolator without
+              applying a physical lock.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -249,10 +283,10 @@ const Section5_5 = () => {
           id="lock-off-check"
           question="What is the main danger of not using a lock-off device during isolation?"
           options={[
-            "It takes longer to complete the work",
-            "Someone else could accidentally re-energise the circuit",
-            "The switch might wear out faster",
-            "It violates company policy"
+            'It takes longer to complete the work',
+            'Someone else could accidentally re-energise the circuit',
+            'The switch might wear out faster',
+            'It violates company policy',
           ]}
           correctIndex={1}
           explanation="Without a physical lock, anyone can accidentally or intentionally switch the circuit back on while you're working, creating a potentially fatal situation. Lock-off devices provide the essential physical barrier to prevent re-energising."
@@ -261,13 +295,18 @@ const Section5_5 = () => {
         {/* Section 2: Using wrong test equipment */}
         <div className="mb-8 border-l-4 border-orange-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">2</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Using wrong test equipment</h2>
+            <div className="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              2
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Using wrong test equipment
+            </h2>
           </div>
-          
+
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
             <p className="text-white mb-4">
-              <strong>The mistake:</strong> Using multimeters or non-compliant testers for proving dead.
+              <strong>The mistake:</strong> Using multimeters or non-compliant testers for proving
+              dead.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -293,13 +332,18 @@ const Section5_5 = () => {
         {/* Section 3: Assuming circuits are off */}
         <div className="mb-8 border-l-4 border-purple-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">3</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Assuming circuits are off</h2>
+            <div className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              3
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Assuming circuits are off
+            </h2>
           </div>
-          
+
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
             <p className="text-white mb-4">
-              <strong>The mistake:</strong> Trusting labels, switch positions, or someone's word without testing.
+              <strong>The mistake:</strong> Trusting labels, switch positions, or someone's word
+              without testing.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -325,13 +369,16 @@ const Section5_5 = () => {
         {/* Section 4: Sharing lock-off keys */}
         <div className="mb-8 border-l-4 border-amber-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-amber-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">4</div>
+            <div className="bg-amber-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              4
+            </div>
             <h2 className="text-lg sm:text-xl font-semibold text-white">Sharing lock-off keys</h2>
           </div>
-          
+
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
             <p className="text-white mb-4">
-              <strong>The mistake:</strong> Multiple workers sharing a single padlock key or using communal locks.
+              <strong>The mistake:</strong> Multiple workers sharing a single padlock key or using
+              communal locks.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -357,10 +404,14 @@ const Section5_5 = () => {
         {/* Section 5: Skipping final tester check */}
         <div className="mb-8 border-l-4 border-indigo-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">5</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Skipping final tester check</h2>
+            <div className="bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              5
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Skipping final tester check
+            </h2>
           </div>
-          
+
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
             <p className="text-white mb-4">
               <strong>The mistake:</strong> Not retesting the voltage tester after proving dead.
@@ -389,13 +440,18 @@ const Section5_5 = () => {
         {/* Section 6: Isolating the wrong circuit */}
         <div className="mb-8 border-l-4 border-rose-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">6</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Isolating the wrong circuit</h2>
+            <div className="bg-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              6
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Isolating the wrong circuit
+            </h2>
           </div>
-          
+
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
             <p className="text-white mb-4">
-              <strong>The mistake:</strong> Isolating the wrong circuit due to poor labelling or circuit identification.
+              <strong>The mistake:</strong> Isolating the wrong circuit due to poor labelling or
+              circuit identification.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -423,13 +479,18 @@ const Section5_5 = () => {
         {/* Section 7: Rushing isolation procedures */}
         <div className="mb-8 border-l-4 border-pink-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">7</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Rushing isolation procedures</h2>
+            <div className="bg-pink-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              7
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Rushing isolation procedures
+            </h2>
           </div>
-          
+
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
             <p className="text-white mb-4">
-              <strong>The mistake:</strong> Skipping steps or rushing through isolation due to time pressure.
+              <strong>The mistake:</strong> Skipping steps or rushing through isolation due to time
+              pressure.
             </p>
             <div className="space-y-4">
               <div>
@@ -444,7 +505,9 @@ const Section5_5 = () => {
               </div>
               <div className="bg-red-500/20 border border-border/30 rounded-lg p-3">
                 <p className="text-red-200 font-medium text-sm">
-                  <strong>Remember:</strong> The few minutes saved by rushing are never worth the potential fatal consequences. Proper isolation takes time, and that time investment saves lives.
+                  <strong>Remember:</strong> The few minutes saved by rushing are never worth the
+                  potential fatal consequences. Proper isolation takes time, and that time
+                  investment saves lives.
                 </p>
               </div>
             </div>
@@ -454,13 +517,18 @@ const Section5_5 = () => {
         {/* Section 8: Not communicating with others */}
         <div className="mb-8 border-l-4 border-cyan-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-cyan-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">8</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Poor communication and signage</h2>
+            <div className="bg-cyan-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              8
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Poor communication and signage
+            </h2>
           </div>
-          
+
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
             <p className="text-white mb-4">
-              <strong>The mistake:</strong> Failing to properly communicate isolation status to others on site.
+              <strong>The mistake:</strong> Failing to properly communicate isolation status to
+              others on site.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -488,10 +556,14 @@ const Section5_5 = () => {
         {/* Section 9: Consequences of isolation failures */}
         <div className="mb-8 border-l-4 border-red-600 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">9</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Consequences of isolation failures</h2>
+            <div className="bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              9
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Consequences of isolation failures
+            </h2>
           </div>
-          
+
           <div className="space-y-6">
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
@@ -533,11 +605,12 @@ const Section5_5 = () => {
               <div className="flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-red-200 font-medium mb-2">
-                    Real Cost of Electrical Accidents
-                  </p>
+                  <p className="text-red-200 font-medium mb-2">Real Cost of Electrical Accidents</p>
                   <p className="text-red-200 text-sm">
-                    According to HSE statistics, electrical accidents result in an average of 30 fatalities and over 3,000 injuries annually in the UK construction industry. The total cost including medical treatment, legal fees, lost productivity, and regulatory fines often exceeds £1 million per serious incident.
+                    According to HSE statistics, electrical accidents result in an average of 30
+                    fatalities and over 3,000 injuries annually in the UK construction industry. The
+                    total cost including medical treatment, legal fees, lost productivity, and
+                    regulatory fines often exceeds £1 million per serious incident.
                   </p>
                 </div>
               </div>
@@ -548,10 +621,14 @@ const Section5_5 = () => {
         {/* Section 10: Professional development and safety culture */}
         <div className="mb-8 border-l-4 border-green-600 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">10</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Building professional safety discipline</h2>
+            <div className="bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              10
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Building professional safety discipline
+            </h2>
           </div>
-          
+
           <div className="space-y-6">
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">Developing safety habits</h4>
@@ -604,49 +681,77 @@ const Section5_5 = () => {
         {/* Section 11: Additional case studies */}
         <div className="mb-8 border-l-4 border-violet-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-violet-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">11</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Additional real-world case studies</h2>
+            <div className="bg-violet-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              11
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Additional real-world case studies
+            </h2>
           </div>
-          
+
           <div className="space-y-6">
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <p className="text-white mb-4">
-                <strong>Case Study 1: The Wrong Circuit</strong><br/>
-                An experienced electrician was replacing a faulty switch in an office block. He isolated what he believed was the correct MCB based on the consumer unit labels. However, the office had been rewired years earlier, and the labels were never updated. When he removed the switch, he received a 230V shock from the live conductor.
+                <strong>Case Study 1: The Wrong Circuit</strong>
+                <br />
+                An experienced electrician was replacing a faulty switch in an office block. He
+                isolated what he believed was the correct MCB based on the consumer unit labels.
+                However, the office had been rewired years earlier, and the labels were never
+                updated. When he removed the switch, he received a 230V shock from the live
+                conductor.
               </p>
-              
+
               <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                 <p className="text-white font-medium">Lessons learned:</p>
                 <p className="text-white">
-                  Circuit verification using proper testing methods is essential. Never trust labels alone. The company implemented a circuit verification policy requiring testing at both the distribution board and the work location before any isolation work begins.
+                  Circuit verification using proper testing methods is essential. Never trust labels
+                  alone. The company implemented a circuit verification policy requiring testing at
+                  both the distribution board and the work location before any isolation work
+                  begins.
                 </p>
               </div>
             </div>
 
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <p className="text-white mb-4">
-                <strong>Case Study 2: Shared Key Incident</strong><br/>
-                Three electricians were working on different lighting circuits in a warehouse. They used a single shared lock to save time. When one electrician finished early and left with the key, another team member arrived and assumed all work was complete. He restored power while the remaining electrician was still working, resulting in a serious electrical burn.
+                <strong>Case Study 2: Shared Key Incident</strong>
+                <br />
+                Three electricians were working on different lighting circuits in a warehouse. They
+                used a single shared lock to save time. When one electrician finished early and left
+                with the key, another team member arrived and assumed all work was complete. He
+                restored power while the remaining electrician was still working, resulting in a
+                serious electrical burn.
               </p>
-              
+
               <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                 <p className="text-white font-medium">Lessons learned:</p>
                 <p className="text-white">
-                  Individual accountability cannot be compromised. The site now requires personal locks for each worker and uses group lock boxes for multi-person jobs. Communication protocols were also strengthened with mandatory team briefings before energising any systems.
+                  Individual accountability cannot be compromised. The site now requires personal
+                  locks for each worker and uses group lock boxes for multi-person jobs.
+                  Communication protocols were also strengthened with mandatory team briefings
+                  before energising any systems.
                 </p>
               </div>
             </div>
 
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <p className="text-white mb-4">
-                <strong>Case Study 3: The Faulty Tester</strong><br/>
-                During routine maintenance, an electrician tested a circuit and confirmed it was dead using his voltage tester. However, he didn't retest the tester after use. Unknown to him, the tester had failed during the testing process due to an internal fault. He proceeded to work on what he thought was a dead circuit but received a severe shock when he touched the live conductor.
+                <strong>Case Study 3: The Faulty Tester</strong>
+                <br />
+                During routine maintenance, an electrician tested a circuit and confirmed it was
+                dead using his voltage tester. However, he didn't retest the tester after use.
+                Unknown to him, the tester had failed during the testing process due to an internal
+                fault. He proceeded to work on what he thought was a dead circuit but received a
+                severe shock when he touched the live conductor.
               </p>
-              
+
               <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
                 <p className="text-white font-medium">Lessons learned:</p>
                 <p className="text-white">
-                  The "test-lock-test" procedure exists for critical safety reasons. The company now requires annual tester calibration, monthly functionality checks, and mandatory proving unit testing before and after every use. They also implemented a buddy system for isolation procedures on high-risk work.
+                  The "test-lock-test" procedure exists for critical safety reasons. The company now
+                  requires annual tester calibration, monthly functionality checks, and mandatory
+                  proving unit testing before and after every use. They also implemented a buddy
+                  system for isolation procedures on high-risk work.
                 </p>
               </div>
             </div>
@@ -656,10 +761,14 @@ const Section5_5 = () => {
         {/* Section 12: Practical prevention checklist */}
         <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">12</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Practical prevention checklist</h2>
+            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              12
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Practical prevention checklist
+            </h2>
           </div>
-          
+
           <div className="space-y-6">
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h4 className="font-medium text-white mb-4">Pre-work safety checklist</h4>
@@ -677,7 +786,9 @@ const Section5_5 = () => {
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-white">Lock-off devices and personal padlock</span>
+                      <span className="text-sm text-white">
+                        Lock-off devices and personal padlock
+                      </span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
@@ -698,7 +809,9 @@ const Section5_5 = () => {
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-white">Permit-to-work completed if required</span>
+                      <span className="text-sm text-white">
+                        Permit-to-work completed if required
+                      </span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
@@ -712,7 +825,9 @@ const Section5_5 = () => {
             <div className="bg-elec-yellow/20 border border-border/30 rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">The professional approach</h4>
               <p className="text-white text-sm mb-3">
-                True electrical professionals understand that safety procedures aren't bureaucratic obstacles - they're life-saving protocols developed from decades of industry experience and accident analysis.
+                True electrical professionals understand that safety procedures aren't bureaucratic
+                obstacles - they're life-saving protocols developed from decades of industry
+                experience and accident analysis.
               </p>
               <ul className="space-y-2 text-sm text-white">
                 <li>• Quality over speed - every time</li>
@@ -727,34 +842,48 @@ const Section5_5 = () => {
         {/* Section 13: Summary and key takeaways */}
         <div className="mb-8 border-l-4 border-slate-500 p-6 bg-card rounded-lg">
           <div className="flex items-center gap-3 mb-4">
-            <div className="bg-slate-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">13</div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Summary and key takeaways</h2>
+            <div className="bg-slate-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+              13
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Summary and key takeaways
+            </h2>
           </div>
-          
+
           <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
             <p className="text-white mb-6">
-              Electrical isolation failures are almost always preventable human errors. Professional discipline, proper procedures, and consistent safety practices eliminate these risks and save lives.
+              Electrical isolation failures are almost always preventable human errors. Professional
+              discipline, proper procedures, and consistent safety practices eliminate these risks
+              and save lives.
             </p>
-            
+
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <h4 className="font-medium text-white mb-3">Critical success factors</h4>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-white text-sm">Never skip steps in the isolation process</span>
+                    <span className="text-white text-sm">
+                      Never skip steps in the isolation process
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-white text-sm">Use only proper, calibrated test equipment</span>
+                    <span className="text-white text-sm">
+                      Use only proper, calibrated test equipment
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-white text-sm">Maintain individual lock and key control</span>
+                    <span className="text-white text-sm">
+                      Maintain individual lock and key control
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-white text-sm">Verify circuit identity before isolation</span>
+                    <span className="text-white text-sm">
+                      Verify circuit identity before isolation
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -763,15 +892,21 @@ const Section5_5 = () => {
                 <ul className="space-y-2">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-white text-sm">Time pressure never justifies cutting corners</span>
+                    <span className="text-white text-sm">
+                      Time pressure never justifies cutting corners
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-white text-sm">Communicate clearly with all site personnel</span>
+                    <span className="text-white text-sm">
+                      Communicate clearly with all site personnel
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-white text-sm">Report near-misses to prevent future incidents</span>
+                    <span className="text-white text-sm">
+                      Report near-misses to prevent future incidents
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
@@ -783,7 +918,8 @@ const Section5_5 = () => {
 
             <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
               <p className="text-white font-medium text-center">
-                "Safety isn't just about following rules - it's about going home to your family every day. Make every isolation count."
+                "Safety isn't just about following rules - it's about going home to your family
+                every day. Make every isolation count."
               </p>
             </div>
           </div>

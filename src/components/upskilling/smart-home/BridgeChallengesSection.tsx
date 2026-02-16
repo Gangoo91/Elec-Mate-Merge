@@ -8,29 +8,29 @@ export const BridgeChallengesSection = () => {
       icon: Settings,
       description: 'Extra device in the network requiring configuration and maintenance',
       impact: 'More potential failure points and troubleshooting complexity',
-      color: 'red'
+      color: 'red',
     },
     {
       title: 'Communication Latency',
       icon: Clock,
       description: 'Additional step in communication path increases response time',
       impact: 'Delayed device responses, especially for time-sensitive automation',
-      color: 'amber'
+      color: 'amber',
     },
     {
       title: 'Single Point of Failure',
       icon: Zap,
       description: 'If bridge fails, connected devices become unresponsive',
       impact: 'Complete system outage for bridged devices until repair/replacement',
-      color: 'orange'
+      color: 'orange',
     },
     {
       title: 'Technical Knowledge Required',
       icon: Settings,
       description: 'Setup often requires advanced networking and protocol understanding',
       impact: 'Higher skill requirements for installers and end users',
-      color: 'blue'
-    }
+      color: 'blue',
+    },
   ];
 
   return (
@@ -44,13 +44,24 @@ export const BridgeChallengesSection = () => {
       <CardContent className="text-gray-300 space-y-6">
         <div className="space-y-4">
           {challenges.map((challenge, index) => (
-            <div key={index} className={`bg-${challenge.color}-900/10 border border-${challenge.color}-600/20 rounded-lg p-4`}>
+            <div
+              key={index}
+              className={`bg-${challenge.color}-900/10 border border-${challenge.color}-600/20 rounded-lg p-4`}
+            >
               <div className="flex items-start gap-3">
-                <challenge.icon className={`h-5 w-5 text-${challenge.color}-400 mt-0.5 flex-shrink-0`} />
+                <challenge.icon
+                  className={`h-5 w-5 text-${challenge.color}-400 mt-0.5 flex-shrink-0`}
+                />
                 <div className="flex-1">
-                  <h4 className={`text-${challenge.color}-200 font-semibold mb-2`}>{challenge.title}</h4>
-                  <p className={`text-${challenge.color}-100 text-sm mb-2`}>{challenge.description}</p>
-                  <div className={`text-xs text-${challenge.color}-200 bg-${challenge.color}-900/20 rounded p-2`}>
+                  <h4 className={`text-${challenge.color}-200 font-semibold mb-2`}>
+                    {challenge.title}
+                  </h4>
+                  <p className={`text-${challenge.color}-100 text-sm mb-2`}>
+                    {challenge.description}
+                  </p>
+                  <div
+                    className={`text-xs text-${challenge.color}-200 bg-${challenge.color}-900/20 rounded p-2`}
+                  >
                     <strong>Impact:</strong> {challenge.impact}
                   </div>
                 </div>
@@ -85,9 +96,16 @@ export const BridgeChallengesSection = () => {
             Failure Scenario
           </h4>
           <div className="text-red-100 text-sm space-y-2">
-            <p><strong>Scenario:</strong> Philips Hue Bridge loses power or network connection</p>
-            <p><strong>Result:</strong> All Zigbee bulbs become uncontrollable via app or voice commands</p>
-            <p><strong>Workaround:</strong> Physical switches still work, but automation stops</p>
+            <p>
+              <strong>Scenario:</strong> Philips Hue Bridge loses power or network connection
+            </p>
+            <p>
+              <strong>Result:</strong> All Zigbee bulbs become uncontrollable via app or voice
+              commands
+            </p>
+            <p>
+              <strong>Workaround:</strong> Physical switches still work, but automation stops
+            </p>
           </div>
         </div>
 

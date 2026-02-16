@@ -26,9 +26,15 @@ export const NotificationDetailModal = ({
   onViewCertificate,
 }: NotificationDetailModalProps) => {
   const [workType, setWorkType] = useState(notification?.work_type || '');
-  const [buildingControlAuthority, setBuildingControlAuthority] = useState(notification?.building_control_authority || '');
-  const [submissionDeadline, setSubmissionDeadline] = useState(notification?.submission_deadline || '');
-  const [status, setStatus] = useState<NotificationStatus>(notification?.notification_status || 'pending');
+  const [buildingControlAuthority, setBuildingControlAuthority] = useState(
+    notification?.building_control_authority || ''
+  );
+  const [submissionDeadline, setSubmissionDeadline] = useState(
+    notification?.submission_deadline || ''
+  );
+  const [status, setStatus] = useState<NotificationStatus>(
+    notification?.notification_status || 'pending'
+  );
 
   const handleSave = () => {
     if (!notification) return;
@@ -62,7 +68,9 @@ export const NotificationDetailModal = ({
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => onViewCertificate(notification.report_id, notification.reports?.report_type || '')}
+                onClick={() =>
+                  onViewCertificate(notification.report_id, notification.reports?.report_type || '')
+                }
               >
                 View Certificate
               </Button>
@@ -70,7 +78,9 @@ export const NotificationDetailModal = ({
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div>
                 <span className="text-muted-foreground">Certificate Number:</span>
-                <p className="font-medium">{notification.reports?.certificate_number || notification.report_id}</p>
+                <p className="font-medium">
+                  {notification.reports?.certificate_number || notification.report_id}
+                </p>
               </div>
               <div>
                 <span className="text-muted-foreground">Type:</span>
@@ -149,15 +159,21 @@ export const NotificationDetailModal = ({
             <div className="grid grid-cols-3 gap-4 text-sm">
               <div>
                 <span className="text-muted-foreground">NICEIC:</span>
-                <p className="font-medium">{notification.niceic_submitted ? '✓ Submitted' : '✗ Not submitted'}</p>
+                <p className="font-medium">
+                  {notification.niceic_submitted ? '✓ Submitted' : '✗ Not submitted'}
+                </p>
               </div>
               <div>
                 <span className="text-muted-foreground">NAPIT:</span>
-                <p className="font-medium">{notification.napit_submitted ? '✓ Submitted' : '✗ Not submitted'}</p>
+                <p className="font-medium">
+                  {notification.napit_submitted ? '✓ Submitted' : '✗ Not submitted'}
+                </p>
               </div>
               <div>
                 <span className="text-muted-foreground">Local Authority:</span>
-                <p className="font-medium">{notification.local_authority_submitted ? '✓ Submitted' : '✗ Not submitted'}</p>
+                <p className="font-medium">
+                  {notification.local_authority_submitted ? '✓ Submitted' : '✗ Not submitted'}
+                </p>
               </div>
             </div>
             {notification.submitted_at && (
@@ -181,9 +197,7 @@ export const NotificationDetailModal = ({
             <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button onClick={handleSave}>
-              Save Changes
-            </Button>
+            <Button onClick={handleSave}>Save Changes</Button>
           </div>
         </div>
       </DialogContent>

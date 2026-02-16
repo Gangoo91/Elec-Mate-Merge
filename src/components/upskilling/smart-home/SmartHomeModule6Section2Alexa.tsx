@@ -8,13 +8,16 @@ export const SmartHomeModule6Section2Alexa = () => {
       <Card className="bg-elec-gray border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
-            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">2</span>
+            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">
+              2
+            </span>
             Amazon Alexa Integration
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <p className="text-foreground leading-relaxed">
-            Amazon Alexa has become one of the most widely adopted voice assistants for smart home control, offering extensive device compatibility and third-party integrations.
+            Amazon Alexa has become one of the most widely adopted voice assistants for smart home
+            control, offering extensive device compatibility and third-party integrations.
           </p>
 
           <div className="space-y-4">
@@ -23,10 +26,13 @@ export const SmartHomeModule6Section2Alexa = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Skills System</h4>
                 <p className="text-foreground text-sm mb-3">
-                  Alexa "Skills" are like apps that extend functionality beyond basic device control. They enable features like security alerts, energy monitoring, and custom automations.
+                  Alexa "Skills" are like apps that extend functionality beyond basic device
+                  control. They enable features like security alerts, energy monitoring, and custom
+                  automations.
                 </p>
                 <p className="text-foreground text-sm">
-                  <strong>Example:</strong> The Samsung SmartThings skill allows Alexa to control any device connected to a SmartThings hub.
+                  <strong>Example:</strong> The Samsung SmartThings skill allows Alexa to control
+                  any device connected to a SmartThings hub.
                 </p>
               </div>
             </div>
@@ -36,10 +42,12 @@ export const SmartHomeModule6Section2Alexa = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Wide Compatibility</h4>
                 <p className="text-foreground text-sm mb-3">
-                  Works with thousands of devices across different brands including Philips Hue, TP-Link Kasa, Ring, Nest, and many more.
+                  Works with thousands of devices across different brands including Philips Hue,
+                  TP-Link Kasa, Ring, Nest, and many more.
                 </p>
                 <p className="text-foreground text-sm">
-                  <strong>Advantage:</strong> Low entry cost and regular feature updates make it accessible to most homeowners.
+                  <strong>Advantage:</strong> Low entry cost and regular feature updates make it
+                  accessible to most homeowners.
                 </p>
               </div>
             </div>
@@ -49,10 +57,13 @@ export const SmartHomeModule6Section2Alexa = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Cloud Dependency</h4>
                 <p className="text-foreground text-sm mb-3">
-                  Alexa relies heavily on cloud services for processing commands and connecting to devices.
+                  Alexa relies heavily on cloud services for processing commands and connecting to
+                  devices.
                 </p>
                 <p className="text-foreground text-sm">
-                  <strong>Limitation:</strong> Internet outages can significantly impact functionality, and some clients may have privacy concerns about cloud data processing.
+                  <strong>Limitation:</strong> Internet outages can significantly impact
+                  functionality, and some clients may have privacy concerns about cloud data
+                  processing.
                 </p>
               </div>
             </div>

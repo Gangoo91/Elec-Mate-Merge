@@ -1,13 +1,13 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, FileCheck, Construction, Save, Download } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { useParams, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowLeft, FileCheck, Construction, Save, Download } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 export default function EICRCertificate() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const isNew = id === "new";
+  const isNew = id === 'new';
 
   return (
     <div className="bg-background">
@@ -20,7 +20,7 @@ export default function EICRCertificate() {
                 variant="ghost"
                 size="sm"
                 className="text-muted-foreground hover:text-foreground"
-                onClick={() => navigate("/electrician/inspection-testing")}
+                onClick={() => navigate('/electrician/inspection-testing')}
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
@@ -29,7 +29,7 @@ export default function EICRCertificate() {
                 <FileCheck className="h-6 w-6 text-blue-500" />
                 <div>
                   <h1 className="text-xl font-bold text-foreground">
-                    {isNew ? "New EICR" : `EICR Certificate`}
+                    {isNew ? 'New EICR' : `EICR Certificate`}
                   </h1>
                   <p className="text-xs text-muted-foreground">
                     Electrical Installation Condition Report
@@ -65,9 +65,9 @@ export default function EICRCertificate() {
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-muted-foreground max-w-md mx-auto">
-              The full EICR form with all sections (Client Details, Supply Characteristics,
-              Earthing & Bonding, Schedule of Inspections, Schedule of Tests, Observations,
-              and Declaration) is ready for integration.
+              The full EICR form with all sections (Client Details, Supply Characteristics, Earthing
+              & Bonding, Schedule of Inspections, Schedule of Tests, Observations, and Declaration)
+              is ready for integration.
             </p>
             <div className="bg-muted/50 rounded-lg p-4 max-w-lg mx-auto text-left">
               <p className="text-sm font-medium mb-2">Form components available:</p>
@@ -81,7 +81,8 @@ export default function EICRCertificate() {
               </ul>
             </div>
             <p className="text-sm text-muted-foreground">
-              Components located in: <code className="bg-muted px-1 rounded">src/components/inspection/eicr/</code>
+              Components located in:{' '}
+              <code className="bg-muted px-1 rounded">src/components/inspection/eicr/</code>
             </p>
           </CardContent>
         </Card>
@@ -92,9 +93,9 @@ export default function EICRCertificate() {
             <CardContent className="pt-6">
               <h3 className="font-semibold mb-2">What is an EICR?</h3>
               <p className="text-sm text-muted-foreground">
-                An Electrical Installation Condition Report assesses the safety of
-                electrical installations in a property, identifying any deterioration,
-                defects or dangerous conditions.
+                An Electrical Installation Condition Report assesses the safety of electrical
+                installations in a property, identifying any deterioration, defects or dangerous
+                conditions.
               </p>
             </CardContent>
           </Card>
@@ -102,9 +103,9 @@ export default function EICRCertificate() {
             <CardContent className="pt-6">
               <h3 className="font-semibold mb-2">When Required?</h3>
               <p className="text-sm text-muted-foreground">
-                Required for rental properties, change of tenancy, commercial premises,
-                and recommended every 5 years for domestic properties or 10 years for
-                owner-occupied homes.
+                Required for rental properties, change of tenancy, commercial premises, and
+                recommended every 5 years for domestic properties or 10 years for owner-occupied
+                homes.
               </p>
             </CardContent>
           </Card>
@@ -112,8 +113,8 @@ export default function EICRCertificate() {
             <CardContent className="pt-6">
               <h3 className="font-semibold mb-2">BS 7671 Compliance</h3>
               <p className="text-sm text-muted-foreground">
-                This EICR form complies with BS 7671:2018+A2:2022 (18th Edition)
-                requirements for periodic inspection reporting.
+                This EICR form complies with BS 7671:2018+A2:2022 (18th Edition) requirements for
+                periodic inspection reporting.
               </p>
             </CardContent>
           </Card>

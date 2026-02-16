@@ -1,32 +1,20 @@
-import { useState } from "react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { useCollege, type CollegeComment } from "@/contexts/CollegeContext";
-import {
-  MessageSquare,
-  Reply,
-  Check,
-  AlertCircle,
-  MoreVertical,
-  Send,
-  AtSign,
-} from "lucide-react";
+import { useState } from 'react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { useCollege, type CollegeComment } from '@/contexts/CollegeContext';
+import { MessageSquare, Reply, Check, AlertCircle, MoreVertical, Send, AtSign } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/dropdown-menu';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface CommentThreadProps {
-  contextType: "evidence" | "assessment" | "ilp" | "portfolio";
+  contextType: 'evidence' | 'assessment' | 'ilp' | 'portfolio';
   contextId: string;
   currentUserId?: string;
   currentUserName?: string;
@@ -38,55 +26,58 @@ interface CommentThreadProps {
 export function CommentThread({
   contextType,
   contextId,
-  currentUserId = "staff-1",
-  currentUserName = "Dr. Sarah Johnson",
-  currentUserRole = "tutor",
-  currentUserInitials = "SJ",
+  currentUserId = 'staff-1',
+  currentUserName = 'Dr. Sarah Johnson',
+  currentUserRole = 'tutor',
+  currentUserInitials = 'SJ',
   readOnly = false,
 }: CommentThreadProps) {
   const { getCommentsForItem, addComment, resolveComment, staff, students } = useCollege();
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
-  const [newComment, setNewComment] = useState("");
-  const [replyContent, setReplyContent] = useState("");
+  const [newComment, setNewComment] = useState('');
+  const [replyContent, setReplyContent] = useState('');
   const [showMentionPopover, setShowMentionPopover] = useState(false);
-  const [mentionSearch, setMentionSearch] = useState("");
+  const [mentionSearch, setMentionSearch] = useState('');
   const [selectedMentions, setSelectedMentions] = useState<string[]>([]);
 
   const comments = getCommentsForItem(contextType, contextId);
 
   // Build threaded structure
-  const topLevelComments = comments.filter(c => !c.parentId);
-  const getReplies = (parentId: string) => comments.filter(c => c.parentId === parentId);
+  const topLevelComments = comments.filter((c) => !c.parentId);
+  const getReplies = (parentId: string) => comments.filter((c) => c.parentId === parentId);
 
   // Get all mentionable users
   const mentionableUsers = [
-    ...staff.filter(s => s.status === "Active").map(s => ({
-      id: s.id,
-      name: s.name,
-      role: s.role,
-      initials: s.avatarInitials,
-    })),
-    ...students.filter(s => s.status === "Active").map(s => ({
-      id: s.id,
-      name: s.name,
-      role: "student",
-      initials: s.avatarInitials,
-    })),
-  ].filter(u =>
-    mentionSearch === "" ||
-    u.name.toLowerCase().includes(mentionSearch.toLowerCase())
+    ...staff
+      .filter((s) => s.status === 'Active')
+      .map((s) => ({
+        id: s.id,
+        name: s.name,
+        role: s.role,
+        initials: s.avatarInitials,
+      })),
+    ...students
+      .filter((s) => s.status === 'Active')
+      .map((s) => ({
+        id: s.id,
+        name: s.name,
+        role: 'student',
+        initials: s.avatarInitials,
+      })),
+  ].filter(
+    (u) => mentionSearch === '' || u.name.toLowerCase().includes(mentionSearch.toLowerCase())
   );
 
   const handleMention = (user: { id: string; name: string }) => {
     const mentionText = `@${user.name}`;
     if (replyingTo) {
-      setReplyContent(prev => prev + mentionText + " ");
+      setReplyContent((prev) => prev + mentionText + ' ');
     } else {
-      setNewComment(prev => prev + mentionText + " ");
+      setNewComment((prev) => prev + mentionText + ' ');
     }
-    setSelectedMentions(prev => [...prev, user.id]);
+    setSelectedMentions((prev) => [...prev, user.id]);
     setShowMentionPopover(false);
-    setMentionSearch("");
+    setMentionSearch('');
   };
 
   const handleSubmitComment = () => {
@@ -94,15 +85,18 @@ export function CommentThread({
 
     // Extract mentions from text
     const mentionMatches = newComment.match(/@[\w\s]+/g) || [];
-    const mentionIds = mentionMatches.map(m => {
-      const name = m.substring(1);
-      const user = [...staff, ...students].find(u => u.name === name);
-      return user?.id;
-    }).filter(Boolean) as string[];
+    const mentionIds = mentionMatches
+      .map((m) => {
+        const name = m.substring(1);
+        const user = [...staff, ...students].find((u) => u.name === name);
+        return user?.id;
+      })
+      .filter(Boolean) as string[];
 
-    const hasRequiresAction = newComment.includes("?") ||
-      newComment.toLowerCase().includes("please") ||
-      newComment.toLowerCase().includes("can you") ||
+    const hasRequiresAction =
+      newComment.includes('?') ||
+      newComment.toLowerCase().includes('please') ||
+      newComment.toLowerCase().includes('can you') ||
       mentionIds.length > 0;
 
     addComment({
@@ -120,7 +114,7 @@ export function CommentThread({
       createdAt: new Date().toISOString(),
     });
 
-    setNewComment("");
+    setNewComment('');
     setSelectedMentions([]);
   };
 
@@ -129,11 +123,13 @@ export function CommentThread({
 
     // Extract mentions from text
     const mentionMatches = replyContent.match(/@[\w\s]+/g) || [];
-    const mentionIds = mentionMatches.map(m => {
-      const name = m.substring(1);
-      const user = [...staff, ...students].find(u => u.name === name);
-      return user?.id;
-    }).filter(Boolean) as string[];
+    const mentionIds = mentionMatches
+      .map((m) => {
+        const name = m.substring(1);
+        const user = [...staff, ...students].find((u) => u.name === name);
+        return user?.id;
+      })
+      .filter(Boolean) as string[];
 
     addComment({
       contextType,
@@ -151,7 +147,7 @@ export function CommentThread({
       createdAt: new Date().toISOString(),
     });
 
-    setReplyContent("");
+    setReplyContent('');
     setReplyingTo(null);
     setSelectedMentions([]);
   };
@@ -162,25 +158,39 @@ export function CommentThread({
 
   const getRoleColor = (role: string) => {
     switch (role) {
-      case "tutor": return "bg-info/10 text-info";
-      case "assessor": return "bg-success/10 text-success";
-      case "iqa": return "bg-warning/10 text-warning";
-      case "head_of_department": return "bg-purple-500/10 text-purple-500";
-      case "student": return "bg-elec-yellow/10 text-elec-yellow";
-      default: return "bg-muted text-muted-foreground";
+      case 'tutor':
+        return 'bg-info/10 text-info';
+      case 'assessor':
+        return 'bg-success/10 text-success';
+      case 'iqa':
+        return 'bg-warning/10 text-warning';
+      case 'head_of_department':
+        return 'bg-purple-500/10 text-purple-500';
+      case 'student':
+        return 'bg-elec-yellow/10 text-elec-yellow';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const formatRole = (role: string) => {
     switch (role) {
-      case "tutor": return "Tutor";
-      case "assessor": return "Assessor";
-      case "iqa": return "IQA";
-      case "head_of_department": return "HoD";
-      case "student": return "Student";
-      case "admin": return "Admin";
-      case "support": return "Support";
-      default: return role;
+      case 'tutor':
+        return 'Tutor';
+      case 'assessor':
+        return 'Assessor';
+      case 'iqa':
+        return 'IQA';
+      case 'head_of_department':
+        return 'HoD';
+      case 'student':
+        return 'Student';
+      case 'admin':
+        return 'Admin';
+      case 'support':
+        return 'Support';
+      default:
+        return role;
     }
   };
 
@@ -192,18 +202,18 @@ export function CommentThread({
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
 
-    if (diffMins < 1) return "Just now";
+    if (diffMins < 1) return 'Just now';
     if (diffMins < 60) return `${diffMins}m ago`;
     if (diffHours < 24) return `${diffHours}h ago`;
     if (diffDays < 7) return `${diffDays}d ago`;
-    return date.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   };
 
   const highlightMentions = (text: string) => {
     // Highlight @mentions in text
     const parts = text.split(/(@[\w\s]+)/g);
     return parts.map((part, i) => {
-      if (part.startsWith("@")) {
+      if (part.startsWith('@')) {
         return (
           <span key={i} className="text-elec-yellow font-medium">
             {part}
@@ -218,8 +228,8 @@ export function CommentThread({
     const replies = getReplies(comment.id);
 
     return (
-      <div key={comment.id} className={`${isReply ? "ml-8 mt-3" : ""}`}>
-        <div className={`flex gap-3 ${comment.isResolved ? "opacity-60" : ""}`}>
+      <div key={comment.id} className={`${isReply ? 'ml-8 mt-3' : ''}`}>
+        <div className={`flex gap-3 ${comment.isResolved ? 'opacity-60' : ''}`}>
           <Avatar className="h-8 w-8 shrink-0">
             <AvatarFallback className={`text-xs font-semibold ${getRoleColor(comment.authorRole)}`}>
               {comment.authorInitials}
@@ -229,10 +239,11 @@ export function CommentThread({
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-medium text-sm text-foreground">
-                  {comment.authorName}
-                </span>
-                <Badge variant="outline" className={`text-[10px] px-1.5 py-0 ${getRoleColor(comment.authorRole)}`}>
+                <span className="font-medium text-sm text-foreground">{comment.authorName}</span>
+                <Badge
+                  variant="outline"
+                  className={`text-[10px] px-1.5 py-0 ${getRoleColor(comment.authorRole)}`}
+                >
                   {formatRole(comment.authorRole)}
                 </Badge>
                 <span className="text-xs text-muted-foreground">
@@ -242,13 +253,19 @@ export function CommentThread({
 
               <div className="flex items-center gap-1">
                 {comment.requiresAction && !comment.isResolved && (
-                  <Badge variant="outline" className="bg-warning/10 text-warning text-[10px] px-1.5 py-0">
+                  <Badge
+                    variant="outline"
+                    className="bg-warning/10 text-warning text-[10px] px-1.5 py-0"
+                  >
                     <AlertCircle className="h-3 w-3 mr-1" />
                     Action
                   </Badge>
                 )}
                 {comment.isResolved && (
-                  <Badge variant="outline" className="bg-success/10 text-success text-[10px] px-1.5 py-0">
+                  <Badge
+                    variant="outline"
+                    className="bg-success/10 text-success text-[10px] px-1.5 py-0"
+                  >
                     <Check className="h-3 w-3 mr-1" />
                     Resolved
                   </Badge>
@@ -283,10 +300,10 @@ export function CommentThread({
 
             {comment.isResolved && comment.resolvedByName && (
               <p className="text-xs text-muted-foreground mt-1">
-                Resolved by {comment.resolvedByName} on{" "}
-                {new Date(comment.resolvedAt!).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "short",
+                Resolved by {comment.resolvedByName} on{' '}
+                {new Date(comment.resolvedAt!).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
                 })}
               </p>
             )}
@@ -330,7 +347,9 @@ export function CommentThread({
                             </Avatar>
                             <div className="flex-1 min-w-0">
                               <p className="font-medium truncate">{user.name}</p>
-                              <p className="text-xs text-muted-foreground">{formatRole(user.role)}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {formatRole(user.role)}
+                              </p>
                             </div>
                           </button>
                         ))}
@@ -367,13 +386,11 @@ export function CommentThread({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <MessageSquare className="h-4 w-4 text-muted-foreground" />
-          <span className="text-sm font-medium">
-            Comments ({comments.length})
-          </span>
+          <span className="text-sm font-medium">Comments ({comments.length})</span>
         </div>
-        {comments.filter(c => c.requiresAction && !c.isResolved).length > 0 && (
+        {comments.filter((c) => c.requiresAction && !c.isResolved).length > 0 && (
           <Badge variant="outline" className="bg-warning/10 text-warning">
-            {comments.filter(c => c.requiresAction && !c.isResolved).length} require action
+            {comments.filter((c) => c.requiresAction && !c.isResolved).length} require action
           </Badge>
         )}
       </div>

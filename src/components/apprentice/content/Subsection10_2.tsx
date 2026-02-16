@@ -1,7 +1,6 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Ruler, AlignJustify, LineChart } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, Ruler, AlignJustify, LineChart } from 'lucide-react';
 
 interface Subsection10_2Props {
   subsectionId: string;
@@ -13,13 +12,14 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-elec-yellow">Circuit Design</h2>
-      
+
       <div className="space-y-4">
         <p>
-          Circuit design involves selecting appropriate equipment, cables, and protective devices to ensure a 
-          safe and functional installation. Proper design calculations are essential for compliance with regulations.
+          Circuit design involves selecting appropriate equipment, cables, and protective devices to
+          ensure a safe and functional installation. Proper design calculations are essential for
+          compliance with regulations.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
@@ -35,7 +35,7 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 <li>Shower circuits (sized according to rating)</li>
                 <li>Fixed appliance circuits (dedicated supplies)</li>
               </ul>
-              
+
               <h4 className="font-semibold mt-4">Commercial/Industrial Arrangements</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Distribution circuits (submains to subdistribution boards)</li>
@@ -44,7 +44,7 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 <li>Motor circuits (with appropriate starting and protection)</li>
                 <li>Special supplies (UPS, standby generation, etc.)</li>
               </ul>
-              
+
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
                 <h4 className="font-semibold text-elec-yellow mb-2">Circuit Segregation:</h4>
                 <ul className="list-disc pl-5 space-y-1">
@@ -57,7 +57,7 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Ruler className="h-5 w-5 mr-2" />
@@ -72,7 +72,7 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 <li>Mechanical protection requirements</li>
                 <li>Environmental considerations (temperature, thermal insulation)</li>
               </ul>
-              
+
               <h4 className="font-semibold mt-4">Cable Types</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>PVC insulated and sheathed cables (flat twin and earth)</li>
@@ -81,7 +81,7 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 <li>FP (Fire Performance) cables for critical circuits</li>
                 <li>LSF/LSZH (Low Smoke Fume/Zero Halogen) for public areas</li>
               </ul>
-              
+
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
                 <h4 className="font-semibold text-elec-yellow mb-2">Derating Factors:</h4>
                 <ul className="list-disc pl-5 space-y-1">
@@ -95,16 +95,18 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
             </div>
           </div>
         </div>
-        
+
         <div className="mt-8 bg-white/10 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
             <LineChart className="h-5 w-5 mr-2" />
             Protection Design
           </h3>
-          
+
           <div className="space-y-4">
-            <p>Selection of appropriate protective devices is critical for safety and functionality:</p>
-            
+            <p>
+              Selection of appropriate protective devices is critical for safety and functionality:
+            </p>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <h4 className="font-semibold text-white">Overcurrent Protection</h4>
@@ -115,7 +117,9 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                   </li>
                   <li>
                     <span className="font-medium">Fuse characteristics</span>
-                    <p className="text-sm mt-1">gG (general), aM (motor rated), other specific types</p>
+                    <p className="text-sm mt-1">
+                      gG (general), aM (motor rated), other specific types
+                    </p>
                   </li>
                   <li>
                     <span className="font-medium">Breaking capacity</span>
@@ -127,17 +131,21 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                   </li>
                 </ul>
               </div>
-              
+
               <div className="space-y-3">
                 <h4 className="font-semibold text-white">Additional Protection</h4>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>
                     <span className="font-medium">RCD protection</span>
-                    <p className="text-sm mt-1">Selection of appropriate sensitivity (30mA, 100mA, 300mA)</p>
+                    <p className="text-sm mt-1">
+                      Selection of appropriate sensitivity (30mA, 100mA, 300mA)
+                    </p>
                   </li>
                   <li>
                     <span className="font-medium">RCBO applications</span>
-                    <p className="text-sm mt-1">Combined overcurrent and earth leakage protection</p>
+                    <p className="text-sm mt-1">
+                      Combined overcurrent and earth leakage protection
+                    </p>
                   </li>
                   <li>
                     <span className="font-medium">SPD selection</span>
@@ -150,15 +158,22 @@ const Subsection10_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 </ul>
               </div>
             </div>
-            
+
             <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
-              <p>BS 7671 Chapter 43 requires that conductors be protected against overcurrent. The protective devices must be selected and erected to respond to any overcurrent up to and including the prospective short-circuit current. Regulation 411.3.3 requires additional protection by an RCD with a rated residual operating current not exceeding 30mA for socket outlet circuits ≤ 32A and for mobile equipment ≤ 32A for use outdoors.</p>
+              <p>
+                BS 7671 Chapter 43 requires that conductors be protected against overcurrent. The
+                protective devices must be selected and erected to respond to any overcurrent up to
+                and including the prospective short-circuit current. Regulation 411.3.3 requires
+                additional protection by an RCD with a rated residual operating current not
+                exceeding 30mA for socket outlet circuits ≤ 32A and for mobile equipment ≤ 32A for
+                use outdoors.
+              </p>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className="flex justify-end pt-6 border-t border-elec-yellow/20">
         <Button
           variant="study"

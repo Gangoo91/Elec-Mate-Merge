@@ -1,80 +1,90 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-m6s5-check1",
-    question: "What are the most common types of certification errors during electrical inspections?",
+    id: 'bs7671-m6s5-check1',
+    question:
+      'What are the most common types of certification errors during electrical inspections?',
     options: [
-      "Minor spelling mistakes only",
-      "Incorrect circuit descriptions, wrong protective device ratings, incomplete test records",
-      "Paper quality issues",
-      "Colour of forms used"
+      'Minor spelling mistakes only',
+      'Incorrect circuit descriptions, wrong protective device ratings, incomplete test records',
+      'Paper quality issues',
+      'Colour of forms used',
     ],
     correctIndex: 1,
-    explanation: "Common errors include incorrect circuit descriptions, wrong protective device ratings, incomplete testing records, missing observations, incorrect earthing arrangements documentation, and failure to record limitations. These errors can invalidate certificates and create legal liability."
+    explanation:
+      'Common errors include incorrect circuit descriptions, wrong protective device ratings, incomplete testing records, missing observations, incorrect earthing arrangements documentation, and failure to record limitations. These errors can invalidate certificates and create legal liability.',
   },
   {
-    id: "bs7671-m6s5-check2",
-    question: "How should certification errors be corrected once identified?",
+    id: 'bs7671-m6s5-check2',
+    question: 'How should certification errors be corrected once identified?',
     options: [
-      "Simply cross out and initial the error",
-      "Ignore minor errors if the installation works",
-      "Issue formal correction notices with traceable amendments",
-      "Start the entire certification process again"
+      'Simply cross out and initial the error',
+      'Ignore minor errors if the installation works',
+      'Issue formal correction notices with traceable amendments',
+      'Start the entire certification process again',
     ],
     correctIndex: 2,
-    explanation: "Errors must be corrected through formal amendment procedures, including issuing correction notices, updating all relevant documentation, re-testing if necessary, and notifying all relevant parties. The original certificate should never be altered - corrections must be traceable and documented."
+    explanation:
+      'Errors must be corrected through formal amendment procedures, including issuing correction notices, updating all relevant documentation, re-testing if necessary, and notifying all relevant parties. The original certificate should never be altered - corrections must be traceable and documented.',
   },
   {
-    id: "bs7671-m6s5-check3",
-    question: "What quality assurance procedures help prevent certification errors?",
+    id: 'bs7671-m6s5-check3',
+    question: 'What quality assurance procedures help prevent certification errors?',
     options: [
-      "Working faster to finish sooner",
-      "Using cheaper test equipment",
-      "Peer reviews, standardised checklists, and systematic verification procedures",
-      "Delegating all testing to apprentices"
+      'Working faster to finish sooner',
+      'Using cheaper test equipment',
+      'Peer reviews, standardised checklists, and systematic verification procedures',
+      'Delegating all testing to apprentices',
     ],
     correctIndex: 2,
-    explanation: "Effective QA includes peer reviews, standardised checklists, systematic verification procedures, proper training programs, regular competency assessments, and comprehensive documentation systems. Independent verification of critical measurements and calculations is essential."
-  }
+    explanation:
+      'Effective QA includes peer reviews, standardised checklists, systematic verification procedures, proper training programs, regular competency assessments, and comprehensive documentation systems. Independent verification of critical measurements and calculations is essential.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What happens if I discover an error on a certificate after issuing it?",
-    answer: "You must issue a formal correction notice immediately, notify the client and any other parties who received the original, and maintain a clear audit trail of the correction. Never alter original documents - corrections must be traceable."
+    question: 'What happens if I discover an error on a certificate after issuing it?',
+    answer:
+      'You must issue a formal correction notice immediately, notify the client and any other parties who received the original, and maintain a clear audit trail of the correction. Never alter original documents - corrections must be traceable.',
   },
   {
-    question: "Can certification errors invalidate insurance coverage?",
-    answer: "Yes. Major certification errors, especially those affecting safety assessments, can void insurance coverage and create legal liability. Professional indemnity insurance may not cover claims arising from gross negligence or falsified certificates."
+    question: 'Can certification errors invalidate insurance coverage?',
+    answer:
+      'Yes. Major certification errors, especially those affecting safety assessments, can void insurance coverage and create legal liability. Professional indemnity insurance may not cover claims arising from gross negligence or falsified certificates.',
   },
   {
-    question: "How can I prevent transcription errors when recording test results?",
-    answer: "Use standardised recording forms, double-check readings before writing them down, use digital test equipment with data logging where possible, and have a colleague verify critical readings. Take your time and avoid rushing."
-  }
+    question: 'How can I prevent transcription errors when recording test results?',
+    answer:
+      'Use standardised recording forms, double-check readings before writing them down, use digital test equipment with data logging where possible, and have a colleague verify critical readings. Take your time and avoid rushing.',
+  },
 ];
 
 const quizQuestion = {
-  question: "An electrician discovers that test results on a recently issued EIC were transposed between two circuits. What is the correct response?",
+  question:
+    'An electrician discovers that test results on a recently issued EIC were transposed between two circuits. What is the correct response?',
   options: [
-    "Ignore it as the installation is safe overall",
-    "Wait until the next periodic inspection to correct it",
-    "Issue a formal correction notice and notify the client immediately",
-    "Recall and destroy the original certificate"
+    'Ignore it as the installation is safe overall',
+    'Wait until the next periodic inspection to correct it',
+    'Issue a formal correction notice and notify the client immediately',
+    'Recall and destroy the original certificate',
   ],
   correctAnswer: 2,
-  explanation: "The correct response is to issue a formal correction notice and notify the client immediately. The original certificate should be retained with the correction notice, maintaining a clear audit trail. Re-testing may be required if there's any doubt about which results apply to which circuit."
+  explanation:
+    "The correct response is to issue a formal correction notice and notify the client immediately. The original certificate should be retained with the correction notice, maintaining a clear audit trail. Re-testing may be required if there's any doubt about which results apply to which circuit.",
 };
 
 const BS7671Module6Section5 = () => {
   useSEO({
-    title: "Certification Errors and Quality Control | BS7671 Module 6.5",
-    description: "Learn about common certification errors, quality control systems, and error correction procedures under BS 7671."
+    title: 'Certification Errors and Quality Control | BS7671 Module 6.5',
+    description:
+      'Learn about common certification errors, quality control systems, and error correction procedures under BS 7671.',
   });
 
   return (
@@ -107,7 +117,8 @@ const BS7671Module6Section5 = () => {
             Certification Errors and Quality Control
           </h1>
           <p className="text-white/80">
-            Preventing, identifying, and correcting certification errors to maintain professional standards
+            Preventing, identifying, and correcting certification errors to maintain professional
+            standards
           </p>
         </header>
 
@@ -116,16 +127,26 @@ const BS7671Module6Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Prevention:</strong> Standardised checklists and peer reviews</li>
-              <li><strong>Detection:</strong> Systematic verification before issue</li>
-              <li><strong>Correction:</strong> Formal amendment with audit trail</li>
+              <li>
+                <strong>Prevention:</strong> Standardised checklists and peer reviews
+              </li>
+              <li>
+                <strong>Detection:</strong> Systematic verification before issue
+              </li>
+              <li>
+                <strong>Correction:</strong> Formal amendment with audit trail
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Transcription errors, missing data, incorrect calculations</li>
-              <li><strong>Use:</strong> QA checklists before every certificate issue</li>
+              <li>
+                <strong>Spot:</strong> Transcription errors, missing data, incorrect calculations
+              </li>
+              <li>
+                <strong>Use:</strong> QA checklists before every certificate issue
+              </li>
             </ul>
           </div>
         </div>
@@ -135,10 +156,10 @@ const BS7671Module6Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify common types of certification errors and their causes",
-              "Implement quality control procedures to prevent errors",
-              "Apply systematic error correction and amendment procedures",
-              "Understand legal implications and professional responsibilities"
+              'Identify common types of certification errors and their causes',
+              'Implement quality control procedures to prevent errors',
+              'Apply systematic error correction and amendment procedures',
+              'Understand legal implications and professional responsibilities',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -158,22 +179,25 @@ const BS7671Module6Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Certification errors can have serious legal and safety consequences, potentially invalidating
-              insurance coverage and creating liability for electricians. Understanding error types helps
-              prevent them.
+              Certification errors can have serious legal and safety consequences, potentially
+              invalidating insurance coverage and creating liability for electricians. Understanding
+              error types helps prevent them.
             </p>
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 my-6">
               <p className="text-sm font-medium text-red-400/80 mb-2">Critical Impact</p>
               <p className="text-sm text-white">
-                Certification errors can invalidate electrical certificates, void insurance coverage, create
-                legal liability, and compromise safety. Every error represents a failure in professional standards.
+                Certification errors can invalidate electrical certificates, void insurance
+                coverage, create legal liability, and compromise safety. Every error represents a
+                failure in professional standards.
               </p>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Circuit Description Errors</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Circuit Description Errors
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Wrong circuit numbers or descriptions</li>
                   <li>Missing or incomplete circuit details</li>
@@ -183,7 +207,9 @@ const BS7671Module6Section5 = () => {
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Protective Device Errors</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Protective Device Errors
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Wrong MCB/RCBO type curves recorded</li>
                   <li>Incorrect current ratings documented</li>
@@ -227,12 +253,15 @@ const BS7671Module6Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Systematic quality assurance prevents errors before they occur. Implementing robust QA
-              procedures protects both electricians and clients from the consequences of certification errors.
+              procedures protects both electricians and clients from the consequences of
+              certification errors.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pre-Certification Checks</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Pre-Certification Checks
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Confirm installation matches approved designs</li>
                   <li>Verify all components meet specifications</li>
@@ -242,7 +271,9 @@ const BS7671Module6Section5 = () => {
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Testing Quality Assurance</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Testing Quality Assurance
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Regular calibration schedules</li>
                   <li>Pre-use equipment checks</li>
@@ -277,13 +308,15 @@ const BS7671Module6Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              When errors are discovered, they must be corrected through formal procedures that maintain
-              traceability and protect all parties involved.
+              When errors are discovered, they must be corrected through formal procedures that
+              maintain traceability and protect all parties involved.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Immediate Response Protocol</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Immediate Response Protocol
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Acknowledge and document the error immediately</li>
                   <li>Evaluate safety implications and urgency</li>
@@ -318,8 +351,8 @@ const BS7671Module6Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Certification errors carry significant legal implications, affecting both criminal and civil
-              liability for electricians and their employers.
+              Certification errors carry significant legal implications, affecting both criminal and
+              civil liability for electricians and their employers.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -351,10 +384,13 @@ const BS7671Module6Section5 = () => {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4">Real World Example</h2>
           <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-            <p className="text-sm font-medium text-red-400/80 mb-2">Manchester Office Building - Certification Error Case</p>
+            <p className="text-sm font-medium text-red-400/80 mb-2">
+              Manchester Office Building - Certification Error Case
+            </p>
             <p className="text-sm text-white mb-3">
-              A £180,000 electrical contract with 45 distribution boards had major certification errors
-              discovered during client handover, causing contract delays and professional reputation damage.
+              A £180,000 electrical contract with 45 distribution boards had major certification
+              errors discovered during client handover, causing contract delays and professional
+              reputation damage.
             </p>
             <p className="text-sm font-medium text-white mb-2">Errors Found:</p>
             <ul className="text-sm text-white space-y-1 ml-4 mb-3">
@@ -364,8 +400,8 @@ const BS7671Module6Section5 = () => {
               <li>Wrong RCD sensitivity ratings recorded</li>
             </ul>
             <p className="text-sm text-elec-yellow/80">
-              <strong>Lesson:</strong> Systematic QA procedures would have caught these errors before certificate
-              issue, saving significant time, cost, and reputation damage.
+              <strong>Lesson:</strong> Systematic QA procedures would have caught these errors
+              before certificate issue, saving significant time, cost, and reputation damage.
             </p>
           </div>
         </section>
@@ -377,7 +413,9 @@ const BS7671Module6Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Pre-Issue Verification</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Pre-Issue Verification
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Review all test results against BS 7671 limits before signing</li>
                 <li>Cross-check circuit descriptions against actual installation</li>
@@ -388,10 +426,21 @@ const BS7671Module6Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Pitfalls to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Rushing:</strong> Time pressure is the leading cause of transcription errors</li>
-                <li><strong>Copy/paste:</strong> Re-using old certificates without updating all fields</li>
-                <li><strong>Assumptions:</strong> Recording values from memory instead of actual readings</li>
-                <li><strong>Delegation:</strong> Signing certificates without personally verifying data</li>
+                <li>
+                  <strong>Rushing:</strong> Time pressure is the leading cause of transcription
+                  errors
+                </li>
+                <li>
+                  <strong>Copy/paste:</strong> Re-using old certificates without updating all fields
+                </li>
+                <li>
+                  <strong>Assumptions:</strong> Recording values from memory instead of actual
+                  readings
+                </li>
+                <li>
+                  <strong>Delegation:</strong> Signing certificates without personally verifying
+                  data
+                </li>
               </ul>
             </div>
           </div>
@@ -414,7 +463,9 @@ const BS7671Module6Section5 = () => {
 
         {/* Quick Reference Card */}
         <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
-          <h3 className="text-sm font-medium text-white mb-4">Quick Reference - Error Prevention Checklist</h3>
+          <h3 className="text-sm font-medium text-white mb-4">
+            Quick Reference - Error Prevention Checklist
+          </h3>
           <div className="grid sm:grid-cols-3 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-elec-yellow/80 mb-1">Before Testing</p>

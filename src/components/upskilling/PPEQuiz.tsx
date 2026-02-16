@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -16,66 +15,65 @@ const PPEQuiz = () => {
   const questions: QuizQuestion[] = [
     {
       id: 1,
-      question: "Which of the following is a standard PPE item for electrical testing?",
+      question: 'Which of the following is a standard PPE item for electrical testing?',
       options: [
-        "Rubber sandals",
-        "Flame-resistant clothing",
-        "Earplugs for dust",
-        "Reflective vest"
+        'Rubber sandals',
+        'Flame-resistant clothing',
+        'Earplugs for dust',
+        'Reflective vest',
       ],
       correctAnswer: 1,
-      explanation: "Flame-resistant clothing is essential PPE for electrical work to protect against arc flash burns."
+      explanation:
+        'Flame-resistant clothing is essential PPE for electrical work to protect against arc flash burns.',
     },
     {
       id: 2,
-      question: "True or False: PPE replaces the need for safe isolation.",
-      options: [
-        "True",
-        "False"
-      ],
+      question: 'True or False: PPE replaces the need for safe isolation.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "PPE is the last line of defence and does not replace safe isolation procedures. It protects you if other controls fail."
+      explanation:
+        'PPE is the last line of defence and does not replace safe isolation procedures. It protects you if other controls fail.',
     },
     {
       id: 3,
-      question: "What does PPE protect against in electrical testing?",
+      question: 'What does PPE protect against in electrical testing?',
       options: [
-        "Financial loss",
-        "Electrical hazards if procedures fail",
-        "Noise complaints",
-        "Poor documentation"
+        'Financial loss',
+        'Electrical hazards if procedures fail',
+        'Noise complaints',
+        'Poor documentation',
       ],
       correctAnswer: 1,
-      explanation: "PPE is designed to protect against electrical hazards when other safety procedures fail or are inadequate."
+      explanation:
+        'PPE is designed to protect against electrical hazards when other safety procedures fail or are inadequate.',
     },
     {
       id: 4,
-      question: "Who is responsible for ensuring PPE is worn correctly?",
+      question: 'Who is responsible for ensuring PPE is worn correctly?',
       options: [
-        "The site manager",
-        "The insurance company",
-        "The electrician using it",
-        "The manufacturer"
+        'The site manager',
+        'The insurance company',
+        'The electrician using it',
+        'The manufacturer',
       ],
       correctAnswer: 2,
-      explanation: "The individual electrician is ultimately responsible for wearing PPE correctly and ensuring it's in good condition."
+      explanation:
+        "The individual electrician is ultimately responsible for wearing PPE correctly and ensuring it's in good condition.",
     },
     {
       id: 5,
-      question: "What regulation covers PPE requirements in the workplace?",
-      options: [
-        "BS7671",
-        "Electricity at Work Regulations",
-        "PPE Regulations 1992",
-        "COSHH"
-      ],
+      question: 'What regulation covers PPE requirements in the workplace?',
+      options: ['BS7671', 'Electricity at Work Regulations', 'PPE Regulations 1992', 'COSHH'],
       correctAnswer: 2,
-      explanation: "PPE Regulations 1992, along with the Health and Safety at Work Act, covers PPE requirements in the workplace."
-    }
+      explanation:
+        'PPE Regulations 1992, along with the Health and Safety at Work Act, covers PPE requirements in the workplace.',
+    },
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(questions.length).fill(null));
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(
+    new Array(questions.length).fill(null)
+  );
   const [showResults, setShowResults] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
@@ -120,7 +118,7 @@ const PPEQuiz = () => {
   if (showResults) {
     const score = calculateScore();
     const percentage = getScorePercentage();
-    
+
     return (
       <Card className="bg-elec-gray border-transparent">
         <CardHeader>
@@ -134,11 +132,13 @@ const PPEQuiz = () => {
             <div className="text-3xl font-bold text-elec-yellow">
               {score}/{questions.length}
             </div>
-            <div className="text-xl text-foreground">
-              {percentage}% Complete
-            </div>
+            <div className="text-xl text-foreground">{percentage}% Complete</div>
             <div className="text-gray-400">
-              {percentage >= 80 ? "Excellent work!" : percentage >= 60 ? "Good effort!" : "Consider reviewing the material again."}
+              {percentage >= 80
+                ? 'Excellent work!'
+                : percentage >= 60
+                  ? 'Good effort!'
+                  : 'Consider reviewing the material again.'}
             </div>
           </div>
 
@@ -147,7 +147,7 @@ const PPEQuiz = () => {
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
                 <div key={question.id} className="bg-[#323232] p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
@@ -160,7 +160,8 @@ const PPEQuiz = () => {
                   </div>
                   <p className="text-sm text-gray-300 mb-2">{question.question}</p>
                   <p className="text-xs text-gray-400 mb-2">
-                    Your answer: {userAnswer !== null ? question.options[userAnswer] : "Not answered"}
+                    Your answer:{' '}
+                    {userAnswer !== null ? question.options[userAnswer] : 'Not answered'}
                   </p>
                   {!isCorrect && (
                     <p className="text-xs text-green-400 mb-2">
@@ -174,7 +175,7 @@ const PPEQuiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={handleRestart}
               className="bg-elec-yellow text-black hover:bg-yellow-400"
             >
@@ -202,11 +203,9 @@ const PPEQuiz = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <div className="bg-[#323232] p-4 rounded-lg">
-          <h4 className="font-semibold text-elec-yellow mb-3">
-            Question {currentQuestion + 1}
-          </h4>
+          <h4 className="font-semibold text-elec-yellow mb-3">Question {currentQuestion + 1}</h4>
           <p className="text-sm mb-4">{question.question}</p>
-          
+
           <div className="space-y-2">
             {question.options.map((option, index) => (
               <button
@@ -219,11 +218,13 @@ const PPEQuiz = () => {
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className={`w-6 h-6 rounded text-xs flex items-center justify-center ${
-                    selectedAnswer === index 
-                      ? 'bg-elec-yellow text-black' 
-                      : 'bg-gray-600 text-foreground'
-                  }`}>
+                  <span
+                    className={`w-6 h-6 rounded text-xs flex items-center justify-center ${
+                      selectedAnswer === index
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-gray-600 text-foreground'
+                    }`}
+                  >
                     {String.fromCharCode(65 + index)}
                   </span>
                   <span>{option}</span>
@@ -242,7 +243,7 @@ const PPEQuiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswer === null}
@@ -253,9 +254,7 @@ const PPEQuiz = () => {
         </div>
 
         {selectedAnswer === null && (
-          <p className="text-center text-sm text-gray-500">
-            Please select an answer to continue
-          </p>
+          <p className="text-center text-sm text-gray-500">Please select an answer to continue</p>
         )}
       </CardContent>
     </Card>

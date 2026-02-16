@@ -1,14 +1,18 @@
-import { useState, useMemo, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import ModernCoursesHero from "./ModernCoursesHero";
-import ModernCoursesGrid from "./ModernCoursesGrid";
-import ModernCoursesFilters, { CourseFilters } from "./ModernCoursesFilters";
-import ModernCoursesDetailsModal from "./ModernCoursesDetailsModal";
-import CourseEnquirySheet from "@/components/training-courses/CourseEnquirySheet";
-import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
-import { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
-import { useTrainingCourses, calculateCoursesAnalytics, TrainingCourse } from "@/hooks/useTrainingCourses";
+import { useState, useMemo, useCallback } from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import ModernCoursesHero from './ModernCoursesHero';
+import ModernCoursesGrid from './ModernCoursesGrid';
+import ModernCoursesFilters, { CourseFilters } from './ModernCoursesFilters';
+import ModernCoursesDetailsModal from './ModernCoursesDetailsModal';
+import CourseEnquirySheet from '@/components/training-courses/CourseEnquirySheet';
+import FundingCalculator from '../../../apprentice/career/education/FundingCalculator';
+import { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
+import {
+  useTrainingCourses,
+  calculateCoursesAnalytics,
+  TrainingCourse,
+} from '@/hooks/useTrainingCourses';
 
 // Transform TrainingCourse to EnhancedCareerCourse for existing grid/modal components
 const transformToEnhanced = (course: TrainingCourse): EnhancedCareerCourse => ({
@@ -16,17 +20,17 @@ const transformToEnhanced = (course: TrainingCourse): EnhancedCareerCourse => ({
   title: course.title,
   provider: course.provider_name,
   category: course.category,
-  description: course.description || "",
-  duration: course.duration || "Contact provider",
-  price: course.price || "Contact for pricing",
-  level: course.level || "All levels",
-  format: course.format || "Classroom",
-  location: course.venue_city || (course.is_online ? "Online" : "Various UK locations"),
+  description: course.description || '',
+  duration: course.duration || 'Contact provider',
+  price: course.price || 'Contact for pricing',
+  level: course.level || 'All levels',
+  format: course.format || 'Classroom',
+  location: course.venue_city || (course.is_online ? 'Online' : 'Various UK locations'),
   rating: course.rating || 4.0,
   external_url: course.external_url,
   image_url: undefined,
   futureProofing: 4,
-  industryDemand: "High" as const,
+  industryDemand: 'High' as const,
   courseOutline: [],
   accreditation: course.accreditation || [],
   employerSupport: true,
@@ -42,21 +46,21 @@ const transformToEnhanced = (course: TrainingCourse): EnhancedCareerCourse => ({
 
 const ElectricianCareerCourses = () => {
   // State
-  const [viewMode, setViewMode] = useState<"grid" | "funding">("grid");
+  const [viewMode, setViewMode] = useState<'grid' | 'funding'>('grid');
   const [modalOpen, setModalOpen] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
   const [enquiryCourse, setEnquiryCourse] = useState<EnhancedCareerCourse | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [locationQuery, setLocationQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [locationQuery, setLocationQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [filters, setFilters] = useState<CourseFilters>({
-    searchTerm: "",
-    category: "",
-    level: "",
-    format: "",
-    location: "",
-    sortBy: "rating"
+    searchTerm: '',
+    category: '',
+    level: '',
+    format: '',
+    location: '',
+    sortBy: 'rating',
   });
 
   // Training courses hook with filters
@@ -72,7 +76,7 @@ const ElectricianCareerCourses = () => {
     postcode: locationQuery,
     format: filters.format,
     level: filters.level,
-    sortBy: filters.sortBy as "rating" | "price" | "title" | "distance",
+    sortBy: filters.sortBy as 'rating' | 'price' | 'title' | 'distance',
   });
 
   // Transform courses
@@ -84,29 +88,29 @@ const ElectricianCareerCourses = () => {
 
     // Apply demand filter (using location field for demand)
     if (filters.location && !locationQuery) {
-      result = result.filter(course => course.industryDemand === filters.location);
+      result = result.filter((course) => course.industryDemand === filters.location);
     }
 
     // Apply sorting if not already sorted by hook
     if (!locationQuery) {
       switch (filters.sortBy) {
-        case "rating":
+        case 'rating':
           result.sort((a, b) => (b.rating || 0) - (a.rating || 0));
           break;
-        case "title":
+        case 'title':
           result.sort((a, b) => a.title.localeCompare(b.title));
           break;
-        case "duration":
+        case 'duration':
           result.sort((a, b) => {
-            const aDuration = parseInt(a.duration.match(/\d+/)?.[0] || "0");
-            const bDuration = parseInt(b.duration.match(/\d+/)?.[0] || "0");
+            const aDuration = parseInt(a.duration.match(/\d+/)?.[0] || '0');
+            const bDuration = parseInt(b.duration.match(/\d+/)?.[0] || '0');
             return aDuration - bDuration;
           });
           break;
-        case "price":
+        case 'price':
           result.sort((a, b) => {
-            const aPrice = parseInt(a.price.replace(/[^\d]/g, "") || "0");
-            const bPrice = parseInt(b.price.replace(/[^\d]/g, "") || "0");
+            const aPrice = parseInt(a.price.replace(/[^\d]/g, '') || '0');
+            const bPrice = parseInt(b.price.replace(/[^\d]/g, '') || '0');
             return aPrice - bPrice;
           });
           break;
@@ -133,16 +137,16 @@ const ElectricianCareerCourses = () => {
 
   const handleReset = useCallback(() => {
     setFilters({
-      searchTerm: "",
-      category: "",
-      level: "",
-      format: "",
-      location: "",
-      sortBy: "rating"
+      searchTerm: '',
+      category: '',
+      level: '',
+      format: '',
+      location: '',
+      sortBy: 'rating',
     });
-    setSearchQuery("");
-    setLocationQuery("");
-    setSelectedCategory("");
+    setSearchQuery('');
+    setLocationQuery('');
+    setSelectedCategory('');
   }, []);
 
   const handleViewDetails = useCallback((course: EnhancedCareerCourse) => {
@@ -151,11 +155,11 @@ const ElectricianCareerCourses = () => {
   }, []);
 
   const handleShowFundingCalculator = useCallback(() => {
-    setViewMode("funding");
+    setViewMode('funding');
   }, []);
 
   const handleBackToGrid = useCallback(() => {
-    setViewMode("grid");
+    setViewMode('grid');
   }, []);
 
   const handleSearchChange = useCallback((query: string) => {
@@ -176,7 +180,7 @@ const ElectricianCareerCourses = () => {
   }, []);
 
   // Funding Calculator View
-  if (viewMode === "funding") {
+  if (viewMode === 'funding') {
     return (
       <div className="space-y-6">
         <Button
@@ -233,11 +237,7 @@ const ElectricianCareerCourses = () => {
       />
 
       {/* Course Enquiry Sheet */}
-      <CourseEnquirySheet
-        course={enquiryCourse}
-        open={enquiryOpen}
-        onOpenChange={setEnquiryOpen}
-      />
+      <CourseEnquirySheet course={enquiryCourse} open={enquiryOpen} onOpenChange={setEnquiryOpen} />
     </div>
   );
 };

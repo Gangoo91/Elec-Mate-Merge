@@ -1,82 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-m8s3-check1",
-    question: "What is the main focus of BS 7671 Amendment 3 regarding AFDDs?",
+    id: 'bs7671-m8s3-check1',
+    question: 'What is the main focus of BS 7671 Amendment 3 regarding AFDDs?',
     options: [
-      "Mandatory for all installations",
-      "Recommended for higher risk locations",
-      "Removed from requirements",
-      "Only for industrial use"
+      'Mandatory for all installations',
+      'Recommended for higher risk locations',
+      'Removed from requirements',
+      'Only for industrial use',
     ],
     correctIndex: 1,
-    explanation: "Amendment 3 strengthens recommendations for Arc Fault Detection Devices (AFDDs) in locations with sleeping accommodation, combustible construction materials, or irreplaceable goods."
+    explanation:
+      'Amendment 3 strengthens recommendations for Arc Fault Detection Devices (AFDDs) in locations with sleeping accommodation, combustible construction materials, or irreplaceable goods.',
   },
   {
-    id: "bs7671-m8s3-check2",
-    question: "What new Part was added to BS 7671 in the 18th Edition?",
-    options: ["Part 6", "Part 7", "Part 8 - Prosumer Installations", "Part 9"],
+    id: 'bs7671-m8s3-check2',
+    question: 'What new Part was added to BS 7671 in the 18th Edition?',
+    options: ['Part 6', 'Part 7', 'Part 8 - Prosumer Installations', 'Part 9'],
     correctIndex: 2,
-    explanation: "Part 8 'Prosumer's Electrical Installations' was added to address installations that generate and/or store energy as well as consuming it (solar PV, batteries, etc.)."
+    explanation:
+      "Part 8 'Prosumer's Electrical Installations' was added to address installations that generate and/or store energy as well as consuming it (solar PV, batteries, etc.).",
   },
   {
-    id: "bs7671-m8s3-check3",
-    question: "What enhanced requirement applies to consumer units in domestic premises?",
+    id: 'bs7671-m8s3-check3',
+    question: 'What enhanced requirement applies to consumer units in domestic premises?',
     options: [
-      "Must be IP4X rated",
-      "Must be metal-clad or within non-combustible enclosure",
-      "Must have glass front",
-      "Must be located outside"
+      'Must be IP4X rated',
+      'Must be metal-clad or within non-combustible enclosure',
+      'Must have glass front',
+      'Must be located outside',
     ],
     correctIndex: 1,
-    explanation: "Consumer units in domestic premises must be either metal-clad (e.g., steel enclosure) or installed within a non-combustible enclosure to reduce fire risk from arc faults."
-  }
+    explanation:
+      'Consumer units in domestic premises must be either metal-clad (e.g., steel enclosure) or installed within a non-combustible enclosure to reduce fire risk from arc faults.',
+  },
 ];
 
 const faqs = [
   {
-    question: "When did Amendment 3 come into effect?",
-    answer: "Amendment 3 was published in 2024 with a transition period allowing work to comply with either Amendment 2 or Amendment 3 for a defined period. Always check current transition dates with your registration scheme."
+    question: 'When did Amendment 3 come into effect?',
+    answer:
+      'Amendment 3 was published in 2024 with a transition period allowing work to comply with either Amendment 2 or Amendment 3 for a defined period. Always check current transition dates with your registration scheme.',
   },
   {
-    question: "Are existing installations non-compliant after an amendment?",
-    answer: "No. Existing compliant installations remain compliant. Amendments apply to new work and alterations. The general principle is that installations need only comply with requirements in force when the work was done."
+    question: 'Are existing installations non-compliant after an amendment?',
+    answer:
+      'No. Existing compliant installations remain compliant. Amendments apply to new work and alterations. The general principle is that installations need only comply with requirements in force when the work was done.',
   },
   {
     question: "What's driving the changes in BS 7671?",
-    answer: "Changes reflect technological advances (EVs, renewables), improved understanding of risks (arc faults, fire), harmonisation with European standards (HD 60364), and lessons from incidents and research."
+    answer:
+      'Changes reflect technological advances (EVs, renewables), improved understanding of risks (arc faults, fire), harmonisation with European standards (HD 60364), and lessons from incidents and research.',
   },
   {
-    question: "How do I stay current with regulation changes?",
-    answer: "Join a competent person scheme (NICEIC, NAPIT, etc.), subscribe to IET publications, attend CPD training, and monitor announcements from scheme providers and industry bodies."
-  }
+    question: 'How do I stay current with regulation changes?',
+    answer:
+      'Join a competent person scheme (NICEIC, NAPIT, etc.), subscribe to IET publications, attend CPD training, and monitor announcements from scheme providers and industry bodies.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A house is being rewired with a new consumer unit. What fire safety requirement applies to the consumer unit?",
-  options: [
-    "No specific fire requirement",
-    "Must be plastic with fire barrier",
-    "Must be metal-clad or in non-combustible enclosure",
-    "Must have integral fire alarm"
-  ],
-  correctAnswer: 2,
-  explanation: "Domestic consumer units must be metal-clad or installed within a non-combustible enclosure. This requirement was introduced in Amendment 3 to reduce fire risk from arc faults within the unit."
-  }
+    question:
+      'A house is being rewired with a new consumer unit. What fire safety requirement applies to the consumer unit?',
+    options: [
+      'No specific fire requirement',
+      'Must be plastic with fire barrier',
+      'Must be metal-clad or in non-combustible enclosure',
+      'Must have integral fire alarm',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Domestic consumer units must be metal-clad or installed within a non-combustible enclosure. This requirement was introduced in Amendment 3 to reduce fire risk from arc faults within the unit.',
+  },
 ];
 
 const BS7671Module8Section3 = () => {
   useSEO({
-    title: "Amendment 3 Highlights | BS7671 Module 8.3",
-    description: "Understand the latest BS 7671 Amendment 3 changes including AFDD recommendations, prosumer installations, and enhanced fire safety requirements."
+    title: 'Amendment 3 Highlights | BS7671 Module 8.3',
+    description:
+      'Understand the latest BS 7671 Amendment 3 changes including AFDD recommendations, prosumer installations, and enhanced fire safety requirements.',
   });
 
   return (
@@ -108,9 +118,7 @@ const BS7671Module8Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Amendment 3 Highlights
           </h1>
-          <p className="text-white/80">
-            Latest updates and enhanced requirements in BS 7671
-          </p>
+          <p className="text-white/80">Latest updates and enhanced requirements in BS 7671</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -118,16 +126,26 @@ const BS7671Module8Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>AFDDs:</strong> Stronger recommendations for fire-risk areas</li>
-              <li><strong>Part 8:</strong> Prosumer installations formalised</li>
-              <li><strong>Consumer units:</strong> Metal-clad requirement</li>
+              <li>
+                <strong>AFDDs:</strong> Stronger recommendations for fire-risk areas
+              </li>
+              <li>
+                <strong>Part 8:</strong> Prosumer installations formalised
+              </li>
+              <li>
+                <strong>Consumer units:</strong> Metal-clad requirement
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> All new installations and alterations</li>
-              <li><strong>Use:</strong> Check current edition, apply latest requirements</li>
+              <li>
+                <strong>Spot:</strong> All new installations and alterations
+              </li>
+              <li>
+                <strong>Use:</strong> Check current edition, apply latest requirements
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +155,12 @@ const BS7671Module8Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Key changes in Amendment 3",
-              "Enhanced AFDD recommendations",
-              "Prosumer installation requirements (Part 8)",
-              "Consumer unit fire safety",
-              "SPD requirements evolution",
-              "Transition period and compliance"
+              'Key changes in Amendment 3',
+              'Enhanced AFDD recommendations',
+              'Prosumer installation requirements (Part 8)',
+              'Consumer unit fire safety',
+              'SPD requirements evolution',
+              'Transition period and compliance',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -162,14 +180,16 @@ const BS7671Module8Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Amendment 3 significantly strengthens recommendations for Arc Fault Detection
-              Devices (AFDDs). These detect dangerous arc faults that can cause fires but
-              won't trip conventional overcurrent or RCD protection.
+              Amendment 3 significantly strengthens recommendations for Arc Fault Detection Devices
+              (AFDDs). These detect dangerous arc faults that can cause fires but won't trip
+              conventional overcurrent or RCD protection.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Recommended Locations</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Recommended Locations
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Sleeping accommodation (bedrooms)</li>
                   <li>Premises with combustible construction</li>
@@ -215,8 +235,8 @@ const BS7671Module8Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Part 8 formalises requirements for installations that generate and/or store
-              electrical energy in addition to consuming it from the public supply.
+              Part 8 formalises requirements for installations that generate and/or store electrical
+              energy in addition to consuming it from the public supply.
             </p>
 
             <div className="my-6">
@@ -231,18 +251,28 @@ const BS7671Module8Section3 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Part 8 Requirements:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Key Part 8 Requirements:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Labelling:</strong> Warning of multiple energy sources</li>
-                <li><strong>Isolation:</strong> Means to disconnect all sources</li>
-                <li><strong>Protection:</strong> Type B RCD where DC faults possible</li>
-                <li><strong>Grid interface:</strong> G98/G99 compliance</li>
+                <li>
+                  <strong>Labelling:</strong> Warning of multiple energy sources
+                </li>
+                <li>
+                  <strong>Isolation:</strong> Means to disconnect all sources
+                </li>
+                <li>
+                  <strong>Protection:</strong> Type B RCD where DC faults possible
+                </li>
+                <li>
+                  <strong>Grid interface:</strong> G98/G99 compliance
+                </li>
               </ul>
             </div>
 
             <p>
-              Part 8 brings together scattered requirements and provides a dedicated
-              framework for the growing number of domestic and commercial energy systems.
+              Part 8 brings together scattered requirements and provides a dedicated framework for
+              the growing number of domestic and commercial energy systems.
             </p>
           </div>
         </section>
@@ -257,16 +287,20 @@ const BS7671Module8Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Enhanced fire safety requirements for consumer units in domestic premises
-              reflect the risk of fire from arc faults within the unit itself.
+              Enhanced fire safety requirements for consumer units in domestic premises reflect the
+              risk of fire from arc faults within the unit itself.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Compliance Options</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Metal-clad:</strong> Steel or similar enclosure</li>
-                  <li><strong>Non-combustible enclosure:</strong> Surrounding cabinet</li>
+                  <li>
+                    <strong>Metal-clad:</strong> Steel or similar enclosure
+                  </li>
+                  <li>
+                    <strong>Non-combustible enclosure:</strong> Surrounding cabinet
+                  </li>
                   <li>Must contain any fire within unit</li>
                   <li>Applies to new and replacement units</li>
                 </ul>
@@ -304,8 +338,8 @@ const BS7671Module8Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Amendment 3 includes various other updates reflecting technological changes
-              and improved understanding of electrical safety.
+              Amendment 3 includes various other updates reflecting technological changes and
+              improved understanding of electrical safety.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -349,8 +383,8 @@ const BS7671Module8Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              When new amendments are published, transition periods allow the industry
-              to adapt. Understanding transition requirements is essential for compliance.
+              When new amendments are published, transition periods allow the industry to adapt.
+              Understanding transition requirements is essential for compliance.
             </p>
 
             <div className="my-6">
@@ -380,7 +414,9 @@ const BS7671Module8Section3 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Amendment 3 Checklist</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Amendment 3 Checklist
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Consider AFDD for sleeping areas and fire risk locations</li>
                 <li>Use metal-clad consumer units in domestic premises</li>
@@ -392,10 +428,18 @@ const BS7671Module8Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Outdated edition:</strong> — Using superseded requirements</li>
-                <li><strong>Missing AFDD consideration:</strong> — Not discussing with client</li>
-                <li><strong>Plastic consumer units:</strong> — Non-compliant in domestic</li>
-                <li><strong>Old forms:</strong> — Using outdated certificates</li>
+                <li>
+                  <strong>Outdated edition:</strong> — Using superseded requirements
+                </li>
+                <li>
+                  <strong>Missing AFDD consideration:</strong> — Not discussing with client
+                </li>
+                <li>
+                  <strong>Plastic consumer units:</strong> — Non-compliant in domestic
+                </li>
+                <li>
+                  <strong>Old forms:</strong> — Using outdated certificates
+                </li>
               </ul>
             </div>
           </div>
@@ -439,10 +483,7 @@ const BS7671Module8Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

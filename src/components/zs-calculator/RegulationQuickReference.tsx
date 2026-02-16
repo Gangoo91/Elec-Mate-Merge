@@ -1,24 +1,60 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { AlertTriangle, Clock, Zap, Shield, Info } from 'lucide-react';
 
 export const RegulationQuickReference = () => {
   const disconnectionTimes = [
-    { voltage: '230V (Single Phase)', finalCircuits: '0.4s', distribution: '5s', application: 'Most domestic and commercial' },
-    { voltage: '400V (Three Phase)', finalCircuits: '0.4s', distribution: '5s', application: 'Commercial and industrial' },
-    { voltage: 'SELV (≤50V)', finalCircuits: 'N/A', distribution: 'N/A', application: 'Extra low voltage systems' }
+    {
+      voltage: '230V (Single Phase)',
+      finalCircuits: '0.4s',
+      distribution: '5s',
+      application: 'Most domestic and commercial',
+    },
+    {
+      voltage: '400V (Three Phase)',
+      finalCircuits: '0.4s',
+      distribution: '5s',
+      application: 'Commercial and industrial',
+    },
+    {
+      voltage: 'SELV (≤50V)',
+      finalCircuits: 'N/A',
+      distribution: 'N/A',
+      application: 'Extra low voltage systems',
+    },
   ];
 
   const rcdRequirements = [
-    { application: 'Socket outlets ≤20A', rating: '30mA', type: 'AC or A', requirement: 'Mandatory' },
+    {
+      application: 'Socket outlets ≤20A',
+      rating: '30mA',
+      type: 'AC or A',
+      requirement: 'Mandatory',
+    },
     { application: 'Bathrooms', rating: '30mA', type: 'AC or A', requirement: 'Mandatory' },
-    { application: 'Outdoor installations', rating: '30mA', type: 'AC or A', requirement: 'Mandatory' },
+    {
+      application: 'Outdoor installations',
+      rating: '30mA',
+      type: 'AC or A',
+      requirement: 'Mandatory',
+    },
     { application: 'Mobile equipment', rating: '30mA', type: 'AC or A', requirement: 'Mandatory' },
     { application: 'Swimming pools', rating: '30mA', type: 'AC or A', requirement: 'Mandatory' },
-    { application: 'Fire protection', rating: '100-300mA', type: 'AC', requirement: 'Where specified' }
+    {
+      application: 'Fire protection',
+      rating: '100-300mA',
+      type: 'AC',
+      requirement: 'Where specified',
+    },
   ];
 
   const testingFrequency = [
@@ -26,7 +62,7 @@ export const RegulationQuickReference = () => {
     { installation: 'Commercial offices', visual: 'Annual', testing: '5 years', rcd: 'Monthly' },
     { installation: 'Industrial premises', visual: '6 months', testing: '3 years', rcd: 'Monthly' },
     { installation: 'Medical locations', visual: 'Monthly', testing: 'Annual', rcd: 'Daily' },
-    { installation: 'Construction sites', visual: 'Daily', testing: '3 months', rcd: 'Daily' }
+    { installation: 'Construction sites', visual: 'Daily', testing: '3 months', rcd: 'Daily' },
   ];
 
   return (
@@ -39,7 +75,8 @@ export const RegulationQuickReference = () => {
             Maximum Disconnection Times
           </CardTitle>
           <CardDescription>
-            Required automatic disconnection times for different system voltages (BS 7671 Table 41.1)
+            Required automatic disconnection times for different system voltages (BS 7671 Table
+            41.1)
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -47,21 +84,31 @@ export const RegulationQuickReference = () => {
             <Table className="border border-neutral-600">
               <TableHeader>
                 <TableRow className="border-elec-yellow/30 bg-muted/50">
-                  <TableHead className="text-elec-yellow font-bold border-r border-neutral-600">System Voltage</TableHead>
-                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">Final Circuits</TableHead>
-                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">Distribution</TableHead>
+                  <TableHead className="text-elec-yellow font-bold border-r border-neutral-600">
+                    System Voltage
+                  </TableHead>
+                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">
+                    Final Circuits
+                  </TableHead>
+                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">
+                    Distribution
+                  </TableHead>
                   <TableHead className="text-elec-yellow font-bold">Typical Application</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {disconnectionTimes.map((item, idx) => (
                   <TableRow key={idx} className="border-neutral-600 hover:bg-muted/30">
-                    <TableCell className="text-foreground font-semibold border-r border-neutral-600">{item.voltage}</TableCell>
+                    <TableCell className="text-foreground font-semibold border-r border-neutral-600">
+                      {item.voltage}
+                    </TableCell>
                     <TableCell className="text-center border-r border-neutral-600">
                       <Badge className="bg-red-500/20 text-red-400">{item.finalCircuits}</Badge>
                     </TableCell>
                     <TableCell className="text-center border-r border-neutral-600">
-                      <Badge className="bg-orange-500/20 text-orange-400">{item.distribution}</Badge>
+                      <Badge className="bg-orange-500/20 text-orange-400">
+                        {item.distribution}
+                      </Badge>
                     </TableCell>
                     <TableCell className="text-gray-300">{item.application}</TableCell>
                   </TableRow>
@@ -75,8 +122,9 @@ export const RegulationQuickReference = () => {
               <span className="text-red-400 font-semibold text-sm">Critical Note</span>
             </div>
             <p className="text-gray-300 text-sm">
-              These times are maximum allowable values. Faster disconnection provides better protection. 
-              RCD protection allows different disconnection criteria but must still meet shock protection requirements.
+              These times are maximum allowable values. Faster disconnection provides better
+              protection. RCD protection allows different disconnection criteria but must still meet
+              shock protection requirements.
             </p>
           </div>
         </CardContent>
@@ -89,31 +137,47 @@ export const RegulationQuickReference = () => {
             <Shield className="h-5 w-5" />
             RCD Protection Requirements
           </CardTitle>
-          <CardDescription>
-            Mandatory RCD protection requirements under BS 7671
-          </CardDescription>
+          <CardDescription>Mandatory RCD protection requirements under BS 7671</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <Table className="border border-neutral-600">
               <TableHeader>
                 <TableRow className="border-elec-yellow/30 bg-muted/50">
-                  <TableHead className="text-elec-yellow font-bold border-r border-neutral-600">Application</TableHead>
-                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">Rating</TableHead>
-                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">Type</TableHead>
-                  <TableHead className="text-elec-yellow font-bold text-center">Requirement</TableHead>
+                  <TableHead className="text-elec-yellow font-bold border-r border-neutral-600">
+                    Application
+                  </TableHead>
+                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">
+                    Rating
+                  </TableHead>
+                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">
+                    Type
+                  </TableHead>
+                  <TableHead className="text-elec-yellow font-bold text-center">
+                    Requirement
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {rcdRequirements.map((item, idx) => (
                   <TableRow key={idx} className="border-neutral-600 hover:bg-muted/30">
-                    <TableCell className="text-foreground font-semibold border-r border-neutral-600">{item.application}</TableCell>
+                    <TableCell className="text-foreground font-semibold border-r border-neutral-600">
+                      {item.application}
+                    </TableCell>
                     <TableCell className="text-center border-r border-neutral-600">
                       <Badge className="bg-blue-500/20 text-blue-400">{item.rating}</Badge>
                     </TableCell>
-                    <TableCell className="text-center border-r border-neutral-600 text-gray-300">{item.type}</TableCell>
+                    <TableCell className="text-center border-r border-neutral-600 text-gray-300">
+                      {item.type}
+                    </TableCell>
                     <TableCell className="text-center">
-                      <Badge className={item.requirement === 'Mandatory' ? 'bg-red-500/20 text-red-400' : 'bg-gray-500/20 text-gray-400'}>
+                      <Badge
+                        className={
+                          item.requirement === 'Mandatory'
+                            ? 'bg-red-500/20 text-red-400'
+                            : 'bg-gray-500/20 text-gray-400'
+                        }
+                      >
                         {item.requirement}
                       </Badge>
                     </TableCell>
@@ -141,16 +205,26 @@ export const RegulationQuickReference = () => {
             <Table className="border border-neutral-600">
               <TableHeader>
                 <TableRow className="border-elec-yellow/30 bg-muted/50">
-                  <TableHead className="text-elec-yellow font-bold border-r border-neutral-600">Installation Type</TableHead>
-                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">Visual Inspection</TableHead>
-                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">Full Testing</TableHead>
-                  <TableHead className="text-elec-yellow font-bold text-center">RCD Testing</TableHead>
+                  <TableHead className="text-elec-yellow font-bold border-r border-neutral-600">
+                    Installation Type
+                  </TableHead>
+                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">
+                    Visual Inspection
+                  </TableHead>
+                  <TableHead className="text-elec-yellow font-bold text-center border-r border-neutral-600">
+                    Full Testing
+                  </TableHead>
+                  <TableHead className="text-elec-yellow font-bold text-center">
+                    RCD Testing
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {testingFrequency.map((item, idx) => (
                   <TableRow key={idx} className="border-neutral-600 hover:bg-muted/30">
-                    <TableCell className="text-foreground font-semibold border-r border-neutral-600">{item.installation}</TableCell>
+                    <TableCell className="text-foreground font-semibold border-r border-neutral-600">
+                      {item.installation}
+                    </TableCell>
                     <TableCell className="text-center border-r border-neutral-600">
                       <Badge className="bg-green-500/20 text-green-400">{item.visual}</Badge>
                     </TableCell>
@@ -171,7 +245,10 @@ export const RegulationQuickReference = () => {
               <span className="text-blue-400 font-semibold text-sm">Testing Notes</span>
             </div>
             <ul className="text-gray-300 text-sm space-y-1">
-              <li>• These are typical intervals - specific circumstances may require more frequent testing</li>
+              <li>
+                • These are typical intervals - specific circumstances may require more frequent
+                testing
+              </li>
               <li>• RCD testing using test button should be carried out by competent persons</li>
               <li>• Records must be kept of all inspections and tests performed</li>
               <li>• Any defects found must be rectified immediately or installation made safe</li>

@@ -1,10 +1,27 @@
-import { Button } from "@/components/ui/button";
-import { Clock, Plus, Wrench, Package, Zap, Loader2, Search, X, Check, ChevronRight, Home, Building2, Sun, TestTube, Cable, Plug } from "lucide-react";
-import { jobTemplates } from "@/data/jobTemplates";
-import { JobTemplate } from "@/types/quote";
-import { useState, useMemo } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import {
+  Clock,
+  Plus,
+  Wrench,
+  Package,
+  Zap,
+  Loader2,
+  Search,
+  X,
+  Check,
+  ChevronRight,
+  Home,
+  Building2,
+  Sun,
+  TestTube,
+  Cable,
+  Plug,
+} from 'lucide-react';
+import { jobTemplates } from '@/data/jobTemplates';
+import { JobTemplate } from '@/types/quote';
+import { useState, useMemo } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 interface JobTemplatesProps {
   onSelectTemplate: (template: JobTemplate) => void;
@@ -12,31 +29,40 @@ interface JobTemplatesProps {
 
 // Simplified category config with icons
 const categoryConfig: Record<string, { icon: typeof Home; color: string }> = {
-  'Installation': { icon: Plug, color: 'bg-blue-500' },
-  'Upgrade': { icon: Cable, color: 'bg-orange-500' },
-  'Rewire': { icon: Wrench, color: 'bg-purple-500' },
-  'Testing': { icon: TestTube, color: 'bg-green-500' },
-  'Domestic': { icon: Home, color: 'bg-teal-500' },
-  'Commercial': { icon: Building2, color: 'bg-indigo-500' },
-  'Renewable': { icon: Sun, color: 'bg-emerald-500' },
+  Installation: { icon: Plug, color: 'bg-blue-500' },
+  Upgrade: { icon: Cable, color: 'bg-orange-500' },
+  Rewire: { icon: Wrench, color: 'bg-purple-500' },
+  Testing: { icon: TestTube, color: 'bg-green-500' },
+  Domestic: { icon: Home, color: 'bg-teal-500' },
+  Commercial: { icon: Building2, color: 'bg-indigo-500' },
+  Renewable: { icon: Sun, color: 'bg-emerald-500' },
 };
 
 export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
   const [loadingTemplate, setLoadingTemplate] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const { toast } = useToast();
 
-  const categories = ["All", "Installation", "Upgrade", "Rewire", "Testing", "Domestic", "Commercial", "Renewable"];
+  const categories = [
+    'All',
+    'Installation',
+    'Upgrade',
+    'Rewire',
+    'Testing',
+    'Domestic',
+    'Commercial',
+    'Renewable',
+  ];
 
   const filteredTemplates = useMemo(() => {
-    return jobTemplates.filter(template => {
-      const matchesSearch = searchQuery === "" ||
+    return jobTemplates.filter((template) => {
+      const matchesSearch =
+        searchQuery === '' ||
         template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         template.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchesCategory = selectedCategory === "All" ||
-        template.category === selectedCategory;
+      const matchesCategory = selectedCategory === 'All' || template.category === selectedCategory;
 
       return matchesSearch && matchesCategory;
     });
@@ -45,10 +71,10 @@ export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
   const handleTemplateSelect = async (template: JobTemplate) => {
     setLoadingTemplate(template.id);
     try {
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 300));
       onSelectTemplate(template);
       toast({
-        title: "Template Applied",
+        title: 'Template Applied',
         description: `"${template.name}" added to invoice`,
       });
     } finally {
@@ -60,7 +86,7 @@ export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
   const getTemplateTotal = (template: JobTemplate) => {
-    return template.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    return template.items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
   };
 
   return (
@@ -85,7 +111,7 @@ export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
         />
         {searchQuery && (
           <button
-            onClick={() => setSearchQuery("")}
+            onClick={() => setSearchQuery('')}
             className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/[0.1]"
           >
             <X className="h-4 w-4 text-white/50" />
@@ -122,7 +148,10 @@ export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
           <Package className="h-10 w-10 mx-auto mb-3 text-white/30" />
           <p className="text-[14px] text-white/50">No templates found</p>
           <button
-            onClick={() => { setSearchQuery(""); setSelectedCategory("All"); }}
+            onClick={() => {
+              setSearchQuery('');
+              setSelectedCategory('All');
+            }}
             className="mt-2 text-[13px] text-elec-yellow"
           >
             Clear filters
@@ -144,19 +173,29 @@ export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
               >
                 <div className="flex items-start gap-3">
                   {/* Category Icon */}
-                  <div className={cn(
-                    'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
-                    config?.color || 'bg-white/[0.1]'
-                  )}>
-                    {config ? <config.icon className="h-5 w-5 text-white" /> : <Package className="h-5 w-5 text-white" />}
+                  <div
+                    className={cn(
+                      'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
+                      config?.color || 'bg-white/[0.1]'
+                    )}
+                  >
+                    {config ? (
+                      <config.icon className="h-5 w-5 text-white" />
+                    ) : (
+                      <Package className="h-5 w-5 text-white" />
+                    )}
                   </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <p className="text-[14px] font-medium text-white truncate">{template.name}</p>
-                        <p className="text-[12px] text-white/50 line-clamp-1 mt-0.5">{template.description}</p>
+                        <p className="text-[14px] font-medium text-white truncate">
+                          {template.name}
+                        </p>
+                        <p className="text-[12px] text-white/50 line-clamp-1 mt-0.5">
+                          {template.description}
+                        </p>
                       </div>
                       {isLoading ? (
                         <Loader2 className="h-5 w-5 text-elec-yellow animate-spin flex-shrink-0" />

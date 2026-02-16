@@ -147,9 +147,10 @@ export function validateEICRForExport(eicrData: EICRFormData): ExportValidation 
   }
 
   // Check for incomplete circuit data
-  const incompleteCircuits = eicrData.scheduleOfTests?.filter(circuit =>
-    !circuit.circuitDescription || !circuit.protectiveDeviceRating
-  ) || [];
+  const incompleteCircuits =
+    eicrData.scheduleOfTests?.filter(
+      (circuit) => !circuit.circuitDescription || !circuit.protectiveDeviceRating
+    ) || [];
 
   if (incompleteCircuits.length > 0) {
     warnings.push(`${incompleteCircuits.length} circuit(s) have incomplete data`);
@@ -167,8 +168,7 @@ export function validateEICRForExport(eicrData: EICRFormData): ExportValidation 
  */
 function mapCircuitToEIC(testResult: TestResult): EICCircuitData {
   // Determine phase type
-  const phaseType: 'single' | 'three' =
-    testResult.phaseType === '3P' ? 'three' : 'single';
+  const phaseType: 'single' | 'three' = testResult.phaseType === '3P' ? 'three' : 'single';
 
   return {
     circuitNumber: testResult.circuitNumber || '',
@@ -296,7 +296,8 @@ export function getExportSummary(eicrData: EICRFormData): {
   if (eicrData.installationAddress) transferredFields.push('Installation address');
   if (eicrData.supplyVoltage) transferredFields.push('Supply voltage');
   if (eicrData.phases) transferredFields.push('Number of phases');
-  if (eicrData.earthingArrangement || eicrData.supplyType) transferredFields.push('Earthing arrangement');
+  if (eicrData.earthingArrangement || eicrData.supplyType)
+    transferredFields.push('Earthing arrangement');
   if (eicrData.mainProtectiveDevice) transferredFields.push('Main protective device');
   if (eicrData.mainBondingSize) transferredFields.push('Main bonding');
   if (eicrData.inspectorName) transferredFields.push('Inspector details');

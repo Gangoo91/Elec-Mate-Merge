@@ -9,25 +9,25 @@ export const EmergencyLightingSummary2_1 = () => {
       points: [
         'Minimum 1 lux horizontal illuminance on escape routes',
         'Uniformity ratio not exceeding 40:1',
-        'Higher levels required at floor level changes and obstacles'
-      ]
+        'Higher levels required at floor level changes and obstacles',
+      ],
     },
     {
       category: 'Spacing and Positioning',
       points: [
         'Maximum spacing = 2 × mounting height for corridors',
         'Luminaires at every change of direction and level',
-        'Exit doors and safety signs must be clearly illuminated'
-      ]
+        'Exit doors and safety signs must be clearly illuminated',
+      ],
     },
     {
       category: 'Design Standards',
       points: [
         'BS 5266-1 provides detailed design requirements',
         'Building Regulations Part B compliance essential',
-        'Fire Risk Assessment may specify additional requirements'
-      ]
-    }
+        'Fire Risk Assessment may specify additional requirements',
+      ],
+    },
   ];
 
   return (
@@ -65,18 +65,33 @@ export const EmergencyLightingSummary2_1 = () => {
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2 text-gray-300">
-              <p><span className="text-foreground font-medium">Critical Path:</span> Ensure continuous illumination from any point to final exit</p>
-              <p><span className="text-foreground font-medium">Mounting Strategy:</span> Use 2:1 spacing ratio for reliable coverage</p>
+              <p>
+                <span className="text-foreground font-medium">Critical Path:</span> Ensure
+                continuous illumination from any point to final exit
+              </p>
+              <p>
+                <span className="text-foreground font-medium">Mounting Strategy:</span> Use 2:1
+                spacing ratio for reliable coverage
+              </p>
             </div>
             <div className="space-y-2 text-gray-300">
-              <p><span className="text-foreground font-medium">Standards Compliance:</span> BS 5266-1 and Building Regulations Part B</p>
-              <p><span className="text-foreground font-medium">Practical Application:</span> Consider building geometry and occupant flow</p>
+              <p>
+                <span className="text-foreground font-medium">Standards Compliance:</span> BS 5266-1
+                and Building Regulations Part B
+              </p>
+              <p>
+                <span className="text-foreground font-medium">Practical Application:</span> Consider
+                building geometry and occupant flow
+              </p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-wrap gap-2">
-          <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+          <Badge
+            variant="secondary"
+            className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30"
+          >
             BS 5266-1
           </Badge>
           <Badge variant="secondary" className="bg-blue-600/20 text-blue-400 border-blue-600/30">
@@ -85,7 +100,10 @@ export const EmergencyLightingSummary2_1 = () => {
           <Badge variant="secondary" className="bg-green-600/20 text-green-400 border-green-600/30">
             40:1 Uniformity
           </Badge>
-          <Badge variant="secondary" className="bg-purple-600/20 text-purple-400 border-purple-600/30">
+          <Badge
+            variant="secondary"
+            className="bg-purple-600/20 text-purple-400 border-purple-600/30"
+          >
             Escape Routes
           </Badge>
         </div>

@@ -12,8 +12,8 @@ export const MatchingLoadsToControlsSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Proper matching of load types to control methods is essential for safety, performance, 
-          and reliability. Follow these proven combinations:
+          Proper matching of load types to control methods is essential for safety, performance, and
+          reliability. Follow these proven combinations:
         </p>
 
         <div className="grid gap-4">
@@ -80,7 +80,7 @@ export const MatchingLoadsToControlsSection = () => {
 
         <div className="bg-red-900/20 border border-red-600/50 p-4 rounded-lg">
           <p className="text-red-200 text-sm">
-            <strong>Safety Rule:</strong> Always match control technology to load type for safety 
+            <strong>Safety Rule:</strong> Always match control technology to load type for safety
             and performance. When in doubt, consult manufacturer compatibility guides.
           </p>
         </div>

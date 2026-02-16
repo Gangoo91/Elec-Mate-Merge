@@ -15,23 +15,27 @@ export const CableShieldingScenario = () => {
           <h3 className="mb-4 text-lg font-semibold text-elec-yellow">The Challenge</h3>
           <div className="space-y-3 text-muted-foreground">
             <p>
-              <strong>Client:</strong> Automotive parts manufacturer with mixed office and production areas
+              <strong>Client:</strong> Automotive parts manufacturer with mixed office and
+              production areas
             </p>
             <p>
-              <strong>Environment:</strong> Office areas, workshop with welding equipment, automated production line with VFDs
+              <strong>Environment:</strong> Office areas, workshop with welding equipment, automated
+              production line with VFDs
             </p>
             <p>
-              <strong>Problem:</strong> Existing UTP network experiencing intermittent failures, slow speeds in production areas
+              <strong>Problem:</strong> Existing UTP network experiencing intermittent failures,
+              slow speeds in production areas
             </p>
             <p>
-              <strong>Requirements:</strong> Reliable network for production monitoring, office connectivity, future automation systems
+              <strong>Requirements:</strong> Reliable network for production monitoring, office
+              connectivity, future automation systems
             </p>
           </div>
         </div>
 
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-elec-yellow">EMI Assessment Results</h3>
-          
+
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-lg border p-4 bg-background">
               <h4 className="mb-3 flex items-center gap-2 font-semibold">
@@ -39,10 +43,18 @@ export const CableShieldingScenario = () => {
                 Office Areas
               </h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><strong>EMI Level:</strong> Low</li>
-                <li><strong>Sources:</strong> Computers, printers, LED lighting</li>
-                <li><strong>Decision:</strong> Cat6 UTP sufficient</li>
-                <li><strong>Reasoning:</strong> Cost-effective, easy installation</li>
+                <li>
+                  <strong>EMI Level:</strong> Low
+                </li>
+                <li>
+                  <strong>Sources:</strong> Computers, printers, LED lighting
+                </li>
+                <li>
+                  <strong>Decision:</strong> Cat6 UTP sufficient
+                </li>
+                <li>
+                  <strong>Reasoning:</strong> Cost-effective, easy installation
+                </li>
               </ul>
             </div>
 
@@ -52,10 +64,18 @@ export const CableShieldingScenario = () => {
                 Workshop Areas
               </h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><strong>EMI Level:</strong> Medium-High</li>
-                <li><strong>Sources:</strong> Welding equipment, power tools</li>
-                <li><strong>Decision:</strong> Cat6A FTP with careful routing</li>
-                <li><strong>Reasoning:</strong> Good protection, manageable cost</li>
+                <li>
+                  <strong>EMI Level:</strong> Medium-High
+                </li>
+                <li>
+                  <strong>Sources:</strong> Welding equipment, power tools
+                </li>
+                <li>
+                  <strong>Decision:</strong> Cat6A FTP with careful routing
+                </li>
+                <li>
+                  <strong>Reasoning:</strong> Good protection, manageable cost
+                </li>
               </ul>
             </div>
 
@@ -65,10 +85,18 @@ export const CableShieldingScenario = () => {
                 Production Line
               </h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><strong>EMI Level:</strong> Very High</li>
-                <li><strong>Sources:</strong> VFDs, servo motors, switching power supplies</li>
-                <li><strong>Decision:</strong> Cat6A STP with comprehensive grounding</li>
-                <li><strong>Reasoning:</strong> Maximum protection required</li>
+                <li>
+                  <strong>EMI Level:</strong> Very High
+                </li>
+                <li>
+                  <strong>Sources:</strong> VFDs, servo motors, switching power supplies
+                </li>
+                <li>
+                  <strong>Decision:</strong> Cat6A STP with comprehensive grounding
+                </li>
+                <li>
+                  <strong>Reasoning:</strong> Maximum protection required
+                </li>
               </ul>
             </div>
           </div>
@@ -76,7 +104,7 @@ export const CableShieldingScenario = () => {
 
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-elec-yellow">Implementation Strategy</h3>
-          
+
           <div className="space-y-4">
             <div className="rounded-lg border p-4 bg-background">
               <h4 className="mb-3 font-semibold">Zone-Based Approach</h4>
@@ -105,15 +133,21 @@ export const CableShieldingScenario = () => {
             <div className="rounded-lg border p-4 bg-background">
               <h4 className="mb-3 font-semibold">High-EMI Zone (Production)</h4>
               <div className="space-y-2 text-sm text-muted-foreground">
-                <p><strong>Solution:</strong> Cat6A STP with comprehensive shielding strategy</p>
-                <p><strong>Special Requirements:</strong></p>
+                <p>
+                  <strong>Solution:</strong> Cat6A STP with comprehensive shielding strategy
+                </p>
+                <p>
+                  <strong>Special Requirements:</strong>
+                </p>
                 <ul className="ml-4 space-y-1">
                   <li>• Metallic conduit for additional protection</li>
                   <li>• Dedicated grounding infrastructure</li>
                   <li>• Shielded patch panels with 360° termination</li>
                   <li>• Isolation from VFD circuits (minimum 600mm separation)</li>
                 </ul>
-                <p><strong>Cost:</strong> £18,000 for 25 critical connections</p>
+                <p>
+                  <strong>Cost:</strong> £18,000 for 25 critical connections
+                </p>
               </div>
             </div>
           </div>
@@ -130,12 +164,16 @@ export const CableShieldingScenario = () => {
             <div className="text-center">
               <CheckCircle className="mx-auto mb-2 h-8 w-8 text-green-600" />
               <h4 className="font-semibold">Performance</h4>
-              <p className="text-sm text-muted-foreground">Full Gigabit speeds throughout facility</p>
+              <p className="text-sm text-muted-foreground">
+                Full Gigabit speeds throughout facility
+              </p>
             </div>
             <div className="text-center">
               <CheckCircle className="mx-auto mb-2 h-8 w-8 text-green-600" />
               <h4 className="font-semibold">Cost Effectiveness</h4>
-              <p className="text-sm text-muted-foreground">Targeted approach saved £15,000 vs all-STP solution</p>
+              <p className="text-sm text-muted-foreground">
+                Targeted approach saved £15,000 vs all-STP solution
+              </p>
             </div>
           </div>
         </div>

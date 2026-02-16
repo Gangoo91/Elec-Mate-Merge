@@ -45,66 +45,75 @@ export const useLiveMarketData = (): UseLiveMarketDataResult => {
   const [isFromCache, setIsFromCache] = useState(false);
   const [isStale, setIsStale] = useState(false);
 
-  const fetchMarketData = useCallback(async (forceRefresh = false) => {
-    setLoading(true);
-    setError(null);
+  const fetchMarketData = useCallback(
+    async (forceRefresh = false) => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      console.log('🔍 Fetching market insights data...');
-      
-      const { data: response, error: fnError } = await supabase.functions.invoke('live-market-insights', {
-        body: { forceRefresh }
-      });
+      try {
+        console.log('🔍 Fetching market insights data...');
 
-      if (fnError) {
-        throw new Error(fnError.message);
-      }
+        const { data: response, error: fnError } = await supabase.functions.invoke(
+          'live-market-insights',
+          {
+            body: { forceRefresh },
+          }
+        );
 
-      if (response?.success) {
-        setMarketData(response.data);
-        setLastUpdated(response.lastUpdated);
-        setIsFromCache(response.cached || false);
-        setIsStale(response.stale || false);
-        
-        if (forceRefresh && !response.cached) {
+        if (fnError) {
+          throw new Error(fnError.message);
+        }
+
+        if (response?.success) {
+          setMarketData(response.data);
+          setLastUpdated(response.lastUpdated);
+          setIsFromCache(response.cached || false);
+          setIsStale(response.stale || false);
+
+          if (forceRefresh && !response.cached) {
+            toast({
+              title: 'Market Data Updated',
+              description: 'Latest market insights have been refreshed',
+            });
+          }
+        } else {
+          throw new Error(response?.error || 'Failed to fetch market data');
+        }
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch market data';
+        console.error('Market data error:', errorMessage);
+        setError(errorMessage);
+
+        if (forceRefresh) {
           toast({
-            title: 'Market Data Updated',
-            description: 'Latest market insights have been refreshed',
+            title: 'Update Failed',
+            description: errorMessage,
+            variant: 'destructive',
           });
         }
-      } else {
-        throw new Error(response?.error || 'Failed to fetch market data');
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch market data';
-      console.error('Market data error:', errorMessage);
-      setError(errorMessage);
-      
-      if (forceRefresh) {
-        toast({
-          title: 'Update Failed',
-          description: errorMessage,
-          variant: 'destructive'
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [toast]);
+    },
+    [toast]
+  );
 
   // Auto-refresh every 30 minutes if data is stale
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (lastUpdated && !loading) {
-        const dataAge = Date.now() - new Date(lastUpdated).getTime();
-        const thirtyMinutes = 30 * 60 * 1000;
-        
-        if (dataAge > thirtyMinutes) {
-          console.log('Auto-refreshing stale market data');
-          fetchMarketData(false);
+    const interval = setInterval(
+      () => {
+        if (lastUpdated && !loading) {
+          const dataAge = Date.now() - new Date(lastUpdated).getTime();
+          const thirtyMinutes = 30 * 60 * 1000;
+
+          if (dataAge > thirtyMinutes) {
+            console.log('Auto-refreshing stale market data');
+            fetchMarketData(false);
+          }
         }
-      }
-    }, 5 * 60 * 1000); // Check every 5 minutes
+      },
+      5 * 60 * 1000
+    ); // Check every 5 minutes
 
     return () => clearInterval(interval);
   }, [lastUpdated, loading, fetchMarketData]);
@@ -114,9 +123,12 @@ export const useLiveMarketData = (): UseLiveMarketDataResult => {
     fetchMarketData(false);
   }, [fetchMarketData]);
 
-  const refreshData = useCallback(async (forceRefresh = true) => {
-    await fetchMarketData(forceRefresh);
-  }, [fetchMarketData]);
+  const refreshData = useCallback(
+    async (forceRefresh = true) => {
+      await fetchMarketData(forceRefresh);
+    },
+    [fetchMarketData]
+  );
 
   return {
     marketData,
@@ -125,6 +137,6 @@ export const useLiveMarketData = (): UseLiveMarketDataResult => {
     lastUpdated,
     isFromCache,
     isStale,
-    refreshData
+    refreshData,
   };
 };

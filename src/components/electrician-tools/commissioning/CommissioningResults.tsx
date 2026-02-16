@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import { toast } from "sonner";
-import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
-import { ProgressHeroBar } from "./redesign/ProgressHeroBar";
-import { CertificateDataSection } from "./CertificateDataSection";
-import { CircuitScheduleSection } from "./redesign/CircuitScheduleSection";
-import { CommissioningHeroSummary } from "./redesign/CommissioningHeroSummary";
-import { CommissioningTestStepCard } from "./redesign/CommissioningTestStepCard";
-import { TestSection } from "./redesign/TestSection";
-import { Zap, Save, Trash2, Clock, XCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { useCommissioningProgress } from "@/hooks/useCommissioningProgress";
-import type { CommissioningResponse } from "@/types/commissioning-response";
+import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { SendToAgentDropdown } from '@/components/install-planner-v2/SendToAgentDropdown';
+import { ProgressHeroBar } from './redesign/ProgressHeroBar';
+import { CertificateDataSection } from './CertificateDataSection';
+import { CircuitScheduleSection } from './redesign/CircuitScheduleSection';
+import { CommissioningHeroSummary } from './redesign/CommissioningHeroSummary';
+import { CommissioningTestStepCard } from './redesign/CommissioningTestStepCard';
+import { TestSection } from './redesign/TestSection';
+import { Zap, Save, Trash2, Clock, XCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { useCommissioningProgress } from '@/hooks/useCommissioningProgress';
+import type { CommissioningResponse } from '@/types/commissioning-response';
 
 interface CommissioningResultsProps {
   results: CommissioningResponse;
@@ -23,14 +23,14 @@ interface CommissioningResultsProps {
   onStartOver: () => void;
 }
 
-const CommissioningResults = ({ 
-  results, 
-  projectName, 
-  location, 
+const CommissioningResults = ({
+  results,
+  projectName,
+  location,
   installationDate,
   installationType,
   originalQuery,
-  onStartOver 
+  onStartOver,
 }: CommissioningResultsProps) => {
   const {
     progress,
@@ -54,16 +54,14 @@ const CommissioningResults = ({
       resumeSession();
     }
   }, [progress, hasExistingSession, initializeSession, resumeSession]);
-  
+
   const deadCount = results.structuredData?.testingProcedure?.deadTests?.length || 0;
   const liveCount = results.structuredData?.testingProcedure?.liveTests?.length || 0;
   const totalItems = deadCount + liveCount;
-  
+
   // Calculate completion from saved test results
   const completedTests = Object.keys(progress?.testResults || {}).length;
-  const completionPercentage = totalItems > 0 
-    ? Math.round((completedTests / totalItems) * 100)
-    : 0;
+  const completionPercentage = totalItems > 0 ? Math.round((completedTests / totalItems) * 100) : 0;
 
   // Update completion percentage whenever it changes
   useEffect(() => {
@@ -72,16 +70,16 @@ const CommissioningResults = ({
 
   const handleCopyChecklist = () => {
     if (!results?.structuredData?.testingProcedure) {
-      toast.error("No testing procedure to copy");
+      toast.error('No testing procedure to copy');
       return;
     }
 
     const { deadTests, liveTests, visualInspection } = results.structuredData.testingProcedure;
 
-    let markdown = "# Testing Checklist\n\n";
+    let markdown = '# Testing Checklist\n\n';
 
     if (deadTests && Array.isArray(deadTests)) {
-      markdown += "## Dead Tests (Isolation Required)\n";
+      markdown += '## Dead Tests (Isolation Required)\n';
       deadTests.forEach((t, i) => {
         markdown += `### ${i + 1}. ${t.testName}\n`;
         markdown += `**Expected**: ${t.acceptanceCriteria}\n`;
@@ -90,7 +88,7 @@ const CommissioningResults = ({
     }
 
     if (liveTests && Array.isArray(liveTests)) {
-      markdown += "## Live Tests\n";
+      markdown += '## Live Tests\n';
       liveTests.forEach((t, i) => {
         markdown += `### ${i + 1}. ${t.testName}\n`;
         markdown += `**Expected**: ${t.acceptanceCriteria}\n`;
@@ -99,15 +97,15 @@ const CommissioningResults = ({
     }
 
     navigator.clipboard.writeText(markdown);
-    toast.success("Testing checklist copied!", {
-      description: "Paste into notes app for on-site use"
+    toast.success('Testing checklist copied!', {
+      description: 'Paste into notes app for on-site use',
     });
   };
 
   const handleExportPDF = () => {
     try {
       const { generateEICSchedulePDF } = require('@/utils/pdf-generators/eic-schedule-pdf');
-      
+
       const pdfData = {
         projectName: projectName || 'Untitled Project',
         installationAddress: location || 'Not specified',
@@ -115,23 +113,25 @@ const CommissioningResults = ({
         inspectionDate: installationDate || new Date().toISOString().split('T')[0],
         circuits: results.circuits || [],
         overallResult: results.overallResult || 'Pass',
-        notes: results.notes
+        notes: results.notes,
       };
-      
+
       const pdf = generateEICSchedulePDF(pdfData);
-      pdf.save(`EIC-Schedule-${projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
-      
-      toast.success("PDF exported", { description: "EIC Schedule downloaded successfully" });
+      pdf.save(
+        `EIC-Schedule-${projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`
+      );
+
+      toast.success('PDF exported', { description: 'EIC Schedule downloaded successfully' });
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error("Export failed", { description: "Could not generate PDF" });
+      toast.error('Export failed', { description: 'Could not generate PDF' });
     }
   };
 
   const handleClearProgress = () => {
-    if (confirm("Are you sure you want to clear all saved progress? This cannot be undone.")) {
+    if (confirm('Are you sure you want to clear all saved progress? This cannot be undone.')) {
       clearProgress();
-      toast.success("Progress cleared", { description: "All test results have been removed" });
+      toast.success('Progress cleared', { description: 'All test results have been removed' });
     }
   };
 
@@ -147,14 +147,14 @@ const CommissioningResults = ({
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      toast.success("Progress exported", { description: "Backup file downloaded" });
+      toast.success('Progress exported', { description: 'Backup file downloaded' });
     }
   };
 
   // Combine dead and live tests into sequential steps
   const allTests = [
     ...(results.structuredData?.testingProcedure?.deadTests || []),
-    ...(results.structuredData?.testingProcedure?.liveTests || [])
+    ...(results.structuredData?.testingProcedure?.liveTests || []),
   ];
 
   return (
@@ -168,9 +168,7 @@ const CommissioningResults = ({
               <h3 className="text-sm font-semibold text-foreground/70 mb-2 uppercase tracking-wide">
                 Original Request
               </h3>
-              <p className="text-lg text-foreground leading-relaxed">
-                {originalQuery}
-              </p>
+              <p className="text-lg text-foreground leading-relaxed">{originalQuery}</p>
             </div>
           </div>
         </Card>
@@ -205,7 +203,7 @@ const CommissioningResults = ({
           <span className="text-2xl font-bold text-elec-yellow">{completionPercentage}%</span>
         </div>
         <div className="w-full bg-background/50 rounded-full h-3">
-          <div 
+          <div
             className="bg-elec-yellow h-3 rounded-full transition-all duration-300"
             style={{ width: `${completionPercentage}%` }}
           />
@@ -216,61 +214,62 @@ const CommissioningResults = ({
       {results.structuredData?.testingProcedure && (
         <div className="space-y-6">
           {/* Dead Tests Section */}
-          {results.structuredData.testingProcedure.deadTests && 
-           results.structuredData.testingProcedure.deadTests.length > 0 && (
-            <TestSection
-              title="Dead Tests (Isolation Required)"
-              icon={<XCircle className="h-6 w-6" />}
-              count={results.structuredData.testingProcedure.deadTests.length}
-              variant="dead"
-            >
-              {results.structuredData.testingProcedure.deadTests.map((test, idx) => (
-                <CommissioningTestStepCard
-                  key={idx}
-                  step={test}
-                  stepNumber={idx + 1}
-                  onToggleComplete={(stepId, completed) => {
-                    recordTestResult({
-                      stepId,
-                      testName: test.testName,
-                      passed: completed
-                    });
-                  }}
-                  isCompleted={!!getTestResult(`step-${idx + 1}`)}
-                />
-              ))}
-            </TestSection>
-          )}
-
-          {/* Live Tests Section */}
-          {results.structuredData.testingProcedure.liveTests && 
-           results.structuredData.testingProcedure.liveTests.length > 0 && (
-            <TestSection
-              title="Live Tests (Circuits Energised)"
-              icon={<Zap className="h-6 w-6" />}
-              count={results.structuredData.testingProcedure.liveTests.length}
-              variant="live"
-            >
-              {results.structuredData.testingProcedure.liveTests.map((test, idx) => {
-                const stepNumber = (results.structuredData?.testingProcedure?.deadTests?.length || 0) + idx + 1;
-                return (
+          {results.structuredData.testingProcedure.deadTests &&
+            results.structuredData.testingProcedure.deadTests.length > 0 && (
+              <TestSection
+                title="Dead Tests (Isolation Required)"
+                icon={<XCircle className="h-6 w-6" />}
+                count={results.structuredData.testingProcedure.deadTests.length}
+                variant="dead"
+              >
+                {results.structuredData.testingProcedure.deadTests.map((test, idx) => (
                   <CommissioningTestStepCard
                     key={idx}
                     step={test}
-                    stepNumber={stepNumber}
+                    stepNumber={idx + 1}
                     onToggleComplete={(stepId, completed) => {
                       recordTestResult({
                         stepId,
                         testName: test.testName,
-                        passed: completed
+                        passed: completed,
                       });
                     }}
-                    isCompleted={!!getTestResult(`step-${stepNumber}`)}
+                    isCompleted={!!getTestResult(`step-${idx + 1}`)}
                   />
-                );
-              })}
-            </TestSection>
-          )}
+                ))}
+              </TestSection>
+            )}
+
+          {/* Live Tests Section */}
+          {results.structuredData.testingProcedure.liveTests &&
+            results.structuredData.testingProcedure.liveTests.length > 0 && (
+              <TestSection
+                title="Live Tests (Circuits Energised)"
+                icon={<Zap className="h-6 w-6" />}
+                count={results.structuredData.testingProcedure.liveTests.length}
+                variant="live"
+              >
+                {results.structuredData.testingProcedure.liveTests.map((test, idx) => {
+                  const stepNumber =
+                    (results.structuredData?.testingProcedure?.deadTests?.length || 0) + idx + 1;
+                  return (
+                    <CommissioningTestStepCard
+                      key={idx}
+                      step={test}
+                      stepNumber={stepNumber}
+                      onToggleComplete={(stepId, completed) => {
+                        recordTestResult({
+                          stepId,
+                          testName: test.testName,
+                          passed: completed,
+                        });
+                      }}
+                      isCompleted={!!getTestResult(`step-${stepNumber}`)}
+                    />
+                  );
+                })}
+              </TestSection>
+            )}
         </div>
       )}
 
@@ -278,9 +277,7 @@ const CommissioningResults = ({
       {!results.structuredData && results.response && (
         <div className="bg-background/40 border-2 border-border/40 rounded-xl p-6">
           <div className="prose prose-invert prose-sm max-w-none">
-            <div className="whitespace-pre-wrap text-sm text-foreground">
-              {results.response}
-            </div>
+            <div className="whitespace-pre-wrap text-sm text-foreground">{results.response}</div>
           </div>
         </div>
       )}

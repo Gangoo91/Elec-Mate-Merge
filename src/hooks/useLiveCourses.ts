@@ -54,9 +54,9 @@ export const useLiveCourses = () => {
       if (error) {
         console.error('Error fetching live courses:', error);
         toast({
-          title: "Error",
-          description: "Failed to fetch live course data. Using cached data if available.",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to fetch live course data. Using cached data if available.',
+          variant: 'destructive',
         });
         return null;
       }
@@ -64,26 +64,26 @@ export const useLiveCourses = () => {
       if (data.success) {
         setLastUpdated(data.lastUpdated);
         toast({
-          title: data.cached ? "Cached Data Loaded" : "Fresh Data Loaded",
+          title: data.cached ? 'Cached Data Loaded' : 'Fresh Data Loaded',
           description: `Loaded ${data.data.length} courses from providers`,
-          variant: "success",
+          variant: 'success',
         });
         return data;
       } else {
         console.error('API returned error:', data.error);
         toast({
-          title: "Error",
-          description: data.error || "Failed to fetch course data",
-          variant: "destructive",
+          title: 'Error',
+          description: data.error || 'Failed to fetch course data',
+          variant: 'destructive',
         });
         return null;
       }
     } catch (error) {
       console.error('Error in fetchLiveCourses:', error);
       toast({
-        title: "Connection Error",
-        description: "Unable to connect to course providers. Please try again later.",
-        variant: "destructive",
+        title: 'Connection Error',
+        description: 'Unable to connect to course providers. Please try again later.',
+        variant: 'destructive',
       });
       return null;
     } finally {
@@ -94,6 +94,6 @@ export const useLiveCourses = () => {
   return {
     fetchLiveCourses,
     isLoading,
-    lastUpdated
+    lastUpdated,
   };
 };

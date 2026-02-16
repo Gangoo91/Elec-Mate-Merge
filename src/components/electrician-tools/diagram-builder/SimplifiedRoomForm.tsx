@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Sparkles, Loader2 } from "lucide-react";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Sparkles, Loader2 } from 'lucide-react';
 
 interface SimplifiedRoomFormProps {
   onGenerate: (description: string) => void;
@@ -24,25 +24,25 @@ export const SimplifiedRoomForm = ({ onGenerate, isGenerating }: SimplifiedRoomF
       top: 'north',
       right: 'east',
       bottom: 'south',
-      left: 'west'
+      left: 'west',
     };
 
     let description = `${roomType} - ${width}m by ${height}m`;
-    
+
     if (hasWindow) {
       description += `, window on ${wallMap[windowPosition]} wall`;
     }
-    
+
     if (hasDoor) {
       description += `, door on ${wallMap[doorPosition]} wall`;
     }
-    
+
     if (numSockets > 0) {
       description += `, ${numSockets}x double sockets evenly spaced on bottom wall`;
     }
-    
+
     description += `, light switch near door`;
-    
+
     if (numLights > 0) {
       description += `, ${numLights}x ceiling light${numLights > 1 ? 's' : ''}`;
     }

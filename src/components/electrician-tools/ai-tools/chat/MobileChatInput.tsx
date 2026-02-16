@@ -133,9 +133,7 @@ export const MobileChatInput = memo(function MobileChatInput({
           'relative flex items-end gap-1.5 rounded-2xl',
           'bg-card/80 backdrop-blur-sm',
           'border-2 transition-all duration-200',
-          isFocused
-            ? 'border-elec-yellow/50 shadow-lg shadow-elec-yellow/10'
-            : 'border-border/50',
+          isFocused ? 'border-elec-yellow/50 shadow-lg shadow-elec-yellow/10' : 'border-border/50',
           'p-1.5 sm:p-2'
         )}
       >

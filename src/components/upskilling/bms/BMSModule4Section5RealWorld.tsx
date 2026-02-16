@@ -12,8 +12,10 @@ export const BMSModule4Section5RealWorld = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-gradient-to-r from-elec-gray to-gray-800/50 border border-gray-600/40 rounded-lg p-6">
-          <h3 className="text-xl font-semibold mb-4 text-foreground">Manchester Business Park: Advanced Integration Success</h3>
-          
+          <h3 className="text-xl font-semibold mb-4 text-foreground">
+            Manchester Business Park: Advanced Integration Success
+          </h3>
+
           <div className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
@@ -22,54 +24,74 @@ export const BMSModule4Section5RealWorld = () => {
                   <div>
                     <h4 className="font-semibold mb-2 text-red-400">The Challenge</h4>
                     <p className="text-sm text-gray-300">
-                      A 15,000m² Manchester business park struggled with excessive energy costs, occupant complaints about inconsistent comfort, and inability to meet carbon reduction targets.
+                      A 15,000m² Manchester business park struggled with excessive energy costs,
+                      occupant complaints about inconsistent comfort, and inability to meet carbon
+                      reduction targets.
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-800/60 rounded-lg p-4">
                   <h4 className="font-semibold mb-3 text-foreground">Original System Problems:</h4>
                   <ul className="space-y-2 text-sm text-foreground">
                     <li>• Independent lighting and HVAC control systems with no coordination</li>
                     <li>• Energy costs 60% above industry benchmarks for similar buildings</li>
-                    <li>• Frequent occupant complaints about temperature swings and glare issues</li>
-                    <li>• Manual lighting systems remained on continuously during daylight hours</li>
+                    <li>
+                      • Frequent occupant complaints about temperature swings and glare issues
+                    </li>
+                    <li>
+                      • Manual lighting systems remained on continuously during daylight hours
+                    </li>
                     <li>• HVAC systems operated at full capacity regardless of actual occupancy</li>
                     <li>• Peak demand charges represented 40% of total electricity costs</li>
                     <li>• Poor air quality affecting tenant satisfaction and lease renewals</li>
                   </ul>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="flex items-start gap-3 p-4 bg-green-900/40 rounded-lg border border-green-500/40">
                   <CheckCircle className="h-6 w-6 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold mb-2 text-green-400">The Integration Solution</h4>
                     <p className="text-sm text-gray-300">
-                      Complete integration of lighting, HVAC, and environmental controls through advanced BMS coordination, featuring intelligent sensors and predictive algorithms.
+                      Complete integration of lighting, HVAC, and environmental controls through
+                      advanced BMS coordination, featuring intelligent sensors and predictive
+                      algorithms.
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-800/60 rounded-lg p-4">
                   <h4 className="font-semibold mb-3 text-foreground">Implementation Components:</h4>
                   <ul className="space-y-2 text-sm text-foreground">
-                    <li>• 450 multi-technology occupancy sensors with PIR and ultrasonic detection</li>
-                    <li>• Comprehensive daylight harvesting system with photocells and automated blinds</li>
+                    <li>
+                      • 450 multi-technology occupancy sensors with PIR and ultrasonic detection
+                    </li>
+                    <li>
+                      • Comprehensive daylight harvesting system with photocells and automated
+                      blinds
+                    </li>
                     <li>• BACnet integration linking lighting controllers with HVAC system</li>
                     <li>• CO₂ and air quality sensors coordinating ventilation with occupancy</li>
-                    <li>• Weather station providing predictive environmental data for system optimization</li>
+                    <li>
+                      • Weather station providing predictive environmental data for system
+                      optimization
+                    </li>
                     <li>• Energy meters enabling real-time monitoring and demand response</li>
-                    <li>• Mobile app providing tenant control whilst maintaining energy efficiency</li>
+                    <li>
+                      • Mobile app providing tenant control whilst maintaining energy efficiency
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
-            
+
             {/* Detailed Technical Implementation */}
             <div className="bg-gray-800/40 rounded-lg p-5">
-              <h4 className="font-semibold mb-4 text-foreground text-lg">Technical Implementation Details</h4>
+              <h4 className="font-semibold mb-4 text-foreground text-lg">
+                Technical Implementation Details
+              </h4>
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="space-y-3">
                   <h5 className="font-semibold text-blue-300">Advanced Occupancy Control</h5>
@@ -82,7 +104,7 @@ export const BMSModule4Section5RealWorld = () => {
                     <p>• Override functions with automatic timeout after 2 hours</p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3">
                   <h5 className="font-semibold text-green-300">Daylight Integration Strategy</h5>
                   <div className="text-sm text-foreground space-y-1">
@@ -94,7 +116,7 @@ export const BMSModule4Section5RealWorld = () => {
                     <p>• Task lighting adjustment based on workstation requirements</p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3">
                   <h5 className="font-semibold text-yellow-300">Peak Demand Management</h5>
                   <div className="text-sm text-foreground space-y-1">
@@ -108,13 +130,17 @@ export const BMSModule4Section5RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Electrician's Installation Process */}
             <div className="bg-blue-900/30 border border-blue-600/40 rounded-lg p-5">
-              <h4 className="font-semibold mb-4 text-blue-400 text-lg">Electrician's Integration Installation Process</h4>
+              <h4 className="font-semibold mb-4 text-blue-400 text-lg">
+                Electrician's Integration Installation Process
+              </h4>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold mb-3 text-foreground">Phase 1: Infrastructure Installation</h5>
+                  <h5 className="font-semibold mb-3 text-foreground">
+                    Phase 1: Infrastructure Installation
+                  </h5>
                   <ul className="space-y-2 text-sm text-foreground">
                     <li>• Installed dedicated communication backbone using CAT6 cabling</li>
                     <li>• Retrofitted existing lighting circuits with DALI control modules</li>
@@ -124,18 +150,26 @@ export const BMSModule4Section5RealWorld = () => {
                   </ul>
                 </div>
                 <div>
-                  <h5 className="font-semibold mb-3 text-foreground">Phase 2: Sensor Integration</h5>
+                  <h5 className="font-semibold mb-3 text-foreground">
+                    Phase 2: Sensor Integration
+                  </h5>
                   <ul className="space-y-2 text-sm text-foreground">
-                    <li>• Strategically positioned multi-zone occupancy sensors for optimal coverage</li>
-                    <li>• Installed daylight sensors with signal conditioning for accurate readings</li>
+                    <li>
+                      • Strategically positioned multi-zone occupancy sensors for optimal coverage
+                    </li>
+                    <li>
+                      • Installed daylight sensors with signal conditioning for accurate readings
+                    </li>
                     <li>• Connected CO₂ sensors to both ventilation and occupancy logic</li>
-                    <li>• Established weather station with data distribution to multiple systems</li>
+                    <li>
+                      • Established weather station with data distribution to multiple systems
+                    </li>
                     <li>• Implemented redundant sensor backup systems for critical areas</li>
                   </ul>
                 </div>
               </div>
             </div>
-            
+
             {/* Comprehensive Results and Benefits */}
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-green-900/30 border border-green-600/40 rounded-lg p-4">
@@ -174,9 +208,11 @@ export const BMSModule4Section5RealWorld = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-blue-900/30 border border-blue-600/40 rounded-lg p-4">
-                <h4 className="font-semibold mb-3 text-blue-400">Occupant and Operational Benefits</h4>
+                <h4 className="font-semibold mb-3 text-blue-400">
+                  Occupant and Operational Benefits
+                </h4>
                 <div className="space-y-2 text-sm text-foreground">
                   <p>• 70% reduction in temperature-related comfort complaints</p>
                   <p>• Improved air quality scores (IAQ Index: 8.5/10)</p>
@@ -189,10 +225,12 @@ export const BMSModule4Section5RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Technical Performance Monitoring */}
             <div className="bg-gray-800/40 rounded-lg p-5">
-              <h4 className="font-semibold mb-4 text-foreground text-lg">Ongoing Performance Monitoring and Optimization</h4>
+              <h4 className="font-semibold mb-4 text-foreground text-lg">
+                Ongoing Performance Monitoring and Optimization
+              </h4>
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="space-y-3">
                   <h5 className="font-semibold text-purple-300">System Performance Metrics</h5>
@@ -204,7 +242,7 @@ export const BMSModule4Section5RealWorld = () => {
                     <p>• Integration system uptime tracking (99.8% availability)</p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3">
                   <h5 className="font-semibold text-orange-300">Machine Learning Optimization</h5>
                   <div className="text-sm text-foreground space-y-1">
@@ -215,7 +253,7 @@ export const BMSModule4Section5RealWorld = () => {
                     <p>• Continuous improvement in energy performance</p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3">
                   <h5 className="font-semibold text-cyan-300">Future Enhancement Planning</h5>
                   <div className="text-sm text-foreground space-y-1">
@@ -228,9 +266,11 @@ export const BMSModule4Section5RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-yellow-900/30 border border-yellow-600/40 rounded-lg p-4">
-              <h4 className="font-semibold mb-2 text-yellow-400">Critical Success Factors for Integration Projects</h4>
+              <h4 className="font-semibold mb-2 text-yellow-400">
+                Critical Success Factors for Integration Projects
+              </h4>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h5 className="font-medium mb-2 text-yellow-300">Technical Implementation:</h5>

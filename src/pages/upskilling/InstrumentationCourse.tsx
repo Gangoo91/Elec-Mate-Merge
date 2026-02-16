@@ -1,5 +1,16 @@
 import React from 'react';
-import { ArrowLeft, BookOpen, Thermometer, Zap, BarChart, RotateCcw, Target, Cable, Search, Award } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookOpen,
+  Thermometer,
+  Zap,
+  BarChart,
+  RotateCcw,
+  Target,
+  Cable,
+  Search,
+  Award,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -15,68 +26,68 @@ const InstrumentationCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Introduction to Electrical Instrumentation",
-      description: "Fundamentals and applications of instrumentation",
-      duration: "50 mins",
-      icon: BookOpen
+      title: 'Introduction to Electrical Instrumentation',
+      description: 'Fundamentals and applications of instrumentation',
+      duration: '50 mins',
+      icon: BookOpen,
     },
     {
       id: 2,
-      title: "Sensors and Transducers Explained",
-      description: "Function, types, and selection of sensors",
-      duration: "55 mins",
-      icon: Thermometer
+      title: 'Sensors and Transducers Explained',
+      description: 'Function, types, and selection of sensors',
+      duration: '55 mins',
+      icon: Thermometer,
     },
     {
       id: 3,
-      title: "Signal Types, Conditioning, and Scaling",
-      description: "Signal processing and conditioning techniques",
-      duration: "60 mins",
-      icon: Zap
+      title: 'Signal Types, Conditioning, and Scaling',
+      description: 'Signal processing and conditioning techniques',
+      duration: '60 mins',
+      icon: Zap,
     },
     {
       id: 4,
-      title: "Measurement of Electrical Quantities",
-      description: "Techniques and equipment for measurements",
-      duration: "50 mins",
-      icon: BarChart
+      title: 'Measurement of Electrical Quantities',
+      description: 'Techniques and equipment for measurements',
+      duration: '50 mins',
+      icon: BarChart,
     },
     {
       id: 5,
-      title: "Control Loops and Feedback Systems",
-      description: "Control theory and feedback systems",
-      duration: "65 mins",
-      icon: RotateCcw
+      title: 'Control Loops and Feedback Systems',
+      description: 'Control theory and feedback systems',
+      duration: '65 mins',
+      icon: RotateCcw,
     },
     {
       id: 6,
-      title: "Calibration Methods and Standards",
-      description: "Calibration procedures and certification",
-      duration: "45 mins",
-      icon: Target
+      title: 'Calibration Methods and Standards',
+      description: 'Calibration procedures and certification',
+      duration: '45 mins',
+      icon: Target,
     },
     {
       id: 7,
-      title: "Instrumentation Wiring and 4–20mA Loops",
-      description: "Current loop systems and wiring standards",
-      duration: "55 mins",
-      icon: Cable
+      title: 'Instrumentation Wiring and 4–20mA Loops',
+      description: 'Current loop systems and wiring standards',
+      duration: '55 mins',
+      icon: Cable,
     },
     {
       id: 8,
-      title: "Fault Finding, Diagnostics, and Maintenance",
-      description: "Troubleshooting and maintenance procedures",
-      duration: "60 mins",
-      icon: Search
+      title: 'Fault Finding, Diagnostics, and Maintenance',
+      description: 'Troubleshooting and maintenance procedures',
+      duration: '60 mins',
+      icon: Search,
     },
     {
       id: 9,
-      title: "Mock Exam",
-      description: "Test your knowledge",
-      duration: "120 mins",
+      title: 'Mock Exam',
+      description: 'Test your knowledge',
+      duration: '120 mins',
       icon: Award,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (
@@ -101,9 +112,7 @@ const InstrumentationCourse = () => {
       <div className="px-4 sm:px-6 py-6 sm:py-8">
         {/* Course Header */}
         <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Instrumentation
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Instrumentation</h1>
           <p className="text-white/60 text-sm sm:text-base">
             Industrial instrumentation systems, control loops, and measurement techniques
           </p>

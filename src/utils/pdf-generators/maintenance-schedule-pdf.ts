@@ -51,13 +51,13 @@ export const generateMaintenanceSchedulePDF = (data: MaintenanceScheduleData): j
   doc.text('Scheduled Maintenance Tasks', 15, yPos);
   yPos += 8;
 
-  const taskRows = data.tasks.map(task => [
+  const taskRows = data.tasks.map((task) => [
     task.equipment,
     task.task,
     task.frequency,
     task.lastCompleted || 'N/A',
     task.nextDue,
-    task.responsible
+    task.responsible,
   ]);
 
   autoTable(doc, {
@@ -73,8 +73,8 @@ export const generateMaintenanceSchedulePDF = (data: MaintenanceScheduleData): j
       2: { cellWidth: 25 },
       3: { cellWidth: 25 },
       4: { cellWidth: 25 },
-      5: { cellWidth: 25 }
-    }
+      5: { cellWidth: 25 },
+    },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 12;
@@ -91,10 +91,10 @@ export const generateMaintenanceSchedulePDF = (data: MaintenanceScheduleData): j
   doc.text('Periodic Inspection Requirements', 15, yPos);
   yPos += 8;
 
-  const inspectionRows = data.inspectionIntervals.map(i => [
+  const inspectionRows = data.inspectionIntervals.map((i) => [
     i.inspectionType,
     i.interval,
-    i.nextDue
+    i.nextDue,
   ]);
 
   autoTable(doc, {
@@ -103,7 +103,7 @@ export const generateMaintenanceSchedulePDF = (data: MaintenanceScheduleData): j
     body: inspectionRows,
     theme: 'grid',
     headStyles: { fillColor: [6, 182, 212], textColor: [255, 255, 255] },
-    styles: { fontSize: 9, cellPadding: 3 }
+    styles: { fontSize: 9, cellPadding: 3 },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 12;

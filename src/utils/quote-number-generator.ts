@@ -16,7 +16,7 @@ export const generateSequentialQuoteNumber = async (): Promise<string> => {
       user = data.user;
       if (user) break;
       // Wait a bit before retrying
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
     if (!user) {
@@ -56,7 +56,7 @@ export const validateQuoteNumberFormat = (quoteNumber: string): boolean => {
   const sequentialPattern = /^\d{4}\/\d{3}$/;
   // Also allow timestamp fallback pattern YYYY/TXXXXXX
   const timestampPattern = /^\d{4}\/T\d{6}$/;
-  
+
   return sequentialPattern.test(quoteNumber) || timestampPattern.test(quoteNumber);
 };
 

@@ -1,71 +1,77 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
 import {
-  BookOpen, AlertTriangle, Shield, Lightbulb, Scale, FileText, HardHat, CheckCircle
-} from "lucide-react";
+  BookOpen,
+  AlertTriangle,
+  Shield,
+  Lightbulb,
+  Scale,
+  FileText,
+  HardHat,
+  CheckCircle,
+} from 'lucide-react';
 
 const EducationalContent = () => {
   const regulations = {
     bs7671: [
-      { section: "132", title: "Design requirements" },
-      { section: "411", title: "Protection against electric shock" },
-      { section: "531", title: "Devices for protection against overcurrent" },
-      { section: "611", title: "Common rules for initial verification" }
+      { section: '132', title: 'Design requirements' },
+      { section: '411', title: 'Protection against electric shock' },
+      { section: '531', title: 'Devices for protection against overcurrent' },
+      { section: '611', title: 'Common rules for initial verification' },
     ],
     healthSafety: [
-      "Health and Safety at Work Act 1974",
-      "Electricity at Work Regulations 1989",
-      "CDM Regulations 2015",
-      "PPE at Work Regulations 1992"
-    ]
+      'Health and Safety at Work Act 1974',
+      'Electricity at Work Regulations 1989',
+      'CDM Regulations 2015',
+      'PPE at Work Regulations 1992',
+    ],
   };
 
   const highRiskHazards = [
-    "Live electrical conductors",
-    "Overhead power lines",
-    "Underground cables",
-    "Arc flash potential",
-    "Stored electrical energy"
+    'Live electrical conductors',
+    'Overhead power lines',
+    'Underground cables',
+    'Arc flash potential',
+    'Stored electrical energy',
   ];
 
   const mediumRiskHazards = [
-    "Damaged electrical equipment",
-    "Poor environmental conditions",
-    "Inadequate lighting",
-    "Unstable access equipment",
-    "Chemical hazards (COSHH)"
+    'Damaged electrical equipment',
+    'Poor environmental conditions',
+    'Inadequate lighting',
+    'Unstable access equipment',
+    'Chemical hazards (COSHH)',
   ];
 
   const essentialPPE = [
-    { item: "Hard hat", spec: "BS EN 397 with electrical protection" },
-    { item: "Safety glasses", spec: "BS EN 166 impact resistant" },
-    { item: "Insulated gloves", spec: "Voltage rated for task" },
-    { item: "Safety boots", spec: "BS EN ISO 20345" }
+    { item: 'Hard hat', spec: 'BS EN 397 with electrical protection' },
+    { item: 'Safety glasses', spec: 'BS EN 166 impact resistant' },
+    { item: 'Insulated gloves', spec: 'Voltage rated for task' },
+    { item: 'Safety boots', spec: 'BS EN ISO 20345' },
   ];
 
   const ppeInspectionTips = [
-    "Check for visible damage before use",
-    "Verify certification dates",
-    "Ensure proper fit and comfort",
-    "Replace if damaged or expired"
+    'Check for visible damage before use',
+    'Verify certification dates',
+    'Ensure proper fit and comfort',
+    'Replace if damaged or expired',
   ];
 
   const assessmentTips = [
-    "Always assess the site before starting any work",
-    "Take photos to document conditions and concerns",
-    "Involve the whole team in safety discussions",
+    'Always assess the site before starting any work',
+    'Take photos to document conditions and concerns',
+    'Involve the whole team in safety discussions',
     "Don't proceed if conditions are unsafe",
-    "Regular reassessment as work progresses"
+    'Regular reassessment as work progresses',
   ];
 
   const documentationTips = [
-    "Use clear, specific language in reports",
-    "Include measurements where relevant",
-    "Note weather and environmental conditions",
-    "Record any deviations from normal procedures",
-    "Keep digital copies of all assessments"
+    'Use clear, specific language in reports',
+    'Include measurements where relevant',
+    'Note weather and environmental conditions',
+    'Record any deviations from normal procedures',
+    'Keep digital copies of all assessments',
   ];
 
   return (

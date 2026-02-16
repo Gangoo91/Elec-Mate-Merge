@@ -1,24 +1,24 @@
-import { cn } from "@/lib/utils";
-import { AgentType, AGENT_CONFIG } from "./AgentConfig";
+import { cn } from '@/lib/utils';
+import { AgentType, AGENT_CONFIG } from './AgentConfig';
 
 interface CircularProgressProps {
   progress: number; // 0-100
   agentType: AgentType;
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg';
   showPercentage?: boolean;
   className?: string;
 }
 
 const sizeConfig = {
-  sm: { svgSize: 64, strokeWidth: 4, fontSize: "text-sm" },
-  md: { svgSize: 96, strokeWidth: 6, fontSize: "text-lg" },
-  lg: { svgSize: 128, strokeWidth: 8, fontSize: "text-2xl" },
+  sm: { svgSize: 64, strokeWidth: 4, fontSize: 'text-sm' },
+  md: { svgSize: 96, strokeWidth: 6, fontSize: 'text-lg' },
+  lg: { svgSize: 128, strokeWidth: 8, fontSize: 'text-2xl' },
 };
 
 export function CircularProgress({
   progress,
   agentType,
-  size = "lg",
+  size = 'lg',
   showPercentage = true,
   className,
 }: CircularProgressProps) {
@@ -30,7 +30,7 @@ export function CircularProgress({
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className={cn("relative inline-flex items-center justify-center", className)}>
+    <div className={cn('relative inline-flex items-center justify-center', className)}>
       {/* Background glow effect */}
       <div
         className="absolute inset-0 rounded-full opacity-20 blur-xl"
@@ -39,11 +39,7 @@ export function CircularProgress({
         }}
       />
 
-      <svg
-        width={svgSize}
-        height={svgSize}
-        className="transform -rotate-90 relative z-10"
-      >
+      <svg width={svgSize} height={svgSize} className="transform -rotate-90 relative z-10">
         {/* Background circle */}
         <circle
           cx={svgSize / 2}
@@ -83,10 +79,7 @@ export function CircularProgress({
       {showPercentage && (
         <div className="absolute inset-0 flex items-center justify-center z-20">
           <span
-            className={cn(
-              fontSize,
-              "font-bold bg-clip-text text-transparent"
-            )}
+            className={cn(fontSize, 'font-bold bg-clip-text text-transparent')}
             style={{
               backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
             }}

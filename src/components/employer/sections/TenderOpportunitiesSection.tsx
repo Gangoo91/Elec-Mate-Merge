@@ -1,10 +1,30 @@
 import { useState } from 'react';
-import { Search, MapPin, Filter, Bookmark, BookmarkCheck, Clock, Building2, Zap, ExternalLink, ChevronRight, Loader2, RefreshCw, AlertCircle } from 'lucide-react';
+import {
+  Search,
+  MapPin,
+  Filter,
+  Bookmark,
+  BookmarkCheck,
+  Clock,
+  Building2,
+  Zap,
+  ExternalLink,
+  ChevronRight,
+  Loader2,
+  RefreshCw,
+  AlertCircle,
+} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
@@ -66,7 +86,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
   };
 
   const isSaved = (opportunityId: string) => {
-    return savedQuery.data?.some(s => s.id === opportunityId) || false;
+    return savedQuery.data?.some((s) => s.id === opportunityId) || false;
   };
 
   const toggleSave = (opportunity: TenderOpportunity) => {
@@ -135,7 +155,11 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
       </div>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0 overflow-hidden">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="flex-1 flex flex-col min-h-0 overflow-hidden"
+      >
         <TabsList className="w-full justify-start rounded-none border-b bg-transparent h-auto p-0 flex-shrink-0">
           <TabsTrigger
             value="search"
@@ -175,7 +199,8 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                 <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-medium mb-2">Find Electrical Contracts Near You</h3>
                 <p className="text-muted-foreground max-w-sm mx-auto">
-                  Enter your postcode to discover live tender opportunities from councils, NHS, housing associations and more.
+                  Enter your postcode to discover live tender opportunities from councils, NHS,
+                  housing associations and more.
                 </p>
               </div>
             ) : searchQuery.isLoading ? (
@@ -193,7 +218,8 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                 <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-medium mb-2">No Opportunities Found</h3>
                 <p className="text-muted-foreground max-w-sm mx-auto">
-                  Try expanding your search radius or adjusting filters. New opportunities are added daily.
+                  Try expanding your search radius or adjusting filters. New opportunities are added
+                  daily.
                 </p>
               </div>
             ) : (
@@ -202,11 +228,15 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                 {stats && (
                   <div className="flex items-center gap-4 mb-4 text-sm">
                     <span className="text-muted-foreground">
-                      <span className="font-medium text-foreground">{stats.total}</span> opportunities
+                      <span className="font-medium text-foreground">{stats.total}</span>{' '}
+                      opportunities
                     </span>
                     {stats.avg_value > 0 && (
                       <span className="text-muted-foreground">
-                        Avg: <span className="font-medium text-foreground">£{stats.avg_value.toLocaleString()}</span>
+                        Avg:{' '}
+                        <span className="font-medium text-foreground">
+                          £{stats.avg_value.toLocaleString()}
+                        </span>
                       </span>
                     )}
                   </div>
@@ -264,7 +294,8 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
             <div className="mb-4">
               <h3 className="font-medium mb-1">20 Integrated Tender Sources</h3>
               <p className="text-sm text-muted-foreground">
-                We aggregate opportunities from government, housing, NHS, education, and construction platforms.
+                We aggregate opportunities from government, housing, NHS, education, and
+                construction platforms.
               </p>
             </div>
 
@@ -277,11 +308,17 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                         <div className="flex items-center gap-2 mb-1">
                           <span className="font-medium">{source.display_name}</span>
                           {source.is_free ? (
-                            <Badge variant="outline" className="text-xs bg-green-500/10 text-green-400 border-green-500/30">
+                            <Badge
+                              variant="outline"
+                              className="text-xs bg-green-500/10 text-green-400 border-green-500/30"
+                            >
                               Free
                             </Badge>
                           ) : (
-                            <Badge variant="outline" className="text-xs bg-orange-500/10 text-orange-400 border-orange-500/30">
+                            <Badge
+                              variant="outline"
+                              className="text-xs bg-orange-500/10 text-orange-400 border-orange-500/30"
+                            >
                               Premium
                             </Badge>
                           )}
@@ -289,10 +326,13 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                             <div className="w-2 h-2 rounded-full bg-green-500" title="Active" />
                           )}
                         </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2">{source.description}</p>
+                        <p className="text-sm text-muted-foreground line-clamp-2">
+                          {source.description}
+                        </p>
                         {source.last_sync_at && (
                           <p className="text-xs text-muted-foreground mt-2">
-                            Last sync: {new Date(source.last_sync_at).toLocaleDateString('en-GB')} ({source.last_sync_count} opportunities)
+                            Last sync: {new Date(source.last_sync_at).toLocaleDateString('en-GB')} (
+                            {source.last_sync_count} opportunities)
                           </p>
                         )}
                       </div>
@@ -313,7 +353,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                             onClick={() => syncOpportunities.mutate(source.name)}
                             disabled={syncOpportunities.isPending}
                           >
-                            <RefreshCw className={`h-4 w-4 ${syncOpportunities.isPending ? 'animate-spin' : ''}`} />
+                            <RefreshCw
+                              className={`h-4 w-4 ${syncOpportunities.isPending ? 'animate-spin' : ''}`}
+                            />
                           </Button>
                         )}
                       </div>
@@ -343,7 +385,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                     type="number"
                     placeholder="0"
                     value={filters.min_value || ''}
-                    onChange={(e) => setFilters({ ...filters, min_value: Number(e.target.value) || undefined })}
+                    onChange={(e) =>
+                      setFilters({ ...filters, min_value: Number(e.target.value) || undefined })
+                    }
                     className="h-11 touch-manipulation text-base"
                   />
                 </div>
@@ -353,7 +397,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                     type="number"
                     placeholder="No limit"
                     value={filters.max_value || ''}
-                    onChange={(e) => setFilters({ ...filters, max_value: Number(e.target.value) || undefined })}
+                    onChange={(e) =>
+                      setFilters({ ...filters, max_value: Number(e.target.value) || undefined })
+                    }
                     className="h-11 touch-manipulation text-base"
                   />
                 </div>
@@ -365,7 +411,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
               <label className="text-sm font-medium mb-2 block">Sector</label>
               <Select
                 value={filters.sector || 'all'}
-                onValueChange={(v) => setFilters({ ...filters, sector: v === 'all' ? undefined : v })}
+                onValueChange={(v) =>
+                  setFilters({ ...filters, sector: v === 'all' ? undefined : v })
+                }
               >
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="All sectors" />
@@ -437,7 +485,13 @@ interface OpportunityCardProps {
   onStartTender?: () => void;
 }
 
-function OpportunityCard({ opportunity, isSaved, onToggleSave, onView, onStartTender }: OpportunityCardProps) {
+function OpportunityCard({
+  opportunity,
+  isSaved,
+  onToggleSave,
+  onView,
+  onStartTender,
+}: OpportunityCardProps) {
   const deadline = formatDeadline(opportunity.deadline);
   const complexity = getComplexityBadge(opportunity.estimated_complexity);
 
@@ -458,9 +512,7 @@ function OpportunityCard({ opportunity, isSaved, onToggleSave, onView, onStartTe
               <Zap className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="min-w-0">
                 <h4 className="font-medium text-sm line-clamp-2">{opportunity.title}</h4>
-                <p className="text-xs text-muted-foreground truncate">
-                  {opportunity.client_name}
-                </p>
+                <p className="text-xs text-muted-foreground truncate">{opportunity.client_name}</p>
               </div>
             </div>
 
@@ -480,7 +532,9 @@ function OpportunityCard({ opportunity, isSaved, onToggleSave, onView, onStartTe
               <span className="font-medium text-foreground">
                 {formatOpportunityValue(opportunity)}
               </span>
-              <span className={`flex items-center gap-1 ${deadline.urgent ? 'text-orange-400' : ''}`}>
+              <span
+                className={`flex items-center gap-1 ${deadline.urgent ? 'text-orange-400' : ''}`}
+              >
                 <Clock className="h-3 w-3" />
                 {deadline.text}
               </span>
@@ -489,9 +543,7 @@ function OpportunityCard({ opportunity, isSaved, onToggleSave, onView, onStartTe
             {/* Scope Preview */}
             {hasScope && (
               <div className="mb-2 p-2 rounded bg-card/30 border border-border/50">
-                <p className="text-xs text-muted-foreground line-clamp-2">
-                  {scopePreview}
-                </p>
+                <p className="text-xs text-muted-foreground line-clamp-2">{scopePreview}</p>
               </div>
             )}
 
@@ -511,7 +563,10 @@ function OpportunityCard({ opportunity, isSaved, onToggleSave, onView, onStartTe
                 </Badge>
               )}
               {opportunity.framework_required && (
-                <Badge variant="outline" className="bg-orange-500/10 text-orange-400 border-orange-500/30">
+                <Badge
+                  variant="outline"
+                  className="bg-orange-500/10 text-orange-400 border-orange-500/30"
+                >
                   Framework
                 </Badge>
               )}

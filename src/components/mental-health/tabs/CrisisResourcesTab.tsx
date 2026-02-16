@@ -1,7 +1,6 @@
-
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Shield,
   Phone,
@@ -14,25 +13,28 @@ import {
   ChevronUp,
   ExternalLink,
   MessageSquare,
-  Clock
-} from "lucide-react";
-import LocalResourceFinder from "@/components/mental-health/crisis/LocalResourceFinder";
-import { emergencyContacts, onlineResources } from "@/components/mental-health/crisis/CrisisResourcesData";
+  Clock,
+} from 'lucide-react';
+import LocalResourceFinder from '@/components/mental-health/crisis/LocalResourceFinder';
+import {
+  emergencyContacts,
+  onlineResources,
+} from '@/components/mental-health/crisis/CrisisResourcesData';
 
 const CrisisResourcesTab = () => {
-  const [expandedSection, setExpandedSection] = useState<string | null>("helplines");
+  const [expandedSection, setExpandedSection] = useState<string | null>('helplines');
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
 
   // Priority helplines to show prominently
-  const priorityHelplines = emergencyContacts.filter(c =>
-    c.type === 'emergency' || c.type === 'crisis'
+  const priorityHelplines = emergencyContacts.filter(
+    (c) => c.type === 'emergency' || c.type === 'crisis'
   );
 
-  const specialtyHelplines = emergencyContacts.filter(c =>
-    c.type === 'support' || c.type === 'specialty'
+  const specialtyHelplines = emergencyContacts.filter(
+    (c) => c.type === 'support' || c.type === 'specialty'
   );
 
   return (
@@ -101,7 +103,7 @@ const CrisisResourcesTab = () => {
         {/* Crisis Helplines Section */}
         <Card className="border-red-500/20 overflow-hidden">
           <button
-            onClick={() => toggleSection("helplines")}
+            onClick={() => toggleSection('helplines')}
             className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-red-500/10 to-transparent min-h-[72px] touch-manipulation active:bg-red-500/20 transition-colors"
           >
             <div className="flex items-center gap-3">
@@ -110,17 +112,19 @@ const CrisisResourcesTab = () => {
               </div>
               <div className="text-left">
                 <h3 className="font-semibold text-foreground">Crisis Helplines</h3>
-                <p className="text-xs text-white">{emergencyContacts.length} support lines available</p>
+                <p className="text-xs text-white">
+                  {emergencyContacts.length} support lines available
+                </p>
               </div>
             </div>
-            {expandedSection === "helplines" ? (
+            {expandedSection === 'helplines' ? (
               <ChevronUp className="h-5 w-5 text-white" />
             ) : (
               <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
-          {expandedSection === "helplines" && (
+          {expandedSection === 'helplines' && (
             <CardContent className="p-3 pt-0 space-y-2">
               {/* Priority Lines */}
               <div className="text-xs font-medium text-red-400 px-1 pt-2">Crisis Lines</div>
@@ -147,7 +151,11 @@ const CrisisResourcesTab = () => {
                     </div>
                     <Button
                       size="sm"
-                      className={contact.type === 'emergency' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'}
+                      className={
+                        contact.type === 'emergency'
+                          ? 'bg-red-500 hover:bg-red-600'
+                          : 'bg-orange-500 hover:bg-orange-600'
+                      }
                       asChild
                     >
                       <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>
@@ -161,10 +169,7 @@ const CrisisResourcesTab = () => {
               {/* Specialty Lines */}
               <div className="text-xs font-medium text-blue-400 px-1 pt-3">Support Lines</div>
               {specialtyHelplines.map((contact, index) => (
-                <div
-                  key={index}
-                  className="p-3 rounded-lg border border-white/10 bg-white/5"
-                >
+                <div key={index} className="p-3 rounded-lg border border-white/10 bg-white/5">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-foreground text-sm">{contact.name}</h4>
@@ -189,7 +194,7 @@ const CrisisResourcesTab = () => {
         {/* Local Services Section */}
         <Card className="border-green-500/20 overflow-hidden">
           <button
-            onClick={() => toggleSection("local")}
+            onClick={() => toggleSection('local')}
             className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-green-500/10 to-transparent min-h-[72px] touch-manipulation active:bg-green-500/20 transition-colors"
           >
             <div className="flex items-center gap-3">
@@ -201,14 +206,14 @@ const CrisisResourcesTab = () => {
                 <p className="text-xs text-white">NHS services near you</p>
               </div>
             </div>
-            {expandedSection === "local" ? (
+            {expandedSection === 'local' ? (
               <ChevronUp className="h-5 w-5 text-white" />
             ) : (
               <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
-          {expandedSection === "local" && (
+          {expandedSection === 'local' && (
             <CardContent className="p-3 pt-0">
               <LocalResourceFinder />
             </CardContent>
@@ -218,7 +223,7 @@ const CrisisResourcesTab = () => {
         {/* Peer Support Section */}
         <Card className="border-purple-500/20 overflow-hidden">
           <button
-            onClick={() => toggleSection("peer")}
+            onClick={() => toggleSection('peer')}
             className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-purple-500/10 to-transparent min-h-[72px] touch-manipulation active:bg-purple-500/20 transition-colors"
           >
             <div className="flex items-center gap-3">
@@ -230,14 +235,14 @@ const CrisisResourcesTab = () => {
                 <p className="text-xs text-white">Connect with others who understand</p>
               </div>
             </div>
-            {expandedSection === "peer" ? (
+            {expandedSection === 'peer' ? (
               <ChevronUp className="h-5 w-5 text-white" />
             ) : (
               <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
-          {expandedSection === "peer" && (
+          {expandedSection === 'peer' && (
             <CardContent className="p-3 pt-0 space-y-3">
               {/* Andy's Man Club */}
               <div className="p-4 rounded-lg border border-purple-500/30 bg-purple-500/10">
@@ -256,7 +261,9 @@ const CrisisResourcesTab = () => {
                 <div className="flex gap-2">
                   <Button
                     className="flex-1 bg-purple-500 hover:bg-purple-600"
-                    onClick={() => window.open("https://andysmanclub.co.uk/find-your-nearest-group/", "_blank")}
+                    onClick={() =>
+                      window.open('https://andysmanclub.co.uk/find-your-nearest-group/', '_blank')
+                    }
                   >
                     <MapPin className="h-4 w-4 mr-2" />
                     Find Group
@@ -281,12 +288,13 @@ const CrisisResourcesTab = () => {
                   </div>
                 </div>
                 <p className="text-sm text-foreground/80 mb-3">
-                  Support for men in the UK who are down or in crisis. Helpline and webchat available.
+                  Support for men in the UK who are down or in crisis. Helpline and webchat
+                  available.
                 </p>
                 <div className="flex gap-2">
                   <Button
                     className="flex-1 bg-blue-500 hover:bg-blue-600"
-                    onClick={() => window.open("https://www.thecalmzone.net/", "_blank")}
+                    onClick={() => window.open('https://www.thecalmzone.net/', '_blank')}
                   >
                     <Globe className="h-4 w-4 mr-2" />
                     Visit Site
@@ -315,7 +323,7 @@ const CrisisResourcesTab = () => {
                 </p>
                 <Button
                   className="w-full bg-amber-500 hover:bg-amber-600 text-black"
-                  onClick={() => window.open("https://www.matesinmind.org/", "_blank")}
+                  onClick={() => window.open('https://www.matesinmind.org/', '_blank')}
                 >
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Learn More
@@ -328,7 +336,7 @@ const CrisisResourcesTab = () => {
         {/* Online Resources Section */}
         <Card className="border-blue-500/20 overflow-hidden">
           <button
-            onClick={() => toggleSection("online")}
+            onClick={() => toggleSection('online')}
             className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-blue-500/10 to-transparent min-h-[72px] touch-manipulation active:bg-blue-500/20 transition-colors"
           >
             <div className="flex items-center gap-3">
@@ -340,14 +348,14 @@ const CrisisResourcesTab = () => {
                 <p className="text-xs text-white">{onlineResources.length} helpful websites</p>
               </div>
             </div>
-            {expandedSection === "online" ? (
+            {expandedSection === 'online' ? (
               <ChevronUp className="h-5 w-5 text-white" />
             ) : (
               <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
-          {expandedSection === "online" && (
+          {expandedSection === 'online' && (
             <CardContent className="p-3 pt-0 space-y-2">
               {onlineResources.map((resource, index) => (
                 <a
@@ -400,7 +408,10 @@ const CrisisResourcesTab = () => {
           <div className="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
             <p className="text-sm text-blue-200 flex items-start gap-2">
               <Heart className="h-4 w-4 flex-shrink-0 mt-0.5" />
-              <span>Seeking help is a sign of strength. You deserve support and there are people who want to help.</span>
+              <span>
+                Seeking help is a sign of strength. You deserve support and there are people who
+                want to help.
+              </span>
             </p>
           </div>
         </CardContent>

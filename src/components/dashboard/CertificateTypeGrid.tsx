@@ -1,16 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  FileText,
-  Zap,
-  Settings,
-  BookOpen,
-  Bell,
-  Lightbulb,
-  Sun,
-  Sparkles
-} from 'lucide-react';
+import { FileText, Zap, Settings, BookOpen, Bell, Lightbulb, Sun, Sparkles } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -133,8 +124,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.03 }
-  }
+    transition: { staggerChildren: 0.03 },
+  },
 };
 
 const cardVariants = {
@@ -142,8 +133,8 @@ const cardVariants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { type: 'spring', stiffness: 400, damping: 30 }
-  }
+    transition: { type: 'spring', stiffness: 400, damping: 30 },
+  },
 };
 
 const CertificateTypeGrid = ({ onNavigate }: CertificateTypeGridProps) => {
@@ -164,10 +155,10 @@ const CertificateTypeGrid = ({ onNavigate }: CertificateTypeGridProps) => {
       variants={cardVariants}
       onClick={() => handleClick(cert)}
       className={cn(
-        "group relative text-left rounded-2xl p-4 transition-all duration-200 touch-manipulation",
-        "bg-[#242428] border border-elec-yellow/30",
-        "hover:bg-[#252528] hover:border-elec-yellow/50",
-        "active:scale-[0.97]"
+        'group relative text-left rounded-2xl p-4 transition-all duration-200 touch-manipulation',
+        'bg-[#242428] border border-elec-yellow/30',
+        'hover:bg-[#252528] hover:border-elec-yellow/50',
+        'active:scale-[0.97]'
       )}
     >
       {cert.isNew && (
@@ -186,9 +177,7 @@ const CertificateTypeGrid = ({ onNavigate }: CertificateTypeGridProps) => {
       <h3 className="font-semibold text-white text-sm mb-0.5 group-hover:text-elec-yellow transition-colors">
         {cert.title}
       </h3>
-      <p className="text-[11px] text-white/50 line-clamp-1">
-        {cert.description}
-      </p>
+      <p className="text-[11px] text-white/50 line-clamp-1">{cert.description}</p>
 
       {cert.standard && (
         <div className="mt-3">
@@ -201,12 +190,7 @@ const CertificateTypeGrid = ({ onNavigate }: CertificateTypeGridProps) => {
   );
 
   return (
-    <motion.div
-      className="space-y-4"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
+    <motion.div className="space-y-4" variants={containerVariants} initial="hidden" animate="show">
       {certificateGroups.map((group) => (
         <div key={group.title}>
           <div className="flex items-center gap-2 mb-2 px-0.5">
@@ -216,16 +200,18 @@ const CertificateTypeGrid = ({ onNavigate }: CertificateTypeGridProps) => {
             <div className="flex-1 h-px bg-white/5"></div>
           </div>
 
-          <div className={cn(
-            "grid gap-2",
-            isMobile
-              ? "grid-cols-2"
-              : group.certificates.length === 1
-                ? "grid-cols-1 max-w-[200px]"
-                : group.certificates.length === 2
-                  ? "grid-cols-2 max-w-md"
-                  : "grid-cols-3"
-          )}>
+          <div
+            className={cn(
+              'grid gap-2',
+              isMobile
+                ? 'grid-cols-2'
+                : group.certificates.length === 1
+                  ? 'grid-cols-1 max-w-[200px]'
+                  : group.certificates.length === 2
+                    ? 'grid-cols-2 max-w-md'
+                    : 'grid-cols-3'
+            )}
+          >
             {group.certificates.map(renderCertCard)}
           </div>
         </div>

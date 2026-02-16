@@ -1,51 +1,51 @@
-import { ArrowLeft, TestTube, Search, Eye, Zap, AlertTriangle } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, TestTube, Search, Eye, Zap, AlertTriangle } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Using a Systematic Approach to Fault Diagnosis",
-    description: "Logical methodology for electrical fault diagnosis",
+    number: 'Subsection 1',
+    title: 'Using a Systematic Approach to Fault Diagnosis',
+    description: 'Logical methodology for electrical fault diagnosis',
     icon: TestTube,
-    href: "4-1"
+    href: '4-1',
   },
   {
-    number: "Subsection 2",
-    title: "Understanding the Sequence of Operation",
-    description: "Analysing how electrical circuits should function normally",
+    number: 'Subsection 2',
+    title: 'Understanding the Sequence of Operation',
+    description: 'Analysing how electrical circuits should function normally',
     icon: Search,
-    href: "4-2"
+    href: '4-2',
   },
   {
-    number: "Subsection 3",
-    title: "Testing One Component or Section at a Time",
-    description: "Methodical testing of individual circuit elements",
+    number: 'Subsection 3',
+    title: 'Testing One Component or Section at a Time',
+    description: 'Methodical testing of individual circuit elements',
     icon: Eye,
-    href: "4-3"
+    href: '4-3',
   },
   {
-    number: "Subsection 4",
-    title: "Dividing the Circuit into Zones (Split and Isolate)",
-    description: "Sectional approach to fault location and isolation",
+    number: 'Subsection 4',
+    title: 'Dividing the Circuit into Zones (Split and Isolate)',
+    description: 'Sectional approach to fault location and isolation',
     icon: Zap,
-    href: "4-4"
+    href: '4-4',
   },
   {
-    number: "Subsection 5",
-    title: "Interpreting Test Readings at a Basic Level",
-    description: "Understanding basic electrical test measurements",
+    number: 'Subsection 5',
+    title: 'Interpreting Test Readings at a Basic Level',
+    description: 'Understanding basic electrical test measurements',
     icon: AlertTriangle,
-    href: "4-5"
+    href: '4-5',
   },
   {
-    number: "Subsection 6",
-    title: "Knowing When to Escalate or Stop Work",
-    description: "Recognising competence limits and safety boundaries",
+    number: 'Subsection 6',
+    title: 'Knowing When to Escalate or Stop Work',
+    description: 'Recognising competence limits and safety boundaries',
     icon: TestTube,
-    href: "4-6"
-  }
+    href: '4-6',
+  },
 ];
 
 const Section4 = () => {

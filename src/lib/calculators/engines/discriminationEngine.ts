@@ -31,7 +31,7 @@ export function checkRCDDiscrimination(
 ): DiscriminationAnalysis {
   const recommendations: string[] = [];
   const regulationReferences: string[] = ['BS 7671 Reg 531.2.9'];
-  
+
   let discrimination: DiscriminationAnalysis['discrimination'] = 'selective';
   let compliant = true;
 
@@ -43,7 +43,7 @@ export function checkRCDDiscrimination(
       discrimination: 'non-selective',
       compliant: false,
       recommendations: ['One or both devices do not have RCD protection'],
-      regulationReferences: []
+      regulationReferences: [],
     };
   }
 
@@ -59,9 +59,7 @@ export function checkRCDDiscrimination(
   // Rule 2: Time discrimination (if applicable)
   if (upstreamRCD.timeDelayed && !downstreamRCD.timeDelayed) {
     discrimination = 'time-delayed';
-    recommendations.push(
-      '✅ Time-delayed upstream RCD provides good discrimination'
-    );
+    recommendations.push('✅ Time-delayed upstream RCD provides good discrimination');
   } else if (!upstreamRCD.timeDelayed && !downstreamRCD.timeDelayed) {
     // Both instantaneous - check rating ratio
     const ratio = upstreamRCD.rcdRating / downstreamRCD.rcdRating;
@@ -75,16 +73,12 @@ export function checkRCDDiscrimination(
 
   // Rule 3: Common configurations
   if (downstreamRCD.rcdRating === 30 && upstreamRCD.rcdRating === 100) {
-    recommendations.push(
-      '✅ Standard 30mA/100mA split-load configuration - good discrimination'
-    );
+    recommendations.push('✅ Standard 30mA/100mA split-load configuration - good discrimination');
     regulationReferences.push('BS 7671 Reg 411.3.3');
   }
 
   if (downstreamRCD.rcdRating === 30 && upstreamRCD.rcdRating === 300) {
-    recommendations.push(
-      '✅ 30mA/300mA configuration provides excellent discrimination'
-    );
+    recommendations.push('✅ 30mA/300mA configuration provides excellent discrimination');
   }
 
   // Rule 4: Type compatibility
@@ -102,7 +96,7 @@ export function checkRCDDiscrimination(
     discrimination,
     compliant,
     recommendations,
-    regulationReferences
+    regulationReferences,
   };
 }
 
@@ -116,7 +110,7 @@ export function checkOvercurrentDiscrimination(
 ): DiscriminationAnalysis {
   const recommendations: string[] = [];
   const regulationReferences: string[] = ['BS 7671 Reg 536.4'];
-  
+
   let discrimination: DiscriminationAnalysis['discrimination'] = 'selective';
   let compliant = true;
 
@@ -159,9 +153,7 @@ export function checkOvercurrentDiscrimination(
       `⚠️ Low rating ratio (${ratio.toFixed(1)}:1) - recommend 1.6:1 or greater for reliable discrimination`
     );
   } else {
-    recommendations.push(
-      `✅ Good rating ratio (${ratio.toFixed(1)}:1) for discrimination`
-    );
+    recommendations.push(`✅ Good rating ratio (${ratio.toFixed(1)}:1) for discrimination`);
   }
 
   return {
@@ -170,7 +162,7 @@ export function checkOvercurrentDiscrimination(
     discrimination,
     compliant,
     recommendations,
-    regulationReferences
+    regulationReferences,
   };
 }
 
@@ -191,7 +183,7 @@ export function analyzeProtectionScheme(devices: {
 
   // Check each circuit protection against upstream RCD (if present)
   if (devices.upstreamRCD) {
-    devices.circuitProtection.forEach(circuit => {
+    devices.circuitProtection.forEach((circuit) => {
       // Check RCD discrimination if circuit has RCD
       if (circuit.rcdRating) {
         const rcdAnalysis = checkRCDDiscrimination(devices.upstreamRCD!, circuit);
@@ -205,13 +197,13 @@ export function analyzeProtectionScheme(devices: {
   }
 
   // Check against main switch
-  devices.circuitProtection.forEach(circuit => {
+  devices.circuitProtection.forEach((circuit) => {
     const mainSwitchAnalysis = checkOvercurrentDiscrimination(devices.mainSwitch, circuit);
     analyses.push(mainSwitchAnalysis);
   });
 
   // Generate summary
-  const nonCompliantCount = analyses.filter(a => !a.compliant).length;
+  const nonCompliantCount = analyses.filter((a) => !a.compliant).length;
   const overallCompliant = nonCompliantCount === 0;
 
   if (overallCompliant) {
@@ -221,15 +213,17 @@ export function analyzeProtectionScheme(devices: {
   }
 
   // Count discrimination types
-  const selectiveCount = analyses.filter(a => a.discrimination === 'selective').length;
-  const partialCount = analyses.filter(a => a.discrimination === 'partial').length;
-  const nonSelectiveCount = analyses.filter(a => a.discrimination === 'non-selective').length;
+  const selectiveCount = analyses.filter((a) => a.discrimination === 'selective').length;
+  const partialCount = analyses.filter((a) => a.discrimination === 'partial').length;
+  const nonSelectiveCount = analyses.filter((a) => a.discrimination === 'non-selective').length;
 
-  summary.push(`Selective: ${selectiveCount}, Partial: ${partialCount}, Non-selective: ${nonSelectiveCount}`);
+  summary.push(
+    `Selective: ${selectiveCount}, Partial: ${partialCount}, Non-selective: ${nonSelectiveCount}`
+  );
 
   return {
     overallCompliant,
     analyses,
-    summary
+    summary,
   };
 }

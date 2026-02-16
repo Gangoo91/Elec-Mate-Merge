@@ -1,13 +1,14 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertTriangle, CheckCircle, XCircle } from "lucide-react";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 
 const LadderInspection = () => {
   return (
     <Card className="border border-elec-yellow/30 bg-elec-card rounded-xl overflow-hidden">
       <CardHeader className="pb-3">
-        <CardTitle className="text-xl font-bold text-elec-yellow">Ladder Inspection & Safe Use</CardTitle>
+        <CardTitle className="text-xl font-bold text-elec-yellow">
+          Ladder Inspection & Safe Use
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="bg-white/10 border-l-4 border-red-500 p-4 rounded-r">
@@ -16,18 +17,20 @@ const LadderInspection = () => {
             <h4 className="font-semibold text-elec-yellow">Pre-use Inspection Requirements</h4>
           </div>
           <p className="text-sm">
-            Before using any ladder for electrical work, a thorough visual inspection must be performed. 
-            Damaged or defective ladders must be removed from service immediately and tagged with 
-            "DO NOT USE" signage until repaired or replaced by a competent person.
+            Before using any ladder for electrical work, a thorough visual inspection must be
+            performed. Damaged or defective ladders must be removed from service immediately and
+            tagged with "DO NOT USE" signage until repaired or replaced by a competent person.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
           <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                <CardTitle className="text-lg font-semibold text-elec-yellow">Visual Inspection Checklist</CardTitle>
+                <CardTitle className="text-lg font-semibold text-elec-yellow">
+                  Visual Inspection Checklist
+                </CardTitle>
               </div>
             </CardHeader>
             <CardContent>
@@ -45,12 +48,14 @@ const LadderInspection = () => {
               </ul>
             </CardContent>
           </Card>
-          
+
           <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                <CardTitle className="text-lg font-semibold text-elec-yellow">Safe Use Practices</CardTitle>
+                <CardTitle className="text-lg font-semibold text-elec-yellow">
+                  Safe Use Practices
+                </CardTitle>
               </div>
             </CardHeader>
             <CardContent>
@@ -69,16 +74,18 @@ const LadderInspection = () => {
             </CardContent>
           </Card>
         </div>
-        
+
         <div className="mt-4">
           <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg font-semibold text-elec-yellow">Formal Inspection Requirements</CardTitle>
+              <CardTitle className="text-lg font-semibold text-elec-yellow">
+                Formal Inspection Requirements
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="mb-3 text-sm">
-                In addition to pre-use checks, ladders used for electrical work require formal documented 
-                inspections at regular intervals:
+                In addition to pre-use checks, ladders used for electrical work require formal
+                documented inspections at regular intervals:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
@@ -86,28 +93,36 @@ const LadderInspection = () => {
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Weekly Visual Inspections
                   </h5>
-                  <p className="text-sm">Required when ladder is in frequent use or in harsh environments</p>
+                  <p className="text-sm">
+                    Required when ladder is in frequent use or in harsh environments
+                  </p>
                 </div>
                 <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Detailed Inspection Every 3-6 Months
                   </h5>
-                  <p className="text-sm">Must be conducted by a competent person and results recorded</p>
+                  <p className="text-sm">
+                    Must be conducted by a competent person and results recorded
+                  </p>
                 </div>
                 <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Tagging System
                   </h5>
-                  <p className="text-sm">Colour-coded or dated tags to indicate inspection status</p>
+                  <p className="text-sm">
+                    Colour-coded or dated tags to indicate inspection status
+                  </p>
                 </div>
                 <div className="bg-white/10 p-3 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium text-elec-yellow mb-2 flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                     Records Retention
                   </h5>
-                  <p className="text-sm">Inspection records must be kept available for regulatory review</p>
+                  <p className="text-sm">
+                    Inspection records must be kept available for regulatory review
+                  </p>
                 </div>
               </div>
             </CardContent>

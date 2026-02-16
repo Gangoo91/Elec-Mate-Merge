@@ -1,17 +1,32 @@
-import { useState } from "react";
-import { Quote } from "@/types/quote";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft, Trash2, MoreHorizontal } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { Quote } from '@/types/quote';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { format, isPast } from "date-fns";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Eye,
+  Edit,
+  Download,
+  Mail,
+  CheckCircle,
+  Bell,
+  AlertCircle,
+  Send,
+  FileText,
+  ArrowLeft,
+  Trash2,
+  MoreHorizontal,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { format, isPast } from 'date-fns';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,9 +37,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
-import { DeleteInvoiceDialog } from "@/components/electrician/invoice-builder/DeleteInvoiceDialog";
+} from '@/components/ui/alert-dialog';
+import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
+import { DeleteInvoiceDialog } from '@/components/electrician/invoice-builder/DeleteInvoiceDialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,7 +47,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 interface InvoiceTableViewProps {
   invoices: Quote[];
@@ -80,9 +95,9 @@ const InvoiceTableView = ({
   };
   const navigate = useNavigate();
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
     }).format(amount);
   };
 
@@ -90,36 +105,48 @@ const InvoiceTableView = ({
     const status = invoice.invoice_status;
     const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
 
-    if (isOverdue || status === "overdue") {
+    if (isOverdue || status === 'overdue') {
       return (
-        <Badge variant="destructive" className="bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800">
+        <Badge
+          variant="destructive"
+          className="bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800"
+        >
           <AlertCircle className="h-3 w-3 mr-1" />
           Overdue
         </Badge>
       );
     }
 
-    if (status === "sent") {
+    if (status === 'sent') {
       return (
-        <Badge variant="secondary" className="bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800">
+        <Badge
+          variant="secondary"
+          className="bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800"
+        >
           <Send className="h-3 w-3 mr-1" />
           Sent
         </Badge>
       );
     }
 
-    if (status === "draft") {
+    if (status === 'draft') {
       return (
-        <Badge variant="outline" className="bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-950 dark:text-slate-300 dark:border-slate-800">
+        <Badge
+          variant="outline"
+          className="bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-950 dark:text-slate-300 dark:border-slate-800"
+        >
           <Edit className="h-3 w-3 mr-1" />
           Draft
         </Badge>
       );
     }
 
-    if (status === "paid") {
+    if (status === 'paid') {
       return (
-        <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800">
+        <Badge
+          variant="secondary"
+          className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800"
+        >
           <FileText className="h-3 w-3 mr-1" />
           Paid
         </Badge>
@@ -152,10 +179,15 @@ const InvoiceTableView = ({
           <TableBody>
             {invoices.map((invoice) => {
               const status = invoice.invoice_status;
-              const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+              const isOverdue =
+                invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
 
               return (
-                <TableRow key={invoice.id} id={`invoice-${invoice.id}`} className="hover:bg-muted/50 transition-all">
+                <TableRow
+                  key={invoice.id}
+                  id={`invoice-${invoice.id}`}
+                  className="hover:bg-muted/50 transition-all"
+                >
                   <TableCell className="font-medium">
                     #{invoice.invoice_number || invoice.quoteNumber}
                   </TableCell>
@@ -169,8 +201,7 @@ const InvoiceTableView = ({
                             onClick={() => navigate(`/electrician/quotes?highlight=${invoice.id}`)}
                             className="h-auto p-1 text-xs font-mono hover:text-elec-yellow"
                           >
-                            <FileText className="h-3 w-3 mr-1" />
-                            #{invoice.quoteNumber}
+                            <FileText className="h-3 w-3 mr-1" />#{invoice.quoteNumber}
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -183,23 +214,17 @@ const InvoiceTableView = ({
                     {invoice.client?.name || 'N/A'}
                   </TableCell>
                   <TableCell>
-                    {invoice.invoice_date 
-                      ? format(new Date(invoice.invoice_date), "dd MMM yyyy")
-                      : 'N/A'
-                    }
+                    {invoice.invoice_date
+                      ? format(new Date(invoice.invoice_date), 'dd MMM yyyy')
+                      : 'N/A'}
                   </TableCell>
                   <TableCell>
                     {invoice.invoice_due_date
-                      ? format(new Date(invoice.invoice_due_date), "dd MMM yyyy")
-                      : 'N/A'
-                    }
+                      ? format(new Date(invoice.invoice_due_date), 'dd MMM yyyy')
+                      : 'N/A'}
                   </TableCell>
-                  <TableCell className="font-bold">
-                    {formatCurrency(invoice.total)}
-                  </TableCell>
-                  <TableCell>
-                    {getStatusBadge(invoice)}
-                  </TableCell>
+                  <TableCell className="font-bold">{formatCurrency(invoice.total)}</TableCell>
+                  <TableCell>{getStatusBadge(invoice)}</TableCell>
                   <TableCell className="text-right w-[80px]">
                     <div className="flex items-center justify-end">
                       <DropdownMenu>
@@ -213,10 +238,11 @@ const InvoiceTableView = ({
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-56 bg-background border-border z-50">
-                          <DropdownMenuItem
-                            onClick={() => onInvoiceAction(invoice)}
-                          >
+                        <DropdownMenuContent
+                          align="end"
+                          className="w-56 bg-background border-border z-50"
+                        >
+                          <DropdownMenuItem onClick={() => onInvoiceAction(invoice)}>
                             {status === 'draft' ? (
                               <>
                                 <Edit className="h-4 w-4 mr-2" />
@@ -229,7 +255,7 @@ const InvoiceTableView = ({
                               </>
                             )}
                           </DropdownMenuItem>
-                          
+
                           <DropdownMenuItem
                             onClick={() => onDownloadPDF(invoice)}
                             disabled={downloadingPdfId === invoice.id}
@@ -239,18 +265,14 @@ const InvoiceTableView = ({
                           </DropdownMenuItem>
 
                           {onShareWhatsApp && (
-                            <DropdownMenuItem
-                              onClick={() => onShareWhatsApp(invoice)}
-                            >
+                            <DropdownMenuItem onClick={() => onShareWhatsApp(invoice)}>
                               <Send className="h-4 w-4 mr-2" />
                               Send to WhatsApp
                             </DropdownMenuItem>
                           )}
 
                           {onShareEmail && (
-                            <DropdownMenuItem
-                              onClick={() => onShareEmail(invoice)}
-                            >
+                            <DropdownMenuItem onClick={() => onShareEmail(invoice)}>
                               <Mail className="h-4 w-4 mr-2" />
                               Send via Email
                             </DropdownMenuItem>
@@ -259,7 +281,7 @@ const InvoiceTableView = ({
                           {status !== 'paid' && (
                             <>
                               <DropdownMenuSeparator />
-                              
+
                               <DropdownMenuItem
                                 onClick={() => onMarkAsPaid(invoice)}
                                 disabled={markingPaidId === invoice.id}

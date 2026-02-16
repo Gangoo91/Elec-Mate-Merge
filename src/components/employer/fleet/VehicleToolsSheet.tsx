@@ -1,10 +1,5 @@
-import { useState } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,30 +9,21 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Wrench,
-  X,
-  Plus,
-  Search,
-  Trash2,
-  Edit,
-  Loader2,
-  Package,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Wrench, X, Plus, Search, Trash2, Edit, Loader2, Package } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   useVehicleTools,
   useToolStats,
@@ -49,8 +35,8 @@ import {
   type VehicleTool,
   type ToolCategory,
   type ToolCondition,
-} from "@/hooks/useVehicleTools";
-import type { Vehicle } from "@/hooks/useFleet";
+} from '@/hooks/useVehicleTools';
+import type { Vehicle } from '@/hooks/useFleet';
 
 interface VehicleToolsSheetProps {
   open: boolean;
@@ -58,15 +44,11 @@ interface VehicleToolsSheetProps {
   vehicle: Vehicle;
 }
 
-export function VehicleToolsSheet({
-  open,
-  onOpenChange,
-  vehicle,
-}: VehicleToolsSheetProps) {
+export function VehicleToolsSheet({ open, onOpenChange, vehicle }: VehicleToolsSheetProps) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingTool, setEditingTool] = useState<VehicleTool | null>(null);
-  const [search, setSearch] = useState("");
-  const [filterCategory, setFilterCategory] = useState<string>("all");
+  const [search, setSearch] = useState('');
+  const [filterCategory, setFilterCategory] = useState<string>('all');
   const [toolToDelete, setToolToDelete] = useState<VehicleTool | null>(null);
 
   const { data: tools = [], isLoading } = useVehicleTools(vehicle.id);
@@ -81,32 +63,35 @@ export function VehicleToolsSheet({
       tool.make?.toLowerCase().includes(search.toLowerCase()) ||
       tool.model?.toLowerCase().includes(search.toLowerCase()) ||
       tool.serial_number?.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = filterCategory === "all" || tool.category === filterCategory;
+    const matchesCategory = filterCategory === 'all' || tool.category === filterCategory;
     return matchesSearch && matchesCategory;
   });
 
   const handleSave = (formData: FormData) => {
     const data = {
       vehicle_id: vehicle.id,
-      name: formData.get("name") as string,
-      category: (formData.get("category") as ToolCategory) || undefined,
-      make: (formData.get("make") as string) || undefined,
-      model: (formData.get("model") as string) || undefined,
-      serial_number: (formData.get("serial_number") as string) || undefined,
-      value: formData.get("value") ? parseFloat(formData.get("value") as string) : undefined,
-      calibration_due: (formData.get("calibration_due") as string) || undefined,
-      pat_test_due: (formData.get("pat_test_due") as string) || undefined,
-      condition: (formData.get("condition") as ToolCondition) || "good",
-      notes: (formData.get("notes") as string) || undefined,
+      name: formData.get('name') as string,
+      category: (formData.get('category') as ToolCategory) || undefined,
+      make: (formData.get('make') as string) || undefined,
+      model: (formData.get('model') as string) || undefined,
+      serial_number: (formData.get('serial_number') as string) || undefined,
+      value: formData.get('value') ? parseFloat(formData.get('value') as string) : undefined,
+      calibration_due: (formData.get('calibration_due') as string) || undefined,
+      pat_test_due: (formData.get('pat_test_due') as string) || undefined,
+      condition: (formData.get('condition') as ToolCondition) || 'good',
+      notes: (formData.get('notes') as string) || undefined,
     };
 
     if (editingTool) {
-      updateTool.mutate({ id: editingTool.id, ...data }, {
-        onSuccess: () => {
-          setEditingTool(null);
-          setShowAddForm(false);
-        },
-      });
+      updateTool.mutate(
+        { id: editingTool.id, ...data },
+        {
+          onSuccess: () => {
+            setEditingTool(null);
+            setShowAddForm(false);
+          },
+        }
+      );
     } else {
       createTool.mutate(data, {
         onSuccess: () => {
@@ -129,14 +114,14 @@ export function VehicleToolsSheet({
 
   const getConditionColor = (condition: ToolCondition) => {
     switch (condition) {
-      case "good":
-        return "bg-green-500/20 text-green-400";
-      case "fair":
-        return "bg-yellow-500/20 text-yellow-400";
-      case "needs_repair":
-        return "bg-orange-500/20 text-orange-400";
-      case "out_of_service":
-        return "bg-red-500/20 text-red-400";
+      case 'good':
+        return 'bg-green-500/20 text-green-400';
+      case 'fair':
+        return 'bg-yellow-500/20 text-yellow-400';
+      case 'needs_repair':
+        return 'bg-orange-500/20 text-orange-400';
+      case 'out_of_service':
+        return 'bg-red-500/20 text-red-400';
     }
   };
 
@@ -183,13 +168,23 @@ export function VehicleToolsSheet({
                 <p className="text-xs text-muted-foreground">Value</p>
               </div>
               <div className="text-center">
-                <p className={cn("text-lg font-bold", stats.calibrationDue > 0 ? "text-orange-400" : "text-foreground")}>
+                <p
+                  className={cn(
+                    'text-lg font-bold',
+                    stats.calibrationDue > 0 ? 'text-orange-400' : 'text-foreground'
+                  )}
+                >
                   {stats.calibrationDue}
                 </p>
                 <p className="text-xs text-muted-foreground">Cal Due</p>
               </div>
               <div className="text-center">
-                <p className={cn("text-lg font-bold", stats.needsRepair > 0 ? "text-red-400" : "text-foreground")}>
+                <p
+                  className={cn(
+                    'text-lg font-bold',
+                    stats.needsRepair > 0 ? 'text-red-400' : 'text-foreground'
+                  )}
+                >
                   {stats.needsRepair}
                 </p>
                 <p className="text-xs text-muted-foreground">Repairs</p>
@@ -221,7 +216,7 @@ export function VehicleToolsSheet({
                       placeholder="Search tools..."
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className={cn("h-11 touch-manipulation text-base", !search && "pl-9")}
+                      className={cn('h-11 touch-manipulation text-base', !search && 'pl-9')}
                     />
                   </div>
                   <Select value={filterCategory} onValueChange={setFilterCategory}>
@@ -257,7 +252,7 @@ export function VehicleToolsSheet({
                   <div className="text-center py-12">
                     <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
                     <p className="text-sm text-muted-foreground">
-                      {tools.length === 0 ? "No tools added yet" : "No matching tools"}
+                      {tools.length === 0 ? 'No tools added yet' : 'No matching tools'}
                     </p>
                   </div>
                 ) : (
@@ -272,7 +267,7 @@ export function VehicleToolsSheet({
                             <h4 className="font-semibold text-foreground text-base">{tool.name}</h4>
                             {(tool.make || tool.model) && (
                               <p className="text-sm text-muted-foreground">
-                                {[tool.make, tool.model].filter(Boolean).join(" ")}
+                                {[tool.make, tool.model].filter(Boolean).join(' ')}
                               </p>
                             )}
                           </div>
@@ -302,7 +297,9 @@ export function VehicleToolsSheet({
                               {TOOL_CATEGORIES.find((c) => c.value === tool.category)?.label}
                             </Badge>
                           )}
-                          <Badge className={cn("text-xs border-0", getConditionColor(tool.condition))}>
+                          <Badge
+                            className={cn('text-xs border-0', getConditionColor(tool.condition))}
+                          >
                             {TOOL_CONDITIONS.find((c) => c.value === tool.condition)?.label}
                           </Badge>
                           {tool.value && (
@@ -323,29 +320,35 @@ export function VehicleToolsSheet({
                             {tool.calibration_due && (
                               <span
                                 className={cn(
-                                  "px-2 py-1 rounded-lg",
-                                  tool.calibration_due <= new Date().toISOString().split("T")[0]
-                                    ? "bg-red-500/10 text-red-400"
-                                    : tool.calibration_due <= new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
-                                    ? "bg-orange-500/10 text-orange-400"
-                                    : "bg-muted/50 text-muted-foreground"
+                                  'px-2 py-1 rounded-lg',
+                                  tool.calibration_due <= new Date().toISOString().split('T')[0]
+                                    ? 'bg-red-500/10 text-red-400'
+                                    : tool.calibration_due <=
+                                        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+                                          .toISOString()
+                                          .split('T')[0]
+                                      ? 'bg-orange-500/10 text-orange-400'
+                                      : 'bg-muted/50 text-muted-foreground'
                                 )}
                               >
-                                Cal: {new Date(tool.calibration_due).toLocaleDateString("en-GB")}
+                                Cal: {new Date(tool.calibration_due).toLocaleDateString('en-GB')}
                               </span>
                             )}
                             {tool.pat_test_due && (
                               <span
                                 className={cn(
-                                  "px-2 py-1 rounded-lg",
-                                  tool.pat_test_due <= new Date().toISOString().split("T")[0]
-                                    ? "bg-red-500/10 text-red-400"
-                                    : tool.pat_test_due <= new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
-                                    ? "bg-orange-500/10 text-orange-400"
-                                    : "bg-muted/50 text-muted-foreground"
+                                  'px-2 py-1 rounded-lg',
+                                  tool.pat_test_due <= new Date().toISOString().split('T')[0]
+                                    ? 'bg-red-500/10 text-red-400'
+                                    : tool.pat_test_due <=
+                                        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+                                          .toISOString()
+                                          .split('T')[0]
+                                      ? 'bg-orange-500/10 text-orange-400'
+                                      : 'bg-muted/50 text-muted-foreground'
                                 )}
                               >
-                                PAT: {new Date(tool.pat_test_due).toLocaleDateString("en-GB")}
+                                PAT: {new Date(tool.pat_test_due).toLocaleDateString('en-GB')}
                               </span>
                             )}
                           </div>
@@ -366,7 +369,8 @@ export function VehicleToolsSheet({
           <AlertDialogHeader>
             <AlertDialogTitle>Remove Tool?</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to remove "{toolToDelete?.name}" from this vehicle? This action cannot be undone.
+              Are you sure you want to remove "{toolToDelete?.name}" from this vehicle? This action
+              cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -432,7 +436,7 @@ function ToolForm({
         </div>
         <div>
           <Label className="text-sm font-medium">Condition</Label>
-          <Select name="condition" defaultValue={tool?.condition || "good"}>
+          <Select name="condition" defaultValue={tool?.condition || 'good'}>
             <SelectTrigger className="h-11 mt-1.5 touch-manipulation">
               <SelectValue />
             </SelectTrigger>
@@ -539,9 +543,9 @@ function ToolForm({
           {isPending ? (
             <Loader2 className="h-5 w-5 animate-spin" />
           ) : tool ? (
-            "Save Changes"
+            'Save Changes'
           ) : (
-            "Add Tool"
+            'Add Tool'
           )}
         </Button>
       </div>

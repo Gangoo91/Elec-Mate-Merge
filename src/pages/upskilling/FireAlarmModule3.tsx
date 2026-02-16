@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Module 3: System Design & Zone Planning - Fire Alarm Course";
-const DESCRIPTION = "Learn about zone design, addressable systems, cause and effect programming, and interface design for fire alarm systems.";
+const TITLE = 'Module 3: System Design & Zone Planning - Fire Alarm Course';
+const DESCRIPTION =
+  'Learn about zone design, addressable systems, cause and effect programming, and interface design for fire alarm systems.';
 
 const FireAlarmModule3 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
@@ -13,40 +14,40 @@ const FireAlarmModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Zone Design Principles",
+      title: 'Zone Design Principles',
       icon: CheckCircle,
-      description: "Zone layouts, floor areas and search distances"
+      description: 'Zone layouts, floor areas and search distances',
     },
     {
       id: 2,
-      title: "Addressable vs Conventional",
+      title: 'Addressable vs Conventional',
       icon: CheckCircle,
-      description: "System architectures and loop design"
+      description: 'System architectures and loop design',
     },
     {
       id: 3,
-      title: "Cause & Effect Programming",
+      title: 'Cause & Effect Programming',
       icon: CheckCircle,
-      description: "Input/output relationships and staged alarms"
+      description: 'Input/output relationships and staged alarms',
     },
     {
       id: 4,
-      title: "Interface Design",
+      title: 'Interface Design',
       icon: CheckCircle,
-      description: "Integration with BMS, access control and lifts"
+      description: 'Integration with BMS, access control and lifts',
     },
     {
       id: 5,
-      title: "Network & Multi-Panel Systems",
+      title: 'Network & Multi-Panel Systems',
       icon: CheckCircle,
-      description: "Networked panels and redundancy"
+      description: 'Networked panels and redundancy',
     },
     {
       id: 6,
-      title: "Design Documentation",
+      title: 'Design Documentation',
       icon: CheckCircle,
-      description: "Specifications, drawings and schedules"
-    }
+      description: 'Specifications, drawings and schedules',
+    },
   ];
 
   return (
@@ -87,7 +88,8 @@ const FireAlarmModule3 = () => {
             System Design & Zone Planning
           </h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Designing effective zone layouts, selecting system architectures and programming cause & effect relationships.
+            Designing effective zone layouts, selecting system architectures and programming cause &
+            effect relationships.
           </p>
         </div>
 

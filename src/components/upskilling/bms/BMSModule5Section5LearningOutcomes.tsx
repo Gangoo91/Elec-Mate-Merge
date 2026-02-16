@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule5Section5LearningOutcomes = () => {
   const outcomes = [
-    "Explain what a gateway is and why it is needed in BMS",
-    "Describe how gateways enable interoperability between BACnet, Modbus, and KNX",
-    "Identify common gateway applications in building systems",
-    "Apply practical installation and documentation methods for gateways"
+    'Explain what a gateway is and why it is needed in BMS',
+    'Describe how gateways enable interoperability between BACnet, Modbus, and KNX',
+    'Identify common gateway applications in building systems',
+    'Apply practical installation and documentation methods for gateways',
   ];
 
   return (
@@ -18,9 +18,7 @@ export const BMSModule5Section5LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By the end of this section, you should be able to:
-        </p>
+        <p className="text-foreground mb-4">By the end of this section, you should be able to:</p>
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">

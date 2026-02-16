@@ -10,37 +10,41 @@ const EmergencyContacts = () => {
       number: '999',
       description: 'Fire, Police, Ambulance',
       availability: '24/7',
-      priority: 'critical'
+      priority: 'critical',
     },
     {
       service: 'Electrical Safety First',
       number: '0207 582 7746',
       description: 'Electrical safety advice and guidance',
       availability: 'Mon-Fri 9-5',
-      priority: 'high'
+      priority: 'high',
     },
     {
       service: 'HSE Emergency',
       number: '0151 951 4000',
       description: 'Health & Safety Executive incidents',
       availability: '24/7',
-      priority: 'high'
+      priority: 'high',
     },
     {
       service: 'Local Electricity Provider',
       number: '105',
       description: 'Power cuts and electrical emergencies',
       availability: '24/7',
-      priority: 'medium'
-    }
+      priority: 'medium',
+    },
   ];
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'critical': return 'text-red-400 bg-red-400/10';
-      case 'high': return 'text-orange-400 bg-orange-400/10';
-      case 'medium': return 'text-blue-400 bg-blue-400/10';
-      default: return 'text-white/80 bg-gray-400/10';
+      case 'critical':
+        return 'text-red-400 bg-red-400/10';
+      case 'high':
+        return 'text-orange-400 bg-orange-400/10';
+      case 'medium':
+        return 'text-blue-400 bg-blue-400/10';
+      default:
+        return 'text-white/80 bg-gray-400/10';
     }
   };
 
@@ -66,9 +70,9 @@ const EmergencyContacts = () => {
                 <div className="flex-grow">
                   <div className="flex items-center justify-between mb-1">
                     <h4 className="font-medium text-foreground">{contact.service}</h4>
-                    <Button 
-                      size="sm" 
-                      variant="ghost" 
+                    <Button
+                      size="sm"
+                      variant="ghost"
                       className="h-6 px-2 text-elec-yellow hover:bg-elec-yellow/10"
                     >
                       {contact.number}
@@ -84,15 +88,16 @@ const EmergencyContacts = () => {
             </div>
           ))}
         </div>
-        
+
         <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <h4 className="font-medium text-red-400">Emergency Protocol</h4>
           </div>
           <p className="text-sm text-white">
-            In case of electrical incident: 1) Ensure personal safety, 2) Isolate power if safe to do so, 
-            3) Call emergency services, 4) Provide first aid if qualified, 5) Report incident to HSE.
+            In case of electrical incident: 1) Ensure personal safety, 2) Isolate power if safe to
+            do so, 3) Call emergency services, 4) Provide first aid if qualified, 5) Report incident
+            to HSE.
           </p>
         </div>
       </CardContent>

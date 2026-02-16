@@ -1,24 +1,19 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { useCollege } from "@/contexts/CollegeContext";
-import {
-  AtSign,
-  Send,
-  AlertCircle,
-  X,
-} from "lucide-react";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { useCollege } from '@/contexts/CollegeContext';
+import { AtSign, Send, AlertCircle, X } from 'lucide-react';
 import {
   Command,
   CommandEmpty,
@@ -26,17 +21,13 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface AddCommentDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  contextType: "evidence" | "assessment" | "ilp" | "portfolio";
+  contextType: 'evidence' | 'assessment' | 'ilp' | 'portfolio';
   contextId: string;
   contextTitle?: string;
   currentUserId?: string;
@@ -51,76 +42,94 @@ export function AddCommentDialog({
   contextType,
   contextId,
   contextTitle,
-  currentUserId = "staff-1",
-  currentUserName = "Dr. Sarah Johnson",
-  currentUserRole = "tutor",
-  currentUserInitials = "SJ",
+  currentUserId = 'staff-1',
+  currentUserName = 'Dr. Sarah Johnson',
+  currentUserRole = 'tutor',
+  currentUserInitials = 'SJ',
 }: AddCommentDialogProps) {
   const { addComment, staff, students } = useCollege();
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const [requiresAction, setRequiresAction] = useState(false);
   const [selectedMentions, setSelectedMentions] = useState<{ id: string; name: string }[]>([]);
   const [mentionPopoverOpen, setMentionPopoverOpen] = useState(false);
 
   const mentionableUsers = [
-    ...staff.filter(s => s.status === "Active").map(s => ({
-      id: s.id,
-      name: s.name,
-      role: s.role,
-      initials: s.avatarInitials,
-    })),
-    ...students.filter(s => s.status === "Active").map(s => ({
-      id: s.id,
-      name: s.name,
-      role: "student",
-      initials: s.avatarInitials,
-    })),
+    ...staff
+      .filter((s) => s.status === 'Active')
+      .map((s) => ({
+        id: s.id,
+        name: s.name,
+        role: s.role,
+        initials: s.avatarInitials,
+      })),
+    ...students
+      .filter((s) => s.status === 'Active')
+      .map((s) => ({
+        id: s.id,
+        name: s.name,
+        role: 'student',
+        initials: s.avatarInitials,
+      })),
   ];
 
   const getRoleColor = (role: string) => {
     switch (role) {
-      case "tutor": return "bg-info/10 text-info";
-      case "assessor": return "bg-success/10 text-success";
-      case "iqa": return "bg-warning/10 text-warning";
-      case "head_of_department": return "bg-purple-500/10 text-purple-500";
-      case "student": return "bg-elec-yellow/10 text-elec-yellow";
-      default: return "bg-muted text-muted-foreground";
+      case 'tutor':
+        return 'bg-info/10 text-info';
+      case 'assessor':
+        return 'bg-success/10 text-success';
+      case 'iqa':
+        return 'bg-warning/10 text-warning';
+      case 'head_of_department':
+        return 'bg-purple-500/10 text-purple-500';
+      case 'student':
+        return 'bg-elec-yellow/10 text-elec-yellow';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   const formatRole = (role: string) => {
     switch (role) {
-      case "tutor": return "Tutor";
-      case "assessor": return "Assessor";
-      case "iqa": return "IQA";
-      case "head_of_department": return "HoD";
-      case "student": return "Student";
-      case "admin": return "Admin";
-      case "support": return "Support";
-      default: return role;
+      case 'tutor':
+        return 'Tutor';
+      case 'assessor':
+        return 'Assessor';
+      case 'iqa':
+        return 'IQA';
+      case 'head_of_department':
+        return 'HoD';
+      case 'student':
+        return 'Student';
+      case 'admin':
+        return 'Admin';
+      case 'support':
+        return 'Support';
+      default:
+        return role;
     }
   };
 
   const handleAddMention = (user: { id: string; name: string }) => {
-    if (!selectedMentions.find(m => m.id === user.id)) {
-      setSelectedMentions(prev => [...prev, user]);
-      setContent(prev => prev + `@${user.name} `);
+    if (!selectedMentions.find((m) => m.id === user.id)) {
+      setSelectedMentions((prev) => [...prev, user]);
+      setContent((prev) => prev + `@${user.name} `);
     }
     setMentionPopoverOpen(false);
   };
 
   const handleRemoveMention = (userId: string) => {
-    const mention = selectedMentions.find(m => m.id === userId);
+    const mention = selectedMentions.find((m) => m.id === userId);
     if (mention) {
-      setSelectedMentions(prev => prev.filter(m => m.id !== userId));
-      setContent(prev => prev.replace(`@${mention.name} `, "").replace(`@${mention.name}`, ""));
+      setSelectedMentions((prev) => prev.filter((m) => m.id !== userId));
+      setContent((prev) => prev.replace(`@${mention.name} `, '').replace(`@${mention.name}`, ''));
     }
   };
 
   const handleSubmit = () => {
     if (!content.trim()) return;
 
-    const mentionIds = selectedMentions.map(m => m.id);
+    const mentionIds = selectedMentions.map((m) => m.id);
 
     addComment({
       contextType,
@@ -138,7 +147,7 @@ export function AddCommentDialog({
     });
 
     // Reset and close
-    setContent("");
+    setContent('');
     setRequiresAction(false);
     setSelectedMentions([]);
     onOpenChange(false);
@@ -146,11 +155,16 @@ export function AddCommentDialog({
 
   const getContextLabel = () => {
     switch (contextType) {
-      case "evidence": return "Evidence";
-      case "assessment": return "Assessment";
-      case "ilp": return "ILP";
-      case "portfolio": return "Portfolio";
-      default: return contextType;
+      case 'evidence':
+        return 'Evidence';
+      case 'assessment':
+        return 'Assessment';
+      case 'ilp':
+        return 'ILP';
+      case 'portfolio':
+        return 'Portfolio';
+      default:
+        return contextType;
     }
   };
 
@@ -158,12 +172,11 @@ export function AddCommentDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            Add Comment
-          </DialogTitle>
+          <DialogTitle className="flex items-center gap-2">Add Comment</DialogTitle>
           {contextTitle && (
             <p className="text-sm text-muted-foreground">
-              On {getContextLabel()}: <span className="font-medium text-foreground">{contextTitle}</span>
+              On {getContextLabel()}:{' '}
+              <span className="font-medium text-foreground">{contextTitle}</span>
             </p>
           )}
         </DialogHeader>
@@ -212,7 +225,7 @@ export function AddCommentDialog({
                       <CommandEmpty>No users found.</CommandEmpty>
                       <CommandGroup>
                         {mentionableUsers
-                          .filter(u => !selectedMentions.find(m => m.id === u.id))
+                          .filter((u) => !selectedMentions.find((m) => m.id === u.id))
                           .slice(0, 10)
                           .map((user) => (
                             <CommandItem
@@ -221,13 +234,17 @@ export function AddCommentDialog({
                               className="flex items-center gap-2"
                             >
                               <Avatar className="h-6 w-6">
-                                <AvatarFallback className={`text-[10px] ${getRoleColor(user.role)}`}>
+                                <AvatarFallback
+                                  className={`text-[10px] ${getRoleColor(user.role)}`}
+                                >
                                   {user.initials}
                                 </AvatarFallback>
                               </Avatar>
                               <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user.name}</p>
-                                <p className="text-xs text-muted-foreground">{formatRole(user.role)}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {formatRole(user.role)}
+                                </p>
                               </div>
                             </CommandItem>
                           ))}
@@ -271,9 +288,7 @@ export function AddCommentDialog({
                 <Label htmlFor="requires-action" className="text-sm font-medium cursor-pointer">
                   Requires Action
                 </Label>
-                <p className="text-xs text-muted-foreground">
-                  Mark if response is needed
-                </p>
+                <p className="text-xs text-muted-foreground">Mark if response is needed</p>
               </div>
             </div>
             <Switch

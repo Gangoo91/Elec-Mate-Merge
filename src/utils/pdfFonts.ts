@@ -19,9 +19,7 @@ const fetchRobotoFont = async (): Promise<string> => {
 
   try {
     // Fetch Roboto Regular from Google Fonts
-    const response = await fetch(
-      'https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxP.ttf'
-    );
+    const response = await fetch('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxP.ttf');
 
     if (!response.ok) {
       throw new Error('Failed to fetch font');
@@ -29,10 +27,7 @@ const fetchRobotoFont = async (): Promise<string> => {
 
     const arrayBuffer = await response.arrayBuffer();
     const base64 = btoa(
-      new Uint8Array(arrayBuffer).reduce(
-        (data, byte) => data + String.fromCharCode(byte),
-        ''
-      )
+      new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
     );
 
     robotoBase64 = base64;
@@ -86,14 +81,14 @@ export const setUnicodeFont = (pdf: jsPDF, style: 'normal' | 'bold' = 'normal'):
  * Electrical symbols that require Unicode font support
  */
 export const ELECTRICAL_SYMBOLS = {
-  OHM: 'Ω',           // Ohm symbol (U+03A9)
-  SQUARED: '²',       // Superscript 2 (U+00B2) - for mm²
-  CUBED: '³',         // Superscript 3 (U+00B3) - for m³
-  DEGREE: '°',        // Degree symbol (U+00B0) - for °C
-  PLUS_MINUS: '±',    // Plus-minus (U+00B1)
-  MICRO: 'μ',         // Micro symbol (U+03BC) - for μF
-  CHECKMARK: '✓',     // Checkmark (U+2713)
-  CROSS: '✗',         // Cross (U+2717)
+  OHM: 'Ω', // Ohm symbol (U+03A9)
+  SQUARED: '²', // Superscript 2 (U+00B2) - for mm²
+  CUBED: '³', // Superscript 3 (U+00B3) - for m³
+  DEGREE: '°', // Degree symbol (U+00B0) - for °C
+  PLUS_MINUS: '±', // Plus-minus (U+00B1)
+  MICRO: 'μ', // Micro symbol (U+03BC) - for μF
+  CHECKMARK: '✓', // Checkmark (U+2713)
+  CROSS: '✗', // Cross (U+2717)
 } as const;
 
 /**

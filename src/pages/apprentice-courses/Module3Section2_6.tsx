@@ -1,187 +1,161 @@
-import { ArrowLeft, ArrowRight, Paperclip, AlertTriangle, Shield, Building, Target, Settings, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Paperclip,
+  AlertTriangle,
+  Shield,
+  Building,
+  Target,
+  Settings,
+  CheckCircle2,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "twin-earth-clip",
-    question: "Which fixing is commonly used for securing Twin and Earth cable to a wall?",
-    options: [
-      "Round cable clip",
-      "Flat twin clip",
-      "Metal cleat",
-    ],
+    id: 'twin-earth-clip',
+    question: 'Which fixing is commonly used for securing Twin and Earth cable to a wall?',
+    options: ['Round cable clip', 'Flat twin clip', 'Metal cleat'],
     correctIndex: 1,
     explanation:
-      "Flat twin clips are specifically designed to secure the profile of Twin and Earth cable flat against walls and surfaces.",
+      'Flat twin clips are specifically designed to secure the profile of Twin and Earth cable flat against walls and surfaces.',
   },
   {
-    id: "fire-resistant-requirement",
-    question: "True or False: Plastic cable clips are acceptable as the only fixing method in escape routes.",
-    options: [
-      "True",
-      "False",
-    ],
+    id: 'fire-resistant-requirement',
+    question:
+      'True or False: Plastic cable clips are acceptable as the only fixing method in escape routes.',
+    options: ['True', 'False'],
     correctIndex: 1,
     explanation:
-      "False. BS 7671 18th Edition requires non-combustible fixings in escape routes to prevent cables falling during a fire.",
+      'False. BS 7671 18th Edition requires non-combustible fixings in escape routes to prevent cables falling during a fire.',
   },
   {
-    id: "swa-fixing",
-    question: "Which fixing is best for securing large SWA cables?",
-    options: [
-      "Plastic clip",
-      "Cable cleat or saddle",
-      "Adhesive pad",
-    ],
+    id: 'swa-fixing',
+    question: 'Which fixing is best for securing large SWA cables?',
+    options: ['Plastic clip', 'Cable cleat or saddle', 'Adhesive pad'],
     correctIndex: 1,
     explanation:
-      "Cable cleats or saddles provide the mechanical strength needed to secure heavy armoured cables safely.",
+      'Cable cleats or saddles provide the mechanical strength needed to secure heavy armoured cables safely.',
   },
   {
-    id: "corrosive-environment",
-    question: "Which material is best for fixings in corrosive or damp environments?",
-    options: [
-      "Mild steel",
-      "Stainless steel",
-      "PVC",
-    ],
+    id: 'corrosive-environment',
+    question: 'Which material is best for fixings in corrosive or damp environments?',
+    options: ['Mild steel', 'Stainless steel', 'PVC'],
     correctIndex: 1,
     explanation:
-      "Stainless steel provides excellent corrosion resistance in damp or chemically aggressive environments.",
+      'Stainless steel provides excellent corrosion resistance in damp or chemically aggressive environments.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which fixing is commonly used for securing Twin and Earth cable to a wall?",
-    options: [
-      "Round cable clip",
-      "Flat twin clip",
-      "Metal cleat",
-      "Cable tie",
-    ],
+    question: 'Which fixing is commonly used for securing Twin and Earth cable to a wall?',
+    options: ['Round cable clip', 'Flat twin clip', 'Metal cleat', 'Cable tie'],
     correctAnswer: 1,
     explanation:
-      "Flat twin clips are specifically designed to secure the flat profile of Twin and Earth cable against walls and surfaces.",
+      'Flat twin clips are specifically designed to secure the flat profile of Twin and Earth cable against walls and surfaces.',
   },
   {
     id: 2,
-    question: "Which fixing is best for securing large SWA cables?",
-    options: [
-      "Plastic clip",
-      "Nylon tie",
-      "Cable cleat or saddle",
-      "Adhesive pad",
-    ],
+    question: 'Which fixing is best for securing large SWA cables?',
+    options: ['Plastic clip', 'Nylon tie', 'Cable cleat or saddle', 'Adhesive pad'],
     correctAnswer: 2,
     explanation:
-      "Cable cleats or saddles provide the mechanical strength and support needed for heavy steel wire armoured cables.",
+      'Cable cleats or saddles provide the mechanical strength and support needed for heavy steel wire armoured cables.',
   },
   {
     id: 3,
-    question: "True or False: Plastic cable clips are acceptable as the only fixing method in escape routes.",
-    options: [
-      "True",
-      "False",
-    ],
+    question:
+      'True or False: Plastic cable clips are acceptable as the only fixing method in escape routes.',
+    options: ['True', 'False'],
     correctAnswer: 1,
     explanation:
-      "False. BS 7671 18th Edition requires non-combustible fixings in escape routes to prevent cables falling during a fire.",
+      'False. BS 7671 18th Edition requires non-combustible fixings in escape routes to prevent cables falling during a fire.',
   },
   {
     id: 4,
-    question: "What is the main reason for using non-combustible fixings in escape routes?",
+    question: 'What is the main reason for using non-combustible fixings in escape routes?',
     options: [
-      "They are cheaper",
-      "To prevent cables falling and obstructing escape routes during a fire",
-      "They look more professional",
-      "They are easier to install",
+      'They are cheaper',
+      'To prevent cables falling and obstructing escape routes during a fire',
+      'They look more professional',
+      'They are easier to install',
     ],
     correctAnswer: 1,
     explanation:
-      "Non-combustible fixings prevent cables from falling and blocking escape routes when plastic fixings melt in a fire.",
+      'Non-combustible fixings prevent cables from falling and blocking escape routes when plastic fixings melt in a fire.',
   },
   {
     id: 5,
-    question: "Name one type of cable tie that can be used in high-temperature environments.",
-    options: [
-      "Nylon tie",
-      "Plastic tie",
-      "Stainless steel tie",
-      "Paper tie",
-    ],
+    question: 'Name one type of cable tie that can be used in high-temperature environments.',
+    options: ['Nylon tie', 'Plastic tie', 'Stainless steel tie', 'Paper tie'],
     correctAnswer: 2,
     explanation:
-      "Stainless steel ties maintain their strength and integrity in high-temperature environments where plastic ties would fail.",
+      'Stainless steel ties maintain their strength and integrity in high-temperature environments where plastic ties would fail.',
   },
   {
     id: 6,
-    question: "Which material is best for fixings in corrosive or damp environments?",
-    options: [
-      "Mild steel",
-      "Stainless steel",
-      "PVC",
-      "Aluminium",
-    ],
+    question: 'Which material is best for fixings in corrosive or damp environments?',
+    options: ['Mild steel', 'Stainless steel', 'PVC', 'Aluminium'],
     correctAnswer: 1,
     explanation:
-      "Stainless steel provides excellent corrosion resistance making it ideal for damp or chemically aggressive environments.",
+      'Stainless steel provides excellent corrosion resistance making it ideal for damp or chemically aggressive environments.',
   },
   {
     id: 7,
-    question: "Why should cable ties not be over-tightened?",
+    question: 'Why should cable ties not be over-tightened?',
     options: [
       "They're expensive",
-      "They can damage cable insulation",
-      "They may cause cables to overheat",
-      "They make the cable too flexible",
+      'They can damage cable insulation',
+      'They may cause cables to overheat',
+      'They make the cable too flexible',
     ],
     correctAnswer: 1,
     explanation:
-      "Over-tightening cable ties can cut into or damage cable insulation, potentially causing electrical faults or safety hazards.",
+      'Over-tightening cable ties can cut into or damage cable insulation, potentially causing electrical faults or safety hazards.',
   },
   {
     id: 8,
-    question: "Give one example of a fixing suitable for conduit systems.",
+    question: 'Give one example of a fixing suitable for conduit systems.',
     options: [
-      "Flat twin clip",
-      "Saddles, brackets, or conduit clips",
-      "Cable ties only",
-      "Adhesive strips",
+      'Flat twin clip',
+      'Saddles, brackets, or conduit clips',
+      'Cable ties only',
+      'Adhesive strips',
     ],
     correctAnswer: 1,
     explanation:
-      "Saddles, brackets, and purpose-made conduit clips provide proper mechanical support for conduit systems.",
+      'Saddles, brackets, and purpose-made conduit clips provide proper mechanical support for conduit systems.',
   },
 ];
 
 const Module3Section2_6 = () => {
   useSEO(
-    "Fixings, Clips and Cable Ties | Level 2 Electrical",
-    "Complete guide to cable fixings, clips and ties. Fire-resistant support requirements, selection criteria and BS 7671 compliance."
+    'Fixings, Clips and Cable Ties | Level 2 Electrical',
+    'Complete guide to cable fixings, clips and ties. Fire-resistant support requirements, selection criteria and BS 7671 compliance.'
   );
 
   const faqs = [
     {
-      q: "Are stainless steel cable ties always necessary?",
-      a: "No - they are typically used in high-temperature or corrosive environments, but other metal fixings may be suitable for standard indoor work.",
+      q: 'Are stainless steel cable ties always necessary?',
+      a: 'No - they are typically used in high-temperature or corrosive environments, but other metal fixings may be suitable for standard indoor work.',
     },
     {
-      q: "Can I still use plastic clips?",
-      a: "Yes, but in escape routes they must be supplemented with non-combustible supports to meet BS 7671 fire-resistant requirements.",
+      q: 'Can I still use plastic clips?',
+      a: 'Yes, but in escape routes they must be supplemented with non-combustible supports to meet BS 7671 fire-resistant requirements.',
     },
     {
       q: "What's the spacing for cable fixings?",
       a: "Depends on cable size and type - always follow BS 7671 guidance and manufacturer's recommendations. Typically 400mm for horizontal, 600mm for vertical runs.",
     },
     {
-      q: "Do I need different fixings for outdoor installations?",
-      a: "Yes - use UV-resistant materials and consider thermal expansion. Stainless steel or galvanised fixings are preferred for weather exposure.",
+      q: 'Do I need different fixings for outdoor installations?',
+      a: 'Yes - use UV-resistant materials and consider thermal expansion. Stainless steel or galvanised fixings are preferred for weather exposure.',
     },
   ];
 
@@ -217,7 +191,8 @@ const Module3Section2_6 = () => {
               Fixings, Clips and Cable Ties
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Essential cable support components, fire-resistant requirements and best practices for secure electrical installations.
+              Essential cable support components, fire-resistant requirements and best practices for
+              secure electrical installations.
             </p>
           </header>
 
@@ -231,18 +206,38 @@ const Module3Section2_6 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li>Cable fixings: Essential for secure, compliant installations preventing cable damage.</li>
-                  <li>Fire-resistant: BS 7671 18th Edition requires non-combustible fixings in escape routes.</li>
-                  <li>Selection criteria: Cable type, environment, load requirements and corrosion resistance.</li>
-                  <li>Best practice: Correct spacing, proper tensioning and material compatibility.</li>
+                  <li>
+                    Cable fixings: Essential for secure, compliant installations preventing cable
+                    damage.
+                  </li>
+                  <li>
+                    Fire-resistant: BS 7671 18th Edition requires non-combustible fixings in escape
+                    routes.
+                  </li>
+                  <li>
+                    Selection criteria: Cable type, environment, load requirements and corrosion
+                    resistance.
+                  </li>
+                  <li>
+                    Best practice: Correct spacing, proper tensioning and material compatibility.
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Spot:</strong> White plastic clips (T&E), metal cleats (SWA), cable ties (grouping).</li>
-                  <li><strong>Use:</strong> Match fixing to cable type, environment and fire safety requirements.</li>
-                  <li><strong>Check:</strong> Spacing intervals, material suitability, fire-resistant compliance.</li>
+                  <li>
+                    <strong>Spot:</strong> White plastic clips (T&E), metal cleats (SWA), cable ties
+                    (grouping).
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Match fixing to cable type, environment and fire safety
+                    requirements.
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Spacing intervals, material suitability, fire-resistant
+                    compliance.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -255,11 +250,25 @@ const Module3Section2_6 = () => {
               Learning Outcomes
             </h2>
             <ul className="list-disc pl-6 space-y-2 text-sm text-white/90">
-              <li>Identify common types of cable fixings and supports for different cable types and applications.</li>
-              <li>Select appropriate fixing methods for different environments including corrosive and outdoor conditions.</li>
-              <li>Explain the fire-resistant support requirements introduced in BS 7671 18th Edition.</li>
-              <li>Apply best practice when using clips, ties and supports including spacing and tensioning.</li>
-              <li>Understand material selection criteria for longevity and compliance in various environments.</li>
+              <li>
+                Identify common types of cable fixings and supports for different cable types and
+                applications.
+              </li>
+              <li>
+                Select appropriate fixing methods for different environments including corrosive and
+                outdoor conditions.
+              </li>
+              <li>
+                Explain the fire-resistant support requirements introduced in BS 7671 18th Edition.
+              </li>
+              <li>
+                Apply best practice when using clips, ties and supports including spacing and
+                tensioning.
+              </li>
+              <li>
+                Understand material selection criteria for longevity and compliance in various
+                environments.
+              </li>
             </ul>
           </section>
 
@@ -284,7 +293,9 @@ const Module3Section2_6 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-elec-yellow mb-1">Installation Considerations</p>
+                      <p className="font-medium text-elec-yellow mb-1">
+                        Installation Considerations
+                      </p>
                       <ul className="list-disc pl-5 space-y-1">
                         <li>Spacing: 400mm horizontal, 600mm vertical typical</li>
                         <li>Avoid over-compression of cable insulation</li>
@@ -349,7 +360,9 @@ const Module3Section2_6 = () => {
                   <p className="font-semibold text-white mb-3">Containment Fixings</p>
                   <div className="space-y-3 text-sm text-white/90">
                     <div>
-                      <p className="font-medium text-elec-yellow mb-1">Conduit and Trunking Support</p>
+                      <p className="font-medium text-elec-yellow mb-1">
+                        Conduit and Trunking Support
+                      </p>
                       <ul className="list-disc pl-5 space-y-1">
                         <li>Saddles: Most common for round conduit</li>
                         <li>Brackets: L-shaped for trunking systems</li>
@@ -384,12 +397,19 @@ const Module3Section2_6 = () => {
             </h2>
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">Fire-resistant support requirements (BS 7671 18th Edition)</p>
+                <p className="font-medium text-white mb-2">
+                  Fire-resistant support requirements (BS 7671 18th Edition)
+                </p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
                   <li>All wiring systems in escape routes must use non-combustible fixings</li>
                   <li>Plastic clips and ties alone are not acceptable in these critical areas</li>
-                  <li>Metal clips, steel cable ties or combined fixings with fire-resistant anchors required</li>
-                  <li>Prevents cables falling and obstructing escape routes during fire incidents</li>
+                  <li>
+                    Metal clips, steel cable ties or combined fixings with fire-resistant anchors
+                    required
+                  </li>
+                  <li>
+                    Prevents cables falling and obstructing escape routes during fire incidents
+                  </li>
                   <li>Regular inspection ensures continued compliance over installation life</li>
                 </ul>
               </div>
@@ -399,7 +419,9 @@ const Module3Section2_6 = () => {
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
                   <li>Indoor standard: Nylon or PVC suitable for most applications</li>
                   <li>Outdoor/UV exposure: Use UV-stabilised materials or metal fixings</li>
-                  <li>Corrosive environments: Stainless steel (316 grade) for chemical resistance</li>
+                  <li>
+                    Corrosive environments: Stainless steel (316 grade) for chemical resistance
+                  </li>
                   <li>High temperature: Metal fixings rated for expected temperatures</li>
                 </ul>
               </div>
@@ -418,22 +440,45 @@ const Module3Section2_6 = () => {
             </h2>
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="font-semibold text-elec-yellow mb-2">Selection and sizing guidelines</p>
+                <p className="font-semibold text-elec-yellow mb-2">
+                  Selection and sizing guidelines
+                </p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li><strong>Load rating:</strong> Choose fixings rated for cable weight plus 50% safety margin</li>
-                  <li><strong>Cable diameter:</strong> Clips should accommodate cable without compression</li>
-                  <li><strong>Bundle sizing:</strong> Cable ties sized for maximum anticipated cable bundle</li>
-                  <li><strong>Environmental factors:</strong> Temperature range, UV exposure, chemical compatibility</li>
-                  <li><strong>Future access:</strong> Consider maintenance and modification requirements</li>
+                  <li>
+                    <strong>Load rating:</strong> Choose fixings rated for cable weight plus 50%
+                    safety margin
+                  </li>
+                  <li>
+                    <strong>Cable diameter:</strong> Clips should accommodate cable without
+                    compression
+                  </li>
+                  <li>
+                    <strong>Bundle sizing:</strong> Cable ties sized for maximum anticipated cable
+                    bundle
+                  </li>
+                  <li>
+                    <strong>Environmental factors:</strong> Temperature range, UV exposure, chemical
+                    compatibility
+                  </li>
+                  <li>
+                    <strong>Future access:</strong> Consider maintenance and modification
+                    requirements
+                  </li>
                 </ul>
               </div>
 
               <div className="rounded-lg p-4 bg-violet-500/10 border border-violet-400/30">
                 <p className="font-semibold text-violet-200 mb-2">Installation best practices</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-violet-200">
-                  <li>Pre-plan fixing positions using measuring tape and level for neat appearance</li>
-                  <li>Use appropriate wall plugs matched to substrate (masonry, plasterboard, steel)</li>
-                  <li>Avoid over-tightening which can damage cable insulation or create stress points</li>
+                  <li>
+                    Pre-plan fixing positions using measuring tape and level for neat appearance
+                  </li>
+                  <li>
+                    Use appropriate wall plugs matched to substrate (masonry, plasterboard, steel)
+                  </li>
+                  <li>
+                    Avoid over-tightening which can damage cable insulation or create stress points
+                  </li>
                   <li>Maintain consistent spacing intervals per BS 7671 recommendations</li>
                   <li>Group cables logically and secure with appropriately sized ties</li>
                   <li>Trim cable tie tails to prevent snagging and maintain professional finish</li>
@@ -444,9 +489,15 @@ const Module3Section2_6 = () => {
                 <p className="font-semibold text-indigo-200 mb-2">Quality and compliance checks</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-indigo-200">
                   <li>Verify fixing security: should support cable weight without movement</li>
-                  <li>Check cable freedom: cables should move naturally without binding at fixings</li>
-                  <li>Inspect for damage: no visible compression, cutting or abrasion of cable sheath</li>
-                  <li>Confirm fire compliance: non-combustible fixings in escape routes verified</li>
+                  <li>
+                    Check cable freedom: cables should move naturally without binding at fixings
+                  </li>
+                  <li>
+                    Inspect for damage: no visible compression, cutting or abrasion of cable sheath
+                  </li>
+                  <li>
+                    Confirm fire compliance: non-combustible fixings in escape routes verified
+                  </li>
                   <li>Document materials used: maintain records for inspection and maintenance</li>
                 </ul>
               </div>
@@ -467,21 +518,48 @@ const Module3Section2_6 = () => {
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Installation errors</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li><strong>Over-tightening fixings:</strong> Compressing cable insulation causing potential failure points</li>
-                  <li><strong>Incorrect spacing:</strong> Too wide spacing allowing cable sag and potential damage</li>
-                  <li><strong>Wrong clip size:</strong> Using clips too small or large for cable diameter</li>
-                  <li><strong>Poor substrate fixing:</strong> Inadequate wall plugs leading to fixing failure over time</li>
-                  <li><strong>Mixed materials:</strong> Galvanic corrosion from incompatible metal combinations</li>
+                  <li>
+                    <strong>Over-tightening fixings:</strong> Compressing cable insulation causing
+                    potential failure points
+                  </li>
+                  <li>
+                    <strong>Incorrect spacing:</strong> Too wide spacing allowing cable sag and
+                    potential damage
+                  </li>
+                  <li>
+                    <strong>Wrong clip size:</strong> Using clips too small or large for cable
+                    diameter
+                  </li>
+                  <li>
+                    <strong>Poor substrate fixing:</strong> Inadequate wall plugs leading to fixing
+                    failure over time
+                  </li>
+                  <li>
+                    <strong>Mixed materials:</strong> Galvanic corrosion from incompatible metal
+                    combinations
+                  </li>
                 </ul>
               </div>
 
               <div className="rounded-lg p-4 bg-white/5 border border-amber-400/30">
                 <p className="font-medium text-amber-300 mb-2">Compliance and safety oversights</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li><strong>Fire regulation non-compliance:</strong> Using plastic-only fixings in escape routes</li>
-                  <li><strong>Environmental unsuitability:</strong> Standard fixings in corrosive or outdoor environments</li>
-                  <li><strong>Inadequate support:</strong> Insufficient fixings for cable weight and span requirements</li>
-                  <li><strong>Future access blocking:</strong> Fixing cables in ways that prevent maintenance access</li>
+                  <li>
+                    <strong>Fire regulation non-compliance:</strong> Using plastic-only fixings in
+                    escape routes
+                  </li>
+                  <li>
+                    <strong>Environmental unsuitability:</strong> Standard fixings in corrosive or
+                    outdoor environments
+                  </li>
+                  <li>
+                    <strong>Inadequate support:</strong> Insufficient fixings for cable weight and
+                    span requirements
+                  </li>
+                  <li>
+                    <strong>Future access blocking:</strong> Fixing cables in ways that prevent
+                    maintenance access
+                  </li>
                 </ul>
               </div>
             </div>
@@ -499,18 +577,37 @@ const Module3Section2_6 = () => {
             </h2>
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
-                <p className="font-medium text-white mb-2">18th Edition fire-resistant requirements</p>
+                <p className="font-medium text-white mb-2">
+                  18th Edition fire-resistant requirements
+                </p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li><strong>521.10.201:</strong> Cable supports in escape routes must be fire-resistant</li>
-                  <li><strong>521.10.202:</strong> Non-combustible materials required for support systems</li>
-                  <li><strong>Definition of escape routes:</strong> Corridors, stairwells, designated emergency egress</li>
-                  <li><strong>Compliance verification:</strong> Regular inspection and testing of support integrity</li>
-                  <li><strong>Documentation:</strong> Records of materials used and installation compliance</li>
+                  <li>
+                    <strong>521.10.201:</strong> Cable supports in escape routes must be
+                    fire-resistant
+                  </li>
+                  <li>
+                    <strong>521.10.202:</strong> Non-combustible materials required for support
+                    systems
+                  </li>
+                  <li>
+                    <strong>Definition of escape routes:</strong> Corridors, stairwells, designated
+                    emergency egress
+                  </li>
+                  <li>
+                    <strong>Compliance verification:</strong> Regular inspection and testing of
+                    support integrity
+                  </li>
+                  <li>
+                    <strong>Documentation:</strong> Records of materials used and installation
+                    compliance
+                  </li>
                 </ul>
               </div>
 
               <div className="rounded-lg p-4 bg-white/5 border border-green-400/30">
-                <p className="font-medium text-green-300 mb-2">Cable support spacing requirements</p>
+                <p className="font-medium text-green-300 mb-2">
+                  Cable support spacing requirements
+                </p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
                   <li>Table 4A3: Support spacing for cables not in conduit or trunking</li>
                   <li>Horizontal runs: Maximum spacing based on cable diameter and type</li>
@@ -525,7 +622,9 @@ const Module3Section2_6 = () => {
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
                   <li>BS EN 61537: Cable management systems including support requirements</li>
                   <li>IP ratings: Protection levels for different environmental exposures</li>
-                  <li>Material certifications: Fire resistance ratings and temperature limitations</li>
+                  <li>
+                    Material certifications: Fire resistance ratings and temperature limitations
+                  </li>
                   <li>Corrosion resistance: Standards for different environmental conditions</li>
                   <li>UV stability: Requirements for outdoor and sunlight exposure applications</li>
                 </ul>
@@ -540,11 +639,13 @@ const Module3Section2_6 = () => {
               Real-world Scenario
             </h2>
             <div className="rounded-lg p-4 bg-white/5 border border-slate-400/30">
-              <h3 className="font-medium text-white mb-2">Post-fire inspection compliance failure</h3>
+              <h3 className="font-medium text-white mb-2">
+                Post-fire inspection compliance failure
+              </h3>
               <p className="text-sm text-white/80 mb-3">
-                During a post-fire inspection of an apartment block, it was found that plastic-only cable fixings
-                in escape routes had melted, causing cables to hang down and obstruct stairs, creating hazards
-                for both residents and emergency responders.
+                During a post-fire inspection of an apartment block, it was found that plastic-only
+                cable fixings in escape routes had melted, causing cables to hang down and obstruct
+                stairs, creating hazards for both residents and emergency responders.
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
@@ -577,7 +678,10 @@ const Module3Section2_6 = () => {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
+                >
                   <p className="font-medium text-white mb-1">Q: {faq.q}</p>
                   <p className="text-sm text-white/80">A: {faq.a}</p>
                 </div>
@@ -593,18 +697,35 @@ const Module3Section2_6 = () => {
               </h2>
               <div className="space-y-3 text-sm text-white/90">
                 <p>
-                  <strong>Cable fixings</strong> are essential components that ensure cables remain secure, compliant and safe throughout their service life.
+                  <strong>Cable fixings</strong> are essential components that ensure cables remain
+                  secure, compliant and safe throughout their service life.
                 </p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Fire resistance</strong> is now critical - BS 7671 18th Edition requires non-combustible fixings in escape routes</li>
-                  <li><strong>Material selection</strong> must consider environment, load, temperature and corrosion factors</li>
-                  <li><strong>Installation quality</strong> affects both safety and professional appearance of electrical work</li>
-                  <li><strong>Spacing and tensioning</strong> must follow manufacturer guidance and BS 7671 requirements</li>
-                  <li><strong>Regular inspection</strong> ensures continued compliance and identifies potential problems early</li>
+                  <li>
+                    <strong>Fire resistance</strong> is now critical - BS 7671 18th Edition requires
+                    non-combustible fixings in escape routes
+                  </li>
+                  <li>
+                    <strong>Material selection</strong> must consider environment, load, temperature
+                    and corrosion factors
+                  </li>
+                  <li>
+                    <strong>Installation quality</strong> affects both safety and professional
+                    appearance of electrical work
+                  </li>
+                  <li>
+                    <strong>Spacing and tensioning</strong> must follow manufacturer guidance and BS
+                    7671 requirements
+                  </li>
+                  <li>
+                    <strong>Regular inspection</strong> ensures continued compliance and identifies
+                    potential problems early
+                  </li>
                 </ul>
                 <p>
-                  Proper selection and installation of fixings, clips and ties prevents cable damage, ensures regulatory
-                  compliance and maintains the integrity of electrical installations under all conditions.
+                  Proper selection and installation of fixings, clips and ties prevents cable
+                  damage, ensures regulatory compliance and maintains the integrity of electrical
+                  installations under all conditions.
                 </p>
               </div>
             </div>
@@ -683,8 +804,9 @@ const Module3Section2_6 = () => {
             </div>
             <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
               <p className="text-yellow-200 text-xs">
-                <strong>Critical check:</strong> Fire areas need non-combustible fixings. Check environment for corrosion
-                resistance. Never over-tighten - damage to cable insulation creates safety hazards.
+                <strong>Critical check:</strong> Fire areas need non-combustible fixings. Check
+                environment for corrosion resistance. Never over-tighten - damage to cable
+                insulation creates safety hazards.
               </p>
             </div>
           </section>

@@ -78,7 +78,7 @@ const commonTestInstruments = [
   { value: 'Di-Log CombiVolt 2', label: 'Di-Log CombiVolt 2 - Voltage Indicator' },
   { value: 'Chauvin Arnoux C.A 6117', label: 'Chauvin Arnoux C.A 6117 - Multifunction Tester' },
   { value: 'Chauvin Arnoux C.A 6116N', label: 'Chauvin Arnoux C.A 6116N - Multifunction Tester' },
-  { value: 'Other', label: 'Other (Manual Entry)' }
+  { value: 'Other', label: 'Other (Manual Entry)' },
 ];
 
 const RECENT_INSTRUMENTS_KEY = 'recent-test-instruments';
@@ -102,13 +102,14 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
     const modelNorm = profileInstrument.model?.toLowerCase() || '';
 
     // Find exact or close matching option
-    const matchingOption = commonTestInstruments.find(inst => {
+    const matchingOption = commonTestInstruments.find((inst) => {
       if (inst.value === 'Other') return false;
       const valueNorm = inst.value.toLowerCase();
       // Exact match: "Megger MFT-X1" matches profile make="Megger" model="MFT-X1"
       if (valueNorm === instrumentMake.toLowerCase()) return true;
       // Contains both make and model
-      if (makeNorm && modelNorm && valueNorm.includes(makeNorm) && valueNorm.includes(modelNorm)) return true;
+      if (makeNorm && modelNorm && valueNorm.includes(makeNorm) && valueNorm.includes(modelNorm))
+        return true;
       // Contains exact model (for unique models like "MFT-X1", "1664 FC")
       if (modelNorm && modelNorm.length >= 4 && valueNorm.includes(modelNorm)) return true;
       return false;
@@ -143,7 +144,12 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
     ) {
       handleAutoFillFromProfile();
     }
-  }, [profileInstrument, formData.testInstrumentMake, formData.testInstrumentSerial, hasAutoFilled]);
+  }, [
+    profileInstrument,
+    formData.testInstrumentMake,
+    formData.testInstrumentSerial,
+    hasAutoFilled,
+  ]);
 
   // Load recent instruments on mount
   useEffect(() => {
@@ -193,7 +199,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
         const { offlineStorage } = await import('@/utils/offlineStorage');
         await offlineStorage.saveInstrumentDetails(make, {
           serialNumber: serial,
-          calibrationDate: calibration || ''
+          calibrationDate: calibration || '',
         });
       } catch (e) {
         console.error('Failed to save instrument details', e);
@@ -213,10 +219,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
   const saveToRecent = async (instrument: string) => {
     if (!instrument || instrument === 'Other') return;
 
-    const updated = [
-      instrument,
-      ...recentInstruments.filter(i => i !== instrument)
-    ].slice(0, 3); // Keep only last 3
+    const updated = [instrument, ...recentInstruments.filter((i) => i !== instrument)].slice(0, 3); // Keep only last 3
 
     setRecentInstruments(updated);
     const { offlineStorage } = await import('@/utils/offlineStorage');
@@ -225,7 +228,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
 
   // Filter instruments based on search
   const filteredInstruments = searchTerm
-    ? commonTestInstruments.filter(inst =>
+    ? commonTestInstruments.filter((inst) =>
         inst.label.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : commonTestInstruments;
@@ -240,10 +243,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
   };
 
   return (
-    <div className={cn(
-      "space-y-4",
-      isMobile ? "px-4 py-4" : ""
-    )}>
+    <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : '')}>
       {/* Profile Banner - Both Mobile & Desktop */}
       {profileInstrument && (
         <div className="flex items-center justify-between gap-3 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
@@ -278,12 +278,14 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
       <div className="space-y-3">
         {/* Test Instrument - Full Width */}
         <div className="space-y-1.5">
-          <Label htmlFor="testInstrumentMake" className="text-xs font-medium text-foreground/70">Test Instrument</Label>
+          <Label htmlFor="testInstrumentMake" className="text-xs font-medium text-foreground/70">
+            Test Instrument
+          </Label>
           {!isOtherSelected ? (
             <MobileSelectPicker
-              value={formData.testInstrumentMake || ""}
+              value={formData.testInstrumentMake || ''}
               onValueChange={(value) => {
-                onUpdate("testInstrumentMake", value);
+                onUpdate('testInstrumentMake', value);
                 saveToRecent(value);
                 loadInstrumentDetails(value);
                 setSearchTerm('');
@@ -329,7 +331,9 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
 
         {/* Serial Number - Full Width */}
         <div className="space-y-1.5">
-          <Label htmlFor="testInstrumentSerial" className="text-xs font-medium text-foreground/70">Serial Number</Label>
+          <Label htmlFor="testInstrumentSerial" className="text-xs font-medium text-foreground/70">
+            Serial Number
+          </Label>
           <Input
             id="testInstrumentSerial"
             value={formData.testInstrumentSerial || ''}
@@ -342,7 +346,9 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
         {/* Calibration & Temperature - 2 Column Grid */}
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label htmlFor="calibrationDate" className="text-xs font-medium text-foreground/70">Calibration Date</Label>
+            <Label htmlFor="calibrationDate" className="text-xs font-medium text-foreground/70">
+              Calibration Date
+            </Label>
             <Input
               id="calibrationDate"
               type="date"
@@ -353,7 +359,9 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="testTemperature" className="text-xs font-medium text-foreground/70">Temperature (°C)</Label>
+            <Label htmlFor="testTemperature" className="text-xs font-medium text-foreground/70">
+              Temperature (°C)
+            </Label>
             <Input
               id="testTemperature"
               value={formData.testTemperature || ''}

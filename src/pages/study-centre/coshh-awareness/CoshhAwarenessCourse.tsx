@@ -1,65 +1,83 @@
-import { ArrowLeft, FlaskConical, BookOpen, Scale, HardHat, Shield, Siren, GraduationCap, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  FlaskConical,
+  BookOpen,
+  Scale,
+  HardHat,
+  Shield,
+  Siren,
+  GraduationCap,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Understanding COSHH",
-    description: "COSHH Regulations 2002, substance types, routes of exposure, and health effects of hazardous substances",
+    title: 'Understanding COSHH',
+    description:
+      'COSHH Regulations 2002, substance types, routes of exposure, and health effects of hazardous substances',
     icon: BookOpen,
-    duration: "30 mins",
-    link: "../coshh-awareness-module-1",
+    duration: '30 mins',
+    link: '../coshh-awareness-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Legislation & Risk Assessment",
-    description: "Legal framework, COSHH assessment process, safety data sheets, and workplace exposure limits",
+    title: 'Legislation & Risk Assessment',
+    description:
+      'Legal framework, COSHH assessment process, safety data sheets, and workplace exposure limits',
     icon: Scale,
-    duration: "30 mins",
-    link: "../coshh-awareness-module-2",
+    duration: '30 mins',
+    link: '../coshh-awareness-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Hazardous Substances on Site",
-    description: "Construction and electrical trade hazards, dust and fume control, and biological risks",
+    title: 'Hazardous Substances on Site',
+    description:
+      'Construction and electrical trade hazards, dust and fume control, and biological risks',
     icon: HardHat,
-    duration: "30 mins",
-    link: "../coshh-awareness-module-3",
+    duration: '30 mins',
+    link: '../coshh-awareness-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Control Measures & PPE",
-    description: "Hierarchy of control, engineering controls, RPE and PPE selection, storage and disposal",
+    title: 'Control Measures & PPE',
+    description:
+      'Hierarchy of control, engineering controls, RPE and PPE selection, storage and disposal',
     icon: Shield,
-    duration: "30 mins",
-    link: "../coshh-awareness-module-4",
+    duration: '30 mins',
+    link: '../coshh-awareness-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Monitoring, Surveillance & Emergencies",
-    description: "Workplace monitoring, health surveillance, emergency procedures, and record keeping",
+    title: 'Monitoring, Surveillance & Emergencies',
+    description:
+      'Workplace monitoring, health surveillance, emergency procedures, and record keeping',
     icon: Siren,
-    duration: "30 mins",
-    link: "../coshh-awareness-module-5",
+    duration: '30 mins',
+    link: '../coshh-awareness-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../coshh-awareness-module-6",
+    duration: '30 mins',
+    link: '../coshh-awareness-module-6',
     isExam: true,
   },
 ];
 
 export default function CoshhAwarenessCourse() {
   useSEO({
-    title: "COSHH Awareness | General Upskilling",
-    description: "Complete COSHH awareness training covering hazardous substances, risk assessment, control measures, PPE, and mock exam preparation.",
+    title: 'COSHH Awareness | General Upskilling',
+    description:
+      'Complete COSHH awareness training covering hazardous substances, risk assessment, control measures, PPE, and mock exam preparation.',
   });
 
   return (
@@ -96,7 +114,8 @@ export default function CoshhAwarenessCourse() {
                 COSHH Awareness
               </h1>
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 max-w-2xl">
-                Control of substances hazardous to health — identification, risk assessment, and safe handling for tradespeople
+                Control of substances hazardous to health — identification, risk assessment, and
+                safe handling for tradespeople
               </p>
             </div>
           </div>

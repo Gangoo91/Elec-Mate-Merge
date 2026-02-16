@@ -10,7 +10,7 @@ interface ElecMateDB extends DBSchema {
       updatedAt: string;
     };
   };
-  'photos': {
+  photos: {
     key: string;
     value: {
       reportId: string;
@@ -110,11 +110,15 @@ class OfflineStorageManager {
   // Form Drafts
   async saveDraft(reportType: string, data: any): Promise<void> {
     const db = await this.dbPromise;
-    await db.put('form-drafts', {
-      reportType,
-      data,
-      updatedAt: new Date().toISOString(),
-    }, reportType);
+    await db.put(
+      'form-drafts',
+      {
+        reportType,
+        data,
+        updatedAt: new Date().toISOString(),
+      },
+      reportType
+    );
   }
 
   async getDraft(reportType: string): Promise<any> {
@@ -132,12 +136,16 @@ class OfflineStorageManager {
   async savePhoto(reportId: string, blob: Blob, filename: string): Promise<string> {
     const db = await this.dbPromise;
     const photoId = crypto.randomUUID();
-    await db.put('photos', {
-      reportId,
-      blob,
-      filename,
-      timestamp: new Date().toISOString(),
-    }, photoId);
+    await db.put(
+      'photos',
+      {
+        reportId,
+        blob,
+        filename,
+        timestamp: new Date().toISOString(),
+      },
+      photoId
+    );
     return photoId;
   }
 
@@ -147,14 +155,18 @@ class OfflineStorageManager {
     const store = tx.objectStore('photos');
     const allPhotos = await store.getAll();
     const allKeys = await store.getAllKeys();
-    
+
     return allPhotos
       .map((photo, index) => ({
         id: allKeys[index] as string,
         blob: photo.blob,
         filename: photo.filename,
       }))
-      .filter(photo => allPhotos[allPhotos.indexOf(allPhotos.find(p => p.reportId === reportId)!)].reportId === reportId);
+      .filter(
+        (photo) =>
+          allPhotos[allPhotos.indexOf(allPhotos.find((p) => p.reportId === reportId)!)].reportId ===
+          reportId
+      );
   }
 
   async deletePhoto(photoId: string): Promise<void> {
@@ -208,7 +220,7 @@ class OfflineStorageManager {
   // Migration from localStorage
   async migrateFromLocalStorage(): Promise<void> {
     console.log('[OfflineStorage] Starting localStorage migration...');
-    
+
     try {
       // Check if migration already completed
       const migrated = await this.getPreference('migration_completed');
@@ -268,14 +280,15 @@ class OfflineStorageManager {
         'autoSaveEnabled',
         'autoSaveInterval',
         'minorWorks_smartDefaults',
-        'elecmate-tour-completed'
+        'elecmate-tour-completed',
       ];
-      
+
       for (const key of prefsToMigrate) {
         const value = localStorage.getItem(key);
         if (value) {
           try {
-            const parsed = value.startsWith('{') || value.startsWith('[') ? JSON.parse(value) : value;
+            const parsed =
+              value.startsWith('{') || value.startsWith('[') ? JSON.parse(value) : value;
             await this.setPreference(key, parsed);
             migratedCount++;
           } catch (e) {
@@ -286,7 +299,7 @@ class OfflineStorageManager {
 
       // Mark migration as complete
       await this.setPreference('migration_completed', true);
-      
+
       console.log(`[OfflineStorage] Migration completed! Migrated ${migratedCount} items`);
       console.log('[OfflineStorage] Note: localStorage data preserved for compatibility');
     } catch (error) {
@@ -308,18 +321,25 @@ class OfflineStorageManager {
   }
 
   // Save full instrument details (make, serial, calibration) - keyed by instrument make
-  async saveInstrumentDetails(make: string, details: { serialNumber: string; calibrationDate: string }): Promise<void> {
+  async saveInstrumentDetails(
+    make: string,
+    details: { serialNumber: string; calibrationDate: string }
+  ): Promise<void> {
     if (!make || make === 'Other') return;
     const db = await this.dbPromise;
     await db.put('test-instruments', { ...details, lastUsed: Date.now() }, `details-${make}`);
   }
 
   // Get saved details for a specific instrument make
-  async getInstrumentDetails(make: string): Promise<{ serialNumber: string; calibrationDate: string } | null> {
+  async getInstrumentDetails(
+    make: string
+  ): Promise<{ serialNumber: string; calibrationDate: string } | null> {
     if (!make || make === 'Other') return null;
     const db = await this.dbPromise;
     const details = await db.get('test-instruments', `details-${make}`);
-    return details ? { serialNumber: details.serialNumber || '', calibrationDate: details.calibrationDate || '' } : null;
+    return details
+      ? { serialNumber: details.serialNumber || '', calibrationDate: details.calibrationDate || '' }
+      : null;
   }
 
   // Table Preferences

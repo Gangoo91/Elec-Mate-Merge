@@ -6,15 +6,9 @@ interface FormSectionProps {
   className?: string;
 }
 
-export const FormSection: React.FC<FormSectionProps> = ({ 
-  children, 
-  className 
-}) => {
+export const FormSection: React.FC<FormSectionProps> = ({ children, className }) => {
   return (
-    <div className={cn(
-      "py-3 sm:py-4 border-b border-border/40 last:border-0",
-      className
-    )}>
+    <div className={cn('py-3 sm:py-4 border-b border-border/40 last:border-0', className)}>
       {children}
     </div>
   );

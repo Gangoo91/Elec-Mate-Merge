@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule5Section6LearningOutcomes = () => {
   const outcomes = [
-    "Explain why careful planning is essential for BMS networks",
-    "Describe what segmentation is and why it matters",
-    "Identify causes of latency in building networks",
-    "Apply best-practice cabling and installation to support reliable performance"
+    'Explain why careful planning is essential for BMS networks',
+    'Describe what segmentation is and why it matters',
+    'Identify causes of latency in building networks',
+    'Apply best-practice cabling and installation to support reliable performance',
   ];
 
   return (

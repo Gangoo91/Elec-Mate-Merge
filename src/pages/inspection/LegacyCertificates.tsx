@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useLegacyCertificates, LegacyCertificate, CertificateType, UpdateLegacyCertificateInput } from '@/hooks/useLegacyCertificates';
+import {
+  useLegacyCertificates,
+  LegacyCertificate,
+  CertificateType,
+  UpdateLegacyCertificateInput,
+} from '@/hooks/useLegacyCertificates';
 import { useCustomers } from '@/hooks/inspection/useCustomers';
 import { LegacyCertificateUpload } from '@/components/LegacyCertificateUpload';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -66,7 +66,8 @@ const CERTIFICATE_TYPE_COLORS: Record<CertificateType, string> = {
 
 export default function LegacyCertificates() {
   const navigate = useNavigate();
-  const { certificates, isLoading, updateCertificate, deleteCertificate, getDownloadUrl } = useLegacyCertificates();
+  const { certificates, isLoading, updateCertificate, deleteCertificate, getDownloadUrl } =
+    useLegacyCertificates();
   const { customers } = useCustomers({});
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -80,7 +81,7 @@ export default function LegacyCertificates() {
   const [editForm, setEditForm] = useState<UpdateLegacyCertificateInput>({});
 
   // Filter certificates
-  const filteredCertificates = certificates.filter(cert => {
+  const filteredCertificates = certificates.filter((cert) => {
     const matchesSearch =
       !searchTerm ||
       cert.original_filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -165,9 +166,7 @@ export default function LegacyCertificates() {
             <FileText className="h-6 w-6 text-elec-yellow" />
             <h1 className="text-xl font-bold">Legacy Certificates</h1>
           </div>
-          <Badge variant="outline">
-            {certificates.length}
-          </Badge>
+          <Badge variant="outline">{certificates.length}</Badge>
         </div>
       </header>
 
@@ -182,11 +181,14 @@ export default function LegacyCertificates() {
               placeholder="Search certificates..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={cn("h-11 touch-manipulation", !searchTerm && "pl-9")}
+              className={cn('h-11 touch-manipulation', !searchTerm && 'pl-9')}
             />
           </div>
           <div className="flex gap-2">
-            <Select value={filterType} onValueChange={(v) => setFilterType(v as CertificateType | 'all')}>
+            <Select
+              value={filterType}
+              onValueChange={(v) => setFilterType(v as CertificateType | 'all')}
+            >
               <SelectTrigger className="w-[140px] h-11 touch-manipulation">
                 <SelectValue placeholder="All Types" />
               </SelectTrigger>
@@ -220,7 +222,9 @@ export default function LegacyCertificates() {
             <FileText className="h-12 w-12 mx-auto text-muted-foreground" />
             <div>
               <p className="text-lg font-medium">
-                {certificates.length === 0 ? 'No legacy certificates yet' : 'No matching certificates'}
+                {certificates.length === 0
+                  ? 'No legacy certificates yet'
+                  : 'No matching certificates'}
               </p>
               <p className="text-sm text-muted-foreground">
                 {certificates.length === 0
@@ -229,11 +233,7 @@ export default function LegacyCertificates() {
               </p>
             </div>
             {certificates.length === 0 && (
-              <Button
-                variant="accent"
-                onClick={() => setShowUploadDialog(true)}
-                className="gap-2"
-              >
+              <Button variant="accent" onClick={() => setShowUploadDialog(true)} className="gap-2">
                 <Plus className="h-4 w-4" />
                 Import Certificates
               </Button>
@@ -242,10 +242,7 @@ export default function LegacyCertificates() {
         ) : (
           <div className="space-y-3">
             {filteredCertificates.map((cert) => (
-              <div
-                key={cert.id}
-                className="bg-card border border-border rounded-lg p-4 space-y-3"
-              >
+              <div key={cert.id} className="bg-card border border-border rounded-lg p-4 space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -253,7 +250,9 @@ export default function LegacyCertificates() {
                         {cert.certificate_number || cert.original_filename}
                       </span>
                       {cert.certificate_type && (
-                        <Badge className={cn('text-xs', CERTIFICATE_TYPE_COLORS[cert.certificate_type])}>
+                        <Badge
+                          className={cn('text-xs', CERTIFICATE_TYPE_COLORS[cert.certificate_type])}
+                        >
                           {CERTIFICATE_TYPE_LABELS[cert.certificate_type]}
                         </Badge>
                       )}
@@ -308,10 +307,12 @@ export default function LegacyCertificates() {
                     </span>
                   )}
                   {cert.expiry_date && (
-                    <span className={cn(
-                      "flex items-center gap-1",
-                      new Date(cert.expiry_date) < new Date() && "text-red-400"
-                    )}>
+                    <span
+                      className={cn(
+                        'flex items-center gap-1',
+                        new Date(cert.expiry_date) < new Date() && 'text-red-400'
+                      )}
+                    >
                       <Calendar className="h-3 w-3" />
                       Expires: {format(new Date(cert.expiry_date), 'dd MMM yyyy')}
                     </span>
@@ -347,13 +348,13 @@ export default function LegacyCertificates() {
       </main>
 
       {/* Upload Dialog */}
-      <LegacyCertificateUpload
-        open={showUploadDialog}
-        onOpenChange={setShowUploadDialog}
-      />
+      <LegacyCertificateUpload open={showUploadDialog} onOpenChange={setShowUploadDialog} />
 
       {/* Edit Sheet */}
-      <Sheet open={!!editingCertificate} onOpenChange={(open) => !open && setEditingCertificate(null)}>
+      <Sheet
+        open={!!editingCertificate}
+        onOpenChange={(open) => !open && setEditingCertificate(null)}
+      >
         <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl flex flex-col">
           <SheetHeader className="px-4 py-4 border-b border-border">
             <SheetTitle>Edit Certificate Details</SheetTitle>
@@ -364,7 +365,9 @@ export default function LegacyCertificates() {
                 <Label>Certificate Type</Label>
                 <Select
                   value={editForm.certificate_type || ''}
-                  onValueChange={(value) => setEditForm(prev => ({ ...prev, certificate_type: value as CertificateType }))}
+                  onValueChange={(value) =>
+                    setEditForm((prev) => ({ ...prev, certificate_type: value as CertificateType }))
+                  }
                 >
                   <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select type" />
@@ -383,7 +386,9 @@ export default function LegacyCertificates() {
                 <Label>Certificate Number</Label>
                 <Input
                   value={editForm.certificate_number || ''}
-                  onChange={(e) => setEditForm(prev => ({ ...prev, certificate_number: e.target.value }))}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, certificate_number: e.target.value }))
+                  }
                   className="h-11 touch-manipulation"
                 />
               </div>
@@ -392,7 +397,9 @@ export default function LegacyCertificates() {
                 <Label>Client Name</Label>
                 <Input
                   value={editForm.client_name || ''}
-                  onChange={(e) => setEditForm(prev => ({ ...prev, client_name: e.target.value }))}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, client_name: e.target.value }))
+                  }
                   className="h-11 touch-manipulation"
                 />
               </div>
@@ -401,13 +408,15 @@ export default function LegacyCertificates() {
                 <Label>Link to Customer</Label>
                 <Select
                   value={editForm.customer_id || ''}
-                  onValueChange={(value) => setEditForm(prev => ({ ...prev, customer_id: value || null }))}
+                  onValueChange={(value) =>
+                    setEditForm((prev) => ({ ...prev, customer_id: value || null }))
+                  }
                 >
                   <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select customer" />
                   </SelectTrigger>
                   <SelectContent>
-                    {customers.map(customer => (
+                    {customers.map((customer) => (
                       <SelectItem key={customer.id} value={customer.id}>
                         {customer.name}
                       </SelectItem>
@@ -420,7 +429,9 @@ export default function LegacyCertificates() {
                 <Label>Installation Address</Label>
                 <Input
                   value={editForm.installation_address || ''}
-                  onChange={(e) => setEditForm(prev => ({ ...prev, installation_address: e.target.value }))}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, installation_address: e.target.value }))
+                  }
                   className="h-11 touch-manipulation"
                 />
               </div>
@@ -430,7 +441,7 @@ export default function LegacyCertificates() {
                 <Input
                   type="date"
                   value={editForm.issue_date || ''}
-                  onChange={(e) => setEditForm(prev => ({ ...prev, issue_date: e.target.value }))}
+                  onChange={(e) => setEditForm((prev) => ({ ...prev, issue_date: e.target.value }))}
                   className="h-11 touch-manipulation"
                 />
               </div>
@@ -440,7 +451,9 @@ export default function LegacyCertificates() {
                 <Input
                   type="date"
                   value={editForm.expiry_date || ''}
-                  onChange={(e) => setEditForm(prev => ({ ...prev, expiry_date: e.target.value }))}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, expiry_date: e.target.value }))
+                  }
                   className="h-11 touch-manipulation"
                 />
               </div>
@@ -449,7 +462,9 @@ export default function LegacyCertificates() {
                 <Label>Issuing Company</Label>
                 <Input
                   value={editForm.issuing_company || ''}
-                  onChange={(e) => setEditForm(prev => ({ ...prev, issuing_company: e.target.value }))}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, issuing_company: e.target.value }))
+                  }
                   className="h-11 touch-manipulation"
                 />
               </div>
@@ -458,7 +473,9 @@ export default function LegacyCertificates() {
                 <Label>Imported From</Label>
                 <Input
                   value={editForm.imported_from_system || ''}
-                  onChange={(e) => setEditForm(prev => ({ ...prev, imported_from_system: e.target.value }))}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, imported_from_system: e.target.value }))
+                  }
                   className="h-11 touch-manipulation"
                 />
               </div>
@@ -467,7 +484,7 @@ export default function LegacyCertificates() {
                 <Label>Notes</Label>
                 <Textarea
                   value={editForm.notes || ''}
-                  onChange={(e) => setEditForm(prev => ({ ...prev, notes: e.target.value }))}
+                  onChange={(e) => setEditForm((prev) => ({ ...prev, notes: e.target.value }))}
                   className="min-h-[80px] touch-manipulation"
                 />
               </div>
@@ -482,11 +499,7 @@ export default function LegacyCertificates() {
               >
                 Cancel
               </Button>
-              <Button
-                variant="accent"
-                className="flex-1 h-11"
-                onClick={handleSaveEdit}
-              >
+              <Button variant="accent" className="flex-1 h-11" onClick={handleSaveEdit}>
                 Save Changes
               </Button>
             </div>
@@ -500,7 +513,8 @@ export default function LegacyCertificates() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Certificate?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete "{deleteConfirm?.original_filename}" and cannot be undone.
+              This will permanently delete "{deleteConfirm?.original_filename}" and cannot be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

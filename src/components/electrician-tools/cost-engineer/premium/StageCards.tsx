@@ -1,5 +1,13 @@
 import { motion } from 'framer-motion';
-import { Search, PoundSterling, Calculator, CheckCircle, FileText, Check, Loader2 } from 'lucide-react';
+import {
+  Search,
+  PoundSterling,
+  Calculator,
+  CheckCircle,
+  FileText,
+  Check,
+  Loader2,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Stage {
@@ -14,7 +22,7 @@ const STAGES: Stage[] = [
   { id: 2, label: 'Pricing', icon: PoundSterling, description: 'Fetching trade prices' },
   { id: 3, label: 'Calculating', icon: Calculator, description: 'Computing costs' },
   { id: 4, label: 'Validating', icon: CheckCircle, description: 'Checking estimates' },
-  { id: 5, label: 'Finalising', icon: FileText, description: 'Building quote' }
+  { id: 5, label: 'Finalising', icon: FileText, description: 'Building quote' },
 ];
 
 interface StageCardsProps {
@@ -57,19 +65,19 @@ export function StageCards({ progress, currentStep }: StageCardsProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 + index * 0.05 }}
               className={cn(
-                "relative flex flex-col items-center p-2 rounded-xl border transition-all duration-500",
-                isComplete && "bg-emerald-500/10 border-emerald-500/30",
-                isCurrent && "bg-elec-yellow/10 border-elec-yellow/30",
-                isPending && "bg-white/5 border-white/10 opacity-40"
+                'relative flex flex-col items-center p-2 rounded-xl border transition-all duration-500',
+                isComplete && 'bg-emerald-500/10 border-emerald-500/30',
+                isCurrent && 'bg-elec-yellow/10 border-elec-yellow/30',
+                isPending && 'bg-white/5 border-white/10 opacity-40'
               )}
             >
               {/* Icon container */}
               <motion.div
                 className={cn(
-                  "relative p-2 rounded-lg mb-1 transition-all duration-300",
-                  isComplete && "bg-emerald-500/20",
-                  isCurrent && "bg-elec-yellow/20",
-                  isPending && "bg-white/10"
+                  'relative p-2 rounded-lg mb-1 transition-all duration-300',
+                  isComplete && 'bg-emerald-500/20',
+                  isCurrent && 'bg-elec-yellow/20',
+                  isPending && 'bg-white/10'
                 )}
                 animate={isCurrent ? { scale: [1, 1.1, 1] } : {}}
                 transition={{ duration: 1, repeat: isCurrent ? Infinity : 0 }}
@@ -78,7 +86,7 @@ export function StageCards({ progress, currentStep }: StageCardsProps) {
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 400 }}
+                    transition={{ type: 'spring', stiffness: 400 }}
                   >
                     <Check className="h-4 w-4 text-emerald-400" />
                   </motion.div>
@@ -92,10 +100,10 @@ export function StageCards({ progress, currentStep }: StageCardsProps) {
               {/* Label */}
               <span
                 className={cn(
-                  "text-[10px] font-medium text-center transition-colors duration-300",
-                  isComplete && "text-emerald-400",
-                  isCurrent && "text-elec-yellow",
-                  isPending && "text-white/40"
+                  'text-[10px] font-medium text-center transition-colors duration-300',
+                  isComplete && 'text-emerald-400',
+                  isCurrent && 'text-elec-yellow',
+                  isPending && 'text-white/40'
                 )}
               >
                 {stage.label}
@@ -111,7 +119,7 @@ export function StageCards({ progress, currentStep }: StageCardsProps) {
           className="absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-500 to-elec-yellow rounded-full"
           initial={{ width: '0%' }}
           animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
         />
       </div>
 

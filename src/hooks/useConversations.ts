@@ -86,7 +86,7 @@ export const useConversation = (id: string) => {
           event: '*',
           schema: 'public',
           table: 'employer_conversations',
-          filter: `id=eq.${id}`
+          filter: `id=eq.${id}`,
         },
         () => {
           queryClient.invalidateQueries({ queryKey: [...CONVERSATIONS_KEY, id] });
@@ -175,7 +175,7 @@ export const useVacancyConversations = (vacancyId: string) => {
   const { data: conversations, ...rest } = useConversations();
 
   const vacancyConversations = useMemo(() => {
-    return (conversations || []).filter(conv => conv.vacancy_id === vacancyId);
+    return (conversations || []).filter((conv) => conv.vacancy_id === vacancyId);
   }, [conversations, vacancyId]);
 
   return {
@@ -191,9 +191,10 @@ export const useElectricianConversation = (electricianProfileId: string, vacancy
   const { data: conversations, ...rest } = useConversations();
 
   const conversation = useMemo(() => {
-    return (conversations || []).find(conv =>
-      conv.electrician_profile_id === electricianProfileId &&
-      (vacancyId ? conv.vacancy_id === vacancyId : true)
+    return (conversations || []).find(
+      (conv) =>
+        conv.electrician_profile_id === electricianProfileId &&
+        (vacancyId ? conv.vacancy_id === vacancyId : true)
     );
   }, [conversations, electricianProfileId, vacancyId]);
 
@@ -228,11 +229,15 @@ export const useElectricianConversations = (electricianProfileId: string | undef
           event: '*',
           schema: 'public',
           table: 'employer_conversations',
-          filter: `electrician_profile_id=eq.${electricianProfileId}`
+          filter: `electrician_profile_id=eq.${electricianProfileId}`,
         },
         () => {
-          queryClient.invalidateQueries({ queryKey: [...ELECTRICIAN_CONVERSATIONS_KEY, electricianProfileId] });
-          queryClient.invalidateQueries({ queryKey: [...ELECTRICIAN_CONVERSATION_STATS_KEY, electricianProfileId] });
+          queryClient.invalidateQueries({
+            queryKey: [...ELECTRICIAN_CONVERSATIONS_KEY, electricianProfileId],
+          });
+          queryClient.invalidateQueries({
+            queryKey: [...ELECTRICIAN_CONVERSATION_STATS_KEY, electricianProfileId],
+          });
         }
       )
       .on(
@@ -240,8 +245,12 @@ export const useElectricianConversations = (electricianProfileId: string | undef
         { event: 'INSERT', schema: 'public', table: 'employer_messages' },
         () => {
           // Refresh conversations when new message arrives
-          queryClient.invalidateQueries({ queryKey: [...ELECTRICIAN_CONVERSATIONS_KEY, electricianProfileId] });
-          queryClient.invalidateQueries({ queryKey: [...ELECTRICIAN_CONVERSATION_STATS_KEY, electricianProfileId] });
+          queryClient.invalidateQueries({
+            queryKey: [...ELECTRICIAN_CONVERSATIONS_KEY, electricianProfileId],
+          });
+          queryClient.invalidateQueries({
+            queryKey: [...ELECTRICIAN_CONVERSATION_STATS_KEY, electricianProfileId],
+          });
         }
       )
       .subscribe();

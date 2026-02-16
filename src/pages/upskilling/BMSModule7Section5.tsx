@@ -1,91 +1,101 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "pre-functional-order",
-    question: "Why must pre-functional commissioning happen before full sequences are tested?",
+    id: 'pre-functional-order',
+    question: 'Why must pre-functional commissioning happen before full sequences are tested?',
     options: [
-      "To reduce overall commissioning time",
-      "To prevent equipment damage from basic wiring and power issues",
-      "To satisfy insurance requirements",
-      "To train building operators"
+      'To reduce overall commissioning time',
+      'To prevent equipment damage from basic wiring and power issues',
+      'To satisfy insurance requirements',
+      'To train building operators',
     ],
     correctIndex: 1,
-    explanation: "Pre-functional commissioning must happen first to prevent equipment damage and wasted time. Testing complex sequences without verifying basic wiring can damage equipment, corrupt controllers, or create safety hazards."
+    explanation:
+      'Pre-functional commissioning must happen first to prevent equipment damage and wasted time. Testing complex sequences without verifying basic wiring can damage equipment, corrupt controllers, or create safety hazards.',
   },
   {
-    id: "functional-purpose",
-    question: "What is one purpose of functional commissioning?",
+    id: 'functional-purpose',
+    question: 'What is one purpose of functional commissioning?',
     options: [
-      "To verify cable terminations are correct",
-      "To test complete sequences and system integration",
-      "To measure power supply voltages",
-      "To label devices and panels"
+      'To verify cable terminations are correct',
+      'To test complete sequences and system integration',
+      'To measure power supply voltages',
+      'To label devices and panels',
     ],
     correctIndex: 1,
-    explanation: "Functional commissioning tests complete sequences of operations, alarm responses, system integration, and overall performance according to design specifications - going beyond individual component testing."
+    explanation:
+      'Functional commissioning tests complete sequences of operations, alarm responses, system integration, and overall performance according to design specifications - going beyond individual component testing.',
   },
   {
-    id: "alarm-testing",
-    question: "Why are alarm and fail-safe simulations carried out during commissioning?",
+    id: 'alarm-testing',
+    question: 'Why are alarm and fail-safe simulations carried out during commissioning?',
     options: [
-      "To test system performance under normal conditions",
-      "To ensure emergency shutdowns and safety systems work correctly",
-      "To calibrate sensors and actuators",
-      "To verify communication protocols"
+      'To test system performance under normal conditions',
+      'To ensure emergency shutdowns and safety systems work correctly',
+      'To calibrate sensors and actuators',
+      'To verify communication protocols',
     ],
     correctIndex: 1,
-    explanation: "Alarm and fail-safe simulations verify that emergency responses, safety shutdowns, and protective systems operate correctly when needed. These are critical for occupant safety and equipment protection."
-  }
+    explanation:
+      'Alarm and fail-safe simulations verify that emergency responses, safety shutdowns, and protective systems operate correctly when needed. These are critical for occupant safety and equipment protection.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What happens if pre-functional testing is skipped?",
-    answer: "Skipping pre-functional testing leads to wasted time during functional commissioning when basic wiring and power issues are discovered. It can also damage equipment if fundamental electrical problems exist."
+    question: 'What happens if pre-functional testing is skipped?',
+    answer:
+      'Skipping pre-functional testing leads to wasted time during functional commissioning when basic wiring and power issues are discovered. It can also damage equipment if fundamental electrical problems exist.',
   },
   {
-    question: "How long does commissioning typically take?",
-    answer: "Pre-functional commissioning usually takes 1-3 days per major system, while functional commissioning can take 1-2 weeks depending on system complexity and the number of sequences to test."
+    question: 'How long does commissioning typically take?',
+    answer:
+      'Pre-functional commissioning usually takes 1-3 days per major system, while functional commissioning can take 1-2 weeks depending on system complexity and the number of sequences to test.',
   },
   {
-    question: "What should be done if functional testing reveals wiring errors?",
-    answer: "Stop testing immediately, isolate power safely, correct the wiring error, verify the fix with multimeter testing, update documentation, and restart functional testing from the beginning of that sequence."
+    question: 'What should be done if functional testing reveals wiring errors?',
+    answer:
+      'Stop testing immediately, isolate power safely, correct the wiring error, verify the fix with multimeter testing, update documentation, and restart functional testing from the beginning of that sequence.',
   },
   {
-    question: "Why is documentation so important during commissioning?",
-    answer: "Documentation provides proof that systems work correctly, creates troubleshooting references for future maintenance, satisfies warranty requirements, and ensures building operators understand system operation."
-  }
+    question: 'Why is documentation so important during commissioning?',
+    answer:
+      'Documentation provides proof that systems work correctly, creates troubleshooting references for future maintenance, satisfies warranty requirements, and ensures building operators understand system operation.',
+  },
 ];
 
 const quizQuestion = {
-  question: "In a large office project, why did AHU dampers fail to close during fire alarm simulation despite working during normal testing?",
+  question:
+    'In a large office project, why did AHU dampers fail to close during fire alarm simulation despite working during normal testing?',
   options: [
-    "Programming error in the fire alarm logic",
-    "Actuator power supply failure during testing",
-    "Actuator was wired to the wrong digital output",
-    "Communication network failure between systems"
+    'Programming error in the fire alarm logic',
+    'Actuator power supply failure during testing',
+    'Actuator was wired to the wrong digital output',
+    'Communication network failure between systems',
   ],
   correctAnswer: 2,
-  explanation: "The actuator was wired to the wrong digital output. During normal operation, this output happened to provide the correct signal, but during fire alarm sequences, the emergency logic used a different output channel. This highlighted the importance of verifying wiring against IO schedules, not just functional operation."
+  explanation:
+    'The actuator was wired to the wrong digital output. During normal operation, this output happened to provide the correct signal, but during fire alarm sequences, the emergency logic used a different output channel. This highlighted the importance of verifying wiring against IO schedules, not just functional operation.',
 };
 
 const BMSModule7Section5 = () => {
   useSEO({
-    title: "Pre-Functional and Functional Commissioning | BMS Module 7.5",
-    description: "Learn the two stages of BMS commissioning: pre-functional verification and functional sequence testing."
+    title: 'Pre-Functional and Functional Commissioning | BMS Module 7.5',
+    description:
+      'Learn the two stages of BMS commissioning: pre-functional verification and functional sequence testing.',
   });
 
   const outcomes = [
-    "Distinguish between pre-functional and functional commissioning",
-    "Explain the types of checks performed at each stage",
+    'Distinguish between pre-functional and functional commissioning',
+    'Explain the types of checks performed at each stage',
     "Recognise the electrician's role in supporting commissioning engineers",
-    "Apply best practices for verifying signals, safety interlocks, and system operation"
+    'Apply best practices for verifying signals, safety interlocks, and system operation',
   ];
 
   return (
@@ -93,7 +103,12 @@ const BMSModule7Section5 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bms-module-7">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -112,9 +127,7 @@ const BMSModule7Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Pre-Functional and Functional Commissioning
           </h1>
-          <p className="text-white">
-            System verification and testing for BMS operation
-          </p>
+          <p className="text-white">System verification and testing for BMS operation</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -122,16 +135,26 @@ const BMSModule7Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Pre-functional:</strong> Verify power, wiring, I/O, and safety interlocks</li>
-              <li><strong>Functional:</strong> Test complete sequences and system integration</li>
-              <li><strong>Goal:</strong> Prove the BMS works exactly as designed</li>
+              <li>
+                <strong>Pre-functional:</strong> Verify power, wiring, I/O, and safety interlocks
+              </li>
+              <li>
+                <strong>Functional:</strong> Test complete sequences and system integration
+              </li>
+              <li>
+                <strong>Goal:</strong> Prove the BMS works exactly as designed
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Commissioning sheets, test procedures, IO lists</li>
-              <li><strong>Use:</strong> Support engineers, verify signals, correct wiring issues</li>
+              <li>
+                <strong>Spot:</strong> Commissioning sheets, test procedures, IO lists
+              </li>
+              <li>
+                <strong>Use:</strong> Support engineers, verify signals, correct wiring issues
+              </li>
             </ul>
           </div>
         </div>
@@ -159,10 +182,17 @@ const BMSModule7Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Commissioning is the process of proving that a Building Management System (BMS) works exactly as designed. It happens in two stages: <strong>pre-functional commissioning</strong> (basic verification of wiring, power, communication, and safety) and <strong>functional commissioning</strong> (testing full sequences of operations and confirming equipment responds correctly to programmed logic).
+              Commissioning is the process of proving that a Building Management System (BMS) works
+              exactly as designed. It happens in two stages:{' '}
+              <strong>pre-functional commissioning</strong> (basic verification of wiring, power,
+              communication, and safety) and <strong>functional commissioning</strong> (testing full
+              sequences of operations and confirming equipment responds correctly to programmed
+              logic).
             </p>
             <p>
-              For electricians, this stage is critical: if signals are miswired, mislabelled, or not powered correctly, commissioning stalls and delays the project. Your preparation and support during this phase directly determines project success.
+              For electricians, this stage is critical: if signals are miswired, mislabelled, or not
+              powered correctly, commissioning stalls and delays the project. Your preparation and
+              support during this phase directly determines project success.
             </p>
           </div>
         </section>
@@ -175,11 +205,15 @@ const BMSModule7Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Pre-functional commissioning systematically verifies all electrical infrastructure before testing operational sequences. This critical phase prevents equipment damage and ensures safe commissioning.
+              Pre-functional commissioning systematically verifies all electrical infrastructure
+              before testing operational sequences. This critical phase prevents equipment damage
+              and ensures safe commissioning.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Power System Verification:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Power System Verification:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>24V AC/DC supplies: 22-26V under load</li>
                 <li>230V single phase: 207-253V (BS7671)</li>
@@ -211,12 +245,23 @@ const BMSModule7Section5 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Safety Interlock Verification (Critical):</p>
+              <p className="text-sm font-medium text-red-400/80 mb-2">
+                Safety Interlock Verification (Critical):
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Fire Alarm Interface:</strong> Verify equipment shuts down within 5 seconds</li>
-                <li><strong>Emergency Stops:</strong> Test immediate power isolation</li>
-                <li><strong>High/Low Pressure Trips:</strong> Simulate and verify safe shutdown</li>
-                <li><strong>Temperature Limits:</strong> Test high temperature cutouts</li>
+                <li>
+                  <strong>Fire Alarm Interface:</strong> Verify equipment shuts down within 5
+                  seconds
+                </li>
+                <li>
+                  <strong>Emergency Stops:</strong> Test immediate power isolation
+                </li>
+                <li>
+                  <strong>High/Low Pressure Trips:</strong> Simulate and verify safe shutdown
+                </li>
+                <li>
+                  <strong>Temperature Limits:</strong> Test high temperature cutouts
+                </li>
               </ul>
             </div>
 
@@ -232,11 +277,15 @@ const BMSModule7Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Functional commissioning validates complete system operation under real conditions. This comprehensive testing ensures the BMS performs as designed and responds correctly to all operational scenarios.
+              Functional commissioning validates complete system operation under real conditions.
+              This comprehensive testing ensures the BMS performs as designed and responds correctly
+              to all operational scenarios.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Performance Acceptance Criteria:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Performance Acceptance Criteria:
+              </p>
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Temperature</p>
@@ -264,7 +313,9 @@ const BMSModule7Section5 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Boiler Plant Commissioning:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Boiler Plant Commissioning:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Lead/lag operation: Primary boiler starts first, standby follows</li>
                 <li>Staging logic: Additional boilers fire based on demand</li>
@@ -285,17 +336,28 @@ const BMSModule7Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Systematic testing of all emergency and alarm conditions is critical for occupant safety and equipment protection.
+              Systematic testing of all emergency and alarm conditions is critical for occupant
+              safety and equipment protection.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-red-400/80 mb-2">Critical Alarm Tests:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Fire alarm interface:</strong> All equipment stops within 5 seconds</li>
-                <li><strong>High/low pressure:</strong> Equipment trips, backup systems activate</li>
-                <li><strong>Power failure:</strong> UPS backup, graceful shutdown sequences</li>
-                <li><strong>Communication loss:</strong> Local control mode, fail-safe positions</li>
-                <li><strong>Sensor failure:</strong> Switch to backup sensors, alarm notifications</li>
+                <li>
+                  <strong>Fire alarm interface:</strong> All equipment stops within 5 seconds
+                </li>
+                <li>
+                  <strong>High/low pressure:</strong> Equipment trips, backup systems activate
+                </li>
+                <li>
+                  <strong>Power failure:</strong> UPS backup, graceful shutdown sequences
+                </li>
+                <li>
+                  <strong>Communication loss:</strong> Local control mode, fail-safe positions
+                </li>
+                <li>
+                  <strong>Sensor failure:</strong> Switch to backup sensors, alarm notifications
+                </li>
               </ul>
             </div>
 
@@ -308,7 +370,9 @@ const BMSModule7Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Electrician's Role in Commissioning</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Electrician's Role in Commissioning
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Be on hand to operate field switches, dampers, and valves when requested</li>
                 <li>Correct wiring issues quickly if points fail during testing</li>
@@ -328,10 +392,21 @@ const BMSModule7Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Skipping pre-functional:</strong> Testing sequences without verifying basic I/O first</li>
-                <li><strong>Poor documentation:</strong> Not documenting changes made during commissioning</li>
-                <li><strong>Safety shortcuts:</strong> Skipping safety interlock testing to save time</li>
-                <li><strong>Inadequate tuning:</strong> Insufficient time for control loop optimisation</li>
+                <li>
+                  <strong>Skipping pre-functional:</strong> Testing sequences without verifying
+                  basic I/O first
+                </li>
+                <li>
+                  <strong>Poor documentation:</strong> Not documenting changes made during
+                  commissioning
+                </li>
+                <li>
+                  <strong>Safety shortcuts:</strong> Skipping safety interlock testing to save time
+                </li>
+                <li>
+                  <strong>Inadequate tuning:</strong> Insufficient time for control loop
+                  optimisation
+                </li>
               </ul>
             </div>
           </div>
@@ -341,17 +416,27 @@ const BMSModule7Section5 = () => {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4">Real World Example</h2>
           <div className="p-4 rounded-lg bg-transparent border border-white/10">
-            <h3 className="text-sm font-medium text-red-400/80 mb-2">Large Office Project: AHU Fire Safety Testing</h3>
+            <h3 className="text-sm font-medium text-red-400/80 mb-2">
+              Large Office Project: AHU Fire Safety Testing
+            </h3>
             <p className="text-sm text-white leading-relaxed mb-3">
-              During functional commissioning of an AHU, fire alarm simulation revealed that dampers failed to close during emergency shutdown. The system appeared to function normally during pre-functional testing, but failed the critical safety sequence.
+              During functional commissioning of an AHU, fire alarm simulation revealed that dampers
+              failed to close during emergency shutdown. The system appeared to function normally
+              during pre-functional testing, but failed the critical safety sequence.
             </p>
             <p className="text-sm text-white leading-relaxed mb-3">
-              Electricians initially suspected programming errors since the damper actuators had worked correctly during individual testing. Further testing with multimeters showed the actuator had been wired to the wrong digital output. During normal operation, this output happened to provide the correct signal, but during fire alarm sequences, the emergency logic used a different output channel.
+              Electricians initially suspected programming errors since the damper actuators had
+              worked correctly during individual testing. Further testing with multimeters showed
+              the actuator had been wired to the wrong digital output. During normal operation, this
+              output happened to provide the correct signal, but during fire alarm sequences, the
+              emergency logic used a different output channel.
             </p>
             <div className="mt-4 p-3 rounded bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm font-medium text-elec-yellow mb-1">Lesson Learned</p>
               <p className="text-xs text-white">
-                Always verify wiring against IO schedules, not just functional operation. Test emergency and safety sequences separately from normal operation. Use multimeters to verify signals before assuming programming issues.
+                Always verify wiring against IO schedules, not just functional operation. Test
+                emergency and safety sequences separately from normal operation. Use multimeters to
+                verify signals before assuming programming issues.
               </p>
             </div>
           </div>
@@ -407,13 +492,22 @@ const BMSModule7Section5 = () => {
 
         {/* Bottom Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-7-section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Software Upload
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bms-module-7-section-6">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

@@ -1,13 +1,12 @@
-
 import { CheckCircle, ClipboardCheck } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const ReadinessTakeaways = () => {
   const takeaways = [
     "Readiness for testing isn't just a formality—it's a safety-critical step",
-    "Confirm all prior inspections and checks are complete",
-    "Never test with unidentified circuits, live feeds, or connected sensitive equipment",
-    "If something doesn't feel right—stop and recheck"
+    'Confirm all prior inspections and checks are complete',
+    'Never test with unidentified circuits, live feeds, or connected sensitive equipment',
+    "If something doesn't feel right—stop and recheck",
   ];
 
   return (

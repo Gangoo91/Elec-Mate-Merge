@@ -7,28 +7,28 @@ const DataCablingModule6 = () => {
   const sections = [
     {
       id: 1,
-      title: "TIA/EIA 568 and ISO/IEC 11801 Overview",
+      title: 'TIA/EIA 568 and ISO/IEC 11801 Overview',
       icon: BookOpen,
-      description: "International cabling standards and requirements"
+      description: 'International cabling standards and requirements',
     },
     {
       id: 2,
-      title: "Class D, E, EA, F Standards",
+      title: 'Class D, E, EA, F Standards',
       icon: Award,
-      description: "Performance class specifications and applications"
+      description: 'Performance class specifications and applications',
     },
     {
       id: 3,
-      title: "Building and Campus Standards",
+      title: 'Building and Campus Standards',
       icon: Building,
-      description: "Installation standards for buildings and campuses"
+      description: 'Installation standards for buildings and campuses',
     },
     {
       id: 4,
-      title: "Record-Keeping and Documentation Requirements",
+      title: 'Record-Keeping and Documentation Requirements',
       icon: FileCheck,
-      description: "Documentation standards and record maintenance"
-    }
+      description: 'Documentation standards and record maintenance',
+    },
   ];
 
   return (

@@ -1,86 +1,91 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-scope-covered",
-    question: "Which of the following is covered under BS 7671?",
+    id: 'bs7671-scope-covered',
+    question: 'Which of the following is covered under BS 7671?',
     options: [
-      "Passenger aircraft electrical systems",
-      "Domestic properties and buildings",
-      "Railway traction systems",
-      "Internal wiring of appliances"
+      'Passenger aircraft electrical systems',
+      'Domestic properties and buildings',
+      'Railway traction systems',
+      'Internal wiring of appliances',
     ],
     correctIndex: 1,
-    explanation: "Domestic properties are fully covered by BS 7671. Aircraft, trains, and appliance internal wiring have their own specific standards."
+    explanation:
+      'Domestic properties are fully covered by BS 7671. Aircraft, trains, and appliance internal wiring have their own specific standards.',
   },
   {
-    id: "bs7671-not-covered",
-    question: "Which type of installation is NOT within the scope of BS 7671?",
+    id: 'bs7671-not-covered',
+    question: 'Which type of installation is NOT within the scope of BS 7671?',
     options: [
-      "Commercial offices",
-      "Marina shore supplies",
-      "Lift control systems",
-      "Agricultural buildings"
+      'Commercial offices',
+      'Marina shore supplies',
+      'Lift control systems',
+      'Agricultural buildings',
     ],
     correctIndex: 2,
-    explanation: "Lift systems are governed by specific lift regulations (BS EN 81 series), not BS 7671. Marina shore supplies ARE covered under Section 709."
+    explanation:
+      'Lift systems are governed by specific lift regulations (BS EN 81 series), not BS 7671. Marina shore supplies ARE covered under Section 709.',
   },
   {
-    id: "alternative-standards",
+    id: 'alternative-standards',
     question: "What should be used when BS 7671 doesn't apply?",
     options: [
-      "Ignore all regulations",
+      'Ignore all regulations',
       "Use manufacturer's instructions only",
-      "Refer to appropriate alternative standards",
-      "Follow local authority advice only"
+      'Refer to appropriate alternative standards',
+      'Follow local authority advice only',
     ],
     correctIndex: 2,
-    explanation: "When BS 7671 doesn't apply, you must refer to the appropriate alternative standards specific to that application, such as BS EN 60204 for machinery or ATEX for explosive atmospheres."
-  }
+    explanation:
+      "When BS 7671 doesn't apply, you must refer to the appropriate alternative standards specific to that application, such as BS EN 60204 for machinery or ATEX for explosive atmospheres.",
+  },
 ];
 
 const faqs = [
   {
-    question: "What voltage range does BS 7671 cover?",
-    answer: "BS 7671 covers electrical installations operating at voltages up to and including 1000V AC or 1500V DC. Higher voltage installations require specialist high voltage standards and additional competency requirements."
+    question: 'What voltage range does BS 7671 cover?',
+    answer:
+      'BS 7671 covers electrical installations operating at voltages up to and including 1000V AC or 1500V DC. Higher voltage installations require specialist high voltage standards and additional competency requirements.',
   },
   {
-    question: "Does BS 7671 apply to food trucks and mobile catering units?",
-    answer: "No. Vehicle electrical systems, including food trucks, are not covered by BS 7671. They require automotive electrical standards and vehicle-specific requirements including vibration resistance and vehicle-rated components."
+    question: 'Does BS 7671 apply to food trucks and mobile catering units?',
+    answer:
+      'No. Vehicle electrical systems, including food trucks, are not covered by BS 7671. They require automotive electrical standards and vehicle-specific requirements including vibration resistance and vehicle-rated components.',
   },
   {
-    question: "What about boat electrical systems at marinas?",
-    answer: "Marina shore supplies (the connection point) ARE covered by BS 7671 Section 709. However, the boat's internal electrical system is NOT covered - it falls under marine electrical standards."
+    question: 'What about boat electrical systems at marinas?',
+    answer:
+      "Marina shore supplies (the connection point) ARE covered by BS 7671 Section 709. However, the boat's internal electrical system is NOT covered - it falls under marine electrical standards.",
   },
   {
-    question: "Can BS 7671 work alongside other standards?",
-    answer: "Yes. In specialist areas, BS 7671 may defer to or work alongside other standards like BS EN 60204 for machinery. When both apply, the most restrictive requirement takes precedence."
-  }
+    question: 'Can BS 7671 work alongside other standards?',
+    answer:
+      'Yes. In specialist areas, BS 7671 may defer to or work alongside other standards like BS EN 60204 for machinery. When both apply, the most restrictive requirement takes precedence.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "Which standard might work alongside BS 7671 for machinery installations?",
-  options: [
-    "BS EN 60204",
-    "BS 7671 Part 7 only",
-    "IET Code of Practice",
-    "EAWR directly"
-  ],
-  correctAnswer: 0,
-  explanation: "BS EN 60204 is the specific standard for electrical equipment of machines and works alongside BS 7671 for industrial machinery, production lines, and automated equipment."
-}];
+    question: 'Which standard might work alongside BS 7671 for machinery installations?',
+    options: ['BS EN 60204', 'BS 7671 Part 7 only', 'IET Code of Practice', 'EAWR directly'],
+    correctAnswer: 0,
+    explanation:
+      'BS EN 60204 is the specific standard for electrical equipment of machines and works alongside BS 7671 for industrial machinery, production lines, and automated equipment.',
+  },
+];
 
 const BS7671Module1Section2 = () => {
   useSEO({
-    title: "Scope and Application of BS 7671 | BS7671 Module 1.2",
-    description: "Learn where BS 7671 applies, its limitations, and when to use alternative electrical standards for specialist installations."
+    title: 'Scope and Application of BS 7671 | BS7671 Module 1.2',
+    description:
+      'Learn where BS 7671 applies, its limitations, and when to use alternative electrical standards for specialist installations.',
   });
 
   return (
@@ -88,7 +93,12 @@ const BS7671Module1Section2 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bs7671-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -107,9 +117,7 @@ const BS7671Module1Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Scope and Application
           </h1>
-          <p className="text-white/80">
-            Understanding where BS 7671 applies and its limitations
-          </p>
+          <p className="text-white/80">Understanding where BS 7671 applies and its limitations</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -117,16 +125,26 @@ const BS7671Module1Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Covered:</strong> Buildings up to 1000V AC / 1500V DC</li>
-              <li><strong>Not covered:</strong> Vehicles, aircraft, lifts, appliance internals</li>
-              <li><strong>Special locations:</strong> Part 7 has additional requirements</li>
+              <li>
+                <strong>Covered:</strong> Buildings up to 1000V AC / 1500V DC
+              </li>
+              <li>
+                <strong>Not covered:</strong> Vehicles, aircraft, lifts, appliance internals
+              </li>
+              <li>
+                <strong>Special locations:</strong> Part 7 has additional requirements
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Check installation type before starting work</li>
-              <li><strong>Use:</strong> Identify correct standards for the application</li>
+              <li>
+                <strong>Spot:</strong> Check installation type before starting work
+              </li>
+              <li>
+                <strong>Use:</strong> Identify correct standards for the application
+              </li>
             </ul>
           </div>
         </div>
@@ -137,9 +155,9 @@ const BS7671Module1Section2 = () => {
           <div className="grid sm:grid-cols-2 gap-2">
             {[
               "Identify where BS 7671 applies and where it doesn't",
-              "Understand the voltage limitations of its scope",
-              "Recognise types of installations and environments it covers",
-              "Explain exceptions and identify appropriate alternative standards"
+              'Understand the voltage limitations of its scope',
+              'Recognise types of installations and environments it covers',
+              'Explain exceptions and identify appropriate alternative standards',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -285,7 +303,9 @@ const BS7671Module1Section2 = () => {
 
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">BS 7671 Voltage Limits</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  BS 7671 Voltage Limits
+                </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
                   <li>AC installations: up to 1000V</li>
                   <li>DC installations: up to 1500V</li>
@@ -293,7 +313,9 @@ const BS7671Module1Section2 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Higher Voltages Require</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Higher Voltages Require
+                </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
                   <li>High voltage regulations</li>
                   <li>Specialist HV standards</li>
@@ -322,22 +344,24 @@ const BS7671Module1Section2 = () => {
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">BS 7430 - Protective Earthing</p>
                 <p className="text-sm text-white/80">
-                  Detailed guidance on earthing systems, earth electrode design, and soil resistivity.
-                  Used for complex earthing systems and TT installations.
+                  Detailed guidance on earthing systems, earth electrode design, and soil
+                  resistivity. Used for complex earthing systems and TT installations.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">BS EN 60204 - Machinery Safety</p>
                 <p className="text-sm text-white/80">
-                  Covers electrical equipment of machines including control circuits and motor control.
-                  Used for industrial machinery, production lines, and automated equipment.
+                  Covers electrical equipment of machines including control circuits and motor
+                  control. Used for industrial machinery, production lines, and automated equipment.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="font-medium text-white mb-1">ATEX Directive - Explosive Atmospheres</p>
+                <p className="font-medium text-white mb-1">
+                  ATEX Directive - Explosive Atmospheres
+                </p>
                 <p className="text-sm text-white/80">
-                  Governs electrical equipment in potentially explosive atmospheres.
-                  Used for chemical plants, grain stores, paint shops, and fuel storage.
+                  Governs electrical equipment in potentially explosive atmospheres. Used for
+                  chemical plants, grain stores, paint shops, and fuel storage.
                 </p>
               </div>
             </div>
@@ -375,36 +399,41 @@ const BS7671Module1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-              <p className="text-sm font-medium text-orange-400 mb-3">Scenario: Food Truck Wiring Mistake</p>
+              <p className="text-sm font-medium text-orange-400 mb-3">
+                Scenario: Food Truck Wiring Mistake
+              </p>
               <div className="space-y-2 text-sm text-white/90">
                 <p>
-                  <strong>Situation:</strong> An electrician wires a food truck using BS 7671 methods
-                  including standard socket outlets and consumer unit installation.
+                  <strong>Situation:</strong> An electrician wires a food truck using BS 7671
+                  methods including standard socket outlets and consumer unit installation.
                 </p>
                 <p>
-                  <strong>Problem:</strong> During safety inspection, the installation fails.
-                  Mobile vehicles are NOT covered by BS 7671.
+                  <strong>Problem:</strong> During safety inspection, the installation fails. Mobile
+                  vehicles are NOT covered by BS 7671.
                 </p>
                 <p>
-                  <strong>Correct Approach:</strong> Should have used automotive electrical standards
-                  with vibration-resistant, vehicle-rated components.
+                  <strong>Correct Approach:</strong> Should have used automotive electrical
+                  standards with vibration-resistant, vehicle-rated components.
                 </p>
                 <p>
-                  <strong>Outcome:</strong> Complete rewire required, delayed opening, lost customer confidence.
+                  <strong>Outcome:</strong> Complete rewire required, delayed opening, lost customer
+                  confidence.
                 </p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-              <p className="text-sm font-medium text-red-400 mb-3">Scenario: Marina Connection Confusion</p>
+              <p className="text-sm font-medium text-red-400 mb-3">
+                Scenario: Marina Connection Confusion
+              </p>
               <div className="space-y-2 text-sm text-white/90">
                 <p>
-                  <strong>Situation:</strong> A contractor installs standard 16A socket outlets
-                  at a marina using domestic wiring methods.
+                  <strong>Situation:</strong> A contractor installs standard 16A socket outlets at a
+                  marina using domestic wiring methods.
                 </p>
                 <p>
-                  <strong>Issue:</strong> While marinas ARE covered by BS 7671 (Section 709),
-                  boat electrical systems are NOT. The interface requires understanding both standards.
+                  <strong>Issue:</strong> While marinas ARE covered by BS 7671 (Section 709), boat
+                  electrical systems are NOT. The interface requires understanding both standards.
                 </p>
                 <p>
                   <strong>Lesson:</strong> Understanding scope boundaries prevents inappropriate
@@ -423,14 +452,28 @@ const BS7671Module1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-              <p className="text-sm font-medium text-elec-yellow mb-3">Does BS 7671 Apply? Step-by-Step</p>
+              <p className="text-sm font-medium text-elec-yellow mb-3">
+                Does BS 7671 Apply? Step-by-Step
+              </p>
               <ol className="text-sm text-white/90 space-y-2 ml-4 list-decimal">
-                <li><strong>Check voltage:</strong> Is it within 1000V AC / 1500V DC?</li>
-                <li><strong>Identify type:</strong> Building, vehicle, appliance, or network?</li>
-                <li><strong>Consider location:</strong> Fixed building or mobile application?</li>
-                <li><strong>Review ownership:</strong> Who owns and controls the installation?</li>
-                <li><strong>Check for special regs:</strong> Are there sector-specific requirements?</li>
-                <li><strong>Identify standards:</strong> What other standards might apply?</li>
+                <li>
+                  <strong>Check voltage:</strong> Is it within 1000V AC / 1500V DC?
+                </li>
+                <li>
+                  <strong>Identify type:</strong> Building, vehicle, appliance, or network?
+                </li>
+                <li>
+                  <strong>Consider location:</strong> Fixed building or mobile application?
+                </li>
+                <li>
+                  <strong>Review ownership:</strong> Who owns and controls the installation?
+                </li>
+                <li>
+                  <strong>Check for special regs:</strong> Are there sector-specific requirements?
+                </li>
+                <li>
+                  <strong>Identify standards:</strong> What other standards might apply?
+                </li>
               </ol>
             </div>
 
@@ -497,21 +540,27 @@ const BS7671Module1Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-10">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bs7671-module-1-section-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bs7671-module-1-section-3">
               Next: Structure of BS 7671
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

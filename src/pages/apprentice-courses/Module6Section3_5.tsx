@@ -1,130 +1,170 @@
-import { ArrowLeft, CheckCircle, Shield, AlertTriangle, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, CheckCircle, Shield, AlertTriangle, Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section3_5 = () => {
   useSEO(
-    "Using a Proving Unit and Two-Pole Voltage Tester - Level 2 Electrical Testing & Inspection",
-    "The most reliable way to confirm circuits are dead using proper testing equipment"
+    'Using a Proving Unit and Two-Pole Voltage Tester - Level 2 Electrical Testing & Inspection',
+    'The most reliable way to confirm circuits are dead using proper testing equipment'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the main purpose of a proving unit?",
-      options: ["To test insulation resistance", "To confirm tester operation", "To measure voltage", "To check polarity"],
+      question: 'What is the main purpose of a proving unit?',
+      options: [
+        'To test insulation resistance',
+        'To confirm tester operation',
+        'To measure voltage',
+        'To check polarity',
+      ],
       correctAnswer: 1,
-      explanation: "A proving unit confirms that your tester is working correctly before and after use, ensuring you can trust your test results."
+      explanation:
+        'A proving unit confirms that your tester is working correctly before and after use, ensuring you can trust your test results.',
     },
     {
       id: 2,
-      question: "Which device is safest for proving dead?",
-      options: ["Neon screwdriver", "Two-pole voltage tester", "Voltage pen", "Multimeter"],
+      question: 'Which device is safest for proving dead?',
+      options: ['Neon screwdriver', 'Two-pole voltage tester', 'Voltage pen', 'Multimeter'],
       correctAnswer: 1,
-      explanation: "Two-pole voltage testers are GS38-compliant and provide the safest, most reliable method for proving circuits are dead."
+      explanation:
+        'Two-pole voltage testers are GS38-compliant and provide the safest, most reliable method for proving circuits are dead.',
     },
     {
       id: 3,
-      question: "What sequence is followed when proving dead?",
-      options: ["Dead-live-dead", "Live-dead-live", "Lock-off only", "Test then isolate"],
+      question: 'What sequence is followed when proving dead?',
+      options: ['Dead-live-dead', 'Live-dead-live', 'Lock-off only', 'Test then isolate'],
       correctAnswer: 1,
-      explanation: "The live-dead-live sequence ensures your tester works before testing, confirms the circuit is dead, then verifies the tester still works."
+      explanation:
+        'The live-dead-live sequence ensures your tester works before testing, confirms the circuit is dead, then verifies the tester still works.',
     },
     {
       id: 4,
-      question: "What must you test between during proving?",
-      options: ["L–N, L–E, N–E", "N–N only", "Earth only", "Live only"],
+      question: 'What must you test between during proving?',
+      options: ['L–N, L–E, N–E', 'N–N only', 'Earth only', 'Live only'],
       correctAnswer: 0,
-      explanation: "You must test between all combinations: L–N, L–E, and N–E to ensure all conductors are dead."
+      explanation:
+        'You must test between all combinations: L–N, L–E, and N–E to ensure all conductors are dead.',
     },
     {
       id: 5,
-      question: "True or False: A multimeter is recommended for proving dead.",
-      options: ["True", "False"],
+      question: 'True or False: A multimeter is recommended for proving dead.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Multimeters can give false or confusing readings and aren't recommended for proving dead."
+      explanation:
+        "False. Multimeters can give false or confusing readings and aren't recommended for proving dead.",
     },
     {
       id: 6,
-      question: "What could happen if you skip the re-prove step?",
-      options: ["Nothing significant", "You may trust a faulty tester", "Faster isolation", "Better accuracy"],
+      question: 'What could happen if you skip the re-prove step?',
+      options: [
+        'Nothing significant',
+        'You may trust a faulty tester',
+        'Faster isolation',
+        'Better accuracy',
+      ],
       correctAnswer: 1,
-      explanation: "If you skip re-proving, you might trust a tester that has failed during testing, leading to dangerous assumptions."
+      explanation:
+        'If you skip re-proving, you might trust a tester that has failed during testing, leading to dangerous assumptions.',
     },
     {
       id: 7,
-      question: "What safety standard applies to testers and leads?",
-      options: ["GS38", "BS 7671", "ISO 9001", "IEC 60364"],
+      question: 'What safety standard applies to testers and leads?',
+      options: ['GS38', 'BS 7671', 'ISO 9001', 'IEC 60364'],
       correctAnswer: 0,
-      explanation: "GS38 is the safety standard that applies to electrical test equipment and leads."
+      explanation:
+        'GS38 is the safety standard that applies to electrical test equipment and leads.',
     },
     {
       id: 8,
-      question: "Which unsafe tool relies on your body for operation?",
-      options: ["Neon screwdriver", "Proving unit", "Two-pole tester", "Digital meter"],
+      question: 'Which unsafe tool relies on your body for operation?',
+      options: ['Neon screwdriver', 'Proving unit', 'Two-pole tester', 'Digital meter'],
       correctAnswer: 0,
-      explanation: "Neon screwdrivers rely on your body to complete the circuit, making them unsafe and non-compliant."
+      explanation:
+        'Neon screwdrivers rely on your body to complete the circuit, making them unsafe and non-compliant.',
     },
     {
       id: 9,
-      question: "Why are voltage pens not acceptable for proving dead?",
-      options: ["They drain batteries too quickly", "They only detect potential presence, not confirm dead", "They are too heavy", "They are too expensive"],
+      question: 'Why are voltage pens not acceptable for proving dead?',
+      options: [
+        'They drain batteries too quickly',
+        'They only detect potential presence, not confirm dead',
+        'They are too heavy',
+        'They are too expensive',
+      ],
       correctAnswer: 1,
-      explanation: "Voltage pens only detect the presence of potential fields, they cannot reliably confirm a circuit is dead."
+      explanation:
+        'Voltage pens only detect the presence of potential fields, they cannot reliably confirm a circuit is dead.',
     },
     {
       id: 10,
-      question: "When should you re-prove your tester?",
-      options: ["Only at the end of the day", "Immediately after testing", "Only if the circuit seems faulty", "Once per week"],
+      question: 'When should you re-prove your tester?',
+      options: [
+        'Only at the end of the day',
+        'Immediately after testing',
+        'Only if the circuit seems faulty',
+        'Once per week',
+      ],
       correctAnswer: 1,
-      explanation: "You must re-prove your tester immediately after testing to confirm it hasn't failed during the testing process."
-    }
+      explanation:
+        "You must re-prove your tester immediately after testing to confirm it hasn't failed during the testing process.",
+    },
   ];
 
   const faqs = [
     {
-      question: "Can a multimeter replace a two-pole tester?",
-      answer: "No — multimeters can give false or confusing readings and aren't recommended for proving dead. Only GS38-compliant two-pole voltage indicators should be used."
+      question: 'Can a multimeter replace a two-pole tester?',
+      answer:
+        "No — multimeters can give false or confusing readings and aren't recommended for proving dead. Only GS38-compliant two-pole voltage indicators should be used.",
     },
     {
-      question: "How often should proving units be checked?",
-      answer: "They should be maintained and replaced according to the manufacturer's guidance. Many units have battery indicators and self-test functions that should be checked regularly."
+      question: 'How often should proving units be checked?',
+      answer:
+        "They should be maintained and replaced according to the manufacturer's guidance. Many units have battery indicators and self-test functions that should be checked regularly.",
     },
     {
       question: "Why can't I use a neon screwdriver?",
-      answer: "They are not GS38 compliant and unsafe — they rely on your body to complete a circuit. They can give false readings and provide no indication of voltage level."
+      answer:
+        'They are not GS38 compliant and unsafe — they rely on your body to complete a circuit. They can give false readings and provide no indication of voltage level.',
     },
     {
-      question: "What if my proving unit stops working during a job?",
-      answer: "Stop work immediately. You cannot safely prove dead without a functioning proving unit. Obtain a replacement before continuing with any electrical work."
+      question: 'What if my proving unit stops working during a job?',
+      answer:
+        'Stop work immediately. You cannot safely prove dead without a functioning proving unit. Obtain a replacement before continuing with any electrical work.',
     },
     {
-      question: "How do I know if my tester leads are damaged?",
-      answer: "Inspect leads before each use for cuts, exposed conductors, damaged insulation, or bent/damaged probe tips. Replace immediately if any damage is found."
+      question: 'How do I know if my tester leads are damaged?',
+      answer:
+        'Inspect leads before each use for cuts, exposed conductors, damaged insulation, or bent/damaged probe tips. Replace immediately if any damage is found.',
     },
     {
-      question: "Can I use the same tester for live testing and proving dead?",
-      answer: "Yes, but ensure it's appropriate for both applications and meets GS38 requirements. Some testers are designed specifically for proving dead applications."
+      question: 'Can I use the same tester for live testing and proving dead?',
+      answer:
+        "Yes, but ensure it's appropriate for both applications and meets GS38 requirements. Some testers are designed specifically for proving dead applications.",
     },
     {
-      question: "What voltage should a proving unit provide?",
-      answer: "Typically 230V or similar to the system voltage being tested. Check the proving unit matches your tester's requirements and the system voltage."
+      question: 'What voltage should a proving unit provide?',
+      answer:
+        "Typically 230V or similar to the system voltage being tested. Check the proving unit matches your tester's requirements and the system voltage.",
     },
     {
-      question: "Why do test leads need to be fused?",
-      answer: "Fused leads limit fault current if the leads are accidentally connected across a supply, protecting both the user and the equipment from dangerous fault currents."
+      question: 'Why do test leads need to be fused?',
+      answer:
+        'Fused leads limit fault current if the leads are accidentally connected across a supply, protecting both the user and the equipment from dangerous fault currents.',
     },
     {
-      question: "How long should I wait between isolation and testing?",
-      answer: "Test immediately after isolation, but allow time for any stored energy (capacitors) to discharge. Follow equipment manufacturer's guidance for specific discharge times."
+      question: 'How long should I wait between isolation and testing?',
+      answer:
+        "Test immediately after isolation, but allow time for any stored energy (capacitors) to discharge. Follow equipment manufacturer's guidance for specific discharge times.",
     },
     {
-      question: "What if I get inconsistent readings when proving dead?",
-      answer: "Stop and investigate. Check tester function on proving unit, inspect leads and connections, and verify isolation is complete. Never proceed if readings are inconsistent."
-    }
+      question: 'What if I get inconsistent readings when proving dead?',
+      answer:
+        'Stop and investigate. Check tester function on proving unit, inspect leads and connections, and verify isolation is complete. Never proceed if readings are inconsistent.',
+    },
   ];
 
   return (
@@ -194,10 +234,14 @@ const Module6Section3_5 = () => {
           <section className="mb-10">
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                The most reliable way to confirm that a circuit is dead and safe to work on is by using a two-pole voltage tester in combination with a proving unit. This method ensures your tester is functioning correctly before and after use, and that circuits are properly verified.
+                The most reliable way to confirm that a circuit is dead and safe to work on is by
+                using a two-pole voltage tester in combination with a proving unit. This method
+                ensures your tester is functioning correctly before and after use, and that circuits
+                are properly verified.
               </p>
               <p>
-                This subsection will guide you through correct procedures, safety practices, and common pitfalls when using these essential pieces of safety equipment.
+                This subsection will guide you through correct procedures, safety practices, and
+                common pitfalls when using these essential pieces of safety equipment.
               </p>
             </div>
           </section>
@@ -209,7 +253,9 @@ const Module6Section3_5 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-white/80 mb-3">By the end of this subsection, you will be able to:</p>
+              <p className="text-white/80 mb-3">
+                By the end of this subsection, you will be able to:
+              </p>
               <ul className="space-y-2 text-white/80">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
@@ -281,7 +327,12 @@ const Module6Section3_5 = () => {
             <InlineCheck
               id="proving-unit-purpose"
               question="What is the main purpose of a proving unit?"
-              options={["To test insulation resistance", "To confirm tester operation", "To measure voltage", "To check polarity"]}
+              options={[
+                'To test insulation resistance',
+                'To confirm tester operation',
+                'To measure voltage',
+                'To check polarity',
+              ]}
               correctIndex={1}
               explanation="A proving unit confirms that your voltage tester is working correctly before and after use, ensuring reliable test results."
             />
@@ -333,7 +384,12 @@ const Module6Section3_5 = () => {
             <InlineCheck
               id="two-pole-tester"
               question="Why are two-pole voltage testers preferred over neon screwdrivers?"
-              options={["They're cheaper", "They don't rely on your body", "They're faster", "They look more professional"]}
+              options={[
+                "They're cheaper",
+                "They don't rely on your body",
+                "They're faster",
+                'They look more professional',
+              ]}
               correctIndex={1}
               explanation="Two-pole testers don't rely on your body to complete the circuit, making them much safer and more reliable than neon screwdrivers."
             />
@@ -385,7 +441,7 @@ const Module6Section3_5 = () => {
             <InlineCheck
               id="live-dead-live-sequence"
               question="What is the correct sequence for proving dead?"
-              options={["Dead-live-dead", "Live-dead-live", "Lock-off only", "Test then isolate"]}
+              options={['Dead-live-dead', 'Live-dead-live', 'Lock-off only', 'Test then isolate']}
               correctIndex={1}
               explanation="Live-dead-live: prove tester works, test circuit is dead, re-prove tester still works. This ensures reliable results."
             />
@@ -439,7 +495,12 @@ const Module6Section3_5 = () => {
             <InlineCheck
               id="unsafe-practices"
               question="Which tool should never be used for proving dead?"
-              options={["Two-pole voltage tester", "Proving unit", "Neon screwdriver", "Digital multimeter"]}
+              options={[
+                'Two-pole voltage tester',
+                'Proving unit',
+                'Neon screwdriver',
+                'Digital multimeter',
+              ]}
               correctIndex={2}
               explanation="Neon screwdrivers should never be used for proving dead as they rely on your body to complete the circuit and are not GS38 compliant."
             />
@@ -506,12 +567,17 @@ const Module6Section3_5 = () => {
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="font-medium text-white mb-3">Case Study: The Hidden Tester Failure</p>
               <p className="text-white/80 mb-4">
-                An electrician isolated a distribution board but skipped the re-prove stage after testing. Unknown to him, the tester's internal fuse had blown during the proving process. He assumed the circuit was dead, but it was still live. He suffered a minor electric shock that could have been fatal.
+                An electrician isolated a distribution board but skipped the re-prove stage after
+                testing. Unknown to him, the tester's internal fuse had blown during the proving
+                process. He assumed the circuit was dead, but it was still live. He suffered a minor
+                electric shock that could have been fatal.
               </p>
               <div className="p-3 rounded-lg bg-white/5 border-l-2 border-amber-500">
                 <p className="font-medium text-white mb-2">Lesson learned:</p>
                 <p className="text-sm text-white/80">
-                  Always perform the complete live-dead-live testing sequence with a proving unit. The re-prove step is not optional—it's a safety-critical verification that your tester is still functioning correctly.
+                  Always perform the complete live-dead-live testing sequence with a proving unit.
+                  The re-prove step is not optional—it's a safety-critical verification that your
+                  tester is still functioning correctly.
                 </p>
               </div>
             </div>
@@ -525,12 +591,15 @@ const Module6Section3_5 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30">
               <p className="text-white/80 mb-4">
-                You arrive at a job and your colleague says "Don't worry, I've already tested it with my voltage pen - it's definitely dead." What do you do?
+                You arrive at a job and your colleague says "Don't worry, I've already tested it
+                with my voltage pen - it's definitely dead." What do you do?
               </p>
               <div className="p-3 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Answer:</p>
                 <p className="text-sm text-white/80">
-                  Never trust another person's testing, especially with non-GS38 equipment. Always perform your own complete live-dead-live procedure using proper two-pole voltage tester and proving unit. Voltage pens are not acceptable for proving dead.
+                  Never trust another person's testing, especially with non-GS38 equipment. Always
+                  perform your own complete live-dead-live procedure using proper two-pole voltage
+                  tester and proving unit. Voltage pens are not acceptable for proving dead.
                 </p>
               </div>
             </div>
@@ -616,10 +685,7 @@ const Module6Section3_5 = () => {
 
           {/* Quiz */}
           <section className="mb-10">
-            <Quiz
-              title="Test Your Knowledge"
-              questions={quizQuestions}
-            />
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
           </section>
 
           {/* Navigation Footer */}

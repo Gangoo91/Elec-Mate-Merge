@@ -14,7 +14,9 @@ export const useCompanyProfile = () => {
 
     try {
       setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       if (!user) {
         logger.info('No user found, skipping company profile fetch');
@@ -22,8 +24,7 @@ export const useCompanyProfile = () => {
       }
 
       // Use RPC function to bypass 406 error from direct table query
-      const { data, error } = await supabase
-        .rpc('get_my_company_profile');
+      const { data, error } = await supabase.rpc('get_my_company_profile');
 
       if (error) {
         logger.api('company_profiles/fetch', requestId).error(error);
@@ -34,7 +35,9 @@ export const useCompanyProfile = () => {
       const profile = Array.isArray(data) ? data[0] : data;
 
       if (profile) {
-        logger.api('company_profiles/fetch', requestId).success({ companyName: profile.company_name });
+        logger
+          .api('company_profiles/fetch', requestId)
+          .success({ companyName: profile.company_name });
         setCompanyProfile({
           ...profile,
           bank_details: profile.bank_details || {},
@@ -51,219 +54,250 @@ export const useCompanyProfile = () => {
     }
   }, []);
 
-  const saveCompanyProfile = useCallback(async (profile: Partial<CompanyProfile>) => {
-    const requestId = generateRequestId();
-    const isUpdate = !!companyProfile?.id;
-    logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).start({
-      companyName: profile.company_name
-    });
-    logger.action('Save company profile', 'company', { isUpdate });
-
-    try {
-      setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (!user) {
-        logger.warn('Attempted to save company profile without authentication');
-        toast({
-          title: "Authentication Required",
-          description: "Please log in to save company profile.",
-          variant: "destructive"
-        });
-        return false;
-      }
-
-      const { created_at, updated_at, id, ...profileData } = profile;
-      const cleanProfileData = {
-        ...profileData,
-        user_id: user.id,
-        company_name: profileData.company_name || '',
-      };
-
-      let result;
-      if (companyProfile?.id) {
-        // Update existing
-        result = await supabase
-          .from('company_profiles')
-          .update(cleanProfileData)
-          .eq('id', companyProfile.id)
-          .select()
-          .single();
-      } else {
-        // Create new
-        result = await supabase
-          .from('company_profiles')
-          .insert(cleanProfileData)
-          .select()
-          .single();
-      }
-
-      if (result.error) {
-        logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).error(result.error);
-        toast({
-          title: "Save Failed",
-          description: "Failed to save company profile. Please try again.",
-          variant: "destructive"
-        });
-        return false;
-      }
-
-      logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).success({
-        profileId: result.data.id
+  const saveCompanyProfile = useCallback(
+    async (profile: Partial<CompanyProfile>) => {
+      const requestId = generateRequestId();
+      const isUpdate = !!companyProfile?.id;
+      logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).start({
+        companyName: profile.company_name,
       });
+      logger.action('Save company profile', 'company', { isUpdate });
 
-      setCompanyProfile({
-        ...result.data,
-        bank_details: result.data.bank_details || {},
-        created_at: new Date(result.data.created_at),
-        updated_at: new Date(result.data.updated_at),
-      } as CompanyProfile);
+      try {
+        setLoading(true);
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
 
-      // CRITICAL: Sync logo_url to inspector_profiles so EICR certificates show the logo
-      // The EICR form uses inspector_profiles.company_logo, not company_profiles.logo_url
-      if (cleanProfileData.logo_url !== undefined) {
-        const { error: syncError } = await supabase
-          .from('inspector_profiles')
-          .update({ company_logo: cleanProfileData.logo_url })
-          .eq('user_id', user.id);
+        if (!user) {
+          logger.warn('Attempted to save company profile without authentication');
+          toast({
+            title: 'Authentication Required',
+            description: 'Please log in to save company profile.',
+            variant: 'destructive',
+          });
+          return false;
+        }
 
-        if (syncError) {
-          console.warn('[useCompanyProfile] Failed to sync logo to inspector profiles:', syncError);
+        const { created_at, updated_at, id, ...profileData } = profile;
+        const cleanProfileData = {
+          ...profileData,
+          user_id: user.id,
+          company_name: profileData.company_name || '',
+        };
+
+        let result;
+        if (companyProfile?.id) {
+          // Update existing
+          result = await supabase
+            .from('company_profiles')
+            .update(cleanProfileData)
+            .eq('id', companyProfile.id)
+            .select()
+            .single();
         } else {
-          console.log('[useCompanyProfile] Logo synced to inspector profiles');
+          // Create new
+          result = await supabase
+            .from('company_profiles')
+            .insert(cleanProfileData)
+            .select()
+            .single();
         }
-      }
 
-      // Sync scheme logos to inspector profiles for PDF embedding
-      if (cleanProfileData.registration_scheme_logo !== undefined) {
-        const { error: syncError } = await supabase
-          .from('inspector_profiles')
-          .update({ registration_scheme_logo: cleanProfileData.registration_scheme_logo })
-          .eq('user_id', user.id);
-        if (syncError) {
-          console.warn('[useCompanyProfile] Failed to sync registration scheme logo to inspector profiles:', syncError);
+        if (result.error) {
+          logger
+            .api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId)
+            .error(result.error);
+          toast({
+            title: 'Save Failed',
+            description: 'Failed to save company profile. Please try again.',
+            variant: 'destructive',
+          });
+          return false;
         }
-      }
 
-      if (cleanProfileData.scheme_logo_data_url !== undefined) {
-        const { error: syncError } = await supabase
-          .from('inspector_profiles')
-          .update({ scheme_logo_data_url: cleanProfileData.scheme_logo_data_url })
-          .eq('user_id', user.id);
-        if (syncError) {
-          console.warn('[useCompanyProfile] Failed to sync scheme logo data URL to inspector profiles:', syncError);
+        logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).success({
+          profileId: result.data.id,
+        });
+
+        setCompanyProfile({
+          ...result.data,
+          bank_details: result.data.bank_details || {},
+          created_at: new Date(result.data.created_at),
+          updated_at: new Date(result.data.updated_at),
+        } as CompanyProfile);
+
+        // CRITICAL: Sync logo_url to inspector_profiles so EICR certificates show the logo
+        // The EICR form uses inspector_profiles.company_logo, not company_profiles.logo_url
+        if (cleanProfileData.logo_url !== undefined) {
+          const { error: syncError } = await supabase
+            .from('inspector_profiles')
+            .update({ company_logo: cleanProfileData.logo_url })
+            .eq('user_id', user.id);
+
+          if (syncError) {
+            console.warn(
+              '[useCompanyProfile] Failed to sync logo to inspector profiles:',
+              syncError
+            );
+          } else {
+            console.log('[useCompanyProfile] Logo synced to inspector profiles');
+          }
         }
-      }
 
-      toast({
-        title: "Profile Saved",
-        description: "Company profile has been saved successfully.",
-        variant: "success"
-      });
+        // Sync scheme logos to inspector profiles for PDF embedding
+        if (cleanProfileData.registration_scheme_logo !== undefined) {
+          const { error: syncError } = await supabase
+            .from('inspector_profiles')
+            .update({ registration_scheme_logo: cleanProfileData.registration_scheme_logo })
+            .eq('user_id', user.id);
+          if (syncError) {
+            console.warn(
+              '[useCompanyProfile] Failed to sync registration scheme logo to inspector profiles:',
+              syncError
+            );
+          }
+        }
 
-      return true;
-    } catch (error) {
-      logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).error(error);
-      toast({
-        title: "Save Failed",
-        description: "An unexpected error occurred. Please try again.",
-        variant: "destructive"
-      });
-      return false;
-    } finally {
-      setLoading(false);
-    }
-  }, [companyProfile]);
+        if (cleanProfileData.scheme_logo_data_url !== undefined) {
+          const { error: syncError } = await supabase
+            .from('inspector_profiles')
+            .update({ scheme_logo_data_url: cleanProfileData.scheme_logo_data_url })
+            .eq('user_id', user.id);
+          if (syncError) {
+            console.warn(
+              '[useCompanyProfile] Failed to sync scheme logo data URL to inspector profiles:',
+              syncError
+            );
+          }
+        }
 
-  const uploadLogo = useCallback(async (file: File): Promise<{ url?: string; dataUrl?: string } | null> => {
-    console.log('[uploadLogo] Starting upload for file:', file.name, 'size:', file.size, 'type:', file.type);
-
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      console.log('[uploadLogo] Auth check - user:', user?.id);
-
-      if (!user) {
-        console.error('[uploadLogo] No authenticated user');
         toast({
-          title: "Authentication Required",
-          description: "Please log in to upload a logo.",
-          variant: "destructive"
+          title: 'Profile Saved',
+          description: 'Company profile has been saved successfully.',
+          variant: 'success',
+        });
+
+        return true;
+      } catch (error) {
+        logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).error(error);
+        toast({
+          title: 'Save Failed',
+          description: 'An unexpected error occurred. Please try again.',
+          variant: 'destructive',
+        });
+        return false;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [companyProfile]
+  );
+
+  const uploadLogo = useCallback(
+    async (file: File): Promise<{ url?: string; dataUrl?: string } | null> => {
+      console.log(
+        '[uploadLogo] Starting upload for file:',
+        file.name,
+        'size:',
+        file.size,
+        'type:',
+        file.type
+      );
+
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        console.log('[uploadLogo] Auth check - user:', user?.id);
+
+        if (!user) {
+          console.error('[uploadLogo] No authenticated user');
+          toast({
+            title: 'Authentication Required',
+            description: 'Please log in to upload a logo.',
+            variant: 'destructive',
+          });
+          return null;
+        }
+
+        // Check file size (max 20MB)
+        const maxSize = 20 * 1024 * 1024;
+        if (file.size > maxSize) {
+          console.error('[uploadLogo] File too large:', file.size);
+          toast({
+            title: 'File Too Large',
+            description: 'Logo must be under 20MB. Please compress or resize your image.',
+            variant: 'destructive',
+          });
+          return null;
+        }
+
+        // Convert to base64 for PDF embedding
+        const dataUrl = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(new Error('Failed to read file'));
+          reader.readAsDataURL(file);
+        });
+
+        // Determine file extension (handle HEIC)
+        let extension = file.name.split('.').pop()?.toLowerCase() || 'png';
+        if (extension === 'heic' || extension === 'heif') {
+          extension = 'jpg'; // HEIC files get converted by browser
+        }
+
+        // Upload to storage
+        const fileName = `${user.id}/logo-${Date.now()}.${extension}`;
+        console.log('[uploadLogo] Uploading to path:', fileName);
+
+        const { data, error } = await supabase.storage
+          .from('company-branding')
+          .upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: true, // Allow overwriting existing logos
+          });
+
+        if (error) {
+          console.error('[uploadLogo] Storage upload failed:', error);
+          toast({
+            title: 'Upload Failed',
+            description: error.message || 'Failed to upload logo. Please try again.',
+            variant: 'destructive',
+          });
+          return null;
+        }
+
+        console.log('[uploadLogo] Upload successful, path:', data.path);
+
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('company-branding').getPublicUrl(data.path);
+
+        console.log('[uploadLogo] Public URL generated:', publicUrl);
+
+        toast({
+          title: 'Logo Uploaded',
+          description: 'Your company logo has been uploaded successfully.',
+          variant: 'success',
+        });
+
+        return { url: publicUrl, dataUrl };
+      } catch (error) {
+        console.error('[uploadLogo] Unexpected error:', error);
+        toast({
+          title: 'Upload Failed',
+          description:
+            error instanceof Error
+              ? error.message
+              : 'An unexpected error occurred. Please try again.',
+          variant: 'destructive',
         });
         return null;
       }
-
-      // Check file size (max 20MB)
-      const maxSize = 20 * 1024 * 1024;
-      if (file.size > maxSize) {
-        console.error('[uploadLogo] File too large:', file.size);
-        toast({
-          title: "File Too Large",
-          description: "Logo must be under 20MB. Please compress or resize your image.",
-          variant: "destructive"
-        });
-        return null;
-      }
-
-      // Convert to base64 for PDF embedding
-      const dataUrl = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = () => reject(new Error('Failed to read file'));
-        reader.readAsDataURL(file);
-      });
-
-      // Determine file extension (handle HEIC)
-      let extension = file.name.split('.').pop()?.toLowerCase() || 'png';
-      if (extension === 'heic' || extension === 'heif') {
-        extension = 'jpg'; // HEIC files get converted by browser
-      }
-
-      // Upload to storage
-      const fileName = `${user.id}/logo-${Date.now()}.${extension}`;
-      console.log('[uploadLogo] Uploading to path:', fileName);
-
-      const { data, error } = await supabase.storage
-        .from('company-branding')
-        .upload(fileName, file, {
-          cacheControl: '3600',
-          upsert: true // Allow overwriting existing logos
-        });
-
-      if (error) {
-        console.error('[uploadLogo] Storage upload failed:', error);
-        toast({
-          title: "Upload Failed",
-          description: error.message || "Failed to upload logo. Please try again.",
-          variant: "destructive"
-        });
-        return null;
-      }
-
-      console.log('[uploadLogo] Upload successful, path:', data.path);
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('company-branding')
-        .getPublicUrl(data.path);
-
-      console.log('[uploadLogo] Public URL generated:', publicUrl);
-
-      toast({
-        title: "Logo Uploaded",
-        description: "Your company logo has been uploaded successfully.",
-        variant: "success"
-      });
-
-      return { url: publicUrl, dataUrl };
-    } catch (error) {
-      console.error('[uploadLogo] Unexpected error:', error);
-      toast({
-        title: "Upload Failed",
-        description: error instanceof Error ? error.message : "An unexpected error occurred. Please try again.",
-        variant: "destructive"
-      });
-      return null;
-    }
-  }, []);
+    },
+    []
+  );
 
   useEffect(() => {
     fetchCompanyProfile();

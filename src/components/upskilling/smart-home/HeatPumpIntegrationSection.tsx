@@ -12,9 +12,10 @@ export const HeatPumpIntegrationSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Heat pumps operate differently from traditional boilers, requiring specific smart control strategies to maximise their efficiency and performance in heating systems.
+          Heat pumps operate differently from traditional boilers, requiring specific smart control
+          strategies to maximise their efficiency and performance in heating systems.
         </p>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-elec-gray border border-blue-600 rounded-lg p-4">
             <h4 className="font-semibold text-blue-200 mb-3">Types of Heat Pumps</h4>
@@ -25,7 +26,7 @@ export const HeatPumpIntegrationSection = () => {
               <li>• Water-source heat pumps</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-green-600 rounded-lg p-4">
             <h4 className="font-semibold text-green-200 mb-3">Operating Characteristics</h4>
             <ul className="space-y-2 text-sm text-green-100">
@@ -64,7 +65,8 @@ export const HeatPumpIntegrationSection = () => {
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">System Requirements</h4>
           <p className="text-sm mb-3">
-            Heat pumps work most efficiently with low-temperature heating distribution systems and require careful zoning to avoid energy waste.
+            Heat pumps work most efficiently with low-temperature heating distribution systems and
+            require careful zoning to avoid energy waste.
           </p>
           <ul className="space-y-2 text-sm">
             <li className="flex items-start gap-2">

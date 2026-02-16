@@ -13,12 +13,10 @@ export const uploadEmployeePhoto = async (
     const filePath = fileName;
 
     // Upload to Supabase Storage
-    const { error: uploadError } = await supabase.storage
-      .from(BUCKET_NAME)
-      .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: true
-      });
+    const { error: uploadError } = await supabase.storage.from(BUCKET_NAME).upload(filePath, file, {
+      cacheControl: '3600',
+      upsert: true,
+    });
 
     if (uploadError) {
       console.error('Error uploading photo:', uploadError);
@@ -26,9 +24,9 @@ export const uploadEmployeePhoto = async (
     }
 
     // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from(BUCKET_NAME)
-      .getPublicUrl(filePath);
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from(BUCKET_NAME).getPublicUrl(filePath);
 
     return publicUrl;
   } catch (error) {
@@ -44,9 +42,7 @@ export const deleteEmployeePhoto = async (photoUrl: string): Promise<boolean> =>
     const pathParts = url.pathname.split('/');
     const fileName = pathParts[pathParts.length - 1];
 
-    const { error } = await supabase.storage
-      .from(BUCKET_NAME)
-      .remove([fileName]);
+    const { error } = await supabase.storage.from(BUCKET_NAME).remove([fileName]);
 
     if (error) {
       console.error('Error deleting photo:', error);

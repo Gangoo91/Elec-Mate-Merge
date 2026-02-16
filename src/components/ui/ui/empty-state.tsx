@@ -33,15 +33,11 @@ export const EmptyState = ({
         <div className="p-4 rounded-full bg-elec-yellow/10 mb-4">
           <Icon className="h-12 w-12 text-elec-yellow/60" />
         </div>
-        
-        <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">
-          {title}
-        </h3>
-        
-        <p className="text-base md:text-sm text-gray-400 max-w-md mb-6">
-          {description}
-        </p>
-        
+
+        <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">{title}</h3>
+
+        <p className="text-base md:text-sm text-gray-400 max-w-md mb-6">{description}</p>
+
         {(action || secondaryAction) && (
           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             {action && (

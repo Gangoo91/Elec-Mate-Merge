@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info, AlertTriangle, BookOpen, ChevronDown } from "lucide-react";
+import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Info, AlertTriangle, BookOpen, ChevronDown } from 'lucide-react';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -14,21 +14,17 @@ import {
   ResultDetails,
   CalculatorFormula,
   FormulaReference,
-} from "@/components/calculators/shared";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from '@/components/calculators/shared';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 
 const OhmsLawCalculator = () => {
-  const [voltage, setVoltage] = useState("");
-  const [current, setCurrent] = useState("");
-  const [resistance, setResistance] = useState("");
-  const [power, setPower] = useState("");
-  const [solveFor, setSolveFor] = useState("auto");
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [voltage, setVoltage] = useState('');
+  const [current, setCurrent] = useState('');
+  const [resistance, setResistance] = useState('');
+  const [power, setPower] = useState('');
+  const [solveFor, setSolveFor] = useState('auto');
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showGuidance, setShowGuidance] = useState(false);
   const [showBsRegs, setShowBsRegs] = useState(false);
   const [result, setResult] = useState<{
@@ -45,17 +41,19 @@ const OhmsLawCalculator = () => {
   } | null>(null);
 
   const validateInputs = () => {
-    const newErrors: {[key: string]: string} = {};
-    const values = [voltage, current, resistance, power].filter(val => val && parseFloat(val) > 0);
+    const newErrors: { [key: string]: string } = {};
+    const values = [voltage, current, resistance, power].filter(
+      (val) => val && parseFloat(val) > 0
+    );
 
     if (values.length < 2) {
-      newErrors.general = "Please enter at least two values";
+      newErrors.general = 'Please enter at least two values';
     }
 
     [voltage, current, resistance, power].forEach((val, idx) => {
       const fieldNames = ['voltage', 'current', 'resistance', 'power'];
       if (val && parseFloat(val) < 0) {
-        newErrors[fieldNames[idx]] = "Value must be positive";
+        newErrors[fieldNames[idx]] = 'Value must be positive';
       }
     });
 
@@ -75,8 +73,8 @@ const OhmsLawCalculator = () => {
     let calculatedI = I;
     let calculatedR = R;
     let calculatedP = P;
-    let formula = "";
-    let formulaType = "";
+    let formula = '';
+    let formulaType = '';
     const calculationSteps: string[] = [];
     const inputValues: { V?: number; I?: number; R?: number; P?: number } = {};
 
@@ -85,8 +83,8 @@ const OhmsLawCalculator = () => {
       inputValues.I = I;
       calculatedR = V / I;
       calculatedP = V * I;
-      formula = "Using V and I: R = V/I, P = V×I";
-      formulaType = "V_I";
+      formula = 'Using V and I: R = V/I, P = V×I';
+      formulaType = 'V_I';
       calculationSteps.push(
         `Step 1: Calculate Resistance (R)`,
         `R = V ÷ I`,
@@ -103,8 +101,8 @@ const OhmsLawCalculator = () => {
       inputValues.R = R;
       calculatedI = V / R;
       calculatedP = (V * V) / R;
-      formula = "Using V and R: I = V/R, P = V²/R";
-      formulaType = "V_R";
+      formula = 'Using V and R: I = V/R, P = V²/R';
+      formulaType = 'V_R';
       calculationSteps.push(
         `Step 1: Calculate Current (I)`,
         `I = V ÷ R`,
@@ -122,8 +120,8 @@ const OhmsLawCalculator = () => {
       inputValues.P = P;
       calculatedI = P / V;
       calculatedR = (V * V) / P;
-      formula = "Using V and P: I = P/V, R = V²/P";
-      formulaType = "V_P";
+      formula = 'Using V and P: I = P/V, R = V²/P';
+      formulaType = 'V_P';
       calculationSteps.push(
         `Step 1: Calculate Current (I)`,
         `I = P ÷ V`,
@@ -141,8 +139,8 @@ const OhmsLawCalculator = () => {
       inputValues.R = R;
       calculatedV = I * R;
       calculatedP = I * I * R;
-      formula = "Using I and R: V = I×R, P = I²×R";
-      formulaType = "I_R";
+      formula = 'Using I and R: V = I×R, P = I²×R';
+      formulaType = 'I_R';
       calculationSteps.push(
         `Step 1: Calculate Voltage (V)`,
         `V = I × R`,
@@ -160,8 +158,8 @@ const OhmsLawCalculator = () => {
       inputValues.P = P;
       calculatedV = P / I;
       calculatedR = P / (I * I);
-      formula = "Using I and P: V = P/I, R = P/I²";
-      formulaType = "I_P";
+      formula = 'Using I and P: V = P/I, R = P/I²';
+      formulaType = 'I_P';
       calculationSteps.push(
         `Step 1: Calculate Voltage (V)`,
         `V = P ÷ I`,
@@ -179,8 +177,8 @@ const OhmsLawCalculator = () => {
       inputValues.P = P;
       calculatedI = Math.sqrt(P / R);
       calculatedV = Math.sqrt(P * R);
-      formula = "Using R and P: I = √(P/R), V = √(P×R)";
-      formulaType = "R_P";
+      formula = 'Using R and P: I = √(P/R), V = √(P×R)';
+      formulaType = 'R_P';
       calculationSteps.push(
         `Step 1: Calculate Current (I)`,
         `I = √(P ÷ R)`,
@@ -198,15 +196,15 @@ const OhmsLawCalculator = () => {
 
     const currentAt230V = calculatedR > 0 ? 230 / calculatedR : 0;
 
-    let protectionGuidance = "";
+    let protectionGuidance = '';
     if (calculatedI > 32) {
-      protectionGuidance = "High current - consider distribution board protection";
+      protectionGuidance = 'High current - consider distribution board protection';
     } else if (calculatedI > 16) {
-      protectionGuidance = "Typical for high-power circuits (cookers, showers)";
+      protectionGuidance = 'Typical for high-power circuits (cookers, showers)';
     } else if (calculatedI > 6) {
-      protectionGuidance = "Standard for socket outlets and lighting circuits";
+      protectionGuidance = 'Standard for socket outlets and lighting circuits';
     } else if (calculatedI > 0) {
-      protectionGuidance = "Low current - typical for control circuits";
+      protectionGuidance = 'Low current - typical for control circuits';
     }
 
     setResult({
@@ -219,22 +217,23 @@ const OhmsLawCalculator = () => {
       protectionGuidance: protectionGuidance,
       inputValues,
       calculationSteps,
-      formulaType
+      formulaType,
     });
     setErrors({});
   };
 
   const reset = () => {
-    setVoltage("");
-    setCurrent("");
-    setResistance("");
-    setPower("");
-    setSolveFor("auto");
+    setVoltage('');
+    setCurrent('');
+    setResistance('');
+    setPower('');
+    setSolveFor('auto');
     setErrors({});
     setResult(null);
   };
 
-  const hasValidInputs = [voltage, current, resistance, power].filter(val => val && parseFloat(val) > 0).length >= 2;
+  const hasValidInputs =
+    [voltage, current, resistance, power].filter((val) => val && parseFloat(val) > 0).length >= 2;
 
   // Convert calculation steps to formula steps format
   const getFormulaSteps = () => {
@@ -243,12 +242,18 @@ const OhmsLawCalculator = () => {
     const steps: { label: string; formula?: string; value?: string }[] = [];
     let currentStep: { label: string; formula?: string; value?: string } | null = null;
 
-    result.calculationSteps.forEach(line => {
+    result.calculationSteps.forEach((line) => {
       if (line.startsWith('Step')) {
         if (currentStep) steps.push(currentStep);
         currentStep = { label: line.replace(/Step \d+: /, '') };
       } else if (line && currentStep) {
-        if (line.includes('=') && (line.includes('Ω') || line.includes('V') || line.includes('A') || line.includes('W')) && !line.includes('÷') && !line.includes('×') && !line.includes('√')) {
+        if (
+          line.includes('=') &&
+          (line.includes('Ω') || line.includes('V') || line.includes('A') || line.includes('W')) &&
+          !line.includes('÷') &&
+          !line.includes('×') &&
+          !line.includes('√')
+        ) {
           currentStep.value = line;
         } else if (!currentStep.formula) {
           currentStep.formula = line;
@@ -276,11 +281,11 @@ const OhmsLawCalculator = () => {
           onChange={setSolveFor}
           placeholder="What are you trying to find?"
           options={[
-            { value: "auto", label: "Auto-detect from inputs" },
-            { value: "voltage", label: "Voltage (V)" },
-            { value: "current", label: "Current (I)" },
-            { value: "resistance", label: "Resistance (R)" },
-            { value: "power", label: "Power (P)" },
+            { value: 'auto', label: 'Auto-detect from inputs' },
+            { value: 'voltage', label: 'Voltage (V)' },
+            { value: 'current', label: 'Current (I)' },
+            { value: 'resistance', label: 'Resistance (R)' },
+            { value: 'power', label: 'Power (P)' },
           ]}
         />
 
@@ -360,25 +365,25 @@ const OhmsLawCalculator = () => {
             <ResultsGrid columns={2}>
               <ResultValue
                 label="Voltage"
-                value={result.voltage?.toFixed(2) || "0"}
+                value={result.voltage?.toFixed(2) || '0'}
                 unit="V"
                 category="power"
               />
               <ResultValue
                 label="Current"
-                value={result.current?.toFixed(3) || "0"}
+                value={result.current?.toFixed(3) || '0'}
                 unit="A"
                 category="power"
               />
               <ResultValue
                 label="Resistance"
-                value={result.resistance?.toFixed(2) || "0"}
+                value={result.resistance?.toFixed(2) || '0'}
                 unit="Ω"
                 category="power"
               />
               <ResultValue
                 label="Power"
-                value={result.power?.toFixed(2) || "0"}
+                value={result.power?.toFixed(2) || '0'}
                 unit="W"
                 category="power"
               />
@@ -388,7 +393,9 @@ const OhmsLawCalculator = () => {
               <div className="pt-3 mt-3 border-t border-white/10">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
                   <span className="text-white/60 text-sm">Current at 230V (per phase):</span>
-                  <span className="text-amber-400 font-mono text-lg font-bold">{result.currentAt230V.toFixed(2)} A</span>
+                  <span className="text-amber-400 font-mono text-lg font-bold">
+                    {result.currentAt230V.toFixed(2)} A
+                  </span>
                 </div>
                 <p className="text-xs text-white/70 mt-1">
                   For 3-phase systems: Total power ÷ 3 phases ÷ 230V line-to-neutral voltage
@@ -457,10 +464,10 @@ const OhmsLawCalculator = () => {
                   name="Ohm's Law Formulas"
                   formula="V = I × R"
                   variables={[
-                    { symbol: "V", description: "Voltage in Volts" },
-                    { symbol: "I", description: "Current in Amps" },
-                    { symbol: "R", description: "Resistance in Ohms" },
-                    { symbol: "P", description: "Power in Watts" },
+                    { symbol: 'V', description: 'Voltage in Volts' },
+                    { symbol: 'I', description: 'Current in Amps' },
+                    { symbol: 'R', description: 'Resistance in Ohms' },
+                    { symbol: 'P', description: 'Power in Watts' },
                   ]}
                 />
               </div>
@@ -473,34 +480,55 @@ const OhmsLawCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showGuidance && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
-                  <p className="font-medium text-blue-300 text-sm mb-1">Current Rating Requirements</p>
-                  <p className="text-sm text-blue-200/80">Cables and protective devices must be rated for at least {result.current?.toFixed(1)}A continuously. Consider derating factors per BS 7671 Table 4D5.</p>
+                  <p className="font-medium text-blue-300 text-sm mb-1">
+                    Current Rating Requirements
+                  </p>
+                  <p className="text-sm text-blue-200/80">
+                    Cables and protective devices must be rated for at least{' '}
+                    {result.current?.toFixed(1)}A continuously. Consider derating factors per BS
+                    7671 Table 4D5.
+                  </p>
                 </div>
 
                 <div className="p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
                   <p className="font-medium text-blue-300 text-sm mb-1">Voltage Drop Compliance</p>
-                  <p className="text-sm text-blue-200/80">BS 7671 limits: 3% for lighting, 5% for power circuits. For {result.current?.toFixed(1)}A, calculate cable length carefully.</p>
+                  <p className="text-sm text-blue-200/80">
+                    BS 7671 limits: 3% for lighting, 5% for power circuits. For{' '}
+                    {result.current?.toFixed(1)}A, calculate cable length carefully.
+                  </p>
                 </div>
 
                 <div className="p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
                   <p className="font-medium text-blue-300 text-sm mb-1">Protection Coordination</p>
-                  <p className="text-sm text-blue-200/80">Protective device rating (In) must coordinate: Ib ≤ In ≤ Iz. {result.protectionGuidance}</p>
+                  <p className="text-sm text-blue-200/80">
+                    Protective device rating (In) must coordinate: Ib ≤ In ≤ Iz.{' '}
+                    {result.protectionGuidance}
+                  </p>
                 </div>
 
                 {result.current && result.current > 16 && (
                   <div className="p-3 bg-amber-500/10 rounded-lg border border-amber-500/30">
-                    <p className="font-medium text-amber-300 text-sm mb-1">High Current Considerations</p>
-                    <p className="text-sm text-amber-200/80">Currents above 16A generate significant heat. Consider cable heating effects and installation method derating factors.</p>
+                    <p className="font-medium text-amber-300 text-sm mb-1">
+                      High Current Considerations
+                    </p>
+                    <p className="text-sm text-amber-200/80">
+                      Currents above 16A generate significant heat. Consider cable heating effects
+                      and installation method derating factors.
+                    </p>
                   </div>
                 )}
               </CollapsibleContent>
@@ -513,20 +541,36 @@ const OhmsLawCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    BS 7671 Regs at a Glance
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showBsRegs && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showBsRegs && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">
-                  <p>• <strong className="text-amber-300">433.1:</strong> Overcurrent protection must not exceed conductor current-carrying capacity</p>
-                  <p>• <strong className="text-amber-300">525:</strong> Voltage drop limits - 3% for lighting, 5% for other circuits</p>
-                  <p>• <strong className="text-amber-300">523:</strong> Current-carrying capacity includes grouping and temperature derating</p>
-                  <p>• <strong className="text-amber-300">434.5.2:</strong> ADS fault protection requirements</p>
+                  <p>
+                    • <strong className="text-amber-300">433.1:</strong> Overcurrent protection must
+                    not exceed conductor current-carrying capacity
+                  </p>
+                  <p>
+                    • <strong className="text-amber-300">525:</strong> Voltage drop limits - 3% for
+                    lighting, 5% for other circuits
+                  </p>
+                  <p>
+                    • <strong className="text-amber-300">523:</strong> Current-carrying capacity
+                    includes grouping and temperature derating
+                  </p>
+                  <p>
+                    • <strong className="text-amber-300">434.5.2:</strong> ADS fault protection
+                    requirements
+                  </p>
                 </div>
               </CollapsibleContent>
             </div>

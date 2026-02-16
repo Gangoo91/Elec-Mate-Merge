@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { 
-  Search, 
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Search,
   Filter,
   LayoutGrid,
   ChevronDown,
@@ -10,9 +10,9 @@ import {
   Camera,
   Check,
   Share2,
-  AlertTriangle
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+  AlertTriangle,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface PhotoStats {
   total: number;
@@ -36,7 +36,7 @@ export function PhotoGalleryHeader({
   onSearchChange,
   onFilterClick,
   onViewModeClick,
-  hasActiveFilters
+  hasActiveFilters,
 }: PhotoGalleryHeaderProps) {
   const [statsExpanded, setStatsExpanded] = useState(false);
 
@@ -60,15 +60,21 @@ export function PhotoGalleryHeader({
             </div>
             <div className="text-center">
               <div className="text-lg font-bold text-success">{stats.approved}</div>
-              <div className="text-[10px] text-muted-foreground uppercase tracking-wide">Approved</div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                Approved
+              </div>
             </div>
             <div className="text-center">
               <div className="text-lg font-bold text-info">{stats.shared}</div>
-              <div className="text-[10px] text-muted-foreground uppercase tracking-wide">Shared</div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                Shared
+              </div>
             </div>
             <div className="text-center">
               <div className="text-lg font-bold text-destructive">{stats.issues}</div>
-              <div className="text-[10px] text-muted-foreground uppercase tracking-wide">Issues</div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                Issues
+              </div>
             </div>
           </div>
         ) : (
@@ -111,28 +117,25 @@ export function PhotoGalleryHeader({
             placeholder="Search photos..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className={cn("bg-elec-gray/80 h-11 border-border/50", !searchQuery && "pl-9")}
+            className={cn('bg-elec-gray/80 h-11 border-border/50', !searchQuery && 'pl-9')}
           />
         </div>
-        
-        <Button 
-          variant="outline" 
-          size="icon" 
+
+        <Button
+          variant="outline"
+          size="icon"
           className={cn(
-            "h-11 w-11 border-border/50",
-            hasActiveFilters && "border-elec-yellow bg-elec-yellow/10"
+            'h-11 w-11 border-border/50',
+            hasActiveFilters && 'border-elec-yellow bg-elec-yellow/10'
           )}
           onClick={onFilterClick}
         >
-          <Filter className={cn(
-            "h-4 w-4",
-            hasActiveFilters && "text-elec-yellow"
-          )} />
+          <Filter className={cn('h-4 w-4', hasActiveFilters && 'text-elec-yellow')} />
         </Button>
 
-        <Button 
-          variant="outline" 
-          size="icon" 
+        <Button
+          variant="outline"
+          size="icon"
           className="h-11 w-11 border-border/50"
           onClick={onViewModeClick}
         >

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { testingProceduresData } from './TestingProcedureData';
@@ -10,7 +9,9 @@ const TestingProceduresStats = () => {
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
       <Card className="bg-card border-border text-center">
         <CardHeader>
-          <CardTitle className="text-2xl text-elec-yellow">{testingProceduresData.length}</CardTitle>
+          <CardTitle className="text-2xl text-elec-yellow">
+            {testingProceduresData.length}
+          </CardTitle>
           <CardDescription>Interactive Procedures</CardDescription>
         </CardHeader>
       </Card>

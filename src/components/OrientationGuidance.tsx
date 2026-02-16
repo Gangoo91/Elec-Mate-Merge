@@ -7,9 +7,9 @@ interface OrientationGuidanceProps {
   onDismiss?: () => void;
 }
 
-const OrientationGuidance: React.FC<OrientationGuidanceProps> = ({ 
+const OrientationGuidance: React.FC<OrientationGuidanceProps> = ({
   showRotatePrompt = false,
-  onDismiss 
+  onDismiss,
 }) => {
   if (!showRotatePrompt) return null;
 
@@ -38,7 +38,7 @@ const OrientationGuidance: React.FC<OrientationGuidanceProps> = ({
           </div>
         </div>
         {onDismiss && (
-          <button 
+          <button
             onClick={onDismiss}
             className="text-xs text-blue-500 hover:text-blue-700 mt-1.5 md:mt-2 underline"
           >

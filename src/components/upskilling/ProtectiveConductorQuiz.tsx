@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Brain } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -66,14 +65,21 @@ export const ProtectiveConductorQuiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-between items-center text-sm text-foreground">
-          <span>Question {currentQuestion + 1} of {protectiveConductorQuizQuestions.length}</span>
-          <span>{Math.round(((currentQuestion + 1) / protectiveConductorQuizQuestions.length) * 100)}% Complete</span>
+          <span>
+            Question {currentQuestion + 1} of {protectiveConductorQuizQuestions.length}
+          </span>
+          <span>
+            {Math.round(((currentQuestion + 1) / protectiveConductorQuizQuestions.length) * 100)}%
+            Complete
+          </span>
         </div>
 
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
-            style={{ width: `${((currentQuestion + 1) / protectiveConductorQuizQuestions.length) * 100}%` }}
+            style={{
+              width: `${((currentQuestion + 1) / protectiveConductorQuizQuestions.length) * 100}%`,
+            }}
           />
         </div>
 

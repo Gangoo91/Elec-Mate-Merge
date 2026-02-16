@@ -12,18 +12,22 @@ const SmartHomeModule7Section6Intro = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground text-base leading-relaxed">
-          The final stage of any smart home installation is providing clear documentation, warranty details, and aftercare guidance. Without this, clients may forget how the system was set up, lose confidence in the technology, or struggle to make warranty claims.
+          The final stage of any smart home installation is providing clear documentation, warranty
+          details, and aftercare guidance. Without this, clients may forget how the system was set
+          up, lose confidence in the technology, or struggle to make warranty claims.
         </p>
-        
+
         <p className="text-foreground text-base leading-relaxed">
-          Professional documentation and structured aftercare not only protect the client — they protect you as the installer. Proper records demonstrate competence, reduce liability, and provide a foundation for ongoing client relationships.
+          Professional documentation and structured aftercare not only protect the client — they
+          protect you as the installer. Proper records demonstrate competence, reduce liability, and
+          provide a foundation for ongoing client relationships.
         </p>
-        
+
         <div className="bg-blue-600/10 border border-blue-600/30 rounded-lg p-4">
           <h4 className="font-semibold text-blue-400 mb-2">Legal and Professional Protection</h4>
           <p className="text-blue-100 text-sm">
-            Comprehensive documentation protects against liability claims, provides evidence of compliance, 
-            and demonstrates professional competence if disputes arise.
+            Comprehensive documentation protects against liability claims, provides evidence of
+            compliance, and demonstrates professional competence if disputes arise.
           </p>
         </div>
 
@@ -33,15 +37,19 @@ const SmartHomeModule7Section6Intro = () => {
               <FileText className="h-4 w-4 text-blue-400" />
               <span className="font-medium text-foreground">Documentation</span>
             </div>
-            <p className="text-gray-300 text-sm">Complete records of installation, configuration, and testing</p>
+            <p className="text-gray-300 text-sm">
+              Complete records of installation, configuration, and testing
+            </p>
           </div>
-          
+
           <div className="p-3 bg-[#1a1a1a] rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Shield className="h-4 w-4 text-green-400" />
               <span className="font-medium text-foreground">Warranty Coverage</span>
             </div>
-            <p className="text-gray-300 text-sm">Clear explanation of manufacturer and installer warranties</p>
+            <p className="text-gray-300 text-sm">
+              Clear explanation of manufacturer and installer warranties
+            </p>
           </div>
 
           <div className="p-3 bg-[#1a1a1a] rounded-lg">

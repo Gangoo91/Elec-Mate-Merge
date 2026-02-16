@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
-import TutorInterface from "@/components/electrician-tools/ai-agents/TutorInterface";
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import TutorInterface from '@/components/electrician-tools/ai-agents/TutorInterface';
 
 const TutorPage = () => {
   return (

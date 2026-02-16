@@ -1,8 +1,7 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Briefcase, ArrowLeft } from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Briefcase, ArrowLeft } from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 interface JobVacancyHeaderProps {
   onBack?: () => void;
@@ -16,9 +15,7 @@ const JobVacancyHeader = ({ onBack }: JobVacancyHeaderProps) => {
           <Briefcase className="h-8 w-8 text-elec-yellow" />
           Job Vacancies
         </h1>
-        <p className="text-muted-foreground mt-1">
-          Find electrical jobs across the UK
-        </p>
+        <p className="text-muted-foreground mt-1">Find electrical jobs across the UK</p>
       </div>
 
       {onBack ? (

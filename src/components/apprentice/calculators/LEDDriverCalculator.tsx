@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react';
 import {
   Lightbulb,
   Calculator,
@@ -10,13 +10,9 @@ import {
   BookOpen,
   Info,
   ChevronDown,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
@@ -25,17 +21,17 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 const LEDDriverCalculator = () => {
-  const config = CALCULATOR_CONFIG["lighting"];
+  const config = CALCULATOR_CONFIG['lighting'];
 
-  const [ledVoltage, setLedVoltage] = useState<string>("");
-  const [ledCurrent, setLedCurrent] = useState<string>("");
-  const [numLeds, setNumLeds] = useState<string>("1");
-  const [connectionType, setConnectionType] = useState<string>("series");
-  const [supplyVoltage, setSupplyVoltage] = useState<string>("12");
-  const [efficiency, setEfficiency] = useState<string>("0.85");
+  const [ledVoltage, setLedVoltage] = useState<string>('');
+  const [ledCurrent, setLedCurrent] = useState<string>('');
+  const [numLeds, setNumLeds] = useState<string>('1');
+  const [connectionType, setConnectionType] = useState<string>('series');
+  const [supplyVoltage, setSupplyVoltage] = useState<string>('12');
+  const [efficiency, setEfficiency] = useState<string>('0.85');
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
   const [showCalculation, setShowCalculation] = useState(false);
@@ -55,7 +51,7 @@ const LEDDriverCalculator = () => {
     let totalCurrent: number;
     let totalPower: number;
 
-    if (connectionType === "series") {
+    if (connectionType === 'series') {
       totalVoltage = vLed * count;
       totalCurrent = iLed;
       totalPower = totalVoltage * totalCurrent;
@@ -72,59 +68,56 @@ const LEDDriverCalculator = () => {
 
     // Enhanced recommendations and compliance
     const complianceVoltage =
-      connectionType === "series" ? totalVoltage + totalVoltage * 0.1 : vSupply;
+      connectionType === 'series' ? totalVoltage + totalVoltage * 0.1 : vSupply;
     const recommendedDriverPower = driverPower * 1.2; // 20% safety margin
 
     // Determine nearest standard driver ratings
-    const standardPowers = [
-      1, 2, 3, 5, 8, 10, 12, 15, 20, 25, 30, 40, 50, 60, 75, 100, 150, 200,
-    ];
+    const standardPowers = [1, 2, 3, 5, 8, 10, 12, 15, 20, 25, 30, 40, 50, 60, 75, 100, 150, 200];
     const nearestPower =
-      standardPowers.find((p) => p >= recommendedDriverPower) ||
-      Math.ceil(recommendedDriverPower);
+      standardPowers.find((p) => p >= recommendedDriverPower) || Math.ceil(recommendedDriverPower);
 
     // Status and guidance assessment
-    let status: "good" | "caution" | "issue" = "good";
+    let status: 'good' | 'caution' | 'issue' = 'good';
     const messages: string[] = [];
 
     // Voltage compliance checks
-    if (connectionType === "series" && totalVoltage > vSupply * 0.9) {
-      status = "issue";
-      messages.push("Insufficient voltage headroom for constant current operation");
-    } else if (connectionType === "series" && totalVoltage > vSupply * 0.8) {
-      status = "caution";
-      messages.push("Limited voltage headroom - consider higher supply voltage");
+    if (connectionType === 'series' && totalVoltage > vSupply * 0.9) {
+      status = 'issue';
+      messages.push('Insufficient voltage headroom for constant current operation');
+    } else if (connectionType === 'series' && totalVoltage > vSupply * 0.8) {
+      status = 'caution';
+      messages.push('Limited voltage headroom - consider higher supply voltage');
     }
 
     // Current checks
-    if (iLed > 1 && status === "good") {
-      status = "caution";
-      messages.push("High current LEDs require careful thermal management");
+    if (iLed > 1 && status === 'good') {
+      status = 'caution';
+      messages.push('High current LEDs require careful thermal management');
     }
 
     // Power efficiency
     const efficiencyPercent = eff * 100;
-    if (efficiencyPercent < 80 && status === "good") {
-      status = "caution";
-      messages.push("Low efficiency driver - consider higher grade driver");
+    if (efficiencyPercent < 80 && status === 'good') {
+      status = 'caution';
+      messages.push('Low efficiency driver - consider higher grade driver');
     }
 
     // Connection guidance
-    let connectionGuidance = "";
-    if (connectionType === "series") {
+    let connectionGuidance = '';
+    if (connectionType === 'series') {
       connectionGuidance =
         count > 10
-          ? "Series connection suitable but consider parallel strings for >10 LEDs"
-          : "Series connection recommended for consistent current";
+          ? 'Series connection suitable but consider parallel strings for >10 LEDs'
+          : 'Series connection recommended for consistent current';
     } else {
       connectionGuidance =
         count > 5
-          ? "Parallel connection requires current balancing for >5 LEDs"
-          : "Parallel connection suitable with proper current limiting";
+          ? 'Parallel connection requires current balancing for >5 LEDs'
+          : 'Parallel connection suitable with proper current limiting';
     }
 
-    if (status === "good") {
-      messages.push("Configuration meets BS 7671 safety requirements");
+    if (status === 'good') {
+      messages.push('Configuration meets BS 7671 safety requirements');
     }
 
     return {
@@ -147,50 +140,47 @@ const LEDDriverCalculator = () => {
   }, [ledVoltage, ledCurrent, numLeds, connectionType, supplyVoltage, efficiency]);
 
   const reset = () => {
-    setLedVoltage("");
-    setLedCurrent("");
-    setNumLeds("1");
-    setConnectionType("series");
-    setSupplyVoltage("12");
-    setEfficiency("0.85");
+    setLedVoltage('');
+    setLedCurrent('');
+    setNumLeds('1');
+    setConnectionType('series');
+    setSupplyVoltage('12');
+    setEfficiency('0.85');
   };
 
   const connectionOptions = [
-    { value: "series", label: "Series" },
-    { value: "parallel", label: "Parallel" },
+    { value: 'series', label: 'Series' },
+    { value: 'parallel', label: 'Parallel' },
   ];
 
   const supplyOptions = [
-    { value: "12", label: "12V" },
-    { value: "24", label: "24V" },
-    { value: "48", label: "48V" },
+    { value: '12', label: '12V' },
+    { value: '24', label: '24V' },
+    { value: '48', label: '48V' },
   ];
 
-  const isValid =
-    parseFloat(ledVoltage) > 0 &&
-    parseFloat(ledCurrent) > 0 &&
-    parseInt(numLeds) > 0;
+  const isValid = parseFloat(ledVoltage) > 0 && parseFloat(ledCurrent) > 0 && parseInt(numLeds) > 0;
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "good":
-        return "text-green-400";
-      case "caution":
-        return "text-amber-400";
-      case "issue":
-        return "text-red-400";
+      case 'good':
+        return 'text-green-400';
+      case 'caution':
+        return 'text-amber-400';
+      case 'issue':
+        return 'text-red-400';
       default:
-        return "text-white";
+        return 'text-white';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "good":
+      case 'good':
         return <CheckCircle className="h-4 w-4 text-green-400" />;
-      case "caution":
+      case 'caution':
         return <AlertTriangle className="h-4 w-4 text-amber-400" />;
-      case "issue":
+      case 'issue':
         return <XCircle className="h-4 w-4 text-red-400" />;
       default:
         return null;
@@ -214,10 +204,10 @@ const LEDDriverCalculator = () => {
                 key={opt.value}
                 onClick={() => setConnectionType(opt.value)}
                 className={cn(
-                  "flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation",
+                  'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
                   connectionType === opt.value
-                    ? "text-black"
-                    : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+                    ? 'text-black'
+                    : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
                 )}
                 style={
                   connectionType === opt.value
@@ -303,9 +293,7 @@ const LEDDriverCalculator = () => {
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
               <div className="flex items-center gap-2">
                 {getStatusIcon(result.recommendations.status)}
-                <span
-                  className={cn("font-medium", getStatusColor(result.recommendations.status))}
-                >
+                <span className={cn('font-medium', getStatusColor(result.recommendations.status))}>
                   {result.recommendations.status.toUpperCase()}
                 </span>
               </div>
@@ -399,7 +387,7 @@ const LEDDriverCalculator = () => {
 
           {/* How It Worked Out */}
           <Collapsible open={showCalculation} onOpenChange={setShowCalculation}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: "#a78bfa15" }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#a78bfa15' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Calculator className="h-4 w-4 text-purple-400" />
@@ -409,8 +397,8 @@ const LEDDriverCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showCalculation && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showCalculation && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -419,10 +407,11 @@ const LEDDriverCalculator = () => {
                 <div className="space-y-3 text-sm font-mono">
                   <div className="p-3 rounded-lg bg-purple-500/10">
                     <p className="text-purple-300 mb-2">Step 1: Array Voltage & Current</p>
-                    {connectionType === "series" ? (
+                    {connectionType === 'series' ? (
                       <>
                         <p className="text-purple-200/80">
-                          V_total = Vf × n = {ledVoltage} × {numLeds} = {result.totalVoltage.toFixed(1)}V
+                          V_total = Vf × n = {ledVoltage} × {numLeds} ={' '}
+                          {result.totalVoltage.toFixed(1)}V
                         </p>
                         <p className="text-purple-200/80">
                           I_total = If = {ledCurrent}mA (same through all)
@@ -434,7 +423,8 @@ const LEDDriverCalculator = () => {
                           V_total = Vf = {ledVoltage}V (same across all)
                         </p>
                         <p className="text-purple-200/80">
-                          I_total = If × n = {ledCurrent} × {numLeds} = {result.totalCurrent.toFixed(0)}mA
+                          I_total = If × n = {ledCurrent} × {numLeds} ={' '}
+                          {result.totalCurrent.toFixed(0)}mA
                         </p>
                       </>
                     )}
@@ -442,19 +432,23 @@ const LEDDriverCalculator = () => {
                   <div className="p-3 rounded-lg bg-purple-500/10">
                     <p className="text-purple-300 mb-2">Step 2: LED Array Power</p>
                     <p className="text-purple-200/80">
-                      P_LED = V × I = {result.totalVoltage.toFixed(1)} × {(result.totalCurrent / 1000).toFixed(3)} = {result.totalPower.toFixed(2)}W
+                      P_LED = V × I = {result.totalVoltage.toFixed(1)} ×{' '}
+                      {(result.totalCurrent / 1000).toFixed(3)} = {result.totalPower.toFixed(2)}W
                     </p>
                   </div>
                   <div className="p-3 rounded-lg bg-purple-500/10">
                     <p className="text-purple-300 mb-2">Step 3: Driver Power</p>
                     <p className="text-purple-200/80">
-                      P_driver = P_LED / η = {result.totalPower.toFixed(2)} / {efficiency} = {result.driverPower.toFixed(2)}W
+                      P_driver = P_LED / η = {result.totalPower.toFixed(2)} / {efficiency} ={' '}
+                      {result.driverPower.toFixed(2)}W
                     </p>
                   </div>
                   <div className="p-3 rounded-lg bg-purple-500/10">
                     <p className="text-purple-300 mb-2">Step 4: Recommended (20% margin)</p>
                     <p className="text-purple-200/80">
-                      {result.driverPower.toFixed(2)} × 1.2 = {result.recommendations.recommendedDriverPower.toFixed(1)}W → {result.recommendations.nearestStandardDriver}
+                      {result.driverPower.toFixed(2)} × 1.2 ={' '}
+                      {result.recommendations.recommendedDriverPower.toFixed(1)}W →{' '}
+                      {result.recommendations.nearestStandardDriver}
                     </p>
                   </div>
                 </div>
@@ -464,7 +458,7 @@ const LEDDriverCalculator = () => {
 
           {/* Why This Matters */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Zap className="h-4 w-4 text-blue-400" />
@@ -474,8 +468,8 @@ const LEDDriverCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showGuidance && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -507,7 +501,7 @@ const LEDDriverCalculator = () => {
 
       {/* Quick Reference */}
       <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
@@ -517,8 +511,8 @@ const LEDDriverCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showReference && "rotate-180"
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>

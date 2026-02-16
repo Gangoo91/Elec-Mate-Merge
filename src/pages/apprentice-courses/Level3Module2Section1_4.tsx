@@ -4,71 +4,71 @@
  * Understanding EPCs and their role in building energy efficiency compliance
  */
 
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 // ============================================
 // SEO CONFIGURATION
 // ============================================
-const TITLE = "Energy Performance Certificates (EPCs) - Level 3 Module 2 Section 1.4";
-const DESCRIPTION = "Understanding Energy Performance Certificates and how electrical installations affect building energy ratings. EPC compliance for electricians.";
+const TITLE = 'Energy Performance Certificates (EPCs) - Level 3 Module 2 Section 1.4';
+const DESCRIPTION =
+  'Understanding Energy Performance Certificates and how electrical installations affect building energy ratings. EPC compliance for electricians.';
 
 // ============================================
 // INLINE CHECK QUESTIONS
 // ============================================
 const quickCheckQuestions = [
   {
-    id: "check-1",
+    id: 'check-1',
     question: "What does an EPC rating of 'A' indicate?",
     options: [
-      "Average energy performance",
-      "The most energy efficient rating",
-      "Acceptable but not efficient",
-      "Assessment not complete"
+      'Average energy performance',
+      'The most energy efficient rating',
+      'Acceptable but not efficient',
+      'Assessment not complete',
     ],
     correctIndex: 1,
-    explanation: "EPC ratings run from A to G, with A being the most energy efficient and G being the least efficient. An A rating indicates excellent energy performance."
+    explanation:
+      'EPC ratings run from A to G, with A being the most energy efficient and G being the least efficient. An A rating indicates excellent energy performance.',
   },
   {
-    id: "check-2",
-    question: "When is an EPC legally required for a property?",
+    id: 'check-2',
+    question: 'When is an EPC legally required for a property?',
     options: [
-      "Only when building new properties",
-      "When selling, renting, or building a property",
-      "Every five years for all buildings",
-      "Only for commercial properties"
+      'Only when building new properties',
+      'When selling, renting, or building a property',
+      'Every five years for all buildings',
+      'Only for commercial properties',
     ],
     correctIndex: 1,
-    explanation: "EPCs are legally required when a property is sold, let, or constructed. They must be made available to prospective buyers or tenants and are valid for 10 years."
+    explanation:
+      'EPCs are legally required when a property is sold, let, or constructed. They must be made available to prospective buyers or tenants and are valid for 10 years.',
   },
   {
-    id: "check-3",
-    question: "How long is an EPC valid for?",
-    options: [
-      "1 year",
-      "5 years",
-      "10 years",
-      "Indefinitely"
-    ],
+    id: 'check-3',
+    question: 'How long is an EPC valid for?',
+    options: ['1 year', '5 years', '10 years', 'Indefinitely'],
     correctIndex: 2,
-    explanation: "An EPC is valid for 10 years from the date of issue. A new certificate is only required when selling or letting, or if the owner wants an updated assessment after making improvements."
+    explanation:
+      'An EPC is valid for 10 years from the date of issue. A new certificate is only required when selling or letting, or if the owner wants an updated assessment after making improvements.',
   },
   {
-    id: "check-4",
-    question: "Which electrical improvement is most likely to improve an EPC rating?",
+    id: 'check-4',
+    question: 'Which electrical improvement is most likely to improve an EPC rating?',
     options: [
-      "Installing more socket outlets",
-      "Upgrading to LED lighting throughout",
-      "Adding a larger consumer unit",
-      "Installing additional circuits"
+      'Installing more socket outlets',
+      'Upgrading to LED lighting throughout',
+      'Adding a larger consumer unit',
+      'Installing additional circuits',
     ],
     correctIndex: 1,
-    explanation: "LED lighting significantly reduces energy consumption compared to traditional lighting, which improves the building's energy efficiency and therefore its EPC rating."
-  }
+    explanation:
+      "LED lighting significantly reduces energy consumption compared to traditional lighting, which improves the building's energy efficiency and therefore its EPC rating.",
+  },
 ];
 
 // ============================================
@@ -77,124 +77,116 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: "EPCs rate properties on a scale from:",
-    options: [
-      "1 to 10",
-      "A to G",
-      "Bronze to Platinum",
-      "Low to High"
-    ],
+    question: 'EPCs rate properties on a scale from:',
+    options: ['1 to 10', 'A to G', 'Bronze to Platinum', 'Low to High'],
     correctAnswer: 1,
-    explanation: "EPCs use a scale from A to G, similar to appliance energy labels. A is the most efficient (lowest running costs) and G is the least efficient."
+    explanation:
+      'EPCs use a scale from A to G, similar to appliance energy labels. A is the most efficient (lowest running costs) and G is the least efficient.',
   },
   {
     id: 2,
-    question: "An EPC must be produced by:",
+    question: 'An EPC must be produced by:',
     options: [
-      "Any qualified electrician",
-      "The property owner",
-      "An accredited Domestic Energy Assessor (DEA)",
-      "Building Control"
+      'Any qualified electrician',
+      'The property owner',
+      'An accredited Domestic Energy Assessor (DEA)',
+      'Building Control',
     ],
     correctAnswer: 2,
-    explanation: "EPCs can only be produced by accredited Domestic Energy Assessors (DEAs) for dwellings, or Non-Domestic Energy Assessors (NDEAs) for commercial buildings."
+    explanation:
+      'EPCs can only be produced by accredited Domestic Energy Assessors (DEAs) for dwellings, or Non-Domestic Energy Assessors (NDEAs) for commercial buildings.',
   },
   {
     id: 3,
-    question: "What is the minimum EPC rating required for rental properties in England and Wales?",
-    options: [
-      "Rating D",
-      "Rating E",
-      "Rating C",
-      "No minimum requirement"
-    ],
+    question: 'What is the minimum EPC rating required for rental properties in England and Wales?',
+    options: ['Rating D', 'Rating E', 'Rating C', 'No minimum requirement'],
     correctAnswer: 1,
-    explanation: "The Minimum Energy Efficiency Standards (MEES) require rental properties to have a minimum EPC rating of E. Properties rated F or G cannot legally be let unless exempt."
+    explanation:
+      'The Minimum Energy Efficiency Standards (MEES) require rental properties to have a minimum EPC rating of E. Properties rated F or G cannot legally be let unless exempt.',
   },
   {
     id: 4,
-    question: "Which of these electrical installations would NOT typically improve an EPC rating?",
+    question: 'Which of these electrical installations would NOT typically improve an EPC rating?',
     options: [
-      "Solar PV panels",
-      "LED lighting upgrade",
-      "Additional socket outlets",
-      "Smart heating controls"
+      'Solar PV panels',
+      'LED lighting upgrade',
+      'Additional socket outlets',
+      'Smart heating controls',
     ],
     correctAnswer: 2,
-    explanation: "Additional socket outlets don't affect energy efficiency. Solar PV, LED lighting, and smart heating controls all reduce energy consumption or generate renewable energy, improving the EPC rating."
+    explanation:
+      "Additional socket outlets don't affect energy efficiency. Solar PV, LED lighting, and smart heating controls all reduce energy consumption or generate renewable energy, improving the EPC rating.",
   },
   {
     id: 5,
-    question: "How does solar PV affect an EPC assessment?",
+    question: 'How does solar PV affect an EPC assessment?',
     options: [
-      "It has no effect on EPC ratings",
-      "It improves the rating by reducing net energy consumption",
-      "It only affects commercial EPCs",
-      "It requires a separate certificate"
+      'It has no effect on EPC ratings',
+      'It improves the rating by reducing net energy consumption',
+      'It only affects commercial EPCs',
+      'It requires a separate certificate',
     ],
     correctAnswer: 1,
-    explanation: "Solar PV significantly improves EPC ratings because it generates renewable electricity on-site, reducing the building's net energy consumption from the grid."
+    explanation:
+      "Solar PV significantly improves EPC ratings because it generates renewable electricity on-site, reducing the building's net energy consumption from the grid.",
   },
   {
     id: 6,
-    question: "The EPC report includes:",
+    question: 'The EPC report includes:',
     options: [
-      "Only the current energy rating",
-      "Current rating and recommended improvements",
-      "Only recommended improvements",
-      "Building insurance information"
+      'Only the current energy rating',
+      'Current rating and recommended improvements',
+      'Only recommended improvements',
+      'Building insurance information',
     ],
     correctAnswer: 1,
-    explanation: "EPCs include both the current energy efficiency rating and a list of recommended improvements with their potential impact on the rating and estimated costs."
+    explanation:
+      'EPCs include both the current energy efficiency rating and a list of recommended improvements with their potential impact on the rating and estimated costs.',
   },
   {
     id: 7,
-    question: "What lighting type provides the best contribution to EPC ratings?",
+    question: 'What lighting type provides the best contribution to EPC ratings?',
     options: [
-      "Halogen lighting",
-      "Compact fluorescent (CFL)",
-      "LED lighting",
-      "Standard incandescent"
+      'Halogen lighting',
+      'Compact fluorescent (CFL)',
+      'LED lighting',
+      'Standard incandescent',
     ],
     correctAnswer: 2,
-    explanation: "LED lighting is the most energy efficient, typically achieving over 100 lumens per watt. This provides the best contribution to EPC ratings compared to other lighting technologies."
+    explanation:
+      'LED lighting is the most energy efficient, typically achieving over 100 lumens per watt. This provides the best contribution to EPC ratings compared to other lighting technologies.',
   },
   {
     id: 8,
-    question: "Which heating system type would typically achieve the best EPC rating when combined with renewable electricity?",
-    options: [
-      "Gas boiler",
-      "Oil boiler",
-      "Heat pump",
-      "Electric resistance heating"
-    ],
+    question:
+      'Which heating system type would typically achieve the best EPC rating when combined with renewable electricity?',
+    options: ['Gas boiler', 'Oil boiler', 'Heat pump', 'Electric resistance heating'],
     correctAnswer: 2,
-    explanation: "Heat pumps are 3-4 times more efficient than direct electric heating. Combined with renewable electricity (or grid electricity which is decarbonising), they achieve excellent EPC ratings."
+    explanation:
+      'Heat pumps are 3-4 times more efficient than direct electric heating. Combined with renewable electricity (or grid electricity which is decarbonising), they achieve excellent EPC ratings.',
   },
   {
     id: 9,
-    question: "Smart heating controls improve EPC ratings because they:",
+    question: 'Smart heating controls improve EPC ratings because they:',
     options: [
-      "Look modern and attractive",
-      "Allow more precise control reducing wasted energy",
-      "Are required by Building Regulations",
-      "Connect to the internet"
+      'Look modern and attractive',
+      'Allow more precise control reducing wasted energy',
+      'Are required by Building Regulations',
+      'Connect to the internet',
     ],
     correctAnswer: 1,
-    explanation: "Smart heating controls improve efficiency by enabling more precise temperature control, scheduling, and zone control, reducing wasted energy from heating unoccupied spaces or overheating."
+    explanation:
+      'Smart heating controls improve efficiency by enabling more precise temperature control, scheduling, and zone control, reducing wasted energy from heating unoccupied spaces or overheating.',
   },
   {
     id: 10,
-    question: "From 2025, the government proposes rental properties should achieve minimum rating of:",
-    options: [
-      "Rating E",
-      "Rating D",
-      "Rating C",
-      "Rating B"
-    ],
+    question:
+      'From 2025, the government proposes rental properties should achieve minimum rating of:',
+    options: ['Rating E', 'Rating D', 'Rating C', 'Rating B'],
     correctAnswer: 2,
-    explanation: "The government has proposed raising the minimum EPC requirement for rental properties to band C from 2025 for new tenancies. This will require significant upgrades to many properties."
-  }
+    explanation:
+      'The government has proposed raising the minimum EPC requirement for rental properties to band C from 2025 for new tenancies. This will require significant upgrades to many properties.',
+  },
 ];
 
 // ============================================
@@ -202,29 +194,35 @@ const quizQuestions = [
 // ============================================
 const faqs = [
   {
-    question: "Do electricians need to understand EPCs?",
-    answer: "Yes, understanding EPCs helps electricians advise customers on improvements that will benefit their property's energy rating. Installing efficient lighting, solar PV, smart controls, and EV charging points can all positively impact EPC ratings and property value."
+    question: 'Do electricians need to understand EPCs?',
+    answer:
+      "Yes, understanding EPCs helps electricians advise customers on improvements that will benefit their property's energy rating. Installing efficient lighting, solar PV, smart controls, and EV charging points can all positively impact EPC ratings and property value.",
   },
   {
-    question: "Can I produce an EPC as a qualified electrician?",
-    answer: "No, EPCs can only be produced by accredited energy assessors (DEAs or NDEAs). However, you can work alongside assessors and provide information about electrical installations. Your work in upgrading lighting and installing renewable technologies directly affects the rating achieved."
+    question: 'Can I produce an EPC as a qualified electrician?',
+    answer:
+      'No, EPCs can only be produced by accredited energy assessors (DEAs or NDEAs). However, you can work alongside assessors and provide information about electrical installations. Your work in upgrading lighting and installing renewable technologies directly affects the rating achieved.',
   },
   {
-    question: "What happens if a rental property fails to meet minimum EPC requirements?",
-    answer: "Landlords who let properties below the minimum E rating can face penalties of up to £5,000 per property. They must either improve the property or register a valid exemption. The fines for non-compliance increase for continued breaches."
+    question: 'What happens if a rental property fails to meet minimum EPC requirements?',
+    answer:
+      'Landlords who let properties below the minimum E rating can face penalties of up to £5,000 per property. They must either improve the property or register a valid exemption. The fines for non-compliance increase for continued breaches.',
   },
   {
-    question: "How much can LED lighting improve an EPC rating?",
-    answer: "Upgrading all lighting to LED can improve an EPC by several points. The exact impact depends on the starting point and the proportion of total energy used for lighting. Combined with other measures, it can be the difference between EPC bands."
+    question: 'How much can LED lighting improve an EPC rating?',
+    answer:
+      'Upgrading all lighting to LED can improve an EPC by several points. The exact impact depends on the starting point and the proportion of total energy used for lighting. Combined with other measures, it can be the difference between EPC bands.',
   },
   {
-    question: "Does EV charging affect EPC ratings?",
-    answer: "Standard EV charging doesn't directly appear in current EPC assessments as it's a vehicle charger rather than a building system. However, smart charging with solar PV integration can demonstrate lower overall energy consumption for the property."
+    question: 'Does EV charging affect EPC ratings?',
+    answer:
+      "Standard EV charging doesn't directly appear in current EPC assessments as it's a vehicle charger rather than a building system. However, smart charging with solar PV integration can demonstrate lower overall energy consumption for the property.",
   },
   {
-    question: "Are there exemptions from EPC requirements?",
-    answer: "Yes, some properties are exempt including listed buildings where improvements would unacceptably alter their character, temporary buildings, and certain industrial sites. Landlords can also claim exemptions if all cost-effective improvements have been made but the property still doesn't reach E rating."
-  }
+    question: 'Are there exemptions from EPC requirements?',
+    answer:
+      "Yes, some properties are exempt including listed buildings where improvements would unacceptably alter their character, temporary buildings, and certain industrial sites. Landlords can also claim exemptions if all cost-effective improvements have been made but the property still doesn't reach E rating.",
+  },
 ];
 
 // ============================================
@@ -235,7 +233,6 @@ const Level3Module2Section1_4 = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
-
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
@@ -255,34 +252,42 @@ const Level3Module2Section1_4 = () => {
 
       {/* Main Article Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Header */}
-        
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>EPC scale:</strong> A (best) to G (worst)</li>
-              <li><strong>Validity:</strong> 10 years</li>
-              <li><strong>Minimum rental:</strong> Currently E, proposed C from 2025</li>
-              <li><strong>Required:</strong> When selling, letting, or building</li>
+              <li>
+                <strong>EPC scale:</strong> A (best) to G (worst)
+              </li>
+              <li>
+                <strong>Validity:</strong> 10 years
+              </li>
+              <li>
+                <strong>Minimum rental:</strong> Currently E, proposed C from 2025
+              </li>
+              <li>
+                <strong>Required:</strong> When selling, letting, or building
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> EPC displayed in property listings</li>
-              <li><strong>Use:</strong> Recommend LED upgrades to improve rating</li>
-              <li><strong>Apply:</strong> Install solar PV to boost EPC significantly</li>
+              <li>
+                <strong>Spot:</strong> EPC displayed in property listings
+              </li>
+              <li>
+                <strong>Use:</strong> Recommend LED upgrades to improve rating
+              </li>
+              <li>
+                <strong>Apply:</strong> Install solar PV to boost EPC significantly
+              </li>
             </ul>
           </div>
         </div>
-
-        
-
-        
 
         {/* Section 01 */}
         <section className="mb-10">
@@ -292,23 +297,39 @@ const Level3Module2Section1_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              An Energy Performance Certificate (EPC) rates a building's energy efficiency on a scale from A (most efficient) to G (least efficient). It provides an estimate of energy costs and recommends improvements. EPCs are required when buildings are sold, let, or constructed.
+              An Energy Performance Certificate (EPC) rates a building's energy efficiency on a
+              scale from A (most efficient) to G (least efficient). It provides an estimate of
+              energy costs and recommends improvements. EPCs are required when buildings are sold,
+              let, or constructed.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">EPC ratings explained:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>A (92-100):</strong> Extremely efficient - lowest energy bills</li>
-                <li><strong>B (81-91):</strong> Very efficient - typical for new builds</li>
-                <li><strong>C (69-80):</strong> Good efficiency - target for most upgrades</li>
-                <li><strong>D (55-68):</strong> Average efficiency - typical older properties</li>
-                <li><strong>E (39-54):</strong> Minimum legal requirement for rentals</li>
-                <li><strong>F (21-38) / G (1-20):</strong> Poor efficiency - cannot be legally let</li>
+                <li>
+                  <strong>A (92-100):</strong> Extremely efficient - lowest energy bills
+                </li>
+                <li>
+                  <strong>B (81-91):</strong> Very efficient - typical for new builds
+                </li>
+                <li>
+                  <strong>C (69-80):</strong> Good efficiency - target for most upgrades
+                </li>
+                <li>
+                  <strong>D (55-68):</strong> Average efficiency - typical older properties
+                </li>
+                <li>
+                  <strong>E (39-54):</strong> Minimum legal requirement for rentals
+                </li>
+                <li>
+                  <strong>F (21-38) / G (1-20):</strong> Poor efficiency - cannot be legally let
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> EPCs are produced by accredited energy assessors, not electricians. However, your installation work directly impacts the rating achieved.
+              <strong>Remember:</strong> EPCs are produced by accredited energy assessors, not
+              electricians. However, your installation work directly impacts the rating achieved.
             </p>
           </div>
         </section>
@@ -323,7 +344,9 @@ const Level3Module2Section1_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The Energy Performance of Buildings Regulations require EPCs whenever a property is built, sold, or let. The Minimum Energy Efficiency Standards (MEES) set minimum ratings for rental properties, with significant penalties for non-compliance.
+              The Energy Performance of Buildings Regulations require EPCs whenever a property is
+              built, sold, or let. The Minimum Energy Efficiency Standards (MEES) set minimum
+              ratings for rental properties, with significant penalties for non-compliance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -359,21 +382,37 @@ const Level3Module2Section1_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Several types of electrical installation directly impact EPC ratings. Understanding this helps you advise customers and provide services that add value to their properties beyond just the installation itself.
+              Several types of electrical installation directly impact EPC ratings. Understanding
+              this helps you advise customers and provide services that add value to their
+              properties beyond just the installation itself.
             </p>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> A landlord needs to improve their rental property from E to D before reletting. By installing LED lighting throughout and adding smart heating controls, you help them achieve this upgrade while also reducing tenant energy bills.
+              <strong>Example:</strong> A landlord needs to improve their rental property from E to
+              D before reletting. By installing LED lighting throughout and adding smart heating
+              controls, you help them achieve this upgrade while also reducing tenant energy bills.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">High-impact electrical improvements:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                High-impact electrical improvements:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Solar PV:</strong> Major positive impact - can move up multiple bands</li>
-                <li><strong>LED lighting:</strong> Moderate impact - better with low-energy fittings</li>
-                <li><strong>Heat pump circuits:</strong> High impact when replacing gas/oil</li>
-                <li><strong>Smart heating controls:</strong> Moderate impact - improves efficiency</li>
-                <li><strong>Battery storage:</strong> Enhances solar PV benefit</li>
+                <li>
+                  <strong>Solar PV:</strong> Major positive impact - can move up multiple bands
+                </li>
+                <li>
+                  <strong>LED lighting:</strong> Moderate impact - better with low-energy fittings
+                </li>
+                <li>
+                  <strong>Heat pump circuits:</strong> High impact when replacing gas/oil
+                </li>
+                <li>
+                  <strong>Smart heating controls:</strong> Moderate impact - improves efficiency
+                </li>
+                <li>
+                  <strong>Battery storage:</strong> Enhances solar PV benefit
+                </li>
               </ul>
             </div>
           </div>
@@ -389,7 +428,9 @@ const Level3Module2Section1_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The government is progressively tightening EPC requirements as part of Net Zero commitments. Understanding future requirements helps you advise customers on future-proofing their properties and creates business opportunities.
+              The government is progressively tightening EPC requirements as part of Net Zero
+              commitments. Understanding future requirements helps you advise customers on
+              future-proofing their properties and creates business opportunities.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -408,7 +449,9 @@ const Level3Module2Section1_4 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Properties requiring upgrades to meet future EPC minimums represent significant work opportunities. Helping customers plan ahead positions you as a knowledgeable advisor.
+              <strong>Remember:</strong> Properties requiring upgrades to meet future EPC minimums
+              represent significant work opportunities. Helping customers plan ahead positions you
+              as a knowledgeable advisor.
             </p>
           </div>
         </section>
@@ -423,7 +466,9 @@ const Level3Module2Section1_4 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Advising Customers</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Advising Customers
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Ask if they have an EPC and what rating they need to achieve</li>
                 <li>Explain how your proposed work will impact their rating</li>
@@ -433,7 +478,9 @@ const Level3Module2Section1_4 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">High-Value EPC Improvements</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                High-Value EPC Improvements
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Solar PV installation (largest single improvement)</li>
                 <li>Heat pump circuit installation</li>
@@ -445,9 +492,18 @@ const Level3Module2Section1_4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Claiming EPC expertise</strong> - Only accredited assessors can produce EPCs</li>
-                <li><strong>Guaranteeing specific improvements</strong> - EPC impact varies by property</li>
-                <li><strong>Ignoring future requirements</strong> - Today's standard may not meet 2025 rules</li>
+                <li>
+                  <strong>Claiming EPC expertise</strong> - Only accredited assessors can produce
+                  EPCs
+                </li>
+                <li>
+                  <strong>Guaranteeing specific improvements</strong> - EPC impact varies by
+                  property
+                </li>
+                <li>
+                  <strong>Ignoring future requirements</strong> - Today's standard may not meet 2025
+                  rules
+                </li>
               </ul>
             </div>
           </div>
@@ -497,10 +553,7 @@ const Level3Module2Section1_4 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
@@ -527,7 +580,6 @@ const Level3Module2Section1_4 = () => {
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

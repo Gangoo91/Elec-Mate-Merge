@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { X, Plus, Check, Star, ArrowRight } from "lucide-react";
-import { ToolItem } from "@/hooks/useToolsData";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { X, Plus, Check, Star, ArrowRight } from 'lucide-react';
+import { ToolItem } from '@/hooks/useToolsData';
 
 interface ToolComparisonProps {
   tools: ToolItem[];
@@ -14,13 +14,13 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const addTool = (tool: ToolItem) => {
-    if (selectedTools.length < 3 && !selectedTools.find(t => t.id === tool.id)) {
+    if (selectedTools.length < 3 && !selectedTools.find((t) => t.id === tool.id)) {
       setSelectedTools([...selectedTools, tool]);
     }
   };
 
   const removeTool = (toolId: string | number | undefined) => {
-    setSelectedTools(selectedTools.filter(t => t.id !== toolId));
+    setSelectedTools(selectedTools.filter((t) => t.id !== toolId));
   };
 
   const getPrice = (tool: ToolItem) => {
@@ -29,10 +29,12 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
   };
 
   const getFeatureScore = (tool: ToolItem) => {
-    return (tool.highlights?.length || 0) + 
-           (tool.reviews ? 1 : 0) + 
-           (tool.isOnSale ? 1 : 0) + 
-           (tool.stockStatus === "In Stock" ? 1 : 0);
+    return (
+      (tool.highlights?.length || 0) +
+      (tool.reviews ? 1 : 0) +
+      (tool.isOnSale ? 1 : 0) +
+      (tool.stockStatus === 'In Stock' ? 1 : 0)
+    );
   };
 
   if (!isExpanded) {
@@ -42,7 +44,9 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-2">Compare Tools</h3>
-              <p className="text-foreground/80">Select up to 3 tools to compare features, prices, and specifications side by side</p>
+              <p className="text-foreground/80">
+                Select up to 3 tools to compare features, prices, and specifications side by side
+              </p>
             </div>
             <Button
               onClick={() => setIsExpanded(true)}
@@ -62,9 +66,9 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-elec-yellow">Tool Comparison</CardTitle>
-          <Button 
-            variant="ghost" 
-            size="sm" 
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => setIsExpanded(false)}
             className="text-foreground/60 hover:text-foreground"
           >
@@ -75,26 +79,32 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
       <CardContent className="space-y-6">
         {/* Tool Selection */}
         <div className="space-y-3">
-          <h4 className="text-foreground font-medium">Select Tools to Compare ({selectedTools.length}/3)</h4>
+          <h4 className="text-foreground font-medium">
+            Select Tools to Compare ({selectedTools.length}/3)
+          </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-40 overflow-y-auto">
             {tools.slice(0, 12).map((tool) => {
-              const isSelected = selectedTools.find(t => t.id === tool.id);
+              const isSelected = selectedTools.find((t) => t.id === tool.id);
               const canAdd = selectedTools.length < 3;
-              
+
               return (
                 <Button
                   key={tool.id}
                   variant="outline"
                   size="sm"
                   disabled={!canAdd && !isSelected}
-                  onClick={() => isSelected ? removeTool(tool.id) : addTool(tool)}
+                  onClick={() => (isSelected ? removeTool(tool.id) : addTool(tool))}
                   className={`justify-start text-left h-auto p-2 ${
-                    isSelected 
-                      ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow' 
+                    isSelected
+                      ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
                       : 'border-white/20 text-foreground hover:border-elec-yellow/50'
                   }`}
                 >
-                  {isSelected ? <Check className="h-4 w-4 mr-2" /> : <Plus className="h-4 w-4 mr-2" />}
+                  {isSelected ? (
+                    <Check className="h-4 w-4 mr-2" />
+                  ) : (
+                    <Plus className="h-4 w-4 mr-2" />
+                  )}
                   <span className="truncate">{tool.name}</span>
                 </Button>
               );
@@ -145,7 +155,7 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
                     <td className="text-foreground/80 p-2 font-medium">Supplier</td>
                     {selectedTools.map((tool) => (
                       <td key={tool.id} className="p-2 text-foreground">
-                        {tool.supplier || "Screwfix"}
+                        {tool.supplier || 'Screwfix'}
                       </td>
                     ))}
                   </tr>
@@ -153,14 +163,14 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
                     <td className="text-foreground/80 p-2 font-medium">Stock Status</td>
                     {selectedTools.map((tool) => (
                       <td key={tool.id} className="p-2">
-                        <Badge 
+                        <Badge
                           className={
-                            tool.stockStatus === "In Stock" 
-                              ? "bg-green-600/90 text-foreground border-green-400" 
-                              : "bg-yellow-600/90 text-foreground border-yellow-400"
+                            tool.stockStatus === 'In Stock'
+                              ? 'bg-green-600/90 text-foreground border-green-400'
+                              : 'bg-yellow-600/90 text-foreground border-yellow-400'
                           }
                         >
-                          {tool.stockStatus || "In Stock"}
+                          {tool.stockStatus || 'In Stock'}
                         </Badge>
                       </td>
                     ))}
@@ -171,7 +181,10 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
                       <td key={tool.id} className="p-2">
                         <div className="space-y-1">
                           {tool.highlights?.slice(0, 3).map((highlight, idx) => (
-                            <div key={idx} className="text-sm text-foreground/80 flex items-center gap-1">
+                            <div
+                              key={idx}
+                              className="text-sm text-foreground/80 flex items-center gap-1"
+                            >
                               <Check className="h-3 w-3 text-green-400" />
                               {highlight}
                             </div>
@@ -188,11 +201,13 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
                         <td key={tool.id} className="p-2">
                           <div className="flex items-center gap-1">
                             {Array.from({ length: 5 }).map((_, i) => (
-                              <Star 
-                                key={i} 
+                              <Star
+                                key={i}
                                 className={`h-4 w-4 ${
-                                  i < score ? 'fill-elec-yellow text-elec-yellow' : 'text-foreground/30'
-                                }`} 
+                                  i < score
+                                    ? 'fill-elec-yellow text-elec-yellow'
+                                    : 'text-foreground/30'
+                                }`}
                               />
                             ))}
                             <span className="text-foreground/80 ml-1">{score}/5</span>

@@ -1,7 +1,7 @@
-import { ReactNode, useState, useCallback, useRef, useEffect } from "react";
-import { useSwipeable } from "react-swipeable";
-import { RefreshCw } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { ReactNode, useState, useCallback, useRef, useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import { RefreshCw } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface PullToRefreshProps {
   onRefresh: () => Promise<void>;
@@ -17,7 +17,7 @@ export function PullToRefresh({
   onRefresh,
   children,
   isRefreshing = false,
-  disabled = false
+  disabled = false,
 }: PullToRefreshProps) {
   const [pullDistance, setPullDistance] = useState(0);
   const [isPulling, setIsPulling] = useState(false);
@@ -58,7 +58,7 @@ export function PullToRefresh({
       if (!isPulling || isRefreshing || disabled) return;
 
       // Only allow downward swipes when at top
-      if (e.dir === "Down" && isAtTop()) {
+      if (e.dir === 'Down' && isAtTop()) {
         const distance = Math.min(e.deltaY, MAX_PULL);
         setPullDistance(Math.max(0, distance));
       }
@@ -104,11 +104,7 @@ export function PullToRefresh({
   }
 
   return (
-    <div
-      ref={containerRef}
-      {...handlers}
-      className="relative min-h-full"
-    >
+    <div ref={containerRef} {...handlers} className="relative min-h-full">
       {/* Pull indicator */}
       <AnimatePresence>
         {(isPulling || isRefreshing) && (
@@ -116,7 +112,7 @@ export function PullToRefresh({
             initial={{ opacity: 0, y: -40 }}
             animate={{
               opacity: isRefreshing ? 1 : opacity,
-              y: isRefreshing ? 0 : Math.min(pullDistance * 0.5, 40) - 40
+              y: isRefreshing ? 0 : Math.min(pullDistance * 0.5, 40) - 40,
             }}
             exit={{ opacity: 0, y: -40 }}
             className="absolute left-0 right-0 top-0 z-50 flex flex-col items-center justify-center py-4"
@@ -125,24 +121,24 @@ export function PullToRefresh({
               animate={{
                 rotate: isRefreshing ? 360 : rotation,
               }}
-              transition={isRefreshing ? {
-                repeat: Infinity,
-                duration: 1,
-                ease: "linear"
-              } : {
-                duration: 0
-              }}
+              transition={
+                isRefreshing
+                  ? {
+                      repeat: Infinity,
+                      duration: 1,
+                      ease: 'linear',
+                    }
+                  : {
+                      duration: 0,
+                    }
+              }
               className={`p-2 rounded-full ${
-                thresholdReached || isRefreshing
-                  ? 'bg-elec-yellow/20'
-                  : 'bg-white/10'
+                thresholdReached || isRefreshing ? 'bg-elec-yellow/20' : 'bg-white/10'
               }`}
             >
               <RefreshCw
                 className={`h-5 w-5 transition-colors ${
-                  thresholdReached || isRefreshing
-                    ? 'text-elec-yellow'
-                    : 'text-white/60'
+                  thresholdReached || isRefreshing ? 'text-elec-yellow' : 'text-white/60'
                 }`}
               />
             </motion.div>
@@ -150,9 +146,7 @@ export function PullToRefresh({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className={`mt-2 text-xs font-medium transition-colors ${
-                thresholdReached || isRefreshing
-                  ? 'text-elec-yellow'
-                  : 'text-white/60'
+                thresholdReached || isRefreshing ? 'text-elec-yellow' : 'text-white/60'
               }`}
             >
               {isRefreshing
@@ -168,9 +162,9 @@ export function PullToRefresh({
       {/* Content with pull offset */}
       <motion.div
         animate={{
-          y: isRefreshing ? 60 : isPulling ? Math.min(pullDistance * 0.5, 60) : 0
+          y: isRefreshing ? 60 : isPulling ? Math.min(pullDistance * 0.5, 60) : 0,
         }}
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
       >
         {children}
       </motion.div>

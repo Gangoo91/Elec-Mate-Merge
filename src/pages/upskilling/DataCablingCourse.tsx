@@ -1,5 +1,14 @@
 import React from 'react';
-import { ArrowLeft, Cable, BookOpen, Wifi, Package, Wrench, FileCheck, GraduationCap } from 'lucide-react';
+import {
+  ArrowLeft,
+  Cable,
+  BookOpen,
+  Wifi,
+  Package,
+  Wrench,
+  FileCheck,
+  GraduationCap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -15,54 +24,54 @@ const DataCablingCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Introduction to Structured Cabling Systems",
-      description: "Network infrastructure fundamentals",
-      duration: "45 mins",
-      icon: BookOpen
+      title: 'Introduction to Structured Cabling Systems',
+      description: 'Network infrastructure fundamentals',
+      duration: '45 mins',
+      icon: BookOpen,
     },
     {
       id: 2,
-      title: "Copper Cabling Standards (Cat5e, Cat6, etc.)",
-      description: "Copper cable types and performance",
-      duration: "50 mins",
-      icon: Cable
+      title: 'Copper Cabling Standards (Cat5e, Cat6, etc.)',
+      description: 'Copper cable types and performance',
+      duration: '50 mins',
+      icon: Cable,
     },
     {
       id: 3,
-      title: "Fibre Optics: Types, Termination, and Testing",
-      description: "Fibre optic systems and installation",
-      duration: "60 mins",
-      icon: Wifi
+      title: 'Fibre Optics: Types, Termination, and Testing',
+      description: 'Fibre optic systems and installation',
+      duration: '60 mins',
+      icon: Wifi,
     },
     {
       id: 4,
-      title: "Containment, Labelling, and Installation Best Practices",
-      description: "Cable management and standards",
-      duration: "55 mins",
-      icon: Package
+      title: 'Containment, Labelling, and Installation Best Practices',
+      description: 'Cable management and standards',
+      duration: '55 mins',
+      icon: Package,
     },
     {
       id: 5,
-      title: "Termination and Certification Procedures",
-      description: "Testing and certification processes",
-      duration: "50 mins",
-      icon: Wrench
+      title: 'Termination and Certification Procedures',
+      description: 'Testing and certification processes',
+      duration: '50 mins',
+      icon: Wrench,
     },
     {
       id: 6,
-      title: "TIA/EIA and ISO Cabling Standards Explained",
-      description: "Industry standards and compliance",
-      duration: "40 mins",
-      icon: FileCheck
+      title: 'TIA/EIA and ISO Cabling Standards Explained',
+      description: 'Industry standards and compliance',
+      duration: '40 mins',
+      icon: FileCheck,
     },
     {
       id: 7,
-      title: "Mock Exam",
-      description: "Test your knowledge",
-      duration: "75 mins",
+      title: 'Mock Exam',
+      description: 'Test your knowledge',
+      duration: '75 mins',
       icon: GraduationCap,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (
@@ -100,7 +109,9 @@ const DataCablingCourse = () => {
           {modules.map((module, index) => (
             <ModuleCard
               key={module.id}
-              to={module.isExam ? `../data-cabling-mock-exam` : `../data-cabling-module-${module.id}`}
+              to={
+                module.isExam ? `../data-cabling-mock-exam` : `../data-cabling-module-${module.id}`
+              }
               moduleNumber={module.id}
               title={module.title}
               description={module.description}

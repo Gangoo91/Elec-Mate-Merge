@@ -4,71 +4,71 @@
  * Understanding standby power, phantom loads, and strategies to reduce energy waste
  */
 
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 // ============================================
 // SEO CONFIGURATION
 // ============================================
-const TITLE = "Reducing Standby Power Consumption - Level 3 Module 2 Section 2.3";
-const DESCRIPTION = "Understanding standby power, phantom loads, and electrical installation strategies to reduce wasted energy in buildings.";
+const TITLE = 'Reducing Standby Power Consumption - Level 3 Module 2 Section 2.3';
+const DESCRIPTION =
+  'Understanding standby power, phantom loads, and electrical installation strategies to reduce wasted energy in buildings.';
 
 // ============================================
 // INLINE CHECK QUESTIONS
 // ============================================
 const quickCheckQuestions = [
   {
-    id: "check-1",
+    id: 'check-1',
     question: "What is 'standby power' consumption?",
     options: [
-      "Power consumed only when equipment is actively in use",
+      'Power consumed only when equipment is actively in use',
       "Power consumed by equipment when it's off or in a low-power waiting state",
-      "The maximum power rating of equipment",
-      "Power lost in cables"
+      'The maximum power rating of equipment',
+      'Power lost in cables',
     ],
     correctIndex: 1,
-    explanation: "Standby power is electricity consumed by equipment when it's not performing its primary function - either fully off but still plugged in, or in a low-power waiting mode ready to respond to commands."
+    explanation:
+      "Standby power is electricity consumed by equipment when it's not performing its primary function - either fully off but still plugged in, or in a low-power waiting mode ready to respond to commands.",
   },
   {
-    id: "check-2",
-    question: "What is another term commonly used for standby power consumption?",
-    options: [
-      "Active power",
-      "Peak demand",
-      "Phantom load or vampire power",
-      "Base load"
-    ],
+    id: 'check-2',
+    question: 'What is another term commonly used for standby power consumption?',
+    options: ['Active power', 'Peak demand', 'Phantom load or vampire power', 'Base load'],
     correctIndex: 2,
-    explanation: "Standby power is often called 'phantom load' or 'vampire power' because it invisibly drains energy even when equipment appears to be off. It can account for 5-10% of household electricity consumption."
+    explanation:
+      "Standby power is often called 'phantom load' or 'vampire power' because it invisibly drains energy even when equipment appears to be off. It can account for 5-10% of household electricity consumption.",
   },
   {
-    id: "check-3",
-    question: "Which installation feature can help reduce standby power in a home office?",
+    id: 'check-3',
+    question: 'Which installation feature can help reduce standby power in a home office?',
     options: [
-      "Higher rated socket outlets",
-      "Switched socket outlets or master/slave power strips",
-      "More circuits in the consumer unit",
-      "Larger cable sizes"
+      'Higher rated socket outlets',
+      'Switched socket outlets or master/slave power strips',
+      'More circuits in the consumer unit',
+      'Larger cable sizes',
     ],
     correctIndex: 1,
-    explanation: "Switched socket outlets allow equipment to be easily disconnected from the supply. Master/slave power strips automatically cut power to peripherals when the main device is switched off."
+    explanation:
+      'Switched socket outlets allow equipment to be easily disconnected from the supply. Master/slave power strips automatically cut power to peripherals when the main device is switched off.',
   },
   {
-    id: "check-4",
-    question: "EU regulations limit standby power consumption for most products to:",
+    id: 'check-4',
+    question: 'EU regulations limit standby power consumption for most products to:',
     options: [
-      "No limit exists",
-      "0.5W in standby mode",
-      "5W in standby mode",
-      "10W in standby mode"
+      'No limit exists',
+      '0.5W in standby mode',
+      '5W in standby mode',
+      '10W in standby mode',
     ],
     correctIndex: 1,
-    explanation: "EU Ecodesign regulations limit standby power to 0.5W for most products (1W if the product displays information or status). This has significantly reduced phantom loads in newer equipment."
-  }
+    explanation:
+      'EU Ecodesign regulations limit standby power to 0.5W for most products (1W if the product displays information or status). This has significantly reduced phantom loads in newer equipment.',
+  },
 ];
 
 // ============================================
@@ -77,124 +77,136 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: "Standby power consumption in a typical UK home can account for approximately:",
+    question: 'Standby power consumption in a typical UK home can account for approximately:',
     options: [
-      "Less than 1% of electricity consumption",
-      "5-10% of electricity consumption",
-      "25-30% of electricity consumption",
-      "Over 50% of electricity consumption"
+      'Less than 1% of electricity consumption',
+      '5-10% of electricity consumption',
+      '25-30% of electricity consumption',
+      'Over 50% of electricity consumption',
     ],
     correctAnswer: 1,
-    explanation: "Standby power typically accounts for 5-10% of household electricity consumption. While individual devices use small amounts, the cumulative effect of many devices on standby is significant."
+    explanation:
+      'Standby power typically accounts for 5-10% of household electricity consumption. While individual devices use small amounts, the cumulative effect of many devices on standby is significant.',
   },
   {
     id: 2,
-    question: "Which of these typically has the highest standby power consumption?",
+    question: 'Which of these typically has the highest standby power consumption?',
     options: [
-      "Phone charger (without phone)",
-      "Set-top box/satellite receiver",
-      "LED lamp",
-      "Electric toothbrush charger"
+      'Phone charger (without phone)',
+      'Set-top box/satellite receiver',
+      'LED lamp',
+      'Electric toothbrush charger',
     ],
     correctAnswer: 1,
-    explanation: "Set-top boxes and satellite receivers often have significant standby consumption (5-15W) as they may be updating programme guides or maintaining connections. Modern phone chargers typically use &lt;0.5W when not charging."
+    explanation:
+      'Set-top boxes and satellite receivers often have significant standby consumption (5-15W) as they may be updating programme guides or maintaining connections. Modern phone chargers typically use &lt;0.5W when not charging.',
   },
   {
     id: 3,
     question: "A 'hard off' switch on equipment means:",
     options: [
-      "The switch is difficult to operate",
-      "It completely disconnects the equipment from the power supply",
-      "It reduces power to half",
-      "It's only for emergencies"
+      'The switch is difficult to operate',
+      'It completely disconnects the equipment from the power supply',
+      'It reduces power to half',
+      "It's only for emergencies",
     ],
     correctAnswer: 1,
-    explanation: "A 'hard off' switch physically disconnects equipment from the supply, eliminating all standby consumption. Soft power buttons often leave equipment in standby mode, still consuming power."
+    explanation:
+      "A 'hard off' switch physically disconnects equipment from the supply, eliminating all standby consumption. Soft power buttons often leave equipment in standby mode, still consuming power.",
   },
   {
     id: 4,
-    question: "Smart power strips can reduce standby consumption by:",
+    question: 'Smart power strips can reduce standby consumption by:',
     options: [
-      "Using less electricity themselves",
-      "Automatically cutting power to peripherals when the main device is off",
-      "Increasing the voltage to equipment",
-      "Reducing the power factor"
+      'Using less electricity themselves',
+      'Automatically cutting power to peripherals when the main device is off',
+      'Increasing the voltage to equipment',
+      'Reducing the power factor',
     ],
     correctAnswer: 1,
-    explanation: "Smart/master-slave power strips detect when a main device (like a TV or computer) is turned off and automatically cut power to connected peripherals, eliminating their standby consumption."
+    explanation:
+      'Smart/master-slave power strips detect when a main device (like a TV or computer) is turned off and automatically cut power to connected peripherals, eliminating their standby consumption.',
   },
   {
     id: 5,
-    question: "Which installation design helps reduce standby consumption in commercial buildings?",
+    question: 'Which installation design helps reduce standby consumption in commercial buildings?',
     options: [
-      "Using larger cables",
-      "Installing more socket outlets",
-      "Providing switching for socket outlets serving equipment areas",
-      "Using single-phase supplies only"
+      'Using larger cables',
+      'Installing more socket outlets',
+      'Providing switching for socket outlets serving equipment areas',
+      'Using single-phase supplies only',
     ],
     correctAnswer: 2,
-    explanation: "Installing switched socket outlets or providing central switching for equipment areas allows all devices to be easily disconnected from supply outside operating hours, eliminating standby loads."
+    explanation:
+      'Installing switched socket outlets or providing central switching for equipment areas allows all devices to be easily disconnected from supply outside operating hours, eliminating standby loads.',
   },
   {
     id: 6,
-    question: "The EU Ecodesign Directive has reduced standby power by:",
+    question: 'The EU Ecodesign Directive has reduced standby power by:',
     options: [
-      "Banning all equipment with standby modes",
-      "Setting maximum standby power limits for products",
-      "Requiring solar panels on all buildings",
-      "Mandating battery backup for all equipment"
+      'Banning all equipment with standby modes',
+      'Setting maximum standby power limits for products',
+      'Requiring solar panels on all buildings',
+      'Mandating battery backup for all equipment',
     ],
     correctAnswer: 1,
-    explanation: "The EU Ecodesign Directive sets maximum limits for standby power consumption (typically 0.5W-1W), forcing manufacturers to improve the efficiency of their products' standby modes."
+    explanation:
+      "The EU Ecodesign Directive sets maximum limits for standby power consumption (typically 0.5W-1W), forcing manufacturers to improve the efficiency of their products' standby modes.",
   },
   {
     id: 7,
-    question: "Which strategy is most effective for reducing ICT equipment standby consumption in offices?",
+    question:
+      'Which strategy is most effective for reducing ICT equipment standby consumption in offices?',
     options: [
-      "Using faster computers",
-      "Implementing power management and automatic shutdown policies",
-      "Installing more monitors per desk",
-      "Keeping equipment running 24/7"
+      'Using faster computers',
+      'Implementing power management and automatic shutdown policies',
+      'Installing more monitors per desk',
+      'Keeping equipment running 24/7',
     ],
     correctAnswer: 1,
-    explanation: "Power management policies automatically put equipment into sleep or shutdown modes during inactive periods. Combined with automatic shutdown outside office hours, this significantly reduces consumption."
+    explanation:
+      'Power management policies automatically put equipment into sleep or shutdown modes during inactive periods. Combined with automatic shutdown outside office hours, this significantly reduces consumption.',
   },
   {
     id: 8,
-    question: "Time switches on socket circuits can help reduce standby power by:",
+    question: 'Time switches on socket circuits can help reduce standby power by:',
     options: [
-      "Making equipment run faster",
-      "Cutting power to equipment outside operating hours",
-      "Increasing power during peak times",
-      "Monitoring energy consumption"
+      'Making equipment run faster',
+      'Cutting power to equipment outside operating hours',
+      'Increasing power during peak times',
+      'Monitoring energy consumption',
     ],
     correctAnswer: 1,
-    explanation: "Time switches can automatically disconnect non-essential equipment overnight and at weekends, eliminating standby consumption during these periods without relying on user action."
+    explanation:
+      'Time switches can automatically disconnect non-essential equipment overnight and at weekends, eliminating standby consumption during these periods without relying on user action.',
   },
   {
     id: 9,
-    question: "Networked standby (when equipment maintains network connectivity while sleeping) typically consumes:",
+    question:
+      'Networked standby (when equipment maintains network connectivity while sleeping) typically consumes:',
     options: [
-      "Zero power",
-      "The same as active mode",
-      "More than simple standby but less than active mode",
-      "More than active mode"
+      'Zero power',
+      'The same as active mode',
+      'More than simple standby but less than active mode',
+      'More than active mode',
     ],
     correctAnswer: 2,
-    explanation: "Networked standby allows devices to wake on network commands but consumes more power than simple standby. EU regulations allow up to 2W for networked standby with high network availability."
+    explanation:
+      'Networked standby allows devices to wake on network commands but consumes more power than simple standby. EU regulations allow up to 2W for networked standby with high network availability.',
   },
   {
     id: 10,
-    question: "When specifying kitchen installations, how can standby power be minimised?",
+    question: 'When specifying kitchen installations, how can standby power be minimised?',
     options: [
-      "Use only gas appliances",
-      "Provide switched spur outlets for built-in appliances where appropriate",
-      "Install larger consumer units",
-      "Use three-phase supplies"
+      'Use only gas appliances',
+      'Provide switched spur outlets for built-in appliances where appropriate',
+      'Install larger consumer units',
+      'Use three-phase supplies',
     ],
     correctAnswer: 1,
-    explanation: "Providing switched spur outlets for appliances like dishwashers and washing machines allows them to be easily isolated when not in use, eliminating standby consumption without unplugging."
-  }
+    explanation:
+      'Providing switched spur outlets for appliances like dishwashers and washing machines allows them to be easily isolated when not in use, eliminating standby consumption without unplugging.',
+  },
 ];
 
 // ============================================
@@ -202,29 +214,35 @@ const quizQuestions = [
 // ============================================
 const faqs = [
   {
-    question: "How much does standby power really cost?",
-    answer: "A single device on standby at 5W costs around 6-7 per year. But a typical home might have 20-40 devices on standby, totalling 50-100W continuous consumption - that's 100-150 per year just in standby power."
+    question: 'How much does standby power really cost?',
+    answer:
+      "A single device on standby at 5W costs around 6-7 per year. But a typical home might have 20-40 devices on standby, totalling 50-100W continuous consumption - that's 100-150 per year just in standby power.",
   },
   {
-    question: "Should I unplug phone chargers when not in use?",
-    answer: "Modern phone chargers meeting EU regulations consume &lt;0.5W when idle - minimal cost. However, older chargers may use more. Unplugging eliminates any consumption and reduces fire risk from faulty equipment left energised."
+    question: 'Should I unplug phone chargers when not in use?',
+    answer:
+      'Modern phone chargers meeting EU regulations consume &lt;0.5W when idle - minimal cost. However, older chargers may use more. Unplugging eliminates any consumption and reduces fire risk from faulty equipment left energised.',
   },
   {
-    question: "How can building design reduce standby consumption?",
-    answer: "Install switched socket outlets, provide master switches for equipment groups, consider time-controlled circuits for office equipment areas, and specify equipment meeting latest Ecodesign standards. Making disconnection easy encourages good habits."
+    question: 'How can building design reduce standby consumption?',
+    answer:
+      'Install switched socket outlets, provide master switches for equipment groups, consider time-controlled circuits for office equipment areas, and specify equipment meeting latest Ecodesign standards. Making disconnection easy encourages good habits.',
   },
   {
-    question: "Does equipment still consume power when the switch is off?",
-    answer: "It depends. A mechanical switch that physically breaks the circuit (hard off) eliminates consumption. Electronic soft-touch buttons often leave equipment in standby. The only certain way to stop consumption is disconnecting from the supply."
+    question: 'Does equipment still consume power when the switch is off?',
+    answer:
+      'It depends. A mechanical switch that physically breaks the circuit (hard off) eliminates consumption. Electronic soft-touch buttons often leave equipment in standby. The only certain way to stop consumption is disconnecting from the supply.',
   },
   {
     question: "What's the best way to measure standby power?",
-    answer: "Use a plug-in energy monitor that shows both instantaneous power and accumulated consumption. Measure equipment in different modes: active, standby, and 'off'. Many people are surprised by what they find."
+    answer:
+      "Use a plug-in energy monitor that shows both instantaneous power and accumulated consumption. Measure equipment in different modes: active, standby, and 'off'. Many people are surprised by what they find.",
   },
   {
-    question: "Are smart home devices making standby consumption worse?",
-    answer: "Smart speakers, hubs, and always-connected devices do consume standby power continuously (typically 2-5W each). However, they can also enable better control of other equipment. The key is ensuring the control benefits outweigh the monitoring consumption."
-  }
+    question: 'Are smart home devices making standby consumption worse?',
+    answer:
+      'Smart speakers, hubs, and always-connected devices do consume standby power continuously (typically 2-5W each). However, they can also enable better control of other equipment. The key is ensuring the control benefits outweigh the monitoring consumption.',
+  },
 ];
 
 // ============================================
@@ -235,7 +253,6 @@ const Level3Module2Section2_3 = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
-
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
@@ -255,34 +272,42 @@ const Level3Module2Section2_3 = () => {
 
       {/* Main Article Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Header */}
-        
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Standby power:</strong> 5-10% of home electricity use</li>
-              <li><strong>EU limit:</strong> 0.5W standby for most products</li>
-              <li><strong>Solutions:</strong> Switched outlets, smart strips, time controls</li>
-              <li><strong>Cost:</strong> 100-150/year typical home</li>
+              <li>
+                <strong>Standby power:</strong> 5-10% of home electricity use
+              </li>
+              <li>
+                <strong>EU limit:</strong> 0.5W standby for most products
+              </li>
+              <li>
+                <strong>Solutions:</strong> Switched outlets, smart strips, time controls
+              </li>
+              <li>
+                <strong>Cost:</strong> 100-150/year typical home
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> LEDs glowing on 'off' equipment</li>
-              <li><strong>Use:</strong> Plug-in energy monitors to measure</li>
-              <li><strong>Apply:</strong> Specify switched spurs for appliances</li>
+              <li>
+                <strong>Spot:</strong> LEDs glowing on 'off' equipment
+              </li>
+              <li>
+                <strong>Use:</strong> Plug-in energy monitors to measure
+              </li>
+              <li>
+                <strong>Apply:</strong> Specify switched spurs for appliances
+              </li>
             </ul>
           </div>
         </div>
-
-        
-
-        
 
         {/* Section 01 */}
         <section className="mb-10">
@@ -292,21 +317,36 @@ const Level3Module2Section2_3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Standby power - also called phantom load or vampire power - is electricity consumed by equipment when it's not performing its main function. This includes devices waiting for remote control signals, maintaining clocks or settings, or simply having power supplies energised but not active.
+              Standby power - also called phantom load or vampire power - is electricity consumed by
+              equipment when it's not performing its main function. This includes devices waiting
+              for remote control signals, maintaining clocks or settings, or simply having power
+              supplies energised but not active.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Standby modes explained:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Off mode:</strong> Equipment appears off but still connected and may draw small current</li>
-                <li><strong>Standby mode:</strong> Ready to be activated by remote, network, or timer</li>
-                <li><strong>Networked standby:</strong> Maintaining network connectivity while sleeping</li>
-                <li><strong>Active standby:</strong> Performing background tasks (e.g., recording)</li>
+                <li>
+                  <strong>Off mode:</strong> Equipment appears off but still connected and may draw
+                  small current
+                </li>
+                <li>
+                  <strong>Standby mode:</strong> Ready to be activated by remote, network, or timer
+                </li>
+                <li>
+                  <strong>Networked standby:</strong> Maintaining network connectivity while
+                  sleeping
+                </li>
+                <li>
+                  <strong>Active standby:</strong> Performing background tasks (e.g., recording)
+                </li>
               </ul>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Even small standby loads add up. A 5W standby load running 24/7 consumes 44 kWh per year - more than some efficient appliances use in active operation.
+              <strong>Remember:</strong> Even small standby loads add up. A 5W standby load running
+              24/7 consumes 44 kWh per year - more than some efficient appliances use in active
+              operation.
             </p>
           </div>
         </section>
@@ -321,12 +361,16 @@ const Level3Module2Section2_3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Understanding which equipment consumes the most standby power helps prioritise reduction efforts. Some devices have improved dramatically due to regulations, while others remain significant consumers.
+              Understanding which equipment consumes the most standby power helps prioritise
+              reduction efforts. Some devices have improved dramatically due to regulations, while
+              others remain significant consumers.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Higher Standby Consumers</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Higher Standby Consumers
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Set-top boxes/satellite receivers (5-15W)</li>
                   <li>Games consoles in standby (5-15W)</li>
@@ -336,7 +380,9 @@ const Level3Module2Section2_3 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Lower Standby Consumers</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Lower Standby Consumers
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Modern phone chargers (&lt;0.5W)</li>
                   <li>Modern TVs in standby (&lt;0.5W)</li>
@@ -359,21 +405,36 @@ const Level3Module2Section2_3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Good installation design makes it easy for occupants to eliminate standby power without inconvenience. The key is providing convenient switching that people will actually use.
+              Good installation design makes it easy for occupants to eliminate standby power
+              without inconvenience. The key is providing convenient switching that people will
+              actually use.
             </p>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> In a home office, install a switched double socket for the monitor and peripherals, controlled by a master-slave strip. When the computer is shut down, the strip automatically cuts power to the monitor, speakers, and printer - eliminating all standby consumption without any user action.
+              <strong>Example:</strong> In a home office, install a switched double socket for the
+              monitor and peripherals, controlled by a master-slave strip. When the computer is shut
+              down, the strip automatically cuts power to the monitor, speakers, and printer -
+              eliminating all standby consumption without any user action.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Design solutions:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Switched socket outlets:</strong> Allow easy disconnection at the wall</li>
-                <li><strong>Switched spurs:</strong> For built-in appliances like dishwashers</li>
-                <li><strong>Master switches:</strong> Control groups of outlets in one action</li>
-                <li><strong>Time-controlled circuits:</strong> Automatic off outside hours</li>
-                <li><strong>Smart power strips:</strong> Master/slave automatic switching</li>
+                <li>
+                  <strong>Switched socket outlets:</strong> Allow easy disconnection at the wall
+                </li>
+                <li>
+                  <strong>Switched spurs:</strong> For built-in appliances like dishwashers
+                </li>
+                <li>
+                  <strong>Master switches:</strong> Control groups of outlets in one action
+                </li>
+                <li>
+                  <strong>Time-controlled circuits:</strong> Automatic off outside hours
+                </li>
+                <li>
+                  <strong>Smart power strips:</strong> Master/slave automatic switching
+                </li>
               </ul>
             </div>
           </div>
@@ -389,7 +450,9 @@ const Level3Module2Section2_3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              EU Ecodesign regulations have driven significant improvements in standby power consumption. Understanding these requirements helps when specifying and advising on equipment selection.
+              EU Ecodesign regulations have driven significant improvements in standby power
+              consumption. Understanding these requirements helps when specifying and advising on
+              equipment selection.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -408,7 +471,8 @@ const Level3Module2Section2_3 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Look for Energy Star or equivalent labels when specifying equipment. These often exceed minimum regulatory requirements for standby power.
+              <strong>Remember:</strong> Look for Energy Star or equivalent labels when specifying
+              equipment. These often exceed minimum regulatory requirements for standby power.
             </p>
           </div>
         </section>
@@ -423,7 +487,9 @@ const Level3Module2Section2_3 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Designing Installations</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Designing Installations
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Install switched socket outlets throughout, not unswitched types</li>
                 <li>Consider switched spurs for built-in kitchen appliances</li>
@@ -433,7 +499,9 @@ const Level3Module2Section2_3 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Advising Customers</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Advising Customers
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Recommend plug-in energy monitors to identify high standby loads</li>
                 <li>Suggest master/slave power strips for computer and AV setups</li>
@@ -445,9 +513,17 @@ const Level3Module2Section2_3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Installing unswitched outlets</strong> - Makes disconnection less convenient</li>
-                <li><strong>Hiding socket outlets</strong> - Switches won't be used if inaccessible</li>
-                <li><strong>Ignoring built-in appliances</strong> - Dishwashers, washing machines have standby too</li>
+                <li>
+                  <strong>Installing unswitched outlets</strong> - Makes disconnection less
+                  convenient
+                </li>
+                <li>
+                  <strong>Hiding socket outlets</strong> - Switches won't be used if inaccessible
+                </li>
+                <li>
+                  <strong>Ignoring built-in appliances</strong> - Dishwashers, washing machines have
+                  standby too
+                </li>
               </ul>
             </div>
           </div>
@@ -497,10 +573,7 @@ const Level3Module2Section2_3 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
@@ -527,7 +600,6 @@ const Level3Module2Section2_3 = () => {
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

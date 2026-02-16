@@ -1,4 +1,4 @@
-import useSEO from "@/hooks/useSEO";
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   Cable,
@@ -16,117 +16,107 @@ import {
   Wrench,
   ClipboardCheck,
   CircuitBoard,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const quickCheckQuestions = [
   {
-    id: "ferrule-purpose",
-    question: "What is the main purpose of using ferrules on flexible conductors?",
+    id: 'ferrule-purpose',
+    question: 'What is the main purpose of using ferrules on flexible conductors?',
     options: [
-      "To change the cable colour",
-      "To prevent conductor strand splay and ensure reliable connection",
-      "To increase conductor size",
-      "To reduce cable cost",
+      'To change the cable colour',
+      'To prevent conductor strand splay and ensure reliable connection',
+      'To increase conductor size',
+      'To reduce cable cost',
     ],
     correctIndex: 1,
     explanation:
-      "Ferrules prevent strand splay in multi-stranded conductors, ensuring all strands make contact and providing a reliable connection in screw or clamp terminals.",
+      'Ferrules prevent strand splay in multi-stranded conductors, ensuring all strands make contact and providing a reliable connection in screw or clamp terminals.',
   },
   {
-    id: "sleeving-fit",
-    question: "Why must sleeving fit snugly over a conductor?",
+    id: 'sleeving-fit',
+    question: 'Why must sleeving fit snugly over a conductor?',
     options: [
-      "To look professional",
-      "To prevent slipping and ensure full protection",
-      "To reduce material cost",
-      "To make installation faster",
+      'To look professional',
+      'To prevent slipping and ensure full protection',
+      'To reduce material cost',
+      'To make installation faster',
     ],
     correctIndex: 1,
     explanation:
-      "Snug-fitting sleeving prevents it from slipping off the conductor and ensures complete coverage and protection of exposed copper.",
+      'Snug-fitting sleeving prevents it from slipping off the conductor and ensures complete coverage and protection of exposed copper.',
   },
   {
-    id: "crimp-types",
-    question: "Name one type of crimp terminal.",
-    options: [
-      "Ring terminal",
-      "Cable gland",
-      "Junction box",
-      "Circuit breaker",
-    ],
+    id: 'crimp-types',
+    question: 'Name one type of crimp terminal.',
+    options: ['Ring terminal', 'Cable gland', 'Junction box', 'Circuit breaker'],
     correctIndex: 0,
     explanation:
-      "Ring terminals are a common type of crimp terminal used for bolted connections, providing a secure mechanical and electrical connection.",
+      'Ring terminals are a common type of crimp terminal used for bolted connections, providing a secure mechanical and electrical connection.',
   },
   {
-    id: "earth-sleeving",
-    question: "What colour is sleeving for an earth conductor in the UK?",
-    options: [
-      "Blue",
-      "Brown",
-      "Green/Yellow",
-      "Red",
-    ],
+    id: 'earth-sleeving',
+    question: 'What colour is sleeving for an earth conductor in the UK?',
+    options: ['Blue', 'Brown', 'Green/Yellow', 'Red'],
     correctIndex: 2,
     explanation:
-      "In the UK, earth conductor sleeving must be green/yellow as per BS 7671, providing clear identification for safety.",
+      'In the UK, earth conductor sleeving must be green/yellow as per BS 7671, providing clear identification for safety.',
   },
 ];
 
 const mainQuizQuestions = [
   {
     id: 1,
-    question: "Which termination method prevents strand splay in flexible conductors?",
-    options: ["Sleeving", "Ferrules", "Crimps", "Tape"],
+    question: 'Which termination method prevents strand splay in flexible conductors?',
+    options: ['Sleeving', 'Ferrules', 'Crimps', 'Tape'],
     correctAnswer: 1,
     explanation:
-      "Ferrules are specifically designed to prevent strand splay in flexible conductors, ensuring all strands are contained and make proper contact.",
+      'Ferrules are specifically designed to prevent strand splay in flexible conductors, ensuring all strands are contained and make proper contact.',
   },
   {
     id: 2,
-    question: "What colour is sleeving for an earth conductor in the UK?",
-    options: ["Blue", "Brown", "Green/Yellow", "Red"],
+    question: 'What colour is sleeving for an earth conductor in the UK?',
+    options: ['Blue', 'Brown', 'Green/Yellow', 'Red'],
     correctAnswer: 2,
     explanation:
-      "Earth conductor sleeving must be green/yellow in the UK as specified in BS 7671 for clear identification and safety.",
+      'Earth conductor sleeving must be green/yellow in the UK as specified in BS 7671 for clear identification and safety.',
   },
   {
     id: 3,
-    question: "True or False: All crimps are insulated.",
-    options: ["True", "False"],
+    question: 'True or False: All crimps are insulated.',
+    options: ['True', 'False'],
     correctAnswer: 1,
     explanation:
-      "False — crimps can be either insulated or uninsulated. Insulated crimps provide additional protection and are preferred in many applications.",
+      'False — crimps can be either insulated or uninsulated. Insulated crimps provide additional protection and are preferred in many applications.',
   },
   {
     id: 4,
-    question: "Name one tool used for installing ferrules.",
-    options: ["Screwdriver", "Ferrule crimping tool", "Wire strippers", "Multimeter"],
+    question: 'Name one tool used for installing ferrules.',
+    options: ['Screwdriver', 'Ferrule crimping tool', 'Wire strippers', 'Multimeter'],
     correctAnswer: 1,
     explanation:
-      "A ferrule crimping tool is specifically designed to properly compress ferrules onto conductors for secure connections.",
+      'A ferrule crimping tool is specifically designed to properly compress ferrules onto conductors for secure connections.',
   },
   {
     id: 5,
-    question: "Which crimp type is best for bolted connections?",
-    options: ["Butt connector", "Ring terminal", "Spade terminal", "Blade connector"],
+    question: 'Which crimp type is best for bolted connections?',
+    options: ['Butt connector', 'Ring terminal', 'Spade terminal', 'Blade connector'],
     correctAnswer: 1,
     explanation:
-      "Ring terminals provide the most secure connection for bolted applications as they completely encircle the bolt.",
+      'Ring terminals provide the most secure connection for bolted applications as they completely encircle the bolt.',
   },
   {
     id: 6,
-    question: "Why should you perform a tug-test on a crimp?",
+    question: 'Why should you perform a tug-test on a crimp?',
     options: [
-      "To check insulation colour",
-      "To ensure the conductor is secure",
-      "To stretch the wire",
-      "To mark the cable",
+      'To check insulation colour',
+      'To ensure the conductor is secure',
+      'To stretch the wire',
+      'To mark the cable',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,38 +124,38 @@ const mainQuizQuestions = [
   },
   {
     id: 7,
-    question: "Give one risk of loose cable terminations.",
+    question: 'Give one risk of loose cable terminations.',
     options: [
-      "Reduced cable flexibility",
-      "Overheating and potential fire risk",
-      "Increased cable cost",
-      "Slower installation",
+      'Reduced cable flexibility',
+      'Overheating and potential fire risk',
+      'Increased cable cost',
+      'Slower installation',
     ],
     correctAnswer: 1,
     explanation:
-      "Loose terminations create high resistance joints that generate heat, potentially leading to overheating, arcing, and fire risk.",
+      'Loose terminations create high resistance joints that generate heat, potentially leading to overheating, arcing, and fire risk.',
   },
   {
     id: 8,
-    question: "What must be done before sliding sleeving onto a conductor?",
+    question: 'What must be done before sliding sleeving onto a conductor?',
     options: [
-      "Test the circuit",
-      "Strip the insulation and prepare the conductor end",
-      "Mark the cable",
-      "Connect to earth",
+      'Test the circuit',
+      'Strip the insulation and prepare the conductor end',
+      'Mark the cable',
+      'Connect to earth',
     ],
     correctAnswer: 1,
     explanation:
-      "The conductor must be properly stripped and prepared before sleeving can be fitted to ensure proper fit and coverage.",
+      'The conductor must be properly stripped and prepared before sleeving can be fitted to ensure proper fit and coverage.',
   },
 ];
 
 const Module3Section4_3: React.FC = () => {
-  console.log("Module3Section4_3 component loaded");
+  console.log('Module3Section4_3 component loaded');
 
   useSEO(
-    "Terminating Cables: Sleeving, Ferrules, and Crimps – Module 3 (3.4.3)",
-    "Complete guide to cable termination methods. Learn sleeving, ferrules, and crimps for safe, reliable electrical connections per BS 7671."
+    'Terminating Cables: Sleeving, Ferrules, and Crimps – Module 3 (3.4.3)',
+    'Complete guide to cable termination methods. Learn sleeving, ferrules, and crimps for safe, reliable electrical connections per BS 7671.'
   );
 
   return (
@@ -199,7 +189,8 @@ const Module3Section4_3: React.FC = () => {
             Terminating Cables: Sleeving, Ferrules, and Crimps
           </h1>
           <p className="text-white/80">
-            Essential cable termination techniques for safe, reliable electrical connections meeting BS 7671 standards.
+            Essential cable termination techniques for safe, reliable electrical connections meeting
+            BS 7671 standards.
           </p>
         </header>
 
@@ -213,18 +204,36 @@ const Module3Section4_3: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Sleeving:</strong> Provides identification and insulation for exposed conductors.</li>
-                <li><strong>Ferrules:</strong> Prevent strand splay in flexible conductors for reliable connections.</li>
-                <li><strong>Crimps:</strong> Join conductors or provide termination points for various connections.</li>
+                <li>
+                  <strong>Sleeving:</strong> Provides identification and insulation for exposed
+                  conductors.
+                </li>
+                <li>
+                  <strong>Ferrules:</strong> Prevent strand splay in flexible conductors for
+                  reliable connections.
+                </li>
+                <li>
+                  <strong>Crimps:</strong> Join conductors or provide termination points for various
+                  connections.
+                </li>
                 <li>Poor termination leads to overheating, arcing, and potential fire risks.</li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Green/yellow earth sleeving, insulated ferrules, ring/spade terminals.</li>
-                <li><strong>Use:</strong> Ferrules for multi-strand, sleeving for identification, crimps for connections.</li>
-                <li><strong>Check:</strong> Correct colours, secure crimps, full coverage, proper tool marks.</li>
+                <li>
+                  <strong>Spot:</strong> Green/yellow earth sleeving, insulated ferrules, ring/spade
+                  terminals.
+                </li>
+                <li>
+                  <strong>Use:</strong> Ferrules for multi-strand, sleeving for identification,
+                  crimps for connections.
+                </li>
+                <li>
+                  <strong>Check:</strong> Correct colours, secure crimps, full coverage, proper tool
+                  marks.
+                </li>
               </ul>
             </div>
           </div>
@@ -238,7 +247,9 @@ const Module3Section4_3: React.FC = () => {
           </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify the main types of cable terminations and their purposes.</li>
-            <li>Select appropriate termination methods for different cable types and applications.</li>
+            <li>
+              Select appropriate termination methods for different cable types and applications.
+            </li>
             <li>Apply correct installation techniques to ensure safe, reliable connections.</li>
             <li>Recognise the consequences of poor cable termination.</li>
           </ul>
@@ -262,7 +273,10 @@ const Module3Section4_3: React.FC = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="font-medium text-white mb-1">Primary Purpose</p>
-                    <p className="text-white">Provides identification and insulation for exposed conductors at termination points</p>
+                    <p className="text-white">
+                      Provides identification and insulation for exposed conductors at termination
+                      points
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Materials Available</p>
@@ -309,7 +323,10 @@ const Module3Section4_3: React.FC = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="font-medium text-white mb-1">Primary Purpose</p>
-                    <p className="text-white">Prevents conductor strand splay and ensures reliable connection in screw or clamp terminals</p>
+                    <p className="text-white">
+                      Prevents conductor strand splay and ensures reliable connection in screw or
+                      clamp terminals
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Construction</p>
@@ -407,28 +424,61 @@ const Module3Section4_3: React.FC = () => {
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Electrical Hazards</p>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li><strong>High Resistance Joints:</strong> Loose terminations cause increased resistance, leading to heat build-up</li>
-                  <li><strong>Arcing:</strong> Poor connections can create arcs under load, causing fire risk</li>
-                  <li><strong>Voltage Drop:</strong> Increased resistance reduces available voltage at equipment</li>
-                  <li><strong>Circuit Failure:</strong> Complete disconnection under load can damage equipment</li>
+                  <li>
+                    <strong>High Resistance Joints:</strong> Loose terminations cause increased
+                    resistance, leading to heat build-up
+                  </li>
+                  <li>
+                    <strong>Arcing:</strong> Poor connections can create arcs under load, causing
+                    fire risk
+                  </li>
+                  <li>
+                    <strong>Voltage Drop:</strong> Increased resistance reduces available voltage at
+                    equipment
+                  </li>
+                  <li>
+                    <strong>Circuit Failure:</strong> Complete disconnection under load can damage
+                    equipment
+                  </li>
                 </ul>
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Mechanical Issues</p>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li><strong>Strand Breakage:</strong> Damaged conductors reduce current-carrying capacity</li>
-                  <li><strong>Vibration Damage:</strong> Loose connections worsen under mechanical stress</li>
-                  <li><strong>Corrosion:</strong> Exposed copper strands oxidize, increasing resistance</li>
-                  <li><strong>Contact Degradation:</strong> Poor terminations deteriorate over time</li>
+                  <li>
+                    <strong>Strand Breakage:</strong> Damaged conductors reduce current-carrying
+                    capacity
+                  </li>
+                  <li>
+                    <strong>Vibration Damage:</strong> Loose connections worsen under mechanical
+                    stress
+                  </li>
+                  <li>
+                    <strong>Corrosion:</strong> Exposed copper strands oxidize, increasing
+                    resistance
+                  </li>
+                  <li>
+                    <strong>Contact Degradation:</strong> Poor terminations deteriorate over time
+                  </li>
                 </ul>
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-2">Safety Risks</p>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li><strong>Electric Shock:</strong> Incorrect colour coding causes identification errors</li>
-                  <li><strong>Fire Risk:</strong> Overheating can ignite surrounding materials</li>
-                  <li><strong>Equipment Damage:</strong> Poor connections can damage expensive equipment</li>
-                  <li><strong>System Downtime:</strong> Failures often occur at critical times</li>
+                  <li>
+                    <strong>Electric Shock:</strong> Incorrect colour coding causes identification
+                    errors
+                  </li>
+                  <li>
+                    <strong>Fire Risk:</strong> Overheating can ignite surrounding materials
+                  </li>
+                  <li>
+                    <strong>Equipment Damage:</strong> Poor connections can damage expensive
+                    equipment
+                  </li>
+                  <li>
+                    <strong>System Downtime:</strong> Failures often occur at critical times
+                  </li>
                 </ul>
               </div>
             </div>
@@ -450,10 +500,19 @@ const Module3Section4_3: React.FC = () => {
                 <h3 className="font-semibold">Crimping Tools</h3>
               </div>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Ratchet Crimping Tool:</strong> Ensures consistent pressure and proper crimp</li>
-                <li><strong>Ferrule Crimping Tool:</strong> Specific for ferrule installation</li>
-                <li><strong>Multi-Size Crimpers:</strong> Various jaw sizes for different terminals</li>
-                <li><strong>Quality Check:</strong> Look for calibrated tools with clear size markings</li>
+                <li>
+                  <strong>Ratchet Crimping Tool:</strong> Ensures consistent pressure and proper
+                  crimp
+                </li>
+                <li>
+                  <strong>Ferrule Crimping Tool:</strong> Specific for ferrule installation
+                </li>
+                <li>
+                  <strong>Multi-Size Crimpers:</strong> Various jaw sizes for different terminals
+                </li>
+                <li>
+                  <strong>Quality Check:</strong> Look for calibrated tools with clear size markings
+                </li>
               </ul>
             </div>
             <div className="space-y-4">
@@ -462,10 +521,18 @@ const Module3Section4_3: React.FC = () => {
                 <h3 className="font-semibold">Preparation Tools</h3>
               </div>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Wire Strippers:</strong> Clean, precise insulation removal</li>
-                <li><strong>Cable Cutters:</strong> Clean conductor cutting</li>
-                <li><strong>Heat Gun:</strong> For heat-shrink sleeving application</li>
-                <li><strong>Tug-Test Equipment:</strong> Verify connection security</li>
+                <li>
+                  <strong>Wire Strippers:</strong> Clean, precise insulation removal
+                </li>
+                <li>
+                  <strong>Cable Cutters:</strong> Clean conductor cutting
+                </li>
+                <li>
+                  <strong>Heat Gun:</strong> For heat-shrink sleeving application
+                </li>
+                <li>
+                  <strong>Tug-Test Equipment:</strong> Verify connection security
+                </li>
               </ul>
             </div>
           </div>
@@ -525,7 +592,9 @@ const Module3Section4_3: React.FC = () => {
               <AlertTriangle className="w-6 h-6 text-elec-yellow" />
             </div>
             <div>
-              <p className="text-white font-medium">Distribution Board Installation - Terminal Failure Case Study</p>
+              <p className="text-white font-medium">
+                Distribution Board Installation - Terminal Failure Case Study
+              </p>
             </div>
           </div>
 
@@ -539,19 +608,31 @@ const Module3Section4_3: React.FC = () => {
               <div className="space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Initial Installation:</strong> Multi-stranded conductor terminated directly into screw terminal</span>
+                  <span>
+                    <strong className="text-white">Initial Installation:</strong> Multi-stranded
+                    conductor terminated directly into screw terminal
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Clock className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Over Time:</strong> Building vibration caused conductor strand splay</span>
+                  <span>
+                    <strong className="text-white">Over Time:</strong> Building vibration caused
+                    conductor strand splay
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Result:</strong> Reduced contact area created high-resistance hot joint</span>
+                  <span>
+                    <strong className="text-white">Result:</strong> Reduced contact area created
+                    high-resistance hot joint
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Power className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Failure:</strong> Joint overheated, tripped circuit, required costly emergency repairs</span>
+                  <span>
+                    <strong className="text-white">Failure:</strong> Joint overheated, tripped
+                    circuit, required costly emergency repairs
+                  </span>
                 </div>
               </div>
             </div>
@@ -565,19 +646,31 @@ const Module3Section4_3: React.FC = () => {
               <div className="space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Preparation:</strong> Strip conductor to correct length for ferrule</span>
+                  <span>
+                    <strong className="text-white">Preparation:</strong> Strip conductor to correct
+                    length for ferrule
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Ferrule Installation:</strong> Insert conductor fully and crimp with proper tool</span>
+                  <span>
+                    <strong className="text-white">Ferrule Installation:</strong> Insert conductor
+                    fully and crimp with proper tool
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Termination:</strong> Ferrule provides solid termination point preventing strand splay</span>
+                  <span>
+                    <strong className="text-white">Termination:</strong> Ferrule provides solid
+                    termination point preventing strand splay
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <Activity className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Outcome:</strong> Reliable connection maintains integrity under vibration</span>
+                  <span>
+                    <strong className="text-white">Outcome:</strong> Reliable connection maintains
+                    integrity under vibration
+                  </span>
                 </div>
               </div>
             </div>
@@ -592,15 +685,24 @@ const Module3Section4_3: React.FC = () => {
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-sm">
               <div className="flex items-start gap-2">
                 <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white"><strong className="text-white">Prevention:</strong> Always use ferrules with multi-stranded conductors</span>
+                <span className="text-white">
+                  <strong className="text-white">Prevention:</strong> Always use ferrules with
+                  multi-stranded conductors
+                </span>
               </div>
               <div className="flex items-start gap-2">
                 <Search className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white"><strong className="text-white">Inspection:</strong> Regular thermal imaging can detect developing problems</span>
+                <span className="text-white">
+                  <strong className="text-white">Inspection:</strong> Regular thermal imaging can
+                  detect developing problems
+                </span>
               </div>
               <div className="flex items-start gap-2">
                 <ClipboardCheck className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white"><strong className="text-white">Quality:</strong> Initial correct installation prevents costly failures</span>
+                <span className="text-white">
+                  <strong className="text-white">Quality:</strong> Initial correct installation
+                  prevents costly failures
+                </span>
               </div>
             </div>
           </div>
@@ -615,22 +717,37 @@ const Module3Section4_3: React.FC = () => {
           <div className="space-y-6 text-xs sm:text-sm text-white">
             <div>
               <p className="font-semibold mb-1">Can I use electrical tape instead of sleeving?</p>
-              <p>No — sleeving provides a neater, safer, and more durable solution. Tape can unravel over time and doesn't provide the same level of protection or identification.</p>
+              <p>
+                No — sleeving provides a neater, safer, and more durable solution. Tape can unravel
+                over time and doesn't provide the same level of protection or identification.
+              </p>
             </div>
             <div className="border-t border-white/10" />
             <div>
               <p className="font-semibold mb-1">Do all ferrules need to be insulated?</p>
-              <p>Not always, but insulated ferrules are generally preferred for improved handling, safety, and prevention of accidental contact in tight spaces.</p>
+              <p>
+                Not always, but insulated ferrules are generally preferred for improved handling,
+                safety, and prevention of accidental contact in tight spaces.
+              </p>
             </div>
             <div className="border-t border-white/10" />
             <div>
               <p className="font-semibold mb-1">How do I choose the right crimp size?</p>
-              <p>Match the crimp to the conductor CSA. Most crimps are colour-coded to industry standards: red (0.5-1.5mm²), blue (1.5-2.5mm²), yellow (4.0-6.0mm²).</p>
+              <p>
+                Match the crimp to the conductor CSA. Most crimps are colour-coded to industry
+                standards: red (0.5-1.5mm²), blue (1.5-2.5mm²), yellow (4.0-6.0mm²).
+              </p>
             </div>
             <div className="border-t border-white/10" />
             <div>
-              <p className="font-semibold mb-1">What's the difference between insulated and non-insulated crimps?</p>
-              <p>Insulated crimps have a plastic sleeve that provides insulation and protection. Non-insulated crimps are bare metal and may require additional sleeving for protection.</p>
+              <p className="font-semibold mb-1">
+                What's the difference between insulated and non-insulated crimps?
+              </p>
+              <p>
+                Insulated crimps have a plastic sleeve that provides insulation and protection.
+                Non-insulated crimps are bare metal and may require additional sleeving for
+                protection.
+              </p>
             </div>
           </div>
         </section>
@@ -646,7 +763,9 @@ const Module3Section4_3: React.FC = () => {
               <ClipboardCheck className="w-6 h-6 text-elec-yellow" />
             </div>
             <div>
-              <p className="text-white">Essential termination techniques for professional electrical installations</p>
+              <p className="text-white">
+                Essential termination techniques for professional electrical installations
+              </p>
             </div>
           </div>
 
@@ -727,8 +846,9 @@ const Module3Section4_3: React.FC = () => {
           {/* Bottom Line */}
           <div className="mt-6 bg-elec-yellow/5 rounded-lg p-4 border border-elec-yellow/30">
             <p className="text-white font-medium text-center">
-              <strong>Bottom Line:</strong> Proper cable termination using sleeving, ferrules, and crimps is fundamental to electrical safety.
-              These techniques prevent failures, ensure compliance with BS 7671, and protect both equipment and personnel.
+              <strong>Bottom Line:</strong> Proper cable termination using sleeving, ferrules, and
+              crimps is fundamental to electrical safety. These techniques prevent failures, ensure
+              compliance with BS 7671, and protect both equipment and personnel.
             </p>
           </div>
         </section>
@@ -744,7 +864,11 @@ const Module3Section4_3: React.FC = () => {
 
         {/* Navigation */}
         <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-6 border-t border-white/10">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../4-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: First Fix and Second Fix

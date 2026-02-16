@@ -1,9 +1,8 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle, RotateCcw, Brain, ArrowLeft, Trophy } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, XCircle, RotateCcw, Brain, ArrowLeft, Trophy } from 'lucide-react';
 
 interface CulturalAwarenessQuizProps {
   onBack: () => void;
@@ -29,69 +28,75 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
   const questions: QuizQuestion[] = [
     {
       id: 1,
-      question: "What's the most appropriate way to address a senior electrician you haven't met before?",
+      question:
+        "What's the most appropriate way to address a senior electrician you haven't met before?",
       options: [
         "Alright mate, how's it going?",
         "Good morning, I'm [your name], the new apprentice",
-        "Hey there!",
-        "What's up?"
+        'Hey there!',
+        "What's up?",
       ],
       correctAnswer: 1,
-      explanation: "Professional introductions show respect and help establish good working relationships from the start.",
-      category: "Professional Communication"
+      explanation:
+        'Professional introductions show respect and help establish good working relationships from the start.',
+      category: 'Professional Communication',
     },
     {
       id: 2,
       question: "If you don't understand a technical instruction, what should you do?",
       options: [
-        "Pretend you understand and figure it out later",
-        "Ask for clarification immediately",
-        "Wait until break time to ask",
-        "Ask another apprentice instead"
+        'Pretend you understand and figure it out later',
+        'Ask for clarification immediately',
+        'Wait until break time to ask',
+        'Ask another apprentice instead',
       ],
       correctAnswer: 1,
-      explanation: "Safety is paramount in electrical work. Always ask for clarification if you're unsure about any instruction.",
-      category: "Safety Communication"
+      explanation:
+        "Safety is paramount in electrical work. Always ask for clarification if you're unsure about any instruction.",
+      category: 'Safety Communication',
     },
     {
       id: 3,
       question: "What's the best response if a colleague uses unfamiliar electrical slang?",
       options: [
-        "Ignore it and hope to understand from context",
-        "Politely ask what the term means",
-        "Pretend you know what they mean",
-        "Look it up later without asking"
+        'Ignore it and hope to understand from context',
+        'Politely ask what the term means',
+        'Pretend you know what they mean',
+        'Look it up later without asking',
       ],
       correctAnswer: 1,
-      explanation: "Learning industry terminology is part of your development. Most colleagues are happy to explain terms to apprentices.",
-      category: "Learning Culture"
+      explanation:
+        'Learning industry terminology is part of your development. Most colleagues are happy to explain terms to apprentices.',
+      category: 'Learning Culture',
     },
     {
       id: 4,
       question: "How should you handle a situation where you've made a mistake?",
       options: [
-        "Try to fix it quietly without telling anyone",
-        "Report it immediately to your supervisor",
-        "Wait to see if anyone notices",
-        "Blame it on someone else"
+        'Try to fix it quietly without telling anyone',
+        'Report it immediately to your supervisor',
+        'Wait to see if anyone notices',
+        'Blame it on someone else',
       ],
       correctAnswer: 1,
-      explanation: "Honesty about mistakes is crucial for safety and learning. It shows maturity and responsibility.",
-      category: "Professional Integrity"
+      explanation:
+        'Honesty about mistakes is crucial for safety and learning. It shows maturity and responsibility.',
+      category: 'Professional Integrity',
     },
     {
       id: 5,
       question: "What's the appropriate way to join a conversation among experienced electricians?",
       options: [
-        "Jump in with your own stories",
-        "Listen and contribute when appropriate",
-        "Stay completely silent",
-        "Change the subject to something you know"
+        'Jump in with your own stories',
+        'Listen and contribute when appropriate',
+        'Stay completely silent',
+        'Change the subject to something you know',
       ],
       correctAnswer: 1,
-      explanation: "Active listening and thoughtful contribution shows respect and helps you learn from experienced colleagues.",
-      category: "Workplace Integration"
-    }
+      explanation:
+        'Active listening and thoughtful contribution shows respect and helps you learn from experienced colleagues.',
+      category: 'Workplace Integration',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -133,22 +138,28 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
   const getScoreMessage = () => {
     const percentage = (score / questions.length) * 100;
     if (percentage >= 80) {
-      return "Excellent! You have a strong understanding of workplace culture.";
+      return 'Excellent! You have a strong understanding of workplace culture.';
     } else if (percentage >= 60) {
       return "Good work! You're developing solid cultural awareness.";
     } else {
-      return "Keep learning! Review the explanations and practice more.";
+      return 'Keep learning! Review the explanations and practice more.';
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'Professional Communication': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'Safety Communication': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'Learning Culture': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-      case 'Professional Integrity': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Workplace Integration': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      default: return 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
+      case 'Professional Communication':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'Safety Communication':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'Learning Culture':
+        return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      case 'Professional Integrity':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'Workplace Integration':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      default:
+        return 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
     }
   };
 
@@ -174,24 +185,36 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
           </div>
         </div>
 
-        <Card className={`bg-gradient-to-br from-elec-gray to-elec-card ${isExcellent ? 'border-green-500/30' : isGood ? 'border-cyan-500/30' : 'border-orange-500/30'} overflow-hidden relative`}>
-          <div className={`absolute top-0 right-0 w-64 h-64 ${isExcellent ? 'bg-green-500/5' : isGood ? 'bg-cyan-500/5' : 'bg-orange-500/5'} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2`} />
+        <Card
+          className={`bg-gradient-to-br from-elec-gray to-elec-card ${isExcellent ? 'border-green-500/30' : isGood ? 'border-cyan-500/30' : 'border-orange-500/30'} overflow-hidden relative`}
+        >
+          <div
+            className={`absolute top-0 right-0 w-64 h-64 ${isExcellent ? 'bg-green-500/5' : isGood ? 'bg-cyan-500/5' : 'bg-orange-500/5'} rounded-full blur-3xl -translate-y-1/2 translate-x-1/2`}
+          />
           <CardHeader className="relative text-center pb-0">
-            <div className={`mx-auto p-4 rounded-2xl ${isExcellent ? 'bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30' : isGood ? 'bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30' : 'bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30'} w-fit mb-4`}>
-              <Trophy className={`h-10 w-10 ${isExcellent ? 'text-green-400' : isGood ? 'text-cyan-400' : 'text-orange-400'}`} />
+            <div
+              className={`mx-auto p-4 rounded-2xl ${isExcellent ? 'bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-500/30' : isGood ? 'bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30' : 'bg-gradient-to-br from-orange-500/20 to-orange-500/5 border border-orange-500/30'} w-fit mb-4`}
+            >
+              <Trophy
+                className={`h-10 w-10 ${isExcellent ? 'text-green-400' : isGood ? 'text-cyan-400' : 'text-orange-400'}`}
+              />
             </div>
             <CardTitle className="text-white text-2xl">Final Score</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 relative text-center">
             <div>
-              <div className={`text-6xl font-bold mb-2 ${isExcellent ? 'text-green-400' : isGood ? 'text-cyan-400' : 'text-orange-400'}`}>
+              <div
+                className={`text-6xl font-bold mb-2 ${isExcellent ? 'text-green-400' : isGood ? 'text-cyan-400' : 'text-orange-400'}`}
+              >
                 {score}/{questions.length}
               </div>
-              <div className="text-xl text-white/70 mb-4">
-                {percentage}% Score
-              </div>
-              <div className={`inline-block px-6 py-3 rounded-xl ${isExcellent ? 'bg-green-500/10 border border-green-500/20' : isGood ? 'bg-cyan-500/10 border border-cyan-500/20' : 'bg-orange-500/10 border border-orange-500/20'}`}>
-                <p className={`${isExcellent ? 'text-green-300' : isGood ? 'text-cyan-300' : 'text-orange-300'}`}>
+              <div className="text-xl text-white/70 mb-4">{percentage}% Score</div>
+              <div
+                className={`inline-block px-6 py-3 rounded-xl ${isExcellent ? 'bg-green-500/10 border border-green-500/20' : isGood ? 'bg-cyan-500/10 border border-cyan-500/20' : 'bg-orange-500/10 border border-orange-500/20'}`}
+              >
+                <p
+                  className={`${isExcellent ? 'text-green-300' : isGood ? 'text-cyan-300' : 'text-orange-300'}`}
+                >
                   {getScoreMessage()}
                 </p>
               </div>
@@ -218,7 +241,9 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
                   className={`p-4 rounded-xl ${isCorrect ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`p-2 rounded-lg flex-shrink-0 ${isCorrect ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                    <div
+                      className={`p-2 rounded-lg flex-shrink-0 ${isCorrect ? 'bg-green-500/20' : 'bg-red-500/20'}`}
+                    >
                       {isCorrect ? (
                         <CheckCircle className="h-4 w-4 text-green-400" />
                       ) : (
@@ -228,10 +253,14 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-white text-sm mb-2">{question.question}</p>
                       <p className="text-xs text-white/60 mb-2">
-                        <strong className="text-white/80">Correct answer:</strong> {question.options[question.correctAnswer]}
+                        <strong className="text-white/80">Correct answer:</strong>{' '}
+                        {question.options[question.correctAnswer]}
                       </p>
                       <p className="text-xs text-green-300/80">{question.explanation}</p>
-                      <Badge variant="outline" className={`mt-3 text-xs ${getCategoryColor(question.category)}`}>
+                      <Badge
+                        variant="outline"
+                        className={`mt-3 text-xs ${getCategoryColor(question.category)}`}
+                      >
                         {question.category}
                       </Badge>
                     </div>
@@ -339,36 +368,45 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
                 disabled={selectedAnswer === null}
                 className="w-full h-11 bg-cyan-500 hover:bg-cyan-500/90 text-black disabled:opacity-50 touch-manipulation active:scale-95 transition-all"
               >
-                {currentQuestion === questions.length - 1 ? "Finish Quiz" : "Check Answer"}
+                {currentQuestion === questions.length - 1 ? 'Finish Quiz' : 'Check Answer'}
               </Button>
             </>
           ) : (
             <div className="space-y-6">
-              <div className={`p-6 rounded-xl text-center ${
-                selectedAnswer === currentQ.correctAnswer
-                  ? 'bg-green-500/10 border border-green-500/20'
-                  : 'bg-red-500/10 border border-red-500/20'
-              }`}>
+              <div
+                className={`p-6 rounded-xl text-center ${
+                  selectedAnswer === currentQ.correctAnswer
+                    ? 'bg-green-500/10 border border-green-500/20'
+                    : 'bg-red-500/10 border border-red-500/20'
+                }`}
+              >
                 <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className={`p-3 rounded-xl ${
-                    selectedAnswer === currentQ.correctAnswer ? 'bg-green-500/20' : 'bg-red-500/20'
-                  }`}>
+                  <div
+                    className={`p-3 rounded-xl ${
+                      selectedAnswer === currentQ.correctAnswer
+                        ? 'bg-green-500/20'
+                        : 'bg-red-500/20'
+                    }`}
+                  >
                     {selectedAnswer === currentQ.correctAnswer ? (
                       <CheckCircle className="h-8 w-8 text-green-400" />
                     ) : (
                       <XCircle className="h-8 w-8 text-red-400" />
                     )}
                   </div>
-                  <h3 className={`text-2xl font-bold ${
-                    selectedAnswer === currentQ.correctAnswer ? 'text-green-400' : 'text-red-400'
-                  }`}>
-                    {selectedAnswer === currentQ.correctAnswer ? "Correct!" : "Incorrect"}
+                  <h3
+                    className={`text-2xl font-bold ${
+                      selectedAnswer === currentQ.correctAnswer ? 'text-green-400' : 'text-red-400'
+                    }`}
+                  >
+                    {selectedAnswer === currentQ.correctAnswer ? 'Correct!' : 'Incorrect'}
                   </h3>
                 </div>
 
                 {selectedAnswer !== currentQ.correctAnswer && (
                   <p className="text-white/70 mb-4">
-                    <strong className="text-white">Correct answer:</strong> {currentQ.options[currentQ.correctAnswer]}
+                    <strong className="text-white">Correct answer:</strong>{' '}
+                    {currentQ.options[currentQ.correctAnswer]}
                   </p>
                 )}
               </div>
@@ -389,7 +427,7 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
                 onClick={handleContinue}
                 className="w-full h-11 bg-cyan-500 hover:bg-cyan-500/90 text-black touch-manipulation active:scale-95 transition-all"
               >
-                {currentQuestion === questions.length - 1 ? "View Results" : "Next Question"}
+                {currentQuestion === questions.length - 1 ? 'View Results' : 'Next Question'}
               </Button>
             </div>
           )}

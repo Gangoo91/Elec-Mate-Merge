@@ -1,4 +1,4 @@
-import PublicQuoteView from "@/components/electrician/quote-builder/PublicQuoteView";
+import PublicQuoteView from '@/components/electrician/quote-builder/PublicQuoteView';
 
 const PublicQuote = () => {
   return <PublicQuoteView />;

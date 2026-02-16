@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
-import { Clock, Timer } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
+import { Clock, Timer } from 'lucide-react';
 
 interface TimeStatsGridProps {
   elapsedSeconds: number;
@@ -11,16 +11,12 @@ interface TimeStatsGridProps {
 function formatTime(seconds: number): string {
   const mins = Math.floor(Math.max(0, seconds) / 60);
   const secs = Math.floor(Math.max(0, seconds) % 60);
-  return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
-export function TimeStatsGrid({
-  elapsedSeconds,
-  remainingSeconds,
-  className,
-}: TimeStatsGridProps) {
+export function TimeStatsGrid({ elapsedSeconds, remainingSeconds, className }: TimeStatsGridProps) {
   return (
-    <div className={cn("grid grid-cols-2 gap-3 sm:gap-4", className)}>
+    <div className={cn('grid grid-cols-2 gap-3 sm:gap-4', className)}>
       {/* Elapsed Time */}
       <div className="bg-white/5 rounded-xl p-3 sm:p-4 text-center border border-white/10">
         <div className="flex items-center justify-center gap-2 mb-1">
@@ -32,7 +28,7 @@ export function TimeStatsGrid({
         <span
           className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent"
           style={{
-            backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899)",
+            backgroundImage: 'linear-gradient(135deg, #a855f7, #ec4899)',
           }}
         >
           {formatTime(elapsedSeconds)}
@@ -50,7 +46,7 @@ export function TimeStatsGrid({
         <span
           className="text-xl sm:text-2xl font-bold bg-clip-text text-transparent"
           style={{
-            backgroundImage: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
+            backgroundImage: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
           }}
         >
           {formatTime(remainingSeconds)}

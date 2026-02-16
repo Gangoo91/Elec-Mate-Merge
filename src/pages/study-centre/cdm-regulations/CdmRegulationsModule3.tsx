@@ -1,45 +1,45 @@
-import { ArrowLeft, FileText, ClipboardList, FolderOpen, Send } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, FileText, ClipboardList, FolderOpen, Send } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Pre-Construction Information",
+    title: 'Pre-Construction Information',
     icon: FileText,
     description:
-      "What pre-construction information is, who must provide it, what it should contain, and how it informs the design and planning of the construction phase",
+      'What pre-construction information is, who must provide it, what it should contain, and how it informs the design and planning of the construction phase',
   },
   {
     id: 2,
-    title: "Construction Phase Plan",
+    title: 'Construction Phase Plan',
     icon: ClipboardList,
     description:
-      "The construction phase plan requirements, who produces it, when it must be in place, and the essential content including site rules, emergency procedures, and risk management arrangements",
+      'The construction phase plan requirements, who produces it, when it must be in place, and the essential content including site rules, emergency procedures, and risk management arrangements',
   },
   {
     id: 3,
-    title: "Health & Safety File",
+    title: 'Health & Safety File',
     icon: FolderOpen,
     description:
-      "The purpose of the health and safety file, what information it should contain, who is responsible for preparing and maintaining it, and how it is used during the life of the structure",
+      'The purpose of the health and safety file, what information it should contain, who is responsible for preparing and maintaining it, and how it is used during the life of the structure',
   },
   {
     id: 4,
-    title: "Notification to HSE (F10)",
+    title: 'Notification to HSE (F10)',
     icon: Send,
     description:
-      "When a project must be notified to the Health and Safety Executive, the F10 notification process, required information, and the thresholds that trigger notification",
+      'When a project must be notified to the Health and Safety Executive, the F10 notification process, required information, and the thresholds that trigger notification',
   },
 ];
 
 export default function CdmRegulationsModule3() {
   useSEO({
-    title: "Module 3: Pre-Construction & Planning | CDM Regulations Awareness",
+    title: 'Module 3: Pre-Construction & Planning | CDM Regulations Awareness',
     description:
-      "Learn about pre-construction information, construction phase plans, health and safety files, and HSE notification requirements under CDM 2015.",
+      'Learn about pre-construction information, construction phase plans, health and safety files, and HSE notification requirements under CDM 2015.',
   });
 
   return (
@@ -76,9 +76,9 @@ export default function CdmRegulationsModule3() {
               Pre-Construction & Planning
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Understand the key documentation and planning requirements under CDM 2015: pre-construction
-              information, the construction phase plan, the health and safety file, and when and how to
-              notify the HSE using the F10 form.
+              Understand the key documentation and planning requirements under CDM 2015:
+              pre-construction information, the construction phase plan, the health and safety file,
+              and when and how to notify the HSE using the F10 form.
             </p>
           </div>
 

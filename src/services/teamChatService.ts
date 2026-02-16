@@ -124,18 +124,22 @@ export const teamChannelService = {
    * Get channels the current user is a member of
    */
   async getMyChannels(): Promise<TeamChannel[]> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return [];
 
     const { data, error } = await supabase
       .from('team_channel_members')
-      .select(`
+      .select(
+        `
         channel:team_channels(*)
-      `)
+      `
+      )
       .eq('user_id', user.id);
 
     if (error) throw error;
-    return (data?.map(d => d.channel) || []).filter(Boolean) as TeamChannel[];
+    return (data?.map((d) => d.channel) || []).filter(Boolean) as TeamChannel[];
   },
 
   /**
@@ -148,7 +152,9 @@ export const teamChannelService = {
     channel_type?: TeamChannel['channel_type'];
     is_private?: boolean;
   }): Promise<TeamChannel> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { data, error } = await supabase
@@ -179,14 +185,16 @@ export const teamChannelService = {
   /**
    * Add member to channel
    */
-  async addMember(channelId: string, userId: string, role: 'admin' | 'member' = 'member'): Promise<void> {
-    const { error } = await supabase
-      .from('team_channel_members')
-      .insert({
-        channel_id: channelId,
-        user_id: userId,
-        role,
-      });
+  async addMember(
+    channelId: string,
+    userId: string,
+    role: 'admin' | 'member' = 'member'
+  ): Promise<void> {
+    const { error } = await supabase.from('team_channel_members').insert({
+      channel_id: channelId,
+      user_id: userId,
+      role,
+    });
 
     if (error) throw error;
   },
@@ -210,10 +218,12 @@ export const teamChannelService = {
   async getMembers(channelId: string): Promise<TeamChannelMember[]> {
     const { data, error } = await supabase
       .from('team_channel_members')
-      .select(`
+      .select(
+        `
         *,
         user:employer_employees!team_channel_members_user_id_fkey(id, name, photo_url)
-      `)
+      `
+      )
       .eq('channel_id', channelId);
 
     if (error) throw error;
@@ -232,10 +242,12 @@ export const teamChannelMessageService = {
   async getMessages(channelId: string, limit = 50): Promise<TeamChannelMessage[]> {
     const { data, error } = await supabase
       .from('team_channel_messages')
-      .select(`
+      .select(
+        `
         *,
         sender:employer_employees!team_channel_messages_sender_id_fkey(id, name, photo_url)
-      `)
+      `
+      )
       .eq('channel_id', channelId)
       .order('sent_at', { ascending: true })
       .limit(limit);
@@ -247,8 +259,14 @@ export const teamChannelMessageService = {
   /**
    * Send a message to a channel
    */
-  async sendMessage(channelId: string, content: string, messageType: string = 'text'): Promise<TeamChannelMessage> {
-    const { data: { user } } = await supabase.auth.getUser();
+  async sendMessage(
+    channelId: string,
+    content: string,
+    messageType: string = 'text'
+  ): Promise<TeamChannelMessage> {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { data, error } = await supabase
@@ -301,7 +319,9 @@ export const teamDMService = {
    * Get all DM conversations for current user
    */
   async getConversations(employerId: string): Promise<TeamDirectMessage[]> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return [];
 
     const { data, error } = await supabase
@@ -318,8 +338,13 @@ export const teamDMService = {
   /**
    * Get or create a DM conversation
    */
-  async getOrCreateConversation(employerId: string, otherUserId: string): Promise<TeamDirectMessage> {
-    const { data: { user } } = await supabase.auth.getUser();
+  async getOrCreateConversation(
+    employerId: string,
+    otherUserId: string
+  ): Promise<TeamDirectMessage> {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     // Try to find existing
@@ -327,7 +352,9 @@ export const teamDMService = {
       .from('team_direct_messages')
       .select('*')
       .eq('employer_id', employerId)
-      .or(`and(participant_1_id.eq.${user.id},participant_2_id.eq.${otherUserId}),and(participant_1_id.eq.${otherUserId},participant_2_id.eq.${user.id})`)
+      .or(
+        `and(participant_1_id.eq.${user.id},participant_2_id.eq.${otherUserId}),and(participant_1_id.eq.${otherUserId},participant_2_id.eq.${user.id})`
+      )
       .single();
 
     if (existing) return existing;
@@ -366,7 +393,9 @@ export const teamDMService = {
    * Send a DM
    */
   async sendMessage(conversationId: string, content: string): Promise<TeamDMMessage> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { data, error } = await supabase
@@ -391,7 +420,9 @@ export const teamDMService = {
    * Mark messages as read
    */
   async markAsRead(conversationId: string): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     // Update messages
@@ -452,7 +483,11 @@ async function sendChannelMessagePush(channelId: string, senderId: string, conte
     // Get channel info and members
     const [channelResult, membersResult, senderResult] = await Promise.all([
       supabase.from('team_channels').select('name').eq('id', channelId).single(),
-      supabase.from('team_channel_members').select('user_id').eq('channel_id', channelId).eq('notifications_enabled', true),
+      supabase
+        .from('team_channel_members')
+        .select('user_id')
+        .eq('channel_id', channelId)
+        .eq('notifications_enabled', true),
       supabase.from('employer_employees').select('name').eq('user_id', senderId).single(),
     ]);
 
@@ -467,8 +502,10 @@ async function sendChannelMessagePush(channelId: string, senderId: string, conte
 
     // Send to all members except sender
     const notifications = members
-      .filter(m => m.user_id !== senderId)
-      .map(m => sendPushNotification(m.user_id, title, body, 'team', { channelId, senderId, senderName }));
+      .filter((m) => m.user_id !== senderId)
+      .map((m) =>
+        sendPushNotification(m.user_id, title, body, 'team', { channelId, senderId, senderName })
+      );
 
     await Promise.all(notifications);
   } catch (error) {
@@ -483,7 +520,11 @@ async function sendDMPush(conversationId: string, senderId: string, content: str
   try {
     // Get conversation and sender info
     const [convResult, senderResult] = await Promise.all([
-      supabase.from('team_direct_messages').select('participant_1_id, participant_2_id').eq('id', conversationId).single(),
+      supabase
+        .from('team_direct_messages')
+        .select('participant_1_id, participant_2_id')
+        .eq('id', conversationId)
+        .single(),
       supabase.from('employer_employees').select('name').eq('user_id', senderId).single(),
     ]);
 
@@ -493,12 +534,17 @@ async function sendDMPush(conversationId: string, senderId: string, content: str
     if (!conv) return;
 
     // Determine recipient
-    const recipientId = conv.participant_1_id === senderId ? conv.participant_2_id : conv.participant_1_id;
+    const recipientId =
+      conv.participant_1_id === senderId ? conv.participant_2_id : conv.participant_1_id;
 
     const title = `Message from ${senderName}`;
     const body = content.length > 100 ? content.substring(0, 97) + '...' : content;
 
-    await sendPushNotification(recipientId, title, body, 'team', { dmId: conversationId, senderId, senderName });
+    await sendPushNotification(recipientId, title, body, 'team', {
+      dmId: conversationId,
+      senderId,
+      senderName,
+    });
   } catch (error) {
     console.error('DM push notification error:', error);
   }

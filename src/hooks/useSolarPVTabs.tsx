@@ -15,45 +15,48 @@ const tabConfigs: TabConfig[] = [
     id: 'installation',
     label: 'Installation Details',
     shortLabel: 'Details',
-    requiredFields: ['clientName', 'clientAddress', 'installationDate']
+    requiredFields: ['clientName', 'clientAddress', 'installationDate'],
   },
   {
     id: 'system',
     label: 'System Design',
     shortLabel: 'System',
-    requiredFields: ['arrays', 'inverters']
+    requiredFields: ['arrays', 'inverters'],
   },
   {
     id: 'grid',
     label: 'Grid Connection',
     shortLabel: 'Grid',
-    requiredFields: ['gridConnection.dnoName', 'gridConnection.mpan']
+    requiredFields: ['gridConnection.dnoName', 'gridConnection.mpan'],
   },
   {
     id: 'testing',
     label: 'Testing',
     shortLabel: 'Testing',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'signoff',
     label: 'Sign-Off',
     shortLabel: 'Sign-Off',
-    requiredFields: ['installerDeclaration.installerName', 'installerDeclaration.installerSignature']
-  }
+    requiredFields: [
+      'installerDeclaration.installerName',
+      'installerDeclaration.installerSignature',
+    ],
+  },
 ];
 
 export const useSolarPVTabs = (formData: SolarPVFormData) => {
   const [currentTab, setCurrentTab] = useState<SolarPVTabValue>('installation');
 
-  const currentTabIndex = tabConfigs.findIndex(tab => tab.id === currentTab);
+  const currentTabIndex = tabConfigs.findIndex((tab) => tab.id === currentTab);
   const totalTabs = tabConfigs.length;
 
   const hasRequiredFields = (tabId: SolarPVTabValue): boolean => {
-    const tab = tabConfigs.find(t => t.id === tabId);
+    const tab = tabConfigs.find((t) => t.id === tabId);
     if (!tab) return false;
 
-    return tab.requiredFields.every(field => {
+    return tab.requiredFields.every((field) => {
       // Handle nested fields like 'gridConnection.dnoName'
       const parts = field.split('.');
       let value: any = formData;
@@ -80,44 +83,57 @@ export const useSolarPVTabs = (formData: SolarPVFormData) => {
 
     switch (tabId) {
       case 'installation':
-        return completedSections[tabId] ||
+        return (
+          completedSections[tabId] ||
           (!!formData.clientName &&
-           !!formData.clientAddress &&
-           !!formData.mcsDetails?.installerNumber);
+            !!formData.clientAddress &&
+            !!formData.mcsDetails?.installerNumber)
+        );
 
       case 'system':
-        return completedSections[tabId] ||
+        return (
+          completedSections[tabId] ||
           (formData.arrays?.length > 0 &&
-           formData.arrays.some(a => a.panelMake && a.panelCount > 0) &&
-           formData.inverters?.length > 0 &&
-           formData.inverters.some(i => i.make && i.ratedPowerAc > 0));
+            formData.arrays.some((a) => a.panelMake && a.panelCount > 0) &&
+            formData.inverters?.length > 0 &&
+            formData.inverters.some((i) => i.make && i.ratedPowerAc > 0))
+        );
 
       case 'grid':
-        return completedSections[tabId] ||
+        return (
+          completedSections[tabId] ||
           (!!formData.gridConnection?.dnoName &&
-           !!formData.gridConnection?.mpan &&
-           !!formData.gridConnection?.applicationType);
+            !!formData.gridConnection?.mpan &&
+            !!formData.gridConnection?.applicationType)
+        );
 
       case 'testing':
-        return completedSections[tabId] ||
+        return (
+          completedSections[tabId] ||
           (formData.testResults?.arrayTests?.length > 0 &&
-           formData.testResults.acTests?.polarityCorrect);
+            formData.testResults.acTests?.polarityCorrect)
+        );
 
       case 'signoff':
-        return completedSections[tabId] ||
+        return (
+          completedSections[tabId] ||
           (!!formData.installerDeclaration?.installerName &&
-           !!formData.installerDeclaration?.installerSignature);
+            !!formData.installerDeclaration?.installerSignature)
+        );
 
       default:
         return completedSections[tabId] === true;
     }
   };
 
-  const toggleTabComplete = (tabId: SolarPVTabValue, onUpdate: (field: string, value: any) => void): void => {
+  const toggleTabComplete = (
+    tabId: SolarPVTabValue,
+    onUpdate: (field: string, value: any) => void
+  ): void => {
     const completedSections = formData.completedSections || {};
     const newCompletedSections = {
       ...completedSections,
-      [tabId]: !completedSections[tabId]
+      [tabId]: !completedSections[tabId],
     };
     onUpdate('completedSections', newCompletedSections);
   };
@@ -145,12 +161,12 @@ export const useSolarPVTabs = (formData: SolarPVFormData) => {
   };
 
   const getProgressPercentage = (): number => {
-    const completedCount = tabConfigs.filter(tab => isTabComplete(tab.id)).length;
+    const completedCount = tabConfigs.filter((tab) => isTabComplete(tab.id)).length;
     return Math.round((completedCount / totalTabs) * 100);
   };
 
   const getCurrentTabLabel = (): string => {
-    const tab = tabConfigs.find(t => t.id === currentTab);
+    const tab = tabConfigs.find((t) => t.id === currentTab);
     return tab?.label || '';
   };
 
@@ -173,6 +189,6 @@ export const useSolarPVTabs = (formData: SolarPVFormData) => {
     navigateNext,
     navigatePrevious,
     getProgressPercentage,
-    getCurrentTabLabel
+    getCurrentTabLabel,
   };
 };

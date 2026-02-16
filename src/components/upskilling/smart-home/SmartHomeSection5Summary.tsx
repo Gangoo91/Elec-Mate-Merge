@@ -12,9 +12,10 @@ export const SmartHomeSection5Summary = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p className="text-lg font-medium text-foreground">
-          Understanding retrofit versus new build smart home installations is crucial for making informed recommendations to clients.
+          Understanding retrofit versus new build smart home installations is crucial for making
+          informed recommendations to clients.
         </p>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <h4 className="font-semibold text-foreground mb-3">Key Takeaways</h4>
@@ -37,11 +38,13 @@ export const SmartHomeSection5Summary = () => {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-semibold text-foreground mb-3">Next: Protocols and Standards</h4>
             <p className="text-sm text-gray-300">
-              The next section will explore communication protocols and standards that enable smart home devices to work together effectively, building on the installation approaches covered here.
+              The next section will explore communication protocols and standards that enable smart
+              home devices to work together effectively, building on the installation approaches
+              covered here.
             </p>
           </div>
         </div>

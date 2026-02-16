@@ -92,9 +92,7 @@ const CheckEmail = () => {
         <div className="w-full max-w-sm animate-fade-in">
           {/* Header text */}
           <div className="text-center mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-white">
-              Check your inbox
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-white">Check your inbox</h1>
             <p className="text-gray-300 text-sm sm:text-base">
               We've sent you a confirmation email
             </p>
@@ -120,9 +118,7 @@ const CheckEmail = () => {
                 {/* Instructions */}
                 <div className="space-y-3 text-sm text-gray-300 mb-6">
                   <p>Click the link in the email to confirm your account.</p>
-                  <p className="text-gray-400">
-                    Can't find it? Check your spam folder.
-                  </p>
+                  <p className="text-gray-400">Can't find it? Check your spam folder.</p>
                 </div>
 
                 {/* Resend button */}

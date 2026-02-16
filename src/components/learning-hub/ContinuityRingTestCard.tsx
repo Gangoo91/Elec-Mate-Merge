@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -31,10 +30,10 @@ const ContinuityRingTestCard = () => {
     r2: '',
     crossTestResults: {
       r1rn: '',
-      r1r2: ''
+      r1r2: '',
     },
     result: 'pending',
-    notes: ''
+    notes: '',
   });
   const isMobile = useIsMobile();
 
@@ -43,15 +42,15 @@ const ContinuityRingTestCard = () => {
       const r1 = parseFloat(currentTest.r1);
       const rn = parseFloat(currentTest.rn);
       const r2 = parseFloat(currentTest.r2);
-      
+
       // Check if readings are similar (within 0.05Ω tolerance)
       const tolerance = 0.05;
       const r1rnDiff = Math.abs(r1 - rn);
       const allSimilar = r1rnDiff <= tolerance;
-      
+
       const result: RingTestResult = {
         ...currentTest,
-        result: allSimilar ? 'pass' : 'fail'
+        result: allSimilar ? 'pass' : 'fail',
       };
 
       setTestResults([...testResults, result]);
@@ -62,10 +61,10 @@ const ContinuityRingTestCard = () => {
         r2: '',
         crossTestResults: {
           r1rn: '',
-          r1r2: ''
+          r1r2: '',
         },
         result: 'pending',
-        notes: ''
+        notes: '',
       });
     }
   };
@@ -82,12 +81,12 @@ const ContinuityRingTestCard = () => {
           ...currentTest,
           crossTestResults: {
             ...currentTest.crossTestResults,
-            [child]: value
-          }
+            [child]: value,
+          },
         });
       }
     } else {
-      setCurrentTest({...currentTest, [field]: value});
+      setCurrentTest({ ...currentTest, [field]: value });
     }
   };
 
@@ -111,18 +110,26 @@ const ContinuityRingTestCard = () => {
               <h4 className="font-medium text-green-400">Ring Circuit Test Procedure</h4>
             </div>
             <div className="space-y-2 text-sm text-white">
-              <p><strong>Step 1:</strong> Identify both ends of ring at distribution board</p>
-              <p><strong>Step 2:</strong> Test end-to-end resistance of each conductor (R1, Rn, R2)</p>
-              <p><strong>Step 3:</strong> Cross-connect conductors and test at each socket</p>
-              <p><strong>Step 4:</strong> Verify readings confirm proper ring formation</p>
+              <p>
+                <strong>Step 1:</strong> Identify both ends of ring at distribution board
+              </p>
+              <p>
+                <strong>Step 2:</strong> Test end-to-end resistance of each conductor (R1, Rn, R2)
+              </p>
+              <p>
+                <strong>Step 3:</strong> Cross-connect conductors and test at each socket
+              </p>
+              <p>
+                <strong>Step 4:</strong> Verify readings confirm proper ring formation
+              </p>
             </div>
           </div>
 
-          <SmartTabs 
+          <SmartTabs
             tabs={[
               {
-                value: "end-to-end",
-                label: "End-to-End Tests",
+                value: 'end-to-end',
+                label: 'End-to-End Tests',
                 content: (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -168,11 +175,11 @@ const ContinuityRingTestCard = () => {
                       />
                     </div>
                   </div>
-                )
+                ),
               },
               {
-                value: "cross-tests",
-                label: "Cross-Connection Tests",
+                value: 'cross-tests',
+                label: 'Cross-Connection Tests',
                 content: (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -207,17 +214,19 @@ const ContinuityRingTestCard = () => {
                       />
                     </div>
                   </div>
-                )
-              }
+                ),
+              },
             ]}
             defaultValue="end-to-end"
             className="w-full"
           />
 
-          <Button 
+          <Button
             onClick={handleAddTest}
             className="w-full bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30"
-            disabled={!currentTest.circuitRef || !currentTest.r1 || !currentTest.rn || !currentTest.r2}
+            disabled={
+              !currentTest.circuitRef || !currentTest.r1 || !currentTest.rn || !currentTest.r2
+            }
           >
             <Calculator className="h-4 w-4 mr-2" />
             Add Ring Test Result
@@ -237,9 +246,13 @@ const ContinuityRingTestCard = () => {
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-4">
                           <div className="font-medium text-foreground">{test.circuitRef}</div>
-                          <Badge 
+                          <Badge
                             variant={test.result === 'pass' ? 'default' : 'destructive'}
-                            className={test.result === 'pass' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}
+                            className={
+                              test.result === 'pass'
+                                ? 'bg-green-500/20 text-green-400'
+                                : 'bg-red-500/20 text-red-400'
+                            }
                           >
                             {test.result.toUpperCase()}
                           </Badge>
@@ -268,17 +281,19 @@ const ContinuityRingTestCard = () => {
                         </div>
                         <div>
                           <span className="text-white/80">R1+Rn:</span>
-                          <span className="text-foreground ml-1">{test.crossTestResults.r1rn}Ω</span>
+                          <span className="text-foreground ml-1">
+                            {test.crossTestResults.r1rn}Ω
+                          </span>
                         </div>
                         <div>
                           <span className="text-white/80">R1+R2:</span>
-                          <span className="text-foreground ml-1">{test.crossTestResults.r1r2}Ω</span>
+                          <span className="text-foreground ml-1">
+                            {test.crossTestResults.r1r2}Ω
+                          </span>
                         </div>
                       </div>
                       {test.notes && (
-                        <div className="mt-2 text-sm text-white/80">
-                          Notes: {test.notes}
-                        </div>
+                        <div className="mt-2 text-sm text-white/80">Notes: {test.notes}</div>
                       )}
                     </CardContent>
                   </Card>

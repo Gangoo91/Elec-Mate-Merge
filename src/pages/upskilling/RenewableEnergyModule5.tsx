@@ -7,40 +7,40 @@ const RenewableEnergyModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Inverter Types: String, Central, Hybrid, Micro",
+      title: 'Inverter Types: String, Central, Hybrid, Micro',
       icon: Zap,
-      description: "Understanding different inverter technologies and their applications"
+      description: 'Understanding different inverter technologies and their applications',
     },
     {
       id: 2,
-      title: "MPPT Tracking and Sizing for PV Arrays",
+      title: 'MPPT Tracking and Sizing for PV Arrays',
       icon: Target,
-      description: "Maximum Power Point Tracking and inverter sizing calculations"
+      description: 'Maximum Power Point Tracking and inverter sizing calculations',
     },
     {
       id: 3,
-      title: "Grid-Tied vs Off-Grid vs Hybrid Configurations",
+      title: 'Grid-Tied vs Off-Grid vs Hybrid Configurations',
       icon: Settings,
-      description: "Different system configurations and their operational characteristics"
+      description: 'Different system configurations and their operational characteristics',
     },
     {
       id: 4,
-      title: "Synchronisation, Anti-Islanding, and Export Limits",
+      title: 'Synchronisation, Anti-Islanding, and Export Limits',
       icon: Wifi,
-      description: "Grid synchronisation and safety protection systems"
+      description: 'Grid synchronisation and safety protection systems',
     },
     {
       id: 5,
-      title: "G98/G99 Compliance and DNO Notifications",
+      title: 'G98/G99 Compliance and DNO Notifications',
       icon: FileCheck,
-      description: "UK grid connection standards and notification procedures"
+      description: 'UK grid connection standards and notification procedures',
     },
     {
       id: 6,
-      title: "Monitoring Platforms and Remote Management",
+      title: 'Monitoring Platforms and Remote Management',
       icon: Monitor,
-      description: "System monitoring and remote management technologies"
-    }
+      description: 'System monitoring and remote management technologies',
+    },
   ];
 
   return (

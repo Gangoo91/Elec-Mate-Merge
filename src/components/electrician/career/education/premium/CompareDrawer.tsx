@@ -3,7 +3,7 @@
  * Side-by-side comparison with visual progress bars
  */
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Drawer,
   DrawerContent,
@@ -11,12 +11,12 @@ import {
   DrawerTitle,
   DrawerFooter,
   DrawerClose,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { SwipeableCard } from "@/components/ui/SwipeableCard";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/drawer';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { SwipeableCard } from '@/components/ui/SwipeableCard';
+import { cn } from '@/lib/utils';
 import {
   X,
   Plus,
@@ -29,10 +29,10 @@ import {
   MapPin,
   GraduationCap,
   ChevronRight,
-} from "lucide-react";
-import { fadeUpVariants } from "./animations/variants";
-import type { LiveEducationData } from "@/hooks/useLiveEducationData";
-import type { ComparisonMetric } from "./hooks/useCompare";
+} from 'lucide-react';
+import { fadeUpVariants } from './animations/variants';
+import type { LiveEducationData } from '@/hooks/useLiveEducationData';
+import type { ComparisonMetric } from './hooks/useCompare';
 
 interface CompareDrawerProps {
   open: boolean;
@@ -57,25 +57,25 @@ const MiniCompareCard = ({
   onClick?: () => void;
   index: number;
 }) => {
-  const colors = ["purple", "blue", "green"] as const;
+  const colors = ['purple', 'blue', 'green'] as const;
   const color = colors[index % colors.length];
   const colorClasses = {
-    purple: "border-purple-500/30 hover:border-purple-500/50",
-    blue: "border-blue-500/30 hover:border-blue-500/50",
-    green: "border-green-500/30 hover:border-green-500/50",
+    purple: 'border-purple-500/30 hover:border-purple-500/50',
+    blue: 'border-blue-500/30 hover:border-blue-500/50',
+    green: 'border-green-500/30 hover:border-green-500/50',
   };
   const dotClasses = {
-    purple: "bg-purple-500",
-    blue: "bg-blue-500",
-    green: "bg-green-500",
+    purple: 'bg-purple-500',
+    blue: 'bg-blue-500',
+    green: 'bg-green-500',
   };
 
   return (
     <SwipeableCard
       leftAction={{
         icon: <Trash2 className="h-5 w-5" />,
-        bgColor: "bg-destructive",
-        label: "Remove",
+        bgColor: 'bg-destructive',
+        label: 'Remove',
         onAction: onRemove,
       }}
       className="flex-shrink-0"
@@ -87,21 +87,17 @@ const MiniCompareCard = ({
         exit="exit"
         onClick={onClick}
         className={cn(
-          "w-[180px] bg-white/5 rounded-xl border overflow-hidden cursor-pointer active:scale-[0.98] transition-all touch-manipulation",
+          'w-[180px] bg-white/5 rounded-xl border overflow-hidden cursor-pointer active:scale-[0.98] transition-all touch-manipulation',
           colorClasses[color]
         )}
       >
         {/* Color indicator */}
-        <div className={cn("h-1", dotClasses[color])} />
+        <div className={cn('h-1', dotClasses[color])} />
 
         {/* Image */}
         <div className="h-20 overflow-hidden">
           {programme.imageUrl ? (
-            <img
-              src={programme.imageUrl}
-              alt=""
-              className="w-full h-full object-cover"
-            />
+            <img src={programme.imageUrl} alt="" className="w-full h-full object-cover" />
           ) : (
             <div className="w-full h-full bg-white/10 flex items-center justify-center">
               <GraduationCap className="h-8 w-8 text-white/20" />
@@ -114,9 +110,7 @@ const MiniCompareCard = ({
           <h4 className="text-sm font-medium text-white line-clamp-2 leading-tight">
             {programme.title}
           </h4>
-          <p className="text-xs text-purple-400 mt-1 line-clamp-1">
-            {programme.institution}
-          </p>
+          <p className="text-xs text-purple-400 mt-1 line-clamp-1">{programme.institution}</p>
         </div>
       </motion.div>
     </SwipeableCard>
@@ -134,21 +128,21 @@ const ComparisonRow = ({
 }: {
   label: string;
   values: (string | number)[];
-  type: "progress" | "text";
+  type: 'progress' | 'text';
   max?: number;
   format?: (v: number) => string;
   icon?: typeof Star;
 }) => {
-  const colors = ["purple", "blue", "green"] as const;
+  const colors = ['purple', 'blue', 'green'] as const;
   const progressColors = {
-    purple: "bg-purple-500",
-    blue: "bg-blue-500",
-    green: "bg-green-500",
+    purple: 'bg-purple-500',
+    blue: 'bg-blue-500',
+    green: 'bg-green-500',
   };
 
   // Find the winner (highest value for progress type)
   let winnerIndex = -1;
-  if (type === "progress" && values.length >= 2) {
+  if (type === 'progress' && values.length >= 2) {
     const numericValues = values as number[];
     const maxValue = Math.max(...numericValues);
     const allSame = numericValues.every((v) => v === numericValues[0]);
@@ -168,7 +162,7 @@ const ComparisonRow = ({
           const color = colors[index % colors.length];
           const isWinner = index === winnerIndex;
 
-          if (type === "progress") {
+          if (type === 'progress') {
             const numericValue = value as number;
             const displayValue = format ? format(numericValue) : String(numericValue);
             const percentage = (numericValue / max) * 100;
@@ -176,7 +170,9 @@ const ComparisonRow = ({
             return (
               <div key={index} className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className={cn("text-sm font-medium", isWinner ? "text-white" : "text-white/70")}>
+                  <span
+                    className={cn('text-sm font-medium', isWinner ? 'text-white' : 'text-white/70')}
+                  >
                     {displayValue}
                   </span>
                   {isWinner && (
@@ -190,7 +186,7 @@ const ComparisonRow = ({
                     initial={{ width: 0 }}
                     animate={{ width: `${percentage}%` }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className={cn("h-full rounded-full", progressColors[color])}
+                    className={cn('h-full rounded-full', progressColors[color])}
                   />
                 </div>
               </div>
@@ -221,10 +217,10 @@ const CompareDrawer = ({
   const handleShare = async () => {
     if (navigator.share && programmes.length >= 2) {
       try {
-        const titles = programmes.map((p) => p.title).join(" vs ");
+        const titles = programmes.map((p) => p.title).join(' vs ');
         await navigator.share({
           title: `Comparing: ${titles}`,
-          text: `Check out this programme comparison:\n${programmes.map((p) => `- ${p.title} at ${p.institution}`).join("\n")}`,
+          text: `Check out this programme comparison:\n${programmes.map((p) => `- ${p.title} at ${p.institution}`).join('\n')}`,
         });
       } catch (error) {
         // User cancelled or error
@@ -334,23 +330,18 @@ const CompareDrawer = ({
               <ComparisonRow
                 label="Location"
                 icon={MapPin}
-                values={programmes.map((p) => p.locations[0] || "Online")}
+                values={programmes.map((p) => p.locations[0] || 'Online')}
                 type="text"
               />
             </motion.div>
           ) : (
             <div className="text-center py-12">
               <GraduationCap className="h-16 w-16 text-white/10 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">
-                Add programmes to compare
-              </h3>
+              <h3 className="text-lg font-semibold text-white mb-2">Add programmes to compare</h3>
               <p className="text-sm text-white/50 max-w-xs mx-auto">
                 Select at least 2 programmes to see a side-by-side comparison
               </p>
-              <Button
-                onClick={onAddMore}
-                className="mt-4 bg-purple-500 hover:bg-purple-600"
-              >
+              <Button onClick={onAddMore} className="mt-4 bg-purple-500 hover:bg-purple-600">
                 <Plus className="h-4 w-4 mr-2" />
                 Browse Programmes
               </Button>

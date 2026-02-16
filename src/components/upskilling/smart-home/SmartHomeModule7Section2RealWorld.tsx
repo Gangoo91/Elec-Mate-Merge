@@ -12,15 +12,18 @@ const SmartHomeModule7Section2RealWorld = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <h4 className="font-semibold text-foreground">Case Study: Smart Lighting Installation in Liverpool</h4>
-          
+          <h4 className="font-semibold text-foreground">
+            Case Study: Smart Lighting Installation in Liverpool
+          </h4>
+
           <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h5 className="font-semibold text-red-200 mb-2">The Problem</h5>
                 <p className="text-red-100 text-sm mb-3">
-                  An electrician skipped thorough commissioning after installing smart lighting. The problems that emerged within a week:
+                  An electrician skipped thorough commissioning after installing smart lighting. The
+                  problems that emerged within a week:
                 </p>
                 <ul className="space-y-1 text-red-100 text-sm ml-4">
                   <li>• Several bulbs were left unnamed in the app ("Bulb 1", "Bulb 2", etc.)</li>
@@ -42,7 +45,10 @@ const SmartHomeModule7Section2RealWorld = () => {
                   After a full re-commissioning process:
                 </p>
                 <ul className="space-y-1 text-green-100 text-sm ml-4">
-                  <li>• Renamed all devices with descriptive names ("Kitchen Ceiling", "Lounge Table Lamp")</li>
+                  <li>
+                    • Renamed all devices with descriptive names ("Kitchen Ceiling", "Lounge Table
+                    Lamp")
+                  </li>
                   <li>• Updated all firmware and properly paired the PIR sensor</li>
                   <li>• Tested all automation routines with the client present</li>
                   <li>• Provided training on app usage and basic troubleshooting</li>

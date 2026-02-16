@@ -3,7 +3,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Trash2, Zap, MapPin, Factory, Box, Grid3X3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -13,7 +19,7 @@ import {
   BOARD_TYPES,
   BOARD_LOCATIONS,
   BOARD_SIZES,
-  BoardType
+  BoardType,
 } from '@/types/distributionBoard';
 
 interface BoardSetupCardProps {
@@ -33,29 +39,28 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   onUpdate,
   onRemove,
   isRemovable = true,
-  className
+  className,
 }) => {
   const isMainBoard = board.id === MAIN_BOARD_ID || board.order === 0;
 
   return (
-    <Card className={cn(
-      "bg-card/50 border-white/10 overflow-hidden",
-      isMainBoard && "border-elec-yellow/30",
-      className
-    )}>
+    <Card
+      className={cn(
+        'bg-card/50 border-white/10 overflow-hidden',
+        isMainBoard && 'border-elec-yellow/30',
+        className
+      )}
+    >
       {/* Board Header */}
-      <div className={cn(
-        "px-4 py-3 flex items-center justify-between",
-        isMainBoard ? "bg-elec-yellow/10" : "bg-white/5"
-      )}>
+      <div
+        className={cn(
+          'px-4 py-3 flex items-center justify-between',
+          isMainBoard ? 'bg-elec-yellow/10' : 'bg-white/5'
+        )}
+      >
         <div className="flex items-center gap-2">
-          <Zap className={cn(
-            "h-4 w-4",
-            isMainBoard ? "text-elec-yellow" : "text-blue-400"
-          )} />
-          <span className="font-semibold text-white">
-            {board.name}
-          </span>
+          <Zap className={cn('h-4 w-4', isMainBoard ? 'text-elec-yellow' : 'text-blue-400')} />
+          <span className="font-semibold text-white">{board.name}</span>
           {isMainBoard && (
             <span className="text-xs px-2 py-0.5 bg-elec-yellow/20 text-elec-yellow rounded-full">
               Primary
@@ -120,10 +125,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               <Factory className="h-3 w-3" />
               Manufacturer
             </Label>
-            <Select
-              value={board.make || ''}
-              onValueChange={(value) => onUpdate('make', value)}
-            >
+            <Select value={board.make || ''} onValueChange={(value) => onUpdate('make', value)}>
               <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/10 text-white focus:border-elec-yellow/50">
                 <SelectValue placeholder="Select..." />
               </SelectTrigger>
@@ -208,7 +210,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
           <Input
             value={board.suppliedFrom || ''}
             onChange={(e) => onUpdate('suppliedFrom', e.target.value)}
-            placeholder={isMainBoard ? "e.g. DNO Supply" : "e.g. Main CU"}
+            placeholder={isMainBoard ? 'e.g. DNO Supply' : 'e.g. Main CU'}
             className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
           />
         </div>

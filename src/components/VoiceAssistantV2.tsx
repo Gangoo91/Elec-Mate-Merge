@@ -1,6 +1,20 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useConversation } from '@elevenlabs/react';
-import { Mic, Volume2, X, Loader2, PhoneOff, AlertCircle, RefreshCw, Lightbulb, BookOpen, Package, PoundSterling, ChevronDown, ChevronUp } from 'lucide-react';
+import {
+  Mic,
+  Volume2,
+  X,
+  Loader2,
+  PhoneOff,
+  AlertCircle,
+  RefreshCw,
+  Lightbulb,
+  BookOpen,
+  Package,
+  PoundSterling,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -20,137 +34,137 @@ const DEFAULT_EMPLOYER_AGENT_ID = 'agent_7301kdxbnshce7vv8mtah970y3g1';
 type ConnectionStep = 'idle' | 'mic' | 'token' | 'connecting' | 'connected' | 'error';
 
 const SECTION_DISPLAY_NAMES: Record<string, string> = {
-  'overview': 'Overview',
-  'dashboard': 'Overview',
-  'home': 'Overview',
-  'peoplehub': 'People Hub',
+  overview: 'Overview',
+  dashboard: 'Overview',
+  home: 'Overview',
+  peoplehub: 'People Hub',
   'people-hub': 'People Hub',
-  'financehub': 'Finance Hub',
+  financehub: 'Finance Hub',
   'finance-hub': 'Finance Hub',
-  'finance': 'Finance Hub',
-  'jobshub': 'Jobs Hub',
+  finance: 'Finance Hub',
+  jobshub: 'Jobs Hub',
   'jobs-hub': 'Jobs Hub',
-  'safetyhub': 'Safety Hub',
+  safetyhub: 'Safety Hub',
   'safety-hub': 'Safety Hub',
-  'safety': 'Safety Hub',
-  'team': 'Employees',
-  'employees': 'Employees',
-  'workers': 'Employees',
-  'staff': 'Employees',
-  'elecid': 'Elec ID Cards',
+  safety: 'Safety Hub',
+  team: 'Employees',
+  employees: 'Employees',
+  workers: 'Employees',
+  staff: 'Employees',
+  elecid: 'Elec ID Cards',
   'elec-id': 'Elec ID Cards',
-  'credentials': 'Elec ID Cards',
-  'timesheets': 'Timesheets',
-  'leave': 'Timesheets',
-  'comms': 'Communications',
-  'communications': 'Communications',
-  'messages': 'Communications',
-  'talentpool': 'Talent Pool',
+  credentials: 'Elec ID Cards',
+  timesheets: 'Timesheets',
+  leave: 'Timesheets',
+  comms: 'Communications',
+  communications: 'Communications',
+  messages: 'Communications',
+  talentpool: 'Talent Pool',
   'talent-pool': 'Talent Pool',
-  'candidates': 'Talent Pool',
-  'vacancies': 'Job Vacancies',
+  candidates: 'Talent Pool',
+  vacancies: 'Job Vacancies',
   'job-vacancies': 'Job Vacancies',
-  'recruitment': 'Job Vacancies',
-  'quotes': 'Quotes & Invoices',
-  'invoices': 'Quotes & Invoices',
+  recruitment: 'Job Vacancies',
+  quotes: 'Quotes & Invoices',
+  invoices: 'Quotes & Invoices',
   'quotes-invoices': 'Quotes & Invoices',
-  'billing': 'Quotes & Invoices',
-  'tenders': 'Tenders',
-  'bids': 'Tenders',
-  'expenses': 'Expenses',
-  'receipts': 'Expenses',
-  'procurement': 'Procurement',
-  'materials': 'Procurement',
-  'purchasing': 'Procurement',
-  'financials': 'Job Financials',
+  billing: 'Quotes & Invoices',
+  tenders: 'Tenders',
+  bids: 'Tenders',
+  expenses: 'Expenses',
+  receipts: 'Expenses',
+  procurement: 'Procurement',
+  materials: 'Procurement',
+  purchasing: 'Procurement',
+  financials: 'Job Financials',
   'job-financials': 'Job Financials',
-  'reports': 'Reports',
-  'analytics': 'Reports',
-  'signatures': 'Signatures',
+  reports: 'Reports',
+  analytics: 'Reports',
+  signatures: 'Signatures',
   'sign-offs': 'Signatures',
-  'pricebook': 'Price Book',
+  pricebook: 'Price Book',
   'price-book': 'Price Book',
-  'pricing': 'Price Book',
-  'jobpacks': 'Job Packs',
+  pricing: 'Price Book',
+  jobpacks: 'Job Packs',
   'job-packs': 'Job Packs',
-  'documentation': 'Job Packs',
-  'jobs': 'Jobs',
-  'projects': 'Jobs',
-  'sites': 'Jobs',
-  'jobboard': 'Job Board',
+  documentation: 'Job Packs',
+  jobs: 'Jobs',
+  projects: 'Jobs',
+  sites: 'Jobs',
+  jobboard: 'Job Board',
   'job-board': 'Job Board',
-  'timeline': 'Timeline',
+  timeline: 'Timeline',
   'job-timeline': 'Timeline',
-  'schedule': 'Timeline',
-  'tracking': 'Worker Tracking',
+  schedule: 'Timeline',
+  tracking: 'Worker Tracking',
   'worker-tracking': 'Worker Tracking',
-  'location': 'Worker Tracking',
-  'gps': 'Worker Tracking',
-  'progresslogs': 'Progress Logs',
+  location: 'Worker Tracking',
+  gps: 'Worker Tracking',
+  progresslogs: 'Progress Logs',
   'progress-logs': 'Progress Logs',
-  'progress': 'Progress Logs',
-  'diary': 'Progress Logs',
-  'issues': 'Job Issues',
+  progress: 'Progress Logs',
+  diary: 'Progress Logs',
+  issues: 'Job Issues',
   'job-issues': 'Job Issues',
-  'problems': 'Job Issues',
-  'testing': 'Testing Workflow',
+  problems: 'Job Issues',
+  testing: 'Testing Workflow',
   'testing-workflow': 'Testing Workflow',
-  'inspections': 'Testing Workflow',
-  'quality': 'Quality',
-  'snags': 'Quality',
-  'defects': 'Quality',
-  'clientportal': 'Client Portal',
+  inspections: 'Testing Workflow',
+  quality: 'Quality',
+  snags: 'Quality',
+  defects: 'Quality',
+  clientportal: 'Client Portal',
   'client-portal': 'Client Portal',
-  'fleet': 'Fleet',
-  'vehicles': 'Fleet',
-  'vans': 'Fleet',
-  'transport': 'Fleet',
-  'photogallery': 'Photo Gallery',
+  fleet: 'Fleet',
+  vehicles: 'Fleet',
+  vans: 'Fleet',
+  transport: 'Fleet',
+  photogallery: 'Photo Gallery',
   'photo-gallery': 'Photo Gallery',
-  'photos': 'Photo Gallery',
-  'gallery': 'Photo Gallery',
-  'rams': 'RAMS',
+  photos: 'Photo Gallery',
+  gallery: 'Photo Gallery',
+  rams: 'RAMS',
   'risk-assessments': 'RAMS',
   'method-statements': 'RAMS',
-  'incidents': 'Incidents',
-  'accidents': 'Incidents',
+  incidents: 'Incidents',
+  accidents: 'Incidents',
   'near-misses': 'Incidents',
-  'policies': 'Policies',
-  'procedures': 'Policies',
-  'contracts': 'Contracts',
-  'agreements': 'Contracts',
-  'training': 'Training Records',
+  policies: 'Policies',
+  procedures: 'Policies',
+  contracts: 'Contracts',
+  agreements: 'Contracts',
+  training: 'Training Records',
   'training-records': 'Training Records',
-  'certifications': 'Training Records',
-  'certs': 'Training Records',
-  'briefings': 'Briefings',
+  certifications: 'Training Records',
+  certs: 'Training Records',
+  briefings: 'Briefings',
   'toolbox-talks': 'Briefings',
-  'compliance': 'Compliance',
-  'regulations': 'Compliance',
-  'audits': 'Compliance',
-  'settings': 'Settings',
-  'preferences': 'Settings',
-  'configuration': 'Settings',
+  compliance: 'Compliance',
+  regulations: 'Compliance',
+  audits: 'Compliance',
+  settings: 'Settings',
+  preferences: 'Settings',
+  configuration: 'Settings',
 };
 
 // Quick prompts for common voice commands
 const QUICK_PROMPTS = [
   { label: "Today's schedule", message: "What's happening today?" },
-  { label: "Overdue invoices", message: "Are there any overdue invoices?" },
-  { label: "Where is everyone?", message: "Where is everyone working today?" },
-  { label: "Pending timesheets", message: "Any pending timesheets to approve?" },
+  { label: 'Overdue invoices', message: 'Are there any overdue invoices?' },
+  { label: 'Where is everyone?', message: 'Where is everyone working today?' },
+  { label: 'Pending timesheets', message: 'Any pending timesheets to approve?' },
 ];
 
 // Rotating tips to show range of capabilities
 const ROTATING_TIPS = [
   "What's happening today?",
-  "Go to quotes",
+  'Go to quotes',
   "Who's on the Smith job?",
-  "Any certifications expiring soon?",
-  "Create a new quote for £500",
-  "Show me pending expenses",
-  "Navigate to timesheets",
-  "What jobs are overdue?",
+  'Any certifications expiring soon?',
+  'Create a new quote for £500',
+  'Show me pending expenses',
+  'Navigate to timesheets',
+  'What jobs are overdue?',
 ];
 
 export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
@@ -160,7 +174,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const formContext = useOptionalVoiceFormContext();
-  
+
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionStep, setConnectionStep] = useState<ConnectionStep>('idle');
   const [connectionError, setConnectionError] = useState<string>('');
@@ -198,9 +212,9 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       const { data, error } = await supabase.functions.invoke('voice-tools-employer', {
         body: { tool: toolName, params },
       });
-      
+
       if (error) throw error;
-      
+
       // Invalidate relevant queries based on action
       if (toolName.includes('quote') || toolName.includes('invoice')) {
         queryClient.invalidateQueries({ queryKey: ['quotes'] });
@@ -210,7 +224,11 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
         queryClient.invalidateQueries({ queryKey: ['jobs'] });
         queryClient.invalidateQueries({ queryKey: ['job-assignments'] });
       }
-      if (toolName.includes('employee') || toolName.includes('timesheet') || toolName.includes('time_entry')) {
+      if (
+        toolName.includes('employee') ||
+        toolName.includes('timesheet') ||
+        toolName.includes('time_entry')
+      ) {
         queryClient.invalidateQueries({ queryKey: ['employees'] });
         queryClient.invalidateQueries({ queryKey: ['timesheets'] });
       }
@@ -226,7 +244,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       if (toolName.includes('vacancy')) {
         queryClient.invalidateQueries({ queryKey: ['vacancies'] });
       }
-      
+
       return data?.result || data?.message || 'Done';
     } catch (error) {
       console.error('[VoiceAssistant] Server tool error:', error);
@@ -251,7 +269,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       setIsConnecting(false);
       setConnectionStep('connected');
       setConnectionError('');
-      toast({ title: 'ELEC-MATE Active', description: 'Speak now - I\'m listening!' });
+      toast({ title: 'ELEC-MATE Active', description: "Speak now - I'm listening!" });
     },
     onDisconnect: () => {
       console.log('[VoiceAssistant] Disconnected');
@@ -268,9 +286,10 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       }
       setIsConnecting(false);
       setConnectionStep('error');
-      const errorMsg = error && typeof error === 'object' && 'message' in error 
-        ? String((error as { message: unknown }).message) 
-        : 'Connection failed';
+      const errorMsg =
+        error && typeof error === 'object' && 'message' in error
+          ? String((error as { message: unknown }).message)
+          : 'Connection failed';
       setConnectionError(errorMsg);
       toast({
         title: 'Voice Error',
@@ -297,54 +316,54 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       navigate_to: async ({ section }: { section: string }) => {
         const sectionLower = section.toLowerCase().replace(/\s+/g, '-');
         const displayName = SECTION_DISPLAY_NAMES[sectionLower] || section;
-        
+
         if (onNavigate) {
           onNavigate(sectionLower);
           toast({ title: 'Navigating', description: `Going to ${displayName}` });
         }
         return `Navigated to ${displayName}`;
       },
-      
+
       go_back: async () => {
         window.history.back();
         return 'Going back';
       },
-      
+
       open_dialog: async ({ dialog }: { dialog: string }) => {
         return openDialog(dialog);
       },
-      
+
       close_dialog: async () => {
         window.dispatchEvent(new CustomEvent('voice-close-dialog'));
         return 'Closed dialog';
       },
-      
+
       scroll_up: async () => {
         window.scrollBy({ top: -300, behavior: 'smooth' });
         return 'Scrolled up';
       },
-      
+
       scroll_down: async () => {
         window.scrollBy({ top: 300, behavior: 'smooth' });
         return 'Scrolled down';
       },
-      
+
       refresh_data: async () => {
         queryClient.invalidateQueries();
         toast({ title: 'Refreshing', description: 'Data is being refreshed' });
         return 'Refreshing all data';
       },
-      
+
       toggle_view: async ({ mode }: { mode: string }) => {
         window.dispatchEvent(new CustomEvent('voice-toggle-view', { detail: { mode } }));
         return `Switched to ${mode} view`;
       },
-      
+
       filter_by: async ({ filter }: { filter: string }) => {
         window.dispatchEvent(new CustomEvent('voice-filter', { detail: { filter } }));
         return `Applied filter: ${filter}`;
       },
-      
+
       search_for: async ({ query }: { query: string }) => {
         window.dispatchEvent(new CustomEvent('voice-search', { detail: { query } }));
         return `Searching for: ${query}`;
@@ -355,17 +374,25 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       // ============================================
       fill_field: async ({ field, value }: { field: string; value: string }) => {
         if (!formContext) return 'No form is currently open';
-        
+
         const success = formContext.fillField(field, value);
         if (success) {
           return `Set ${field} to "${value}"`;
         }
         return `Could not find field "${field}"`;
       },
-      
-      add_labour_item: async ({ description, hours, rate }: { description: string; hours: number; rate: number }) => {
+
+      add_labour_item: async ({
+        description,
+        hours,
+        rate,
+      }: {
+        description: string;
+        hours: number;
+        rate: number;
+      }) => {
         if (!formContext) return 'No form is currently open';
-        
+
         const success = formContext.executeAction('add_labour_item', { description, hours, rate });
         if (success) {
           const total = hours * rate;
@@ -373,60 +400,87 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
         }
         return 'Cannot add labour item to this form';
       },
-      
-      add_material_item: async ({ description, quantity, unitPrice }: { description: string; quantity: number; unitPrice: number }) => {
+
+      add_material_item: async ({
+        description,
+        quantity,
+        unitPrice,
+      }: {
+        description: string;
+        quantity: number;
+        unitPrice: number;
+      }) => {
         if (!formContext) return 'No form is currently open';
-        
-        const success = formContext.executeAction('add_material_item', { description, quantity, unitPrice });
+
+        const success = formContext.executeAction('add_material_item', {
+          description,
+          quantity,
+          unitPrice,
+        });
         if (success) {
           const total = quantity * unitPrice;
           return `Added material: ${description}, ${quantity} x £${unitPrice} = £${total}`;
         }
         return 'Cannot add material item to this form';
       },
-      
-      add_line_item: async ({ description, quantity, unitPrice, unit }: { description: string; quantity: number; unitPrice: number; unit?: string }) => {
+
+      add_line_item: async ({
+        description,
+        quantity,
+        unitPrice,
+        unit,
+      }: {
+        description: string;
+        quantity: number;
+        unitPrice: number;
+        unit?: string;
+      }) => {
         if (!formContext) return 'No form is currently open';
-        
-        const success = formContext.executeAction('add_line_item', { description, quantity, unitPrice, unit: unit || 'each' });
+
+        const success = formContext.executeAction('add_line_item', {
+          description,
+          quantity,
+          unitPrice,
+          unit: unit || 'each',
+        });
         if (success) {
           const total = quantity * unitPrice;
           return `Added: ${description}, ${quantity} x £${unitPrice} = £${total}`;
         }
         return 'Cannot add line item to this form';
       },
-      
+
       remove_last_item: async () => {
         if (!formContext) return 'No form is currently open';
-        
+
         const success = formContext.executeAction('remove_last_item', {});
         return success ? 'Removed last item' : 'No items to remove';
       },
-      
+
       next_step: async () => {
         if (!formContext) return 'No form is currently open';
-        
+
         const success = formContext.executeAction('next_step', {});
         return success ? 'Moving to next step' : 'Cannot proceed to next step';
       },
-      
+
       submit_form: async () => {
         if (!formContext) return 'No form is currently open';
-        
+
         const success = formContext.submitForm();
         return success ? 'Form submitted' : 'Could not submit form';
       },
-      
+
       clear_form: async () => {
         if (!formContext) return 'No form is currently open';
-        
+
         const success = formContext.clearForm();
         return success ? 'Form cleared' : 'Could not clear form';
       },
-      
+
       cancel_form: async () => {
         if (!formContext) return 'No form is currently open';
-        
+
         const success = formContext.cancelForm();
         if (success) {
           window.dispatchEvent(new CustomEvent('voice-close-dialog'));
@@ -439,26 +493,40 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       // QUERY TOOLS - Server-side
       // ============================================
       get_dashboard_summary: async () => executeServerTool('get_dashboard_summary', {}),
-      get_employee_info: async ({ name }: { name?: string }) => executeServerTool('get_employee_info', { name }),
-      get_employee_certifications: async ({ name }: { name: string }) => executeServerTool('get_employee_certifications', { name }),
+      get_employee_info: async ({ name }: { name?: string }) =>
+        executeServerTool('get_employee_info', { name }),
+      get_employee_certifications: async ({ name }: { name: string }) =>
+        executeServerTool('get_employee_certifications', { name }),
       get_pending_timesheets: async () => executeServerTool('get_pending_timesheets', {}),
       get_pending_leave: async () => executeServerTool('get_pending_leave', {}),
-      get_employee_hours: async ({ name, days }: { name: string; days?: number }) => executeServerTool('get_employee_hours', { name, days }),
-      get_expiring_certifications: async ({ days }: { days?: number }) => executeServerTool('get_expiring_certifications', { days: days || 30 }),
-      get_job_info: async ({ title }: { title?: string }) => executeServerTool('get_job_info', { title }),
-      get_job_workers: async ({ title }: { title: string }) => executeServerTool('get_job_workers', { title }),
-      get_job_progress: async ({ title }: { title: string }) => executeServerTool('get_job_progress', { title }),
-      get_upcoming_deadlines: async ({ days }: { days?: number }) => executeServerTool('get_upcoming_deadlines', { days }),
+      get_employee_hours: async ({ name, days }: { name: string; days?: number }) =>
+        executeServerTool('get_employee_hours', { name, days }),
+      get_expiring_certifications: async ({ days }: { days?: number }) =>
+        executeServerTool('get_expiring_certifications', { days: days || 30 }),
+      get_job_info: async ({ title }: { title?: string }) =>
+        executeServerTool('get_job_info', { title }),
+      get_job_workers: async ({ title }: { title: string }) =>
+        executeServerTool('get_job_workers', { title }),
+      get_job_progress: async ({ title }: { title: string }) =>
+        executeServerTool('get_job_progress', { title }),
+      get_upcoming_deadlines: async ({ days }: { days?: number }) =>
+        executeServerTool('get_upcoming_deadlines', { days }),
       get_worker_locations: async () => executeServerTool('get_worker_locations', {}),
-      get_quote_info: async ({ client, status }: { client?: string; status?: string }) => executeServerTool('get_quote_info', { client, status }),
-      get_invoice_info: async ({ client, status }: { client?: string; status?: string }) => executeServerTool('get_invoice_info', { client, status }),
+      get_quote_info: async ({ client, status }: { client?: string; status?: string }) =>
+        executeServerTool('get_quote_info', { client, status }),
+      get_invoice_info: async ({ client, status }: { client?: string; status?: string }) =>
+        executeServerTool('get_invoice_info', { client, status }),
       get_overdue_invoices: async () => executeServerTool('get_overdue_invoices', {}),
       get_pending_expenses: async () => executeServerTool('get_pending_expenses', {}),
-      get_supplier_info: async ({ name }: { name?: string }) => executeServerTool('get_supplier_info', { name }),
-      get_revenue_summary: async ({ days }: { days?: number }) => executeServerTool('get_revenue_summary', { days }),
+      get_supplier_info: async ({ name }: { name?: string }) =>
+        executeServerTool('get_supplier_info', { name }),
+      get_revenue_summary: async ({ days }: { days?: number }) =>
+        executeServerTool('get_revenue_summary', { days }),
       get_open_incidents: async () => executeServerTool('get_open_incidents', {}),
-      get_rams_status: async ({ title }: { title?: string }) => executeServerTool('get_rams_status', { title }),
-      get_training_due: async ({ days }: { days?: number }) => executeServerTool('get_training_due', { days }),
+      get_rams_status: async ({ title }: { title?: string }) =>
+        executeServerTool('get_rams_status', { title }),
+      get_training_due: async ({ days }: { days?: number }) =>
+        executeServerTool('get_training_due', { days }),
 
       // ============================================
       // PRICE BOOK LOOKUP - Server-side with visual display
@@ -494,12 +562,24 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       // ============================================
       // APPROVAL ACTIONS - Server-side
       // ============================================
-      approve_timesheet: async ({ employeeName, approveAll }: { employeeName?: string; approveAll?: boolean }) => {
+      approve_timesheet: async ({
+        employeeName,
+        approveAll,
+      }: {
+        employeeName?: string;
+        approveAll?: boolean;
+      }) => {
         const result = await executeServerTool('approve_timesheet', { employeeName, approveAll });
         toast({ title: 'Timesheet Approved', description: result });
         return result;
       },
-      reject_timesheet: async ({ employeeName, reason }: { employeeName: string; reason?: string }) => {
+      reject_timesheet: async ({
+        employeeName,
+        reason,
+      }: {
+        employeeName: string;
+        reason?: string;
+      }) => {
         const result = await executeServerTool('reject_timesheet', { employeeName, reason });
         toast({ title: 'Timesheet Rejected', description: result });
         return result;
@@ -514,12 +594,24 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
         toast({ title: 'Leave Rejected', description: result });
         return result;
       },
-      approve_expense: async ({ employeeName, approveAll }: { employeeName?: string; approveAll?: boolean }) => {
+      approve_expense: async ({
+        employeeName,
+        approveAll,
+      }: {
+        employeeName?: string;
+        approveAll?: boolean;
+      }) => {
         const result = await executeServerTool('approve_expense', { employeeName, approveAll });
         toast({ title: 'Expense Approved', description: result });
         return result;
       },
-      reject_expense: async ({ employeeName, reason }: { employeeName: string; reason?: string }) => {
+      reject_expense: async ({
+        employeeName,
+        reason,
+      }: {
+        employeeName: string;
+        reason?: string;
+      }) => {
         const result = await executeServerTool('reject_expense', { employeeName, reason });
         toast({ title: 'Expense Rejected', description: result });
         return result;
@@ -528,32 +620,47 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       // ============================================
       // CREATION ACTIONS - Server-side
       // ============================================
-      create_quote: async ({ client, description, value, email }: { client: string; description?: string; value?: number; email?: string }) => {
-        const result = await executeServerTool('create_quote', { client, description, value, email });
+      create_quote: async ({
+        client,
+        description,
+        value,
+        email,
+      }: {
+        client: string;
+        description?: string;
+        value?: number;
+        email?: string;
+      }) => {
+        const result = await executeServerTool('create_quote', {
+          client,
+          description,
+          value,
+          email,
+        });
         toast({ title: 'Quote Created', description: result });
         if (onNavigate) onNavigate('quotes');
         return result;
       },
-      create_and_send_quote: async ({ 
-        client, 
-        clientAddress, 
-        clientEmail, 
+      create_and_send_quote: async ({
+        client,
+        clientAddress,
+        clientEmail,
         clientPhone,
-        jobTitle, 
-        labourHours, 
+        jobTitle,
+        labourHours,
         labourRate,
-        materialsTotal, 
-        includeVat, 
+        materialsTotal,
+        includeVat,
         validDays,
         notes,
-        sendNow 
-      }: { 
-        client: string; 
+        sendNow,
+      }: {
+        client: string;
         clientAddress: string;
-        clientEmail: string; 
+        clientEmail: string;
         clientPhone?: string;
         jobTitle: string;
-        labourHours?: number; 
+        labourHours?: number;
         labourRate?: number;
         materialsTotal?: number;
         includeVat?: boolean;
@@ -561,63 +668,177 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
         notes?: string;
         sendNow?: boolean;
       }) => {
-        const result = await executeServerTool('create_and_send_quote', { 
-          client, 
+        const result = await executeServerTool('create_and_send_quote', {
+          client,
           clientAddress,
-          clientEmail, 
+          clientEmail,
           clientPhone,
           jobTitle,
-          labourHours, 
+          labourHours,
           labourRate,
-          materialsTotal, 
+          materialsTotal,
           includeVat,
           validDays,
           notes,
-          sendNow: sendNow ?? true
+          sendNow: sendNow ?? true,
         });
-        toast({ 
-          title: sendNow !== false ? 'Quote Created & Sent' : 'Quote Created', 
-          description: result 
+        toast({
+          title: sendNow !== false ? 'Quote Created & Sent' : 'Quote Created',
+          description: result,
         });
         if (onNavigate) onNavigate('quotes');
         return result;
       },
-      create_job: async ({ title, client, location, description, value }: { title: string; client: string; location: string; description?: string; value?: number }) => {
-        const result = await executeServerTool('create_job', { title, client, location, description, value });
+      create_job: async ({
+        title,
+        client,
+        location,
+        description,
+        value,
+      }: {
+        title: string;
+        client: string;
+        location: string;
+        description?: string;
+        value?: number;
+      }) => {
+        const result = await executeServerTool('create_job', {
+          title,
+          client,
+          location,
+          description,
+          value,
+        });
         toast({ title: 'Job Created', description: result });
         if (onNavigate) onNavigate('jobs');
         return result;
       },
-      create_employee: async ({ name, role, email, phone, hourlyRate }: { name: string; role?: string; email?: string; phone?: string; hourlyRate?: number }) => {
-        const result = await executeServerTool('create_employee', { name, role, email, phone, hourlyRate });
+      create_employee: async ({
+        name,
+        role,
+        email,
+        phone,
+        hourlyRate,
+      }: {
+        name: string;
+        role?: string;
+        email?: string;
+        phone?: string;
+        hourlyRate?: number;
+      }) => {
+        const result = await executeServerTool('create_employee', {
+          name,
+          role,
+          email,
+          phone,
+          hourlyRate,
+        });
         toast({ title: 'Employee Added', description: result });
         if (onNavigate) onNavigate('team');
         return result;
       },
-      create_invoice: async ({ client, amount, project, quoteId }: { client: string; amount?: number; project?: string; quoteId?: string }) => {
-        const result = await executeServerTool('create_invoice', { client, amount, project, quoteId });
+      create_invoice: async ({
+        client,
+        amount,
+        project,
+        quoteId,
+      }: {
+        client: string;
+        amount?: number;
+        project?: string;
+        quoteId?: string;
+      }) => {
+        const result = await executeServerTool('create_invoice', {
+          client,
+          amount,
+          project,
+          quoteId,
+        });
         toast({ title: 'Invoice Created', description: result });
         if (onNavigate) onNavigate('quotes');
         return result;
       },
-      create_expense: async ({ employeeName, amount, category, description }: { employeeName: string; amount: number; category?: string; description?: string }) => {
-        const result = await executeServerTool('create_expense', { employeeName, amount, category, description });
+      create_expense: async ({
+        employeeName,
+        amount,
+        category,
+        description,
+      }: {
+        employeeName: string;
+        amount: number;
+        category?: string;
+        description?: string;
+      }) => {
+        const result = await executeServerTool('create_expense', {
+          employeeName,
+          amount,
+          category,
+          description,
+        });
         toast({ title: 'Expense Created', description: result });
         return result;
       },
-      create_time_entry: async ({ employeeName, hours, jobTitle, date }: { employeeName: string; hours: number; jobTitle?: string; date?: string }) => {
-        const result = await executeServerTool('create_time_entry', { employeeName, hours, jobTitle, date });
+      create_time_entry: async ({
+        employeeName,
+        hours,
+        jobTitle,
+        date,
+      }: {
+        employeeName: string;
+        hours: number;
+        jobTitle?: string;
+        date?: string;
+      }) => {
+        const result = await executeServerTool('create_time_entry', {
+          employeeName,
+          hours,
+          jobTitle,
+          date,
+        });
         toast({ title: 'Time Entry Added', description: result });
         return result;
       },
-      create_incident: async ({ title, description, severity, location }: { title: string; description?: string; severity?: string; location?: string }) => {
-        const result = await executeServerTool('create_incident', { title, description, severity, location });
+      create_incident: async ({
+        title,
+        description,
+        severity,
+        location,
+      }: {
+        title: string;
+        description?: string;
+        severity?: string;
+        location?: string;
+      }) => {
+        const result = await executeServerTool('create_incident', {
+          title,
+          description,
+          severity,
+          location,
+        });
         toast({ title: 'Incident Reported', description: result });
         if (onNavigate) onNavigate('incidents');
         return result;
       },
-      post_vacancy: async ({ title, location, salaryMin, salaryMax, type }: { title: string; location: string; salaryMin?: number; salaryMax?: number; type?: string }) => {
-        const result = await executeServerTool('post_vacancy', { title, location, salaryMin, salaryMax, type });
+      post_vacancy: async ({
+        title,
+        location,
+        salaryMin,
+        salaryMax,
+        type,
+      }: {
+        title: string;
+        location: string;
+        salaryMin?: number;
+        salaryMax?: number;
+        type?: string;
+      }) => {
+        const result = await executeServerTool('post_vacancy', {
+          title,
+          location,
+          salaryMin,
+          salaryMax,
+          type,
+        });
         toast({ title: 'Vacancy Posted', description: result });
         if (onNavigate) onNavigate('vacancies');
         return result;
@@ -636,17 +857,35 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
         toast({ title: 'Progress Updated', description: result });
         return result;
       },
-      assign_to_job: async ({ employeeName, jobTitle }: { employeeName: string; jobTitle: string }) => {
+      assign_to_job: async ({
+        employeeName,
+        jobTitle,
+      }: {
+        employeeName: string;
+        jobTitle: string;
+      }) => {
         const result = await executeServerTool('assign_to_job', { employeeName, jobTitle });
         toast({ title: 'Worker Assigned', description: result });
         return result;
       },
-      unassign_from_job: async ({ employeeName, jobTitle }: { employeeName: string; jobTitle: string }) => {
+      unassign_from_job: async ({
+        employeeName,
+        jobTitle,
+      }: {
+        employeeName: string;
+        jobTitle: string;
+      }) => {
         const result = await executeServerTool('unassign_from_job', { employeeName, jobTitle });
         toast({ title: 'Worker Unassigned', description: result });
         return result;
       },
-      mark_invoice_paid: async ({ invoiceNumber, client }: { invoiceNumber?: string; client?: string }) => {
+      mark_invoice_paid: async ({
+        invoiceNumber,
+        client,
+      }: {
+        invoiceNumber?: string;
+        client?: string;
+      }) => {
         const result = await executeServerTool('mark_invoice_paid', { invoiceNumber, client });
         toast({ title: 'Invoice Marked Paid', description: result });
         return result;
@@ -665,12 +904,24 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
         toast({ title: 'Quote Sent', description: result });
         return result;
       },
-      send_invoice: async ({ invoiceNumber, email }: { invoiceNumber?: string; email?: string }) => {
+      send_invoice: async ({
+        invoiceNumber,
+        email,
+      }: {
+        invoiceNumber?: string;
+        email?: string;
+      }) => {
         const result = await executeServerTool('send_invoice', { invoiceNumber, email });
         toast({ title: 'Invoice Sent', description: result });
         return result;
       },
-      send_reminder: async ({ invoiceNumber, client }: { invoiceNumber?: string; client?: string }) => {
+      send_reminder: async ({
+        invoiceNumber,
+        client,
+      }: {
+        invoiceNumber?: string;
+        client?: string;
+      }) => {
         const result = await executeServerTool('send_reminder', { invoiceNumber, client });
         toast({ title: 'Reminder Sent', description: result });
         return result;
@@ -685,7 +936,13 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       get_all_worker_locations: async () => {
         return executeServerTool('get_worker_locations', {});
       },
-      get_nearest_worker: async ({ jobTitle, location }: { jobTitle?: string; location?: string }) => {
+      get_nearest_worker: async ({
+        jobTitle,
+        location,
+      }: {
+        jobTitle?: string;
+        location?: string;
+      }) => {
         return executeServerTool('get_nearest_worker', { jobTitle, location });
       },
       get_todays_schedule: async () => {
@@ -695,17 +952,46 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       // ============================================
       // MESSAGING - Server-side
       // ============================================
-      send_worker_message: async ({ name, subject, message, priority }: { name: string; subject?: string; message: string; priority?: string }) => {
-        const result = await executeServerTool('send_worker_message', { name, subject, message, priority });
+      send_worker_message: async ({
+        name,
+        subject,
+        message,
+        priority,
+      }: {
+        name: string;
+        subject?: string;
+        message: string;
+        priority?: string;
+      }) => {
+        const result = await executeServerTool('send_worker_message', {
+          name,
+          subject,
+          message,
+          priority,
+        });
         toast({ title: 'Message Sent', description: result });
         return result;
       },
-      send_team_message: async ({ jobTitle, message, all }: { jobTitle?: string; message: string; all?: boolean }) => {
+      send_team_message: async ({
+        jobTitle,
+        message,
+        all,
+      }: {
+        jobTitle?: string;
+        message: string;
+        all?: boolean;
+      }) => {
         const result = await executeServerTool('send_team_message', { jobTitle, message, all });
         toast({ title: 'Team Message Sent', description: result });
         return result;
       },
-      send_job_update_to_client: async ({ jobTitle, message }: { jobTitle: string; message: string }) => {
+      send_job_update_to_client: async ({
+        jobTitle,
+        message,
+      }: {
+        jobTitle: string;
+        message: string;
+      }) => {
         const result = await executeServerTool('send_job_update_to_client', { jobTitle, message });
         toast({ title: 'Client Update Sent', description: result });
         return result;
@@ -714,13 +1000,36 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       // ============================================
       // EMAIL - Server-side
       // ============================================
-      email_worker: async ({ name, subject, message }: { name: string; subject?: string; message: string }) => {
+      email_worker: async ({
+        name,
+        subject,
+        message,
+      }: {
+        name: string;
+        subject?: string;
+        message: string;
+      }) => {
         const result = await executeServerTool('email_worker', { name, subject, message });
         toast({ title: 'Email Sent', description: result });
         return result;
       },
-      email_client: async ({ jobTitle, clientName, subject, message }: { jobTitle?: string; clientName?: string; subject?: string; message: string }) => {
-        const result = await executeServerTool('email_client', { jobTitle, clientName, subject, message });
+      email_client: async ({
+        jobTitle,
+        clientName,
+        subject,
+        message,
+      }: {
+        jobTitle?: string;
+        clientName?: string;
+        subject?: string;
+        message: string;
+      }) => {
+        const result = await executeServerTool('email_client', {
+          jobTitle,
+          clientName,
+          subject,
+          message,
+        });
         toast({ title: 'Email Sent', description: result });
         return result;
       },
@@ -736,7 +1045,13 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       get_employee_phone: async ({ name }: { name: string }) => {
         return executeServerTool('get_employee_phone', { name });
       },
-      get_client_phone: async ({ jobTitle, clientName }: { jobTitle?: string; clientName?: string }) => {
+      get_client_phone: async ({
+        jobTitle,
+        clientName,
+      }: {
+        jobTitle?: string;
+        clientName?: string;
+      }) => {
         return executeServerTool('get_client_phone', { jobTitle, clientName });
       },
       initiate_call: async ({ phoneNumber }: { phoneNumber: string }) => {
@@ -759,7 +1074,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
   // Send form context to agent when it changes
   useEffect(() => {
     if (conversation.status !== 'connected' || !formContext) return;
-    
+
     const currentFormContext = formContext.getFormContext();
     if (currentFormContext !== lastFormContextRef.current) {
       lastFormContextRef.current = currentFormContext;
@@ -772,21 +1087,24 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
   useEffect(() => {
     const connected = conversation.status === 'connected';
     if (!connected || conversation.isSpeaking) return;
-    
+
     const interval = setInterval(() => {
       setCurrentTipIndex((prev) => (prev + 1) % ROTATING_TIPS.length);
     }, 4000);
-    
+
     return () => clearInterval(interval);
   }, [conversation.status, conversation.isSpeaking]);
 
   // Handle quick prompt click
-  const handleQuickPrompt = useCallback((message: string) => {
-    if (conversation.status === 'connected') {
-      conversation.sendUserMessage(message);
-      setTranscript(message);
-    }
-  }, [conversation]);
+  const handleQuickPrompt = useCallback(
+    (message: string) => {
+      if (conversation.status === 'connected') {
+        conversation.sendUserMessage(message);
+        setTranscript(message);
+      }
+    },
+    [conversation]
+  );
 
   const startConversation = useCallback(async () => {
     if (!agentId) {
@@ -818,7 +1136,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
       // Step 2: Get token
       setConnectionStep('token');
       console.log('[VoiceAssistant] Getting token...');
-      
+
       const { data, error } = await supabase.functions.invoke('elevenlabs-conversation-token', {
         body: { agentId },
       });
@@ -827,7 +1145,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
         console.error('[VoiceAssistant] Token error:', error);
         throw new Error(error.message || 'Failed to get conversation token');
       }
-      
+
       if (!data?.token) {
         console.error('[VoiceAssistant] No token in response:', data);
         throw new Error('No token received from server');
@@ -914,13 +1232,20 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-primary/10 border-b border-border">
             <div className="flex items-center gap-2">
-              <div className={cn(
-                "h-2 w-2 rounded-full",
-                isConnected ? "bg-green-500 animate-pulse" : "bg-muted-foreground"
-              )} />
+              <div
+                className={cn(
+                  'h-2 w-2 rounded-full',
+                  isConnected ? 'bg-green-500 animate-pulse' : 'bg-muted-foreground'
+                )}
+              />
               <span className="text-sm font-medium">ELEC-MATE</span>
             </div>
-            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setIsMinimised(true)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => setIsMinimised(true)}
+            >
               <X className="h-4 w-4" />
             </Button>
           </div>
@@ -952,7 +1277,9 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
                 <AlertCircle className="h-8 w-8 text-destructive" />
                 <div className="text-center">
                   <p className="text-sm font-medium text-foreground">Connection Failed</p>
-                  <p className="text-xs text-muted-foreground mt-1">{connectionError || 'Please try again'}</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {connectionError || 'Please try again'}
+                  </p>
                 </div>
                 <Button onClick={startConversation} size="sm" variant="outline" className="gap-2">
                   <RefreshCw className="h-4 w-4" />
@@ -965,12 +1292,14 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
               <>
                 {/* Speaking/Listening indicator */}
                 <div className="flex items-center justify-center gap-2 py-2">
-                  <div className={cn(
-                    "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium",
-                    conversation.isSpeaking 
-                      ? "bg-primary/10 text-primary" 
-                      : "bg-green-500/10 text-green-600"
-                  )}>
+                  <div
+                    className={cn(
+                      'flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium',
+                      conversation.isSpeaking
+                        ? 'bg-primary/10 text-primary'
+                        : 'bg-green-500/10 text-green-600'
+                    )}
+                  >
                     {conversation.isSpeaking ? (
                       <>
                         <Volume2 className="h-3 w-3 animate-pulse" />
@@ -1014,10 +1343,10 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
                         <Package className="h-3 w-3 text-accent" />
                         <span className="text-xs font-medium text-accent">Price Results</span>
                       </div>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="h-5 w-5" 
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-5 w-5"
                         onClick={() => setShowPriceResults(false)}
                       >
                         <X className="h-3 w-3" />
@@ -1025,13 +1354,18 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
                     </div>
                     <div className="space-y-1.5 max-h-32 overflow-y-auto">
                       {priceResults.slice(0, 5).map((item, idx) => (
-                        <div key={idx} className="flex items-center justify-between text-xs p-1.5 rounded bg-background/50">
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between text-xs p-1.5 rounded bg-background/50"
+                        >
                           <div className="flex-1 min-w-0">
                             <p className="font-medium truncate">{item.name}</p>
                             <p className="text-muted-foreground">{item.category}</p>
                           </div>
                           <div className="text-right ml-2">
-                            <p className="font-semibold text-green-600">£{item.sellPrice?.toFixed(2)}</p>
+                            <p className="font-semibold text-green-600">
+                              £{item.sellPrice?.toFixed(2)}
+                            </p>
                             <p className="text-muted-foreground">
                               {item.stockLevel !== null ? `${item.stockLevel} in stock` : ''}
                             </p>
@@ -1039,9 +1373,9 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
                         </div>
                       ))}
                     </div>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
                       className="w-full mt-2 h-7 text-xs gap-1"
                       onClick={() => {
                         if (onNavigate) onNavigate('pricebook');
@@ -1071,13 +1405,11 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
                     </div>
                   </div>
                 )}
-                
+
                 {/* Form context indicator */}
                 {formContext?.activeForm && (
                   <div className="mt-2 p-2 rounded-lg bg-primary/5 border border-primary/20">
-                    <p className="text-xs text-primary">
-                      Form: {formContext.activeForm.formName}
-                    </p>
+                    <p className="text-xs text-primary">Form: {formContext.activeForm.formName}</p>
                   </div>
                 )}
               </>
@@ -1086,9 +1418,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
             {!isConnected && !isConnecting && connectionStep !== 'error' && (
               <div className="flex flex-col items-center justify-center py-6 gap-2">
                 <Mic className="h-8 w-8 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground text-center">
-                  Tap Start to begin
-                </p>
+                <p className="text-sm text-muted-foreground text-center">Tap Start to begin</p>
               </div>
             )}
           </div>
@@ -1096,12 +1426,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
           {/* Actions */}
           <div className="flex items-center justify-center gap-3 px-4 py-3 border-t border-border bg-muted/30">
             {isConnected ? (
-              <Button
-                onClick={stopConversation}
-                variant="destructive"
-                size="sm"
-                className="gap-2"
-              >
+              <Button onClick={stopConversation} variant="destructive" size="sm" className="gap-2">
                 <PhoneOff className="h-4 w-4" />
                 End
               </Button>
@@ -1134,11 +1459,9 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
         }}
         size="lg"
         className={cn(
-          "h-14 w-14 rounded-full shadow-lg transition-all",
-          isConnected
-            ? "bg-green-600 hover:bg-green-700"
-            : "bg-primary hover:bg-primary/90",
-          conversation.isSpeaking && "ring-4 ring-primary/30"
+          'h-14 w-14 rounded-full shadow-lg transition-all',
+          isConnected ? 'bg-green-600 hover:bg-green-700' : 'bg-primary hover:bg-primary/90',
+          conversation.isSpeaking && 'ring-4 ring-primary/30'
         )}
       >
         {isConnecting ? (

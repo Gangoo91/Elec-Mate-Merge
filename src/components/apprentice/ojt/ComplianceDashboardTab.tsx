@@ -1,13 +1,12 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Target, Plus, TrendingUp, Calendar, CheckCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import AddGoalDialog from "./AddGoalDialog";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Target, Plus, TrendingUp, Calendar, CheckCircle } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import AddGoalDialog from './AddGoalDialog';
 
 interface Goal {
   id: string;
@@ -34,7 +33,9 @@ const ComplianceDashboardTab = () => {
 
   const fetchGoals = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
@@ -45,18 +46,18 @@ const ComplianceDashboardTab = () => {
 
       if (error) throw error;
 
-      const typedGoals: Goal[] = (data || []).map(goal => ({
+      const typedGoals: Goal[] = (data || []).map((goal) => ({
         ...goal,
-        priority: (goal.priority as 'low' | 'medium' | 'high') || 'medium'
+        priority: (goal.priority as 'low' | 'medium' | 'high') || 'medium',
       }));
 
       setGoals(typedGoals);
     } catch (error) {
       console.error('Error fetching goals:', error);
       toast({
-        title: "Error",
-        description: "Failed to load goals",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to load goals',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -65,29 +66,29 @@ const ComplianceDashboardTab = () => {
 
   const handleAddGoal = async (goalData: any) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { error } = await supabase
-        .from('ojt_goals')
-        .insert({
-          user_id: user.id,
-          title: goalData.title,
-          description: goalData.description,
-          target_value: goalData.targetValue,
-          unit: goalData.unit,
-          priority: goalData.priority,
-          category: goalData.category,
-          deadline: goalData.deadline,
-          current_value: 0,
-          status: 'in_progress'
-        });
+      const { error } = await supabase.from('ojt_goals').insert({
+        user_id: user.id,
+        title: goalData.title,
+        description: goalData.description,
+        target_value: goalData.targetValue,
+        unit: goalData.unit,
+        priority: goalData.priority,
+        category: goalData.category,
+        deadline: goalData.deadline,
+        current_value: 0,
+        status: 'in_progress',
+      });
 
       if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "Goal added successfully"
+        title: 'Success',
+        description: 'Goal added successfully',
       });
 
       setIsAddDialogOpen(false);
@@ -95,9 +96,9 @@ const ComplianceDashboardTab = () => {
     } catch (error) {
       console.error('Error adding goal:', error);
       toast({
-        title: "Error",
-        description: "Failed to add goal",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to add goal',
+        variant: 'destructive',
       });
     }
   };
@@ -106,45 +107,56 @@ const ComplianceDashboardTab = () => {
     try {
       const { error } = await supabase
         .from('ojt_goals')
-        .update({ 
+        .update({
           current_value: newValue,
-          status: newValue >= goals.find(g => g.id === goalId)?.target_value ? 'completed' : 'in_progress'
+          status:
+            newValue >= goals.find((g) => g.id === goalId)?.target_value
+              ? 'completed'
+              : 'in_progress',
         })
         .eq('id', goalId);
 
       if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "Goal progress updated"
+        title: 'Success',
+        description: 'Goal progress updated',
       });
 
       fetchGoals();
     } catch (error) {
       console.error('Error updating goal:', error);
       toast({
-        title: "Error",
-        description: "Failed to update goal progress",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to update goal progress',
+        variant: 'destructive',
       });
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-white/5 text-white/90 border-white/20';
+      case 'high':
+        return 'bg-red-100 text-red-800 border-red-200';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'low':
+        return 'bg-green-100 text-green-800 border-green-200';
+      default:
+        return 'bg-white/5 text-white/90 border-white/20';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-100 text-green-800 border-green-200';
-      case 'in_progress': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'overdue': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-white/5 text-white/90 border-white/20';
+      case 'completed':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'in_progress':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'overdue':
+        return 'bg-red-100 text-red-800 border-red-200';
+      default:
+        return 'bg-white/5 text-white/90 border-white/20';
     }
   };
 
@@ -152,7 +164,7 @@ const ComplianceDashboardTab = () => {
     return (
       <div className="space-y-6">
         <div className="animate-pulse space-y-4">
-          {[1, 2, 3].map(i => (
+          {[1, 2, 3].map((i) => (
             <Card key={i}>
               <CardContent className="p-6">
                 <div className="h-6 bg-white/30 rounded mb-2"></div>
@@ -165,7 +177,7 @@ const ComplianceDashboardTab = () => {
     );
   }
 
-  const completedGoals = goals.filter(g => g.status === 'completed').length;
+  const completedGoals = goals.filter((g) => g.status === 'completed').length;
   const overallProgress = goals.length > 0 ? (completedGoals / goals.length) * 100 : 0;
 
   return (
@@ -184,7 +196,9 @@ const ComplianceDashboardTab = () => {
           <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[120px]">
             <TrendingUp className="h-6 w-6 text-elec-yellow mb-3" />
             <div className="space-y-1">
-              <div className="text-3xl font-bold text-elec-yellow">{overallProgress.toFixed(0)}%</div>
+              <div className="text-3xl font-bold text-elec-yellow">
+                {overallProgress.toFixed(0)}%
+              </div>
               <p className="text-xs text-elec-light/70 font-medium">Overall Progress</p>
               <Progress value={overallProgress} className="mt-2 bg-elec-card h-2 w-20" />
             </div>
@@ -207,7 +221,7 @@ const ComplianceDashboardTab = () => {
             <Target className="h-6 w-6 text-blue-400 mb-3" />
             <div className="space-y-1">
               <div className="text-3xl font-bold text-blue-400">
-                {goals.filter(g => g.status === 'in_progress').length}
+                {goals.filter((g) => g.status === 'in_progress').length}
               </div>
               <p className="text-xs text-elec-light/70 font-medium">Active Goals</p>
               <p className="text-xs text-elec-light/60">in progress</p>
@@ -236,15 +250,19 @@ const ComplianceDashboardTab = () => {
           ) : (
             <div className="space-y-6">
               {goals.map((goal) => {
-                const progressPercentage = Math.min((goal.current_value / goal.target_value) * 100, 100);
-                
+                const progressPercentage = Math.min(
+                  (goal.current_value / goal.target_value) * 100,
+                  100
+                );
+
                 return (
-                  <div key={goal.id} className="p-4 bg-white/5 border border-elec-gray/40 rounded-xl space-y-4">
+                  <div
+                    key={goal.id}
+                    className="p-4 bg-white/5 border border-elec-gray/40 rounded-xl space-y-4"
+                  >
                     {/* Mobile-optimized badges - centered at top */}
                     <div className="flex justify-center gap-2">
-                      <Badge className={getPriorityColor(goal.priority)}>
-                        {goal.priority}
-                      </Badge>
+                      <Badge className={getPriorityColor(goal.priority)}>{goal.priority}</Badge>
                       <Badge className={getStatusColor(goal.status)}>
                         {goal.status.replace('_', ' ')}
                       </Badge>
@@ -252,15 +270,23 @@ const ComplianceDashboardTab = () => {
 
                     {/* Title and description */}
                     <div className="space-y-2 text-center sm:text-left">
-                      <h4 className="font-semibold text-lg text-elec-light leading-tight">{goal.title}</h4>
-                      <p className="text-sm text-elec-light/70 leading-relaxed">{goal.description}</p>
+                      <h4 className="font-semibold text-lg text-elec-light leading-tight">
+                        {goal.title}
+                      </h4>
+                      <p className="text-sm text-elec-light/70 leading-relaxed">
+                        {goal.description}
+                      </p>
                     </div>
 
                     {/* Progress section */}
                     <div className="space-y-3">
                       <div className="flex justify-between text-sm text-elec-light">
-                        <span className="font-medium">Progress: {goal.current_value} / {goal.target_value} {goal.unit}</span>
-                        <span className="font-semibold text-elec-yellow">{progressPercentage.toFixed(0)}%</span>
+                        <span className="font-medium">
+                          Progress: {goal.current_value} / {goal.target_value} {goal.unit}
+                        </span>
+                        <span className="font-semibold text-elec-yellow">
+                          {progressPercentage.toFixed(0)}%
+                        </span>
                       </div>
                       <Progress value={progressPercentage} className="h-2 bg-elec-card" />
                     </div>
@@ -271,7 +297,12 @@ const ComplianceDashboardTab = () => {
                         <Calendar className="h-4 w-4 text-elec-yellow" />
                         <span>Due: {new Date(goal.deadline).toLocaleDateString('en-GB')}</span>
                       </div>
-                      <Badge variant="outline" className="w-fit mx-auto sm:mx-0 border-elec-yellow/30 text-elec-yellow bg-elec-yellow/10">{goal.category}</Badge>
+                      <Badge
+                        variant="outline"
+                        className="w-fit mx-auto sm:mx-0 border-elec-yellow/30 text-elec-yellow bg-elec-yellow/10"
+                      >
+                        {goal.category}
+                      </Badge>
                     </div>
                   </div>
                 );

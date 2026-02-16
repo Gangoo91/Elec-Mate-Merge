@@ -1,44 +1,44 @@
-import { ArrowLeft, Shield, TestTube, Eye, Zap, AlertTriangle } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Shield, TestTube, Eye, Zap, AlertTriangle } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Selection of Test Equipment for Basic Fault-Finding",
-    description: "Choosing appropriate testing instruments for fault diagnosis",
+    number: 'Subsection 1',
+    title: 'Selection of Test Equipment for Basic Fault-Finding',
+    description: 'Choosing appropriate testing instruments for fault diagnosis',
     icon: Shield,
-    href: "5-1"
+    href: '5-1',
   },
   {
-    number: "Subsection 2",
-    title: "Checking Instruments for Safety and Accuracy",
-    description: "Verifying test equipment condition before use",
+    number: 'Subsection 2',
+    title: 'Checking Instruments for Safety and Accuracy',
+    description: 'Verifying test equipment condition before use',
     icon: TestTube,
-    href: "5-2"
+    href: '5-2',
   },
   {
-    number: "Subsection 3",
-    title: "GS38-Compliant Testing Practices",
-    description: "Following GS38 safety requirements for electrical testing",
+    number: 'Subsection 3',
+    title: 'GS38-Compliant Testing Practices',
+    description: 'Following GS38 safety requirements for electrical testing',
     icon: Eye,
-    href: "5-3"
+    href: '5-3',
   },
   {
-    number: "Subsection 4",
-    title: "PPE and Environmental Precautions During Fault Investigation",
-    description: "Personal protection and environmental safety during fault finding",
+    number: 'Subsection 4',
+    title: 'PPE and Environmental Precautions During Fault Investigation',
+    description: 'Personal protection and environmental safety during fault finding',
     icon: Zap,
-    href: "5-4"
+    href: '5-4',
   },
   {
-    number: "Subsection 5",
-    title: "Avoiding Live Testing Where Possible",
-    description: "Safe isolation practices and minimising live working",
+    number: 'Subsection 5',
+    title: 'Avoiding Live Testing Where Possible',
+    description: 'Safe isolation practices and minimising live working',
     icon: AlertTriangle,
-    href: "5-5"
-  }
+    href: '5-5',
+  },
 ];
 
 const Section5 = () => {

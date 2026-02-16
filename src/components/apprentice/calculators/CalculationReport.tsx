@@ -1,9 +1,8 @@
-
 import React from 'react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, FileText } from "lucide-react";
-import { CalculatorValidator } from "@/services/calculatorValidation";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Download, FileText } from 'lucide-react';
+import { CalculatorValidator } from '@/services/calculatorValidation';
 
 interface CalculationReportProps {
   calculationType: string;
@@ -18,11 +17,11 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
   inputs,
   results,
   validation,
-  onDownload
+  onDownload,
 }) => {
   const generateReport = () => {
     if (!validation) return '';
-    
+
     return CalculatorValidator.generateCalculationReport(
       calculationType,
       inputs,
@@ -42,7 +41,7 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
+
     if (onDownload) {
       onDownload();
     }
@@ -61,8 +60,8 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
           <div className="text-xs text-white">
             Generate a professional calculation report for documentation and compliance purposes.
           </div>
-          
-          <Button 
+
+          <Button
             onClick={downloadReport}
             className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
             size="sm"
@@ -70,7 +69,7 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
             <Download className="mr-2 h-4 w-4" />
             Download Report
           </Button>
-          
+
           <div className="bg-white/10 rounded p-3 text-xs">
             <div className="font-medium text-elec-yellow mb-2">Report includes:</div>
             <ul className="list-disc list-inside space-y-1 text-white">

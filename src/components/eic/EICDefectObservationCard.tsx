@@ -9,7 +9,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { AlertTriangle, Trash2, Info, ChevronDown, ChevronUp, Camera, MapPin } from 'lucide-react';
 import { EICObservation } from '@/hooks/useEICObservations';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
@@ -34,74 +40,91 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
   index,
   onUpdate,
   onRemove,
-  onSyncToInspectionItem
+  onSyncToInspectionItem,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const isMobile = useIsMobile();
   const haptics = useHaptics();
 
   // Initialize photo management
-  const {
-    photos,
-    isUploading,
-    isScanning,
-    uploadPhoto,
-    deletePhoto,
-    scanPhotoWithAI,
-  } = useInspectionPhotos({
-    reportId: reportId || '',
-    reportType: 'eic',
-    itemId: observation.id,
-    observationId: observation.id,
-    observationContext: {
-      classification: observation.defectCode.toUpperCase(),
-      itemLocation: observation.item || 'Not specified',
-      description: observation.description || 'No description provided',
-      recommendation: observation.recommendation,
-    },
-  });
+  const { photos, isUploading, isScanning, uploadPhoto, deletePhoto, scanPhotoWithAI } =
+    useInspectionPhotos({
+      reportId: reportId || '',
+      reportType: 'eic',
+      itemId: observation.id,
+      observationId: observation.id,
+      observationContext: {
+        classification: observation.defectCode.toUpperCase(),
+        itemLocation: observation.item || 'Not specified',
+        description: observation.description || 'No description provided',
+        recommendation: observation.recommendation,
+      },
+    });
 
   const defectCodes = [
-    { code: 'unsatisfactory', label: 'Unsatisfactory', description: 'Does not comply with BS 7671', color: 'red' },
-    { code: 'limitation', label: 'Limitation', description: 'Limitation noted during inspection', color: 'purple' },
-    { code: 'not-applicable', label: 'N/A', description: 'Not applicable to this installation', color: 'neutral' }
+    {
+      code: 'unsatisfactory',
+      label: 'Unsatisfactory',
+      description: 'Does not comply with BS 7671',
+      color: 'red',
+    },
+    {
+      code: 'limitation',
+      label: 'Limitation',
+      description: 'Limitation noted during inspection',
+      color: 'purple',
+    },
+    {
+      code: 'not-applicable',
+      label: 'N/A',
+      description: 'Not applicable to this installation',
+      color: 'neutral',
+    },
   ];
 
-  const currentCode = defectCodes.find(c => c.code === observation.defectCode) || defectCodes[0];
+  const currentCode = defectCodes.find((c) => c.code === observation.defectCode) || defectCodes[0];
 
   const getBorderColor = () => {
     switch (currentCode.color) {
-      case 'red': return 'border-l-red-500';
-      case 'purple': return 'border-l-purple-500';
-      case 'neutral': return 'border-l-neutral-500';
-      default: return 'border-l-orange-500';
+      case 'red':
+        return 'border-l-red-500';
+      case 'purple':
+        return 'border-l-purple-500';
+      case 'neutral':
+        return 'border-l-neutral-500';
+      default:
+        return 'border-l-orange-500';
     }
   };
 
   const getBadgeStyles = () => {
     switch (currentCode.color) {
-      case 'red': return 'bg-red-500/15 text-red-400';
-      case 'purple': return 'bg-purple-500/15 text-purple-400';
-      case 'neutral': return 'bg-neutral-500/15 text-neutral-400';
-      default: return 'bg-orange-500/15 text-orange-400';
+      case 'red':
+        return 'bg-red-500/15 text-red-400';
+      case 'purple':
+        return 'bg-purple-500/15 text-purple-400';
+      case 'neutral':
+        return 'bg-neutral-500/15 text-neutral-400';
+      default:
+        return 'bg-orange-500/15 text-orange-400';
     }
   };
 
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl",
-        "bg-white/[0.03] backdrop-blur-sm",
-        "border border-white/[0.06]",
-        "border-l-4",
+        'relative overflow-hidden rounded-xl',
+        'bg-white/[0.03] backdrop-blur-sm',
+        'border border-white/[0.06]',
+        'border-l-4',
         getBorderColor()
       )}
     >
       {/* Header - Always Visible */}
       <div
         className={cn(
-          "flex items-center justify-between p-4 cursor-pointer touch-manipulation",
-          isMobile && "min-h-[60px]"
+          'flex items-center justify-between p-4 cursor-pointer touch-manipulation',
+          isMobile && 'min-h-[60px]'
         )}
         onClick={() => {
           haptics.tap();
@@ -110,11 +133,13 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
       >
         <div className="flex items-center gap-3 flex-1 min-w-0">
           {/* Number Badge */}
-          <div className={cn(
-            "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
-            "text-sm font-bold",
-            getBadgeStyles()
-          )}>
+          <div
+            className={cn(
+              'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center',
+              'text-sm font-bold',
+              getBadgeStyles()
+            )}
+          >
             {index + 1}
           </div>
 
@@ -123,19 +148,19 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
             <div className="flex items-center gap-2">
               {currentCode.color === 'red' && <AlertTriangle className="w-4 h-4 text-red-400" />}
               {currentCode.color === 'purple' && <Info className="w-4 h-4 text-purple-400" />}
-              <span className={cn(
-                "text-sm font-medium",
-                currentCode.color === 'red' && "text-red-400",
-                currentCode.color === 'purple' && "text-purple-400",
-                currentCode.color === 'neutral' && "text-neutral-400"
-              )}>
+              <span
+                className={cn(
+                  'text-sm font-medium',
+                  currentCode.color === 'red' && 'text-red-400',
+                  currentCode.color === 'purple' && 'text-purple-400',
+                  currentCode.color === 'neutral' && 'text-neutral-400'
+                )}
+              >
                 {currentCode.label}
               </span>
             </div>
             {observation.item && (
-              <p className="text-xs text-foreground/50 truncate mt-0.5">
-                {observation.item}
-              </p>
+              <p className="text-xs text-foreground/50 truncate mt-0.5">{observation.item}</p>
             )}
           </div>
         </div>
@@ -199,15 +224,15 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
                         }
                       }}
                       className={cn(
-                        "flex-1 h-10 rounded-lg text-sm font-medium transition-all duration-200",
-                        "touch-manipulation active:scale-[0.97]",
+                        'flex-1 h-10 rounded-lg text-sm font-medium transition-all duration-200',
+                        'touch-manipulation active:scale-[0.97]',
                         observation.defectCode === code.code
                           ? code.color === 'red'
-                            ? "bg-red-600 text-white"
+                            ? 'bg-red-600 text-white'
                             : code.color === 'purple'
-                            ? "bg-purple-600 text-white"
-                            : "bg-neutral-600 text-white"
-                          : "bg-white/[0.05] text-foreground/70 border border-white/[0.08]"
+                              ? 'bg-purple-600 text-white'
+                              : 'bg-neutral-600 text-white'
+                          : 'bg-white/[0.05] text-foreground/70 border border-white/[0.08]'
                       )}
                     >
                       {code.label}
@@ -219,15 +244,19 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
               {/* Description */}
               <div>
                 <span className="text-xs text-foreground/50 mb-2 block">
-                  {observation.defectCode === 'not-applicable' ? 'Reason' :
-                   observation.defectCode === 'limitation' ? 'Limitation Details' :
-                   'Description'}
+                  {observation.defectCode === 'not-applicable'
+                    ? 'Reason'
+                    : observation.defectCode === 'limitation'
+                      ? 'Limitation Details'
+                      : 'Description'}
                 </span>
                 <Textarea
                   placeholder={
-                    observation.defectCode === 'not-applicable' ? 'Explain why this item is not applicable...' :
-                    observation.defectCode === 'limitation' ? 'Describe the limitation encountered...' :
-                    'Detailed description of the non-compliance...'
+                    observation.defectCode === 'not-applicable'
+                      ? 'Explain why this item is not applicable...'
+                      : observation.defectCode === 'limitation'
+                        ? 'Describe the limitation encountered...'
+                        : 'Detailed description of the non-compliance...'
                   }
                   value={observation.description}
                   onChange={(e) => onUpdate(observation.id, 'description', e.target.value)}
@@ -240,12 +269,15 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
               {observation.defectCode !== 'not-applicable' && (
                 <div>
                   <span className="text-xs text-foreground/50 mb-2 block">
-                    {observation.defectCode === 'limitation' ? 'Further Action Required' : 'Recommendation'}
+                    {observation.defectCode === 'limitation'
+                      ? 'Further Action Required'
+                      : 'Recommendation'}
                   </span>
                   <Textarea
                     placeholder={
-                      observation.defectCode === 'limitation' ? 'What action is needed to overcome this limitation...' :
-                      'Recommended remedial action to achieve compliance...'
+                      observation.defectCode === 'limitation'
+                        ? 'What action is needed to overcome this limitation...'
+                        : 'Recommended remedial action to achieve compliance...'
                     }
                     value={observation.recommendation}
                     onChange={(e) => onUpdate(observation.id, 'recommendation', e.target.value)}

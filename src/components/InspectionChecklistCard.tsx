@@ -8,7 +8,15 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -33,13 +41,13 @@ const InspectionChecklistCard = ({
   onAutoCreateObservation,
   onBulkMarkSatisfactory,
   onBulkClearSection,
-  propertyType
+  propertyType,
 }: InspectionChecklistCardProps) => {
   const filteredSections = bs7671InspectionSections;
 
   return (
     <div className="space-y-2">
-      {filteredSections.map(section => (
+      {filteredSections.map((section) => (
         <InspectionSectionCard
           key={section.id}
           section={section}

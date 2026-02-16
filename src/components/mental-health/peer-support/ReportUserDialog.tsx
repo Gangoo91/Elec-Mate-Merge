@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,14 +6,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Flag, Loader2, CheckCircle } from "lucide-react";
-import { peerReportService, ReportReason } from "@/services/peerSupportService";
-import { toast } from "@/hooks/use-toast";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Flag, Loader2, CheckCircle } from 'lucide-react';
+import { peerReportService, ReportReason } from '@/services/peerSupportService';
+import { toast } from '@/hooks/use-toast';
 
 interface ReportUserDialogProps {
   open: boolean;
@@ -26,24 +26,24 @@ interface ReportUserDialogProps {
 
 const reportReasons: { value: ReportReason; label: string; description: string }[] = [
   {
-    value: "harassment",
-    label: "Harassment",
-    description: "Bullying, threats, or intimidation",
+    value: 'harassment',
+    label: 'Harassment',
+    description: 'Bullying, threats, or intimidation',
   },
   {
-    value: "inappropriate",
-    label: "Inappropriate Content",
-    description: "Sexual content, explicit language, or offensive material",
+    value: 'inappropriate',
+    label: 'Inappropriate Content',
+    description: 'Sexual content, explicit language, or offensive material',
   },
   {
-    value: "spam",
-    label: "Spam",
-    description: "Unsolicited promotions or repetitive messages",
+    value: 'spam',
+    label: 'Spam',
+    description: 'Unsolicited promotions or repetitive messages',
   },
   {
-    value: "other",
-    label: "Other",
-    description: "Something else not listed above",
+    value: 'other',
+    label: 'Other',
+    description: 'Something else not listed above',
   },
 ];
 
@@ -51,21 +51,21 @@ export function ReportUserDialog({
   open,
   onOpenChange,
   userId,
-  userName = "this user",
+  userName = 'this user',
   conversationId,
   onReported,
 }: ReportUserDialogProps) {
   const [reason, setReason] = useState<ReportReason | null>(null);
-  const [additionalNotes, setAdditionalNotes] = useState("");
+  const [additionalNotes, setAdditionalNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async () => {
     if (!reason) {
       toast({
-        title: "Please select a reason",
+        title: 'Please select a reason',
         description: "Choose why you're reporting this user",
-        variant: "destructive",
+        variant: 'destructive',
       });
       return;
     }
@@ -86,15 +86,15 @@ export function ReportUserDialog({
         onOpenChange(false);
         setIsSubmitted(false);
         setReason(null);
-        setAdditionalNotes("");
+        setAdditionalNotes('');
         onReported?.();
       }, 1500);
     } catch (error) {
-      console.error("Error reporting user:", error);
+      console.error('Error reporting user:', error);
       toast({
-        title: "Failed to submit report",
-        description: "Please try again later",
-        variant: "destructive",
+        title: 'Failed to submit report',
+        description: 'Please try again later',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -106,7 +106,7 @@ export function ReportUserDialog({
       // Reset state when closing
       setTimeout(() => {
         setReason(null);
-        setAdditionalNotes("");
+        setAdditionalNotes('');
         setIsSubmitted(false);
       }, 200);
     }
@@ -132,9 +132,7 @@ export function ReportUserDialog({
               <div className="mx-auto mb-2 p-3 rounded-full bg-orange-500/10">
                 <Flag className="h-6 w-6 text-orange-500" />
               </div>
-              <DialogTitle className="text-center">
-                Report {userName}
-              </DialogTitle>
+              <DialogTitle className="text-center">Report {userName}</DialogTitle>
               <DialogDescription className="text-center">
                 Help us understand what happened. All reports are reviewed by our team.
               </DialogDescription>
@@ -142,11 +140,9 @@ export function ReportUserDialog({
 
             <div className="space-y-4 py-4">
               <div className="space-y-3">
-                <Label className="text-sm font-medium">
-                  Why are you reporting this user?
-                </Label>
+                <Label className="text-sm font-medium">Why are you reporting this user?</Label>
                 <RadioGroup
-                  value={reason || ""}
+                  value={reason || ''}
                   onValueChange={(value) => setReason(value as ReportReason)}
                   className="space-y-2"
                 >
@@ -155,26 +151,17 @@ export function ReportUserDialog({
                       key={option.value}
                       className={`flex items-start space-x-3 p-3 rounded-lg border transition-colors cursor-pointer ${
                         reason === option.value
-                          ? "border-orange-500/50 bg-orange-500/5"
-                          : "border-border hover:border-border/80"
+                          ? 'border-orange-500/50 bg-orange-500/5'
+                          : 'border-border hover:border-border/80'
                       }`}
                       onClick={() => setReason(option.value)}
                     >
-                      <RadioGroupItem
-                        value={option.value}
-                        id={option.value}
-                        className="mt-0.5"
-                      />
+                      <RadioGroupItem value={option.value} id={option.value} className="mt-0.5" />
                       <div className="flex-1">
-                        <Label
-                          htmlFor={option.value}
-                          className="font-medium cursor-pointer"
-                        >
+                        <Label htmlFor={option.value} className="font-medium cursor-pointer">
                           {option.label}
                         </Label>
-                        <p className="text-xs text-muted-foreground mt-0.5">
-                          {option.description}
-                        </p>
+                        <p className="text-xs text-muted-foreground mt-0.5">{option.description}</p>
                       </div>
                     </div>
                   ))}
@@ -218,7 +205,7 @@ export function ReportUserDialog({
                     Submitting...
                   </>
                 ) : (
-                  "Submit Report"
+                  'Submit Report'
                 )}
               </Button>
             </DialogFooter>

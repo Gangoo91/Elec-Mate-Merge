@@ -239,9 +239,7 @@ export function useCombinedRequirements(options: UseCombinedRequirementsOptions 
   // Get requirements that need specific evidence type
   const getRequirementsForType = useCallback(
     (typeCode: EvidenceTypeCode) => {
-      return combinedRequirements.filter((r) =>
-        r.evidence_type_codes.includes(typeCode)
-      );
+      return combinedRequirements.filter((r) => r.evidence_type_codes.includes(typeCode));
     },
     [combinedRequirements]
   );

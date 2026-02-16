@@ -1,7 +1,7 @@
-import { Quote } from "@/types/quote";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { Quote } from '@/types/quote';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 import {
   Package,
   Wrench,
@@ -23,9 +23,9 @@ import {
   Bell,
   AlertTriangle,
   Eye,
-} from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 interface QuoteDetailViewProps {
   quote: Quote;
@@ -34,11 +34,11 @@ interface QuoteDetailViewProps {
 export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case "labour":
+      case 'labour':
         return <Wrench className="h-4 w-4 text-blue-500" />;
-      case "materials":
+      case 'materials':
         return <Package className="h-4 w-4 text-green-500" />;
-      case "equipment":
+      case 'equipment':
         return <Zap className="h-4 w-4 text-purple-500" />;
       default:
         return <FileText className="h-4 w-4 text-gray-500" />;
@@ -72,7 +72,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
   };
 
   const isExpired = quote.expiryDate && new Date(quote.expiryDate) < new Date();
-  const categories = ["labour", "materials", "equipment", "manual"];
+  const categories = ['labour', 'materials', 'equipment', 'manual'];
 
   // Email tracking data
   const hasBeenViewed = !!quote.email_opened_at;
@@ -88,7 +88,9 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
 
   // Calculate days until expiry
   const daysUntilExpiry = quote.expiryDate
-    ? Math.ceil((new Date(quote.expiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+    ? Math.ceil(
+        (new Date(quote.expiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+      )
     : null;
   const isExpiringSoon = daysUntilExpiry !== null && daysUntilExpiry <= 3 && daysUntilExpiry > 0;
 
@@ -98,13 +100,9 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
       <Card className="glass-premium p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">
-              Quote {quote.quoteNumber}
-            </h1>
+            <h1 className="text-3xl font-bold text-white mb-2">Quote {quote.quoteNumber}</h1>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge className={cn("border", getStatusColor(quote.status))}>
-                {quote.status}
-              </Badge>
+              <Badge className={cn('border', getStatusColor(quote.status))}>{quote.status}</Badge>
               {quote.acceptance_status && (
                 <Badge variant="outline" className="border-white/20">
                   <span className="mr-1">{getAcceptanceStatusIcon()}</span>
@@ -127,9 +125,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
 
           <div className="text-right">
             <p className="text-sm text-white/50 mb-1">Total Amount</p>
-            <p className="text-4xl font-bold text-elec-yellow">
-              £{(quote.total || 0).toFixed(2)}
-            </p>
+            <p className="text-4xl font-bold text-elec-yellow">£{(quote.total || 0).toFixed(2)}</p>
           </div>
         </div>
 
@@ -145,7 +141,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             <Clock className="h-4 w-4 text-elec-yellow" />
             <div>
               <p className="text-white/50">Valid Until</p>
-              <p className={cn("font-medium", isExpired && "text-red-400")}>
+              <p className={cn('font-medium', isExpired && 'text-red-400')}>
                 {format(new Date(quote.expiryDate), 'dd MMM yyyy')}
               </p>
             </div>
@@ -203,10 +199,12 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 <Eye className="h-3 w-3" />
                 <span>Email Opens</span>
               </div>
-              <p className={cn(
-                "font-medium text-sm",
-                hasBeenViewed ? "text-blue-400" : "text-white/40"
-              )}>
+              <p
+                className={cn(
+                  'font-medium text-sm',
+                  hasBeenViewed ? 'text-blue-400' : 'text-white/40'
+                )}
+              >
                 {hasBeenViewed ? viewCount : 'Not opened yet'}
               </p>
               {quote.email_opened_at && (
@@ -222,10 +220,12 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 <Bell className="h-3 w-3" />
                 <span>Reminders</span>
               </div>
-              <p className={cn(
-                "font-medium text-sm",
-                reminderCount > 0 ? "text-purple-400" : "text-white"
-              )}>
+              <p
+                className={cn(
+                  'font-medium text-sm',
+                  reminderCount > 0 ? 'text-purple-400' : 'text-white'
+                )}
+              >
                 {reminderCount} of 3 sent
               </p>
               {lastReminderAt && (
@@ -241,20 +241,19 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 <Clock className="h-3 w-3" />
                 <span>Expires In</span>
               </div>
-              <p className={cn(
-                "font-medium text-sm",
-                isExpired ? "text-red-400" :
-                isExpiringSoon ? "text-orange-400" :
-                "text-white"
-              )}>
+              <p
+                className={cn(
+                  'font-medium text-sm',
+                  isExpired ? 'text-red-400' : isExpiringSoon ? 'text-orange-400' : 'text-white'
+                )}
+              >
                 {isExpired
                   ? 'Expired'
                   : daysUntilExpiry === 0
                     ? 'Today'
                     : daysUntilExpiry === 1
                       ? 'Tomorrow'
-                      : `${daysUntilExpiry} days`
-                }
+                      : `${daysUntilExpiry} days`}
               </p>
               <p className="text-white/40 text-xs">
                 {format(new Date(quote.expiryDate), 'dd MMM yyyy')}
@@ -268,7 +267,8 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
               <div className="flex items-center gap-2 text-blue-400">
                 <CheckCircle className="h-4 w-4" />
                 <span className="text-sm">
-                  Client has viewed your quote {viewCount > 1 ? `${viewCount} times` : ''} - awaiting their decision
+                  Client has viewed your quote {viewCount > 1 ? `${viewCount} times` : ''} -
+                  awaiting their decision
                 </span>
               </div>
             ) : !hasBeenViewed && daysSinceSent && daysSinceSent > 2 ? (
@@ -288,9 +288,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             ) : (
               <div className="flex items-center gap-2 text-white/50">
                 <Clock className="h-4 w-4" />
-                <span className="text-sm">
-                  Waiting for client to open the email
-                </span>
+                <span className="text-sm">Waiting for client to open the email</span>
               </div>
             )}
           </div>
@@ -358,20 +356,14 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             <h2 className="text-xl font-semibold text-white">Job Details</h2>
           </div>
 
-          <h3 className="text-lg font-semibold text-white mb-2">
-            {quote.jobDetails.title}
-          </h3>
-          <p className="text-white/70 mb-4 whitespace-pre-wrap">
-            {quote.jobDetails.description}
-          </p>
+          <h3 className="text-lg font-semibold text-white mb-2">{quote.jobDetails.title}</h3>
+          <p className="text-white/70 mb-4 whitespace-pre-wrap">{quote.jobDetails.description}</p>
 
           {quote.jobDetails.estimatedDuration && (
             <div className="flex items-center gap-2 text-sm">
               <Clock className="h-4 w-4 text-elec-yellow" />
               <span className="text-white/50">Estimated Duration:</span>
-              <span className="text-white font-medium">
-                {quote.jobDetails.estimatedDuration}
-              </span>
+              <span className="text-white font-medium">{quote.jobDetails.estimatedDuration}</span>
             </div>
           )}
         </Card>
@@ -397,16 +389,12 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     {getCategoryIcon(category)}
-                    <h3 className="font-semibold text-white capitalize">
-                      {category}
-                    </h3>
+                    <h3 className="font-semibold text-white capitalize">{category}</h3>
                     <Badge variant="outline" className="border-white/20 text-white/70">
                       {categoryItems.length} {categoryItems.length === 1 ? 'item' : 'items'}
                     </Badge>
                   </div>
-                  <p className="font-semibold text-elec-yellow">
-                    £{categoryTotal.toFixed(2)}
-                  </p>
+                  <p className="font-semibold text-elec-yellow">£{categoryTotal.toFixed(2)}</p>
                 </div>
 
                 {/* Items Table */}
@@ -424,18 +412,18 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                     <div
                       key={item.id}
                       className={cn(
-                        "grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 px-4 py-3 text-sm",
-                        index !== categoryItems.length - 1 && "border-b border-white/[0.06]"
+                        'grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 px-4 py-3 text-sm',
+                        index !== categoryItems.length - 1 && 'border-b border-white/[0.06]'
                       )}
                     >
                       {/* Mobile Layout */}
                       <div className="col-span-1 sm:col-span-5">
-                        <p className="text-white font-medium mb-1 sm:mb-0">
-                          {item.description}
-                        </p>
+                        <p className="text-white font-medium mb-1 sm:mb-0">{item.description}</p>
                         {/* Mobile: Show qty and prices below description */}
                         <div className="flex items-center justify-between sm:hidden text-white/70 text-xs">
-                          <span>Qty: {item.quantity} × £{item.unitPrice.toFixed(2)}</span>
+                          <span>
+                            Qty: {item.quantity} × £{item.unitPrice.toFixed(2)}
+                          </span>
                           <span className="font-semibold text-elec-yellow">
                             £{item.totalPrice.toFixed(2)}
                           </span>

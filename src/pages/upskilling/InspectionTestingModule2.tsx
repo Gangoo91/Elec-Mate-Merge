@@ -8,31 +8,36 @@ const sections = [
   {
     id: 1,
     title: 'Principles of Safe Isolation',
-    description: 'Understand the fundamental principles and importance of safe isolation in electrical work.',
+    description:
+      'Understand the fundamental principles and importance of safe isolation in electrical work.',
     icon: Shield,
   },
   {
     id: 2,
     title: 'Isolation Equipment and PPE',
-    description: 'Learn about the essential equipment and personal protective equipment required for safe isolation.',
+    description:
+      'Learn about the essential equipment and personal protective equipment required for safe isolation.',
     icon: Lock,
   },
   {
     id: 3,
     title: 'Lock-Off/Tag-Out Procedures',
-    description: 'Master the lock-off and tag-out procedures to ensure circuits remain isolated during work.',
+    description:
+      'Master the lock-off and tag-out procedures to ensure circuits remain isolated during work.',
     icon: Tag,
   },
   {
     id: 4,
     title: 'Proving Dead Techniques',
-    description: 'Learn the correct methods for proving that circuits are dead before commencing work.',
+    description:
+      'Learn the correct methods for proving that circuits are dead before commencing work.',
     icon: Zap,
   },
   {
     id: 5,
     title: 'Working on Isolated Systems',
-    description: 'Best practices and safety considerations when working on isolated electrical systems.',
+    description:
+      'Best practices and safety considerations when working on isolated electrical systems.',
     icon: Power,
   },
   {
@@ -46,7 +51,8 @@ const sections = [
 export default function InspectionTestingModule2() {
   useSEO({
     title: 'Module 2: Safe Isolation Procedures | Inspection & Testing',
-    description: 'Learn safe isolation procedures including lock-off/tag-out, proving dead techniques, and re-energisation procedures.',
+    description:
+      'Learn safe isolation procedures including lock-off/tag-out, proving dead techniques, and re-energisation procedures.',
   });
 
   return (
@@ -80,7 +86,8 @@ export default function InspectionTestingModule2() {
             Safe Isolation Procedures
           </h1>
           <p className="text-white/80 text-sm sm:text-base">
-            Master the critical procedures for safely isolating electrical circuits before carrying out any work
+            Master the critical procedures for safely isolating electrical circuits before carrying
+            out any work
           </p>
         </div>
 

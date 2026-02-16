@@ -2,10 +2,10 @@
  * Hook for education programme search with debouncing and recent searches
  */
 
-import { useState, useEffect, useCallback, useMemo } from "react";
-import type { LiveEducationData } from "@/hooks/useLiveEducationData";
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import type { LiveEducationData } from '@/hooks/useLiveEducationData';
 
-const RECENT_SEARCHES_KEY = "elecmate_education_recent_searches";
+const RECENT_SEARCHES_KEY = 'elecmate_education_recent_searches';
 const MAX_RECENT_SEARCHES = 5;
 
 export interface EducationFilters {
@@ -13,15 +13,15 @@ export interface EducationFilters {
   level: string;
   studyMode: string;
   location: string;
-  sortBy: "rating" | "employment" | "title" | "duration" | "fees";
+  sortBy: 'rating' | 'employment' | 'title' | 'duration' | 'fees';
 }
 
 const DEFAULT_FILTERS: EducationFilters = {
-  category: "",
-  level: "",
-  studyMode: "",
-  location: "",
-  sortBy: "rating",
+  category: '',
+  level: '',
+  studyMode: '',
+  location: '',
+  sortBy: 'rating',
 };
 
 export interface QuickFilter {
@@ -31,12 +31,9 @@ export interface QuickFilter {
   apply: (programmes: LiveEducationData[]) => LiveEducationData[];
 }
 
-export const useEducationSearch = (
-  programmes: LiveEducationData[],
-  debounceMs: number = 300
-) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+export const useEducationSearch = (programmes: LiveEducationData[], debounceMs: number = 300) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [filters, setFilters] = useState<EducationFilters>(DEFAULT_FILTERS);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -49,7 +46,7 @@ export const useEducationSearch = (
         setRecentSearches(JSON.parse(stored));
       }
     } catch (error) {
-      console.error("Failed to load recent searches:", error);
+      console.error('Failed to load recent searches:', error);
     }
   }, []);
 
@@ -69,15 +66,13 @@ export const useEducationSearch = (
     if (term.trim().length < 2) return;
 
     setRecentSearches((prev) => {
-      const filtered = prev.filter(
-        (s) => s.toLowerCase() !== term.toLowerCase()
-      );
+      const filtered = prev.filter((s) => s.toLowerCase() !== term.toLowerCase());
       const updated = [term, ...filtered].slice(0, MAX_RECENT_SEARCHES);
 
       try {
         localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
       } catch (error) {
-        console.error("Failed to save recent searches:", error);
+        console.error('Failed to save recent searches:', error);
       }
 
       return updated;
@@ -132,28 +127,26 @@ export const useEducationSearch = (
 
     // Apply sorting
     switch (filters.sortBy) {
-      case "rating":
+      case 'rating':
         result.sort((a, b) => (b.rating || 0) - (a.rating || 0));
         break;
-      case "employment":
-        result.sort(
-          (a, b) => (b.employmentRate || 0) - (a.employmentRate || 0)
-        );
+      case 'employment':
+        result.sort((a, b) => (b.employmentRate || 0) - (a.employmentRate || 0));
         break;
-      case "title":
+      case 'title':
         result.sort((a, b) => a.title.localeCompare(b.title));
         break;
-      case "duration":
+      case 'duration':
         result.sort((a, b) => {
-          const aDuration = parseInt(a.duration.match(/\d+/)?.[0] || "0");
-          const bDuration = parseInt(b.duration.match(/\d+/)?.[0] || "0");
+          const aDuration = parseInt(a.duration.match(/\d+/)?.[0] || '0');
+          const bDuration = parseInt(b.duration.match(/\d+/)?.[0] || '0');
           return aDuration - bDuration;
         });
         break;
-      case "fees":
+      case 'fees':
         result.sort((a, b) => {
-          const aFees = parseInt(a.tuitionFees.replace(/[^\d]/g, "") || "0");
-          const bFees = parseInt(b.tuitionFees.replace(/[^\d]/g, "") || "0");
+          const aFees = parseInt(a.tuitionFees.replace(/[^\d]/g, '') || '0');
+          const bFees = parseInt(b.tuitionFees.replace(/[^\d]/g, '') || '0');
           return aFees - bFees;
         });
         break;
@@ -166,37 +159,30 @@ export const useEducationSearch = (
   const quickFilters: QuickFilter[] = useMemo(
     () => [
       {
-        id: "high-rated",
-        label: "Top Rated",
+        id: 'high-rated',
+        label: 'Top Rated',
         active: false,
         apply: (p) => p.filter((prog) => (prog.rating || 0) >= 4.5),
       },
       {
-        id: "high-demand",
-        label: "High Demand",
+        id: 'high-demand',
+        label: 'High Demand',
         active: false,
         apply: (p) => p.filter((prog) => (prog.employmentRate || 0) >= 90),
       },
       {
-        id: "online",
-        label: "Online",
+        id: 'online',
+        label: 'Online',
         active: false,
         apply: (p) =>
-          p.filter(
-            (prog) =>
-              prog.studyMode === "Distance Learning" ||
-              prog.studyMode === "Online"
-          ),
+          p.filter((prog) => prog.studyMode === 'Distance Learning' || prog.studyMode === 'Online'),
       },
       {
-        id: "part-time",
-        label: "Part-time",
+        id: 'part-time',
+        label: 'Part-time',
         active: false,
         apply: (p) =>
-          p.filter(
-            (prog) =>
-              prog.studyMode === "Part-time" || prog.studyMode === "Flexible"
-          ),
+          p.filter((prog) => prog.studyMode === 'Part-time' || prog.studyMode === 'Flexible'),
       },
     ],
     []
@@ -244,17 +230,17 @@ export const useEducationSearch = (
   // Reset all filters
   const resetFilters = useCallback(() => {
     setFilters(DEFAULT_FILTERS);
-    setSearchTerm("");
+    setSearchTerm('');
   }, []);
 
   // Check if any filters are active
   const hasActiveFilters = useMemo(() => {
     return (
       searchTerm.length > 0 ||
-      filters.category !== "" ||
-      filters.level !== "" ||
-      filters.studyMode !== "" ||
-      filters.location !== ""
+      filters.category !== '' ||
+      filters.level !== '' ||
+      filters.studyMode !== '' ||
+      filters.location !== ''
     );
   }, [searchTerm, filters]);
 

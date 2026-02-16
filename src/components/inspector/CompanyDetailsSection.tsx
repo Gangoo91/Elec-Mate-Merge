@@ -1,20 +1,16 @@
-
 import React from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { 
-  Building2, 
-  Phone, 
-  Mail, 
-  FileText, 
-  MapPin,
-  CreditCard,
-  Shield,
-  Hash
-} from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Building2, Phone, Mail, FileText, MapPin, CreditCard, Shield, Hash } from 'lucide-react';
 
 interface CompanyDetailsSectionProps {
   formData: any;
@@ -24,12 +20,12 @@ interface CompanyDetailsSectionProps {
   onQuickFill: (template: string) => void;
 }
 
-const CompanyDetailsSection = ({ 
-  formData, 
-  onUpdate, 
-  companyDetailsMode, 
-  onToggleMode, 
-  onQuickFill 
+const CompanyDetailsSection = ({
+  formData,
+  onUpdate,
+  companyDetailsMode,
+  onToggleMode,
+  onQuickFill,
 }: CompanyDetailsSectionProps) => {
   return (
     <div className="space-y-6">
@@ -64,7 +60,10 @@ const CompanyDetailsSection = ({
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="companyName" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label
+                htmlFor="companyName"
+                className="flex items-center gap-2 text-sm font-medium text-gray-300"
+              >
                 <Building2 className="h-4 w-4" />
                 Company Name
               </Label>
@@ -77,7 +76,10 @@ const CompanyDetailsSection = ({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="companyRegistration" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label
+                htmlFor="companyRegistration"
+                className="flex items-center gap-2 text-sm font-medium text-gray-300"
+              >
                 <Hash className="h-4 w-4" />
                 Registration Number
               </Label>
@@ -92,7 +94,10 @@ const CompanyDetailsSection = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="companyAddress" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+            <Label
+              htmlFor="companyAddress"
+              className="flex items-center gap-2 text-sm font-medium text-gray-300"
+            >
               <MapPin className="h-4 w-4" />
               Company Address
             </Label>
@@ -108,7 +113,10 @@ const CompanyDetailsSection = ({
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="companyPhone" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label
+                htmlFor="companyPhone"
+                className="flex items-center gap-2 text-sm font-medium text-gray-300"
+              >
                 <Phone className="h-4 w-4" />
                 Phone Number
               </Label>
@@ -121,7 +129,10 @@ const CompanyDetailsSection = ({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="companyEmail" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label
+                htmlFor="companyEmail"
+                className="flex items-center gap-2 text-sm font-medium text-gray-300"
+              >
                 <Mail className="h-4 w-4" />
                 Email Address
               </Label>
@@ -138,7 +149,10 @@ const CompanyDetailsSection = ({
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="companyNICEIC" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label
+                htmlFor="companyNICEIC"
+                className="flex items-center gap-2 text-sm font-medium text-gray-300"
+              >
                 <CreditCard className="h-4 w-4" />
                 NICEIC/NAPIT Registration
               </Label>
@@ -151,7 +165,10 @@ const CompanyDetailsSection = ({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="companyInsurance" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+              <Label
+                htmlFor="companyInsurance"
+                className="flex items-center gap-2 text-sm font-medium text-gray-300"
+              >
                 <Shield className="h-4 w-4" />
                 Insurance Details
               </Label>
@@ -167,7 +184,10 @@ const CompanyDetailsSection = ({
         </div>
       ) : (
         <div className="space-y-2">
-          <Label htmlFor="companyDetails" className="flex items-center gap-2 text-sm font-medium text-gray-300">
+          <Label
+            htmlFor="companyDetails"
+            className="flex items-center gap-2 text-sm font-medium text-gray-300"
+          >
             <FileText className="h-4 w-4" />
             Company Details (Freeform)
           </Label>
@@ -179,7 +199,7 @@ const CompanyDetailsSection = ({
             rows={8}
             className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow font-mono text-sm"
           />
-          
+
           <div className="mt-2 text-xs text-gray-400 bg-muted p-3 rounded-md border border-border">
             <div className="flex flex-wrap gap-4">
               <span className="font-medium">Include:</span>

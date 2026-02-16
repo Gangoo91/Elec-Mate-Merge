@@ -1,51 +1,59 @@
-import { ArrowLeft, MapPin, FileText, Lightbulb, Package, Users, MessageSquare } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  MapPin,
+  FileText,
+  Lightbulb,
+  Package,
+  Users,
+  MessageSquare,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Job Breakdown and Task Sequencing",
-    description: "Breaking down installation work into manageable tasks",
+    number: 'Subsection 1',
+    title: 'Job Breakdown and Task Sequencing',
+    description: 'Breaking down installation work into manageable tasks',
     icon: MapPin,
-    href: "3-1"
+    href: '3-1',
   },
   {
-    number: "Subsection 2",
-    title: "Setting Realistic Timescales and Milestones",
-    description: "Planning realistic timeframes for electrical work",
+    number: 'Subsection 2',
+    title: 'Setting Realistic Timescales and Milestones',
+    description: 'Planning realistic timeframes for electrical work',
     icon: FileText,
-    href: "3-2"
+    href: '3-2',
   },
   {
-    number: "Subsection 3",
-    title: "Planning Access and Working Platforms",
-    description: "Organising safe access to work areas",
+    number: 'Subsection 3',
+    title: 'Planning Access and Working Platforms',
+    description: 'Organising safe access to work areas',
     icon: Lightbulb,
-    href: "3-3"
+    href: '3-3',
   },
   {
-    number: "Subsection 4",
-    title: "Minimising Disruption to Other Site Activities",
-    description: "Planning work to reduce impact on other trades",
+    number: 'Subsection 4',
+    title: 'Minimising Disruption to Other Site Activities',
+    description: 'Planning work to reduce impact on other trades',
     icon: Package,
-    href: "3-4"
+    href: '3-4',
   },
   {
-    number: "Subsection 5",
-    title: "Dealing with Variations and Unforeseen Issues",
-    description: "Managing changes and unexpected problems during installation",
+    number: 'Subsection 5',
+    title: 'Dealing with Variations and Unforeseen Issues',
+    description: 'Managing changes and unexpected problems during installation',
     icon: Users,
-    href: "3-5"
+    href: '3-5',
   },
   {
-    number: "Subsection 6",
-    title: "Health and Safety Considerations During Planning",
-    description: "Incorporating safety planning into installation work",
+    number: 'Subsection 6',
+    title: 'Health and Safety Considerations During Planning',
+    description: 'Incorporating safety planning into installation work',
     icon: MessageSquare,
-    href: "3-6"
-  }
+    href: '3-6',
+  },
 ];
 
 const Section3 = () => {

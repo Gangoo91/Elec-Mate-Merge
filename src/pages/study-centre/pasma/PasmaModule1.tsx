@@ -1,40 +1,45 @@
-import { ArrowLeft, Scale, BookOpen, FileText, Award } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Scale, BookOpen, FileText, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Work at Height Regs & HSWA 1974",
+    title: 'Work at Height Regs & HSWA 1974',
     icon: Scale,
-    description: "WAHR 2005 hierarchy of control, HSWA Sections 2/3/7/8, Schedule 5 inspection requirements",
+    description:
+      'WAHR 2005 hierarchy of control, HSWA Sections 2/3/7/8, Schedule 5 inspection requirements',
   },
   {
     id: 2,
-    title: "EN 1004:2020 & BS 1139-6",
+    title: 'EN 1004:2020 & BS 1139-6',
     icon: BookOpen,
-    description: "EN 1004:2020 changes, load classes 2 & 3, max heights, BS 1139-6 scope, compliance marking",
+    description:
+      'EN 1004:2020 changes, load classes 2 & 3, max heights, BS 1139-6 scope, compliance marking',
   },
   {
     id: 3,
-    title: "PASMA Code of Practice",
+    title: 'PASMA Code of Practice',
     icon: FileText,
-    description: "What PASMA is, Code of Practice scope, course types, digital certification, card validity",
+    description:
+      'What PASMA is, Code of Practice scope, course types, digital certification, card validity',
   },
   {
     id: 4,
-    title: "CDM 2015 & Duty Holders",
+    title: 'CDM 2015 & Duty Holders',
     icon: Award,
-    description: "5 CDM duty holders, construction phase plan, pre-construction information, practical scenarios",
+    description:
+      '5 CDM duty holders, construction phase plan, pre-construction information, practical scenarios',
   },
 ];
 
 export default function PasmaModule1() {
   useSEO({
-    title: "Module 1: Legislation & PASMA Standards | PASMA Towers for Users",
-    description: "Work at Height Regulations 2005, HSWA 1974, EN 1004:2020, PASMA Code of Practice, and CDM 2015 duty holders for mobile tower scaffold work.",
+    title: 'Module 1: Legislation & PASMA Standards | PASMA Towers for Users',
+    description:
+      'Work at Height Regulations 2005, HSWA 1974, EN 1004:2020, PASMA Code of Practice, and CDM 2015 duty holders for mobile tower scaffold work.',
   });
 
   return (
@@ -73,7 +78,8 @@ export default function PasmaModule1() {
               Legislation & PASMA Standards
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Key legislation, European and British standards, the PASMA Code of Practice, and CDM 2015 duty holder responsibilities
+              Key legislation, European and British standards, the PASMA Code of Practice, and CDM
+              2015 duty holder responsibilities
             </p>
           </div>
 

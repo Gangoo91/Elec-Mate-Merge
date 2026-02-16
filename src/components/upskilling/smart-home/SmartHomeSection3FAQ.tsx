@@ -4,17 +4,20 @@ import { HelpCircle } from 'lucide-react';
 export const SmartHomeSection3FAQ = () => {
   const faqs = [
     {
-      question: "Can smart devices work without a controller?",
-      answer: "Some simple setups (like a motion sensor linked directly to a light) can, but most complex automations require a hub/controller."
+      question: 'Can smart devices work without a controller?',
+      answer:
+        'Some simple setups (like a motion sensor linked directly to a light) can, but most complex automations require a hub/controller.',
     },
     {
-      question: "Do actuators need constant power?",
-      answer: "High-load actuators (locks, motors) usually need mains power; smaller ones may run on batteries."
+      question: 'Do actuators need constant power?',
+      answer:
+        'High-load actuators (locks, motors) usually need mains power; smaller ones may run on batteries.',
     },
     {
-      question: "Is it better to use local or cloud controllers?",
-      answer: "Local controllers are faster and more secure; cloud controllers offer more features and easier integration."
-    }
+      question: 'Is it better to use local or cloud controllers?',
+      answer:
+        'Local controllers are faster and more secure; cloud controllers offer more features and easier integration.',
+    },
   ];
 
   return (

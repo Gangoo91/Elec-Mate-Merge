@@ -1,16 +1,18 @@
-
-import { useState } from "react";
-import { TimeEntry } from "@/types/time-tracking";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Pencil, Save, Trash2, Plus, Zap } from "lucide-react";
-import { useTimeToPortfolio } from "@/hooks/portfolio/useTimeToPortfolio";
-import { useUniversalPortfolio } from "@/hooks/portfolio/useUniversalPortfolio";
-import TimeEntryToPortfolioDialog from "@/components/apprentice/portfolio/TimeEntryToPortfolioDialog";
+import { useState } from 'react';
+import { TimeEntry } from '@/types/time-tracking';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Pencil, Save, Trash2, Plus, Zap } from 'lucide-react';
+import { useTimeToPortfolio } from '@/hooks/portfolio/useTimeToPortfolio';
+import { useUniversalPortfolio } from '@/hooks/portfolio/useUniversalPortfolio';
+import TimeEntryToPortfolioDialog from '@/components/apprentice/portfolio/TimeEntryToPortfolioDialog';
 
 interface LogbookEntryRowProps {
   entry: TimeEntry;
-  onSave: (entryId: string, updatedData: { duration: number, activity: string, notes: string }) => void;
+  onSave: (
+    entryId: string,
+    updatedData: { duration: number; activity: string; notes: string }
+  ) => void;
   onDelete: (entryId: string) => void;
 }
 
@@ -20,8 +22,9 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
   const [editedDuration, setEditedDuration] = useState<number>(entry.duration);
   const [editedActivity, setEditedActivity] = useState<string>(entry.activity);
   const [editedNotes, setEditedNotes] = useState<string>(entry.notes);
-  
-  const { convertTimeEntryToPortfolio, quickConvertTimeEntry, isConverting, categories } = useTimeToPortfolio();
+
+  const { convertTimeEntryToPortfolio, quickConvertTimeEntry, isConverting, categories } =
+    useTimeToPortfolio();
   const { convertTimeEntryToUniversal } = useUniversalPortfolio();
 
   const handleEdit = () => {
@@ -32,7 +35,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
     onSave(entry.id, {
       duration: editedDuration,
       activity: editedActivity,
-      notes: editedNotes
+      notes: editedNotes,
     });
     setIsEditing(false);
   };
@@ -56,11 +59,11 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
 
   return (
     <>
-      <tr key={entry.id} className={entry.isAutomatic ? "bg-elec-yellow/5" : ""}>
+      <tr key={entry.id} className={entry.isAutomatic ? 'bg-elec-yellow/5' : ''}>
         {isEditing ? (
           <>
             <td className="p-3">
-              <Input 
+              <Input
                 value={editedActivity}
                 onChange={(e) => setEditedActivity(e.target.value)}
                 className="w-full bg-white/5"
@@ -68,7 +71,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
               />
             </td>
             <td className="p-3 text-center">
-              <Input 
+              <Input
                 type="number"
                 value={editedDuration}
                 onChange={(e) => setEditedDuration(parseInt(e.target.value) || 0)}
@@ -77,7 +80,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
               />
             </td>
             <td className="p-3 hidden md:table-cell">
-              <Input 
+              <Input
                 value={editedNotes}
                 onChange={(e) => setEditedNotes(e.target.value)}
                 className="w-full bg-white/5"
@@ -85,9 +88,9 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
               />
             </td>
             <td className="p-3 text-right">
-              <Button 
-                size="sm" 
-                variant="ghost" 
+              <Button
+                size="sm"
+                variant="ghost"
                 onClick={handleSaveChanges}
                 disabled={entry.isAutomatic}
               >
@@ -97,9 +100,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
           </>
         ) : (
           <>
-            <td className="p-3">
-              {entry.activity}
-            </td>
+            <td className="p-3">{entry.activity}</td>
             <td className="p-3 text-center">
               {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
             </td>
@@ -110,16 +111,12 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
               <div className="flex gap-1">
                 {!entry.isAutomatic && (
                   <>
-                    <Button 
-                      size="sm" 
-                      variant="ghost" 
-                      onClick={handleEdit}
-                    >
+                    <Button size="sm" variant="ghost" onClick={handleEdit}>
                       <Pencil className="h-4 w-4" />
                     </Button>
-                    <Button 
-                      size="sm" 
-                      variant="ghost" 
+                    <Button
+                      size="sm"
+                      variant="ghost"
                       onClick={() => onDelete(entry.id)}
                       className="text-red-400 hover:text-red-300"
                     >
@@ -127,7 +124,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                     </Button>
                   </>
                 )}
-                
+
                 {/* Quick Add to Portfolio */}
                 <Button
                   size="sm"
@@ -139,7 +136,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                 >
                   <Zap className="h-4 w-4" />
                 </Button>
-                
+
                 {/* Custom Add to Portfolio */}
                 <Button
                   size="sm"

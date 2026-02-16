@@ -8,10 +8,10 @@ export const WarmWhiteKelvinQuickCheck = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const options = [
-    { text: "5000-6500K", correct: false },
-    { text: "2200-3000K", correct: true },
-    { text: "1000-2000K", correct: false },
-    { text: "4000-5000K", correct: false }
+    { text: '5000-6500K', correct: false },
+    { text: '2200-3000K', correct: true },
+    { text: '1000-2000K', correct: false },
+    { text: '4000-5000K', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -33,7 +33,7 @@ export const WarmWhiteKelvinQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">Q3: At what Kelvin is "warm white" lighting?</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +58,9 @@ export const WarmWhiteKelvinQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +70,9 @@ export const WarmWhiteKelvinQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> Warm white lighting ranges from 2200-3000K, with 2700K being the standard warm white that creates a cosy, relaxing atmosphere with yellow-orange tones.
+              <strong>Correct:</strong> Warm white lighting ranges from 2200-3000K, with 2700K being
+              the standard warm white that creates a cosy, relaxing atmosphere with yellow-orange
+              tones.
             </p>
           </div>
         )}

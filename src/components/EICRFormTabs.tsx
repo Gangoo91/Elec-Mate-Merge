@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useEICRTabs } from '@/hooks/useEICRTabs';
@@ -14,7 +13,14 @@ interface EICRFormTabsProps {
   onTabChange?: (tab: string) => void;
 }
 
-const EICRFormTabs = ({ formData, onUpdate, onOpenBoardScan, initialTab, currentTab: controlledTab, onTabChange: onControlledTabChange }: EICRFormTabsProps) => {
+const EICRFormTabs = ({
+  formData,
+  onUpdate,
+  onOpenBoardScan,
+  initialTab,
+  currentTab: controlledTab,
+  onTabChange: onControlledTabChange,
+}: EICRFormTabsProps) => {
   const isMobile = useIsMobile();
   const {
     currentTab,
@@ -30,11 +36,11 @@ const EICRFormTabs = ({ formData, onUpdate, onOpenBoardScan, initialTab, current
     isCurrentTabComplete,
     currentTabHasRequiredFields,
     toggleTabComplete,
-    hasRequiredFields
+    hasRequiredFields,
   } = useEICRTabs(formData, {
     initialTab,
     controlledTab,
-    onTabChange: onControlledTabChange
+    onTabChange: onControlledTabChange,
   });
 
   // Build completion status map
@@ -43,9 +49,9 @@ const EICRFormTabs = ({ formData, onUpdate, onOpenBoardScan, initialTab, current
     return {
       details: completedSections.details || hasRequiredFields('details'),
       inspection: completedSections.inspection || false,
-      testing: completedSections.testing || (formData.scheduleOfTests?.length > 0),
+      testing: completedSections.testing || formData.scheduleOfTests?.length > 0,
       inspector: completedSections.inspector || hasRequiredFields('inspector'),
-      certificate: completedSections.certificate || hasRequiredFields('certificate')
+      certificate: completedSections.certificate || hasRequiredFields('certificate'),
     };
   }, [formData.completedSections, formData.scheduleOfTests, hasRequiredFields]);
 
@@ -72,40 +78,40 @@ const EICRFormTabs = ({ formData, onUpdate, onOpenBoardScan, initialTab, current
     isCurrentTabComplete,
     currentTabHasRequiredFields,
     onToggleComplete: handleToggleComplete,
-    onOpenBoardScan
+    onOpenBoardScan,
   };
 
   const smartTabs: SmartTab[] = [
     {
-      value: "details",
-      label: "Details",
-      shortLabel: "Details",
-      content: <EICRTabContent tabValue="details" {...tabContentProps} />
+      value: 'details',
+      label: 'Details',
+      shortLabel: 'Details',
+      content: <EICRTabContent tabValue="details" {...tabContentProps} />,
     },
     {
-      value: "inspection",
-      label: "Inspection",
-      shortLabel: "Inspect",
-      content: <EICRTabContent tabValue="inspection" {...tabContentProps} />
+      value: 'inspection',
+      label: 'Inspection',
+      shortLabel: 'Inspect',
+      content: <EICRTabContent tabValue="inspection" {...tabContentProps} />,
     },
     {
-      value: "testing",
-      label: "Testing",
-      shortLabel: "Tests",
-      content: <EICRTabContent tabValue="testing" {...tabContentProps} />
+      value: 'testing',
+      label: 'Testing',
+      shortLabel: 'Tests',
+      content: <EICRTabContent tabValue="testing" {...tabContentProps} />,
     },
     {
-      value: "inspector",
-      label: "Inspector",
-      shortLabel: "Inspector",
-      content: <EICRTabContent tabValue="inspector" {...tabContentProps} />
+      value: 'inspector',
+      label: 'Inspector',
+      shortLabel: 'Inspector',
+      content: <EICRTabContent tabValue="inspector" {...tabContentProps} />,
     },
     {
-      value: "certificate",
-      label: "Certificate",
-      shortLabel: "Cert",
-      content: <EICRTabContent tabValue="certificate" {...tabContentProps} />
-    }
+      value: 'certificate',
+      label: 'Certificate',
+      shortLabel: 'Cert',
+      content: <EICRTabContent tabValue="certificate" {...tabContentProps} />,
+    },
   ];
 
   return (

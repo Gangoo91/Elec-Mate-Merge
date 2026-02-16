@@ -1,45 +1,45 @@
-import { ArrowLeft, CheckCircle, Shield, Wrench, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, CheckCircle, Shield, Wrench, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Pre-Entry Procedures",
+    title: 'Pre-Entry Procedures',
     icon: CheckCircle,
     description:
-      "Mechanical, electrical, and piping isolation techniques, purging the atmosphere, pre-entry atmospheric testing, and issuing the entry permit",
+      'Mechanical, electrical, and piping isolation techniques, purging the atmosphere, pre-entry atmospheric testing, and issuing the entry permit',
   },
   {
     id: 2,
-    title: "Personal Protective Equipment",
+    title: 'Personal Protective Equipment',
     icon: Shield,
     description:
-      "Selecting between breathing apparatus and respiratory protective equipment, harnesses and lanyards, tripod rescue systems, communication equipment, and lighting",
+      'Selecting between breathing apparatus and respiratory protective equipment, harnesses and lanyards, tripod rescue systems, communication equipment, and lighting',
   },
   {
     id: 3,
-    title: "Working Inside Confined Spaces",
+    title: 'Working Inside Confined Spaces',
     icon: Wrench,
     description:
-      "Communication systems between entrant and top person, top-person duties and responsibilities, time limits, personnel rotation, and continuous atmospheric monitoring",
+      'Communication systems between entrant and top person, top-person duties and responsibilities, time limits, personnel rotation, and continuous atmospheric monitoring',
   },
   {
     id: 4,
-    title: "Electrical Work in Confined Spaces",
+    title: 'Electrical Work in Confined Spaces',
     icon: Zap,
     description:
-      "Reduced voltage requirements at 110V, 25V, and 12V, residual current devices, battery-powered tools, hot work permit requirements, and safe cable routing",
+      'Reduced voltage requirements at 110V, 25V, and 12V, residual current devices, battery-powered tools, hot work permit requirements, and safe cable routing',
   },
 ];
 
 export default function ConfinedSpacesModule4() {
   useSEO({
-    title: "Module 4: Safe Entry & Working Procedures | Confined Spaces Awareness",
+    title: 'Module 4: Safe Entry & Working Procedures | Confined Spaces Awareness',
     description:
-      "Learn pre-entry procedures, PPE selection, safe working practices inside confined spaces, and the special requirements for electrical work.",
+      'Learn pre-entry procedures, PPE selection, safe working practices inside confined spaces, and the special requirements for electrical work.',
   });
 
   return (

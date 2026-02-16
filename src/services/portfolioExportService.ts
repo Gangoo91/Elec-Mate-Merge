@@ -26,7 +26,7 @@ export class PortfolioExportService {
     let yPosition = 20;
     const pageHeight = doc.internal.pageSize.height;
     const lineHeight = 7;
-    
+
     // Filter entries based on options
     const filteredEntries = this.filterEntries(entries, options);
     this.updateProgress('Preparing PDF export...', 0, filteredEntries.length);
@@ -70,7 +70,7 @@ export class PortfolioExportService {
         ['Date Created', new Date(entry.dateCreated).toLocaleDateString()],
         ['Status', entry.status],
         ['Self Assessment', `${entry.selfAssessment}/5`],
-        ['Time Spent', `${Math.round(entry.timeSpent / 60)} hours`]
+        ['Time Spent', `${Math.round(entry.timeSpent / 60)} hours`],
       ];
 
       if (entry.dateCompleted) {
@@ -85,7 +85,7 @@ export class PortfolioExportService {
         headStyles: { fillColor: [255, 193, 7] }, // elec-yellow
         margin: { left: 20, right: 20 },
         tableWidth: 'auto',
-        styles: { fontSize: 9 }
+        styles: { fontSize: 9 },
       });
 
       yPosition = (doc as any).lastAutoTable.finalY + 10;
@@ -96,7 +96,7 @@ export class PortfolioExportService {
         doc.setFont('helvetica', 'bold');
         doc.text('Description:', 20, yPosition);
         yPosition += 7;
-        
+
         doc.setFont('helvetica', 'normal');
         const splitDescription = doc.splitTextToSize(entry.description, 170);
         doc.text(splitDescription, 20, yPosition);
@@ -109,7 +109,7 @@ export class PortfolioExportService {
         doc.setFont('helvetica', 'bold');
         doc.text('Skills Demonstrated:', 20, yPosition);
         yPosition += 7;
-        
+
         doc.setFont('helvetica', 'normal');
         const skillsText = entry.skills.join(', ');
         const splitSkills = doc.splitTextToSize(skillsText, 170);
@@ -123,7 +123,7 @@ export class PortfolioExportService {
         doc.setFont('helvetica', 'bold');
         doc.text('Reflection:', 20, yPosition);
         yPosition += 7;
-        
+
         doc.setFont('helvetica', 'normal');
         const splitReflection = doc.splitTextToSize(entry.reflection, 170);
         doc.text(splitReflection, 20, yPosition);
@@ -136,9 +136,9 @@ export class PortfolioExportService {
         doc.setFont('helvetica', 'bold');
         doc.text('Learning Outcomes:', 20, yPosition);
         yPosition += 7;
-        
+
         doc.setFont('helvetica', 'normal');
-        entry.learningOutcomes.forEach(outcome => {
+        entry.learningOutcomes.forEach((outcome) => {
           doc.text(`• ${outcome}`, 25, yPosition);
           yPosition += 5;
         });
@@ -151,9 +151,9 @@ export class PortfolioExportService {
         doc.setFont('helvetica', 'bold');
         doc.text('Assessment Criteria:', 20, yPosition);
         yPosition += 7;
-        
+
         doc.setFont('helvetica', 'normal');
-        entry.assessmentCriteria.forEach(criteria => {
+        entry.assessmentCriteria.forEach((criteria) => {
           doc.text(`• ${criteria}`, 25, yPosition);
           yPosition += 5;
         });
@@ -166,7 +166,7 @@ export class PortfolioExportService {
         doc.setFont('helvetica', 'bold');
         doc.text('Supervisor Feedback:', 20, yPosition);
         yPosition += 7;
-        
+
         doc.setFont('helvetica', 'normal');
         const splitFeedback = doc.splitTextToSize(entry.supervisorFeedback, 170);
         doc.text(splitFeedback, 20, yPosition);
@@ -179,9 +179,9 @@ export class PortfolioExportService {
         doc.setFont('helvetica', 'bold');
         doc.text('Evidence Files:', 20, yPosition);
         yPosition += 7;
-        
+
         doc.setFont('helvetica', 'normal');
-        entry.evidenceFiles.forEach(file => {
+        entry.evidenceFiles.forEach((file) => {
           doc.text(`• ${file.name} (${file.type})`, 25, yPosition);
           yPosition += 5;
         });
@@ -251,45 +251,69 @@ export class PortfolioExportService {
           
           ${entry.description ? `<p><span class="field-label">Description:</span></p><p>${this.escapeHtml(entry.description)}</p>` : ''}
           
-          ${entry.skills && entry.skills.length > 0 ? `
+          ${
+            entry.skills && entry.skills.length > 0
+              ? `
             <div class="skills">
               <p class="field-label">Skills Demonstrated:</p>
-              <p>${entry.skills.map(skill => this.escapeHtml(skill)).join(', ')}</p>
+              <p>${entry.skills.map((skill) => this.escapeHtml(skill)).join(', ')}</p>
             </div>
-          ` : ''}
+          `
+              : ''
+          }
           
-          ${options.includeReflections && entry.reflection ? `
+          ${
+            options.includeReflections && entry.reflection
+              ? `
             <div class="reflection">
               <p class="field-label">Reflection:</p>
               <p>${this.escapeHtml(entry.reflection)}</p>
             </div>
-          ` : ''}
+          `
+              : ''
+          }
           
-          ${entry.learningOutcomes && entry.learningOutcomes.length > 0 ? `
+          ${
+            entry.learningOutcomes && entry.learningOutcomes.length > 0
+              ? `
             <p class="field-label">Learning Outcomes:</p>
             <ul>
-              ${entry.learningOutcomes.map(outcome => `<li>${this.escapeHtml(outcome)}</li>`).join('')}
+              ${entry.learningOutcomes.map((outcome) => `<li>${this.escapeHtml(outcome)}</li>`).join('')}
             </ul>
-          ` : ''}
+          `
+              : ''
+          }
           
-          ${entry.assessmentCriteria && entry.assessmentCriteria.length > 0 ? `
+          ${
+            entry.assessmentCriteria && entry.assessmentCriteria.length > 0
+              ? `
             <p class="field-label">Assessment Criteria:</p>
             <ul>
-              ${entry.assessmentCriteria.map(criteria => `<li>${this.escapeHtml(criteria)}</li>`).join('')}
+              ${entry.assessmentCriteria.map((criteria) => `<li>${this.escapeHtml(criteria)}</li>`).join('')}
             </ul>
-          ` : ''}
+          `
+              : ''
+          }
           
-          ${entry.supervisorFeedback ? `
+          ${
+            entry.supervisorFeedback
+              ? `
             <p><span class="field-label">Supervisor Feedback:</span></p>
             <p>${this.escapeHtml(entry.supervisorFeedback)}</p>
-          ` : ''}
+          `
+              : ''
+          }
           
-          ${options.includeEvidence && entry.evidenceFiles && entry.evidenceFiles.length > 0 ? `
+          ${
+            options.includeEvidence && entry.evidenceFiles && entry.evidenceFiles.length > 0
+              ? `
             <p class="field-label">Evidence Files:</p>
             <ul>
-              ${entry.evidenceFiles.map(file => `<li>${this.escapeHtml(file.name)} (${this.escapeHtml(file.type)})</li>`).join('')}
+              ${entry.evidenceFiles.map((file) => `<li>${this.escapeHtml(file.name)} (${this.escapeHtml(file.type)})</li>`).join('')}
             </ul>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
       `;
     }
@@ -318,14 +342,14 @@ export class PortfolioExportService {
 
     // Filter by categories
     if (options.categories && options.categories.length > 0) {
-      filtered = filtered.filter(entry => options.categories.includes(entry.category.id));
+      filtered = filtered.filter((entry) => options.categories.includes(entry.category.id));
     }
 
     // Filter by date range
     if (options.dateRange?.from && options.dateRange?.to) {
       const fromDate = new Date(options.dateRange.from);
       const toDate = new Date(options.dateRange.to);
-      filtered = filtered.filter(entry => {
+      filtered = filtered.filter((entry) => {
         const entryDate = new Date(entry.dateCreated);
         return entryDate >= fromDate && entryDate <= toDate;
       });

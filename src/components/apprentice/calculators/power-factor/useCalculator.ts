@@ -1,64 +1,66 @@
-
-import { useState } from "react";
-import { CalculatorValidator, ValidationResult } from "@/services/calculatorValidation";
+import { useState } from 'react';
+import { CalculatorValidator, ValidationResult } from '@/services/calculatorValidation';
 
 export const useCalculator = () => {
-  const [activePower, setActivePower] = useState<string>("");
-  const [apparentPower, setApparentPower] = useState<string>("");
-  const [current, setCurrent] = useState<string>("");
-  const [voltage, setVoltage] = useState<string>("");
-  const [calculationMethod, setCalculationMethod] = useState<"power" | "currentVoltage">("power");
+  const [activePower, setActivePower] = useState<string>('');
+  const [apparentPower, setApparentPower] = useState<string>('');
+  const [current, setCurrent] = useState<string>('');
+  const [voltage, setVoltage] = useState<string>('');
+  const [calculationMethod, setCalculationMethod] = useState<'power' | 'currentVoltage'>('power');
   const [powerFactor, setPowerFactor] = useState<string | null>(null);
-  const [targetPF, setTargetPF] = useState<string>("0.95");
-  const [pfType, setPfType] = useState<string>("lagging");
+  const [targetPF, setTargetPF] = useState<string>('0.95');
+  const [pfType, setPfType] = useState<string>('lagging');
   const [capacitorKVAr, setCapacitorKVAr] = useState<string | null>(null);
   const [currentAfterCorrection, setCurrentAfterCorrection] = useState<string | null>(null);
   const [validation, setValidation] = useState<ValidationResult | null>(null);
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const validateInputs = () => {
-    const newErrors: {[key: string]: string} = {};
-    
-    if (calculationMethod === "power") {
+    const newErrors: { [key: string]: string } = {};
+
+    if (calculationMethod === 'power') {
       // Enhanced validation for power method
       if (!activePower) {
-        newErrors.activePower = "Active power is required";
+        newErrors.activePower = 'Active power is required';
       } else {
         const activeValue = parseFloat(activePower);
         if (isNaN(activeValue) || activeValue <= 0) {
-          newErrors.activePower = "Please enter a valid positive number";
-        } else if (activeValue > 1000000) { // 1MW limit for practical applications
-          newErrors.activePower = "Active power exceeds practical limit (1MW max)";
+          newErrors.activePower = 'Please enter a valid positive number';
+        } else if (activeValue > 1000000) {
+          // 1MW limit for practical applications
+          newErrors.activePower = 'Active power exceeds practical limit (1MW max)';
         }
       }
-      
+
       if (!apparentPower) {
-        newErrors.apparentPower = "Apparent power is required";
+        newErrors.apparentPower = 'Apparent power is required';
       } else {
         const apparentValue = parseFloat(apparentPower);
         if (isNaN(apparentValue) || apparentValue <= 0) {
-          newErrors.apparentPower = "Please enter a valid positive number";
-        } else if (apparentValue > 1000000) { // 1MVA limit
-          newErrors.apparentPower = "Apparent power exceeds practical limit (1MVA max)";
+          newErrors.apparentPower = 'Please enter a valid positive number';
+        } else if (apparentValue > 1000000) {
+          // 1MVA limit
+          newErrors.apparentPower = 'Apparent power exceeds practical limit (1MVA max)';
         }
       }
-      
+
       // Professional validation: Active power cannot exceed apparent power
       if (apparentPower && activePower) {
         const activeValue = parseFloat(activePower);
         const apparentValue = parseFloat(apparentPower);
         if (!isNaN(activeValue) && !isNaN(apparentValue) && activeValue > apparentValue) {
-          newErrors.activePower = "Active power cannot exceed apparent power (violates fundamental electrical principles)";
+          newErrors.activePower =
+            'Active power cannot exceed apparent power (violates fundamental electrical principles)';
         }
       }
     } else {
       // Enhanced validation for current/voltage method
       if (!current) {
-        newErrors.current = "Current is required";
+        newErrors.current = 'Current is required';
       } else {
         const currentValue = parseFloat(current);
         if (isNaN(currentValue) || currentValue <= 0) {
-          newErrors.current = "Please enter a valid positive number";
+          newErrors.current = 'Please enter a valid positive number';
         } else {
           // Professional range validation
           const currentValidation = CalculatorValidator.validateInputRange(currentValue, 'current');
@@ -67,13 +69,13 @@ export const useCalculator = () => {
           }
         }
       }
-      
+
       if (!voltage) {
-        newErrors.voltage = "Voltage is required";
+        newErrors.voltage = 'Voltage is required';
       } else {
         const voltageValue = parseFloat(voltage);
         if (isNaN(voltageValue) || voltageValue <= 0) {
-          newErrors.voltage = "Please enter a valid positive number";
+          newErrors.voltage = 'Please enter a valid positive number';
         } else {
           // Professional range validation
           const voltageValidation = CalculatorValidator.validateInputRange(voltageValue, 'voltage');
@@ -82,39 +84,39 @@ export const useCalculator = () => {
           }
         }
       }
-      
+
       if (!activePower) {
-        newErrors.activePower = "Active power is required for this calculation method";
+        newErrors.activePower = 'Active power is required for this calculation method';
       } else {
         const activeValue = parseFloat(activePower);
         if (isNaN(activeValue) || activeValue <= 0) {
-          newErrors.activePower = "Please enter a valid positive number";
+          newErrors.activePower = 'Please enter a valid positive number';
         }
       }
     }
 
     // Target PF validation
     if (!targetPF) {
-      newErrors.targetPF = "Target PF is required";
+      newErrors.targetPF = 'Target PF is required';
     } else {
       const t = parseFloat(targetPF);
       if (isNaN(t) || t <= 0 || t > 1) {
-        newErrors.targetPF = "Target PF must be between 0 and 1";
+        newErrors.targetPF = 'Target PF must be between 0 and 1';
       }
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const calculatePowerFactor = () => {
     if (!validateInputs()) return;
-    
+
     let pf: number;
     let activeValue: number;
     let apparentValue: number;
-    
-    if (calculationMethod === "power") {
+
+    if (calculationMethod === 'power') {
       // Professional calculation: Power Factor = Active Power / Apparent Power
       activeValue = parseFloat(activePower);
       apparentValue = parseFloat(apparentPower);
@@ -125,44 +127,40 @@ export const useCalculator = () => {
       const volts = parseFloat(voltage);
       const amps = parseFloat(current);
       apparentValue = volts * amps;
-      
+
       // Enhanced validation: Active power cannot exceed apparent power
       if (activeValue > apparentValue) {
-        setErrors({ 
-          activePower: `Active power (${activeValue}W) cannot exceed apparent power (${apparentValue.toFixed(1)}VA) - Check input values` 
+        setErrors({
+          activePower: `Active power (${activeValue}W) cannot exceed apparent power (${apparentValue.toFixed(1)}VA) - Check input values`,
         });
         return;
       }
-      
+
       pf = activeValue / apparentValue;
     }
-    
+
     // Professional bounds checking
     pf = Math.min(Math.max(pf, 0), 1);
-    
+
     // Enhanced validation using professional standards
-    const pfValidation = CalculatorValidator.validatePowerFactor(
-      activeValue,
-      apparentValue,
-      pf
-    );
-    
+    const pfValidation = CalculatorValidator.validatePowerFactor(activeValue, apparentValue, pf);
+
     setValidation(pfValidation);
     setPowerFactor(pf.toFixed(4)); // Professional precision to 4 decimal places
 
     // Capacitor sizing to reach target PF (only for lagging PF)
-    if (pfType === "lagging" && targetPF) {
+    if (pfType === 'lagging' && targetPF) {
       const tpf = Math.min(Math.max(parseFloat(targetPF), 0.1), 1);
       const phi1 = Math.acos(pf);
       const phi2 = Math.acos(tpf);
       const PkW = activeValue >= 1000 ? activeValue / 1000 : activeValue; // Accept W or kW input
       const kvar = Math.max(0, PkW * (Math.tan(phi1) - Math.tan(phi2)));
       setCapacitorKVAr(kvar.toFixed(2));
-      
+
       // Calculate estimated current after correction
-      if (calculationMethod === "currentVoltage") {
+      if (calculationMethod === 'currentVoltage') {
         const volts = parseFloat(voltage);
-        const newApparentPower = PkW * 1000 / tpf; // Convert back to watts for apparent power
+        const newApparentPower = (PkW * 1000) / tpf; // Convert back to watts for apparent power
         const newCurrent = newApparentPower / volts;
         setCurrentAfterCorrection(newCurrent.toFixed(2));
       }
@@ -170,14 +168,14 @@ export const useCalculator = () => {
       setCapacitorKVAr(null);
       setCurrentAfterCorrection(null);
     }
-    
+
     // Clear any previous errors if calculation is successful
     if (pfValidation.isValid) {
       setErrors({});
     } else {
       // Set professional error messages
-      const validationErrors: {[key: string]: string} = {};
-      pfValidation.errors.forEach(error => {
+      const validationErrors: { [key: string]: string } = {};
+      pfValidation.errors.forEach((error) => {
         validationErrors.general = error;
       });
       setErrors(validationErrors);
@@ -186,20 +184,20 @@ export const useCalculator = () => {
 
   const clearError = (field: string) => {
     if (errors[field]) {
-      const newErrors = {...errors};
+      const newErrors = { ...errors };
       delete newErrors[field];
       setErrors(newErrors);
     }
   };
 
   const resetCalculator = () => {
-    setActivePower("");
-    setApparentPower("");
-    setCurrent("");
-    setVoltage("");
+    setActivePower('');
+    setApparentPower('');
+    setCurrent('');
+    setVoltage('');
     setPowerFactor(null);
-    setTargetPF("0.95");
-    setPfType("lagging");
+    setTargetPF('0.95');
+    setPfType('lagging');
     setCapacitorKVAr(null);
     setCurrentAfterCorrection(null);
     setValidation(null);
@@ -231,6 +229,6 @@ export const useCalculator = () => {
     validateInputs,
     calculatePowerFactor,
     clearError,
-    resetCalculator
+    resetCalculator,
   };
 };

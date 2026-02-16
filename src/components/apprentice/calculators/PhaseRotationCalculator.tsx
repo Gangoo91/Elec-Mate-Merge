@@ -1,16 +1,32 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Badge } from "@/components/ui/badge";
-import { RotateCw, AlertTriangle, CheckCircle, XCircle, Info, Zap, Eye, AlertCircle, Calculator, Lightbulb } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { usePhaseRotationCalculator } from "./phase-rotation/usePhaseRotationCalculator";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
-import { useRef, useEffect } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MobileButton } from '@/components/ui/mobile-button';
+import {
+  MobileSelect,
+  MobileSelectContent,
+  MobileSelectItem,
+  MobileSelectTrigger,
+  MobileSelectValue,
+} from '@/components/ui/mobile-select';
+import { Badge } from '@/components/ui/badge';
+import {
+  RotateCw,
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
+  Info,
+  Zap,
+  Eye,
+  AlertCircle,
+  Calculator,
+  Lightbulb,
+} from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { usePhaseRotationCalculator } from './phase-rotation/usePhaseRotationCalculator';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
+import { useRef, useEffect } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const PhaseRotationCalculator = () => {
   const {
@@ -31,12 +47,12 @@ const PhaseRotationCalculator = () => {
     calculatePhaseSequence,
     resetCalculator,
     clearError,
-    validateInputs
+    validateInputs,
   } = usePhaseRotationCalculator();
-  
+
   const resultsRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
-  
+
   // Auto-scroll to results on mobile
   useEffect(() => {
     if (result && resultsRef.current && isMobile) {
@@ -53,11 +69,11 @@ const PhaseRotationCalculator = () => {
   // Get confidence level for results
   const getConfidenceLevel = () => {
     if (!result) return null;
-    
-    if (testMethod === "phase-rotation-meter") return "High";
-    if (testMethod === "motor-behaviour") return "Medium"; 
-    if (testMethod === "voltage-measurement") return "Low";
-    return "Unknown";
+
+    if (testMethod === 'phase-rotation-meter') return 'High';
+    if (testMethod === 'motor-behaviour') return 'Medium';
+    if (testMethod === 'voltage-measurement') return 'Low';
+    return 'Unknown';
   };
 
   return (
@@ -92,7 +108,7 @@ const PhaseRotationCalculator = () => {
                   <Zap className="h-4 w-4 text-elec-yellow" />
                   <h3 className="text-lg font-semibold text-elec-yellow">Test Configuration</h3>
                 </div>
-                
+
                 <div className="space-y-3">
                   <MobileSelect
                     value={testMethod}
@@ -105,9 +121,15 @@ const PhaseRotationCalculator = () => {
                       <MobileSelectValue placeholder="Choose test method" />
                     </MobileSelectTrigger>
                     <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                      <MobileSelectItem value="phase-rotation-meter">Phase Rotation Meter</MobileSelectItem>
-                      <MobileSelectItem value="voltage-measurement">Voltage Measurement</MobileSelectItem>
-                      <MobileSelectItem value="motor-behaviour">Motor Rotation Test</MobileSelectItem>
+                      <MobileSelectItem value="phase-rotation-meter">
+                        Phase Rotation Meter
+                      </MobileSelectItem>
+                      <MobileSelectItem value="voltage-measurement">
+                        Voltage Measurement
+                      </MobileSelectItem>
+                      <MobileSelectItem value="motor-behaviour">
+                        Motor Rotation Test
+                      </MobileSelectItem>
                     </MobileSelectContent>
                   </MobileSelect>
                   {errors.testMethod && (
@@ -115,7 +137,7 @@ const PhaseRotationCalculator = () => {
                   )}
                 </div>
 
-                {testMethod === "phase-rotation-meter" && (
+                {testMethod === 'phase-rotation-meter' && (
                   <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg">
                     <h4 className="font-medium text-elec-yellow">Phase Rotation Meter Reading</h4>
                     <div className="space-y-3">
@@ -131,7 +153,9 @@ const PhaseRotationCalculator = () => {
                         </MobileSelectTrigger>
                         <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
                           <MobileSelectItem value="l1-l2-l3">L1-L2-L3 (Clockwise)</MobileSelectItem>
-                          <MobileSelectItem value="l1-l3-l2">L1-L3-L2 (Anti-clockwise)</MobileSelectItem>
+                          <MobileSelectItem value="l1-l3-l2">
+                            L1-L3-L2 (Anti-clockwise)
+                          </MobileSelectItem>
                         </MobileSelectContent>
                       </MobileSelect>
                       {errors.phaseRotationMeter && (
@@ -141,7 +165,7 @@ const PhaseRotationCalculator = () => {
                   </div>
                 )}
 
-                {testMethod === "voltage-measurement" && (
+                {testMethod === 'voltage-measurement' && (
                   <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg">
                     <h4 className="font-medium text-elec-yellow">Line-to-Line Voltages</h4>
                     <div className="space-y-4">
@@ -156,7 +180,7 @@ const PhaseRotationCalculator = () => {
                         hint="Typical UK supply: 400V"
                         unit="V"
                       />
-                      
+
                       <MobileInputWrapper
                         label="L2 to L3 (V) - Black to Grey"
                         value={l2ToL3}
@@ -168,7 +192,7 @@ const PhaseRotationCalculator = () => {
                         hint="Should be similar to L1-L2"
                         unit="V"
                       />
-                      
+
                       <MobileInputWrapper
                         label="L3 to L1 (V) - Grey to Brown"
                         value={l3ToL1}
@@ -184,13 +208,14 @@ const PhaseRotationCalculator = () => {
                     <Alert className="bg-blue-500/10 border-blue-500/30">
                       <Info className="h-4 w-4" />
                       <AlertDescription className="text-blue-300">
-                        <strong>Voltage Method Note:</strong> This method only checks balance, not actual phase sequence. A phase rotation meter gives definitive results.
+                        <strong>Voltage Method Note:</strong> This method only checks balance, not
+                        actual phase sequence. A phase rotation meter gives definitive results.
                       </AlertDescription>
                     </Alert>
                   </div>
                 )}
 
-                {testMethod === "motor-behaviour" && (
+                {testMethod === 'motor-behaviour' && (
                   <div className="space-y-4 p-4 border border-elec-yellow/20 rounded-lg">
                     <h4 className="font-medium text-elec-yellow">Motor Rotation Test</h4>
                     <div className="space-y-3">
@@ -205,8 +230,12 @@ const PhaseRotationCalculator = () => {
                           <MobileSelectValue placeholder="Select rotation direction" />
                         </MobileSelectTrigger>
                         <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-                          <MobileSelectItem value="clockwise">Clockwise (Expected for standard motors)</MobileSelectItem>
-                          <MobileSelectItem value="anticlockwise">Anti-clockwise (Reversed sequence)</MobileSelectItem>
+                          <MobileSelectItem value="clockwise">
+                            Clockwise (Expected for standard motors)
+                          </MobileSelectItem>
+                          <MobileSelectItem value="anticlockwise">
+                            Anti-clockwise (Reversed sequence)
+                          </MobileSelectItem>
                         </MobileSelectContent>
                       </MobileSelect>
                       {errors.motorBehaviour && (
@@ -216,7 +245,8 @@ const PhaseRotationCalculator = () => {
                     <Alert className="bg-amber-500/10 border-amber-500/30">
                       <AlertTriangle className="h-4 w-4" />
                       <AlertDescription className="text-amber-300">
-                        <strong>Safety:</strong> Only use this method with a small test motor. Ensure proper isolation and PPE.
+                        <strong>Safety:</strong> Only use this method with a small test motor.
+                        Ensure proper isolation and PPE.
                       </AlertDescription>
                     </Alert>
                   </div>
@@ -234,7 +264,7 @@ const PhaseRotationCalculator = () => {
                   </MobileButton>
                   {!canCalculate() && (
                     <p className="text-sm text-white mt-2 text-center">
-                      {!testMethod ? "Select a test method first" : "Complete all required fields"}
+                      {!testMethod ? 'Select a test method first' : 'Complete all required fields'}
                     </p>
                   )}
                   <MobileButton
@@ -253,11 +283,18 @@ const PhaseRotationCalculator = () => {
                   <Eye className="h-4 w-4 text-elec-yellow" />
                   <h3 className="text-lg font-semibold text-elec-yellow">Analysis Results</h3>
                 </div>
-                
+
                 {result ? (
-                  <div className="space-y-4" role="region" aria-live="polite" aria-label="Phase rotation analysis results">
+                  <div
+                    className="space-y-4"
+                    role="region"
+                    aria-live="polite"
+                    aria-label="Phase rotation analysis results"
+                  >
                     {/* Summary Banner */}
-                    <Card className={`border-2 ${result.isCorrect ? 'border-green-500/40 bg-green-500/10' : 'border-red-500/40 bg-red-500/10'}`}>
+                    <Card
+                      className={`border-2 ${result.isCorrect ? 'border-green-500/40 bg-green-500/10' : 'border-red-500/40 bg-red-500/10'}`}
+                    >
                       <CardContent className="pt-4">
                         <div className="flex items-start justify-between mb-3">
                           <div className="flex items-center gap-2">
@@ -267,12 +304,17 @@ const PhaseRotationCalculator = () => {
                               <XCircle className="h-6 w-6 text-red-400" />
                             )}
                             <div>
-                              <span className={`font-semibold text-lg ${result.isCorrect ? 'text-green-300' : 'text-red-300'}`}>
+                              <span
+                                className={`font-semibold text-lg ${result.isCorrect ? 'text-green-300' : 'text-red-300'}`}
+                              >
                                 {result.sequence}
                               </span>
                               <div className="flex items-center gap-2 mt-1">
-                                <Badge variant={result.isCorrect ? "default" : "destructive"} className="text-xs">
-                                  {result.isCorrect ? "Correct Sequence" : "Incorrect Sequence"}
+                                <Badge
+                                  variant={result.isCorrect ? 'default' : 'destructive'}
+                                  className="text-xs"
+                                >
+                                  {result.isCorrect ? 'Correct Sequence' : 'Incorrect Sequence'}
                                 </Badge>
                                 <Badge variant="outline" className="text-xs">
                                   {getConfidenceLevel()} Confidence
@@ -281,7 +323,9 @@ const PhaseRotationCalculator = () => {
                             </div>
                           </div>
                         </div>
-                        <p className={`text-sm ${result.isCorrect ? 'text-green-200' : 'text-red-200'}`}>
+                        <p
+                          className={`text-sm ${result.isCorrect ? 'text-green-200' : 'text-red-200'}`}
+                        >
                           {result.recommendation}
                         </p>
                         {result.balanceStatus && (
@@ -302,13 +346,15 @@ const PhaseRotationCalculator = () => {
                       </CardHeader>
                       <CardContent className="space-y-3">
                         <div className="bg-white/10 rounded-lg p-3">
-                          <h4 className="font-medium text-elec-yellow mb-2 text-sm">Motor Direction</h4>
+                          <h4 className="font-medium text-elec-yellow mb-2 text-sm">
+                            Motor Direction
+                          </h4>
                           <p className="text-sm text-white">{result.motorDirection}</p>
                         </div>
-                        
+
                         <div className="bg-white/10 rounded-lg p-3">
                           <h4 className="font-medium text-elec-yellow mb-2 text-sm">
-                            {result.isCorrect ? "Verification" : "Correction Required"}
+                            {result.isCorrect ? 'Verification' : 'Correction Required'}
                           </h4>
                           <p className="text-sm text-white">{result.correctionMethod}</p>
                         </div>
@@ -317,7 +363,8 @@ const PhaseRotationCalculator = () => {
                           <Alert className="bg-amber-500/10 border-amber-500/30">
                             <AlertTriangle className="h-4 w-4" />
                             <AlertDescription className="text-amber-300 text-sm">
-                              <strong>Remember:</strong> Always isolate supply and prove dead before making any phase corrections.
+                              <strong>Remember:</strong> Always isolate supply and prove dead before
+                              making any phase corrections.
                             </AlertDescription>
                           </Alert>
                         )}
@@ -331,40 +378,44 @@ const PhaseRotationCalculator = () => {
                         <div className="flex items-center justify-center">
                           <div className="relative w-32 h-32 border-2 border-elec-yellow/30 rounded-full">
                             {/* Phase vectors */}
-                            <div 
+                            <div
                               className="absolute w-16 h-0.5 bg-amber-400 origin-left"
-                              style={{ 
-                                left: '50%', 
+                              style={{
+                                left: '50%',
                                 top: '50%',
                                 transform: `rotate(${result.visualRepresentation.l1Phase}deg)`,
-                                transformOrigin: '0 50%'
+                                transformOrigin: '0 50%',
                               }}
                             />
-                            <div 
+                            <div
                               className="absolute w-16 h-0.5 bg-slate-400 origin-left"
-                              style={{ 
-                                left: '50%', 
+                              style={{
+                                left: '50%',
                                 top: '50%',
                                 transform: `rotate(${result.visualRepresentation.l2Phase}deg)`,
-                                transformOrigin: '0 50%'
+                                transformOrigin: '0 50%',
                               }}
                             />
-                            <div 
+                            <div
                               className="absolute w-16 h-0.5 bg-white/15 origin-left"
-                              style={{ 
-                                left: '50%', 
+                              style={{
+                                left: '50%',
                                 top: '50%',
                                 transform: `rotate(${result.visualRepresentation.l3Phase}deg)`,
-                                transformOrigin: '0 50%'
+                                transformOrigin: '0 50%',
                               }}
                             />
-                            
+
                             {/* Center dot */}
                             <div className="absolute w-2 h-2 bg-elec-yellow rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                            
+
                             {/* Rotation indicator */}
-                            <div className={`absolute top-2 right-2 text-xs ${result.isCorrect ? 'text-green-400' : 'text-red-400'}`}>
-                              {result.visualRepresentation.rotationDirection === 'clockwise' ? '↻' : '↺'}
+                            <div
+                              className={`absolute top-2 right-2 text-xs ${result.isCorrect ? 'text-green-400' : 'text-red-400'}`}
+                            >
+                              {result.visualRepresentation.rotationDirection === 'clockwise'
+                                ? '↻'
+                                : '↺'}
                             </div>
                           </div>
                         </div>
@@ -393,11 +444,11 @@ const PhaseRotationCalculator = () => {
                     {/* Why This Matters */}
                     <WhyThisMatters
                       points={[
-                        "Incorrect phase sequence can damage equipment and create safety hazards",
-                        "Water pumps may not flow or could be damaged by reverse rotation", 
-                        "HVAC systems will have reduced efficiency with wrong fan direction",
-                        "Industrial processes depend on correct motor rotation for quality control",
-                        "BS 7671 requires proper phase sequence verification for three-phase installations"
+                        'Incorrect phase sequence can damage equipment and create safety hazards',
+                        'Water pumps may not flow or could be damaged by reverse rotation',
+                        'HVAC systems will have reduced efficiency with wrong fan direction',
+                        'Industrial processes depend on correct motor rotation for quality control',
+                        'BS 7671 requires proper phase sequence verification for three-phase installations',
                       ]}
                     />
 
@@ -410,9 +461,18 @@ const PhaseRotationCalculator = () => {
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="text-blue-200 text-sm space-y-2">
-                        <p><strong>Regulation 612.6:</strong> Phase sequence verification required for three-phase installations</p>
-                        <p><strong>Regulation 314.1:</strong> Conductors must be clearly identified according to approved colour coding</p>
-                        <p><strong>Section 514:</strong> Correct identification and connection of conductors to prevent hazards</p>
+                        <p>
+                          <strong>Regulation 612.6:</strong> Phase sequence verification required
+                          for three-phase installations
+                        </p>
+                        <p>
+                          <strong>Regulation 314.1:</strong> Conductors must be clearly identified
+                          according to approved colour coding
+                        </p>
+                        <p>
+                          <strong>Section 514:</strong> Correct identification and connection of
+                          conductors to prevent hazards
+                        </p>
                       </CardContent>
                     </Card>
 
@@ -452,13 +512,18 @@ const PhaseRotationCalculator = () => {
                 </CardHeader>
                 <CardContent className="space-y-3 text-blue-200">
                   <p>
-                    Phase rotation (or phase sequence) is the order in which the three phases of a three-phase supply reach their peak values.
+                    Phase rotation (or phase sequence) is the order in which the three phases of a
+                    three-phase supply reach their peak values.
                   </p>
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
                     <h4 className="font-medium mb-2">Standard UK Sequence (Current)</h4>
                     <ul className="space-y-1 text-sm">
-                      <li><strong>L1 → L2 → L3</strong> (Clockwise rotation)</li>
-                      <li><strong>Brown → Black → Grey</strong> (Cable colours since 2004)</li>
+                      <li>
+                        <strong>L1 → L2 → L3</strong> (Clockwise rotation)
+                      </li>
+                      <li>
+                        <strong>Brown → Black → Grey</strong> (Cable colours since 2004)
+                      </li>
                       <li>Creates clockwise rotating magnetic field</li>
                       <li>120° electrical separation between phases</li>
                     </ul>
@@ -474,15 +539,24 @@ const PhaseRotationCalculator = () => {
                   <div className="space-y-3">
                     <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
                       <h4 className="font-medium mb-2">1. Phase Rotation Meter (Best)</h4>
-                      <p className="text-sm">Dedicated instrument that directly indicates phase sequence. Most accurate method.</p>
+                      <p className="text-sm">
+                        Dedicated instrument that directly indicates phase sequence. Most accurate
+                        method.
+                      </p>
                     </div>
                     <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
                       <h4 className="font-medium mb-2">2. Motor Test (Practical)</h4>
-                      <p className="text-sm">Connect a small test motor and observe rotation direction. Simple but effective.</p>
+                      <p className="text-sm">
+                        Connect a small test motor and observe rotation direction. Simple but
+                        effective.
+                      </p>
                     </div>
                     <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
                       <h4 className="font-medium mb-2">3. Oscilloscope (Technical)</h4>
-                      <p className="text-sm">Compare phase relationships using scope traces. Requires technical expertise.</p>
+                      <p className="text-sm">
+                        Compare phase relationships using scope traces. Requires technical
+                        expertise.
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -494,12 +568,24 @@ const PhaseRotationCalculator = () => {
                 </CardHeader>
                 <CardContent className="space-y-3 text-yellow-200">
                   <ul className="space-y-2 text-sm">
-                    <li><strong>Water Pumps:</strong> Wrong direction = no flow or damage</li>
-                    <li><strong>HVAC Fans:</strong> Affects airflow and system efficiency</li>
-                    <li><strong>Conveyor Systems:</strong> Safety critical - wrong direction dangerous</li>
-                    <li><strong>Elevators:</strong> Direction control essential for safety</li>
-                    <li><strong>Industrial Mixers:</strong> Process quality depends on rotation</li>
-                    <li><strong>Generator Synchronization:</strong> Must match grid sequence</li>
+                    <li>
+                      <strong>Water Pumps:</strong> Wrong direction = no flow or damage
+                    </li>
+                    <li>
+                      <strong>HVAC Fans:</strong> Affects airflow and system efficiency
+                    </li>
+                    <li>
+                      <strong>Conveyor Systems:</strong> Safety critical - wrong direction dangerous
+                    </li>
+                    <li>
+                      <strong>Elevators:</strong> Direction control essential for safety
+                    </li>
+                    <li>
+                      <strong>Industrial Mixers:</strong> Process quality depends on rotation
+                    </li>
+                    <li>
+                      <strong>Generator Synchronization:</strong> Must match grid sequence
+                    </li>
                   </ul>
                 </CardContent>
               </Card>
@@ -513,7 +599,9 @@ const PhaseRotationCalculator = () => {
                     <h4 className="font-medium mb-2">Simple Fix</h4>
                     <p className="text-sm mb-2">To reverse phase sequence:</p>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Isolate the supply</strong> and prove dead</li>
+                      <li>
+                        • <strong>Isolate the supply</strong> and prove dead
+                      </li>
                       <li>• Swap ANY two phases (commonly L2 and L3)</li>
                       <li>• Most accessible at motor terminal box</li>
                       <li>• Never swap all three phases</li>
@@ -529,7 +617,9 @@ const PhaseRotationCalculator = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="border-green-500/30 bg-green-500/5">
                 <CardHeader>
-                  <CardTitle className="text-green-300 text-lg">Current UK Cable Colours (2004-Present)</CardTitle>
+                  <CardTitle className="text-green-300 text-lg">
+                    Current UK Cable Colours (2004-Present)
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
@@ -557,7 +647,8 @@ const PhaseRotationCalculator = () => {
                   <Alert className="bg-green-500/10 border-green-500/30">
                     <CheckCircle className="h-4 w-4" />
                     <AlertDescription className="text-green-300">
-                      <strong>Current Standard:</strong> BS 7671:2018 harmonized European colours. Used since 31st March 2004.
+                      <strong>Current Standard:</strong> BS 7671:2018 harmonized European colours.
+                      Used since 31st March 2004.
                     </AlertDescription>
                   </Alert>
                 </CardContent>
@@ -565,7 +656,9 @@ const PhaseRotationCalculator = () => {
 
               <Card className="border-amber-500/30 bg-amber-500/5">
                 <CardHeader>
-                  <CardTitle className="text-amber-300 text-lg">Old UK Cable Colours (Pre-2004)</CardTitle>
+                  <CardTitle className="text-amber-300 text-lg">
+                    Old UK Cable Colours (Pre-2004)
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-3">
@@ -593,7 +686,8 @@ const PhaseRotationCalculator = () => {
                   <Alert className="bg-amber-500/10 border-amber-500/30">
                     <AlertTriangle className="h-4 w-4" />
                     <AlertDescription className="text-amber-300">
-                      <strong>Discontinued:</strong> Old colours may still be found in installations predating March 2004. Check carefully!
+                      <strong>Discontinued:</strong> Old colours may still be found in installations
+                      predating March 2004. Check carefully!
                     </AlertDescription>
                   </Alert>
                 </CardContent>
@@ -601,7 +695,9 @@ const PhaseRotationCalculator = () => {
 
               <Card className="border-blue-500/30 bg-blue-500/5 md:col-span-2">
                 <CardHeader>
-                  <CardTitle className="text-blue-300 text-lg">Important Transition Notes</CardTitle>
+                  <CardTitle className="text-blue-300 text-lg">
+                    Important Transition Notes
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="text-blue-200">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

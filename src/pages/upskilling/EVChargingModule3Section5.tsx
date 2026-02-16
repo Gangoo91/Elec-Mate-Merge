@@ -1,77 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m3s5-check1",
-    question: "What percentage of properties are predicted to have 2+ EVs by 2030?",
-    options: ["20%", "30%", "40%", "50%"],
+    id: 'evcharging-m3s5-check1',
+    question: 'What percentage of properties are predicted to have 2+ EVs by 2030?',
+    options: ['20%', '30%', '40%', '50%'],
     correctIndex: 2,
-    explanation: "Statistical analysis predicts 40% of properties will have 2+ EVs by 2030, making dual charging capability essential for future-proof installations."
+    explanation:
+      'Statistical analysis predicts 40% of properties will have 2+ EVs by 2030, making dual charging capability essential for future-proof installations.',
   },
   {
-    id: "evcharging-m3s5-check2",
-    question: "What is Vehicle-to-Grid (V2G) technology?",
+    id: 'evcharging-m3s5-check2',
+    question: 'What is Vehicle-to-Grid (V2G) technology?',
     options: [
-      "One-way charging only",
-      "Bidirectional charging allowing EVs to export power to the grid",
-      "Wireless charging",
-      "Solar panel connection"
+      'One-way charging only',
+      'Bidirectional charging allowing EVs to export power to the grid',
+      'Wireless charging',
+      'Solar panel connection',
     ],
     correctIndex: 1,
-    explanation: "V2G enables bidirectional power flow, allowing EVs to export stored energy back to the grid during peak demand, creating revenue opportunities for vehicle owners."
+    explanation:
+      'V2G enables bidirectional power flow, allowing EVs to export stored energy back to the grid during peak demand, creating revenue opportunities for vehicle owners.',
   },
   {
-    id: "evcharging-m3s5-check3",
-    question: "What diversity factor applies with smart charging for dual domestic EV charging?",
-    options: ["1.0 (100%)", "0.8 (80%)", "0.6 (60%)", "0.4 (40%)"],
+    id: 'evcharging-m3s5-check3',
+    question: 'What diversity factor applies with smart charging for dual domestic EV charging?',
+    options: ['1.0 (100%)', '0.8 (80%)', '0.6 (60%)', '0.4 (40%)'],
     correctIndex: 1,
-    explanation: "Smart charging systems enable 0.8 (80%) diversity factor for 1-2 domestic chargers, as dynamic load balancing prevents simultaneous full-power charging."
-  }
+    explanation:
+      'Smart charging systems enable 0.8 (80%) diversity factor for 1-2 domestic chargers, as dynamic load balancing prevents simultaneous full-power charging.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How should I size infrastructure for future expansion?",
-    answer: "Size cable infrastructure for 150% of current requirements. Install larger cables with tapping points, use modular distribution boards, and leave 25% spare capacity in containment. Plan DNO upgrade pathways early."
+    question: 'How should I size infrastructure for future expansion?',
+    answer:
+      'Size cable infrastructure for 150% of current requirements. Install larger cables with tapping points, use modular distribution boards, and leave 25% spare capacity in containment. Plan DNO upgrade pathways early.',
   },
   {
     question: "What's the benefit of PV integration with EV charging?",
-    answer: "A typical 6kWp residential PV system can provide 60-70% of EV charging energy. This reduces grid demand, lowers charging costs, and provides energy independence. Battery storage enables evening charging from daytime generation."
+    answer:
+      'A typical 6kWp residential PV system can provide 60-70% of EV charging energy. This reduces grid demand, lowers charging costs, and provides energy independence. Battery storage enables evening charging from daytime generation.',
   },
   {
-    question: "When will higher power charging standards become mainstream?",
-    answer: "350kW DC and 22kW AC are expected standard by 2025-2027. 800V vehicle architectures and MW-level charging are projected for 2028-2030. Infrastructure should accommodate these future requirements."
+    question: 'When will higher power charging standards become mainstream?',
+    answer:
+      '350kW DC and 22kW AC are expected standard by 2025-2027. 800V vehicle architectures and MW-level charging are projected for 2028-2030. Infrastructure should accommodate these future requirements.',
   },
   {
-    question: "What revenue opportunities exist for smart EV charging?",
-    answer: "Grid services earn £50-200/MW/hour. Demand response provides £0.10-0.30/kWh. V2G systems can generate £300-600 annual revenue. Time-of-use tariff optimization saves £800-1,200 annually vs day rate charging."
-  }
+    question: 'What revenue opportunities exist for smart EV charging?',
+    answer:
+      'Grid services earn £50-200/MW/hour. Demand response provides £0.10-0.30/kWh. V2G systems can generate £300-600 annual revenue. Time-of-use tariff optimization saves £800-1,200 annually vs day rate charging.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A new residential development of 50 homes wants future-proof EV charging. What infrastructure strategy should you recommend?",
-  options: [
-    "Single 7kW charger per home, no expansion planning",
-    "Install the cheapest solution and upgrade later",
-    "Dual EV capability, smart charging, PV-ready, ducted routes for expansion",
-    "Only install rapid chargers in communal areas"
-  ],
-  correctAnswer: 2,
-  explanation: "Future-proofing requires: dual EV capability (40% will have 2+ EVs by 2030), smart charging for load management, PV-ready infrastructure for renewable integration, and ducted cable routes for future upgrades. This maximises long-term value."
-  }
+    question:
+      'A new residential development of 50 homes wants future-proof EV charging. What infrastructure strategy should you recommend?',
+    options: [
+      'Single 7kW charger per home, no expansion planning',
+      'Install the cheapest solution and upgrade later',
+      'Dual EV capability, smart charging, PV-ready, ducted routes for expansion',
+      'Only install rapid chargers in communal areas',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Future-proofing requires: dual EV capability (40% will have 2+ EVs by 2030), smart charging for load management, PV-ready infrastructure for renewable integration, and ducted cable routes for future upgrades. This maximises long-term value.',
+  },
 ];
 
 const EVChargingModule3Section5 = () => {
   useSEO({
-    title: "Future-Proofing Installations | EV Charging Module 3.5",
-    description: "Design future-proof EV charging installations with dual EV capability, PV integration, smart grid connectivity and expansion planning."
+    title: 'Future-Proofing Installations | EV Charging Module 3.5',
+    description:
+      'Design future-proof EV charging installations with dual EV capability, PV integration, smart grid connectivity and expansion planning.',
   });
 
   return (
@@ -103,9 +113,7 @@ const EVChargingModule3Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Future-Proofing Installations
           </h1>
-          <p className="text-white/80">
-            Designing for expansion, PV integration, and smart grid
-          </p>
+          <p className="text-white/80">Designing for expansion, PV integration, and smart grid</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -113,16 +121,26 @@ const EVChargingModule3Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Dual EV:</strong> 40% of homes will have 2+ EVs by 2030</li>
-              <li><strong>V2G:</strong> Bidirectional charging for grid services</li>
-              <li><strong>Sizing:</strong> 150% of current requirements</li>
+              <li>
+                <strong>Dual EV:</strong> 40% of homes will have 2+ EVs by 2030
+              </li>
+              <li>
+                <strong>V2G:</strong> Bidirectional charging for grid services
+              </li>
+              <li>
+                <strong>Sizing:</strong> 150% of current requirements
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Spare capacity in containment/CU</li>
-              <li><strong>Use:</strong> Smart charging + PV for future value</li>
+              <li>
+                <strong>Spot:</strong> Spare capacity in containment/CU
+              </li>
+              <li>
+                <strong>Use:</strong> Smart charging + PV for future value
+              </li>
             </ul>
           </div>
         </div>
@@ -132,12 +150,12 @@ const EVChargingModule3Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Plan infrastructure for multiple EV scenarios",
-              "Design dual EV systems with load management",
-              "Integrate PV solar with EV charging",
-              "Implement smart grid connectivity",
-              "Size for future expansion",
-              "Understand emerging charging technologies"
+              'Plan infrastructure for multiple EV scenarios',
+              'Design dual EV systems with load management',
+              'Integrate PV solar with EV charging',
+              'Implement smart grid connectivity',
+              'Size for future expansion',
+              'Understand emerging charging technologies',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -157,8 +175,8 @@ const EVChargingModule3Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Future-proofing requires anticipating EV adoption growth and planning
-              infrastructure that can accommodate increasing demand.
+              Future-proofing requires anticipating EV adoption growth and planning infrastructure
+              that can accommodate increasing demand.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -172,12 +190,22 @@ const EVChargingModule3Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Diversity with Smart Charging</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Diversity with Smart Charging
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>1-2 chargers:</strong> 0.8 diversity</li>
-                  <li><strong>3-10:</strong> 0.5 diversity</li>
-                  <li><strong>11-50:</strong> 0.3 diversity</li>
-                  <li><strong>50+:</strong> 0.2 diversity</li>
+                  <li>
+                    <strong>1-2 chargers:</strong> 0.8 diversity
+                  </li>
+                  <li>
+                    <strong>3-10:</strong> 0.5 diversity
+                  </li>
+                  <li>
+                    <strong>11-50:</strong> 0.3 diversity
+                  </li>
+                  <li>
+                    <strong>50+:</strong> 0.2 diversity
+                  </li>
                 </ul>
               </div>
             </div>
@@ -205,7 +233,9 @@ const EVChargingModule3Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dual EV Load Balancing</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Dual EV Load Balancing
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Dynamic power allocation</li>
                   <li>• Sequential charging queues</li>
@@ -214,7 +244,9 @@ const EVChargingModule3Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">PV-EV Direct Charging</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  PV-EV Direct Charging
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• DC-coupled: Direct from PV</li>
                   <li>• AC-coupled: Via grid-tie inverter</li>
@@ -225,18 +257,32 @@ const EVChargingModule3Section5 = () => {
             </div>
 
             <div className="p-3 rounded bg-transparent border border-elec-yellow/20">
-              <p className="text-sm font-medium text-elec-yellow mb-2">Example: Residential PV-EV System</p>
+              <p className="text-sm font-medium text-elec-yellow mb-2">
+                Example: Residential PV-EV System
+              </p>
               <ul className="text-xs text-white space-y-1">
-                <li><strong>PV Array:</strong> 6kWp (24 × 250W panels)</li>
-                <li><strong>Annual generation:</strong> ~5,400kWh</li>
-                <li><strong>EV consumption:</strong> 3,500kWh/year (12,000 miles)</li>
-                <li><strong>Solar charging:</strong> 60-70% of EV energy from PV</li>
-                <li><strong>Battery storage:</strong> 10kWh for evening charging</li>
+                <li>
+                  <strong>PV Array:</strong> 6kWp (24 × 250W panels)
+                </li>
+                <li>
+                  <strong>Annual generation:</strong> ~5,400kWh
+                </li>
+                <li>
+                  <strong>EV consumption:</strong> 3,500kWh/year (12,000 miles)
+                </li>
+                <li>
+                  <strong>Solar charging:</strong> 60-70% of EV energy from PV
+                </li>
+                <li>
+                  <strong>Battery storage:</strong> 10kWh for evening charging
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Grid Connection Considerations</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Grid Connection Considerations
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>• G98/G99 requirements for PV systems</li>
                 <li>• Export limitation and curtailment</li>
@@ -258,7 +304,9 @@ const EVChargingModule3Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Vehicle-to-Grid (V2G)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Vehicle-to-Grid (V2G)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Bidirectional charging</li>
                   <li>• G98/G99 approval required</li>
@@ -278,13 +326,25 @@ const EVChargingModule3Section5 = () => {
             </div>
 
             <div className="p-3 rounded bg-transparent border border-elec-yellow/20">
-              <p className="text-sm font-medium text-elec-yellow mb-2">Example: Octopus Go Integration</p>
+              <p className="text-sm font-medium text-elec-yellow mb-2">
+                Example: Octopus Go Integration
+              </p>
               <ul className="text-xs text-white space-y-1">
-                <li><strong>Off-peak:</strong> 00:30-04:30 at 7.5p/kWh</li>
-                <li><strong>Day rate:</strong> 05:00-00:00 at 30.9p/kWh</li>
-                <li><strong>Smart charging:</strong> 90% in off-peak window</li>
-                <li><strong>Annual saving:</strong> £800-1,200 vs day rate</li>
-                <li><strong>V2G potential:</strong> Additional £300-600 revenue</li>
+                <li>
+                  <strong>Off-peak:</strong> 00:30-04:30 at 7.5p/kWh
+                </li>
+                <li>
+                  <strong>Day rate:</strong> 05:00-00:00 at 30.9p/kWh
+                </li>
+                <li>
+                  <strong>Smart charging:</strong> 90% in off-peak window
+                </li>
+                <li>
+                  <strong>Annual saving:</strong> £800-1,200 vs day rate
+                </li>
+                <li>
+                  <strong>V2G potential:</strong> Additional £300-600 revenue
+                </li>
               </ul>
             </div>
           </div>
@@ -390,7 +450,9 @@ const EVChargingModule3Section5 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Future-Proofing Checklist</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Future-Proofing Checklist
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>✓ Cable infrastructure sized 150% current requirements</li>
                 <li>✓ Three-phase provision for single-phase installations</li>
@@ -408,7 +470,9 @@ const EVChargingModule3Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Planning Future-Proof Installations</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Planning Future-Proof Installations
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Size infrastructure for 150% current requirements</li>
                 <li>Include smart charging capability from the start</li>
@@ -420,10 +484,18 @@ const EVChargingModule3Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>No expansion planning:</strong> — Expensive retrofits required</li>
-                <li><strong>Ignoring smart charging:</strong> — Higher diversity factors possible</li>
-                <li><strong>No PV integration:</strong> — Missed renewable energy opportunities</li>
-                <li><strong>Undersized infrastructure:</strong> — Cannot accommodate second EV</li>
+                <li>
+                  <strong>No expansion planning:</strong> — Expensive retrofits required
+                </li>
+                <li>
+                  <strong>Ignoring smart charging:</strong> — Higher diversity factors possible
+                </li>
+                <li>
+                  <strong>No PV integration:</strong> — Missed renewable energy opportunities
+                </li>
+                <li>
+                  <strong>Undersized infrastructure:</strong> — Cannot accommodate second EV
+                </li>
               </ul>
             </div>
           </div>
@@ -467,10 +539,7 @@ const EVChargingModule3Section5 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

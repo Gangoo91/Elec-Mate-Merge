@@ -10,7 +10,9 @@ export const EnergyManagementSection = () => {
           <Zap className="h-5 w-5 text-elec-yellow" />
           Energy Management Systems (EMS) & Smart Control
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-purple-600 text-foreground">Intelligent Control</Badge>
+        <Badge variant="secondary" className="w-fit bg-purple-600 text-foreground">
+          Intelligent Control
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
@@ -98,7 +100,9 @@ export const EnergyManagementSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Communication Protocols & Integration:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Communication Protocols & Integration:
+          </h5>
           <div className="grid md:grid-cols-3 gap-4">
             <div>
               <h6 className="text-cyan-400 font-medium mb-2">Device Level:</h6>
@@ -134,10 +138,14 @@ export const EnergyManagementSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Performance Monitoring & Analytics:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Performance Monitoring & Analytics:
+          </h5>
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded">
-              <h6 className="text-yellow-400 font-medium mb-2">Key Performance Indicators (KPIs):</h6>
+              <h6 className="text-yellow-400 font-medium mb-2">
+                Key Performance Indicators (KPIs):
+              </h6>
               <div className="grid md:grid-cols-2 gap-3">
                 <ul className="text-sm space-y-1">
                   <li>• Self-consumption ratio: Target &gt;70%</li>

@@ -31,12 +31,16 @@ const CheckoutTrial = () => {
   // Backfill role to profile if missing (handles race condition from signup)
   useEffect(() => {
     if (user?.id && profile && !profile.role) {
-      supabase.from('profiles').update({
-        role,
-        updated_at: new Date().toISOString(),
-      }).eq('id', user.id).then(({ error }) => {
-        if (error) console.warn('Failed to backfill role:', error);
-      });
+      supabase
+        .from('profiles')
+        .update({
+          role,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', user.id)
+        .then(({ error }) => {
+          if (error) console.warn('Failed to backfill role:', error);
+        });
     }
   }, [user?.id, profile, role]);
 

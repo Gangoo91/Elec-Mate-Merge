@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 export interface UnifiedJob {
   id: string;
@@ -36,38 +36,100 @@ export interface SearchProgress {
 // Keywords that indicate electrical industry jobs (case-insensitive matching)
 const ELECTRICAL_KEYWORDS = [
   // Core electrical roles
-  'electrician', 'electrical', 'sparky', 'spark',
+  'electrician',
+  'electrical',
+  'sparky',
+  'spark',
   // Specific electrical work
-  'wiring', 'rewire', 'cable', 'cabling',
+  'wiring',
+  'rewire',
+  'cable',
+  'cabling',
   // Green/renewable
-  'ev ', 'ev-', 'solar', 'renewable', 'battery storage', 'heat pump',
+  'ev ',
+  'ev-',
+  'solar',
+  'renewable',
+  'battery storage',
+  'heat pump',
   // Testing & compliance
-  'commissioning', 'testing', 'inspection', 'eicr', 'eic', '18th edition', 'bs7671',
+  'commissioning',
+  'testing',
+  'inspection',
+  'eicr',
+  'eic',
+  '18th edition',
+  'bs7671',
   // Design & engineering
-  'electrical design', 'electrical engineer', 'building services', 'm&e', 'mep',
+  'electrical design',
+  'electrical engineer',
+  'building services',
+  'm&e',
+  'mep',
   // Installation types
-  'fire alarm', 'security system', 'intruder alarm', 'cctv', 'access control',
-  'data install', 'network install', 'fibre',
+  'fire alarm',
+  'security system',
+  'intruder alarm',
+  'cctv',
+  'access control',
+  'data install',
+  'network install',
+  'fibre',
   // Sectors
-  'industrial electric', 'commercial electric', 'domestic electric',
+  'industrial electric',
+  'commercial electric',
+  'domestic electric',
   // Apprenticeships
-  'electrical apprentice', 'apprentice electric',
+  'electrical apprentice',
+  'apprentice electric',
   // Maintenance
-  'electrical maintenance', 'building maintenance electric',
+  'electrical maintenance',
+  'building maintenance electric',
   // Management/progression roles
-  'electrical project', 'electrical supervisor', 'electrical manager', 'contracts manager electric',
-  'site manager electric', 'foreman electric',
+  'electrical project',
+  'electrical supervisor',
+  'electrical manager',
+  'contracts manager electric',
+  'site manager electric',
+  'foreman electric',
   // Related trades that electricians do
-  'pat testing', 'emergency lighting', 'led', 'lighting',
+  'pat testing',
+  'emergency lighting',
+  'led',
+  'lighting',
 ];
 
 // Titles to explicitly exclude (non-electrical trades)
 const EXCLUDED_TITLES = [
-  'joiner', 'carpenter', 'plumber', 'plumbing', 'gas engineer', 'gas fitter',
-  'bricklayer', 'plasterer', 'painter', 'decorator', 'roofer', 'scaffolder',
-  'groundworker', 'labourer', 'cleaner', 'driver', 'warehouse', 'forklift',
-  'chef', 'cook', 'retail', 'sales assistant', 'receptionist', 'admin',
-  'nurse', 'carer', 'teacher', 'accountant', 'solicitor',
+  'joiner',
+  'carpenter',
+  'plumber',
+  'plumbing',
+  'gas engineer',
+  'gas fitter',
+  'bricklayer',
+  'plasterer',
+  'painter',
+  'decorator',
+  'roofer',
+  'scaffolder',
+  'groundworker',
+  'labourer',
+  'cleaner',
+  'driver',
+  'warehouse',
+  'forklift',
+  'chef',
+  'cook',
+  'retail',
+  'sales assistant',
+  'receptionist',
+  'admin',
+  'nurse',
+  'carer',
+  'teacher',
+  'accountant',
+  'solicitor',
 ];
 
 // Check if a job is electrical-related
@@ -77,12 +139,13 @@ const isElectricalJob = (job: UnifiedJob): boolean => {
   const combined = `${titleLower} ${descLower}`;
 
   // Check if title starts with or primarily mentions electrical
-  const hasElectricalInTitle = titleLower.includes('electric') ||
-                               titleLower.includes('sparky') ||
-                               titleLower.startsWith('ev ') ||
-                               titleLower.includes('solar') ||
-                               titleLower.includes('fire alarm') ||
-                               titleLower.includes('security engineer');
+  const hasElectricalInTitle =
+    titleLower.includes('electric') ||
+    titleLower.includes('sparky') ||
+    titleLower.startsWith('ev ') ||
+    titleLower.includes('solar') ||
+    titleLower.includes('fire alarm') ||
+    titleLower.includes('security engineer');
 
   // If title clearly starts with electrical term, include it even if other trades mentioned
   if (hasElectricalInTitle) {
@@ -132,7 +195,7 @@ export const useUnifiedJobSearch = () => {
     totalJobsFound: 0,
     completedSources: 0,
     totalSources: 0,
-    isSearching: false
+    isSearching: false,
   });
 
   // Fetch initial jobs on mount - filtered to electrical industry only
@@ -146,7 +209,9 @@ export const useUnifiedJobSearch = () => {
       const { data, error } = await supabase
         .from('job_listings')
         .select('*')
-        .or('title.ilike.%electric%,title.ilike.%sparky%,title.ilike.%wiring%,title.ilike.%solar%,title.ilike.%ev %,title.ilike.%commissioning%,title.ilike.%fire alarm%,title.ilike.%cable%,title.ilike.%testing%,description.ilike.%electrician%,description.ilike.%electrical%')
+        .or(
+          'title.ilike.%electric%,title.ilike.%sparky%,title.ilike.%wiring%,title.ilike.%solar%,title.ilike.%ev %,title.ilike.%commissioning%,title.ilike.%fire alarm%,title.ilike.%cable%,title.ilike.%testing%,description.ilike.%electrician%,description.ilike.%electrical%'
+        )
         .order('posted_date', { ascending: false })
         .limit(500);
 
@@ -154,14 +219,16 @@ export const useUnifiedJobSearch = () => {
 
       // Apply additional client-side filtering for precision
       const electricalJobs = (data || [])
-        .map(job => ({
+        .map((job) => ({
           ...job,
-          is_fresh: isJobFresh(job.updated_at)
+          is_fresh: isJobFresh(job.updated_at),
         }))
         .filter(isElectricalJob)
         .slice(0, 150); // Limit final results
 
-      console.log(`✅ Loaded ${electricalJobs.length} electrical jobs (filtered from ${data?.length || 0})`);
+      console.log(
+        `✅ Loaded ${electricalJobs.length} electrical jobs (filtered from ${data?.length || 0})`
+      );
       setJobs(electricalJobs);
 
       setSearchProgress({
@@ -169,7 +236,7 @@ export const useUnifiedJobSearch = () => {
         totalJobsFound: electricalJobs.length,
         completedSources: 1,
         totalSources: 1,
-        isSearching: false
+        isSearching: false,
       });
     } catch (error) {
       console.error('Error fetching initial jobs:', error);
@@ -192,7 +259,9 @@ export const useUnifiedJobSearch = () => {
 
       // Add text search across title, description, and company
       if (keywords.trim()) {
-        query = query.or(`title.ilike.%${keywords}%,description.ilike.%${keywords}%,company.ilike.%${keywords}%`);
+        query = query.or(
+          `title.ilike.%${keywords}%,description.ilike.%${keywords}%,company.ilike.%${keywords}%`
+        );
       }
 
       // Add location filter
@@ -206,9 +275,9 @@ export const useUnifiedJobSearch = () => {
 
       // Filter to electrical jobs only and apply freshness indicator
       const electricalJobs = (data || [])
-        .map(job => ({
+        .map((job) => ({
           ...job,
-          is_fresh: isJobFresh(job.updated_at)
+          is_fresh: isJobFresh(job.updated_at),
         }))
         .filter(isElectricalJob);
 
@@ -228,53 +297,56 @@ export const useUnifiedJobSearch = () => {
           page: 1,
           progressCallback: (progress: any) => {
             // Update progress state with partial results
-            setSearchProgress(prev => {
-              const updatedSources = prev.sources.map(source => {
+            setSearchProgress((prev) => {
+              const updatedSources = prev.sources.map((source) => {
                 const update = progress.sources?.find((s: any) => s.source === source.source);
                 return update ? { ...source, ...update } : source;
               });
-              
+
               const totalJobs = updatedSources.reduce((sum, s) => sum + s.jobCount, 0);
-              const completed = updatedSources.filter(s => s.status === 'completed' || s.status === 'failed' || s.status === 'timeout').length;
-              
+              const completed = updatedSources.filter(
+                (s) => s.status === 'completed' || s.status === 'failed' || s.status === 'timeout'
+              ).length;
+
               return {
                 ...prev,
                 sources: updatedSources,
                 totalJobsFound: totalJobs,
-                completedSources: completed
+                completedSources: completed,
               };
             });
 
             // Update jobs with partial results
             if (progress.partialJobs && progress.partialJobs.length > 0) {
-              setJobs(prevJobs => {
-                const newJobs = progress.partialJobs.filter((newJob: any) => 
-                  !prevJobs.some(existingJob => existingJob.id === newJob.id)
+              setJobs((prevJobs) => {
+                const newJobs = progress.partialJobs.filter(
+                  (newJob: any) => !prevJobs.some((existingJob) => existingJob.id === newJob.id)
                 );
                 return [...prevJobs, ...newJobs.map((job: any) => ({ ...job, is_fresh: true }))];
               });
             }
-          }
-        }
+          },
+        },
       });
 
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
 
       return {
-        jobs: data.jobs?.map((job: any) => ({
-          ...job,
-          is_fresh: true
-        })) || [],
+        jobs:
+          data.jobs?.map((job: any) => ({
+            ...job,
+            is_fresh: true,
+          })) || [],
         summary: data.summary,
-        sourceResults: data.sourceResults
+        sourceResults: data.sourceResults,
       };
     } catch (error) {
       console.error('Error searching live jobs:', error);
       return {
         jobs: [],
         summary: null,
-        sourceResults: []
+        sourceResults: [],
       };
     }
   };
@@ -286,8 +358,8 @@ export const useUnifiedJobSearch = () => {
         console.error('Error triggering job update:', error);
       } else {
         toast({
-          title: "Job database updated",
-          description: "Fresh jobs are being fetched in the background"
+          title: 'Job database updated',
+          description: 'Fresh jobs are being fetched in the background',
         });
       }
     } catch (error) {
@@ -310,7 +382,7 @@ export const useUnifiedJobSearch = () => {
 
   const removeDuplicates = (allJobs: UnifiedJob[]) => {
     const seen = new Set();
-    return allJobs.filter(job => {
+    return allJobs.filter((job) => {
       const key = `${job.title.toLowerCase().trim()}-${job.company.toLowerCase().trim()}`;
       if (seen.has(key)) {
         return false;
@@ -326,7 +398,7 @@ export const useUnifiedJobSearch = () => {
   };
 
   const changeJobsPerPage = (value: string) => {
-    const newJobsPerPage = value === "all" ? -1 : parseInt(value);
+    const newJobsPerPage = value === 'all' ? -1 : parseInt(value);
     setJobsPerPage(newJobsPerPage);
     setCurrentPage(1);
   };
@@ -343,7 +415,7 @@ export const useUnifiedJobSearch = () => {
       totalJobsFound: 0,
       completedSources: 0,
       totalSources: 1,
-      isSearching: true
+      isSearching: true,
     });
 
     try {
@@ -363,22 +435,21 @@ export const useUnifiedJobSearch = () => {
         totalJobsFound: dbJobs.length,
         completedSources: 1,
         totalSources: 1,
-        isSearching: false
+        isSearching: false,
       });
 
       toast({
-        title: "Search Complete",
-        description: `Found ${dbJobs.length} jobs matching your search`
+        title: 'Search Complete',
+        description: `Found ${dbJobs.length} jobs matching your search`,
       });
-
     } catch (error) {
-      setSearchProgress(prev => ({ ...prev, isSearching: false }));
-      const errorMessage = error instanceof Error ? error.message : "Search failed";
+      setSearchProgress((prev) => ({ ...prev, isSearching: false }));
+      const errorMessage = error instanceof Error ? error.message : 'Search failed';
       setError(errorMessage);
       toast({
-        title: "Search Failed",
+        title: 'Search Failed',
         description: errorMessage,
-        variant: "destructive"
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -396,6 +467,6 @@ export const useUnifiedJobSearch = () => {
     currentPage,
     jobsPerPage,
     paginate,
-    changeJobsPerPage
+    changeJobsPerPage,
   };
 };

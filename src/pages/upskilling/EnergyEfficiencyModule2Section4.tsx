@@ -1,119 +1,144 @@
-import { ArrowLeft, Activity, Zap, Gauge, Cpu, Wifi, AlertTriangle, CheckCircle, PoundSterling, Target, Wrench, ClipboardCheck } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Activity,
+  Zap,
+  Gauge,
+  Cpu,
+  Wifi,
+  AlertTriangle,
+  CheckCircle,
+  PoundSterling,
+  Target,
+  Wrench,
+  ClipboardCheck,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const EnergyEfficiencyModule2Section4 = () => {
   useSEO({
-    title: "Equipment for Power Monitoring | Energy Efficiency Module 2 Section 4 | Elec-Mate",
-    description: "Learn about power monitoring equipment including clamp meters, power analysers, CTs, smart meters, and IoT energy monitors. Practical guidance for UK electricians on equipment selection and installation.",
-    keywords: "power monitoring equipment, clamp meters, power analysers, current transformers, smart meters, energy monitoring, Fluke, Chauvin Arnoux, Hioki, UK electrical"
+    title: 'Equipment for Power Monitoring | Energy Efficiency Module 2 Section 4 | Elec-Mate',
+    description:
+      'Learn about power monitoring equipment including clamp meters, power analysers, CTs, smart meters, and IoT energy monitors. Practical guidance for UK electricians on equipment selection and installation.',
+    keywords:
+      'power monitoring equipment, clamp meters, power analysers, current transformers, smart meters, energy monitoring, Fluke, Chauvin Arnoux, Hioki, UK electrical',
   });
 
   const quickCheckQuestions = [
     {
-      id: "qc1",
-      question: "What accuracy class is typically required for billing-grade energy metering in commercial installations?",
-      options: ["Class 3", "Class 1", "Class 0.5 or better", "Class 5"],
+      id: 'qc1',
+      question:
+        'What accuracy class is typically required for billing-grade energy metering in commercial installations?',
+      options: ['Class 3', 'Class 1', 'Class 0.5 or better', 'Class 5'],
       correctIndex: 2,
-      explanation: "Billing-grade metering requires Class 0.5 or better accuracy to ensure fair and accurate energy billing. Class 1 is acceptable for sub-metering, while Class 3 is only suitable for indicative measurements."
+      explanation:
+        'Billing-grade metering requires Class 0.5 or better accuracy to ensure fair and accurate energy billing. Class 1 is acceptable for sub-metering, while Class 3 is only suitable for indicative measurements.',
     },
     {
-      id: "qc2",
-      question: "When selecting a CT for a 400A circuit, what ratio would typically be most appropriate?",
-      options: ["100/5A", "250/5A", "500/5A", "1000/5A"],
+      id: 'qc2',
+      question:
+        'When selecting a CT for a 400A circuit, what ratio would typically be most appropriate?',
+      options: ['100/5A', '250/5A', '500/5A', '1000/5A'],
       correctIndex: 2,
-      explanation: "A 500/5A CT provides headroom above the 400A load while keeping measurements in an optimal range. The CT should be rated above maximum expected current but not excessively oversized, which would reduce accuracy at lower loads."
+      explanation:
+        'A 500/5A CT provides headroom above the 400A load while keeping measurements in an optimal range. The CT should be rated above maximum expected current but not excessively oversized, which would reduce accuracy at lower loads.',
     },
     {
-      id: "qc3",
-      question: "What is the main advantage of Rogowski coils over traditional split-core CTs?",
-      options: ["Higher accuracy", "Lower cost", "Flexibility to fit around large or awkwardly shaped conductors", "Better high-frequency response"],
+      id: 'qc3',
+      question: 'What is the main advantage of Rogowski coils over traditional split-core CTs?',
+      options: [
+        'Higher accuracy',
+        'Lower cost',
+        'Flexibility to fit around large or awkwardly shaped conductors',
+        'Better high-frequency response',
+      ],
       correctIndex: 2,
-      explanation: "Rogowski coils are flexible, lightweight, and can wrap around conductors of any size or shape, making them ideal for retrofit installations where access is limited or conductors are large busbar arrangements."
-    }
+      explanation:
+        'Rogowski coils are flexible, lightweight, and can wrap around conductors of any size or shape, making them ideal for retrofit installations where access is limited or conductors are large busbar arrangements.',
+    },
   ];
 
   const quizQuestions = [
     {
-      question: "What does a true RMS clamp meter measure that a standard clamp meter cannot accurately measure?",
+      question:
+        'What does a true RMS clamp meter measure that a standard clamp meter cannot accurately measure?',
       options: [
-        "DC current only",
-        "Non-sinusoidal waveforms from VFDs and LED drivers",
-        "Very low currents below 1A",
-        "Voltage measurements"
+        'DC current only',
+        'Non-sinusoidal waveforms from VFDs and LED drivers',
+        'Very low currents below 1A',
+        'Voltage measurements',
       ],
-      correctAnswer: "Non-sinusoidal waveforms from VFDs and LED drivers"
+      correctAnswer: 'Non-sinusoidal waveforms from VFDs and LED drivers',
     },
     {
-      question: "Which UK standard covers the performance requirements for electricity metering equipment?",
-      options: [
-        "BS 7671",
-        "BS EN 62053 series",
-        "BS 5839",
-        "BS EN 61010"
-      ],
-      correctAnswer: "BS EN 62053 series"
+      question:
+        'Which UK standard covers the performance requirements for electricity metering equipment?',
+      options: ['BS 7671', 'BS EN 62053 series', 'BS 5839', 'BS EN 61010'],
+      correctAnswer: 'BS EN 62053 series',
     },
     {
-      question: "What is the typical cost range for a professional-grade portable power analyser in the UK?",
-      options: [
-        "£50-£150",
-        "£200-£500",
-        "£800-£3,000",
-        "£5,000-£10,000"
-      ],
-      correctAnswer: "£800-£3,000"
+      question:
+        'What is the typical cost range for a professional-grade portable power analyser in the UK?',
+      options: ['£50-£150', '£200-£500', '£800-£3,000', '£5,000-£10,000'],
+      correctAnswer: '£800-£3,000',
     },
     {
-      question: "What parameter does Power Factor (PF) measurement help identify?",
+      question: 'What parameter does Power Factor (PF) measurement help identify?',
       options: [
-        "Earth fault current",
-        "Reactive power and potential for power factor correction",
-        "Maximum demand only",
-        "Cable temperature"
+        'Earth fault current',
+        'Reactive power and potential for power factor correction',
+        'Maximum demand only',
+        'Cable temperature',
       ],
-      correctAnswer: "Reactive power and potential for power factor correction"
+      correctAnswer: 'Reactive power and potential for power factor correction',
     },
     {
-      question: "When installing CTs on a three-phase system, why is correct orientation (K-L marking) important?",
+      question:
+        'When installing CTs on a three-phase system, why is correct orientation (K-L marking) important?',
       options: [
-        "It affects the CT lifespan",
-        "It ensures correct polarity for accurate power and energy measurements",
-        "It is only important for safety",
-        "It determines the CT ratio"
+        'It affects the CT lifespan',
+        'It ensures correct polarity for accurate power and energy measurements',
+        'It is only important for safety',
+        'It determines the CT ratio',
       ],
-      correctAnswer: "It ensures correct polarity for accurate power and energy measurements"
-    }
+      correctAnswer: 'It ensures correct polarity for accurate power and energy measurements',
+    },
   ];
 
   const faqs = [
     {
-      question: "Do I need a calibrated power analyser for energy audits?",
-      answer: "For formal energy audits and reports that may influence investment decisions, using calibrated equipment with traceable certificates is strongly recommended. Calibration should be performed annually by an accredited laboratory. For general monitoring and indicative measurements, factory calibration is usually sufficient, but you should maintain records of equipment used and its calibration status."
+      question: 'Do I need a calibrated power analyser for energy audits?',
+      answer:
+        'For formal energy audits and reports that may influence investment decisions, using calibrated equipment with traceable certificates is strongly recommended. Calibration should be performed annually by an accredited laboratory. For general monitoring and indicative measurements, factory calibration is usually sufficient, but you should maintain records of equipment used and its calibration status.',
     },
     {
-      question: "Can I use standard CTs with any power meter?",
-      answer: "CTs must be compatible with your meter in terms of output (typically 5A or 1A secondary), accuracy class, and burden rating. Most meters specify compatible CT types. Using mismatched CTs can result in inaccurate readings or damage to equipment. Always check the meter specifications and consider using manufacturer-recommended CT combinations."
+      question: 'Can I use standard CTs with any power meter?',
+      answer:
+        'CTs must be compatible with your meter in terms of output (typically 5A or 1A secondary), accuracy class, and burden rating. Most meters specify compatible CT types. Using mismatched CTs can result in inaccurate readings or damage to equipment. Always check the meter specifications and consider using manufacturer-recommended CT combinations.',
     },
     {
-      question: "What is the difference between MID-approved and non-MID meters?",
-      answer: "MID (Measuring Instruments Directive) approved meters meet EU accuracy and quality standards required for billing purposes where energy costs are recharged to tenants or other parties. Non-MID meters are suitable for internal monitoring and energy management but cannot be used for fiscal metering. MID approval adds cost but provides legal traceability."
+      question: 'What is the difference between MID-approved and non-MID meters?',
+      answer:
+        'MID (Measuring Instruments Directive) approved meters meet EU accuracy and quality standards required for billing purposes where energy costs are recharged to tenants or other parties. Non-MID meters are suitable for internal monitoring and energy management but cannot be used for fiscal metering. MID approval adds cost but provides legal traceability.',
     },
     {
-      question: "How do I choose between WiFi and wired data loggers?",
-      answer: "WiFi loggers offer easier installation and flexibility but may suffer connectivity issues in buildings with thick walls or electrical interference. Wired connections (Ethernet, Modbus, BACnet) are more reliable for permanent installations and industrial environments. Consider hybrid systems that log locally and transmit periodically to handle connectivity gaps."
+      question: 'How do I choose between WiFi and wired data loggers?',
+      answer:
+        'WiFi loggers offer easier installation and flexibility but may suffer connectivity issues in buildings with thick walls or electrical interference. Wired connections (Ethernet, Modbus, BACnet) are more reliable for permanent installations and industrial environments. Consider hybrid systems that log locally and transmit periodically to handle connectivity gaps.',
     },
     {
-      question: "What safety precautions are essential when installing power monitoring equipment?",
-      answer: "Always isolate circuits where possible before installing CTs or making connections. Use appropriate PPE including arc-flash rated clothing for work on live equipment. Ensure CTs are never operated with an open secondary circuit as dangerous voltages can develop. Follow safe isolation procedures per BS 7671 and GS38 guidance for test equipment. Only competent persons should work on live systems."
+      question: 'What safety precautions are essential when installing power monitoring equipment?',
+      answer:
+        'Always isolate circuits where possible before installing CTs or making connections. Use appropriate PPE including arc-flash rated clothing for work on live equipment. Ensure CTs are never operated with an open secondary circuit as dangerous voltages can develop. Follow safe isolation procedures per BS 7671 and GS38 guidance for test equipment. Only competent persons should work on live systems.',
     },
     {
-      question: "Can IoT energy monitors replace traditional power analysers?",
-      answer: "IoT monitors excel at continuous, long-term monitoring and trend analysis but typically lack the detailed power quality analysis capabilities of dedicated analysers. They are complementary tools - use IoT monitors for ongoing energy management and bring in power analysers for detailed investigations of specific issues like harmonics, transients, or voltage quality problems."
-    }
+      question: 'Can IoT energy monitors replace traditional power analysers?',
+      answer:
+        'IoT monitors excel at continuous, long-term monitoring and trend analysis but typically lack the detailed power quality analysis capabilities of dedicated analysers. They are complementary tools - use IoT monitors for ongoing energy management and bring in power analysers for detailed investigations of specific issues like harmonics, transients, or voltage quality problems.',
+    },
   ];
 
   return (
@@ -121,7 +146,12 @@ const EnergyEfficiencyModule2Section4 = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-2">
               <ArrowLeft className="h-5 w-5" />
             </Link>
@@ -140,7 +170,8 @@ const EnergyEfficiencyModule2Section4 = () => {
             Equipment for Power Monitoring
           </h1>
           <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">
-            Master the tools of the trade - from handheld clamp meters to sophisticated IoT monitoring systems
+            Master the tools of the trade - from handheld clamp meters to sophisticated IoT
+            monitoring systems
           </p>
         </header>
 
@@ -177,22 +208,36 @@ const EnergyEfficiencyModule2Section4 = () => {
                 Clamp Meters
               </h3>
               <p className="text-white mb-4">
-                Clamp meters are the electrician's everyday tool for current measurement. Modern units offer far more than basic AC current readings.
+                Clamp meters are the electrician's everyday tool for current measurement. Modern
+                units offer far more than basic AC current readings.
               </p>
               <div className="space-y-4">
                 <div className="border-l-2 border-elec-yellow pl-4">
                   <h4 className="font-medium text-white mb-2">True RMS vs Average-Responding</h4>
                   <p className="text-white text-sm">
-                    True RMS meters accurately measure non-sinusoidal waveforms common with VFDs, LED drivers, and switched-mode power supplies. Average-responding meters can under-read by 20-40% on distorted waveforms. For energy work, always use True RMS instruments.
+                    True RMS meters accurately measure non-sinusoidal waveforms common with VFDs,
+                    LED drivers, and switched-mode power supplies. Average-responding meters can
+                    under-read by 20-40% on distorted waveforms. For energy work, always use True
+                    RMS instruments.
                   </p>
                 </div>
                 <div className="border-l-2 border-elec-yellow pl-4">
                   <h4 className="font-medium text-white mb-2">Popular UK Models</h4>
                   <ul className="text-white text-sm space-y-1">
-                    <li><strong>Fluke 376 FC:</strong> True RMS, iFlex compatibility, Bluetooth - approx £400-500</li>
-                    <li><strong>Fluke 325:</strong> Excellent mid-range option - approx £200-250</li>
-                    <li><strong>Chauvin Arnoux F407:</strong> Power and harmonics capable - approx £350-450</li>
-                    <li><strong>Hioki CM4375:</strong> AC/DC with Bluetooth - approx £300-400</li>
+                    <li>
+                      <strong>Fluke 376 FC:</strong> True RMS, iFlex compatibility, Bluetooth -
+                      approx £400-500
+                    </li>
+                    <li>
+                      <strong>Fluke 325:</strong> Excellent mid-range option - approx £200-250
+                    </li>
+                    <li>
+                      <strong>Chauvin Arnoux F407:</strong> Power and harmonics capable - approx
+                      £350-450
+                    </li>
+                    <li>
+                      <strong>Hioki CM4375:</strong> AC/DC with Bluetooth - approx £300-400
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -204,7 +249,9 @@ const EnergyEfficiencyModule2Section4 = () => {
                 Portable Power Analysers
               </h3>
               <p className="text-white mb-4">
-                For detailed energy analysis, portable power analysers provide comprehensive measurements including voltage, current, power factor, harmonics, and energy consumption over time.
+                For detailed energy analysis, portable power analysers provide comprehensive
+                measurements including voltage, current, power factor, harmonics, and energy
+                consumption over time.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-white/5 p-4 rounded-lg">
@@ -220,10 +267,18 @@ const EnergyEfficiencyModule2Section4 = () => {
                 <div className="bg-white/5 p-4 rounded-lg">
                   <h4 className="font-medium text-white mb-2">Leading Models (UK Market)</h4>
                   <ul className="text-white text-sm space-y-1">
-                    <li><strong>Fluke 1770 series:</strong> £2,500-4,000</li>
-                    <li><strong>Chauvin Arnoux CA8336:</strong> £2,000-3,000</li>
-                    <li><strong>Hioki PW3198:</strong> £2,500-3,500</li>
-                    <li><strong>Megger MPQ2000:</strong> £1,500-2,500</li>
+                    <li>
+                      <strong>Fluke 1770 series:</strong> £2,500-4,000
+                    </li>
+                    <li>
+                      <strong>Chauvin Arnoux CA8336:</strong> £2,000-3,000
+                    </li>
+                    <li>
+                      <strong>Hioki PW3198:</strong> £2,500-3,500
+                    </li>
+                    <li>
+                      <strong>Megger MPQ2000:</strong> £1,500-2,500
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -239,7 +294,9 @@ const EnergyEfficiencyModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              For permanent monitoring installations, fixed power quality analysers provide continuous data collection and often integrate with building management systems (BMS) or energy management software.
+              For permanent monitoring installations, fixed power quality analysers provide
+              continuous data collection and often integrate with building management systems (BMS)
+              or energy management software.
             </p>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="font-medium text-elec-yellow mb-3">When to Specify Fixed Analysers</h4>
@@ -279,15 +336,21 @@ const EnergyEfficiencyModule2Section4 = () => {
               <div className="grid md:grid-cols-2 gap-3">
                 <div className="bg-white/5 p-3 rounded">
                   <p className="font-medium text-elec-yellow text-sm">Schneider ION Series</p>
-                  <p className="text-white/70 text-xs">Enterprise-grade, extensive BMS integration</p>
+                  <p className="text-white/70 text-xs">
+                    Enterprise-grade, extensive BMS integration
+                  </p>
                 </div>
                 <div className="bg-white/5 p-3 rounded">
                   <p className="font-medium text-elec-yellow text-sm">ABB M4M Series</p>
-                  <p className="text-white/70 text-xs">Modular, scalable for various applications</p>
+                  <p className="text-white/70 text-xs">
+                    Modular, scalable for various applications
+                  </p>
                 </div>
                 <div className="bg-white/5 p-3 rounded">
                   <p className="font-medium text-elec-yellow text-sm">Janitza UMG Series</p>
-                  <p className="text-white/70 text-xs">Excellent harmonic analysis, German quality</p>
+                  <p className="text-white/70 text-xs">
+                    Excellent harmonic analysis, German quality
+                  </p>
                 </div>
                 <div className="bg-white/5 p-3 rounded">
                   <p className="font-medium text-elec-yellow text-sm">Crompton Integra Series</p>
@@ -317,9 +380,13 @@ const EnergyEfficiencyModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <h3 className="text-lg font-medium text-elec-yellow mb-3">Current Transformers (CTs)</h3>
+              <h3 className="text-lg font-medium text-elec-yellow mb-3">
+                Current Transformers (CTs)
+              </h3>
               <p className="text-white mb-4">
-                CTs are essential for measuring high currents safely. They step down the primary current to a safe secondary level (typically 5A or 1A) that can be measured by instruments.
+                CTs are essential for measuring high currents safely. They step down the primary
+                current to a safe secondary level (typically 5A or 1A) that can be measured by
+                instruments.
               </p>
               <div className="overflow-x-auto mb-4">
                 <table className="w-full text-sm">
@@ -361,7 +428,10 @@ const EnergyEfficiencyModule2Section4 = () => {
                   <div>
                     <h4 className="font-medium text-amber-500 mb-1">Critical Safety Warning</h4>
                     <p className="text-white text-sm">
-                      Never leave a CT secondary circuit open when primary current is flowing. Dangerous voltages (potentially thousands of volts) can develop. Always short-circuit CT secondaries before disconnecting from the meter, or use CTs with built-in shorting links.
+                      Never leave a CT secondary circuit open when primary current is flowing.
+                      Dangerous voltages (potentially thousands of volts) can develop. Always
+                      short-circuit CT secondaries before disconnecting from the meter, or use CTs
+                      with built-in shorting links.
                     </p>
                   </div>
                 </div>
@@ -371,7 +441,8 @@ const EnergyEfficiencyModule2Section4 = () => {
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h3 className="text-lg font-medium text-elec-yellow mb-3">Rogowski Coils</h3>
               <p className="text-white mb-4">
-                Rogowski coils are flexible current sensors that offer unique advantages for certain applications.
+                Rogowski coils are flexible current sensors that offer unique advantages for certain
+                applications.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
@@ -423,7 +494,9 @@ const EnergyEfficiencyModule2Section4 = () => {
                 UK Smart Meter Rollout (SMETS2)
               </h3>
               <p className="text-white mb-4">
-                The UK smart meter rollout uses SMETS2 (Smart Metering Equipment Technical Specifications 2) meters that communicate via the Data Communications Company (DCC) network.
+                The UK smart meter rollout uses SMETS2 (Smart Metering Equipment Technical
+                Specifications 2) meters that communicate via the Data Communications Company (DCC)
+                network.
               </p>
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-white/5 p-4 rounded-lg">
@@ -451,22 +524,30 @@ const EnergyEfficiencyModule2Section4 = () => {
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h3 className="text-lg font-medium text-elec-yellow mb-3">Sub-metering Systems</h3>
               <p className="text-white mb-4">
-                Sub-meters provide circuit-level monitoring within buildings, enabling detailed energy analysis and cost allocation.
+                Sub-meters provide circuit-level monitoring within buildings, enabling detailed
+                energy analysis and cost allocation.
               </p>
               <div className="space-y-4">
                 <div className="border-l-2 border-elec-yellow pl-4">
-                  <h4 className="font-medium text-white mb-2">MID-Approved Sub-meters (for billing)</h4>
+                  <h4 className="font-medium text-white mb-2">
+                    MID-Approved Sub-meters (for billing)
+                  </h4>
                   <p className="text-white text-sm mb-2">
-                    Required when recharging energy costs to tenants or other parties. Must display the MID conformity marking and have sealed calibration.
+                    Required when recharging energy costs to tenants or other parties. Must display
+                    the MID conformity marking and have sealed calibration.
                   </p>
                   <p className="text-white/70 text-xs">
-                    Examples: Rayleigh Instruments RI-D series, Eastron SDM series (MID versions), Schneider iEM3000
+                    Examples: Rayleigh Instruments RI-D series, Eastron SDM series (MID versions),
+                    Schneider iEM3000
                   </p>
                 </div>
                 <div className="border-l-2 border-white/30 pl-4">
-                  <h4 className="font-medium text-white mb-2">Non-MID Sub-meters (for monitoring)</h4>
+                  <h4 className="font-medium text-white mb-2">
+                    Non-MID Sub-meters (for monitoring)
+                  </h4>
                   <p className="text-white text-sm mb-2">
-                    Suitable for internal energy management, identifying waste, and monitoring individual circuits or equipment. Lower cost but not legal for billing.
+                    Suitable for internal energy management, identifying waste, and monitoring
+                    individual circuits or equipment. Lower cost but not legal for billing.
                   </p>
                   <p className="text-white/70 text-xs">
                     Examples: Eastron SDM series (standard), Finder 7E series, Northern Design Cube
@@ -490,7 +571,8 @@ const EnergyEfficiencyModule2Section4 = () => {
                 IoT Energy Monitoring Systems
               </h3>
               <p className="text-white mb-4">
-                Modern IoT energy monitors combine local measurement with cloud connectivity, enabling remote monitoring, alerts, and advanced analytics.
+                Modern IoT energy monitors combine local measurement with cloud connectivity,
+                enabling remote monitoring, alerts, and advanced analytics.
               </p>
               <div className="grid md:grid-cols-3 gap-4 mb-4">
                 <div className="bg-white/5 p-4 rounded-lg">
@@ -524,7 +606,10 @@ const EnergyEfficiencyModule2Section4 = () => {
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <h4 className="font-medium text-blue-400 mb-1">Connectivity Considerations</h4>
                 <p className="text-white text-sm">
-                  Consider network infrastructure before specifying IoT monitors. Options include WiFi, Ethernet, Modbus TCP/RTU, BACnet, LoRaWAN, and cellular (4G/5G). For industrial environments, wired protocols are more reliable. Always plan for local data buffering in case of connectivity loss.
+                  Consider network infrastructure before specifying IoT monitors. Options include
+                  WiFi, Ethernet, Modbus TCP/RTU, BACnet, LoRaWAN, and cellular (4G/5G). For
+                  industrial environments, wired protocols are more reliable. Always plan for local
+                  data buffering in case of connectivity loss.
                 </p>
               </div>
             </div>
@@ -532,7 +617,8 @@ const EnergyEfficiencyModule2Section4 = () => {
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h3 className="text-lg font-medium text-elec-yellow mb-3">Standalone Data Loggers</h3>
               <p className="text-white mb-4">
-                For temporary monitoring campaigns or locations without network connectivity, standalone data loggers store measurements locally for later retrieval.
+                For temporary monitoring campaigns or locations without network connectivity,
+                standalone data loggers store measurements locally for later retrieval.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
@@ -548,10 +634,18 @@ const EnergyEfficiencyModule2Section4 = () => {
                 <div>
                   <h4 className="font-medium text-white mb-2">Recommended Models</h4>
                   <ul className="text-white text-sm space-y-1">
-                    <li><strong>Onset HOBO:</strong> Industry standard, excellent software</li>
-                    <li><strong>Tinytag:</strong> UK manufactured, robust</li>
-                    <li><strong>Elcomponent Microlite:</strong> Good value, easy setup</li>
-                    <li><strong>Dent ELITEpro:</strong> Three-phase power logging</li>
+                    <li>
+                      <strong>Onset HOBO:</strong> Industry standard, excellent software
+                    </li>
+                    <li>
+                      <strong>Tinytag:</strong> UK manufactured, robust
+                    </li>
+                    <li>
+                      <strong>Elcomponent Microlite:</strong> Good value, easy setup
+                    </li>
+                    <li>
+                      <strong>Dent ELITEpro:</strong> Three-phase power logging
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -610,25 +704,38 @@ const EnergyEfficiencyModule2Section4 = () => {
                   <ul className="text-white text-sm space-y-2">
                     <li className="flex items-start gap-2">
                       <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Access:</strong> New install (solid CTs) vs retrofit (split-core/Rogowski)</span>
+                      <span>
+                        <strong>Access:</strong> New install (solid CTs) vs retrofit
+                        (split-core/Rogowski)
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Current levels:</strong> Size CTs with 20-30% headroom above maximum expected load</span>
+                      <span>
+                        <strong>Current levels:</strong> Size CTs with 20-30% headroom above maximum
+                        expected load
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Phases:</strong> Single-phase, three-phase 3-wire, or three-phase 4-wire configuration</span>
+                      <span>
+                        <strong>Phases:</strong> Single-phase, three-phase 3-wire, or three-phase
+                        4-wire configuration
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Wrench className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span><strong>Space:</strong> DIN rail capacity in distribution board</span>
+                      <span>
+                        <strong>Space:</strong> DIN rail capacity in distribution board
+                      </span>
                     </li>
                   </ul>
                 </div>
 
                 <div className="bg-white/5 p-4 rounded-lg">
-                  <h4 className="font-medium text-white mb-3">Step 3: Consider Accuracy Requirements</h4>
+                  <h4 className="font-medium text-white mb-3">
+                    Step 3: Consider Accuracy Requirements
+                  </h4>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
@@ -733,10 +840,18 @@ const EnergyEfficiencyModule2Section4 = () => {
               <div>
                 <h4 className="font-medium text-white mb-3">Accuracy Classes (BS EN 62053)</h4>
                 <ul className="text-white text-sm space-y-2">
-                  <li><strong>Class 0.2S/0.5S:</strong> Revenue metering, high accuracy</li>
-                  <li><strong>Class 0.5/1:</strong> Commercial sub-metering</li>
-                  <li><strong>Class 2:</strong> General energy management</li>
-                  <li><strong>Class 3:</strong> Indicative measurements only</li>
+                  <li>
+                    <strong>Class 0.2S/0.5S:</strong> Revenue metering, high accuracy
+                  </li>
+                  <li>
+                    <strong>Class 0.5/1:</strong> Commercial sub-metering
+                  </li>
+                  <li>
+                    <strong>Class 2:</strong> General energy management
+                  </li>
+                  <li>
+                    <strong>Class 3:</strong> Indicative measurements only
+                  </li>
                 </ul>
               </div>
               <div>
@@ -763,11 +878,21 @@ const EnergyEfficiencyModule2Section4 = () => {
               <div>
                 <h4 className="font-medium text-white mb-3">Leading UK Brands</h4>
                 <ul className="text-white text-sm space-y-2">
-                  <li><strong>Fluke:</strong> Industry standard for portable instruments</li>
-                  <li><strong>Chauvin Arnoux:</strong> Excellent power quality analysers</li>
-                  <li><strong>Hioki:</strong> High-quality Japanese manufacturer</li>
-                  <li><strong>Megger:</strong> Strong UK presence and support</li>
-                  <li><strong>Schneider Electric:</strong> Enterprise monitoring systems</li>
+                  <li>
+                    <strong>Fluke:</strong> Industry standard for portable instruments
+                  </li>
+                  <li>
+                    <strong>Chauvin Arnoux:</strong> Excellent power quality analysers
+                  </li>
+                  <li>
+                    <strong>Hioki:</strong> High-quality Japanese manufacturer
+                  </li>
+                  <li>
+                    <strong>Megger:</strong> Strong UK presence and support
+                  </li>
+                  <li>
+                    <strong>Schneider Electric:</strong> Enterprise monitoring systems
+                  </li>
                 </ul>
               </div>
             </div>
@@ -795,7 +920,11 @@ const EnergyEfficiencyModule2Section4 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" asChild className="text-white hover:text-elec-yellow hover:bg-transparent">
+          <Button
+            variant="ghost"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent"
+          >
             <Link to="../section-3" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Previous: Section 3

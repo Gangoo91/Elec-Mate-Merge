@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
@@ -11,7 +10,12 @@ interface MobileTestProgressProps {
   circuits: any[];
 }
 
-const MobileTestProgress = ({ progress, completedTests, totalTests, circuits }: MobileTestProgressProps) => {
+const MobileTestProgress = ({
+  progress,
+  completedTests,
+  totalTests,
+  circuits,
+}: MobileTestProgressProps) => {
   const getProgressColor = () => {
     if (progress >= 100) return 'text-green-600';
     if (progress >= 75) return 'text-blue-600';
@@ -38,9 +42,7 @@ const MobileTestProgress = ({ progress, completedTests, totalTests, circuits }: 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           {getProgressIcon()}
-          <span className={`font-semibold ${getProgressColor()}`}>
-            {getStatusText()}
-          </span>
+          <span className={`font-semibold ${getProgressColor()}`}>{getStatusText()}</span>
         </div>
         <Badge variant="outline" className="text-xs">
           {Math.round(progress)}% Complete
@@ -50,7 +52,9 @@ const MobileTestProgress = ({ progress, completedTests, totalTests, circuits }: 
       <div className="space-y-2">
         <div className="flex justify-between text-sm text-muted-foreground">
           <span>Test Progress</span>
-          <span>{completedTests} of {totalTests} tests</span>
+          <span>
+            {completedTests} of {totalTests} tests
+          </span>
         </div>
         <Progress value={progress} className="h-3" />
       </div>

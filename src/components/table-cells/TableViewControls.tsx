@@ -87,10 +87,7 @@ export const TableViewControls: React.FC<TableViewControlsProps> = ({
   const handleColorModeToggle = () => {
     const newColorMode = !colorMode;
     setColorMode(newColorMode);
-    document.documentElement.style.setProperty(
-      '--table-color-mode',
-      newColorMode ? '1' : '0'
-    );
+    document.documentElement.style.setProperty('--table-color-mode', newColorMode ? '1' : '0');
   };
 
   return (
@@ -129,7 +126,10 @@ export const TableViewControls: React.FC<TableViewControlsProps> = ({
         <DropdownMenuContent align="start" className="bg-background z-50">
           <DropdownMenuLabel>Row Spacing</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup value={viewMode} onValueChange={(v) => handleViewModeChange(v as ViewMode)}>
+          <DropdownMenuRadioGroup
+            value={viewMode}
+            onValueChange={(v) => handleViewModeChange(v as ViewMode)}
+          >
             <DropdownMenuRadioItem value="compact">Compact</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="normal">Normal</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="comfortable">Comfortable</DropdownMenuRadioItem>
@@ -148,7 +148,10 @@ export const TableViewControls: React.FC<TableViewControlsProps> = ({
         <DropdownMenuContent align="start" className="bg-background z-50">
           <DropdownMenuLabel>Text Size</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup value={zoomLevel.toString()} onValueChange={(v) => handleZoomChange(parseInt(v) as ZoomLevel)}>
+          <DropdownMenuRadioGroup
+            value={zoomLevel.toString()}
+            onValueChange={(v) => handleZoomChange(parseInt(v) as ZoomLevel)}
+          >
             <DropdownMenuRadioItem value="80">80%</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="100">100%</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="120">120%</DropdownMenuRadioItem>
@@ -157,12 +160,7 @@ export const TableViewControls: React.FC<TableViewControlsProps> = ({
       </DropdownMenu>
 
       {/* Color Mode */}
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={handleColorModeToggle}
-        className="h-8 px-3"
-      >
+      <Button variant="outline" size="sm" onClick={handleColorModeToggle} className="h-8 px-3">
         {colorMode ? <Eye className="h-4 w-4 mr-2" /> : <EyeOff className="h-4 w-4 mr-2" />}
         Colors
       </Button>

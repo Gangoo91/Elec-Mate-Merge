@@ -6,115 +6,112 @@ import { CheckCircle, XCircle, RotateCcw } from 'lucide-react';
 
 const quizData = [
   {
-    question: "What is the typical accuracy class required for current transformers used in EV charging revenue metering?",
+    question:
+      'What is the typical accuracy class required for current transformers used in EV charging revenue metering?',
+    answers: ['Class 1', 'Class 0.5', 'Class 0.2S', 'Class 3'],
+    correctAnswer: 2,
+    explanation:
+      'Class 0.2S CTs are required for revenue-grade metering applications as they provide the highest accuracy (±0.2%) needed for billing and financial transactions in commercial EV charging.',
+  },
+  {
+    question:
+      'What is the recommended voltage trip setting for undervoltage protection in EV charging applications?',
     answers: [
-      "Class 1",
-      "Class 0.5",
-      "Class 0.2S", 
-      "Class 3"
+      '85% of nominal voltage',
+      '90% of nominal voltage (207V)',
+      '95% of nominal voltage',
+      '80% of nominal voltage',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'EV charging equipment typically requires 90% of nominal voltage (207V for 230V systems) to ensure proper operation and prevent damage to charging electronics. This is more stringent than general electrical equipment requirements.',
+  },
+  {
+    question:
+      'What is the maximum allowable Total Harmonic Distortion (THD) for current in EV charging applications?',
+    answers: ['5%', '8%', '12%', '15%'],
+    correctAnswer: 1,
+    explanation:
+      'IEC 61851 and most standards limit current THD to <8% at nominal power for EV charging equipment to ensure power quality compliance and minimize network disturbance.',
+  },
+  {
+    question: 'What is the primary safety consideration when working with current transformers?',
+    answers: [
+      'Always use the highest burden possible',
+      'Secondary circuits must never be open-circuited during operation',
+      'Primary current should not exceed 50% of rating',
+      'CTs can be installed in any orientation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CT secondary circuits must never be open-circuited during operation as this causes dangerous high voltages (potentially kV levels) to appear across the secondary terminals, creating serious shock and equipment damage risks.',
+  },
+  {
+    question:
+      'What type of arc fault detection provides the fastest response time for DC charging installations?',
+    answers: [
+      'Current signature analysis only',
+      'Light-based arc detection (<2ms)',
+      'Voltage-based detection',
+      'Temperature-based detection',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Light-based arc detection systems provide the fastest response time (<2ms) by detecting the characteristic light emission from electrical arcs, which is essential for the rapid disconnection required in high-power DC charging applications.',
+  },
+  {
+    question: 'What is the typical burden rating for a CT used with a multifunction power meter?',
+    answers: ['1VA per CT', '2.5VA per CT', '5-10VA per CT', '15VA per CT'],
+    correctAnswer: 2,
+    explanation:
+      "Multifunction power meters typically require 5-10VA burden per CT, depending on the meter's input characteristics and cable length. This ensures accurate measurement across the full operating range.",
+  },
+  {
+    question: 'What phase unbalance level typically triggers protection in EV charging systems?',
+    answers: ['1% unbalance', '3% unbalance', '5% unbalance', '10% unbalance'],
+    correctAnswer: 1,
+    explanation:
+      'EV charging systems typically trip at 3% voltage unbalance to protect sensitive electronics and motors from overheating and reduced efficiency caused by negative sequence currents.',
+  },
+  {
+    question:
+      'Which monitoring parameter is most critical for preventing thermal damage in EV charging equipment?',
+    answers: [
+      'Voltage magnitude only',
+      'Current magnitude and temperature',
+      'Power factor only',
+      'Frequency deviation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Current magnitude and temperature monitoring are critical as high currents combined with poor cooling can cause rapid thermal damage to cables, contactors, and power electronics in EV charging systems.',
+  },
+  {
+    question:
+      'What is the recommended minimum clearance for CT installation in EV charging panels?',
+    answers: [
+      '50mm from adjacent conductors',
+      '100mm from adjacent conductors',
+      '200mm from adjacent conductors',
+      '300mm from adjacent conductors',
     ],
     correctAnswer: 2,
-    explanation: "Class 0.2S CTs are required for revenue-grade metering applications as they provide the highest accuracy (±0.2%) needed for billing and financial transactions in commercial EV charging."
+    explanation:
+      '200mm minimum clearance prevents electromagnetic interference between CTs and ensures safe access for installation, testing, and maintenance in typical EV charging panel configurations.',
   },
   {
-    question: "What is the recommended voltage trip setting for undervoltage protection in EV charging applications?",
+    question:
+      'How often should power quality monitoring data be reviewed for commercial EV charging installations?',
     answers: [
-      "85% of nominal voltage",
-      "90% of nominal voltage (207V)",
-      "95% of nominal voltage", 
-      "80% of nominal voltage"
-    ],
-    correctAnswer: 1,
-    explanation: "EV charging equipment typically requires 90% of nominal voltage (207V for 230V systems) to ensure proper operation and prevent damage to charging electronics. This is more stringent than general electrical equipment requirements."
-  },
-  {
-    question: "What is the maximum allowable Total Harmonic Distortion (THD) for current in EV charging applications?",
-    answers: [
-      "5%",
-      "8%",
-      "12%",
-      "15%"
-    ],
-    correctAnswer: 1,
-    explanation: "IEC 61851 and most standards limit current THD to <8% at nominal power for EV charging equipment to ensure power quality compliance and minimize network disturbance."
-  },
-  {
-    question: "What is the primary safety consideration when working with current transformers?",
-    answers: [
-      "Always use the highest burden possible",
-      "Secondary circuits must never be open-circuited during operation",
-      "Primary current should not exceed 50% of rating",
-      "CTs can be installed in any orientation"
-    ],
-    correctAnswer: 1,
-    explanation: "CT secondary circuits must never be open-circuited during operation as this causes dangerous high voltages (potentially kV levels) to appear across the secondary terminals, creating serious shock and equipment damage risks."
-  },
-  {
-    question: "What type of arc fault detection provides the fastest response time for DC charging installations?",
-    answers: [
-      "Current signature analysis only",
-      "Light-based arc detection (<2ms)",
-      "Voltage-based detection",
-      "Temperature-based detection"
-    ],
-    correctAnswer: 1,
-    explanation: "Light-based arc detection systems provide the fastest response time (<2ms) by detecting the characteristic light emission from electrical arcs, which is essential for the rapid disconnection required in high-power DC charging applications."
-  },
-  {
-    question: "What is the typical burden rating for a CT used with a multifunction power meter?",
-    answers: [
-      "1VA per CT",
-      "2.5VA per CT",
-      "5-10VA per CT",
-      "15VA per CT"
-    ],
-    correctAnswer: 2,
-    explanation: "Multifunction power meters typically require 5-10VA burden per CT, depending on the meter's input characteristics and cable length. This ensures accurate measurement across the full operating range."
-  },
-  {
-    question: "What phase unbalance level typically triggers protection in EV charging systems?",
-    answers: [
-      "1% unbalance",
-      "3% unbalance",
-      "5% unbalance",
-      "10% unbalance"
-    ],
-    correctAnswer: 1,
-    explanation: "EV charging systems typically trip at 3% voltage unbalance to protect sensitive electronics and motors from overheating and reduced efficiency caused by negative sequence currents."
-  },
-  {
-    question: "Which monitoring parameter is most critical for preventing thermal damage in EV charging equipment?",
-    answers: [
-      "Voltage magnitude only",
-      "Current magnitude and temperature",
-      "Power factor only",
-      "Frequency deviation"
-    ],
-    correctAnswer: 1,
-    explanation: "Current magnitude and temperature monitoring are critical as high currents combined with poor cooling can cause rapid thermal damage to cables, contactors, and power electronics in EV charging systems."
-  },
-  {
-    question: "What is the recommended minimum clearance for CT installation in EV charging panels?",
-    answers: [
-      "50mm from adjacent conductors",
-      "100mm from adjacent conductors",
-      "200mm from adjacent conductors",
-      "300mm from adjacent conductors"
-    ],
-    correctAnswer: 2,
-    explanation: "200mm minimum clearance prevents electromagnetic interference between CTs and ensures safe access for installation, testing, and maintenance in typical EV charging panel configurations."
-  },
-  {
-    question: "How often should power quality monitoring data be reviewed for commercial EV charging installations?",
-    answers: [
-      "Real-time monitoring with weekly reports",
-      "Daily manual checks only",
-      "Monthly data review only",
-      "Annual review sufficient"
+      'Real-time monitoring with weekly reports',
+      'Daily manual checks only',
+      'Monthly data review only',
+      'Annual review sufficient',
     ],
     correctAnswer: 0,
-    explanation: "Real-time monitoring with automated alarms plus weekly trending reports ensures immediate response to power quality issues while identifying long-term trends that could affect equipment reliability and customer satisfaction."
-  }
+    explanation:
+      'Real-time monitoring with automated alarms plus weekly trending reports ensures immediate response to power quality issues while identifying long-term trends that could affect equipment reliability and customer satisfaction.',
+  },
 ];
 
 export const EVChargingModule4Section3Quiz = () => {
@@ -125,7 +122,7 @@ export const EVChargingModule4Section3Quiz = () => {
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (quizCompleted) return;
-    
+
     const newSelectedAnswers = [...selectedAnswers];
     newSelectedAnswers[currentQuestion] = answerIndex;
     setSelectedAnswers(newSelectedAnswers);
@@ -161,9 +158,9 @@ export const EVChargingModule4Section3Quiz = () => {
 
   const getScoreColor = (score: number) => {
     const percentage = (score / quizData.length) * 100;
-    if (percentage >= 80) return "text-green-400";
-    if (percentage >= 60) return "text-yellow-400";
-    return "text-red-400";
+    if (percentage >= 80) return 'text-green-400';
+    if (percentage >= 60) return 'text-yellow-400';
+    return 'text-red-400';
   };
 
   if (showResults) {
@@ -180,11 +177,9 @@ export const EVChargingModule4Section3Quiz = () => {
             <div className={`text-3xl font-bold ${getScoreColor(score)}`}>
               {score}/{quizData.length}
             </div>
-            <div className="text-gray-400 text-lg">
-              {percentage.toFixed(0)}% Correct
-            </div>
+            <div className="text-gray-400 text-lg">{percentage.toFixed(0)}% Correct</div>
           </div>
-          
+
           <div className="space-y-4">
             {quizData.map((question, index) => {
               const isCorrect = selectedAnswers[index] === question.correctAnswer;
@@ -197,9 +192,7 @@ export const EVChargingModule4Section3Quiz = () => {
                       <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
                     )}
                     <div className="flex-1">
-                      <div className="font-medium text-foreground mb-2">
-                        {question.question}
-                      </div>
+                      <div className="font-medium text-foreground mb-2">{question.question}</div>
                       <div className="text-sm text-gray-400 mb-2">
                         Your answer: {question.answers[selectedAnswers[index]]}
                       </div>
@@ -208,9 +201,7 @@ export const EVChargingModule4Section3Quiz = () => {
                           Correct answer: {question.answers[question.correctAnswer]}
                         </div>
                       )}
-                      <div className="text-sm text-gray-300">
-                        {question.explanation}
-                      </div>
+                      <div className="text-sm text-gray-300">{question.explanation}</div>
                     </div>
                   </div>
                 </div>
@@ -219,7 +210,7 @@ export const EVChargingModule4Section3Quiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={handleRestart}
               className="bg-elec-yellow text-black hover:bg-yellow-600"
             >
@@ -247,10 +238,8 @@ export const EVChargingModule4Section3Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium text-foreground mb-4">
-            {currentQ.question}
-          </h3>
-          
+          <h3 className="text-lg font-medium text-foreground mb-4">{currentQ.question}</h3>
+
           <div className="space-y-3">
             {currentQ.answers.map((answer, index) => (
               <button
@@ -264,11 +253,13 @@ export const EVChargingModule4Section3Quiz = () => {
                 disabled={quizCompleted}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    selectedAnswers[currentQuestion] === index
-                      ? 'border-elec-yellow bg-elec-yellow text-black'
-                      : 'border-gray-500'
-                  }`}>
+                  <div
+                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                      selectedAnswers[currentQuestion] === index
+                        ? 'border-elec-yellow bg-elec-yellow text-black'
+                        : 'border-gray-500'
+                    }`}
+                  >
                     {selectedAnswers[currentQuestion] === index && (
                       <CheckCircle className="h-4 w-4" />
                     )}
@@ -289,7 +280,7 @@ export const EVChargingModule4Section3Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={!isAnswered}

@@ -1,12 +1,12 @@
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const HNCModule2Section4_6 = () => {
   useSEO(
-    "Human Comfort in Lighting and Acoustics - HNC Module 2",
-    "Occupant comfort and performance standards for lighting and acoustic design"
+    'Human Comfort in Lighting and Acoustics - HNC Module 2',
+    'Occupant comfort and performance standards for lighting and acoustic design'
   );
 
   return (
@@ -14,7 +14,11 @@ const HNCModule2Section4_6 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="../section4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -30,7 +34,8 @@ const HNCModule2Section4_6 = () => {
             4.6 Human Comfort in Lighting and Acoustics
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl">
-            Occupant comfort and performance standards for optimal lighting and acoustic environments.
+            Occupant comfort and performance standards for optimal lighting and acoustic
+            environments.
           </p>
         </div>
       </div>

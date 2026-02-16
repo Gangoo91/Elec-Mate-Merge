@@ -1,9 +1,21 @@
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap, Sparkles } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { SavedResultsCard } from "@/components/electrician-tools/saved-results";
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Zap,
+  Calculator,
+  Wrench,
+  Shield,
+  CheckCircle2,
+  Clipboard,
+  Settings,
+  GraduationCap,
+  Sparkles,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { SavedResultsCard } from '@/components/electrician-tools/saved-results';
 
 // Animation variants - Smooth, fast entrance
 const containerVariants = {
@@ -42,7 +54,12 @@ const AGENTS: Agent[] = [
     gradient: 'from-amber-400 to-yellow-500',
     bgGradient: 'from-amber-500/20 to-yellow-500/10',
     description: 'BS 7671 compliant circuit design and cable sizing',
-    expertise: ['Circuit calculations', 'Cable sizing', 'Consumer unit layouts', 'Voltage drop analysis']
+    expertise: [
+      'Circuit calculations',
+      'Cable sizing',
+      'Consumer unit layouts',
+      'Voltage drop analysis',
+    ],
   },
   {
     id: 'cost-engineer',
@@ -51,7 +68,7 @@ const AGENTS: Agent[] = [
     gradient: 'from-emerald-400 to-green-500',
     bgGradient: 'from-emerald-500/20 to-green-500/10',
     description: 'Full project quotes with materials, labour and timescales',
-    expertise: ['Material pricing', 'Labour estimates', 'Project timescales', 'Quote generation']
+    expertise: ['Material pricing', 'Labour estimates', 'Project timescales', 'Quote generation'],
   },
   {
     id: 'installer',
@@ -60,7 +77,7 @@ const AGENTS: Agent[] = [
     gradient: 'from-blue-400 to-blue-500',
     bgGradient: 'from-blue-500/20 to-blue-500/10',
     description: 'Step-by-step installation methods and practical guidance',
-    expertise: ['Installation methods', 'Practical tips', 'Tool selection', 'Best practices']
+    expertise: ['Installation methods', 'Practical tips', 'Tool selection', 'Best practices'],
   },
   {
     id: 'maintenance',
@@ -69,7 +86,12 @@ const AGENTS: Agent[] = [
     gradient: 'from-cyan-400 to-teal-500',
     bgGradient: 'from-cyan-500/20 to-teal-500/10',
     description: 'Periodic inspections, preventive maintenance & fault diagnosis',
-    expertise: ['Periodic inspections', 'Preventive maintenance', 'Fault diagnosis', 'Equipment servicing']
+    expertise: [
+      'Periodic inspections',
+      'Preventive maintenance',
+      'Fault diagnosis',
+      'Equipment servicing',
+    ],
   },
   {
     id: 'health-safety',
@@ -78,7 +100,7 @@ const AGENTS: Agent[] = [
     gradient: 'from-orange-400 to-red-500',
     bgGradient: 'from-orange-500/20 to-red-500/10',
     description: 'Risk assessments, PPE requirements and safety procedures',
-    expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Emergency procedures']
+    expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Emergency procedures'],
   },
   {
     id: 'commissioning',
@@ -87,8 +109,13 @@ const AGENTS: Agent[] = [
     gradient: 'from-purple-400 to-purple-500',
     bgGradient: 'from-purple-500/20 to-purple-500/10',
     description: 'Test procedures, EICR defect coding and fault diagnosis',
-    expertise: ['Testing procedures', 'EICR photo analysis', 'Defect coding (C1-C3)', 'Fault diagnosis'],
-    comingSoon: true
+    expertise: [
+      'Testing procedures',
+      'EICR photo analysis',
+      'Defect coding (C1-C3)',
+      'Fault diagnosis',
+    ],
+    comingSoon: true,
   },
   {
     id: 'project-manager',
@@ -98,7 +125,7 @@ const AGENTS: Agent[] = [
     bgGradient: 'from-pink-500/20 to-rose-500/10',
     description: 'Scheduling, coordination, handover documentation',
     expertise: ['Project planning', 'Coordination', 'Documentation', 'Client communication'],
-    comingSoon: true
+    comingSoon: true,
   },
   {
     id: 'tutor',
@@ -107,9 +134,14 @@ const AGENTS: Agent[] = [
     gradient: 'from-indigo-400 to-indigo-500',
     bgGradient: 'from-indigo-500/20 to-indigo-500/10',
     description: 'Educational guidance, exam prep & concept explanations',
-    expertise: ['Level 3 guidance', 'Concept explanations', 'Exam preparation', 'Practice questions'],
-    comingSoon: true
-  }
+    expertise: [
+      'Level 3 guidance',
+      'Concept explanations',
+      'Exam preparation',
+      'Practice questions',
+    ],
+    comingSoon: true,
+  },
 ];
 
 const AgentSelectorPage = () => {
@@ -119,14 +151,14 @@ const AgentSelectorPage = () => {
     if (comingSoon) return;
 
     const routes: Record<string, string> = {
-      'designer': '/electrician/circuit-designer',
+      designer: '/electrician/circuit-designer',
       'cost-engineer': '/electrician/cost-engineer',
-      'installer': '/electrician/installation-specialist',
+      installer: '/electrician/installation-specialist',
       'health-safety': '/electrician/health-safety',
-      'commissioning': '/electrician/commissioning',
+      commissioning: '/electrician/commissioning',
       'project-manager': '/electrician/project-manager',
-      'maintenance': '/electrician/maintenance',
-      'tutor': '/electrician/tutor'
+      maintenance: '/electrician/maintenance',
+      tutor: '/electrician/tutor',
     };
 
     const route = routes[agentId];
@@ -134,14 +166,14 @@ const AgentSelectorPage = () => {
       navigate(route, { state: { fromAgentSelector: true } });
     } else {
       navigate('/electrician/install-planner?mode=ai', {
-        state: { preSelectedAgent: agentId }
+        state: { preSelectedAgent: agentId },
       });
     }
   };
 
   // Separate available and coming soon agents
-  const availableAgents = AGENTS.filter(a => !a.comingSoon);
-  const comingSoonAgents = AGENTS.filter(a => a.comingSoon);
+  const availableAgents = AGENTS.filter((a) => !a.comingSoon);
+  const comingSoonAgents = AGENTS.filter((a) => a.comingSoon);
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
@@ -184,7 +216,10 @@ const AgentSelectorPage = () => {
           <div className="flex items-center gap-2.5">
             <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
             <h2 className="text-base font-bold text-white">Build Partners</h2>
-            <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
+            <Badge
+              variant="secondary"
+              className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs"
+            >
               {availableAgents.length} Active
             </Badge>
           </div>
@@ -200,9 +235,13 @@ const AgentSelectorPage = () => {
                   onClick={() => handleAgentSelect(agent.id, agent.comingSoon)}
                   className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
                 >
-                  <div className={`relative overflow-hidden rounded-2xl group active:scale-[0.99] transition-all duration-200`}>
+                  <div
+                    className={`relative overflow-hidden rounded-2xl group active:scale-[0.99] transition-all duration-200`}
+                  >
                     {/* Gradient background layer */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${agent.bgGradient} opacity-60`} />
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${agent.bgGradient} opacity-60`}
+                    />
 
                     {/* Glass effect overlay */}
                     <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent" />
@@ -216,8 +255,12 @@ const AgentSelectorPage = () => {
                         {/* Icon with enhanced styling */}
                         <div className="relative flex-shrink-0">
                           {/* Glow effect */}
-                          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${agent.gradient} blur-lg opacity-40`} />
-                          <div className={`relative w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} shadow-lg`}>
+                          <div
+                            className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${agent.gradient} blur-lg opacity-40`}
+                          />
+                          <div
+                            className={`relative w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} shadow-lg`}
+                          >
                             <IconComponent className="h-7 w-7 text-white drop-shadow-sm" />
                           </div>
                         </div>
@@ -235,7 +278,9 @@ const AgentSelectorPage = () => {
 
                         {/* Arrow indicator with gradient border */}
                         <div className="flex-shrink-0 relative">
-                          <div className={`w-10 h-10 rounded-full bg-white/[0.06] backdrop-blur-sm flex items-center justify-center border border-white/[0.1] group-active:bg-white/[0.12] transition-all`}>
+                          <div
+                            className={`w-10 h-10 rounded-full bg-white/[0.06] backdrop-blur-sm flex items-center justify-center border border-white/[0.1] group-active:bg-white/[0.12] transition-all`}
+                          >
                             <ArrowRight className="h-5 w-5 text-white/80" />
                           </div>
                         </div>
@@ -270,7 +315,10 @@ const AgentSelectorPage = () => {
           <div className="flex items-center gap-2.5">
             <div className="h-1.5 w-1.5 rounded-full bg-white/30" />
             <h2 className="text-base font-bold text-white/50">Coming Soon</h2>
-            <Badge variant="secondary" className="bg-white/10 text-white/40 border-white/10 text-xs">
+            <Badge
+              variant="secondary"
+              className="bg-white/10 text-white/40 border-white/10 text-xs"
+            >
               {comingSoonAgents.length} Planned
             </Badge>
           </div>
@@ -279,12 +327,11 @@ const AgentSelectorPage = () => {
             {comingSoonAgents.map((agent) => {
               const IconComponent = agent.icon;
               return (
-                <div
-                  key={agent.id}
-                  className="relative overflow-hidden rounded-2xl"
-                >
+                <div key={agent.id} className="relative overflow-hidden rounded-2xl">
                   {/* Muted gradient background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${agent.bgGradient} opacity-20`} />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${agent.bgGradient} opacity-20`}
+                  />
 
                   {/* Border */}
                   <div className="absolute inset-0 rounded-2xl border border-white/[0.06]" />
@@ -292,7 +339,9 @@ const AgentSelectorPage = () => {
                   <div className="relative p-4">
                     <div className="flex items-center gap-4">
                       {/* Icon - muted */}
-                      <div className={`flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} opacity-30`}>
+                      <div
+                        className={`flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} opacity-30`}
+                      >
                         <IconComponent className="h-7 w-7 text-white/70" />
                       </div>
 
@@ -302,7 +351,10 @@ const AgentSelectorPage = () => {
                           <h3 className="text-base font-bold text-white/50 tracking-tight">
                             {agent.name}
                           </h3>
-                          <Badge variant="secondary" className="bg-white/[0.08] text-white/40 border-white/[0.08] text-[10px] font-medium">
+                          <Badge
+                            variant="secondary"
+                            className="bg-white/[0.08] text-white/40 border-white/[0.08] text-[10px] font-medium"
+                          >
                             Coming Soon
                           </Badge>
                         </div>

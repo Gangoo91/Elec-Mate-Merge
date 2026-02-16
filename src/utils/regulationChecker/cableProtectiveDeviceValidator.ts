@@ -1,4 +1,3 @@
-
 import { TestResult } from '@/types/testResult';
 import { RegulationWarning } from './types';
 import { isRingCircuit } from './ringCircuitDetector';
@@ -8,23 +7,31 @@ import { getCableCapacity, getCableSizeForRating } from './cableCapacityCalculat
 const isLightingCircuit = (result: TestResult): boolean => {
   const circuitType = result.type?.toLowerCase() || '';
   const description = result.circuitDescription?.toLowerCase() || '';
-  
+
   // Check for common lighting circuit indicators
   const lightingKeywords = [
-    'light', 'lights', 'lighting',
-    'downstairs lights', 'upstairs lights', 'kitchen lights', 'outdoor lights',
-    'bedroom lights', 'bathroom lights', 'hall lights', 'landing lights'
+    'light',
+    'lights',
+    'lighting',
+    'downstairs lights',
+    'upstairs lights',
+    'kitchen lights',
+    'outdoor lights',
+    'bedroom lights',
+    'bathroom lights',
+    'hall lights',
+    'landing lights',
   ];
-  
-  return lightingKeywords.some(keyword => 
-    circuitType.includes(keyword) || description.includes(keyword)
+
+  return lightingKeywords.some(
+    (keyword) => circuitType.includes(keyword) || description.includes(keyword)
   );
 };
 
 // Check cable and protective device compatibility
 export const checkCableProtectiveDeviceMatch = (result: TestResult): RegulationWarning[] => {
   const warnings: RegulationWarning[] = [];
-  
+
   if (!result.liveSize || !result.protectiveDeviceRating) {
     return warnings;
   }
@@ -40,13 +47,15 @@ export const checkCableProtectiveDeviceMatch = (result: TestResult): RegulationW
 
   // BS 7671 Regulation 433.1.1 - Cable capacity must exceed protective device rating
   if (deviceRating > cableCapacity) {
-    const capacityNote = isRing ? ` (${cableCapacity/2}A × 2 parallel paths = ${cableCapacity}A effective capacity)` : ` (${cableCapacity}A capacity)`;
+    const capacityNote = isRing
+      ? ` (${cableCapacity / 2}A × 2 parallel paths = ${cableCapacity}A effective capacity)`
+      : ` (${cableCapacity}A capacity)`;
     warnings.push({
       severity: 'critical',
       title: 'Cable Undersized for Protective Device',
       description: `${result.liveSize} cable${capacityNote} cannot safely carry ${deviceRating}A protective device rating.`,
       regulation: 'BS 7671 Regulation 433.1.1',
-      suggestion: `Use minimum ${getCableSizeForRating(deviceRating, 'method_c', isRing)} cable for ${deviceRating}A protection${isRing ? ' in ring configuration' : ''}.`
+      suggestion: `Use minimum ${getCableSizeForRating(deviceRating, 'method_c', isRing)} cable for ${deviceRating}A protection${isRing ? ' in ring configuration' : ''}.`,
     });
   }
 
@@ -60,7 +69,7 @@ export const checkCableProtectiveDeviceMatch = (result: TestResult): RegulationW
         title: 'Cable May Be Oversized',
         description: `${result.liveSize} cable appears oversized for ${deviceRating}A protection. Consider cable cost optimisation.`,
         regulation: 'BS 7671 Section 433',
-        suggestion: `${getCableSizeForRating(deviceRating, 'method_c', isRing)} may be sufficient for this application.`
+        suggestion: `${getCableSizeForRating(deviceRating, 'method_c', isRing)} may be sufficient for this application.`,
       });
     }
   }

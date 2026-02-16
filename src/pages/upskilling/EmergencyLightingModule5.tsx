@@ -7,40 +7,40 @@ const EmergencyLightingModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Initial Inspection and Verification",
+      title: 'Initial Inspection and Verification',
       icon: Search,
-      description: "Pre-commissioning checks and verification procedures"
+      description: 'Pre-commissioning checks and verification procedures',
     },
     {
       id: 2,
-      title: "Functional Testing and 3-Hour Duration Tests",
+      title: 'Functional Testing and 3-Hour Duration Tests',
       icon: TestTube,
-      description: "Operational testing and duration verification"
+      description: 'Operational testing and duration verification',
     },
     {
       id: 3,
-      title: "Monthly and Annual Testing Requirements",
+      title: 'Monthly and Annual Testing Requirements',
       icon: Calendar,
-      description: "Scheduled testing regimes and frequencies"
+      description: 'Scheduled testing regimes and frequencies',
     },
     {
       id: 4,
-      title: "System Labelling and Maintenance Records",
+      title: 'System Labelling and Maintenance Records',
       icon: Tag,
-      description: "Documentation and record-keeping requirements"
+      description: 'Documentation and record-keeping requirements',
     },
     {
       id: 5,
-      title: "Certification and Commissioning Checklists",
+      title: 'Certification and Commissioning Checklists',
       icon: FileCheck,
-      description: "Formal certification procedures and checklists"
+      description: 'Formal certification procedures and checklists',
     },
     {
       id: 6,
-      title: "Client Handover Procedure",
+      title: 'Client Handover Procedure',
       icon: Users,
-      description: "Handover documentation and client training"
-    }
+      description: 'Handover documentation and client training',
+    },
   ];
 
   return (

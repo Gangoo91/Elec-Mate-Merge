@@ -1,4 +1,16 @@
-import { ArrowLeft, RotateCcw, CheckCircle, AlertTriangle, Info, Target, Settings, BookOpen, Eye, Activity, Zap } from 'lucide-react';
+import {
+  ArrowLeft,
+  RotateCcw,
+  CheckCircle,
+  AlertTriangle,
+  Info,
+  Target,
+  Settings,
+  BookOpen,
+  Eye,
+  Activity,
+  Zap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,77 +19,77 @@ import { Link } from 'react-router-dom';
 const RingFinalContinuityGuide = () => {
   const whyWeTest = [
     {
-      title: "Ring Integrity",
-      description: "Ensures the ring circuit is complete and properly connected throughout",
-      icon: RotateCcw
+      title: 'Ring Integrity',
+      description: 'Ensures the ring circuit is complete and properly connected throughout',
+      icon: RotateCcw,
     },
     {
-      title: "Load Distribution",
-      description: "Verifies balanced load sharing between both legs of the ring",
-      icon: Target
+      title: 'Load Distribution',
+      description: 'Verifies balanced load sharing between both legs of the ring',
+      icon: Target,
     },
     {
-      title: "Fault Protection",
-      description: "Confirms protective devices will operate correctly under fault conditions",
-      icon: AlertTriangle
+      title: 'Fault Protection',
+      description: 'Confirms protective devices will operate correctly under fault conditions',
+      icon: AlertTriangle,
     },
     {
-      title: "Regulation Compliance",
-      description: "BS 7671 requires ring final circuit continuity verification",
-      icon: CheckCircle
-    }
+      title: 'Regulation Compliance',
+      description: 'BS 7671 requires ring final circuit continuity verification',
+      icon: CheckCircle,
+    },
   ];
 
   const testMethods = [
     {
-      method: "End-to-End Test",
-      description: "Tests continuity of each conductor around the complete ring",
-      when: "Initial verification of ring circuit integrity",
-      equipment: "Low resistance ohmmeter, test leads"
+      method: 'End-to-End Test',
+      description: 'Tests continuity of each conductor around the complete ring',
+      when: 'Initial verification of ring circuit integrity',
+      equipment: 'Low resistance ohmmeter, test leads',
     },
     {
-      method: "Cross-Connection Test", 
-      description: "Verifies correct polarity and identifies any interconnections",
-      when: "After end-to-end test to confirm proper wiring",
-      equipment: "Low resistance ohmmeter, temporary links"
+      method: 'Cross-Connection Test',
+      description: 'Verifies correct polarity and identifies any interconnections',
+      when: 'After end-to-end test to confirm proper wiring',
+      equipment: 'Low resistance ohmmeter, temporary links',
     },
     {
-      method: "R1 + R2 Test",
-      description: "Measures combined resistance of line and CPC conductors",
-      when: "Final verification for protective device coordination",
-      equipment: "Low resistance ohmmeter, link connections"
-    }
+      method: 'R1 + R2 Test',
+      description: 'Measures combined resistance of line and CPC conductors',
+      when: 'Final verification for protective device coordination',
+      equipment: 'Low resistance ohmmeter, link connections',
+    },
   ];
 
   const expectedResults = [
     {
-      test: "End-to-End Line",
-      range: "≤ 1.67 x cable resistance",
-      cable25: "~0.15Ω (typical)",
-      cable4: "~0.09Ω (typical)",
-      status: "good"
+      test: 'End-to-End Line',
+      range: '≤ 1.67 x cable resistance',
+      cable25: '~0.15Ω (typical)',
+      cable4: '~0.09Ω (typical)',
+      status: 'good',
     },
     {
-      test: "End-to-End Neutral", 
-      range: "≤ 1.67 x cable resistance",
-      cable25: "~0.15Ω (typical)",
-      cable4: "~0.09Ω (typical)",
-      status: "good"
+      test: 'End-to-End Neutral',
+      range: '≤ 1.67 x cable resistance',
+      cable25: '~0.15Ω (typical)',
+      cable4: '~0.09Ω (typical)',
+      status: 'good',
     },
     {
-      test: "End-to-End CPC",
-      range: "≤ 1.67 x cable resistance", 
-      cable25: "~0.25Ω (typical)",
-      cable4: "~0.15Ω (typical)",
-      status: "good"
+      test: 'End-to-End CPC',
+      range: '≤ 1.67 x cable resistance',
+      cable25: '~0.25Ω (typical)',
+      cable4: '~0.15Ω (typical)',
+      status: 'good',
     },
     {
-      test: "Cross-Connection",
-      range: "Should be ∞ (open circuit)",
-      cable25: "∞Ω",
-      cable4: "∞Ω", 
-      status: "critical"
-    }
+      test: 'Cross-Connection',
+      range: 'Should be ∞ (open circuit)',
+      cable25: '∞Ω',
+      cable4: '∞Ω',
+      status: 'critical',
+    },
   ];
 
   return (
@@ -93,12 +105,12 @@ const RingFinalContinuityGuide = () => {
             Back to Practical Tests
           </Button>
         </Link>
-        
+
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <RotateCcw className="h-8 w-8 text-elec-yellow" />
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className="bg-green-600/40 text-green-300 hover:bg-green-600/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Continuity Testing
@@ -108,7 +120,8 @@ const RingFinalContinuityGuide = () => {
             Ring Final Circuit Continuity
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-3xl">
-            Complete guide to testing ring final circuits including end-to-end and cross-connection tests
+            Complete guide to testing ring final circuits including end-to-end and cross-connection
+            tests
           </p>
         </div>
       </header>
@@ -116,7 +129,6 @@ const RingFinalContinuityGuide = () => {
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-6xl mx-auto space-y-8">
-
           {/* Why We Test Section */}
           <Card className="bg-transparent border-transparent">
             <CardHeader>
@@ -180,18 +192,20 @@ const RingFinalContinuityGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               {/* Test 1: End-to-End */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    1
+                  </span>
                   End-to-End Continuity Test
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
-                      <strong>Purpose:</strong> Verify each conductor forms a complete ring with no breaks
+                      <strong>Purpose:</strong> Verify each conductor forms a complete ring with no
+                      breaks
                     </p>
                   </div>
 
@@ -206,7 +220,7 @@ const RingFinalContinuityGuide = () => {
                         <li>• Keep conductors clearly separated and labelled</li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-white font-medium mb-2">Equipment Setup:</h4>
                       <ul className="text-white text-sm space-y-2">
@@ -222,9 +236,15 @@ const RingFinalContinuityGuide = () => {
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">Test Sequence:</h4>
                     <div className="bg-transparent p-4 rounded space-y-2">
-                      <p className="text-elec-yellow font-mono text-sm">1. Test L1 to L2: Connect leads, record reading (should be ~0.15Ω)</p>
-                      <p className="text-elec-yellow font-mono text-sm">2. Test N1 to N2: Connect leads, record reading (should be ~0.15Ω)</p>
-                      <p className="text-elec-yellow font-mono text-sm">3. Test E1 to E2: Connect leads, record reading (should be ~0.25Ω)</p>
+                      <p className="text-elec-yellow font-mono text-sm">
+                        1. Test L1 to L2: Connect leads, record reading (should be ~0.15Ω)
+                      </p>
+                      <p className="text-elec-yellow font-mono text-sm">
+                        2. Test N1 to N2: Connect leads, record reading (should be ~0.15Ω)
+                      </p>
+                      <p className="text-elec-yellow font-mono text-sm">
+                        3. Test E1 to E2: Connect leads, record reading (should be ~0.25Ω)
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -233,31 +253,46 @@ const RingFinalContinuityGuide = () => {
               {/* Test 2: Cross-Connection */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                  <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    2
+                  </span>
                   Cross-Connection Test
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-green-600/20 p-4 rounded border-l-4 border-green-400">
                     <p className="text-green-200 text-sm">
-                      <strong>Purpose:</strong> Verify no unwanted connections between different conductors
+                      <strong>Purpose:</strong> Verify no unwanted connections between different
+                      conductors
                     </p>
                   </div>
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">What to Test:</h4>
                     <div className="bg-transparent p-4 rounded space-y-2">
-                      <p className="text-elec-yellow font-mono text-sm">L1 to N1: Should read ∞ (open circuit)</p>
-                      <p className="text-elec-yellow font-mono text-sm">L1 to N2: Should read ∞ (open circuit)</p>
-                      <p className="text-elec-yellow font-mono text-sm">L2 to N1: Should read ∞ (open circuit)</p>
-                      <p className="text-elec-yellow font-mono text-sm">L2 to N2: Should read ∞ (open circuit)</p>
-                      <p className="text-elec-yellow font-mono text-sm">All conductor to CPC tests: Should read ∞</p>
+                      <p className="text-elec-yellow font-mono text-sm">
+                        L1 to N1: Should read ∞ (open circuit)
+                      </p>
+                      <p className="text-elec-yellow font-mono text-sm">
+                        L1 to N2: Should read ∞ (open circuit)
+                      </p>
+                      <p className="text-elec-yellow font-mono text-sm">
+                        L2 to N1: Should read ∞ (open circuit)
+                      </p>
+                      <p className="text-elec-yellow font-mono text-sm">
+                        L2 to N2: Should read ∞ (open circuit)
+                      </p>
+                      <p className="text-elec-yellow font-mono text-sm">
+                        All conductor to CPC tests: Should read ∞
+                      </p>
                     </div>
                   </div>
 
                   <div className="bg-red-600/20 p-4 rounded border-l-4 border-red-400">
                     <p className="text-red-200 text-sm">
-                      <strong>If you get a reading other than ∞:</strong> There's an unwanted connection - check for crossed wires, damaged insulation, or incorrect terminations
+                      <strong>If you get a reading other than ∞:</strong> There's an unwanted
+                      connection - check for crossed wires, damaged insulation, or incorrect
+                      terminations
                     </p>
                   </div>
                 </div>
@@ -266,14 +301,17 @@ const RingFinalContinuityGuide = () => {
               {/* Test 3: R1 + R2 */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
+                  <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    3
+                  </span>
                   R1 + R2 Test
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-600/20 p-4 rounded border-l-4 border-purple-400">
                     <p className="text-purple-200 text-sm">
-                      <strong>Purpose:</strong> Measure earth fault loop impedance within the ring circuit
+                      <strong>Purpose:</strong> Measure earth fault loop impedance within the ring
+                      circuit
                     </p>
                   </div>
 
@@ -288,7 +326,7 @@ const RingFinalContinuityGuide = () => {
                         <li>• This gives maximum R1 + R2 for circuit</li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-white font-medium mb-2">Method B - Calculation:</h4>
                       <ul className="text-white text-sm space-y-2">
@@ -329,10 +367,14 @@ const RingFinalContinuityGuide = () => {
                       <tr key={index} className="border-b border-gray-700">
                         <td className="text-white p-3 font-medium">{result.test}</td>
                         <td className="text-white p-3">{result.range}</td>
-                        <td className={`p-3 ${result.status === 'good' ? 'text-green-400' : result.status === 'critical' ? 'text-red-400' : 'text-elec-yellow'}`}>
+                        <td
+                          className={`p-3 ${result.status === 'good' ? 'text-green-400' : result.status === 'critical' ? 'text-red-400' : 'text-elec-yellow'}`}
+                        >
                           {result.cable25}
                         </td>
-                        <td className={`p-3 ${result.status === 'good' ? 'text-green-400' : result.status === 'critical' ? 'text-red-400' : 'text-elec-yellow'}`}>
+                        <td
+                          className={`p-3 ${result.status === 'good' ? 'text-green-400' : result.status === 'critical' ? 'text-red-400' : 'text-elec-yellow'}`}
+                        >
                           {result.cable4}
                         </td>
                       </tr>
@@ -350,7 +392,7 @@ const RingFinalContinuityGuide = () => {
                     <li>• R1 + R2 matches calculated values</li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-elec-yellow/20 p-4 rounded border border-elec-yellow/30">
                   <h4 className="text-elec-yellow font-semibold mb-2">Check Further</h4>
                   <ul className="text-yellow-200 text-sm space-y-1">
@@ -359,7 +401,7 @@ const RingFinalContinuityGuide = () => {
                     <li>• Temperature compensation needed</li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-red-600/20 p-4 rounded border border-red-600/30">
                   <h4 className="text-red-400 font-semibold mb-2">Problems Found</h4>
                   <ul className="text-red-200 text-sm space-y-1">
@@ -383,7 +425,9 @@ const RingFinalContinuityGuide = () => {
             <CardContent className="space-y-4">
               <div className="space-y-4">
                 <div className="bg-transparent/80 p-4 rounded-lg">
-                  <h3 className="text-red-400 font-semibold mb-3">Problem: Open Circuit on End-to-End Test</h3>
+                  <h3 className="text-red-400 font-semibold mb-3">
+                    Problem: Open Circuit on End-to-End Test
+                  </h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
                       <h4 className="text-white font-medium mb-2">Possible Causes:</h4>
@@ -407,7 +451,9 @@ const RingFinalContinuityGuide = () => {
                 </div>
 
                 <div className="bg-transparent/80 p-4 rounded-lg">
-                  <h3 className="text-red-400 font-semibold mb-3">Problem: Low Reading on Cross-Connection</h3>
+                  <h3 className="text-red-400 font-semibold mb-3">
+                    Problem: Low Reading on Cross-Connection
+                  </h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div>
                       <h4 className="text-white font-medium mb-2">Possible Causes:</h4>
@@ -488,7 +534,7 @@ const RingFinalContinuityGuide = () => {
                     </li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-transparent/80 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-semibold mb-3">During Testing</h3>
                   <ul className="text-white text-sm space-y-2">
@@ -511,15 +557,16 @@ const RingFinalContinuityGuide = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="bg-green-600/20 p-4 rounded-lg border border-green-600/30 mt-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Info className="h-5 w-5 text-green-400" />
                   <h4 className="text-green-400 font-semibold">Remember for Exams</h4>
                 </div>
                 <p className="text-green-200 text-sm">
-                  Ring final circuits must pass ALL three tests - end-to-end continuity, cross-connection (polarity), 
-                  and R1 + R2 measurement. If any test fails, investigate and rectify before proceeding.
+                  Ring final circuits must pass ALL three tests - end-to-end continuity,
+                  cross-connection (polarity), and R1 + R2 measurement. If any test fails,
+                  investigate and rectify before proceeding.
                 </p>
               </div>
             </CardContent>
@@ -534,18 +581,20 @@ const RingFinalContinuityGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               {/* Advanced Method 1 */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                  <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    1
+                  </span>
                   The "Socket-by-Socket" Method
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-600/20 p-4 rounded border-l-4 border-purple-400">
                     <p className="text-purple-200 text-sm">
-                      <strong>When to use:</strong> When you suspect wiring faults or need to identify exact fault locations
+                      <strong>When to use:</strong> When you suspect wiring faults or need to
+                      identify exact fault locations
                     </p>
                   </div>
 
@@ -553,7 +602,9 @@ const RingFinalContinuityGuide = () => {
                     <h4 className="text-white font-medium">Step-by-Step Process:</h4>
                     <div className="space-y-3">
                       <div className="bg-transparent p-3 rounded">
-                        <p className="text-elec-yellow font-medium text-sm">Stage 1: Map the Ring</p>
+                        <p className="text-elec-yellow font-medium text-sm">
+                          Stage 1: Map the Ring
+                        </p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Start with all sockets disconnected from ring</li>
                           <li>• Test end-to-end continuity from CU</li>
@@ -562,9 +613,11 @@ const RingFinalContinuityGuide = () => {
                           <li>• Continue socket by socket around ring</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-transparent p-3 rounded">
-                        <p className="text-elec-yellow font-medium text-sm">Stage 2: Identify the Pattern</p>
+                        <p className="text-elec-yellow font-medium text-sm">
+                          Stage 2: Identify the Pattern
+                        </p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Resistance should decrease as you complete the ring</li>
                           <li>• Any sudden increases indicate problems</li>
@@ -572,9 +625,11 @@ const RingFinalContinuityGuide = () => {
                           <li>• Compare with calculated values for verification</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-transparent p-3 rounded">
-                        <p className="text-elec-yellow font-medium text-sm">Stage 3: Verification Test</p>
+                        <p className="text-elec-yellow font-medium text-sm">
+                          Stage 3: Verification Test
+                        </p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Remove mid-point socket temporarily</li>
                           <li>• Reading should approximately double</li>
@@ -587,8 +642,9 @@ const RingFinalContinuityGuide = () => {
 
                   <div className="bg-green-600/20 p-4 rounded border-l-4 border-green-400">
                     <p className="text-green-200 text-sm">
-                      <strong>Time Investment:</strong> Takes 45-60 minutes but gives complete confidence in ring integrity. 
-                      Essential for fault investigation or final verification of complex installations.
+                      <strong>Time Investment:</strong> Takes 45-60 minutes but gives complete
+                      confidence in ring integrity. Essential for fault investigation or final
+                      verification of complex installations.
                     </p>
                   </div>
                 </div>
@@ -597,14 +653,17 @@ const RingFinalContinuityGuide = () => {
               {/* Advanced Method 2 */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-orange-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                  <span className="bg-orange-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    2
+                  </span>
                   Load Balance Verification Test
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-orange-600/20 p-4 rounded border-l-4 border-orange-400">
                     <p className="text-orange-200 text-sm">
-                      <strong>Purpose:</strong> Verify that loads will be evenly distributed across both legs of the ring circuit
+                      <strong>Purpose:</strong> Verify that loads will be evenly distributed across
+                      both legs of the ring circuit
                     </p>
                   </div>
 
@@ -619,23 +678,34 @@ const RingFinalContinuityGuide = () => {
                         <li>• Test with multiple loads if possible</li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-white font-medium mb-2">What Good Results Look Like:</h4>
                       <ul className="text-white text-sm space-y-2">
-                        <li>• <strong>Mid-point load:</strong> 5A each leg</li>
-                        <li>• <strong>Quarter-point load:</strong> 7.5A / 2.5A</li>
-                        <li>• <strong>End-point load:</strong> 10A / 0A</li>
-                        <li>• <strong>Multiple loads:</strong> Balanced overall</li>
-                        <li>• <strong>No parallel paths affecting distribution</strong></li>
+                        <li>
+                          • <strong>Mid-point load:</strong> 5A each leg
+                        </li>
+                        <li>
+                          • <strong>Quarter-point load:</strong> 7.5A / 2.5A
+                        </li>
+                        <li>
+                          • <strong>End-point load:</strong> 10A / 0A
+                        </li>
+                        <li>
+                          • <strong>Multiple loads:</strong> Balanced overall
+                        </li>
+                        <li>
+                          • <strong>No parallel paths affecting distribution</strong>
+                        </li>
                       </ul>
                     </div>
                   </div>
 
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-yellow-200 text-sm">
-                      <strong>Practical Note:</strong> This test requires a variable load (like a portable heater) and clamp meter. 
-                      Not always practical on site, but valuable for commissioning critical installations.
+                      <strong>Practical Note:</strong> This test requires a variable load (like a
+                      portable heater) and clamp meter. Not always practical on site, but valuable
+                      for commissioning critical installations.
                     </p>
                   </div>
                 </div>
@@ -644,37 +714,46 @@ const RingFinalContinuityGuide = () => {
               {/* Advanced Method 3 */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
+                  <span className="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    3
+                  </span>
                   Temperature Rise Testing
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-teal-600/20 p-4 rounded border-l-4 border-teal-400">
                     <p className="text-teal-200 text-sm">
-                      <strong>Application:</strong> Verifying thermal performance under load conditions - critical for high-current rings
+                      <strong>Application:</strong> Verifying thermal performance under load
+                      conditions - critical for high-current rings
                     </p>
                   </div>
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">Testing Procedure:</h4>
                     <div className="bg-transparent p-4 rounded space-y-2">
-                      <p className="text-white text-sm"><strong>1. Baseline Measurements:</strong></p>
+                      <p className="text-white text-sm">
+                        <strong>1. Baseline Measurements:</strong>
+                      </p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• Record ambient temperature</li>
                         <li>• Measure cold resistance values</li>
                         <li>• Note cable routing and grouping factors</li>
                         <li>• Identify potential hot spots</li>
                       </ul>
-                      
-                      <p className="text-white text-sm mt-3"><strong>2. Load Application:</strong></p>
+
+                      <p className="text-white text-sm mt-3">
+                        <strong>2. Load Application:</strong>
+                      </p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• Apply design load for 4 hours minimum</li>
                         <li>• Monitor cable temperatures with IR thermometer</li>
                         <li>• Check termination temperatures</li>
                         <li>• Verify no excessive heating at connections</li>
                       </ul>
-                      
-                      <p className="text-white text-sm mt-3"><strong>3. Post-Load Testing:</strong></p>
+
+                      <p className="text-white text-sm mt-3">
+                        <strong>3. Post-Load Testing:</strong>
+                      </p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• Re-measure resistance when hot</li>
                         <li>• Compare with calculated temperature rise</li>
@@ -697,18 +776,20 @@ const RingFinalContinuityGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               {/* Fault Scenario 1 */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                  <span className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    1
+                  </span>
                   Case Study: The "Mystery" Open Circuit
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-red-600/20 p-4 rounded border-l-4 border-red-400">
                     <p className="text-red-200 text-sm">
-                      <strong>Problem:</strong> End-to-end test shows ∞ (open circuit) on line conductor, but all sockets appear wired correctly
+                      <strong>Problem:</strong> End-to-end test shows ∞ (open circuit) on line
+                      conductor, but all sockets appear wired correctly
                     </p>
                   </div>
 
@@ -724,7 +805,7 @@ const RingFinalContinuityGuide = () => {
                           <li>• Installation is 3 years old, previously working</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-transparent p-3 rounded">
                         <p className="text-elec-yellow font-medium text-sm">Systematic Testing</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
@@ -734,7 +815,7 @@ const RingFinalContinuityGuide = () => {
                           <li>• Recent building work in that area</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-transparent p-3 rounded">
                         <p className="text-elec-yellow font-medium text-sm">Root Cause Discovery</p>
                         <ul className="text-white text-sm mt-2 space-y-1">
@@ -749,8 +830,9 @@ const RingFinalContinuityGuide = () => {
 
                   <div className="bg-green-600/20 p-4 rounded border-l-4 border-green-400">
                     <p className="text-green-200 text-sm">
-                      <strong>Solution:</strong> Cable re-routed around damaged section. New junction boxes installed 
-                      with maintenance access. Always investigate recent building work when faults appear!
+                      <strong>Solution:</strong> Cable re-routed around damaged section. New
+                      junction boxes installed with maintenance access. Always investigate recent
+                      building work when faults appear!
                     </p>
                   </div>
                 </div>
@@ -759,14 +841,17 @@ const RingFinalContinuityGuide = () => {
               {/* Fault Scenario 2 */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    2
+                  </span>
                   Case Study: The Intermittent Cross-Connection
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-yellow-200 text-sm">
-                      <strong>Problem:</strong> Cross-connection test sometimes passes, sometimes fails. Reading varies from ∞ to 15Ω
+                      <strong>Problem:</strong> Cross-connection test sometimes passes, sometimes
+                      fails. Reading varies from ∞ to 15Ω
                     </p>
                   </div>
 
@@ -781,7 +866,7 @@ const RingFinalContinuityGuide = () => {
                         <li>• Some sockets work intermittently</li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-white font-medium mb-2">Investigation Strategy:</h4>
                       <ul className="text-white text-sm space-y-2">
@@ -797,8 +882,8 @@ const RingFinalContinuityGuide = () => {
                   <div className="bg-transparent p-4 rounded">
                     <h4 className="text-elec-yellow font-medium mb-2">Discovery:</h4>
                     <p className="text-white text-sm mb-2">
-                      External junction box with poor IP rating allowing water ingress. 
-                      When wet, insulation breaks down creating cross-connection path.
+                      External junction box with poor IP rating allowing water ingress. When wet,
+                      insulation breaks down creating cross-connection path.
                     </p>
                     <ul className="text-white text-sm space-y-1">
                       <li>• Box located below gutter downpipe</li>
@@ -813,37 +898,46 @@ const RingFinalContinuityGuide = () => {
               {/* Fault Scenario 3 */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    3
+                  </span>
                   Case Study: The "Perfect" Tests with No Ring
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
-                      <strong>Problem:</strong> All tests pass perfectly, but circuit doesn't behave like a ring. High voltage drop under load.
+                      <strong>Problem:</strong> All tests pass perfectly, but circuit doesn't behave
+                      like a ring. High voltage drop under load.
                     </p>
                   </div>
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">The Investigation:</h4>
                     <div className="bg-transparent p-4 rounded space-y-2">
-                      <p className="text-white text-sm"><strong>Initial Test Results:</strong></p>
+                      <p className="text-white text-sm">
+                        <strong>Initial Test Results:</strong>
+                      </p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• End-to-end continuity: 0.16Ω ✓</li>
                         <li>• Cross-connection tests: All ∞ ✓</li>
                         <li>• R1 + R2 measurements: 0.10Ω ✓</li>
                         <li>• All results within expected parameters</li>
                       </ul>
-                      
-                      <p className="text-white text-sm mt-3"><strong>Load Testing Reveals:</strong></p>
+
+                      <p className="text-white text-sm mt-3">
+                        <strong>Load Testing Reveals:</strong>
+                      </p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• 13A load causes 8V voltage drop</li>
                         <li>• Should be maximum 3-4V for ring circuit</li>
                         <li>• Load appears on one leg only at CU</li>
                         <li>• Current not splitting as expected</li>
                       </ul>
-                      
-                      <p className="text-white text-sm mt-3"><strong>Final Discovery:</strong></p>
+
+                      <p className="text-white text-sm mt-3">
+                        <strong>Final Discovery:</strong>
+                      </p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• Circuit wired as "figure-8" not true ring</li>
                         <li>• Junction box creates artificial end-to-end continuity</li>
@@ -855,8 +949,9 @@ const RingFinalContinuityGuide = () => {
 
                   <div className="bg-red-600/20 p-4 rounded border-l-4 border-red-400">
                     <p className="text-red-200 text-sm">
-                      <strong>Lesson:</strong> Continuity tests alone don't prove proper ring configuration. 
-                      Always verify load distribution behavior on critical installations.
+                      <strong>Lesson:</strong> Continuity tests alone don't prove proper ring
+                      configuration. Always verify load distribution behavior on critical
+                      installations.
                     </p>
                   </div>
                 </div>
@@ -873,13 +968,16 @@ const RingFinalContinuityGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-white text-lg font-semibold mb-4">What Experienced Electricians Look For</h3>
-                
+                <h3 className="text-white text-lg font-semibold mb-4">
+                  What Experienced Electricians Look For
+                </h3>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="text-green-400 font-medium mb-2">Green Flags (Good Installation):</h4>
+                    <h4 className="text-green-400 font-medium mb-2">
+                      Green Flags (Good Installation):
+                    </h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -903,9 +1001,11 @@ const RingFinalContinuityGuide = () => {
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div>
-                    <h4 className="text-red-400 font-medium mb-2">Red Flags (Investigation Needed):</h4>
+                    <h4 className="text-red-400 font-medium mb-2">
+                      Red Flags (Investigation Needed):
+                    </h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
                         <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
@@ -933,8 +1033,10 @@ const RingFinalContinuityGuide = () => {
               </div>
 
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-white text-lg font-semibold mb-4">Time Management for Commercial Work</h3>
-                
+                <h3 className="text-white text-lg font-semibold mb-4">
+                  Time Management for Commercial Work
+                </h3>
+
                 <div className="space-y-4">
                   <div className="bg-transparent p-4 rounded">
                     <h4 className="text-elec-yellow font-medium mb-2">Typical Time Allocations:</h4>
@@ -968,7 +1070,7 @@ const RingFinalContinuityGuide = () => {
                         <li>• Use appropriate test leads for situation</li>
                       </ul>
                     </div>
-                    
+
                     <div className="bg-elec-yellow/20 p-4 rounded">
                       <h4 className="text-elec-yellow font-semibold mb-2">Quality Checks</h4>
                       <ul className="text-yellow-200 text-sm space-y-1">
@@ -984,31 +1086,49 @@ const RingFinalContinuityGuide = () => {
               </div>
 
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-white text-lg font-semibold mb-4">Examiner Expectations (City & Guilds / EAL)</h3>
-                
+                <h3 className="text-white text-lg font-semibold mb-4">
+                  Examiner Expectations (City & Guilds / EAL)
+                </h3>
+
                 <div className="space-y-4">
                   <div className="bg-transparent p-4 rounded">
-                    <h4 className="text-elec-yellow font-medium mb-2">What Examiners Want to See:</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">
+                      What Examiners Want to See:
+                    </h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">•</span>
-                        <span><strong>Logical test sequence:</strong> Safe isolation → End-to-end → Cross-connection → R1+R2</span>
+                        <span>
+                          <strong>Logical test sequence:</strong> Safe isolation → End-to-end →
+                          Cross-connection → R1+R2
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">•</span>
-                        <span><strong>Proper equipment setup:</strong> Nulled test leads, correct settings, calibrated meter</span>
+                        <span>
+                          <strong>Proper equipment setup:</strong> Nulled test leads, correct
+                          settings, calibrated meter
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">•</span>
-                        <span><strong>Clear documentation:</strong> All readings recorded, any anomalies noted</span>
+                        <span>
+                          <strong>Clear documentation:</strong> All readings recorded, any anomalies
+                          noted
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">•</span>
-                        <span><strong>Safety awareness:</strong> Isolation checks, PPE, risk assessment</span>
+                        <span>
+                          <strong>Safety awareness:</strong> Isolation checks, PPE, risk assessment
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">•</span>
-                        <span><strong>Result interpretation:</strong> Explain what readings mean, identify problems</span>
+                        <span>
+                          <strong>Result interpretation:</strong> Explain what readings mean,
+                          identify problems
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -1024,7 +1144,7 @@ const RingFinalContinuityGuide = () => {
                         <li>• Clear, legible documentation</li>
                       </ul>
                     </div>
-                    
+
                     <div className="bg-red-600/20 p-4 rounded">
                       <h4 className="text-red-400 font-semibold mb-2">Common Fail Reasons</h4>
                       <ul className="text-red-200 text-sm space-y-1">
@@ -1040,7 +1160,6 @@ const RingFinalContinuityGuide = () => {
               </div>
             </CardContent>
           </Card>
-
         </div>
       </main>
     </div>

@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Clock, Wrench, Search } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { AlertTriangle, Clock, Wrench, Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface FaultDiagnosisHeroSummaryProps {
   faultType: string;
@@ -16,7 +16,7 @@ const riskColors = {
   LOW: 'bg-success/10 text-success border-success/20',
   MODERATE: 'bg-warning/10 text-warning border-warning/20',
   HIGH: 'bg-destructive/10 text-destructive border-destructive/20',
-  CRITICAL: 'bg-red-600/20 text-red-300 border-red-600/40'
+  CRITICAL: 'bg-red-600/20 text-red-300 border-red-600/40',
 };
 
 export const FaultDiagnosisHeroSummary = ({
@@ -24,8 +24,8 @@ export const FaultDiagnosisHeroSummary = ({
   safetyRisk,
   diagnosticStepsCount,
   correctiveActionsCount,
-  estimatedRepairTime = "Unknown",
-  rootCausesCount
+  estimatedRepairTime = 'Unknown',
+  rootCausesCount,
 }: FaultDiagnosisHeroSummaryProps) => {
   return (
     <Card className="p-4 sm:p-6 bg-gradient-to-br from-red-500/10 via-background to-background border-red-500/30 shadow-lg hover:shadow-xl transition-shadow">
@@ -34,7 +34,7 @@ export const FaultDiagnosisHeroSummary = ({
           <AlertTriangle className="h-5 w-5 text-red-400" />
           <h3 className="text-lg font-semibold text-foreground">Fault Overview</h3>
         </div>
-        
+
         {/* Desktop Layout - 5 columns */}
         <div className="hidden sm:grid sm:grid-cols-5 gap-4">
           {/* Risk Level */}
@@ -44,7 +44,12 @@ export const FaultDiagnosisHeroSummary = ({
                 <AlertTriangle className="h-4 w-4" />
                 <span className="text-xs font-medium">Risk</span>
               </div>
-              <Badge className={cn(riskColors[safetyRisk], "text-sm font-bold uppercase w-full justify-center")}>
+              <Badge
+                className={cn(
+                  riskColors[safetyRisk],
+                  'text-sm font-bold uppercase w-full justify-center'
+                )}
+              >
                 {safetyRisk}
               </Badge>
             </div>
@@ -57,7 +62,9 @@ export const FaultDiagnosisHeroSummary = ({
                 <Search className="h-4 w-4" />
                 <span className="text-xs font-medium">Diagnostic Steps</span>
               </div>
-              <div className="text-3xl font-black text-foreground text-center">{diagnosticStepsCount}</div>
+              <div className="text-3xl font-black text-foreground text-center">
+                {diagnosticStepsCount}
+              </div>
             </div>
           </div>
 
@@ -68,7 +75,9 @@ export const FaultDiagnosisHeroSummary = ({
                 <Wrench className="h-4 w-4" />
                 <span className="text-xs font-medium">Fix Actions</span>
               </div>
-              <div className="text-3xl font-black text-foreground text-center">{correctiveActionsCount}</div>
+              <div className="text-3xl font-black text-foreground text-center">
+                {correctiveActionsCount}
+              </div>
             </div>
           </div>
 
@@ -79,7 +88,9 @@ export const FaultDiagnosisHeroSummary = ({
                 <AlertTriangle className="h-4 w-4" />
                 <span className="text-xs font-medium">Root Causes</span>
               </div>
-              <div className="text-3xl font-black text-foreground text-center">{rootCausesCount}</div>
+              <div className="text-3xl font-black text-foreground text-center">
+                {rootCausesCount}
+              </div>
             </div>
           </div>
 
@@ -90,7 +101,10 @@ export const FaultDiagnosisHeroSummary = ({
                 <Clock className="h-4 w-4" />
                 <span className="text-xs font-medium">Est. Time</span>
               </div>
-              <div className="text-xl font-black text-foreground text-center truncate" title={estimatedRepairTime}>
+              <div
+                className="text-xl font-black text-foreground text-center truncate"
+                title={estimatedRepairTime}
+              >
                 {estimatedRepairTime}
               </div>
             </div>
@@ -106,7 +120,12 @@ export const FaultDiagnosisHeroSummary = ({
                 <AlertTriangle className="h-5 w-5" />
                 <span className="text-xs font-medium">RISK</span>
               </div>
-              <Badge className={cn(riskColors[safetyRisk], "text-base font-bold uppercase w-full justify-center py-2")}>
+              <Badge
+                className={cn(
+                  riskColors[safetyRisk],
+                  'text-base font-bold uppercase w-full justify-center py-2'
+                )}
+              >
                 {safetyRisk}
               </Badge>
             </div>
@@ -117,7 +136,10 @@ export const FaultDiagnosisHeroSummary = ({
                 <Clock className="h-5 w-5" />
                 <span className="text-xs font-medium">EST. TIME</span>
               </div>
-              <div className="text-2xl font-black text-foreground text-center truncate" title={estimatedRepairTime}>
+              <div
+                className="text-2xl font-black text-foreground text-center truncate"
+                title={estimatedRepairTime}
+              >
                 {estimatedRepairTime}
               </div>
             </div>
@@ -128,7 +150,9 @@ export const FaultDiagnosisHeroSummary = ({
                 <Search className="h-5 w-5" />
                 <span className="text-xs font-medium">DIAGNOSTIC</span>
               </div>
-              <div className="text-4xl font-black text-foreground text-center">{diagnosticStepsCount}</div>
+              <div className="text-4xl font-black text-foreground text-center">
+                {diagnosticStepsCount}
+              </div>
             </div>
 
             {/* Corrective Actions */}
@@ -137,7 +161,9 @@ export const FaultDiagnosisHeroSummary = ({
                 <Wrench className="h-5 w-5" />
                 <span className="text-xs font-medium">FIX ACTIONS</span>
               </div>
-              <div className="text-4xl font-black text-foreground text-center">{correctiveActionsCount}</div>
+              <div className="text-4xl font-black text-foreground text-center">
+                {correctiveActionsCount}
+              </div>
             </div>
           </div>
 

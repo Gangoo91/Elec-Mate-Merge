@@ -50,10 +50,7 @@ export const SwipeableReminderCard = ({
       {/* Card Content */}
       <div
         ref={swipeRef}
-        className={cn(
-          "relative bg-card transition-transform duration-200",
-          "touch-pan-y"
-        )}
+        className={cn('relative bg-card transition-transform duration-200', 'touch-pan-y')}
         style={{ transform: `translateX(${offset}px)` }}
       >
         {children}

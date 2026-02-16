@@ -1,11 +1,10 @@
-
-import { ReactNode } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Heart, ArrowLeft, Shield, Users, BookOpen, Brain, Headphones } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { ReactNode } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Heart, ArrowLeft, Shield, Users, BookOpen, Brain, Headphones } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 interface MentalHealthHubLayoutProps {
   children: ReactNode;
@@ -19,36 +18,36 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
 
   const quickAccessCards = [
     {
-      title: "Crisis Support",
+      title: 'Crisis Support',
       icon: <Shield className="h-5 w-5 text-red-400" />,
-      description: "24/7 emergency helplines",
+      description: '24/7 emergency helplines',
       link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health/crisis-resources`,
-      urgent: true
+      urgent: true,
     },
     {
-      title: "Stress Management",
+      title: 'Stress Management',
       icon: <Brain className="h-5 w-5 text-blue-400" />,
-      description: "Quick techniques & tools",
-      link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health/stress-management`
+      description: 'Quick techniques & tools',
+      link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health/stress-management`,
     },
     {
-      title: "Mental Health Mates",
+      title: 'Mental Health Mates',
       icon: <Users className="h-5 w-5 text-purple-400" />,
-      description: "Connect with peer support",
-      link: "#mental-health-mates"
+      description: 'Connect with peer support',
+      link: '#mental-health-mates',
     },
     {
-      title: "Resources Library",
+      title: 'Resources Library',
       icon: <BookOpen className="h-5 w-5 text-green-400" />,
-      description: "Guides, articles & tools",
-      link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health/resources`
+      description: 'Guides, articles & tools',
+      link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health/resources`,
     },
     {
-      title: "Podcasts",
+      title: 'Podcasts',
       icon: <Headphones className="h-5 w-5 text-orange-400" />,
-      description: "Mental health podcasts",
-      link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health#podcasts`
-    }
+      description: 'Mental health podcasts',
+      link: `${isElectricianPath ? '/electrician' : '/apprentice'}/mental-health#podcasts`,
+    },
   ];
 
   return (
@@ -68,7 +67,11 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
         </div>
         {showBackButton && (
           <Link to={basePath} className="self-start sm:self-auto">
-            <Button variant="outline" size="sm" className="w-full sm:w-auto flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-95">
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full sm:w-auto flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-95"
+            >
               <ArrowLeft className="h-4 w-4" />
               Back to Hub
             </Button>
@@ -84,8 +87,12 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-red-500">Emergency Support</h3>
               <p className="text-sm">
-                If you're in crisis, call <span className="font-bold">999</span> or contact Samaritans at{" "}
-                <a href="tel:116123" className="font-bold text-red-500 hover:underline">116 123</a> (free, 24/7)
+                If you're in crisis, call <span className="font-bold">999</span> or contact
+                Samaritans at{' '}
+                <a href="tel:116123" className="font-bold text-red-500 hover:underline">
+                  116 123
+                </a>{' '}
+                (free, 24/7)
               </p>
             </div>
           </div>
@@ -100,12 +107,14 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
             to={card.link.startsWith('#') ? card.link : card.link}
             className="block group"
           >
-            <Card className={cn(
-              "border-elec-yellow/20 bg-elec-gray h-full hover:shadow-md hover:border-elec-yellow/30 transition-all",
-              "group-hover:scale-[1.02] group-active:scale-[0.98]",
-              "touch-manipulation min-h-[100px]",
-              card.urgent && "border-red-500/30 bg-red-500/5"
-            )}>
+            <Card
+              className={cn(
+                'border-elec-yellow/20 bg-elec-gray h-full hover:shadow-md hover:border-elec-yellow/30 transition-all',
+                'group-hover:scale-[1.02] group-active:scale-[0.98]',
+                'touch-manipulation min-h-[100px]',
+                card.urgent && 'border-red-500/30 bg-red-500/5'
+              )}
+            >
               <CardHeader className="pb-2 p-3 sm:p-4 sm:pb-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -113,7 +122,9 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
                     <CardTitle className="text-xs sm:text-sm">{card.title}</CardTitle>
                   </div>
                   {card.urgent && (
-                    <Badge className="bg-red-500 text-foreground text-[10px] sm:text-xs">Urgent</Badge>
+                    <Badge className="bg-red-500 text-foreground text-[10px] sm:text-xs">
+                      Urgent
+                    </Badge>
                   )}
                 </div>
               </CardHeader>

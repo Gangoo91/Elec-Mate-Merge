@@ -1,14 +1,24 @@
-import { ArrowLeft, Zap, CheckCircle, HelpCircle, Thermometer, Gauge, Activity, Settings } from 'lucide-react';
+import {
+  ArrowLeft,
+  Zap,
+  CheckCircle,
+  HelpCircle,
+  Thermometer,
+  Gauge,
+  Activity,
+  Settings,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule5Section6 = () => {
   useSEO({
-    title: "HVAC, Pressure Systems and Motor Control Examples | Instrumentation Module 5",
-    description: "Real-world applications of control loops in HVAC systems, pressure control, and motor speed regulation."
+    title: 'HVAC, Pressure Systems and Motor Control Examples | Instrumentation Module 5',
+    description:
+      'Real-world applications of control loops in HVAC systems, pressure control, and motor speed regulation.',
   });
 
   return (
@@ -16,7 +26,10 @@ const InstrumentationModule5Section6 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-5" className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-5"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Module 5
           </Link>
@@ -45,7 +58,9 @@ const InstrumentationModule5Section6 = () => {
         {/* Section 01 - HVAC Control Systems */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">HVAC Control Systems</h2>
           </div>
 
@@ -56,7 +71,8 @@ const InstrumentationModule5Section6 = () => {
                 <h3 className="font-medium text-white mb-2">Temperature Control Strategies</h3>
                 <p className="text-white/80 text-sm">
                   HVAC systems require precise temperature control for comfort, energy efficiency,
-                  and equipment protection. Different zones and applications need tailored approaches.
+                  and equipment protection. Different zones and applications need tailored
+                  approaches.
                 </p>
               </div>
             </div>
@@ -151,7 +167,9 @@ const InstrumentationModule5Section6 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Economiser Control</p>
-                  <p className="text-white/70 text-xs">Maximises free cooling when outdoor conditions permit</p>
+                  <p className="text-white/70 text-xs">
+                    Maximises free cooling when outdoor conditions permit
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Variable Air Volume (VAV)</p>
@@ -163,7 +181,9 @@ const InstrumentationModule5Section6 = () => {
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Night Setback</p>
-                  <p className="text-white/70 text-xs">Reduced conditioning during unoccupied periods</p>
+                  <p className="text-white/70 text-xs">
+                    Reduced conditioning during unoccupied periods
+                  </p>
                 </div>
               </div>
             </div>
@@ -180,7 +200,9 @@ const InstrumentationModule5Section6 = () => {
         {/* Section 02 - Pressure Control Systems */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Pressure Control Systems</h2>
           </div>
 
@@ -199,7 +221,9 @@ const InstrumentationModule5Section6 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-blue-300 mb-2">Gas Pressure Control</h4>
-                <p className="text-white/70 text-xs mb-2">Natural gas, compressed air, process gases</p>
+                <p className="text-white/70 text-xs mb-2">
+                  Natural gas, compressed air, process gases
+                </p>
                 <ul className="space-y-1 text-white/70 text-xs">
                   <li>Fast dynamics due to compressibility</li>
                   <li>Pressure reducing valves (PRV)</li>
@@ -209,7 +233,9 @@ const InstrumentationModule5Section6 = () => {
               </div>
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-green-300 mb-2">Liquid Pressure Control</h4>
-                <p className="text-white/70 text-xs mb-2">Water systems, hydraulics, process liquids</p>
+                <p className="text-white/70 text-xs mb-2">
+                  Water systems, hydraulics, process liquids
+                </p>
                 <ul className="space-y-1 text-white/70 text-xs">
                   <li>Slower response due to inertia</li>
                   <li>Pump speed or bypass control</li>
@@ -227,15 +253,21 @@ const InstrumentationModule5Section6 = () => {
               <div className="space-y-2">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Load/Unload Control</p>
-                  <p className="text-white/70 text-xs">Compressors switch states based on pressure band</p>
+                  <p className="text-white/70 text-xs">
+                    Compressors switch states based on pressure band
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Variable Speed Control</p>
-                  <p className="text-white/70 text-xs">VFD-controlled compressor modulates speed for exact pressure</p>
+                  <p className="text-white/70 text-xs">
+                    VFD-controlled compressor modulates speed for exact pressure
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Sequencing Logic</p>
-                  <p className="text-white/70 text-xs">Automatic staging of multiple compressors based on demand</p>
+                  <p className="text-white/70 text-xs">
+                    Automatic staging of multiple compressors based on demand
+                  </p>
                 </div>
               </div>
             </div>
@@ -275,21 +307,27 @@ const InstrumentationModule5Section6 = () => {
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium text-sm">Pump Speed Control</p>
-                    <p className="text-white/70 text-xs">VFD adjusts speed to maintain differential pressure</p>
+                    <p className="text-white/70 text-xs">
+                      VFD adjusts speed to maintain differential pressure
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium text-sm">Bypass Control</p>
-                    <p className="text-white/70 text-xs">Three-way valve bypasses excess flow back to tank</p>
+                    <p className="text-white/70 text-xs">
+                      Three-way valve bypasses excess flow back to tank
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium text-sm">Accumulator Systems</p>
-                    <p className="text-white/70 text-xs">Pressure vessels smooth demand variations</p>
+                    <p className="text-white/70 text-xs">
+                      Pressure vessels smooth demand variations
+                    </p>
                   </div>
                 </div>
               </div>
@@ -307,7 +345,9 @@ const InstrumentationModule5Section6 = () => {
         {/* Section 03 - Motor Speed Control */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Motor Speed Control Systems</h2>
           </div>
 
@@ -335,7 +375,9 @@ const InstrumentationModule5Section6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white font-medium text-sm mb-2">Current/Torque Control Loop (Inner):</p>
+                  <p className="text-white font-medium text-sm mb-2">
+                    Current/Torque Control Loop (Inner):
+                  </p>
                   <ul className="space-y-1 text-white/70 text-xs">
                     <li>Controls motor current or torque</li>
                     <li>Very fast response (sub-millisecond)</li>
@@ -375,11 +417,22 @@ const InstrumentationModule5Section6 = () => {
               </p>
               <div className="space-y-3">
                 <div>
-                  <p className="text-white font-medium text-sm mb-2">Multi-Loop Control Structure:</p>
+                  <p className="text-white font-medium text-sm mb-2">
+                    Multi-Loop Control Structure:
+                  </p>
                   <div className="space-y-1 text-white/70 text-xs">
-                    <p><span className="text-cyan-300">Position Loop:</span> Outermost - controls final position</p>
-                    <p><span className="text-blue-300">Velocity Loop:</span> Middle - controls speed profile</p>
-                    <p><span className="text-green-300">Current Loop:</span> Innermost - controls motor torque</p>
+                    <p>
+                      <span className="text-cyan-300">Position Loop:</span> Outermost - controls
+                      final position
+                    </p>
+                    <p>
+                      <span className="text-blue-300">Velocity Loop:</span> Middle - controls speed
+                      profile
+                    </p>
+                    <p>
+                      <span className="text-green-300">Current Loop:</span> Innermost - controls
+                      motor torque
+                    </p>
                   </div>
                 </div>
                 <div>
@@ -430,7 +483,9 @@ const InstrumentationModule5Section6 = () => {
         {/* Section 04 - System Integration */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
             <h2 className="text-xl font-semibold text-white">System Integration</h2>
           </div>
 
@@ -451,15 +506,25 @@ const InstrumentationModule5Section6 = () => {
               <div className="space-y-2">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Temperature and Humidity</p>
-                  <p className="text-white/70 text-xs">Cooling and dehumidification must be coordinated to avoid fighting</p>
+                  <p className="text-white/70 text-xs">
+                    Cooling and dehumidification must be coordinated to avoid fighting
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
-                  <p className="text-white font-medium text-sm">Supply and Return Fan Coordination</p>
-                  <p className="text-white/70 text-xs">Maintain building pressure while providing adequate ventilation</p>
+                  <p className="text-white font-medium text-sm">
+                    Supply and Return Fan Coordination
+                  </p>
+                  <p className="text-white/70 text-xs">
+                    Maintain building pressure while providing adequate ventilation
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
-                  <p className="text-white font-medium text-sm">Economiser and Mechanical Cooling</p>
-                  <p className="text-white/70 text-xs">Seamless transition between free cooling and mechanical cooling</p>
+                  <p className="text-white font-medium text-sm">
+                    Economiser and Mechanical Cooling
+                  </p>
+                  <p className="text-white/70 text-xs">
+                    Seamless transition between free cooling and mechanical cooling
+                  </p>
                 </div>
               </div>
             </div>
@@ -515,19 +580,31 @@ const InstrumentationModule5Section6 = () => {
 
         {/* Real-World Scenario */}
         <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 mb-8">
-          <h4 className="font-medium text-blue-300 mb-2">Real-World Scenario: Data Centre Cooling</h4>
+          <h4 className="font-medium text-blue-300 mb-2">
+            Real-World Scenario: Data Centre Cooling
+          </h4>
           <div className="space-y-3 text-white/80 text-sm">
             <div>
               <p className="text-white font-medium">Challenge:</p>
-              <p className="text-white/70 text-xs">Maintain precise temperature (plus or minus 1 degree C) in data centre while optimising energy consumption and providing redundancy.</p>
+              <p className="text-white/70 text-xs">
+                Maintain precise temperature (plus or minus 1 degree C) in data centre while
+                optimising energy consumption and providing redundancy.
+              </p>
             </div>
             <div>
               <p className="text-white font-medium">Solution:</p>
-              <p className="text-white/70 text-xs">Implement cascade control: room temperature controls chilled water temperature setpoint, which controls chiller staging and pump speeds. Add economiser for free cooling.</p>
+              <p className="text-white/70 text-xs">
+                Implement cascade control: room temperature controls chilled water temperature
+                setpoint, which controls chiller staging and pump speeds. Add economiser for free
+                cooling.
+              </p>
             </div>
             <div>
               <p className="text-white font-medium">Result:</p>
-              <p className="text-white/70 text-xs">Achieved plus or minus 0.5 degree C control with 30% energy reduction through intelligent equipment staging and free cooling optimisation.</p>
+              <p className="text-white/70 text-xs">
+                Achieved plus or minus 0.5 degree C control with 30% energy reduction through
+                intelligent equipment staging and free cooling optimisation.
+              </p>
             </div>
           </div>
         </div>
@@ -541,7 +618,9 @@ const InstrumentationModule5Section6 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">What is the most common control strategy for maintaining room temperature?</h4>
+              <h4 className="font-medium text-white mb-2">
+                What is the most common control strategy for maintaining room temperature?
+              </h4>
               <p className="text-white/70 text-sm">
                 PI control is most common for HVAC temperature control because it eliminates
                 steady-state error while avoiding the noise sensitivity of derivative control.
@@ -550,7 +629,9 @@ const InstrumentationModule5Section6 = () => {
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">Why might feedforward control be added to a pressure system?</h4>
+              <h4 className="font-medium text-white mb-2">
+                Why might feedforward control be added to a pressure system?
+              </h4>
               <p className="text-white/70 text-sm">
                 Feedforward control measures disturbances (like flow demand changes) and takes
                 corrective action before they affect the controlled pressure. This anticipatory
@@ -559,20 +640,24 @@ const InstrumentationModule5Section6 = () => {
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">What parameter is typically controlled in the VFD inner loop?</h4>
+              <h4 className="font-medium text-white mb-2">
+                What parameter is typically controlled in the VFD inner loop?
+              </h4>
               <p className="text-white/70 text-sm">
                 Motor current or torque is typically controlled in the inner loop because it
-                responds quickly and directly relates to motor output. The outer loop controls
-                speed and provides the current or torque setpoint.
+                responds quickly and directly relates to motor output. The outer loop controls speed
+                and provides the current or torque setpoint.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">How do fan affinity laws affect energy savings?</h4>
+              <h4 className="font-medium text-white mb-2">
+                How do fan affinity laws affect energy savings?
+              </h4>
               <p className="text-white/70 text-sm">
-                Power varies with the cube of speed, meaning reducing fan speed by 20% reduces
-                power consumption by about 50%. This makes variable speed control extremely
-                effective for energy savings in fan and pump applications.
+                Power varies with the cube of speed, meaning reducing fan speed by 20% reduces power
+                consumption by about 50%. This makes variable speed control extremely effective for
+                energy savings in fan and pump applications.
               </p>
             </div>
           </div>
@@ -583,10 +668,10 @@ const InstrumentationModule5Section6 = () => {
           <SingleQuestionQuiz
             question="In HVAC control, what is the most common control strategy for maintaining room temperature?"
             options={[
-              "On/off control with large deadband",
-              "PI control with reset windup prevention",
-              "Proportional-only control",
-              "Manual control with operator intervention"
+              'On/off control with large deadband',
+              'PI control with reset windup prevention',
+              'Proportional-only control',
+              'Manual control with operator intervention',
             ]}
             correctAnswer={1}
             explanation="PI control is preferred because it eliminates steady-state error (offset) while avoiding the noise sensitivity that derivative action would introduce in a typical building environment."

@@ -15,7 +15,7 @@ export const moetQuestionBank: StandardMockQuestion[] = [
   ...questionsPart1,
   ...questionsPart2,
   ...questionsPart3,
-  ...questionsPart4
+  ...questionsPart4,
 ];
 
 /**
@@ -40,9 +40,9 @@ export function getRandomQuestions(
   distribution: DifficultyDistribution = DEFAULT_DIFFICULTY_DISTRIBUTION
 ): StandardMockQuestion[] {
   // Group questions by difficulty
-  const basicQuestions = moetQuestionBank.filter(q => q.difficulty === 'basic');
-  const intermediateQuestions = moetQuestionBank.filter(q => q.difficulty === 'intermediate');
-  const advancedQuestions = moetQuestionBank.filter(q => q.difficulty === 'advanced');
+  const basicQuestions = moetQuestionBank.filter((q) => q.difficulty === 'basic');
+  const intermediateQuestions = moetQuestionBank.filter((q) => q.difficulty === 'intermediate');
+  const advancedQuestions = moetQuestionBank.filter((q) => q.difficulty === 'advanced');
 
   // Calculate target counts for each difficulty
   const basicCount = Math.round(count * distribution.basic);
@@ -59,7 +59,7 @@ export function getRandomQuestions(
 
   // If we don't have enough questions in some categories, fill from others
   if (combined.length < count) {
-    const remaining = shuffle(moetQuestionBank.filter(q => !combined.includes(q)));
+    const remaining = shuffle(moetQuestionBank.filter((q) => !combined.includes(q)));
     combined.push(...remaining.slice(0, count - combined.length));
   }
 

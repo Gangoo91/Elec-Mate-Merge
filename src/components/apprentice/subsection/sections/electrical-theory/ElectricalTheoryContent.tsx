@@ -1,16 +1,19 @@
+import React from 'react';
+import { SubsectionProps } from '../../types';
+import ElectricalTheorySubsection from './ElectricalTheorySubsection';
+import ElectricalTheoryHSAWA from '@/components/apprentice/content/subsection1_1/ElectricalTheoryHSAWA';
+import ElectricalTheoryEWR from '@/components/apprentice/content/subsection1_1/ElectricalTheoryEWR';
+import ElectricalTheoryPartP from '@/components/apprentice/content/subsection1_1/ElectricalTheoryPartP';
 
-import React from "react";
-import { SubsectionProps } from "../../types";
-import ElectricalTheorySubsection from "./ElectricalTheorySubsection";
-import ElectricalTheoryHSAWA from "@/components/apprentice/content/subsection1_1/ElectricalTheoryHSAWA";
-import ElectricalTheoryEWR from "@/components/apprentice/content/subsection1_1/ElectricalTheoryEWR";
-import ElectricalTheoryPartP from "@/components/apprentice/content/subsection1_1/ElectricalTheoryPartP";
-
-export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted: boolean, markAsComplete: () => void) => {
+export const renderElectricalTheorySection1 = (
+  subsectionId: string,
+  isCompleted: boolean,
+  markAsComplete: () => void
+) => {
   // Map the subsection IDs to content
   switch (subsectionId) {
-    case "1.1":
-    case "1":
+    case '1.1':
+    case '1':
       return (
         <ElectricalTheoryHSAWA
           subsectionId={subsectionId}
@@ -18,8 +21,8 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
           markAsComplete={markAsComplete}
         />
       );
-    case "1.2":
-    case "2":
+    case '1.2':
+    case '2':
       return (
         <ElectricalTheoryEWR
           subsectionId={subsectionId}
@@ -27,8 +30,8 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
           markAsComplete={markAsComplete}
         />
       );
-    case "1.3":
-    case "3":
+    case '1.3':
+    case '3':
       return (
         <ElectricalTheoryPartP
           subsectionId={subsectionId}
@@ -36,51 +39,51 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
           markAsComplete={markAsComplete}
         />
       );
-    case "1.4":
-    case "4":
+    case '1.4':
+    case '4':
       return (
         <ElectricalTheorySubsection
           title="British Standards (BS 7671)"
           content="BS 7671, also known as the IET Wiring Regulations, is the national standard for electrical installations in the UK. It provides detailed technical requirements to ensure the safety of electrical installations in buildings."
           keyPoints={[
-            "Currently on the 18th Edition, the regulations are updated periodically to reflect new technologies and safety considerations.",
-            "Compliance with BS 7671 is the primary way to satisfy Part P of the Building Regulations.",
-            "The standard covers all aspects of electrical installation including design, selection, erection, inspection, and testing.",
-            "It includes provisions for protection against electric shock, thermal effects, overcurrent, and more."
+            'Currently on the 18th Edition, the regulations are updated periodically to reflect new technologies and safety considerations.',
+            'Compliance with BS 7671 is the primary way to satisfy Part P of the Building Regulations.',
+            'The standard covers all aspects of electrical installation including design, selection, erection, inspection, and testing.',
+            'It includes provisions for protection against electric shock, thermal effects, overcurrent, and more.',
           ]}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
           subsectionId={subsectionId}
         />
       );
-    case "1.5":
-    case "5":
+    case '1.5':
+    case '5':
       return (
         <ElectricalTheorySubsection
           title="Guidance Documents"
           content="Various guidance documents are published to help electricians interpret and apply the regulations effectively in practical situations. These include official publications from the IET and other industry bodies."
           keyPoints={[
-            "The IET On-Site Guide provides practical guidance for electricians working on-site.",
-            "Guidance Notes expand on specific aspects of BS 7671, such as protection, isolation, and earthing.",
+            'The IET On-Site Guide provides practical guidance for electricians working on-site.',
+            'Guidance Notes expand on specific aspects of BS 7671, such as protection, isolation, and earthing.',
             "The Electrician's Guide to Good Electrical Practice offers practical advice on installation techniques.",
-            "Manufacturer's instructions provide specific guidance for the installation and use of particular equipment."
+            "Manufacturer's instructions provide specific guidance for the installation and use of particular equipment.",
           ]}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
           subsectionId={subsectionId}
         />
       );
-    case "1.6":
-    case "6":
+    case '1.6':
+    case '6':
       return (
         <ElectricalTheorySubsection
           title="Roles and Responsibilities"
           content="Electrical installation work involves multiple parties, each with specific roles and responsibilities to ensure compliance with regulations and safety standards."
           keyPoints={[
-            "Designers must specify installations that comply with BS 7671 and other relevant standards.",
-            "Installers are responsible for the quality of their work and ensuring it meets the regulations.",
-            "Inspectors verify that installations comply with regulations through inspection and testing.",
-            "Clients have responsibilities to select competent designers and installers, and to ensure adequate information is provided."
+            'Designers must specify installations that comply with BS 7671 and other relevant standards.',
+            'Installers are responsible for the quality of their work and ensuring it meets the regulations.',
+            'Inspectors verify that installations comply with regulations through inspection and testing.',
+            'Clients have responsibilities to select competent designers and installers, and to ensure adequate information is provided.',
           ]}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}

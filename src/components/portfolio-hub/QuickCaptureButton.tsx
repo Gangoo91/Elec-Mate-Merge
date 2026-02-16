@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Plus, Camera, FileText, Mic, X, Image, Video, File } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 export type CaptureType = 'photo' | 'video' | 'document' | 'voice' | 'text';
 
@@ -38,7 +33,13 @@ export function QuickCaptureButton({
 }: QuickCaptureButtonProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const captureOptions: { type: CaptureType; label: string; icon: typeof Camera; color: string; description: string }[] = [
+  const captureOptions: {
+    type: CaptureType;
+    label: string;
+    icon: typeof Camera;
+    color: string;
+    description: string;
+  }[] = [
     {
       type: 'photo',
       label: 'Photo',
@@ -85,7 +86,7 @@ export function QuickCaptureButton({
   return (
     <>
       {/* Floating Action Button - Mobile only */}
-      <div className={cn("fixed z-50", className)}>
+      <div className={cn('fixed z-50', className)}>
         {/* FAB Position: Above bottom nav, right side */}
         <div className="fixed bottom-20 right-4">
           {/* Expanded Options - Radial menu */}
@@ -96,17 +97,22 @@ export function QuickCaptureButton({
                   key={option.type}
                   onClick={() => handleCaptureSelect(option.type)}
                   className={cn(
-                    "flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-full shadow-lg",
-                    "bg-card border border-border",
-                    "animate-in slide-in-from-bottom-2 fade-in duration-200",
-                    "hover:scale-105 active:scale-95 transition-transform touch-manipulation"
+                    'flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-full shadow-lg',
+                    'bg-card border border-border',
+                    'animate-in slide-in-from-bottom-2 fade-in duration-200',
+                    'hover:scale-105 active:scale-95 transition-transform touch-manipulation'
                   )}
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <span className="text-sm font-medium text-foreground whitespace-nowrap">
                     {option.label}
                   </span>
-                  <span className={cn("h-10 w-10 rounded-full flex items-center justify-center", option.color)}>
+                  <span
+                    className={cn(
+                      'h-10 w-10 rounded-full flex items-center justify-center',
+                      option.color
+                    )}
+                  >
                     <option.icon className="h-5 w-5 text-white" />
                   </span>
                 </button>
@@ -118,14 +124,12 @@ export function QuickCaptureButton({
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className={cn(
-              "h-14 w-14 rounded-full shadow-lg flex items-center justify-center",
-              "transition-all duration-300 ease-out",
-              "active:scale-95 touch-manipulation",
-              isExpanded
-                ? "bg-muted rotate-45"
-                : "bg-elec-yellow hover:bg-elec-yellow/90"
+              'h-14 w-14 rounded-full shadow-lg flex items-center justify-center',
+              'transition-all duration-300 ease-out',
+              'active:scale-95 touch-manipulation',
+              isExpanded ? 'bg-muted rotate-45' : 'bg-elec-yellow hover:bg-elec-yellow/90'
             )}
-            aria-label={isExpanded ? "Close capture menu" : "Quick capture"}
+            aria-label={isExpanded ? 'Close capture menu' : 'Quick capture'}
           >
             {isExpanded ? (
               <X className="h-6 w-6 text-foreground" />
@@ -167,14 +171,19 @@ export function QuickCaptureButton({
                   key={option.type}
                   onClick={() => handleCaptureSelect(option.type)}
                   className={cn(
-                    "flex items-center gap-4 p-4 rounded-xl",
-                    "bg-muted/50 border border-border",
-                    "hover:border-elec-yellow/50 hover:bg-elec-yellow/5",
-                    "transition-all duration-200",
-                    "text-left touch-manipulation active:scale-[0.98]"
+                    'flex items-center gap-4 p-4 rounded-xl',
+                    'bg-muted/50 border border-border',
+                    'hover:border-elec-yellow/50 hover:bg-elec-yellow/5',
+                    'transition-all duration-200',
+                    'text-left touch-manipulation active:scale-[0.98]'
                   )}
                 >
-                  <span className={cn("h-12 w-12 rounded-xl flex items-center justify-center shrink-0", option.color)}>
+                  <span
+                    className={cn(
+                      'h-12 w-12 rounded-xl flex items-center justify-center shrink-0',
+                      option.color
+                    )}
+                  >
                     <option.icon className="h-6 w-6 text-white" />
                   </span>
                   <div>

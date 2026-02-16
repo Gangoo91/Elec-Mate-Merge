@@ -30,20 +30,20 @@ const CONDUCTOR_RESISTANCE_COPPER = {
   185: 0.0991,
   240: 0.0754,
   300: 0.0601,
-  400: 0.0470
+  400: 0.047,
 };
 
 // BS 7671 Table 9B - Reactance values (mΩ/m) for cables
 const CABLE_REACTANCE = {
   singleCore: {
     touching: 0.08,
-    spaced: 0.145
+    spaced: 0.145,
   },
   multiCore: {
-    small: 0.08,  // up to 16mm²
+    small: 0.08, // up to 16mm²
     medium: 0.085, // 25-95mm²
-    large: 0.09    // 120mm² and above
-  }
+    large: 0.09, // 120mm² and above
+  },
 };
 
 export function calculatePSCC(params: {
@@ -56,11 +56,20 @@ export function calculatePSCC(params: {
   Ze: number; // External earth fault loop impedance (Ω)
   protectionDeviceRating?: number; // kA breaking capacity
 }): PSCCCalculation {
-  const { incomingPFC, voltage, cableSize, cableLength, cableType, Ze, protectionDeviceRating = 6 } = params;
+  const {
+    incomingPFC,
+    voltage,
+    cableSize,
+    cableLength,
+    cableType,
+    Ze,
+    protectionDeviceRating = 6,
+  } = params;
 
   // Get conductor resistance
-  const resistance = CONDUCTOR_RESISTANCE_COPPER[cableSize as keyof typeof CONDUCTOR_RESISTANCE_COPPER] || 0;
-  
+  const resistance =
+    CONDUCTOR_RESISTANCE_COPPER[cableSize as keyof typeof CONDUCTOR_RESISTANCE_COPPER] || 0;
+
   // Get reactance based on cable type
   let reactance = 0;
   if (cableType === 'multicore') {
@@ -84,7 +93,7 @@ export function calculatePSCC(params: {
 
   // Calculate PSCC at the point
   // I = U / Z (where U is voltage, Z is impedance)
-  const calculatedPSCC = (voltage / (totalImpedance / 1000)) / 1000; // kA
+  const calculatedPSCC = voltage / (totalImpedance / 1000) / 1000; // kA
 
   // Check compliance - PSCC must be less than device breaking capacity
   const compliant = calculatedPSCC < protectionDeviceRating;
@@ -97,7 +106,7 @@ export function calculatePSCC(params: {
     protectionRating: protectionDeviceRating,
     compliant,
     regulation: 'BS 7671 Reg 434.5.2',
-    marginOfSafety: Number(marginOfSafety.toFixed(1))
+    marginOfSafety: Number(marginOfSafety.toFixed(1)),
   };
 }
 
@@ -112,8 +121,9 @@ export function calculateMaxCableLength(params: {
 }): number {
   const { incomingPFC, voltage, cableSize, maxPSCC, cableType, Ze } = params;
 
-  const resistance = CONDUCTOR_RESISTANCE_COPPER[cableSize as keyof typeof CONDUCTOR_RESISTANCE_COPPER] || 0;
-  
+  const resistance =
+    CONDUCTOR_RESISTANCE_COPPER[cableSize as keyof typeof CONDUCTOR_RESISTANCE_COPPER] || 0;
+
   let reactance = 0;
   if (cableType === 'multicore') {
     if (cableSize <= 16) reactance = CABLE_REACTANCE.multiCore.small;
@@ -125,7 +135,7 @@ export function calculateMaxCableLength(params: {
 
   // Maximum impedance allowed
   const maxImpedance = (voltage / (maxPSCC * 1000)) * 1000; // mΩ
-  
+
   // Cable impedance available
   const ZeMilliohms = Ze * 1000;
   const availableImpedance = maxImpedance - ZeMilliohms;

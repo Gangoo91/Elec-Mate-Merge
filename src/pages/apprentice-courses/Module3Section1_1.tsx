@@ -1,122 +1,168 @@
-import useSEO from "@/hooks/useSEO";
-import { ArrowLeft, Cable, Wrench, Shield, AlertTriangle, CheckCircle2, Home } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import useSEO from '@/hooks/useSEO';
+import { ArrowLeft, Cable, Wrench, Shield, AlertTriangle, CheckCircle2, Home } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Which wiring system requires the most planning but offers maximum protection?",
-    options: ["Surface wiring", "PVC conduit", "Steel conduit", "Flexible cord"],
+    question: 'Which wiring system requires the most planning but offers maximum protection?',
+    options: ['Surface wiring', 'PVC conduit', 'Steel conduit', 'Flexible cord'],
     correctAnswer: 2,
-    explanation: "Steel conduit provides excellent mechanical and fire protection but requires careful planning for routing and earthing continuity."
+    explanation:
+      'Steel conduit provides excellent mechanical and fire protection but requires careful planning for routing and earthing continuity.',
   },
   {
     id: 2,
-    question: "When is surface wiring most appropriate?",
-    options: ["New builds", "Temporary installations", "Underground", "High-risk environments"],
+    question: 'When is surface wiring most appropriate?',
+    options: ['New builds', 'Temporary installations', 'Underground', 'High-risk environments'],
     correctAnswer: 1,
-    explanation: "Surface wiring is ideal for temporary installations, retrofits, and situations where concealed wiring isn't practical."
+    explanation:
+      "Surface wiring is ideal for temporary installations, retrofits, and situations where concealed wiring isn't practical.",
   },
   {
     id: 3,
     question: "What's the key advantage of trunking systems?",
-    options: ["Lowest cost", "Easy cable changes", "Best protection", "Smallest size"],
+    options: ['Lowest cost', 'Easy cable changes', 'Best protection', 'Smallest size'],
     correctAnswer: 1,
-    explanation: "Trunking allows easy access for cable changes, additions, and maintenance without major disruption."
-  }
+    explanation:
+      'Trunking allows easy access for cable changes, additions, and maintenance without major disruption.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which wiring system offers the best mechanical protection in industrial environments?",
-    options: ["Surface wiring", "PVC conduit", "Steel conduit", "Trunking"],
+    question:
+      'Which wiring system offers the best mechanical protection in industrial environments?',
+    options: ['Surface wiring', 'PVC conduit', 'Steel conduit', 'Trunking'],
     correctAnswer: 2,
-    explanation: "Steel conduit provides superior mechanical protection and is preferred in industrial settings where cables may be subject to impact damage."
+    explanation:
+      'Steel conduit provides superior mechanical protection and is preferred in industrial settings where cables may be subject to impact damage.',
   },
   {
     id: 2,
-    question: "For a domestic kitchen renovation where cables need to be hidden, what's the most practical approach?",
-    options: ["Surface wiring with clips", "Concealed conduit in walls", "SWA cable", "Flexible cord only"],
+    question:
+      "For a domestic kitchen renovation where cables need to be hidden, what's the most practical approach?",
+    options: [
+      'Surface wiring with clips',
+      'Concealed conduit in walls',
+      'SWA cable',
+      'Flexible cord only',
+    ],
     correctAnswer: 1,
-    explanation: "Concealed PVC conduit allows cables to be hidden within walls while providing protection and allowing future cable changes."
+    explanation:
+      'Concealed PVC conduit allows cables to be hidden within walls while providing protection and allowing future cable changes.',
   },
   {
     id: 3,
     question: "What's the maximum recommended length for flexible cord connections?",
-    options: ["2 metres", "5 metres", "10 metres", "No limit"],
+    options: ['2 metres', '5 metres', '10 metres', 'No limit'],
     correctAnswer: 0,
-    explanation: "BS 7671 recommends flexible cords should generally not exceed 2 metres and should not be used as permanent wiring."
+    explanation:
+      'BS 7671 recommends flexible cords should generally not exceed 2 metres and should not be used as permanent wiring.',
   },
   {
     id: 4,
-    question: "Which system is most suitable for underground cable runs?",
-    options: ["PVC conduit", "Steel conduit", "SWA cable", "Surface wiring"],
+    question: 'Which system is most suitable for underground cable runs?',
+    options: ['PVC conduit', 'Steel conduit', 'SWA cable', 'Surface wiring'],
     correctAnswer: 2,
-    explanation: "SWA (Steel Wire Armoured) cable is designed for underground use with integral protection and moisture resistance."
+    explanation:
+      'SWA (Steel Wire Armoured) cable is designed for underground use with integral protection and moisture resistance.',
   },
   {
     id: 5,
-    question: "In an office fit-out with frequent layout changes, which system offers the most flexibility?",
-    options: ["Fixed conduit", "Surface clips", "Trunking", "Buried cables"],
+    question:
+      'In an office fit-out with frequent layout changes, which system offers the most flexibility?',
+    options: ['Fixed conduit', 'Surface clips', 'Trunking', 'Buried cables'],
     correctAnswer: 2,
-    explanation: "Trunking systems allow easy access for cable changes and additions, making them ideal for environments with changing requirements."
+    explanation:
+      'Trunking systems allow easy access for cable changes and additions, making them ideal for environments with changing requirements.',
   },
   {
     id: 6,
-    question: "What earthing consideration is critical with steel conduit?",
-    options: ["No earthing needed", "Earth at one end only", "Continuous earth path", "Plastic bushes required"],
+    question: 'What earthing consideration is critical with steel conduit?',
+    options: [
+      'No earthing needed',
+      'Earth at one end only',
+      'Continuous earth path',
+      'Plastic bushes required',
+    ],
     correctAnswer: 2,
-    explanation: "Steel conduit must maintain continuous earthing throughout the system, with proper bonding at all joints and connections."
+    explanation:
+      'Steel conduit must maintain continuous earthing throughout the system, with proper bonding at all joints and connections.',
   },
   {
     id: 7,
-    question: "Which factor is most important when selecting between PVC and steel conduit?",
-    options: ["Cost only", "Environmental conditions", "Cable size", "Voltage level"],
+    question: 'Which factor is most important when selecting between PVC and steel conduit?',
+    options: ['Cost only', 'Environmental conditions', 'Cable size', 'Voltage level'],
     correctAnswer: 1,
-    explanation: "Environmental conditions (temperature, mechanical stress, fire risk, corrosion) are the primary factors in material selection."
+    explanation:
+      'Environmental conditions (temperature, mechanical stress, fire risk, corrosion) are the primary factors in material selection.',
   },
   {
     id: 8,
-    question: "For temporary building site installations, what's the most appropriate wiring method?",
-    options: ["Permanent conduit", "SWA to weatherproof outlets", "Standard flexible cords", "Surface clipping only"],
+    question:
+      "For temporary building site installations, what's the most appropriate wiring method?",
+    options: [
+      'Permanent conduit',
+      'SWA to weatherproof outlets',
+      'Standard flexible cords',
+      'Surface clipping only',
+    ],
     correctAnswer: 1,
-    explanation: "SWA cable to proper weatherproof outlets provides the durability and protection needed for construction site conditions."
-  }
+    explanation:
+      'SWA cable to proper weatherproof outlets provides the durability and protection needed for construction site conditions.',
+  },
 ];
 
 const Module3Section1_1: React.FC = () => {
   useSEO(
-    "Common Wiring Systems – Module 3 (3.1.1)",
-    "Compare surface wiring, conduit, trunking, SWA and flexible systems. BS 7671 compliant selection guide for UK electrical installations."
+    'Common Wiring Systems – Module 3 (3.1.1)',
+    'Compare surface wiring, conduit, trunking, SWA and flexible systems. BS 7671 compliant selection guide for UK electrical installations.'
   );
 
   const articleJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: "Common Wiring Systems – Module 3 (3.1.1)",
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Common Wiring Systems – Module 3 (3.1.1)',
     description:
-      "Compare surface wiring, conduit, trunking, SWA and flexible systems. BS 7671 compliant selection guide for UK electrical installations.",
-    articleSection: "Electrical Installation",
-    inLanguage: "en-GB",
+      'Compare surface wiring, conduit, trunking, SWA and flexible systems. BS 7671 compliant selection guide for UK electrical installations.',
+    articleSection: 'Electrical Installation',
+    inLanguage: 'en-GB',
     isAccessibleForFree: true,
   } as const;
 
   const faqs = [
-    { q: "Can I mix different wiring systems in one installation?", a: "Yes, but ensure proper transitions, maintain earthing continuity, and follow BS 7671 requirements for each system type." },
-    { q: "What determines cable derating in trunking?", a: "Number of cables, grouping, ambient temperature, and ventilation. Use derating factors from BS 7671 Appendix 4." },
-    { q: "When is surface wiring not permitted?", a: "Generally not suitable for bathrooms, areas at risk of mechanical damage, or where concealment is required by building regulations." },
-    { q: "How do I ensure earth continuity in steel conduit?", a: "Use proper couplers, bond all joints, maintain metallic contact, and test continuity. Consider separate CPC if in doubt." }
+    {
+      q: 'Can I mix different wiring systems in one installation?',
+      a: 'Yes, but ensure proper transitions, maintain earthing continuity, and follow BS 7671 requirements for each system type.',
+    },
+    {
+      q: 'What determines cable derating in trunking?',
+      a: 'Number of cables, grouping, ambient temperature, and ventilation. Use derating factors from BS 7671 Appendix 4.',
+    },
+    {
+      q: 'When is surface wiring not permitted?',
+      a: 'Generally not suitable for bathrooms, areas at risk of mechanical damage, or where concealment is required by building regulations.',
+    },
+    {
+      q: 'How do I ensure earth continuity in steel conduit?',
+      a: 'Use proper couplers, bond all joints, maintain metallic contact, and test continuity. Consider separate CPC if in doubt.',
+    },
   ];
 
   const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   } as const;
 
   return (
@@ -124,7 +170,12 @@ const Module3Section1_1: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -146,7 +197,8 @@ const Module3Section1_1: React.FC = () => {
               Common Wiring Systems Overview
             </h1>
             <p className="text-white/80">
-              Understanding surface wiring, conduit, trunking, SWA and flexible systems for practical UK installations
+              Understanding surface wiring, conduit, trunking, SWA and flexible systems for
+              practical UK installations
             </p>
           </header>
 
@@ -155,17 +207,32 @@ const Module3Section1_1: React.FC = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
               <ul className="text-sm text-white space-y-1">
-                <li>Choose wiring systems based on protection needed, environment, and accessibility requirements</li>
-                <li>Surface = quick/temporary; Conduit = protection; Trunking = access; SWA = outdoor/underground</li>
+                <li>
+                  Choose wiring systems based on protection needed, environment, and accessibility
+                  requirements
+                </li>
+                <li>
+                  Surface = quick/temporary; Conduit = protection; Trunking = access; SWA =
+                  outdoor/underground
+                </li>
                 <li>All systems must comply with BS 7671 and maintain earth continuity</li>
               </ul>
             </div>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
               <ul className="text-sm text-white space-y-1">
-                <li><strong>Spot:</strong> Look for environmental conditions, mechanical risk, and access needs</li>
-                <li><strong>Use:</strong> Match system to application: industrial = steel conduit, office = trunking</li>
-                <li><strong>Check:</strong> Earth continuity, appropriate glands, and cable support spacing</li>
+                <li>
+                  <strong>Spot:</strong> Look for environmental conditions, mechanical risk, and
+                  access needs
+                </li>
+                <li>
+                  <strong>Use:</strong> Match system to application: industrial = steel conduit,
+                  office = trunking
+                </li>
+                <li>
+                  <strong>Check:</strong> Earth continuity, appropriate glands, and cable support
+                  spacing
+                </li>
               </ul>
             </div>
           </div>
@@ -175,12 +242,12 @@ const Module3Section1_1: React.FC = () => {
             <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
             <div className="grid sm:grid-cols-2 gap-2">
               {[
-                "Compare and select appropriate wiring systems for different applications",
-                "Understand installation requirements for each system type",
-                "Apply BS 7671 requirements for cable support and protection",
-                "Assess cost, installation time and maintenance implications",
-                "Identify common mistakes and compliance issues",
-                "Plan system transitions and proper termination techniques"
+                'Compare and select appropriate wiring systems for different applications',
+                'Understand installation requirements for each system type',
+                'Apply BS 7671 requirements for cable support and protection',
+                'Assess cost, installation time and maintenance implications',
+                'Identify common mistakes and compliance issues',
+                'Plan system transitions and proper termination techniques',
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-2 text-sm text-white">
                   <CheckCircle2 className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -201,7 +268,8 @@ const Module3Section1_1: React.FC = () => {
             </h2>
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                <strong>Description:</strong> Cables run on the surface of walls, ceilings or structures, secured with clips or cleats.
+                <strong>Description:</strong> Cables run on the surface of walls, ceilings or
+                structures, secured with clips or cleats.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -253,7 +321,7 @@ const Module3Section1_1: React.FC = () => {
           <InlineCheck
             id="ic-surface-wiring"
             question="What's the maximum spacing for cable clips on horizontal surface runs?"
-            options={["200mm", "300mm", "400mm", "500mm"]}
+            options={['200mm', '300mm', '400mm', '500mm']}
             correctIndex={1}
             explanation="BS 7671 requires cable clips at maximum 300mm spacing for horizontal runs and 400mm for vertical runs."
           />
@@ -266,7 +334,8 @@ const Module3Section1_1: React.FC = () => {
             </h2>
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                <strong>Description:</strong> Plastic conduit providing mechanical protection and allowing cable changes. Available in heavy and light gauge versions.
+                <strong>Description:</strong> Plastic conduit providing mechanical protection and
+                allowing cable changes. Available in heavy and light gauge versions.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -295,10 +364,18 @@ const Module3Section1_1: React.FC = () => {
               <div className="p-4 rounded-lg bg-amber-500/10">
                 <p className="text-sm font-medium text-white mb-2">Environmental Considerations:</p>
                 <ul className="text-sm text-white/90 space-y-1 ml-4">
-                  <li><strong>Temperature:</strong> Standard PVC: -5°C to +60°C</li>
-                  <li><strong>UV exposure:</strong> Requires UV-stabilised grade for outdoor use</li>
-                  <li><strong>Mechanical stress:</strong> Heavy gauge for areas at risk</li>
-                  <li><strong>Fire performance:</strong> Meets flame retardant standards</li>
+                  <li>
+                    <strong>Temperature:</strong> Standard PVC: -5°C to +60°C
+                  </li>
+                  <li>
+                    <strong>UV exposure:</strong> Requires UV-stabilised grade for outdoor use
+                  </li>
+                  <li>
+                    <strong>Mechanical stress:</strong> Heavy gauge for areas at risk
+                  </li>
+                  <li>
+                    <strong>Fire performance:</strong> Meets flame retardant standards
+                  </li>
                 </ul>
               </div>
             </div>
@@ -312,7 +389,8 @@ const Module3Section1_1: React.FC = () => {
             </h2>
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                <strong>Description:</strong> Metal conduit providing maximum mechanical and fire protection. Requires careful earthing and corrosion protection.
+                <strong>Description:</strong> Metal conduit providing maximum mechanical and fire
+                protection. Requires careful earthing and corrosion protection.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -339,7 +417,9 @@ const Module3Section1_1: React.FC = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-white mb-2">Critical Earthing Requirements:</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Critical Earthing Requirements:
+                </p>
                 <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li>All joints must maintain electrical continuity</li>
                   <li>Use proper steel conduit couplers and fittings</li>
@@ -354,7 +434,12 @@ const Module3Section1_1: React.FC = () => {
           <InlineCheck
             id="ic-steel-conduit"
             question="What is the most critical requirement when installing steel conduit?"
-            options={["Correct cable sizing", "Continuous earth path", "Regular support spacing", "Proper labelling"]}
+            options={[
+              'Correct cable sizing',
+              'Continuous earth path',
+              'Regular support spacing',
+              'Proper labelling',
+            ]}
             correctIndex={1}
             explanation="Maintaining continuous earthing throughout the steel conduit system is critical for both safety and BS 7671 compliance."
           />
@@ -367,7 +452,8 @@ const Module3Section1_1: React.FC = () => {
             </h2>
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                <strong>Description:</strong> Large rectangular cable containment allowing easy access for cable management, changes and additions.
+                <strong>Description:</strong> Large rectangular cable containment allowing easy
+                access for cable management, changes and additions.
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 mb-4">
@@ -394,7 +480,9 @@ const Module3Section1_1: React.FC = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-green-500/10">
-                <p className="text-sm font-medium text-white mb-2">Typical Commercial Applications:</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Typical Commercial Applications:
+                </p>
                 <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li>Office buildings with changing layouts</li>
                   <li>Industrial installations requiring access</li>
@@ -414,7 +502,8 @@ const Module3Section1_1: React.FC = () => {
             </h2>
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                <strong>Description:</strong> Armoured cable with integral protection suitable for direct burial, outdoor installation and high-risk environments.
+                <strong>Description:</strong> Armoured cable with integral protection suitable for
+                direct burial, outdoor installation and high-risk environments.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4 my-6">
@@ -461,7 +550,8 @@ const Module3Section1_1: React.FC = () => {
             </h2>
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                <strong>Description:</strong> Flexible cables for temporary connections and movable equipment. Not suitable for permanent fixed wiring.
+                <strong>Description:</strong> Flexible cables for temporary connections and movable
+                equipment. Not suitable for permanent fixed wiring.
               </p>
 
               <div className="p-4 rounded-lg bg-amber-500/10 mb-4">
@@ -562,14 +652,18 @@ const Module3Section1_1: React.FC = () => {
 
           {/* Real-world Scenario */}
           <section className="mb-10">
-            <h2 className="text-xl font-semibold text-white mb-6">Real-world Scenario: Commercial Kitchen Renovation</h2>
+            <h2 className="text-xl font-semibold text-white mb-6">
+              Real-world Scenario: Commercial Kitchen Renovation
+            </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <div className="flex items-start gap-3">
                   <Home className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-white mb-2">The Challenge</p>
-                    <p className="text-sm text-white/90">A restaurant kitchen needs complete electrical renovation. The space includes:</p>
+                    <p className="text-sm text-white/90">
+                      A restaurant kitchen needs complete electrical renovation. The space includes:
+                    </p>
                     <ul className="text-sm text-white/90 list-disc pl-6 mt-2 space-y-1">
                       <li>High-power cooking equipment (three-phase)</li>
                       <li>Wash areas with water exposure risk</li>
@@ -585,7 +679,9 @@ const Module3Section1_1: React.FC = () => {
                 <div className="p-4 rounded-lg bg-green-500/10">
                   <p className="text-sm font-medium text-white mb-2">Main Distribution</p>
                   <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
-                    <li><strong>SWA cable</strong> for supply from external meter</li>
+                    <li>
+                      <strong>SWA cable</strong> for supply from external meter
+                    </li>
                     <li>Steel conduit for main panel feeds</li>
                     <li>Mechanical protection in high-traffic areas</li>
                   </ul>
@@ -593,7 +689,9 @@ const Module3Section1_1: React.FC = () => {
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Equipment Circuits</p>
                   <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
-                    <li><strong>Steel conduit</strong> for fixed cooking equipment</li>
+                    <li>
+                      <strong>Steel conduit</strong> for fixed cooking equipment
+                    </li>
                     <li>IP65-rated outlets for cleaning resilience</li>
                     <li>Separate circuits for each major appliance</li>
                   </ul>
@@ -601,7 +699,9 @@ const Module3Section1_1: React.FC = () => {
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Lighting & Sockets</p>
                   <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
-                    <li><strong>Trunking system</strong> above service areas</li>
+                    <li>
+                      <strong>Trunking system</strong> above service areas
+                    </li>
                     <li>Easy access for future changes</li>
                     <li>Segregated power and data routes</li>
                   </ul>
@@ -609,7 +709,9 @@ const Module3Section1_1: React.FC = () => {
                 <div className="p-4 rounded-lg bg-amber-500/10">
                   <p className="text-sm font-medium text-white mb-2">Temporary/Flexible</p>
                   <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
-                    <li><strong>Armoured flexibles</strong> to mobile equipment</li>
+                    <li>
+                      <strong>Armoured flexibles</strong> to mobile equipment
+                    </li>
                     <li>Specialist food-grade cable types</li>
                     <li>Regular inspection schedule</li>
                   </ul>
@@ -631,7 +733,9 @@ const Module3Section1_1: React.FC = () => {
 
           {/* Common Mistakes */}
           <section className="mb-10">
-            <h2 className="text-xl font-semibold text-white mb-6">Common Mistakes and How to Avoid Them</h2>
+            <h2 className="text-xl font-semibold text-white mb-6">
+              Common Mistakes and How to Avoid Them
+            </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-white mb-2 flex items-center gap-2">
@@ -639,10 +743,19 @@ const Module3Section1_1: React.FC = () => {
                   System Selection Errors
                 </p>
                 <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
-                  <li><strong>Wrong:</strong> Using surface wiring in areas requiring concealment</li>
-                  <li><strong>Right:</strong> Check building regulations and aesthetic requirements first</li>
-                  <li><strong>Wrong:</strong> PVC conduit in high-temperature environments</li>
-                  <li><strong>Right:</strong> Use appropriate temperature ratings for all components</li>
+                  <li>
+                    <strong>Wrong:</strong> Using surface wiring in areas requiring concealment
+                  </li>
+                  <li>
+                    <strong>Right:</strong> Check building regulations and aesthetic requirements
+                    first
+                  </li>
+                  <li>
+                    <strong>Wrong:</strong> PVC conduit in high-temperature environments
+                  </li>
+                  <li>
+                    <strong>Right:</strong> Use appropriate temperature ratings for all components
+                  </li>
                 </ul>
               </div>
 
@@ -652,10 +765,18 @@ const Module3Section1_1: React.FC = () => {
                   Installation Mistakes
                 </p>
                 <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
-                  <li><strong>Wrong:</strong> Poor earthing continuity in steel conduit systems</li>
-                  <li><strong>Right:</strong> Test continuity and use proper bonding techniques</li>
-                  <li><strong>Wrong:</strong> Inadequate cable support spacing</li>
-                  <li><strong>Right:</strong> Follow BS 7671 maximum spacing requirements</li>
+                  <li>
+                    <strong>Wrong:</strong> Poor earthing continuity in steel conduit systems
+                  </li>
+                  <li>
+                    <strong>Right:</strong> Test continuity and use proper bonding techniques
+                  </li>
+                  <li>
+                    <strong>Wrong:</strong> Inadequate cable support spacing
+                  </li>
+                  <li>
+                    <strong>Right:</strong> Follow BS 7671 maximum spacing requirements
+                  </li>
                 </ul>
               </div>
 
@@ -677,10 +798,14 @@ const Module3Section1_1: React.FC = () => {
 
           {/* BS 7671 Context */}
           <section className="mb-10">
-            <h2 className="text-xl font-semibold text-white mb-6">BS 7671 Context and Compliance</h2>
+            <h2 className="text-xl font-semibold text-white mb-6">
+              BS 7671 Context and Compliance
+            </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-white mb-2">Selection and Erection (Part 5)</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Selection and Erection (Part 5)
+                </p>
                 <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
                   <li>Wiring systems must suit environmental conditions</li>
                   <li>Consider external influences (AD, AE, AF codes)</li>
@@ -690,7 +815,9 @@ const Module3Section1_1: React.FC = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-green-500/10">
-                <p className="text-sm font-medium text-white mb-2">Current-carrying Capacity (Appendix 4)</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Current-carrying Capacity (Appendix 4)
+                </p>
                 <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
                   <li>Apply grouping factors for multiple cables</li>
                   <li>Consider thermal insulation effects</li>
@@ -699,10 +826,16 @@ const Module3Section1_1: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50" role="alert">
+              <div
+                className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
+                role="alert"
+              >
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-white">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all wiring systems.</p>
+                  <p className="text-sm text-white">
+                    Isolate, lock-off and prove dead before work. Follow manufacturer instructions
+                    and BS 7671 requirements for all wiring systems.
+                  </p>
                 </div>
               </div>
             </div>
@@ -748,13 +881,22 @@ const Module3Section1_1: React.FC = () => {
 
           {/* Navigation */}
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-            <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Button
+              variant="ghost"
+              size="lg"
+              className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              asChild
+            >
               <Link to="..">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Section 3.1
               </Link>
             </Button>
-            <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Button
+              size="lg"
+              className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+              asChild
+            >
               <Link to="../1-2">
                 Next: Twin and Earth Cable
                 <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
@@ -764,8 +906,14 @@ const Module3Section1_1: React.FC = () => {
         </div>
 
         {/* Structured data */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
       </article>
     </div>
   );

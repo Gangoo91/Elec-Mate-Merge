@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, ChevronRight, Download, Home, Building, Factory, Zap } from "lucide-react";
-import { Circuit } from "./types";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown, ChevronRight, Download, Home, Building, Factory, Zap } from 'lucide-react';
+import { Circuit } from './types';
+import { v4 as uuidv4 } from 'uuid';
 
 interface InstallationTemplate {
   id: string;
@@ -21,317 +21,317 @@ interface MobileInstallationTemplatesProps {
   onApplyTemplate: (circuits: Circuit[]) => void;
 }
 
-const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = ({ 
-  installationType, 
-  onApplyTemplate 
+const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = ({
+  installationType,
+  onApplyTemplate,
 }) => {
-  const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState('');
   const [expandedTemplate, setExpandedTemplate] = useState<string | null>(null);
 
   const getTemplates = (instType: string): InstallationTemplate[] => {
     switch (instType) {
-      case "domestic":
+      case 'domestic':
         return [
           {
-            id: "small-flat",
-            name: "Small Flat/Apartment",
-            description: "Basic electrical installation for 1-2 bedroom property",
-            installationType: "domestic",
+            id: 'small-flat',
+            name: 'Small Flat/Apartment',
+            description: 'Basic electrical installation for 1-2 bedroom property',
+            installationType: 'domestic',
             circuits: [
               {
-                name: "Lighting Circuit",
-                loadType: "lighting",
+                name: 'Lighting Circuit',
+                loadType: 'lighting',
                 totalLoad: 800,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 25,
-                installationMethod: "clipped-direct",
-                cableType: "t&e",
-                protectiveDevice: "mcb",
-                enabled: true
+                installationMethod: 'clipped-direct',
+                cableType: 't&e',
+                protectiveDevice: 'mcb',
+                enabled: true,
               },
               {
-                name: "Power Circuit - Kitchen/Living",
-                loadType: "power",
+                name: 'Power Circuit - Kitchen/Living',
+                loadType: 'power',
                 totalLoad: 2300,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 20,
-                installationMethod: "clipped-direct",
-                cableType: "t&e",
-                protectiveDevice: "rcbo",
-                enabled: true
+                installationMethod: 'clipped-direct',
+                cableType: 't&e',
+                protectiveDevice: 'rcbo',
+                enabled: true,
               },
               {
-                name: "Power Circuit - Bedrooms",
-                loadType: "power",
+                name: 'Power Circuit - Bedrooms',
+                loadType: 'power',
                 totalLoad: 1500,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 30,
-                installationMethod: "clipped-direct",
-                cableType: "t&e",
-                protectiveDevice: "rcbo",
-                enabled: true
-              }
-            ]
+                installationMethod: 'clipped-direct',
+                cableType: 't&e',
+                protectiveDevice: 'rcbo',
+                enabled: true,
+              },
+            ],
           },
           {
-            id: "family-house",
-            name: "Family House (3-4 Bed)",
-            description: "Complete installation for typical family home",
-            installationType: "domestic",
+            id: 'family-house',
+            name: 'Family House (3-4 Bed)',
+            description: 'Complete installation for typical family home',
+            installationType: 'domestic',
             circuits: [
               {
-                name: "Downstairs Lighting",
-                loadType: "lighting",
+                name: 'Downstairs Lighting',
+                loadType: 'lighting',
                 totalLoad: 600,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 40,
-                installationMethod: "clipped-direct",
-                cableType: "t&e",
-                protectiveDevice: "mcb",
-                enabled: true
+                installationMethod: 'clipped-direct',
+                cableType: 't&e',
+                protectiveDevice: 'mcb',
+                enabled: true,
               },
               {
-                name: "Upstairs Lighting",
-                loadType: "lighting",
+                name: 'Upstairs Lighting',
+                loadType: 'lighting',
                 totalLoad: 500,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 35,
-                installationMethod: "clipped-direct",
-                cableType: "t&e",
-                protectiveDevice: "mcb",
-                enabled: true
+                installationMethod: 'clipped-direct',
+                cableType: 't&e',
+                protectiveDevice: 'mcb',
+                enabled: true,
               },
               {
-                name: "Kitchen Ring Circuit",
-                loadType: "power",
+                name: 'Kitchen Ring Circuit',
+                loadType: 'power',
                 totalLoad: 7200,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 50,
-                installationMethod: "clipped-direct",
-                cableType: "t&e",
-                protectiveDevice: "rcbo",
-                enabled: true
+                installationMethod: 'clipped-direct',
+                cableType: 't&e',
+                protectiveDevice: 'rcbo',
+                enabled: true,
               },
               {
-                name: "Downstairs Ring Circuit",
-                loadType: "power",
+                name: 'Downstairs Ring Circuit',
+                loadType: 'power',
                 totalLoad: 7200,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 60,
-                installationMethod: "clipped-direct",
-                cableType: "t&e",
-                protectiveDevice: "rcbo",
-                enabled: true
+                installationMethod: 'clipped-direct',
+                cableType: 't&e',
+                protectiveDevice: 'rcbo',
+                enabled: true,
               },
               {
-                name: "Upstairs Ring Circuit",
-                loadType: "power",
+                name: 'Upstairs Ring Circuit',
+                loadType: 'power',
                 totalLoad: 7200,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 45,
-                installationMethod: "clipped-direct",
-                cableType: "t&e",
-                protectiveDevice: "rcbo",
-                enabled: true
+                installationMethod: 'clipped-direct',
+                cableType: 't&e',
+                protectiveDevice: 'rcbo',
+                enabled: true,
               },
               {
-                name: "Cooker Circuit",
-                loadType: "cooker",
+                name: 'Cooker Circuit',
+                loadType: 'cooker',
                 totalLoad: 7000,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 15,
-                installationMethod: "clipped-direct",
-                cableType: "t&e",
-                protectiveDevice: "mcb",
-                enabled: true
-              }
-            ]
-          }
+                installationMethod: 'clipped-direct',
+                cableType: 't&e',
+                protectiveDevice: 'mcb',
+                enabled: true,
+              },
+            ],
+          },
         ];
-      case "commercial":
+      case 'commercial':
         return [
           {
-            id: "small-office",
-            name: "Small Office",
-            description: "Basic commercial office installation",
-            installationType: "commercial",
+            id: 'small-office',
+            name: 'Small Office',
+            description: 'Basic commercial office installation',
+            installationType: 'commercial',
             circuits: [
               {
-                name: "General Lighting",
-                loadType: "commercial-lighting",
+                name: 'General Lighting',
+                loadType: 'commercial-lighting',
                 totalLoad: 2000,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 80,
-                installationMethod: "trunking",
-                cableType: "swa",
-                protectiveDevice: "mcb",
-                enabled: true
+                installationMethod: 'trunking',
+                cableType: 'swa',
+                protectiveDevice: 'mcb',
+                enabled: true,
               },
               {
-                name: "Power - Workstations",
-                loadType: "commercial-power",
+                name: 'Power - Workstations',
+                loadType: 'commercial-power',
                 totalLoad: 5000,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 60,
-                installationMethod: "trunking",
-                cableType: "swa",
-                protectiveDevice: "rcbo",
-                enabled: true
+                installationMethod: 'trunking',
+                cableType: 'swa',
+                protectiveDevice: 'rcbo',
+                enabled: true,
               },
               {
-                name: "IT Equipment",
-                loadType: "it-equipment",
+                name: 'IT Equipment',
+                loadType: 'it-equipment',
                 totalLoad: 3000,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 40,
-                installationMethod: "trunking",
-                cableType: "swa",
-                protectiveDevice: "rcbo",
-                enabled: true
+                installationMethod: 'trunking',
+                cableType: 'swa',
+                protectiveDevice: 'rcbo',
+                enabled: true,
               },
               {
-                name: "HVAC System",
-                loadType: "hvac",
+                name: 'HVAC System',
+                loadType: 'hvac',
                 totalLoad: 8000,
                 voltage: 400,
-                phases: "three",
+                phases: 'three',
                 cableLength: 25,
-                installationMethod: "tray",
-                cableType: "swa",
-                protectiveDevice: "mcb",
-                enabled: true
-              }
-            ]
-          }
+                installationMethod: 'tray',
+                cableType: 'swa',
+                protectiveDevice: 'mcb',
+                enabled: true,
+              },
+            ],
+          },
         ];
-      case "industrial":
+      case 'industrial':
         return [
           {
-            id: "workshop",
-            name: "Small Workshop",
-            description: "Basic industrial workshop installation",
-            installationType: "industrial",
+            id: 'workshop',
+            name: 'Small Workshop',
+            description: 'Basic industrial workshop installation',
+            installationType: 'industrial',
             circuits: [
               {
-                name: "Workshop Lighting",
-                loadType: "lighting",
+                name: 'Workshop Lighting',
+                loadType: 'lighting',
                 totalLoad: 1500,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 100,
-                installationMethod: "tray",
-                cableType: "swa",
-                protectiveDevice: "mcb",
-                enabled: true
+                installationMethod: 'tray',
+                cableType: 'swa',
+                protectiveDevice: 'mcb',
+                enabled: true,
               },
               {
-                name: "General Power",
-                loadType: "power",
+                name: 'General Power',
+                loadType: 'power',
                 totalLoad: 10000,
                 voltage: 400,
-                phases: "three",
+                phases: 'three',
                 cableLength: 75,
-                installationMethod: "tray",
-                cableType: "swa",
-                protectiveDevice: "rcbo",
-                enabled: true
+                installationMethod: 'tray',
+                cableType: 'swa',
+                protectiveDevice: 'rcbo',
+                enabled: true,
               },
               {
-                name: "Motor Drive 1",
-                loadType: "motor-small",
+                name: 'Motor Drive 1',
+                loadType: 'motor-small',
                 totalLoad: 15000,
                 voltage: 400,
-                phases: "three",
+                phases: 'three',
                 cableLength: 50,
-                installationMethod: "tray",
-                cableType: "swa",
-                protectiveDevice: "mcb",
-                enabled: true
-              }
-            ]
-          }
+                installationMethod: 'tray',
+                cableType: 'swa',
+                protectiveDevice: 'mcb',
+                enabled: true,
+              },
+            ],
+          },
         ];
-      case "data-center":
+      case 'data-center':
         return [
           {
-            id: "small-data-center",
-            name: "Small Data Center",
-            description: "Basic data center installation with UPS and cooling",
-            installationType: "data-center",
+            id: 'small-data-center',
+            name: 'Small Data Center',
+            description: 'Basic data center installation with UPS and cooling',
+            installationType: 'data-center',
             circuits: [
               {
-                name: "UPS System",
-                loadType: "ups-system",
+                name: 'UPS System',
+                loadType: 'ups-system',
                 totalLoad: 50000,
                 voltage: 400,
-                phases: "three",
+                phases: 'three',
                 cableLength: 20,
-                installationMethod: "tray",
-                cableType: "swa",
-                protectiveDevice: "mcb",
-                enabled: true
+                installationMethod: 'tray',
+                cableType: 'swa',
+                protectiveDevice: 'mcb',
+                enabled: true,
               },
               {
-                name: "Server Racks",
-                loadType: "server-rack",
+                name: 'Server Racks',
+                loadType: 'server-rack',
                 totalLoad: 8000,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 15,
-                installationMethod: "tray",
-                cableType: "swa",
-                protectiveDevice: "rcbo",
-                enabled: true
-              }
-            ]
-          }
+                installationMethod: 'tray',
+                cableType: 'swa',
+                protectiveDevice: 'rcbo',
+                enabled: true,
+              },
+            ],
+          },
         ];
-      case "healthcare":
+      case 'healthcare':
         return [
           {
-            id: "medical-facility",
-            name: "Medical Facility",
-            description: "Healthcare facility with medical equipment and backup power",
-            installationType: "healthcare",
+            id: 'medical-facility',
+            name: 'Medical Facility',
+            description: 'Healthcare facility with medical equipment and backup power',
+            installationType: 'healthcare',
             circuits: [
               {
-                name: "Medical Equipment",
-                loadType: "medical",
+                name: 'Medical Equipment',
+                loadType: 'medical',
                 totalLoad: 8000,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 20,
-                installationMethod: "conduit",
-                cableType: "mineral",
-                protectiveDevice: "rcbo",
-                enabled: true
+                installationMethod: 'conduit',
+                cableType: 'mineral',
+                protectiveDevice: 'rcbo',
+                enabled: true,
               },
               {
-                name: "Emergency Systems",
-                loadType: "emergency",
+                name: 'Emergency Systems',
+                loadType: 'emergency',
                 totalLoad: 1500,
                 voltage: 230,
-                phases: "single",
+                phases: 'single',
                 cableLength: 80,
-                installationMethod: "conduit",
-                cableType: "mineral",
-                protectiveDevice: "mcb",
-                enabled: true
-              }
-            ]
-          }
+                installationMethod: 'conduit',
+                cableType: 'mineral',
+                protectiveDevice: 'mcb',
+                enabled: true,
+              },
+            ],
+          },
         ];
       default:
         return [];
@@ -339,13 +339,13 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
   };
 
   const templates = getTemplates(installationType);
-  const selectedTemplateData = templates.find(t => t.id === selectedTemplate);
+  const selectedTemplateData = templates.find((t) => t.id === selectedTemplate);
 
   const handleApplyTemplate = () => {
     if (selectedTemplateData) {
-      const circuits: Circuit[] = selectedTemplateData.circuits.map(circuit => ({
+      const circuits: Circuit[] = selectedTemplateData.circuits.map((circuit) => ({
         ...circuit,
-        id: uuidv4()
+        id: uuidv4(),
       }));
       onApplyTemplate(circuits);
     }
@@ -353,10 +353,14 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
 
   const getInstallationIcon = (type: string) => {
     switch (type) {
-      case "domestic": return Home;
-      case "commercial": return Building;
-      case "industrial": return Factory;
-      default: return Zap;
+      case 'domestic':
+        return Home;
+      case 'commercial':
+        return Building;
+      case 'industrial':
+        return Factory;
+      default:
+        return Zap;
     }
   };
 
@@ -374,9 +378,9 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
     );
   }
 
-  const templateOptions = templates.map(template => ({
+  const templateOptions = templates.map((template) => ({
     value: template.id,
-    label: template.name
+    label: template.name,
   }));
 
   return (
@@ -396,7 +400,7 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
               <CardTitle className="flex items-center gap-3 text-base">
                 <div className="h-8 w-8 rounded bg-elec-yellow/20 flex items-center justify-center">
                   {React.createElement(getInstallationIcon(selectedTemplateData.installationType), {
-                    className: "h-4 w-4 text-elec-yellow"
+                    className: 'h-4 w-4 text-elec-yellow',
                   })}
                 </div>
                 <div className="min-w-0 flex-1">
@@ -407,25 +411,23 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
                 </div>
               </CardTitle>
             </CardHeader>
-            
+
             <CardContent className="space-y-4">
-              <Collapsible 
+              <Collapsible
                 open={expandedTemplate === selectedTemplateData.id}
                 onOpenChange={(open) => setExpandedTemplate(open ? selectedTemplateData.id : null)}
               >
                 <CollapsibleTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    className="w-full justify-between p-0 h-auto text-sm"
-                  >
+                  <Button variant="ghost" className="w-full justify-between p-0 h-auto text-sm">
                     <span>View {selectedTemplateData.circuits.length} circuits</span>
-                    {expandedTemplate === selectedTemplateData.id ? 
-                      <ChevronDown className="h-4 w-4" /> : 
+                    {expandedTemplate === selectedTemplateData.id ? (
+                      <ChevronDown className="h-4 w-4" />
+                    ) : (
                       <ChevronRight className="h-4 w-4" />
-                    }
+                    )}
                   </Button>
                 </CollapsibleTrigger>
-                
+
                 <CollapsibleContent className="space-y-2 mt-3">
                   {selectedTemplateData.circuits.map((circuit, index) => (
                     <div key={index} className="p-3 bg-black/20 rounded-md">
@@ -441,7 +443,11 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
                         </div>
                         <div className="bg-black/30 rounded p-2 text-center col-span-2">
                           <div className="text-muted-foreground mb-1">Type</div>
-                          <div className="font-medium text-purple-400">{circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
+                          <div className="font-medium text-purple-400">
+                            {circuit.loadType
+                              .replace('-', ' ')
+                              .replace(/\b\w/g, (l) => l.toUpperCase())}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -456,11 +462,13 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
                 </div>
                 <div className="bg-black/20 rounded-md p-2">
                   <span className="text-muted-foreground">Installation Type</span>
-                  <div className="font-medium capitalize">{selectedTemplateData.installationType}</div>
+                  <div className="font-medium capitalize">
+                    {selectedTemplateData.installationType}
+                  </div>
                 </div>
               </div>
 
-              <Button 
+              <Button
                 onClick={handleApplyTemplate}
                 className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
               >

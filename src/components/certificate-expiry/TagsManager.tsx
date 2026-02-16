@@ -4,11 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { X, Plus, Tag } from 'lucide-react';
 import { QUICK_TAGS } from '@/types/expiryTypes';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface TagsManagerProps {
   tags: string[];
@@ -27,7 +23,7 @@ export const TagsManager = ({ tags = [], onTagsChange, disabled }: TagsManagerPr
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    onTagsChange(tags.filter(t => t !== tagToRemove));
+    onTagsChange(tags.filter((t) => t !== tagToRemove));
   };
 
   const handleAddCustomTag = () => {
@@ -37,12 +33,12 @@ export const TagsManager = ({ tags = [], onTagsChange, disabled }: TagsManagerPr
     }
   };
 
-  const availableQuickTags = QUICK_TAGS.filter(tag => !tags.includes(tag));
+  const availableQuickTags = QUICK_TAGS.filter((tag) => !tags.includes(tag));
 
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 flex-wrap">
-        {tags.map(tag => (
+        {tags.map((tag) => (
           <Badge key={tag} variant="secondary" className="gap-1 pr-1">
             <Tag className="h-3 w-3" />
             {tag}
@@ -57,15 +53,10 @@ export const TagsManager = ({ tags = [], onTagsChange, disabled }: TagsManagerPr
             </Button>
           </Badge>
         ))}
-        
+
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="h-7 gap-1"
-              disabled={disabled}
-            >
+            <Button variant="outline" size="sm" className="h-7 gap-1" disabled={disabled}>
               <Plus className="h-3 w-3" />
               Add Tag
             </Button>
@@ -76,7 +67,7 @@ export const TagsManager = ({ tags = [], onTagsChange, disabled }: TagsManagerPr
                 <p className="text-sm font-medium mb-2">Quick Tags</p>
                 <div className="flex flex-wrap gap-2">
                   {availableQuickTags.length > 0 ? (
-                    availableQuickTags.map(tag => (
+                    availableQuickTags.map((tag) => (
                       <Button
                         key={tag}
                         variant="outline"
@@ -95,7 +86,7 @@ export const TagsManager = ({ tags = [], onTagsChange, disabled }: TagsManagerPr
                   )}
                 </div>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium mb-2">Custom Tag</p>
                 <div className="flex gap-2">
@@ -111,9 +102,9 @@ export const TagsManager = ({ tags = [], onTagsChange, disabled }: TagsManagerPr
                     }}
                     className="h-9 sm:h-8 text-base sm:text-sm"
                   />
-                  <Button 
-                    size="sm" 
-                    className="h-9 sm:h-8 px-4 min-w-[60px]" 
+                  <Button
+                    size="sm"
+                    className="h-9 sm:h-8 px-4 min-w-[60px]"
                     onClick={handleAddCustomTag}
                     disabled={!customTag.trim()}
                   >

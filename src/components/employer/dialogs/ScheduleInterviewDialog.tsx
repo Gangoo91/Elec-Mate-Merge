@@ -1,15 +1,21 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon, Clock, Video, Phone, Building, MapPin } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon, Clock, Video, Phone, Building, MapPin } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface ScheduleInterviewDialogProps {
   open: boolean;
@@ -31,33 +37,47 @@ export function ScheduleInterviewDialog({
 }: ScheduleInterviewDialogProps) {
   const { toast } = useToast();
   const [date, setDate] = useState<Date>();
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState('');
   const [interviewType, setInterviewType] = useState<'In-person' | 'Phone' | 'Video'>('In-person');
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState('');
 
   const timeSlots = [
-    "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-    "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
-    "15:00", "15:30", "16:00", "16:30", "17:00"
+    '09:00',
+    '09:30',
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '12:00',
+    '12:30',
+    '13:00',
+    '13:30',
+    '14:00',
+    '14:30',
+    '15:00',
+    '15:30',
+    '16:00',
+    '16:30',
+    '17:00',
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!date || !time) {
       toast({
-        title: "Missing Information",
-        description: "Please select a date and time for the interview.",
-        variant: "destructive",
+        title: 'Missing Information',
+        description: 'Please select a date and time for the interview.',
+        variant: 'destructive',
       });
       return;
     }
 
     if (interviewType === 'In-person' && !location) {
       toast({
-        title: "Missing Location",
-        description: "Please enter the interview location.",
-        variant: "destructive",
+        title: 'Missing Location',
+        description: 'Please enter the interview location.',
+        variant: 'destructive',
       });
       return;
     }
@@ -70,23 +90,26 @@ export function ScheduleInterviewDialog({
     });
 
     toast({
-      title: "Interview Scheduled",
+      title: 'Interview Scheduled',
       description: `Interview with ${candidateName} scheduled for ${format(date, 'PPP')} at ${time}.`,
     });
 
     // Reset form
     setDate(undefined);
-    setTime("");
+    setTime('');
     setInterviewType('In-person');
-    setLocation("");
+    setLocation('');
     onOpenChange(false);
   };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'Video': return <Video className="h-4 w-4" />;
-      case 'Phone': return <Phone className="h-4 w-4" />;
-      default: return <Building className="h-4 w-4" />;
+      case 'Video':
+        return <Video className="h-4 w-4" />;
+      case 'Phone':
+        return <Phone className="h-4 w-4" />;
+      default:
+        return <Building className="h-4 w-4" />;
     }
   };
 
@@ -112,12 +135,12 @@ export function ScheduleInterviewDialog({
                 <Button
                   variant="outline"
                   className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
+                    'w-full justify-start text-left font-normal',
+                    !date && 'text-muted-foreground'
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : "Select date"}
+                  {date ? format(date, 'PPP') : 'Select date'}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -125,7 +148,9 @@ export function ScheduleInterviewDialog({
                   mode="single"
                   selected={date}
                   onSelect={setDate}
-                  disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                  disabled={(date) =>
+                    date < new Date() || date.getDay() === 0 || date.getDay() === 6
+                  }
                   initialFocus
                   className="pointer-events-auto"
                 />
@@ -159,7 +184,7 @@ export function ScheduleInterviewDialog({
                 <Button
                   key={type}
                   type="button"
-                  variant={interviewType === type ? "default" : "outline"}
+                  variant={interviewType === type ? 'default' : 'outline'}
                   className="flex flex-col items-center gap-1 h-auto py-3"
                   onClick={() => setInterviewType(type)}
                 >
@@ -203,7 +228,9 @@ export function ScheduleInterviewDialog({
             <div className="bg-muted/50 rounded-lg p-4 space-y-2">
               <p className="text-sm font-medium">Interview Summary</p>
               <div className="text-sm text-muted-foreground space-y-1">
-                <p>{format(date, 'EEEE, d MMMM yyyy')} at {time}</p>
+                <p>
+                  {format(date, 'EEEE, d MMMM yyyy')} at {time}
+                </p>
                 <p className="flex items-center gap-1">
                   {getTypeIcon(interviewType)}
                   {interviewType}
@@ -215,7 +242,12 @@ export function ScheduleInterviewDialog({
 
           {/* Actions */}
           <div className="flex gap-3">
-            <Button type="button" variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit" className="flex-1">

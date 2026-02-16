@@ -36,10 +36,12 @@ export interface JobAssignmentWithDetails extends JobAssignment {
 export const getJobAssignments = async (jobId: string): Promise<JobAssignmentWithDetails[]> => {
   const { data, error } = await supabase
     .from('employer_job_assignments')
-    .select(`
+    .select(
+      `
       *,
       employee:employer_employees(id, name, role, avatar_initials, phone, email)
-    `)
+    `
+    )
     .eq('job_id', jobId)
     .order('assigned_at', { ascending: false });
 
@@ -51,13 +53,17 @@ export const getJobAssignments = async (jobId: string): Promise<JobAssignmentWit
   return (data || []) as unknown as JobAssignmentWithDetails[];
 };
 
-export const getEmployeeAssignments = async (employeeId: string): Promise<JobAssignmentWithDetails[]> => {
+export const getEmployeeAssignments = async (
+  employeeId: string
+): Promise<JobAssignmentWithDetails[]> => {
   const { data, error } = await supabase
     .from('employer_job_assignments')
-    .select(`
+    .select(
+      `
       *,
       job:employer_jobs(id, title, client, location)
-    `)
+    `
+    )
     .eq('employee_id', employeeId)
     .order('start_date', { ascending: true });
 
@@ -69,18 +75,16 @@ export const getEmployeeAssignments = async (employeeId: string): Promise<JobAss
   return (data || []) as unknown as JobAssignmentWithDetails[];
 };
 
-export const createJobAssignment = async (
-  assignment: {
-    job_id: string;
-    employee_id: string;
-    start_date: string;
-    end_date?: string | null;
-    role_on_job?: string | null;
-    notes?: string | null;
-    notify_email?: boolean;
-    assigned_by?: string;
-  }
-): Promise<JobAssignment> => {
+export const createJobAssignment = async (assignment: {
+  job_id: string;
+  employee_id: string;
+  start_date: string;
+  end_date?: string | null;
+  role_on_job?: string | null;
+  notes?: string | null;
+  notify_email?: boolean;
+  assigned_by?: string;
+}): Promise<JobAssignment> => {
   const { data, error } = await supabase
     .from('employer_job_assignments')
     .insert({
@@ -119,10 +123,7 @@ export const updateJobAssignment = async (
 };
 
 export const deleteJobAssignment = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('employer_job_assignments')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('employer_job_assignments').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting job assignment:', error);
@@ -155,10 +156,12 @@ export const checkForClashes = async (
 ): Promise<JobAssignmentWithDetails[]> => {
   let query = supabase
     .from('employer_job_assignments')
-    .select(`
+    .select(
+      `
       *,
       job:employer_jobs(id, title, client, location)
-    `)
+    `
+    )
     .eq('employee_id', employeeId);
 
   if (excludeJobId) {
@@ -175,7 +178,9 @@ export const checkForClashes = async (
   // Filter for overlapping dates
   const clashes = (data || []).filter((assignment: any) => {
     const assignmentStart = new Date(assignment.start_date);
-    const assignmentEnd = assignment.end_date ? new Date(assignment.end_date) : new Date('2099-12-31');
+    const assignmentEnd = assignment.end_date
+      ? new Date(assignment.end_date)
+      : new Date('2099-12-31');
     const newStart = new Date(startDate);
     const newEnd = endDate ? new Date(endDate) : new Date('2099-12-31');
 

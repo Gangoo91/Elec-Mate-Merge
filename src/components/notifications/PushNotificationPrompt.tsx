@@ -22,8 +22,8 @@ interface PushNotificationPromptProps {
  */
 const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
   delay = 3000,
-  context = "Never miss important messages",
-  compact = false
+  context = 'Never miss important messages',
+  compact = false,
 }) => {
   const { user } = useAuth();
   const { isSupported, isSubscribed, isLoading, subscribe } = usePushNotifications();
@@ -87,10 +87,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
         >
           {isLoading ? 'Enabling...' : 'Enable'}
         </Button>
-        <button
-          onClick={handleDismiss}
-          className="text-white/40 hover:text-white/60 p-1"
-        >
+        <button onClick={handleDismiss} className="text-white/40 hover:text-white/60 p-1">
           <X className="w-4 h-4" />
         </button>
       </div>

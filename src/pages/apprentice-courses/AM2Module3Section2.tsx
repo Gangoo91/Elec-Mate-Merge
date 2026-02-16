@@ -1,18 +1,27 @@
-import { AlertTriangle, Clock, BookOpen, Zap, Settings, Wrench, CheckCircle, Target } from "lucide-react";
-import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
-import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
-import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
-import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
-import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
-import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import {
+  AlertTriangle,
+  Clock,
+  BookOpen,
+  Zap,
+  Settings,
+  Wrench,
+  CheckCircle,
+  Target,
+} from 'lucide-react';
+import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
+import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
+import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
+import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
 const AM2Module3Section2 = () => {
   useSEO(
-    "Power Circuits - Ring, Radial, Cooker, Motor | AM2 Module 3 Section 2",
-    "Master power circuit installation for AM2 assessment - ring finals, radials, cooker circuits, and motor controls with professional workmanship standards"
+    'Power Circuits - Ring, Radial, Cooker, Motor | AM2 Module 3 Section 2',
+    'Master power circuit installation for AM2 assessment - ring finals, radials, cooker circuits, and motor controls with professional workmanship standards'
   );
 
   const quickCheckQuestions: Array<{
@@ -23,210 +32,227 @@ const AM2Module3Section2 = () => {
     explanation: string;
   }> = [
     {
-      id: "ring-open-consequence",
-      question: "What happens if a ring final circuit is left open (one leg disconnected)?",
+      id: 'ring-open-consequence',
+      question: 'What happens if a ring final circuit is left open (one leg disconnected)?',
       options: [
-        "It still works safely as designed",
-        "It becomes an unprotected radial circuit",
-        "The MCB will trip immediately",
-        "Only half the sockets will work"
+        'It still works safely as designed',
+        'It becomes an unprotected radial circuit',
+        'The MCB will trip immediately',
+        'Only half the sockets will work',
       ],
       correctIndex: 1,
-      explanation: "An open ring becomes a radial circuit but is still protected by a 32A MCB, which exceeds the safe rating for 2.5mm² cable (20A max). This is a major safety issue and automatic fail."
+      explanation:
+        'An open ring becomes a radial circuit but is still protected by a 32A MCB, which exceeds the safe rating for 2.5mm² cable (20A max). This is a major safety issue and automatic fail.',
     },
     {
-      id: "cooker-workmanship",
-      question: "Why do many candidates lose marks on cooker circuits?",
+      id: 'cooker-workmanship',
+      question: 'Why do many candidates lose marks on cooker circuits?',
       options: [
-        "Using wrong cable size",
-        "Incorrect MCB rating",
-        "Over-stripping cable sheath leaving bare conductors visible",
-        "Poor earth connections"
+        'Using wrong cable size',
+        'Incorrect MCB rating',
+        'Over-stripping cable sheath leaving bare conductors visible',
+        'Poor earth connections',
       ],
       correctIndex: 2,
-      explanation: "The most common error is over-stripping the cable sheath, leaving bare conductors visible at the outlet plate. The sheath must enter the accessory to maintain protection."
+      explanation:
+        'The most common error is over-stripping the cable sheath, leaving bare conductors visible at the outlet plate. The sheath must enter the accessory to maintain protection.',
     },
     {
-      id: "swa-gland-check",
-      question: "What does the assessor specifically check at an SWA gland?",
+      id: 'swa-gland-check',
+      question: 'What does the assessor specifically check at an SWA gland?',
       options: [
-        "Cable entry angle only",
-        "Gland tightness only",
-        "Mechanical strength and earth continuity",
-        "Cable identification"
+        'Cable entry angle only',
+        'Gland tightness only',
+        'Mechanical strength and earth continuity',
+        'Cable identification',
       ],
       correctIndex: 2,
-      explanation: "The assessor checks both mechanical strength (proper gland tightening) and earth continuity through the SWA armour to ensure both physical and electrical protection."
+      explanation:
+        'The assessor checks both mechanical strength (proper gland tightening) and earth continuity through the SWA armour to ensure both physical and electrical protection.',
     },
     {
-      id: "safety-vs-neatness",
-      question: "In AM2 assessment, which is worse - messy work or unsafe work?",
+      id: 'safety-vs-neatness',
+      question: 'In AM2 assessment, which is worse - messy work or unsafe work?',
       options: [
-        "Both are equally bad",
-        "Messy work - it shows poor professionalism",
-        "Unsafe work - messy loses marks, unsafe means fail",
-        "Neither affects the result"
+        'Both are equally bad',
+        'Messy work - it shows poor professionalism',
+        'Unsafe work - messy loses marks, unsafe means fail',
+        'Neither affects the result',
       ],
       correctIndex: 2,
-      explanation: "Unsafe work results in immediate failure regardless of other factors. Messy work loses marks but doesn't automatically fail the assessment. Safety is always the priority."
+      explanation:
+        "Unsafe work results in immediate failure regardless of other factors. Messy work loses marks but doesn't automatically fail the assessment. Safety is always the priority.",
     },
     {
-      id: "testing-requirement",
-      question: "Can you energise a power circuit before completing all required tests?",
+      id: 'testing-requirement',
+      question: 'Can you energise a power circuit before completing all required tests?',
       options: [
-        "Yes, if continuity is confirmed",
-        "Yes, for basic function testing",
+        'Yes, if continuity is confirmed',
+        'Yes, for basic function testing',
         "No - that's unsafe and results in failure",
-        "Only with assessor permission"
+        'Only with assessor permission',
       ],
       correctIndex: 2,
-      explanation: "All required tests (continuity, polarity, insulation resistance, loop impedance) must be completed before energisation. Energising untested circuits is unsafe practice and results in immediate failure."
-    }
+      explanation:
+        'All required tests (continuity, polarity, insulation resistance, loop impedance) must be completed before energisation. Energising untested circuits is unsafe practice and results in immediate failure.',
+    },
   ];
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What cable size is typically specified for a ring final circuit in AM2?",
-      options: ["1.5mm²", "2.5mm²", "4mm²", "6mm²"],
+      question: 'What cable size is typically specified for a ring final circuit in AM2?',
+      options: ['1.5mm²', '2.5mm²', '4mm²', '6mm²'],
       correctAnswer: 1,
-      explanation: "Ring final circuits typically use 2.5mm² twin & earth cable with a 32A MCB protection."
+      explanation:
+        'Ring final circuits typically use 2.5mm² twin & earth cable with a 32A MCB protection.',
     },
     {
       id: 2,
       question: "What's the consequence of leaving one leg disconnected in a ring final?",
       options: [
-        "Circuit works normally",
-        "Half the sockets stop working",
-        "It becomes an unprotected radial circuit",
-        "The RCD will trip"
+        'Circuit works normally',
+        'Half the sockets stop working',
+        'It becomes an unprotected radial circuit',
+        'The RCD will trip',
       ],
       correctAnswer: 2,
-      explanation: "A disconnected ring becomes a radial circuit still protected by 32A, exceeding the 20A safe rating for 2.5mm² cable."
+      explanation:
+        'A disconnected ring becomes a radial circuit still protected by 32A, exceeding the 20A safe rating for 2.5mm² cable.',
     },
     {
       id: 3,
-      question: "Which protective device rating is typically used for a cooker circuit?",
-      options: ["20A MCB", "32A MCB", "32-40A MCB", "50A MCB"],
+      question: 'Which protective device rating is typically used for a cooker circuit?',
+      options: ['20A MCB', '32A MCB', '32-40A MCB', '50A MCB'],
       correctAnswer: 2,
-      explanation: "Cooker circuits typically use 32-40A MCB depending on the cooker load and cable size specified."
+      explanation:
+        'Cooker circuits typically use 32-40A MCB depending on the cooker load and cable size specified.',
     },
     {
       id: 4,
-      question: "Why must the cable sheath enter the cooker outlet plate?",
+      question: 'Why must the cable sheath enter the cooker outlet plate?',
       options: [
-        "For better appearance",
-        "To prevent moisture entry",
-        "To protect bare conductors from damage",
-        "To meet cable bend radius requirements"
+        'For better appearance',
+        'To prevent moisture entry',
+        'To protect bare conductors from damage',
+        'To meet cable bend radius requirements',
       ],
       correctAnswer: 2,
-      explanation: "The sheath must enter the outlet plate to ensure no bare conductors are visible and maintain mechanical protection."
+      explanation:
+        'The sheath must enter the outlet plate to ensure no bare conductors are visible and maintain mechanical protection.',
     },
     {
       id: 5,
-      question: "What device must be correctly set in a motor circuit?",
-      options: ["Timer relay", "Contactor", "Overload protection", "Phase monitor"],
+      question: 'What device must be correctly set in a motor circuit?',
+      options: ['Timer relay', 'Contactor', 'Overload protection', 'Phase monitor'],
       correctAnswer: 2,
-      explanation: "The overload protection device must be set correctly for the motor's full load current to provide proper protection."
+      explanation:
+        "The overload protection device must be set correctly for the motor's full load current to provide proper protection.",
     },
     {
       id: 6,
       question: "What's the purpose of a banjo washer in SWA glanding?",
       options: [
-        "Weatherproofing",
-        "Cable strain relief",
-        "Earth continuity connection",
-        "Cable identification"
+        'Weatherproofing',
+        'Cable strain relief',
+        'Earth continuity connection',
+        'Cable identification',
       ],
       correctAnswer: 2,
-      explanation: "The banjo washer provides earth continuity between the SWA armour and the equipment earth terminal."
+      explanation:
+        'The banjo washer provides earth continuity between the SWA armour and the equipment earth terminal.',
     },
     {
       id: 7,
-      question: "True or false: You must calculate cable sizes in AM2.",
-      options: ["True", "False"],
+      question: 'True or false: You must calculate cable sizes in AM2.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. In AM2, you follow the specification exactly as given - no calculations are required or expected."
+      explanation:
+        'False. In AM2, you follow the specification exactly as given - no calculations are required or expected.',
     },
     {
       id: 8,
       question: "What's the difference between a radial and a broken ring?",
       options: [
-        "No difference in function",
-        "Radial is designed as one-way feed, broken ring is faulty two-way feed",
-        "Radial uses smaller cable",
-        "Broken ring has lower impedance"
+        'No difference in function',
+        'Radial is designed as one-way feed, broken ring is faulty two-way feed',
+        'Radial uses smaller cable',
+        'Broken ring has lower impedance',
       ],
       correctAnswer: 1,
-      explanation: "A radial is designed as a one-way feed with appropriate protection. A broken ring is a fault condition where a two-way circuit becomes one-way but retains inappropriate protection."
+      explanation:
+        'A radial is designed as a one-way feed with appropriate protection. A broken ring is a fault condition where a two-way circuit becomes one-way but retains inappropriate protection.',
     },
     {
       id: 9,
-      question: "Give an example of poor workmanship in power circuits.",
+      question: 'Give an example of poor workmanship in power circuits.',
       options: [
-        "Using correct cable size",
-        "Over-tightening terminals damaging insulation",
-        "Following the specification exactly",
-        "Completing all required tests"
+        'Using correct cable size',
+        'Over-tightening terminals damaging insulation',
+        'Following the specification exactly',
+        'Completing all required tests',
       ],
       correctAnswer: 1,
-      explanation: "Over-tightening terminals can damage cable insulation, creating safety hazards and demonstrating poor workmanship."
+      explanation:
+        'Over-tightening terminals can damage cable insulation, creating safety hazards and demonstrating poor workmanship.',
     },
     {
       id: 10,
-      question: "What happens if you energise before completing all required tests?",
+      question: 'What happens if you energise before completing all required tests?',
       options: [
-        "Minor marks deduction",
-        "Warning from assessor",
-        "Immediate failure for unsafe practice",
-        "No consequence if circuit works"
+        'Minor marks deduction',
+        'Warning from assessor',
+        'Immediate failure for unsafe practice',
+        'No consequence if circuit works',
       ],
       correctAnswer: 2,
-      explanation: "Energising circuits before completing all required tests is unsafe practice and results in immediate failure."
+      explanation:
+        'Energising circuits before completing all required tests is unsafe practice and results in immediate failure.',
     },
     {
       id: 11,
-      question: "Which test confirms ring circuit integrity?",
+      question: 'Which test confirms ring circuit integrity?',
       options: [
-        "Insulation resistance only",
-        "End-to-end continuity of all conductors",
-        "Loop impedance only",
-        "Polarity check only"
+        'Insulation resistance only',
+        'End-to-end continuity of all conductors',
+        'Loop impedance only',
+        'Polarity check only',
       ],
       correctAnswer: 1,
-      explanation: "End-to-end continuity testing of line, neutral, and CPC conductors confirms the ring is complete and unbroken."
+      explanation:
+        'End-to-end continuity testing of line, neutral, and CPC conductors confirms the ring is complete and unbroken.',
     },
     {
       id: 12,
-      question: "What must be done to CPCs in all power circuits?",
+      question: 'What must be done to CPCs in all power circuits?',
       options: [
-        "Twisted together",
-        "Left bare",
-        "Sleeved and properly connected",
-        "Painted for identification"
+        'Twisted together',
+        'Left bare',
+        'Sleeved and properly connected',
+        'Painted for identification',
       ],
       correctAnswer: 2,
-      explanation: "All CPCs must be sleeved with green/yellow sleeving and properly connected to maintain earth continuity and meet standards."
-    }
+      explanation:
+        'All CPCs must be sleeved with green/yellow sleeving and properly connected to maintain earth continuity and meet standards.',
+    },
   ];
 
   const learningOutcomes = [
-    "Install ring, radial, cooker, and motor circuits as per AM2 drawings and specifications",
-    "Terminate cables neatly, with CPCs correctly sleeved and connected",
-    "Carry out required tests before energisation according to NET standards",
-    "Recognise common candidate errors in each type of circuit",
-    "Apply strategies to work efficiently under time pressure without sacrificing safety",
-    "Understand what the assessor is checking for in each circuit type"
+    'Install ring, radial, cooker, and motor circuits as per AM2 drawings and specifications',
+    'Terminate cables neatly, with CPCs correctly sleeved and connected',
+    'Carry out required tests before energisation according to NET standards',
+    'Recognise common candidate errors in each type of circuit',
+    'Apply strategies to work efficiently under time pressure without sacrificing safety',
+    'Understand what the assessor is checking for in each circuit type',
   ];
 
   return (
     <AM2SectionLayout
       backHref="/study-centre/apprentice/am2/module3"
       breadcrumbs={[
-        { label: "AM2", href: "/study-centre/apprentice/am2" },
-        { label: "Module 3", href: "/study-centre/apprentice/am2/module3" },
-        { label: "Section 2" }
+        { label: 'AM2', href: '/study-centre/apprentice/am2' },
+        { label: 'Module 3', href: '/study-centre/apprentice/am2/module3' },
+        { label: 'Section 2' },
       ]}
     >
       {/* Hero Section */}
@@ -249,15 +275,68 @@ const AM2Module3Section2 = () => {
       {/* Ring Final Circuit Wiring Topology Diagram */}
       <div className="my-8 flex justify-center">
         <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 w-full max-w-2xl">
-          <svg viewBox="0 0 450 300" className="w-full h-auto" role="img" aria-label="Ring final circuit wiring topology diagram showing a consumer unit with a ring loop through socket outlets with line, neutral and CPC conductors">
+          <svg
+            viewBox="0 0 450 300"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Ring final circuit wiring topology diagram showing a consumer unit with a ring loop through socket outlets with line, neutral and CPC conductors"
+          >
             {/* Title */}
-            <text x="225" y="22" textAnchor="middle" fill="#F3F4F6" fontSize="15" fontFamily="system-ui, sans-serif" fontWeight="bold">Ring Final Circuit Topology</text>
+            <text
+              x="225"
+              y="22"
+              textAnchor="middle"
+              fill="#F3F4F6"
+              fontSize="15"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              Ring Final Circuit Topology
+            </text>
 
             {/* Consumer Unit */}
-            <rect x="10" y="70" width="70" height="140" rx="6" fill="#374151" stroke="#9CA3AF" strokeWidth="2" />
-            <text x="45" y="95" textAnchor="middle" fill="#F3F4F6" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Consumer</text>
-            <text x="45" y="110" textAnchor="middle" fill="#F3F4F6" fontSize="11" fontFamily="system-ui, sans-serif" fontWeight="bold">Unit</text>
-            <text x="45" y="132" textAnchor="middle" fill="#9CA3AF" fontSize="9" fontFamily="system-ui, sans-serif">32A MCB</text>
+            <rect
+              x="10"
+              y="70"
+              width="70"
+              height="140"
+              rx="6"
+              fill="#374151"
+              stroke="#9CA3AF"
+              strokeWidth="2"
+            />
+            <text
+              x="45"
+              y="95"
+              textAnchor="middle"
+              fill="#F3F4F6"
+              fontSize="11"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              Consumer
+            </text>
+            <text
+              x="45"
+              y="110"
+              textAnchor="middle"
+              fill="#F3F4F6"
+              fontSize="11"
+              fontFamily="system-ui, sans-serif"
+              fontWeight="bold"
+            >
+              Unit
+            </text>
+            <text
+              x="45"
+              y="132"
+              textAnchor="middle"
+              fill="#9CA3AF"
+              fontSize="9"
+              fontFamily="system-ui, sans-serif"
+            >
+              32A MCB
+            </text>
 
             {/* Outgoing terminals (top) */}
             <circle cx="80" cy="100" r="4" fill="#8B6914" />
@@ -270,20 +349,92 @@ const AM2Module3Section2 = () => {
             <circle cx="80" cy="190" r="4" fill="#22C55E" />
 
             {/* Socket 1 */}
-            <rect x="150" y="50" width="60" height="40" rx="4" fill="#1F2937" stroke="#9CA3AF" strokeWidth="1.5" />
-            <text x="180" y="75" textAnchor="middle" fill="#F3F4F6" fontSize="9" fontFamily="system-ui, sans-serif">Socket 1</text>
+            <rect
+              x="150"
+              y="50"
+              width="60"
+              height="40"
+              rx="4"
+              fill="#1F2937"
+              stroke="#9CA3AF"
+              strokeWidth="1.5"
+            />
+            <text
+              x="180"
+              y="75"
+              textAnchor="middle"
+              fill="#F3F4F6"
+              fontSize="9"
+              fontFamily="system-ui, sans-serif"
+            >
+              Socket 1
+            </text>
 
             {/* Socket 2 */}
-            <rect x="260" y="50" width="60" height="40" rx="4" fill="#1F2937" stroke="#9CA3AF" strokeWidth="1.5" />
-            <text x="290" y="75" textAnchor="middle" fill="#F3F4F6" fontSize="9" fontFamily="system-ui, sans-serif">Socket 2</text>
+            <rect
+              x="260"
+              y="50"
+              width="60"
+              height="40"
+              rx="4"
+              fill="#1F2937"
+              stroke="#9CA3AF"
+              strokeWidth="1.5"
+            />
+            <text
+              x="290"
+              y="75"
+              textAnchor="middle"
+              fill="#F3F4F6"
+              fontSize="9"
+              fontFamily="system-ui, sans-serif"
+            >
+              Socket 2
+            </text>
 
             {/* Socket 3 */}
-            <rect x="370" y="110" width="60" height="40" rx="4" fill="#1F2937" stroke="#9CA3AF" strokeWidth="1.5" />
-            <text x="400" y="135" textAnchor="middle" fill="#F3F4F6" fontSize="9" fontFamily="system-ui, sans-serif">Socket 3</text>
+            <rect
+              x="370"
+              y="110"
+              width="60"
+              height="40"
+              rx="4"
+              fill="#1F2937"
+              stroke="#9CA3AF"
+              strokeWidth="1.5"
+            />
+            <text
+              x="400"
+              y="135"
+              textAnchor="middle"
+              fill="#F3F4F6"
+              fontSize="9"
+              fontFamily="system-ui, sans-serif"
+            >
+              Socket 3
+            </text>
 
             {/* Socket 4 */}
-            <rect x="260" y="190" width="60" height="40" rx="4" fill="#1F2937" stroke="#9CA3AF" strokeWidth="1.5" />
-            <text x="290" y="215" textAnchor="middle" fill="#F3F4F6" fontSize="9" fontFamily="system-ui, sans-serif">Socket 4</text>
+            <rect
+              x="260"
+              y="190"
+              width="60"
+              height="40"
+              rx="4"
+              fill="#1F2937"
+              stroke="#9CA3AF"
+              strokeWidth="1.5"
+            />
+            <text
+              x="290"
+              y="215"
+              textAnchor="middle"
+              fill="#F3F4F6"
+              fontSize="9"
+              fontFamily="system-ui, sans-serif"
+            >
+              Socket 4
+            </text>
 
             {/* TOP PATH (outgoing) - Line conductor (brown) */}
             <path d="M 84 100 L 150 70" stroke="#8B6914" strokeWidth="2.5" fill="none" />
@@ -296,9 +447,27 @@ const AM2Module3Section2 = () => {
             <path d="M 320 77 L 400 118" stroke="#2563EB" strokeWidth="2.5" fill="none" />
 
             {/* TOP PATH - CPC/Earth (green dashed) */}
-            <path d="M 84 130 L 150 84" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
-            <path d="M 210 84 L 260 84" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
-            <path d="M 320 84 L 400 126" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
+            <path
+              d="M 84 130 L 150 84"
+              stroke="#22C55E"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="6,3"
+            />
+            <path
+              d="M 210 84 L 260 84"
+              stroke="#22C55E"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="6,3"
+            />
+            <path
+              d="M 320 84 L 400 126"
+              stroke="#22C55E"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="6,3"
+            />
 
             {/* BOTTOM PATH (return) - Line conductor (brown) */}
             <path d="M 84 160 L 150 200" stroke="#8B6914" strokeWidth="2.5" fill="none" />
@@ -311,31 +480,77 @@ const AM2Module3Section2 = () => {
             <path d="M 320 207 L 400 142" stroke="#2563EB" strokeWidth="2.5" fill="none" />
 
             {/* BOTTOM PATH - CPC/Earth (green dashed) */}
-            <path d="M 84 190 L 150 214" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
-            <path d="M 210 214 L 260 214" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
-            <path d="M 320 214 L 400 148" stroke="#22C55E" strokeWidth="2" fill="none" strokeDasharray="6,3" />
+            <path
+              d="M 84 190 L 150 214"
+              stroke="#22C55E"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="6,3"
+            />
+            <path
+              d="M 210 214 L 260 214"
+              stroke="#22C55E"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="6,3"
+            />
+            <path
+              d="M 320 214 L 400 148"
+              stroke="#22C55E"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="6,3"
+            />
 
             {/* Legend */}
-            <rect x="80" y="252" width="290" height="36" rx="6" fill="#1F2937" stroke="#374151" strokeWidth="1" />
+            <rect
+              x="80"
+              y="252"
+              width="290"
+              height="36"
+              rx="6"
+              fill="#1F2937"
+              stroke="#374151"
+              strokeWidth="1"
+            />
             <line x1="100" y1="270" x2="130" y2="270" stroke="#8B6914" strokeWidth="2.5" />
-            <text x="135" y="274" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Line (L)</text>
+            <text x="135" y="274" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Line (L)
+            </text>
             <line x1="185" y1="270" x2="215" y2="270" stroke="#2563EB" strokeWidth="2.5" />
-            <text x="220" y="274" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">Neutral (N)</text>
-            <line x1="290" y1="270" x2="320" y2="270" stroke="#22C55E" strokeWidth="2" strokeDasharray="6,3" />
-            <text x="325" y="274" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">CPC</text>
+            <text x="220" y="274" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              Neutral (N)
+            </text>
+            <line
+              x1="290"
+              y1="270"
+              x2="320"
+              y2="270"
+              stroke="#22C55E"
+              strokeWidth="2"
+              strokeDasharray="6,3"
+            />
+            <text x="325" y="274" fill="#F3F4F6" fontSize="10" fontFamily="system-ui, sans-serif">
+              CPC
+            </text>
 
             {/* Bottom label */}
-            <text x="225" y="298" textAnchor="middle" fill="#9CA3AF" fontSize="10" fontFamily="system-ui, sans-serif">Complete loop -- both ends must return to origin</text>
+            <text
+              x="225"
+              y="298"
+              textAnchor="middle"
+              fill="#9CA3AF"
+              fontSize="10"
+              fontFamily="system-ui, sans-serif"
+            >
+              Complete loop -- both ends must return to origin
+            </text>
           </svg>
         </div>
       </div>
 
       {/* Ring Final Circuit */}
-      <AM2ContentCard
-        title="1. Ring Final Circuit"
-        icon={Zap}
-        accent
-      >
+      <AM2ContentCard title="1. Ring Final Circuit" icon={Zap} accent>
         <div className="space-y-4 text-xs sm:text-sm text-white/80">
           <div>
             <h3 className="font-medium text-white/90 mb-2">Typical Specification</h3>
@@ -395,10 +610,7 @@ const AM2Module3Section2 = () => {
       <InlineCheck {...quickCheckQuestions[0]} />
 
       {/* Radial Circuit */}
-      <AM2ContentCard
-        title="2. Radial Circuit"
-        icon={Target}
-      >
+      <AM2ContentCard title="2. Radial Circuit" icon={Target}>
         <div className="space-y-4 text-xs sm:text-sm text-white/80">
           <div>
             <h3 className="font-medium text-white/90 mb-2">Typical Specifications</h3>
@@ -447,14 +659,14 @@ const AM2Module3Section2 = () => {
       </AM2ContentCard>
 
       {/* Cooker Circuit */}
-      <AM2ContentCard
-        title="3. Cooker Circuit"
-        icon={Settings}
-      >
+      <AM2ContentCard title="3. Cooker Circuit" icon={Settings}>
         <div className="space-y-4 text-xs sm:text-sm text-white/80">
           <div>
             <h3 className="font-medium text-white/90 mb-2">Typical Specification</h3>
-            <p>6mm² twin & earth cable, 32-40A MCB, connected through cooker control unit and outlet plate.</p>
+            <p>
+              6mm² twin & earth cable, 32-40A MCB, connected through cooker control unit and outlet
+              plate.
+            </p>
           </div>
 
           <div>
@@ -485,7 +697,9 @@ const AM2Module3Section2 = () => {
 
           <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
             <p className="text-sm text-white/80">
-              <strong className="text-amber-400">Common Error:</strong> Over-stripping cable sheath leaving bare conductors visible at outlet plate. This is the most frequent reason for losing marks on cooker circuits.
+              <strong className="text-amber-400">Common Error:</strong> Over-stripping cable sheath
+              leaving bare conductors visible at outlet plate. This is the most frequent reason for
+              losing marks on cooker circuits.
             </p>
           </div>
         </div>
@@ -494,14 +708,14 @@ const AM2Module3Section2 = () => {
       <InlineCheck {...quickCheckQuestions[1]} />
 
       {/* Motor Circuit */}
-      <AM2ContentCard
-        title="4. Motor Circuit"
-        icon={Wrench}
-      >
+      <AM2ContentCard title="4. Motor Circuit" icon={Wrench}>
         <div className="space-y-4 text-xs sm:text-sm text-white/80">
           <div>
             <h3 className="font-medium text-white/90 mb-2">Typical Configuration</h3>
-            <p>Usually wired in SWA or flex, feeding a DOL (Direct-On-Line) starter. May include start/stop control circuit.</p>
+            <p>
+              Usually wired in SWA or flex, feeding a DOL (Direct-On-Line) starter. May include
+              start/stop control circuit.
+            </p>
           </div>
 
           <div>
@@ -536,7 +750,9 @@ const AM2Module3Section2 = () => {
 
           <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
             <p className="text-sm text-white/80">
-              <strong className="text-elec-yellow">Professional Tip:</strong> Practice SWA glanding until it's second nature. Use a checklist: gland tight, banjo fitted, earth continuous, cable strain relief adequate.
+              <strong className="text-elec-yellow">Professional Tip:</strong> Practice SWA glanding
+              until it's second nature. Use a checklist: gland tight, banjo fitted, earth
+              continuous, cable strain relief adequate.
             </p>
           </div>
         </div>
@@ -555,15 +771,24 @@ const AM2Module3Section2 = () => {
             <ul className="space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Specification compliance:</strong> Cable sizes, routes, protective devices exactly as shown</span>
+                <span>
+                  <strong className="text-white/90">Specification compliance:</strong> Cable sizes,
+                  routes, protective devices exactly as shown
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Safety:</strong> CPC sleeved and connected, no exposed copper</span>
+                <span>
+                  <strong className="text-white/90">Safety:</strong> CPC sleeved and connected, no
+                  exposed copper
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Testing:</strong> All tests completed before energisation</span>
+                <span>
+                  <strong className="text-white/90">Testing:</strong> All tests completed before
+                  energisation
+                </span>
               </li>
             </ul>
           </div>
@@ -572,15 +797,24 @@ const AM2Module3Section2 = () => {
             <ul className="space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Installation quality:</strong> Straight runs, level accessories, neat terminations</span>
+                <span>
+                  <strong className="text-white/90">Installation quality:</strong> Straight runs,
+                  level accessories, neat terminations
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Professional finish:</strong> Conduits/trunking aligned, cables not twisted</span>
+                <span>
+                  <strong className="text-white/90">Professional finish:</strong> Conduits/trunking
+                  aligned, cables not twisted
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Protection integrity:</strong> No damage to cable insulation</span>
+                <span>
+                  <strong className="text-white/90">Protection integrity:</strong> No damage to
+                  cable insulation
+                </span>
               </li>
             </ul>
           </div>
@@ -588,10 +822,7 @@ const AM2Module3Section2 = () => {
       </AM2ContentCard>
 
       {/* Common Candidate Errors */}
-      <AM2ContentCard
-        title="6. Common Candidate Errors (NET Guidance)"
-        icon={AlertTriangle}
-      >
+      <AM2ContentCard title="6. Common Candidate Errors (NET Guidance)" icon={AlertTriangle}>
         <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm">
           <div className="space-y-3">
             <div className="p-3 bg-white/5 border border-red-500/30 rounded-xl">
@@ -618,7 +849,9 @@ const AM2Module3Section2 = () => {
           </div>
           <div className="space-y-3">
             <div className="p-3 bg-white/5 border border-amber-500/30 rounded-xl">
-              <h4 className="font-medium text-amber-400 text-sm">Workmanship Issues (Marks Lost)</h4>
+              <h4 className="font-medium text-amber-400 text-sm">
+                Workmanship Issues (Marks Lost)
+              </h4>
               <ul className="text-sm text-white/80 mt-2 space-y-1">
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></div>
@@ -645,29 +878,38 @@ const AM2Module3Section2 = () => {
       <InlineCheck {...quickCheckQuestions[3]} />
 
       {/* Practical Guidance */}
-      <AM2ContentCard
-        title="7. Practical Guidance"
-        icon={Clock}
-      >
+      <AM2ContentCard title="7. Practical Guidance" icon={Clock}>
         <div className="space-y-4 text-xs sm:text-sm text-white/80">
           <div>
             <h3 className="font-medium text-white/90 mb-2">Time Management Strategies</h3>
             <ul className="space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Ring circuits:</strong> Lay out both ends before terminating to ensure continuity</span>
+                <span>
+                  <strong className="text-white/90">Ring circuits:</strong> Lay out both ends before
+                  terminating to ensure continuity
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Radials:</strong> Mark clearly where the circuit ends to avoid confusion</span>
+                <span>
+                  <strong className="text-white/90">Radials:</strong> Mark clearly where the circuit
+                  ends to avoid confusion
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Cooker circuits:</strong> Pre-shape large cables before termination</span>
+                <span>
+                  <strong className="text-white/90">Cooker circuits:</strong> Pre-shape large cables
+                  before termination
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span><strong className="text-white/90">Motors:</strong> Have SWA glanding checklist ready</span>
+                <span>
+                  <strong className="text-white/90">Motors:</strong> Have SWA glanding checklist
+                  ready
+                </span>
               </li>
             </ul>
           </div>
@@ -697,62 +939,93 @@ const AM2Module3Section2 = () => {
       </AM2ContentCard>
 
       {/* Real-World Examples */}
-      <AM2ContentCard
-        title="8. Real-World Examples"
-        icon={BookOpen}
-      >
+      <AM2ContentCard title="8. Real-World Examples" icon={BookOpen}>
         <div className="grid gap-4 text-xs sm:text-sm">
           <div className="p-4 bg-white/5 border border-red-500/30 rounded-xl">
             <h4 className="font-medium text-red-400 mb-2">Example 1: Ring Final Failure</h4>
-            <p className="text-white/80">Candidate installed ring final but left one leg disconnected in consumer unit. Failed continuity test - section fail. Always verify complete loop before termination.</p>
+            <p className="text-white/80">
+              Candidate installed ring final but left one leg disconnected in consumer unit. Failed
+              continuity test - section fail. Always verify complete loop before termination.
+            </p>
           </div>
 
           <div className="p-4 bg-white/5 border border-red-500/30 rounded-xl">
             <h4 className="font-medium text-red-400 mb-2">Example 2: Cooker Circuit Workmanship</h4>
-            <p className="text-white/80">Cooker circuit wired with sheath stripped back too far. Exposed cable insulation visible at outlet plate = significant marks lost for poor workmanship.</p>
+            <p className="text-white/80">
+              Cooker circuit wired with sheath stripped back too far. Exposed cable insulation
+              visible at outlet plate = significant marks lost for poor workmanship.
+            </p>
           </div>
 
           <div className="p-4 bg-white/5 border border-amber-500/30 rounded-xl">
             <h4 className="font-medium text-amber-400 mb-2">Example 3: Motor Circuit Incomplete</h4>
-            <p className="text-white/80">Motor circuit wired correctly but overload protection not set for motor FLC. Assessor flagged incomplete installation - lost marks for attention to detail.</p>
+            <p className="text-white/80">
+              Motor circuit wired correctly but overload protection not set for motor FLC. Assessor
+              flagged incomplete installation - lost marks for attention to detail.
+            </p>
           </div>
 
           <div className="p-4 bg-white/5 border border-amber-500/30 rounded-xl">
             <h4 className="font-medium text-amber-400 mb-2">Example 4: Terminal Damage</h4>
-            <p className="text-white/80">Candidate over-tightened terminals on 6mm² cooker cable, crushing insulation. Lost significant workmanship marks for poor technique.</p>
+            <p className="text-white/80">
+              Candidate over-tightened terminals on 6mm² cooker cable, crushing insulation. Lost
+              significant workmanship marks for poor technique.
+            </p>
           </div>
         </div>
       </AM2ContentCard>
 
       {/* FAQ Section */}
-      <AM2ContentCard
-        title="9. Frequently Asked Questions"
-        icon={BookOpen}
-      >
+      <AM2ContentCard title="9. Frequently Asked Questions" icon={BookOpen}>
         <div className="space-y-4 text-xs sm:text-sm text-white/80">
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Q1: Do I need to calculate cable sizes in AM2?</h3>
-            <p>No - follow the AM2 specification exactly as provided. No calculations are required or expected.</p>
+            <h3 className="font-medium text-white/90 mb-2">
+              Q1: Do I need to calculate cable sizes in AM2?
+            </h3>
+            <p>
+              No - follow the AM2 specification exactly as provided. No calculations are required or
+              expected.
+            </p>
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Q2: Will the assessor open socket outlets and accessories?</h3>
-            <p>Yes - expect sample inspections of terminations, so ensure all connections are neat and secure.</p>
+            <h3 className="font-medium text-white/90 mb-2">
+              Q2: Will the assessor open socket outlets and accessories?
+            </h3>
+            <p>
+              Yes - expect sample inspections of terminations, so ensure all connections are neat
+              and secure.
+            </p>
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Q3: Can I energise a circuit before completing all tests?</h3>
-            <p>No - that's unsafe practice and results in immediate failure. All tests must be completed first.</p>
+            <h3 className="font-medium text-white/90 mb-2">
+              Q3: Can I energise a circuit before completing all tests?
+            </h3>
+            <p>
+              No - that's unsafe practice and results in immediate failure. All tests must be
+              completed first.
+            </p>
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Q4: What if I accidentally damage cable insulation?</h3>
-            <p>Replace the cable section - tape repairs are not acceptable and will result in failure.</p>
+            <h3 className="font-medium text-white/90 mb-2">
+              Q4: What if I accidentally damage cable insulation?
+            </h3>
+            <p>
+              Replace the cable section - tape repairs are not acceptable and will result in
+              failure.
+            </p>
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Q5: How important is neatness compared to correctness?</h3>
-            <p>Both matter significantly: correctness is essential for safety, neatness is heavily marked for professionalism.</p>
+            <h3 className="font-medium text-white/90 mb-2">
+              Q5: How important is neatness compared to correctness?
+            </h3>
+            <p>
+              Both matter significantly: correctness is essential for safety, neatness is heavily
+              marked for professionalism.
+            </p>
           </div>
         </div>
       </AM2ContentCard>
@@ -760,31 +1033,40 @@ const AM2Module3Section2 = () => {
       <InlineCheck {...quickCheckQuestions[4]} />
 
       {/* Summary */}
-      <AM2ContentCard
-        title="10. Summary"
-        icon={CheckCircle}
-        accent
-      >
+      <AM2ContentCard title="10. Summary" icon={CheckCircle} accent>
         <div className="space-y-4 text-sm text-white/80">
           <p>
-            In AM2, power circuits must be installed to specification, neatly, and safely. Assessors check:
+            In AM2, power circuits must be installed to specification, neatly, and safely. Assessors
+            check:
           </p>
           <ul className="space-y-2">
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              <span><strong className="text-white/90">Technical accuracy:</strong> Ring continuity, correct radial wiring, proper cooker cable termination</span>
+              <span>
+                <strong className="text-white/90">Technical accuracy:</strong> Ring continuity,
+                correct radial wiring, proper cooker cable termination
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              <span><strong className="text-white/90">Motor circuits:</strong> Overloads set correctly, SWA glanded properly with earth continuity</span>
+              <span>
+                <strong className="text-white/90">Motor circuits:</strong> Overloads set correctly,
+                SWA glanded properly with earth continuity
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              <span><strong className="text-white/90">Professional standards:</strong> CPCs sleeved, terminations secure, accessories level</span>
+              <span>
+                <strong className="text-white/90">Professional standards:</strong> CPCs sleeved,
+                terminations secure, accessories level
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-              <span><strong className="text-white/90">Safety compliance:</strong> No unsafe shortcuts, circuits tested fully before energisation</span>
+              <span>
+                <strong className="text-white/90">Safety compliance:</strong> No unsafe shortcuts,
+                circuits tested fully before energisation
+              </span>
             </li>
           </ul>
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-3 mt-4">

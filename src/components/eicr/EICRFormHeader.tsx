@@ -130,7 +130,10 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
           isAuthenticated={isAuthenticated}
         />
         <Button
-          onClick={() => { haptics.tap(); onStartNew(); }}
+          onClick={() => {
+            haptics.tap();
+            onStartNew();
+          }}
           variant="outline"
           size="sm"
           className="border-border/40 hover:border-border/60"

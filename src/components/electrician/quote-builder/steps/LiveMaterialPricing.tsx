@@ -1,18 +1,21 @@
-import { useState } from "react";
-import MaterialPriceComparison from "@/components/electrician-materials/MaterialPriceComparison";
-import { SmartQuoteBuilder } from "../SmartQuoteBuilder";
-import { IntelligentMaterialSearch } from "../IntelligentMaterialSearch";
-import { MaterialToQuoteItem } from "@/hooks/useQuoteMaterialIntegration";
-import { Button } from "@/components/ui/button";
-import { Brain, Search, Sparkles } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from 'react';
+import MaterialPriceComparison from '@/components/electrician-materials/MaterialPriceComparison';
+import { SmartQuoteBuilder } from '../SmartQuoteBuilder';
+import { IntelligentMaterialSearch } from '../IntelligentMaterialSearch';
+import { MaterialToQuoteItem } from '@/hooks/useQuoteMaterialIntegration';
+import { Button } from '@/components/ui/button';
+import { Brain, Search, Sparkles } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface LiveMaterialPricingProps {
   onAddToQuote: (material: MaterialToQuoteItem, quantity?: number) => void;
   onAddMultipleToQuote: (materials: MaterialToQuoteItem[]) => void;
 }
 
-export const LiveMaterialPricing = ({ onAddToQuote, onAddMultipleToQuote }: LiveMaterialPricingProps) => {
+export const LiveMaterialPricing = ({
+  onAddToQuote,
+  onAddMultipleToQuote,
+}: LiveMaterialPricingProps) => {
   const [activeTab, setActiveTab] = useState<'intelligent' | 'screwfix' | 'smart'>('intelligent');
 
   return (
@@ -24,7 +27,11 @@ export const LiveMaterialPricing = ({ onAddToQuote, onAddMultipleToQuote }: Live
         </p>
       </div>
 
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'intelligent' | 'screwfix' | 'smart')} className="w-full">
+      <Tabs
+        value={activeTab}
+        onValueChange={(v) => setActiveTab(v as 'intelligent' | 'screwfix' | 'smart')}
+        className="w-full"
+      >
         <TabsList className="grid w-full grid-cols-3 mb-6">
           <TabsTrigger value="intelligent" className="flex items-center gap-2">
             <Sparkles className="h-4 w-4" />
@@ -44,19 +51,15 @@ export const LiveMaterialPricing = ({ onAddToQuote, onAddMultipleToQuote }: Live
         </TabsList>
 
         <TabsContent value="intelligent">
-          <IntelligentMaterialSearch 
-            onAddToQuote={onAddToQuote}
-          />
+          <IntelligentMaterialSearch onAddToQuote={onAddToQuote} />
         </TabsContent>
 
         <TabsContent value="screwfix">
-          <MaterialPriceComparison 
-            onAddToQuote={onAddToQuote}
-          />
+          <MaterialPriceComparison onAddToQuote={onAddToQuote} />
         </TabsContent>
 
         <TabsContent value="smart">
-          <SmartQuoteBuilder 
+          <SmartQuoteBuilder
             onAddToQuote={onAddToQuote}
             onAddMultipleToQuote={onAddMultipleToQuote}
           />

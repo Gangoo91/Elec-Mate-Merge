@@ -55,99 +55,103 @@ export function useAssessmentScores() {
   }, [fetchScores]);
 
   // Save a new score
-  const saveScore = useCallback(async (
-    assessmentType: string,
-    score: number,
-    maxScore: number,
-    options?: {
-      assessmentId?: string;
-      timeTakenSeconds?: number;
-      details?: Record<string, unknown>;
-    }
-  ) => {
-    if (!user) return null;
+  const saveScore = useCallback(
+    async (
+      assessmentType: string,
+      score: number,
+      maxScore: number,
+      options?: {
+        assessmentId?: string;
+        timeTakenSeconds?: number;
+        details?: Record<string, unknown>;
+      }
+    ) => {
+      if (!user) return null;
 
-    try {
-      const { data, error } = await supabase
-        .from('user_assessment_scores')
-        .insert({
-          user_id: user.id,
-          assessment_type: assessmentType,
-          assessment_id: options?.assessmentId || null,
-          score,
-          max_score: maxScore,
-          time_taken_seconds: options?.timeTakenSeconds || null,
-          details: options?.details || {}
-        })
-        .select()
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from('user_assessment_scores')
+          .insert({
+            user_id: user.id,
+            assessment_type: assessmentType,
+            assessment_id: options?.assessmentId || null,
+            score,
+            max_score: maxScore,
+            time_taken_seconds: options?.timeTakenSeconds || null,
+            details: options?.details || {},
+          })
+          .select()
+          .single();
 
-      if (error) throw error;
+        if (error) throw error;
 
-      // Refresh scores
-      fetchScores();
-      return data;
-    } catch (error) {
-      console.error('Error saving assessment score:', error);
-      return null;
-    }
-  }, [user, fetchScores]);
+        // Refresh scores
+        fetchScores();
+        return data;
+      } catch (error) {
+        console.error('Error saving assessment score:', error);
+        return null;
+      }
+    },
+    [user, fetchScores]
+  );
 
   // Get stats for a specific assessment type
-  const getAssessmentStats = useCallback((
-    assessmentType: string,
-    assessmentId?: string
-  ): AssessmentStats => {
-    const filtered = scores.filter(s =>
-      s.assessment_type === assessmentType &&
-      (!assessmentId || s.assessment_id === assessmentId)
-    );
+  const getAssessmentStats = useCallback(
+    (assessmentType: string, assessmentId?: string): AssessmentStats => {
+      const filtered = scores.filter(
+        (s) =>
+          s.assessment_type === assessmentType &&
+          (!assessmentId || s.assessment_id === assessmentId)
+      );
 
-    if (filtered.length === 0) {
+      if (filtered.length === 0) {
+        return {
+          totalAttempts: 0,
+          averageScore: 0,
+          bestScore: 0,
+          recentScores: [],
+        };
+      }
+
+      const totalAttempts = filtered.length;
+      const averageScore = Math.round(
+        filtered.reduce((sum, s) => sum + s.percentage, 0) / totalAttempts
+      );
+      const bestScore = Math.max(...filtered.map((s) => s.percentage));
+      const recentScores = filtered.slice(0, 5);
+
       return {
-        totalAttempts: 0,
-        averageScore: 0,
-        bestScore: 0,
-        recentScores: []
+        totalAttempts,
+        averageScore,
+        bestScore,
+        recentScores,
       };
-    }
-
-    const totalAttempts = filtered.length;
-    const averageScore = Math.round(
-      filtered.reduce((sum, s) => sum + s.percentage, 0) / totalAttempts
-    );
-    const bestScore = Math.max(...filtered.map(s => s.percentage));
-    const recentScores = filtered.slice(0, 5);
-
-    return {
-      totalAttempts,
-      averageScore,
-      bestScore,
-      recentScores
-    };
-  }, [scores]);
+    },
+    [scores]
+  );
 
   // Get best score for display
-  const getBestScore = useCallback((
-    assessmentType: string,
-    assessmentId?: string
-  ): number | null => {
-    const stats = getAssessmentStats(assessmentType, assessmentId);
-    return stats.totalAttempts > 0 ? stats.bestScore : null;
-  }, [getAssessmentStats]);
+  const getBestScore = useCallback(
+    (assessmentType: string, assessmentId?: string): number | null => {
+      const stats = getAssessmentStats(assessmentType, assessmentId);
+      return stats.totalAttempts > 0 ? stats.bestScore : null;
+    },
+    [getAssessmentStats]
+  );
 
   // Check if user has completed an assessment
-  const hasCompleted = useCallback((
-    assessmentType: string,
-    assessmentId?: string,
-    minPercentage = 70
-  ): boolean => {
-    return scores.some(s =>
-      s.assessment_type === assessmentType &&
-      (!assessmentId || s.assessment_id === assessmentId) &&
-      s.percentage >= minPercentage
-    );
-  }, [scores]);
+  const hasCompleted = useCallback(
+    (assessmentType: string, assessmentId?: string, minPercentage = 70): boolean => {
+      return scores.some(
+        (s) =>
+          s.assessment_type === assessmentType &&
+          (!assessmentId || s.assessment_id === assessmentId) &&
+          s.percentage >= minPercentage
+      );
+    },
+    [scores]
+  );
 
   return {
     scores,
@@ -156,6 +160,6 @@ export function useAssessmentScores() {
     getAssessmentStats,
     getBestScore,
     hasCompleted,
-    refetch: fetchScores
+    refetch: fetchScores,
   };
 }

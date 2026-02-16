@@ -104,8 +104,9 @@ export const generateTechnicalPDF = async (cvData: CVData): Promise<void> => {
   // CERTIFICATIONS - Prominent position for technical CV
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const { essential: essentialCerts, additional: additionalCerts } =
-    categoriseCertifications(cvData.certifications);
+  const { essential: essentialCerts, additional: additionalCerts } = categoriseCertifications(
+    cvData.certifications
+  );
 
   if (essentialCerts.length > 0) {
     // Highlighted section header
@@ -183,7 +184,7 @@ export const generateTechnicalPDF = async (cvData: CVData): Promise<void> => {
     cvData.skills.forEach((skill, i) => {
       y = checkPageBreak(pdf, y, 12);
 
-      const skillX = margin + (skillCol * (halfWidth + 12));
+      const skillX = margin + skillCol * (halfWidth + 12);
 
       // Skill name
       setColor(pdf, colors.text);
@@ -238,7 +239,14 @@ export const generateTechnicalPDF = async (cvData: CVData): Promise<void> => {
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(10);
     setColor(pdf, colors.text);
-    y = addWrappedText(pdf, cvData.personalInfo.professionalSummary, margin + 7, y, contentWidth - 7, 5);
+    y = addWrappedText(
+      pdf,
+      cvData.personalInfo.professionalSummary,
+      margin + 7,
+      y,
+      contentWidth - 7,
+      5
+    );
     y += 14;
   }
 
@@ -381,7 +389,7 @@ export const generateTechnicalPDF = async (cvData: CVData): Promise<void> => {
 
     additionalCerts.forEach((cert, i) => {
       y = checkPageBreak(pdf, y, 8);
-      const xPos = margin + (col * (halfWidth + 10));
+      const xPos = margin + col * (halfWidth + 10);
 
       setColor(pdf, colors.accent);
       pdf.text('>', xPos, y);

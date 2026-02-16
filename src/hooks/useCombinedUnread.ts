@@ -46,15 +46,23 @@ export const useCombinedUnread = (): CombinedUnreadResult => {
   });
 
   // Sum up actual unread counts from peer conversations
-  const peerUnread = peerConversations?.reduce((total, conv) => {
-    return total + (conv.unread_count || 0);
-  }, 0) || 0;
+  const peerUnread =
+    peerConversations?.reduce((total, conv) => {
+      return total + (conv.unread_count || 0);
+    }, 0) || 0;
 
   // Calculate message total
   const messageUnread = useMemo(() => {
     const jobUnread = isEmployerContext ? employerUnread : electricianUnread;
     return (jobUnread || 0) + (teamChatUnread || 0) + (collegeUnread || 0) + peerUnread;
-  }, [isEmployerContext, employerUnread, electricianUnread, teamChatUnread, collegeUnread, peerUnread]);
+  }, [
+    isEmployerContext,
+    employerUnread,
+    electricianUnread,
+    teamChatUnread,
+    collegeUnread,
+    peerUnread,
+  ]);
 
   const combinedUnread = messageUnread + notificationUnread;
   const hasUnread = combinedUnread > 0;
@@ -68,7 +76,9 @@ export const useCombinedUnread = (): CombinedUnreadResult => {
 };
 
 // Hook that includes notification count (for use where NotificationProvider is available)
-export const useCombinedUnreadWithNotifications = (notificationUnread: number): CombinedUnreadResult => {
+export const useCombinedUnreadWithNotifications = (
+  notificationUnread: number
+): CombinedUnreadResult => {
   const baseResult = useCombinedUnread();
 
   return {

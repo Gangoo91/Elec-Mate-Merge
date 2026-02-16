@@ -1,135 +1,142 @@
-import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const Module7Section2_1 = () => {
   useSEO(
-    "Open Circuit Faults - Level 2 Module 7 Section 2.1",
-    "Understanding detection, causes, and rectification of open circuit faults"
+    'Open Circuit Faults - Level 2 Module 7 Section 2.1',
+    'Understanding detection, causes, and rectification of open circuit faults'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is an open circuit fault?",
+      question: 'What is an open circuit fault?',
       options: [
-        "When two conductors touch each other",
-        "When a conductor is broken or disconnected, preventing current flow",
-        "When current flows to earth",
-        "When voltage is too high"
+        'When two conductors touch each other',
+        'When a conductor is broken or disconnected, preventing current flow',
+        'When current flows to earth',
+        'When voltage is too high',
       ],
       correctAnswer: 1,
-      explanation: "An open circuit fault occurs when the intended path of current is broken, preventing electricity from flowing properly."
+      explanation:
+        'An open circuit fault occurs when the intended path of current is broken, preventing electricity from flowing properly.',
     },
     {
       id: 2,
-      question: "What happens to current flow when a conductor is broken?",
+      question: 'What happens to current flow when a conductor is broken?',
       options: [
-        "Current increases dramatically",
-        "Current flows to earth",
-        "Current cannot complete its path",
-        "Current flows backwards"
+        'Current increases dramatically',
+        'Current flows to earth',
+        'Current cannot complete its path',
+        'Current flows backwards',
       ],
       correctAnswer: 2,
-      explanation: "When a conductor is broken or disconnected, current cannot complete its circuit path, so no current flows."
+      explanation:
+        'When a conductor is broken or disconnected, current cannot complete its circuit path, so no current flows.',
     },
     {
       id: 3,
-      question: "Which of these is a common cause of open circuit faults?",
+      question: 'Which of these is a common cause of open circuit faults?',
       options: [
-        "Too much insulation",
-        "Loose or poorly tightened connections",
-        "Excessive earthing",
-        "High voltage"
+        'Too much insulation',
+        'Loose or poorly tightened connections',
+        'Excessive earthing',
+        'High voltage',
       ],
       correctAnswer: 1,
-      explanation: "Loose or poorly tightened connections at terminals are one of the most common causes of open circuit faults."
+      explanation:
+        'Loose or poorly tightened connections at terminals are one of the most common causes of open circuit faults.',
     },
     {
       id: 4,
-      question: "Why might a lighting point stop working due to an open circuit fault?",
+      question: 'Why might a lighting point stop working due to an open circuit fault?',
       options: [
-        "The circuit breaker has tripped",
+        'The circuit breaker has tripped',
         "There's too much current flowing",
-        "A conductor in the lighting circuit is broken",
-        "The earth connection is faulty"
+        'A conductor in the lighting circuit is broken',
+        'The earth connection is faulty',
       ],
       correctAnswer: 2,
-      explanation: "If a conductor in the lighting circuit is broken, the circuit cannot complete and the light will not work."
+      explanation:
+        'If a conductor in the lighting circuit is broken, the circuit cannot complete and the light will not work.',
     },
     {
       id: 5,
-      question: "What risk occurs if a CPC (earth wire) suffers an open circuit fault?",
+      question: 'What risk occurs if a CPC (earth wire) suffers an open circuit fault?',
       options: [
-        "The lights will not work",
-        "The protective conductor will not function when needed",
-        "The circuit breaker will trip immediately",
-        "Voltage will increase"
+        'The lights will not work',
+        'The protective conductor will not function when needed',
+        'The circuit breaker will trip immediately',
+        'Voltage will increase',
       ],
       correctAnswer: 1,
-      explanation: "If the CPC has an open circuit, it cannot provide protection during earth faults, creating a safety risk."
+      explanation:
+        'If the CPC has an open circuit, it cannot provide protection during earth faults, creating a safety risk.',
     },
     {
       id: 6,
-      question: "What test is commonly used to detect open circuits in conductors?",
+      question: 'What test is commonly used to detect open circuits in conductors?',
       options: [
-        "Insulation resistance test",
-        "Continuity test",
-        "Earth fault loop impedance test",
-        "Polarity test"
+        'Insulation resistance test',
+        'Continuity test',
+        'Earth fault loop impedance test',
+        'Polarity test',
       ],
       correctAnswer: 1,
-      explanation: "Continuity testing checks that conductors are complete and can carry current, detecting open circuits."
+      explanation:
+        'Continuity testing checks that conductors are complete and can carry current, detecting open circuits.',
     },
     {
       id: 7,
-      question: "True or False: Open circuit faults always cause circuit breakers to trip.",
-      options: [
-        "True",
-        "False"
-      ],
+      question: 'True or False: Open circuit faults always cause circuit breakers to trip.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. Open circuits usually stop current flow altogether, so there's no overcurrent to cause tripping."
+      explanation:
+        "False. Open circuits usually stop current flow altogether, so there's no overcurrent to cause tripping.",
     },
     {
       id: 8,
-      question: "Why might insulation resistance tests still pass even with an open CPC?",
+      question: 'Why might insulation resistance tests still pass even with an open CPC?',
       options: [
         "The test doesn't check earth conductors",
         "Insulation resistance testing doesn't detect breaks in conductors",
-        "The readings are always misleading",
-        "Open circuits improve insulation"
+        'The readings are always misleading',
+        'Open circuits improve insulation',
       ],
       correctAnswer: 1,
-      explanation: "Insulation resistance testing measures resistance between conductors, not continuity within them, so it won't detect a broken CPC."
+      explanation:
+        "Insulation resistance testing measures resistance between conductors, not continuity within them, so it won't detect a broken CPC.",
     },
     {
       id: 9,
-      question: "How should an open circuit fault be corrected?",
+      question: 'How should an open circuit fault be corrected?',
       options: [
-        "Increase the voltage",
-        "Replace the circuit breaker",
-        "Repair or replace the damaged conductor and retest",
-        "Add more insulation"
+        'Increase the voltage',
+        'Replace the circuit breaker',
+        'Repair or replace the damaged conductor and retest',
+        'Add more insulation',
       ],
       correctAnswer: 2,
-      explanation: "Open circuits are corrected by repairing or replacing the damaged conductor, tightening connections, or re-terminating, followed by retesting."
+      explanation:
+        'Open circuits are corrected by repairing or replacing the damaged conductor, tightening connections, or re-terminating, followed by retesting.',
     },
     {
       id: 10,
-      question: "In the real-world example, what mistake caused the socket to fail?",
+      question: 'In the real-world example, what mistake caused the socket to fail?',
       options: [
-        "Wrong cable size was used",
-        "The neutral conductor was not tightened properly",
-        "Too much current was flowing",
-        "The earth was disconnected"
+        'Wrong cable size was used',
+        'The neutral conductor was not tightened properly',
+        'Too much current was flowing',
+        'The earth was disconnected',
       ],
       correctAnswer: 1,
-      explanation: "The apprentice failed to tighten the neutral conductor properly at the terminal, causing it to come loose and create an open circuit."
-    }
+      explanation:
+        'The apprentice failed to tighten the neutral conductor properly at the terminal, causing it to come loose and create an open circuit.',
+    },
   ];
 
   return (
@@ -160,9 +167,7 @@ const Module7Section2_1 = () => {
               <span className="text-white/40">•</span>
               <span>Section 2.1</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-              Open Circuit Faults
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Open Circuit Faults</h1>
             <p className="text-white/60 max-w-xl mx-auto">
               Understanding detection, causes, and rectification of open circuit faults
             </p>
@@ -171,7 +176,10 @@ const Module7Section2_1 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="text-white/80 text-sm leading-relaxed">
-              An <strong className="text-white">open circuit fault</strong> occurs when there is a break in the electrical path, preventing current from flowing. These are among the most common faults in electrical systems and require systematic testing to locate and repair.
+              An <strong className="text-white">open circuit fault</strong> occurs when there is a
+              break in the electrical path, preventing current from flowing. These are among the
+              most common faults in electrical systems and require systematic testing to locate and
+              repair.
             </p>
           </div>
 
@@ -183,7 +191,9 @@ const Module7Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                An open circuit fault occurs when the electrical path becomes incomplete, preventing current from flowing. This can happen when a conductor is physically broken, disconnected, or when a connection becomes loose enough to break the circuit.
+                An open circuit fault occurs when the electrical path becomes incomplete, preventing
+                current from flowing. This can happen when a conductor is physically broken,
+                disconnected, or when a connection becomes loose enough to break the circuit.
               </p>
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -217,19 +227,23 @@ const Module7Section2_1 = () => {
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">•</span>
-                    <strong className="text-white">Complete break:</strong> Physical separation of conductor
+                    <strong className="text-white">Complete break:</strong> Physical separation of
+                    conductor
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">•</span>
-                    <strong className="text-white">Loose connection:</strong> High resistance joint that eventually fails
+                    <strong className="text-white">Loose connection:</strong> High resistance joint
+                    that eventually fails
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">•</span>
-                    <strong className="text-white">Component failure:</strong> Blown fuse, failed switch contacts
+                    <strong className="text-white">Component failure:</strong> Blown fuse, failed
+                    switch contacts
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">•</span>
-                    <strong className="text-white">Corrosion:</strong> Oxidation causing loss of conductivity
+                    <strong className="text-white">Corrosion:</strong> Oxidation causing loss of
+                    conductivity
                   </li>
                 </ul>
               </div>
@@ -240,10 +254,10 @@ const Module7Section2_1 = () => {
                 id="open-circuit-current"
                 question="What happens to current flow when a conductor is broken or disconnected?"
                 options={[
-                  "Current increases dramatically",
-                  "Current flows to earth instead",
-                  "Current cannot complete its path",
-                  "Current flows backwards through the circuit"
+                  'Current increases dramatically',
+                  'Current flows to earth instead',
+                  'Current cannot complete its path',
+                  'Current flows backwards through the circuit',
                 ]}
                 correctIndex={2}
                 explanation="When a conductor is broken or disconnected, the circuit path is incomplete, so current cannot flow at all."
@@ -259,7 +273,8 @@ const Module7Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Open circuit faults can arise from various factors throughout the lifecycle of an electrical installation:
+                Open circuit faults can arise from various factors throughout the lifecycle of an
+                electrical installation:
               </p>
 
               <div className="grid gap-4 sm:grid-cols-2">
@@ -297,7 +312,9 @@ const Module7Section2_1 = () => {
                 </div>
 
                 <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                  <h4 className="font-medium text-elec-yellow mb-3 text-sm">Environmental Factors</h4>
+                  <h4 className="font-medium text-elec-yellow mb-3 text-sm">
+                    Environmental Factors
+                  </h4>
                   <ul className="space-y-1.5 text-sm">
                     <li>• Corrosion due to moisture ingress</li>
                     <li>• Thermal damage from overheating</li>
@@ -314,10 +331,10 @@ const Module7Section2_1 = () => {
                 id="open-circuit-causes"
                 question="Give two common causes of open circuit faults in electrical installations."
                 options={[
-                  "High voltage and low current",
-                  "Loose connections and mechanical damage",
-                  "Too much insulation and earthing",
-                  "Circuit breakers and fuses"
+                  'High voltage and low current',
+                  'Loose connections and mechanical damage',
+                  'Too much insulation and earthing',
+                  'Circuit breakers and fuses',
                 ]}
                 correctIndex={1}
                 explanation="Loose or poorly tightened connections and mechanical damage to cables are among the most common causes of open circuit faults."
@@ -333,7 +350,8 @@ const Module7Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                While open circuits may seem less dangerous than short circuits, they can have serious safety and operational consequences:
+                While open circuits may seem less dangerous than short circuits, they can have
+                serious safety and operational consequences:
               </p>
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -350,17 +368,35 @@ const Module7Section2_1 = () => {
               <div className="bg-red-500/10 rounded-lg p-4 border border-red-500/30">
                 <h4 className="font-medium text-red-400 mb-3">Critical Safety Implications</h4>
                 <ul className="space-y-1.5 text-sm text-red-200/80">
-                  <li>• <strong className="text-red-300">CPC failure:</strong> Loss of earth fault protection</li>
-                  <li>• <strong className="text-red-300">Emergency systems:</strong> Fire alarms, emergency lighting failure</li>
-                  <li>• <strong className="text-red-300">Security systems:</strong> Intruder alarms, access control</li>
-                  <li>• <strong className="text-red-300">Safety equipment:</strong> Ventilation, smoke extraction</li>
-                  <li>• <strong className="text-red-300">Medical equipment:</strong> Life support systems in healthcare</li>
+                  <li>
+                    • <strong className="text-red-300">CPC failure:</strong> Loss of earth fault
+                    protection
+                  </li>
+                  <li>
+                    • <strong className="text-red-300">Emergency systems:</strong> Fire alarms,
+                    emergency lighting failure
+                  </li>
+                  <li>
+                    • <strong className="text-red-300">Security systems:</strong> Intruder alarms,
+                    access control
+                  </li>
+                  <li>
+                    • <strong className="text-red-300">Safety equipment:</strong> Ventilation, smoke
+                    extraction
+                  </li>
+                  <li>
+                    • <strong className="text-red-300">Medical equipment:</strong> Life support
+                    systems in healthcare
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
                 <p className="text-sm text-red-200/80">
-                  <strong className="text-red-300">Critical Safety Note:</strong> Open circuit faults in protective conductors (CPC) are particularly dangerous as they remove earth fault protection while equipment may continue to operate normally. This creates a hidden danger that could result in electric shock or fire.
+                  <strong className="text-red-300">Critical Safety Note:</strong> Open circuit
+                  faults in protective conductors (CPC) are particularly dangerous as they remove
+                  earth fault protection while equipment may continue to operate normally. This
+                  creates a hidden danger that could result in electric shock or fire.
                 </p>
               </div>
             </div>
@@ -374,27 +410,53 @@ const Module7Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Systematic testing approaches are essential for locating open circuit faults efficiently and safely:
+                Systematic testing approaches are essential for locating open circuit faults
+                efficiently and safely:
               </p>
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-medium text-elec-yellow mb-3">Primary Testing Methods</h4>
                 <ul className="space-y-1.5 text-sm">
-                  <li>• <strong className="text-white">Continuity testing:</strong> Using multimeter or dedicated continuity tester</li>
-                  <li>• <strong className="text-white">Visual inspection:</strong> Checking for obvious breaks or loose connections</li>
-                  <li>• <strong className="text-white">Voltage testing:</strong> Measuring voltage presence at various points</li>
-                  <li>• <strong className="text-white">Resistance measurement:</strong> Checking conductor resistance values</li>
+                  <li>
+                    • <strong className="text-white">Continuity testing:</strong> Using multimeter
+                    or dedicated continuity tester
+                  </li>
+                  <li>
+                    • <strong className="text-white">Visual inspection:</strong> Checking for
+                    obvious breaks or loose connections
+                  </li>
+                  <li>
+                    • <strong className="text-white">Voltage testing:</strong> Measuring voltage
+                    presence at various points
+                  </li>
+                  <li>
+                    • <strong className="text-white">Resistance measurement:</strong> Checking
+                    conductor resistance values
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-medium text-white mb-3">Testing Sequence</h4>
                 <ol className="space-y-1.5 text-sm list-decimal list-inside">
-                  <li><strong className="text-white">Isolate</strong> the circuit and verify isolation</li>
-                  <li><strong className="text-white">Visual inspection</strong> of accessible connections</li>
-                  <li><strong className="text-white">Continuity test</strong> from supply to load</li>
-                  <li><strong className="text-white">Section testing</strong> to narrow down fault location</li>
-                  <li><strong className="text-white">Point-to-point testing</strong> to identify exact fault position</li>
+                  <li>
+                    <strong className="text-white">Isolate</strong> the circuit and verify isolation
+                  </li>
+                  <li>
+                    <strong className="text-white">Visual inspection</strong> of accessible
+                    connections
+                  </li>
+                  <li>
+                    <strong className="text-white">Continuity test</strong> from supply to load
+                  </li>
+                  <li>
+                    <strong className="text-white">Section testing</strong> to narrow down fault
+                    location
+                  </li>
+                  <li>
+                    <strong className="text-white">Point-to-point testing</strong> to identify exact
+                    fault position
+                  </li>
                 </ol>
               </div>
 
@@ -415,10 +477,10 @@ const Module7Section2_1 = () => {
                 id="open-circuit-testing"
                 question="What is the first step when testing for open circuit faults?"
                 options={[
-                  "Start continuity testing immediately",
-                  "Check the circuit breaker position",
-                  "Isolate the circuit and verify isolation",
-                  "Measure the voltage at the load"
+                  'Start continuity testing immediately',
+                  'Check the circuit breaker position',
+                  'Isolate the circuit and verify isolation',
+                  'Measure the voltage at the load',
                 ]}
                 correctIndex={2}
                 explanation="Safety requires that the circuit is properly isolated and isolation verified before any testing begins."
@@ -434,17 +496,33 @@ const Module7Section2_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Effective repair requires proper techniques and consideration of prevention measures:
+                Effective repair requires proper techniques and consideration of prevention
+                measures:
               </p>
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-medium text-elec-yellow mb-3">Repair Procedures</h4>
                 <ul className="space-y-1.5 text-sm">
-                  <li>• <strong className="text-white">Reconnection:</strong> Clean and properly terminate loose connections</li>
-                  <li>• <strong className="text-white">Cable repair:</strong> Use appropriate junction boxes or replacement sections</li>
-                  <li>• <strong className="text-white">Component replacement:</strong> Replace blown fuses, failed switches</li>
-                  <li>• <strong className="text-white">Re-termination:</strong> Strip and re-terminate damaged cable ends</li>
-                  <li>• <strong className="text-white">Testing:</strong> Verify repair with continuity and function tests</li>
+                  <li>
+                    • <strong className="text-white">Reconnection:</strong> Clean and properly
+                    terminate loose connections
+                  </li>
+                  <li>
+                    • <strong className="text-white">Cable repair:</strong> Use appropriate junction
+                    boxes or replacement sections
+                  </li>
+                  <li>
+                    • <strong className="text-white">Component replacement:</strong> Replace blown
+                    fuses, failed switches
+                  </li>
+                  <li>
+                    • <strong className="text-white">Re-termination:</strong> Strip and re-terminate
+                    damaged cable ends
+                  </li>
+                  <li>
+                    • <strong className="text-white">Testing:</strong> Verify repair with continuity
+                    and function tests
+                  </li>
                 </ul>
               </div>
 
@@ -480,30 +558,41 @@ const Module7Section2_1 = () => {
             </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
-                <h4 className="font-medium text-amber-300 mb-2">Case Study: Office Socket Circuit Failure</h4>
+                <h4 className="font-medium text-amber-300 mb-2">
+                  Case Study: Office Socket Circuit Failure
+                </h4>
                 <p className="text-sm text-amber-200/80">
-                  During a routine office refurbishment, an apprentice electrician installed new socket outlets. Two weeks later, several sockets on the circuit stopped working, causing disruption to the office operations.
+                  During a routine office refurbishment, an apprentice electrician installed new
+                  socket outlets. Two weeks later, several sockets on the circuit stopped working,
+                  causing disruption to the office operations.
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h4 className="font-medium text-red-300 mb-2">The Problem</h4>
                 <p className="text-sm text-red-200/80">
-                  Multiple socket outlets on a ring final circuit suddenly lost power. Initial checks showed the MCB had not tripped, and other sockets on the circuit were still working normally.
+                  Multiple socket outlets on a ring final circuit suddenly lost power. Initial
+                  checks showed the MCB had not tripped, and other sockets on the circuit were still
+                  working normally.
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/10 border-l-2 border-elec-yellow/50">
                 <h4 className="font-medium text-elec-yellow mb-2">The Investigation</h4>
                 <p className="text-sm text-elec-yellow/80">
-                  An experienced electrician performed continuity testing and discovered an open circuit in the neutral conductor at one of the newly installed sockets. The socket itself appeared to be properly connected.
+                  An experienced electrician performed continuity testing and discovered an open
+                  circuit in the neutral conductor at one of the newly installed sockets. The socket
+                  itself appeared to be properly connected.
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
                 <h4 className="font-medium text-orange-300 mb-2">The Root Cause</h4>
                 <p className="text-sm text-orange-200/80">
-                  Upon closer inspection, it was found that the neutral conductor terminal screw had not been properly tightened during installation. Vibration from normal office activity had caused the connection to gradually work loose until it made insufficient contact.
+                  Upon closer inspection, it was found that the neutral conductor terminal screw had
+                  not been properly tightened during installation. Vibration from normal office
+                  activity had caused the connection to gradually work loose until it made
+                  insufficient contact.
                 </p>
               </div>
 
@@ -527,23 +616,41 @@ const Module7Section2_1 = () => {
             </h2>
             <div className="space-y-4">
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-medium text-white mb-2">What's the difference between an open circuit and a short circuit?</h4>
-                <p className="text-sm text-white/70">An open circuit has a break in the path preventing current flow, while a short circuit creates an unintended low-resistance path allowing excessive current flow.</p>
+                <h4 className="font-medium text-white mb-2">
+                  What's the difference between an open circuit and a short circuit?
+                </h4>
+                <p className="text-sm text-white/70">
+                  An open circuit has a break in the path preventing current flow, while a short
+                  circuit creates an unintended low-resistance path allowing excessive current flow.
+                </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Can an open circuit be dangerous?</h4>
-                <p className="text-sm text-white/70">While open circuits don't cause overcurrent, they can be dangerous if they affect safety systems like emergency lighting or protective devices.</p>
+                <p className="text-sm text-white/70">
+                  While open circuits don't cause overcurrent, they can be dangerous if they affect
+                  safety systems like emergency lighting or protective devices.
+                </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-medium text-white mb-2">How do I test for continuity safely?</h4>
-                <p className="text-sm text-white/70">Always isolate the circuit first, verify isolation, then use a multimeter set to continuity mode. Never test continuity on live circuits.</p>
+                <h4 className="font-medium text-white mb-2">
+                  How do I test for continuity safely?
+                </h4>
+                <p className="text-sm text-white/70">
+                  Always isolate the circuit first, verify isolation, then use a multimeter set to
+                  continuity mode. Never test continuity on live circuits.
+                </p>
               </div>
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-medium text-white mb-2">What tools do I need for open circuit fault finding?</h4>
-                <p className="text-sm text-white/70">Essential tools include a multimeter, continuity tester, voltage indicator, and basic hand tools for accessing connections.</p>
+                <h4 className="font-medium text-white mb-2">
+                  What tools do I need for open circuit fault finding?
+                </h4>
+                <p className="text-sm text-white/70">
+                  Essential tools include a multimeter, continuity tester, voltage indicator, and
+                  basic hand tools for accessing connections.
+                </p>
               </div>
             </div>
           </section>
@@ -556,7 +663,14 @@ const Module7Section2_1 = () => {
                 <h3 className="font-semibold text-white">Summary</h3>
               </div>
               <p className="text-sm text-white/80 leading-relaxed">
-                Open circuit faults represent one of the most common electrical problems, characterised by a complete break in the electrical path that prevents current flow. These faults can occur due to loose connections, mechanical damage, component failures, and environmental factors. While they may not immediately cause protective device operation, they can have serious safety implications, particularly when affecting protective conductors or safety-critical systems. Effective detection requires systematic testing with proper isolation procedures, and understanding their behaviour is fundamental for electrical technicians.
+                Open circuit faults represent one of the most common electrical problems,
+                characterised by a complete break in the electrical path that prevents current flow.
+                These faults can occur due to loose connections, mechanical damage, component
+                failures, and environmental factors. While they may not immediately cause protective
+                device operation, they can have serious safety implications, particularly when
+                affecting protective conductors or safety-critical systems. Effective detection
+                requires systematic testing with proper isolation procedures, and understanding
+                their behaviour is fundamental for electrical technicians.
               </p>
             </div>
           </section>

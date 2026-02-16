@@ -1,6 +1,6 @@
-import { useRef, useEffect, forwardRef, useImperativeHandle, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { RotateCcw, Pen } from "lucide-react";
+import { useRef, useEffect, forwardRef, useImperativeHandle, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { RotateCcw, Pen } from 'lucide-react';
 
 interface SignaturePadProps {
   onSignatureChange: (signature: string) => void;
@@ -13,7 +13,7 @@ export interface SignaturePadRef {
 }
 
 const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
-  ({ onSignatureChange, className = "" }, ref) => {
+  ({ onSignatureChange, className = '' }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const isDrawing = useRef(false);
@@ -21,7 +21,7 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
 
     useImperativeHandle(ref, () => ({
       clear: clearSignature,
-      getSignature: () => canvasRef.current?.toDataURL() || ""
+      getSignature: () => canvasRef.current?.toDataURL() || '',
     }));
 
     useEffect(() => {
@@ -36,9 +36,15 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
         if (currentData && hasSignature) {
           const img = new Image();
           img.onload = () => {
-            const ctx = canvasRef.current?.getContext("2d");
+            const ctx = canvasRef.current?.getContext('2d');
             if (ctx && canvasRef.current) {
-              ctx.drawImage(img, 0, 0, canvasRef.current.width / window.devicePixelRatio, canvasRef.current.height / window.devicePixelRatio);
+              ctx.drawImage(
+                img,
+                0,
+                0,
+                canvasRef.current.width / window.devicePixelRatio,
+                canvasRef.current.height / window.devicePixelRatio
+              );
             }
           };
           img.src = currentData;
@@ -54,7 +60,7 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
       const container = containerRef.current;
       if (!canvas || !container) return;
 
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
       // Get container dimensions
@@ -69,17 +75,17 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
       ctx.scale(dpr, dpr);
 
       // Set drawing style
-      ctx.strokeStyle = "#1f2937";
+      ctx.strokeStyle = '#1f2937';
       ctx.lineWidth = 2.5;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
 
       // Fill with white background
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, rect.width, rect.height);
 
       // Draw signature line hint
-      ctx.strokeStyle = "#e5e7eb";
+      ctx.strokeStyle = '#e5e7eb';
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(20, rect.height - 30);
@@ -87,11 +93,13 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
       ctx.stroke();
 
       // Reset stroke style for signature
-      ctx.strokeStyle = "#1f2937";
+      ctx.strokeStyle = '#1f2937';
       ctx.lineWidth = 2.5;
     };
 
-    const getCoordinates = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    const getCoordinates = (
+      e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+    ) => {
       const canvas = canvasRef.current;
       const container = containerRef.current;
       if (!canvas || !container) return { x: 0, y: 0 };
@@ -103,22 +111,24 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
         const touch = e.touches[0];
         return {
           x: touch.clientX - rect.left,
-          y: touch.clientY - rect.top
+          y: touch.clientY - rect.top,
         };
       } else {
         return {
           x: e.clientX - rect.left,
-          y: e.clientY - rect.top
+          y: e.clientY - rect.top,
         };
       }
     };
 
-    const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    const startDrawing = (
+      e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+    ) => {
       e.preventDefault();
       const canvas = canvasRef.current;
       if (!canvas) return;
 
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
       isDrawing.current = true;
@@ -135,7 +145,7 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
       const canvas = canvasRef.current;
       if (!canvas) return;
 
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
       const { x, y } = getCoordinates(e);
@@ -159,7 +169,7 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
     const clearSignature = () => {
       setHasSignature(false);
       initCanvas();
-      onSignatureChange("");
+      onSignatureChange('');
     };
 
     return (
@@ -208,6 +218,6 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
   }
 );
 
-SignaturePad.displayName = "SignaturePad";
+SignaturePad.displayName = 'SignaturePad';
 
 export default SignaturePad;

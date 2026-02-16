@@ -1,13 +1,17 @@
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Zap, Info, AlertTriangle, CheckCircle2, BookOpen, ChevronDown, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+  Zap,
+  Info,
+  AlertTriangle,
+  CheckCircle2,
+  BookOpen,
+  ChevronDown,
+  Settings,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -18,21 +22,49 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import { toast } from "@/hooks/use-toast";
+} from '@/components/calculators/shared';
+import { toast } from '@/hooks/use-toast';
 
 const INVERTER_PRESETS = {
   singlePhase: [
-    { value: '3.68', label: '3.68kW Single Phase', specs: { maxDcV: 600, mpptMin: 120, mpptMax: 500, mppts: 1, maxCurrent: 16 } },
-    { value: '5', label: '5kW Single Phase', specs: { maxDcV: 600, mpptMin: 120, mpptMax: 500, mppts: 2, maxCurrent: 11 } },
-    { value: '8', label: '8kW Single Phase', specs: { maxDcV: 1000, mpptMin: 120, mpptMax: 800, mppts: 2, maxCurrent: 13 } },
-    { value: '10', label: '10kW Single Phase', specs: { maxDcV: 1000, mpptMin: 120, mpptMax: 800, mppts: 2, maxCurrent: 15 } },
+    {
+      value: '3.68',
+      label: '3.68kW Single Phase',
+      specs: { maxDcV: 600, mpptMin: 120, mpptMax: 500, mppts: 1, maxCurrent: 16 },
+    },
+    {
+      value: '5',
+      label: '5kW Single Phase',
+      specs: { maxDcV: 600, mpptMin: 120, mpptMax: 500, mppts: 2, maxCurrent: 11 },
+    },
+    {
+      value: '8',
+      label: '8kW Single Phase',
+      specs: { maxDcV: 1000, mpptMin: 120, mpptMax: 800, mppts: 2, maxCurrent: 13 },
+    },
+    {
+      value: '10',
+      label: '10kW Single Phase',
+      specs: { maxDcV: 1000, mpptMin: 120, mpptMax: 800, mppts: 2, maxCurrent: 15 },
+    },
   ],
   threePhase: [
-    { value: '10', label: '10kW Three Phase', specs: { maxDcV: 1000, mpptMin: 200, mpptMax: 800, mppts: 2, maxCurrent: 15 } },
-    { value: '15', label: '15kW Three Phase', specs: { maxDcV: 1100, mpptMin: 200, mpptMax: 900, mppts: 3, maxCurrent: 15 } },
-    { value: '20', label: '20kW Three Phase', specs: { maxDcV: 1100, mpptMin: 200, mpptMax: 900, mppts: 4, maxCurrent: 20 } },
-  ]
+    {
+      value: '10',
+      label: '10kW Three Phase',
+      specs: { maxDcV: 1000, mpptMin: 200, mpptMax: 800, mppts: 2, maxCurrent: 15 },
+    },
+    {
+      value: '15',
+      label: '15kW Three Phase',
+      specs: { maxDcV: 1100, mpptMin: 200, mpptMax: 900, mppts: 3, maxCurrent: 15 },
+    },
+    {
+      value: '20',
+      label: '20kW Three Phase',
+      specs: { maxDcV: 1100, mpptMin: 200, mpptMax: 900, mppts: 4, maxCurrent: 20 },
+    },
+  ],
 };
 
 interface GridTieResult {
@@ -91,7 +123,11 @@ export function GridTieInverterCalculator() {
     const voltage = parseFloat(systemPhase);
 
     if (!dcArrayPower || !inverterAcPower || !actualPsh || !voltage) {
-      toast({ title: "Missing inputs", description: "Please fill in all required fields", variant: "destructive" });
+      toast({
+        title: 'Missing inputs',
+        description: 'Please fill in all required fields',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -111,9 +147,10 @@ export function GridTieInverterCalculator() {
     const totalAnnualValue = exportIncome + billSavings;
     const paybackYears = actualSystemCost > 0 ? actualSystemCost / totalAnnualValue : 0;
 
-    const acCurrent = systemPhase === '230' ?
-      inverterAcPower * 1000 / (voltage * 0.99) :
-      inverterAcPower * 1000 / (Math.sqrt(3) * voltage * 0.99);
+    const acCurrent =
+      systemPhase === '230'
+        ? (inverterAcPower * 1000) / (voltage * 0.99)
+        : (inverterAcPower * 1000) / (Math.sqrt(3) * voltage * 0.99);
     const recommendedMcb = Math.ceil(acCurrent / 5) * 5;
     const isG98 = acCurrent <= 16;
     const requiresG99 = !isG98;
@@ -134,7 +171,7 @@ export function GridTieInverterCalculator() {
       acCurrent,
       recommendedMcb,
       isG98,
-      requiresG99
+      requiresG99,
     });
   };
 
@@ -162,7 +199,12 @@ export function GridTieInverterCalculator() {
         description="G98/G99 compliant system design with financial analysis"
         badge="G98/G99"
         headerAction={
-          <Button variant="outline" size="sm" onClick={() => setShowAdvanced(!showAdvanced)} className="gap-2 h-8 text-xs border-white/20 hover:bg-white/10">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="gap-2 h-8 text-xs border-white/20 hover:bg-white/10"
+          >
             <Settings className="h-3 w-3" />
             {showAdvanced ? 'Basic' : 'Advanced'}
           </Button>
@@ -195,7 +237,7 @@ export function GridTieInverterCalculator() {
             label="Inverter Selection"
             value={inverterPower}
             onChange={setInverterPower}
-            options={getInverterOptions().map(i => ({ value: i.value, label: i.label }))}
+            options={getInverterOptions().map((i) => ({ value: i.value, label: i.label }))}
             placeholder="Select inverter"
           />
         )}
@@ -228,10 +270,42 @@ export function GridTieInverterCalculator() {
         {showAdvanced && (
           <div className="space-y-4 pt-4 border-t border-white/10">
             <CalculatorInputGrid columns={2}>
-              <CalculatorInput label="Retail Price" unit="£/kWh" type="text" inputMode="decimal" value={retailPrice} onChange={setRetailPrice} placeholder="0.25" />
-              <CalculatorInput label="SEG Rate" unit="£/kWh" type="text" inputMode="decimal" value={segRate} onChange={setSegRate} placeholder="0.05" />
-              <CalculatorInput label="System Losses" unit="%" type="text" inputMode="numeric" value={lossProfile} onChange={setLossProfile} placeholder="18" />
-              <CalculatorInput label="System Cost" unit="£" type="text" inputMode="numeric" value={systemCost} onChange={setSystemCost} placeholder="8000" />
+              <CalculatorInput
+                label="Retail Price"
+                unit="£/kWh"
+                type="text"
+                inputMode="decimal"
+                value={retailPrice}
+                onChange={setRetailPrice}
+                placeholder="0.25"
+              />
+              <CalculatorInput
+                label="SEG Rate"
+                unit="£/kWh"
+                type="text"
+                inputMode="decimal"
+                value={segRate}
+                onChange={setSegRate}
+                placeholder="0.05"
+              />
+              <CalculatorInput
+                label="System Losses"
+                unit="%"
+                type="text"
+                inputMode="numeric"
+                value={lossProfile}
+                onChange={setLossProfile}
+                placeholder="18"
+              />
+              <CalculatorInput
+                label="System Cost"
+                unit="£"
+                type="text"
+                inputMode="numeric"
+                value={systemCost}
+                onChange={setSystemCost}
+                placeholder="8000"
+              />
             </CalculatorInputGrid>
           </div>
         )}
@@ -250,7 +324,12 @@ export function GridTieInverterCalculator() {
           <CalculatorResult category="renewable">
             <div className="text-center pb-4 border-b border-white/10">
               <p className="text-sm text-white/60 mb-1">Annual Value</p>
-              <div className="text-4xl font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}>
+              <div
+                className="text-4xl font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
+              >
                 £{result.totalAnnualValue.toFixed(0)}
               </div>
               <div className="flex justify-center gap-2 mt-2">
@@ -266,20 +345,60 @@ export function GridTieInverterCalculator() {
             </div>
 
             <ResultsGrid columns={2}>
-              <ResultValue label="DC:AC Ratio" value={result.dcAcRatio.toFixed(2)} category="renewable" size="sm" />
-              <ResultValue label="Daily Gen" value={result.dailyGeneration.toFixed(1)} unit="kWh" category="renewable" size="sm" />
-              <ResultValue label="Bill Savings" value={`£${result.billSavings.toFixed(0)}`} category="renewable" size="sm" />
-              <ResultValue label="Export Income" value={`£${result.exportIncome.toFixed(0)}`} category="renewable" size="sm" />
+              <ResultValue
+                label="DC:AC Ratio"
+                value={result.dcAcRatio.toFixed(2)}
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Daily Gen"
+                value={result.dailyGeneration.toFixed(1)}
+                unit="kWh"
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Bill Savings"
+                value={`£${result.billSavings.toFixed(0)}`}
+                category="renewable"
+                size="sm"
+              />
+              <ResultValue
+                label="Export Income"
+                value={`£${result.exportIncome.toFixed(0)}`}
+                category="renewable"
+                size="sm"
+              />
             </ResultsGrid>
 
             <div className="pt-4 mt-4 border-t border-white/10">
               <h4 className="text-sm font-medium text-white/80 mb-3">AC System & Protection</h4>
               <ResultsGrid columns={2}>
-                <ResultValue label="AC Current" value={result.acCurrent.toFixed(1)} unit="A" category="renewable" size="sm" />
-                <ResultValue label="MCB Rating" value={`${result.recommendedMcb}`} unit="A" category="renewable" size="sm" />
+                <ResultValue
+                  label="AC Current"
+                  value={result.acCurrent.toFixed(1)}
+                  unit="A"
+                  category="renewable"
+                  size="sm"
+                />
+                <ResultValue
+                  label="MCB Rating"
+                  value={`${result.recommendedMcb}`}
+                  unit="A"
+                  category="renewable"
+                  size="sm"
+                />
               </ResultsGrid>
               <div className="flex gap-2 mt-3">
-                <Badge variant={result.isG98 ? "default" : "secondary"} className={result.isG98 ? "bg-green-500/20 text-green-400" : "bg-orange-500/20 text-orange-400"}>
+                <Badge
+                  variant={result.isG98 ? 'default' : 'secondary'}
+                  className={
+                    result.isG98
+                      ? 'bg-green-500/20 text-green-400'
+                      : 'bg-orange-500/20 text-orange-400'
+                  }
+                >
                   {result.isG98 ? 'G98' : 'G99 Required'}
                 </Badge>
               </div>
@@ -290,7 +409,8 @@ export function GridTieInverterCalculator() {
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
                   <p className="text-sm text-orange-200">
-                    Clipping loss: {result.clippingLoss.toFixed(0)} kWh/yr ({(result.clippingLoss / result.yearlyGeneration * 100).toFixed(1)}%)
+                    Clipping loss: {result.clippingLoss.toFixed(0)} kWh/yr (
+                    {((result.clippingLoss / result.yearlyGeneration) * 100).toFixed(1)}%)
                   </p>
                 </div>
               </div>
@@ -302,16 +422,32 @@ export function GridTieInverterCalculator() {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2">
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">DC:AC Ratio ({result.dcAcRatio.toFixed(2)}):</strong> {result.dcAcRatio >= 1.1 && result.dcAcRatio <= 1.3 ? 'Optimal balance' : result.dcAcRatio > 1.3 ? 'High - expect clipping' : 'Conservative'}
+                  <strong className="text-blue-300">
+                    DC:AC Ratio ({result.dcAcRatio.toFixed(2)}):
+                  </strong>{' '}
+                  {result.dcAcRatio >= 1.1 && result.dcAcRatio <= 1.3
+                    ? 'Optimal balance'
+                    : result.dcAcRatio > 1.3
+                      ? 'High - expect clipping'
+                      : 'Conservative'}
                 </p>
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Self-consumption</strong> saves £{result.billSavings.toFixed(0)}/yr vs exported energy earns £{result.exportIncome.toFixed(0)}/yr at SEG rates.
+                  <strong className="text-blue-300">Self-consumption</strong> saves £
+                  {result.billSavings.toFixed(0)}/yr vs exported energy earns £
+                  {result.exportIncome.toFixed(0)}/yr at SEG rates.
                 </p>
               </CollapsibleContent>
             </div>
@@ -322,15 +458,33 @@ export function GridTieInverterCalculator() {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">Regulatory Requirements</span>
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    Regulatory Requirements
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showRegs && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showRegs && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">
-                  <p><strong className="text-amber-300">{result.isG98 ? 'G98' : 'G99'}:</strong> {result.isG98 ? 'Simplified notification (≤16A/phase)' : 'DNO application required (>16A/phase)'}</p>
-                  <p><strong className="text-amber-300">BS 7671 Section 712:</strong> RCD Type A minimum, isolation switches required</p>
-                  <p><strong className="text-amber-300">MCS Certification:</strong> Required for SEG payments</p>
+                  <p>
+                    <strong className="text-amber-300">{result.isG98 ? 'G98' : 'G99'}:</strong>{' '}
+                    {result.isG98
+                      ? 'Simplified notification (≤16A/phase)'
+                      : 'DNO application required (>16A/phase)'}
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">BS 7671 Section 712:</strong> RCD Type A
+                    minimum, isolation switches required
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">MCS Certification:</strong> Required for SEG
+                    payments
+                  </p>
                 </div>
               </CollapsibleContent>
             </div>
@@ -342,7 +496,8 @@ export function GridTieInverterCalculator() {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
           <p className="text-sm text-green-200">
-            <strong>DC:AC Ratio</strong> 1.1-1.3 is optimal. Higher ratios increase clipping but improve low-light performance.
+            <strong>DC:AC Ratio</strong> 1.1-1.3 is optimal. Higher ratios increase clipping but
+            improve low-light performance.
           </p>
         </div>
       </div>

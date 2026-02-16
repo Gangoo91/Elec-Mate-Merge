@@ -13,7 +13,7 @@ export const SmartHomeModule5Section3RealWorld = () => {
       <CardContent className="space-y-6">
         <div className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-600/50 rounded-lg p-6">
           <h3 className="text-blue-200 font-semibold mb-4">Security Gap Scenario</h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-4 bg-[#1a1a1a] border border-red-600 rounded-lg">
               <h4 className="font-semibold text-red-200 mb-3 flex items-center gap-2">
@@ -21,7 +21,8 @@ export const SmartHomeModule5Section3RealWorld = () => {
                 Initial Setup Issue
               </h4>
               <p className="text-red-100 text-sm mb-3">
-                A family installed contact sensors on all ground-floor windows but no PIR sensors indoors.
+                A family installed contact sensors on all ground-floor windows but no PIR sensors
+                indoors.
               </p>
               <ul className="text-red-100 text-sm space-y-1">
                 <li>• Perimeter detection only</li>
@@ -49,7 +50,9 @@ export const SmartHomeModule5Section3RealWorld = () => {
           <div className="mt-6 p-4 bg-[#1a1a1a] border border-yellow-600 rounded-lg">
             <h4 className="font-semibold text-yellow-200 mb-3">The Incident</h4>
             <p className="text-yellow-100 text-sm">
-              During a break-in, the intruder forced a door open (triggering an alert) but moved freely inside before police arrived. The family realised they had no way to track the intruder's movements within the property.
+              During a break-in, the intruder forced a door open (triggering an alert) but moved
+              freely inside before police arrived. The family realised they had no way to track the
+              intruder's movements within the property.
             </p>
           </div>
 
@@ -75,7 +78,8 @@ export const SmartHomeModule5Section3RealWorld = () => {
               "What lesson does this scenario teach about layered security?"
             </p>
             <p className="text-purple-200 text-sm mt-2">
-              Consider how combining different sensor types creates comprehensive coverage and why relying on a single detection method can leave security gaps.
+              Consider how combining different sensor types creates comprehensive coverage and why
+              relying on a single detection method can leave security gaps.
             </p>
           </div>
         </div>

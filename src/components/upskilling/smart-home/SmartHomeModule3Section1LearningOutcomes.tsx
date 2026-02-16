@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule3Section1LearningOutcomes = () => {
   const outcomes = [
-    "Identify the main types of smart lighting systems available today",
-    "Compare wired, wireless, and hybrid systems",
-    "Explain the pros and cons of smart bulbs, smart switches, and centralised systems",
-    "Recognise which systems are best suited for retrofit vs new build",
-    "Recommend appropriate lighting solutions based on client needs"
+    'Identify the main types of smart lighting systems available today',
+    'Compare wired, wireless, and hybrid systems',
+    'Explain the pros and cons of smart bulbs, smart switches, and centralised systems',
+    'Recognise which systems are best suited for retrofit vs new build',
+    'Recommend appropriate lighting solutions based on client needs',
   ];
 
   return (

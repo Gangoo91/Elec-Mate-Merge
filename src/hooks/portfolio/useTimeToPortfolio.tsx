@@ -1,10 +1,9 @@
-
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { TimeEntry } from "@/types/time-tracking";
-import { PortfolioEntry, PortfolioCategory } from "@/types/portfolio";
-import { usePortfolioData } from "./usePortfolioData";
-import { useUniversalPortfolio } from "./useUniversalPortfolio";
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { TimeEntry } from '@/types/time-tracking';
+import { PortfolioEntry, PortfolioCategory } from '@/types/portfolio';
+import { usePortfolioData } from './usePortfolioData';
+import { useUniversalPortfolio } from './useUniversalPortfolio';
 
 export const useTimeToPortfolio = () => {
   const { toast } = useToast();
@@ -26,13 +25,13 @@ export const useTimeToPortfolio = () => {
     }
   ) => {
     setIsConverting(true);
-    
+
     try {
       // Find the selected category
-      const selectedCategory = categories.find(cat => cat.id === portfolioData.categoryId);
-      
+      const selectedCategory = categories.find((cat) => cat.id === portfolioData.categoryId);
+
       if (!selectedCategory) {
-        throw new Error("Selected category not found");
+        throw new Error('Selected category not found');
       }
 
       // Create portfolio entry from time entry using universal system
@@ -51,24 +50,24 @@ export const useTimeToPortfolio = () => {
         selfAssessment: 3, // Default rating
         status: 'completed',
         timeSpent: timeEntry.duration,
-        awardingBodyStandards: []
+        awardingBodyStandards: [],
       };
 
       // Add to portfolio
       const newEntryId = addEntry(portfolioEntry);
-      
+
       toast({
-        title: "Added to Portfolio",
-        description: `"${portfolioData.title}" has been successfully added to your portfolio.`
+        title: 'Added to Portfolio',
+        description: `"${portfolioData.title}" has been successfully added to your portfolio.`,
       });
 
       return newEntryId;
     } catch (error) {
       console.error('Error converting time entry to portfolio:', error);
       toast({
-        title: "Error",
-        description: "Failed to add entry to portfolio. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to add entry to portfolio. Please try again.',
+        variant: 'destructive',
       });
       throw error;
     } finally {
@@ -79,23 +78,23 @@ export const useTimeToPortfolio = () => {
   // Quick convert using universal system with smart defaults
   const quickConvertTimeEntry = async (timeEntry: TimeEntry) => {
     setIsConverting(true);
-    
+
     try {
       const universalActivity = convertTimeEntryToUniversal(timeEntry);
       const entryId = await createUniversalPortfolioEntry(universalActivity);
-      
+
       toast({
-        title: "Quick Add Successful",
-        description: `"${timeEntry.activity}" has been automatically added to your portfolio with smart categorisation.`
+        title: 'Quick Add Successful',
+        description: `"${timeEntry.activity}" has been automatically added to your portfolio with smart categorisation.`,
       });
 
       return entryId;
     } catch (error) {
       console.error('Error quick converting time entry:', error);
       toast({
-        title: "Error",
-        description: "Failed to add entry to portfolio. Please try again.",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to add entry to portfolio. Please try again.',
+        variant: 'destructive',
       });
       throw error;
     } finally {
@@ -107,6 +106,6 @@ export const useTimeToPortfolio = () => {
     convertTimeEntryToPortfolio,
     quickConvertTimeEntry,
     isConverting,
-    categories
+    categories,
   };
 };

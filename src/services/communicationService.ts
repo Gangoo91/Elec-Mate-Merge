@@ -132,10 +132,7 @@ export const updateCommunication = async (
 };
 
 export const deleteCommunication = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('employer_communications')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('employer_communications').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting communication:', error);
@@ -170,7 +167,7 @@ const createRecipientsForCommunication = async (communication: Communication): P
       .select('id')
       .eq('status', 'Active');
 
-    employeeIds = (employees || []).map(e => e.id);
+    employeeIds = (employees || []).map((e) => e.id);
   } else if (communication.target_audience === 'managers') {
     // Get employees with manager roles
     const { data: employees } = await supabase
@@ -179,13 +176,13 @@ const createRecipientsForCommunication = async (communication: Communication): P
       .eq('status', 'Active')
       .in('team_role', ['Manager', 'Admin', 'Supervisor']);
 
-    employeeIds = (employees || []).map(e => e.id);
+    employeeIds = (employees || []).map((e) => e.id);
   } else if (communication.target_audience === 'specific' && communication.target_employee_ids) {
     employeeIds = communication.target_employee_ids;
   }
 
   if (employeeIds.length > 0) {
-    const recipients = employeeIds.map(employeeId => ({
+    const recipients = employeeIds.map((employeeId) => ({
       communication_id: communication.id,
       employee_id: employeeId,
     }));
@@ -194,17 +191,21 @@ const createRecipientsForCommunication = async (communication: Communication): P
   }
 };
 
-export const getRecipientsForCommunication = async (communicationId: string): Promise<CommunicationRecipient[]> => {
+export const getRecipientsForCommunication = async (
+  communicationId: string
+): Promise<CommunicationRecipient[]> => {
   const { data, error } = await supabase
     .from('employer_communication_recipients')
-    .select(`
+    .select(
+      `
       *,
       employee:employer_employees (
         id,
         name,
         photo_url
       )
-    `)
+    `
+    )
     .eq('communication_id', communicationId)
     .order('read_at', { ascending: false, nullsFirst: false });
 
@@ -232,7 +233,10 @@ export const markAsRead = async (communicationId: string, employeeId: string): P
   return true;
 };
 
-export const acknowledgeMessage = async (communicationId: string, employeeId: string): Promise<boolean> => {
+export const acknowledgeMessage = async (
+  communicationId: string,
+  employeeId: string
+): Promise<boolean> => {
   const { error } = await supabase
     .from('employer_communication_recipients')
     .update({

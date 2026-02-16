@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Wrench,
   Info,
@@ -12,13 +12,9 @@ import {
   TrendingDown,
   ChevronDown,
   BookOpen,
-} from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorSelect,
@@ -26,12 +22,12 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import { useMultiLoadDiversityCalculator } from "./diversity-factor/useMultiLoadDiversityCalculator";
-import { LoadEntry } from "./diversity-factor/LoadEntry";
+} from '@/components/calculators/shared';
+import { useMultiLoadDiversityCalculator } from './diversity-factor/useMultiLoadDiversityCalculator';
+import { LoadEntry } from './diversity-factor/LoadEntry';
 
 const DiversityFactorCalculator = () => {
-  const config = CALCULATOR_CONFIG["power"];
+  const config = CALCULATOR_CONFIG['power'];
 
   const {
     loads,
@@ -53,7 +49,7 @@ const DiversityFactorCalculator = () => {
     loadTypes,
   } = useMultiLoadDiversityCalculator();
 
-  const [supplyType, setSupplyType] = useState<string>("single-phase");
+  const [supplyType, setSupplyType] = useState<string>('single-phase');
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
   const [showPractical, setShowPractical] = useState(false);
@@ -66,34 +62,34 @@ const DiversityFactorCalculator = () => {
   const getMainDeviceRecommendation = () => {
     const current = calculateEstimatedCurrent();
 
-    if (current <= 6) return "6A MCB/RCBO";
-    if (current <= 10) return "10A MCB/RCBO";
-    if (current <= 16) return "16A MCB/RCBO";
-    if (current <= 20) return "20A MCB/RCBO";
-    if (current <= 25) return "25A MCB/RCBO";
-    if (current <= 32) return "32A MCB/RCBO";
-    if (current <= 40) return "40A MCB/RCBO";
-    if (current <= 50) return "50A MCB/RCBO";
-    if (current <= 63) return "63A MCB/RCBO";
-    if (current <= 80) return "80A Switch Disconnector";
-    if (current <= 100) return "100A Switch Disconnector";
-    return "125A+ Switch Disconnector";
+    if (current <= 6) return '6A MCB/RCBO';
+    if (current <= 10) return '10A MCB/RCBO';
+    if (current <= 16) return '16A MCB/RCBO';
+    if (current <= 20) return '20A MCB/RCBO';
+    if (current <= 25) return '25A MCB/RCBO';
+    if (current <= 32) return '32A MCB/RCBO';
+    if (current <= 40) return '40A MCB/RCBO';
+    if (current <= 50) return '50A MCB/RCBO';
+    if (current <= 63) return '63A MCB/RCBO';
+    if (current <= 80) return '80A Switch Disconnector';
+    if (current <= 100) return '100A Switch Disconnector';
+    return '125A+ Switch Disconnector';
   };
 
   const locationOptions = [
-    { value: "domestic", label: "Domestic Installation" },
-    { value: "commercial", label: "Commercial Installation" },
-    { value: "industrial", label: "Industrial Installation" },
+    { value: 'domestic', label: 'Domestic Installation' },
+    { value: 'commercial', label: 'Commercial Installation' },
+    { value: 'industrial', label: 'Industrial Installation' },
   ];
 
   const voltageOptions = [
-    { value: "230", label: "230V" },
-    { value: "400", label: "400V" },
+    { value: '230', label: '230V' },
+    { value: '400', label: '400V' },
   ];
 
   const supplyTypeOptions = [
-    { value: "single-phase", label: "Single Phase" },
-    { value: "three-phase", label: "Three Phase" },
+    { value: 'single-phase', label: 'Single Phase' },
+    { value: 'three-phase', label: 'Three Phase' },
   ];
 
   return (
@@ -109,15 +105,15 @@ const DiversityFactorCalculator = () => {
           <p className="text-sm text-white/60">Input Mode</p>
           <div className="flex gap-2">
             <button
-              onClick={() => toggleInputMode("amperage")}
+              onClick={() => toggleInputMode('amperage')}
               className={cn(
-                "flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation",
-                inputMode === "amperage"
-                  ? "text-black"
-                  : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+                'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
+                inputMode === 'amperage'
+                  ? 'text-black'
+                  : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
               )}
               style={
-                inputMode === "amperage"
+                inputMode === 'amperage'
                   ? {
                       background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
                     }
@@ -130,15 +126,15 @@ const DiversityFactorCalculator = () => {
               </div>
             </button>
             <button
-              onClick={() => toggleInputMode("kw")}
+              onClick={() => toggleInputMode('kw')}
               className={cn(
-                "flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation",
-                inputMode === "kw"
-                  ? "text-black"
-                  : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+                'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
+                inputMode === 'kw'
+                  ? 'text-black'
+                  : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
               )}
               style={
-                inputMode === "kw"
+                inputMode === 'kw'
                   ? {
                       background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
                     }
@@ -221,10 +217,10 @@ const DiversityFactorCalculator = () => {
             onClick={calculateDemand}
             disabled={loads.some((load) => !load.type || !load.connectedLoad)}
             className={cn(
-              "flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation",
+              'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
               !loads.some((load) => !load.type || !load.connectedLoad)
-                ? "text-black"
-                : "bg-white/10 text-white/30 cursor-not-allowed"
+                ? 'text-black'
+                : 'bg-white/10 text-white/30 cursor-not-allowed'
             )}
             style={
               !loads.some((load) => !load.type || !load.connectedLoad)
@@ -285,9 +281,7 @@ const DiversityFactorCalculator = () => {
             {/* Diversity Factor Badge */}
             <div className="mt-4 p-3 rounded-xl bg-amber-400/10 border border-amber-400/20">
               <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-white/80">
-                  Overall Diversity Factor:
-                </span>
+                <span className="text-sm font-medium text-white/80">Overall Diversity Factor:</span>
                 <span
                   className="text-2xl font-bold bg-clip-text text-transparent"
                   style={{
@@ -311,7 +305,7 @@ const DiversityFactorCalculator = () => {
                     <div key={index} className="p-2 rounded-lg bg-white/5">
                       <div className="flex justify-between items-center mb-1">
                         <span className="text-sm font-medium text-white capitalize">
-                          {breakdown.type.replace("-", " ")}
+                          {breakdown.type.replace('-', ' ')}
                         </span>
                         <span className="text-sm font-semibold text-amber-400">
                           {(breakdown.diversityFactor * 100).toFixed(0)}%
@@ -319,7 +313,7 @@ const DiversityFactorCalculator = () => {
                       </div>
                       <div className="flex justify-between text-xs text-white/80">
                         <span>
-                          {breakdown.installedLoad.toFixed(2)} kW →{" "}
+                          {breakdown.installedLoad.toFixed(2)} kW →{' '}
                           {breakdown.diversifiedLoad.toFixed(2)} kW
                         </span>
                         <span>
@@ -344,7 +338,7 @@ const DiversityFactorCalculator = () => {
             {/* Load Reduction Summary */}
             <div className="mt-3 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
               <p className="text-sm text-blue-300">
-                <span className="font-medium">Total Load Reduction:</span>{" "}
+                <span className="font-medium">Total Load Reduction:</span>{' '}
                 {(result.totalInstalledLoad - result.diversifiedLoad).toFixed(2)} kW (
                 {(
                   ((result.totalInstalledLoad - result.diversifiedLoad) /
@@ -358,7 +352,7 @@ const DiversityFactorCalculator = () => {
 
           {/* What This Means */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-            <div className="calculator-card overflow-hidden" style={{ borderColor: "#60a5fa15" }}>
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Lightbulb className="h-4 w-4 text-blue-400" />
@@ -368,8 +362,8 @@ const DiversityFactorCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showGuidance && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -382,7 +376,8 @@ const DiversityFactorCalculator = () => {
                       <li className="flex items-start gap-2">
                         <span className="text-blue-400 mt-1">•</span>
                         <span>
-                          <strong>Cable Savings:</strong> Use smaller cables than total load suggests
+                          <strong>Cable Savings:</strong> Use smaller cables than total load
+                          suggests
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
@@ -394,7 +389,7 @@ const DiversityFactorCalculator = () => {
                       <li className="flex items-start gap-2">
                         <span className="text-blue-400 mt-1">•</span>
                         <span>
-                          <strong>Cost Reduction:</strong>{" "}
+                          <strong>Cost Reduction:</strong>{' '}
                           {(
                             ((result.totalInstalledLoad - result.diversifiedLoad) /
                               result.totalInstalledLoad) *
@@ -435,10 +430,7 @@ const DiversityFactorCalculator = () => {
 
           {/* Practical Recommendations */}
           <Collapsible open={showPractical} onOpenChange={setShowPractical}>
-            <div
-              className="calculator-card overflow-hidden"
-              style={{ borderColor: "#22c55e15" }}
-            >
+            <div className="calculator-card overflow-hidden" style={{ borderColor: '#22c55e15' }}>
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <TrendingDown className="h-4 w-4 text-green-400" />
@@ -448,8 +440,8 @@ const DiversityFactorCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    "h-4 w-4 text-white/70 transition-transform duration-200",
-                    showPractical && "rotate-180"
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showPractical && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
@@ -462,7 +454,7 @@ const DiversityFactorCalculator = () => {
                       <li className="flex items-start gap-2">
                         <span className="text-green-400 mt-1">•</span>
                         <span>
-                          Design for {result.diversifiedCurrent.toFixed(1)}A, not{" "}
+                          Design for {result.diversifiedCurrent.toFixed(1)}A, not{' '}
                           {result.totalDesignCurrent.toFixed(1)}A
                         </span>
                       </li>
@@ -534,7 +526,7 @@ const DiversityFactorCalculator = () => {
 
       {/* Quick Reference */}
       <Collapsible open={showReference} onOpenChange={setShowReference}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: "#fbbf2415" }}>
+        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <BookOpen className="h-4 w-4 text-amber-400" />
@@ -544,8 +536,8 @@ const DiversityFactorCalculator = () => {
             </div>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/70 transition-transform duration-200",
-                showReference && "rotate-180"
+                'h-4 w-4 text-white/70 transition-transform duration-200',
+                showReference && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>
@@ -553,8 +545,8 @@ const DiversityFactorCalculator = () => {
           <CollapsibleContent className="p-4 pt-0">
             <div className="space-y-3 text-sm text-amber-200/80">
               <p>
-                <strong className="text-amber-300">Diversity factors from Table 311:</strong> Applied
-                based on installation type
+                <strong className="text-amber-300">Diversity factors from Table 311:</strong>{' '}
+                Applied based on installation type
               </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">

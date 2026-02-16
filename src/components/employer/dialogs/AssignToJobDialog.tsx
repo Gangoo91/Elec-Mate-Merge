@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useEmployer, type Employee } from "@/contexts/EmployerContext";
-import { useJobs } from "@/hooks/useJobs";
-import { toast } from "@/hooks/use-toast";
-import { Briefcase, MapPin, Calendar, Check, Search } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useEmployer, type Employee } from '@/contexts/EmployerContext';
+import { useJobs } from '@/hooks/useJobs';
+import { toast } from '@/hooks/use-toast';
+import { Briefcase, MapPin, Calendar, Check, Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface AssignToJobDialogProps {
   employee: Employee | null;
@@ -26,33 +26,34 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
   const { data: jobs = [] } = useJobs();
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
-  const [notes, setNotes] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [notes, setNotes] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   if (!employee) return null;
 
-  const activeJobs = jobs.filter(j => j.status === "Active" || j.status === "Pending");
-  
-  const filteredJobs = activeJobs.filter(job =>
-    job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    job.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    job.location.toLowerCase().includes(searchQuery.toLowerCase())
+  const activeJobs = jobs.filter((j) => j.status === 'Active' || j.status === 'Pending');
+
+  const filteredJobs = activeJobs.filter(
+    (job) =>
+      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleAssign = () => {
     if (!selectedJobId) {
       toast({
-        title: "Select a Job",
-        description: "Please select a job to assign the employee to.",
-        variant: "destructive",
+        title: 'Select a Job',
+        description: 'Please select a job to assign the employee to.',
+        variant: 'destructive',
       });
       return;
     }
 
-    const selectedJob = jobs.find(j => j.id === selectedJobId);
-    
+    const selectedJob = jobs.find((j) => j.id === selectedJobId);
+
     if (!selectedJob) return;
-    
+
     // Use context action to persist assignment
     assignEmployeeToJob(
       employee.id,
@@ -64,22 +65,28 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
     );
 
     toast({
-      title: "Employee Assigned",
+      title: 'Employee Assigned',
       description: `${employee.name} has been assigned to ${selectedJob.title}.`,
     });
 
     // Reset and close
     setSelectedJobId(null);
-    setNotes("");
-    setSearchQuery("");
+    setNotes('');
+    setSearchQuery('');
     onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={isMobile ? "max-w-[95vw] h-[90vh] p-0 flex flex-col" : "sm:max-w-lg max-h-[85vh] p-0 flex flex-col"}>
+      <DialogContent
+        className={
+          isMobile
+            ? 'max-w-[95vw] h-[90vh] p-0 flex flex-col'
+            : 'sm:max-w-lg max-h-[85vh] p-0 flex flex-col'
+        }
+      >
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-primary to-primary/50 rounded-t-lg" />
-        
+
         {/* Fixed Header */}
         <div className="flex-shrink-0 p-4 pb-0">
           <DialogHeader>
@@ -112,7 +119,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
                 placeholder="Search jobs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={cn(!searchQuery && "pl-10")}
+                className={cn(!searchQuery && 'pl-10')}
               />
             </div>
 
@@ -122,11 +129,11 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
               <div className="space-y-2">
                 {filteredJobs.length > 0 ? (
                   filteredJobs.map((job) => (
-                    <Card 
+                    <Card
                       key={job.id}
                       className={`cursor-pointer transition-all ${
-                        selectedJobId === job.id 
-                          ? 'border-elec-yellow bg-elec-yellow/5 ring-1 ring-elec-yellow' 
+                        selectedJobId === job.id
+                          ? 'border-elec-yellow bg-elec-yellow/5 ring-1 ring-elec-yellow'
                           : 'hover:border-border/80'
                       }`}
                       onClick={() => setSelectedJobId(job.id)}
@@ -146,8 +153,8 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
                               {job.location}
                             </p>
                           </div>
-                          <Badge 
-                            variant="outline" 
+                          <Badge
+                            variant="outline"
                             className={`text-xs flex-shrink-0 ${
                               job.status === 'Active' ? 'border-success text-success' : ''
                             }`}
@@ -156,7 +163,9 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
                           </Badge>
                         </div>
                         <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
-                          <span>{job.assignedWorkers}/{job.totalWorkers} assigned</span>
+                          <span>
+                            {job.assignedWorkers}/{job.totalWorkers} assigned
+                          </span>
                           <span>{job.progress}% complete</span>
                         </div>
                       </CardContent>
@@ -206,11 +215,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
             <Button variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
-            <Button 
-              className="flex-1" 
-              onClick={handleAssign}
-              disabled={!selectedJobId}
-            >
+            <Button className="flex-1" onClick={handleAssign} disabled={!selectedJobId}>
               Assign to Job
             </Button>
           </div>

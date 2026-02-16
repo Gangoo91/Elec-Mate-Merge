@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -20,8 +19,8 @@ const DateInputWithToday: React.FC<DateInputWithTodayProps> = ({
   id,
   value,
   onChange,
-  placeholder = "Select date",
-  className
+  placeholder = 'Select date',
+  className,
 }) => {
   const [open, setOpen] = React.useState(false);
   const selectedDate = value ? new Date(value) : undefined;
@@ -46,8 +45,8 @@ const DateInputWithToday: React.FC<DateInputWithTodayProps> = ({
           <Button
             variant="outline"
             className={cn(
-              "flex-1 justify-start text-left font-normal",
-              !value && "text-muted-foreground",
+              'flex-1 justify-start text-left font-normal',
+              !value && 'text-muted-foreground',
               className
             )}
           >
@@ -64,19 +63,14 @@ const DateInputWithToday: React.FC<DateInputWithTodayProps> = ({
             className="pointer-events-auto"
           />
           <div className="p-3 border-t">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleTodayClick}
-              className="w-full"
-            >
+            <Button variant="outline" size="sm" onClick={handleTodayClick} className="w-full">
               <Clock className="mr-2 h-4 w-4" />
               Today
             </Button>
           </div>
         </PopoverContent>
       </Popover>
-      
+
       {/* Hidden input for form compatibility */}
       <Input
         id={id}

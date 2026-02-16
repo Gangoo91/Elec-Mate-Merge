@@ -70,7 +70,12 @@ import { useSupervisorVerification } from '@/hooks/portfolio/useSupervisorVerifi
 import { SupervisorVerificationQRSheet } from '@/components/portfolio-hub/SupervisorVerificationQRSheet';
 import { useEvidenceValidator } from '@/hooks/portfolio/useEvidenceValidator';
 import { EvidenceValidationReport } from '@/components/portfolio-hub/ai/EvidenceValidationReport';
-import { useAIEvidenceTagger, type AIAnalysisResult, getStrengthColor, getConfidenceBadgeClass } from '@/hooks/portfolio/useAIEvidenceTagger';
+import {
+  useAIEvidenceTagger,
+  type AIAnalysisResult,
+  getStrengthColor,
+  getConfidenceBadgeClass,
+} from '@/hooks/portfolio/useAIEvidenceTagger';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
@@ -95,11 +100,8 @@ export function PortfolioDetailSheet({
   const { getCommentsForEvidence, addComment } = usePortfolioComments();
   const { createShareLink, getShareUrl } = usePortfolioSharing();
   const { deleteEntry } = usePortfolioData();
-  const {
-    createVerification,
-    getVerificationForPortfolioItem,
-    getVerificationUrl,
-  } = useSupervisorVerification();
+  const { createVerification, getVerificationForPortfolioItem, getVerificationUrl } =
+    useSupervisorVerification();
   const { validate, isValidating, result: validationResult } = useEvidenceValidator();
   const { analyze, isAnalyzing, result: aiAnalysis } = useAIEvidenceTagger();
   const { qualificationCode } = useStudentQualification();
@@ -151,8 +153,11 @@ export function PortfolioDetailSheet({
         tasks: entry.assessmentCriteria || [],
         skills: entry.skills || [],
         learned: entry.reflection || '',
-        photos: entry.evidenceFiles?.filter((f: any) => f.type?.startsWith('image/'))
-          .map((f: any) => f.url).filter(Boolean) || [],
+        photos:
+          entry.evidenceFiles
+            ?.filter((f: any) => f.type?.startsWith('image/'))
+            .map((f: any) => f.url)
+            .filter(Boolean) || [],
       };
 
       const profile = user?.user_metadata;
@@ -200,8 +205,8 @@ export function PortfolioDetailSheet({
   const handleAnalyseEvidence = async () => {
     if (aiAnalysis) return; // Already have results
 
-    const evidenceFile = entry.evidenceFiles?.find((f: any) =>
-      f.type?.startsWith('image/') || f.type?.includes('pdf')
+    const evidenceFile = entry.evidenceFiles?.find(
+      (f: any) => f.type?.startsWith('image/') || f.type?.includes('pdf')
     );
 
     if (!evidenceFile?.url) {
@@ -214,10 +219,10 @@ export function PortfolioDetailSheet({
     }
 
     const evidenceType = evidenceFile.type?.startsWith('image/')
-      ? 'image' as const
+      ? ('image' as const)
       : evidenceFile.type?.includes('pdf')
-        ? 'document' as const
-        : 'image' as const;
+        ? ('document' as const)
+        : ('image' as const);
 
     const result = await analyze({
       evidenceUrl: evidenceFile.url,
@@ -389,16 +394,25 @@ export function PortfolioDetailSheet({
                   {entry.status || 'draft'}
                 </Badge>
                 <Badge variant="outline" className="text-xs">
-                  {typeof entry.category === 'object' ? entry.category?.name : entry.category || 'N/A'}
+                  {typeof entry.category === 'object'
+                    ? entry.category?.name
+                    : entry.category || 'N/A'}
                 </Badge>
-                {(entry.category?.id === 'site-diary-evidence' || entry.category === 'site-diary-evidence') && (
-                  <Badge variant="outline" className="text-xs bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
+                {(entry.category?.id === 'site-diary-evidence' ||
+                  entry.category === 'site-diary-evidence') && (
+                  <Badge
+                    variant="outline"
+                    className="text-xs bg-cyan-500/10 text-cyan-400 border-cyan-500/30"
+                  >
                     <NotebookPen className="h-3 w-3 mr-1" />
                     From Site Diary
                   </Badge>
                 )}
                 {isVerified && (
-                  <Badge variant="outline" className="text-xs bg-emerald-500/10 text-emerald-400 border-emerald-500/30">
+                  <Badge
+                    variant="outline"
+                    className="text-xs bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                  >
                     <ShieldCheck className="h-3 w-3 mr-1" />
                     Verified
                   </Badge>
@@ -514,8 +528,8 @@ export function PortfolioDetailSheet({
                       {entry.assessmentCriteria.map((ac: string, i: number) => {
                         const isExpanded = expandedAC === ac;
                         // Try to find matching AI criteria for detail
-                        const matchedDetail = aiAnalysis?.matchedCriteria?.find((mc) =>
-                          ac.includes(mc.acCode) && ac.includes(mc.unitCode || '')
+                        const matchedDetail = aiAnalysis?.matchedCriteria?.find(
+                          (mc) => ac.includes(mc.acCode) && ac.includes(mc.unitCode || '')
                         );
                         return (
                           <button
@@ -529,11 +543,21 @@ export function PortfolioDetailSheet({
                             </div>
                             {isExpanded && matchedDetail && (
                               <div className="mt-2 ml-6 space-y-1">
-                                <p className="text-xs text-white leading-relaxed">{matchedDetail.acText}</p>
+                                <p className="text-xs text-white leading-relaxed">
+                                  {matchedDetail.acText}
+                                </p>
                                 {matchedDetail.reason && (
-                                  <p className="text-[11px] text-white/70 leading-relaxed">{matchedDetail.reason}</p>
+                                  <p className="text-[11px] text-white/70 leading-relaxed">
+                                    {matchedDetail.reason}
+                                  </p>
                                 )}
-                                <Badge variant="outline" className={cn('text-[10px]', getConfidenceBadgeClass(matchedDetail.confidence))}>
+                                <Badge
+                                  variant="outline"
+                                  className={cn(
+                                    'text-[10px]',
+                                    getConfidenceBadgeClass(matchedDetail.confidence)
+                                  )}
+                                >
                                   {matchedDetail.confidence}% confidence match
                                 </Badge>
                               </div>
@@ -559,7 +583,10 @@ export function PortfolioDetailSheet({
                     </h3>
                     <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/15 space-y-3">
                       <div className="flex items-center gap-2">
-                        <Badge variant="outline" className={getStrengthColor(aiAnalysis.evidenceStrength)}>
+                        <Badge
+                          variant="outline"
+                          className={getStrengthColor(aiAnalysis.evidenceStrength)}
+                        >
                           {aiAnalysis.evidenceStrength} evidence
                         </Badge>
                       </div>
@@ -573,7 +600,9 @@ export function PortfolioDetailSheet({
                           </p>
                           {(() => {
                             // Sort by highest confidence first
-                            const sorted = [...aiAnalysis.matchedCriteria].sort((a, b) => b.confidence - a.confidence);
+                            const sorted = [...aiAnalysis.matchedCriteria].sort(
+                              (a, b) => b.confidence - a.confidence
+                            );
                             // Group by unit
                             const byUnit = new Map<string, typeof sorted>();
                             for (const mc of sorted) {
@@ -583,21 +612,32 @@ export function PortfolioDetailSheet({
                             }
                             // Sort unit groups by their best confidence
                             const unitEntries = Array.from(byUnit.entries()).sort(
-                              (a, b) => Math.max(...b[1].map((m) => m.confidence)) - Math.max(...a[1].map((m) => m.confidence))
+                              (a, b) =>
+                                Math.max(...b[1].map((m) => m.confidence)) -
+                                Math.max(...a[1].map((m) => m.confidence))
                             );
                             return unitEntries.map(([unitCode, criteria]) => (
-                              <div key={unitCode} className="rounded-lg bg-white/[0.04] border border-white/[0.08] overflow-hidden">
+                              <div
+                                key={unitCode}
+                                className="rounded-lg bg-white/[0.04] border border-white/[0.08] overflow-hidden"
+                              >
                                 <div className="px-3 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
-                                  <span className="text-[10px] font-bold text-elec-yellow">Unit {unitCode}</span>
+                                  <span className="text-[10px] font-bold text-elec-yellow">
+                                    Unit {unitCode}
+                                  </span>
                                   {criteria[0]?.unitTitle && (
-                                    <p className="text-xs text-white leading-snug mt-0.5">{criteria[0].unitTitle}</p>
+                                    <p className="text-xs text-white leading-snug mt-0.5">
+                                      {criteria[0].unitTitle}
+                                    </p>
                                   )}
                                 </div>
                                 <div className="px-3 py-2.5 space-y-2">
                                   {criteria.map((mc, i) => {
                                     const ref = `${mc.unitCode} AC ${mc.acCode}`;
                                     const isSelected = selectedClaimACs.has(ref);
-                                    const alreadyClaimed = (entry.assessmentCriteria || []).includes(ref);
+                                    const alreadyClaimed = (
+                                      entry.assessmentCriteria || []
+                                    ).includes(ref);
                                     return (
                                       <button
                                         key={i}
@@ -629,15 +669,24 @@ export function PortfolioDetailSheet({
                                           )}
                                           <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2">
-                                              <Badge variant="outline" className={cn('text-[10px] shrink-0', getConfidenceBadgeClass(mc.confidence))}>
+                                              <Badge
+                                                variant="outline"
+                                                className={cn(
+                                                  'text-[10px] shrink-0',
+                                                  getConfidenceBadgeClass(mc.confidence)
+                                                )}
+                                              >
                                                 {mc.confidence}%
                                               </Badge>
                                               {alreadyClaimed && (
-                                                <span className="text-[10px] text-green-400 font-medium">Claimed</span>
+                                                <span className="text-[10px] text-green-400 font-medium">
+                                                  Claimed
+                                                </span>
                                               )}
                                             </div>
                                             <p className="text-xs text-white leading-relaxed mt-1">
-                                              <span className="font-bold">{mc.acCode}:</span> {mc.acText}
+                                              <span className="font-bold">{mc.acCode}:</span>{' '}
+                                              {mc.acText}
                                             </p>
                                             {mc.reason && (
                                               <p className="text-[11px] text-white/70 leading-relaxed mt-1">
@@ -670,7 +719,9 @@ export function PortfolioDetailSheet({
                       {/* Tips to strengthen */}
                       {aiAnalysis.qualityTips?.length > 0 && (
                         <div className="space-y-1 pt-1">
-                          <p className="text-xs font-semibold text-white uppercase tracking-wider">Tips to strengthen:</p>
+                          <p className="text-xs font-semibold text-white uppercase tracking-wider">
+                            Tips to strengthen:
+                          </p>
                           {aiAnalysis.qualityTips.map((tip, i) => (
                             <p key={i} className="text-xs text-white flex items-start gap-1.5">
                               <span className="text-elec-yellow mt-0.5">•</span>
@@ -790,7 +841,9 @@ export function PortfolioDetailSheet({
                           </span>
                         </div>
                         {existingVerification.supervisor_company && (
-                          <p className="text-xs text-white/50 ml-6">{existingVerification.supervisor_company}</p>
+                          <p className="text-xs text-white/50 ml-6">
+                            {existingVerification.supervisor_company}
+                          </p>
                         )}
                         {existingVerification.feedback_text && (
                           <p className="text-sm text-white/70 ml-6 italic">
@@ -827,9 +880,7 @@ export function PortfolioDetailSheet({
                   <div className="text-center py-8 space-y-2">
                     <MessageSquare className="h-8 w-8 text-white/80 mx-auto" />
                     <p className="text-sm text-white/80">No comments yet</p>
-                    <p className="text-xs text-white/80">
-                      Start a discussion about this evidence
-                    </p>
+                    <p className="text-xs text-white/80">Start a discussion about this evidence</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -924,9 +975,16 @@ export function PortfolioDetailSheet({
                 {isCreatingVerification ? (
                   <Loader2 className="h-5 w-5 text-purple-400 animate-spin" />
                 ) : (
-                  <ShieldCheck className={cn('h-5 w-5', isVerified ? 'text-emerald-400' : 'text-purple-400')} />
+                  <ShieldCheck
+                    className={cn('h-5 w-5', isVerified ? 'text-emerald-400' : 'text-purple-400')}
+                  />
                 )}
-                <span className={cn('text-[10px]', isVerified ? 'text-emerald-400' : 'text-purple-400/80')}>
+                <span
+                  className={cn(
+                    'text-[10px]',
+                    isVerified ? 'text-emerald-400' : 'text-purple-400/80'
+                  )}
+                >
                   {isVerified ? 'Verified' : 'Verify'}
                 </span>
               </button>
@@ -968,21 +1026,9 @@ export function PortfolioDetailSheet({
             ) : shareUrl ? (
               <>
                 <div className="flex items-center gap-2">
-                  <Input
-                    value={shareUrl}
-                    readOnly
-                    className="flex-1 h-11"
-                  />
-                  <Button
-                    size="icon"
-                    onClick={handleCopyLink}
-                    className="h-11 w-11 shrink-0"
-                  >
-                    {copied ? (
-                      <Check className="h-4 w-4" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
+                  <Input value={shareUrl} readOnly className="flex-1 h-11" />
+                  <Button size="icon" onClick={handleCopyLink} className="h-11 w-11 shrink-0">
+                    {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </Button>
                 </div>
                 <p className="text-xs text-white/80">

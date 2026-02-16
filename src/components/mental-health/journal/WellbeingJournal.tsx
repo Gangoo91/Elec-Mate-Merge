@@ -1,10 +1,9 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import {
   BookOpen,
   Plus,
@@ -22,11 +21,11 @@ import {
   Filter,
   Download,
   Cloud,
-  CloudOff
-} from "lucide-react";
-import { useJournalData } from "@/hooks/useMentalHealthSync";
-import { useAuth } from "@/contexts/AuthContext";
-import { cn } from "@/lib/utils";
+  CloudOff,
+} from 'lucide-react';
+import { useJournalData } from '@/hooks/useMentalHealthSync';
+import { useAuth } from '@/contexts/AuthContext';
+import { cn } from '@/lib/utils';
 
 interface JournalEntry {
   id?: string;
@@ -43,34 +42,44 @@ interface JournalEntry {
 }
 
 const moodOptions = [
-  { value: 1, emoji: "😢", label: "Very Low", color: "bg-red-500" },
-  { value: 2, emoji: "😔", label: "Low", color: "bg-orange-500" },
-  { value: 3, emoji: "😐", label: "Okay", color: "bg-yellow-500" },
-  { value: 4, emoji: "🙂", label: "Good", color: "bg-lime-500" },
-  { value: 5, emoji: "😊", label: "Great", color: "bg-green-500" }
+  { value: 1, emoji: '😢', label: 'Very Low', color: 'bg-red-500' },
+  { value: 2, emoji: '😔', label: 'Low', color: 'bg-orange-500' },
+  { value: 3, emoji: '😐', label: 'Okay', color: 'bg-yellow-500' },
+  { value: 4, emoji: '🙂', label: 'Good', color: 'bg-lime-500' },
+  { value: 5, emoji: '😊', label: 'Great', color: 'bg-green-500' },
 ];
 
 const journalPrompts = [
   "What's one thing that went well today?",
-  "How are you feeling about work right now?",
+  'How are you feeling about work right now?',
   "What's been on your mind lately?",
-  "Describe a moment today when you felt calm.",
+  'Describe a moment today when you felt calm.',
   "What's something you're looking forward to?",
-  "What challenged you today and how did you handle it?",
-  "What would make tomorrow better?",
-  "Who or what made you smile today?",
+  'What challenged you today and how did you handle it?',
+  'What would make tomorrow better?',
+  'Who or what made you smile today?',
   "What's one thing you're proud of this week?",
-  "How has your energy been today?",
+  'How has your energy been today?',
   "What's one boundary you set or could set?",
-  "What did you learn about yourself recently?",
-  "Describe your perfect mental health day.",
-  "What support do you need right now?",
-  "What's one small act of self-care you did today?"
+  'What did you learn about yourself recently?',
+  'Describe your perfect mental health day.',
+  'What support do you need right now?',
+  "What's one small act of self-care you did today?",
 ];
 
 const commonTags = [
-  "work", "family", "sleep", "anxiety", "stress", "achievement",
-  "exercise", "rest", "social", "alone-time", "productive", "tired"
+  'work',
+  'family',
+  'sleep',
+  'anxiety',
+  'stress',
+  'achievement',
+  'exercise',
+  'rest',
+  'social',
+  'alone-time',
+  'productive',
+  'tired',
 ];
 
 const WellbeingJournal = () => {
@@ -79,23 +88,23 @@ const WellbeingJournal = () => {
   const [view, setView] = useState<'list' | 'write' | 'entry'>('list');
   const [currentEntry, setCurrentEntry] = useState<Partial<JournalEntry>>({});
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [filterMood, setFilterMood] = useState<number | null>(null);
   const [showFilters, setShowFilters] = useState(false);
-  const [currentPrompt, setCurrentPrompt] = useState("");
-  const [newGratitude, setNewGratitude] = useState("");
-  const [newTrigger, setNewTrigger] = useState("");
+  const [currentPrompt, setCurrentPrompt] = useState('');
+  const [newGratitude, setNewGratitude] = useState('');
+  const [newTrigger, setNewTrigger] = useState('');
 
   const startNewEntry = () => {
     const randomPrompt = journalPrompts[Math.floor(Math.random() * journalPrompts.length)];
     setCurrentPrompt(randomPrompt);
     setCurrentEntry({
       mood: 3,
-      moodLabel: "Okay",
-      content: "",
+      moodLabel: 'Okay',
+      content: '',
       gratitude: [],
       triggers: [],
-      tags: []
+      tags: [],
     });
     setView('write');
   };
@@ -108,12 +117,12 @@ const WellbeingJournal = () => {
       date: new Date().toISOString().split('T')[0],
       time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
       mood: currentEntry.mood || 3,
-      mood_label: moodOptions.find(m => m.value === currentEntry.mood)?.label || "Okay",
-      content: currentEntry.content || "",
+      mood_label: moodOptions.find((m) => m.value === currentEntry.mood)?.label || 'Okay',
+      content: currentEntry.content || '',
       gratitude: currentEntry.gratitude || [],
       triggers: currentEntry.triggers || [],
       tags: currentEntry.tags || [],
-      prompt: currentPrompt || undefined
+      prompt: currentPrompt || undefined,
     };
 
     await addEntry(entry);
@@ -133,9 +142,9 @@ const WellbeingJournal = () => {
     if (!newGratitude.trim()) return;
     setCurrentEntry({
       ...currentEntry,
-      gratitude: [...(currentEntry.gratitude || []), newGratitude.trim()]
+      gratitude: [...(currentEntry.gratitude || []), newGratitude.trim()],
     });
-    setNewGratitude("");
+    setNewGratitude('');
   };
 
   const removeGratitude = (index: number) => {
@@ -148,9 +157,9 @@ const WellbeingJournal = () => {
     if (!newTrigger.trim()) return;
     setCurrentEntry({
       ...currentEntry,
-      triggers: [...(currentEntry.triggers || []), newTrigger.trim()]
+      triggers: [...(currentEntry.triggers || []), newTrigger.trim()],
     });
-    setNewTrigger("");
+    setNewTrigger('');
   };
 
   const removeTrigger = (index: number) => {
@@ -162,19 +171,20 @@ const WellbeingJournal = () => {
   const toggleTag = (tag: string) => {
     const tags = currentEntry.tags || [];
     if (tags.includes(tag)) {
-      setCurrentEntry({ ...currentEntry, tags: tags.filter(t => t !== tag) });
+      setCurrentEntry({ ...currentEntry, tags: tags.filter((t) => t !== tag) });
     } else {
       setCurrentEntry({ ...currentEntry, tags: [...tags, tag] });
     }
   };
 
-  const filteredEntries = entries.filter(entry => {
+  const filteredEntries = entries.filter((entry) => {
     const content = entry.content || '';
     const gratitude = entry.gratitude || [];
     const tags = entry.tags || [];
-    const matchesSearch = content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          gratitude.some(g => g.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                          tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesSearch =
+      content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      gratitude.some((g) => g.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      tags.some((t) => t.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesMood = filterMood === null || entry.mood === filterMood;
     return matchesSearch && matchesMood;
   });
@@ -189,7 +199,7 @@ const WellbeingJournal = () => {
       checkDate.setDate(today.getDate() - i);
       const dateStr = checkDate.toISOString().split('T')[0];
 
-      if (entries.some(e => e.date === dateStr)) {
+      if (entries.some((e) => e.date === dateStr)) {
         streak++;
       } else if (i > 0) {
         break;
@@ -205,9 +215,12 @@ const WellbeingJournal = () => {
   };
 
   const exportEntries = () => {
-    const text = entries.map(e =>
-      `Date: ${e.date} ${e.time}\nMood: ${e.moodLabel}\n\n${e.content}\n\nGratitude:\n${e.gratitude.map(g => `- ${g}`).join('\n')}\n\nTriggers:\n${e.triggers.map(t => `- ${t}`).join('\n')}\n\nTags: ${e.tags.join(', ')}\n\n${'='.repeat(40)}\n`
-    ).join('\n');
+    const text = entries
+      .map(
+        (e) =>
+          `Date: ${e.date} ${e.time}\nMood: ${e.moodLabel}\n\n${e.content}\n\nGratitude:\n${e.gratitude.map((g) => `- ${g}`).join('\n')}\n\nTriggers:\n${e.triggers.map((t) => `- ${t}`).join('\n')}\n\nTags: ${e.tags.join(', ')}\n\n${'='.repeat(40)}\n`
+      )
+      .join('\n');
 
     const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -227,9 +240,7 @@ const WellbeingJournal = () => {
             <BookOpen className="h-6 w-6 text-purple-400" />
           </div>
           <h2 className="text-xl font-bold text-white mb-1">Wellbeing Journal</h2>
-          <p className="text-sm text-white">
-            Track your thoughts, feelings, and growth
-          </p>
+          <p className="text-sm text-white">Track your thoughts, feelings, and growth</p>
         </div>
 
         {/* Cloud Sync Status */}
@@ -290,7 +301,10 @@ const WellbeingJournal = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search entries..."
-                  className={cn("h-12 bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl touch-manipulation", !searchTerm && "pl-10")}
+                  className={cn(
+                    'h-12 bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl touch-manipulation',
+                    !searchTerm && 'pl-10'
+                  )}
                 />
               </div>
               <Button
@@ -298,8 +312,8 @@ const WellbeingJournal = () => {
                 size="icon"
                 onClick={() => setShowFilters(!showFilters)}
                 className={cn(
-                  "h-12 w-12 touch-manipulation active:scale-95 transition-all",
-                  showFilters ? "bg-purple-500/20 border-purple-500/30" : "border-white/10"
+                  'h-12 w-12 touch-manipulation active:scale-95 transition-all',
+                  showFilters ? 'bg-purple-500/20 border-purple-500/30' : 'border-white/10'
                 )}
               >
                 <Filter className="h-4 w-4" />
@@ -318,17 +332,17 @@ const WellbeingJournal = () => {
               <div className="flex gap-2 overflow-x-auto pb-2">
                 <Button
                   size="sm"
-                  variant={filterMood === null ? "default" : "outline"}
+                  variant={filterMood === null ? 'default' : 'outline'}
                   onClick={() => setFilterMood(null)}
                   className="text-xs h-10 min-w-[60px]"
                 >
                   All
                 </Button>
-                {moodOptions.map(mood => (
+                {moodOptions.map((mood) => (
                   <Button
                     key={mood.value}
                     size="sm"
-                    variant={filterMood === mood.value ? "default" : "outline"}
+                    variant={filterMood === mood.value ? 'default' : 'outline'}
                     onClick={() => setFilterMood(mood.value)}
                     className="text-xs h-10 min-w-[50px]"
                   >
@@ -343,23 +357,28 @@ const WellbeingJournal = () => {
         {/* Entries List */}
         <div className="space-y-3">
           {filteredEntries.length > 0 ? (
-            filteredEntries.map(entry => {
-              const mood = moodOptions.find(m => m.value === entry.mood);
+            filteredEntries.map((entry) => {
+              const mood = moodOptions.find((m) => m.value === entry.mood);
               const gratitude = entry.gratitude || [];
               const tags = entry.tags || [];
               return (
                 <Card
                   key={entry.id}
                   className="border-white/10 bg-white/5 cursor-pointer touch-manipulation active:scale-[0.98] transition-all"
-                  onClick={() => { setSelectedEntry(entry); setView('entry'); }}
+                  onClick={() => {
+                    setSelectedEntry(entry);
+                    setView('entry');
+                  }}
                 >
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       {/* Mood indicator circle */}
-                      <div className={cn(
-                        "w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0",
-                        mood?.color
-                      )}>
+                      <div
+                        className={cn(
+                          'w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0',
+                          mood?.color
+                        )}
+                      >
                         <span className="text-2xl">{mood?.emoji}</span>
                       </div>
 
@@ -371,7 +390,7 @@ const WellbeingJournal = () => {
                             {new Date(entry.date).toLocaleDateString('en-GB', {
                               weekday: 'short',
                               day: 'numeric',
-                              month: 'short'
+                              month: 'short',
                             })}
                           </div>
                           <div className="flex items-center gap-1 text-xs text-white">
@@ -388,13 +407,20 @@ const WellbeingJournal = () => {
                         {/* Tags as small badges */}
                         {tags.length > 0 && (
                           <div className="flex gap-1.5 mt-2 flex-wrap">
-                            {tags.slice(0, 3).map(tag => (
-                              <Badge key={tag} variant="outline" className="text-[10px] py-0 px-2 text-white border-white/20">
+                            {tags.slice(0, 3).map((tag) => (
+                              <Badge
+                                key={tag}
+                                variant="outline"
+                                className="text-[10px] py-0 px-2 text-white border-white/20"
+                              >
                                 {tag}
                               </Badge>
                             ))}
                             {tags.length > 3 && (
-                              <Badge variant="outline" className="text-[10px] py-0 px-2 text-white border-white/20">
+                              <Badge
+                                variant="outline"
+                                className="text-[10px] py-0 px-2 text-white border-white/20"
+                              >
                                 +{tags.length - 3}
                               </Badge>
                             )}
@@ -421,8 +447,8 @@ const WellbeingJournal = () => {
                 <Sparkles className="h-10 w-10 text-purple-400 mx-auto mb-3" />
                 <h3 className="font-medium text-white mb-2">Start Your Journal</h3>
                 <p className="text-sm text-white mb-4">
-                  Writing regularly helps identify patterns in your mental health.
-                  Just a few minutes a day can make a difference.
+                  Writing regularly helps identify patterns in your mental health. Just a few
+                  minutes a day can make a difference.
                 </p>
                 <Button onClick={startNewEntry} className="bg-purple-500 hover:bg-purple-600 h-12">
                   <Plus className="h-4 w-4 mr-2" />
@@ -446,8 +472,7 @@ const WellbeingJournal = () => {
                       ? `Great consistency! You've journaled for ${getStreak()} days in a row. This habit builds self-awareness.`
                       : entries.length >= 7
                         ? `You've written ${entries.length} entries. Regular reflection helps identify patterns in your wellbeing.`
-                        : "Keep journaling to unlock insights about your mental health patterns."
-                    }
+                        : 'Keep journaling to unlock insights about your mental health patterns.'}
                   </p>
                 </div>
               </div>
@@ -474,7 +499,11 @@ const WellbeingJournal = () => {
               Back
             </Button>
             <span className="text-sm text-white font-medium">
-              {new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
+              {new Date().toLocaleDateString('en-GB', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short',
+              })}
             </span>
             <div className="w-20"></div>
           </div>
@@ -485,20 +514,24 @@ const WellbeingJournal = () => {
           <CardContent className="p-4">
             <h3 className="text-sm font-medium text-white mb-3">How are you feeling?</h3>
             <div className="grid grid-cols-5 gap-1 sm:gap-2">
-              {moodOptions.map(mood => (
+              {moodOptions.map((mood) => (
                 <button
                   key={mood.value}
-                  onClick={() => setCurrentEntry({ ...currentEntry, mood: mood.value, moodLabel: mood.label })}
+                  onClick={() =>
+                    setCurrentEntry({ ...currentEntry, mood: mood.value, moodLabel: mood.label })
+                  }
                   className={cn(
-                    "flex flex-col items-center p-2 sm:p-3 rounded-xl transition-all min-h-[72px]",
-                    "border-2 touch-manipulation active:scale-[0.95]",
+                    'flex flex-col items-center p-2 sm:p-3 rounded-xl transition-all min-h-[72px]',
+                    'border-2 touch-manipulation active:scale-[0.95]',
                     currentEntry.mood === mood.value
-                      ? "bg-white/10 border-white/30 scale-105"
-                      : "border-transparent hover:bg-white/5"
+                      ? 'bg-white/10 border-white/30 scale-105'
+                      : 'border-transparent hover:bg-white/5'
                   )}
                 >
                   <span className="text-2xl sm:text-3xl mb-1">{mood.emoji}</span>
-                  <span className="text-[10px] sm:text-xs text-white font-medium">{mood.label}</span>
+                  <span className="text-[10px] sm:text-xs text-white font-medium">
+                    {mood.label}
+                  </span>
                 </button>
               ))}
             </div>
@@ -525,7 +558,7 @@ const WellbeingJournal = () => {
           <CardContent className="p-4">
             <h3 className="text-sm font-medium text-white mb-3">What's on your mind?</h3>
             <Textarea
-              value={currentEntry.content || ""}
+              value={currentEntry.content || ''}
               onChange={(e) => setCurrentEntry({ ...currentEntry, content: e.target.value })}
               placeholder="Write your thoughts, feelings, reflections..."
               className="min-h-[150px] resize-none text-base touch-manipulation bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl"
@@ -559,7 +592,10 @@ const WellbeingJournal = () => {
             {currentEntry.gratitude && currentEntry.gratitude.length > 0 && (
               <div className="space-y-2">
                 {currentEntry.gratitude.map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20"
+                  >
                     <span className="text-green-400 font-semibold">✓</span>
                     <span className="text-sm text-white flex-1">{item}</span>
                     <button
@@ -601,7 +637,10 @@ const WellbeingJournal = () => {
             {currentEntry.triggers && currentEntry.triggers.length > 0 && (
               <div className="space-y-2">
                 {currentEntry.triggers.map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 p-3 rounded-lg bg-orange-500/10 border border-orange-500/20"
+                  >
                     <span className="text-orange-400 font-semibold">!</span>
                     <span className="text-sm text-white flex-1">{item}</span>
                     <button
@@ -625,12 +664,12 @@ const WellbeingJournal = () => {
               Tags
             </h3>
             <div className="flex flex-wrap gap-2">
-              {commonTags.map(tag => (
+              {commonTags.map((tag) => (
                 <button
                   key={tag}
                   onClick={() => toggleTag(tag)}
                   className={cn(
-                    "px-4 py-2.5 rounded-full text-sm transition-all min-h-[40px] touch-manipulation active:scale-[0.95]",
+                    'px-4 py-2.5 rounded-full text-sm transition-all min-h-[40px] touch-manipulation active:scale-[0.95]',
                     currentEntry.tags?.includes(tag)
                       ? 'bg-purple-500 text-white'
                       : 'bg-white/10 text-white hover:bg-white/20'
@@ -665,7 +704,7 @@ const WellbeingJournal = () => {
 
   // Entry View
   if (view === 'entry' && selectedEntry) {
-    const mood = moodOptions.find(m => m.value === selectedEntry.mood);
+    const mood = moodOptions.find((m) => m.value === selectedEntry.mood);
     return (
       <div className="space-y-4">
         {/* Sticky Header */}
@@ -673,7 +712,10 @@ const WellbeingJournal = () => {
           <div className="flex items-center justify-between">
             <Button
               variant="ghost"
-              onClick={() => { setSelectedEntry(null); setView('list'); }}
+              onClick={() => {
+                setSelectedEntry(null);
+                setView('list');
+              }}
               className="h-11 touch-manipulation active:scale-[0.98] transition-all"
             >
               <ChevronLeft className="h-5 w-5 mr-1" />
@@ -693,7 +735,9 @@ const WellbeingJournal = () => {
         <Card className="border-white/10 bg-white/5">
           <CardContent className="p-4">
             <div className="flex items-center gap-4">
-              <div className={cn("w-14 h-14 rounded-xl flex items-center justify-center", mood?.color)}>
+              <div
+                className={cn('w-14 h-14 rounded-xl flex items-center justify-center', mood?.color)}
+              >
                 <span className="text-3xl">{mood?.emoji}</span>
               </div>
               <div>
@@ -704,7 +748,7 @@ const WellbeingJournal = () => {
                     weekday: 'long',
                     day: 'numeric',
                     month: 'long',
-                    year: 'numeric'
+                    year: 'numeric',
                   })}
                 </div>
                 <div className="flex items-center gap-2 text-xs text-white">
@@ -779,7 +823,7 @@ const WellbeingJournal = () => {
         {/* Tags */}
         {(selectedEntry.tags?.length || 0) > 0 && (
           <div className="flex flex-wrap gap-2">
-            {(selectedEntry.tags || []).map(tag => (
+            {(selectedEntry.tags || []).map((tag) => (
               <Badge key={tag} variant="outline" className="text-xs text-white border-white/20">
                 {tag}
               </Badge>

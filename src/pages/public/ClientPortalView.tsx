@@ -1,15 +1,15 @@
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import {
   usePortalData,
   usePortalProgressLogs,
   usePortalPhotos,
   usePortalMessages,
   useSendPortalMessage,
-} from "@/hooks/usePublicPortal";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+} from '@/hooks/usePublicPortal';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 import {
   Loader2,
   Calendar,
@@ -26,14 +26,14 @@ import {
   ChevronDown,
   ChevronUp,
   Zap,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ClientPortalView() {
   const { token } = useParams<{ token: string }>();
   const { toast } = useToast();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [showAllLogs, setShowAllLogs] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -48,16 +48,16 @@ export default function ClientPortalView() {
 
     try {
       await sendMessage.mutateAsync(message);
-      setMessage("");
+      setMessage('');
       toast({
-        title: "Message sent",
-        description: "Your message has been sent to the contractor.",
+        title: 'Message sent',
+        description: 'Your message has been sent to the contractor.',
       });
     } catch {
       toast({
-        title: "Failed to send",
-        description: "Could not send your message. Please try again.",
-        variant: "destructive",
+        title: 'Failed to send',
+        description: 'Could not send your message. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -84,7 +84,8 @@ export default function ClientPortalView() {
           </div>
           <h1 className="text-xl font-bold text-foreground mb-2">Portal Not Available</h1>
           <p className="text-muted-foreground">
-            This portal link is invalid or has been deactivated. Please contact your contractor for a new link.
+            This portal link is invalid or has been deactivated. Please contact your contractor for
+            a new link.
           </p>
         </div>
       </div>
@@ -102,24 +103,24 @@ export default function ClientPortalView() {
 
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
-      case "completed":
-        return "bg-green-500/20 text-green-400";
-      case "in_progress":
-      case "active":
-        return "bg-blue-500/20 text-blue-400";
-      case "on_hold":
-        return "bg-yellow-500/20 text-yellow-400";
+      case 'completed':
+        return 'bg-green-500/20 text-green-400';
+      case 'in_progress':
+      case 'active':
+        return 'bg-blue-500/20 text-blue-400';
+      case 'on_hold':
+        return 'bg-yellow-500/20 text-yellow-400';
       default:
-        return "bg-gray-500/20 text-gray-400";
+        return 'bg-gray-500/20 text-gray-400';
     }
   };
 
   const formatDate = (date: string | null) => {
-    if (!date) return "TBC";
-    return new Date(date).toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
+    if (!date) return 'TBC';
+    return new Date(date).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
     });
   };
 
@@ -158,7 +159,7 @@ export default function ClientPortalView() {
                 Project Progress
               </h3>
               <Badge className={getStatusColor(portal.job_status)}>
-                {portal.job_status?.replace("_", " ") || "Active"}
+                {portal.job_status?.replace('_', ' ') || 'Active'}
               </Badge>
             </div>
 
@@ -218,10 +219,7 @@ export default function ClientPortalView() {
 
             <div className="space-y-3">
               {displayedLogs.map((log) => (
-                <div
-                  key={log.id}
-                  className="p-3 rounded-lg bg-muted/50 border border-border"
-                >
+                <div key={log.id} className="p-3 rounded-lg bg-muted/50 border border-border">
                   <div className="flex items-center justify-between mb-2">
                     <p className="font-medium text-foreground text-sm">
                       {formatDate(log.log_date)}
@@ -290,7 +288,7 @@ export default function ClientPortalView() {
             {photoCategories.length > 1 && (
               <div className="flex gap-2 mb-3 overflow-x-auto pb-2">
                 <Button
-                  variant={selectedCategory === null ? "default" : "outline"}
+                  variant={selectedCategory === null ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(null)}
                   className="shrink-0"
@@ -300,7 +298,7 @@ export default function ClientPortalView() {
                 {photoCategories.map((category) => (
                   <Button
                     key={category}
-                    variant={selectedCategory === category ? "default" : "outline"}
+                    variant={selectedCategory === category ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setSelectedCategory(category)}
                     className="shrink-0 capitalize"
@@ -351,20 +349,18 @@ export default function ClientPortalView() {
                   <div
                     key={msg.id}
                     className={cn(
-                      "p-3 rounded-lg max-w-[85%]",
-                      msg.sender_type === "client"
-                        ? "bg-blue-500/20 ml-auto"
-                        : "bg-muted"
+                      'p-3 rounded-lg max-w-[85%]',
+                      msg.sender_type === 'client' ? 'bg-blue-500/20 ml-auto' : 'bg-muted'
                     )}
                   >
                     <p className="text-sm text-foreground">{msg.message}</p>
                     <p className="text-xs text-muted-foreground mt-1">
                       <Clock className="h-3 w-3 inline mr-1" />
-                      {new Date(msg.created_at).toLocaleString("en-GB", {
-                        day: "numeric",
-                        month: "short",
-                        hour: "2-digit",
-                        minute: "2-digit",
+                      {new Date(msg.created_at).toLocaleString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit',
                       })}
                     </p>
                   </div>
@@ -400,9 +396,7 @@ export default function ClientPortalView() {
 
         {/* Footer */}
         <footer className="text-center py-6">
-          <p className="text-xs text-muted-foreground">
-            Powered by Elec-Mate
-          </p>
+          <p className="text-xs text-muted-foreground">Powered by Elec-Mate</p>
         </footer>
       </main>
     </div>

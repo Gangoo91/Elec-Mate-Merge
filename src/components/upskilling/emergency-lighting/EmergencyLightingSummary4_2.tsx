@@ -12,7 +12,13 @@ export const EmergencyLightingSummary4_2 = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground leading-relaxed">
-          Self-contained and central battery emergency lighting systems both comply with BS 5266-1, but each has distinct advantages that make them suitable for different applications. Self-contained systems offer simplicity, low installation costs, and independent operation — ideal for small to medium buildings like offices, schools, and retail spaces. Central battery systems provide longer battery life, easier maintenance, and higher reliability — essential for large, complex, or critical infrastructure such as hospitals, airports, and shopping centres.
+          Self-contained and central battery emergency lighting systems both comply with BS 5266-1,
+          but each has distinct advantages that make them suitable for different applications.
+          Self-contained systems offer simplicity, low installation costs, and independent operation
+          — ideal for small to medium buildings like offices, schools, and retail spaces. Central
+          battery systems provide longer battery life, easier maintenance, and higher reliability —
+          essential for large, complex, or critical infrastructure such as hospitals, airports, and
+          shopping centres.
         </p>
 
         <div className="grid md:grid-cols-2 gap-4 mt-4">
@@ -71,7 +77,9 @@ export const EmergencyLightingSummary4_2 = () => {
 
         <div className="bg-elec-yellow/20 border border-elec-yellow/40 rounded-lg p-4 mt-4">
           <p className="text-foreground font-medium text-center">
-            Understanding both system types enables electricians to recommend solutions that balance regulatory compliance, client budgets, and operational requirements whilst ensuring reliable emergency illumination when it matters most.
+            Understanding both system types enables electricians to recommend solutions that balance
+            regulatory compliance, client budgets, and operational requirements whilst ensuring
+            reliable emergency illumination when it matters most.
           </p>
         </div>
       </CardContent>

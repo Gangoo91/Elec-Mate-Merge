@@ -1,17 +1,23 @@
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Search, Loader2 } from "lucide-react";
-import { Form, FormControl, FormField, FormItem, FormDescription, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { Search, Loader2 } from 'lucide-react';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormDescription,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const postcodeSchema = z.object({
   postcode: z
     .string()
-    .min(5, { message: "Please enter a valid postcode" })
-    .max(8, { message: "Postcode is too long" })
+    .min(5, { message: 'Please enter a valid postcode' })
+    .max(8, { message: 'Postcode is too long' }),
 });
 
 interface PostcodeSearchFormProps {
@@ -23,7 +29,7 @@ const PostcodeSearchForm = ({ isSearching, onSearch }: PostcodeSearchFormProps) 
   const form = useForm<z.infer<typeof postcodeSchema>>({
     resolver: zodResolver(postcodeSchema),
     defaultValues: {
-      postcode: "",
+      postcode: '',
     },
   });
 
@@ -41,12 +47,8 @@ const PostcodeSearchForm = ({ isSearching, onSearch }: PostcodeSearchFormProps) 
             <FormItem>
               <FormControl>
                 <div className="flex flex-col sm:flex-row gap-2">
-                  <Input 
-                    placeholder="Enter your postcode" 
-                    className="text-sm" 
-                    {...field} 
-                  />
-                  <Button 
+                  <Input placeholder="Enter your postcode" className="text-sm" {...field} />
+                  <Button
                     type="submit"
                     className="bg-red-500 hover:bg-red-600 text-foreground sm:w-auto"
                     disabled={isSearching}

@@ -5,7 +5,7 @@ import { isTypingContext, shouldAllowSpaceDefault } from '@/utils/keyboardGuards
  * GlobalKeyGuards prevents Space from scrolling the page by default,
  * allowing Space only in typing contexts (inputs, textareas, etc.) or
  * on accessible controls (buttons, checkboxes, radios).
- * 
+ *
  * This component uses a capture-phase listener at document level to
  * intercept Space before any other handlers, ensuring it works reliably
  * everywhere in the app.

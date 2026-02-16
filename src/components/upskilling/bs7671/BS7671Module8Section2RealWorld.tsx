@@ -10,7 +10,9 @@ const BS7671Module8Section2RealWorld = () => {
           <Building className="h-6 w-6 text-elec-yellow" />
           Real-World Documentation Scenarios
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-teal-600 text-foreground">Practical Applications</Badge>
+        <Badge variant="secondary" className="w-fit bg-teal-600 text-foreground">
+          Practical Applications
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
@@ -23,7 +25,9 @@ const BS7671Module8Section2RealWorld = () => {
             </CardHeader>
             <CardContent className="text-foreground space-y-4">
               <div className="bg-gray-800 p-3 rounded">
-                <h6 className="text-elec-yellow font-semibold mb-2">Project: Victorian Terrace House Conversion</h6>
+                <h6 className="text-elec-yellow font-semibold mb-2">
+                  Project: Victorian Terrace House Conversion
+                </h6>
                 <ul className="text-sm space-y-1">
                   <li>• Conversion of single dwelling to 3 flats</li>
                   <li>• New 3-phase supply installation required</li>
@@ -32,7 +36,7 @@ const BS7671Module8Section2RealWorld = () => {
                   <li>• EV charging provision in rear car park</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Documentation Challenges:</h6>
                 <ul className="text-sm space-y-1">
@@ -43,7 +47,7 @@ const BS7671Module8Section2RealWorld = () => {
                   <li>• Landlord certification obligations</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Solutions Implemented:</h6>
                 <ul className="text-sm space-y-1">
@@ -66,7 +70,9 @@ const BS7671Module8Section2RealWorld = () => {
             </CardHeader>
             <CardContent className="text-foreground space-y-4">
               <div className="bg-gray-800 p-3 rounded">
-                <h6 className="text-elec-yellow font-semibold mb-2">Project: Manufacturing Facility Upgrade</h6>
+                <h6 className="text-elec-yellow font-semibold mb-2">
+                  Project: Manufacturing Facility Upgrade
+                </h6>
                 <ul className="text-sm space-y-1">
                   <li>• 1000kVA transformer installation</li>
                   <li>• 150 motor control circuits</li>
@@ -75,7 +81,7 @@ const BS7671Module8Section2RealWorld = () => {
                   <li>• Power factor correction and harmonics mitigation</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Documentation Complexity:</h6>
                 <ul className="text-sm space-y-1">
@@ -86,7 +92,7 @@ const BS7671Module8Section2RealWorld = () => {
                   <li>• Integration with existing building management systems</li>
                 </ul>
               </div>
-              
+
               <div className="bg-gray-800 p-3 rounded">
                 <h6 className="text-elec-yellow font-semibold mb-2">Professional Approach:</h6>
                 <ul className="text-sm space-y-1">
@@ -105,10 +111,17 @@ const BS7671Module8Section2RealWorld = () => {
           <h5 className="text-elec-yellow font-semibold mb-3">Complex Certification Scenarios:</h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h6 className="text-yellow-400 font-medium mb-2">Scenario 1: Partial Rewire with Retained Circuits</h6>
+              <h6 className="text-yellow-400 font-medium mb-2">
+                Scenario 1: Partial Rewire with Retained Circuits
+              </h6>
               <div className="bg-gray-800 p-3 rounded text-sm">
-                <p className="mb-2"><strong>Challenge:</strong> Kitchen and bathroom rewire in occupied house with retained lighting circuits</p>
-                <p className="mb-2"><strong>Documentation Required:</strong></p>
+                <p className="mb-2">
+                  <strong>Challenge:</strong> Kitchen and bathroom rewire in occupied house with
+                  retained lighting circuits
+                </p>
+                <p className="mb-2">
+                  <strong>Documentation Required:</strong>
+                </p>
                 <ul className="space-y-1 text-xs">
                   <li>• EIC for new installation work</li>
                   <li>• EICR for retained circuits to verify safety</li>
@@ -116,15 +129,25 @@ const BS7671Module8Section2RealWorld = () => {
                   <li>• Interface points documented</li>
                   <li>• Test results for both new and existing</li>
                 </ul>
-                <p className="mt-2 text-elec-yellow"><strong>Solution:</strong> Combined approach with clear boundary definitions and comprehensive testing program</p>
+                <p className="mt-2 text-elec-yellow">
+                  <strong>Solution:</strong> Combined approach with clear boundary definitions and
+                  comprehensive testing program
+                </p>
               </div>
             </div>
-            
+
             <div>
-              <h6 className="text-yellow-400 font-medium mb-2">Scenario 2: Emergency Lighting Integration</h6>
+              <h6 className="text-yellow-400 font-medium mb-2">
+                Scenario 2: Emergency Lighting Integration
+              </h6>
               <div className="bg-gray-800 p-3 rounded text-sm">
-                <p className="mb-2"><strong>Challenge:</strong> New emergency lighting system interfacing with existing general lighting</p>
-                <p className="mb-2"><strong>Documentation Required:</strong></p>
+                <p className="mb-2">
+                  <strong>Challenge:</strong> New emergency lighting system interfacing with
+                  existing general lighting
+                </p>
+                <p className="mb-2">
+                  <strong>Documentation Required:</strong>
+                </p>
                 <ul className="space-y-1 text-xs">
                   <li>• EIC for emergency lighting circuits</li>
                   <li>• BS 5266 compliance certification</li>
@@ -132,7 +155,10 @@ const BS7671Module8Section2RealWorld = () => {
                   <li>• Monthly and annual test log books</li>
                   <li>• Integration with fire alarm documentation</li>
                 </ul>
-                <p className="mt-2 text-elec-yellow"><strong>Solution:</strong> Multi-standard approach with cross-referenced documentation and ongoing test schedules</p>
+                <p className="mt-2 text-elec-yellow">
+                  <strong>Solution:</strong> Multi-standard approach with cross-referenced
+                  documentation and ongoing test schedules
+                </p>
               </div>
             </div>
           </div>
@@ -142,8 +168,13 @@ const BS7671Module8Section2RealWorld = () => {
           <h5 className="text-elec-yellow font-semibold mb-3">Quality Control Case Studies:</h5>
           <div className="space-y-4">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-red-400">
-              <h6 className="font-bold text-red-400 mb-2">Case Study: Certification Error Discovery</h6>
-              <p className="text-sm mb-2"><strong>Situation:</strong> Post-completion inspection revealed Zs values exceeded tabulated limits on 3 circuits</p>
+              <h6 className="font-bold text-red-400 mb-2">
+                Case Study: Certification Error Discovery
+              </h6>
+              <p className="text-sm mb-2">
+                <strong>Situation:</strong> Post-completion inspection revealed Zs values exceeded
+                tabulated limits on 3 circuits
+              </p>
               <div className="grid md:grid-cols-2 gap-4 mt-2">
                 <div>
                   <p className="text-xs font-semibold mb-1">Root Cause Analysis:</p>
@@ -165,10 +196,15 @@ const BS7671Module8Section2RealWorld = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
-              <h6 className="font-bold text-green-400 mb-2">Case Study: Excellence in Documentation</h6>
-              <p className="text-sm mb-2"><strong>Situation:</strong> Large commercial project with exemplary documentation standards</p>
+              <h6 className="font-bold text-green-400 mb-2">
+                Case Study: Excellence in Documentation
+              </h6>
+              <p className="text-sm mb-2">
+                <strong>Situation:</strong> Large commercial project with exemplary documentation
+                standards
+              </p>
               <div className="grid md:grid-cols-2 gap-4 mt-2">
                 <div>
                   <p className="text-xs font-semibold mb-1">Success Factors:</p>
@@ -198,7 +234,9 @@ const BS7671Module8Section2RealWorld = () => {
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-gray-800 p-3 rounded">
               <h6 className="font-bold text-blue-400 mb-2">Mobile Data Capture</h6>
-              <p className="text-sm mb-2">Tablet-based test result entry with automatic calculation verification</p>
+              <p className="text-sm mb-2">
+                Tablet-based test result entry with automatic calculation verification
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Real-time error detection</li>
                 <li>• Photograph integration</li>
@@ -208,7 +246,9 @@ const BS7671Module8Section2RealWorld = () => {
             </div>
             <div className="bg-gray-800 p-3 rounded">
               <h6 className="font-bold text-green-400 mb-2">Test Equipment Integration</h6>
-              <p className="text-sm mb-2">Direct data transfer from test instruments to certification software</p>
+              <p className="text-sm mb-2">
+                Direct data transfer from test instruments to certification software
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Eliminates transcription errors</li>
                 <li>• Timestamps all measurements</li>
@@ -218,7 +258,9 @@ const BS7671Module8Section2RealWorld = () => {
             </div>
             <div className="bg-gray-800 p-3 rounded">
               <h6 className="font-bold text-purple-400 mb-2">Digital Signatures</h6>
-              <p className="text-sm mb-2">Secure electronic authentication for certificate completion</p>
+              <p className="text-sm mb-2">
+                Secure electronic authentication for certificate completion
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Legal equivalence to handwritten signatures</li>
                 <li>• Audit trail maintenance</li>
@@ -230,26 +272,41 @@ const BS7671Module8Section2RealWorld = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Lessons Learned and Best Practices:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Lessons Learned and Best Practices:
+          </h5>
           <div className="space-y-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <h6 className="font-bold text-yellow-400 mb-1">Planning and Preparation</h6>
-              <p className="text-sm">Thorough pre-work planning, including documentation requirements, significantly reduces completion time and error rates while improving client satisfaction.</p>
+              <p className="text-sm">
+                Thorough pre-work planning, including documentation requirements, significantly
+                reduces completion time and error rates while improving client satisfaction.
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-1">Communication Excellence</h6>
-              <p className="text-sm">Clear, frequent communication with clients, building control, and other stakeholders prevents misunderstandings and ensures smooth project delivery.</p>
+              <p className="text-sm">
+                Clear, frequent communication with clients, building control, and other stakeholders
+                prevents misunderstandings and ensures smooth project delivery.
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <h6 className="font-bold text-green-400 mb-1">Continuous Improvement</h6>
-              <p className="text-sm">Regular review of documentation processes, incorporation of new technologies, and learning from both successes and challenges drives professional excellence.</p>
+              <p className="text-sm">
+                Regular review of documentation processes, incorporation of new technologies, and
+                learning from both successes and challenges drives professional excellence.
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-purple-400">
               <h6 className="font-bold text-purple-400 mb-1">Regulatory Compliance</h6>
-              <p className="text-sm">Staying current with regulatory changes, maintaining competence through training, and understanding legal obligations ensures professional protection and public safety.</p>
+              <p className="text-sm">
+                Staying current with regulatory changes, maintaining competence through training,
+                and understanding legal obligations ensures professional protection and public
+                safety.
+              </p>
             </div>
           </div>
         </div>

@@ -37,44 +37,46 @@ export const useAssessmentPortfolioIntegration = () => {
   const getPortfolioCategoryForAssessment = (unitCode: string, assessmentType: string) => {
     // Find the most relevant category based on unit code or assessment type
     const unitCodeLower = unitCode.toLowerCase();
-    
+
     // Electrical installation categories
     if (unitCodeLower.includes('installation') || unitCodeLower.includes('wiring')) {
-      return categories.find(cat => cat.name.toLowerCase().includes('installation'));
+      return categories.find((cat) => cat.name.toLowerCase().includes('installation'));
     }
-    
+
     // Health and safety categories
     if (unitCodeLower.includes('safety') || unitCodeLower.includes('health')) {
-      return categories.find(cat => cat.name.toLowerCase().includes('safety'));
+      return categories.find((cat) => cat.name.toLowerCase().includes('safety'));
     }
-    
+
     // Testing and commissioning
     if (unitCodeLower.includes('test') || unitCodeLower.includes('commission')) {
-      return categories.find(cat => cat.name.toLowerCase().includes('testing'));
+      return categories.find((cat) => cat.name.toLowerCase().includes('testing'));
     }
-    
+
     // Maintenance
     if (unitCodeLower.includes('maintenance') || unitCodeLower.includes('repair')) {
-      return categories.find(cat => cat.name.toLowerCase().includes('maintenance'));
+      return categories.find((cat) => cat.name.toLowerCase().includes('maintenance'));
     }
-    
+
     // Default to first available category
-    return categories[0] || {
-      id: 'default',
-      name: 'General Assessment',
-      description: 'General assessment evidence',
-      icon: 'FileText',
-      color: '#ffc107',
-      requiredEntries: 1,
-      completedEntries: 0
-    };
+    return (
+      categories[0] || {
+        id: 'default',
+        name: 'General Assessment',
+        description: 'General assessment evidence',
+        icon: 'FileText',
+        color: '#ffc107',
+        requiredEntries: 1,
+        completedEntries: 0,
+      }
+    );
   };
 
   // Generate skills based on assessment performance
   const generateSkillsFromAssessment = (assessment: AssessmentData): string[] => {
     const skills: string[] = [];
     const unitLower = assessment.unitTitle.toLowerCase();
-    
+
     // Base skills from unit content
     if (unitLower.includes('installation')) {
       skills.push('Cable installation', 'Circuit design', 'Equipment mounting');
@@ -88,7 +90,7 @@ export const useAssessmentPortfolioIntegration = () => {
     if (unitLower.includes('maintenance')) {
       skills.push('Preventive maintenance', 'Fault diagnosis', 'Component replacement');
     }
-    
+
     // Performance-based skills
     if (assessment.percentage >= 90) {
       skills.push('Excellence in theoretical knowledge');
@@ -97,38 +99,38 @@ export const useAssessmentPortfolioIntegration = () => {
     } else if (assessment.percentage >= 70) {
       skills.push('Good theoretical foundation');
     }
-    
+
     // Assessment-specific skills
     skills.push('Knowledge assessment completion', 'Time management');
-    
+
     return skills;
   };
 
   // Generate learning outcomes based on assessment
   const generateLearningOutcomes = (assessment: AssessmentData): string[] => {
     const outcomes: string[] = [];
-    
+
     outcomes.push(`Demonstrated understanding of ${assessment.unitTitle}`);
     outcomes.push(`Achieved ${assessment.percentage}% competency in ${assessment.unitCode}`);
-    
+
     if (assessment.percentage >= 80) {
       outcomes.push('Exceeded minimum competency requirements');
     }
-    
+
     outcomes.push('Completed formal knowledge assessment');
-    
+
     return outcomes;
   };
 
   // Generate assessment criteria
   const generateAssessmentCriteria = (assessment: AssessmentData): string[] => {
     const criteria: string[] = [];
-    
+
     criteria.push(`Unit: ${assessment.unitCode} - ${assessment.unitTitle}`);
     criteria.push(`Assessment type: ${assessment.assessmentType}`);
     criteria.push(`Minimum pass mark: 70%`);
     criteria.push(`Achieved score: ${assessment.percentage}%`);
-    
+
     return criteria;
   };
 
@@ -149,7 +151,7 @@ export const useAssessmentPortfolioIntegration = () => {
 
   // Convert assessment to portfolio entry
   const convertAssessmentToPortfolio = async (
-    assessment: AssessmentData, 
+    assessment: AssessmentData,
     additionalData?: {
       title?: string;
       reflection?: string;
@@ -158,10 +160,10 @@ export const useAssessmentPortfolioIntegration = () => {
     }
   ): Promise<string | undefined> => {
     setIsConverting(true);
-    
+
     try {
-      const category = additionalData?.categoryId 
-        ? categories.find(cat => cat.id === additionalData.categoryId)
+      const category = additionalData?.categoryId
+        ? categories.find((cat) => cat.id === additionalData.categoryId)
         : getPortfolioCategoryForAssessment(assessment.unitCode, assessment.assessmentType);
 
       if (!category) {
@@ -170,7 +172,7 @@ export const useAssessmentPortfolioIntegration = () => {
 
       const skills = [
         ...generateSkillsFromAssessment(assessment),
-        ...(additionalData?.additionalSkills || [])
+        ...(additionalData?.additionalSkills || []),
       ];
 
       const portfolioEntry: Omit<PortfolioEntry, 'id'> = {
@@ -178,7 +180,9 @@ export const useAssessmentPortfolioIntegration = () => {
         description: `Assessment completion for ${assessment.unitTitle} (${assessment.unitCode}). Achieved ${assessment.score}/${assessment.totalQuestions} (${assessment.percentage}%) in ${Math.round(assessment.timeTaken / 60)} minutes.`,
         category,
         skills,
-        reflection: additionalData?.reflection || `Successfully completed the ${assessment.assessmentType} for ${assessment.unitTitle}. This assessment tested my theoretical knowledge and understanding of key concepts in ${assessment.unitCode}. Achieving ${assessment.percentage}% demonstrates my competency in this area.`,
+        reflection:
+          additionalData?.reflection ||
+          `Successfully completed the ${assessment.assessmentType} for ${assessment.unitTitle}. This assessment tested my theoretical knowledge and understanding of key concepts in ${assessment.unitCode}. Achieving ${assessment.percentage}% demonstrates my competency in this area.`,
         dateCreated: assessment.completedAt,
         dateCompleted: assessment.completedAt,
         evidenceFiles: [], // Could be enhanced to include assessment screenshots/certificates
@@ -186,7 +190,7 @@ export const useAssessmentPortfolioIntegration = () => {
           'assessment',
           assessment.assessmentType.toLowerCase().replace(' ', '-'),
           assessment.unitCode.toLowerCase(),
-          assessment.percentage >= 80 ? 'high-achievement' : 'competent'
+          assessment.percentage >= 80 ? 'high-achievement' : 'competent',
         ],
         assessmentCriteria: generateAssessmentCriteria(assessment),
         learningOutcomes: generateLearningOutcomes(assessment),
@@ -194,25 +198,25 @@ export const useAssessmentPortfolioIntegration = () => {
         status: 'completed' as const,
         timeSpent: assessment.timeTaken,
         awardingBodyStandards: [`Unit ${assessment.unitCode}`],
-        supervisorFeedback: assessment.feedback
+        supervisorFeedback: assessment.feedback,
       };
 
       const newEntry = await addEntry(portfolioEntry);
-      
+
       if (newEntry) {
         toast({
-          title: "Assessment Added to Portfolio",
+          title: 'Assessment Added to Portfolio',
           description: `Your ${assessment.assessmentType} results have been successfully added to your portfolio.`,
         });
-        
+
         return newEntry.id;
       }
     } catch (error) {
       console.error('Error converting assessment to portfolio:', error);
       toast({
-        title: "Conversion Failed",
-        description: "Failed to add assessment to portfolio. Please try again.",
-        variant: "destructive"
+        title: 'Conversion Failed',
+        description: 'Failed to add assessment to portfolio. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsConverting(false);
@@ -226,7 +230,9 @@ export const useAssessmentPortfolioIntegration = () => {
   };
 
   // Bulk convert multiple assessments
-  const bulkConvertAssessments = async (assessments: AssessmentData[]): Promise<{ successful: number; failed: number }> => {
+  const bulkConvertAssessments = async (
+    assessments: AssessmentData[]
+  ): Promise<{ successful: number; failed: number }> => {
     setIsConverting(true);
     let successful = 0;
     let failed = 0;
@@ -242,9 +248,9 @@ export const useAssessmentPortfolioIntegration = () => {
       }
 
       toast({
-        title: "Bulk Conversion Complete",
+        title: 'Bulk Conversion Complete',
         description: `Successfully converted ${successful} assessments. ${failed} failed.`,
-        variant: failed > 0 ? "destructive" : "default"
+        variant: failed > 0 ? 'destructive' : 'default',
       });
     } finally {
       setIsConverting(false);
@@ -260,6 +266,6 @@ export const useAssessmentPortfolioIntegration = () => {
     convertQuizAttemptToAssessment,
     generateSkillsFromAssessment,
     isConverting,
-    categories
+    categories,
   };
 };

@@ -12,7 +12,10 @@ import { cn } from '@/lib/utils';
 
 export type RecommendationVariant = 'orange' | 'green' | 'purple' | 'yellow' | 'blue' | 'red';
 
-const variantStyles: Record<RecommendationVariant, { bg: string; border: string; text: string; btnBg: string; iconBg: string }> = {
+const variantStyles: Record<
+  RecommendationVariant,
+  { bg: string; border: string; text: string; btnBg: string; iconBg: string }
+> = {
   orange: {
     bg: 'bg-orange-500/[0.08]',
     border: 'border-orange-500/20',
@@ -100,7 +103,8 @@ export function RecommendationCard({
         className={cn(
           'mt-3 w-full flex items-center justify-center gap-2 h-12 rounded-xl',
           'text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all',
-          styles.btnBg, 'text-black'
+          styles.btnBg,
+          'text-black'
         )}
       >
         {actionLabel}

@@ -3,16 +3,16 @@
  * Shows complete Elec-ID data: qualifications, skills, work history, training
  */
 
-import { useState } from "react";
-import { Drawer } from "vaul";
-import { motion, AnimatePresence } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { Drawer } from 'vaul';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
 import {
   X,
   Shield,
@@ -37,11 +37,11 @@ import {
   MessageSquare,
   FileText,
   AlertCircle,
-} from "lucide-react";
-import type { EmployerVacancyApplication, FullElecIdProfile } from "@/services/vacancyService";
-import { CandidateNotesSection } from "./CandidateNotesSection";
-import { useUpdateApplicationNotes } from "@/hooks/useVacancyApplications";
-import { toast } from "@/hooks/use-toast";
+} from 'lucide-react';
+import type { EmployerVacancyApplication, FullElecIdProfile } from '@/services/vacancyService';
+import { CandidateNotesSection } from './CandidateNotesSection';
+import { useUpdateApplicationNotes } from '@/hooks/useVacancyApplications';
+import { toast } from '@/hooks/use-toast';
 
 interface ApplicantProfileSheetProps {
   application: EmployerVacancyApplication | null;
@@ -55,26 +55,26 @@ interface ApplicantProfileSheetProps {
 const VerificationBadge = ({ tier }: { tier: string }) => {
   const tierConfig: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
     basic: {
-      label: "Basic",
-      color: "bg-slate-500/20 text-slate-300 border-slate-500/30",
-      icon: <Shield className="h-4 w-4" />
+      label: 'Basic',
+      color: 'bg-slate-500/20 text-slate-300 border-slate-500/30',
+      icon: <Shield className="h-4 w-4" />,
     },
     verified: {
-      label: "Verified",
-      color: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-      icon: <BadgeCheck className="h-4 w-4" />
+      label: 'Verified',
+      color: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+      icon: <BadgeCheck className="h-4 w-4" />,
     },
     premium: {
-      label: "Premium",
-      color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
-      icon: <Award className="h-4 w-4" />
+      label: 'Premium',
+      color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+      icon: <Award className="h-4 w-4" />,
     },
   };
 
   const config = tierConfig[tier] || tierConfig.basic;
 
   return (
-    <Badge className={cn("text-sm font-medium gap-1.5 px-3 py-1", config.color)}>
+    <Badge className={cn('text-sm font-medium gap-1.5 px-3 py-1', config.color)}>
       {config.icon}
       {config.label}
     </Badge>
@@ -84,10 +84,10 @@ const VerificationBadge = ({ tier }: { tier: string }) => {
 // Skill level indicator
 const SkillLevelBadge = ({ level }: { level: string }) => {
   const levelConfig: Record<string, { color: string; width: string }> = {
-    beginner: { color: "bg-blue-500", width: "w-1/4" },
-    intermediate: { color: "bg-emerald-500", width: "w-2/4" },
-    advanced: { color: "bg-purple-500", width: "w-3/4" },
-    expert: { color: "bg-amber-500", width: "w-full" },
+    beginner: { color: 'bg-blue-500', width: 'w-1/4' },
+    intermediate: { color: 'bg-emerald-500', width: 'w-2/4' },
+    advanced: { color: 'bg-purple-500', width: 'w-3/4' },
+    expert: { color: 'bg-amber-500', width: 'w-full' },
   };
 
   const config = levelConfig[level.toLowerCase()] || levelConfig.intermediate;
@@ -95,7 +95,7 @@ const SkillLevelBadge = ({ level }: { level: string }) => {
   return (
     <div className="flex items-center gap-2">
       <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-        <div className={cn("h-full rounded-full transition-all", config.color, config.width)} />
+        <div className={cn('h-full rounded-full transition-all', config.color, config.width)} />
       </div>
       <span className="text-xs text-muted-foreground capitalize w-20">{level}</span>
     </div>
@@ -104,11 +104,11 @@ const SkillLevelBadge = ({ level }: { level: string }) => {
 
 // Format date helper
 const formatDate = (dateString: string | null | undefined) => {
-  if (!dateString) return "N/A";
-  return new Date(dateString).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
+  if (!dateString) return 'N/A';
+  return new Date(dateString).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
   });
 };
 
@@ -133,7 +133,7 @@ export function ApplicantProfileSheet({
   onUpdateStatus,
   onMessage,
 }: ApplicantProfileSheetProps) {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState('overview');
   const updateNotes = useUpdateApplicationNotes();
 
   const handleSaveNotes = async (notes: string) => {
@@ -141,14 +141,14 @@ export function ApplicantProfileSheet({
     try {
       await updateNotes.mutateAsync({ id: application.id, notes });
       toast({
-        title: "Notes saved",
-        description: "Candidate notes have been updated.",
+        title: 'Notes saved',
+        description: 'Candidate notes have been updated.',
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to save notes. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to save notes. Please try again.',
+        variant: 'destructive',
       });
       throw error;
     }
@@ -158,27 +158,28 @@ export function ApplicantProfileSheet({
 
   const profile = application.elec_id_profile;
   const initials = application.applicant_name
-    .split(" ")
+    .split(' ')
     .map((n) => n[0])
-    .join("")
+    .join('')
     .toUpperCase()
     .slice(0, 2);
 
-  const totalExperience = profile?.work_history?.reduce((total, job) => {
-    const start = new Date(job.start_date);
-    const end = job.end_date ? new Date(job.end_date) : new Date();
-    return total + (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 365);
-  }, 0) || 0;
+  const totalExperience =
+    profile?.work_history?.reduce((total, job) => {
+      const start = new Date(job.start_date);
+      const end = job.end_date ? new Date(job.end_date) : new Date();
+      return total + (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 365);
+    }, 0) || 0;
 
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
-      New: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      Reviewing: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-      Shortlisted: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-      Interviewed: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-      Offered: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-      Hired: "bg-green-500/20 text-green-400 border-green-500/30",
-      Rejected: "bg-red-500/20 text-red-400 border-red-500/30",
+      New: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+      Reviewing: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+      Shortlisted: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+      Interviewed: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+      Offered: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+      Hired: 'bg-green-500/20 text-green-400 border-green-500/30',
+      Rejected: 'bg-red-500/20 text-red-400 border-red-500/30',
     };
     return colors[status] || colors.New;
   };
@@ -203,11 +204,13 @@ export function ApplicantProfileSheet({
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <h2 className="text-xl font-bold text-foreground">{application.applicant_name}</h2>
+                  <h2 className="text-xl font-bold text-foreground">
+                    {application.applicant_name}
+                  </h2>
                   {profile && (
                     <div className="flex items-center gap-2 mt-1">
                       <VerificationBadge tier={profile.verification_tier} />
-                      <Badge className={cn("text-xs", getStatusColor(application.status))}>
+                      <Badge className={cn('text-xs', getStatusColor(application.status))}>
                         {application.status}
                       </Badge>
                     </div>
@@ -270,15 +273,28 @@ export function ApplicantProfileSheet({
           </div>
 
           {/* Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="flex-1 flex flex-col min-h-0"
+          >
             <TabsList className="w-full justify-start px-4 pt-2 bg-transparent border-b border-border rounded-none h-auto">
-              <TabsTrigger value="overview" className="text-xs data-[state=active]:bg-emerald-500/20">
+              <TabsTrigger
+                value="overview"
+                className="text-xs data-[state=active]:bg-emerald-500/20"
+              >
                 Overview
               </TabsTrigger>
-              <TabsTrigger value="qualifications" className="text-xs data-[state=active]:bg-emerald-500/20">
+              <TabsTrigger
+                value="qualifications"
+                className="text-xs data-[state=active]:bg-emerald-500/20"
+              >
                 Qualifications
               </TabsTrigger>
-              <TabsTrigger value="experience" className="text-xs data-[state=active]:bg-emerald-500/20">
+              <TabsTrigger
+                value="experience"
+                className="text-xs data-[state=active]:bg-emerald-500/20"
+              >
                 Experience
               </TabsTrigger>
               <TabsTrigger value="skills" className="text-xs data-[state=active]:bg-emerald-500/20">
@@ -317,13 +333,17 @@ export function ApplicantProfileSheet({
                           <div className="flex items-center gap-2 text-sm">
                             <CreditCard className="h-4 w-4 text-emerald-400" />
                             <span className="text-muted-foreground">ECS Card:</span>
-                            <span className="font-semibold text-foreground">{profile.ecs_card_type}</span>
+                            <span className="font-semibold text-foreground">
+                              {profile.ecs_card_type}
+                            </span>
                           </div>
                           {profile.ecs_expiry_date && (
                             <div className="flex items-center gap-2 text-sm mt-1">
                               <Calendar className="h-4 w-4 text-emerald-400" />
                               <span className="text-muted-foreground">Expires:</span>
-                              <span className="text-foreground">{formatDate(profile.ecs_expiry_date)}</span>
+                              <span className="text-foreground">
+                                {formatDate(profile.ecs_expiry_date)}
+                              </span>
                             </div>
                           )}
                         </div>
@@ -352,7 +372,11 @@ export function ApplicantProfileSheet({
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {profile.specialisations.map((spec, i) => (
-                          <Badge key={i} variant="outline" className="bg-emerald-500/10 border-emerald-500/20 text-emerald-300">
+                          <Badge
+                            key={i}
+                            variant="outline"
+                            className="bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
+                          >
                             {spec}
                           </Badge>
                         ))}
@@ -413,14 +437,19 @@ export function ApplicantProfileSheet({
                               <GraduationCap className="h-5 w-5 text-purple-400" />
                             </div>
                             <div>
-                              <h4 className="font-semibold text-foreground">{qual.qualification_name}</h4>
+                              <h4 className="font-semibold text-foreground">
+                                {qual.qualification_name}
+                              </h4>
                               <p className="text-sm text-muted-foreground">{qual.awarding_body}</p>
                               <div className="flex items-center gap-2 mt-1">
                                 <Badge variant="outline" className="text-xs">
                                   {qual.qualification_type}
                                 </Badge>
                                 {qual.grade && (
-                                  <Badge variant="outline" className="text-xs bg-emerald-500/10 border-emerald-500/20 text-emerald-300">
+                                  <Badge
+                                    variant="outline"
+                                    className="text-xs bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
+                                  >
                                     {qual.grade}
                                   </Badge>
                                 )}
@@ -462,16 +491,18 @@ export function ApplicantProfileSheet({
                       )}
                       <CardContent className="p-4">
                         <div className="flex items-start gap-3">
-                          <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center shrink-0",
-                            job.is_current
-                              ? "bg-emerald-500/20"
-                              : "bg-blue-500/20"
-                          )}>
-                            <Building2 className={cn(
-                              "h-5 w-5",
-                              job.is_current ? "text-emerald-400" : "text-blue-400"
-                            )} />
+                          <div
+                            className={cn(
+                              'w-10 h-10 rounded-lg flex items-center justify-center shrink-0',
+                              job.is_current ? 'bg-emerald-500/20' : 'bg-blue-500/20'
+                            )}
+                          >
+                            <Building2
+                              className={cn(
+                                'h-5 w-5',
+                                job.is_current ? 'text-emerald-400' : 'text-blue-400'
+                              )}
+                            />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-start justify-between">
@@ -488,18 +519,24 @@ export function ApplicantProfileSheet({
                             <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
                               <Calendar className="h-3.5 w-3.5" />
                               <span>
-                                {formatDate(job.start_date)} - {job.is_current ? "Present" : formatDate(job.end_date)}
+                                {formatDate(job.start_date)} -{' '}
+                                {job.is_current ? 'Present' : formatDate(job.end_date)}
                               </span>
                               <span className="text-emerald-400">
                                 ({calculateDuration(job.start_date, job.end_date, job.is_current)})
                               </span>
                             </div>
                             {job.description && (
-                              <p className="text-sm text-muted-foreground mt-2">{job.description}</p>
+                              <p className="text-sm text-muted-foreground mt-2">
+                                {job.description}
+                              </p>
                             )}
                             <div className="flex items-center gap-2 mt-2">
                               {job.is_verified && (
-                                <Badge variant="outline" className="text-xs bg-emerald-500/10 border-emerald-500/20 text-emerald-300">
+                                <Badge
+                                  variant="outline"
+                                  className="text-xs bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
+                                >
                                   <CheckCircle2 className="h-3 w-3 mr-1" />
                                   Verified
                                 </Badge>
@@ -559,7 +596,9 @@ export function ApplicantProfileSheet({
                         <CardContent className="p-4">
                           <div className="flex items-start justify-between">
                             <div>
-                              <h4 className="font-medium text-foreground">{training.training_name}</h4>
+                              <h4 className="font-medium text-foreground">
+                                {training.training_name}
+                              </h4>
                               {training.provider && (
                                 <p className="text-sm text-muted-foreground">{training.provider}</p>
                               )}
@@ -581,10 +620,10 @@ export function ApplicantProfileSheet({
                             <Badge
                               variant="outline"
                               className={cn(
-                                "text-xs",
-                                training.status === "completed"
-                                  ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-300"
-                                  : "bg-amber-500/10 border-amber-500/20 text-amber-300"
+                                'text-xs',
+                                training.status === 'completed'
+                                  ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300'
+                                  : 'bg-amber-500/10 border-amber-500/20 text-amber-300'
                               )}
                             >
                               {training.status}
@@ -612,58 +651,54 @@ export function ApplicantProfileSheet({
           {/* Footer Actions */}
           <div className="p-4 border-t border-border bg-background/95 backdrop-blur-sm">
             <div className="flex gap-2">
-              {application.status === "New" && (
+              {application.status === 'New' && (
                 <>
                   <Button
                     variant="outline"
                     className="flex-1"
-                    onClick={() => onUpdateStatus?.("Rejected")}
+                    onClick={() => onUpdateStatus?.('Rejected')}
                   >
                     <XCircle className="h-4 w-4 mr-2" />
                     Reject
                   </Button>
                   <Button
                     className="flex-1 bg-purple-500 hover:bg-purple-400 text-white"
-                    onClick={() => onUpdateStatus?.("Shortlisted")}
+                    onClick={() => onUpdateStatus?.('Shortlisted')}
                   >
                     <Star className="h-4 w-4 mr-2" />
                     Shortlist
                   </Button>
                 </>
               )}
-              {application.status === "Shortlisted" && (
+              {application.status === 'Shortlisted' && (
                 <Button
                   className="flex-1 bg-cyan-500 hover:bg-cyan-400 text-white"
-                  onClick={() => onUpdateStatus?.("Interviewed")}
+                  onClick={() => onUpdateStatus?.('Interviewed')}
                 >
                   <Calendar className="h-4 w-4 mr-2" />
                   Mark Interviewed
                 </Button>
               )}
-              {application.status === "Interviewed" && (
+              {application.status === 'Interviewed' && (
                 <Button
                   className="flex-1 bg-emerald-500 hover:bg-emerald-400 text-white"
-                  onClick={() => onUpdateStatus?.("Offered")}
+                  onClick={() => onUpdateStatus?.('Offered')}
                 >
                   <CheckCircle2 className="h-4 w-4 mr-2" />
                   Make Offer
                 </Button>
               )}
-              {application.status === "Offered" && (
+              {application.status === 'Offered' && (
                 <Button
                   className="flex-1 bg-green-500 hover:bg-green-400 text-white"
-                  onClick={() => onUpdateStatus?.("Hired")}
+                  onClick={() => onUpdateStatus?.('Hired')}
                 >
                   <CheckCircle2 className="h-4 w-4 mr-2" />
                   Mark Hired
                 </Button>
               )}
               {onMessage && (
-                <Button
-                  variant="outline"
-                  className="flex-1"
-                  onClick={onMessage}
-                >
+                <Button variant="outline" className="flex-1" onClick={onMessage}>
                   <MessageSquare className="h-4 w-4 mr-2" />
                   Message
                 </Button>

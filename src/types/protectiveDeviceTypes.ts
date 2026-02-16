@@ -1,11 +1,10 @@
-
 // Protective device types
 export const protectiveDeviceTypeOptions = [
   { value: 'MCB', label: 'MCB' },
   { value: 'RCBO', label: 'RCBO' },
   { value: 'RCD', label: 'RCD' },
   { value: 'Fuse', label: 'Fuse' },
-  { value: 'Other', label: 'Other' }
+  { value: 'Other', label: 'Other' },
 ];
 
 // Protective device ratings
@@ -20,7 +19,7 @@ export const protectiveDeviceRatingOptions = [
   { value: '50', label: '50A' },
   { value: '63', label: '63A' },
   { value: '80', label: '80A' },
-  { value: '100', label: '100A' }
+  { value: '100', label: '100A' },
 ];
 
 // BS Standards for protective devices
@@ -31,7 +30,7 @@ export const bsStandardOptions = [
   { value: 'Fuse (BS 88)', label: 'Fuse (BS 88)' },
   { value: 'Fuse (BS 1361)', label: 'Fuse (BS 1361)' },
   { value: 'Fuse (BS 3036)', label: 'Fuse (BS 3036)' },
-  { value: 'Other', label: 'Other' }
+  { value: 'Other', label: 'Other' },
 ];
 
 // RCD-specific BS Standards (for RCD Details section)
@@ -39,7 +38,7 @@ export const rcdBsStandardOptions = [
   { value: 'RCD (BS EN 61008)', label: 'RCD (BS EN 61008)' },
   { value: 'RCBO (BS EN 61009)', label: 'RCBO (BS EN 61009)' },
   { value: 'RCD (BS 7288)', label: 'RCD (BS 7288)' },
-  { value: 'Other', label: 'Other' }
+  { value: 'Other', label: 'Other' },
 ];
 
 // MCB Curve Type Options (Tripping Characteristics)
@@ -68,7 +67,7 @@ export const getDefaultBsStandard = (deviceType: string): string => {
 
 export const getDefaultKaRating = (deviceType: string, rating: string): string => {
   const ratingNum = parseInt(rating);
-  
+
   switch (deviceType) {
     case 'MCB':
       return ratingNum <= 50 ? '6' : '10';
@@ -83,12 +82,10 @@ export const getDefaultKaRating = (deviceType: string, rating: string): string =
   }
 };
 
-
 // Check if a BS standard requires a curve (MCB/RCBO only)
 export const bsStandardRequiresCurve = (bsStandard: string): boolean => {
   return bsStandard === 'MCB (BS EN 60898)' || bsStandard === 'RCBO (BS EN 61009)';
 };
-
 
 // Protective device options with Zs limits for validation
 // BS 7671 Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009 (0.4s disconnection)
@@ -131,5 +128,5 @@ export const protectiveDeviceOptions = [
   { value: 'D63', label: 'MCB D63', zsLimit: 0.17 },
   { value: 'D80', label: 'MCB D80', zsLimit: 0.14 },
   { value: 'D100', label: 'MCB D100', zsLimit: 0.11 },
-  { value: 'D125', label: 'MCB D125', zsLimit: 0.09 }
+  { value: 'D125', label: 'MCB D125', zsLimit: 0.09 },
 ];

@@ -1,8 +1,17 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, XCircle, AlertTriangle, Calculator, Copy, Lightbulb, Shield, Info } from "lucide-react";
-import { toast } from "sonner";
-import { copyToClipboard } from "@/lib/calc-utils";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Calculator,
+  Copy,
+  Lightbulb,
+  Shield,
+  Info,
+} from 'lucide-react';
+import { toast } from 'sonner';
+import { copyToClipboard } from '@/lib/calc-utils';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
 
 interface ZsCalculatorResultProps {
   result: number | null;
@@ -25,7 +34,7 @@ const ZsCalculatorResult = ({
   fusRating,
   fuseType,
   mcbCurve,
-  rcboCurve
+  rcboCurve,
 }: ZsCalculatorResultProps) => {
   if (!result) {
     return (
@@ -41,14 +50,14 @@ const ZsCalculatorResult = ({
   }
 
   const getDeviceDescription = () => {
-    if (protectionType === "mcb") {
+    if (protectionType === 'mcb') {
       return `${mcbRating}A ${mcbCurve}-curve MCB`;
-    } else if (protectionType === "rcbo") {
+    } else if (protectionType === 'rcbo') {
       return `${rcboRating}A ${rcboCurve}-curve RCBO`;
-    } else if (protectionType === "fuse") {
+    } else if (protectionType === 'fuse') {
       return `${fusRating}A ${fuseType}`;
     }
-    return "Unknown device";
+    return 'Unknown device';
   };
 
   const get80PercentValue = () => {
@@ -57,38 +66,38 @@ const ZsCalculatorResult = ({
 
   const getComplianceStatus = () => {
     if (!calculatedZs || !result) return null;
-    
+
     const testValue = get80PercentValue();
     const tabulated = result;
-    
+
     return {
       passesTest: calculatedZs <= testValue,
       passesTabulated: calculatedZs <= tabulated,
-      headroom80: ((testValue - calculatedZs) / testValue * 100),
-      headroom100: ((tabulated - calculatedZs) / tabulated * 100)
+      headroom80: ((testValue - calculatedZs) / testValue) * 100,
+      headroom100: ((tabulated - calculatedZs) / tabulated) * 100,
     };
   };
 
   const handleCopyResults = async () => {
     const deviceDesc = getDeviceDescription();
     const testValue = get80PercentValue().toFixed(2);
-    
+
     let copyText = `Zs Calculator Results\n`;
     copyText += `Device: ${deviceDesc}\n`;
     copyText += `Maximum Zs (BS 7671): ${result.toFixed(2)} Ω\n`;
     copyText += `80% Test Value: ${testValue} Ω\n`;
-    
+
     if (calculatedZs !== null) {
       const compliance = getComplianceStatus();
       copyText += `Calculated Zs: ${calculatedZs.toFixed(2)} Ω\n`;
       copyText += `Status: ${compliance?.passesTest ? 'Compliant' : 'Non-compliant'}\n`;
     }
-    
+
     const success = await copyToClipboard(copyText);
     if (success) {
-      toast.success("Results copied to clipboard");
+      toast.success('Results copied to clipboard');
     } else {
-      toast.error("Failed to copy results");
+      toast.error('Failed to copy results');
     }
   };
 
@@ -117,7 +126,7 @@ const ZsCalculatorResult = ({
           <p className="text-elec-yellow/80">{getDeviceDescription()}</p>
         </CardContent>
       </Card>
-      
+
       {/* Main Results */}
       <Card className="border-green-500/30 bg-green-500/5">
         <CardHeader>
@@ -139,7 +148,7 @@ const ZsCalculatorResult = ({
                 <p className="text-green-200/70 text-xs">At normal operating temperature</p>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
                 <div className="flex justify-between items-center mb-1">
@@ -157,18 +166,20 @@ const ZsCalculatorResult = ({
 
       {/* Calculated Circuit Zs */}
       {calculatedZs !== null && (
-        <Card className={`border-2 ${
-          compliance?.passesTest 
-            ? 'border-green-500/50 bg-green-500/10' 
-            : 'border-red-500/50 bg-red-500/10'
-        }`}>
+        <Card
+          className={`border-2 ${
+            compliance?.passesTest
+              ? 'border-green-500/50 bg-green-500/10'
+              : 'border-red-500/50 bg-red-500/10'
+          }`}
+        >
           <CardContent className="pt-4">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <Calculator className="h-5 w-5 text-amber-300" />
                 <h4 className="text-amber-300 font-semibold">Your Calculated Circuit Zs</h4>
               </div>
-              
+
               <div className="bg-amber-500/10 border border-amber-500/20 rounded p-4">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-amber-200">Ze + (R1 + R2):</span>
@@ -180,57 +191,67 @@ const ZsCalculatorResult = ({
 
               {/* Compliance Check */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className={`border rounded p-3 ${
-                  compliance?.passesTest 
-                    ? 'border-green-500/30 bg-green-500/10' 
-                    : 'border-red-500/30 bg-red-500/10'
-                }`}>
+                <div
+                  className={`border rounded p-3 ${
+                    compliance?.passesTest
+                      ? 'border-green-500/30 bg-green-500/10'
+                      : 'border-red-500/30 bg-red-500/10'
+                  }`}
+                >
                   <div className="flex items-center gap-2 mb-2">
                     {compliance?.passesTest ? (
                       <CheckCircle className="h-4 w-4 text-green-400" />
                     ) : (
                       <XCircle className="h-4 w-4 text-red-400" />
                     )}
-                    <span className={`font-medium ${
-                      compliance?.passesTest ? 'text-green-300' : 'text-red-300'
-                    }`}>
+                    <span
+                      className={`font-medium ${
+                        compliance?.passesTest ? 'text-green-300' : 'text-red-300'
+                      }`}
+                    >
                       80% Test Compliance
                     </span>
                   </div>
-                  <p className={`text-sm ${
-                    compliance?.passesTest ? 'text-green-200' : 'text-red-200'
-                  }`}>
-                    {compliance?.passesTest 
-                      ? `✓ Passes (${compliance.headroom80.toFixed(1)}% headroom)` 
-                      : `✗ Fails (${Math.abs(compliance?.headroom80 || 0).toFixed(1)}% over limit)`
-                    }
+                  <p
+                    className={`text-sm ${
+                      compliance?.passesTest ? 'text-green-200' : 'text-red-200'
+                    }`}
+                  >
+                    {compliance?.passesTest
+                      ? `✓ Passes (${compliance.headroom80.toFixed(1)}% headroom)`
+                      : `✗ Fails (${Math.abs(compliance?.headroom80 || 0).toFixed(1)}% over limit)`}
                   </p>
                 </div>
 
-                <div className={`border rounded p-3 ${
-                  compliance?.passesTabulated 
-                    ? 'border-green-500/30 bg-green-500/10' 
-                    : 'border-orange-500/30 bg-orange-500/10'
-                }`}>
+                <div
+                  className={`border rounded p-3 ${
+                    compliance?.passesTabulated
+                      ? 'border-green-500/30 bg-green-500/10'
+                      : 'border-orange-500/30 bg-orange-500/10'
+                  }`}
+                >
                   <div className="flex items-center gap-2 mb-2">
                     {compliance?.passesTabulated ? (
                       <CheckCircle className="h-4 w-4 text-green-400" />
                     ) : (
                       <AlertTriangle className="h-4 w-4 text-orange-400" />
                     )}
-                    <span className={`font-medium ${
-                      compliance?.passesTabulated ? 'text-green-300' : 'text-orange-300'
-                    }`}>
+                    <span
+                      className={`font-medium ${
+                        compliance?.passesTabulated ? 'text-green-300' : 'text-orange-300'
+                      }`}
+                    >
                       100% Tabulated Compliance
                     </span>
                   </div>
-                  <p className={`text-sm ${
-                    compliance?.passesTabulated ? 'text-green-200' : 'text-orange-200'
-                  }`}>
-                    {compliance?.passesTabulated 
-                      ? `✓ Passes (${compliance.headroom100.toFixed(1)}% headroom)` 
-                      : `⚠ Exceeds tabulated value`
-                    }
+                  <p
+                    className={`text-sm ${
+                      compliance?.passesTabulated ? 'text-green-200' : 'text-orange-200'
+                    }`}
+                  >
+                    {compliance?.passesTabulated
+                      ? `✓ Passes (${compliance.headroom100.toFixed(1)}% headroom)`
+                      : `⚠ Exceeds tabulated value`}
                   </p>
                 </div>
               </div>
@@ -243,11 +264,11 @@ const ZsCalculatorResult = ({
       <WhyThisMatters
         title="Why Zs values matter"
         points={[
-          "Ensures protective devices operate within required disconnection times (0.4s for final circuits ≤32A)",
-          "Prevents dangerous touch voltages during earth faults that could cause electric shock",
-          "Reduces fire risk by ensuring rapid fault clearance",
-          "BS 7671 legal requirement for electrical safety compliance",
-          "80% test value accounts for temperature rise during normal operation"
+          'Ensures protective devices operate within required disconnection times (0.4s for final circuits ≤32A)',
+          'Prevents dangerous touch voltages during earth faults that could cause electric shock',
+          'Reduces fire risk by ensuring rapid fault clearance',
+          'BS 7671 legal requirement for electrical safety compliance',
+          '80% test value accounts for temperature rise during normal operation',
         ]}
       />
 

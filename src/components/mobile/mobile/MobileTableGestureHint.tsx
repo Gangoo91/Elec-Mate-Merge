@@ -43,32 +43,35 @@ export const MobileTableGestureHint: React.FC<MobileTableGestureHintProps> = ({ 
             <X className="h-4 w-4" />
           </Button>
         </div>
-        
+
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
             This table is designed for mobile use. Swipe left and right to see all test columns.
           </p>
-          
+
           <div className="flex items-center justify-center py-6 bg-accent/10 rounded-lg">
             <div className="animate-pulse flex items-center gap-2">
-              <ChevronRight className="h-8 w-8 text-primary animate-bounce" style={{ animationDirection: 'alternate' }} />
+              <ChevronRight
+                className="h-8 w-8 text-primary animate-bounce"
+                style={{ animationDirection: 'alternate' }}
+              />
               <span className="text-sm font-medium text-foreground">Swipe horizontally</span>
-              <ChevronRight className="h-8 w-8 text-primary animate-bounce" style={{ animationDirection: 'alternate', animationDelay: '0.2s' }} />
+              <ChevronRight
+                className="h-8 w-8 text-primary animate-bounce"
+                style={{ animationDirection: 'alternate', animationDelay: '0.2s' }}
+              />
             </div>
           </div>
 
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground">
-              💡 <strong>Tip:</strong> Use the navigation buttons at the bottom to quickly jump between sections.
+              💡 <strong>Tip:</strong> Use the navigation buttons at the bottom to quickly jump
+              between sections.
             </p>
           </div>
         </div>
 
-        <Button 
-          onClick={handleDismiss}
-          className="w-full mt-6"
-          size="lg"
-        >
+        <Button onClick={handleDismiss} className="w-full mt-6" size="lg">
           Got it!
         </Button>
       </div>

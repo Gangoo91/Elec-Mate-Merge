@@ -1,40 +1,45 @@
-import { ArrowLeft, Scale, ClipboardCheck, FileText, Gauge } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Scale, ClipboardCheck, FileText, Gauge } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "The COSHH Regulations 2002",
+    title: 'The COSHH Regulations 2002',
     icon: Scale,
-    description: "Legal framework, employer and employee duties, Approved Codes of Practice, and related health and safety legislation",
+    description:
+      'Legal framework, employer and employee duties, Approved Codes of Practice, and related health and safety legislation',
   },
   {
     id: 2,
-    title: "COSHH Risk Assessment",
+    title: 'COSHH Risk Assessment',
     icon: ClipboardCheck,
-    description: "The 8-step assessment process, identifying hazards, evaluating exposure, and recording findings",
+    description:
+      'The 8-step assessment process, identifying hazards, evaluating exposure, and recording findings',
   },
   {
     id: 3,
-    title: "Safety Data Sheets",
+    title: 'Safety Data Sheets',
     icon: FileText,
-    description: "The 16 SDS sections, GHS pictograms, hazard and precautionary statements, and how to interpret them",
+    description:
+      'The 16 SDS sections, GHS pictograms, hazard and precautionary statements, and how to interpret them',
   },
   {
     id: 4,
-    title: "Workplace Exposure Limits",
+    title: 'Workplace Exposure Limits',
     icon: Gauge,
-    description: "WELs explained, EH40 guidance document, monitoring methods, and biological monitoring requirements",
+    description:
+      'WELs explained, EH40 guidance document, monitoring methods, and biological monitoring requirements',
   },
 ];
 
 export default function CoshhAwarenessModule2() {
   useSEO({
-    title: "Module 2: Legislation & Risk Assessment | COSHH Awareness",
-    description: "Understand the COSHH Regulations 2002, how to carry out a COSHH risk assessment, read safety data sheets, and interpret workplace exposure limits.",
+    title: 'Module 2: Legislation & Risk Assessment | COSHH Awareness',
+    description:
+      'Understand the COSHH Regulations 2002, how to carry out a COSHH risk assessment, read safety data sheets, and interpret workplace exposure limits.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function CoshhAwarenessModule2() {
               Legislation & Risk Assessment
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              The legal framework behind COSHH, how to carry out and record risk assessments, read safety data sheets, and understand workplace exposure limits
+              The legal framework behind COSHH, how to carry out and record risk assessments, read
+              safety data sheets, and understand workplace exposure limits
             </p>
           </div>
 

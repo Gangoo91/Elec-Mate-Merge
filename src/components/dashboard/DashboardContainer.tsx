@@ -14,10 +14,7 @@ interface DashboardContainerProps {
   className?: string;
 }
 
-export const DashboardContainer: React.FC<DashboardContainerProps> = ({
-  children,
-  className,
-}) => {
+export const DashboardContainer: React.FC<DashboardContainerProps> = ({ children, className }) => {
   return (
     <div
       className={cn(

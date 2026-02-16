@@ -1,23 +1,22 @@
-
 import { Archive } from 'lucide-react';
 
 export const DocumentStorage = () => {
   const storageRequirements = [
-    "Electrical installation certificates must be retained for the life of the installation",
-    "Inspection and test records should be kept for minimum 7 years",
-    "Design documentation must be accessible to maintenance personnel",
-    "Digital copies should have secure backup and version control",
-    "Physical documents require protection from damage and loss",
-    "Access permissions should be controlled and documented"
+    'Electrical installation certificates must be retained for the life of the installation',
+    'Inspection and test records should be kept for minimum 7 years',
+    'Design documentation must be accessible to maintenance personnel',
+    'Digital copies should have secure backup and version control',
+    'Physical documents require protection from damage and loss',
+    'Access permissions should be controlled and documented',
   ];
 
   const bestPractices = [
-    "Use cloud-based document management systems with access controls",
-    "Maintain both digital and physical copies of critical documents",
-    "Implement version control to track changes and updates",
-    "Regular backup and disaster recovery procedures",
-    "Clear naming conventions and folder structures",
-    "Regular review and updating of documentation"
+    'Use cloud-based document management systems with access controls',
+    'Maintain both digital and physical copies of critical documents',
+    'Implement version control to track changes and updates',
+    'Regular backup and disaster recovery procedures',
+    'Clear naming conventions and folder structures',
+    'Regular review and updating of documentation',
   ];
 
   return (
@@ -52,7 +51,9 @@ export const DocumentStorage = () => {
       </div>
       <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
         <p className="text-blue-200 font-medium">
-          <strong>Future-Proofing:</strong> Good document management today saves significant time and cost in future inspections, maintenance, and modifications. Invest in proper systems from the start.
+          <strong>Future-Proofing:</strong> Good document management today saves significant time
+          and cost in future inspections, maintenance, and modifications. Invest in proper systems
+          from the start.
         </p>
       </div>
     </div>

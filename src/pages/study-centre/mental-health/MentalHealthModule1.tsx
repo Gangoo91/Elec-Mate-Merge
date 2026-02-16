@@ -1,40 +1,45 @@
-import { ArrowLeft, Brain, Users, Briefcase, MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Brain, Users, Briefcase, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Mental Health Awareness & the Spectrum",
+    title: 'Mental Health Awareness & the Spectrum',
     icon: Brain,
-    description: "Mental health vs mental illness, the continuum model, prevalence, impact on work, myths and stigma in construction",
+    description:
+      'Mental health vs mental illness, the continuum model, prevalence, impact on work, myths and stigma in construction',
   },
   {
     id: 2,
     title: "The Mental Health First Aider's Role",
     icon: Users,
-    description: "MHFA England framework, ALGEE action plan, boundaries, confidentiality, duty of care vs duty to refer",
+    description:
+      'MHFA England framework, ALGEE action plan, boundaries, confidentiality, duty of care vs duty to refer',
   },
   {
     id: 3,
-    title: "Workplace Mental Health Framework",
+    title: 'Workplace Mental Health Framework',
     icon: Briefcase,
-    description: "HSE Management Standards, Health & Safety at Work Act 1974, Equality Act 2010, reasonable adjustments, risk assessments",
+    description:
+      'HSE Management Standards, Health & Safety at Work Act 1974, Equality Act 2010, reasonable adjustments, risk assessments',
   },
   {
     id: 4,
-    title: "Communication Skills & Active Listening",
+    title: 'Communication Skills & Active Listening',
     icon: MessageCircle,
-    description: "Non-judgemental listening, open questions, reflective techniques, body language, cultural sensitivity",
+    description:
+      'Non-judgemental listening, open questions, reflective techniques, body language, cultural sensitivity',
   },
 ];
 
 export default function MentalHealthModule1() {
   useSEO({
-    title: "Module 1: Understanding Mental Health & the MHFA Role | Mental Health First Aid",
-    description: "Mental health awareness, the MHFA role, workplace framework, communication skills and active listening.",
+    title: 'Module 1: Understanding Mental Health & the MHFA Role | Mental Health First Aid',
+    description:
+      'Mental health awareness, the MHFA role, workplace framework, communication skills and active listening.',
   });
 
   return (
@@ -71,7 +76,8 @@ export default function MentalHealthModule1() {
               Understanding Mental Health &amp; the MHFA Role
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Mental health awareness, the role and responsibilities of a Mental Health First Aider, workplace legislation and communication skills
+              Mental health awareness, the role and responsibilities of a Mental Health First Aider,
+              workplace legislation and communication skills
             </p>
           </div>
 

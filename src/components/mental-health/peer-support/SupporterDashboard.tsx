@@ -14,7 +14,11 @@ import {
   Power,
   Loader2,
 } from 'lucide-react';
-import { PeerSupporter, peerSupporterService, trainingLevelLabels } from '@/services/peerSupportService';
+import {
+  PeerSupporter,
+  peerSupporterService,
+  trainingLevelLabels,
+} from '@/services/peerSupportService';
 import { useToast } from '@/hooks/use-toast';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -40,15 +44,15 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
         title: profile.is_available ? "You're now offline" : "You're now available!",
         description: profile.is_available
           ? "You won't receive new connection requests"
-          : "Others can now see you and connect",
+          : 'Others can now see you and connect',
       });
       onProfileUpdated();
     } catch (error) {
       console.error('Toggle error:', error);
       toast({
-        title: "Failed to update status",
-        description: "Please try again",
-        variant: "destructive",
+        title: 'Failed to update status',
+        description: 'Please try again',
+        variant: 'destructive',
       });
     } finally {
       setIsToggling(false);
@@ -66,13 +70,16 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
   };
 
   return (
-    <Card className={`
+    <Card
+      className={`
       relative overflow-hidden transition-all duration-500
-      ${profile.is_available
-        ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/5 border-green-500/30'
-        : 'bg-white/[0.02] border-white/10'
+      ${
+        profile.is_available
+          ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/5 border-green-500/30'
+          : 'bg-white/[0.02] border-white/10'
       }
-    `}>
+    `}
+    >
       {/* Glow Effect when available */}
       {profile.is_available && (
         <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5 animate-pulse" />
@@ -81,8 +88,12 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
       <CardHeader className="relative pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">
-            <div className={`p-2 rounded-lg ${profile.is_available ? 'bg-green-500/20' : 'bg-white/10'}`}>
-              <Power className={`h-5 w-5 ${profile.is_available ? 'text-green-400' : 'text-white'}`} />
+            <div
+              className={`p-2 rounded-lg ${profile.is_available ? 'bg-green-500/20' : 'bg-white/10'}`}
+            >
+              <Power
+                className={`h-5 w-5 ${profile.is_available ? 'text-green-400' : 'text-white'}`}
+              />
             </div>
             <div>
               <CardTitle className="text-base">Your Status</CardTitle>
@@ -189,19 +200,20 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
         </div>
 
         {/* Status Message */}
-        <div className={`
+        <div
+          className={`
           flex items-center gap-2 p-3 rounded-lg
-          ${profile.is_available
-            ? 'bg-green-500/10 border border-green-500/20'
-            : 'bg-white/5 border border-white/10'
+          ${
+            profile.is_available
+              ? 'bg-green-500/10 border border-green-500/20'
+              : 'bg-white/5 border border-white/10'
           }
-        `}>
+        `}
+        >
           {profile.is_available ? (
             <>
               <CheckCircle className="w-4 h-4 text-green-400" />
-              <p className="text-sm text-green-300">
-                You're visible to people looking for support
-              </p>
+              <p className="text-sm text-green-300">You're visible to people looking for support</p>
             </>
           ) : (
             <>

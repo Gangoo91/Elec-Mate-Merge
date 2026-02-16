@@ -21,9 +21,15 @@ const RcdTestButtonCellComponent = ({ value, onChange }: RcdTestButtonCellProps)
           <SelectValue placeholder="Select" />
         </SelectTrigger>
         <SelectContent className="bg-background border border-border rounded-md z-[100]">
-          <SelectItem value="Pass" className="text-sm text-green-400">Pass</SelectItem>
-          <SelectItem value="Fail" className="text-sm text-red-400">Fail</SelectItem>
-          <SelectItem value="N/A" className="text-sm">N/A</SelectItem>
+          <SelectItem value="Pass" className="text-sm text-green-400">
+            Pass
+          </SelectItem>
+          <SelectItem value="Fail" className="text-sm text-red-400">
+            Fail
+          </SelectItem>
+          <SelectItem value="N/A" className="text-sm">
+            N/A
+          </SelectItem>
         </SelectContent>
       </Select>
     </TableCell>

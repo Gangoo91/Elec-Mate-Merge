@@ -1,8 +1,20 @@
 import React, { useCallback } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
-import { protectiveDeviceTypeOptions, protectiveDeviceRatingOptions, protectiveDeviceCurveOptions, bsStandardOptions, bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
+import {
+  protectiveDeviceTypeOptions,
+  protectiveDeviceRatingOptions,
+  protectiveDeviceCurveOptions,
+  bsStandardOptions,
+  bsStandardRequiresCurve,
+} from '@/types/protectiveDeviceTypes';
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import { FieldTooltip } from '@/components/ui/field-tooltip';
@@ -13,94 +25,107 @@ interface ProtectiveDeviceCellsProps {
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
 }
 
-const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ result, onUpdate, onBulkUpdate }) => {
+const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
+  result,
+  onUpdate,
+  onBulkUpdate,
+}) => {
   // Show curve selector only for MCB/RCBO types (based on BS Standard)
   const showCurveSelector = bsStandardRequiresCurve(result.bsStandard || '');
 
   // Handle BS Standard change
-  const handleBsStandardChange = useCallback((value: string) => {
-    const updates: Partial<TestResult> = {
-      bsStandard: value
-    };
-    
-    // Clear curve if switching away from MCB/RCBO standards
-    const needsCurve = bsStandardRequiresCurve(value);
-    if (!needsCurve && result.protectiveDeviceCurve) {
-      updates.protectiveDeviceCurve = '';
-    }
-    
-    // Auto-fill maxZs if we have all required data
-    const rating = result.protectiveDeviceRating || '';
-    const curve = needsCurve ? (result.protectiveDeviceCurve || '') : '';
-    if (rating && (needsCurve ? curve : true)) {
-      const maxZs = getMaxZsFromDeviceDetails(value, curve, rating);
-      if (maxZs !== null) {
-        updates.maxZs = maxZs.toString();
+  const handleBsStandardChange = useCallback(
+    (value: string) => {
+      const updates: Partial<TestResult> = {
+        bsStandard: value,
+      };
+
+      // Clear curve if switching away from MCB/RCBO standards
+      const needsCurve = bsStandardRequiresCurve(value);
+      if (!needsCurve && result.protectiveDeviceCurve) {
+        updates.protectiveDeviceCurve = '';
       }
-    }
-    
-    // Use bulk update if available, otherwise fall back to individual updates
-    if (onBulkUpdate) {
-      onBulkUpdate(result.id, updates);
-    } else {
-      Object.entries(updates).forEach(([field, val]) => {
-        onUpdate(result.id, field as keyof TestResult, val as string);
-      });
-    }
-  }, [result.id, result.protectiveDeviceCurve, result.protectiveDeviceRating, onUpdate, onBulkUpdate]);
+
+      // Auto-fill maxZs if we have all required data
+      const rating = result.protectiveDeviceRating || '';
+      const curve = needsCurve ? result.protectiveDeviceCurve || '' : '';
+      if (rating && (needsCurve ? curve : true)) {
+        const maxZs = getMaxZsFromDeviceDetails(value, curve, rating);
+        if (maxZs !== null) {
+          updates.maxZs = maxZs.toString();
+        }
+      }
+
+      // Use bulk update if available, otherwise fall back to individual updates
+      if (onBulkUpdate) {
+        onBulkUpdate(result.id, updates);
+      } else {
+        Object.entries(updates).forEach(([field, val]) => {
+          onUpdate(result.id, field as keyof TestResult, val as string);
+        });
+      }
+    },
+    [result.id, result.protectiveDeviceCurve, result.protectiveDeviceRating, onUpdate, onBulkUpdate]
+  );
 
   // Handle Curve change
-  const handleCurveChange = useCallback((value: string) => {
-    const updates: Partial<TestResult> = {
-      protectiveDeviceCurve: value
-    };
-    
-    // Auto-fill maxZs if we have all required data
-    const bsStandard = result.bsStandard || '';
-    const rating = result.protectiveDeviceRating || '';
-    if (bsStandard && rating) {
-      const maxZs = getMaxZsFromDeviceDetails(bsStandard, value, rating);
-      if (maxZs !== null) {
-        updates.maxZs = maxZs.toString();
+  const handleCurveChange = useCallback(
+    (value: string) => {
+      const updates: Partial<TestResult> = {
+        protectiveDeviceCurve: value,
+      };
+
+      // Auto-fill maxZs if we have all required data
+      const bsStandard = result.bsStandard || '';
+      const rating = result.protectiveDeviceRating || '';
+      if (bsStandard && rating) {
+        const maxZs = getMaxZsFromDeviceDetails(bsStandard, value, rating);
+        if (maxZs !== null) {
+          updates.maxZs = maxZs.toString();
+        }
       }
-    }
-    
-    // Use bulk update if available, otherwise fall back to individual updates
-    if (onBulkUpdate) {
-      onBulkUpdate(result.id, updates);
-    } else {
-      Object.entries(updates).forEach(([field, val]) => {
-        onUpdate(result.id, field as keyof TestResult, val as string);
-      });
-    }
-  }, [result.id, result.bsStandard, result.protectiveDeviceRating, onUpdate, onBulkUpdate]);
+
+      // Use bulk update if available, otherwise fall back to individual updates
+      if (onBulkUpdate) {
+        onBulkUpdate(result.id, updates);
+      } else {
+        Object.entries(updates).forEach(([field, val]) => {
+          onUpdate(result.id, field as keyof TestResult, val as string);
+        });
+      }
+    },
+    [result.id, result.bsStandard, result.protectiveDeviceRating, onUpdate, onBulkUpdate]
+  );
 
   // Handle Rating change
-  const handleRatingChange = useCallback((value: string) => {
-    const updates: Partial<TestResult> = {
-      protectiveDeviceRating: value
-    };
-    
-    // Auto-fill maxZs if we have all required data
-    const bsStandard = result.bsStandard || '';
-    const curve = result.protectiveDeviceCurve || '';
-    const needsCurve = bsStandardRequiresCurve(bsStandard);
-    if (bsStandard && (needsCurve ? curve : true)) {
-      const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, value);
-      if (maxZs !== null) {
-        updates.maxZs = maxZs.toString();
+  const handleRatingChange = useCallback(
+    (value: string) => {
+      const updates: Partial<TestResult> = {
+        protectiveDeviceRating: value,
+      };
+
+      // Auto-fill maxZs if we have all required data
+      const bsStandard = result.bsStandard || '';
+      const curve = result.protectiveDeviceCurve || '';
+      const needsCurve = bsStandardRequiresCurve(bsStandard);
+      if (bsStandard && (needsCurve ? curve : true)) {
+        const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, value);
+        if (maxZs !== null) {
+          updates.maxZs = maxZs.toString();
+        }
       }
-    }
-    
-    // Use bulk update if available, otherwise fall back to individual updates
-    if (onBulkUpdate) {
-      onBulkUpdate(result.id, updates);
-    } else {
-      Object.entries(updates).forEach(([field, val]) => {
-        onUpdate(result.id, field as keyof TestResult, val as string);
-      });
-    }
-  }, [result.id, result.bsStandard, result.protectiveDeviceCurve, onUpdate, onBulkUpdate]);
+
+      // Use bulk update if available, otherwise fall back to individual updates
+      if (onBulkUpdate) {
+        onBulkUpdate(result.id, updates);
+      } else {
+        Object.entries(updates).forEach(([field, val]) => {
+          onUpdate(result.id, field as keyof TestResult, val as string);
+        });
+      }
+    },
+    [result.id, result.bsStandard, result.protectiveDeviceCurve, onUpdate, onBulkUpdate]
+  );
 
   return (
     <>
@@ -114,14 +139,18 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
           <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="BS EN" className="truncate" />
           </SelectTrigger>
-          <SelectContent 
-            key={`bsStandard-content-${result.id}`} 
+          <SelectContent
+            key={`bsStandard-content-${result.id}`}
             position="popper"
             sideOffset={5}
             className="bg-background border border-border rounded-md z-[9999]"
           >
             {bsStandardOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-xs text-neutral-100"
+              >
                 {option.label}
               </SelectItem>
             ))}
@@ -140,14 +169,18 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
           <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 disabled:opacity-50">
             <SelectValue placeholder="Type" className="truncate" />
           </SelectTrigger>
-          <SelectContent 
-            key={`protectiveDeviceCurve-content-${result.id}`} 
+          <SelectContent
+            key={`protectiveDeviceCurve-content-${result.id}`}
             position="popper"
             sideOffset={5}
             className="bg-background border border-border rounded-md z-[9999]"
           >
             {protectiveDeviceCurveOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-xs text-neutral-100"
+              >
                 {option.label}
               </SelectItem>
             ))}
@@ -165,14 +198,18 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
           <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="A" className="truncate" />
           </SelectTrigger>
-          <SelectContent 
-            key={`protectiveDeviceRating-content-${result.id}`} 
+          <SelectContent
+            key={`protectiveDeviceRating-content-${result.id}`}
             position="popper"
             sideOffset={5}
             className="bg-background border border-border rounded-md z-[9999]"
           >
             {protectiveDeviceRatingOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-xs text-neutral-100"
+              >
                 {option.label}
               </SelectItem>
             ))}
@@ -199,7 +236,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
             className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
             placeholder="Ω"
           />
-          <FieldTooltip 
+          <FieldTooltip
             content="Maximum Zs values from BS 7671 Tables 41.2, 41.3, 41.4. These are the maximum permitted values - the tables already account for Cmin (0.95)."
             regulation="BS 7671 Chapter 41"
           />

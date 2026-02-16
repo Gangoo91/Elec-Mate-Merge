@@ -1,126 +1,138 @@
-import { ArrowLeft, ArrowRight, Shield, CheckCircle, Award } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Shield, CheckCircle, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Network Security and User Privacy";
-const DESCRIPTION = "Securing smart home networks and protecting user data from cyber threats";
+const TITLE = 'Network Security and User Privacy';
+const DESCRIPTION = 'Securing smart home networks and protecting user data from cyber threats';
 
 const quickCheckQuestions = [
   {
-    question: "Why should IoT devices be on a separate network from main computers and phones?",
+    question: 'Why should IoT devices be on a separate network from main computers and phones?',
     options: [
-      "To improve Wi-Fi speed for streaming",
-      "To isolate vulnerable devices and limit breach impact",
-      "To reduce electricity usage",
-      "To make setup easier"
+      'To improve Wi-Fi speed for streaming',
+      'To isolate vulnerable devices and limit breach impact',
+      'To reduce electricity usage',
+      'To make setup easier',
     ],
     correctAnswer: 1,
-    explanation: "Network segmentation isolates IoT devices from sensitive devices like computers and phones. If an IoT device is compromised, the attacker cannot easily access banking details or personal files on other devices."
+    explanation:
+      'Network segmentation isolates IoT devices from sensitive devices like computers and phones. If an IoT device is compromised, the attacker cannot easily access banking details or personal files on other devices.',
   },
   {
-    question: "What is the primary privacy risk of cloud-connected smart home devices?",
+    question: 'What is the primary privacy risk of cloud-connected smart home devices?',
     options: [
-      "Increased electricity bills",
-      "Data collection and potential third-party access to personal information",
-      "Slower device response times",
-      "Higher purchase costs"
+      'Increased electricity bills',
+      'Data collection and potential third-party access to personal information',
+      'Slower device response times',
+      'Higher purchase costs',
     ],
     correctAnswer: 1,
-    explanation: "Cloud-connected devices often collect usage data, voice recordings, or video footage that is stored on manufacturer servers. This data may be accessed by the company, shared with partners, or vulnerable to breaches."
+    explanation:
+      'Cloud-connected devices often collect usage data, voice recordings, or video footage that is stored on manufacturer servers. This data may be accessed by the company, shared with partners, or vulnerable to breaches.',
   },
   {
-    question: "What should electricians recommend for router security?",
+    question: 'What should electricians recommend for router security?',
     options: [
-      "Using the default password for convenience",
-      "Disabling all encryption",
-      "Using WPA3 encryption with a strong, unique password",
-      "Leaving the network open for easier setup"
+      'Using the default password for convenience',
+      'Disabling all encryption',
+      'Using WPA3 encryption with a strong, unique password',
+      'Leaving the network open for easier setup',
     ],
     correctAnswer: 2,
-    explanation: "WPA3 encryption (or WPA2 if WPA3 unavailable) with a strong, unique password provides essential protection against unauthorised network access and eavesdropping on smart home traffic."
-  }
+    explanation:
+      'WPA3 encryption (or WPA2 if WPA3 unavailable) with a strong, unique password provides essential protection against unauthorised network access and eavesdropping on smart home traffic.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "What does VLAN stand for?",
+    question: 'What does VLAN stand for?',
     options: [
-      "Virtual Local Area Network",
-      "Variable Lighting and Network",
-      "Voice Link Access Node",
-      "Verified Login Authentication Network"
+      'Virtual Local Area Network',
+      'Variable Lighting and Network',
+      'Voice Link Access Node',
+      'Verified Login Authentication Network',
     ],
     correctAnswer: 0,
-    explanation: "VLAN stands for Virtual Local Area Network. VLANs allow network segmentation on a single physical network, keeping IoT devices isolated from sensitive data on computers and phones."
+    explanation:
+      'VLAN stands for Virtual Local Area Network. VLANs allow network segmentation on a single physical network, keeping IoT devices isolated from sensitive data on computers and phones.',
   },
   {
-    question: "Why is firmware updating important for smart home devices?",
+    question: 'Why is firmware updating important for smart home devices?',
     options: [
-      "To change the device colour",
-      "To patch security vulnerabilities and improve functionality",
-      "To increase power consumption",
-      "To void the warranty"
+      'To change the device colour',
+      'To patch security vulnerabilities and improve functionality',
+      'To increase power consumption',
+      'To void the warranty',
     ],
     correctAnswer: 1,
-    explanation: "Firmware updates patch security vulnerabilities discovered after manufacture, fix bugs, and may add new features. Keeping devices updated is essential for maintaining security."
+    explanation:
+      'Firmware updates patch security vulnerabilities discovered after manufacture, fix bugs, and may add new features. Keeping devices updated is essential for maintaining security.',
   },
   {
-    question: "What is the risk of using devices from manufacturers with poor security track records?",
+    question:
+      'What is the risk of using devices from manufacturers with poor security track records?',
     options: [
-      "Lower purchase price",
-      "Vulnerabilities may never be patched, leaving devices exposed",
-      "Better aesthetics",
-      "Faster setup"
+      'Lower purchase price',
+      'Vulnerabilities may never be patched, leaving devices exposed',
+      'Better aesthetics',
+      'Faster setup',
     ],
     correctAnswer: 1,
-    explanation: "Manufacturers with poor security records may not issue timely patches, may use weak encryption, or may have insecure cloud infrastructure, leaving devices permanently vulnerable."
+    explanation:
+      'Manufacturers with poor security records may not issue timely patches, may use weak encryption, or may have insecure cloud infrastructure, leaving devices permanently vulnerable.',
   },
   {
-    question: "What is end-to-end encryption?",
+    question: 'What is end-to-end encryption?',
     options: [
-      "Encrypting only the first data packet",
-      "Data encrypted from source to destination, unreadable in transit",
-      "Encryption used only at night",
-      "A type of Wi-Fi protocol"
+      'Encrypting only the first data packet',
+      'Data encrypted from source to destination, unreadable in transit',
+      'Encryption used only at night',
+      'A type of Wi-Fi protocol',
     ],
     correctAnswer: 1,
-    explanation: "End-to-end encryption ensures data is encrypted from the sending device to the receiving device, meaning even the service provider cannot read the data in transit."
+    explanation:
+      'End-to-end encryption ensures data is encrypted from the sending device to the receiving device, meaning even the service provider cannot read the data in transit.',
   },
   {
-    question: "What role should electricians play in smart home security?",
+    question: 'What role should electricians play in smart home security?',
     options: [
-      "None - security is not their concern",
-      "Advising customers on basic security practices and secure configuration",
-      "Hacking into the system to test it",
-      "Installing antivirus software"
+      'None - security is not their concern',
+      'Advising customers on basic security practices and secure configuration',
+      'Hacking into the system to test it',
+      'Installing antivirus software',
     ],
     correctAnswer: 1,
-    explanation: "Electricians should advise customers on basic security practices including strong passwords, network segmentation, and firmware updates, and ensure devices are configured securely during installation."
-  }
+    explanation:
+      'Electricians should advise customers on basic security practices including strong passwords, network segmentation, and firmware updates, and ensure devices are configured securely during installation.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Should I recommend specific smart home brands for security?",
-    answer: "Recommend established brands with good security track records, regular firmware updates, clear privacy policies, and support for local control without mandatory cloud connectivity. Research recent security audits and vulnerability disclosures before recommending specific products."
+    question: 'Should I recommend specific smart home brands for security?',
+    answer:
+      'Recommend established brands with good security track records, regular firmware updates, clear privacy policies, and support for local control without mandatory cloud connectivity. Research recent security audits and vulnerability disclosures before recommending specific products.',
   },
   {
-    question: "What if a customer refuses to change default passwords?",
-    answer: "Document your recommendation in writing and explain the risks clearly. Ultimately the customer decides, but ensure they understand the potential consequences. Consider including basic security setup as part of your standard installation service."
+    question: 'What if a customer refuses to change default passwords?',
+    answer:
+      'Document your recommendation in writing and explain the risks clearly. Ultimately the customer decides, but ensure they understand the potential consequences. Consider including basic security setup as part of your standard installation service.',
   },
   {
-    question: "Are voice assistants a security risk?",
-    answer: "Voice assistants can be security and privacy risks as they continuously listen for wake words and may send audio to cloud servers for processing. Advise customers to review privacy settings, consider muting when not needed, and understand what data is collected and stored."
-  }
+    question: 'Are voice assistants a security risk?',
+    answer:
+      'Voice assistants can be security and privacy risks as they continuously listen for wake words and may send audio to cloud servers for processing. Advise customers to review privacy settings, consider muting when not needed, and understand what data is collected and stored.',
+  },
 ];
 
 const SmartHomeModule5Section6 = () => {
   useSEO({
     title: `${TITLE} | Smart Home Module 5`,
-    description: DESCRIPTION
+    description: DESCRIPTION,
   });
 
   return (
@@ -148,7 +160,9 @@ const SmartHomeModule5Section6 = () => {
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
             <Shield className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-medium text-elec-yellow">Smart Security and Access Control</span>
+            <span className="text-sm font-medium text-elec-yellow">
+              Smart Security and Access Control
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{TITLE}</h1>
           <p className="text-lg text-white max-w-2xl mx-auto">{DESCRIPTION}</p>
@@ -184,19 +198,27 @@ const SmartHomeModule5Section6 = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Understand common cyber threats targeting smart home systems</span>
+                <span className="text-white">
+                  Understand common cyber threats targeting smart home systems
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Explain network security principles including segmentation and encryption</span>
+                <span className="text-white">
+                  Explain network security principles including segmentation and encryption
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Identify privacy risks associated with cloud-connected devices</span>
+                <span className="text-white">
+                  Identify privacy risks associated with cloud-connected devices
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Apply best practices for secure smart home installation and customer guidance</span>
+                <span className="text-white">
+                  Apply best practices for secure smart home installation and customer guidance
+                </span>
               </li>
             </ul>
           </div>
@@ -210,7 +232,8 @@ const SmartHomeModule5Section6 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Smart home devices are attractive targets for cybercriminals due to often weak security, always-on connectivity, and access to personal spaces and data.
+              Smart home devices are attractive targets for cybercriminals due to often weak
+              security, always-on connectivity, and access to personal spaces and data.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
@@ -219,25 +242,31 @@ const SmartHomeModule5Section6 = () => {
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Default Credentials</h4>
                   <p className="text-white text-sm">
-                    Many devices ship with default usernames and passwords that are publicly known. Attackers scan the internet for devices with unchanged credentials.
+                    Many devices ship with default usernames and passwords that are publicly known.
+                    Attackers scan the internet for devices with unchanged credentials.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-elec-yellow text-sm">Unpatched Vulnerabilities</h4>
+                  <h4 className="font-semibold text-elec-yellow text-sm">
+                    Unpatched Vulnerabilities
+                  </h4>
                   <p className="text-white text-sm">
-                    Devices with outdated firmware contain known security flaws that attackers can exploit. Many IoT devices are never updated after installation.
+                    Devices with outdated firmware contain known security flaws that attackers can
+                    exploit. Many IoT devices are never updated after installation.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Weak Encryption</h4>
                   <p className="text-white text-sm">
-                    Some devices use weak or no encryption for data transmission, allowing attackers to intercept sensitive information including video feeds and access codes.
+                    Some devices use weak or no encryption for data transmission, allowing attackers
+                    to intercept sensitive information including video feeds and access codes.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Botnet Recruitment</h4>
                   <p className="text-white text-sm">
-                    Compromised IoT devices are often recruited into botnets for distributed denial-of-service (DDoS) attacks against other targets.
+                    Compromised IoT devices are often recruited into botnets for distributed
+                    denial-of-service (DDoS) attacks against other targets.
                   </p>
                 </div>
               </div>
@@ -255,20 +284,30 @@ const SmartHomeModule5Section6 = () => {
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
               <h3 className="font-semibold text-white mb-3">Network Segmentation</h3>
               <p className="text-white mb-3">
-                Separating IoT devices from computers and phones limits the damage from a compromised device. If a smart plug is hacked, attackers cannot access banking on the laptop.
+                Separating IoT devices from computers and phones limits the damage from a
+                compromised device. If a smart plug is hacked, attackers cannot access banking on
+                the laptop.
               </p>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Guest network:</strong> Many routers support guest networks that can isolate IoT devices</span>
+                  <span>
+                    <strong>Guest network:</strong> Many routers support guest networks that can
+                    isolate IoT devices
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>VLAN:</strong> Advanced routers support VLANs for more robust segmentation</span>
+                  <span>
+                    <strong>VLAN:</strong> Advanced routers support VLANs for more robust
+                    segmentation
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Dedicated IoT router:</strong> Separate router for smart home devices</span>
+                  <span>
+                    <strong>Dedicated IoT router:</strong> Separate router for smart home devices
+                  </span>
                 </li>
               </ul>
             </div>
@@ -278,19 +317,30 @@ const SmartHomeModule5Section6 = () => {
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>WPA3:</strong> Use WPA3 encryption where supported, WPA2 as minimum</span>
+                  <span>
+                    <strong>WPA3:</strong> Use WPA3 encryption where supported, WPA2 as minimum
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Strong password:</strong> Minimum 12 characters with mixed case, numbers, symbols</span>
+                  <span>
+                    <strong>Strong password:</strong> Minimum 12 characters with mixed case,
+                    numbers, symbols
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Hidden SSID:</strong> Consider hiding network name (limited security benefit)</span>
+                  <span>
+                    <strong>Hidden SSID:</strong> Consider hiding network name (limited security
+                    benefit)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Disable WPS:</strong> Wi-Fi Protected Setup is vulnerable to brute force attacks</span>
+                  <span>
+                    <strong>Disable WPS:</strong> Wi-Fi Protected Setup is vulnerable to brute force
+                    attacks
+                  </span>
                 </li>
               </ul>
             </div>
@@ -329,7 +379,8 @@ const SmartHomeModule5Section6 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Smart home devices collect significant amounts of data about occupants' daily lives. Understanding and mitigating privacy risks is essential.
+              Smart home devices collect significant amounts of data about occupants' daily lives.
+              Understanding and mitigating privacy risks is essential.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
@@ -337,19 +388,34 @@ const SmartHomeModule5Section6 = () => {
               <ul className="space-y-3">
                 <li>
                   <strong className="text-elec-yellow">Usage patterns:</strong>
-                  <span className="text-white"> When lights are used, heating schedules, occupancy patterns - reveals when home is empty.</span>
+                  <span className="text-white">
+                    {' '}
+                    When lights are used, heating schedules, occupancy patterns - reveals when home
+                    is empty.
+                  </span>
                 </li>
                 <li>
                   <strong className="text-elec-yellow">Voice recordings:</strong>
-                  <span className="text-white"> Voice assistants may record and store conversations, potentially reviewed by human contractors.</span>
+                  <span className="text-white">
+                    {' '}
+                    Voice assistants may record and store conversations, potentially reviewed by
+                    human contractors.
+                  </span>
                 </li>
                 <li>
                   <strong className="text-elec-yellow">Video footage:</strong>
-                  <span className="text-white"> Cloud-stored camera footage accessible to manufacturer employees or through data breaches.</span>
+                  <span className="text-white">
+                    {' '}
+                    Cloud-stored camera footage accessible to manufacturer employees or through data
+                    breaches.
+                  </span>
                 </li>
                 <li>
                   <strong className="text-elec-yellow">Location data:</strong>
-                  <span className="text-white"> Geofencing features track smartphone location and presence patterns.</span>
+                  <span className="text-white">
+                    {' '}
+                    Geofencing features track smartphone location and presence patterns.
+                  </span>
                 </li>
               </ul>
             </div>
@@ -396,7 +462,8 @@ const SmartHomeModule5Section6 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              As trusted professionals, electricians have an opportunity and responsibility to guide customers on security best practices during installation.
+              As trusted professionals, electricians have an opportunity and responsibility to guide
+              customers on security best practices during installation.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
@@ -494,7 +561,9 @@ const SmartHomeModule5Section6 = () => {
               </div>
             </div>
             <p className="text-white mb-4">
-              Congratulations on completing Module 5! You have learned about smart locks, CCTV systems, security sensors, remote access, lighting integration, and network security for smart home installations.
+              Congratulations on completing Module 5! You have learned about smart locks, CCTV
+              systems, security sensors, remote access, lighting integration, and network security
+              for smart home installations.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
@@ -511,9 +580,7 @@ const SmartHomeModule5Section6 = () => {
                 className="border-white/30 text-white hover:bg-white/10 touch-manipulation"
                 asChild
               >
-                <Link to="/electrician/upskilling/smart-home-course">
-                  Back to Course Overview
-                </Link>
+                <Link to="/electrician/upskilling/smart-home-course">Back to Course Overview</Link>
               </Button>
             </div>
           </div>

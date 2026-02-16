@@ -51,30 +51,16 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
       }}
       snapPoints={snapPoints}
     >
-      <DrawerContent
-        className={cn(
-          'max-h-[95vh] flex flex-col',
-          className
-        )}
-      >
+      <DrawerContent className={cn('max-h-[95vh] flex flex-col', className)}>
         {/* Header */}
         {(title || headerContent || showCloseButton) && (
           <DrawerHeader className="border-b border-border pb-3 px-4 flex-shrink-0">
             <div className="flex items-center justify-between">
-              {title && (
-                <DrawerTitle className="text-lg font-semibold">
-                  {title}
-                </DrawerTitle>
-              )}
+              {title && <DrawerTitle className="text-lg font-semibold">{title}</DrawerTitle>}
               {headerContent}
               {showCloseButton && (
                 <DrawerClose asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-9 w-9 -mr-2"
-                    onClick={onClose}
-                  >
+                  <Button variant="ghost" size="icon" className="h-9 w-9 -mr-2" onClick={onClose}>
                     <X className="h-5 w-5" />
                     <span className="sr-only">Close</span>
                   </Button>
@@ -85,9 +71,7 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
         )}
 
         {/* Body */}
-        <div className="flex-1 overflow-hidden flex flex-col">
-          {children}
-        </div>
+        <div className="flex-1 overflow-hidden flex flex-col">{children}</div>
       </DrawerContent>
     </Drawer>
   );
@@ -100,9 +84,7 @@ export const BottomSheetScrollArea: React.FC<{
   children: React.ReactNode;
   className?: string;
 }> = ({ children, className = '' }) => (
-  <div className={cn('flex-1 overflow-y-auto overscroll-contain', className)}>
-    {children}
-  </div>
+  <div className={cn('flex-1 overflow-y-auto overscroll-contain', className)}>{children}</div>
 );
 
 /**
@@ -112,12 +94,7 @@ export const BottomSheetFooter: React.FC<{
   children: React.ReactNode;
   className?: string;
 }> = ({ children, className = '' }) => (
-  <div
-    className={cn(
-      'flex-shrink-0 border-t border-border p-4 pb-safe bg-background',
-      className
-    )}
-  >
+  <div className={cn('flex-shrink-0 border-t border-border p-4 pb-safe bg-background', className)}>
     {children}
   </div>
 );

@@ -19,30 +19,30 @@ export const SmartHomeModule5Section6PrivacyRisks = () => {
               <h4 className="font-semibold text-foreground">Audio Privacy</h4>
             </div>
             <p className="text-gray-300 text-sm">
-              Smart speakers and voice assistants may capture sensitive conversations 
-              and transmit them to cloud services
+              Smart speakers and voice assistants may capture sensitive conversations and transmit
+              them to cloud services
             </p>
           </div>
-          
+
           <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
             <div className="flex items-center gap-2 mb-2">
               <Eye className="h-4 w-4 text-elec-yellow" />
               <h4 className="font-semibold text-foreground">Visual Privacy</h4>
             </div>
             <p className="text-gray-300 text-sm">
-              Poorly configured CCTV systems can be accessed externally, 
-              allowing strangers to view live feeds
+              Poorly configured CCTV systems can be accessed externally, allowing strangers to view
+              live feeds
             </p>
           </div>
-          
+
           <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
             <div className="flex items-center gap-2 mb-2">
               <MapPin className="h-4 w-4 text-elec-yellow" />
               <h4 className="font-semibold text-foreground">Location Privacy</h4>
             </div>
             <p className="text-gray-300 text-sm">
-              Location data and usage patterns can reveal when a home is empty, 
-              creating security vulnerabilities
+              Location data and usage patterns can reveal when a home is empty, creating security
+              vulnerabilities
             </p>
           </div>
         </div>

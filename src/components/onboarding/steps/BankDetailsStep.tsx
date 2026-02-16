@@ -27,9 +27,7 @@ export function BankDetailsStep({ formData, onChange }: StepProps) {
           <CreditCard className="h-10 w-10 text-green-500" />
         </div>
         <h3 className="text-xl font-bold mb-2">Bank Details</h3>
-        <p className="text-muted-foreground">
-          So clients know where to send payment for invoices
-        </p>
+        <p className="text-muted-foreground">So clients know where to send payment for invoices</p>
       </div>
 
       <Card className="bg-amber-500/5 border-amber-500/20 p-4">
@@ -38,7 +36,8 @@ export function BankDetailsStep({ formData, onChange }: StepProps) {
           <div className="text-sm">
             <p className="font-medium mb-1">This step is optional</p>
             <p className="text-muted-foreground">
-              Without bank details, clients won't know where to send payment. You can skip this now and add it later in Settings.
+              Without bank details, clients won't know where to send payment. You can skip this now
+              and add it later in Settings.
             </p>
           </div>
         </div>
@@ -46,7 +45,9 @@ export function BankDetailsStep({ formData, onChange }: StepProps) {
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="bank-name" className="text-base">Bank Name</Label>
+          <Label htmlFor="bank-name" className="text-base">
+            Bank Name
+          </Label>
           <Input
             id="bank-name"
             value={formData.bankName}
@@ -57,7 +58,9 @@ export function BankDetailsStep({ formData, onChange }: StepProps) {
         </div>
 
         <div>
-          <Label htmlFor="account-name" className="text-base">Account Name</Label>
+          <Label htmlFor="account-name" className="text-base">
+            Account Name
+          </Label>
           <Input
             id="account-name"
             value={formData.accountName}
@@ -69,7 +72,9 @@ export function BankDetailsStep({ formData, onChange }: StepProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="sort-code" className="text-base">Sort Code</Label>
+            <Label htmlFor="sort-code" className="text-base">
+              Sort Code
+            </Label>
             <Input
               id="sort-code"
               value={formData.sortCode}
@@ -81,11 +86,18 @@ export function BankDetailsStep({ formData, onChange }: StepProps) {
           </div>
 
           <div>
-            <Label htmlFor="account-number" className="text-base">Account Number</Label>
+            <Label htmlFor="account-number" className="text-base">
+              Account Number
+            </Label>
             <Input
               id="account-number"
               value={formData.accountNumber}
-              onChange={(e) => onChange({ ...formData, accountNumber: e.target.value.replace(/\D/g, '').slice(0, 8) })}
+              onChange={(e) =>
+                onChange({
+                  ...formData,
+                  accountNumber: e.target.value.replace(/\D/g, '').slice(0, 8),
+                })
+              }
               placeholder="XXXXXXXX"
               maxLength={8}
               className="h-11 mt-2 touch-manipulation"
@@ -106,7 +118,8 @@ export function BankDetailsStep({ formData, onChange }: StepProps) {
         {showHelp && (
           <Card className="bg-muted/50 p-4">
             <p className="text-sm text-muted-foreground">
-              You can find your bank details on your bank statement, online banking portal, or mobile banking app. Look for "Account Details" or "Account Information" section.
+              You can find your bank details on your bank statement, online banking portal, or
+              mobile banking app. Look for "Account Details" or "Account Information" section.
             </p>
           </Card>
         )}

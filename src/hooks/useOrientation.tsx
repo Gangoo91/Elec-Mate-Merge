@@ -58,12 +58,11 @@ export const useOrientation = () => {
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleOrientationChange);
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    
+
     // Also listen for screen orientation API if available
     if (screen.orientation) {
       screen.orientation.addEventListener('change', handleOrientationChange);
     }
-
 
     return () => {
       window.removeEventListener('resize', handleResize);

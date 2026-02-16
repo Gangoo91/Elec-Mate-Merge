@@ -30,20 +30,14 @@ interface SyncFiltersProps {
 export const SyncFilters = ({ filters, onFiltersChange, className }: SyncFiltersProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const updateFilter = <K extends keyof FilterState>(
-    key: K,
-    value: FilterState[K]
-  ) => {
+  const updateFilter = <K extends keyof FilterState>(key: K, value: FilterState[K]) => {
     onFiltersChange({ ...filters, [key]: value });
   };
 
-  const toggleArrayFilter = (
-    key: 'operationType' | 'status',
-    value: string
-  ) => {
+  const toggleArrayFilter = (key: 'operationType' | 'status', value: string) => {
     const current = filters[key];
     const updated = current.includes(value)
-      ? current.filter(v => v !== value)
+      ? current.filter((v) => v !== value)
       : [...current, value];
     updateFilter(key, updated);
   };
@@ -57,7 +51,7 @@ export const SyncFilters = ({ filters, onFiltersChange, className }: SyncFilters
     });
   };
 
-  const activeFilterCount = 
+  const activeFilterCount =
     (filters.searchQuery ? 1 : 0) +
     filters.operationType.length +
     filters.status.length +
@@ -74,7 +68,7 @@ export const SyncFilters = ({ filters, onFiltersChange, className }: SyncFilters
           placeholder="Search by Report ID or type..."
           value={filters.searchQuery}
           onChange={(e) => updateFilter('searchQuery', e.target.value)}
-          className={cn("pr-10", !filters.searchQuery && "pl-10")}
+          className={cn('pr-10', !filters.searchQuery && 'pl-10')}
         />
         {filters.searchQuery && (
           <button
@@ -122,7 +116,7 @@ export const SyncFilters = ({ filters, onFiltersChange, className }: SyncFilters
             </DropdownMenuCheckboxItem>
 
             <DropdownMenuSeparator />
-            
+
             <DropdownMenuLabel>Status</DropdownMenuLabel>
             <DropdownMenuCheckboxItem
               checked={filters.status.includes('pending')}
@@ -144,7 +138,7 @@ export const SyncFilters = ({ filters, onFiltersChange, className }: SyncFilters
             </DropdownMenuCheckboxItem>
 
             <DropdownMenuSeparator />
-            
+
             <DropdownMenuLabel>Sort By</DropdownMenuLabel>
             <DropdownMenuCheckboxItem
               checked={filters.sortBy === 'newest'}

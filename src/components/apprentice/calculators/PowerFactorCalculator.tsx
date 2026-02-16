@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
-import { Info, BookOpen, TrendingDown, ChevronDown } from "lucide-react";
-import { useCalculator } from "./power-factor/useCalculator";
+import { Badge } from '@/components/ui/badge';
+import { Info, BookOpen, TrendingDown, ChevronDown } from 'lucide-react';
+import { useCalculator } from './power-factor/useCalculator';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -11,14 +11,10 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
+} from '@/components/calculators/shared';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 const PowerFactorCalculator = () => {
   const {
@@ -42,7 +38,7 @@ const PowerFactorCalculator = () => {
     pfType,
     setPfType,
     capacitorKVAr,
-    currentAfterCorrection
+    currentAfterCorrection,
   } = useCalculator();
 
   const [showGuidance, setShowGuidance] = useState(false);
@@ -50,11 +46,11 @@ const PowerFactorCalculator = () => {
   const config = CALCULATOR_CONFIG['power'];
 
   const getResultStatus = () => {
-    if (powerFactor === null) return { text: "Enter values to calculate", color: "text-white/80" };
+    if (powerFactor === null) return { text: 'Enter values to calculate', color: 'text-white/80' };
     const pf = parseFloat(powerFactor);
-    if (pf >= 0.95) return { text: "Excellent efficiency", color: "text-green-400" };
-    if (pf >= 0.85) return { text: "Good efficiency", color: "text-amber-400" };
-    return { text: "Poor efficiency - consider correction", color: "text-red-400" };
+    if (pf >= 0.95) return { text: 'Excellent efficiency', color: 'text-green-400' };
+    if (pf >= 0.85) return { text: 'Good efficiency', color: 'text-amber-400' };
+    return { text: 'Poor efficiency - consider correction', color: 'text-red-400' };
   };
 
   const hasValidInputs = () => {
@@ -77,15 +73,15 @@ const PowerFactorCalculator = () => {
         <CalculatorSelect
           label="Calculation Method"
           value={calculationMethod}
-          onChange={(value) => setCalculationMethod(value as "power" | "currentVoltage")}
+          onChange={(value) => setCalculationMethod(value as 'power' | 'currentVoltage')}
           options={[
-            { value: "power", label: "From Power Values" },
-            { value: "currentVoltage", label: "From Electrical Parameters" },
+            { value: 'power', label: 'From Power Values' },
+            { value: 'currentVoltage', label: 'From Electrical Parameters' },
           ]}
         />
 
         {/* Input Fields based on method */}
-        {calculationMethod === "power" ? (
+        {calculationMethod === 'power' ? (
           <CalculatorInputGrid columns={2}>
             <CalculatorInput
               label="Active Power"
@@ -151,11 +147,11 @@ const PowerFactorCalculator = () => {
             value={pfType}
             onChange={setPfType}
             options={[
-              { value: "lagging", label: "Lagging (Inductive loads)" },
-              { value: "leading", label: "Leading (Capacitive loads)" },
+              { value: 'lagging', label: 'Lagging (Inductive loads)' },
+              { value: 'leading', label: 'Leading (Capacitive loads)' },
             ]}
           />
-          {pfType === "lagging" && (
+          {pfType === 'lagging' && (
             <CalculatorInput
               label="Target PF for Correction"
               type="text"
@@ -185,13 +181,15 @@ const PowerFactorCalculator = () => {
               <p className="text-sm text-white/60 mb-1">Power Factor</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
                 {parseFloat(powerFactor).toFixed(3)}
               </div>
               <Badge
                 variant="outline"
-                className={cn("mt-2", status.color)}
+                className={cn('mt-2', status.color)}
                 style={{ borderColor: 'currentColor' }}
               >
                 {status.text}
@@ -201,17 +199,31 @@ const PowerFactorCalculator = () => {
             <div className="space-y-2 pt-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-white/60">Method:</span>
-                <span className="text-white">{calculationMethod === 'power' ? 'Power Values' : 'V/I Parameters'}</span>
+                <span className="text-white">
+                  {calculationMethod === 'power' ? 'Power Values' : 'V/I Parameters'}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white/60">Efficiency Rating:</span>
-                <span className={parseFloat(powerFactor) >= 0.95 ? "text-green-400" : parseFloat(powerFactor) >= 0.85 ? "text-amber-400" : "text-red-400"}>
-                  {parseFloat(powerFactor) >= 0.95 ? "Excellent" : parseFloat(powerFactor) >= 0.85 ? "Good" : "Poor"}
+                <span
+                  className={
+                    parseFloat(powerFactor) >= 0.95
+                      ? 'text-green-400'
+                      : parseFloat(powerFactor) >= 0.85
+                        ? 'text-amber-400'
+                        : 'text-red-400'
+                  }
+                >
+                  {parseFloat(powerFactor) >= 0.95
+                    ? 'Excellent'
+                    : parseFloat(powerFactor) >= 0.85
+                      ? 'Good'
+                      : 'Poor'}
                 </span>
               </div>
             </div>
 
-            {capacitorKVAr && targetPF && pfType === "lagging" && (
+            {capacitorKVAr && targetPF && pfType === 'lagging' && (
               <div className="pt-3 mt-3 border-t border-white/10 space-y-2">
                 <ResultsGrid columns={2}>
                   <ResultValue
@@ -241,7 +253,13 @@ const PowerFactorCalculator = () => {
               <div className="flex items-center gap-2">
                 <TrendingDown className="h-4 w-4 text-green-400" />
                 <p className="text-sm text-green-200">
-                  Current reduction with PF correction: {((parseFloat(current) - parseFloat(currentAfterCorrection)) / parseFloat(current) * 100).toFixed(1)}% lower
+                  Current reduction with PF correction:{' '}
+                  {(
+                    ((parseFloat(current) - parseFloat(currentAfterCorrection)) /
+                      parseFloat(current)) *
+                    100
+                  ).toFixed(1)}
+                  % lower
                 </p>
               </div>
             </div>
@@ -253,31 +271,43 @@ const PowerFactorCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showGuidance && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0 space-y-2">
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Power Factor Quality:</strong> {parseFloat(powerFactor) >= 0.95 ? "Excellent - minimal reactive power waste" : parseFloat(powerFactor) >= 0.85 ? "Acceptable for most applications" : "Poor - significant energy inefficiency"}
+                  <strong className="text-blue-300">Power Factor Quality:</strong>{' '}
+                  {parseFloat(powerFactor) >= 0.95
+                    ? 'Excellent - minimal reactive power waste'
+                    : parseFloat(powerFactor) >= 0.85
+                      ? 'Acceptable for most applications'
+                      : 'Poor - significant energy inefficiency'}
                 </p>
-                {pfType === "lagging" && (
+                {pfType === 'lagging' && (
                   <p className="text-sm text-blue-200/80">
-                    <strong className="text-blue-300">Inductive Load:</strong> Current lags voltage - typical of motors, transformers, fluorescent lighting
+                    <strong className="text-blue-300">Inductive Load:</strong> Current lags voltage
+                    - typical of motors, transformers, fluorescent lighting
                   </p>
                 )}
-                {pfType === "leading" && (
+                {pfType === 'leading' && (
                   <p className="text-sm text-blue-200/80">
-                    <strong className="text-blue-300">Capacitive Load:</strong> Current leads voltage - can cause voltage regulation issues
+                    <strong className="text-blue-300">Capacitive Load:</strong> Current leads
+                    voltage - can cause voltage regulation issues
                   </p>
                 )}
                 {capacitorKVAr && (
                   <p className="text-sm text-blue-200/80">
-                    <strong className="text-blue-300">Correction Benefits:</strong> Reduced kVA demand, lower energy costs, improved voltage regulation, reduced cable losses
+                    <strong className="text-blue-300">Correction Benefits:</strong> Reduced kVA
+                    demand, lower energy costs, improved voltage regulation, reduced cable losses
                   </p>
                 )}
               </CollapsibleContent>
@@ -290,20 +320,36 @@ const PowerFactorCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Regs at a Glance</span>
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    BS 7671 Regs at a Glance
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showBsRegs && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showBsRegs && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">
-                  <p>• <strong className="text-amber-300">512.1.2:</strong> Equipment selection must consider power factor and efficiency</p>
-                  <p>• <strong className="text-amber-300">525:</strong> Voltage drop calculations must account for both active and reactive power</p>
-                  <p>• <strong className="text-amber-300">523:</strong> Conductor sizing based on design current, not reduced current from poor PF</p>
-                  <p>• <strong className="text-amber-300">534:</strong> Capacitor banks require appropriate protection and switching</p>
+                  <p>
+                    • <strong className="text-amber-300">512.1.2:</strong> Equipment selection must
+                    consider power factor and efficiency
+                  </p>
+                  <p>
+                    • <strong className="text-amber-300">525:</strong> Voltage drop calculations
+                    must account for both active and reactive power
+                  </p>
+                  <p>
+                    • <strong className="text-amber-300">523:</strong> Conductor sizing based on
+                    design current, not reduced current from poor PF
+                  </p>
+                  <p>
+                    • <strong className="text-amber-300">534:</strong> Capacitor banks require
+                    appropriate protection and switching
+                  </p>
                 </div>
               </CollapsibleContent>
             </div>

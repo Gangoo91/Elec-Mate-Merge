@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
 
 export const useCourseComparison = () => {
   const [selectedCourses, setSelectedCourses] = useState<(string | number)[]>([]);
@@ -10,29 +10,29 @@ export const useCourseComparison = () => {
   const addToComparison = (courseId: string | number, courseData?: EnhancedCareerCourse) => {
     if (selectedCourses.length >= 3) {
       toast({
-        title: "Comparison limit reached",
-        description: "You can compare up to 3 courses at a time.",
-        variant: "destructive"
+        title: 'Comparison limit reached',
+        description: 'You can compare up to 3 courses at a time.',
+        variant: 'destructive',
       });
       return;
     }
 
     if (!selectedCourses.includes(courseId)) {
-      setSelectedCourses(prev => [...prev, courseId]);
+      setSelectedCourses((prev) => [...prev, courseId]);
       if (courseData) {
-        setSelectedCourseData(prev => [...prev, courseData]);
+        setSelectedCourseData((prev) => [...prev, courseData]);
       }
       toast({
-        title: "Course added to comparison",
+        title: 'Course added to comparison',
         description: `Course has been added to your comparison.`,
-        variant: "default"
+        variant: 'default',
       });
     }
   };
 
   const removeFromComparison = (courseId: string | number) => {
-    setSelectedCourses(prev => prev.filter(id => id !== courseId));
-    setSelectedCourseData(prev => prev.filter(course => course.id !== courseId));
+    setSelectedCourses((prev) => prev.filter((id) => id !== courseId));
+    setSelectedCourseData((prev) => prev.filter((course) => course.id !== courseId));
   };
 
   const clearComparison = () => {
@@ -42,13 +42,13 @@ export const useCourseComparison = () => {
 
   const isInComparison = (courseId: string | number) => selectedCourses.includes(courseId);
 
-  return { 
-    addToComparison, 
-    removeFromComparison, 
+  return {
+    addToComparison,
+    removeFromComparison,
     clearComparison,
-    isInComparison, 
+    isInComparison,
     selectedCount: selectedCourses.length,
     selectedCourses,
-    selectedCourseData
+    selectedCourseData,
   };
 };

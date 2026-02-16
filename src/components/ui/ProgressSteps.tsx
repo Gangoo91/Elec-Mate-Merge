@@ -105,10 +105,7 @@ const HorizontalSteps: React.FC<Omit<ProgressStepsProps, 'orientation' | 'compac
           return (
             <div
               key={step.id}
-              className={cn(
-                'flex flex-col items-center',
-                onStepClick && 'cursor-pointer'
-              )}
+              className={cn('flex flex-col items-center', onStepClick && 'cursor-pointer')}
               onClick={() => onStepClick?.(index)}
             >
               {/* Circle */}
@@ -116,7 +113,9 @@ const HorizontalSteps: React.FC<Omit<ProgressStepsProps, 'orientation' | 'compac
                 className={cn(
                   'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-200 z-10',
                   isCompleted && 'bg-elec-yellow text-black',
-                  isCurrent && !isCompleted && 'bg-elec-yellow text-black ring-4 ring-elec-yellow/20',
+                  isCurrent &&
+                    !isCompleted &&
+                    'bg-elec-yellow text-black ring-4 ring-elec-yellow/20',
                   !isCompleted && !isCurrent && 'bg-muted text-muted-foreground'
                 )}
               >
@@ -166,10 +165,7 @@ const VerticalSteps: React.FC<Omit<ProgressStepsProps, 'orientation' | 'compact'
       return (
         <div
           key={step.id}
-          className={cn(
-            'flex gap-3',
-            onStepClick && 'cursor-pointer'
-          )}
+          className={cn('flex gap-3', onStepClick && 'cursor-pointer')}
           onClick={() => onStepClick?.(index)}
         >
           {/* Circle and line */}
@@ -211,9 +207,7 @@ const VerticalSteps: React.FC<Omit<ProgressStepsProps, 'orientation' | 'compact'
               {step.label}
             </span>
             {step.description && (
-              <p className="text-xs text-muted-foreground mt-0.5">
-                {step.description}
-              </p>
+              <p className="text-xs text-muted-foreground mt-0.5">{step.description}</p>
             )}
           </div>
         </div>
@@ -239,9 +233,7 @@ const CompactProgressSteps: React.FC<{
     <div className={cn('space-y-2', className)}>
       {/* Current step label and position */}
       <div className="flex items-center justify-between text-sm px-1">
-        <span className="font-medium text-foreground">
-          {currentStepData?.label}
-        </span>
+        <span className="font-medium text-foreground">{currentStepData?.label}</span>
         <span className="text-muted-foreground text-xs">
           {currentStep + 1}/{steps.length}
         </span>
@@ -292,9 +284,7 @@ export const StepDots: React.FC<{
         disabled={!onStepClick}
         className={cn(
           'w-2 h-2 rounded-full transition-all duration-200',
-          i === currentStep
-            ? 'bg-elec-yellow w-6'
-            : 'bg-muted hover:bg-muted-foreground/50',
+          i === currentStep ? 'bg-elec-yellow w-6' : 'bg-muted hover:bg-muted-foreground/50',
           !onStepClick && 'cursor-default'
         )}
         aria-label={`Step ${i + 1}`}

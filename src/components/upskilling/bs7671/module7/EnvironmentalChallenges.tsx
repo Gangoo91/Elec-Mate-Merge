@@ -5,61 +5,102 @@ const EnvironmentalChallenges = () => {
   return (
     <Card className="bg-gradient-to-r from-orange-900/20 to-elec-gray border-orange-600/30">
       <CardHeader>
-        <CardTitle className="text-foreground">Environmental Challenges in Agricultural Settings</CardTitle>
-        <Badge variant="secondary" className="w-fit bg-orange-600 text-foreground">Harsh Conditions</Badge>
+        <CardTitle className="text-foreground">
+          Environmental Challenges in Agricultural Settings
+        </CardTitle>
+        <Badge variant="secondary" className="w-fit bg-orange-600 text-foreground">
+          Harsh Conditions
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600 mb-4">
-          <h5 className="text-elec-yellow font-semibold mb-2">Code Reference: BS 7671 Section 705 - Agricultural Premises</h5>
-          <p className="text-sm">Special requirements for electrical installations in agricultural and horticultural premises with livestock considerations</p>
+          <h5 className="text-elec-yellow font-semibold mb-2">
+            Code Reference: BS 7671 Section 705 - Agricultural Premises
+          </h5>
+          <p className="text-sm">
+            Special requirements for electrical installations in agricultural and horticultural
+            premises with livestock considerations
+          </p>
         </div>
-        
+
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-2">Agricultural Environment Classifications:</h5>
-          
+          <h5 className="text-elec-yellow font-semibold mb-2">
+            Agricultural Environment Classifications:
+          </h5>
+
           {/* Mobile-friendly environment cards */}
           <div className="grid gap-4 md:hidden">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-red-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-red-400">Livestock Areas</h6>
-                <span className="text-xs bg-red-600 text-foreground px-2 py-1 rounded">IP44 min</span>
+                <span className="text-xs bg-red-600 text-foreground px-2 py-1 rounded">
+                  IP44 min
+                </span>
               </div>
-              <p className="text-sm mb-1"><strong>Risk:</strong> Very High</p>
-              <p className="text-sm mb-1"><strong>Special:</strong> SELV or 25V limit</p>
-              <p className="text-sm"><strong>Use:</strong> Milking parlours, stables</p>
+              <p className="text-sm mb-1">
+                <strong>Risk:</strong> Very High
+              </p>
+              <p className="text-sm mb-1">
+                <strong>Special:</strong> SELV or 25V limit
+              </p>
+              <p className="text-sm">
+                <strong>Use:</strong> Milking parlours, stables
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-orange-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-orange-400">Feed/Storage</h6>
-                <span className="text-xs bg-orange-600 text-foreground px-2 py-1 rounded">IP54</span>
+                <span className="text-xs bg-orange-600 text-foreground px-2 py-1 rounded">
+                  IP54
+                </span>
               </div>
-              <p className="text-sm mb-1"><strong>Risk:</strong> High</p>
-              <p className="text-sm mb-1"><strong>Special:</strong> Dust/moisture protection</p>
-              <p className="text-sm"><strong>Use:</strong> Grain stores, feed mills</p>
+              <p className="text-sm mb-1">
+                <strong>Risk:</strong> High
+              </p>
+              <p className="text-sm mb-1">
+                <strong>Special:</strong> Dust/moisture protection
+              </p>
+              <p className="text-sm">
+                <strong>Use:</strong> Grain stores, feed mills
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-yellow-400">Equipment Sheds</h6>
-                <span className="text-xs bg-yellow-600 text-foreground px-2 py-1 rounded">IP44</span>
+                <span className="text-xs bg-yellow-600 text-foreground px-2 py-1 rounded">
+                  IP44
+                </span>
               </div>
-              <p className="text-sm mb-1"><strong>Risk:</strong> Medium</p>
-              <p className="text-sm mb-1"><strong>Special:</strong> Mechanical protection</p>
-              <p className="text-sm"><strong>Use:</strong> Workshops, machinery</p>
+              <p className="text-sm mb-1">
+                <strong>Risk:</strong> Medium
+              </p>
+              <p className="text-sm mb-1">
+                <strong>Special:</strong> Mechanical protection
+              </p>
+              <p className="text-sm">
+                <strong>Use:</strong> Workshops, machinery
+              </p>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <div className="flex justify-between items-center mb-2">
                 <h6 className="font-bold text-green-400">Office/Domestic</h6>
                 <span className="text-xs bg-green-600 text-foreground px-2 py-1 rounded">IP20</span>
               </div>
-              <p className="text-sm mb-1"><strong>Risk:</strong> Standard</p>
-              <p className="text-sm mb-1"><strong>Special:</strong> Standard wiring rules</p>
-              <p className="text-sm"><strong>Use:</strong> Farmhouse, offices</p>
+              <p className="text-sm mb-1">
+                <strong>Risk:</strong> Standard
+              </p>
+              <p className="text-sm mb-1">
+                <strong>Special:</strong> Standard wiring rules
+              </p>
+              <p className="text-sm">
+                <strong>Use:</strong> Farmhouse, offices
+              </p>
             </div>
           </div>
-          
+
           {/* Desktop table - hidden on mobile */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-sm">
@@ -105,7 +146,7 @@ const EnvironmentalChallenges = () => {
             </table>
           </div>
         </div>
-        
+
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
           <h5 className="text-elec-yellow font-semibold mb-2">Livestock Contact Protection:</h5>
           <div className="space-y-4 lg:grid lg:grid-cols-2 lg:gap-4">
@@ -133,7 +174,7 @@ const EnvironmentalChallenges = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
           <h5 className="text-elec-yellow font-semibold mb-2">Agricultural Equipment:</h5>
           <ul className="text-sm space-y-1">
@@ -145,7 +186,7 @@ const EnvironmentalChallenges = () => {
             <li>• Feeding: System resilience</li>
           </ul>
         </div>
-        
+
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
           <h5 className="text-elec-yellow font-semibold mb-2">Outdoor Protection:</h5>
           <ul className="text-sm space-y-1">
@@ -157,10 +198,12 @@ const EnvironmentalChallenges = () => {
             <li>• Weatherproof maintenance</li>
           </ul>
         </div>
-        
+
         <div className="space-y-4">
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h4 className="text-elec-yellow font-semibold mb-2 break-words">Weather and Environmental Factors</h4>
+            <h4 className="text-elec-yellow font-semibold mb-2 break-words">
+              Weather and Environmental Factors
+            </h4>
             <ul className="text-sm space-y-1 break-words">
               <li>• Temperature extremes: -20°C to +60°C typical range</li>
               <li>• High humidity and condensation in livestock buildings</li>
@@ -170,9 +213,11 @@ const EnvironmentalChallenges = () => {
               <li>• Seasonal flooding considerations</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h4 className="text-elec-yellow font-semibold mb-2 break-words">Mechanical Damage Risks</h4>
+            <h4 className="text-elec-yellow font-semibold mb-2 break-words">
+              Mechanical Damage Risks
+            </h4>
             <ul className="text-sm space-y-1 break-words">
               <li>• Large machinery and vehicle impact</li>
               <li>• Animal contact and damage</li>
@@ -182,7 +227,7 @@ const EnvironmentalChallenges = () => {
               <li>• Ground movement and settlement</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
             <h4 className="text-elec-yellow font-semibold mb-2 break-words">Chemical Hazards</h4>
             <ul className="text-sm space-y-1 break-words">
@@ -194,9 +239,11 @@ const EnvironmentalChallenges = () => {
               <li>• pH variations affecting metalwork</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-            <h4 className="text-elec-yellow font-semibold mb-2 break-words">Dust and Particulate Issues</h4>
+            <h4 className="text-elec-yellow font-semibold mb-2 break-words">
+              Dust and Particulate Issues
+            </h4>
             <ul className="text-sm space-y-1 break-words">
               <li>• Grain dust and chaff accumulation</li>
               <li>• Fine particulate ingress into equipment</li>
@@ -207,7 +254,7 @@ const EnvironmentalChallenges = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="bg-elec-dark p-3 rounded-md border border-gray-600">
           <h5 className="text-elec-yellow font-semibold mb-2">Livestock Electrical Sensitivity:</h5>
           <ul className="text-sm space-y-1">

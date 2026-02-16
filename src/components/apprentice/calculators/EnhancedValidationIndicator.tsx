@@ -1,18 +1,17 @@
-
 import React from 'react';
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertTriangle, XCircle, Shield, Zap } from "lucide-react";
-import { SafetyValidationResult } from "@/services/safetyValidation";
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, AlertTriangle, XCircle, Shield, Zap } from 'lucide-react';
+import { SafetyValidationResult } from '@/services/safetyValidation';
 
 interface EnhancedValidationIndicatorProps {
   validation: SafetyValidationResult | null;
   calculationType: string;
 }
 
-const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = ({ 
-  validation, 
-  calculationType 
+const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = ({
+  validation,
+  calculationType,
 }) => {
   if (!validation) {
     return null;
@@ -22,8 +21,8 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
     <div className="space-y-4">
       {/* Safety Status Header */}
       <div className="flex flex-wrap gap-2 items-center">
-        <Badge 
-          variant={validation.isValid ? "default" : "destructive"}
+        <Badge
+          variant={validation.isValid ? 'default' : 'destructive'}
           className="flex items-center gap-1 text-sm"
         >
           {validation.isValid ? (
@@ -33,7 +32,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
           )}
           {validation.isValid ? 'Safety Compliant' : 'Safety Issues Detected'}
         </Badge>
-        
+
         {/* Safety Factors Display */}
         {validation.safetyFactors.safetyMargin > 0 && (
           <Badge variant="outline" className="text-xs">
@@ -50,13 +49,15 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
             <div className="font-bold text-red-300 mb-2 text-lg">⚠️ CRITICAL SAFETY ALERT</div>
             <ul className="list-disc list-inside space-y-2">
               {validation.criticalAlerts.map((alert, index) => (
-                <li key={index} className="text-red-200 font-medium">{alert}</li>
+                <li key={index} className="text-red-200 font-medium">
+                  {alert}
+                </li>
               ))}
             </ul>
             <div className="mt-3 p-2 bg-red-800/30 rounded border border-red-600/50">
               <p className="text-red-100 text-sm font-medium">
-                🚨 DO NOT PROCEED with installation until these issues are resolved.
-                Consult a qualified electrician immediately.
+                🚨 DO NOT PROCEED with installation until these issues are resolved. Consult a
+                qualified electrician immediately.
               </p>
             </div>
           </AlertDescription>
@@ -71,7 +72,9 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
             <div className="font-medium text-red-300 mb-1">Calculation Errors:</div>
             <ul className="list-disc list-inside space-y-1 text-sm">
               {validation.errors.map((error, index) => (
-                <li key={index} className="text-red-200">{error}</li>
+                <li key={index} className="text-red-200">
+                  {error}
+                </li>
               ))}
             </ul>
           </AlertDescription>
@@ -86,7 +89,9 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
             <div className="font-medium text-amber-300 mb-1">Safety Warnings:</div>
             <ul className="list-disc list-inside space-y-1 text-sm">
               {validation.warnings.map((warning, index) => (
-                <li key={index} className="text-amber-200">{warning}</li>
+                <li key={index} className="text-amber-200">
+                  {warning}
+                </li>
               ))}
             </ul>
           </AlertDescription>
@@ -95,8 +100,8 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
 
       {/* Compliance Status */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-        <Badge 
-          variant={validation.complianceChecks.bs7671 ? "default" : "destructive"}
+        <Badge
+          variant={validation.complianceChecks.bs7671 ? 'default' : 'destructive'}
           className="flex items-center gap-1 justify-center"
         >
           {validation.complianceChecks.bs7671 ? (
@@ -106,9 +111,9 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
           )}
           BS 7671
         </Badge>
-        
-        <Badge 
-          variant={validation.complianceChecks.iet ? "default" : "destructive"}
+
+        <Badge
+          variant={validation.complianceChecks.iet ? 'default' : 'destructive'}
           className="flex items-center gap-1 justify-center"
         >
           {validation.complianceChecks.iet ? (
@@ -119,8 +124,8 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
           IET
         </Badge>
 
-        <Badge 
-          variant={validation.complianceChecks.buildingRegs ? "default" : "destructive"}
+        <Badge
+          variant={validation.complianceChecks.buildingRegs ? 'default' : 'destructive'}
           className="flex items-center gap-1 justify-center"
         >
           {validation.complianceChecks.buildingRegs ? (
@@ -131,8 +136,8 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
           Building Regs
         </Badge>
 
-        <Badge 
-          variant={validation.complianceChecks.cdm ? "default" : "destructive"}
+        <Badge
+          variant={validation.complianceChecks.cdm ? 'default' : 'destructive'}
           className="flex items-center gap-1 justify-center"
         >
           {validation.complianceChecks.cdm ? (
@@ -145,7 +150,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
       </div>
 
       {/* Safety Factors Detail */}
-      {(validation.safetyFactors.temperatureDerating < 1.0 || 
+      {(validation.safetyFactors.temperatureDerating < 1.0 ||
         validation.safetyFactors.groupingFactor < 1.0) && (
         <Alert className="border-blue-500/50 bg-blue-500/10">
           <Shield className="h-4 w-4 text-blue-500" />
@@ -154,7 +159,8 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
             <div className="grid grid-cols-2 gap-2 text-sm">
               {validation.safetyFactors.temperatureDerating < 1.0 && (
                 <div className="text-blue-200">
-                  Temperature derating: {(validation.safetyFactors.temperatureDerating * 100).toFixed(0)}%
+                  Temperature derating:{' '}
+                  {(validation.safetyFactors.temperatureDerating * 100).toFixed(0)}%
                 </div>
               )}
               {validation.safetyFactors.groupingFactor < 1.0 && (
@@ -171,9 +177,10 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
       <Alert className="border-slate-500/50 bg-slate-500/10">
         <Shield className="h-4 w-4 text-slate-400" />
         <AlertDescription className="text-xs text-slate-300">
-          <strong>Professional Notice:</strong> These calculations include safety factors and real-world conditions. 
-          However, all electrical work must be designed, installed, and certified by qualified personnel. 
-          This tool is for guidance only and does not replace professional electrical design or inspection.
+          <strong>Professional Notice:</strong> These calculations include safety factors and
+          real-world conditions. However, all electrical work must be designed, installed, and
+          certified by qualified personnel. This tool is for guidance only and does not replace
+          professional electrical design or inspection.
           {validation.criticalAlerts.length > 0 && (
             <div className="mt-2 text-red-300 font-medium">
               ⚠️ Critical safety issues detected - professional consultation required immediately.

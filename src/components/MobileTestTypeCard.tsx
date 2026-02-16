@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -23,24 +22,28 @@ interface MobileTestTypeCardProps {
   onStartTest: (testTypeId: string) => void;
 }
 
-const MobileTestTypeCard = ({ testType, circuits, completedTests, onStartTest }: MobileTestTypeCardProps) => {
+const MobileTestTypeCard = ({
+  testType,
+  circuits,
+  completedTests,
+  onStartTest,
+}: MobileTestTypeCardProps) => {
   const applicableCircuits = circuits.filter((circuit: any) => {
     if (testType.requiredForAll) return true;
     if (testType.requiredForCircuits) {
       const circuitType = circuit.circuitDescription?.toLowerCase() || '';
-      return testType.requiredForCircuits.some(type => 
-        circuitType.includes(type)
-      );
+      return testType.requiredForCircuits.some((type) => circuitType.includes(type));
     }
     return false;
   });
 
-  const completedCount = applicableCircuits.filter((circuit: any) => 
+  const completedCount = applicableCircuits.filter((circuit: any) =>
     completedTests.has(`${testType.id}-${circuit.id}`)
   ).length;
 
   const isComplete = completedCount === applicableCircuits.length && applicableCircuits.length > 0;
-  const progressPercentage = applicableCircuits.length > 0 ? (completedCount / applicableCircuits.length) * 100 : 0;
+  const progressPercentage =
+    applicableCircuits.length > 0 ? (completedCount / applicableCircuits.length) * 100 : 0;
 
   return (
     <Card className="relative overflow-hidden">
@@ -55,7 +58,7 @@ const MobileTestTypeCard = ({ testType, circuits, completedTests, onStartTest }:
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant={isComplete ? "default" : "secondary"} className="text-xs">
+              <Badge variant={isComplete ? 'default' : 'secondary'} className="text-xs">
                 {completedCount}/{applicableCircuits.length} circuits
               </Badge>
               {isComplete && <CheckCircle className="h-4 w-4 text-green-500" />}
@@ -64,7 +67,7 @@ const MobileTestTypeCard = ({ testType, circuits, completedTests, onStartTest }:
           <Button
             onClick={() => onStartTest(testType.id)}
             size="sm"
-            variant={isComplete ? "outline" : "default"}
+            variant={isComplete ? 'outline' : 'default'}
             className="ml-4"
           >
             {isComplete ? (
@@ -80,17 +83,14 @@ const MobileTestTypeCard = ({ testType, circuits, completedTests, onStartTest }:
             )}
           </Button>
         </div>
-        
+
         {!isComplete && (
           <div className="mt-3">
             <div className="flex justify-between text-xs text-muted-foreground mb-1">
               <span>Progress</span>
               <span>{Math.round(progressPercentage)}%</span>
             </div>
-            <Progress 
-              value={progressPercentage} 
-              className="h-2"
-            />
+            <Progress value={progressPercentage} className="h-2" />
           </div>
         )}
       </CardContent>

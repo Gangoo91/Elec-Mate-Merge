@@ -1,26 +1,20 @@
-import { Badge } from "@/components/ui/badge";
-import {
-  CheckCircle2,
-  AlertCircle,
-  Zap,
-  Building2,
-  ClipboardCheck,
-  Sparkles
-} from "lucide-react";
-import { DesignInputs } from "@/types/installation-design";
-import { cn } from "@/lib/utils";
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, AlertCircle, Zap, Building2, ClipboardCheck, Sparkles } from 'lucide-react';
+import { DesignInputs } from '@/types/installation-design';
+import { cn } from '@/lib/utils';
 
 interface ReviewStepProps {
   inputs: DesignInputs;
 }
 
 export const ReviewStep = ({ inputs }: ReviewStepProps) => {
-  const hasIssues = inputs.circuits.length === 0 ||
-                     !inputs.projectName ||
-                     !inputs.location ||
-                     inputs.circuits.some(c => !c.name || !c.loadPower);
+  const hasIssues =
+    inputs.circuits.length === 0 ||
+    !inputs.projectName ||
+    !inputs.location ||
+    inputs.circuits.some((c) => !c.name || !c.loadPower);
 
-  const missingData = inputs.circuits.filter(c => !c.cableLength);
+  const missingData = inputs.circuits.filter((c) => !c.cableLength);
 
   return (
     <div className="space-y-6">
@@ -39,8 +33,8 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
       {hasIssues ? (
         <div
           className={cn(
-            "flex items-start gap-3 p-4 rounded-xl border",
-            "bg-red-500/10 border-red-500/30"
+            'flex items-start gap-3 p-4 rounded-xl border',
+            'bg-red-500/10 border-red-500/30'
           )}
         >
           <AlertCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
@@ -54,27 +48,20 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
       ) : (
         <div
           className={cn(
-            "flex items-start gap-3 p-4 rounded-xl border",
-            "bg-green-500/10 border-green-500/30"
+            'flex items-start gap-3 p-4 rounded-xl border',
+            'bg-green-500/10 border-green-500/30'
           )}
         >
           <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
           <div>
             <h4 className="text-sm font-semibold text-white mb-0.5">Ready to Generate</h4>
-            <p className="text-xs text-green-300">
-              All required information provided
-            </p>
+            <p className="text-xs text-green-300">All required information provided</p>
           </div>
         </div>
       )}
 
       {/* Project Summary */}
-      <div
-        className={cn(
-          "p-4 rounded-xl",
-          "bg-white/5 backdrop-blur border border-white/10"
-        )}
-      >
+      <div className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-white/10')}>
         <div className="flex items-center gap-2 mb-4">
           <div className="p-2 rounded-lg bg-elec-yellow/10">
             <Building2 className="h-4 w-4 text-elec-yellow" />
@@ -113,12 +100,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
       </div>
 
       {/* Circuits Summary */}
-      <div
-        className={cn(
-          "p-4 rounded-xl",
-          "bg-white/5 backdrop-blur border border-white/10"
-        )}
-      >
+      <div className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-white/10')}>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <div className="p-2 rounded-lg bg-elec-yellow/10">
@@ -135,10 +117,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
           {inputs.circuits.map((circuit, index) => (
             <div
               key={circuit.id}
-              className={cn(
-                "p-3 rounded-lg",
-                "bg-white/5 border border-white/10"
-              )}
+              className={cn('p-3 rounded-lg', 'bg-white/5 border border-white/10')}
             >
               <div className="flex items-center gap-2 mb-2">
                 <Badge
@@ -150,9 +129,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
                 <span className="font-semibold text-sm text-white flex-1 truncate">
                   {circuit.name || <span className="text-red-400">Unnamed Circuit</span>}
                 </span>
-                {!circuit.loadPower && (
-                  <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
-                )}
+                {!circuit.loadPower && <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />}
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
@@ -174,9 +151,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
                 </div>
                 {circuit.specialLocation && circuit.specialLocation !== 'none' && (
                   <div>
-                    <Badge
-                      className="bg-orange-500/20 text-orange-300 border-0 text-xs capitalize"
-                    >
+                    <Badge className="bg-orange-500/20 text-orange-300 border-0 text-xs capitalize">
                       {circuit.specialLocation}
                     </Badge>
                   </div>
@@ -191,24 +166,22 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
       {missingData.length > 0 && (
         <div
           className={cn(
-            "flex items-start gap-2 p-3 rounded-xl border",
-            "bg-orange-500/10 border-orange-500/30"
+            'flex items-start gap-2 p-3 rounded-xl border',
+            'bg-orange-500/10 border-orange-500/30'
           )}
         >
           <AlertCircle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
           <p className="text-xs text-orange-200">
-            <span className="font-medium text-orange-300">Note:</span> {missingData.length} circuit{missingData.length > 1 ? 's' : ''} missing cable length.
-            AI will estimate based on typical installations.
+            <span className="font-medium text-orange-300">Note:</span> {missingData.length} circuit
+            {missingData.length > 1 ? 's' : ''} missing cable length. AI will estimate based on
+            typical installations.
           </p>
         </div>
       )}
 
       {/* Expected Output */}
       <div
-        className={cn(
-          "p-4 rounded-xl",
-          "bg-white/5 backdrop-blur border border-elec-yellow/20"
-        )}
+        className={cn('p-4 rounded-xl', 'bg-white/5 backdrop-blur border border-elec-yellow/20')}
       >
         <div className="flex items-center gap-2 mb-4">
           <div className="p-2 rounded-lg bg-elec-yellow/10">
@@ -225,7 +198,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
             'Earth fault loop impedance (Zs) calculations',
             'Detailed justifications referencing BS 7671 regulations',
             'Materials list with specifications',
-            'Installation guidance and practical tips'
+            'Installation guidance and practical tips',
           ].map((item, index) => (
             <div key={index} className="flex items-start gap-2.5 text-sm">
               <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />

@@ -1,35 +1,55 @@
-import { ArrowLeft, ArrowRight, Clock, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Clock, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Setting Realistic Timescales and Milestones - Module 5.3.2 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn to set realistic timescales and milestones for electrical installations, ensuring quality work and avoiding delays.";
+const TITLE =
+  'Setting Realistic Timescales and Milestones - Module 5.3.2 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn to set realistic timescales and milestones for electrical installations, ensuring quality work and avoiding delays.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What is a milestone in project planning?",
-    options: ["A stone marker", "A key checkpoint showing project progress", "A deadline", "A problem"],
+    question: 'What is a milestone in project planning?',
+    options: [
+      'A stone marker',
+      'A key checkpoint showing project progress',
+      'A deadline',
+      'A problem',
+    ],
     correctIndex: 1,
-    explanation: "A milestone is a key checkpoint that shows project progress and helps track completion of important phases."
+    explanation:
+      'A milestone is a key checkpoint that shows project progress and helps track completion of important phases.',
   },
   {
     id: 2,
-    question: "Why should timescales allow extra time for delays?",
-    options: ["To waste time", "To account for unexpected delays", "To look professional", "To charge more"],
+    question: 'Why should timescales allow extra time for delays?',
+    options: [
+      'To waste time',
+      'To account for unexpected delays',
+      'To look professional',
+      'To charge more',
+    ],
     correctIndex: 1,
-    explanation: "Timescales should include buffer time to account for unexpected delays like weather, material shortages, or unforeseen issues."
+    explanation:
+      'Timescales should include buffer time to account for unexpected delays like weather, material shortages, or unforeseen issues.',
   },
   {
     id: 3,
-    question: "Give one risk of setting unrealistic deadlines.",
-    options: ["Better quality work", "Mistakes and unsafe working practices", "Higher profits", "Faster completion"],
+    question: 'Give one risk of setting unrealistic deadlines.',
+    options: [
+      'Better quality work',
+      'Mistakes and unsafe working practices',
+      'Higher profits',
+      'Faster completion',
+    ],
     correctIndex: 1,
-    explanation: "Unrealistic deadlines lead to rushing, which causes mistakes, unsafe working practices, and often results in costly rework."
-  }
+    explanation:
+      'Unrealistic deadlines lead to rushing, which causes mistakes, unsafe working practices, and often results in costly rework.',
+  },
 ];
 
 const Module5Section3_2 = () => {
@@ -38,89 +58,136 @@ const Module5Section3_2 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What is a timescale in project planning?",
-      options: ["The cost of materials", "The planned duration to complete tasks", "The number of workers", "The safety requirements"],
+      question: 'What is a timescale in project planning?',
+      options: [
+        'The cost of materials',
+        'The planned duration to complete tasks',
+        'The number of workers',
+        'The safety requirements',
+      ],
       correctAnswer: 1,
-      explanation: "A timescale is the planned duration for completing specific tasks or the whole project."
+      explanation:
+        'A timescale is the planned duration for completing specific tasks or the whole project.',
     },
     {
       id: 2,
-      question: "What is a milestone?",
-      options: ["A budget review", "A key checkpoint showing project progress", "A tool inspection", "A safety meeting"],
+      question: 'What is a milestone?',
+      options: [
+        'A budget review',
+        'A key checkpoint showing project progress',
+        'A tool inspection',
+        'A safety meeting',
+      ],
       correctAnswer: 1,
-      explanation: "A milestone is a key checkpoint in a project that shows progress towards completion."
+      explanation:
+        'A milestone is a key checkpoint in a project that shows progress towards completion.',
     },
     {
       id: 3,
-      question: "Give one example of a milestone in electrical installation.",
-      options: ["Ordering materials", "Completion of containment", "Tool inspection", "Site handover"],
+      question: 'Give one example of a milestone in electrical installation.',
+      options: [
+        'Ordering materials',
+        'Completion of containment',
+        'Tool inspection',
+        'Site handover',
+      ],
       correctAnswer: 1,
-      explanation: "Examples of milestones include completion of containment, cable installation, final fix, or testing."
+      explanation:
+        'Examples of milestones include completion of containment, cable installation, final fix, or testing.',
     },
     {
       id: 4,
-      question: "Why should you allow extra time in timescales?",
-      options: ["To account for unexpected delays", "To work slower", "To increase costs", "To confuse workers"],
+      question: 'Why should you allow extra time in timescales?',
+      options: [
+        'To account for unexpected delays',
+        'To work slower',
+        'To increase costs',
+        'To confuse workers',
+      ],
       correctAnswer: 0,
-      explanation: "Extra time accounts for potential delays like weather, late deliveries, or unforeseen site conditions."
+      explanation:
+        'Extra time accounts for potential delays like weather, late deliveries, or unforeseen site conditions.',
     },
     {
       id: 5,
-      question: "True or False: Unrealistic deadlines improve efficiency.",
-      options: ["False", "True"],
+      question: 'True or False: Unrealistic deadlines improve efficiency.',
+      options: ['False', 'True'],
       correctAnswer: 0,
-      explanation: "False. Unrealistic deadlines lead to rushing, mistakes, and poor quality work."
+      explanation: 'False. Unrealistic deadlines lead to rushing, mistakes, and poor quality work.',
     },
     {
       id: 6,
-      question: "Name one risk of setting unrealistic timescales.",
-      options: ["Better quality", "Mistakes and rework", "Lower costs", "Happy workers"],
+      question: 'Name one risk of setting unrealistic timescales.',
+      options: ['Better quality', 'Mistakes and rework', 'Lower costs', 'Happy workers'],
       correctAnswer: 1,
-      explanation: "Unrealistic timescales can lead to mistakes, unsafe work, stress, or costly rework."
+      explanation:
+        'Unrealistic timescales can lead to mistakes, unsafe work, stress, or costly rework.',
     },
     {
       id: 7,
-      question: "How often should timescales be reassessed?",
-      options: ["Never", "Weekly or as needed", "Only at project end", "Once a year"],
+      question: 'How often should timescales be reassessed?',
+      options: ['Never', 'Weekly or as needed', 'Only at project end', 'Once a year'],
       correctAnswer: 1,
-      explanation: "Timescales should be reassessed weekly and adjusted when site conditions change."
+      explanation:
+        'Timescales should be reassessed weekly and adjusted when site conditions change.',
     },
     {
       id: 8,
-      question: "Who usually sets project timescales?",
-      options: ["Individual electricians", "Site manager or supervisor", "The client only", "Material suppliers"],
+      question: 'Who usually sets project timescales?',
+      options: [
+        'Individual electricians',
+        'Site manager or supervisor',
+        'The client only',
+        'Material suppliers',
+      ],
       correctAnswer: 1,
-      explanation: "Project timescales are usually set by the site manager or supervisor based on project requirements."
+      explanation:
+        'Project timescales are usually set by the site manager or supervisor based on project requirements.',
     },
     {
       id: 9,
-      question: "What should you do if you know a milestone cannot be met?",
-      options: ["Ignore it", "Inform the supervisor immediately", "Work overtime alone", "Wait until deadline"],
+      question: 'What should you do if you know a milestone cannot be met?',
+      options: [
+        'Ignore it',
+        'Inform the supervisor immediately',
+        'Work overtime alone',
+        'Wait until deadline',
+      ],
       correctAnswer: 1,
-      explanation: "You should inform your supervisor immediately so adjustments can be made to the project plan."
+      explanation:
+        'You should inform your supervisor immediately so adjustments can be made to the project plan.',
     },
     {
       id: 10,
-      question: "How do milestones help manage progress?",
-      options: ["They reduce costs", "They provide checkpoints to track and measure progress", "They eliminate delays", "They guarantee success"],
+      question: 'How do milestones help manage progress?',
+      options: [
+        'They reduce costs',
+        'They provide checkpoints to track and measure progress',
+        'They eliminate delays',
+        'They guarantee success',
+      ],
       correctAnswer: 1,
-      explanation: "Milestones provide clear checkpoints to track and measure progress throughout the project."
-    }
+      explanation:
+        'Milestones provide clear checkpoints to track and measure progress throughout the project.',
+    },
   ];
 
   const faqs = [
     {
-      question: "Who sets the timescales for a project?",
-      answer: "Usually the site manager or supervisor, but electricians should understand and follow them. Good communication between all team members ensures realistic and achievable timescales."
+      question: 'Who sets the timescales for a project?',
+      answer:
+        'Usually the site manager or supervisor, but electricians should understand and follow them. Good communication between all team members ensures realistic and achievable timescales.',
     },
     {
       question: "What if I can't meet a milestone?",
-      answer: "Inform your supervisor early so adjustments can be made. It's better to communicate delays in advance than to miss deadlines without warning."
+      answer:
+        "Inform your supervisor early so adjustments can be made. It's better to communicate delays in advance than to miss deadlines without warning.",
     },
     {
-      question: "Can milestones change once set?",
-      answer: "Yes, milestones should be flexible to reflect real site conditions. Project plans must adapt to unforeseen circumstances while maintaining safety and quality standards."
-    }
+      question: 'Can milestones change once set?',
+      answer:
+        'Yes, milestones should be flexible to reflect real site conditions. Project plans must adapt to unforeseen circumstances while maintaining safety and quality standards.',
+    },
   ];
 
   return (
@@ -154,7 +221,8 @@ const Module5Section3_2 = () => {
               Setting Realistic Timescales and Milestones
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Learn to set achievable timescales and milestones for electrical installations to ensure quality work without compromising safety.
+              Learn to set achievable timescales and milestones for electrical installations to
+              ensure quality work without compromising safety.
             </p>
           </header>
 
@@ -181,7 +249,11 @@ const Module5Section3_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Timescales and milestones are essential in electrical installation projects. They provide structure, help manage resources, and ensure that work is completed on time without rushing or compromising quality. Unrealistic deadlines often lead to mistakes, poor workmanship, and safety risks. Setting achievable timescales ensures projects remain efficient and professional.
+                Timescales and milestones are essential in electrical installation projects. They
+                provide structure, help manage resources, and ensure that work is completed on time
+                without rushing or compromising quality. Unrealistic deadlines often lead to
+                mistakes, poor workmanship, and safety risks. Setting achievable timescales ensures
+                projects remain efficient and professional.
               </p>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <div className="flex items-start gap-3">
@@ -189,16 +261,22 @@ const Module5Section3_2 = () => {
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
                     <p className="text-white/70 text-sm">
-                      Proper timescale planning in electrical projects reduces installation errors by up to 40% and prevents costly delays that can impact entire construction schedules.
+                      Proper timescale planning in electrical projects reduces installation errors
+                      by up to 40% and prevents costly delays that can impact entire construction
+                      schedules.
                     </p>
                   </div>
                 </div>
               </div>
               <p>
-                <strong className="text-white">Real Impact:</strong> Projects with realistic timescales and clear milestones show 25% fewer rework instances and improved team satisfaction compared to rushed installations.
+                <strong className="text-white">Real Impact:</strong> Projects with realistic
+                timescales and clear milestones show 25% fewer rework instances and improved team
+                satisfaction compared to rushed installations.
               </p>
               <p className="text-sm p-3 rounded bg-white/5 border border-white/10">
-                <strong className="text-white">Industry Standard:</strong> BS 7671 requires that electrical work be planned and executed with sufficient time to ensure safety standards and regulatory compliance.
+                <strong className="text-white">Industry Standard:</strong> BS 7671 requires that
+                electrical work be planned and executed with sufficient time to ensure safety
+                standards and regulatory compliance.
               </p>
             </div>
           </section>
@@ -231,7 +309,9 @@ const Module5Section3_2 = () => {
               <p>The planned duration for completing specific tasks or the whole project:</p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-elec-yellow mb-3">Purpose of Timescales</p>
-                <p className="mb-2"><strong className="text-white">Helps organise:</strong></p>
+                <p className="mb-2">
+                  <strong className="text-white">Helps organise:</strong>
+                </p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>Labour allocation and work schedules</li>
                   <li>Materials deliveries and equipment availability</li>
@@ -240,7 +320,8 @@ const Module5Section3_2 = () => {
                 <div className="mt-4 p-3 rounded bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-1">Key Benefit</p>
                   <p className="text-sm text-white/70">
-                    Clear timescales provide structure and ensure all team members understand project expectations and deadlines.
+                    Clear timescales provide structure and ensure all team members understand
+                    project expectations and deadlines.
                   </p>
                 </div>
               </div>
@@ -257,12 +338,26 @@ const Module5Section3_2 = () => {
               <p>Key checkpoints in a project that show progress:</p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-green-400 mb-3">Milestone Examples</p>
-                <p className="mb-2"><strong className="text-white">Common Milestones:</strong></p>
+                <p className="mb-2">
+                  <strong className="text-white">Common Milestones:</strong>
+                </p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
-                  <li><strong className="text-white">Completion of containment</strong> - All trunking, conduit, and cable trays installed</li>
-                  <li><strong className="text-white">Cable installation</strong> - All cables run and routed correctly</li>
-                  <li><strong className="text-white">Final fix</strong> - All accessories and equipment installed</li>
-                  <li><strong className="text-white">Testing</strong> - Installation tested and verified safe</li>
+                  <li>
+                    <strong className="text-white">Completion of containment</strong> - All
+                    trunking, conduit, and cable trays installed
+                  </li>
+                  <li>
+                    <strong className="text-white">Cable installation</strong> - All cables run and
+                    routed correctly
+                  </li>
+                  <li>
+                    <strong className="text-white">Final fix</strong> - All accessories and
+                    equipment installed
+                  </li>
+                  <li>
+                    <strong className="text-white">Testing</strong> - Installation tested and
+                    verified safe
+                  </li>
                 </ul>
               </div>
             </div>
@@ -283,10 +378,15 @@ const Module5Section3_2 = () => {
               Setting Realistic Timescales
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Review installation drawings and specifications. Break tasks into smaller steps and estimate time needed. Allow extra time for potential delays:</p>
+              <p>
+                Review installation drawings and specifications. Break tasks into smaller steps and
+                estimate time needed. Allow extra time for potential delays:
+              </p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-amber-400 mb-3">Planning Process</p>
-                <p className="mb-2"><strong className="text-white">Steps to set realistic timescales:</strong></p>
+                <p className="mb-2">
+                  <strong className="text-white">Steps to set realistic timescales:</strong>
+                </p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
                   <li>Review installation drawings and specifications thoroughly</li>
                   <li>Break tasks into smaller, manageable steps</li>
@@ -296,7 +396,8 @@ const Module5Section3_2 = () => {
                 <div className="mt-4 p-3 rounded bg-orange-500/10 border border-orange-500/20">
                   <p className="font-medium text-elec-yellow mb-1">Buffer Time Rule</p>
                   <p className="text-sm text-white/70">
-                    Always add 10-20% extra time to account for unexpected delays like weather, material shortages, or site access issues.
+                    Always add 10-20% extra time to account for unexpected delays like weather,
+                    material shortages, or site access issues.
                   </p>
                 </div>
               </div>
@@ -319,7 +420,9 @@ const Module5Section3_2 = () => {
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
-                <h3 className="font-medium text-green-400 mb-3">Benefits of Realistic Timescales</h3>
+                <h3 className="font-medium text-green-400 mb-3">
+                  Benefits of Realistic Timescales
+                </h3>
                 <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
                   <li>Ensures steady progress without rushing</li>
                   <li>Improves quality and reduces errors</li>
@@ -386,10 +489,15 @@ const Module5Section3_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2">
-                <li>Use project programmes (like Gantt charts or site schedules) to track progress.</li>
+                <li>
+                  Use project programmes (like Gantt charts or site schedules) to track progress.
+                </li>
                 <li>Always add a buffer (extra time) for unexpected problems.</li>
                 <li>Mark milestones clearly on site boards so everyone knows progress points.</li>
-                <li>Be realistic about manpower — don't assume tasks will be finished quicker than normal.</li>
+                <li>
+                  Be realistic about manpower — don't assume tasks will be finished quicker than
+                  normal.
+                </li>
                 <li>Reassess timescales weekly and make adjustments if needed.</li>
               </ul>
             </div>
@@ -403,7 +511,10 @@ const Module5Section3_2 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
               <p className="text-amber-300">
-                On a commercial office installation, the supervisor set an unrealistic deadline for cable pulling, giving only two days instead of the required four. The team rushed the job, leading to damaged cables and rework. The rework caused a week's delay, which could have been avoided by setting a realistic timescale.
+                On a commercial office installation, the supervisor set an unrealistic deadline for
+                cable pulling, giving only two days instead of the required four. The team rushed
+                the job, leading to damaged cables and rework. The rework caused a week's delay,
+                which could have been avoided by setting a realistic timescale.
               </p>
             </div>
           </section>
@@ -416,7 +527,10 @@ const Module5Section3_2 = () => {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
+                >
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
                   <p className="text-white/70 text-sm">A: {faq.answer}</p>
                 </div>
@@ -432,8 +546,12 @@ const Module5Section3_2 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
               <div className="space-y-2 text-elec-yellow">
-                <p>• <strong>Timescales</strong> = planned duration for tasks.</p>
-                <p>• <strong>Milestones</strong> = key checkpoints to track progress.</p>
+                <p>
+                  • <strong>Timescales</strong> = planned duration for tasks.
+                </p>
+                <p>
+                  • <strong>Milestones</strong> = key checkpoints to track progress.
+                </p>
                 <p>• Always allow extra time for delays.</p>
                 <p>• Unrealistic deadlines = mistakes and rework.</p>
                 <p>• Communicate and adjust timescales when needed.</p>
@@ -449,7 +567,10 @@ const Module5Section3_2 = () => {
             </h2>
             <div className="text-white/80 leading-relaxed">
               <p>
-                In this subsection, you learned about setting realistic timescales and milestones. You now understand how they keep projects on track, improve quality, and prevent unnecessary stress. You also explored how poor timescale planning can lead to mistakes, unsafe work, and costly delays.
+                In this subsection, you learned about setting realistic timescales and milestones.
+                You now understand how they keep projects on track, improve quality, and prevent
+                unnecessary stress. You also explored how poor timescale planning can lead to
+                mistakes, unsafe work, and costly delays.
               </p>
             </div>
           </section>

@@ -1,8 +1,7 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, CheckCircle, FileText } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const CommunicationStructures = () => {
   return (
@@ -13,7 +12,7 @@ const CommunicationStructures = () => {
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Safety Communication
         </Button>
       </Link>
-      
+
       {/* Main content */}
       <div className="space-y-8">
         <div className="text-center mb-8">
@@ -21,15 +20,18 @@ const CommunicationStructures = () => {
             Communication Structures in Electrical Safety
           </h1>
           <p className="text-elec-light/80 max-w-2xl mx-auto">
-            Effective communication structures ensure safety information flows efficiently throughout an organization.
+            Effective communication structures ensure safety information flows efficiently
+            throughout an organization.
           </p>
         </div>
-        
+
         {/* Content sections */}
         <div className="space-y-6">
           <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Reporting Hierarchies</h2>
-            <p className="mb-4">Clear reporting hierarchies establish who to contact in different safety scenarios:</p>
+            <p className="mb-4">
+              Clear reporting hierarchies establish who to contact in different safety scenarios:
+            </p>
             <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
               <li>Direct supervisors for immediate workplace hazards</li>
               <li>Health and safety representatives for ongoing concerns</li>
@@ -37,10 +39,14 @@ const CommunicationStructures = () => {
               <li>Senior management for systemic safety issues</li>
             </ul>
           </section>
-          
+
           <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
-            <h2 className="text-xl font-semibold text-elec-yellow mb-4">Formal Communication Procedures</h2>
-            <p className="mb-4">Standardized procedures ensure consistent and effective information flow:</p>
+            <h2 className="text-xl font-semibold text-elec-yellow mb-4">
+              Formal Communication Procedures
+            </h2>
+            <p className="mb-4">
+              Standardized procedures ensure consistent and effective information flow:
+            </p>
             <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
               <li>Incident reporting forms and processes</li>
               <li>Risk assessment documentation</li>
@@ -48,10 +54,14 @@ const CommunicationStructures = () => {
               <li>Emergency response communication chains</li>
             </ul>
           </section>
-          
+
           <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
-            <h2 className="text-xl font-semibold text-elec-yellow mb-4">Clear Lines of Authority</h2>
-            <p className="mb-4">Understanding who has authority in safety matters prevents confusion:</p>
+            <h2 className="text-xl font-semibold text-elec-yellow mb-4">
+              Clear Lines of Authority
+            </h2>
+            <p className="mb-4">
+              Understanding who has authority in safety matters prevents confusion:
+            </p>
             <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
               <li>Site safety officers and their jurisdiction</li>
               <li>Project managers' safety responsibilities</li>
@@ -59,16 +69,25 @@ const CommunicationStructures = () => {
               <li>Regulatory inspectors and their powers</li>
             </ul>
           </section>
-          
+
           <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
-            <h2 className="text-xl font-semibold text-elec-yellow mb-4">Communication Flow Charts</h2>
-            <p className="mb-4">Visual representations help clarify who to contact in different situations:</p>
+            <h2 className="text-xl font-semibold text-elec-yellow mb-4">
+              Communication Flow Charts
+            </h2>
+            <p className="mb-4">
+              Visual representations help clarify who to contact in different situations:
+            </p>
             <div className="bg-white/5 p-4 rounded border border-elec-yellow/10 text-center">
-              <p className="text-elec-light/70 italic">Flow chart visualization would be displayed here</p>
+              <p className="text-elec-light/70 italic">
+                Flow chart visualization would be displayed here
+              </p>
             </div>
-            <p className="mt-4">Flow charts should be posted in visible locations and included in safety manuals for quick reference.</p>
+            <p className="mt-4">
+              Flow charts should be posted in visible locations and included in safety manuals for
+              quick reference.
+            </p>
           </section>
-          
+
           <section className="bg-white/10 p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4">Best Practices</h2>
             <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
@@ -80,7 +99,7 @@ const CommunicationStructures = () => {
             </ul>
           </section>
         </div>
-        
+
         {/* Resources */}
         <div className="bg-white/[0.07] p-6 rounded-lg border border-elec-yellow/20 mt-8">
           <h2 className="text-xl font-semibold text-elec-yellow mb-4">Additional Resources</h2>

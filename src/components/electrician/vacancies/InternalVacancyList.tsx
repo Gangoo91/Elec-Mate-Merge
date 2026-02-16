@@ -1,33 +1,21 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import {
-  Search,
-  SlidersHorizontal,
-  Briefcase,
-  MapPin,
-  RefreshCw,
-  X,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { InternalVacancyCard, type InternalVacancy } from "./InternalVacancyCard";
-import { useInternalVacancies, type VacancyFilters } from "@/hooks/useInternalVacancies";
+} from '@/components/ui/select';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Search, SlidersHorizontal, Briefcase, MapPin, RefreshCw, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { InternalVacancyCard, type InternalVacancy } from './InternalVacancyCard';
+import { useInternalVacancies, type VacancyFilters } from '@/hooks/useInternalVacancies';
 
 interface InternalVacancyListProps {
   onApply: (vacancy: InternalVacancy) => void;
@@ -36,11 +24,11 @@ interface InternalVacancyListProps {
 }
 
 const EMPLOYMENT_TYPES = [
-  { value: "all", label: "All Types" },
-  { value: "Full-time", label: "Full-time" },
-  { value: "Part-time", label: "Part-time" },
-  { value: "Contract", label: "Contract" },
-  { value: "Temporary", label: "Temporary" },
+  { value: 'all', label: 'All Types' },
+  { value: 'Full-time', label: 'Full-time' },
+  { value: 'Part-time', label: 'Part-time' },
+  { value: 'Contract', label: 'Contract' },
+  { value: 'Temporary', label: 'Temporary' },
 ];
 
 export function InternalVacancyList({
@@ -48,12 +36,17 @@ export function InternalVacancyList({
   onMessage,
   onViewDetails,
 }: InternalVacancyListProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<VacancyFilters>({});
   const [showFilters, setShowFilters] = useState(false);
   const [tempFilters, setTempFilters] = useState<VacancyFilters>({});
 
-  const { data: vacancies, isLoading, refetch, isRefetching } = useInternalVacancies({
+  const {
+    data: vacancies,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useInternalVacancies({
     ...filters,
     searchQuery: searchQuery || undefined,
   });
@@ -71,7 +64,7 @@ export function InternalVacancyList({
   const clearFilters = () => {
     setFilters({});
     setTempFilters({});
-    setSearchQuery("");
+    setSearchQuery('');
   };
 
   const activeFilterCount = Object.values(filters).filter(Boolean).length;
@@ -89,7 +82,7 @@ export function InternalVacancyList({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search jobs, companies..."
-              className={cn("pr-4", !searchQuery && "pl-9")}
+              className={cn('pr-4', !searchQuery && 'pl-9')}
             />
           </div>
         </form>
@@ -111,12 +104,7 @@ export function InternalVacancyList({
           )}
         </Button>
 
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => refetch()}
-          disabled={isRefetching}
-        >
+        <Button variant="outline" size="icon" onClick={() => refetch()} disabled={isRefetching}>
           <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
         </Button>
       </div>
@@ -148,12 +136,7 @@ export function InternalVacancyList({
               </button>
             </Badge>
           )}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={clearFilters}
-            className="h-6 text-xs"
-          >
+          <Button variant="ghost" size="sm" onClick={clearFilters} className="h-6 text-xs">
             Clear all
           </Button>
         </div>
@@ -206,8 +189,8 @@ export function InternalVacancyList({
               <h3 className="font-semibold text-lg mb-2">No vacancies found</h3>
               <p className="text-muted-foreground mb-4">
                 {searchQuery || activeFilterCount > 0
-                  ? "Try adjusting your search or filters"
-                  : "Check back later for new opportunities"}
+                  ? 'Try adjusting your search or filters'
+                  : 'Check back later for new opportunities'}
               </p>
               {(searchQuery || activeFilterCount > 0) && (
                 <Button variant="outline" onClick={clearFilters}>
@@ -231,9 +214,9 @@ export function InternalVacancyList({
             <div className="space-y-2">
               <label className="text-sm font-medium">Employment Type</label>
               <Select
-                value={tempFilters.type || "all"}
+                value={tempFilters.type || 'all'}
                 onValueChange={(v) =>
-                  setTempFilters({ ...tempFilters, type: v === "all" ? undefined : v })
+                  setTempFilters({ ...tempFilters, type: v === 'all' ? undefined : v })
                 }
               >
                 <SelectTrigger>
@@ -253,7 +236,7 @@ export function InternalVacancyList({
             <div className="space-y-2">
               <label className="text-sm font-medium">Location</label>
               <Input
-                value={tempFilters.location || ""}
+                value={tempFilters.location || ''}
                 onChange={(e) =>
                   setTempFilters({ ...tempFilters, location: e.target.value || undefined })
                 }
@@ -265,11 +248,11 @@ export function InternalVacancyList({
             <div className="space-y-2">
               <label className="text-sm font-medium">Minimum Salary (Annual)</label>
               <Select
-                value={tempFilters.minSalary?.toString() || "any"}
+                value={tempFilters.minSalary?.toString() || 'any'}
                 onValueChange={(v) =>
                   setTempFilters({
                     ...tempFilters,
-                    minSalary: v === "any" ? undefined : parseInt(v),
+                    minSalary: v === 'any' ? undefined : parseInt(v),
                   })
                 }
               >

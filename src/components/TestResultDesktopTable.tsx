@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Table, TableBody } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -17,11 +16,11 @@ interface TestResultDesktopTableProps {
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
 }
 
-const TestResultDesktopTable: React.FC<TestResultDesktopTableProps> = ({ 
-  testResults, 
-  onUpdate, 
+const TestResultDesktopTable: React.FC<TestResultDesktopTableProps> = ({
+  testResults,
+  onUpdate,
   onRemove,
-  onBulkUpdate
+  onBulkUpdate,
 }) => {
   const [showRegulationStatus, setShowRegulationStatus] = useState(false);
 
@@ -46,10 +45,7 @@ const TestResultDesktopTable: React.FC<TestResultDesktopTableProps> = ({
     <div className="w-full space-y-4">
       {/* Compact Smart Auto-Fill Section */}
       {!isEmpty && (
-        <CompactCircuitAutoFillSection 
-          testResults={testResults}
-          onUpdate={handleBulkUpdate}
-        />
+        <CompactCircuitAutoFillSection testResults={testResults} onUpdate={handleBulkUpdate} />
       )}
 
       {/* Desktop Table */}

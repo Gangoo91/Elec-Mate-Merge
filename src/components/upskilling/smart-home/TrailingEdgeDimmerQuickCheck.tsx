@@ -8,10 +8,10 @@ export const TrailingEdgeDimmerQuickCheck = () => {
   const [showFeedback, setShowFeedback] = useState(false);
 
   const options = [
-    { text: "They are cheaper to buy", correct: false },
-    { text: "They provide smoother dimming with LEDs and reduce flicker", correct: true },
-    { text: "They work without electricity", correct: false },
-    { text: "They only work with halogen bulbs", correct: false }
+    { text: 'They are cheaper to buy', correct: false },
+    { text: 'They provide smoother dimming with LEDs and reduce flicker', correct: true },
+    { text: 'They work without electricity', correct: false },
+    { text: 'They only work with halogen bulbs', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -32,8 +32,10 @@ export const TrailingEdgeDimmerQuickCheck = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground font-medium">Q2: What is the main advantage of trailing-edge dimmers with LEDs?</p>
-        
+        <p className="text-foreground font-medium">
+          Q2: What is the main advantage of trailing-edge dimmers with LEDs?
+        </p>
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <div key={index} className="space-y-2">
@@ -58,7 +60,9 @@ export const TrailingEdgeDimmerQuickCheck = () => {
                 />
                 <span className="text-foreground">{option.text}</span>
                 {showFeedback && selectedAnswer === index && (
-                  <CheckCircle2 className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`} />
+                  <CheckCircle2
+                    className={`ml-auto h-4 w-4 ${option.correct ? 'text-green-400' : 'text-red-400'}`}
+                  />
                 )}
               </label>
             </div>
@@ -68,7 +72,9 @@ export const TrailingEdgeDimmerQuickCheck = () => {
         {showFeedback && (
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <p className="text-blue-100 text-sm">
-              <strong>Correct:</strong> Trailing-edge dimmers are designed for modern LED loads and provide smoother dimming operation with reduced flicker compared to traditional leading-edge dimmers.
+              <strong>Correct:</strong> Trailing-edge dimmers are designed for modern LED loads and
+              provide smoother dimming operation with reduced flicker compared to traditional
+              leading-edge dimmers.
             </p>
           </div>
         )}

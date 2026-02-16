@@ -36,11 +36,13 @@ export const RequestSummaryHeader = ({ design }: RequestSummaryHeaderProps) => {
                     {design.projectName || 'Circuit Design'}
                   </h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">
-                    {design.circuits?.length || 0} circuit{(design.circuits?.length || 0) !== 1 ? 's' : ''} designed • {voltage}V {phases === 'three' ? '3-phase' : 'single-phase'}
+                    {design.circuits?.length || 0} circuit
+                    {(design.circuits?.length || 0) !== 1 ? 's' : ''} designed • {voltage}V{' '}
+                    {phases === 'three' ? '3-phase' : 'single-phase'}
                   </p>
                 </div>
               </div>
-              <ChevronDown 
+              <ChevronDown
                 className={`h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground transition-transform flex-shrink-0 ${
                   isOpen ? 'rotate-180' : ''
                 }`}

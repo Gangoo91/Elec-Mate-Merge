@@ -1,9 +1,19 @@
-import { AlertTriangle, CheckCircle2, AlertCircle, Wrench, ClipboardCheck, Clock, Lightbulb, Zap, BookOpen } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { useState } from "react";
-import type { DiagnosticStep } from "@/types/commissioning-response";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  AlertCircle,
+  Wrench,
+  ClipboardCheck,
+  Clock,
+  Lightbulb,
+  Zap,
+  BookOpen,
+} from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useState } from 'react';
+import type { DiagnosticStep } from '@/types/commissioning-response';
 
 interface DiagnosticStepCardProps {
   step: DiagnosticStep;
@@ -18,22 +28,22 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
       borderColor: 'border-red-500',
       textColor: 'text-red-300',
       icon: AlertTriangle,
-      label: 'Critical'
+      label: 'Critical',
     },
     AMBER: {
       bgColor: 'bg-amber-500/10',
       borderColor: 'border-amber-500',
       textColor: 'text-amber-300',
       icon: AlertCircle,
-      label: 'Investigation Required'
+      label: 'Investigation Required',
     },
     GREEN: {
       bgColor: 'bg-green-500/10',
       borderColor: 'border-green-500',
       textColor: 'text-green-300',
       icon: CheckCircle2,
-      label: 'Normal Check'
-    }
+      label: 'Normal Check',
+    },
   };
 
   const config = ragConfig[step.ragStatus];
@@ -44,7 +54,9 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
       <Card className={`${config.bgColor} border-2 ${config.borderColor} overflow-hidden`}>
         <CollapsibleTrigger className="w-full p-4 sm:p-5 text-left hover:bg-white/5 transition-colors">
           <div className="flex items-start gap-3">
-            <div className={`flex-shrink-0 p-2 rounded-lg ${config.bgColor} ${config.borderColor} border`}>
+            <div
+              className={`flex-shrink-0 p-2 rounded-lg ${config.bgColor} ${config.borderColor} border`}
+            >
               <StatusIcon className={`h-5 w-5 ${config.textColor}`} />
             </div>
             <div className="flex-1 min-w-0">
@@ -56,7 +68,10 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                   {config.label}
                 </Badge>
                 {step.testDuration && (
-                  <Badge variant="outline" className="text-blue-300 border-blue-500/50 flex items-center gap-1">
+                  <Badge
+                    variant="outline"
+                    className="text-blue-300 border-blue-500/50 flex items-center gap-1"
+                  >
                     <Clock className="h-3 w-3" />
                     {step.testDuration}
                   </Badge>
@@ -65,9 +80,7 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
               <h4 className="text-base sm:text-lg font-semibold text-foreground mb-1">
                 {step.stepTitle}
               </h4>
-              <p className="text-sm text-foreground/70 line-clamp-2">
-                {step.action}
-              </p>
+              <p className="text-sm text-foreground/70 line-clamp-2">{step.action}</p>
             </div>
           </div>
         </CollapsibleTrigger>
@@ -109,19 +122,25 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                 <h5 className="text-sm font-semibold text-foreground mb-2">Expected Readings</h5>
                 {step.whatToMeasure && (
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <span className="text-xs text-foreground/60 sm:min-w-[120px]">Measurement:</span>
+                    <span className="text-xs text-foreground/60 sm:min-w-[120px]">
+                      Measurement:
+                    </span>
                     <span className="text-sm text-foreground font-mono">{step.whatToMeasure}</span>
                   </div>
                 )}
                 {step.expectedReading && (
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                     <span className="text-xs text-foreground/60 sm:min-w-[120px]">Expected:</span>
-                    <span className="text-sm text-green-400 font-mono font-semibold">{step.expectedReading}</span>
+                    <span className="text-sm text-green-400 font-mono font-semibold">
+                      {step.expectedReading}
+                    </span>
                   </div>
                 )}
                 {step.acceptableRange && (
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                    <span className="text-xs text-foreground/60 sm:min-w-[120px]">Acceptable Range:</span>
+                    <span className="text-xs text-foreground/60 sm:min-w-[120px]">
+                      Acceptable Range:
+                    </span>
                     <span className="text-sm text-blue-400 font-mono">{step.acceptableRange}</span>
                   </div>
                 )}
@@ -151,7 +170,9 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                 <div className="flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h5 className="text-xs font-semibold text-amber-300 mb-1">Temperature Effects</h5>
+                    <h5 className="text-xs font-semibold text-amber-300 mb-1">
+                      Temperature Effects
+                    </h5>
                     <p className="text-xs text-foreground/80">{step.temperatureNotes}</p>
                   </div>
                 </div>
@@ -181,7 +202,9 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                 <div className="flex items-start gap-2">
                   <BookOpen className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h5 className="text-xs font-semibold text-purple-300 mb-1">Client Explanation</h5>
+                    <h5 className="text-xs font-semibold text-purple-300 mb-1">
+                      Client Explanation
+                    </h5>
                     <p className="text-sm text-foreground/80">{step.clientExplanation}</p>
                   </div>
                 </div>

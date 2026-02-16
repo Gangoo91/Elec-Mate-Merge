@@ -77,27 +77,23 @@ export function ExpenseCategorySection({
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className={cn(
-          "w-full flex items-center justify-between p-3 rounded-lg touch-manipulation active:scale-[0.98] transition-all",
+          'w-full flex items-center justify-between p-3 rounded-lg touch-manipulation active:scale-[0.98] transition-all',
           colourClass.split(' ')[0] // Just the background colour
         )}
       >
         <div className="flex items-center gap-3">
-          <div className={cn("w-8 h-8 rounded-md flex items-center justify-center", colourClass)}>
+          <div className={cn('w-8 h-8 rounded-md flex items-center justify-center', colourClass)}>
             <CategoryIcon className="h-4 w-4" />
           </div>
           <div className="text-left">
             <span className="font-semibold text-foreground">
               {group.config.label.toUpperCase()}
             </span>
-            <span className="text-muted-foreground ml-2 text-sm">
-              ({group.count})
-            </span>
+            <span className="text-muted-foreground ml-2 text-sm">({group.count})</span>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <span className="font-bold text-foreground">
-            £{group.total.toFixed(2)}
-          </span>
+          <span className="font-bold text-foreground">£{group.total.toFixed(2)}</span>
           {isExpanded ? (
             <ChevronUp className="h-5 w-5 text-muted-foreground" />
           ) : (

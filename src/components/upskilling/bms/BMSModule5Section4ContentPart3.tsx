@@ -12,10 +12,11 @@ export const BMSModule5Section4ContentPart3 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          KNX devices fall into several categories, each serving specific functions in the building automation system. 
-          Understanding device types and their applications is essential for proper system design and installation.
+          KNX devices fall into several categories, each serving specific functions in the building
+          automation system. Understanding device types and their applications is essential for
+          proper system design and installation.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-4">
@@ -44,7 +45,7 @@ export const BMSModule5Section4ContentPart3 = () => {
                 <p className="text-foreground">• Switch actuators (on/off control)</p>
                 <p className="text-foreground">• Dimming actuators (0-10V, DALI, phase control)</p>
                 <p className="text-foreground">• LED drivers with KNX interface</p>
-                
+
                 <p className="text-foreground font-medium mt-2">Motor Control:</p>
                 <p className="text-foreground">• Blind/shutter actuators</p>
                 <p className="text-foreground">• Valve actuators for heating/cooling</p>
@@ -64,7 +65,7 @@ export const BMSModule5Section4ContentPart3 = () => {
                 <p className="text-foreground">• Line couplers (connect lines within areas)</p>
                 <p className="text-foreground">• Area couplers (connect areas to backbone)</p>
                 <p className="text-foreground">• Media couplers (TP to IP conversion)</p>
-                
+
                 <p className="text-foreground font-medium mt-2">Power Supplies:</p>
                 <p className="text-foreground">• 160mA, 320mA, 640mA capacities</p>
                 <p className="text-foreground">• Integrated choke for interference suppression</p>
@@ -82,7 +83,7 @@ export const BMSModule5Section4ContentPart3 = () => {
                 <p className="text-foreground">• KNX to BACnet gateways</p>
                 <p className="text-foreground">• KNX to Modbus gateways</p>
                 <p className="text-foreground">• KNX to DALI gateways</p>
-                
+
                 <p className="text-foreground font-medium mt-2">Interface Devices:</p>
                 <p className="text-foreground">• USB programming interfaces</p>
                 <p className="text-foreground">• IP routers for remote access</p>
@@ -95,10 +96,10 @@ export const BMSModule5Section4ContentPart3 = () => {
         <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Practical Device Example</h4>
           <p className="text-foreground text-sm">
-            A KNX PIR sensor detects occupancy and sends a telegram to group address 1/2/3. 
-            Both the lighting actuator and HVAC controller are programmed to listen to this address. 
-            When occupancy is detected, lights turn on automatically and the temperature setpoint adjusts, 
-            all without requiring a central controller.
+            A KNX PIR sensor detects occupancy and sends a telegram to group address 1/2/3. Both the
+            lighting actuator and HVAC controller are programmed to listen to this address. When
+            occupancy is detected, lights turn on automatically and the temperature setpoint
+            adjusts, all without requiring a central controller.
           </p>
         </div>
 
@@ -110,8 +111,12 @@ export const BMSModule5Section4ContentPart3 = () => {
               <p className="text-foreground">Push buttons, binary inputs, simple sensors</p>
             </div>
             <div>
-              <p className="text-foreground font-medium text-yellow-400">Medium Current (10-20mA):</p>
-              <p className="text-foreground">Switch actuators, dimmer actuators, room controllers</p>
+              <p className="text-foreground font-medium text-yellow-400">
+                Medium Current (10-20mA):
+              </p>
+              <p className="text-foreground">
+                Switch actuators, dimmer actuators, room controllers
+              </p>
             </div>
             <div>
               <p className="text-foreground font-medium text-red-400">High Current (20mA+):</p>

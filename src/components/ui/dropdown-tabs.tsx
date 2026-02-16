@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
 
@@ -31,7 +37,10 @@ const renderIcon = (icon: React.ReactNode | LucideIcon | undefined) => {
 
   // Check if it's a component type (function or forwardRef object)
   // LucideIcons are forwardRef components which have $$typeof and render properties
-  if (typeof icon === 'function' || (typeof icon === 'object' && icon !== null && '$$typeof' in icon)) {
+  if (
+    typeof icon === 'function' ||
+    (typeof icon === 'object' && icon !== null && '$$typeof' in icon)
+  ) {
     const IconComponent = icon as LucideIcon;
     return <IconComponent className="h-4 w-4" />;
   }
@@ -47,7 +56,7 @@ export const DropdownTabs = ({
   onValueChange,
   className,
   triggerClassName,
-  placeholder = "Select a section..."
+  placeholder = 'Select a section...',
 }: DropdownTabsProps) => {
   const [internalValue, setInternalValue] = useState(defaultValue || tabs[0]?.value || '');
 
@@ -61,17 +70,26 @@ export const DropdownTabs = ({
     onValueChange?.(newValue);
   };
 
-  const selectedTab = tabs.find(tab => tab.value === currentValue);
+  const selectedTab = tabs.find((tab) => tab.value === currentValue);
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn('space-y-4', className)}>
       <Select value={currentValue} onValueChange={handleValueChange}>
-        <SelectTrigger className={cn("w-full h-9 bg-muted text-foreground border-border focus:ring-1 focus:ring-elec-yellow focus:border-elec-yellow text-sm", triggerClassName)}>
+        <SelectTrigger
+          className={cn(
+            'w-full h-9 bg-muted text-foreground border-border focus:ring-1 focus:ring-elec-yellow focus:border-elec-yellow text-sm',
+            triggerClassName
+          )}
+        >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent className="bg-muted text-foreground border-border z-[100]">
           {tabs.map((tab) => (
-            <SelectItem key={tab.value} value={tab.value} className="min-h-[36px] py-2 cursor-pointer text-foreground text-sm data-[highlighted]:bg-neutral-600 data-[state=checked]:bg-neutral-600 focus:bg-neutral-600 focus:text-foreground">
+            <SelectItem
+              key={tab.value}
+              value={tab.value}
+              className="min-h-[36px] py-2 cursor-pointer text-foreground text-sm data-[highlighted]:bg-neutral-600 data-[state=checked]:bg-neutral-600 focus:bg-neutral-600 focus:text-foreground"
+            >
               <div className="flex items-center gap-2 text-sm">
                 {renderIcon(tab.icon)}
                 <span>{tab.label}</span>
@@ -82,11 +100,7 @@ export const DropdownTabs = ({
       </Select>
 
       {/* Render content of selected tab */}
-      {selectedTab?.content && (
-        <div className="animate-fade-in">
-          {selectedTab.content}
-        </div>
-      )}
+      {selectedTab?.content && <div className="animate-fade-in">{selectedTab.content}</div>}
     </div>
   );
 };

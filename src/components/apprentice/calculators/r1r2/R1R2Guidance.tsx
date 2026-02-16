@@ -1,7 +1,15 @@
-import InfoBox from "@/components/common/InfoBox";
-import { BookOpen, AlertTriangle, Lightbulb, CheckCircle, XCircle, Settings, Zap } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import InfoBox from '@/components/common/InfoBox';
+import {
+  BookOpen,
+  AlertTriangle,
+  Lightbulb,
+  CheckCircle,
+  XCircle,
+  Settings,
+  Zap,
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const R1R2Guidance = () => {
   return (
@@ -23,14 +31,20 @@ const R1R2Guidance = () => {
               </CardHeader>
               <CardContent className="pt-0">
                 <ul className="text-xs space-y-1">
-                  <li>• <strong>R1:</strong> Resistance of line conductor</li>
-                  <li>• <strong>R2:</strong> Resistance of protective conductor (CPC)</li>
-                  <li>• <strong>R1+R2:</strong> Combined resistance for earth fault path</li>
+                  <li>
+                    • <strong>R1:</strong> Resistance of line conductor
+                  </li>
+                  <li>
+                    • <strong>R2:</strong> Resistance of protective conductor (CPC)
+                  </li>
+                  <li>
+                    • <strong>R1+R2:</strong> Combined resistance for earth fault path
+                  </li>
                   <li>• Essential component of earth fault loop impedance</li>
                 </ul>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-green-500/10 border-green-500/30">
               <CardHeader className="pb-2">
                 <CardTitle className="text-green-300 text-sm flex items-center gap-2">
@@ -48,11 +62,12 @@ const R1R2Guidance = () => {
               </CardContent>
             </Card>
           </div>
-          
+
           <div className="bg-white/10 rounded p-3">
             <p className="text-xs text-elec-light">
-              <strong>Key relationship:</strong> Zs = Ze + R1+R2, where Ze is external earth fault loop impedance. 
-              R1+R2 testing provides the internal circuit component needed for complete Zs calculation.
+              <strong>Key relationship:</strong> Zs = Ze + R1+R2, where Ze is external earth fault
+              loop impedance. R1+R2 testing provides the internal circuit component needed for
+              complete Zs calculation.
             </p>
           </div>
         </div>
@@ -69,28 +84,52 @@ const R1R2Guidance = () => {
             <div>
               <h4 className="text-elec-yellow font-medium mb-3">Method 1: Direct R1+R2 Test</h4>
               <ol className="text-xs space-y-2 list-decimal list-inside">
-                <li><strong>Isolate circuit:</strong> Switch off and lock off protective device</li>
-                <li><strong>Prove dead:</strong> Use approved voltage indicator</li>
-                <li><strong>Link conductors:</strong> Connect line and CPC at distribution board</li>
-                <li><strong>Test at outlets:</strong> Measure between line and CPC terminals</li>
-                <li><strong>Record readings:</strong> Test at furthest point and each outlet</li>
-                <li><strong>Remove links:</strong> Restore normal connections</li>
+                <li>
+                  <strong>Isolate circuit:</strong> Switch off and lock off protective device
+                </li>
+                <li>
+                  <strong>Prove dead:</strong> Use approved voltage indicator
+                </li>
+                <li>
+                  <strong>Link conductors:</strong> Connect line and CPC at distribution board
+                </li>
+                <li>
+                  <strong>Test at outlets:</strong> Measure between line and CPC terminals
+                </li>
+                <li>
+                  <strong>Record readings:</strong> Test at furthest point and each outlet
+                </li>
+                <li>
+                  <strong>Remove links:</strong> Restore normal connections
+                </li>
               </ol>
             </div>
-            
+
             <div>
               <h4 className="text-elec-yellow font-medium mb-3">Method 2: Calculation Method</h4>
               <ol className="text-xs space-y-2 list-decimal list-inside">
-                <li><strong>Measure length:</strong> Determine actual cable route length</li>
-                <li><strong>Identify conductors:</strong> Line and CPC cross-sectional areas</li>
-                <li><strong>Material type:</strong> Copper or aluminium conductors</li>
-                <li><strong>Calculate values:</strong> Using resistance per metre data</li>
-                <li><strong>Apply factors:</strong> Temperature correction for test limit</li>
-                <li><strong>Compare results:</strong> Verify against measured values</li>
+                <li>
+                  <strong>Measure length:</strong> Determine actual cable route length
+                </li>
+                <li>
+                  <strong>Identify conductors:</strong> Line and CPC cross-sectional areas
+                </li>
+                <li>
+                  <strong>Material type:</strong> Copper or aluminium conductors
+                </li>
+                <li>
+                  <strong>Calculate values:</strong> Using resistance per metre data
+                </li>
+                <li>
+                  <strong>Apply factors:</strong> Temperature correction for test limit
+                </li>
+                <li>
+                  <strong>Compare results:</strong> Verify against measured values
+                </li>
               </ol>
             </div>
           </div>
-          
+
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
               <h5 className="text-green-300 font-medium text-xs mb-1">✓ Best Practices:</h5>
@@ -101,7 +140,7 @@ const R1R2Guidance = () => {
                 <li>• Record highest reading found</li>
               </ul>
             </div>
-            
+
             <div className="bg-red-500/10 border border-red-500/30 rounded p-3">
               <h5 className="text-red-300 font-medium text-xs mb-1">❌ Common Mistakes:</h5>
               <ul className="text-xs space-y-0.5">
@@ -135,9 +174,11 @@ const R1R2Guidance = () => {
                   <p className="text-white">CPC same size as line conductor</p>
                 </div>
               </div>
-              
+
               <div>
-                <h5 className="text-sm font-medium text-elec-light mb-2">Line Conductor &gt; 16mm²</h5>
+                <h5 className="text-sm font-medium text-elec-light mb-2">
+                  Line Conductor &gt; 16mm²
+                </h5>
                 <div className="space-y-1 text-xs">
                   <div className="flex justify-between">
                     <span>Line CSA:</span>
@@ -148,7 +189,7 @@ const R1R2Guidance = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="grid gap-3 sm:grid-cols-3">
             <Card className="bg-blue-500/10 border-blue-500/30">
               <CardHeader className="pb-2">
@@ -162,7 +203,7 @@ const R1R2Guidance = () => {
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-blue-500/10 border-blue-500/30">
               <CardHeader className="pb-2">
                 <CardTitle className="text-blue-300 text-xs">Example 2</CardTitle>
@@ -175,7 +216,7 @@ const R1R2Guidance = () => {
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-blue-500/10 border-blue-500/30">
               <CardHeader className="pb-2">
                 <CardTitle className="text-blue-300 text-xs">Example 3</CardTitle>
@@ -203,7 +244,9 @@ const R1R2Guidance = () => {
             <h4 className="text-elec-yellow font-medium mb-3">Why Temperature Matters</h4>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <h5 className="text-sm font-medium text-elec-light mb-2">Testing Temperature (~20°C)</h5>
+                <h5 className="text-sm font-medium text-elec-light mb-2">
+                  Testing Temperature (~20°C)
+                </h5>
                 <ul className="text-xs space-y-1">
                   <li>• Continuity tests performed at ambient</li>
                   <li>• Cables not carrying load current</li>
@@ -211,9 +254,11 @@ const R1R2Guidance = () => {
                   <li>• Direct comparison possible</li>
                 </ul>
               </div>
-              
+
               <div>
-                <h5 className="text-sm font-medium text-elec-light mb-2">Operating Temperature (70°C+)</h5>
+                <h5 className="text-sm font-medium text-elec-light mb-2">
+                  Operating Temperature (70°C+)
+                </h5>
                 <ul className="text-xs space-y-1">
                   <li>• Cables heated by load current</li>
                   <li>• Higher resistance due to temperature</li>
@@ -223,7 +268,7 @@ const R1R2Guidance = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="bg-yellow-500/10 border border-yellow-500/30 rounded p-3">
               <h5 className="text-yellow-300 font-medium text-xs mb-2">Temperature Coefficients</h5>
@@ -238,14 +283,18 @@ const R1R2Guidance = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
               <h5 className="text-blue-300 font-medium text-xs mb-2">Correction Factor</h5>
               <div className="space-y-1 text-xs">
-                <p><strong>Formula:</strong> (234.5 + θ₂) / (234.5 + θ₁)</p>
+                <p>
+                  <strong>Formula:</strong> (234.5 + θ₂) / (234.5 + θ₁)
+                </p>
                 <p>θ₁ = Test temp (20°C)</p>
                 <p>θ₂ = Operating temp (70°C)</p>
-                <p><strong>Result:</strong> Factor ≈ 1.67</p>
+                <p>
+                  <strong>Result:</strong> Factor ≈ 1.67
+                </p>
               </div>
             </div>
           </div>
@@ -263,15 +312,27 @@ const R1R2Guidance = () => {
             <div>
               <h4 className="text-red-300 font-medium mb-3">Common Causes</h4>
               <ul className="text-xs space-y-2">
-                <li>• <strong>Loose connections:</strong> High resistance joints</li>
-                <li>• <strong>Damaged conductors:</strong> Partial breaks or nicks</li>
-                <li>• <strong>Incorrect terminations:</strong> Poor workmanship</li>
-                <li>• <strong>Wrong conductor size:</strong> Smaller than expected</li>
-                <li>• <strong>Long cable runs:</strong> Exceeding design limits</li>
-                <li>• <strong>Parallel paths:</strong> Not accounted for in design</li>
+                <li>
+                  • <strong>Loose connections:</strong> High resistance joints
+                </li>
+                <li>
+                  • <strong>Damaged conductors:</strong> Partial breaks or nicks
+                </li>
+                <li>
+                  • <strong>Incorrect terminations:</strong> Poor workmanship
+                </li>
+                <li>
+                  • <strong>Wrong conductor size:</strong> Smaller than expected
+                </li>
+                <li>
+                  • <strong>Long cable runs:</strong> Exceeding design limits
+                </li>
+                <li>
+                  • <strong>Parallel paths:</strong> Not accounted for in design
+                </li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="text-green-300 font-medium mb-3">Investigation Steps</h4>
               <ol className="text-xs space-y-2 list-decimal list-inside">
@@ -284,11 +345,15 @@ const R1R2Guidance = () => {
               </ol>
             </div>
           </div>
-          
+
           <div className="bg-red-500/10 border border-red-500/30 rounded p-3">
-            <h5 className="text-red-300 font-medium text-xs mb-2">When R1+R2 Exceeds Test Limit:</h5>
+            <h5 className="text-red-300 font-medium text-xs mb-2">
+              When R1+R2 Exceeds Test Limit:
+            </h5>
             <ul className="text-xs space-y-1">
-              <li>• <strong>Do not energise</strong> until fault is found and corrected</li>
+              <li>
+                • <strong>Do not energise</strong> until fault is found and corrected
+              </li>
               <li>• Investigate systematically from distribution board to final outlet</li>
               <li>• Consider cable replacement if widespread damage found</li>
               <li>• Recalculate expected values to verify test equipment accuracy</li>
@@ -314,11 +379,13 @@ const R1R2Guidance = () => {
                   <p>Calculate expected R1+R2 during design phase</p>
                   <p>Test to verify installation quality</p>
                   <p>Compare measured vs calculated values</p>
-                  <Badge className="bg-blue-500/20 text-blue-300 text-xs">Initial Verification</Badge>
+                  <Badge className="bg-blue-500/20 text-blue-300 text-xs">
+                    Initial Verification
+                  </Badge>
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-elec-light text-sm">Periodic Inspection</CardTitle>
@@ -332,7 +399,7 @@ const R1R2Guidance = () => {
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-white/10 border-elec-yellow/20">
               <CardHeader className="pb-2">
                 <CardTitle className="text-elec-light text-sm">Fault Finding</CardTitle>

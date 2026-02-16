@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { ValidationResult } from '@/utils/testValidation';
@@ -14,13 +13,13 @@ interface ValidatedInputProps {
   disabled?: boolean;
 }
 
-const ValidatedInput = ({ 
-  value, 
-  onChange, 
-  validation, 
-  placeholder, 
+const ValidatedInput = ({
+  value,
+  onChange,
+  validation,
+  placeholder,
   className,
-  disabled = false
+  disabled = false,
 }: ValidatedInputProps) => {
   const getValidationIcon = () => {
     if (!validation) return null;
@@ -60,28 +59,23 @@ const ValidatedInput = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           disabled={disabled}
-          className={cn(
-            'bg-transparent',
-            className,
-            getValidationBorder(),
-            validation && 'pr-8'
-          )}
+          className={cn('bg-transparent', className, getValidationBorder(), validation && 'pr-8')}
         />
         {validation && (
-          <div className="absolute right-2 top-1/2 -translate-y-1/2">
-            {getValidationIcon()}
-          </div>
+          <div className="absolute right-2 top-1/2 -translate-y-1/2">{getValidationIcon()}</div>
         )}
       </div>
 
       {/* Validation message - only show in desktop table tooltips */}
       {validation && validation.message && (
-        <div className={cn(
-          "absolute z-50 hidden group-hover:block mt-1 text-xs px-2 py-1 rounded bg-white border shadow-lg max-w-xs",
-          validation.level === 'pass' && "text-green-600 border-green-200",
-          validation.level === 'warning' && "text-amber-600 border-amber-200",
-          validation.level === 'fail' && "text-red-600 border-red-200"
-        )}>
+        <div
+          className={cn(
+            'absolute z-50 hidden group-hover:block mt-1 text-xs px-2 py-1 rounded bg-white border shadow-lg max-w-xs',
+            validation.level === 'pass' && 'text-green-600 border-green-200',
+            validation.level === 'warning' && 'text-amber-600 border-amber-200',
+            validation.level === 'fail' && 'text-red-600 border-red-200'
+          )}
+        >
           <div className="flex items-start gap-1">
             <Info className="h-3 w-3 mt-0.5 flex-shrink-0" />
             <span>{validation.message}</span>

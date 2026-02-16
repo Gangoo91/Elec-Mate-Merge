@@ -1,5 +1,11 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
 export interface DropdownTab {
@@ -16,18 +22,23 @@ interface DropdownTabsProps {
   placeholder?: string;
 }
 
-export const DropdownTabs = ({ 
-  tabs, 
-  value, 
-  onValueChange, 
+export const DropdownTabs = ({
+  tabs,
+  value,
+  onValueChange,
   className,
-  placeholder = "Select a section..." 
+  placeholder = 'Select a section...',
 }: DropdownTabsProps) => {
-  const selectedTab = tabs.find(tab => tab.value === value);
-  
+  const selectedTab = tabs.find((tab) => tab.value === value);
+
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className={cn("w-full h-9 bg-neutral-700 text-foreground border-border focus:ring-1 focus:ring-elec-yellow focus:border-elec-yellow text-sm", className)}>
+      <SelectTrigger
+        className={cn(
+          'w-full h-9 bg-neutral-700 text-foreground border-border focus:ring-1 focus:ring-elec-yellow focus:border-elec-yellow text-sm',
+          className
+        )}
+      >
         <SelectValue placeholder={placeholder}>
           {selectedTab && (
             <div className="flex items-center gap-2 text-sm">
@@ -39,7 +50,11 @@ export const DropdownTabs = ({
       </SelectTrigger>
       <SelectContent className="bg-neutral-700 text-foreground border-border z-[100]">
         {tabs.map((tab) => (
-          <SelectItem key={tab.value} value={tab.value} className="min-h-[36px] py-2 cursor-pointer text-foreground text-sm data-[highlighted]:bg-neutral-600 data-[state=checked]:bg-neutral-600 focus:bg-neutral-600 focus:text-foreground">
+          <SelectItem
+            key={tab.value}
+            value={tab.value}
+            className="min-h-[36px] py-2 cursor-pointer text-foreground text-sm data-[highlighted]:bg-neutral-600 data-[state=checked]:bg-neutral-600 focus:bg-neutral-600 focus:text-foreground"
+          >
             <div className="flex items-center gap-2 text-sm">
               {tab.icon}
               <span>{tab.label}</span>

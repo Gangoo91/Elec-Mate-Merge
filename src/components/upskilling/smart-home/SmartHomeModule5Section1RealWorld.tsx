@@ -12,14 +12,18 @@ export const SmartHomeModule5Section1RealWorld = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <div className="p-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-600 rounded-lg">
-          <h4 className="font-semibold text-foreground mb-3">Rental Property Smart Lock Solution</h4>
-          
+          <h4 className="font-semibold text-foreground mb-3">
+            Rental Property Smart Lock Solution
+          </h4>
+
           <div className="mb-4">
             <p className="text-blue-100 text-sm mb-3">
-              A landlord installs smart locks with keypad entry on a rental property. Guests are issued one-time codes that expire after checkout. This avoids lost keys and gives the landlord full control remotely.
+              A landlord installs smart locks with keypad entry on a rental property. Guests are
+              issued one-time codes that expire after checkout. This avoids lost keys and gives the
+              landlord full control remotely.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div className="p-3 bg-[#1a1a1a] border border-green-600 rounded">
               <h5 className="font-medium text-green-200 mb-2">Benefits Achieved</h5>
@@ -31,7 +35,7 @@ export const SmartHomeModule5Section1RealWorld = () => {
                 <li>• Reduced property management overhead</li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-[#1a1a1a] border border-blue-600 rounded">
               <h5 className="font-medium text-blue-200 mb-2">System Features Used</h5>
               <ul className="text-xs text-blue-100 space-y-1">
@@ -43,20 +47,33 @@ export const SmartHomeModule5Section1RealWorld = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="p-3 bg-[#0f0f0f] border border-gray-600 rounded">
             <h5 className="font-medium text-elec-yellow mb-2">Discussion Question:</h5>
             <p className="text-gray-300 text-sm mb-2">
               What risks still exist with this setup, and how could they be reduced?
             </p>
             <div className="mt-3 p-3 bg-gray-800/50 rounded border border-gray-600">
-              <h6 className="text-foreground text-sm font-medium mb-2">Potential Risks & Solutions:</h6>
+              <h6 className="text-foreground text-sm font-medium mb-2">
+                Potential Risks & Solutions:
+              </h6>
               <ul className="text-xs text-gray-400 space-y-1">
-                <li>• <strong>Code sharing:</strong> Use single-use codes and monitor access logs</li>
-                <li>• <strong>Technical failure:</strong> Maintain physical backup key access</li>
-                <li>• <strong>Battery depletion:</strong> Set up low-battery alerts and regular maintenance</li>
-                <li>• <strong>Wi-Fi outage:</strong> Choose locks with offline PIN functionality</li>
-                <li>• <strong>Guest disputes:</strong> Maintain detailed access audit trails</li>
+                <li>
+                  • <strong>Code sharing:</strong> Use single-use codes and monitor access logs
+                </li>
+                <li>
+                  • <strong>Technical failure:</strong> Maintain physical backup key access
+                </li>
+                <li>
+                  • <strong>Battery depletion:</strong> Set up low-battery alerts and regular
+                  maintenance
+                </li>
+                <li>
+                  • <strong>Wi-Fi outage:</strong> Choose locks with offline PIN functionality
+                </li>
+                <li>
+                  • <strong>Guest disputes:</strong> Maintain detailed access audit trails
+                </li>
               </ul>
             </div>
           </div>
@@ -72,7 +89,7 @@ export const SmartHomeModule5Section1RealWorld = () => {
               <li>• Improved guest satisfaction scores</li>
             </ul>
           </div>
-          
+
           <div className="p-4 bg-gradient-to-br from-orange-900/20 to-red-900/20 border border-orange-600 rounded-lg">
             <h5 className="font-medium text-orange-200 mb-2">Implementation Costs</h5>
             <ul className="text-xs text-orange-100 space-y-1">

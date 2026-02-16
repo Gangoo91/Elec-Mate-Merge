@@ -1,155 +1,210 @@
-import { ArrowLeft, Zap, CheckCircle, AlertTriangle, Shield, TestTube, Battery } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Zap,
+  CheckCircle,
+  AlertTriangle,
+  Shield,
+  TestTube,
+  Battery,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Common Materials in Electrical Work - Level 2 Module 2 Section 5.2";
-const DESCRIPTION = "Learn about common electrical materials including copper, aluminium, PVC, XLPE, and rubber - their properties and applications.";
+const TITLE = 'Common Materials in Electrical Work - Level 2 Module 2 Section 5.2';
+const DESCRIPTION =
+  'Learn about common electrical materials including copper, aluminium, PVC, XLPE, and rubber - their properties and applications.';
 
 const quickCheckQuestions = [
   {
-    id: "copper-vs-aluminium",
-    question: "Which statement about copper vs aluminium conductors is correct?",
+    id: 'copper-vs-aluminium',
+    question: 'Which statement about copper vs aluminium conductors is correct?',
     options: [
-      "Aluminium has lower resistivity than copper",
-      "Copper requires larger CSA for the same current",
-      "Copper has lower resistivity but is heavier than aluminium",
-      "Both materials have identical properties"
+      'Aluminium has lower resistivity than copper',
+      'Copper requires larger CSA for the same current',
+      'Copper has lower resistivity but is heavier than aluminium',
+      'Both materials have identical properties',
     ],
     correctIndex: 2,
-    explanation: "Copper has lower resistivity (better conductor) but is heavier. Aluminium is lighter but needs larger CSA for the same current capacity."
+    explanation:
+      'Copper has lower resistivity (better conductor) but is heavier. Aluminium is lighter but needs larger CSA for the same current capacity.',
   },
   {
-    id: "xlpe-vs-pvc",
-    question: "What is the main advantage of XLPE over PVC insulation?",
+    id: 'xlpe-vs-pvc',
+    question: 'What is the main advantage of XLPE over PVC insulation?',
     options: [
-      "XLPE is cheaper to manufacture",
-      "XLPE has a higher temperature rating",
-      "XLPE is easier to strip and terminate",
-      "XLPE has better colour options"
+      'XLPE is cheaper to manufacture',
+      'XLPE has a higher temperature rating',
+      'XLPE is easier to strip and terminate',
+      'XLPE has better colour options',
     ],
     correctIndex: 1,
-    explanation: "XLPE typically has a higher temperature rating (often 90°C) compared to PVC (typically 70°C), allowing higher current capacity."
+    explanation:
+      'XLPE typically has a higher temperature rating (often 90°C) compared to PVC (typically 70°C), allowing higher current capacity.',
   },
   {
-    id: "termination-safety",
-    question: "When connecting aluminium to copper, you should:",
+    id: 'termination-safety',
+    question: 'When connecting aluminium to copper, you should:',
     options: [
-      "Use any standard connector",
-      "Always solder the joint",
-      "Use bimetallic connectors and follow manufacturer guidance",
-      "Avoid the connection entirely"
+      'Use any standard connector',
+      'Always solder the joint',
+      'Use bimetallic connectors and follow manufacturer guidance',
+      'Avoid the connection entirely',
     ],
     correctIndex: 2,
-    explanation: "Bimetallic connectors prevent galvanic corrosion and ensure reliable connections between different conductor materials."
-  }
+    explanation:
+      'Bimetallic connectors prevent galvanic corrosion and ensure reliable connections between different conductor materials.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which metal has higher resistivity (lower conductivity) than copper?",
-    options: ["Gold", "Aluminium", "Silver", "None – copper is highest"],
+    question: 'Which metal has higher resistivity (lower conductivity) than copper?',
+    options: ['Gold', 'Aluminium', 'Silver', 'None – copper is highest'],
     correctAnswer: 1,
-    explanation: "Aluminium has higher resistivity than copper, so a larger CSA is needed for the same current.",
+    explanation:
+      'Aluminium has higher resistivity than copper, so a larger CSA is needed for the same current.',
   },
   {
     id: 2,
-    question: "Which statement about aluminium terminations is correct?",
+    question: 'Which statement about aluminium terminations is correct?',
     options: [
-      "They can use any copper lug",
-      "They may require bimetallic lugs and specific torque",
-      "No preparation needed",
-      "Always soldered",
+      'They can use any copper lug',
+      'They may require bimetallic lugs and specific torque',
+      'No preparation needed',
+      'Always soldered',
     ],
     correctAnswer: 1,
-    explanation: "Use approved lugs, correct torque, and surface preparation to avoid creep/oxidation issues.",
+    explanation:
+      'Use approved lugs, correct torque, and surface preparation to avoid creep/oxidation issues.',
   },
   {
     id: 3,
-    question: "PVC vs XLPE insulation – which is typically true?",
-    options: ["PVC has higher temperature rating than XLPE", "XLPE often allows higher operating temperature", "They are identical", "XLPE melts at lower temperatures"],
+    question: 'PVC vs XLPE insulation – which is typically true?',
+    options: [
+      'PVC has higher temperature rating than XLPE',
+      'XLPE often allows higher operating temperature',
+      'They are identical',
+      'XLPE melts at lower temperatures',
+    ],
     correctAnswer: 1,
-    explanation: "XLPE typically has a higher temperature rating than PVC, improving current capacity in some methods.",
+    explanation:
+      'XLPE typically has a higher temperature rating than PVC, improving current capacity in some methods.',
   },
   {
     id: 4,
-    question: "Which BS 7671 topics are most relevant to choosing materials and terminations?",
-    options: ["Sections 521 and 526", "Part 1 only", "Inspection forms only", "Earthing only"],
+    question: 'Which BS 7671 topics are most relevant to choosing materials and terminations?',
+    options: ['Sections 521 and 526', 'Part 1 only', 'Inspection forms only', 'Earthing only'],
     correctAnswer: 0,
-    explanation: "521 covers wiring systems; 526 addresses electrical connections.",
+    explanation: '521 covers wiring systems; 526 addresses electrical connections.',
   },
   {
     id: 5,
-    question: "Why might aluminium be chosen over copper for long runs?",
-    options: ["It has lower resistivity", "It is lighter and cheaper per metre", "It is stronger electrically", "It never corrodes"],
+    question: 'Why might aluminium be chosen over copper for long runs?',
+    options: [
+      'It has lower resistivity',
+      'It is lighter and cheaper per metre',
+      'It is stronger electrically',
+      'It never corrodes',
+    ],
     correctAnswer: 1,
-    explanation: "Aluminium is lighter and often cheaper; designs compensate with larger CSA and correct terminations.",
+    explanation:
+      'Aluminium is lighter and often cheaper; designs compensate with larger CSA and correct terminations.',
   },
   {
     id: 6,
-    question: "LSF/LSZH sheaths are selected primarily to:",
-    options: ["Increase current capacity", "Reduce smoke and toxic fumes in fire", "Change colour", "Make cable magnetic"],
+    question: 'LSF/LSZH sheaths are selected primarily to:',
+    options: [
+      'Increase current capacity',
+      'Reduce smoke and toxic fumes in fire',
+      'Change colour',
+      'Make cable magnetic',
+    ],
     correctAnswer: 1,
-    explanation: "Low smoke/halogen properties support life safety and asset protection in buildings.",
+    explanation:
+      'Low smoke/halogen properties support life safety and asset protection in buildings.',
   },
   {
     id: 7,
-    question: "For mixed copper/aluminium systems, a good practice is to:",
-    options: ["Join directly with any connector", "Use bimetallic lugs and anti‑oxidant compounds where specified", "Paint them", "Always solder"],
+    question: 'For mixed copper/aluminium systems, a good practice is to:',
+    options: [
+      'Join directly with any connector',
+      'Use bimetallic lugs and anti‑oxidant compounds where specified',
+      'Paint them',
+      'Always solder',
+    ],
     correctAnswer: 1,
-    explanation: "Bimetallic interfaces limit galvanic corrosion; follow manufacturer instructions.",
+    explanation:
+      'Bimetallic interfaces limit galvanic corrosion; follow manufacturer instructions.',
   },
   {
     id: 8,
-    question: "Which factor most affects voltage drop on long feeders?",
-    options: ["Conductor resistivity and CSA", "Cable colour", "Sheath material only", "Conduit type only"],
+    question: 'Which factor most affects voltage drop on long feeders?',
+    options: [
+      'Conductor resistivity and CSA',
+      'Cable colour',
+      'Sheath material only',
+      'Conduit type only',
+    ],
     correctAnswer: 0,
-    explanation: "Voltage drop depends on conductor resistance/reactance and CSA; see Appendix 4.",
+    explanation: 'Voltage drop depends on conductor resistance/reactance and CSA; see Appendix 4.',
   },
   {
     id: 9,
-    question: "What is the typical temperature rating of XLPE insulation?",
-    options: ["60°C", "70°C", "90°C", "110°C"],
+    question: 'What is the typical temperature rating of XLPE insulation?',
+    options: ['60°C', '70°C', '90°C', '110°C'],
     correctAnswer: 2,
-    explanation: "XLPE typically has a 90°C temperature rating, higher than standard PVC at 70°C.",
+    explanation: 'XLPE typically has a 90°C temperature rating, higher than standard PVC at 70°C.',
   },
   {
     id: 10,
-    question: "When should rubber insulation be considered?",
-    options: ["Only for indoor use", "For flexible applications and harsh environments", "Never in electrical work", "Only for ELV circuits"],
+    question: 'When should rubber insulation be considered?',
+    options: [
+      'Only for indoor use',
+      'For flexible applications and harsh environments',
+      'Never in electrical work',
+      'Only for ELV circuits',
+    ],
     correctAnswer: 1,
-    explanation: "Rubber insulation offers flexibility and can withstand harsh environmental conditions better than rigid plastics.",
-  }
+    explanation:
+      'Rubber insulation offers flexibility and can withstand harsh environmental conditions better than rigid plastics.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why choose aluminium over copper for some applications?",
-    answer: "Aluminium is significantly lighter and often more cost-effective for long cable runs. While it requires larger conductor sizes due to higher resistivity, the weight and cost savings can be substantial for major installations like overhead lines and large feeders."
+    question: 'Why choose aluminium over copper for some applications?',
+    answer:
+      'Aluminium is significantly lighter and often more cost-effective for long cable runs. While it requires larger conductor sizes due to higher resistivity, the weight and cost savings can be substantial for major installations like overhead lines and large feeders.',
   },
   {
-    question: "What problems can occur with aluminium terminations?",
-    answer: "Aluminium can suffer from 'creep' - gradual deformation under pressure that can loosen connections. It also oxidises readily, creating high-resistance layers. Use approved aluminium-rated terminals, apply anti-oxidant compound where specified, and follow re-torque schedules."
+    question: 'What problems can occur with aluminium terminations?',
+    answer:
+      "Aluminium can suffer from 'creep' - gradual deformation under pressure that can loosen connections. It also oxidises readily, creating high-resistance layers. Use approved aluminium-rated terminals, apply anti-oxidant compound where specified, and follow re-torque schedules.",
   },
   {
-    question: "When would I choose XLPE over PVC insulation?",
-    answer: "Choose XLPE when higher temperature ratings are needed (typically 90°C vs 70°C for PVC), in applications with higher ambient temperatures, or where the higher rating allows smaller cable sizes due to increased current capacity."
+    question: 'When would I choose XLPE over PVC insulation?',
+    answer:
+      'Choose XLPE when higher temperature ratings are needed (typically 90°C vs 70°C for PVC), in applications with higher ambient temperatures, or where the higher rating allows smaller cable sizes due to increased current capacity.',
   },
   {
-    question: "What does LSF/LSZH mean and when is it required?",
-    answer: "Low Smoke Fume/Low Smoke Zero Halogen cables reduce toxic emissions in fires. They may be specified in public buildings, escape routes, plant rooms, or areas where smoke evacuation is critical for life safety."
+    question: 'What does LSF/LSZH mean and when is it required?',
+    answer:
+      'Low Smoke Fume/Low Smoke Zero Halogen cables reduce toxic emissions in fires. They may be specified in public buildings, escape routes, plant rooms, or areas where smoke evacuation is critical for life safety.',
   },
   {
-    question: "Can I mix different conductor materials in one installation?",
-    answer: "Yes, but use proper transition methods. Different materials expand at different rates and can create galvanic corrosion. Use bimetallic lugs, transition joints, or compatible terminals designed for mixed materials."
+    question: 'Can I mix different conductor materials in one installation?',
+    answer:
+      'Yes, but use proper transition methods. Different materials expand at different rates and can create galvanic corrosion. Use bimetallic lugs, transition joints, or compatible terminals designed for mixed materials.',
   },
   {
-    question: "How do I calculate the right cable size for aluminium conductors?",
-    answer: "Use the same methods as copper but account for higher resistivity. Check BS 7671 Appendix 4 tables for aluminium conductor ratings, and always verify voltage drop calculations as the higher resistance may require larger sizes than expected."
-  }
+    question: 'How do I calculate the right cable size for aluminium conductors?',
+    answer:
+      'Use the same methods as copper but account for higher resistivity. Check BS 7671 Appendix 4 tables for aluminium conductor ratings, and always verify voltage drop calculations as the higher resistance may require larger sizes than expected.',
+  },
 ];
 
 const Module2Section5_2 = () => {
@@ -160,7 +215,11 @@ const Module2Section5_2 = () => {
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.5
@@ -194,19 +253,37 @@ const Module2Section5_2 = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Copper vs Aluminium:</strong> Copper = lower resistance, Al = lighter/cheaper</li>
-                <li><strong>PVC vs XLPE:</strong> PVC 70°C, XLPE 90°C typical ratings</li>
-                <li><strong>LSF/LSZH:</strong> Low smoke properties for fire safety</li>
-                <li><strong>Terminations:</strong> Bimetallic lugs for mixed materials</li>
-                <li><strong>Selection:</strong> Match material to environment and application</li>
+                <li>
+                  <strong>Copper vs Aluminium:</strong> Copper = lower resistance, Al =
+                  lighter/cheaper
+                </li>
+                <li>
+                  <strong>PVC vs XLPE:</strong> PVC 70°C, XLPE 90°C typical ratings
+                </li>
+                <li>
+                  <strong>LSF/LSZH:</strong> Low smoke properties for fire safety
+                </li>
+                <li>
+                  <strong>Terminations:</strong> Bimetallic lugs for mixed materials
+                </li>
+                <li>
+                  <strong>Selection:</strong> Match material to environment and application
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Cable markings, SWA armour, termination types, sheath materials</li>
-                <li><strong>Use:</strong> Check manufacturer specs, torque values, temperature ratings</li>
-                <li><strong>Apply:</strong> Consider cost, weight, environment in material selection</li>
+                <li>
+                  <strong>Spot:</strong> Cable markings, SWA armour, termination types, sheath
+                  materials
+                </li>
+                <li>
+                  <strong>Use:</strong> Check manufacturer specs, torque values, temperature ratings
+                </li>
+                <li>
+                  <strong>Apply:</strong> Consider cost, weight, environment in material selection
+                </li>
               </ul>
             </div>
           </div>
@@ -238,7 +315,9 @@ const Module2Section5_2 = () => {
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Understand the impact of material choice on voltage drop and current capacity</span>
+              <span>
+                Understand the impact of material choice on voltage drop and current capacity
+              </span>
             </li>
           </ul>
         </section>
@@ -251,9 +330,10 @@ const Module2Section5_2 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Choosing the right conductor material affects current capacity, voltage drop, cost, installation complexity,
-              and long-term reliability. Understanding the properties and trade-offs is essential for optimal design decisions
-              that balance technical performance with economic considerations.
+              Choosing the right conductor material affects current capacity, voltage drop, cost,
+              installation complexity, and long-term reliability. Understanding the properties and
+              trade-offs is essential for optimal design decisions that balance technical
+              performance with economic considerations.
             </p>
 
             <div className="space-y-4">
@@ -265,7 +345,9 @@ const Module2Section5_2 = () => {
                   </h4>
                   <div className="space-y-2 text-white text-sm">
                     <div>
-                      <p><strong>Physical Properties:</strong></p>
+                      <p>
+                        <strong>Physical Properties:</strong>
+                      </p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>Resistivity: 17.2 nΩ·m at 20°C</li>
                         <li>Density: 8.96 g/cm³</li>
@@ -274,7 +356,9 @@ const Module2Section5_2 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p><strong>Applications and Benefits:</strong></p>
+                      <p>
+                        <strong>Applications and Benefits:</strong>
+                      </p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>T&E cables (domestic/commercial)</li>
                         <li>Flexible cords and appliance wiring</li>
@@ -283,7 +367,9 @@ const Module2Section5_2 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p><strong>Economic Considerations:</strong></p>
+                      <p>
+                        <strong>Economic Considerations:</strong>
+                      </p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>Higher material cost per metre</li>
                         <li>Lower installation labour costs</li>
@@ -301,7 +387,9 @@ const Module2Section5_2 = () => {
                   </h4>
                   <div className="space-y-2 text-white text-sm">
                     <div>
-                      <p><strong>Physical Properties:</strong></p>
+                      <p>
+                        <strong>Physical Properties:</strong>
+                      </p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>Resistivity: 28.2 nΩ·m at 20°C</li>
                         <li>Density: 2.70 g/cm³ (70% lighter than copper)</li>
@@ -310,7 +398,9 @@ const Module2Section5_2 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p><strong>Applications and Benefits:</strong></p>
+                      <p>
+                        <strong>Applications and Benefits:</strong>
+                      </p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>Overhead transmission and distribution</li>
                         <li>Large commercial and industrial feeders</li>
@@ -319,7 +409,9 @@ const Module2Section5_2 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p><strong>Technical Challenges:</strong></p>
+                      <p>
+                        <strong>Technical Challenges:</strong>
+                      </p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>Thermal expansion and 'creep' under load</li>
                         <li>Oxide formation affects connections</li>
@@ -335,7 +427,9 @@ const Module2Section5_2 = () => {
                 <h4 className="font-semibold text-teal-300 mb-2">Detailed Comparison Analysis</h4>
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-white text-sm">
                   <div>
-                    <p><strong>Electrical Performance:</strong></p>
+                    <p>
+                      <strong>Electrical Performance:</strong>
+                    </p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Copper: 1.6× current capacity per CSA</li>
                       <li>Aluminium: Lower voltage drop per kg</li>
@@ -343,7 +437,9 @@ const Module2Section5_2 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p><strong>Mechanical Properties:</strong></p>
+                    <p>
+                      <strong>Mechanical Properties:</strong>
+                    </p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Copper: Higher tensile strength</li>
                       <li>Aluminium: Better corrosion resistance</li>
@@ -351,7 +447,9 @@ const Module2Section5_2 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p><strong>Environmental Impact:</strong></p>
+                    <p>
+                      <strong>Environmental Impact:</strong>
+                    </p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Copper: Higher embodied energy</li>
                       <li>Aluminium: Abundant raw material</li>
@@ -362,13 +460,20 @@ const Module2Section5_2 = () => {
               </div>
 
               <div className="bg-indigo-500/10 border border-indigo-400/30 p-4 rounded-lg">
-                <h4 className="font-semibold text-indigo-300 mb-2">Practical Example: 100A Feeder Comparison</h4>
+                <h4 className="font-semibold text-indigo-300 mb-2">
+                  Practical Example: 100A Feeder Comparison
+                </h4>
                 <div className="text-indigo-200 text-sm space-y-2">
-                  <p><strong>Application:</strong> 150m three-phase feeder, 100A load, reference method D (buried)</p>
+                  <p>
+                    <strong>Application:</strong> 150m three-phase feeder, 100A load, reference
+                    method D (buried)
+                  </p>
                   <div className="bg-indigo-600/20 p-3 rounded space-y-2">
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <p><strong>Copper Solution:</strong></p>
+                        <p>
+                          <strong>Copper Solution:</strong>
+                        </p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Cable: 25mm² Cu SWA</li>
                           <li>Weight: ~8.5 kg/m × 150m = 1,275kg</li>
@@ -377,7 +482,9 @@ const Module2Section5_2 = () => {
                         </ul>
                       </div>
                       <div>
-                        <p><strong>Aluminium Solution:</strong></p>
+                        <p>
+                          <strong>Aluminium Solution:</strong>
+                        </p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Cable: 35mm² Al SWA</li>
                           <li>Weight: ~6.2 kg/m × 150m = 930kg</li>
@@ -386,7 +493,10 @@ const Module2Section5_2 = () => {
                         </ul>
                       </div>
                     </div>
-                    <p><strong>Key Insight:</strong> Both achieve same electrical performance; choose based on cost, weight, and termination complexity</p>
+                    <p>
+                      <strong>Key Insight:</strong> Both achieve same electrical performance; choose
+                      based on cost, weight, and termination complexity
+                    </p>
                   </div>
                 </div>
               </div>
@@ -398,8 +508,13 @@ const Module2Section5_2 = () => {
                   Critical Design Rule: CSA Equivalence
                 </p>
                 <div className="text-yellow-200 text-sm">
-                  <p>For equivalent current-carrying capacity: <strong>Al CSA ≈ 1.6 × Cu CSA</strong></p>
-                  <p>This factor accounts for the resistivity difference and ensures similar electrical performance</p>
+                  <p>
+                    For equivalent current-carrying capacity: <strong>Al CSA ≈ 1.6 × Cu CSA</strong>
+                  </p>
+                  <p>
+                    This factor accounts for the resistivity difference and ensures similar
+                    electrical performance
+                  </p>
                 </div>
               </div>
             </div>
@@ -416,38 +531,63 @@ const Module2Section5_2 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Insulation material selection affects cable temperature rating, current capacity, environmental resistance,
-              and fire performance. Understanding these properties is essential for safe installations.
+              Insulation material selection affects cable temperature rating, current capacity,
+              environmental resistance, and fire performance. Understanding these properties is
+              essential for safe installations.
             </p>
 
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <h4 className="font-semibold text-elec-yellow mb-2">PVC / LSF</h4>
                 <ul className="space-y-1 text-white text-sm">
-                  <li>• <strong>Rating:</strong> Typically 70°C</li>
-                  <li>• <strong>Uses:</strong> T&E, flex, general wiring</li>
-                  <li>• <strong>LSF:</strong> Low smoke properties</li>
-                  <li>• <strong>Cost:</strong> Economical option</li>
+                  <li>
+                    • <strong>Rating:</strong> Typically 70°C
+                  </li>
+                  <li>
+                    • <strong>Uses:</strong> T&E, flex, general wiring
+                  </li>
+                  <li>
+                    • <strong>LSF:</strong> Low smoke properties
+                  </li>
+                  <li>
+                    • <strong>Cost:</strong> Economical option
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                 <h4 className="font-semibold text-elec-yellow mb-2">XLPE</h4>
                 <ul className="space-y-1 text-elec-yellow text-sm">
-                  <li>• <strong>Rating:</strong> Typically 90°C</li>
-                  <li>• <strong>Uses:</strong> SWA, high-performance cables</li>
-                  <li>• <strong>Benefit:</strong> Higher current capacity</li>
-                  <li>• <strong>Applications:</strong> Industrial, distribution</li>
+                  <li>
+                    • <strong>Rating:</strong> Typically 90°C
+                  </li>
+                  <li>
+                    • <strong>Uses:</strong> SWA, high-performance cables
+                  </li>
+                  <li>
+                    • <strong>Benefit:</strong> Higher current capacity
+                  </li>
+                  <li>
+                    • <strong>Applications:</strong> Industrial, distribution
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-rose-500/10 border border-rose-400/30 p-4 rounded-lg">
                 <h4 className="font-semibold text-rose-300 mb-2">Rubber / Elastomers</h4>
                 <ul className="space-y-1 text-rose-200 text-sm">
-                  <li>• <strong>Uses:</strong> Flexible cords, mobile equipment</li>
-                  <li>• <strong>Benefits:</strong> Flexibility, low-temp performance</li>
-                  <li>• <strong>Varieties:</strong> Natural, synthetic rubber</li>
-                  <li>• <strong>Environment:</strong> Oil/chemical resistance options</li>
+                  <li>
+                    • <strong>Uses:</strong> Flexible cords, mobile equipment
+                  </li>
+                  <li>
+                    • <strong>Benefits:</strong> Flexibility, low-temp performance
+                  </li>
+                  <li>
+                    • <strong>Varieties:</strong> Natural, synthetic rubber
+                  </li>
+                  <li>
+                    • <strong>Environment:</strong> Oil/chemical resistance options
+                  </li>
                 </ul>
               </div>
             </div>
@@ -456,8 +596,8 @@ const Module2Section5_2 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <p className="text-elec-yellow">
-                  <strong>Important:</strong> LSZH (Low Smoke Zero Halogen) cables may be required in certain applications
-                  for improved fire performance and reduced toxic emissions.
+                  <strong>Important:</strong> LSZH (Low Smoke Zero Halogen) cables may be required
+                  in certain applications for improved fire performance and reduced toxic emissions.
                 </p>
               </div>
             </div>
@@ -474,18 +614,31 @@ const Module2Section5_2 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Proper termination methods are critical for safety and reliability. Different materials require
-              specific techniques and components to ensure lasting, safe connections.
+              Proper termination methods are critical for safety and reliability. Different
+              materials require specific techniques and components to ensure lasting, safe
+              connections.
             </p>
 
             <div className="space-y-4">
               <div>
                 <h4 className="font-bold text-elec-yellow">Critical Termination Factors</h4>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
-                  <li><strong>Material Compatibility:</strong> Use approved terminals for conductor material (Cu/Al rating)</li>
-                  <li><strong>Torque Values:</strong> Follow manufacturer specifications - over/under-torquing causes failures</li>
-                  <li><strong>Surface Preparation:</strong> Remove oxidation, apply compounds where specified</li>
-                  <li><strong>Creep and Expansion:</strong> Consider thermal movement, especially with aluminium</li>
+                  <li>
+                    <strong>Material Compatibility:</strong> Use approved terminals for conductor
+                    material (Cu/Al rating)
+                  </li>
+                  <li>
+                    <strong>Torque Values:</strong> Follow manufacturer specifications -
+                    over/under-torquing causes failures
+                  </li>
+                  <li>
+                    <strong>Surface Preparation:</strong> Remove oxidation, apply compounds where
+                    specified
+                  </li>
+                  <li>
+                    <strong>Creep and Expansion:</strong> Consider thermal movement, especially with
+                    aluminium
+                  </li>
                 </ul>
               </div>
 
@@ -550,30 +703,55 @@ const Module2Section5_2 = () => {
               <h3 className="text-lg font-semibold text-white mb-3">Installation Best Practices</h3>
               <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                 <ul className="list-disc pl-4 space-y-2 text-sm text-elec-yellow">
-                  <li><strong>Documentation:</strong> Record conductor material, CSA, and insulation type on certificates</li>
-                  <li><strong>Termination Quality:</strong> Use calibrated torque tools and verify connection tightness</li>
-                  <li><strong>Environmental Protection:</strong> Ensure IP ratings and environmental sealing are adequate</li>
-                  <li><strong>Future Access:</strong> Consider maintenance requirements and connection accessibility</li>
-                  <li><strong>Mixed Systems:</strong> Clearly label where different materials are used</li>
+                  <li>
+                    <strong>Documentation:</strong> Record conductor material, CSA, and insulation
+                    type on certificates
+                  </li>
+                  <li>
+                    <strong>Termination Quality:</strong> Use calibrated torque tools and verify
+                    connection tightness
+                  </li>
+                  <li>
+                    <strong>Environmental Protection:</strong> Ensure IP ratings and environmental
+                    sealing are adequate
+                  </li>
+                  <li>
+                    <strong>Future Access:</strong> Consider maintenance requirements and connection
+                    accessibility
+                  </li>
+                  <li>
+                    <strong>Mixed Systems:</strong> Clearly label where different materials are used
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div>
-              <h3 className="text-lg font-semibold text-white mb-3">Common Problems and Solutions</h3>
+              <h3 className="text-lg font-semibold text-white mb-3">
+                Common Problems and Solutions
+              </h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <div className="space-y-3 text-sm text-white">
                   <div>
                     <p className="font-semibold">Loose Aluminium Connections:</p>
-                    <p>Caused by creep and oxidation. Use Al-rated terminals, apply anti-oxidant, follow re-torque schedules.</p>
+                    <p>
+                      Caused by creep and oxidation. Use Al-rated terminals, apply anti-oxidant,
+                      follow re-torque schedules.
+                    </p>
                   </div>
                   <div>
                     <p className="font-semibold">Excessive Voltage Drop:</p>
-                    <p>Check calculations for actual conductor material. Aluminium may need larger CSA than expected.</p>
+                    <p>
+                      Check calculations for actual conductor material. Aluminium may need larger
+                      CSA than expected.
+                    </p>
                   </div>
                   <div>
                     <p className="font-semibold">Insulation Overheating:</p>
-                    <p>Verify temperature ratings and apply derating factors for grouping and ambient conditions.</p>
+                    <p>
+                      Verify temperature ratings and apply derating factors for grouping and ambient
+                      conditions.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -603,7 +781,9 @@ const Module2Section5_2 = () => {
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <Shield className="h-5 w-5 text-elec-yellow" />
-                <h2 className="text-lg sm:text-xl font-semibold text-white">Material Selection Pocket Guide</h2>
+                <h2 className="text-lg sm:text-xl font-semibold text-white">
+                  Material Selection Pocket Guide
+                </h2>
               </div>
               <p className="text-sm text-white">
                 Quick reference for common electrical materials and their applications
@@ -618,10 +798,18 @@ const Module2Section5_2 = () => {
                     Conductor Comparison
                   </h4>
                   <ul className="space-y-1 text-white text-xs">
-                    <li>• <strong>Copper:</strong> 17.2 nΩ·m, easy termination</li>
-                    <li>• <strong>Aluminium:</strong> 28.2 nΩ·m, 60% lighter</li>
-                    <li>• <strong>CSA rule:</strong> Al needs ~1.6× Cu area</li>
-                    <li>• <strong>Cost:</strong> Al cheaper per metre, Cu per ampere</li>
+                    <li>
+                      • <strong>Copper:</strong> 17.2 nΩ·m, easy termination
+                    </li>
+                    <li>
+                      • <strong>Aluminium:</strong> 28.2 nΩ·m, 60% lighter
+                    </li>
+                    <li>
+                      • <strong>CSA rule:</strong> Al needs ~1.6× Cu area
+                    </li>
+                    <li>
+                      • <strong>Cost:</strong> Al cheaper per metre, Cu per ampere
+                    </li>
                   </ul>
                 </div>
 
@@ -631,10 +819,18 @@ const Module2Section5_2 = () => {
                     Insulation Types
                   </h4>
                   <ul className="space-y-1 text-white text-xs">
-                    <li>• <strong>PVC:</strong> 70°C, T&E, economical</li>
-                    <li>• <strong>XLPE:</strong> 90°C, SWA, higher capacity</li>
-                    <li>• <strong>LSF/LSZH:</strong> Fire performance</li>
-                    <li>• <strong>Rubber:</strong> Flexible, mobile equipment</li>
+                    <li>
+                      • <strong>PVC:</strong> 70°C, T&E, economical
+                    </li>
+                    <li>
+                      • <strong>XLPE:</strong> 90°C, SWA, higher capacity
+                    </li>
+                    <li>
+                      • <strong>LSF/LSZH:</strong> Fire performance
+                    </li>
+                    <li>
+                      • <strong>Rubber:</strong> Flexible, mobile equipment
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -643,11 +839,21 @@ const Module2Section5_2 = () => {
                 <div className="bg-card border border-elec-yellow/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Selection Checklist</h4>
                   <ul className="space-y-1 text-elec-yellow text-xs">
-                    <li>• <strong>Current:</strong> Check capacity tables (App 4)</li>
-                    <li>• <strong>Voltage drop:</strong> Calculate for actual length</li>
-                    <li>• <strong>Environment:</strong> Temperature, moisture, chemicals</li>
-                    <li>• <strong>Installation:</strong> Method affects rating</li>
-                    <li>• <strong>Fire:</strong> Consider LSF/LSZH requirements</li>
+                    <li>
+                      • <strong>Current:</strong> Check capacity tables (App 4)
+                    </li>
+                    <li>
+                      • <strong>Voltage drop:</strong> Calculate for actual length
+                    </li>
+                    <li>
+                      • <strong>Environment:</strong> Temperature, moisture, chemicals
+                    </li>
+                    <li>
+                      • <strong>Installation:</strong> Method affects rating
+                    </li>
+                    <li>
+                      • <strong>Fire:</strong> Consider LSF/LSZH requirements
+                    </li>
                   </ul>
                 </div>
 
@@ -657,10 +863,18 @@ const Module2Section5_2 = () => {
                     Termination Safety
                   </h4>
                   <ul className="space-y-1 text-white text-xs">
-                    <li>• <strong>Al terminals:</strong> Use bimetallic or Al-rated</li>
-                    <li>• <strong>Torque:</strong> Follow manufacturer specs exactly</li>
-                    <li>• <strong>Maintenance:</strong> Re-torque Al connections</li>
-                    <li>• <strong>Mixed materials:</strong> Prevent galvanic issues</li>
+                    <li>
+                      • <strong>Al terminals:</strong> Use bimetallic or Al-rated
+                    </li>
+                    <li>
+                      • <strong>Torque:</strong> Follow manufacturer specs exactly
+                    </li>
+                    <li>
+                      • <strong>Maintenance:</strong> Re-torque Al connections
+                    </li>
+                    <li>
+                      • <strong>Mixed materials:</strong> Prevent galvanic issues
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -690,18 +904,30 @@ const Module2Section5_2 = () => {
         </section>
 
         {/* Quiz */}
-        <Quiz
-          title="Test Your Knowledge: Common Electrical Materials"
-          questions={quizQuestions}
-        />
+        <Quiz title="Test Your Knowledge: Common Electrical Materials" questions={quizQuestions} />
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
-            <Link to="/study-centre/apprentice/level2/module2/section5/5-1"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5"
+            asChild
+          >
+            <Link to="/study-centre/apprentice/level2/module2/section5/5-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous
+            </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
-            <Link to="/study-centre/apprentice/level2/module2/section5/5-3">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]"
+            asChild
+          >
+            <Link to="/study-centre/apprentice/level2/module2/section5/5-3">
+              Next
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
           </Button>
         </nav>
       </div>

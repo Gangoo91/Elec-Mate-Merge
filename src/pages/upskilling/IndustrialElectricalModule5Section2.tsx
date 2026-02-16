@@ -21,22 +21,24 @@ import {
   Gauge,
   Clock,
   Settings,
-  Eye
+  Eye,
 } from 'lucide-react';
 
 // Quick Check Questions for InlineCheck component
 const quickCheckQuestions = [
   {
     id: 'qc-m5s2-1',
-    question: 'When measuring a contactor coil with an ohmmeter, what reading indicates an open coil?',
+    question:
+      'When measuring a contactor coil with an ohmmeter, what reading indicates an open coil?',
     options: [
       'Zero ohms (0 Ω)',
       'Infinite resistance (OL)',
       'The nameplate rated resistance',
-      'Fluctuating readings'
+      'Fluctuating readings',
     ],
     correctIndex: 1,
-    explanation: 'An infinite resistance reading (OL or overload on a digital meter) indicates an open coil where the internal winding has broken. A good coil should read its rated resistance value, typically ranging from 10Ω to several hundred ohms depending on the coil voltage rating.'
+    explanation:
+      'An infinite resistance reading (OL or overload on a digital meter) indicates an open coil where the internal winding has broken. A good coil should read its rated resistance value, typically ranging from 10Ω to several hundred ohms depending on the coil voltage rating.',
   },
   {
     id: 'qc-m5s2-2',
@@ -45,23 +47,21 @@ const quickCheckQuestions = [
       'Low ambient temperature',
       'Excessive inrush current during motor starting',
       'Using contacts rated above the load',
-      'Proper contact alignment'
+      'Proper contact alignment',
     ],
     correctIndex: 1,
-    explanation: 'Contact welding occurs when excessive inrush current (typically 6-10 times running current for motors) creates enough heat to momentarily melt and fuse the contact surfaces together. This is especially common when contactors are undersized for the starting current of the load.'
+    explanation:
+      'Contact welding occurs when excessive inrush current (typically 6-10 times running current for motors) creates enough heat to momentarily melt and fuse the contact surfaces together. This is especially common when contactors are undersized for the starting current of the load.',
   },
   {
     id: 'qc-m5s2-3',
-    question: 'During thermal imaging inspection, what temperature rise above ambient typically indicates a developing fault?',
-    options: [
-      '1-2°C rise',
-      '5-10°C rise',
-      '15-30°C rise or greater',
-      'Any temperature difference'
-    ],
+    question:
+      'During thermal imaging inspection, what temperature rise above ambient typically indicates a developing fault?',
+    options: ['1-2°C rise', '5-10°C rise', '15-30°C rise or greater', 'Any temperature difference'],
     correctIndex: 2,
-    explanation: 'A temperature rise of 15-30°C or greater above ambient (or compared to similar components) typically indicates a developing fault such as loose connections, degraded contacts, or overloaded circuits. Minor temperature variations (1-10°C) may be normal operational differences.'
-  }
+    explanation:
+      'A temperature rise of 15-30°C or greater above ambient (or compared to similar components) typically indicates a developing fault such as loose connections, degraded contacts, or overloaded circuits. Minor temperature variations (1-10°C) may be normal operational differences.',
+  },
 ];
 
 // Quiz Questions
@@ -72,19 +72,20 @@ const quizQuestions = [
       'The coil is shorted',
       'The coil is within normal range',
       'The coil is open',
-      'The coil has excessive resistance'
+      'The coil has excessive resistance',
     ],
-    correctAnswer: 'The coil is within normal range'
+    correctAnswer: 'The coil is within normal range',
   },
   {
-    question: 'What visual symptom indicates contact pitting has become severe enough to require replacement?',
+    question:
+      'What visual symptom indicates contact pitting has become severe enough to require replacement?',
     options: [
       'Slight discolouration of contacts',
       'Minor surface roughness',
       'Deep erosion with visible craters or material loss exceeding 50%',
-      'Contacts appear shiny and smooth'
+      'Contacts appear shiny and smooth',
     ],
-    correctAnswer: 'Deep erosion with visible craters or material loss exceeding 50%'
+    correctAnswer: 'Deep erosion with visible craters or material loss exceeding 50%',
   },
   {
     question: 'When a relay coil buzzes audibly during operation, what is the most likely cause?',
@@ -92,9 +93,9 @@ const quizQuestions = [
       'Coil is overheating',
       'Broken shading coil on AC relay',
       'Contacts are welded',
-      'Power supply voltage is too high'
+      'Power supply voltage is too high',
     ],
-    correctAnswer: 'Broken shading coil on AC relay'
+    correctAnswer: 'Broken shading coil on AC relay',
   },
   {
     question: 'What is the recommended method for testing a suspected intermittent connection?',
@@ -102,49 +103,53 @@ const quizQuestions = [
       'Visual inspection only',
       'Single point measurement',
       'Wiggle test while monitoring voltage or continuity',
-      'Replacing the component without testing'
+      'Replacing the component without testing',
     ],
-    correctAnswer: 'Wiggle test while monitoring voltage or continuity'
+    correctAnswer: 'Wiggle test while monitoring voltage or continuity',
   },
   {
-    question: 'A control transformer secondary voltage drops from 24V to 18V under load. What is the most likely cause?',
+    question:
+      'A control transformer secondary voltage drops from 24V to 18V under load. What is the most likely cause?',
     options: [
       'Normal operation',
       'Transformer overloaded or internal fault',
       'Primary voltage too high',
-      'Secondary fuse is blown'
+      'Secondary fuse is blown',
     ],
-    correctAnswer: 'Transformer overloaded or internal fault'
+    correctAnswer: 'Transformer overloaded or internal fault',
   },
   {
-    question: 'When inspecting timer contacts that have failed to operate, what should be checked first?',
+    question:
+      'When inspecting timer contacts that have failed to operate, what should be checked first?',
     options: [
       'The timer motor',
       'The timing dial setting',
       'Power supply to the timer and proper voltage',
-      'The output load'
+      'The output load',
     ],
-    correctAnswer: 'Power supply to the timer and proper voltage'
+    correctAnswer: 'Power supply to the timer and proper voltage',
   },
   {
-    question: 'What maintenance practice helps prevent contact welding in motor starter contactors?',
+    question:
+      'What maintenance practice helps prevent contact welding in motor starter contactors?',
     options: [
       'Applying contact grease',
       'Filing contacts smooth regularly',
       'Ensuring proper contactor sizing for inrush current',
-      'Reducing operating voltage'
+      'Reducing operating voltage',
     ],
-    correctAnswer: 'Ensuring proper contactor sizing for inrush current'
+    correctAnswer: 'Ensuring proper contactor sizing for inrush current',
   },
   {
-    question: 'During coil resistance testing, a reading that is significantly lower than rated indicates:',
+    question:
+      'During coil resistance testing, a reading that is significantly lower than rated indicates:',
     options: [
       'An open coil',
       'A shorted turn in the coil winding',
       'Normal coil condition',
-      'High ambient temperature'
+      'High ambient temperature',
     ],
-    correctAnswer: 'A shorted turn in the coil winding'
+    correctAnswer: 'A shorted turn in the coil winding',
   },
   {
     question: 'What environmental factor most commonly causes intermittent control circuit faults?',
@@ -152,48 +157,55 @@ const quizQuestions = [
       'Constant temperature',
       'Vibration loosening connections',
       'Clean environment',
-      'Stable humidity'
+      'Stable humidity',
     ],
-    correctAnswer: 'Vibration loosening connections'
+    correctAnswer: 'Vibration loosening connections',
   },
   {
-    question: 'When using thermal imaging for predictive maintenance, what should similar components under similar loads show?',
+    question:
+      'When using thermal imaging for predictive maintenance, what should similar components under similar loads show?',
     options: [
       'Completely different temperatures',
       'Similar temperatures within 5-10°C of each other',
       'One component always hotter',
-      'Room temperature readings'
+      'Room temperature readings',
     ],
-    correctAnswer: 'Similar temperatures within 5-10°C of each other'
-  }
+    correctAnswer: 'Similar temperatures within 5-10°C of each other',
+  },
 ];
 
 // FAQ Data
 const faqItems = [
   {
     question: 'How do I test a contactor coil without removing it from the circuit?',
-    answer: 'With power locked out and verified off, disconnect one wire from the coil terminal to isolate it from the circuit. Use an ohmmeter to measure resistance across the coil terminals. Compare the reading to the manufacturer\'s specifications (typically printed on the coil or contactor nameplate). For 120VAC coils, expect 50-200Ω; for 24VAC coils, expect 10-50Ω; for 24VDC coils, expect 100-500Ω. An infinite reading indicates an open coil, while a very low reading suggests shorted turns.'
+    answer:
+      "With power locked out and verified off, disconnect one wire from the coil terminal to isolate it from the circuit. Use an ohmmeter to measure resistance across the coil terminals. Compare the reading to the manufacturer's specifications (typically printed on the coil or contactor nameplate). For 120VAC coils, expect 50-200Ω; for 24VAC coils, expect 10-50Ω; for 24VDC coils, expect 100-500Ω. An infinite reading indicates an open coil, while a very low reading suggests shorted turns.",
   },
   {
     question: 'What causes contacts to weld together and how do I prevent it?',
-    answer: 'Contact welding occurs when excessive current (especially inrush current from motors, transformers, or capacitive loads) generates enough heat to melt and fuse contact surfaces. Prevention includes: sizing contactors for the actual inrush current (not just running current), using contactors rated for the specific load type (AC-3 for motors), installing current-limiting devices for high inrush loads, ensuring proper contact pressure by checking springs, and implementing soft-start methods where appropriate.'
+    answer:
+      'Contact welding occurs when excessive current (especially inrush current from motors, transformers, or capacitive loads) generates enough heat to melt and fuse contact surfaces. Prevention includes: sizing contactors for the actual inrush current (not just running current), using contactors rated for the specific load type (AC-3 for motors), installing current-limiting devices for high inrush loads, ensuring proper contact pressure by checking springs, and implementing soft-start methods where appropriate.',
   },
   {
     question: 'Why does my relay buzz and what should I do about it?',
-    answer: 'Relay buzzing in AC relays typically indicates a broken or cracked shading coil (the copper ring/band on the pole face). The shading coil creates a phase-shifted magnetic field that prevents armature chatter at AC zero-crossings. If buzzing occurs: verify correct coil voltage, check for broken shading coil, inspect pole faces for contamination or damage, and consider replacement if shading coil is damaged. For DC relays, buzzing may indicate insufficient voltage or a failing coil.'
+    answer:
+      'Relay buzzing in AC relays typically indicates a broken or cracked shading coil (the copper ring/band on the pole face). The shading coil creates a phase-shifted magnetic field that prevents armature chatter at AC zero-crossings. If buzzing occurs: verify correct coil voltage, check for broken shading coil, inspect pole faces for contamination or damage, and consider replacement if shading coil is damaged. For DC relays, buzzing may indicate insufficient voltage or a failing coil.',
   },
   {
     question: 'How can I identify the source of intermittent control faults?',
-    answer: 'Systematic approach for intermittent faults: 1) Document when faults occur (time, conditions, temperature), 2) Perform wiggle tests on connections while monitoring circuits, 3) Check for thermal expansion effects by testing hot and cold, 4) Inspect for vibration-loosened connections, 5) Look for corrosion or contamination on contacts, 6) Test under load conditions that simulate the fault, 7) Use data logging to capture fault events, 8) Thermal imaging can reveal overheating connections that may be intermittent.'
+    answer:
+      'Systematic approach for intermittent faults: 1) Document when faults occur (time, conditions, temperature), 2) Perform wiggle tests on connections while monitoring circuits, 3) Check for thermal expansion effects by testing hot and cold, 4) Inspect for vibration-loosened connections, 5) Look for corrosion or contamination on contacts, 6) Test under load conditions that simulate the fault, 7) Use data logging to capture fault events, 8) Thermal imaging can reveal overheating connections that may be intermittent.',
   },
   {
     question: 'What are the signs that a control transformer is failing?',
-    answer: 'Control transformer failure signs include: excessive voltage drop under load (more than 10% from rated), overheating or discolouration of windings, burning smell or visible damage, audible humming or buzzing louder than normal, circuit breaker or fuse tripping, secondary voltage fluctuations, and physical damage to terminals or insulation. Test by measuring secondary voltage under no-load and full-load conditions; significant difference indicates transformer issues or overloading.'
+    answer:
+      'Control transformer failure signs include: excessive voltage drop under load (more than 10% from rated), overheating or discolouration of windings, burning smell or visible damage, audible humming or buzzing louder than normal, circuit breaker or fuse tripping, secondary voltage fluctuations, and physical damage to terminals or insulation. Test by measuring secondary voltage under no-load and full-load conditions; significant difference indicates transformer issues or overloading.',
   },
   {
     question: 'How often should thermal imaging inspections be performed on control panels?',
-    answer: 'Recommended thermal imaging frequency depends on criticality: critical systems monthly, standard industrial panels quarterly, and less critical systems annually. Perform additional scans after any maintenance work, during peak load periods, when ambient conditions change significantly, or when problems are suspected. Document baseline readings for comparison. Always scan with panels under normal operating load for accurate results. Consistent scheduling enables trend analysis for predictive maintenance.'
-  }
+    answer:
+      'Recommended thermal imaging frequency depends on criticality: critical systems monthly, standard industrial panels quarterly, and less critical systems annually. Perform additional scans after any maintenance work, during peak load periods, when ambient conditions change significantly, or when problems are suspected. Document baseline readings for comparison. Always scan with panels under normal operating load for accurate results. Consistent scheduling enables trend analysis for predictive maintenance.',
+  },
 ];
 
 const IndustrialElectricalModule5Section2: React.FC = () => {
@@ -201,7 +213,8 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
 
   useSEO({
     title: 'Common Control Faults (Coils, Relays, Power) | Industrial Electrical Module 5',
-    description: 'Learn to diagnose and repair common control circuit faults including contactor coils, relay failures, contact welding, power supply issues, and predictive maintenance techniques for industrial electrical systems.',
+    description:
+      'Learn to diagnose and repair common control circuit faults including contactor coils, relay failures, contact welding, power supply issues, and predictive maintenance techniques for industrial electrical systems.',
     keywords: [
       'control circuit faults',
       'contactor coil failure',
@@ -212,10 +225,10 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
       'predictive maintenance',
       'thermal imaging electrical',
       'coil resistance testing',
-      'intermittent faults'
+      'intermittent faults',
     ],
     canonicalUrl: '/study-centre/upskilling/industrial-electrical/module-5/section-2',
-    ogType: 'article'
+    ogType: 'article',
   });
 
   return (
@@ -223,7 +236,12 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
       {/* Sticky Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground hover:text-foreground"
+            asChild
+          >
             <Link to="/electrician/upskilling/industrial-electrical-module-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -240,9 +258,7 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10">
             <AlertTriangle className="w-8 h-8 text-elec-yellow" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
-            Common Control Faults
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Common Control Faults</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Coils, relays, and power supply troubleshooting for industrial control circuits
           </p>
@@ -273,8 +289,9 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-muted-foreground leading-relaxed">
-              Coil failures typically manifest as open windings, shorted turns, or ground faults. Each failure type
-              produces distinct symptoms and requires specific testing methods for accurate diagnosis.
+              Coil failures typically manifest as open windings, shorted turns, or ground faults.
+              Each failure type produces distinct symptoms and requires specific testing methods for
+              accurate diagnosis.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -313,11 +330,23 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                 Coil Resistance Testing Procedure
               </h4>
               <ol className="text-white space-y-2 text-sm">
-                <li><strong>1.</strong> Lock out and tag out all power sources, verify zero energy state</li>
-                <li><strong>2.</strong> Disconnect at least one coil lead to isolate from circuit</li>
-                <li><strong>3.</strong> Set multimeter to resistance (Ω) range appropriate for expected value</li>
-                <li><strong>4.</strong> Measure across coil terminals and record reading</li>
-                <li><strong>5.</strong> Compare to manufacturer specifications:</li>
+                <li>
+                  <strong>1.</strong> Lock out and tag out all power sources, verify zero energy
+                  state
+                </li>
+                <li>
+                  <strong>2.</strong> Disconnect at least one coil lead to isolate from circuit
+                </li>
+                <li>
+                  <strong>3.</strong> Set multimeter to resistance (Ω) range appropriate for
+                  expected value
+                </li>
+                <li>
+                  <strong>4.</strong> Measure across coil terminals and record reading
+                </li>
+                <li>
+                  <strong>5.</strong> Compare to manufacturer specifications:
+                </li>
               </ol>
               <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                 <div className="bg-background/80 p-2 rounded text-center">
@@ -350,9 +379,9 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-muted-foreground leading-relaxed">
-              Contact degradation is one of the most common contactor failure modes. Understanding the mechanisms
-              of contact welding and pitting helps in selecting proper components and implementing effective
-              maintenance procedures.
+              Contact degradation is one of the most common contactor failure modes. Understanding
+              the mechanisms of contact welding and pitting helps in selecting proper components and
+              implementing effective maintenance procedures.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4 border border-white/10">
@@ -361,15 +390,27 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                 Contact Welding Mechanism
               </h4>
               <p className="text-white text-sm mb-3">
-                Contact welding occurs when electrical current generates enough heat at the contact interface
-                to melt and fuse the contact materials together. Contributing factors include:
+                Contact welding occurs when electrical current generates enough heat at the contact
+                interface to melt and fuse the contact materials together. Contributing factors
+                include:
               </p>
               <ul className="text-white text-sm space-y-1">
-                <li>- <strong>Inrush current:</strong> Motor starting current (6-10x FLA) creates momentary high heat</li>
-                <li>- <strong>Contact bounce:</strong> Mechanical rebound creates multiple arc events</li>
-                <li>- <strong>Undersized contacts:</strong> Insufficient contact area for current load</li>
-                <li>- <strong>Reduced contact pressure:</strong> Worn springs or mechanical damage</li>
-                <li>- <strong>Contamination:</strong> Oil or debris increasing contact resistance</li>
+                <li>
+                  - <strong>Inrush current:</strong> Motor starting current (6-10x FLA) creates
+                  momentary high heat
+                </li>
+                <li>
+                  - <strong>Contact bounce:</strong> Mechanical rebound creates multiple arc events
+                </li>
+                <li>
+                  - <strong>Undersized contacts:</strong> Insufficient contact area for current load
+                </li>
+                <li>
+                  - <strong>Reduced contact pressure:</strong> Worn springs or mechanical damage
+                </li>
+                <li>
+                  - <strong>Contamination:</strong> Oil or debris increasing contact resistance
+                </li>
               </ul>
             </div>
 
@@ -406,9 +447,9 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                 <div>
                   <h4 className="font-semibold text-orange-300">Important</h4>
                   <p className="text-white text-sm">
-                    Never file silver-alloy contacts smooth. The rough surface created by arcing actually helps
-                    break through oxide layers and maintain good electrical contact. Filing removes the silver
-                    alloy layer and shortens contact life.
+                    Never file silver-alloy contacts smooth. The rough surface created by arcing
+                    actually helps break through oxide layers and maintain good electrical contact.
+                    Filing removes the silver alloy layer and shortens contact life.
                   </p>
                 </div>
               </div>
@@ -434,9 +475,9 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-muted-foreground leading-relaxed">
-              Control circuit power supply problems can cause erratic operation, nuisance tripping, or complete
-              system failure. Systematic voltage testing under various load conditions reveals power supply issues
-              that may not be apparent at no-load.
+              Control circuit power supply problems can cause erratic operation, nuisance tripping,
+              or complete system failure. Systematic voltage testing under various load conditions
+              reveals power supply issues that may not be apparent at no-load.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -446,11 +487,22 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                   Control Transformer Faults
                 </h4>
                 <ul className="text-white text-sm space-y-2">
-                  <li>- <strong>Overloading:</strong> Voltage drops &gt;10% under load</li>
-                  <li>- <strong>Shorted turns:</strong> Excessive heat, low output voltage</li>
-                  <li>- <strong>Open winding:</strong> No output voltage</li>
-                  <li>- <strong>Insulation failure:</strong> Ground faults, erratic operation</li>
-                  <li>- <strong>Loose connections:</strong> Intermittent voltage, overheating terminals</li>
+                  <li>
+                    - <strong>Overloading:</strong> Voltage drops &gt;10% under load
+                  </li>
+                  <li>
+                    - <strong>Shorted turns:</strong> Excessive heat, low output voltage
+                  </li>
+                  <li>
+                    - <strong>Open winding:</strong> No output voltage
+                  </li>
+                  <li>
+                    - <strong>Insulation failure:</strong> Ground faults, erratic operation
+                  </li>
+                  <li>
+                    - <strong>Loose connections:</strong> Intermittent voltage, overheating
+                    terminals
+                  </li>
                 </ul>
               </div>
 
@@ -460,11 +512,21 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                   DC Power Supply Issues
                 </h4>
                 <ul className="text-white text-sm space-y-2">
-                  <li>- <strong>Ripple voltage:</strong> Failing filter capacitors</li>
-                  <li>- <strong>Regulation problems:</strong> Output varies with load</li>
-                  <li>- <strong>Overcurrent shutdown:</strong> Load exceeds rating</li>
-                  <li>- <strong>Ground faults:</strong> DC ground different from AC ground</li>
-                  <li>- <strong>Ageing components:</strong> Capacitor degradation over time</li>
+                  <li>
+                    - <strong>Ripple voltage:</strong> Failing filter capacitors
+                  </li>
+                  <li>
+                    - <strong>Regulation problems:</strong> Output varies with load
+                  </li>
+                  <li>
+                    - <strong>Overcurrent shutdown:</strong> Load exceeds rating
+                  </li>
+                  <li>
+                    - <strong>Ground faults:</strong> DC ground different from AC ground
+                  </li>
+                  <li>
+                    - <strong>Ageing components:</strong> Capacitor degradation over time
+                  </li>
                 </ul>
               </div>
             </div>
@@ -472,12 +534,28 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
             <div className="bg-background/50 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-foreground mb-3">Voltage Drop Testing Procedure</h4>
               <ol className="text-white text-sm space-y-2">
-                <li><strong>1.</strong> Measure and record supply voltage at the source (transformer secondary or power supply output)</li>
-                <li><strong>2.</strong> Measure voltage at the load terminals with circuit de-energised</li>
-                <li><strong>3.</strong> Energise the circuit and measure voltage under actual operating conditions</li>
-                <li><strong>4.</strong> Calculate voltage drop: Source voltage - Load voltage = Drop</li>
-                <li><strong>5.</strong> Acceptable drop is typically less than 5% for control circuits</li>
-                <li><strong>6.</strong> Excessive drop indicates undersized wiring, poor connections, or overloaded source</li>
+                <li>
+                  <strong>1.</strong> Measure and record supply voltage at the source (transformer
+                  secondary or power supply output)
+                </li>
+                <li>
+                  <strong>2.</strong> Measure voltage at the load terminals with circuit
+                  de-energised
+                </li>
+                <li>
+                  <strong>3.</strong> Energise the circuit and measure voltage under actual
+                  operating conditions
+                </li>
+                <li>
+                  <strong>4.</strong> Calculate voltage drop: Source voltage - Load voltage = Drop
+                </li>
+                <li>
+                  <strong>5.</strong> Acceptable drop is typically less than 5% for control circuits
+                </li>
+                <li>
+                  <strong>6.</strong> Excessive drop indicates undersized wiring, poor connections,
+                  or overloaded source
+                </li>
               </ol>
             </div>
           </div>
@@ -494,8 +572,8 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
             <div className="flex items-start gap-3">
               <Clock className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
               <p className="text-muted-foreground leading-relaxed">
-                Timing relays and counters are critical for sequencing operations. Failures in these devices
-                can cause process problems, safety issues, or complete system shutdowns.
+                Timing relays and counters are critical for sequencing operations. Failures in these
+                devices can cause process problems, safety issues, or complete system shutdowns.
               </p>
             </div>
 
@@ -528,23 +606,47 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
             <div className="bg-background/50 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-foreground mb-3">Pneumatic Timer Failures</h4>
               <ul className="text-white text-sm space-y-2">
-                <li>- <strong>Timing too fast:</strong> Air leak in bellows or diaphragm</li>
-                <li>- <strong>Timing too slow:</strong> Clogged needle valve or restricted air passage</li>
-                <li>- <strong>No timing action:</strong> Bellows ruptured, diaphragm damaged</li>
-                <li>- <strong>Contacts do not operate:</strong> Mechanical linkage broken or contacts welded</li>
-                <li>- <strong>Erratic timing:</strong> Oil contamination, temperature extremes</li>
+                <li>
+                  - <strong>Timing too fast:</strong> Air leak in bellows or diaphragm
+                </li>
+                <li>
+                  - <strong>Timing too slow:</strong> Clogged needle valve or restricted air passage
+                </li>
+                <li>
+                  - <strong>No timing action:</strong> Bellows ruptured, diaphragm damaged
+                </li>
+                <li>
+                  - <strong>Contacts do not operate:</strong> Mechanical linkage broken or contacts
+                  welded
+                </li>
+                <li>
+                  - <strong>Erratic timing:</strong> Oil contamination, temperature extremes
+                </li>
               </ul>
             </div>
 
             <div className="bg-background/50 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-foreground mb-3">Timer Troubleshooting Steps</h4>
               <ol className="text-white text-sm space-y-2">
-                <li><strong>1.</strong> Verify correct supply voltage is present at timer terminals</li>
-                <li><strong>2.</strong> Check input signal is properly triggering the timer</li>
-                <li><strong>3.</strong> Confirm timing settings match application requirements</li>
-                <li><strong>4.</strong> Test output contacts with ohmmeter for proper operation</li>
-                <li><strong>5.</strong> Check for electrical noise sources if timing is erratic</li>
-                <li><strong>6.</strong> Verify wiring matches timer function type (on-delay, off-delay, etc.)</li>
+                <li>
+                  <strong>1.</strong> Verify correct supply voltage is present at timer terminals
+                </li>
+                <li>
+                  <strong>2.</strong> Check input signal is properly triggering the timer
+                </li>
+                <li>
+                  <strong>3.</strong> Confirm timing settings match application requirements
+                </li>
+                <li>
+                  <strong>4.</strong> Test output contacts with ohmmeter for proper operation
+                </li>
+                <li>
+                  <strong>5.</strong> Check for electrical noise sources if timing is erratic
+                </li>
+                <li>
+                  <strong>6.</strong> Verify wiring matches timer function type (on-delay,
+                  off-delay, etc.)
+                </li>
               </ol>
             </div>
           </div>
@@ -568,9 +670,9 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-muted-foreground leading-relaxed">
-              Intermittent faults are among the most challenging problems to diagnose because they may not be
-              present during inspection. Systematic approaches and proper documentation are essential for
-              tracking down these elusive problems.
+              Intermittent faults are among the most challenging problems to diagnose because they
+              may not be present during inspection. Systematic approaches and proper documentation
+              are essential for tracking down these elusive problems.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4 border border-white/10">
@@ -582,37 +684,53 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                 <ul className="text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span><strong>Loose connections:</strong> Vibration causes intermittent contact</span>
+                    <span>
+                      <strong>Loose connections:</strong> Vibration causes intermittent contact
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span><strong>Thermal expansion:</strong> Connections fail when hot</span>
+                    <span>
+                      <strong>Thermal expansion:</strong> Connections fail when hot
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span><strong>Corroded contacts:</strong> Oxide buildup creates resistance</span>
+                    <span>
+                      <strong>Corroded contacts:</strong> Oxide buildup creates resistance
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span><strong>Cracked solder joints:</strong> Especially in vibrating equipment</span>
+                    <span>
+                      <strong>Cracked solder joints:</strong> Especially in vibrating equipment
+                    </span>
                   </li>
                 </ul>
                 <ul className="text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span><strong>Damaged insulation:</strong> Short circuits under movement</span>
+                    <span>
+                      <strong>Damaged insulation:</strong> Short circuits under movement
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span><strong>Failing components:</strong> Borderline capacitors, resistors</span>
+                    <span>
+                      <strong>Failing components:</strong> Borderline capacitors, resistors
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span><strong>EMI/RFI interference:</strong> External noise sources</span>
+                    <span>
+                      <strong>EMI/RFI interference:</strong> External noise sources
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span><strong>Moisture intrusion:</strong> Humidity-related failures</span>
+                    <span>
+                      <strong>Moisture intrusion:</strong> Humidity-related failures
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -625,16 +743,18 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
               </h4>
               <ol className="text-white text-sm space-y-3">
                 <li>
-                  <strong>1. Documentation:</strong> Record exact conditions when faults occur - time,
-                  temperature, equipment running, recent changes. Patterns often reveal the cause.
+                  <strong>1. Documentation:</strong> Record exact conditions when faults occur -
+                  time, temperature, equipment running, recent changes. Patterns often reveal the
+                  cause.
                 </li>
                 <li>
                   <strong>2. Wiggle Test:</strong> With meter connected, gently flex wires and tap
-                  connections while monitoring for interruptions. Use proper PPE for energised testing.
+                  connections while monitoring for interruptions. Use proper PPE for energised
+                  testing.
                 </li>
                 <li>
-                  <strong>3. Thermal Cycling:</strong> Test when equipment is cold and after reaching
-                  operating temperature. Thermal expansion often reveals loose connections.
+                  <strong>3. Thermal Cycling:</strong> Test when equipment is cold and after
+                  reaching operating temperature. Thermal expansion often reveals loose connections.
                 </li>
                 <li>
                   <strong>4. Visual Inspection:</strong> Look for discolouration, corrosion, damage,
@@ -658,9 +778,9 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-muted-foreground leading-relaxed">
-              Predictive maintenance using thermal imaging and systematic inspection prevents unplanned downtime
-              by identifying developing faults before they cause failures. Implementing these techniques reduces
-              emergency repairs and extends equipment life.
+              Predictive maintenance using thermal imaging and systematic inspection prevents
+              unplanned downtime by identifying developing faults before they cause failures.
+              Implementing these techniques reduces emergency repairs and extends equipment life.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4 border border-white/10">
@@ -739,12 +859,30 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                 Best Practices for Extended Equipment Life
               </h4>
               <ul className="text-white text-sm space-y-2">
-                <li>- <strong>Proper sizing:</strong> Select contactors and relays rated for actual inrush and continuous currents</li>
-                <li>- <strong>Environment control:</strong> Maintain acceptable temperature and humidity ranges</li>
-                <li>- <strong>Clean conditions:</strong> Keep enclosures free of dust, moisture, and contaminants</li>
-                <li>- <strong>Connection integrity:</strong> Maintain proper torque on all terminals per manufacturer specs</li>
-                <li>- <strong>Surge protection:</strong> Install appropriate suppression for coils and sensitive electronics</li>
-                <li>- <strong>Documentation:</strong> Maintain records of inspections, measurements, and replacements</li>
+                <li>
+                  - <strong>Proper sizing:</strong> Select contactors and relays rated for actual
+                  inrush and continuous currents
+                </li>
+                <li>
+                  - <strong>Environment control:</strong> Maintain acceptable temperature and
+                  humidity ranges
+                </li>
+                <li>
+                  - <strong>Clean conditions:</strong> Keep enclosures free of dust, moisture, and
+                  contaminants
+                </li>
+                <li>
+                  - <strong>Connection integrity:</strong> Maintain proper torque on all terminals
+                  per manufacturer specs
+                </li>
+                <li>
+                  - <strong>Surge protection:</strong> Install appropriate suppression for coils and
+                  sensitive electronics
+                </li>
+                <li>
+                  - <strong>Documentation:</strong> Maintain records of inspections, measurements,
+                  and replacements
+                </li>
               </ul>
             </div>
           </div>
@@ -773,10 +911,20 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                   Coil Testing Quick Guide
                 </h4>
                 <div className="text-sm text-white space-y-1">
-                  <p><span className="text-red-400">OL (Infinite):</span> Open coil - replace</p>
-                  <p><span className="text-red-400">Very low (&lt;10Ω):</span> Shorted turns - replace</p>
-                  <p><span className="text-green-400">Within spec:</span> Coil OK</p>
-                  <p><span className="text-yellow-400">High resistance:</span> Degraded - monitor/replace</p>
+                  <p>
+                    <span className="text-red-400">OL (Infinite):</span> Open coil - replace
+                  </p>
+                  <p>
+                    <span className="text-red-400">Very low (&lt;10Ω):</span> Shorted turns -
+                    replace
+                  </p>
+                  <p>
+                    <span className="text-green-400">Within spec:</span> Coil OK
+                  </p>
+                  <p>
+                    <span className="text-yellow-400">High resistance:</span> Degraded -
+                    monitor/replace
+                  </p>
                 </div>
               </div>
 
@@ -785,10 +933,18 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                   Thermal Imaging Action Levels
                 </h4>
                 <div className="text-sm text-white space-y-1">
-                  <p><span className="text-green-400">&lt;10°C:</span> Normal - routine monitoring</p>
-                  <p><span className="text-yellow-400">10-20°C:</span> Schedule investigation</p>
-                  <p><span className="text-orange-400">20-40°C:</span> Priority repair needed</p>
-                  <p><span className="text-red-400">&gt;40°C:</span> Immediate attention required</p>
+                  <p>
+                    <span className="text-green-400">&lt;10°C:</span> Normal - routine monitoring
+                  </p>
+                  <p>
+                    <span className="text-yellow-400">10-20°C:</span> Schedule investigation
+                  </p>
+                  <p>
+                    <span className="text-orange-400">20-40°C:</span> Priority repair needed
+                  </p>
+                  <p>
+                    <span className="text-red-400">&gt;40°C:</span> Immediate attention required
+                  </p>
                 </div>
               </div>
 
@@ -797,12 +953,24 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
                   Troubleshooting Priority Order
                 </h4>
                 <div className="flex flex-wrap gap-2 text-sm">
-                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">1. Verify power supply</span>
-                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">2. Check control voltage</span>
-                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">3. Test coil resistance</span>
-                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">4. Inspect contacts</span>
-                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">5. Check connections</span>
-                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">6. Verify signals</span>
+                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">
+                    1. Verify power supply
+                  </span>
+                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">
+                    2. Check control voltage
+                  </span>
+                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">
+                    3. Test coil resistance
+                  </span>
+                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">
+                    4. Inspect contacts
+                  </span>
+                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">
+                    5. Check connections
+                  </span>
+                  <span className="bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded">
+                    6. Verify signals
+                  </span>
                 </div>
               </div>
             </div>
@@ -818,7 +986,10 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
 
           <div className="space-y-3">
             {faqItems.map((faq, index) => (
-              <div key={index} className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+              <div
+                key={index}
+                className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4"
+              >
                 <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
                 <p className="text-sm text-white">{faq.answer}</p>
               </div>
@@ -847,13 +1018,20 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation border-white/20" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation border-white/20"
+            asChild
+          >
             <Link to="/study-centre/upskilling/industrial-electrical/module-5/section-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Section 1
             </Link>
           </Button>
-          <Button className="min-h-[44px] touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90" asChild>
+          <Button
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90"
+            asChild
+          >
             <Link to="/study-centre/upskilling/industrial-electrical/module-5/section-3">
               Next: Section 3 - Motor Control Circuit Faults
               <ArrowRight className="w-4 h-4 ml-2" />

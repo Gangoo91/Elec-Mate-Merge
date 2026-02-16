@@ -3,33 +3,36 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
 
 export const EmergencyLightingQuickCheckSection2 = () => {
-  const [selectedAnswers, setSelectedAnswers] = useState<{[key: number]: boolean}>({});
+  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: boolean }>({});
 
   const questions = [
     {
       id: 1,
-      question: "Emergency lighting is only required in areas designated as escape routes",
+      question: 'Emergency lighting is only required in areas designated as escape routes',
       correct: false,
-      explanation: "Incorrect. Emergency lighting is also required in toilets >8m², plant rooms, areas with high fire risk, and many other locations specified by BS5266."
+      explanation:
+        'Incorrect. Emergency lighting is also required in toilets >8m², plant rooms, areas with high fire risk, and many other locations specified by BS5266.',
     },
     {
       id: 2,
-      question: "All stairways must have emergency lighting on each flight and half-landing",
+      question: 'All stairways must have emergency lighting on each flight and half-landing',
       correct: true,
-      explanation: "Correct. BS5266 requires emergency lighting to illuminate each flight of stairs and every half-landing with minimum 1 lux on treads."
+      explanation:
+        'Correct. BS5266 requires emergency lighting to illuminate each flight of stairs and every half-landing with minimum 1 lux on treads.',
     },
     {
       id: 3,
-      question: "Operating theatres in hospitals require 3-hour emergency lighting duration",
+      question: 'Operating theatres in hospitals require 3-hour emergency lighting duration',
       correct: true,
-      explanation: "Correct. Critical healthcare areas like operating theatres require extended 3-hour duration emergency lighting for patient safety."
-    }
+      explanation:
+        'Correct. Critical healthcare areas like operating theatres require extended 3-hour duration emergency lighting for patient safety.',
+    },
   ];
 
   const handleAnswer = (questionId: number, answer: boolean) => {
-    setSelectedAnswers(prev => ({
+    setSelectedAnswers((prev) => ({
       ...prev,
-      [questionId]: answer
+      [questionId]: answer,
     }));
   };
 
@@ -67,7 +70,9 @@ export const EmergencyLightingQuickCheckSection2 = () => {
               </button>
             </div>
             {selectedAnswers[q.id] !== undefined && (
-              <p className={`text-sm ${selectedAnswers[q.id] === q.correct ? 'text-green-400' : 'text-red-400'}`}>
+              <p
+                className={`text-sm ${selectedAnswers[q.id] === q.correct ? 'text-green-400' : 'text-red-400'}`}
+              >
                 {selectedAnswers[q.id] === q.correct ? '✓ Correct! ' : '✗ Incorrect. '}
                 {q.explanation}
               </p>

@@ -1,10 +1,10 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Loader2, Zap, FileText, Download } from "lucide-react";
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { WiringSchematicPreview } from "./WiringSchematicPreview";
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Loader2, Zap, FileText, Download } from 'lucide-react';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { WiringSchematicPreview } from './WiringSchematicPreview';
 
 interface Circuit {
   id: string;
@@ -25,11 +25,11 @@ interface CircuitSummaryCardProps {
   isLoading: boolean;
 }
 
-export const CircuitSummaryCard = ({ 
-  circuit, 
-  onGenerateSchematic, 
-  schematic, 
-  isLoading 
+export const CircuitSummaryCard = ({
+  circuit,
+  onGenerateSchematic,
+  schematic,
+  isLoading,
 }: CircuitSummaryCardProps) => {
   const [showSchematicDialog, setShowSchematicDialog] = useState(false);
 
@@ -40,8 +40,8 @@ export const CircuitSummaryCard = ({
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-foreground truncate">{circuit.name}</h3>
             <p className="text-sm text-foreground/70 mt-1">
-              {circuit.totalLoad ? `${circuit.totalLoad}W` : 'Power TBC'} • 
-              {circuit.cableSize ? ` ${circuit.cableSize}mm²` : ' Cable TBC'} • 
+              {circuit.totalLoad ? `${circuit.totalLoad}W` : 'Power TBC'} •
+              {circuit.cableSize ? ` ${circuit.cableSize}mm²` : ' Cable TBC'} •
               {circuit.cableLength ? ` ${circuit.cableLength}m` : ' Length TBC'}
             </p>
           </div>
@@ -51,23 +51,27 @@ export const CircuitSummaryCard = ({
             </Badge>
           )}
         </div>
-        
+
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="p-2 rounded bg-elec-dark/50 border border-elec-yellow/10">
             <div className="text-foreground/60">Voltage</div>
-            <div className="font-semibold text-foreground">{circuit.voltage || 230}V {circuit.phases === 'three' ? '3φ' : '1φ'}</div>
+            <div className="font-semibold text-foreground">
+              {circuit.voltage || 230}V {circuit.phases === 'three' ? '3φ' : '1φ'}
+            </div>
           </div>
           <div className="p-2 rounded bg-elec-dark/50 border border-elec-yellow/10">
             <div className="text-foreground/60">Type</div>
-            <div className="font-semibold text-foreground capitalize">{circuit.loadType || 'General'}</div>
+            <div className="font-semibold text-foreground capitalize">
+              {circuit.loadType || 'General'}
+            </div>
           </div>
         </div>
 
         {schematic ? (
           <div className="space-y-2">
-            <Button 
+            <Button
               onClick={() => setShowSchematicDialog(true)}
-              variant="outline" 
+              variant="outline"
               className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10"
             >
               <FileText className="h-4 w-4 mr-2" />
@@ -75,7 +79,7 @@ export const CircuitSummaryCard = ({
             </Button>
           </div>
         ) : (
-          <Button 
+          <Button
             onClick={() => onGenerateSchematic(circuit.id)}
             disabled={isLoading}
             variant="default"

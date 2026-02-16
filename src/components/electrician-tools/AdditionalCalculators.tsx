@@ -1,8 +1,7 @@
+import { Card, CardContent } from '@/components/ui/card';
+import { Calculator } from 'lucide-react';
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Calculator } from "lucide-react";
-
-const calculatorTypes = ["Power Factor", "Conduit Fill", "Ohm's Law", "Transformer Sizing"];
+const calculatorTypes = ['Power Factor', 'Conduit Fill', "Ohm's Law", 'Transformer Sizing'];
 
 const AdditionalCalculators = () => {
   return (

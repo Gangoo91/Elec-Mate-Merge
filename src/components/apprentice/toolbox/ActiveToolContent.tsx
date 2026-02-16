@@ -1,7 +1,6 @@
-
-import { Button } from "@/components/ui/button";
-import PowerFactorCalculator from "@/components/apprentice/calculators/PowerFactorCalculator";
-import CableSizingCalculator from "@/components/apprentice/calculators/CableSizingCalculator";
+import { Button } from '@/components/ui/button';
+import PowerFactorCalculator from '@/components/apprentice/calculators/PowerFactorCalculator';
+import CableSizingCalculator from '@/components/apprentice/calculators/CableSizingCalculator';
 
 type ActiveTool = string | null;
 
@@ -16,9 +15,9 @@ const ActiveToolContent = ({ activeTool, onClose }: ActiveToolContentProps) => {
   // Render the tool content based on the active tool
   const renderActiveTool = () => {
     switch (activeTool) {
-      case "powerCalculator":
+      case 'powerCalculator':
         return <PowerFactorCalculator />;
-      case "cableSizing":
+      case 'cableSizing':
         return <CableSizingCalculator />;
       default:
         return (

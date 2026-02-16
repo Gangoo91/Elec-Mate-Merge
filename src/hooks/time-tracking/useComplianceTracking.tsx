@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface ComplianceGoal {
   id: string;
@@ -24,7 +24,9 @@ export const useComplianceTracking = () => {
   useEffect(() => {
     const fetchGoals = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (!user) {
           setIsLoading(false);
           return;
@@ -39,7 +41,7 @@ export const useComplianceTracking = () => {
         if (error) throw error;
 
         setGoals(data || []);
-        const otjGoalData = data?.find(g => g.goal_type === '20_percent_otj');
+        const otjGoalData = data?.find((g) => g.goal_type === '20_percent_otj');
         setOtjGoal(otjGoalData || null);
 
         // If no 20% OTJ goal exists, create one
@@ -63,16 +65,16 @@ export const useComplianceTracking = () => {
         {
           event: '*',
           schema: 'public',
-          table: 'compliance_goals'
+          table: 'compliance_goals',
         },
         (payload) => {
           const goal = payload.new as ComplianceGoal;
           if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
-            setGoals(prev => {
-              const filtered = prev.filter(g => g.id !== goal.id);
+            setGoals((prev) => {
+              const filtered = prev.filter((g) => g.id !== goal.id);
               return [...filtered, goal];
             });
-            
+
             if (goal.goal_type === '20_percent_otj') {
               setOtjGoal(goal);
             }
@@ -95,7 +97,7 @@ export const useComplianceTracking = () => {
           user_id: userId,
           goal_type: '20_percent_otj',
           target_hours: 400,
-          deadline: new Date(new Date().getFullYear() + 1, 0, 1).toISOString().split('T')[0] // End of current training year
+          deadline: new Date(new Date().getFullYear() + 1, 0, 1).toISOString().split('T')[0], // End of current training year
         })
         .select()
         .single();
@@ -117,12 +119,12 @@ export const useComplianceTracking = () => {
         .single();
 
       if (error) throw error;
-      
-      setGoals(prev => prev.map(g => g.id === goalId ? data : g));
+
+      setGoals((prev) => prev.map((g) => (g.id === goalId ? data : g)));
       if (data.goal_type === '20_percent_otj') {
         setOtjGoal(data);
       }
-      
+
       return data;
     } catch (error) {
       console.error('Error updating goal:', error);
@@ -130,23 +132,36 @@ export const useComplianceTracking = () => {
     }
   };
 
-  const createGoal = async (goalData: Omit<ComplianceGoal, 'id' | 'user_id' | 'current_hours' | 'current_entries' | 'compliance_percentage' | 'created_at' | 'updated_at'>) => {
+  const createGoal = async (
+    goalData: Omit<
+      ComplianceGoal,
+      | 'id'
+      | 'user_id'
+      | 'current_hours'
+      | 'current_entries'
+      | 'compliance_percentage'
+      | 'created_at'
+      | 'updated_at'
+    >
+  ) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
         .from('compliance_goals')
         .insert({
           ...goalData,
-          user_id: user.id
+          user_id: user.id,
         })
         .select()
         .single();
 
       if (error) throw error;
-      
-      setGoals(prev => [...prev, data]);
+
+      setGoals((prev) => [...prev, data]);
       return data;
     } catch (error) {
       console.error('Error creating goal:', error);
@@ -157,9 +172,9 @@ export const useComplianceTracking = () => {
   // Calculate compliance status
   const getComplianceStatus = () => {
     if (!otjGoal) return { status: 'unknown', message: 'No compliance goal set' };
-    
+
     const percentage = otjGoal.compliance_percentage;
-    
+
     if (percentage >= 100) {
       return { status: 'compliant', message: 'Compliance target achieved' };
     } else if (percentage >= 80) {
@@ -184,6 +199,6 @@ export const useComplianceTracking = () => {
     updateGoal,
     createGoal,
     getComplianceStatus,
-    getRemainingHours
+    getRemainingHours,
   };
 };

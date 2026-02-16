@@ -28,7 +28,7 @@ export function MentionSuggestions({
   className,
 }: MentionSuggestionsProps) {
   // Filter users by query
-  const filteredUsers = users.filter(user =>
+  const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(query.toLowerCase())
   );
 
@@ -59,9 +59,7 @@ export function MentionSuggestions({
           </Avatar>
           <div className="text-left">
             <p className="text-sm font-medium">{user.name}</p>
-            {user.role && (
-              <p className="text-xs text-muted-foreground">{user.role}</p>
-            )}
+            {user.role && <p className="text-xs text-muted-foreground">{user.role}</p>}
           </div>
         </button>
       ))}
@@ -104,8 +102,8 @@ export function MentionText({
 
     // Find matching mention data
     const mentionName = match[1];
-    const mentionData = mentions.find(m =>
-      m.userName.toLowerCase() === mentionName.toLowerCase()
+    const mentionData = mentions.find(
+      (m) => m.userName.toLowerCase() === mentionName.toLowerCase()
     );
 
     parts.push({
@@ -166,14 +164,11 @@ export function useMentions({ users, onMentionComplete }: UseMentionsOptions) {
   const [mentionStart, setMentionStart] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
 
-  const filteredUsers = users.filter(user =>
+  const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(mentionQuery.toLowerCase())
   );
 
-  const handleInputChange = useCallback((
-    value: string,
-    cursorPosition: number
-  ) => {
+  const handleInputChange = useCallback((value: string, cursorPosition: number) => {
     // Check if we're in a mention context
     const textBeforeCursor = value.slice(0, cursorPosition);
     const mentionMatch = textBeforeCursor.match(/@(\w*)$/);
@@ -190,57 +185,59 @@ export function useMentions({ users, onMentionComplete }: UseMentionsOptions) {
     }
   }, []);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (!showSuggestions) return;
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (!showSuggestions) return;
 
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        setSelectedIndex(prev =>
-          prev < filteredUsers.length - 1 ? prev + 1 : 0
-        );
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        setSelectedIndex(prev =>
-          prev > 0 ? prev - 1 : filteredUsers.length - 1
-        );
-        break;
-      case 'Enter':
-      case 'Tab':
-        e.preventDefault();
-        if (filteredUsers[selectedIndex]) {
-          selectMention(filteredUsers[selectedIndex]);
-        }
-        break;
-      case 'Escape':
-        setShowSuggestions(false);
-        break;
-    }
-  }, [showSuggestions, filteredUsers, selectedIndex]);
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          setSelectedIndex((prev) => (prev < filteredUsers.length - 1 ? prev + 1 : 0));
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          setSelectedIndex((prev) => (prev > 0 ? prev - 1 : filteredUsers.length - 1));
+          break;
+        case 'Enter':
+        case 'Tab':
+          e.preventDefault();
+          if (filteredUsers[selectedIndex]) {
+            selectMention(filteredUsers[selectedIndex]);
+          }
+          break;
+        case 'Escape':
+          setShowSuggestions(false);
+          break;
+      }
+    },
+    [showSuggestions, filteredUsers, selectedIndex]
+  );
 
-  const selectMention = useCallback((user: MentionUser) => {
-    if (mentionStart !== null && onMentionComplete) {
-      onMentionComplete(user, {
-        start: mentionStart,
-        end: mentionStart + mentionQuery.length + 1, // +1 for @
-      });
-    }
-    setShowSuggestions(false);
-    setMentionQuery('');
-    setMentionStart(null);
-  }, [mentionStart, mentionQuery, onMentionComplete]);
+  const selectMention = useCallback(
+    (user: MentionUser) => {
+      if (mentionStart !== null && onMentionComplete) {
+        onMentionComplete(user, {
+          start: mentionStart,
+          end: mentionStart + mentionQuery.length + 1, // +1 for @
+        });
+      }
+      setShowSuggestions(false);
+      setMentionQuery('');
+      setMentionStart(null);
+    },
+    [mentionStart, mentionQuery, onMentionComplete]
+  );
 
-  const insertMention = useCallback((
-    currentValue: string,
-    user: MentionUser
-  ): string => {
-    if (mentionStart === null) return currentValue;
+  const insertMention = useCallback(
+    (currentValue: string, user: MentionUser): string => {
+      if (mentionStart === null) return currentValue;
 
-    const before = currentValue.slice(0, mentionStart);
-    const after = currentValue.slice(mentionStart + mentionQuery.length + 1);
-    return `${before}@${user.name} ${after}`;
-  }, [mentionStart, mentionQuery]);
+      const before = currentValue.slice(0, mentionStart);
+      const after = currentValue.slice(mentionStart + mentionQuery.length + 1);
+      return `${before}@${user.name} ${after}`;
+    },
+    [mentionStart, mentionQuery]
+  );
 
   return {
     showSuggestions,

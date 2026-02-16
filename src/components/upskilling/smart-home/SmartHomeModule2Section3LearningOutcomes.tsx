@@ -3,12 +3,12 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule2Section3LearningOutcomes = () => {
   const outcomes = [
-    "Describe the role of Wi-Fi and Bluetooth in smart home devices",
-    "Explain the strengths and weaknesses of Wi-Fi for smart home use",
-    "Recognise where Bluetooth and BLE (Bluetooth Low Energy) are typically applied",
-    "Define what Thread is and why it matters for IoT devices",
-    "Explain how Matter aims to solve compatibility issues across ecosystems",
-    "Compare modern protocols and select appropriate solutions for different scenarios"
+    'Describe the role of Wi-Fi and Bluetooth in smart home devices',
+    'Explain the strengths and weaknesses of Wi-Fi for smart home use',
+    'Recognise where Bluetooth and BLE (Bluetooth Low Energy) are typically applied',
+    'Define what Thread is and why it matters for IoT devices',
+    'Explain how Matter aims to solve compatibility issues across ecosystems',
+    'Compare modern protocols and select appropriate solutions for different scenarios',
   ];
 
   return (
@@ -20,7 +20,9 @@ export const SmartHomeModule2Section3LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground">
-        <p className="mb-4 text-foreground">By the end of this section, learners will be able to:</p>
+        <p className="mb-4 text-foreground">
+          By the end of this section, learners will be able to:
+        </p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3">

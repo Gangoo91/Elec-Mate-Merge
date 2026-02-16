@@ -13,12 +13,12 @@ export interface SoilResistivityFactor {
 // Column 2 = Rating factor for direct buried cables
 export const soilResistivityFactors: SoilResistivityFactor[] = [
   { resistivity: 0.5, directBuried: 1.88, inDuct: 1.28 },
-  { resistivity: 0.7, directBuried: 1.62, inDuct: 1.20 },
-  { resistivity: 1.0, directBuried: 1.50, inDuct: 1.18 },
-  { resistivity: 1.5, directBuried: 1.28, inDuct: 1.10 },
+  { resistivity: 0.7, directBuried: 1.62, inDuct: 1.2 },
+  { resistivity: 1.0, directBuried: 1.5, inDuct: 1.18 },
+  { resistivity: 1.5, directBuried: 1.28, inDuct: 1.1 },
   { resistivity: 2.0, directBuried: 1.12, inDuct: 1.05 },
-  { resistivity: 2.5, directBuried: 1.00, inDuct: 1.00 }, // Reference value
-  { resistivity: 3.0, directBuried: 0.90, inDuct: 0.96 },
+  { resistivity: 2.5, directBuried: 1.0, inDuct: 1.0 }, // Reference value
+  { resistivity: 3.0, directBuried: 0.9, inDuct: 0.96 },
 ];
 
 // Table 4B4 - Correction factors for depth of laying (Cd)
@@ -32,13 +32,13 @@ export interface DepthFactor {
 // BS 7671 Table 4B4 - Corrected values from official tables
 export const depthOfLayingFactors: DepthFactor[] = [
   { depth: 0.5, directBuried: 1.03, inDuct: 1.02 },
-  { depth: 0.7, directBuried: 1.00, inDuct: 1.00 }, // Reference
+  { depth: 0.7, directBuried: 1.0, inDuct: 1.0 }, // Reference
   { depth: 1.0, directBuried: 0.97, inDuct: 0.98 },
   { depth: 1.25, directBuried: 0.95, inDuct: 0.96 },
   { depth: 1.5, directBuried: 0.94, inDuct: 0.95 },
   { depth: 1.75, directBuried: 0.93, inDuct: 0.94 },
   { depth: 2.0, directBuried: 0.92, inDuct: 0.93 },
-  { depth: 2.5, directBuried: 0.90, inDuct: 0.92 },
+  { depth: 2.5, directBuried: 0.9, inDuct: 0.92 },
   { depth: 3.0, directBuried: 0.89, inDuct: 0.91 },
 ];
 
@@ -49,28 +49,28 @@ export const getSoilResistivityFactor = (
 ): number => {
   const factors = soilResistivityFactors;
   const key = installationType === 'direct' ? 'directBuried' : 'inDuct';
-  
+
   // Find exact match
-  const exactMatch = factors.find(f => f.resistivity === resistivity);
+  const exactMatch = factors.find((f) => f.resistivity === resistivity);
   if (exactMatch) return exactMatch[key];
-  
+
   // Find interpolation points
   const lowerPoint = factors
-    .filter(f => f.resistivity <= resistivity)
+    .filter((f) => f.resistivity <= resistivity)
     .sort((a, b) => b.resistivity - a.resistivity)[0];
-    
+
   const upperPoint = factors
-    .filter(f => f.resistivity >= resistivity)
+    .filter((f) => f.resistivity >= resistivity)
     .sort((a, b) => a.resistivity - b.resistivity)[0];
-  
+
   if (!lowerPoint) return factors[0][key];
   if (!upperPoint) return factors[factors.length - 1][key];
   if (lowerPoint === upperPoint) return lowerPoint[key];
-  
+
   // Linear interpolation
-  const ratio = (resistivity - lowerPoint.resistivity) / 
-                (upperPoint.resistivity - lowerPoint.resistivity);
-  
+  const ratio =
+    (resistivity - lowerPoint.resistivity) / (upperPoint.resistivity - lowerPoint.resistivity);
+
   return lowerPoint[key] + ratio * (upperPoint[key] - lowerPoint[key]);
 };
 
@@ -81,28 +81,23 @@ export const getDepthOfLayingFactor = (
 ): number => {
   const factors = depthOfLayingFactors;
   const key = installationType === 'direct' ? 'directBuried' : 'inDuct';
-  
+
   // Find exact match
-  const exactMatch = factors.find(f => f.depth === depth);
+  const exactMatch = factors.find((f) => f.depth === depth);
   if (exactMatch) return exactMatch[key];
-  
+
   // Find interpolation points
-  const lowerPoint = factors
-    .filter(f => f.depth <= depth)
-    .sort((a, b) => b.depth - a.depth)[0];
-    
-  const upperPoint = factors
-    .filter(f => f.depth >= depth)
-    .sort((a, b) => a.depth - b.depth)[0];
-  
+  const lowerPoint = factors.filter((f) => f.depth <= depth).sort((a, b) => b.depth - a.depth)[0];
+
+  const upperPoint = factors.filter((f) => f.depth >= depth).sort((a, b) => a.depth - b.depth)[0];
+
   if (!lowerPoint) return factors[0][key];
   if (!upperPoint) return factors[factors.length - 1][key];
   if (lowerPoint === upperPoint) return lowerPoint[key];
-  
+
   // Linear interpolation
-  const ratio = (depth - lowerPoint.depth) / 
-                (upperPoint.depth - lowerPoint.depth);
-  
+  const ratio = (depth - lowerPoint.depth) / (upperPoint.depth - lowerPoint.depth);
+
   return lowerPoint[key] + ratio * (upperPoint[key] - lowerPoint[key]);
 };
 
@@ -119,24 +114,24 @@ export const thermalInsulationFactors: ThermalInsulationFactor[] = [
     code: '100',
     description: 'Cable in contact with thermal insulation for less than 0.5m',
     factor: 0.89,
-    lengthCondition: '<0.5m'
+    lengthCondition: '<0.5m',
   },
   {
-    code: '101', 
+    code: '101',
     description: 'Cable surrounded by thermal insulation - 50mm depth',
     factor: 0.55,
-    lengthCondition: 'Any length'
+    lengthCondition: 'Any length',
   },
   {
     code: '102',
     description: 'Cable surrounded by thermal insulation - 100mm depth',
-    factor: 0.50,
-    lengthCondition: 'Any length'
+    factor: 0.5,
+    lengthCondition: 'Any length',
   },
   {
     code: '103',
     description: 'Cable surrounded by thermal insulation - 200mm+ depth',
     factor: 0.44,
-    lengthCondition: 'Any length'
-  }
+    lengthCondition: 'Any length',
+  },
 ];

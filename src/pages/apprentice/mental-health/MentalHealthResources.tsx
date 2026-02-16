@@ -1,70 +1,69 @@
-
-import MentalHealthPageLayout from "@/components/mental-health/MentalHealthPageLayout";
-import { BookOpen, ExternalLink } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import MentalHealthPageLayout from '@/components/mental-health/MentalHealthPageLayout';
+import { BookOpen, ExternalLink } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const MentalHealthResources = () => {
   const resources = [
     {
-      title: "Mind - Mental Health Charity",
-      description: "Information and support for mental health problems",
-      url: "https://www.mind.org.uk/",
-      type: "Website"
+      title: 'Mind - Mental Health Charity',
+      description: 'Information and support for mental health problems',
+      url: 'https://www.mind.org.uk/',
+      type: 'Website',
     },
     {
-      title: "NHS Mental Health Services",
-      description: "Find local NHS mental health support and services",
-      url: "https://www.nhs.uk/mental-health/",
-      type: "Healthcare"
+      title: 'NHS Mental Health Services',
+      description: 'Find local NHS mental health support and services',
+      url: 'https://www.nhs.uk/mental-health/',
+      type: 'Healthcare',
     },
     {
-      title: "Samaritans",
-      description: "Free confidential emotional support 24/7",
-      url: "https://www.samaritans.org/",
-      type: "Helpline"
+      title: 'Samaritans',
+      description: 'Free confidential emotional support 24/7',
+      url: 'https://www.samaritans.org/',
+      type: 'Helpline',
     },
     {
-      title: "CALM - Campaign Against Living Miserably",
-      description: "Support specifically for men facing difficult times",
-      url: "https://www.thecalmzone.net/",
-      type: "Support"
+      title: 'CALM - Campaign Against Living Miserably',
+      description: 'Support specifically for men facing difficult times',
+      url: 'https://www.thecalmzone.net/',
+      type: 'Support',
     },
     {
-      title: "Mental Health First Aid England",
-      description: "Training and resources for mental health awareness",
-      url: "https://mhfaengland.org/",
-      type: "Training"
+      title: 'Mental Health First Aid England',
+      description: 'Training and resources for mental health awareness',
+      url: 'https://mhfaengland.org/',
+      type: 'Training',
     },
     {
-      title: "Electrical Industries Charity",
-      description: "Practical, emotional and financial support for electrical workers",
-      url: "https://www.electricalcharity.org/",
-      type: "Industry Support"
-    }
+      title: 'Electrical Industries Charity',
+      description: 'Practical, emotional and financial support for electrical workers',
+      url: 'https://www.electricalcharity.org/',
+      type: 'Industry Support',
+    },
   ];
 
   const selfHelpResources = [
     {
-      title: "Stress Management Techniques",
-      description: "Practical techniques for managing workplace stress",
-      type: "Guide"
+      title: 'Stress Management Techniques',
+      description: 'Practical techniques for managing workplace stress',
+      type: 'Guide',
     },
     {
-      title: "Mindfulness for Apprentices",
-      description: "Simple mindfulness exercises you can do during breaks",
-      type: "Audio/Video"
+      title: 'Mindfulness for Apprentices',
+      description: 'Simple mindfulness exercises you can do during breaks',
+      type: 'Audio/Video',
     },
     {
-      title: "Work-Life Balance Planner",
-      description: "Tool to help you plan and maintain healthy boundaries",
-      type: "Interactive Tool"
+      title: 'Work-Life Balance Planner',
+      description: 'Tool to help you plan and maintain healthy boundaries',
+      type: 'Interactive Tool',
     },
     {
-      title: "Mental Health First Aid",
-      description: "How to recognise and respond to mental health issues in yourself and others",
-      type: "Educational"
-    }
+      title: 'Mental Health First Aid',
+      description: 'How to recognise and respond to mental health issues in yourself and others',
+      type: 'Educational',
+    },
   ];
 
   return (
@@ -82,7 +81,10 @@ const MentalHealthResources = () => {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {resources.map((resource, index) => (
-                <div key={index} className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-blue-500/30 transition-all">
+                <div
+                  key={index}
+                  className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-blue-500/30 transition-all"
+                >
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h4 className="font-semibold text-white">{resource.title}</h4>
@@ -114,7 +116,10 @@ const MentalHealthResources = () => {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {selfHelpResources.map((resource, index) => (
-                <div key={index} className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-green-500/30 transition-all">
+                <div
+                  key={index}
+                  className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-green-500/30 transition-all"
+                >
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h4 className="font-semibold text-white">{resource.title}</h4>
@@ -145,19 +150,36 @@ const MentalHealthResources = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center border border-red-500/30 rounded-lg p-4 bg-red-500/10">
                 <h4 className="font-semibold text-red-400 mb-2">Emergency</h4>
-                <a href="tel:999" className="text-2xl font-bold text-white mb-1 block underline hover:text-red-400 transition-colors">999</a>
-                <p className="text-xs text-white">Immediate danger or serious mental health crisis</p>
+                <a
+                  href="tel:999"
+                  className="text-2xl font-bold text-white mb-1 block underline hover:text-red-400 transition-colors"
+                >
+                  999
+                </a>
+                <p className="text-xs text-white">
+                  Immediate danger or serious mental health crisis
+                </p>
               </div>
 
               <div className="text-center border border-orange-500/30 rounded-lg p-4 bg-orange-500/10">
                 <h4 className="font-semibold text-orange-400 mb-2">Crisis Support</h4>
-                <a href="tel:116123" className="text-lg font-bold text-white mb-1 block underline hover:text-orange-400 transition-colors">116 123</a>
+                <a
+                  href="tel:116123"
+                  className="text-lg font-bold text-white mb-1 block underline hover:text-orange-400 transition-colors"
+                >
+                  116 123
+                </a>
                 <p className="text-xs text-white">Samaritans - Free 24/7 emotional support</p>
               </div>
 
               <div className="text-center border border-blue-500/30 rounded-lg p-4 bg-blue-500/10">
                 <h4 className="font-semibold text-blue-400 mb-2">Text Support</h4>
-                <a href="sms:85258?body=SHOUT" className="text-lg font-bold text-white mb-1 block underline hover:text-blue-400 transition-colors">Text SHOUT to 85258</a>
+                <a
+                  href="sms:85258?body=SHOUT"
+                  className="text-lg font-bold text-white mb-1 block underline hover:text-blue-400 transition-colors"
+                >
+                  Text SHOUT to 85258
+                </a>
                 <p className="text-xs text-white">Free 24/7 crisis text line</p>
               </div>
             </div>

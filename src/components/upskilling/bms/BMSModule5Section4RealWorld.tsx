@@ -12,12 +12,14 @@ export const BMSModule5Section4RealWorld = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-6">
-          <h3 className="text-foreground font-bold text-lg mb-4">High-End Residential Development</h3>
+          <h3 className="text-foreground font-bold text-lg mb-4">
+            High-End Residential Development
+          </h3>
           <p className="text-foreground mb-4">
-            In a luxury residential development, electricians installed KNX devices throughout three floors 
-            to control lighting, motorised blinds, and underfloor heating systems. The project included over 
-            200 devices across multiple lines and required careful coordination between electrical and 
-            commissioning teams.
+            In a luxury residential development, electricians installed KNX devices throughout three
+            floors to control lighting, motorised blinds, and underfloor heating systems. The
+            project included over 200 devices across multiple lines and required careful
+            coordination between electrical and commissioning teams.
           </p>
         </div>
 
@@ -53,14 +55,14 @@ export const BMSModule5Section4RealWorld = () => {
           <h4 className="text-foreground font-semibold mb-3">Root Cause Analysis</h4>
           <div className="space-y-2 text-sm text-foreground">
             <p>
-              <strong>The Issue:</strong> During cable installation, a loop had been inadvertently created when 
-              connecting two distribution points. The loop caused signal reflections and prevented proper 
-              communication on the entire line.
+              <strong>The Issue:</strong> During cable installation, a loop had been inadvertently
+              created when connecting two distribution points. The loop caused signal reflections
+              and prevented proper communication on the entire line.
             </p>
             <p>
-              <strong>Why It Wasn't Obvious:</strong> The loop provided electrical continuity, so bus voltage 
-              was present at all devices. However, the signal reflections corrupted all data telegrams, 
-              making communication impossible.
+              <strong>Why It Wasn't Obvious:</strong> The loop provided electrical continuity, so
+              bus voltage was present at all devices. However, the signal reflections corrupted all
+              data telegrams, making communication impossible.
             </p>
           </div>
         </div>
@@ -84,15 +86,23 @@ export const BMSModule5Section4RealWorld = () => {
           <div className="space-y-3 text-sm">
             <div>
               <p className="text-foreground font-medium text-green-400">Prevention Strategies:</p>
-              <p className="text-foreground">• Create detailed topology diagrams before installation</p>
+              <p className="text-foreground">
+                • Create detailed topology diagrams before installation
+              </p>
               <p className="text-foreground">• Use systematic labelling for all junction points</p>
               <p className="text-foreground">• Implement peer review for complex cable routes</p>
             </div>
             <div>
               <p className="text-foreground font-medium text-blue-400">Troubleshooting Approach:</p>
-              <p className="text-foreground">• Always check topology before assuming device failures</p>
-              <p className="text-foreground">• Use bus monitoring tools to understand communication patterns</p>
-              <p className="text-foreground">• Systematic elimination approach for complex problems</p>
+              <p className="text-foreground">
+                • Always check topology before assuming device failures
+              </p>
+              <p className="text-foreground">
+                • Use bus monitoring tools to understand communication patterns
+              </p>
+              <p className="text-foreground">
+                • Systematic elimination approach for complex problems
+              </p>
             </div>
           </div>
         </div>
@@ -100,11 +110,11 @@ export const BMSModule5Section4RealWorld = () => {
         <div className="bg-gradient-to-r from-indigo-500/10 to-blue-500/10 border border-indigo-500/20 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-3">Project Outcome</h4>
           <p className="text-foreground text-sm">
-            Once rewired into proper tree topology, communication was immediately restored. All 200+ devices 
-            operated reliably throughout commissioning and beyond. The client received a fully functional 
-            KNX system controlling lighting scenes, automated blinds, and heating zones. The incident highlighted 
-            the critical importance of proper topology in KNX installations and led to improved documentation 
-            standards for the electrical contractor.
+            Once rewired into proper tree topology, communication was immediately restored. All 200+
+            devices operated reliably throughout commissioning and beyond. The client received a
+            fully functional KNX system controlling lighting scenes, automated blinds, and heating
+            zones. The incident highlighted the critical importance of proper topology in KNX
+            installations and led to improved documentation standards for the electrical contractor.
           </p>
         </div>
       </CardContent>

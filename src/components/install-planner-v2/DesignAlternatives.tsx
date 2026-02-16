@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Loader2, ArrowRight, Check, AlertTriangle } from "lucide-react";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Loader2, ArrowRight, Check, AlertTriangle } from 'lucide-react';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -38,39 +38,39 @@ export const DesignAlternatives = ({ messages, onSelectAlternative }: DesignAlte
 
   const generateAlternatives = async () => {
     setIsGenerating(true);
-    toast.info("Generating alternative designs...", {
-      description: "AI is creating 3 different approaches"
+    toast.info('Generating alternative designs...', {
+      description: 'AI is creating 3 different approaches',
     });
 
     try {
-      const latestUserQuery = [...messages].reverse().find(m => m.role === 'user')?.content || '';
+      const latestUserQuery = [...messages].reverse().find((m) => m.role === 'user')?.content || '';
       const designContext = messages
-        .filter(m => m.agentName === 'designer')
-        .map(m => m.content)
+        .filter((m) => m.agentName === 'designer')
+        .map((m) => m.content)
         .join('\n\n');
 
       const { data, error } = await supabase.functions.invoke('generate-design-alternatives', {
         body: {
           userQuery: latestUserQuery,
           designContext,
-          messages: messages.slice(-10) // Last 10 messages for context
-        }
+          messages: messages.slice(-10), // Last 10 messages for context
+        },
       });
 
       if (error) throw error;
 
       if (data?.alternatives && Array.isArray(data.alternatives)) {
         setAlternatives(data.alternatives);
-        toast.success("3 alternatives generated!", {
-          description: "Compare and choose the best option"
+        toast.success('3 alternatives generated!', {
+          description: 'Compare and choose the best option',
         });
       } else {
         throw new Error('Invalid response format');
       }
     } catch (error) {
       console.error('Error generating alternatives:', error);
-      toast.error("Failed to generate alternatives", {
-        description: error instanceof Error ? error.message : "Unknown error"
+      toast.error('Failed to generate alternatives', {
+        description: error instanceof Error ? error.message : 'Unknown error',
       });
     } finally {
       setIsGenerating(false);
@@ -79,26 +79,26 @@ export const DesignAlternatives = ({ messages, onSelectAlternative }: DesignAlte
 
   const handleSelectAlternative = (alt: Alternative) => {
     setSelectedId(alt.id);
-    
+
     // Create new messages with this alternative design
     const alternativeMessages: Message[] = [
       {
         role: 'assistant',
-        content: `**Selected Alternative: ${alt.title}**\n\n${alt.approach}\n\n**Specification:**\n- Cable: ${alt.cableSize}mm²\n- Protection: ${alt.protectionDevice}\n- Voltage Drop: ${alt.voltageDrop}%\n- Estimated Cost: £${alt.estimatedCost}\n\n**Advantages:**\n${alt.pros.map(p => `✓ ${p}`).join('\n')}\n\n**Considerations:**\n${alt.cons.map(c => `• ${c}`).join('\n')}`,
+        content: `**Selected Alternative: ${alt.title}**\n\n${alt.approach}\n\n**Specification:**\n- Cable: ${alt.cableSize}mm²\n- Protection: ${alt.protectionDevice}\n- Voltage Drop: ${alt.voltageDrop}%\n- Estimated Cost: £${alt.estimatedCost}\n\n**Advantages:**\n${alt.pros.map((p) => `✓ ${p}`).join('\n')}\n\n**Considerations:**\n${alt.cons.map((c) => `• ${c}`).join('\n')}`,
         agentName: 'designer',
         structuredData: {
           cableSize: alt.cableSize,
           protectionDevice: alt.protectionDevice,
           voltageDrop: { percentage: alt.voltageDrop },
-          estimatedCost: alt.estimatedCost
-        }
-      }
+          estimatedCost: alt.estimatedCost,
+        },
+      },
     ];
 
     onSelectAlternative(alt, alternativeMessages);
-    
+
     toast.success(`${alt.title} selected`, {
-      description: "Design updated with this alternative"
+      description: 'Design updated with this alternative',
     });
   };
 
@@ -113,20 +113,17 @@ export const DesignAlternatives = ({ messages, onSelectAlternative }: DesignAlte
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground mb-4">
-            Get AI to generate 3 alternative approaches - different cable sizes, routes, or protection strategies.
+            Get AI to generate 3 alternative approaches - different cable sizes, routes, or
+            protection strategies.
           </p>
-          <Button
-            onClick={generateAlternatives}
-            disabled={isGenerating}
-            className="w-full"
-          >
+          <Button onClick={generateAlternatives} disabled={isGenerating} className="w-full">
             {isGenerating ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 Generating alternatives...
               </>
             ) : (
-              "Show me 3 alternatives"
+              'Show me 3 alternatives'
             )}
           </Button>
         </CardContent>
@@ -171,7 +168,7 @@ export const DesignAlternatives = ({ messages, onSelectAlternative }: DesignAlte
                 </div>
                 <Button
                   size="sm"
-                  variant={selectedId === alt.id ? "default" : "outline"}
+                  variant={selectedId === alt.id ? 'default' : 'outline'}
                   onClick={() => handleSelectAlternative(alt)}
                 >
                   {selectedId === alt.id ? (
@@ -180,14 +177,14 @@ export const DesignAlternatives = ({ messages, onSelectAlternative }: DesignAlte
                       Selected
                     </>
                   ) : (
-                    "Select"
+                    'Select'
                   )}
                 </Button>
               </div>
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
               <p className="text-foreground">{alt.approach}</p>
-              
+
               <div className="grid grid-cols-2 gap-2 p-3 bg-muted/30 rounded-md">
                 <div>
                   <span className="text-xs text-muted-foreground">Cable Size</span>
@@ -233,7 +230,7 @@ export const DesignAlternatives = ({ messages, onSelectAlternative }: DesignAlte
             </CardContent>
           </Card>
         ))}
-        
+
         <Button
           onClick={generateAlternatives}
           disabled={isGenerating}
@@ -247,7 +244,7 @@ export const DesignAlternatives = ({ messages, onSelectAlternative }: DesignAlte
               Regenerating...
             </>
           ) : (
-            "Generate new alternatives"
+            'Generate new alternatives'
           )}
         </Button>
       </CardContent>

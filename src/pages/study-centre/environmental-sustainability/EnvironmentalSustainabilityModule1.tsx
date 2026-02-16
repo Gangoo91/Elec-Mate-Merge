@@ -1,45 +1,45 @@
-import { ArrowLeft, Globe, Scale, Search, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Globe, Scale, Search, Lightbulb } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "What Is Environmental Management?",
+    title: 'What Is Environmental Management?',
     icon: Globe,
     description:
-      "The principles of environmental management, how organisations identify and control their environmental impacts, and why it matters on construction sites",
+      'The principles of environmental management, how organisations identify and control their environmental impacts, and why it matters on construction sites',
   },
   {
     id: 2,
-    title: "Key Environmental Legislation",
+    title: 'Key Environmental Legislation',
     icon: Scale,
     description:
-      "The Environmental Protection Act 1990, Environment Act 2021, Clean Air Act, and other key legislation that governs environmental responsibilities on site",
+      'The Environmental Protection Act 1990, Environment Act 2021, Clean Air Act, and other key legislation that governs environmental responsibilities on site',
   },
   {
     id: 3,
-    title: "Environmental Impact Assessment",
+    title: 'Environmental Impact Assessment',
     icon: Search,
     description:
-      "How environmental impact assessments are carried out, when they are required, the screening and scoping process, and how findings influence project decisions",
+      'How environmental impact assessments are carried out, when they are required, the screening and scoping process, and how findings influence project decisions',
   },
   {
     id: 4,
-    title: "Sustainability Principles",
+    title: 'Sustainability Principles',
     icon: Lightbulb,
     description:
-      "The three pillars of sustainability (environmental, social, economic), circular economy thinking, and how tradespeople contribute to sustainable construction",
+      'The three pillars of sustainability (environmental, social, economic), circular economy thinking, and how tradespeople contribute to sustainable construction',
   },
 ];
 
 export default function EnvironmentalSustainabilityModule1() {
   useSEO({
-    title: "Module 1: Environmental Awareness | Environmental & Sustainability",
+    title: 'Module 1: Environmental Awareness | Environmental & Sustainability',
     description:
-      "Learn about environmental management principles, key legislation, impact assessments, and sustainability fundamentals.",
+      'Learn about environmental management principles, key legislation, impact assessments, and sustainability fundamentals.',
   });
 
   return (

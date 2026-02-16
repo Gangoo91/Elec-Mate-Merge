@@ -12,9 +12,10 @@ export const CompatibilityIssuesSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Not all smart heating components are compatible with every heating system. Understanding these limitations is crucial for successful installations and avoiding equipment damage.
+          Not all smart heating components are compatible with every heating system. Understanding
+          these limitations is crucial for successful installations and avoiding equipment damage.
         </p>
-        
+
         <div className="space-y-4">
           <div className="bg-elec-gray border border-red-600 rounded-lg p-4">
             <h4 className="font-semibold text-red-200 mb-3">Thermostat Limitations</h4>
@@ -25,7 +26,7 @@ export const CompatibilityIssuesSection = () => {
               <li>• Some require neutral wire connections</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-orange-600 rounded-lg p-4">
             <h4 className="font-semibold text-orange-200 mb-3">Proprietary Protocols</h4>
             <ul className="space-y-2 text-sm text-orange-100">
@@ -35,7 +36,7 @@ export const CompatibilityIssuesSection = () => {
               <li>• Firmware dependencies and updates</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-yellow-600 rounded-lg p-4">
             <h4 className="font-semibold text-yellow-200 mb-3">Setup Risks</h4>
             <ul className="space-y-2 text-sm text-yellow-100">
@@ -50,8 +51,12 @@ export const CompatibilityIssuesSection = () => {
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">Best Practice</h4>
           <p className="text-sm">
-            <strong className="text-elec-yellow">Always check manufacturer-approved compatibility lists</strong> before specifying smart heating controls. 
-            When in doubt, consult technical support or use manufacturer-specific control systems to ensure proper operation and maintain warranties.
+            <strong className="text-elec-yellow">
+              Always check manufacturer-approved compatibility lists
+            </strong>{' '}
+            before specifying smart heating controls. When in doubt, consult technical support or
+            use manufacturer-specific control systems to ensure proper operation and maintain
+            warranties.
           </p>
         </div>
 
@@ -65,7 +70,7 @@ export const CompatibilityIssuesSection = () => {
               <li>• Confirm protocol support</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-blue-600 rounded-lg p-4">
             <h4 className="font-semibold text-blue-200 mb-3">Safe Installation</h4>
             <ul className="space-y-2 text-sm text-blue-100">

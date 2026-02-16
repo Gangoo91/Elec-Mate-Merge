@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { 
-  Trophy, 
-  Clock, 
-  Target, 
-  RotateCcw, 
+import {
+  Trophy,
+  Clock,
+  Target,
+  RotateCcw,
   Home,
   CheckCircle2,
   XCircle,
   TrendingUp,
   Award,
-  Zap
+  Zap,
 } from 'lucide-react';
 import { QuizResult, Assessment } from '@/types/quiz';
 import ConfettiEffect from './ConfettiEffect';
@@ -25,11 +25,11 @@ interface ImpressiveResultsPageProps {
   onBackToHub: () => void;
 }
 
-const ImpressiveResultsPage = ({ 
-  result, 
-  assessment, 
-  onRetake, 
-  onBackToHub 
+const ImpressiveResultsPage = ({
+  result,
+  assessment,
+  onRetake,
+  onBackToHub,
 }: ImpressiveResultsPageProps) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [animatedScore, setAnimatedScore] = useState(0);
@@ -83,11 +83,27 @@ const ImpressiveResultsPage = ({
   };
 
   const getScoreMessage = (percentage: number) => {
-    if (percentage >= 90) return { title: 'Outstanding!', message: 'Exceptional knowledge demonstrated. You\'re certification ready!' };
-    if (percentage >= 80) return { title: 'Excellent Work!', message: 'Strong understanding of BS 7671 principles.' };
-    if (percentage >= 70) return { title: 'Well Done!', message: 'Good grasp of the material with room for improvement.' };
-    if (percentage >= 60) return { title: 'Keep Going!', message: 'You\'re on the right track. More practice recommended.' };
-    return { title: 'Keep Learning!', message: 'Review the material and try again. You can do this!' };
+    if (percentage >= 90)
+      return {
+        title: 'Outstanding!',
+        message: "Exceptional knowledge demonstrated. You're certification ready!",
+      };
+    if (percentage >= 80)
+      return { title: 'Excellent Work!', message: 'Strong understanding of BS 7671 principles.' };
+    if (percentage >= 70)
+      return {
+        title: 'Well Done!',
+        message: 'Good grasp of the material with room for improvement.',
+      };
+    if (percentage >= 60)
+      return {
+        title: 'Keep Going!',
+        message: "You're on the right track. More practice recommended.",
+      };
+    return {
+      title: 'Keep Learning!',
+      message: 'Review the material and try again. You can do this!',
+    };
   };
 
   const getCategoryColor = (correct: number, total: number) => {
@@ -99,13 +115,13 @@ const ImpressiveResultsPage = ({
 
   const getStrengths = () => {
     return Object.entries(result.categoryBreakdown)
-      .filter(([, data]) => (data.correct / data.total) >= 0.8)
+      .filter(([, data]) => data.correct / data.total >= 0.8)
       .map(([category]) => category);
   };
 
   const getWeaknesses = () => {
     return Object.entries(result.categoryBreakdown)
-      .filter(([, data]) => (data.correct / data.total) < 0.6)
+      .filter(([, data]) => data.correct / data.total < 0.6)
       .map(([category]) => category);
   };
 
@@ -120,9 +136,13 @@ const ImpressiveResultsPage = ({
         <div className="text-center space-y-6 py-8">
           {/* Trophy Animation */}
           <div className="flex justify-center animate-bounce">
-            <div className={`relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br ${getScoreGradient(result.percentage)} p-1 shadow-2xl`}>
+            <div
+              className={`relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br ${getScoreGradient(result.percentage)} p-1 shadow-2xl`}
+            >
               <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-                <Trophy className={`h-12 w-12 sm:h-16 sm:w-16 ${getScoreColor(result.percentage)}`} />
+                <Trophy
+                  className={`h-12 w-12 sm:h-16 sm:w-16 ${getScoreColor(result.percentage)}`}
+                />
               </div>
             </div>
           </div>
@@ -139,7 +159,9 @@ const ImpressiveResultsPage = ({
 
           {/* Animated Score */}
           <div className="inline-block">
-            <div className={`text-7xl sm:text-8xl font-black ${getScoreColor(result.percentage)} drop-shadow-lg`}>
+            <div
+              className={`text-7xl sm:text-8xl font-black ${getScoreColor(result.percentage)} drop-shadow-lg`}
+            >
               {animatedScore}%
             </div>
             <div className="text-sm sm:text-base text-muted-foreground font-medium mt-2">
@@ -160,7 +182,9 @@ const ImpressiveResultsPage = ({
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="bg-gradient-to-br from-card to-muted/50 border-2">
             <CardContent className="p-6 text-center space-y-2">
-              <div className={`text-4xl sm:text-5xl font-black ${getScoreColor(result.percentage)}`}>
+              <div
+                className={`text-4xl sm:text-5xl font-black ${getScoreColor(result.percentage)}`}
+              >
                 {result.percentage}%
               </div>
               <div className="text-sm text-muted-foreground font-medium">Final Score</div>
@@ -187,9 +211,7 @@ const ImpressiveResultsPage = ({
                 <Clock className="h-6 w-6" />
                 <span>{Math.floor(result.timeSpent / 60)}</span>
               </div>
-              <div className="text-sm text-muted-foreground font-medium">
-                Minutes Taken
-              </div>
+              <div className="text-sm text-muted-foreground font-medium">Minutes Taken</div>
             </CardContent>
           </Card>
 
@@ -199,9 +221,7 @@ const ImpressiveResultsPage = ({
                 <Zap className="h-6 w-6" />
                 <span>{Math.round(result.timeSpent / result.totalQuestions)}</span>
               </div>
-              <div className="text-sm text-muted-foreground font-medium">
-                Seconds/Question
-              </div>
+              <div className="text-sm text-muted-foreground font-medium">Seconds/Question</div>
             </CardContent>
           </Card>
         </div>
@@ -228,7 +248,9 @@ const ImpressiveResultsPage = ({
                       <span className={`font-bold ${getCategoryColor(data.correct, data.total)}`}>
                         {data.correct}/{data.total}
                       </span>
-                      <span className={`text-sm font-semibold ${getCategoryColor(data.correct, data.total)}`}>
+                      <span
+                        className={`text-sm font-semibold ${getCategoryColor(data.correct, data.total)}`}
+                      >
                         {percentage}%
                       </span>
                     </div>
@@ -252,7 +274,7 @@ const ImpressiveResultsPage = ({
             </CardHeader>
             <CardContent className="space-y-2">
               {getStrengths().length > 0 ? (
-                getStrengths().map(category => (
+                getStrengths().map((category) => (
                   <div key={category} className="flex items-center gap-2 text-green-400">
                     <CheckCircle2 className="h-4 w-4" />
                     <span className="font-medium">{category}</span>
@@ -276,16 +298,14 @@ const ImpressiveResultsPage = ({
             </CardHeader>
             <CardContent className="space-y-2">
               {getWeaknesses().length > 0 ? (
-                getWeaknesses().map(category => (
+                getWeaknesses().map((category) => (
                   <div key={category} className="flex items-center gap-2 text-orange-400">
                     <XCircle className="h-4 w-4" />
                     <span className="font-medium">{category}</span>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">
-                  Excellent! No weak areas identified
-                </p>
+                <p className="text-sm text-muted-foreground">Excellent! No weak areas identified</p>
               )}
             </CardContent>
           </Card>

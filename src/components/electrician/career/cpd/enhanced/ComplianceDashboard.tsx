@@ -4,11 +4,11 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { 
-  Shield, 
-  AlertTriangle, 
-  CheckCircle, 
-  Clock, 
+import {
+  Shield,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
   Target,
   TrendingUp,
   Calendar,
@@ -16,7 +16,7 @@ import {
   Plus,
   Download,
   FileText,
-  Bell
+  Bell,
 } from 'lucide-react';
 import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
 import { cpdExportService } from '@/services/cpdExportService';
@@ -29,7 +29,11 @@ interface ComplianceDashboardProps {
   onManageGoals?: () => void;
 }
 
-const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: ComplianceDashboardProps = {}) => {
+const ComplianceDashboard = ({
+  onAddEntry,
+  onViewHistory,
+  onManageGoals,
+}: ComplianceDashboardProps = {}) => {
   const { compliance, settings, reminders, loading } = useEnhancedCPD();
   const { entries, goals } = useCPDData();
 
@@ -39,18 +43,25 @@ const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: Compl
         totalHours: compliance.hoursCompleted,
         hoursThisYear: compliance.hoursCompleted,
         targetHours: compliance.hoursRequired,
-        completionPercentage: Math.round((compliance.hoursCompleted / compliance.hoursRequired) * 100),
-        daysRemaining: Math.ceil((new Date('2024-12-31').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)),
-        hoursThisMonth: entries.filter(e => 
-          new Date(e.date).getMonth() === new Date().getMonth() &&
-          new Date(e.date).getFullYear() === new Date().getFullYear()
-        ).reduce((sum, e) => sum + e.hours, 0),
+        completionPercentage: Math.round(
+          (compliance.hoursCompleted / compliance.hoursRequired) * 100
+        ),
+        daysRemaining: Math.ceil(
+          (new Date('2024-12-31').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+        ),
+        hoursThisMonth: entries
+          .filter(
+            (e) =>
+              new Date(e.date).getMonth() === new Date().getMonth() &&
+              new Date(e.date).getFullYear() === new Date().getFullYear()
+          )
+          .reduce((sum, e) => sum + e.hours, 0),
         averageHoursPerMonth: compliance.hoursCompleted / 12,
-        categoryBreakdown: compliance.categoryGaps.map(gap => ({
+        categoryBreakdown: compliance.categoryGaps.map((gap) => ({
           category: gap.category,
           hours: gap.completed,
-          percentage: Math.round((gap.completed / compliance.hoursCompleted) * 100)
-        }))
+          percentage: Math.round((gap.completed / compliance.hoursCompleted) * 100),
+        })),
       };
       cpdExportService.exportToPDF(entries, statsData, goals);
     }
@@ -104,7 +115,9 @@ const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: Compl
     }
   };
 
-  const progressPercentage = Math.round((compliance.hoursCompleted / compliance.hoursRequired) * 100);
+  const progressPercentage = Math.round(
+    (compliance.hoursCompleted / compliance.hoursRequired) * 100
+  );
 
   return (
     <div className="space-y-6">
@@ -168,14 +181,16 @@ const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: Compl
       </Card>
 
       {/* High Priority Alerts */}
-      {reminders.filter(r => r.priority === 'high').map(reminder => (
-        <Alert key={reminder.id} className="border-red-500/30 bg-red-500/5">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertDescription className="text-foreground">
-            <strong>{reminder.title}:</strong> {reminder.message}
-          </AlertDescription>
-        </Alert>
-      ))}
+      {reminders
+        .filter((r) => r.priority === 'high')
+        .map((reminder) => (
+          <Alert key={reminder.id} className="border-red-500/30 bg-red-500/5">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription className="text-foreground">
+              <strong>{reminder.title}:</strong> {reminder.message}
+            </AlertDescription>
+          </Alert>
+        ))}
 
       {/* Overall Compliance Status */}
       <Card className="bg-elec-grey border-border">
@@ -194,9 +209,9 @@ const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: Compl
               {compliance.hoursCompleted} / {compliance.hoursRequired} hours completed
             </span>
           </div>
-          
+
           <Progress value={Math.min(progressPercentage, 100)} className="h-3" />
-          
+
           <div className="text-center">
             <span className="text-2xl font-bold text-foreground">{progressPercentage}%</span>
             <p className="text-sm text-muted-foreground">of annual target achieved</p>
@@ -217,19 +232,17 @@ const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: Compl
                   {body.complianceStatus}
                 </Badge>
                 {body.membershipNumber && (
-                  <span className="text-xs text-muted-foreground">
-                    #{body.membershipNumber}
-                  </span>
+                  <span className="text-xs text-muted-foreground">#{body.membershipNumber}</span>
                 )}
               </div>
-              
+
               {body.renewalDate && (
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
                   Renewal: {new Date(body.renewalDate).toLocaleDateString()}
                 </div>
               )}
-              
+
               {body.nextAssessment && (
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
                   <Award className="h-4 w-4" />
@@ -255,14 +268,14 @@ const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: Compl
                     {gap.category.replace('-', ' ')}
                   </span>
                   <div className="flex items-center gap-2">
-                    <Badge 
+                    <Badge
                       variant="outline"
                       className={
-                        gap.status === 'complete' 
-                          ? 'text-green-400 border-green-500/30' 
+                        gap.status === 'complete'
+                          ? 'text-green-400 border-green-500/30'
                           : gap.status === 'on-track'
-                          ? 'text-yellow-400 border-yellow-500/30'
-                          : 'text-red-400 border-red-500/30'
+                            ? 'text-yellow-400 border-yellow-500/30'
+                            : 'text-red-400 border-red-500/30'
                       }
                     >
                       {gap.status}
@@ -272,8 +285,8 @@ const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: Compl
                     </span>
                   </div>
                 </div>
-                <Progress 
-                  value={Math.min((gap.completed / gap.required) * 100, 100)} 
+                <Progress
+                  value={Math.min((gap.completed / gap.required) * 100, 100)}
                   className="h-2"
                 />
               </div>
@@ -319,9 +332,12 @@ const ComplianceDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: Compl
                 const daysUntil = Math.ceil(
                   (new Date(deadline.date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
                 );
-                
+
                 return (
-                  <div key={index} className="flex items-center justify-between p-3 bg-muted/20 rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-muted/20 rounded-lg"
+                  >
                     <div>
                       <p className="font-medium text-foreground">{deadline.description}</p>
                       <p className="text-sm text-muted-foreground">{deadline.type}</p>

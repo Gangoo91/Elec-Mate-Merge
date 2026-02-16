@@ -1,9 +1,14 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Settings, Thermometer, AlertTriangle } from 'lucide-react';
@@ -28,23 +33,25 @@ export const AdvancedCalculatorOptions: React.FC<AdvancedOptionsProps> = ({
   conductorMaterial,
   onConductorMaterialChange,
   operatingTemperature,
-  onOperatingTemperatureChange
+  onOperatingTemperatureChange,
 }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  const temperatureOptions = Object.keys(TEMPERATURE_CORRECTION_FACTORS.copper).map(temp => ({
+  const temperatureOptions = Object.keys(TEMPERATURE_CORRECTION_FACTORS.copper).map((temp) => ({
     value: parseInt(temp),
-    label: `${temp}°C`
+    label: `${temp}°C`,
   }));
 
-  const correctionFactor = temperatureCorrection 
-    ? TEMPERATURE_CORRECTION_FACTORS[conductorMaterial][operatingTemperature as keyof typeof TEMPERATURE_CORRECTION_FACTORS.copper] || 1.0
+  const correctionFactor = temperatureCorrection
+    ? TEMPERATURE_CORRECTION_FACTORS[conductorMaterial][
+        operatingTemperature as keyof typeof TEMPERATURE_CORRECTION_FACTORS.copper
+      ] || 1.0
     : 1.0;
 
   return (
     <Card className="bg-card border-border">
       <CardHeader>
-        <CardTitle 
+        <CardTitle
           className="text-foreground flex items-center justify-between cursor-pointer"
           onClick={() => setShowAdvanced(!showAdvanced)}
         >
@@ -57,7 +64,7 @@ export const AdvancedCalculatorOptions: React.FC<AdvancedOptionsProps> = ({
           </Badge>
         </CardTitle>
       </CardHeader>
-      
+
       {showAdvanced && (
         <CardContent className="space-y-6">
           {/* Additional Resistances */}
@@ -101,25 +108,29 @@ export const AdvancedCalculatorOptions: React.FC<AdvancedOptionsProps> = ({
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="copper" className="text-foreground">Copper</SelectItem>
-                      <SelectItem value="aluminium" className="text-foreground">Aluminium</SelectItem>
+                      <SelectItem value="copper" className="text-foreground">
+                        Copper
+                      </SelectItem>
+                      <SelectItem value="aluminium" className="text-foreground">
+                        Aluminium
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-foreground">Operating Temperature</Label>
-                  <Select 
-                    value={operatingTemperature.toString()} 
+                  <Select
+                    value={operatingTemperature.toString()}
                     onValueChange={(value) => onOperatingTemperatureChange(parseInt(value))}
                   >
                     <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-gray border-elec-gray text-foreground">
-                      {temperatureOptions.map(option => (
-                        <SelectItem 
-                          key={option.value} 
+                      {temperatureOptions.map((option) => (
+                        <SelectItem
+                          key={option.value}
                           value={option.value.toString()}
                           className="text-foreground"
                         >
@@ -134,10 +145,13 @@ export const AdvancedCalculatorOptions: React.FC<AdvancedOptionsProps> = ({
                   <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
                       <AlertTriangle className="h-4 w-4 text-blue-400" />
-                      <span className="text-blue-400 font-semibold text-sm">Temperature Factor</span>
+                      <span className="text-blue-400 font-semibold text-sm">
+                        Temperature Factor
+                      </span>
                     </div>
                     <p className="text-gray-300 text-sm">
-                      Correction factor: <span className="font-bold text-elec-yellow">{correctionFactor}</span>
+                      Correction factor:{' '}
+                      <span className="font-bold text-elec-yellow">{correctionFactor}</span>
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
                       Applied to R1+R2 values to account for conductor temperature effects

@@ -1,14 +1,14 @@
-import React from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RequiredFieldTooltip } from "@/components/ui/required-field-tooltip";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
+import { cn } from '@/lib/utils';
 
 interface EnhancedInputProps {
   id: string;
   label: string;
-  type?: "text" | "email" | "tel" | "number";
-  inputMode?: "search" | "text" | "email" | "tel" | "url" | "decimal" | "none" | "numeric";
+  type?: 'text' | 'email' | 'tel' | 'number';
+  inputMode?: 'search' | 'text' | 'email' | 'tel' | 'url' | 'decimal' | 'none' | 'numeric';
   value: string | number;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -23,7 +23,7 @@ interface EnhancedInputProps {
 export const EnhancedInput: React.FC<EnhancedInputProps> = ({
   id,
   label,
-  type = "text",
+  type = 'text',
   inputMode,
   value,
   onChange,
@@ -33,15 +33,12 @@ export const EnhancedInput: React.FC<EnhancedInputProps> = ({
   unit,
   className,
   error,
-  pattern
+  pattern,
 }) => {
   // Auto-set inputMode based on type if not explicitly provided
-  const effectiveInputMode = inputMode || (
-    type === "email" ? "email" :
-    type === "tel" ? "tel" :
-    type === "number" ? "numeric" :
-    "text"
-  );
+  const effectiveInputMode =
+    inputMode ||
+    (type === 'email' ? 'email' : type === 'tel' ? 'tel' : type === 'number' ? 'numeric' : 'text');
 
   return (
     <div className="space-y-2">
@@ -52,7 +49,7 @@ export const EnhancedInput: React.FC<EnhancedInputProps> = ({
         </Label>
         {helpText && <RequiredFieldTooltip content={helpText} />}
       </div>
-      
+
       <div className="relative">
         <Input
           id={id}
@@ -63,9 +60,9 @@ export const EnhancedInput: React.FC<EnhancedInputProps> = ({
           placeholder={placeholder}
           pattern={pattern}
           className={cn(
-            "h-14 touch-manipulation",
-            unit && "pr-12",
-            error && "border-destructive focus-visible:border-destructive",
+            'h-14 touch-manipulation',
+            unit && 'pr-12',
+            error && 'border-destructive focus-visible:border-destructive',
             className
           )}
         />
@@ -75,15 +72,11 @@ export const EnhancedInput: React.FC<EnhancedInputProps> = ({
           </div>
         )}
       </div>
-      
-      {error && (
-        <p className="text-sm text-destructive">{error}</p>
-      )}
-      
+
+      {error && <p className="text-sm text-destructive">{error}</p>}
+
       {!error && placeholder && (
-        <p className="text-xs text-muted-foreground">
-          Example: {placeholder}
-        </p>
+        <p className="text-xs text-muted-foreground">Example: {placeholder}</p>
       )}
     </div>
   );

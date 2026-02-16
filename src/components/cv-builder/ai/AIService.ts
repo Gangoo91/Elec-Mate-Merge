@@ -1,8 +1,16 @@
-
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 interface AIGenerationRequest {
-  type: 'professional_summary' | 'job_description' | 'skills' | 'achievements' | 'complete_cv' | 'quote_summary' | 'job_description_enhancement' | 'terms_conditions' | 'additional_services';
+  type:
+    | 'professional_summary'
+    | 'job_description'
+    | 'skills'
+    | 'achievements'
+    | 'complete_cv'
+    | 'quote_summary'
+    | 'job_description_enhancement'
+    | 'terms_conditions'
+    | 'additional_services';
   context: {
     jobTitle?: string;
     company?: string;
@@ -31,8 +39,8 @@ export class AIService {
         jobTitle: quote.jobDetails?.title,
         company: companyProfile?.company_name,
         targetRole: 'Executive Summary',
-        personalInfo: { quote, companyProfile }
-      }
+        personalInfo: { quote, companyProfile },
+      },
     });
     return response.content;
   }
@@ -42,9 +50,9 @@ export class AIService {
       type: 'job_description_enhancement',
       context: {
         jobTitle: jobDetails.title,
-        personalInfo: jobDetails
+        personalInfo: jobDetails,
       },
-      userInput: jobDetails.description
+      userInput: jobDetails.description,
     });
     return response.content;
   }
@@ -55,8 +63,8 @@ export class AIService {
       context: {
         jobTitle: quote.jobDetails?.title,
         experience: quote.jobDetails?.estimatedDuration,
-        personalInfo: quote
-      }
+        personalInfo: quote,
+      },
     });
     return response.content;
   }
@@ -66,19 +74,21 @@ export class AIService {
       type: 'additional_services',
       context: {
         jobTitle: quote.jobDetails?.title,
-        personalInfo: quote
-      }
+        personalInfo: quote,
+      },
     });
     return response.content.split('\n').filter((line: string) => line.trim().length > 0);
   }
 
-  private static async callAIAssistant(request: AIGenerationRequest): Promise<AIGenerationResponse> {
+  private static async callAIAssistant(
+    request: AIGenerationRequest
+  ): Promise<AIGenerationResponse> {
     try {
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: {
           prompt: this.buildPrompt(request),
-          type: 'cv_generation'
-        }
+          type: 'cv_generation',
+        },
       });
 
       if (error) {
@@ -102,8 +112,8 @@ export class AIService {
 
   private static buildPrompt(request: AIGenerationRequest): string {
     const { type, context, userInput } = request;
-    const industry = "electrical industry";
-    
+    const industry = 'electrical industry';
+
     switch (type) {
       case 'professional_summary':
         return `Create a professional summary for an electrical worker with the following details:
@@ -227,70 +237,90 @@ IMPORTANT: Return the response in clean HTML format with proper list tags (<ul>,
 
   private static parseAIResponse(response: string, type: string): AIGenerationResponse {
     // Parse the AI response to extract content and suggestions
-    const lines = response.split('\n').filter(line => line.trim());
-    
+    const lines = response.split('\n').filter((line) => line.trim());
+
     if (type === 'skills') {
       // Extract skills from bullet points or comma-separated list
-      const skillLines = lines.filter(line => 
-        line.includes('•') || line.includes('-') || line.includes('*')
+      const skillLines = lines.filter(
+        (line) => line.includes('•') || line.includes('-') || line.includes('*')
       );
-      const skills = skillLines.map(line => 
-        line.replace(/[•\-*]\s*/, '').trim()
-      ).filter(skill => skill.length > 0);
-      
+      const skills = skillLines
+        .map((line) => line.replace(/[•\-*]\s*/, '').trim())
+        .filter((skill) => skill.length > 0);
+
       return {
         content: skills.join(', '),
-        suggestions: skills.slice(0, 5)
+        suggestions: skills.slice(0, 5),
       };
     }
 
     return {
       content: response,
       suggestions: [],
-      alternatives: []
+      alternatives: [],
     };
   }
 
-  static async generateProfessionalSummary(context: AIGenerationRequest['context'], userInput?: string): Promise<string> {
+  static async generateProfessionalSummary(
+    context: AIGenerationRequest['context'],
+    userInput?: string
+  ): Promise<string> {
     const response = await this.callAIAssistant({
       type: 'professional_summary',
       context,
-      userInput
+      userInput,
     });
     return response.content;
   }
 
-  static async generateJobDescription(jobTitle: string, company: string, additionalContext?: string): Promise<string> {
+  static async generateJobDescription(
+    jobTitle: string,
+    company: string,
+    additionalContext?: string
+  ): Promise<string> {
     const response = await this.callAIAssistant({
       type: 'job_description',
       context: { jobTitle, company },
-      userInput: additionalContext
+      userInput: additionalContext,
     });
     return response.content;
   }
 
-  static async generateSkills(context: AIGenerationRequest['context'], userInput?: string): Promise<string[]> {
+  static async generateSkills(
+    context: AIGenerationRequest['context'],
+    userInput?: string
+  ): Promise<string[]> {
     const response = await this.callAIAssistant({
       type: 'skills',
       context,
-      userInput
+      userInput,
     });
-    return response.content.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
+    return response.content
+      .split(',')
+      .map((skill) => skill.trim())
+      .filter((skill) => skill.length > 0);
   }
 
-  static async generateAchievements(jobTitle: string, company: string, experience: string, context?: string): Promise<string[]> {
+  static async generateAchievements(
+    jobTitle: string,
+    company: string,
+    experience: string,
+    context?: string
+  ): Promise<string[]> {
     const response = await this.callAIAssistant({
       type: 'achievements',
       context: { jobTitle, company, experience },
-      userInput: context
+      userInput: context,
     });
-    return response.content.split('\n').filter(line => line.trim().length > 0);
+    return response.content.split('\n').filter((line) => line.trim().length > 0);
   }
 
-  static async generateCompleteCV(context: AIGenerationRequest['context']): Promise<AIGenerationResponse> {
+  static async generateCompleteCV(
+    context: AIGenerationRequest['context']
+  ): Promise<AIGenerationResponse> {
     return await this.callAIAssistant({
       type: 'complete_cv',
-      context
+      context,
     });
   }
 }

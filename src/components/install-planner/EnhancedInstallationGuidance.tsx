@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Separator } from "@/components/ui/separator";
-import { 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Separator } from '@/components/ui/separator';
+import {
   Wrench,
   AlertTriangle,
   CheckCircle2,
@@ -16,28 +16,28 @@ import {
   HardHat,
   MapPin,
   Settings,
-  Cable
-} from "lucide-react";
-import { InstallPlanData, CableRecommendation } from "./types";
+  Cable,
+} from 'lucide-react';
+import { InstallPlanData, CableRecommendation } from './types';
 
 interface EnhancedInstallationGuidanceProps {
   planData: InstallPlanData;
   recommendedCable: CableRecommendation;
 }
 
-const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> = ({ 
-  planData, 
-  recommendedCable 
+const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> = ({
+  planData,
+  recommendedCable,
 }) => {
   const isSWA = planData.cableType?.toLowerCase().includes('swa');
   const isUnderground = planData.installationMethod?.includes('buried');
-  const isRingCircuit = planData.loadType === "power" && planData.cableLength <= 106;
+  const isRingCircuit = planData.loadType === 'power' && planData.cableLength <= 106;
   const isHighCurrent = parseFloat(recommendedCable.size.replace('mm²', '')) >= 25;
-  const isThreePhase = planData.phases === "three";
+  const isThreePhase = planData.phases === 'three';
 
   const getInstallationMethodGuidance = () => {
     const method = planData.installationMethod;
-    
+
     const methodGuidance = {
       'cable-tray': {
         title: 'Cable Tray Installation',
@@ -48,19 +48,19 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Consider cable segregation: power/control/data on separate levels',
           'Fire stopping required at compartment boundaries',
           'Earthing continuity throughout tray system',
-          'Access for maintenance and future cable installation'
+          'Access for maintenance and future cable installation',
         ],
         considerations: [
           'Perforated trays improve heat dissipation but may collect debris',
           'Ladder trays allow better airflow for high current applications',
           'Consider wind loading for external installations',
-          'Drainage requirements for outdoor/damp locations'
+          'Drainage requirements for outdoor/damp locations',
         ],
         hazards: [
           'Sharp edges on cut metalwork - file smooth',
           'Heavy sections require mechanical lifting',
-          'Live cable exposure during maintenance'
-        ]
+          'Live cable exposure during maintenance',
+        ],
       },
       'clipped-direct': {
         title: 'Clipped Direct to Structure',
@@ -71,19 +71,19 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Maintain minimum bend radius: 6x cable diameter for SWA, 4x for T&E',
           'Protect against mechanical damage in vulnerable areas',
           'Thermal movement allowance for long runs',
-          'Access points for testing and inspection'
+          'Access points for testing and inspection',
         ],
         considerations: [
           'Use appropriate clip material to prevent galvanic corrosion',
           'Consider thermal expansion of cable and structure',
           'Avoid compression of cable under clips',
-          'UV protection for external installations'
+          'UV protection for external installations',
         ],
         hazards: [
           'Drilling into structure - check for services',
           'Working at height for elevated cable routes',
-          'Cable damage from over-tightening clips'
-        ]
+          'Cable damage from over-tightening clips',
+        ],
       },
       'enclosed-conduit': {
         title: 'Conduit Installation',
@@ -94,19 +94,19 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Conduit filling factor: max 45% for multiple cables',
           'Seal conduit ends to prevent ingress',
           'Earth continuity through metallic conduit system',
-          'Adequate drainage for outdoor installations'
+          'Adequate drainage for outdoor installations',
         ],
         considerations: [
           'Use appropriate lubricant for cable pulling',
           'Pre-install draw wire for future maintenance',
           'Consider thermal effects on conduit material',
-          'Joint compound for threaded connections'
+          'Joint compound for threaded connections',
         ],
         hazards: [
           'Sharp edges on cut conduit - ream and file',
           'Cable damage during pulling operation',
-          'Threading/cutting creates metal swarf'
-        ]
+          'Threading/cutting creates metal swarf',
+        ],
       },
       'buried-direct': {
         title: 'Direct Buried Installation',
@@ -117,21 +117,21 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Warning tape 150mm above cable at minimum 450mm depth',
           'Marker posts at changes of direction and road crossings',
           'Mechanical protection in vulnerable areas',
-          'Clear route marking and "as-laid" drawings'
+          'Clear route marking and "as-laid" drawings',
         ],
         considerations: [
           'Avoid areas with tree roots or future excavation',
           'Consider soil thermal resistivity effects',
           'Drainage for areas prone to waterlogging',
-          'Separation from other buried services'
+          'Separation from other buried services',
         ],
         hazards: [
           'Existing buried services - CAT scan before digging',
           'Unstable excavation sides - consider shoring',
-          'Manual handling of heavy armoured cables'
-        ]
+          'Manual handling of heavy armoured cables',
+        ],
       },
-      'trunking': {
+      trunking: {
         title: 'Cable Trunking Installation',
         icon: FileText,
         requirements: [
@@ -140,23 +140,25 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Fire barriers at compartment boundaries every 5m maximum',
           'Adequate ventilation to prevent overheating',
           'Earth continuity for metallic trunking systems',
-          'Access via removable lids every 3m maximum'
+          'Access via removable lids every 3m maximum',
         ],
         considerations: [
           'Cable bend radius at entry/exit points',
           'Thermal expansion joints for long runs',
           'Protection against condensation in damp areas',
-          'Future cable capacity planning'
+          'Future cable capacity planning',
         ],
         hazards: [
           'Sharp edges on cut metalwork',
           'Weight of loaded trunking systems',
-          'Live cable exposure during maintenance'
-        ]
-      }
+          'Live cable exposure during maintenance',
+        ],
+      },
     };
 
-    return methodGuidance[method as keyof typeof methodGuidance] || methodGuidance['clipped-direct'];
+    return (
+      methodGuidance[method as keyof typeof methodGuidance] || methodGuidance['clipped-direct']
+    );
   };
 
   const getCableSpecificGuidance = () => {
@@ -170,20 +172,20 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Maintain minimum bend radius: 6x overall cable diameter',
           'Support cable weight adequately - SWA is heavier than T&E',
           'Protect joints from moisture ingress',
-          'Use pulling stockings for long cable pulls'
+          'Use pulling stockings for long cable pulls',
         ],
         specialConsiderations: [
           'Armour provides mechanical protection and earth continuity',
           'Can be installed direct buried without additional protection',
           'Magnetic effects on steel structures - consider spacing',
-          'Corrosion resistance in aggressive environments'
+          'Corrosion resistance in aggressive environments',
         ],
         terminationNotes: [
           'Remove armour carefully to avoid damage to cores',
           'Use earth tags to connect armour to gland',
           'Apply jointing compound to threaded connections',
-          'Verify gland IP rating matches environment requirements'
-        ]
+          'Verify gland IP rating matches environment requirements',
+        ],
       };
     } else {
       return {
@@ -195,20 +197,20 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Maintain minimum bend radius: 4x cable diameter',
           'Use appropriate cable clips to prevent damage',
           'Protect from UV exposure if used externally',
-          'Ensure proper earth continuity'
+          'Ensure proper earth continuity',
         ],
         specialConsiderations: [
           'Flat profile suits shallow chases in masonry',
           'Cost-effective for domestic and light commercial',
           'Limited mechanical protection - needs containment',
-          'Good flexibility for awkward routing'
+          'Good flexibility for awkward routing',
         ],
         terminationNotes: [
           'Strip outer sheath carefully to avoid core damage',
           'Use appropriate cable entry methods',
           'Ensure earth continuity at all terminations',
-          'Consider using cable markers for identification'
-        ]
+          'Consider using cable markers for identification',
+        ],
       };
     }
   };
@@ -226,8 +228,8 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Apply temperature derating factors as calculated',
           'Consider improved ventilation or larger cable size',
           'Monitor temperature during peak loading',
-          'Use temperature-resistant cable types if >60°C'
-        ]
+          'Use temperature-resistant cable types if >60°C',
+        ],
       });
     }
 
@@ -240,8 +242,8 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Use SWA cable or ducted installation',
           'Ensure proper drainage to prevent waterlogging',
           'Install warning tape and marker posts',
-          'Record accurate "as-laid" drawings'
-        ]
+          'Record accurate "as-laid" drawings',
+        ],
       });
     }
 
@@ -254,8 +256,8 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
           'Use UV-resistant cable or protect from sunlight',
           'Allow for thermal expansion and contraction',
           'Ensure adequate IP rating for enclosures',
-          'Consider wildlife protection measures'
-        ]
+          'Consider wildlife protection measures',
+        ],
       });
     }
 
@@ -268,53 +270,55 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
         {
           check: 'Cable Condition Inspection',
           requirement: 'Visual inspection for damage during delivery/storage',
-          action: 'Reject damaged drums, check for moisture ingress'
+          action: 'Reject damaged drums, check for moisture ingress',
         },
         {
           check: 'Route Survey',
           requirement: 'Verify planned route is clear and accessible',
-          action: 'CAT scan for buried services, structural survey for fixings'
+          action: 'CAT scan for buried services, structural survey for fixings',
         },
         {
           check: 'Environmental Conditions',
           requirement: 'Confirm actual conditions match design assumptions',
-          action: 'Measure temperature, humidity, check ventilation'
-        }
+          action: 'Measure temperature, humidity, check ventilation',
+        },
       ],
       duringInstallation: [
         {
           check: 'Cable Handling',
           requirement: 'Prevent damage during installation',
-          action: 'Use correct lifting equipment, avoid over-bending'
+          action: 'Use correct lifting equipment, avoid over-bending',
         },
         {
           check: 'Containment Installation',
           requirement: 'Install supports and protection before cable pulling',
-          action: 'Check spacing, alignment, and earth continuity'
+          action: 'Check spacing, alignment, and earth continuity',
         },
         {
           check: 'Termination Quality',
           requirement: 'Proper termination techniques and materials',
-          action: 'Check torque settings, insulation levels, labelling'
-        }
+          action: 'Check torque settings, insulation levels, labelling',
+        },
       ],
       postInstallation: [
         {
           check: 'Continuity Testing',
-          requirement: isRingCircuit ? 'Ring circuit continuity both legs' : 'End-to-end continuity',
-          action: 'Record readings, verify within acceptable limits'
+          requirement: isRingCircuit
+            ? 'Ring circuit continuity both legs'
+            : 'End-to-end continuity',
+          action: 'Record readings, verify within acceptable limits',
         },
         {
           check: 'Insulation Resistance',
           requirement: '≥1MΩ at 500V DC between all conductors',
-          action: 'Test line-neutral, line-earth, neutral-earth'
+          action: 'Test line-neutral, line-earth, neutral-earth',
         },
         {
           check: 'Earth Fault Loop Impedance',
           requirement: `≤${(planData.voltage === 230 ? 1.44 : 0.83).toFixed(2)}Ω for ${recommendedCable.ratedCurrent}A MCB`,
-          action: 'Measure at furthest point, verify disconnection time'
-        }
-      ]
+          action: 'Measure at furthest point, verify disconnection time',
+        },
+      ],
     };
   };
 
@@ -381,9 +385,7 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
               {methodGuidance.hazards.map((hazard, index) => (
                 <Alert key={index} className="bg-amber-500/10 border-amber-500/30">
                   <HardHat className="h-4 w-4 text-amber-300" />
-                  <AlertDescription className="text-amber-200 text-sm">
-                    {hazard}
-                  </AlertDescription>
+                  <AlertDescription className="text-amber-200 text-sm">{hazard}</AlertDescription>
                 </Alert>
               ))}
             </div>
@@ -460,7 +462,9 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
               </div>
               <div>
                 <div className="text-lg">Environmental Factors</div>
-                <div className="text-sm font-normal text-elec-light/60">Site-specific considerations</div>
+                <div className="text-sm font-normal text-elec-light/60">
+                  Site-specific considerations
+                </div>
               </div>
             </CardTitle>
           </CardHeader>
@@ -497,7 +501,9 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
             </div>
             <div>
               <div className="text-lg font-semibold">Testing & Commissioning</div>
-              <div className="text-sm font-normal text-foreground/70">Step-by-step verification process</div>
+              <div className="text-sm font-normal text-foreground/70">
+                Step-by-step verification process
+              </div>
             </div>
           </CardTitle>
         </CardHeader>
@@ -511,7 +517,10 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
               </h4>
               <div className="space-y-3">
                 {testing.preInstallation.map((test, index) => (
-                  <div key={index} className="p-3 bg-elec-dark/30 rounded border border-elec-green/20">
+                  <div
+                    key={index}
+                    className="p-3 bg-elec-dark/30 rounded border border-elec-green/20"
+                  >
                     <div className="font-medium text-sm text-elec-green mb-1">{test.check}</div>
                     <div className="text-xs text-foreground/70 mb-2">{test.requirement}</div>
                     <div className="text-xs text-elec-green/80">{test.action}</div>
@@ -528,7 +537,10 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
               </h4>
               <div className="space-y-3">
                 {testing.duringInstallation.map((test, index) => (
-                  <div key={index} className="p-3 bg-elec-dark/30 rounded border border-elec-yellow/20">
+                  <div
+                    key={index}
+                    className="p-3 bg-elec-dark/30 rounded border border-elec-yellow/20"
+                  >
                     <div className="font-medium text-sm text-elec-yellow mb-1">{test.check}</div>
                     <div className="text-xs text-foreground/70 mb-2">{test.requirement}</div>
                     <div className="text-xs text-elec-yellow/80">{test.action}</div>
@@ -545,7 +557,10 @@ const EnhancedInstallationGuidance: React.FC<EnhancedInstallationGuidanceProps> 
               </h4>
               <div className="space-y-3">
                 {testing.postInstallation.map((test, index) => (
-                  <div key={index} className="p-3 bg-elec-dark/30 rounded border border-elec-blue/20">
+                  <div
+                    key={index}
+                    className="p-3 bg-elec-dark/30 rounded border border-elec-blue/20"
+                  >
                     <div className="font-medium text-sm text-elec-blue mb-1">{test.check}</div>
                     <div className="text-xs text-foreground/70 mb-2">{test.requirement}</div>
                     <div className="text-xs text-elec-blue/80">{test.action}</div>

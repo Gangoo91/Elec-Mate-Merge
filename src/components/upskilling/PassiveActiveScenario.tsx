@@ -17,9 +17,10 @@ export const PassiveActiveScenario = () => {
             <div>
               <h4 className="font-semibold text-orange-300 mb-2">The Challenge</h4>
               <p className="text-orange-100 text-sm leading-relaxed">
-                IndustrialTech Ltd needs to network their new manufacturing facility with harsh environmental 
-                conditions, 24/7 operations, and a mix of office areas, production floors, and control rooms. 
-                The facility requires both high reliability and intelligent network management.
+                IndustrialTech Ltd needs to network their new manufacturing facility with harsh
+                environmental conditions, 24/7 operations, and a mix of office areas, production
+                floors, and control rooms. The facility requires both high reliability and
+                intelligent network management.
               </p>
             </div>
           </div>
@@ -33,18 +34,26 @@ export const PassiveActiveScenario = () => {
               <div className="space-y-3 text-blue-100 text-sm">
                 <div>
                   <strong>Passive Infrastructure Foundation:</strong>
-                  <p>Cat 6A cabling throughout with fibre backbone for maximum reliability and future capacity. 
-                  All cables run through sealed conduits to protect from environmental hazards.</p>
+                  <p>
+                    Cat 6A cabling throughout with fibre backbone for maximum reliability and future
+                    capacity. All cables run through sealed conduits to protect from environmental
+                    hazards.
+                  </p>
                 </div>
                 <div>
                   <strong>Strategic Active Components:</strong>
-                  <p>Industrial-grade managed switches in climate-controlled rooms for network intelligence, 
-                  with passive infrastructure extending to endpoints in harsh environments.</p>
+                  <p>
+                    Industrial-grade managed switches in climate-controlled rooms for network
+                    intelligence, with passive infrastructure extending to endpoints in harsh
+                    environments.
+                  </p>
                 </div>
                 <div>
                   <strong>Zoned Approach:</strong>
-                  <p>Office areas use standard active equipment, whilst production floors rely primarily 
-                  on passive connections to ruggedised terminal equipment.</p>
+                  <p>
+                    Office areas use standard active equipment, whilst production floors rely
+                    primarily on passive connections to ruggedised terminal equipment.
+                  </p>
                 </div>
               </div>
             </div>

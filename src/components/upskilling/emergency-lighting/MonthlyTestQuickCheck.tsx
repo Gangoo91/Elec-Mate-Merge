@@ -12,7 +12,10 @@ export const MonthlyTestQuickCheck = () => {
               Quick Check: Why is the monthly test deliberately short in duration?
             </p>
             <p className="text-foreground text-sm sm:text-base">
-              To avoid draining batteries unnecessarily. Short tests confirm that luminaires switch to emergency mode and batteries are charging, without significantly reducing battery capacity before they've fully recharged. This prevents the need for a 24-hour recharge period and maintains system readiness.
+              To avoid draining batteries unnecessarily. Short tests confirm that luminaires switch
+              to emergency mode and batteries are charging, without significantly reducing battery
+              capacity before they've fully recharged. This prevents the need for a 24-hour recharge
+              period and maintains system readiness.
             </p>
           </div>
         </div>

@@ -1,62 +1,62 @@
-import { useMemo, useState } from "react";
-import { Helmet } from "react-helmet";
+import { useMemo, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
-import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
+import { useToolsData, type ToolItem } from '@/hooks/useToolsData';
 
 // New premium components
-import PremiumToolPageHeader from "./PremiumToolPageHeader";
-import SlideOutFilters, { type FilterState } from "./SlideOutFilters";
-import CategoryToolsCarousel from "./CategoryToolsCarousel";
-import EnhancedProductGrid from "./EnhancedProductGrid";
-import InlineCompareSection from "./InlineCompareSection";
-import InlineAIInsightsSection from "./InlineAIInsightsSection";
-import ProfessionalTips from "./ProfessionalTips";
+import PremiumToolPageHeader from './PremiumToolPageHeader';
+import SlideOutFilters, { type FilterState } from './SlideOutFilters';
+import CategoryToolsCarousel from './CategoryToolsCarousel';
+import EnhancedProductGrid from './EnhancedProductGrid';
+import InlineCompareSection from './InlineCompareSection';
+import InlineAIInsightsSection from './InlineAIInsightsSection';
+import ProfessionalTips from './ProfessionalTips';
 
 // Category metadata
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
-  "test-equipment": {
-    title: "Test Equipment",
-    description: "Multimeters, socket testers, insulation testers and PAT equipment",
+  'test-equipment': {
+    title: 'Test Equipment',
+    description: 'Multimeters, socket testers, insulation testers and PAT equipment',
   },
-  "safety-tools": {
-    title: "Safety Tools",
-    description: "PPE, safety equipment and protective devices",
+  'safety-tools': {
+    title: 'Safety Tools',
+    description: 'PPE, safety equipment and protective devices',
   },
-  "power-tools": {
-    title: "Power Tools",
-    description: "Drills, saws, grinders and cordless tool systems",
+  'power-tools': {
+    title: 'Power Tools',
+    description: 'Drills, saws, grinders and cordless tool systems',
   },
-  "hand-tools": {
-    title: "Hand Tools",
-    description: "Screwdrivers, pliers, strippers and manual tools",
+  'hand-tools': {
+    title: 'Hand Tools',
+    description: 'Screwdrivers, pliers, strippers and manual tools',
   },
-  "installation-tools": {
-    title: "Installation Tools",
-    description: "Cable management, conduit, trunking and installation accessories",
+  'installation-tools': {
+    title: 'Installation Tools',
+    description: 'Cable management, conduit, trunking and installation accessories',
   },
-  "cable-wiring": {
-    title: "Cable & Wiring",
-    description: "Cables, wires, cable rods and wiring accessories",
+  'cable-wiring': {
+    title: 'Cable & Wiring',
+    description: 'Cables, wires, cable rods and wiring accessories',
   },
-  "electrical-components": {
-    title: "Electrical Components",
-    description: "Switches, sockets, outlets and electrical fittings",
+  'electrical-components': {
+    title: 'Electrical Components',
+    description: 'Switches, sockets, outlets and electrical fittings',
   },
   lighting: {
-    title: "Lighting",
-    description: "LED lights, fittings, downlights and lighting accessories",
+    title: 'Lighting',
+    description: 'LED lights, fittings, downlights and lighting accessories',
   },
-  "access-tools": {
-    title: "Access Tools & Equipment",
-    description: "Ladders, steps, access platforms and safety equipment",
+  'access-tools': {
+    title: 'Access Tools & Equipment',
+    description: 'Ladders, steps, access platforms and safety equipment',
   },
-  "tool-storage": {
-    title: "Tool Storage",
-    description: "Tool bags, cases, vans racking and storage solutions",
+  'tool-storage': {
+    title: 'Tool Storage',
+    description: 'Tool bags, cases, vans racking and storage solutions',
   },
-  "specialist-tools": {
-    title: "Specialist Tools",
-    description: "Cable tools, crimpers, benders and specialised equipment",
+  'specialist-tools': {
+    title: 'Specialist Tools',
+    description: 'Cable tools, crimpers, benders and specialised equipment',
   },
 };
 
@@ -64,21 +64,19 @@ interface EnhancedToolCategoryDisplayProps {
   categoryName: string;
 }
 
-const EnhancedToolCategoryDisplay = ({
-  categoryName,
-}: EnhancedToolCategoryDisplayProps) => {
+const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDisplayProps) => {
   // Get category metadata
-  const categoryKey = categoryName.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "");
+  const categoryKey = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
   const meta = CATEGORY_META[categoryKey] || {
     title: categoryName,
-    description: "Browse curated tools by category",
+    description: 'Browse curated tools by category',
   };
 
   // Fetch tools data
   const { data: allTools, isLoading } = useToolsData();
 
   // State
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     brands: [],
@@ -91,17 +89,33 @@ const EnhancedToolCategoryDisplay = ({
   // Category mapping for filtering
   const getCategoryMappings = (frontendCategory: string): string[] => {
     const mappings: Record<string, string[]> = {
-      "Test Equipment": ["Test Equipment", "Testing Equipment", "Test & Measurement", "Testers"],
-      "Safety Tools": ["Safety Tools", "Safety Equipment", "PPE", "Personal Protective Equipment"],
-      "Power Tools": ["Power Tools", "Electric Tools", "Cordless Tools", "Battery Tools"],
-      "Hand Tools": ["Hand Tools", "Manual Tools", "Basic Tools", "Cable Rods", "Cable Rod Sets"],
-      "Installation Tools": ["Installation Tools", "Cable Ties", "Cable Clips", "Conduit", "Trunking"],
-      "Cable & Wiring": ["Cable & Wiring", "Hook Up Wire", "Cable", "Power Cable", "Control Cable"],
-      "Electrical Components": ["Electrical Components", "Switches", "Sockets", "Outlets", "Consumer Units"],
-      Lighting: ["Lighting", "LED Lighting", "Light Fittings", "Downlights", "Emergency Lighting"],
-      "Access Tools & Equipment": ["Access Tools & Equipment", "Access Equipment", "Ladders & Steps"],
-      "Tool Storage": ["Tool Storage", "Storage", "Tool Bags", "Cases & Bags"],
-      "Specialist Tools": ["Specialist Tools", "Electrical Tools", "Cable Tools", "Wiring Tools"],
+      'Test Equipment': ['Test Equipment', 'Testing Equipment', 'Test & Measurement', 'Testers'],
+      'Safety Tools': ['Safety Tools', 'Safety Equipment', 'PPE', 'Personal Protective Equipment'],
+      'Power Tools': ['Power Tools', 'Electric Tools', 'Cordless Tools', 'Battery Tools'],
+      'Hand Tools': ['Hand Tools', 'Manual Tools', 'Basic Tools', 'Cable Rods', 'Cable Rod Sets'],
+      'Installation Tools': [
+        'Installation Tools',
+        'Cable Ties',
+        'Cable Clips',
+        'Conduit',
+        'Trunking',
+      ],
+      'Cable & Wiring': ['Cable & Wiring', 'Hook Up Wire', 'Cable', 'Power Cable', 'Control Cable'],
+      'Electrical Components': [
+        'Electrical Components',
+        'Switches',
+        'Sockets',
+        'Outlets',
+        'Consumer Units',
+      ],
+      Lighting: ['Lighting', 'LED Lighting', 'Light Fittings', 'Downlights', 'Emergency Lighting'],
+      'Access Tools & Equipment': [
+        'Access Tools & Equipment',
+        'Access Equipment',
+        'Ladders & Steps',
+      ],
+      'Tool Storage': ['Tool Storage', 'Storage', 'Tool Bags', 'Cases & Bags'],
+      'Specialist Tools': ['Specialist Tools', 'Electrical Tools', 'Cable Tools', 'Wiring Tools'],
     };
     return mappings[frontendCategory] || [frontendCategory];
   };
@@ -131,7 +145,7 @@ const EnhancedToolCategoryDisplay = ({
     // Brand filter
     if (filters.brands.length > 0) {
       result = result.filter((tool) => {
-        const brand = tool.brand || tool.name?.split(" ")[0];
+        const brand = tool.brand || tool.name?.split(' ')[0];
         return filters.brands.includes(brand);
       });
     }
@@ -141,17 +155,24 @@ const EnhancedToolCategoryDisplay = ({
       result = result.filter((tool) => {
         const priceMatch = tool.price?.match(/£([\d,]+\.?\d*)/);
         if (!priceMatch) return false;
-        const price = parseFloat(priceMatch[1].replace(",", ""));
+        const price = parseFloat(priceMatch[1].replace(',', ''));
 
         return filters.priceRanges.some((range) => {
           switch (range) {
-            case "Under £25": return price < 25;
-            case "£25 - £50": return price >= 25 && price <= 50;
-            case "£50 - £100": return price >= 50 && price <= 100;
-            case "£100 - £250": return price >= 100 && price <= 250;
-            case "£250 - £500": return price >= 250 && price <= 500;
-            case "Over £500": return price > 500;
-            default: return false;
+            case 'Under £25':
+              return price < 25;
+            case '£25 - £50':
+              return price >= 25 && price <= 50;
+            case '£50 - £100':
+              return price >= 50 && price <= 100;
+            case '£100 - £250':
+              return price >= 100 && price <= 250;
+            case '£250 - £500':
+              return price >= 250 && price <= 500;
+            case 'Over £500':
+              return price > 500;
+            default:
+              return false;
           }
         });
       });
@@ -166,9 +187,7 @@ const EnhancedToolCategoryDisplay = ({
 
     // Supplier filter
     if (filters.suppliers.length > 0) {
-      result = result.filter(
-        (tool) => tool.supplier && filters.suppliers.includes(tool.supplier)
-      );
+      result = result.filter((tool) => tool.supplier && filters.suppliers.includes(tool.supplier));
     }
 
     return result;
@@ -222,10 +241,7 @@ const EnhancedToolCategoryDisplay = ({
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10">
         {/* Featured Carousel */}
         {categoryTools.length > 0 && (
-          <CategoryToolsCarousel
-            tools={categoryTools}
-            categoryName={categoryName}
-          />
+          <CategoryToolsCarousel tools={categoryTools} categoryName={categoryName} />
         )}
 
         {/* Product Grid */}
@@ -252,10 +268,7 @@ const EnhancedToolCategoryDisplay = ({
         )}
 
         {/* AI Insights Section */}
-        <InlineAIInsightsSection
-          tools={categoryTools}
-          categoryName={categoryName}
-        />
+        <InlineAIInsightsSection tools={categoryTools} categoryName={categoryName} />
 
         {/* Professional Tips */}
         <ProfessionalTips />

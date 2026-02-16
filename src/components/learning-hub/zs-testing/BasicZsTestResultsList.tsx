@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,9 +28,13 @@ const BasicZsTestResultsList = ({ testResults, onRemoveTest }: BasicZsTestResult
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-4">
                   <div className="font-medium text-foreground">{test.circuitRef}</div>
-                  <Badge 
+                  <Badge
                     variant={test.result === 'pass' ? 'default' : 'destructive'}
-                    className={test.result === 'pass' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}
+                    className={
+                      test.result === 'pass'
+                        ? 'bg-green-500/20 text-green-400'
+                        : 'bg-red-500/20 text-red-400'
+                    }
                   >
                     {test.result.toUpperCase()}
                   </Badge>
@@ -63,11 +66,7 @@ const BasicZsTestResultsList = ({ testResults, onRemoveTest }: BasicZsTestResult
                   <span className="text-foreground ml-1">{test.temperature}°C</span>
                 </div>
               </div>
-              {test.notes && (
-                <div className="mt-2 text-sm text-white/80">
-                  Notes: {test.notes}
-                </div>
-              )}
+              {test.notes && <div className="mt-2 text-sm text-white/80">Notes: {test.notes}</div>}
             </CardContent>
           </Card>
         ))}

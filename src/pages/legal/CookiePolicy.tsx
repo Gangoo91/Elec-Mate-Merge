@@ -1,11 +1,26 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Zap, ArrowLeft, Cookie, Shield, Settings, Globe, Clock, Trash2, Mail, Scale, AlertTriangle, ToggleRight, Database, RefreshCw } from "lucide-react";
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Zap,
+  ArrowLeft,
+  Cookie,
+  Shield,
+  Settings,
+  Globe,
+  Clock,
+  Trash2,
+  Mail,
+  Scale,
+  AlertTriangle,
+  ToggleRight,
+  Database,
+  RefreshCw,
+} from 'lucide-react';
 
 const CookiePolicy = () => {
-  const lastUpdated = "30 January 2026";
-  const effectiveDate = "30 January 2026";
+  const lastUpdated = '30 January 2026';
+  const effectiveDate = '30 January 2026';
 
   return (
     <div className="bg-black text-white min-h-screen">
@@ -21,7 +36,11 @@ const CookiePolicy = () => {
             </span>
           </Link>
           <Link to="/settings">
-            <Button variant="outline" size="sm" className="h-9 px-3 border-white/20 text-white hover:bg-white/5 touch-manipulation active:scale-95">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-9 px-3 border-white/20 text-white hover:bg-white/5 touch-manipulation active:scale-95"
+            >
               <ArrowLeft className="h-4 w-4 mr-1.5" />
               <span className="hidden sm:inline">Back</span>
             </Button>
@@ -44,7 +63,10 @@ const CookiePolicy = () => {
         <Card className="bg-neutral-900 border-white/10 mb-6">
           <CardContent className="p-4 sm:p-6">
             <p className="text-gray-300 leading-relaxed">
-              This Cookie Policy explains how Elec-Mate Ltd ("we", "us", "our") uses cookies and similar tracking technologies when you visit our platform. We are committed to full compliance with the Privacy and Electronic Communications Regulations 2003 (PECR) and the UK General Data Protection Regulation (UK GDPR).
+              This Cookie Policy explains how Elec-Mate Ltd ("we", "us", "our") uses cookies and
+              similar tracking technologies when you visit our platform. We are committed to full
+              compliance with the Privacy and Electronic Communications Regulations 2003 (PECR) and
+              the UK General Data Protection Regulation (UK GDPR).
             </p>
             <p className="text-gray-400 text-sm mt-3">
               <strong className="text-white">Effective Date:</strong> {effectiveDate}
@@ -65,7 +87,10 @@ const CookiePolicy = () => {
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <p className="text-white font-medium">Elec-Mate Ltd</p>
               <p className="text-gray-400 text-sm mt-2">
-                Email: <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">info@elec-mate.com</a>
+                Email:{' '}
+                <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">
+                  info@elec-mate.com
+                </a>
               </p>
               <p className="text-gray-400 text-sm mt-1">
                 ICO Registration Number: <span className="text-white">ZB935897</span>
@@ -91,7 +116,8 @@ const CookiePolicy = () => {
               2. What Are Cookies?
             </h2>
             <p className="text-gray-300 leading-relaxed mb-3">
-              Cookies are small text files stored on your device (computer, tablet, or mobile phone) when you visit websites. They serve various purposes:
+              Cookies are small text files stored on your device (computer, tablet, or mobile phone)
+              when you visit websites. They serve various purposes:
             </p>
             <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside mb-4">
               <li>Remembering your login status and preferences</li>
@@ -103,19 +129,31 @@ const CookiePolicy = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2 text-sm">Session Cookies</h3>
-                <p className="text-gray-400 text-xs">Temporary cookies deleted when you close your browser. Used for essential functions like keeping you logged in during a visit.</p>
+                <p className="text-gray-400 text-xs">
+                  Temporary cookies deleted when you close your browser. Used for essential
+                  functions like keeping you logged in during a visit.
+                </p>
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2 text-sm">Persistent Cookies</h3>
-                <p className="text-gray-400 text-xs">Remain on your device for a set period or until manually deleted. Used to remember preferences and track usage over time.</p>
+                <p className="text-gray-400 text-xs">
+                  Remain on your device for a set period or until manually deleted. Used to remember
+                  preferences and track usage over time.
+                </p>
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2 text-sm">First-Party Cookies</h3>
-                <p className="text-gray-400 text-xs">Set by Elec-Mate directly. We have full control over these and use them for core functionality.</p>
+                <p className="text-gray-400 text-xs">
+                  Set by Elec-Mate directly. We have full control over these and use them for core
+                  functionality.
+                </p>
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2 text-sm">Third-Party Cookies</h3>
-                <p className="text-gray-400 text-xs">Set by our service providers (Supabase, Stripe, PostHog). We disclose these in this policy.</p>
+                <p className="text-gray-400 text-xs">
+                  Set by our service providers (Supabase, Stripe, PostHog). We disclose these in
+                  this policy.
+                </p>
               </div>
             </div>
           </section>
@@ -136,7 +174,9 @@ const CookiePolicy = () => {
                   <tr className="border-b border-white/10">
                     <th className="text-left py-3 px-4 text-gray-300 font-medium">Cookie Type</th>
                     <th className="text-left py-3 px-4 text-gray-300 font-medium">Legal Basis</th>
-                    <th className="text-left py-3 px-4 text-gray-300 font-medium">Consent Required?</th>
+                    <th className="text-left py-3 px-4 text-gray-300 font-medium">
+                      Consent Required?
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -167,7 +207,9 @@ const CookiePolicy = () => {
               4. Strictly Necessary Cookies
             </h2>
             <p className="text-gray-300 leading-relaxed mb-3">
-              These cookies are essential for the platform to function. They cannot be disabled as the service would not work without them. We do not require your consent for these cookies under PECR Regulation 6(4).
+              These cookies are essential for the platform to function. They cannot be disabled as
+              the service would not work without them. We do not require your consent for these
+              cookies under PECR Regulation 6(4).
             </p>
 
             <div className="overflow-x-auto mb-4">
@@ -219,7 +261,8 @@ const CookiePolicy = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <p className="text-blue-200 text-sm">
-                  <strong>Note:</strong> Blocking essential cookies via your browser will prevent you from logging in or using core features of Elec-Mate.
+                  <strong>Note:</strong> Blocking essential cookies via your browser will prevent
+                  you from logging in or using core features of Elec-Mate.
                 </p>
               </div>
             </div>
@@ -232,7 +275,11 @@ const CookiePolicy = () => {
               5. Analytics Cookies
             </h2>
             <p className="text-gray-300 leading-relaxed mb-3">
-              With your consent, we use analytics cookies to understand how visitors interact with our platform. This data helps us improve our services. <strong className="text-white">These cookies are only set if you accept analytics in our cookie banner.</strong>
+              With your consent, we use analytics cookies to understand how visitors interact with
+              our platform. This data helps us improve our services.{' '}
+              <strong className="text-white">
+                These cookies are only set if you accept analytics in our cookie banner.
+              </strong>
             </p>
 
             <div className="overflow-x-auto mb-4">
@@ -292,11 +339,17 @@ const CookiePolicy = () => {
               6. Marketing Cookies
             </h2>
             <p className="text-gray-300 leading-relaxed mb-3">
-              Marketing cookies may be used to track visitors across websites and display relevant advertisements. <strong className="text-white">We currently do not use marketing or advertising cookies.</strong> If this changes, we will update this policy and request your consent.
+              Marketing cookies may be used to track visitors across websites and display relevant
+              advertisements.{' '}
+              <strong className="text-white">
+                We currently do not use marketing or advertising cookies.
+              </strong>{' '}
+              If this changes, we will update this policy and request your consent.
             </p>
             <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/30">
               <p className="text-green-200 text-sm">
-                <strong>Current Status:</strong> No marketing or advertising cookies are in use on Elec-Mate.
+                <strong>Current Status:</strong> No marketing or advertising cookies are in use on
+                Elec-Mate.
               </p>
             </div>
           </section>
@@ -308,16 +361,27 @@ const CookiePolicy = () => {
               7. Third-Party Cookies
             </h2>
             <p className="text-gray-300 leading-relaxed mb-4">
-              Some of our service providers may set cookies on your device. We have carefully selected providers who comply with data protection regulations:
+              Some of our service providers may set cookies on your device. We have carefully
+              selected providers who comply with data protection regulations:
             </p>
 
             <div className="space-y-3">
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <h3 className="font-semibold text-white mb-2">Supabase (Authentication & Database)</h3>
-                <p className="text-gray-300 text-sm mb-2">Provides secure authentication and data storage. Sets essential cookies for login sessions.</p>
+                <h3 className="font-semibold text-white mb-2">
+                  Supabase (Authentication & Database)
+                </h3>
+                <p className="text-gray-300 text-sm mb-2">
+                  Provides secure authentication and data storage. Sets essential cookies for login
+                  sessions.
+                </p>
                 <p className="text-gray-400 text-xs">
                   Location: EU (Frankfurt) |{' '}
-                  <a href="https://supabase.com/privacy" className="text-yellow-400 hover:underline" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://supabase.com/privacy"
+                    className="text-yellow-400 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Privacy Policy
                   </a>
                 </p>
@@ -325,10 +389,18 @@ const CookiePolicy = () => {
 
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Stripe (Payment Processing)</h3>
-                <p className="text-gray-300 text-sm mb-2">Processes payments securely. Sets cookies for fraud prevention and payment session management.</p>
+                <p className="text-gray-300 text-sm mb-2">
+                  Processes payments securely. Sets cookies for fraud prevention and payment session
+                  management.
+                </p>
                 <p className="text-gray-400 text-xs">
                   Location: EU/USA (SCCs in place) |{' '}
-                  <a href="https://stripe.com/gb/privacy" className="text-yellow-400 hover:underline" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://stripe.com/gb/privacy"
+                    className="text-yellow-400 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Privacy Policy
                   </a>
                 </p>
@@ -336,10 +408,18 @@ const CookiePolicy = () => {
 
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">PostHog (Analytics)</h3>
-                <p className="text-gray-300 text-sm mb-2">Only loaded if you consent to analytics cookies. Helps us understand platform usage.</p>
+                <p className="text-gray-300 text-sm mb-2">
+                  Only loaded if you consent to analytics cookies. Helps us understand platform
+                  usage.
+                </p>
                 <p className="text-gray-400 text-xs">
                   Location: EU |{' '}
-                  <a href="https://posthog.com/privacy" className="text-yellow-400 hover:underline" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://posthog.com/privacy"
+                    className="text-yellow-400 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Privacy Policy
                   </a>
                 </p>
@@ -347,10 +427,18 @@ const CookiePolicy = () => {
 
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Vercel (Hosting & Performance)</h3>
-                <p className="text-gray-300 text-sm mb-2">Hosts our platform and provides performance insights. Minimal, privacy-focused analytics.</p>
+                <p className="text-gray-300 text-sm mb-2">
+                  Hosts our platform and provides performance insights. Minimal, privacy-focused
+                  analytics.
+                </p>
                 <p className="text-gray-400 text-xs">
                   Location: EU (Ireland) |{' '}
-                  <a href="https://vercel.com/legal/privacy-policy" className="text-yellow-400 hover:underline" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://vercel.com/legal/privacy-policy"
+                    className="text-yellow-400 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Privacy Policy
                   </a>
                 </p>
@@ -365,25 +453,42 @@ const CookiePolicy = () => {
               8. How We Obtain & Manage Your Consent
             </h2>
             <p className="text-gray-300 leading-relaxed mb-4">
-              We are committed to obtaining clear, informed consent before setting any non-essential cookies:
+              We are committed to obtaining clear, informed consent before setting any non-essential
+              cookies:
             </p>
 
             <div className="space-y-3">
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Cookie Consent Banner</h3>
-                <p className="text-gray-300 text-sm">When you first visit Elec-Mate, you'll see a cookie banner at the bottom of the screen. You can:</p>
+                <p className="text-gray-300 text-sm">
+                  When you first visit Elec-Mate, you'll see a cookie banner at the bottom of the
+                  screen. You can:
+                </p>
                 <ul className="text-gray-300 text-sm mt-2 space-y-1 list-disc list-inside">
-                  <li><strong className="text-white">Accept All:</strong> Enables all cookies including analytics</li>
-                  <li><strong className="text-white">Essential Only:</strong> Enables only strictly necessary cookies</li>
-                  <li><strong className="text-white">Manage Preferences:</strong> Customise which cookie categories you accept</li>
+                  <li>
+                    <strong className="text-white">Accept All:</strong> Enables all cookies
+                    including analytics
+                  </li>
+                  <li>
+                    <strong className="text-white">Essential Only:</strong> Enables only strictly
+                    necessary cookies
+                  </li>
+                  <li>
+                    <strong className="text-white">Manage Preferences:</strong> Customise which
+                    cookie categories you accept
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Changing Your Preferences</h3>
-                <p className="text-gray-300 text-sm">You can change your cookie preferences at any time:</p>
+                <p className="text-gray-300 text-sm">
+                  You can change your cookie preferences at any time:
+                </p>
                 <ul className="text-gray-300 text-sm mt-2 space-y-1 list-disc list-inside">
-                  <li>Go to <strong className="text-white">Settings → Privacy</strong> in your account</li>
+                  <li>
+                    Go to <strong className="text-white">Settings → Privacy</strong> in your account
+                  </li>
                   <li>Adjust the cookie toggles under "Cookie Preferences"</li>
                   <li>Your new preferences take effect immediately</li>
                 </ul>
@@ -393,7 +498,10 @@ const CookiePolicy = () => {
                 <h3 className="font-semibold text-white mb-2">How We Respect Your Choice</h3>
                 <p className="text-gray-300 text-sm">When you decline analytics cookies:</p>
                 <ul className="text-gray-300 text-sm mt-2 space-y-1 list-disc list-inside">
-                  <li>Analytics scripts are <strong className="text-white">not loaded at all</strong> (not just disabled)</li>
+                  <li>
+                    Analytics scripts are <strong className="text-white">not loaded at all</strong>{' '}
+                    (not just disabled)
+                  </li>
                   <li>No tracking data is collected or sent to PostHog</li>
                   <li>Your preference is stored locally and respected across sessions</li>
                 </ul>
@@ -411,8 +519,12 @@ const CookiePolicy = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th className="text-left py-3 px-4 text-gray-300 font-medium">Cookie Category</th>
-                    <th className="text-left py-3 px-4 text-gray-300 font-medium">Retention Period</th>
+                    <th className="text-left py-3 px-4 text-gray-300 font-medium">
+                      Cookie Category
+                    </th>
+                    <th className="text-left py-3 px-4 text-gray-300 font-medium">
+                      Retention Period
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -448,17 +560,30 @@ const CookiePolicy = () => {
               10. Managing Cookies via Your Browser
             </h2>
             <p className="text-gray-300 leading-relaxed mb-4">
-              In addition to our consent controls, you can manage cookies through your browser settings:
+              In addition to our consent controls, you can manage cookies through your browser
+              settings:
             </p>
 
             <div className="space-y-3">
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Viewing & Deleting Cookies</h3>
                 <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside">
-                  <li><strong className="text-white">Chrome:</strong> Settings → Privacy and security → Cookies and other site data</li>
-                  <li><strong className="text-white">Firefox:</strong> Settings → Privacy & Security → Cookies and Site Data</li>
-                  <li><strong className="text-white">Safari:</strong> Preferences → Privacy → Manage Website Data</li>
-                  <li><strong className="text-white">Edge:</strong> Settings → Cookies and site permissions → Manage and delete cookies</li>
+                  <li>
+                    <strong className="text-white">Chrome:</strong> Settings → Privacy and security
+                    → Cookies and other site data
+                  </li>
+                  <li>
+                    <strong className="text-white">Firefox:</strong> Settings → Privacy & Security →
+                    Cookies and Site Data
+                  </li>
+                  <li>
+                    <strong className="text-white">Safari:</strong> Preferences → Privacy → Manage
+                    Website Data
+                  </li>
+                  <li>
+                    <strong className="text-white">Edge:</strong> Settings → Cookies and site
+                    permissions → Manage and delete cookies
+                  </li>
                 </ul>
               </div>
 
@@ -468,7 +593,9 @@ const CookiePolicy = () => {
                   <div>
                     <p className="text-amber-200 text-sm font-medium">Warning</p>
                     <p className="text-amber-200/80 text-xs mt-1">
-                      Blocking all cookies via your browser will prevent Elec-Mate from functioning correctly. You won't be able to log in or access your account. We recommend using our cookie banner to selectively control non-essential cookies instead.
+                      Blocking all cookies via your browser will prevent Elec-Mate from functioning
+                      correctly. You won't be able to log in or access your account. We recommend
+                      using our cookie banner to selectively control non-essential cookies instead.
                     </p>
                   </div>
                 </div>
@@ -485,11 +612,17 @@ const CookiePolicy = () => {
             <div className="space-y-3">
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Local Storage</h3>
-                <p className="text-gray-300 text-sm">Used to store your preferences and app state locally on your device. This includes your cookie consent choice and UI preferences.</p>
+                <p className="text-gray-300 text-sm">
+                  Used to store your preferences and app state locally on your device. This includes
+                  your cookie consent choice and UI preferences.
+                </p>
               </div>
               <div className="p-4 rounded-xl bg-white/5 border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Session Storage</h3>
-                <p className="text-gray-300 text-sm">Temporary storage cleared when you close your browser tab. Used for form data and navigation state.</p>
+                <p className="text-gray-300 text-sm">
+                  Temporary storage cleared when you close your browser tab. Used for form data and
+                  navigation state.
+                </p>
               </div>
             </div>
           </section>
@@ -504,14 +637,33 @@ const CookiePolicy = () => {
               Under UK GDPR and PECR, you have the following rights regarding cookies:
             </p>
             <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside">
-              <li><strong className="text-white">Right to be informed:</strong> This policy explains what cookies we use and why</li>
-              <li><strong className="text-white">Right to consent:</strong> We ask before setting non-essential cookies</li>
-              <li><strong className="text-white">Right to withdraw consent:</strong> Change preferences anytime via Settings → Privacy</li>
-              <li><strong className="text-white">Right to access:</strong> Request details of data collected via cookies</li>
-              <li><strong className="text-white">Right to erasure:</strong> Delete cookies via browser or request data deletion</li>
+              <li>
+                <strong className="text-white">Right to be informed:</strong> This policy explains
+                what cookies we use and why
+              </li>
+              <li>
+                <strong className="text-white">Right to consent:</strong> We ask before setting
+                non-essential cookies
+              </li>
+              <li>
+                <strong className="text-white">Right to withdraw consent:</strong> Change
+                preferences anytime via Settings → Privacy
+              </li>
+              <li>
+                <strong className="text-white">Right to access:</strong> Request details of data
+                collected via cookies
+              </li>
+              <li>
+                <strong className="text-white">Right to erasure:</strong> Delete cookies via browser
+                or request data deletion
+              </li>
             </ul>
             <p className="text-gray-400 text-sm mt-3">
-              To exercise these rights, contact us at <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">info@elec-mate.com</a>.
+              To exercise these rights, contact us at{' '}
+              <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">
+                info@elec-mate.com
+              </a>
+              .
             </p>
           </section>
 
@@ -522,11 +674,15 @@ const CookiePolicy = () => {
               13. Updates to This Policy
             </h2>
             <p className="text-gray-300 leading-relaxed mb-3">
-              We may update this Cookie Policy to reflect changes in our practices, technology, or legal requirements. When we make material changes:
+              We may update this Cookie Policy to reflect changes in our practices, technology, or
+              legal requirements. When we make material changes:
             </p>
             <ul className="text-gray-300 text-sm space-y-2 list-disc list-inside">
               <li>We will update the "Last updated" date at the top of this policy</li>
-              <li>For significant changes, we will reset your cookie preferences and ask for consent again</li>
+              <li>
+                For significant changes, we will reset your cookie preferences and ask for consent
+                again
+              </li>
               <li>We may notify you via email or in-app notification for major updates</li>
             </ul>
           </section>
@@ -535,7 +691,8 @@ const CookiePolicy = () => {
           <section>
             <h2 className="text-xl font-bold text-yellow-400 mb-3">14. Complaints</h2>
             <p className="text-gray-300 leading-relaxed mb-3">
-              If you have concerns about our use of cookies, please contact us first. If you're not satisfied with our response, you can complain to:
+              If you have concerns about our use of cookies, please contact us first. If you're not
+              satisfied with our response, you can complain to:
             </p>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <p className="text-white font-medium">Information Commissioner's Office (ICO)</p>
@@ -566,11 +723,12 @@ const CookiePolicy = () => {
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <p className="text-white font-medium">Elec-Mate Ltd</p>
               <p className="text-gray-400 text-sm mt-2">
-                Email: <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">info@elec-mate.com</a>
+                Email:{' '}
+                <a href="mailto:info@elec-mate.com" className="text-yellow-400 hover:underline">
+                  info@elec-mate.com
+                </a>
               </p>
-              <p className="text-gray-400 text-sm mt-1">
-                ICO Registration: ZB935897
-              </p>
+              <p className="text-gray-400 text-sm mt-1">ICO Registration: ZB935897</p>
             </div>
           </section>
         </div>

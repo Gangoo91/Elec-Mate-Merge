@@ -1,51 +1,51 @@
-import { ArrowLeft, Cog, Play, RotateCw, Settings, Wrench } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Cog, Play, RotateCw, Settings, Wrench } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule3Section2 = () => {
   useSEO(
-    "Motors, Drives and Starters - MOET Module 3",
-    "Motor operation, DOL/star-delta starters, VSDs and motor maintenance"
+    'Motors, Drives and Starters - MOET Module 3',
+    'Motor operation, DOL/star-delta starters, VSDs and motor maintenance'
   );
 
   const subsections = [
     {
-      number: "3.2.1",
-      title: "Motor Construction and Operation",
-      description: "Motor types, construction principles and operating characteristics",
+      number: '3.2.1',
+      title: 'Motor Construction and Operation',
+      description: 'Motor types, construction principles and operating characteristics',
       icon: Cog,
-      href: "/study-centre/apprentice/m-o-e-t-module3-section2-1"
+      href: '/study-centre/apprentice/m-o-e-t-module3-section2-1',
     },
     {
-      number: "3.2.2", 
-      title: "Direct-On-Line (DOL) Starters",
-      description: "DOL starter operation, components and applications",
+      number: '3.2.2',
+      title: 'Direct-On-Line (DOL) Starters',
+      description: 'DOL starter operation, components and applications',
       icon: Play,
-      href: "/study-centre/apprentice/m-o-e-t-module3-section2-2"
+      href: '/study-centre/apprentice/m-o-e-t-module3-section2-2',
     },
     {
-      number: "3.2.3",
-      title: "Star/Delta Starters", 
-      description: "Star-delta starting principles, wiring and operation",
+      number: '3.2.3',
+      title: 'Star/Delta Starters',
+      description: 'Star-delta starting principles, wiring and operation',
       icon: RotateCw,
-      href: "/study-centre/apprentice/m-o-e-t-module3-section2-3"
+      href: '/study-centre/apprentice/m-o-e-t-module3-section2-3',
     },
     {
-      number: "3.2.4",
-      title: "Variable Speed Drives (VSDs) and Soft Starters",
-      description: "VSD technology, soft starters and speed control methods",
+      number: '3.2.4',
+      title: 'Variable Speed Drives (VSDs) and Soft Starters',
+      description: 'VSD technology, soft starters and speed control methods',
       icon: Settings,
-      href: "/study-centre/apprentice/m-o-e-t-module3-section2-4"
+      href: '/study-centre/apprentice/m-o-e-t-module3-section2-4',
     },
     {
-      number: "3.2.5",
-      title: "Motor Maintenance and Testing",
-      description: "Preventive maintenance, testing procedures and fault diagnosis",
+      number: '3.2.5',
+      title: 'Motor Maintenance and Testing',
+      description: 'Preventive maintenance, testing procedures and fault diagnosis',
       icon: Wrench,
-      href: "/study-centre/apprentice/m-o-e-t-module3-section2-5"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module3-section2-5',
+    },
   ];
 
   return (
@@ -53,7 +53,11 @@ const MOETModule3Section2 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 3

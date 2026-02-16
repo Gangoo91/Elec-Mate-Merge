@@ -1,4 +1,3 @@
-
 import { Wrench } from 'lucide-react';
 
 export const VisualInspectionTools = () => {
@@ -8,7 +7,9 @@ export const VisualInspectionTools = () => {
         <Wrench className="h-4 w-4" />
         Tools & Equipment for Visual Inspection
       </h3>
-      <p className="text-gray-300 mb-3">While visual inspection doesn't require electrical test equipment, you'll need:</p>
+      <p className="text-gray-300 mb-3">
+        While visual inspection doesn't require electrical test equipment, you'll need:
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-[#323232] rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">Essential Tools</h4>

@@ -1,190 +1,148 @@
-import { ArrowLeft, ArrowRight, Building2, AlertTriangle, Shield, Building, Target, Settings, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Building2,
+  AlertTriangle,
+  Shield,
+  Building,
+  Target,
+  Settings,
+  CheckCircle2,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "trunking-spacing",
-    question: "What is the typical maximum spacing for support brackets in underfloor trunking?",
-    options: [
-      "300mm centres",
-      "600mm centres",
-      "900mm centres",
-    ],
+    id: 'trunking-spacing',
+    question: 'What is the typical maximum spacing for support brackets in underfloor trunking?',
+    options: ['300mm centres', '600mm centres', '900mm centres'],
     correctIndex: 1,
     explanation:
-      "Support brackets for underfloor trunking should typically be placed every 600mm to ensure adequate support and prevent sagging.",
+      'Support brackets for underfloor trunking should typically be placed every 600mm to ensure adequate support and prevent sagging.',
   },
   {
-    id: "segregation-distance",
-    question: "According to BS 7671, what is the minimum segregation distance between power and data cables in trunking?",
-    options: [
-      "25mm",
-      "50mm",
-      "100mm",
-    ],
+    id: 'segregation-distance',
+    question:
+      'According to BS 7671, what is the minimum segregation distance between power and data cables in trunking?',
+    options: ['25mm', '50mm', '100mm'],
     correctIndex: 1,
     explanation:
-      "BS 7671 requires a minimum segregation distance of 50mm between power and data cables to prevent electromagnetic interference.",
+      'BS 7671 requires a minimum segregation distance of 50mm between power and data cables to prevent electromagnetic interference.',
   },
   {
-    id: "fill-factor",
-    question: "What is the maximum fill factor for cables in trunking according to BS 7671?",
-    options: [
-      "35%",
-      "45%",
-      "55%",
-    ],
+    id: 'fill-factor',
+    question: 'What is the maximum fill factor for cables in trunking according to BS 7671?',
+    options: ['35%', '45%', '55%'],
     correctIndex: 1,
     explanation:
-      "BS 7671 specifies a maximum fill factor of 45% for cables in trunking to ensure adequate heat dissipation and ease of installation.",
+      'BS 7671 specifies a maximum fill factor of 45% for cables in trunking to ensure adequate heat dissipation and ease of installation.',
   },
   {
-    id: "fire-barriers",
-    question: "Fire barriers in underfloor trunking must be installed at intervals of:",
-    options: [
-      "10m maximum",
-      "15m maximum",
-      "20m maximum",
-    ],
+    id: 'fire-barriers',
+    question: 'Fire barriers in underfloor trunking must be installed at intervals of:',
+    options: ['10m maximum', '15m maximum', '20m maximum'],
     correctIndex: 1,
     explanation:
-      "Fire barriers must be installed at maximum 15m intervals in underfloor trunking to prevent fire spread and maintain compartmentation.",
+      'Fire barriers must be installed at maximum 15m intervals in underfloor trunking to prevent fire spread and maintain compartmentation.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the typical maximum spacing for support brackets in underfloor trunking?",
-    options: [
-      "300mm",
-      "600mm",
-      "900mm",
-      "1200mm",
-    ],
+    question: 'What is the typical maximum spacing for support brackets in underfloor trunking?',
+    options: ['300mm', '600mm', '900mm', '1200mm'],
     correctAnswer: 1,
     explanation:
-      "Support brackets for underfloor trunking should typically be placed every 600mm to ensure adequate support and prevent sagging.",
+      'Support brackets for underfloor trunking should typically be placed every 600mm to ensure adequate support and prevent sagging.',
   },
   {
     id: 2,
-    question: "According to BS 7671, what is the minimum segregation distance between power and data cables in trunking?",
-    options: [
-      "25mm",
-      "50mm",
-      "100mm",
-      "150mm",
-    ],
+    question:
+      'According to BS 7671, what is the minimum segregation distance between power and data cables in trunking?',
+    options: ['25mm', '50mm', '100mm', '150mm'],
     correctAnswer: 1,
     explanation:
-      "BS 7671 requires a minimum segregation distance of 50mm between power and data cables to prevent electromagnetic interference.",
+      'BS 7671 requires a minimum segregation distance of 50mm between power and data cables to prevent electromagnetic interference.',
   },
   {
     id: 3,
-    question: "Fire barriers in underfloor trunking must be installed at intervals of:",
-    options: [
-      "5m",
-      "10m",
-      "15m",
-      "20m",
-    ],
+    question: 'Fire barriers in underfloor trunking must be installed at intervals of:',
+    options: ['5m', '10m', '15m', '20m'],
     correctAnswer: 2,
     explanation:
-      "Fire barriers must be installed at maximum 15m intervals in underfloor trunking to prevent fire spread and maintain compartmentation.",
+      'Fire barriers must be installed at maximum 15m intervals in underfloor trunking to prevent fire spread and maintain compartmentation.',
   },
   {
     id: 4,
-    question: "What is the maximum fill factor for cables in trunking according to BS 7671?",
-    options: [
-      "35%",
-      "45%",
-      "55%",
-      "65%",
-    ],
+    question: 'What is the maximum fill factor for cables in trunking according to BS 7671?',
+    options: ['35%', '45%', '55%', '65%'],
     correctAnswer: 1,
     explanation:
-      "BS 7671 specifies a maximum fill factor of 45% for cables in trunking to ensure adequate heat dissipation and ease of installation.",
+      'BS 7671 specifies a maximum fill factor of 45% for cables in trunking to ensure adequate heat dissipation and ease of installation.',
   },
   {
     id: 5,
-    question: "When using metal trunking, what additional requirement must be met?",
-    options: [
-      "Painting",
-      "Earthing",
-      "Labelling",
-      "Insulation",
-    ],
+    question: 'When using metal trunking, what additional requirement must be met?',
+    options: ['Painting', 'Earthing', 'Labelling', 'Insulation'],
     correctAnswer: 1,
     explanation:
-      "Metal trunking must be properly earthed to provide electrical safety and comply with BS 7671 earthing requirements.",
+      'Metal trunking must be properly earthed to provide electrical safety and comply with BS 7671 earthing requirements.',
   },
   {
     id: 6,
-    question: "What is the recommended spacing for access covers in dado trunking?",
-    options: [
-      "1-2 metres",
-      "3-4 metres",
-      "5-6 metres",
-      "7-8 metres",
-    ],
+    question: 'What is the recommended spacing for access covers in dado trunking?',
+    options: ['1-2 metres', '3-4 metres', '5-6 metres', '7-8 metres'],
     correctAnswer: 1,
     explanation:
-      "Access covers should be positioned every 3-4 metres to allow reasonable access for cable installation and future maintenance.",
+      'Access covers should be positioned every 3-4 metres to allow reasonable access for cable installation and future maintenance.',
   },
   {
     id: 7,
-    question: "For a 200m² office with 25 workstations at 300W each, what is the design load with 0.8 diversity factor?",
-    options: [
-      "6kW",
-      "7.5kW",
-      "6kW",
-      "9kW",
-    ],
+    question:
+      'For a 200m² office with 25 workstations at 300W each, what is the design load with 0.8 diversity factor?',
+    options: ['6kW', '7.5kW', '6kW', '9kW'],
     correctAnswer: 2,
     explanation:
-      "Total load = 25 x 300W = 7.5kW. Design load = 7.5kW x 0.8 = 6kW with diversity factor applied.",
+      'Total load = 25 x 300W = 7.5kW. Design load = 7.5kW x 0.8 = 6kW with diversity factor applied.',
   },
   {
     id: 8,
-    question: "Which standard specifically covers trunking and ducting systems for electrical installations?",
-    options: [
-      "BS 7671",
-      "BS EN 50085",
-      "BS 5839",
-      "BS 6701",
-    ],
+    question:
+      'Which standard specifically covers trunking and ducting systems for electrical installations?',
+    options: ['BS 7671', 'BS EN 50085', 'BS 5839', 'BS 6701'],
     correctAnswer: 1,
     explanation:
-      "BS EN 50085 specifically covers cable trunking and ducting systems for electrical installations, while BS 7671 provides the installation requirements.",
+      'BS EN 50085 specifically covers cable trunking and ducting systems for electrical installations, while BS 7671 provides the installation requirements.',
   },
 ];
 
 const Module3Section2_5 = () => {
   useSEO(
-    "Underfloor and Dado Trunking Systems | Level 2 Electrical",
-    "Complete guide to underfloor and dado trunking systems. Installation, segregation, load calculations and BS 7671 compliance."
+    'Underfloor and Dado Trunking Systems | Level 2 Electrical',
+    'Complete guide to underfloor and dado trunking systems. Installation, segregation, load calculations and BS 7671 compliance.'
   );
 
   const faqs = [
     {
-      q: "Can power and data cables share the same trunking compartment?",
-      a: "No - BS 7671 requires segregation. Use compartmented trunking with minimum 50mm separation or separate trunking systems for power and data.",
+      q: 'Can power and data cables share the same trunking compartment?',
+      a: 'No - BS 7671 requires segregation. Use compartmented trunking with minimum 50mm separation or separate trunking systems for power and data.',
     },
     {
       q: "What's the difference between underfloor and dado trunking applications?",
-      a: "Underfloor trunking is hidden beneath raised floors for open-plan offices, while dado trunking is wall-mounted for accessible power and data outlets.",
+      a: 'Underfloor trunking is hidden beneath raised floors for open-plan offices, while dado trunking is wall-mounted for accessible power and data outlets.',
     },
     {
-      q: "Do PVC trunking systems require earthing?",
+      q: 'Do PVC trunking systems require earthing?',
       a: "No - PVC trunking is non-conductive and doesn't require earthing. However, any metal components (supports, covers) must be earthed.",
     },
     {
-      q: "How do you calculate the correct trunking size for mixed cable installations?",
-      a: "Calculate total cable cross-sectional area including segregation barriers. Ensure maximum 45% fill factor and allow for future expansion.",
+      q: 'How do you calculate the correct trunking size for mixed cable installations?',
+      a: 'Calculate total cable cross-sectional area including segregation barriers. Ensure maximum 45% fill factor and allow for future expansion.',
     },
   ];
 
@@ -220,7 +178,8 @@ const Module3Section2_5 = () => {
               Underfloor and Dado Trunking Systems
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Understanding trunking systems for power and data distribution in commercial buildings and office environments.
+              Understanding trunking systems for power and data distribution in commercial buildings
+              and office environments.
             </p>
           </header>
 
@@ -234,18 +193,32 @@ const Module3Section2_5 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li>Underfloor: Hidden distribution beneath raised floors for clean office aesthetics.</li>
+                  <li>
+                    Underfloor: Hidden distribution beneath raised floors for clean office
+                    aesthetics.
+                  </li>
                   <li>Dado: Wall-mounted horizontal trunking with accessible outlet points.</li>
-                  <li>Compartmented: Segregated sections maintain separation between power and data.</li>
+                  <li>
+                    Compartmented: Segregated sections maintain separation between power and data.
+                  </li>
                   <li>Both require load calculations, support spacing and BS 7671 compliance.</li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Spot:</strong> Rectangular channels in floors (underfloor) or horizontal wall-mounted boxes (dado).</li>
-                  <li><strong>Use:</strong> Underfloor for open offices; dado for perimeter power/data distribution.</li>
-                  <li><strong>Check:</strong> 45% fill factor, 50mm segregation, 600mm support spacing, earthing continuity.</li>
+                  <li>
+                    <strong>Spot:</strong> Rectangular channels in floors (underfloor) or horizontal
+                    wall-mounted boxes (dado).
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Underfloor for open offices; dado for perimeter power/data
+                    distribution.
+                  </li>
+                  <li>
+                    <strong>Check:</strong> 45% fill factor, 50mm segregation, 600mm support
+                    spacing, earthing continuity.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -258,11 +231,25 @@ const Module3Section2_5 = () => {
               Learning Outcomes
             </h2>
             <ul className="list-disc pl-6 space-y-2 text-sm text-white/90">
-              <li>Calculate load requirements and support spacing for underfloor and dado trunking systems.</li>
-              <li>Determine segregation distances and compartment sizing for mixed power and data installations.</li>
-              <li>Apply fire barrier placement and access cover positioning calculations to meet regulations.</li>
-              <li>Implement proper cable pulling techniques and capacity calculations for trunking systems.</li>
-              <li>Ensure BS 7671 and BS EN 50085 compliance for commercial trunking installations.</li>
+              <li>
+                Calculate load requirements and support spacing for underfloor and dado trunking
+                systems.
+              </li>
+              <li>
+                Determine segregation distances and compartment sizing for mixed power and data
+                installations.
+              </li>
+              <li>
+                Apply fire barrier placement and access cover positioning calculations to meet
+                regulations.
+              </li>
+              <li>
+                Implement proper cable pulling techniques and capacity calculations for trunking
+                systems.
+              </li>
+              <li>
+                Ensure BS 7671 and BS EN 50085 compliance for commercial trunking installations.
+              </li>
             </ul>
           </section>
 
@@ -277,7 +264,9 @@ const Module3Section2_5 = () => {
                 <p className="font-semibold text-white mb-3">Underfloor Trunking Systems</p>
                 <div className="space-y-3 text-sm text-white/90">
                   <div>
-                    <p className="font-medium text-elec-yellow mb-1">Construction and Applications</p>
+                    <p className="font-medium text-elec-yellow mb-1">
+                      Construction and Applications
+                    </p>
                     <ul className="list-disc pl-5 space-y-1">
                       <li>Installed beneath raised access floors</li>
                       <li>Compartmented for power and data segregation</li>
@@ -355,10 +344,14 @@ const Module3Section2_5 = () => {
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Load calculations and sizing</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li>Calculate total cable cross-sectional area including separators and barriers</li>
+                  <li>
+                    Calculate total cable cross-sectional area including separators and barriers
+                  </li>
                   <li>Apply diversity factors: 0.8 for office loads, 1.0 for critical equipment</li>
                   <li>Allow 25% spare capacity for future installations and modifications</li>
-                  <li>Consider heat dissipation requirements for high-density cable installations</li>
+                  <li>
+                    Consider heat dissipation requirements for high-density cable installations
+                  </li>
                   <li>Factor in cable bend radius restrictions within trunking systems</li>
                 </ul>
               </div>
@@ -366,10 +359,16 @@ const Module3Section2_5 = () => {
               <div className="rounded-lg p-4 bg-white/5 border border-cyan-400/30">
                 <p className="font-medium text-cyan-300 mb-2">Segregation and compartmentation</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li>Power circuits: Band I (up to 50V), Band II (over 50V) separation required</li>
+                  <li>
+                    Power circuits: Band I (up to 50V), Band II (over 50V) separation required
+                  </li>
                   <li>Data circuits: Cat5e/6/6A require separate compartments from power cables</li>
-                  <li>Fire barriers: Must maintain compartmentation integrity across trunking runs</li>
-                  <li>Access planning: Coordinate with building services and structural constraints</li>
+                  <li>
+                    Fire barriers: Must maintain compartmentation integrity across trunking runs
+                  </li>
+                  <li>
+                    Access planning: Coordinate with building services and structural constraints
+                  </li>
                 </ul>
               </div>
             </div>
@@ -387,32 +386,68 @@ const Module3Section2_5 = () => {
             </h2>
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="font-semibold text-elec-yellow mb-2">Support and structural calculations</p>
+                <p className="font-semibold text-elec-yellow mb-2">
+                  Support and structural calculations
+                </p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li><strong>Support loading:</strong> Trunking weight + cable weight + 2.5 safety factor</li>
-                  <li><strong>Underfloor spacing:</strong> 600mm centres for standard loads up to 50kg/m</li>
-                  <li><strong>Dado spacing:</strong> 750mm centres with additional support at junctions</li>
-                  <li><strong>Deflection limits:</strong> Maximum L/300 under full load for steel systems</li>
-                  <li><strong>Thermal expansion:</strong> Allow 1mm per metre for temperature changes</li>
+                  <li>
+                    <strong>Support loading:</strong> Trunking weight + cable weight + 2.5 safety
+                    factor
+                  </li>
+                  <li>
+                    <strong>Underfloor spacing:</strong> 600mm centres for standard loads up to
+                    50kg/m
+                  </li>
+                  <li>
+                    <strong>Dado spacing:</strong> 750mm centres with additional support at
+                    junctions
+                  </li>
+                  <li>
+                    <strong>Deflection limits:</strong> Maximum L/300 under full load for steel
+                    systems
+                  </li>
+                  <li>
+                    <strong>Thermal expansion:</strong> Allow 1mm per metre for temperature changes
+                  </li>
                 </ul>
               </div>
 
               <div className="rounded-lg p-4 bg-violet-500/10 border border-violet-400/30">
-                <p className="font-semibold text-violet-200 mb-2">Cable capacity and fill calculations</p>
+                <p className="font-semibold text-violet-200 mb-2">
+                  Cable capacity and fill calculations
+                </p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-violet-200">
-                  <li><strong>Fill factor formula:</strong> (Total cable area / compartment area) x 100%</li>
-                  <li><strong>Maximum fill:</strong> 45% for cables in trunking (BS 7671 Table 4F1)</li>
-                  <li><strong>Cable area:</strong> pi x (d/2)^2 where d = overall cable diameter</li>
-                  <li><strong>Derating:</strong> Apply current capacity reduction factors for grouping</li>
-                  <li><strong>Heat dissipation:</strong> Consider thermal resistance of trunking material</li>
+                  <li>
+                    <strong>Fill factor formula:</strong> (Total cable area / compartment area) x
+                    100%
+                  </li>
+                  <li>
+                    <strong>Maximum fill:</strong> 45% for cables in trunking (BS 7671 Table 4F1)
+                  </li>
+                  <li>
+                    <strong>Cable area:</strong> pi x (d/2)^2 where d = overall cable diameter
+                  </li>
+                  <li>
+                    <strong>Derating:</strong> Apply current capacity reduction factors for grouping
+                  </li>
+                  <li>
+                    <strong>Heat dissipation:</strong> Consider thermal resistance of trunking
+                    material
+                  </li>
                 </ul>
               </div>
 
               <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
-                <p className="font-semibold text-indigo-200 mb-2">Worked example: Office trunking sizing</p>
+                <p className="font-semibold text-indigo-200 mb-2">
+                  Worked example: Office trunking sizing
+                </p>
                 <div className="bg-black/30 p-3 rounded font-mono text-xs text-indigo-100">
-                  <p><strong>Scenario:</strong> 500m2 office, 50 workstations at 300W each</p>
-                  <p><strong>Calculation:</strong></p>
+                  <p>
+                    <strong>Scenario:</strong> 500m2 office, 50 workstations at 300W each
+                  </p>
+                  <p>
+                    <strong>Calculation:</strong>
+                  </p>
                   <p>- Total load = 50 x 300W = 15kW</p>
                   <p>- Diversity factor = 0.8 (office environment)</p>
                   <p>- Design load = 15kW x 0.8 = 12kW</p>
@@ -442,21 +477,48 @@ const Module3Section2_5 = () => {
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Installation errors</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li><strong>Overfilling trunking:</strong> Exceeding 45% fill factor causes overheating and installation difficulties</li>
-                  <li><strong>Inadequate segregation:</strong> Mixing power and data cables without proper barriers</li>
-                  <li><strong>Poor support spacing:</strong> Excessive spans causing sagging and stress on cable insulation</li>
-                  <li><strong>Missing fire barriers:</strong> Compromising building compartmentation and fire safety</li>
-                  <li><strong>Incorrect earthing:</strong> Failing to maintain continuity in metal trunking systems</li>
+                  <li>
+                    <strong>Overfilling trunking:</strong> Exceeding 45% fill factor causes
+                    overheating and installation difficulties
+                  </li>
+                  <li>
+                    <strong>Inadequate segregation:</strong> Mixing power and data cables without
+                    proper barriers
+                  </li>
+                  <li>
+                    <strong>Poor support spacing:</strong> Excessive spans causing sagging and
+                    stress on cable insulation
+                  </li>
+                  <li>
+                    <strong>Missing fire barriers:</strong> Compromising building compartmentation
+                    and fire safety
+                  </li>
+                  <li>
+                    <strong>Incorrect earthing:</strong> Failing to maintain continuity in metal
+                    trunking systems
+                  </li>
                 </ul>
               </div>
 
               <div className="rounded-lg p-4 bg-white/5 border border-amber-400/30">
                 <p className="font-medium text-amber-300 mb-2">Planning and design oversights</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li><strong>Insufficient access provision:</strong> Poor access cover placement making maintenance difficult</li>
-                  <li><strong>Ignoring future expansion:</strong> Not allowing adequate spare capacity for modifications</li>
-                  <li><strong>Poor coordination:</strong> Conflicts with other building services and structural elements</li>
-                  <li><strong>Thermal considerations:</strong> Not accounting for heat buildup in high-density installations</li>
+                  <li>
+                    <strong>Insufficient access provision:</strong> Poor access cover placement
+                    making maintenance difficult
+                  </li>
+                  <li>
+                    <strong>Ignoring future expansion:</strong> Not allowing adequate spare capacity
+                    for modifications
+                  </li>
+                  <li>
+                    <strong>Poor coordination:</strong> Conflicts with other building services and
+                    structural elements
+                  </li>
+                  <li>
+                    <strong>Thermal considerations:</strong> Not accounting for heat buildup in
+                    high-density installations
+                  </li>
                 </ul>
               </div>
             </div>
@@ -476,22 +538,41 @@ const Module3Section2_5 = () => {
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Key standards and regulations</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
-                  <li><strong>BS EN 50085:</strong> Cable trunking and ducting systems for electrical installations</li>
-                  <li><strong>BS 7671 Section 521:</strong> Selection and erection of wiring systems - trunking</li>
-                  <li><strong>521.8:</strong> Requirements for cable trunking and ducting systems</li>
-                  <li><strong>543.2:</strong> Protective conductor arrangements for trunking systems</li>
-                  <li><strong>527.1:</strong> Current-carrying capacity and voltage drop in trunking</li>
+                  <li>
+                    <strong>BS EN 50085:</strong> Cable trunking and ducting systems for electrical
+                    installations
+                  </li>
+                  <li>
+                    <strong>BS 7671 Section 521:</strong> Selection and erection of wiring systems -
+                    trunking
+                  </li>
+                  <li>
+                    <strong>521.8:</strong> Requirements for cable trunking and ducting systems
+                  </li>
+                  <li>
+                    <strong>543.2:</strong> Protective conductor arrangements for trunking systems
+                  </li>
+                  <li>
+                    <strong>527.1:</strong> Current-carrying capacity and voltage drop in trunking
+                  </li>
                 </ul>
               </div>
 
               <div className="rounded-lg p-4 bg-white/5 border border-green-400/30">
-                <p className="font-medium text-green-300 mb-2">Segregation and compatibility requirements</p>
+                <p className="font-medium text-green-300 mb-2">
+                  Segregation and compatibility requirements
+                </p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
                   <li>Band I circuits (ELV): Up to 50V including telecommunications and control</li>
                   <li>Band II circuits: Over 50V including power distribution circuits</li>
                   <li>Physical segregation: Separate compartments or 50mm minimum air gap</li>
-                  <li>Electromagnetic compatibility: Consider screening requirements for sensitive circuits</li>
-                  <li>Fire barrier requirements: Maintain compartmentation per Building Regulations</li>
+                  <li>
+                    Electromagnetic compatibility: Consider screening requirements for sensitive
+                    circuits
+                  </li>
+                  <li>
+                    Fire barrier requirements: Maintain compartmentation per Building Regulations
+                  </li>
                 </ul>
               </div>
 
@@ -500,9 +581,13 @@ const Module3Section2_5 = () => {
                 <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
                   <li>Earth continuity: &lt;0.05 ohm between all metallic sections</li>
                   <li>Insulation resistance: Minimum 1M ohm between segregated compartments</li>
-                  <li>Fill factor verification: Measure and document actual vs. calculated values</li>
+                  <li>
+                    Fill factor verification: Measure and document actual vs. calculated values
+                  </li>
                   <li>Mechanical security: Check support fixing and trunking joint integrity</li>
-                  <li>Documentation: Installation certificates, test records and as-built drawings</li>
+                  <li>
+                    Documentation: Installation certificates, test records and as-built drawings
+                  </li>
                 </ul>
               </div>
             </div>
@@ -515,10 +600,12 @@ const Module3Section2_5 = () => {
               Real-world Scenario
             </h2>
             <div className="rounded-lg p-4 bg-white/5 border border-slate-400/30">
-              <h3 className="font-medium text-white mb-2">Open-plan office electrical distribution</h3>
+              <h3 className="font-medium text-white mb-2">
+                Open-plan office electrical distribution
+              </h3>
               <p className="text-sm text-white/80 mb-3">
-                A financial services company requires electrical distribution for a new 800m2 trading floor
-                with 60 workstations, each requiring power and dual data connections.
+                A financial services company requires electrical distribution for a new 800m2
+                trading floor with 60 workstations, each requiring power and dual data connections.
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
@@ -551,7 +638,10 @@ const Module3Section2_5 = () => {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
+                >
                   <p className="font-medium text-white mb-1">Q: {faq.q}</p>
                   <p className="text-sm text-white/80">A: {faq.a}</p>
                 </div>
@@ -567,18 +657,35 @@ const Module3Section2_5 = () => {
               </h2>
               <div className="space-y-3 text-sm text-white/90">
                 <p>
-                  <strong>Trunking systems</strong> provide organised, accessible distribution for power and data cables in commercial buildings.
+                  <strong>Trunking systems</strong> provide organised, accessible distribution for
+                  power and data cables in commercial buildings.
                 </p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Underfloor trunking</strong> offers hidden distribution beneath raised floors with flexible outlet positioning</li>
-                  <li><strong>Dado trunking</strong> provides wall-mounted distribution with easy access for maintenance</li>
-                  <li><strong>Segregation</strong> is critical - maintain 50mm minimum separation between power and data circuits</li>
-                  <li><strong>Load calculations</strong> must include diversity factors, future capacity and thermal considerations</li>
-                  <li><strong>Installation compliance</strong> requires proper support spacing, earthing and fire barrier placement</li>
+                  <li>
+                    <strong>Underfloor trunking</strong> offers hidden distribution beneath raised
+                    floors with flexible outlet positioning
+                  </li>
+                  <li>
+                    <strong>Dado trunking</strong> provides wall-mounted distribution with easy
+                    access for maintenance
+                  </li>
+                  <li>
+                    <strong>Segregation</strong> is critical - maintain 50mm minimum separation
+                    between power and data circuits
+                  </li>
+                  <li>
+                    <strong>Load calculations</strong> must include diversity factors, future
+                    capacity and thermal considerations
+                  </li>
+                  <li>
+                    <strong>Installation compliance</strong> requires proper support spacing,
+                    earthing and fire barrier placement
+                  </li>
                 </ul>
                 <p>
-                  Proper installation with correct fill factors, segregation and support spacing ensures safe,
-                  compliant installations meeting BS EN 50085 and BS 7671 requirements.
+                  Proper installation with correct fill factors, segregation and support spacing
+                  ensures safe, compliant installations meeting BS EN 50085 and BS 7671
+                  requirements.
                 </p>
               </div>
             </div>
@@ -652,8 +759,9 @@ const Module3Section2_5 = () => {
             </div>
             <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
               <p className="text-yellow-200 text-xs">
-                <strong>Critical checks:</strong> Fill factor calculation, segregation distances, support spacing,
-                fire barrier placement, earthing continuity. Test before energising!
+                <strong>Critical checks:</strong> Fill factor calculation, segregation distances,
+                support spacing, fire barrier placement, earthing continuity. Test before
+                energising!
               </p>
             </div>
           </section>

@@ -1,4 +1,3 @@
-
 import { Cable, AlertCircle, Zap, Shield, FileCheck, Eye } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -15,15 +14,16 @@ export const InsulationResistanceContent = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-foreground leading-relaxed">
-            This test checks that the insulation surrounding conductors is intact and not breaking down. 
-            It prevents leakage currents, shock risk, and damage to connected devices.
+            This test checks that the insulation surrounding conductors is intact and not breaking
+            down. It prevents leakage currents, shock risk, and damage to connected devices.
           </p>
-          
+
           <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
             <h4 className="text-green-200 font-medium mb-3">Key Function</h4>
             <p className="text-foreground text-sm leading-relaxed">
-              The test applies a DC voltage between conductors and measures the resistance of the insulation. 
-              High resistance indicates good insulation; low resistance suggests breakdown or damage.
+              The test applies a DC voltage between conductors and measures the resistance of the
+              insulation. High resistance indicates good insulation; low resistance suggests
+              breakdown or damage.
             </p>
           </div>
         </CardContent>
@@ -42,21 +42,29 @@ export const InsulationResistanceContent = () => {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-foreground text-sm">Confirms separation between conductors</span>
+                <span className="text-foreground text-sm">
+                  Confirms separation between conductors
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-foreground text-sm">Detects deterioration due to age, heat, or mechanical damage</span>
+                <span className="text-foreground text-sm">
+                  Detects deterioration due to age, heat, or mechanical damage
+                </span>
               </div>
             </div>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-foreground text-sm">Helps prevent fire, electric shock, and equipment failure</span>
+                <span className="text-foreground text-sm">
+                  Helps prevent fire, electric shock, and equipment failure
+                </span>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-foreground text-sm">Mandatory for all new circuits, alterations, and during periodic inspection</span>
+                <span className="text-foreground text-sm">
+                  Mandatory for all new circuits, alterations, and during periodic inspection
+                </span>
               </div>
             </div>
           </div>
@@ -78,17 +86,20 @@ export const InsulationResistanceContent = () => {
               <li>• After continuity testing and before energising</li>
               <li>• Before polarity or loop impedance tests</li>
               <li>• On new installations, modified circuits, and during condition reports</li>
-              <li>• Always after verifying the circuit is safe and no sensitive equipment is connected</li>
+              <li>
+                • Always after verifying the circuit is safe and no sensitive equipment is connected
+              </li>
             </ul>
           </div>
-          
+
           <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertCircle className="h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="text-orange-200 font-medium mb-2">Important</h4>
                 <p className="text-foreground text-sm leading-relaxed">
-                  Electronic equipment must be disconnected before testing to prevent damage from the high test voltage.
+                  Electronic equipment must be disconnected before testing to prevent damage from
+                  the high test voltage.
                 </p>
               </div>
             </div>
@@ -107,11 +118,11 @@ export const InsulationResistanceContent = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              "Damage to insulation",
-              "Moisture ingress in cables or enclosures",
-              "Carbonisation (from arcing or overcurrent)",
-              "Bridging or breakdown between conductors or to earth",
-              "Poor workmanship—e.g. bare copper left too close to other terminals"
+              'Damage to insulation',
+              'Moisture ingress in cables or enclosures',
+              'Carbonisation (from arcing or overcurrent)',
+              'Bridging or breakdown between conductors or to earth',
+              'Poor workmanship—e.g. bare copper left too close to other terminals',
             ].map((item, index) => (
               <div key={index} className="bg-[#323232] rounded-lg p-3 border-l-4 border-red-500/50">
                 <span className="text-foreground text-sm">{item}</span>
@@ -134,9 +145,13 @@ export const InsulationResistanceContent = () => {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="border-b border-gray-600">
-                  <th className="text-left text-foreground font-medium py-3 px-4">System Voltage</th>
+                  <th className="text-left text-foreground font-medium py-3 px-4">
+                    System Voltage
+                  </th>
                   <th className="text-left text-foreground font-medium py-3 px-4">Test Voltage</th>
-                  <th className="text-left text-foreground font-medium py-3 px-4">Minimum IR Value</th>
+                  <th className="text-left text-foreground font-medium py-3 px-4">
+                    Minimum IR Value
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -153,11 +168,11 @@ export const InsulationResistanceContent = () => {
               </tbody>
             </table>
           </div>
-          
+
           <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
             <p className="text-foreground text-sm leading-relaxed">
-              <strong>Note:</strong> Where surge protection or sensitive devices are installed, 
-              a lower test voltage may be used—but must be justified and recorded.
+              <strong>Note:</strong> Where surge protection or sensitive devices are installed, a
+              lower test voltage may be used—but must be justified and recorded.
             </p>
           </div>
         </CardContent>

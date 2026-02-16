@@ -16,7 +16,15 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -43,13 +51,13 @@ const EnhancedInspectionSectionCard = ({
   onAutoCreateObservation,
   onBulkMarkSatisfactory,
   onBulkClearSection,
-  onBulkMarkNotApplicable
+  onBulkMarkNotApplicable,
 }: EnhancedInspectionSectionCardProps) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
 
   const handleOutcomeChange = (itemId: string, outcome: InspectionItem['outcome']) => {
-    const currentInspectionItem = inspectionItems.find(item => item.id === itemId);
+    const currentInspectionItem = inspectionItems.find((item) => item.id === itemId);
 
     if (!currentInspectionItem) {
       console.warn(`[EnhancedInspectionSectionCard] Could not find inspection item ${itemId}`);
@@ -60,12 +68,10 @@ const EnhancedInspectionSectionCard = ({
       const updatedItem: InspectionItem = {
         ...currentInspectionItem,
         outcome,
-        inspected: outcome !== '' && outcome !== 'not-applicable'
+        inspected: outcome !== '' && outcome !== 'not-applicable',
       };
 
-      const allItems = inspectionItems.map(item =>
-        item.id === itemId ? updatedItem : item
-      );
+      const allItems = inspectionItems.map((item) => (item.id === itemId ? updatedItem : item));
 
       onUpdateItem('__BULK_UPDATE__', '__BULK_UPDATE__', allItems);
 
@@ -86,8 +92,8 @@ const EnhancedInspectionSectionCard = ({
       if (onBulkMarkNotApplicable) {
         onBulkMarkNotApplicable(section.id);
       } else {
-        const allItems = inspectionItems.map(item =>
-          section.items.some(si => si.id === item.id)
+        const allItems = inspectionItems.map((item) =>
+          section.items.some((si) => si.id === item.id)
             ? { ...item, outcome: 'not-applicable' as const, inspected: false }
             : item
         );
@@ -99,25 +105,34 @@ const EnhancedInspectionSectionCard = ({
   };
 
   const sectionItems = section.items;
-  const completedItems = sectionItems.filter(sItem => {
-    const inspectionItem = inspectionItems.find(item => item.id === sItem.id);
+  const completedItems = sectionItems.filter((sItem) => {
+    const inspectionItem = inspectionItems.find((item) => item.id === sItem.id);
     return inspectionItem?.outcome !== undefined && inspectionItem.outcome !== '';
   });
   const completedCount = completedItems.length;
-  const progressPercent = sectionItems.length > 0 ? Math.round((completedCount / sectionItems.length) * 100) : 0;
+  const progressPercent =
+    sectionItems.length > 0 ? Math.round((completedCount / sectionItems.length) * 100) : 0;
   const isComplete = progressPercent === 100;
 
   return (
-    <div className={cn(isMobile && "-mx-4")}>
-      <Collapsible open={isExpanded} onOpenChange={() => { haptics.tap(); onToggle(); }}>
+    <div className={cn(isMobile && '-mx-4')}>
+      <Collapsible
+        open={isExpanded}
+        onOpenChange={() => {
+          haptics.tap();
+          onToggle();
+        }}
+      >
         {/* Section Header - Edge to edge on mobile */}
         <CollapsibleTrigger className="w-full" asChild>
-          <button className={cn(
-            "w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors",
-            "bg-card/50 border-y border-border/30",
-            isExpanded && "bg-card/80",
-            "active:bg-card/90"
-          )}>
+          <button
+            className={cn(
+              'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
+              'bg-card/50 border-y border-border/30',
+              isExpanded && 'bg-card/80',
+              'active:bg-card/90'
+            )}
+          >
             {/* Section Number Badge with Progress Ring */}
             <div className="relative flex-shrink-0">
               {/* Progress ring background */}
@@ -141,58 +156,66 @@ const EnhancedInspectionSectionCard = ({
                   strokeDasharray={`${progressPercent * 1.26} 126`}
                   strokeLinecap="round"
                   className={cn(
-                    "transition-all duration-500",
-                    isComplete ? "text-green-500" : "text-elec-yellow"
+                    'transition-all duration-500',
+                    isComplete ? 'text-green-500' : 'text-elec-yellow'
                   )}
                 />
               </svg>
               {/* Center content */}
-              <div className={cn(
-                "absolute inset-0 flex items-center justify-center text-sm font-bold",
-                isComplete ? "text-green-400" : "text-elec-yellow"
-              )}>
-                {isComplete ? (
-                  <CheckCircle className="h-5 w-5" />
-                ) : (
-                  section.sectionNumber
+              <div
+                className={cn(
+                  'absolute inset-0 flex items-center justify-center text-sm font-bold',
+                  isComplete ? 'text-green-400' : 'text-elec-yellow'
                 )}
+              >
+                {isComplete ? <CheckCircle className="h-5 w-5" /> : section.sectionNumber}
               </div>
             </div>
 
             {/* Title and Meta */}
             <div className="flex-1 min-w-0">
-              <h3 className={cn(
-                "font-semibold text-base truncate transition-colors",
-                isComplete ? "text-green-400" : "text-foreground"
-              )}>
+              <h3
+                className={cn(
+                  'font-semibold text-base truncate transition-colors',
+                  isComplete ? 'text-green-400' : 'text-foreground'
+                )}
+              >
                 {section.title}
               </h3>
               <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                <span>{completedCount}/{sectionItems.length} items</span>
+                <span>
+                  {completedCount}/{sectionItems.length} items
+                </span>
                 <span>·</span>
-                <span className={cn(
-                  "font-medium",
-                  isComplete ? "text-green-400" : progressPercent > 0 ? "text-elec-yellow" : ""
-                )}>
+                <span
+                  className={cn(
+                    'font-medium',
+                    isComplete ? 'text-green-400' : progressPercent > 0 ? 'text-elec-yellow' : ''
+                  )}
+                >
                   {progressPercent}%
                 </span>
               </div>
             </div>
 
             {/* Chevron */}
-            <ChevronDown className={cn(
-              "h-5 w-5 text-muted-foreground transition-transform duration-200",
-              isExpanded && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-5 w-5 text-muted-foreground transition-transform duration-200',
+                isExpanded && 'rotate-180'
+              )}
+            />
           </button>
         </CollapsibleTrigger>
 
         <CollapsibleContent>
           {/* Quick Actions Bar */}
-          <div className={cn(
-            "flex gap-2 p-3 bg-card/30 border-b border-border/20",
-            isMobile ? "px-4 overflow-x-auto" : ""
-          )}>
+          <div
+            className={cn(
+              'flex gap-2 p-3 bg-card/30 border-b border-border/20',
+              isMobile ? 'px-4 overflow-x-auto' : ''
+            )}
+          >
             {onBulkMarkSatisfactory && (
               <Button
                 variant="outline"
@@ -239,22 +262,34 @@ const EnhancedInspectionSectionCard = ({
           </div>
 
           {/* Inspection Items */}
-          <div className={cn(isMobile ? "px-4 py-3" : "p-4")}>
+          <div className={cn(isMobile ? 'px-4 py-3' : 'p-4')}>
             {/* Desktop Table View */}
             <div className="hidden md:block rounded-xl border border-white/10 overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-white/5 border-white/10 bg-white/[0.02]">
-                    <TableHead className="w-14 text-center text-white/50 text-xs uppercase tracking-wider">Status</TableHead>
-                    <TableHead className="text-left text-white/50 text-xs uppercase tracking-wider">Item & Regulation</TableHead>
-                    <TableHead className="w-72 text-left text-white/50 text-xs uppercase tracking-wider">Outcome</TableHead>
-                    <TableHead className="text-left text-white/50 text-xs uppercase tracking-wider">Notes</TableHead>
-                    <TableHead className="w-24 text-center text-white/50 text-xs uppercase tracking-wider">Actions</TableHead>
+                    <TableHead className="w-14 text-center text-white/50 text-xs uppercase tracking-wider">
+                      Status
+                    </TableHead>
+                    <TableHead className="text-left text-white/50 text-xs uppercase tracking-wider">
+                      Item & Regulation
+                    </TableHead>
+                    <TableHead className="w-72 text-left text-white/50 text-xs uppercase tracking-wider">
+                      Outcome
+                    </TableHead>
+                    <TableHead className="text-left text-white/50 text-xs uppercase tracking-wider">
+                      Notes
+                    </TableHead>
+                    <TableHead className="w-24 text-center text-white/50 text-xs uppercase tracking-wider">
+                      Actions
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {section.items.map((sectionItem) => {
-                    const inspectionItem = inspectionItems.find(item => item.id === sectionItem.id);
+                    const inspectionItem = inspectionItems.find(
+                      (item) => item.id === sectionItem.id
+                    );
                     return (
                       <EnhancedInspectionItemRow
                         key={sectionItem.id}
@@ -273,7 +308,7 @@ const EnhancedInspectionSectionCard = ({
             {/* Mobile Card View - Compact with swipe */}
             <div className="md:hidden space-y-2">
               {section.items.map((sectionItem) => {
-                const inspectionItem = inspectionItems.find(item => item.id === sectionItem.id);
+                const inspectionItem = inspectionItems.find((item) => item.id === sectionItem.id);
                 return (
                   <EnhancedInspectionItemCard
                     key={sectionItem.id}

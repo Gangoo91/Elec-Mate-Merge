@@ -10,11 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   ClipboardCheck,
   ChevronDown,
@@ -68,8 +64,16 @@ const EIC_INSPECTION_SECTIONS: InspectionSection[] = [
       { id: 'cu-2', code: '1.2', description: 'DB meets requirements of BS EN 61439-3' },
       { id: 'cu-3', code: '1.3', description: 'Enclosure suitable for external influences' },
       { id: 'cu-4', code: '1.4', description: 'All entries, knockouts, glands correctly fitted' },
-      { id: 'cu-5', code: '1.5', description: 'Correct cable entry, adequate space for connections' },
-      { id: 'cu-6', code: '1.6', description: 'Cables correctly supported, strain relief provided' },
+      {
+        id: 'cu-5',
+        code: '1.5',
+        description: 'Correct cable entry, adequate space for connections',
+      },
+      {
+        id: 'cu-6',
+        code: '1.6',
+        description: 'Cables correctly supported, strain relief provided',
+      },
       { id: 'cu-7', code: '1.7', description: 'Circuits correctly identified at DB' },
       { id: 'cu-8', code: '1.8', description: 'Warning notices and labels fitted correctly' },
       { id: 'cu-9', code: '1.9', description: 'SPD fitted where required (Reg 443)' },
@@ -93,7 +97,11 @@ const EIC_INSPECTION_SECTIONS: InspectionSection[] = [
     title: 'Cables & Conductors',
     icon: Cable,
     items: [
-      { id: 'cc-1', code: '3.1', description: 'Correct cable type for environment and application' },
+      {
+        id: 'cc-1',
+        code: '3.1',
+        description: 'Correct cable type for environment and application',
+      },
       { id: 'cc-2', code: '3.2', description: 'Cables correctly sized for load and protection' },
       { id: 'cc-3', code: '3.3', description: 'Cable routes correctly selected' },
       { id: 'cc-4', code: '3.4', description: 'Cables correctly installed in prescribed zones' },
@@ -234,24 +242,30 @@ const InspectionSectionCard: React.FC<{
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <Card className={cn(
-        'border-border/50 overflow-hidden transition-all',
-        stats.complete === stats.total && 'border-green-500/30'
-      )}>
+      <Card
+        className={cn(
+          'border-border/50 overflow-hidden transition-all',
+          stats.complete === stats.total && 'border-green-500/30'
+        )}
+      >
         <CollapsibleTrigger asChild>
           <CardHeader
             className="py-4 cursor-pointer hover:bg-muted/30 active:bg-muted/50 transition-all touch-manipulation"
             onClick={handleToggle}
           >
             <div className="flex items-center gap-3">
-              <div className={cn(
-                'p-2 rounded-lg',
-                stats.complete === stats.total ? 'bg-green-500/10' : 'bg-elec-yellow/10'
-              )}>
-                <Icon className={cn(
-                  'h-5 w-5',
-                  stats.complete === stats.total ? 'text-green-500' : 'text-elec-yellow'
-                )} />
+              <div
+                className={cn(
+                  'p-2 rounded-lg',
+                  stats.complete === stats.total ? 'bg-green-500/10' : 'bg-elec-yellow/10'
+                )}
+              >
+                <Icon
+                  className={cn(
+                    'h-5 w-5',
+                    stats.complete === stats.total ? 'text-green-500' : 'text-elec-yellow'
+                  )}
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <CardTitle className="text-base">{section.title}</CardTitle>
@@ -296,11 +310,7 @@ const InspectionSectionCard: React.FC<{
   );
 };
 
-export const InspectionsStep: React.FC<InspectionsStepProps> = ({
-  data,
-  onChange,
-  isMobile,
-}) => {
+export const InspectionsStep: React.FC<InspectionsStepProps> = ({ data, onChange, isMobile }) => {
   const haptic = useHaptic();
 
   // Initialize inspection items from data or defaults
@@ -406,12 +416,7 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
           <CheckCircle2 className="h-4 w-4 mr-2 text-green-500" />
           Mark Remaining ✓
         </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleClearAll}
-          className="h-10"
-        >
+        <Button variant="outline" size="sm" onClick={handleClearAll} className="h-10">
           <XCircle className="h-4 w-4 mr-1 text-red-500" />
           Clear
         </Button>
@@ -433,7 +438,9 @@ export const InspectionsStep: React.FC<InspectionsStepProps> = ({
       {/* BS7671 Reference */}
       <div className="text-center text-xs text-muted-foreground">
         <p>Inspection items based on BS 7671:2018+A2:2022</p>
-        <p className="mt-1">C = Compliant | X = Non-compliant | NA = Not Applicable | LIM = Limitation</p>
+        <p className="mt-1">
+          C = Compliant | X = Non-compliant | NA = Not Applicable | LIM = Limitation
+        </p>
       </div>
     </div>
   );

@@ -33,7 +33,9 @@ export function useCompanyProfileForInvoice() {
       const requestId = generateRequestId();
       logger.api('company_profiles/fetch-for-invoice', requestId).start();
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         logger.info('No user found, skipping company profile fetch for invoice');
         return null;
@@ -50,7 +52,9 @@ export function useCompanyProfileForInvoice() {
         return null;
       }
 
-      logger.api('company_profiles/fetch-for-invoice', requestId).success({ companyName: data?.company_name });
+      logger
+        .api('company_profiles/fetch-for-invoice', requestId)
+        .success({ companyName: data?.company_name });
       return data as CompanyProfile;
     },
   });
@@ -74,7 +78,7 @@ export const createInvoiceFromQuote = (
     invoice_status: 'draft',
     additional_invoice_items: [],
     work_completion_date: new Date(),
-    items: quote.items.map(item => ({
+    items: quote.items.map((item) => ({
       ...item,
       completionStatus: 'completed' as const,
       actualQuantity: item.quantity,
@@ -120,8 +124,8 @@ const createEmptyInvoice = (): Partial<Invoice> => {
     },
     settings: {
       labourRate: 50,
-      overheadPercentage: 0,  // User enters final prices - no automatic overhead
-      profitMargin: 0,        // User enters final prices - no automatic profit
+      overheadPercentage: 0, // User enters final prices - no automatic overhead
+      profitMargin: 0, // User enters final prices - no automatic profit
       vatRate: 20,
       vatRegistered: true,
       paymentTerms: '30 days',
@@ -141,7 +145,10 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   const [invoice, setInvoice] = useState<Partial<Invoice>>(() => {
     // If editing an existing invoice, recalculate totals to ensure consistency
     if (existingInvoice) {
-      const allItems = [...(existingInvoice.items || []), ...(existingInvoice.additional_invoice_items || [])];
+      const allItems = [
+        ...(existingInvoice.items || []),
+        ...(existingInvoice.additional_invoice_items || []),
+      ];
       const subtotal = calculateSafeSubtotal(allItems);
       const settings = existingInvoice.settings!;
       const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
@@ -162,7 +169,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     }
     // Otherwise create from quote
     if (sourceQuote) {
-      return createInvoiceFromQuote(sourceQuote, null);  // Will be updated when profile loads
+      return createInvoiceFromQuote(sourceQuote, null); // Will be updated when profile loads
     }
     // Create empty invoice for standalone creation
     return createEmptyInvoice();
@@ -172,7 +179,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   // This ensures bank details and payment terms are always populated from company profile
   useEffect(() => {
     if (companyProfile) {
-      setInvoice(prev => {
+      setInvoice((prev) => {
         // Only update if bank details aren't already set (don't overwrite user edits)
         const currentBankDetails = prev.settings?.bankDetails;
         const hasBankDetails = currentBankDetails?.bankName || currentBankDetails?.accountNumber;
@@ -183,7 +190,8 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
             ...prev,
             settings: {
               ...prev.settings!,
-              paymentTerms: prev.settings?.paymentTerms || companyProfile.payment_terms || '30 days',
+              paymentTerms:
+                prev.settings?.paymentTerms || companyProfile.payment_terms || '30 days',
               bankDetails: companyProfile.bank_details,
             },
           };
@@ -215,19 +223,22 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
       actualQuantity: item.quantity,
     };
 
-    setInvoice(prev => {
+    setInvoice((prev) => {
       const updatedInvoice = {
         ...prev,
         additional_invoice_items: [...(prev.additional_invoice_items || []), newItem],
       };
-      
+
       // Recalculate totals with updated items
-      const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
+      const allItems = [
+        ...(updatedInvoice.items || []),
+        ...(updatedInvoice.additional_invoice_items || []),
+      ];
       const subtotal = calculateSafeSubtotal(allItems);
       const settings = updatedInvoice.settings!;
       const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
       const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
-      const vatAmount = settings.vatRegistered 
+      const vatAmount = settings.vatRegistered
         ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
         : 0;
       const total = subtotal + overhead + profit + vatAmount;
@@ -244,32 +255,43 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   }, []);
 
   const updateInvoiceItem = useCallback((itemId: string, updates: Partial<InvoiceItem>) => {
-    setInvoice(prev => {
+    setInvoice((prev) => {
       const updatedInvoice = {
         ...prev,
-        items: prev.items?.map(item =>
-          item.id === itemId ? { 
-            ...item, 
-            ...updates,
-            totalPrice: ((updates.quantity ?? item.quantity) || 0) * ((updates.unitPrice ?? item.unitPrice) || 0)
-          } : item
+        items: prev.items?.map((item) =>
+          item.id === itemId
+            ? {
+                ...item,
+                ...updates,
+                totalPrice:
+                  ((updates.quantity ?? item.quantity) || 0) *
+                  ((updates.unitPrice ?? item.unitPrice) || 0),
+              }
+            : item
         ),
-        additional_invoice_items: prev.additional_invoice_items?.map(item =>
-          item.id === itemId ? { 
-            ...item, 
-            ...updates,
-            totalPrice: ((updates.quantity ?? item.quantity) || 0) * ((updates.unitPrice ?? item.unitPrice) || 0)
-          } : item
+        additional_invoice_items: prev.additional_invoice_items?.map((item) =>
+          item.id === itemId
+            ? {
+                ...item,
+                ...updates,
+                totalPrice:
+                  ((updates.quantity ?? item.quantity) || 0) *
+                  ((updates.unitPrice ?? item.unitPrice) || 0),
+              }
+            : item
         ),
       };
 
       // Recalculate totals with updated items
-      const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
+      const allItems = [
+        ...(updatedInvoice.items || []),
+        ...(updatedInvoice.additional_invoice_items || []),
+      ];
       const subtotal = calculateSafeSubtotal(allItems);
       const settings = updatedInvoice.settings!;
       const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
       const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
-      const vatAmount = settings.vatRegistered 
+      const vatAmount = settings.vatRegistered
         ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
         : 0;
       const total = subtotal + overhead + profit + vatAmount;
@@ -286,19 +308,24 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   }, []);
 
   const removeInvoiceItem = useCallback((itemId: string) => {
-    setInvoice(prev => {
+    setInvoice((prev) => {
       const updatedInvoice = {
         ...prev,
-        additional_invoice_items: prev.additional_invoice_items?.filter(item => item.id !== itemId),
+        additional_invoice_items: prev.additional_invoice_items?.filter(
+          (item) => item.id !== itemId
+        ),
       };
 
       // Recalculate totals with updated items
-      const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
+      const allItems = [
+        ...(updatedInvoice.items || []),
+        ...(updatedInvoice.additional_invoice_items || []),
+      ];
       const subtotal = calculateSafeSubtotal(allItems);
       const settings = updatedInvoice.settings!;
       const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
       const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
-      const vatAmount = settings.vatRegistered 
+      const vatAmount = settings.vatRegistered
         ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
         : 0;
       const total = subtotal + overhead + profit + vatAmount;
@@ -315,7 +342,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   }, []);
 
   const updateInvoiceSettings = useCallback((settings: Partial<InvoiceSettings>) => {
-    setInvoice(prev => {
+    setInvoice((prev) => {
       const updatedInvoice = {
         ...prev,
         settings: { ...prev.settings!, ...settings },
@@ -324,7 +351,10 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
       };
 
       // Recalculate totals with updated settings
-      const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
+      const allItems = [
+        ...(updatedInvoice.items || []),
+        ...(updatedInvoice.additional_invoice_items || []),
+      ];
       const subtotal = calculateSafeSubtotal(allItems);
       const updatedSettings = updatedInvoice.settings!;
       const overhead = subtotal * ((updatedSettings.overheadPercentage || 0) / 100);
@@ -346,7 +376,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   }, []);
 
   const recalculateTotals = useCallback(() => {
-    setInvoice(prev => {
+    setInvoice((prev) => {
       const allItems = [...(prev.items || []), ...(prev.additional_invoice_items || [])];
       const subtotal = calculateSafeSubtotal(allItems);
 
@@ -370,21 +400,21 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   }, []);
 
   const setInvoiceNotes = useCallback((notes: string) => {
-    setInvoice(prev => ({
+    setInvoice((prev) => ({
       ...prev,
       invoice_notes: notes,
     }));
   }, []);
 
   const updateInvoiceStatus = useCallback((status: Invoice['invoice_status']) => {
-    setInvoice(prev => ({
+    setInvoice((prev) => ({
       ...prev,
       invoice_status: status,
     }));
   }, []);
 
   const updateJobDetails = useCallback((jobDetails: Partial<Quote['jobDetails']>) => {
-    setInvoice(prev => ({
+    setInvoice((prev) => ({
       ...prev,
       jobDetails: {
         ...prev.jobDetails,
@@ -394,7 +424,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   }, []);
 
   const updateClientDetails = useCallback((client: Partial<Quote['client']>) => {
-    setInvoice(prev => ({
+    setInvoice((prev) => ({
       ...prev,
       client: {
         ...prev.client,
@@ -403,13 +433,16 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     }));
   }, []);
 
-  const initializeInvoice = useCallback((client: Quote['client'], jobDetails: Quote['jobDetails']) => {
-    setInvoice(prev => ({
-      ...prev,
-      client,
-      jobDetails,
-    }));
-  }, []);
+  const initializeInvoice = useCallback(
+    (client: Quote['client'], jobDetails: Quote['jobDetails']) => {
+      setInvoice((prev) => ({
+        ...prev,
+        client,
+        jobDetails,
+      }));
+    },
+    []
+  );
 
   return {
     invoice,
@@ -425,4 +458,3 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     recalculateTotals,
   };
 };
-

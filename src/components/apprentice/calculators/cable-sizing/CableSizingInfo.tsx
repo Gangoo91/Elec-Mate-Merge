@@ -1,5 +1,5 @@
-import InfoBox from "@/components/common/InfoBox";
-import { Ruler } from "lucide-react";
+import InfoBox from '@/components/common/InfoBox';
+import { Ruler } from 'lucide-react';
 
 const CableSizingInfo = () => {
   return (
@@ -7,11 +7,11 @@ const CableSizingInfo = () => {
       title="Cable Selection Factors"
       icon={<Ruler className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />}
       points={[
-        "Current-carrying capacity",
-        "Voltage drop over distance",
-        "Installation method & ambient temperature",
-        "Grouping factors when multiple cables run together",
-        "Short circuit protection requirements",
+        'Current-carrying capacity',
+        'Voltage drop over distance',
+        'Installation method & ambient temperature',
+        'Grouping factors when multiple cables run together',
+        'Short circuit protection requirements',
       ]}
     >
       <p className="text-sm text-elec-light/80 mb-2">

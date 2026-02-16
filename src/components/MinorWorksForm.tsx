@@ -12,7 +12,7 @@ import { draftStorage } from '@/utils/draftStorage';
 import {
   validateLoadedData,
   saveToLocalStorageBackup,
-  logIntegrityEvent
+  logIntegrityEvent,
 } from '@/utils/dataIntegrity';
 import MinorWorksPdfGenerator from '@/components/pdf/MinorWorksPdfGenerator';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
@@ -37,7 +37,13 @@ import MWTabNavigation from '@/components/minor-works/MWTabNavigation';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 
-const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initialReportId?: string | null }) => {
+const MinorWorksForm = ({
+  onBack,
+  initialReportId,
+}: {
+  onBack: () => void;
+  initialReportId?: string | null;
+}) => {
   const location = useLocation();
   const isMobile = useIsMobile();
   const [userId, setUserId] = useState<string | null>(null);
@@ -184,7 +190,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     workSafety: false,
     partPNotification: false,
     copyProvided: false,
-    additionalNotes: ''
+    additionalNotes: '',
   });
 
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
@@ -205,11 +211,13 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     navigatePrevious,
     getProgressPercentage,
     isTabComplete,
-    getCurrentTabLabel
+    getCurrentTabLabel,
   } = useMinorWorksTabs(formData);
 
   // Smart defaults and validation
-  const { defaults, hasDefaults, applyDefaults, saveDefaults } = useSmartDefaults(userId || undefined);
+  const { defaults, hasDefaults, applyDefaults, saveDefaults } = useSmartDefaults(
+    userId || undefined
+  );
   const validation = useFormValidation(formData);
 
   // Smart form auto-fill from Business Settings
@@ -222,7 +230,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     loadTestEquipment,
     loadContractorDetails,
     getAvailableInstruments,
-    applySmartDefaults
+    applySmartDefaults,
   } = useMinorWorksSmartForm();
 
   // Callback when auto-sync creates a new report - keeps component state in sync
@@ -232,14 +240,15 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   }, []);
 
   // Cloud sync
-  const { loadFromCloud, isAuthenticated, isOnline, syncToCloud, syncState, syncNow, onTabChange } = useCloudSync({
-    reportId: currentReportId,
-    reportType: 'minor-works',
-    data: formData,
-    enabled: true,
-    customerId: customerIdFromNav,
-    onReportCreated: handleReportCreated,
-  });
+  const { loadFromCloud, isAuthenticated, isOnline, syncToCloud, syncState, syncNow, onTabChange } =
+    useCloudSync({
+      reportId: currentReportId,
+      reportType: 'minor-works',
+      data: formData,
+      enabled: true,
+      customerId: customerIdFromNav,
+      onReportCreated: handleReportCreated,
+    });
 
   // Auto-save hook
   const {
@@ -248,7 +257,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     hasUnsavedChanges,
     manualSave: autoSaveManualSave,
     loadFromLocalStorage: loadFromIndexedDB,
-    clearAutoSave
+    clearAutoSave,
   } = useEICAutoSave({
     formData,
     interval: 30,
@@ -256,7 +265,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     onSave: async (data) => {
       await syncToCloud(false);
     },
-    enabled: true
+    enabled: true,
   });
 
   // Pre-fill customer details if navigating from customer page
@@ -284,7 +293,9 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   // Fetch user ID on mount
   useEffect(() => {
     const fetchUserId = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user) setUserId(user.id);
     };
     fetchUserId();
@@ -339,7 +350,8 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       if (hasUnsyncedChanges && hasMeaningfulData) {
         // ALWAYS warn the user if data hasn't synced to cloud
         e.preventDefault();
-        e.returnValue = 'Your certificate has NOT been saved to the cloud. If you leave, you may lose your work on other devices.';
+        e.returnValue =
+          'Your certificate has NOT been saved to the cloud. If you leave, you may lose your work on other devices.';
         return;
       }
 
@@ -415,13 +427,15 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       }
 
       // Step 2: Load from cloud
-      loadFromCloud(initialReportId).then(cloudResult => {
+      loadFromCloud(initialReportId).then((cloudResult) => {
         // Step 3: Compare timestamps - use whichever is NEWER
         // cloudResult is now { data, databaseId } format
         if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
           const data = cloudResult.data as any;
           const cloudTime = new Date(data.updated_at || data.last_synced_at || 0).getTime();
-          const localTime = localDraft?.lastModified ? new Date(localDraft.lastModified).getTime() : 0;
+          const localTime = localDraft?.lastModified
+            ? new Date(localDraft.lastModified).getTime()
+            : 0;
 
           console.log('[MinorWorks] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
 
@@ -434,7 +448,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
               reportType: 'minor-works',
               reportId: initialReportId,
               fieldCount: integrity.fieldCount,
-              error: integrity.warnings.join('; ')
+              error: integrity.warnings.join('; '),
             });
 
             // Try localStorage backup if cloud data is empty
@@ -461,7 +475,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
               reportType: 'minor-works',
               reportId: initialReportId,
               fieldCount: Object.keys(localDraft.data).length,
-              source: 'local'
+              source: 'local',
             });
             toast({
               title: 'Recovered unsaved changes',
@@ -475,7 +489,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
               reportType: 'minor-works',
               reportId: initialReportId,
               fieldCount: integrity.fieldCount,
-              source: 'cloud'
+              source: 'cloud',
             });
           }
           setCurrentReportId(initialReportId);
@@ -487,7 +501,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           logIntegrityEvent('recovery_success', {
             reportType: 'minor-works',
             reportId: initialReportId,
-            source: 'local'
+            source: 'local',
           });
           toast({
             title: 'Loaded from local storage',
@@ -497,7 +511,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           logIntegrityEvent('recovery_failed', {
             reportType: 'minor-works',
             reportId: initialReportId,
-            error: 'No data found in cloud or local'
+            error: 'No data found in cloud or local',
           });
           toast({
             title: 'Report not found',
@@ -583,7 +597,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       logIntegrityEvent('backup_saved', {
         reportType: 'minor-works',
         reportId: reportIdForBackup,
-        fieldCount: Object.keys(formData).filter((k: string) => !k.startsWith('_')).length
+        fieldCount: Object.keys(formData).filter((k: string) => !k.startsWith('_')).length,
       });
     }
 
@@ -598,8 +612,8 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       }
 
       toast({
-        title: "Draft Saved",
-        description: "Your Minor Works Certificate draft has been saved.",
+        title: 'Draft Saved',
+        description: 'Your Minor Works Certificate draft has been saved.',
       });
     } else if (!result?.success) {
       // Error toast - useCloudSync shows "Cannot save yet" if form empty
@@ -622,16 +636,16 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   const handleDevFill = () => {
     applyMinorWorksDevFill(handleUpdate);
     toast({
-      title: "Dev Fill Applied",
-      description: "Test data has been filled in all fields.",
+      title: 'Dev Fill Applied',
+      description: 'Test data has been filled in all fields.',
     });
   };
 
   const handleClearForm = () => {
     clearMinorWorksForm(handleUpdate);
     toast({
-      title: "Form Cleared",
-      description: "All fields have been reset.",
+      title: 'Form Cleared',
+      description: 'All fields have been reset.',
     });
   };
 
@@ -741,13 +755,13 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       workSafety: false,
       partPNotification: false,
       copyProvided: false,
-      additionalNotes: ''
+      additionalNotes: '',
     });
     setCurrentReportId(null);
     setShowStartNewDialog(false);
     toast({
-      title: "New Minor Works Certificate started",
-      description: "Started a new Minor Works Certificate.",
+      title: 'New Minor Works Certificate started',
+      description: 'Started a new Minor Works Certificate.',
     });
   };
 
@@ -755,9 +769,10 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
     const certificateNumber = await generateCertificateNumber('minor-works');
 
-    const duplicatedData: any = (typeof structuredClone === 'function'
-      ? structuredClone(formData)
-      : JSON.parse(JSON.stringify(formData)));
+    const duplicatedData: any =
+      typeof structuredClone === 'function'
+        ? structuredClone(formData)
+        : JSON.parse(JSON.stringify(formData));
 
     delete duplicatedData.id;
     delete duplicatedData.report_id;
@@ -773,7 +788,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     setShowStartNewDialog(false);
 
     toast({
-      title: "Report duplicated",
+      title: 'Report duplicated',
       description: `New certificate number: ${certificateNumber}`,
     });
   };
@@ -786,10 +801,21 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   // Determine if current tab has required fields for "Mark as Complete" functionality
   const currentTabHasRequiredFields = () => {
     const requiredFieldsByTab: Record<string, string[]> = {
-      details: ['clientName', 'propertyAddress', 'workDate', 'workDescription', 'earthingArrangement'],
-      circuit: ['circuitDesignation', 'protectiveDeviceType', 'protectiveDeviceRating', 'liveConductorSize'],
+      details: [
+        'clientName',
+        'propertyAddress',
+        'workDate',
+        'workDescription',
+        'earthingArrangement',
+      ],
+      circuit: [
+        'circuitDesignation',
+        'protectiveDeviceType',
+        'protectiveDeviceRating',
+        'liveConductorSize',
+      ],
       testing: ['continuityR1R2', 'polarity', 'earthFaultLoopImpedance'],
-      declaration: ['electricianName', 'position', 'signatureDate', 'signature']
+      declaration: ['electricianName', 'position', 'signatureDate', 'signature'],
     };
     return requiredFieldsByTab[currentTab]?.length > 0;
   };
@@ -797,12 +823,14 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   // Handle PDF generation success
   const handlePdfSuccess = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         toast({
-          title: "Authentication Error",
-          description: "Unable to verify user. Please log in again.",
-          variant: "destructive",
+          title: 'Authentication Error',
+          description: 'Unable to verify user. Please log in again.',
+          variant: 'destructive',
         });
         return;
       }
@@ -813,7 +841,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         ...formData,
         certificateGenerated: true,
         certificateGeneratedAt: new Date().toISOString(),
-        status: 'completed'
+        status: 'completed',
       };
 
       const { error: updateError } = await supabase
@@ -822,7 +850,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           status: 'completed',
           data: completedData,
           updated_at: new Date().toISOString(),
-          last_synced_at: new Date().toISOString()
+          last_synced_at: new Date().toISOString(),
         })
         .eq('report_id', reportIdToUpdate)
         .eq('user_id', user.id);
@@ -843,15 +871,15 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       await clearAutoSave();
 
       toast({
-        title: "Certificate Completed",
-        description: "Your Minor Works certificate has been marked as completed.",
+        title: 'Certificate Completed',
+        description: 'Your Minor Works certificate has been marked as completed.',
       });
     } catch (error) {
       console.error('Failed to mark as completed:', error);
       toast({
-        title: "Status Update Failed",
-        description: "Certificate generated but status may not have updated.",
-        variant: "destructive",
+        title: 'Status Update Failed',
+        description: 'Certificate generated but status may not have updated.',
+        variant: 'destructive',
       });
     }
   };
@@ -900,8 +928,18 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
               <div className="px-0 sm:px-0">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2.5 rounded-xl bg-green-500/20">
-                    <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      className="h-5 w-5 text-green-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                   </div>
                   <div>
@@ -968,10 +1006,12 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         />
 
         {/* Main Content - Edge-to-edge on mobile, contained on desktop */}
-        <div className={cn(
-          "minor-works-container pb-20 sm:pb-16",
-          isMobile ? "" : "px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto"
-        )}>
+        <div
+          className={cn(
+            'minor-works-container pb-20 sm:pb-16',
+            isMobile ? '' : 'px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto'
+          )}
+        >
           <SmartTabs
             tabs={smartTabs}
             value={currentTab}

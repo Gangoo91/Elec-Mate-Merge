@@ -1,17 +1,26 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RotateCcw, Calculator } from "lucide-react";
-import { InstallPlanDataV2 } from "./types";
-import { calculateSimplifiedCableSize } from "@/lib/calculators/engines/simplifiedCableSizingEngine";
-import { calculateVoltageDrop } from "@/lib/calculators/engines/voltageDropEngine";
-import { calculateEarthFaultLoop } from "@/lib/calculators/engines/earthFaultLoopEngine";
-import { getTemperatureFactor, getGroupingFactor } from "@/lib/calculators/bs7671-data/temperatureFactors";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { RotateCcw, Calculator } from 'lucide-react';
+import { InstallPlanDataV2 } from './types';
+import { calculateSimplifiedCableSize } from '@/lib/calculators/engines/simplifiedCableSizingEngine';
+import { calculateVoltageDrop } from '@/lib/calculators/engines/voltageDropEngine';
+import { calculateEarthFaultLoop } from '@/lib/calculators/engines/earthFaultLoopEngine';
+import {
+  getTemperatureFactor,
+  getGroupingFactor,
+} from '@/lib/calculators/bs7671-data/temperatureFactors';
 
 interface ProfessionalModeProps {
   planData: InstallPlanDataV2;
@@ -24,8 +33,8 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
   const [cableLength, setCableLength] = useState<number>(25);
   const [ambientTemp, setAmbientTemp] = useState<number>(30);
   const [groupingCircuits, setGroupingCircuits] = useState<number>(1);
-  const [installationType, setInstallationType] = useState<string>("clipped-direct");
-  const [cableType, setCableType] = useState<"pvc-twin-earth" | "swa">("pvc-twin-earth");
+  const [installationType, setInstallationType] = useState<string>('clipped-direct');
+  const [cableType, setCableType] = useState<'pvc-twin-earth' | 'swa'>('pvc-twin-earth');
   const [voltage, setVoltage] = useState<number>(230);
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<any>(null);
@@ -39,7 +48,7 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
       length: cableLength,
       voltage,
       cableType,
-      voltageDropLimit: 5
+      voltageDropLimit: 5,
     });
 
     if (result) {
@@ -50,8 +59,8 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
         current: designCurrent,
         voltage,
         powerFactor: 0.95,
-        phaseConfig: "single",
-        temperature: ambientTemp
+        phaseConfig: 'single',
+        temperature: ambientTemp,
       });
 
       const earthFaultCalc = calculateEarthFaultLoop({
@@ -63,8 +72,8 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
         conductorMaterial: 'copper',
         protectiveDevice: {
           type: 'mcb-b',
-          rating: Math.ceil(designCurrent * 1.25)
-        }
+          rating: Math.ceil(designCurrent * 1.25),
+        },
       });
 
       setResults({
@@ -74,8 +83,8 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
         compliance: {
           overloadProtection: result.compliant,
           voltageDrop: voltageDropCalc.compliance.isCompliant,
-          earthFault: earthFaultCalc.compliance === 'pass'
-        }
+          earthFault: earthFaultCalc.compliance === 'pass',
+        },
       });
 
       updatePlanData({
@@ -87,11 +96,11 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
           finalApplied: {
             ambientTemp,
             grouping: groupingCircuits,
-            conditions: "Indoor dry locations",
-            earthing: "TN-S",
-            ze: 0.35
-          }
-        }
+            conditions: 'Indoor dry locations',
+            earthing: 'TN-S',
+            ze: 0.35,
+          },
+        },
       });
 
       setShowResults(true);
@@ -107,7 +116,7 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
             <RotateCcw className="h-4 w-4" /> Back to Inputs
           </Button>
         </div>
-        
+
         <div className="grid gap-6">
           <Card>
             <CardHeader>
@@ -117,19 +126,28 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-muted-foreground">Recommended Cable Size</p>
-                  <p className="text-2xl font-bold text-foreground">{results.cableSizing.recommendedSize}mm²</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {results.cableSizing.recommendedSize}mm²
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Derated Capacity (Iz)</p>
-                  <p className="text-2xl font-bold text-foreground">{results.cableSizing.deratedCapacity.toFixed(1)}A</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {results.cableSizing.deratedCapacity.toFixed(1)}A
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Safety Margin</p>
-                  <p className="text-2xl font-bold text-foreground">{results.cableSizing.safetyMargin.toFixed(1)}%</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {results.cableSizing.safetyMargin.toFixed(1)}%
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Correction Factors</p>
-                  <p className="text-sm text-foreground">Ca={results.cableSizing.factors.temperature}, Cg={results.cableSizing.factors.grouping}</p>
+                  <p className="text-sm text-foreground">
+                    Ca={results.cableSizing.factors.temperature}, Cg=
+                    {results.cableSizing.factors.grouping}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -143,11 +161,16 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-muted-foreground">Voltage Drop</p>
-                  <p className="text-2xl font-bold text-foreground">{results.voltageDrop.voltageDrop.toFixed(2)}V ({results.voltageDrop.voltageDropPercent.toFixed(2)}%)</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {results.voltageDrop.voltageDrop.toFixed(2)}V (
+                    {results.voltageDrop.voltageDropPercent.toFixed(2)}%)
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Compliance</p>
-                  <p className={`text-2xl font-bold ${results.voltageDrop.compliance.isCompliant ? 'text-green-500' : 'text-red-500'}`}>
+                  <p
+                    className={`text-2xl font-bold ${results.voltageDrop.compliance.isCompliant ? 'text-green-500' : 'text-red-500'}`}
+                  >
                     {results.voltageDrop.compliance.isCompliant ? 'PASS' : 'FAIL'}
                   </p>
                 </div>
@@ -163,15 +186,21 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-muted-foreground">Calculated Zs</p>
-                  <p className="text-2xl font-bold text-foreground">{results.earthFault.calculatedZs}Ω</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {results.earthFault.calculatedZs}Ω
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Max Permitted Zs</p>
-                  <p className="text-2xl font-bold text-foreground">{results.earthFault.maxPermittedZs}Ω</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {results.earthFault.maxPermittedZs}Ω
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Compliance</p>
-                  <p className={`text-2xl font-bold ${results.earthFault.compliance === 'pass' ? 'text-green-500' : 'text-red-500'}`}>
+                  <p
+                    className={`text-2xl font-bold ${results.earthFault.compliance === 'pass' ? 'text-green-500' : 'text-red-500'}`}
+                  >
                     {results.earthFault.compliance.toUpperCase()}
                   </p>
                 </div>
@@ -254,7 +283,7 @@ export const ProfessionalMode = ({ planData, updatePlanData, onReset }: Professi
                     max="50"
                   />
                   <p className="text-xs text-muted-foreground">
-                    Ca = {getTemperatureFactor(ambientTemp, "70C")}
+                    Ca = {getTemperatureFactor(ambientTemp, '70C')}
                   </p>
                 </div>
 

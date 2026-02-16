@@ -3,11 +3,11 @@
  * Native app feel with swipe actions, touch feedback, and smooth animations
  */
 
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { SwipeableCard } from "@/components/ui/SwipeableCard";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { SwipeableCard } from '@/components/ui/SwipeableCard';
+import { cn } from '@/lib/utils';
 import {
   Briefcase,
   MapPin,
@@ -19,9 +19,9 @@ import {
   ExternalLink,
   Star,
   Zap,
-} from "lucide-react";
-import { cardPressSubtleVariants, listItemVariants } from "./animations/variants";
-import type { UnifiedJob } from "@/hooks/job-vacancies/useUnifiedJobSearch";
+} from 'lucide-react';
+import { cardPressSubtleVariants, listItemVariants } from './animations/variants';
+import type { UnifiedJob } from '@/hooks/job-vacancies/useUnifiedJobSearch';
 
 interface PremiumJobCardProps {
   job: UnifiedJob;
@@ -36,10 +36,10 @@ interface PremiumJobCardProps {
 // Company logo fallback with initials
 const CompanyInitials = ({ company }: { company: string }) => {
   const initials = company
-    .split(" ")
+    .split(' ')
     .slice(0, 2)
     .map((word) => word[0])
-    .join("")
+    .join('')
     .toUpperCase();
 
   return (
@@ -52,13 +52,15 @@ const CompanyInitials = ({ company }: { company: string }) => {
 // Match score badge with color coding
 const MatchScoreBadge = ({ score }: { score: number }) => {
   const getScoreColor = () => {
-    if (score >= 85) return "bg-gradient-to-r from-emerald-500/30 to-green-500/30 border-emerald-400/40 text-emerald-300";
-    if (score >= 70) return "bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border-blue-400/40 text-blue-300";
-    return "bg-gradient-to-r from-slate-500/30 to-slate-600/30 border-slate-400/40 text-slate-300";
+    if (score >= 85)
+      return 'bg-gradient-to-r from-emerald-500/30 to-green-500/30 border-emerald-400/40 text-emerald-300';
+    if (score >= 70)
+      return 'bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border-blue-400/40 text-blue-300';
+    return 'bg-gradient-to-r from-slate-500/30 to-slate-600/30 border-slate-400/40 text-slate-300';
   };
 
   return (
-    <Badge className={cn("text-[10px] font-semibold backdrop-blur-sm", getScoreColor())}>
+    <Badge className={cn('text-[10px] font-semibold backdrop-blur-sm', getScoreColor())}>
       <Star className="h-3 w-3 mr-1 fill-current" />
       {score}% Match
     </Badge>
@@ -67,7 +69,7 @@ const MatchScoreBadge = ({ score }: { score: number }) => {
 
 // Format salary for display
 const formatSalary = (salary: string | null) => {
-  if (!salary || salary === "Not specified") return null;
+  if (!salary || salary === 'Not specified') return null;
   return salary;
 };
 
@@ -85,23 +87,23 @@ const formatPostedDate = (date: string) => {
   const diffMs = now.getTime() - posted.getTime();
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
   if (diffDays < 7) return `${diffDays} days ago`;
   if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-  return posted.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  return posted.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 };
 
 // Source badge color
 const getSourceColor = (source: string) => {
   const colors: Record<string, string> = {
-    Reed: "bg-blue-500/20 border-blue-500/30 text-blue-300",
-    Indeed: "bg-purple-500/20 border-purple-500/30 text-purple-300",
-    TotalJobs: "bg-green-500/20 border-green-500/30 text-green-300",
-    "CV Library": "bg-orange-500/20 border-orange-500/30 text-orange-300",
-    "Jobs.co.uk": "bg-cyan-500/20 border-cyan-500/30 text-cyan-300",
+    Reed: 'bg-blue-500/20 border-blue-500/30 text-blue-300',
+    Indeed: 'bg-purple-500/20 border-purple-500/30 text-purple-300',
+    TotalJobs: 'bg-green-500/20 border-green-500/30 text-green-300',
+    'CV Library': 'bg-orange-500/20 border-orange-500/30 text-orange-300',
+    'Jobs.co.uk': 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300',
   };
-  return colors[source] || "bg-white/10 border-white/20 text-white/70";
+  return colors[source] || 'bg-white/10 border-white/20 text-white/70';
 };
 
 const PremiumJobCard = ({
@@ -122,12 +124,12 @@ const PremiumJobCard = ({
       whileTap={cardPressSubtleVariants.tap}
       onClick={() => onSelect(job)}
       className={cn(
-        "group relative bg-card/80 backdrop-blur-sm",
-        "rounded-2xl border border-white/10 overflow-hidden cursor-pointer",
-        "hover:border-blue-500/40 transition-all duration-300",
-        "hover:shadow-2xl hover:shadow-blue-500/10",
-        "hover:-translate-y-1",
-        "active:scale-[0.98]",
+        'group relative bg-card/80 backdrop-blur-sm',
+        'rounded-2xl border border-white/10 overflow-hidden cursor-pointer',
+        'hover:border-blue-500/40 transition-all duration-300',
+        'hover:shadow-2xl hover:shadow-blue-500/10',
+        'hover:-translate-y-1',
+        'active:scale-[0.98]',
         className
       )}
     >
@@ -147,8 +149,8 @@ const PremiumJobCard = ({
               alt={job.company}
               className="w-12 h-12 rounded-xl object-cover border border-white/10"
               onError={(e) => {
-                e.currentTarget.style.display = "none";
-                e.currentTarget.nextElementSibling?.classList.remove("hidden");
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.classList.remove('hidden');
               }}
             />
           ) : (
@@ -168,7 +170,12 @@ const PremiumJobCard = ({
             )}
             {matchScore && <MatchScoreBadge score={matchScore} />}
             {job.source && (
-              <Badge className={cn("text-[10px] font-medium backdrop-blur-sm", getSourceColor(job.source))}>
+              <Badge
+                className={cn(
+                  'text-[10px] font-medium backdrop-blur-sm',
+                  getSourceColor(job.source)
+                )}
+              >
                 {job.source}
               </Badge>
             )}
@@ -258,8 +265,8 @@ const PremiumJobCard = ({
         onApply
           ? {
               icon: <ExternalLink className="h-5 w-5" />,
-              bgColor: "bg-emerald-500",
-              label: "Apply",
+              bgColor: 'bg-emerald-500',
+              label: 'Apply',
               onAction: () => onApply(job),
             }
           : undefined
@@ -267,9 +274,9 @@ const PremiumJobCard = ({
       rightAction={
         onSave
           ? {
-              icon: <Bookmark className={cn("h-5 w-5", isSaved && "fill-current")} />,
-              bgColor: "bg-blue-500",
-              label: isSaved ? "Saved" : "Save",
+              icon: <Bookmark className={cn('h-5 w-5', isSaved && 'fill-current')} />,
+              bgColor: 'bg-blue-500',
+              label: isSaved ? 'Saved' : 'Save',
               onAction: () => onSave(job.id),
             }
           : undefined

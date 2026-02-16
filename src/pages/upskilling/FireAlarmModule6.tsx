@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Module 6: Testing, Servicing & Certification - Fire Alarm Course";
-const DESCRIPTION = "Learn about routine testing schedules, maintenance requirements, fault finding techniques and certification documentation.";
+const TITLE = 'Module 6: Testing, Servicing & Certification - Fire Alarm Course';
+const DESCRIPTION =
+  'Learn about routine testing schedules, maintenance requirements, fault finding techniques and certification documentation.';
 
 const FireAlarmModule6 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
@@ -13,40 +14,40 @@ const FireAlarmModule6 = () => {
   const sections = [
     {
       id: 1,
-      title: "Routine Testing Requirements",
+      title: 'Routine Testing Requirements',
       icon: CheckCircle,
-      description: "Weekly, monthly, quarterly and annual tests"
+      description: 'Weekly, monthly, quarterly and annual tests',
     },
     {
       id: 2,
-      title: "Servicing & Maintenance",
+      title: 'Servicing & Maintenance',
       icon: CheckCircle,
-      description: "Service visit procedures and parts replacement"
+      description: 'Service visit procedures and parts replacement',
     },
     {
       id: 3,
-      title: "Fault Finding Techniques",
+      title: 'Fault Finding Techniques',
       icon: CheckCircle,
-      description: "Systematic diagnosis and common faults"
+      description: 'Systematic diagnosis and common faults',
     },
     {
       id: 4,
-      title: "Record Keeping & Logbooks",
+      title: 'Record Keeping & Logbooks',
       icon: CheckCircle,
-      description: "Maintenance records and compliance evidence"
+      description: 'Maintenance records and compliance evidence',
     },
     {
       id: 5,
-      title: "Verification & Certification",
+      title: 'Verification & Certification',
       icon: CheckCircle,
-      description: "Certificates of compliance and approval"
+      description: 'Certificates of compliance and approval',
     },
     {
       id: 6,
-      title: "Handover & Client Training",
+      title: 'Handover & Client Training',
       icon: CheckCircle,
-      description: "User training and documentation packages"
-    }
+      description: 'User training and documentation packages',
+    },
   ];
 
   return (
@@ -87,7 +88,8 @@ const FireAlarmModule6 = () => {
             Testing, Servicing & Certification
           </h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Maintaining fire alarm systems through routine testing, scheduled servicing and proper documentation.
+            Maintaining fire alarm systems through routine testing, scheduled servicing and proper
+            documentation.
           </p>
         </div>
 

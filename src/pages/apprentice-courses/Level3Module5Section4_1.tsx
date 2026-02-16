@@ -3,239 +3,259 @@
  * Following Level3ContentTemplate.tsx design pattern
  */
 
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Safe Energisation of Circuits - Level 3 Module 5 Section 4.1";
-const DESCRIPTION = "Master safe procedures for energising electrical circuits during commissioning, including pre-energisation checks, phased energisation and monitoring for initial power-up.";
+const TITLE = 'Safe Energisation of Circuits - Level 3 Module 5 Section 4.1';
+const DESCRIPTION =
+  'Master safe procedures for energising electrical circuits during commissioning, including pre-energisation checks, phased energisation and monitoring for initial power-up.';
 
 const quickCheckQuestions = [
   {
-    id: "check-1",
-    question: "What must be completed BEFORE energising any circuit for the first time?",
+    id: 'check-1',
+    question: 'What must be completed BEFORE energising any circuit for the first time?',
     options: [
-      "Only a visual inspection",
-      "All dead tests including continuity, insulation resistance and polarity",
-      "Only the RCD test",
-      "Just check the cable connections"
+      'Only a visual inspection',
+      'All dead tests including continuity, insulation resistance and polarity',
+      'Only the RCD test',
+      'Just check the cable connections',
     ],
     correctIndex: 1,
-    explanation: "BS 7671 Regulation 643 requires all dead tests (continuity, insulation resistance, polarity) to be completed and passed before energisation. This ensures the circuit is safe to energise and prevents damage or danger."
+    explanation:
+      'BS 7671 Regulation 643 requires all dead tests (continuity, insulation resistance, polarity) to be completed and passed before energisation. This ensures the circuit is safe to energise and prevents damage or danger.',
   },
   {
-    id: "check-2",
-    question: "When first energising a distribution board, what is the recommended approach?",
+    id: 'check-2',
+    question: 'When first energising a distribution board, what is the recommended approach?',
     options: [
-      "Turn everything on at once to save time",
-      "Energise with all MCBs off, then bring circuits on one at a time",
-      "Start with the largest load first",
-      "It doesn't matter - just turn the main switch on"
+      'Turn everything on at once to save time',
+      'Energise with all MCBs off, then bring circuits on one at a time',
+      'Start with the largest load first',
+      "It doesn't matter - just turn the main switch on",
     ],
     correctIndex: 1,
-    explanation: "Phased energisation (main on with all MCBs off, then one circuit at a time) allows you to identify any problems on individual circuits without affecting the whole installation. This systematic approach helps isolate faults quickly."
+    explanation:
+      'Phased energisation (main on with all MCBs off, then one circuit at a time) allows you to identify any problems on individual circuits without affecting the whole installation. This systematic approach helps isolate faults quickly.',
   },
   {
-    id: "check-3",
-    question: "What should you check immediately after energising a circuit?",
+    id: 'check-3',
+    question: 'What should you check immediately after energising a circuit?',
     options: [
-      "Check the electricity meter is recording",
-      "Verify correct voltage and phase rotation, check for abnormal sounds or smells",
-      "Start the largest motor immediately",
-      "Leave the site immediately"
+      'Check the electricity meter is recording',
+      'Verify correct voltage and phase rotation, check for abnormal sounds or smells',
+      'Start the largest motor immediately',
+      'Leave the site immediately',
     ],
     correctIndex: 1,
-    explanation: "After energisation, immediately verify voltage and phase rotation (for three-phase), listen for unusual sounds, and check for any burning smells or visible signs of distress. This early warning can prevent serious damage or fire."
+    explanation:
+      'After energisation, immediately verify voltage and phase rotation (for three-phase), listen for unusual sounds, and check for any burning smells or visible signs of distress. This early warning can prevent serious damage or fire.',
   },
   {
-    id: "check-4",
-    question: "What is the purpose of monitoring current draw during initial energisation?",
+    id: 'check-4',
+    question: 'What is the purpose of monitoring current draw during initial energisation?',
     options: [
-      "To calculate the electricity bill",
-      "To verify the circuit is not overloaded and loads are operating normally",
-      "To impress the client",
-      "It's only needed for commercial installations"
+      'To calculate the electricity bill',
+      'To verify the circuit is not overloaded and loads are operating normally',
+      'To impress the client',
+      "It's only needed for commercial installations",
     ],
     correctIndex: 1,
-    explanation: "Monitoring current draw verifies that loads are operating correctly and within expected parameters. Excessive current could indicate a fault, short circuit, or overloaded circuit that needs investigation before continuing."
-  }
+    explanation:
+      'Monitoring current draw verifies that loads are operating correctly and within expected parameters. Excessive current could indicate a fault, short circuit, or overloaded circuit that needs investigation before continuing.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which dead test must show satisfactory results before energisation can proceed?",
+    question: 'Which dead test must show satisfactory results before energisation can proceed?',
     options: [
-      "Only insulation resistance",
-      "Only continuity",
-      "All dead tests: continuity, insulation resistance, and polarity",
-      "Only polarity"
+      'Only insulation resistance',
+      'Only continuity',
+      'All dead tests: continuity, insulation resistance, and polarity',
+      'Only polarity',
     ],
     correctAnswer: 2,
-    explanation: "All dead tests must pass before energisation. Continuity confirms protective conductors are connected, insulation resistance confirms no shorts or breakdowns, and polarity confirms correct connections. Missing any could result in danger."
+    explanation:
+      'All dead tests must pass before energisation. Continuity confirms protective conductors are connected, insulation resistance confirms no shorts or breakdowns, and polarity confirms correct connections. Missing any could result in danger.',
   },
   {
     id: 2,
-    question: "What minimum insulation resistance reading must be achieved before a 230V circuit can be energised?",
-    options: [
-      "0.5 megohms",
-      "1.0 megohms",
-      "2.0 megohms",
-      "10 megohms"
-    ],
+    question:
+      'What minimum insulation resistance reading must be achieved before a 230V circuit can be energised?',
+    options: ['0.5 megohms', '1.0 megohms', '2.0 megohms', '10 megohms'],
     correctAnswer: 1,
-    explanation: "BS 7671 Table 6.1 requires a minimum of 1.0 megohms for circuits up to 500V. Below this value, the insulation is considered inadequate and the circuit must not be energised until the cause is identified and rectified."
+    explanation:
+      'BS 7671 Table 6.1 requires a minimum of 1.0 megohms for circuits up to 500V. Below this value, the insulation is considered inadequate and the circuit must not be energised until the cause is identified and rectified.',
   },
   {
     id: 3,
-    question: "Before energising, who should be notified?",
+    question: 'Before energising, who should be notified?',
     options: [
-      "Only the DNO",
-      "Only the client",
-      "All persons in the area who could be affected, plus the client/duty holder",
-      "No notification is required"
+      'Only the DNO',
+      'Only the client',
+      'All persons in the area who could be affected, plus the client/duty holder',
+      'No notification is required',
     ],
     correctAnswer: 2,
-    explanation: "Anyone in the area who could be affected by the energisation must be warned. This includes other trades, building occupants, and the client or duty holder. This is a safety requirement and professional courtesy."
+    explanation:
+      'Anyone in the area who could be affected by the energisation must be warned. This includes other trades, building occupants, and the client or duty holder. This is a safety requirement and professional courtesy.',
   },
   {
     id: 4,
-    question: "During phased energisation of a three-phase distribution board, what should be checked first?",
+    question:
+      'During phased energisation of a three-phase distribution board, what should be checked first?',
     options: [
-      "The largest motor",
-      "Voltage presence on all phases and phase rotation",
-      "Socket outlets only",
-      "Lighting circuits only"
+      'The largest motor',
+      'Voltage presence on all phases and phase rotation',
+      'Socket outlets only',
+      'Lighting circuits only',
     ],
     correctAnswer: 1,
-    explanation: "Before connecting loads, verify that all three phases are present and at correct voltage (400V line-to-line, 230V line-to-neutral). Check phase rotation for motor circuits. Incorrect phase sequence will cause motors to run backwards."
+    explanation:
+      'Before connecting loads, verify that all three phases are present and at correct voltage (400V line-to-line, 230V line-to-neutral). Check phase rotation for motor circuits. Incorrect phase sequence will cause motors to run backwards.',
   },
   {
     id: 5,
-    question: "What action should be taken if a burning smell is detected during energisation?",
+    question: 'What action should be taken if a burning smell is detected during energisation?',
     options: [
-      "Wait to see if it goes away",
-      "Immediately de-energise, investigate and rectify before re-energising",
-      "Open windows for ventilation",
-      "Carry on - new installations often smell"
+      'Wait to see if it goes away',
+      'Immediately de-energise, investigate and rectify before re-energising',
+      'Open windows for ventilation',
+      'Carry on - new installations often smell',
     ],
     correctAnswer: 1,
-    explanation: "A burning smell indicates overheating, which could lead to fire or insulation breakdown. Immediately de-energise the circuit, identify the source (loose connection, overloaded cable, fault), and rectify before attempting to re-energise."
+    explanation:
+      'A burning smell indicates overheating, which could lead to fire or insulation breakdown. Immediately de-energise the circuit, identify the source (loose connection, overloaded cable, fault), and rectify before attempting to re-energise.',
   },
   {
     id: 6,
-    question: "Why should large motors not be started immediately after energisation?",
+    question: 'Why should large motors not be started immediately after energisation?',
     options: [
-      "They use too much electricity",
-      "They may cause voltage dips affecting other equipment and should be started last",
+      'They use too much electricity',
+      'They may cause voltage dips affecting other equipment and should be started last',
       "Motors don't need to be tested",
-      "There is no reason - start them immediately"
+      'There is no reason - start them immediately',
     ],
     correctAnswer: 1,
-    explanation: "Large motors draw high starting currents (6-8 times running current) that can cause voltage dips. Start smaller loads first to verify the installation, then start motors individually while monitoring voltage and current."
+    explanation:
+      'Large motors draw high starting currents (6-8 times running current) that can cause voltage dips. Start smaller loads first to verify the installation, then start motors individually while monitoring voltage and current.',
   },
   {
     id: 7,
-    question: "What live tests are typically performed immediately after energisation?",
+    question: 'What live tests are typically performed immediately after energisation?',
     options: [
-      "Continuity and insulation resistance",
-      "Earth fault loop impedance, prospective fault current, RCD operation",
-      "Only voltage measurement",
-      "No tests are performed after energisation"
+      'Continuity and insulation resistance',
+      'Earth fault loop impedance, prospective fault current, RCD operation',
+      'Only voltage measurement',
+      'No tests are performed after energisation',
     ],
     correctAnswer: 1,
-    explanation: "Live tests including Ze and Zs (earth fault loop impedance), prospective fault current (Ipf), and RCD operation can only be performed with the supply connected. These complete the verification process after initial energisation."
+    explanation:
+      'Live tests including Ze and Zs (earth fault loop impedance), prospective fault current (Ipf), and RCD operation can only be performed with the supply connected. These complete the verification process after initial energisation.',
   },
   {
     id: 8,
-    question: "What should be done with test equipment before performing live tests?",
+    question: 'What should be done with test equipment before performing live tests?',
     options: [
-      "Nothing - just use it",
-      "Check calibration is current and prove it works before and after testing",
-      "Only check the battery",
-      "Only check the leads"
+      'Nothing - just use it',
+      'Check calibration is current and prove it works before and after testing',
+      'Only check the battery',
+      'Only check the leads',
     ],
     correctAnswer: 1,
-    explanation: "Test equipment must have current calibration and be proved before and after use (especially voltage indicators using a proving unit). This ensures accurate readings and confirms the instrument is functioning correctly."
+    explanation:
+      'Test equipment must have current calibration and be proved before and after use (especially voltage indicators using a proving unit). This ensures accurate readings and confirms the instrument is functioning correctly.',
   },
   {
     id: 9,
-    question: "During energisation, an RCD trips immediately. What should be the first action?",
+    question: 'During energisation, an RCD trips immediately. What should be the first action?',
     options: [
-      "Replace the RCD",
-      "De-energise, check for earth leakage or fault, then systematically investigate",
-      "Bypass the RCD",
-      "Ignore it and move on"
+      'Replace the RCD',
+      'De-energise, check for earth leakage or fault, then systematically investigate',
+      'Bypass the RCD',
+      'Ignore it and move on',
     ],
     correctAnswer: 1,
-    explanation: "An RCD tripping indicates an earth fault or excessive earth leakage. De-energise and systematically disconnect circuits to identify the faulty circuit. Check for moisture, incorrect wiring, or damaged insulation."
+    explanation:
+      'An RCD tripping indicates an earth fault or excessive earth leakage. De-energise and systematically disconnect circuits to identify the faulty circuit. Check for moisture, incorrect wiring, or damaged insulation.',
   },
   {
     id: 10,
-    question: "What documentation should be available before energising?",
+    question: 'What documentation should be available before energising?',
     options: [
-      "Nothing is required",
-      "Design specifications, circuit schedules, and completed dead test results",
-      "Only the electricity bill",
-      "Only the client's phone number"
+      'Nothing is required',
+      'Design specifications, circuit schedules, and completed dead test results',
+      'Only the electricity bill',
+      "Only the client's phone number",
     ],
     correctAnswer: 1,
-    explanation: "Design specifications confirm what to expect, circuit schedules help systematic energisation, and completed dead test results prove the installation is safe to energise. This documentation is essential for safe commissioning."
+    explanation:
+      'Design specifications confirm what to expect, circuit schedules help systematic energisation, and completed dead test results prove the installation is safe to energise. This documentation is essential for safe commissioning.',
   },
   {
     id: 11,
-    question: "For a TT system, what additional consideration applies during energisation?",
+    question: 'For a TT system, what additional consideration applies during energisation?',
     options: [
-      "None - same as TN systems",
-      "Verify the earth electrode is connected and RCDs are functioning correctly",
-      "Only test socket outlets",
-      "Higher voltage is expected"
+      'None - same as TN systems',
+      'Verify the earth electrode is connected and RCDs are functioning correctly',
+      'Only test socket outlets',
+      'Higher voltage is expected',
     ],
     correctAnswer: 1,
-    explanation: "TT systems rely entirely on RCDs for earth fault protection since the earth path through the electrode has high impedance. Verify the electrode is connected and RCDs operate correctly. Check RA x Ia is less than 50V."
+    explanation:
+      'TT systems rely entirely on RCDs for earth fault protection since the earth path through the electrode has high impedance. Verify the electrode is connected and RCDs operate correctly. Check RA x Ia is less than 50V.',
   },
   {
     id: 12,
-    question: "What is the recommended sequence for energising a new installation?",
+    question: 'What is the recommended sequence for energising a new installation?',
     options: [
-      "All circuits at once",
-      "Essential services, then distribution, then final circuits systematically",
-      "Largest loads first",
-      "Random order"
+      'All circuits at once',
+      'Essential services, then distribution, then final circuits systematically',
+      'Largest loads first',
+      'Random order',
     ],
     correctAnswer: 1,
-    explanation: "Start with essential/critical services that may be needed if problems occur. Energise main distribution, then sub-distribution, then final circuits one at a time. This systematic approach allows problems to be identified and isolated quickly."
-  }
+    explanation:
+      'Start with essential/critical services that may be needed if problems occur. Energise main distribution, then sub-distribution, then final circuits one at a time. This systematic approach allows problems to be identified and isolated quickly.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What if dead test results are borderline - can I still energise?",
-    answer: "Borderline results (e.g., insulation resistance just above 1 megohm) should be investigated. While technically compliant, they may indicate developing problems. Identify the cause before energising. If in doubt, do not energise until satisfactory readings are obtained."
+    question: 'What if dead test results are borderline - can I still energise?',
+    answer:
+      'Borderline results (e.g., insulation resistance just above 1 megohm) should be investigated. While technically compliant, they may indicate developing problems. Identify the cause before energising. If in doubt, do not energise until satisfactory readings are obtained.',
   },
   {
-    question: "Can I energise part of an installation while other parts are still being worked on?",
-    answer: "Yes, but only if the live parts are completely separated from the work area, with secure isolation and warning notices. The work area must remain dead and locked off. This requires careful planning and communication with all workers."
+    question: 'Can I energise part of an installation while other parts are still being worked on?',
+    answer:
+      'Yes, but only if the live parts are completely separated from the work area, with secure isolation and warning notices. The work area must remain dead and locked off. This requires careful planning and communication with all workers.',
   },
   {
     question: "What should I do if there's no DNO supply yet?",
-    answer: "If waiting for DNO connection, you cannot perform live tests. Complete all dead tests and document them. When supply becomes available, perform live tests and complete the commissioning. Note any limitations on the certificate."
+    answer:
+      'If waiting for DNO connection, you cannot perform live tests. Complete all dead tests and document them. When supply becomes available, perform live tests and complete the commissioning. Note any limitations on the certificate.',
   },
   {
-    question: "How do I handle energising circuits with sensitive electronic equipment?",
-    answer: "Energise the circuit with electronic equipment disconnected first. Verify voltage and absence of transients. Then connect equipment. Some sensitive equipment may require soft-start procedures or specific commissioning sequences per manufacturer instructions."
+    question: 'How do I handle energising circuits with sensitive electronic equipment?',
+    answer:
+      'Energise the circuit with electronic equipment disconnected first. Verify voltage and absence of transients. Then connect equipment. Some sensitive equipment may require soft-start procedures or specific commissioning sequences per manufacturer instructions.',
   },
   {
-    question: "What PPE is required during energisation?",
-    answer: "Minimum requirements include safety footwear, eye protection (arc flash risk), and appropriate clothing. For higher risk energisation (large installations, high fault levels), consider arc-rated clothing, face shields, and insulated gloves. Follow your risk assessment."
+    question: 'What PPE is required during energisation?',
+    answer:
+      'Minimum requirements include safety footwear, eye protection (arc flash risk), and appropriate clothing. For higher risk energisation (large installations, high fault levels), consider arc-rated clothing, face shields, and insulated gloves. Follow your risk assessment.',
   },
   {
-    question: "Should I inform the DNO before energising a new installation?",
-    answer: "The DNO should already be aware if they've provided a new supply. For existing supplies with increased load, you may need to confirm the connection agreement. Always ensure the installation is suitable for the supply characteristics declared by the DNO."
-  }
+    question: 'Should I inform the DNO before energising a new installation?',
+    answer:
+      "The DNO should already be aware if they've provided a new supply. For existing supplies with increased load, you may need to confirm the connection agreement. Always ensure the installation is suitable for the supply characteristics declared by the DNO.",
+  },
 ];
 
 const Level3Module5Section4_1 = () => {
@@ -243,7 +263,6 @@ const Level3Module5Section4_1 = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
-
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
@@ -263,34 +282,42 @@ const Level3Module5Section4_1 = () => {
 
       {/* Main Article Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Header */}
-        
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Before:</strong> All dead tests must pass</li>
-              <li><strong>Notify:</strong> All persons who could be affected</li>
-              <li><strong>Method:</strong> Phased energisation, one circuit at a time</li>
-              <li><strong>Monitor:</strong> Voltage, current, sounds, smells</li>
+              <li>
+                <strong>Before:</strong> All dead tests must pass
+              </li>
+              <li>
+                <strong>Notify:</strong> All persons who could be affected
+              </li>
+              <li>
+                <strong>Method:</strong> Phased energisation, one circuit at a time
+              </li>
+              <li>
+                <strong>Monitor:</strong> Voltage, current, sounds, smells
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Completed test sheets, clear work area</li>
-              <li><strong>Use:</strong> Systematic circuit-by-circuit approach</li>
-              <li><strong>Apply:</strong> Immediate de-energisation if problems detected</li>
+              <li>
+                <strong>Spot:</strong> Completed test sheets, clear work area
+              </li>
+              <li>
+                <strong>Use:</strong> Systematic circuit-by-circuit approach
+              </li>
+              <li>
+                <strong>Apply:</strong> Immediate de-energisation if problems detected
+              </li>
             </ul>
           </div>
         </div>
-
-        
-
-        
 
         {/* Section 01: Pre-Energisation Requirements */}
         <section className="mb-10">
@@ -300,24 +327,42 @@ const Level3Module5Section4_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Before any circuit is energised for the first time, a comprehensive series of checks and tests must be completed. These verify that the installation is safe to energise and will function correctly. Energising without completing these checks risks electric shock, fire, and equipment damage.
+              Before any circuit is energised for the first time, a comprehensive series of checks
+              and tests must be completed. These verify that the installation is safe to energise
+              and will function correctly. Energising without completing these checks risks electric
+              shock, fire, and equipment damage.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Dead tests that must pass before energisation:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Dead tests that must pass before energisation:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Continuity of protective conductors:</strong> All CPCs and bonding connected</li>
-                <li><strong>Continuity of ring final circuits:</strong> Ring integrity verified</li>
-                <li><strong>Insulation resistance:</strong> Minimum 1 megohm for 230V circuits</li>
-                <li><strong>Polarity:</strong> All single-pole devices in line conductor</li>
-                <li><strong>Earth electrode resistance:</strong> For TT systems</li>
+                <li>
+                  <strong>Continuity of protective conductors:</strong> All CPCs and bonding
+                  connected
+                </li>
+                <li>
+                  <strong>Continuity of ring final circuits:</strong> Ring integrity verified
+                </li>
+                <li>
+                  <strong>Insulation resistance:</strong> Minimum 1 megohm for 230V circuits
+                </li>
+                <li>
+                  <strong>Polarity:</strong> All single-pole devices in line conductor
+                </li>
+                <li>
+                  <strong>Earth electrode resistance:</strong> For TT systems
+                </li>
               </ul>
             </div>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Visual Check</p>
-                <p className="text-white/90 text-xs">All covers on, no loose cables, work complete</p>
+                <p className="text-white/90 text-xs">
+                  All covers on, no loose cables, work complete
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Documentation</p>
@@ -330,7 +375,9 @@ const Level3Module5Section4_1 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Never energise if any dead test has failed or given unexpected results. Investigate and rectify first. 'Just seeing if it works' is never acceptable.
+              <strong>Remember:</strong> Never energise if any dead test has failed or given
+              unexpected results. Investigate and rectify first. 'Just seeing if it works' is never
+              acceptable.
             </p>
           </div>
         </section>
@@ -345,7 +392,9 @@ const Level3Module5Section4_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Phased energisation means bringing the installation live systematically, one section at a time. This allows problems to be identified and isolated quickly without affecting the entire installation. It is the professional approach to commissioning.
+              Phased energisation means bringing the installation live systematically, one section
+              at a time. This allows problems to be identified and isolated quickly without
+              affecting the entire installation. It is the professional approach to commissioning.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -384,7 +433,9 @@ const Level3Module5Section4_1 = () => {
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> A distribution board with 12 circuits should take approximately 30 minutes to energise properly - 2-3 minutes per circuit to verify operation, plus time for main energisation and live tests.
+              <strong>Example:</strong> A distribution board with 12 circuits should take
+              approximately 30 minutes to energise properly - 2-3 minutes per circuit to verify
+              operation, plus time for main energisation and live tests.
             </p>
           </div>
         </section>
@@ -399,18 +450,34 @@ const Level3Module5Section4_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Active monitoring during energisation can identify problems before they become dangerous. Use all your senses - sight, smell, sound, and (carefully) touch - to detect issues. Have test equipment ready to measure voltage and current.
+              Active monitoring during energisation can identify problems before they become
+              dangerous. Use all your senses - sight, smell, sound, and (carefully) touch - to
+              detect issues. Have test equipment ready to measure voltage and current.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">What to monitor:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Voltage:</strong> Check at busbars and at point of use - should be 230V +10%/-6%</li>
-                <li><strong>Current:</strong> Use clamp meter to verify loads are within expected range</li>
-                <li><strong>Temperature:</strong> Feel for warm connections (after a few minutes)</li>
-                <li><strong>Sound:</strong> Listen for buzzing, humming, or arcing sounds</li>
-                <li><strong>Smell:</strong> Any burning smell requires immediate investigation</li>
-                <li><strong>Visual:</strong> Look for sparks, smoke, or distressed components</li>
+                <li>
+                  <strong>Voltage:</strong> Check at busbars and at point of use - should be 230V
+                  +10%/-6%
+                </li>
+                <li>
+                  <strong>Current:</strong> Use clamp meter to verify loads are within expected
+                  range
+                </li>
+                <li>
+                  <strong>Temperature:</strong> Feel for warm connections (after a few minutes)
+                </li>
+                <li>
+                  <strong>Sound:</strong> Listen for buzzing, humming, or arcing sounds
+                </li>
+                <li>
+                  <strong>Smell:</strong> Any burning smell requires immediate investigation
+                </li>
+                <li>
+                  <strong>Visual:</strong> Look for sparks, smoke, or distressed components
+                </li>
               </ul>
             </div>
 
@@ -426,7 +493,9 @@ const Level3Module5Section4_1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-red-400/80 mb-2">Warning Signs - De-energise!</p>
+                <p className="text-sm font-medium text-red-400/80 mb-2">
+                  Warning Signs - De-energise!
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Burning smell - overheating</li>
                   <li>Buzzing from connections - loose</li>
@@ -438,7 +507,9 @@ const Level3Module5Section4_1 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Safety:</strong> Never ignore warning signs. Immediate de-energisation and investigation prevents small problems becoming major incidents. Document what you observed.
+              <strong>Safety:</strong> Never ignore warning signs. Immediate de-energisation and
+              investigation prevents small problems becoming major incidents. Document what you
+              observed.
             </p>
           </div>
         </section>
@@ -453,18 +524,34 @@ const Level3Module5Section4_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Once initial energisation is successful and stable, live tests must be performed to complete the verification. These tests can only be done with the supply connected and confirm the installation will provide adequate protection in service.
+              Once initial energisation is successful and stable, live tests must be performed to
+              complete the verification. These tests can only be done with the supply connected and
+              confirm the installation will provide adequate protection in service.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Live tests required:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Prospective fault current (Ipf):</strong> At origin and distribution boards</li>
-                <li><strong>Earth fault loop impedance (Ze):</strong> External loop impedance at origin</li>
-                <li><strong>Earth fault loop impedance (Zs):</strong> At circuit extremities</li>
-                <li><strong>RCD operation:</strong> Trip times at 1x and optionally 5x rated current</li>
-                <li><strong>Polarity confirmation:</strong> Live verification at socket outlets</li>
-                <li><strong>Phase rotation:</strong> For three-phase motor circuits</li>
+                <li>
+                  <strong>Prospective fault current (Ipf):</strong> At origin and distribution
+                  boards
+                </li>
+                <li>
+                  <strong>Earth fault loop impedance (Ze):</strong> External loop impedance at
+                  origin
+                </li>
+                <li>
+                  <strong>Earth fault loop impedance (Zs):</strong> At circuit extremities
+                </li>
+                <li>
+                  <strong>RCD operation:</strong> Trip times at 1x and optionally 5x rated current
+                </li>
+                <li>
+                  <strong>Polarity confirmation:</strong> Live verification at socket outlets
+                </li>
+                <li>
+                  <strong>Phase rotation:</strong> For three-phase motor circuits
+                </li>
               </ul>
             </div>
 
@@ -484,11 +571,15 @@ const Level3Module5Section4_1 = () => {
             </div>
 
             <p>
-              Record all live test results on the schedule of test results. These complete the verification process and prove the installation provides the required level of protection. Any failures must be investigated and rectified.
+              Record all live test results on the schedule of test results. These complete the
+              verification process and prove the installation provides the required level of
+              protection. Any failures must be investigated and rectified.
             </p>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Note:</strong> Use no-trip loop testers on RCD-protected circuits to prevent nuisance tripping. Standard loop testers may trip 30mA RCDs, requiring multiple resets and potentially affecting connected equipment.
+              <strong>Note:</strong> Use no-trip loop testers on RCD-protected circuits to prevent
+              nuisance tripping. Standard loop testers may trip 30mA RCDs, requiring multiple resets
+              and potentially affecting connected equipment.
             </p>
           </div>
         </section>
@@ -527,10 +618,18 @@ const Level3Module5Section4_1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Rushing:</strong> Taking shortcuts leads to missed problems</li>
-                <li><strong>All at once:</strong> Makes fault finding difficult</li>
-                <li><strong>Ignoring warnings:</strong> Small signs precede big failures</li>
-                <li><strong>No documentation:</strong> Unable to prove safe commissioning</li>
+                <li>
+                  <strong>Rushing:</strong> Taking shortcuts leads to missed problems
+                </li>
+                <li>
+                  <strong>All at once:</strong> Makes fault finding difficult
+                </li>
+                <li>
+                  <strong>Ignoring warnings:</strong> Small signs precede big failures
+                </li>
+                <li>
+                  <strong>No documentation:</strong> Unable to prove safe commissioning
+                </li>
               </ul>
             </div>
           </div>
@@ -580,10 +679,7 @@ const Level3Module5Section4_1 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
@@ -610,7 +706,6 @@ const Level3Module5Section4_1 = () => {
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule4Section4LearningOutcomes = () => {
   const outcomes = [
-    "Explain the difference between scheduled and AI-based control",
-    "Set up time-based heating schedules",
-    "Describe how AI learning systems adapt to user behaviour",
-    "Compare energy efficiency, convenience, and flexibility of both methods",
-    "Recommend control strategies for different property types and user needs"
+    'Explain the difference between scheduled and AI-based control',
+    'Set up time-based heating schedules',
+    'Describe how AI learning systems adapt to user behaviour',
+    'Compare energy efficiency, convenience, and flexibility of both methods',
+    'Recommend control strategies for different property types and user needs',
   ];
 
   return (

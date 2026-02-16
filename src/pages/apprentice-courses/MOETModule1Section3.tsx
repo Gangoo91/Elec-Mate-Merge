@@ -1,51 +1,51 @@
-import { ArrowLeft, Search, BarChart3, Shield, FileCheck, Activity } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Search, BarChart3, Shield, FileCheck, Activity } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule1Section3 = () => {
   useSEO(
-    "Risk Assessment & Method Statements - MOET Module 1",
-    "Hazard identification, risk evaluation, controls and dynamic assessments"
+    'Risk Assessment & Method Statements - MOET Module 1',
+    'Hazard identification, risk evaluation, controls and dynamic assessments'
   );
 
   const subsections = [
     {
-      number: "1.3.1",
-      title: "Hazard Identification",
-      description: "Systematic identification of workplace hazards and risks",
+      number: '1.3.1',
+      title: 'Hazard Identification',
+      description: 'Systematic identification of workplace hazards and risks',
       icon: Search,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section3-1"
+      href: '/study-centre/apprentice/m-o-e-t-module1-section3-1',
     },
     {
-      number: "1.3.2", 
-      title: "Risk Evaluation (likelihood vs severity)",
-      description: "Assessing and rating risks using likelihood and severity matrices",
+      number: '1.3.2',
+      title: 'Risk Evaluation (likelihood vs severity)',
+      description: 'Assessing and rating risks using likelihood and severity matrices',
       icon: BarChart3,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section3-2"
+      href: '/study-centre/apprentice/m-o-e-t-module1-section3-2',
     },
     {
-      number: "1.3.3",
-      title: "Hierarchy of Controls", 
-      description: "Elimination, substitution, engineering, administrative and PPE controls",
+      number: '1.3.3',
+      title: 'Hierarchy of Controls',
+      description: 'Elimination, substitution, engineering, administrative and PPE controls',
       icon: Shield,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section3-3"
+      href: '/study-centre/apprentice/m-o-e-t-module1-section3-3',
     },
     {
-      number: "1.3.4",
-      title: "Writing and Following Method Statements",
-      description: "Developing and implementing safe method statements",
+      number: '1.3.4',
+      title: 'Writing and Following Method Statements',
+      description: 'Developing and implementing safe method statements',
       icon: FileCheck,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section3-4"
+      href: '/study-centre/apprentice/m-o-e-t-module1-section3-4',
     },
     {
-      number: "1.3.5",
-      title: "Dynamic Risk Assessments (on-the-job)",
-      description: "Real-time risk assessment and adaptation during work activities",
+      number: '1.3.5',
+      title: 'Dynamic Risk Assessments (on-the-job)',
+      description: 'Real-time risk assessment and adaptation during work activities',
       icon: Activity,
-      href: "/study-centre/apprentice/m-o-e-t-module1-section3-5"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module1-section3-5',
+    },
   ];
 
   return (
@@ -53,7 +53,11 @@ const MOETModule1Section3 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 1

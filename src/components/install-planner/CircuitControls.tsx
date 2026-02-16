@@ -1,10 +1,9 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Plus, Minus, Copy, Settings, Trash2 } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Circuit } from "./types";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Plus, Minus, Copy, Settings, Trash2 } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Circuit } from './types';
 
 interface CircuitControlsProps {
   circuit: Circuit;
@@ -23,7 +22,7 @@ const CircuitControls: React.FC<CircuitControlsProps> = ({
   onDelete,
   onToggleExpanded,
   isExpanded,
-  canDelete
+  canDelete,
 }) => {
   return (
     <div className="w-full flex justify-center">
@@ -44,13 +43,13 @@ const CircuitControls: React.FC<CircuitControlsProps> = ({
           size="sm"
           onClick={onToggleExpanded}
           className="h-8 w-8 p-0 hover:bg-elec-yellow/10"
-          title={isExpanded ? "Collapse" : "Expand"}
+          title={isExpanded ? 'Collapse' : 'Expand'}
         >
           <Settings className="h-3 w-3" />
         </Button>
 
         <div className="flex items-center justify-center">
-          <Switch 
+          <Switch
             checked={circuit.enabled}
             onCheckedChange={onToggleEnabled}
             className="scale-75"

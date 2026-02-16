@@ -13,59 +13,59 @@ const IndustrialElectricalCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Overview of Industrial Electrical Distribution",
-      duration: "50 mins",
-      icon: Settings
+      title: 'Overview of Industrial Electrical Distribution',
+      duration: '50 mins',
+      icon: Settings,
     },
     {
       id: 2,
-      title: "Motors, Starters, and Control Gear",
-      duration: "65 mins",
-      icon: Settings
+      title: 'Motors, Starters, and Control Gear',
+      duration: '65 mins',
+      icon: Settings,
     },
     {
       id: 3,
-      title: "Industrial Panel Assembly and Layout",
-      duration: "60 mins",
-      icon: Settings
+      title: 'Industrial Panel Assembly and Layout',
+      duration: '60 mins',
+      icon: Settings,
     },
     {
       id: 4,
-      title: "PLC Basics and System Integration",
-      duration: "70 mins",
-      icon: Settings
+      title: 'PLC Basics and System Integration',
+      duration: '70 mins',
+      icon: Settings,
     },
     {
       id: 5,
-      title: "Industrial Fault Finding and Troubleshooting",
-      duration: "65 mins",
-      icon: Settings
+      title: 'Industrial Fault Finding and Troubleshooting',
+      duration: '65 mins',
+      icon: Settings,
     },
     {
       id: 6,
-      title: "Cable Types, Containment, and Routing",
-      duration: "55 mins",
-      icon: Settings
+      title: 'Cable Types, Containment, and Routing',
+      duration: '55 mins',
+      icon: Settings,
     },
     {
       id: 7,
-      title: "Power Factor Correction and Harmonics",
-      duration: "60 mins",
-      icon: Settings
+      title: 'Power Factor Correction and Harmonics',
+      duration: '60 mins',
+      icon: Settings,
     },
     {
       id: 8,
-      title: "Industrial Safety, Isolation, and Lock-off",
-      duration: "45 mins",
-      icon: Settings
+      title: 'Industrial Safety, Isolation, and Lock-off',
+      duration: '45 mins',
+      icon: Settings,
     },
     {
-      id: "exam",
-      title: "Mock Exam",
-      duration: "120 mins",
+      id: 'exam',
+      title: 'Mock Exam',
+      duration: '120 mins',
       icon: GraduationCap,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (
@@ -103,7 +103,11 @@ const IndustrialElectricalCourse = () => {
           {modules.map((module, index) => (
             <ModuleCard
               key={module.id}
-              to={module.isExam ? `../industrial-electrical-mock-exam` : `../industrial-electrical-module-${module.id}`}
+              to={
+                module.isExam
+                  ? `../industrial-electrical-mock-exam`
+                  : `../industrial-electrical-module-${module.id}`
+              }
               moduleNumber={typeof module.id === 'number' ? module.id : 0}
               title={module.title}
               duration={module.duration}

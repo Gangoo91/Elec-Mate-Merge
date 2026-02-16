@@ -1,44 +1,44 @@
-import { ArrowLeft, Zap, AlertTriangle, Flame, MapPin, Users } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Zap, AlertTriangle, Flame, MapPin, Users } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Electric Shock and Burns",
-    description: "Understanding electrical injuries and their prevention",
+    number: 'Subsection 1',
+    title: 'Electric Shock and Burns',
+    description: 'Understanding electrical injuries and their prevention',
     icon: Zap,
-    href: "2-1"
+    href: '2-1',
   },
   {
-    number: "Subsection 2", 
-    title: "Overloads, Short Circuits and Arcing",
-    description: "Electrical faults that can cause injury and damage",
+    number: 'Subsection 2',
+    title: 'Overloads, Short Circuits and Arcing',
+    description: 'Electrical faults that can cause injury and damage',
     icon: AlertTriangle,
-    href: "2-2"
+    href: '2-2',
   },
   {
-    number: "Subsection 3",
-    title: "Fire Hazards and Explosive Environments",
-    description: "Fire risks and working in potentially explosive atmospheres",
+    number: 'Subsection 3',
+    title: 'Fire Hazards and Explosive Environments',
+    description: 'Fire risks and working in potentially explosive atmospheres',
     icon: Flame,
-    href: "2-3"
+    href: '2-3',
   },
   {
-    number: "Subsection 4",
-    title: "Working at Height and Confined Spaces",
-    description: "Special considerations for elevated and restricted work areas",
+    number: 'Subsection 4',
+    title: 'Working at Height and Confined Spaces',
+    description: 'Special considerations for elevated and restricted work areas',
     icon: MapPin,
-    href: "2-4"
+    href: '2-4',
   },
   {
-    number: "Subsection 5",
-    title: "Slip, Trip and Manual Handling Risks",
-    description: "Common workplace hazards affecting electrical workers",
+    number: 'Subsection 5',
+    title: 'Slip, Trip and Manual Handling Risks',
+    description: 'Common workplace hazards affecting electrical workers',
     icon: Users,
-    href: "2-5"
-  }
+    href: '2-5',
+  },
 ];
 
 const Section2 = () => {
@@ -47,7 +47,11 @@ const Section2 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 1

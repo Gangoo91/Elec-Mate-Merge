@@ -19,11 +19,36 @@ interface QuickNoteDialogProps {
   customerId: string;
 }
 
-const activityTypes: { value: ActivityType; label: string; icon: React.ElementType; color: string }[] = [
-  { value: 'note', label: 'Note', icon: StickyNote, color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
-  { value: 'call', label: 'Call', icon: Phone, color: 'bg-green-500/20 text-green-400 border-green-500/30' },
-  { value: 'email', label: 'Email', icon: Mail, color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
-  { value: 'visit', label: 'Site Visit', icon: MapPin, color: 'bg-purple-500/20 text-purple-400 border-purple-500/30' },
+const activityTypes: {
+  value: ActivityType;
+  label: string;
+  icon: React.ElementType;
+  color: string;
+}[] = [
+  {
+    value: 'note',
+    label: 'Note',
+    icon: StickyNote,
+    color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+  },
+  {
+    value: 'call',
+    label: 'Call',
+    icon: Phone,
+    color: 'bg-green-500/20 text-green-400 border-green-500/30',
+  },
+  {
+    value: 'email',
+    label: 'Email',
+    icon: Mail,
+    color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  },
+  {
+    value: 'visit',
+    label: 'Site Visit',
+    icon: MapPin,
+    color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+  },
 ];
 
 export const QuickNoteDialog = ({ open, onOpenChange, customerId }: QuickNoteDialogProps) => {
@@ -82,9 +107,7 @@ export const QuickNoteDialog = ({ open, onOpenChange, customerId }: QuickNoteDia
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[calc(100%-2rem)] max-w-[500px] max-h-[90vh] overflow-y-auto bg-card border-border p-4 sm:p-6">
         <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl text-foreground">
-            Log Activity
-          </DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl text-foreground">Log Activity</DialogTitle>
           <DialogDescription className="text-sm text-neutral-400">
             Record a note, call, email, or site visit for this customer.
           </DialogDescription>

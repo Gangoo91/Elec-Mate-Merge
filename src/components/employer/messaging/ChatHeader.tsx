@@ -1,14 +1,14 @@
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, MoreVertical, Phone, Video, Shield, Award, Briefcase } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, MoreVertical, Phone, Video, Shield, Award, Briefcase } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import type { Conversation } from "@/services/conversationService";
+} from '@/components/ui/dropdown-menu';
+import type { Conversation } from '@/services/conversationService';
 
 interface ChatHeaderProps {
   conversation: Conversation;
@@ -27,19 +27,18 @@ export function ChatHeader({ conversation, onBack, onArchive, onViewProfile }: C
   const profile = conversation.electrician_profile;
   const employee = profile?.employee;
   const name = employee?.name || 'Unknown';
-  const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+  const initials = name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase();
   const tier = tierConfig[profile?.verification_tier || 'basic'];
   const TierIcon = tier.icon;
 
   return (
     <div className="flex items-center gap-3 p-4 border-b border-border bg-background">
       {/* Back button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={onBack}
-        className="shrink-0 -ml-2"
-      >
+      <Button variant="ghost" size="icon" onClick={onBack} className="shrink-0 -ml-2">
         <ArrowLeft className="h-5 w-5" />
       </Button>
 
@@ -52,7 +51,9 @@ export function ChatHeader({ conversation, onBack, onArchive, onViewProfile }: C
           </AvatarFallback>
         </Avatar>
         {profile?.verification_tier && profile.verification_tier !== 'basic' && (
-          <div className={`absolute -bottom-0.5 -right-0.5 ${tier.bg} p-0.5 rounded-full ring-2 ring-background`}>
+          <div
+            className={`absolute -bottom-0.5 -right-0.5 ${tier.bg} p-0.5 rounded-full ring-2 ring-background`}
+          >
             <TierIcon className={`h-2.5 w-2.5 ${tier.color}`} />
           </div>
         )}
@@ -63,8 +64,12 @@ export function ChatHeader({ conversation, onBack, onArchive, onViewProfile }: C
         <div className="flex items-center gap-2">
           <h2 className="font-semibold text-foreground truncate">{name}</h2>
           {profile?.verification_tier && (
-            <Badge variant="outline" className={`text-xs px-1.5 py-0 ${tier.bg} ${tier.color} border-0 shrink-0`}>
-              {profile.verification_tier.charAt(0).toUpperCase() + profile.verification_tier.slice(1)}
+            <Badge
+              variant="outline"
+              className={`text-xs px-1.5 py-0 ${tier.bg} ${tier.color} border-0 shrink-0`}
+            >
+              {profile.verification_tier.charAt(0).toUpperCase() +
+                profile.verification_tier.slice(1)}
             </Badge>
           )}
         </div>
@@ -85,9 +90,7 @@ export function ChatHeader({ conversation, onBack, onArchive, onViewProfile }: C
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           {onViewProfile && (
-            <DropdownMenuItem onClick={onViewProfile}>
-              View Profile
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onViewProfile}>View Profile</DropdownMenuItem>
           )}
           {onArchive && (
             <DropdownMenuItem onClick={onArchive} className="text-destructive">

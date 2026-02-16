@@ -17,20 +17,21 @@ export const SmartHomeModule3Section4RealWorld = () => {
             The Problem
           </h3>
           <p className="text-gray-300 mb-4">
-            An installer fits smart LED bulbs in a client's home but leaves the existing 
-            leading-edge dimmers in place. The result: lights flicker, buzz loudly, and 
-            sometimes won't dim below 30%.
+            An installer fits smart LED bulbs in a client's home but leaves the existing
+            leading-edge dimmers in place. The result: lights flicker, buzz loudly, and sometimes
+            won't dim below 30%.
           </p>
           <p className="text-gray-300">
-            The client is frustrated with the poor performance and is considering returning 
-            the expensive smart bulbs.
+            The client is frustrated with the poor performance and is considering returning the
+            expensive smart bulbs.
           </p>
         </div>
 
         <div className="bg-blue-900/20 border border-blue-600/50 p-4 rounded-lg">
           <h3 className="text-blue-300 font-semibold mb-3">💭 Think About It</h3>
           <p className="text-blue-200 text-sm">
-            What went wrong in this installation, and what should the installer have done differently?
+            What went wrong in this installation, and what should the installer have done
+            differently?
           </p>
         </div>
 
@@ -67,9 +68,7 @@ export const SmartHomeModule3Section4RealWorld = () => {
               <Lightbulb className="h-4 w-4" />
               Professional Solution
             </h4>
-            <p className="text-amber-200 text-sm mb-2">
-              The installer should return and:
-            </p>
+            <p className="text-amber-200 text-sm mb-2">The installer should return and:</p>
             <ul className="text-amber-200 text-sm space-y-1">
               <li>• Replace all leading-edge dimmers with trailing-edge versions</li>
               <li>• Test system performance thoroughly</li>
@@ -82,7 +81,7 @@ export const SmartHomeModule3Section4RealWorld = () => {
         <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
           <h4 className="text-foreground font-semibold mb-2">Key Takeaway</h4>
           <p className="text-gray-300 text-sm">
-            Always verify control and load compatibility before installation. A few minutes of 
+            Always verify control and load compatibility before installation. A few minutes of
             planning prevents hours of remedial work and maintains professional reputation.
           </p>
         </div>

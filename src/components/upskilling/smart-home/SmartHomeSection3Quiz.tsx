@@ -3,7 +3,7 @@ import { smartHomeSection3QuizQuestions } from '@/data/upskilling/smartHomeSecti
 
 export const SmartHomeSection3Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={smartHomeSection3QuizQuestions}
       title="Section 1.3 Quiz: Core Components"
     />

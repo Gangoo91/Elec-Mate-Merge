@@ -11,6 +11,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui
 import {
   MapPin,
   Calendar,
+  Clock,
   Wrench,
   GraduationCap,
   MessageSquare,
@@ -291,9 +292,10 @@ export function DiaryEntryDetailSheet({
 
       const acCount = acsMet.length;
       toast.success('Added to portfolio', {
-        description: acCount > 0
-          ? `${acCount} assessment criteri${acCount === 1 ? 'on' : 'a'} linked — keep building your evidence!`
-          : 'Evidence saved — open your portfolio to track progress',
+        description:
+          acCount > 0
+            ? `${acCount} assessment criteri${acCount === 1 ? 'on' : 'a'} linked — keep building your evidence!`
+            : 'Evidence saved — open your portfolio to track progress',
       });
       setShowPortfolioPicker(false);
       setSuggestedACs([]);
@@ -377,6 +379,22 @@ export function DiaryEntryDetailSheet({
               >
                 <User className="h-4 w-4 text-white flex-shrink-0" />
                 <span className="text-sm text-white">Supervised by {entry.supervisor}</span>
+              </motion.div>
+            )}
+
+            {/* Linked OJT hours */}
+            {entry.linked_time_entry_id && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.22, duration: 0.3 }}
+                className="flex items-center gap-2"
+              >
+                <Clock className="h-4 w-4 text-blue-400 flex-shrink-0" />
+                <span className="text-sm text-white">OJT hours linked</span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-500/15 text-blue-400 border border-blue-500/25">
+                  Tracked
+                </span>
               </motion.div>
             )}
 
@@ -573,8 +591,8 @@ export function DiaryEntryDetailSheet({
                                   <span className="text-[11px] text-white/60">
                                     {mc.confidence}%
                                   </span>
-                                  {evidencedACs && (
-                                    evidencedACs.has(`${mc.unitCode}.${mc.acCode}`) ? (
+                                  {evidencedACs &&
+                                    (evidencedACs.has(`${mc.unitCode}.${mc.acCode}`) ? (
                                       <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-green-500/15 text-green-400 border border-green-500/25">
                                         <CheckCircle2 className="h-2.5 w-2.5" />
                                         Evidenced
@@ -584,8 +602,7 @@ export function DiaryEntryDetailSheet({
                                         <Circle className="h-2.5 w-2.5" />
                                         Needed
                                       </span>
-                                    )
-                                  )}
+                                    ))}
                                 </div>
                               </div>
                               <p className="text-[11px] text-white/70 leading-snug mb-1.5">
@@ -737,8 +754,8 @@ export function DiaryEntryDetailSheet({
                             <span className="text-[10px] font-bold text-elec-yellow">
                               Unit {ac.unitCode}
                             </span>
-                            {evidencedACs && (
-                              evidencedACs.has(`${ac.unitCode}.${ac.acText.split(' ')[0]}`) ? (
+                            {evidencedACs &&
+                              (evidencedACs.has(`${ac.unitCode}.${ac.acText.split(' ')[0]}`) ? (
                                 <span className="inline-flex items-center gap-0.5 px-1 py-px rounded text-[8px] font-bold uppercase bg-green-500/15 text-green-400 border border-green-500/25">
                                   <CheckCircle2 className="h-2 w-2" />
                                   Evidenced
@@ -747,8 +764,7 @@ export function DiaryEntryDetailSheet({
                                 <span className="inline-flex items-center gap-0.5 px-1 py-px rounded text-[8px] font-bold uppercase bg-amber-500/15 text-amber-400 border border-amber-500/25">
                                   Needed
                                 </span>
-                              )
-                            )}
+                              ))}
                           </div>
                           <p className="text-[11px] text-white/70 leading-snug">AC {ac.acText}</p>
                         </div>

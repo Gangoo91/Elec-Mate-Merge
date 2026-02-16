@@ -11,9 +11,9 @@ export const ACHIEVEMENTS: Achievement[] = [
     rarity: 'common',
     condition: {
       type: 'total_quizzes',
-      params: { count: 1 }
+      params: { count: 1 },
     },
-    unlocked: false
+    unlocked: false,
   },
 
   // Performance Achievement
@@ -26,9 +26,9 @@ export const ACHIEVEMENTS: Achievement[] = [
     rarity: 'rare',
     condition: {
       type: 'perfect_score',
-      params: { percentage: 100 }
+      params: { percentage: 100 },
     },
-    unlocked: false
+    unlocked: false,
   },
 
   // Speed Achievement
@@ -41,9 +41,9 @@ export const ACHIEVEMENTS: Achievement[] = [
     rarity: 'uncommon',
     condition: {
       type: 'speed',
-      params: { maxTimeMinutes: 10 }
+      params: { maxTimeMinutes: 10 },
     },
-    unlocked: false
+    unlocked: false,
   },
 
   // Progress Milestone
@@ -56,9 +56,9 @@ export const ACHIEVEMENTS: Achievement[] = [
     rarity: 'uncommon',
     condition: {
       type: 'total_quizzes',
-      params: { count: 10 }
+      params: { count: 10 },
     },
-    unlocked: false
+    unlocked: false,
   },
 
   // Category Mastery
@@ -71,9 +71,9 @@ export const ACHIEVEMENTS: Achievement[] = [
     rarity: 'rare',
     condition: {
       type: 'category_mastery',
-      params: { uniqueCategories: 5 }
+      params: { uniqueCategories: 5 },
     },
-    unlocked: false
+    unlocked: false,
   },
 
   // Ultimate Achievement
@@ -86,25 +86,25 @@ export const ACHIEVEMENTS: Achievement[] = [
     rarity: 'epic',
     condition: {
       type: 'total_quizzes',
-      params: { count: 20, averageScore: 85 }
+      params: { count: 20, averageScore: 85 },
     },
-    unlocked: false
-  }
+    unlocked: false,
+  },
 ];
 
 export const ACHIEVEMENT_CATEGORIES = {
   'test-specific': { name: 'Test Specific', color: 'text-blue-400' },
-  'progress': { name: 'Progress', color: 'text-green-400' },
-  'performance': { name: 'Performance', color: 'text-elec-yellow' },
-  'regulation': { name: 'Regulation & Standards', color: 'text-purple-400' },
-  'milestone': { name: 'Milestone', color: 'text-orange-400' },
-  'advanced': { name: 'Advanced', color: 'text-red-400' }
+  progress: { name: 'Progress', color: 'text-green-400' },
+  performance: { name: 'Performance', color: 'text-elec-yellow' },
+  regulation: { name: 'Regulation & Standards', color: 'text-purple-400' },
+  milestone: { name: 'Milestone', color: 'text-orange-400' },
+  advanced: { name: 'Advanced', color: 'text-red-400' },
 };
 
 export const RARITY_COLORS = {
-  'common': 'text-gray-400',
-  'uncommon': 'text-green-400',
-  'rare': 'text-blue-400',
-  'epic': 'text-purple-400',
-  'legendary': 'text-elec-yellow'
+  common: 'text-gray-400',
+  uncommon: 'text-green-400',
+  rare: 'text-blue-400',
+  epic: 'text-purple-400',
+  legendary: 'text-elec-yellow',
 };

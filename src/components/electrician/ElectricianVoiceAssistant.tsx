@@ -1,6 +1,17 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useConversation } from '@elevenlabs/react';
-import { Mic, Volume2, X, Loader2, PhoneOff, AlertCircle, RefreshCw, Lightbulb, GripVertical, Minimize2 } from 'lucide-react';
+import {
+  Mic,
+  Volume2,
+  X,
+  Loader2,
+  PhoneOff,
+  AlertCircle,
+  RefreshCw,
+  Lightbulb,
+  GripVertical,
+  Minimize2,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,37 +34,37 @@ const DEFAULT_ELECTRICIAN_AGENT_ID = 'agent_0801kdxbb7hhepg80gfpgq8kgpgs';
 type ConnectionStep = 'idle' | 'mic' | 'token' | 'connecting' | 'connected' | 'error';
 
 const SECTION_DISPLAY_NAMES: Record<string, string> = {
-  'overview': 'Overview',
-  'dashboard': 'Dashboard',
-  'home': 'Home',
-  'business': 'Business Hub',
+  overview: 'Overview',
+  dashboard: 'Dashboard',
+  home: 'Home',
+  business: 'Business Hub',
   'quote-builder': 'Quote Builder',
-  'quotes': 'Quotes',
-  'invoices': 'Invoices',
+  quotes: 'Quotes',
+  invoices: 'Invoices',
   'cost-engineer': 'Cost Engineer',
   'ai-planner': 'AI Planner',
-  'customers': 'Customers',
-  'testing': 'Inspection & Testing',
-  'certificates': 'Certificates',
-  'settings': 'Settings',
+  customers: 'Customers',
+  testing: 'Inspection & Testing',
+  certificates: 'Certificates',
+  settings: 'Settings',
 };
 
 const QUICK_PROMPTS = [
-  { label: "New quote", message: "Create a new quote" },
-  { label: "My quotes", message: "Show me my recent quotes" },
-  { label: "Add labour", message: "Add labour to the quote" },
-  { label: "Calculate total", message: "What's the total?" },
+  { label: 'New quote', message: 'Create a new quote' },
+  { label: 'My quotes', message: 'Show me my recent quotes' },
+  { label: 'Add labour', message: 'Add labour to the quote' },
+  { label: 'Calculate total', message: "What's the total?" },
 ];
 
 const ROTATING_TIPS = [
-  "Create a new quote",
-  "Add 8 hours labour at £50 per hour",
-  "Add cable to materials",
+  'Create a new quote',
+  'Add 8 hours labour at £50 per hour',
+  'Add cable to materials',
   "What's the total so far?",
-  "Go to invoices",
-  "Next step",
-  "Submit the quote",
-  "Go back",
+  'Go to invoices',
+  'Next step',
+  'Submit the quote',
+  'Go back',
 ];
 
 // Dock zone at bottom center
@@ -198,7 +209,7 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       setIsConnecting(false);
       setConnectionStep('connected');
       setConnectionError('');
-      toast({ title: 'Voice Assistant Active', description: 'Speak now - I\'m listening!' });
+      toast({ title: 'Voice Assistant Active', description: "Speak now - I'm listening!" });
     },
     onDisconnect: () => {
       console.log('[ElectricianVoice] Disconnected');
@@ -215,9 +226,10 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       }
       setIsConnecting(false);
       setConnectionStep('error');
-      const errorMsg = error && typeof error === 'object' && 'message' in error
-        ? String((error as { message: unknown }).message)
-        : 'Connection failed';
+      const errorMsg =
+        error && typeof error === 'object' && 'message' in error
+          ? String((error as { message: unknown }).message)
+          : 'Connection failed';
       setConnectionError(errorMsg);
       toast({
         title: 'Voice Error',
@@ -234,7 +246,12 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
 
         // Check for voice "stop" command
         const textLower = userText.toLowerCase().trim();
-        if (textLower === 'stop' || textLower === 'stop listening' || textLower === 'end' || textLower === 'close') {
+        if (
+          textLower === 'stop' ||
+          textLower === 'stop listening' ||
+          textLower === 'end' ||
+          textLower === 'close'
+        ) {
           console.log('[ElectricianVoice] Stop command detected');
           conversation.endSession();
           setIsMinimised(true);
@@ -291,7 +308,15 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       },
 
       // Quote-specific tools
-      add_labour_item: async ({ description, hours, rate }: { description: string; hours: number; rate: number }) => {
+      add_labour_item: async ({
+        description,
+        hours,
+        rate,
+      }: {
+        description: string;
+        hours: number;
+        rate: number;
+      }) => {
         if (!formContext) return 'No form is currently open';
         const success = formContext.executeAction('add_labour_item', { description, hours, rate });
         if (success) {
@@ -301,9 +326,21 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
         return 'Cannot add labour item to this form';
       },
 
-      add_material_item: async ({ description, quantity, unitPrice }: { description: string; quantity: number; unitPrice: number }) => {
+      add_material_item: async ({
+        description,
+        quantity,
+        unitPrice,
+      }: {
+        description: string;
+        quantity: number;
+        unitPrice: number;
+      }) => {
         if (!formContext) return 'No form is currently open';
-        const success = formContext.executeAction('add_material_item', { description, quantity, unitPrice });
+        const success = formContext.executeAction('add_material_item', {
+          description,
+          quantity,
+          unitPrice,
+        });
         if (success) {
           const total = quantity * unitPrice;
           return `Added material: ${description}, ${quantity} x £${unitPrice} = £${total}`;
@@ -311,9 +348,24 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
         return 'Cannot add material item to this form';
       },
 
-      add_line_item: async ({ description, quantity, unitPrice, unit }: { description: string; quantity: number; unitPrice: number; unit?: string }) => {
+      add_line_item: async ({
+        description,
+        quantity,
+        unitPrice,
+        unit,
+      }: {
+        description: string;
+        quantity: number;
+        unitPrice: number;
+        unit?: string;
+      }) => {
         if (!formContext) return 'No form is currently open';
-        const success = formContext.executeAction('add_line_item', { description, quantity, unitPrice, unit: unit || 'each' });
+        const success = formContext.executeAction('add_line_item', {
+          description,
+          quantity,
+          unitPrice,
+          unit: unit || 'each',
+        });
         if (success) {
           const total = quantity * unitPrice;
           return `Added: ${description}, ${quantity} x £${unitPrice} = £${total}`;
@@ -355,7 +407,9 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       add_circuit: async ({ type, rating }: { type?: string; rating?: string }) => {
         if (!formContext) return 'No form is currently open';
         const success = formContext.executeAction('add_circuit', { type, rating });
-        return success ? `Added circuit${type ? ` (${type})` : ''}${rating ? ` with ${rating}A rating` : ''}` : 'Cannot add circuit to this form';
+        return success
+          ? `Added circuit${type ? ` (${type})` : ''}${rating ? ` with ${rating}A rating` : ''}`
+          : 'Cannot add circuit to this form';
       },
 
       next_circuit: async () => {
@@ -398,20 +452,50 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       set_field_all_circuits: async ({ field, value }: { field: string; value: string }) => {
         if (!formContext) return 'No form is currently open';
         const success = formContext.executeAction('set_field_all_circuits', { field, value });
-        return success ? `Set ${field} to ${value} for all circuits` : `Could not set ${field} for all circuits`;
+        return success
+          ? `Set ${field} to ${value} for all circuits`
+          : `Could not set ${field} for all circuits`;
       },
 
-      set_circuit_field: async ({ circuit_number, field, value }: { circuit_number: number; field: string; value: string }) => {
+      set_circuit_field: async ({
+        circuit_number,
+        field,
+        value,
+      }: {
+        circuit_number: number;
+        field: string;
+        value: string;
+      }) => {
         if (!formContext) return 'No form is currently open';
-        const success = formContext.executeAction('set_circuit_field', { circuit_number, field, value });
-        return success ? `Set circuit ${circuit_number} ${field} to ${value}` : `Could not update circuit ${circuit_number}`;
+        const success = formContext.executeAction('set_circuit_field', {
+          circuit_number,
+          field,
+          value,
+        });
+        return success
+          ? `Set circuit ${circuit_number} ${field} to ${value}`
+          : `Could not update circuit ${circuit_number}`;
       },
 
-      set_multiple_fields: async (params: { circuit_number?: number; zs?: string; r1r2?: string; polarity?: string; insulationTestVoltage?: string; insulationLiveEarth?: string; insulationLiveNeutral?: string; rcdOneX?: string; pfc?: string }) => {
+      set_multiple_fields: async (params: {
+        circuit_number?: number;
+        zs?: string;
+        r1r2?: string;
+        polarity?: string;
+        insulationTestVoltage?: string;
+        insulationLiveEarth?: string;
+        insulationLiveNeutral?: string;
+        rcdOneX?: string;
+        pfc?: string;
+      }) => {
         if (!formContext) return 'No form is currently open';
         const success = formContext.executeAction('set_multiple_fields', params);
-        const fieldCount = Object.keys(params).filter(k => k !== 'circuit_number' && params[k as keyof typeof params]).length;
-        return success ? `Updated ${fieldCount} fields${params.circuit_number ? ` on circuit ${params.circuit_number}` : ''}` : 'Could not update fields';
+        const fieldCount = Object.keys(params).filter(
+          (k) => k !== 'circuit_number' && params[k as keyof typeof params]
+        ).length;
+        return success
+          ? `Updated ${fieldCount} fields${params.circuit_number ? ` on circuit ${params.circuit_number}` : ''}`
+          : 'Could not update fields';
       },
 
       get_circuits_status: async () => {
@@ -427,16 +511,45 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
         return success ? `Selected ${board} board` : `Could not find board: ${board}`;
       },
 
-      add_circuit_to_board: async ({ board, type, rating, description }: { board: string; type?: string; rating?: string; description?: string }) => {
+      add_circuit_to_board: async ({
+        board,
+        type,
+        rating,
+        description,
+      }: {
+        board: string;
+        type?: string;
+        rating?: string;
+        description?: string;
+      }) => {
         if (!formContext) return 'No form is currently open';
-        const success = formContext.executeAction('add_circuit_to_board', { board, type, rating, description });
+        const success = formContext.executeAction('add_circuit_to_board', {
+          board,
+          type,
+          rating,
+          description,
+        });
         return success ? `Added circuit to ${board}` : `Could not add circuit to ${board}`;
       },
 
-      set_board_field_all_circuits: async ({ board, field, value }: { board: string; field: string; value: string }) => {
+      set_board_field_all_circuits: async ({
+        board,
+        field,
+        value,
+      }: {
+        board: string;
+        field: string;
+        value: string;
+      }) => {
         if (!formContext) return 'No form is currently open';
-        const success = formContext.executeAction('set_board_field_all_circuits', { board, field, value });
-        return success ? `Set ${field} to ${value} for all circuits on ${board}` : `Could not update ${board} circuits`;
+        const success = formContext.executeAction('set_board_field_all_circuits', {
+          board,
+          field,
+          value,
+        });
+        return success
+          ? `Set ${field} to ${value} for all circuits on ${board}`
+          : `Could not update ${board} circuits`;
       },
 
       get_board_status: async ({ board }: { board?: string }) => {
@@ -452,17 +565,34 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       },
 
       // Query tools for electrician
-      get_quote_info: async ({ client, status }: { client?: string; status?: string }) => executeServerTool('get_quote_info', { client, status }),
-      get_invoice_info: async ({ client, status }: { client?: string; status?: string }) => executeServerTool('get_invoice_info', { client, status }),
+      get_quote_info: async ({ client, status }: { client?: string; status?: string }) =>
+        executeServerTool('get_quote_info', { client, status }),
+      get_invoice_info: async ({ client, status }: { client?: string; status?: string }) =>
+        executeServerTool('get_invoice_info', { client, status }),
       get_overdue_invoices: async () => executeServerTool('get_overdue_invoices', {}),
-      lookup_price: async ({ searchTerm }: { searchTerm: string }) => executeServerTool('lookup_price', { searchTerm }),
+      lookup_price: async ({ searchTerm }: { searchTerm: string }) =>
+        executeServerTool('lookup_price', { searchTerm }),
 
       // Quote/Invoice send tools
-      send_quote: async ({ quoteId, clientName, quoteNumber }: { quoteId?: string; clientName?: string; quoteNumber?: string }) =>
-        executeServerTool('send_quote', { quoteId, clientName, quoteNumber }),
+      send_quote: async ({
+        quoteId,
+        clientName,
+        quoteNumber,
+      }: {
+        quoteId?: string;
+        clientName?: string;
+        quoteNumber?: string;
+      }) => executeServerTool('send_quote', { quoteId, clientName, quoteNumber }),
 
-      send_invoice: async ({ invoiceId, clientName, invoiceNumber }: { invoiceId?: string; clientName?: string; invoiceNumber?: string }) =>
-        executeServerTool('send_invoice', { invoiceId, clientName, invoiceNumber }),
+      send_invoice: async ({
+        invoiceId,
+        clientName,
+        invoiceNumber,
+      }: {
+        invoiceId?: string;
+        clientName?: string;
+        invoiceNumber?: string;
+      }) => executeServerTool('send_invoice', { invoiceId, clientName, invoiceNumber }),
 
       create_and_send_quote: async (params: {
         clientName: string;
@@ -476,12 +606,21 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
         vatPercent?: number;
       }) => executeServerTool('create_and_send_quote', params),
 
-      create_and_send_invoice: async ({ quoteId, clientName, quoteNumber }: { quoteId?: string; clientName?: string; quoteNumber?: string }) =>
-        executeServerTool('create_and_send_invoice', { quoteId, clientName, quoteNumber }),
+      create_and_send_invoice: async ({
+        quoteId,
+        clientName,
+        quoteNumber,
+      }: {
+        quoteId?: string;
+        clientName?: string;
+        quoteNumber?: string;
+      }) => executeServerTool('create_and_send_invoice', { quoteId, clientName, quoteNumber }),
 
       // Certificate query tools
-      get_cert_info: async ({ certNumber, status }: { certNumber?: string; status?: string }) => executeServerTool('get_cert_info', { certNumber, status }),
-      get_recent_certificates: async ({ days }: { days?: number }) => executeServerTool('get_recent_certificates', { days: days || 30 }),
+      get_cert_info: async ({ certNumber, status }: { certNumber?: string; status?: string }) =>
+        executeServerTool('get_cert_info', { certNumber, status }),
+      get_recent_certificates: async ({ days }: { days?: number }) =>
+        executeServerTool('get_recent_certificates', { days: days || 30 }),
     },
   });
 
@@ -510,66 +649,75 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
   }, [conversation.status, conversation.isSpeaking]);
 
   // Handle quick prompt click
-  const handleQuickPrompt = useCallback((message: string) => {
-    if (conversation.status === 'connected') {
-      conversation.sendUserMessage(message);
-      setTranscript(message);
-    }
-  }, [conversation]);
+  const handleQuickPrompt = useCallback(
+    (message: string) => {
+      if (conversation.status === 'connected') {
+        conversation.sendUserMessage(message);
+        setTranscript(message);
+      }
+    },
+    [conversation]
+  );
 
   // Drag handlers
-  const handleDragStart = useCallback((clientX: number, clientY: number) => {
-    if (isDocked) return;
+  const handleDragStart = useCallback(
+    (clientX: number, clientY: number) => {
+      if (isDocked) return;
 
-    const fab = fabRef.current;
-    if (!fab) return;
+      const fab = fabRef.current;
+      if (!fab) return;
 
-    const rect = fab.getBoundingClientRect();
-    setIsDragging(true);
-    setStartPos({ x: clientX, y: clientY });
-    setDragOffset({
-      x: clientX - rect.left,
-      y: clientY - rect.top,
-    });
-    hasDraggedRef.current = false; // Reset drag tracking on new interaction
-  }, [isDocked]);
+      const rect = fab.getBoundingClientRect();
+      setIsDragging(true);
+      setStartPos({ x: clientX, y: clientY });
+      setDragOffset({
+        x: clientX - rect.left,
+        y: clientY - rect.top,
+      });
+      hasDraggedRef.current = false; // Reset drag tracking on new interaction
+    },
+    [isDocked]
+  );
 
-  const handleDragMove = useCallback((clientX: number, clientY: number) => {
-    if (!isDragging) return;
+  const handleDragMove = useCallback(
+    (clientX: number, clientY: number) => {
+      if (!isDragging) return;
 
-    // Mark that actual dragging occurred (fixes first-click bug)
-    hasDraggedRef.current = true;
+      // Mark that actual dragging occurred (fixes first-click bug)
+      hasDraggedRef.current = true;
 
-    const newX = clientX - dragOffset.x;
-    const newY = clientY - dragOffset.y;
+      const newX = clientX - dragOffset.x;
+      const newY = clientY - dragOffset.y;
 
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
 
-    const dockLeft = (screenWidth - DOCK_ZONE.width) / 2;
-    const dockRight = dockLeft + DOCK_ZONE.width;
-    const dockTop = screenHeight - DOCK_ZONE.height;
+      const dockLeft = (screenWidth - DOCK_ZONE.width) / 2;
+      const dockRight = dockLeft + DOCK_ZONE.width;
+      const dockTop = screenHeight - DOCK_ZONE.height;
 
-    const dismissRight = DISMISS_ZONE.width;
-    const dismissTop = screenHeight - DISMISS_ZONE.height;
+      const dismissRight = DISMISS_ZONE.width;
+      const dismissTop = screenHeight - DISMISS_ZONE.height;
 
-    const centerX = newX + 28;
-    const centerY = newY + 28;
+      const centerX = newX + 28;
+      const centerY = newY + 28;
 
-    const inDock = centerX >= dockLeft && centerX <= dockRight && centerY >= dockTop;
-    const inDismiss = centerX <= dismissRight && centerY >= dismissTop;
+      const inDock = centerX >= dockLeft && centerX <= dockRight && centerY >= dockTop;
+      const inDismiss = centerX <= dismissRight && centerY >= dismissTop;
 
-    setIsInDockZone(inDock && !inDismiss);
-    setIsInDismissZone(inDismiss);
+      setIsInDockZone(inDock && !inDismiss);
+      setIsInDismissZone(inDismiss);
 
-    const maxX = screenWidth - 56;
-    const maxY = screenHeight - 56;
+      const maxX = screenWidth - 56;
+      const maxY = screenHeight - 56;
 
-    setPosition({
-      x: Math.max(0, Math.min(newX, maxX)),
-      y: Math.max(0, Math.min(newY, maxY)),
-    });
-  }, [isDragging, dragOffset]);
+      setPosition({
+        x: Math.max(0, Math.min(newX, maxX)),
+        y: Math.max(0, Math.min(newY, maxY)),
+      });
+    },
+    [isDragging, dragOffset]
+  );
 
   const handleDragEnd = useCallback(() => {
     if (!isDragging) return;
@@ -591,10 +739,13 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
   }, [isDragging, isInDockZone, isInDismissZone, toast]);
 
   // Mouse events
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    handleDragStart(e.clientX, e.clientY);
-  }, [handleDragStart]);
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      handleDragStart(e.clientX, e.clientY);
+    },
+    [handleDragStart]
+  );
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -617,17 +768,23 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
   }, [isDragging, handleDragMove, handleDragEnd]);
 
   // Touch events
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length === 1) {
-      handleDragStart(e.touches[0].clientX, e.touches[0].clientY);
-    }
-  }, [handleDragStart]);
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (e.touches.length === 1) {
+        handleDragStart(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    },
+    [handleDragStart]
+  );
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length === 1) {
-      handleDragMove(e.touches[0].clientX, e.touches[0].clientY);
-    }
-  }, [handleDragMove]);
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      if (e.touches.length === 1) {
+        handleDragMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    },
+    [handleDragMove]
+  );
 
   const handleTouchEnd = useCallback(() => {
     handleDragEnd();
@@ -754,23 +911,51 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       <>
         {isDragging && (
           <>
-            <div className={cn(
-              "fixed bottom-0 left-0 w-[80px] h-[80px] rounded-tr-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40",
-              isInDismissZone
-                ? "border-red-500 bg-red-500/20 scale-110"
-                : "border-muted-foreground/30 bg-muted/20"
-            )}>
-              <X className={cn("h-6 w-6", isInDismissZone ? "text-red-500" : "text-muted-foreground/50")} />
-              <span className={cn("text-[10px] font-medium", isInDismissZone ? "text-red-500" : "text-muted-foreground/50")}>Hide</span>
+            <div
+              className={cn(
+                'fixed bottom-0 left-0 w-[80px] h-[80px] rounded-tr-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40',
+                isInDismissZone
+                  ? 'border-red-500 bg-red-500/20 scale-110'
+                  : 'border-muted-foreground/30 bg-muted/20'
+              )}
+            >
+              <X
+                className={cn(
+                  'h-6 w-6',
+                  isInDismissZone ? 'text-red-500' : 'text-muted-foreground/50'
+                )}
+              />
+              <span
+                className={cn(
+                  'text-[10px] font-medium',
+                  isInDismissZone ? 'text-red-500' : 'text-muted-foreground/50'
+                )}
+              >
+                Hide
+              </span>
             </div>
-            <div className={cn(
-              "fixed bottom-0 left-1/2 -translate-x-1/2 w-[120px] h-[80px] rounded-t-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40",
-              isInDockZone
-                ? "border-elec-yellow bg-elec-yellow/20 scale-110"
-                : "border-muted-foreground/30 bg-muted/20"
-            )}>
-              <Minimize2 className={cn("h-6 w-6", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")} />
-              <span className={cn("text-[10px] font-medium", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")}>Dock</span>
+            <div
+              className={cn(
+                'fixed bottom-0 left-1/2 -translate-x-1/2 w-[120px] h-[80px] rounded-t-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40',
+                isInDockZone
+                  ? 'border-elec-yellow bg-elec-yellow/20 scale-110'
+                  : 'border-muted-foreground/30 bg-muted/20'
+              )}
+            >
+              <Minimize2
+                className={cn(
+                  'h-6 w-6',
+                  isInDockZone ? 'text-elec-yellow' : 'text-muted-foreground/50'
+                )}
+              />
+              <span
+                className={cn(
+                  'text-[10px] font-medium',
+                  isInDockZone ? 'text-elec-yellow' : 'text-muted-foreground/50'
+                )}
+              >
+                Dock
+              </span>
             </div>
           </>
         )}
@@ -784,64 +969,92 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
             });
           }}
           className={cn(
-            "fixed bottom-4 left-1/2 -translate-x-1/2 z-50",
-            "h-10 px-4 rounded-full",
-            "flex items-center gap-2",
-            "bg-elec-gray/90 backdrop-blur border border-elec-yellow/30",
-            "shadow-lg hover:bg-elec-gray transition-all duration-200",
-            "touch-feedback",
-            isConnected && "border-green-500/50"
+            'fixed bottom-4 left-1/2 -translate-x-1/2 z-50',
+            'h-10 px-4 rounded-full',
+            'flex items-center gap-2',
+            'bg-elec-gray/90 backdrop-blur border border-elec-yellow/30',
+            'shadow-lg hover:bg-elec-gray transition-all duration-200',
+            'touch-feedback',
+            isConnected && 'border-green-500/50'
           )}
         >
-          <div className={cn(
-            "h-2 w-2 rounded-full",
-            isConnected ? "bg-green-500 animate-pulse" : "bg-muted-foreground"
-          )} />
-          <Mic className={cn(
-            "h-4 w-4",
-            isConnected ? "text-green-500" : "text-elec-yellow"
-          )} />
+          <div
+            className={cn(
+              'h-2 w-2 rounded-full',
+              isConnected ? 'bg-green-500 animate-pulse' : 'bg-muted-foreground'
+            )}
+          />
+          <Mic className={cn('h-4 w-4', isConnected ? 'text-green-500' : 'text-elec-yellow')} />
           <span className="text-xs font-medium text-foreground">Voice</span>
         </button>
       </>
     );
   }
 
-  const fabStyle: React.CSSProperties = isDragging || position.x !== 0 || position.y !== 0
-    ? {
-        position: 'fixed',
-        left: position.x,
-        top: position.y,
-        right: 'auto',
-        bottom: 'auto',
-      }
-    : {
-        position: 'fixed',
-        right: 16,
-        bottom: 80,
-      };
+  const fabStyle: React.CSSProperties =
+    isDragging || position.x !== 0 || position.y !== 0
+      ? {
+          position: 'fixed',
+          left: position.x,
+          top: position.y,
+          right: 'auto',
+          bottom: 'auto',
+        }
+      : {
+          position: 'fixed',
+          right: 16,
+          bottom: 80,
+        };
 
   return (
     <>
       {isDragging && (
         <>
-          <div className={cn(
-            "fixed bottom-0 left-0 w-[80px] h-[80px] rounded-tr-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40",
-            isInDismissZone
-              ? "border-red-500 bg-red-500/20 scale-110"
-              : "border-muted-foreground/30 bg-muted/20"
-          )}>
-            <X className={cn("h-6 w-6", isInDismissZone ? "text-red-500" : "text-muted-foreground/50")} />
-            <span className={cn("text-[10px] font-medium", isInDismissZone ? "text-red-500" : "text-muted-foreground/50")}>Hide</span>
+          <div
+            className={cn(
+              'fixed bottom-0 left-0 w-[80px] h-[80px] rounded-tr-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40',
+              isInDismissZone
+                ? 'border-red-500 bg-red-500/20 scale-110'
+                : 'border-muted-foreground/30 bg-muted/20'
+            )}
+          >
+            <X
+              className={cn(
+                'h-6 w-6',
+                isInDismissZone ? 'text-red-500' : 'text-muted-foreground/50'
+              )}
+            />
+            <span
+              className={cn(
+                'text-[10px] font-medium',
+                isInDismissZone ? 'text-red-500' : 'text-muted-foreground/50'
+              )}
+            >
+              Hide
+            </span>
           </div>
-          <div className={cn(
-            "fixed bottom-0 left-1/2 -translate-x-1/2 w-[120px] h-[80px] rounded-t-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40",
-            isInDockZone
-              ? "border-elec-yellow bg-elec-yellow/20 scale-110"
-              : "border-muted-foreground/30 bg-muted/20"
-          )}>
-            <Minimize2 className={cn("h-6 w-6", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")} />
-            <span className={cn("text-[10px] font-medium", isInDockZone ? "text-elec-yellow" : "text-muted-foreground/50")}>Dock</span>
+          <div
+            className={cn(
+              'fixed bottom-0 left-1/2 -translate-x-1/2 w-[120px] h-[80px] rounded-t-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1 z-40',
+              isInDockZone
+                ? 'border-elec-yellow bg-elec-yellow/20 scale-110'
+                : 'border-muted-foreground/30 bg-muted/20'
+            )}
+          >
+            <Minimize2
+              className={cn(
+                'h-6 w-6',
+                isInDockZone ? 'text-elec-yellow' : 'text-muted-foreground/50'
+              )}
+            />
+            <span
+              className={cn(
+                'text-[10px] font-medium',
+                isInDockZone ? 'text-elec-yellow' : 'text-muted-foreground/50'
+              )}
+            >
+              Dock
+            </span>
           </div>
         </>
       )}
@@ -865,25 +1078,34 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
 
         {/* Full Panel - Desktop or mobile when not connected */}
         {!isMinimised && (!isMobile || !isConnected) && (
-          <div className={cn(
-            "absolute rounded-2xl bg-card border border-border shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4",
-            // Mobile: full width with safe margins, positioned above FAB
-            "w-[calc(100vw-24px)] left-1/2 -translate-x-1/2 bottom-[72px]",
-            // Desktop: fixed width positioned to the right
-            "sm:w-80 sm:left-auto sm:translate-x-0 sm:right-0 sm:bottom-16",
-            // Max height for scrollable content
-            "max-h-[60vh]"
-          )}>
+          <div
+            className={cn(
+              'absolute rounded-2xl bg-card border border-border shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4',
+              // Mobile: full width with safe margins, positioned above FAB
+              'w-[calc(100vw-24px)] left-1/2 -translate-x-1/2 bottom-[72px]',
+              // Desktop: fixed width positioned to the right
+              'sm:w-80 sm:left-auto sm:translate-x-0 sm:right-0 sm:bottom-16',
+              // Max height for scrollable content
+              'max-h-[60vh]'
+            )}
+          >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-elec-yellow/10 border-b border-border">
               <div className="flex items-center gap-2">
-                <div className={cn(
-                  "h-2 w-2 rounded-full",
-                  isConnected ? "bg-green-500 animate-pulse" : "bg-muted-foreground"
-                )} />
+                <div
+                  className={cn(
+                    'h-2 w-2 rounded-full',
+                    isConnected ? 'bg-green-500 animate-pulse' : 'bg-muted-foreground'
+                  )}
+                />
                 <span className="text-sm font-medium">Voice Assistant</span>
               </div>
-              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setIsMinimised(true)}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => setIsMinimised(true)}
+              >
                 <X className="h-4 w-4" />
               </Button>
             </div>
@@ -913,7 +1135,9 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
                   <AlertCircle className="h-8 w-8 text-destructive" />
                   <div className="text-center">
                     <p className="text-sm font-medium text-foreground">Connection Failed</p>
-                    <p className="text-xs text-muted-foreground mt-1">{connectionError || 'Please try again'}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {connectionError || 'Please try again'}
+                    </p>
                   </div>
                   <Button onClick={startConversation} size="sm" variant="outline" className="gap-2">
                     <RefreshCw className="h-4 w-4" />
@@ -925,12 +1149,14 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
               {isConnected && (
                 <>
                   <div className="flex items-center justify-center gap-2 py-2">
-                    <div className={cn(
-                      "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium",
-                      conversation.isSpeaking
-                        ? "bg-elec-yellow/10 text-elec-yellow"
-                        : "bg-green-500/10 text-green-600"
-                    )}>
+                    <div
+                      className={cn(
+                        'flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium',
+                        conversation.isSpeaking
+                          ? 'bg-elec-yellow/10 text-elec-yellow'
+                          : 'bg-green-500/10 text-green-600'
+                      )}
+                    >
                       {conversation.isSpeaking ? (
                         <>
                           <Volume2 className="h-3 w-3 animate-pulse" />
@@ -995,9 +1221,7 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
               {!isConnected && !isConnecting && connectionStep !== 'error' && (
                 <div className="flex flex-col items-center justify-center py-6 gap-2">
                   <Mic className="h-8 w-8 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground text-center">
-                    Tap Start to begin
-                  </p>
+                  <p className="text-sm text-muted-foreground text-center">Tap Start to begin</p>
                 </div>
               )}
             </div>
@@ -1051,13 +1275,13 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
           }}
           size="lg"
           className={cn(
-            "h-14 w-14 rounded-full shadow-lg transition-all select-none",
+            'h-14 w-14 rounded-full shadow-lg transition-all select-none',
             isConnected
-              ? "bg-green-600 hover:bg-green-700"
-              : "bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark",
-            conversation.isSpeaking && "ring-4 ring-elec-yellow/30",
-            isDragging && "cursor-grabbing scale-110 opacity-90",
-            !isDragging && "cursor-grab"
+              ? 'bg-green-600 hover:bg-green-700'
+              : 'bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark',
+            conversation.isSpeaking && 'ring-4 ring-elec-yellow/30',
+            isDragging && 'cursor-grabbing scale-110 opacity-90',
+            !isDragging && 'cursor-grab'
           )}
         >
           {isDragging ? (

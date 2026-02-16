@@ -1,69 +1,85 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Power over Ethernet (PoE) Applications | Data Cabling Module 5.4";
-const DESCRIPTION = "Understanding PoE standards, power delivery systems, and cable infrastructure requirements for power and data integration.";
+const TITLE = 'Power over Ethernet (PoE) Applications | Data Cabling Module 5.4';
+const DESCRIPTION =
+  'Understanding PoE standards, power delivery systems, and cable infrastructure requirements for power and data integration.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m5s4-check1",
-    question: "What is the maximum power delivery for IEEE 802.3bt Type 4 (PoE++)?",
-    options: ["30W", "60W", "90W", "120W"],
+    id: 'datacabling-m5s4-check1',
+    question: 'What is the maximum power delivery for IEEE 802.3bt Type 4 (PoE++)?',
+    options: ['30W', '60W', '90W', '120W'],
     correctIndex: 2,
-    explanation: "IEEE 802.3bt Type 4 can deliver up to 90W at the PSE (Power Sourcing Equipment), with approximately 71W available at the powered device after cable losses."
+    explanation:
+      'IEEE 802.3bt Type 4 can deliver up to 90W at the PSE (Power Sourcing Equipment), with approximately 71W available at the powered device after cable losses.',
   },
   {
-    id: "datacabling-m5s4-check2",
-    question: "How many pairs are used for power delivery in IEEE 802.3bt (4-pair PoE)?",
-    options: ["1 pair", "2 pairs", "3 pairs", "All 4 pairs"],
+    id: 'datacabling-m5s4-check2',
+    question: 'How many pairs are used for power delivery in IEEE 802.3bt (4-pair PoE)?',
+    options: ['1 pair', '2 pairs', '3 pairs', 'All 4 pairs'],
     correctIndex: 3,
-    explanation: "IEEE 802.3bt uses all four pairs for power delivery, distributing current across more conductors to manage heat generation and enable higher power levels."
+    explanation:
+      'IEEE 802.3bt uses all four pairs for power delivery, distributing current across more conductors to manage heat generation and enable higher power levels.',
   },
   {
-    id: "datacabling-m5s4-check3",
-    question: "What is the primary cable consideration for high-power PoE in bundled installations?",
-    options: ["Cable colour", "Temperature rise and derating", "Connector type", "Cable length only"],
+    id: 'datacabling-m5s4-check3',
+    question:
+      'What is the primary cable consideration for high-power PoE in bundled installations?',
+    options: [
+      'Cable colour',
+      'Temperature rise and derating',
+      'Connector type',
+      'Cable length only',
+    ],
     correctIndex: 1,
-    explanation: "High-power PoE causes temperature rise in cables. When multiple PoE cables are bundled together, power derating may be required to prevent overheating and ensure safe operation."
-  }
+    explanation:
+      'High-power PoE causes temperature rise in cables. When multiple PoE cables are bundled together, power derating may be required to prevent overheating and ensure safe operation.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I use existing Cat 5e cabling for PoE?",
-    answer: "Yes, standard PoE (802.3af, 15.4W) and PoE+ (802.3at, 25.5W) work on Cat 5e. However, for high-power PoE++ (802.3bt), Cat 6A is recommended due to better thermal performance and lower resistance in bundled installations."
+    question: 'Can I use existing Cat 5e cabling for PoE?',
+    answer:
+      'Yes, standard PoE (802.3af, 15.4W) and PoE+ (802.3at, 25.5W) work on Cat 5e. However, for high-power PoE++ (802.3bt), Cat 6A is recommended due to better thermal performance and lower resistance in bundled installations.',
   },
   {
-    question: "Why does PoE++ need all four pairs?",
-    answer: "Using all four pairs distributes the current across more conductors, reducing heat generation per pair. This enables the higher power levels (60-90W) without exceeding safe cable temperatures, especially important in bundled cable runs."
+    question: 'Why does PoE++ need all four pairs?',
+    answer:
+      'Using all four pairs distributes the current across more conductors, reducing heat generation per pair. This enables the higher power levels (60-90W) without exceeding safe cable temperatures, especially important in bundled cable runs.',
   },
   {
     question: "What happens if my PSE doesn't have enough power budget?",
-    answer: "The PSE will prioritise based on port settings or refuse to power lower-priority devices. Always calculate total power requirements plus 20% headroom when sizing PoE switches or midspan injectors."
+    answer:
+      'The PSE will prioritise based on port settings or refuse to power lower-priority devices. Always calculate total power requirements plus 20% headroom when sizing PoE switches or midspan injectors.',
   },
   {
-    question: "Do I need special patch cords for PoE?",
-    answer: "Standard patch cords work for most PoE applications. However, for PoE++ (60-90W) ensure patch cords meet category specifications and have quality connectors. Poor connections increase resistance and heat generation."
-  }
+    question: 'Do I need special patch cords for PoE?',
+    answer:
+      'Standard patch cords work for most PoE applications. However, for PoE++ (60-90W) ensure patch cords meet category specifications and have quality connectors. Poor connections increase resistance and heat generation.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A building has 48 wireless access points requiring 25W each. The infrastructure uses Cat 6A with cables bundled in groups of 12. What power delivery consideration is most important?",
-  options: [
-    "Total switch power budget only",
-    "Cable derating for bundled high-power PoE",
-    "Using the shortest patch cords possible",
-    "Selecting the right colour cables"
-  ],
-  correctAnswer: 1,
-  explanation: "With 12 cables bundled carrying 25W each, cable derating for thermal management is critical. Bundles of 7+ PoE cables require power derating (typically 15-20% for Cat 6A) to prevent overheating and maintain safe operation."
-  }
+    question:
+      'A building has 48 wireless access points requiring 25W each. The infrastructure uses Cat 6A with cables bundled in groups of 12. What power delivery consideration is most important?',
+    options: [
+      'Total switch power budget only',
+      'Cable derating for bundled high-power PoE',
+      'Using the shortest patch cords possible',
+      'Selecting the right colour cables',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'With 12 cables bundled carrying 25W each, cable derating for thermal management is critical. Bundles of 7+ PoE cables require power derating (typically 15-20% for Cat 6A) to prevent overheating and maintain safe operation.',
+  },
 ];
 
 const DataCablingModule5Section4 = () => {
@@ -108,16 +124,26 @@ const DataCablingModule5Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>PoE:</strong> 15.4W (802.3af) - IP phones, basic cameras</li>
-              <li><strong>PoE+:</strong> 25.5W (802.3at) - PTZ cameras, access points</li>
-              <li><strong>PoE++:</strong> 60-90W (802.3bt) - LED lights, laptops</li>
+              <li>
+                <strong>PoE:</strong> 15.4W (802.3af) - IP phones, basic cameras
+              </li>
+              <li>
+                <strong>PoE+:</strong> 25.5W (802.3at) - PTZ cameras, access points
+              </li>
+              <li>
+                <strong>PoE++:</strong> 60-90W (802.3bt) - LED lights, laptops
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Device wattage label, PSE power budget</li>
-              <li><strong>Use:</strong> Cat 6A for high-power, calculate bundle derating</li>
+              <li>
+                <strong>Spot:</strong> Device wattage label, PSE power budget
+              </li>
+              <li>
+                <strong>Use:</strong> Cat 6A for high-power, calculate bundle derating
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +153,12 @@ const DataCablingModule5Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand PoE standards and power levels",
-              "Select appropriate cable for PoE applications",
-              "Calculate power budgets for installations",
-              "Apply cable derating for bundled runs",
-              "Design thermal management strategies",
-              "Troubleshoot PoE connectivity issues"
+              'Understand PoE standards and power levels',
+              'Select appropriate cable for PoE applications',
+              'Calculate power budgets for installations',
+              'Apply cable derating for bundled runs',
+              'Design thermal management strategies',
+              'Troubleshoot PoE connectivity issues',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -152,29 +178,49 @@ const DataCablingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Power over Ethernet has evolved through multiple IEEE standards to support increasingly
-              demanding applications whilst maintaining backward compatibility.
+              Power over Ethernet has evolved through multiple IEEE standards to support
+              increasingly demanding applications whilst maintaining backward compatibility.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Original Standards</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>802.3af (2003):</strong> 15.4W at PSE, 12.95W at PD</li>
-                  <li><strong>Voltage:</strong> 44-57V DC, nominal 48V</li>
-                  <li><strong>Current:</strong> 350mA max per pair</li>
-                  <li><strong>Pairs used:</strong> 2 pairs (Alternative A or B)</li>
-                  <li><strong>Applications:</strong> IP phones, basic cameras</li>
+                  <li>
+                    <strong>802.3af (2003):</strong> 15.4W at PSE, 12.95W at PD
+                  </li>
+                  <li>
+                    <strong>Voltage:</strong> 44-57V DC, nominal 48V
+                  </li>
+                  <li>
+                    <strong>Current:</strong> 350mA max per pair
+                  </li>
+                  <li>
+                    <strong>Pairs used:</strong> 2 pairs (Alternative A or B)
+                  </li>
+                  <li>
+                    <strong>Applications:</strong> IP phones, basic cameras
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modern Standards</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>802.3at (2009):</strong> 25.5W (PoE+)</li>
-                  <li><strong>802.3bt Type 3:</strong> 60W (4-pair PoE)</li>
-                  <li><strong>802.3bt Type 4:</strong> 90W (PoE++)</li>
-                  <li><strong>4-pair benefit:</strong> Current distributed across all conductors</li>
-                  <li><strong>Applications:</strong> Wi-Fi 6 APs, LED lighting, laptops</li>
+                  <li>
+                    <strong>802.3at (2009):</strong> 25.5W (PoE+)
+                  </li>
+                  <li>
+                    <strong>802.3bt Type 3:</strong> 60W (4-pair PoE)
+                  </li>
+                  <li>
+                    <strong>802.3bt Type 4:</strong> 90W (PoE++)
+                  </li>
+                  <li>
+                    <strong>4-pair benefit:</strong> Current distributed across all conductors
+                  </li>
+                  <li>
+                    <strong>Applications:</strong> Wi-Fi 6 APs, LED lighting, laptops
+                  </li>
                 </ul>
               </div>
             </div>
@@ -211,7 +257,9 @@ const DataCablingModule5Section4 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Power Delivery Methods:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Power Delivery Methods:
+              </p>
               <div className="grid sm:grid-cols-3 gap-4 mt-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Alternative A</p>
@@ -243,10 +291,18 @@ const DataCablingModule5Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Detection sequence:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1. Detection:</strong> PSE applies 2.8-10V, checks for 25kΩ signature</li>
-                <li><strong>2. Classification:</strong> Measures current draw to determine class</li>
-                <li><strong>3. Power enable:</strong> Ramps to 48V with inrush limiting</li>
-                <li><strong>4. Monitoring:</strong> Continuous current checking for disconnect</li>
+                <li>
+                  <strong>1. Detection:</strong> PSE applies 2.8-10V, checks for 25kΩ signature
+                </li>
+                <li>
+                  <strong>2. Classification:</strong> Measures current draw to determine class
+                </li>
+                <li>
+                  <strong>3. Power enable:</strong> Ramps to 48V with inrush limiting
+                </li>
+                <li>
+                  <strong>4. Monitoring:</strong> Continuous current checking for disconnect
+                </li>
               </ul>
             </div>
           </div>
@@ -262,33 +318,55 @@ const DataCablingModule5Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Higher power PoE creates thermal management challenges, particularly in bundled
-              cable runs where heat accumulation can affect performance and safety.
+              Higher power PoE creates thermal management challenges, particularly in bundled cable
+              runs where heat accumulation can affect performance and safety.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Temperature Rise</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Cable Temperature Rise
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Cat 5e (24 AWG):</strong> ~15°C at full PoE+</li>
-                  <li><strong>Cat 6 (23 AWG):</strong> ~12°C at full PoE+</li>
-                  <li><strong>Cat 6A (23 AWG):</strong> ~10°C at full PoE+</li>
-                  <li><strong>Bundle effect:</strong> Multiply by derating factor</li>
+                  <li>
+                    <strong>Cat 5e (24 AWG):</strong> ~15°C at full PoE+
+                  </li>
+                  <li>
+                    <strong>Cat 6 (23 AWG):</strong> ~12°C at full PoE+
+                  </li>
+                  <li>
+                    <strong>Cat 6A (23 AWG):</strong> ~10°C at full PoE+
+                  </li>
+                  <li>
+                    <strong>Bundle effect:</strong> Multiply by derating factor
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Bundle Derating Guidelines</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Bundle Derating Guidelines
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>1-6 cables:</strong> No derating required</li>
-                  <li><strong>7-12 cables:</strong> 20% power reduction</li>
-                  <li><strong>13-24 cables:</strong> 30% power reduction</li>
-                  <li><strong>25+ cables:</strong> 40% power reduction</li>
+                  <li>
+                    <strong>1-6 cables:</strong> No derating required
+                  </li>
+                  <li>
+                    <strong>7-12 cables:</strong> 20% power reduction
+                  </li>
+                  <li>
+                    <strong>13-24 cables:</strong> 30% power reduction
+                  </li>
+                  <li>
+                    <strong>25+ cables:</strong> 40% power reduction
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Thermal management best practices:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Thermal management best practices:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Use Cat 6A for high-power PoE applications</li>
                 <li>Maintain cable separation where possible</li>
@@ -307,7 +385,9 @@ const DataCablingModule5Section4 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Design Considerations</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Design Considerations
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Calculate total power budget including 20% headroom</li>
                 <li>Consider device startup inrush currents</li>
@@ -319,11 +399,21 @@ const DataCablingModule5Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Underestimating power:</strong> — Not accounting for all devices</li>
-                <li><strong>Ignoring bundles:</strong> — No derating for grouped cables</li>
-                <li><strong>Wrong cable:</strong> — Cat 5e for high-power applications</li>
-                <li><strong>Poor connections:</strong> — High resistance causes overheating</li>
-                <li><strong>No UPS planning:</strong> — PoE devices lose power in outage</li>
+                <li>
+                  <strong>Underestimating power:</strong> — Not accounting for all devices
+                </li>
+                <li>
+                  <strong>Ignoring bundles:</strong> — No derating for grouped cables
+                </li>
+                <li>
+                  <strong>Wrong cable:</strong> — Cat 5e for high-power applications
+                </li>
+                <li>
+                  <strong>Poor connections:</strong> — High resistance causes overheating
+                </li>
+                <li>
+                  <strong>No UPS planning:</strong> — PoE devices lose power in outage
+                </li>
               </ul>
             </div>
           </div>
@@ -369,10 +459,7 @@ const DataCablingModule5Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

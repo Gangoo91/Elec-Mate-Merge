@@ -1,15 +1,15 @@
-import React from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Printer } from "lucide-react";
+import React from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Printer } from 'lucide-react';
 
 const rows = [
-  { q: "Voltage", u: "Volt", s: "V", note: "Electrical pressure" },
-  { q: "Current", u: "Ampere", s: "A", note: "Flow of charge" },
-  { q: "Resistance", u: "Ohm", s: "Ω", note: "Opposition to current" },
-  { q: "Power", u: "Watt", s: "W", note: "Rate of energy" },
-  { q: "Energy", u: "Watt-hour", s: "Wh", note: "Consumption over time" },
-  { q: "Frequency", u: "Hertz", s: "Hz", note: "AC cycles per second" },
+  { q: 'Voltage', u: 'Volt', s: 'V', note: 'Electrical pressure' },
+  { q: 'Current', u: 'Ampere', s: 'A', note: 'Flow of charge' },
+  { q: 'Resistance', u: 'Ohm', s: 'Ω', note: 'Opposition to current' },
+  { q: 'Power', u: 'Watt', s: 'W', note: 'Rate of energy' },
+  { q: 'Energy', u: 'Watt-hour', s: 'Wh', note: 'Consumption over time' },
+  { q: 'Frequency', u: 'Hertz', s: 'Hz', note: 'AC cycles per second' },
 ];
 
 const UnitsPocketCard: React.FC = () => {

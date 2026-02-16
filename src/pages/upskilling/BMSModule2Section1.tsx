@@ -1,85 +1,95 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import { bmsModule2Section1QuizData } from "@/data/upskilling/bmsModule2Section1QuizData";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { bmsModule2Section1QuizData } from '@/data/upskilling/bmsModule2Section1QuizData';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "digital-input-example",
-    question: "Give one example of a digital input in a BMS.",
+    id: 'digital-input-example',
+    question: 'Give one example of a digital input in a BMS.',
     options: [
-      "Temperature sensor reading 22°C",
-      "Variable fan speed control at 60%",
-      "Door contact sensor showing open/closed",
-      "Humidity sensor at 45% RH"
+      'Temperature sensor reading 22°C',
+      'Variable fan speed control at 60%',
+      'Door contact sensor showing open/closed',
+      'Humidity sensor at 45% RH',
     ],
     correctIndex: 2,
-    explanation: "Door contact sensors are digital inputs as they provide only two states - open or closed. Temperature and humidity sensors provide variable analog readings."
+    explanation:
+      'Door contact sensors are digital inputs as they provide only two states - open or closed. Temperature and humidity sensors provide variable analog readings.',
   },
   {
-    id: "digital-output",
-    question: "What type of BMS output would switch a fan on or off?",
+    id: 'digital-output',
+    question: 'What type of BMS output would switch a fan on or off?',
     options: [
-      "Analog output providing variable speed",
-      "Digital output providing on/off control",
-      "Pulse width modulated signal",
-      "Variable frequency drive output"
+      'Analog output providing variable speed',
+      'Digital output providing on/off control',
+      'Pulse width modulated signal',
+      'Variable frequency drive output',
     ],
     correctIndex: 1,
-    explanation: "A digital output provides on/off control for switching a fan. For variable speed control, you would need an analog output to a variable frequency drive."
+    explanation:
+      'A digital output provides on/off control for switching a fan. For variable speed control, you would need an analog output to a variable frequency drive.',
   },
   {
-    id: "analog-signal-range",
-    question: "What signal range might a temperature sensor send to a BMS?",
+    id: 'analog-signal-range',
+    question: 'What signal range might a temperature sensor send to a BMS?',
     options: [
-      "230V AC mains voltage",
-      "0-10V DC or 4-20mA signal",
-      "High frequency digital pulses",
-      "24V AC on/off switching"
+      '230V AC mains voltage',
+      '0-10V DC or 4-20mA signal',
+      'High frequency digital pulses',
+      '24V AC on/off switching',
     ],
     correctIndex: 1,
-    explanation: "Temperature sensors typically send analog signals in the range of 0-10V DC or 4-20mA to represent variable temperature readings. These are standard analog signal ranges for BMS applications."
+    explanation:
+      'Temperature sensors typically send analog signals in the range of 0-10V DC or 4-20mA to represent variable temperature readings. These are standard analog signal ranges for BMS applications.',
   },
   {
-    id: "analog-output-device",
-    question: "What kind of device would an analog output control that requires variable positioning?",
+    id: 'analog-output-device',
+    question:
+      'What kind of device would an analog output control that requires variable positioning?',
     options: [
-      "A simple on/off relay for lighting",
-      "A motorised valve actuator that can be positioned anywhere from 0-100% open",
-      "An alarm beacon with fixed brightness",
-      "A door contact sensor for monitoring"
+      'A simple on/off relay for lighting',
+      'A motorised valve actuator that can be positioned anywhere from 0-100% open',
+      'An alarm beacon with fixed brightness',
+      'A door contact sensor for monitoring',
     ],
     correctIndex: 1,
-    explanation: "Motorised valve actuators require analog outputs because they need precise positioning control (e.g., 40% open, 75% open). This variable control allows for accurate flow regulation and energy efficiency."
-  }
+    explanation:
+      'Motorised valve actuators require analog outputs because they need precise positioning control (e.g., 40% open, 75% open). This variable control allows for accurate flow regulation and energy efficiency.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I know if a signal is digital or analog?",
-    answer: "Digital signals have only two states (on/off, open/closed), while analog signals vary continuously across a range (e.g., 0-10V, 4-20mA). Check the device datasheet - it will specify the signal type and range."
+    question: 'How do I know if a signal is digital or analog?',
+    answer:
+      'Digital signals have only two states (on/off, open/closed), while analog signals vary continuously across a range (e.g., 0-10V, 4-20mA). Check the device datasheet - it will specify the signal type and range.',
   },
   {
-    question: "Why is 4-20mA preferred over 0-10V for long cable runs?",
-    answer: "Current signals (4-20mA) have better noise immunity than voltage signals because they're less affected by cable resistance and electromagnetic interference. Additionally, a reading below 4mA indicates a fault, making it self-diagnosing."
+    question: 'Why is 4-20mA preferred over 0-10V for long cable runs?',
+    answer:
+      "Current signals (4-20mA) have better noise immunity than voltage signals because they're less affected by cable resistance and electromagnetic interference. Additionally, a reading below 4mA indicates a fault, making it self-diagnosing.",
   },
   {
-    question: "What happens if I wire an analog device to a digital input?",
-    answer: "The BMS will only see on/off states instead of variable readings. For example, a temperature sensor would show as 'triggered' or 'not triggered' rather than displaying actual temperature values, leading to incorrect control."
+    question: 'What happens if I wire an analog device to a digital input?',
+    answer:
+      "The BMS will only see on/off states instead of variable readings. For example, a temperature sensor would show as 'triggered' or 'not triggered' rather than displaying actual temperature values, leading to incorrect control.",
   },
   {
-    question: "How should I terminate screened cables for analog signals?",
-    answer: "Terminate the screen at one end only (usually the BMS controller end) to prevent ground loops. Use a single star earth point for all analog signal screens to minimise noise pickup."
-  }
+    question: 'How should I terminate screened cables for analog signals?',
+    answer:
+      'Terminate the screen at one end only (usually the BMS controller end) to prevent ground loops. Use a single star earth point for all analog signal screens to minimise noise pickup.',
+  },
 ];
 
 const BMSModule2Section1 = () => {
   useSEO({
-    title: "Digital vs Analog Inputs and Outputs | BMS Course",
-    description: "Learn the differences between digital and analog signals in Building Management Systems. Understand DI, DO, AI, AO signal types for proper BMS installation."
+    title: 'Digital vs Analog Inputs and Outputs | BMS Course',
+    description:
+      'Learn the differences between digital and analog signals in Building Management Systems. Understand DI, DO, AI, AO signal types for proper BMS installation.',
   });
 
   return (
@@ -111,9 +121,7 @@ const BMSModule2Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Digital vs Analog Inputs and Outputs
           </h1>
-          <p className="text-white">
-            Signal types and processing methods
-          </p>
+          <p className="text-white">Signal types and processing methods</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -121,17 +129,29 @@ const BMSModule2Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Digital:</strong> On/off, open/closed — binary states only</li>
-              <li><strong>Analog:</strong> Variable values — 0-10V, 4-20mA signals</li>
-              <li><strong>Critical:</strong> Correct wiring prevents system failures</li>
+              <li>
+                <strong>Digital:</strong> On/off, open/closed — binary states only
+              </li>
+              <li>
+                <strong>Analog:</strong> Variable values — 0-10V, 4-20mA signals
+              </li>
+              <li>
+                <strong>Critical:</strong> Correct wiring prevents system failures
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">On Site</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>DI:</strong> Door contacts, flow switches, alarm contacts</li>
-              <li><strong>DO:</strong> Fan switching, lighting relays, pump control</li>
-              <li><strong>AI/AO:</strong> Temperature, humidity, valve positioning</li>
+              <li>
+                <strong>DI:</strong> Door contacts, flow switches, alarm contacts
+              </li>
+              <li>
+                <strong>DO:</strong> Fan switching, lighting relays, pump control
+              </li>
+              <li>
+                <strong>AI/AO:</strong> Temperature, humidity, valve positioning
+              </li>
             </ul>
           </div>
         </div>
@@ -141,10 +161,10 @@ const BMSModule2Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Explain the difference between digital and analog signals",
-              "Identify examples of digital inputs/outputs in a BMS",
-              "Identify examples of analog inputs/outputs in a BMS",
-              "Understand how signal types affect installation and testing"
+              'Explain the difference between digital and analog signals',
+              'Identify examples of digital inputs/outputs in a BMS',
+              'Identify examples of analog inputs/outputs in a BMS',
+              'Understand how signal types affect installation and testing',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -164,29 +184,55 @@ const BMSModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Digital inputs represent two states: <strong>on/off</strong>, <strong>open/closed</strong>, <strong>true/false</strong>.
-              These binary signals are the foundation of BMS monitoring, providing essential status information about building systems.
+              Digital inputs represent two states: <strong>on/off</strong>,{' '}
+              <strong>open/closed</strong>, <strong>true/false</strong>. These binary signals are
+              the foundation of BMS monitoring, providing essential status information about
+              building systems.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Examples</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Door contact sensors</strong> — open/closed status</li>
-                <li><strong>Flow switches</strong> — water flow/no flow</li>
-                <li><strong>Alarm contacts</strong> — triggered/not triggered</li>
-                <li><strong>Pressure switches</strong> — high/low pressure</li>
-                <li><strong>Filter status switches</strong> — clean/dirty indication</li>
-                <li><strong>Smoke detector contacts</strong> — normal/alarm state</li>
+                <li>
+                  <strong>Door contact sensors</strong> — open/closed status
+                </li>
+                <li>
+                  <strong>Flow switches</strong> — water flow/no flow
+                </li>
+                <li>
+                  <strong>Alarm contacts</strong> — triggered/not triggered
+                </li>
+                <li>
+                  <strong>Pressure switches</strong> — high/low pressure
+                </li>
+                <li>
+                  <strong>Filter status switches</strong> — clean/dirty indication
+                </li>
+                <li>
+                  <strong>Smoke detector contacts</strong> — normal/alarm state
+                </li>
               </ul>
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 my-6">
-              <p className="text-elec-yellow/90 text-sm font-medium mb-2">Wiring and Installation</p>
+              <p className="text-elec-yellow/90 text-sm font-medium mb-2">
+                Wiring and Installation
+              </p>
               <ul className="text-sm text-white space-y-1">
-                <li><strong>Voltage:</strong> Typically 24V DC/AC, some systems 12V or 48V</li>
-                <li><strong>Terminals:</strong> Dedicated DI terminals numbered sequentially (DI1, DI2, etc.)</li>
-                <li><strong>Contact types:</strong> Normally open (NO), normally closed (NC), or changeover</li>
-                <li><strong>Polarity:</strong> Always check manufacturer specifications</li>
+                <li>
+                  <strong>Voltage:</strong> Typically 24V DC/AC, some systems 12V or 48V
+                </li>
+                <li>
+                  <strong>Terminals:</strong> Dedicated DI terminals numbered sequentially (DI1,
+                  DI2, etc.)
+                </li>
+                <li>
+                  <strong>Contact types:</strong> Normally open (NO), normally closed (NC), or
+                  changeover
+                </li>
+                <li>
+                  <strong>Polarity:</strong> Always check manufacturer specifications
+                </li>
               </ul>
             </div>
 
@@ -194,25 +240,44 @@ const BMSModule2Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Signal Processing</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Debouncing:</strong> Eliminates contact bounce, prevents false triggers</li>
-                  <li><strong>Isolation:</strong> Optical isolation protects from voltage spikes</li>
+                  <li>
+                    <strong>Debouncing:</strong> Eliminates contact bounce, prevents false triggers
+                  </li>
+                  <li>
+                    <strong>Isolation:</strong> Optical isolation protects from voltage spikes
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">BS 7671 Requirements</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>SELV:</strong> Under 50V AC/120V DC classification</li>
-                  <li><strong>Separation:</strong> Minimum 3mm from mains circuits</li>
+                  <li>
+                    <strong>SELV:</strong> Under 50V AC/120V DC classification
+                  </li>
+                  <li>
+                    <strong>Separation:</strong> Minimum 3mm from mains circuits
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Common Troubleshooting Issues</p>
+              <p className="text-sm font-medium text-red-400/80 mb-2">
+                Common Troubleshooting Issues
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Contact bounce:</strong> Multiple rapid on/off readings — check debouncing settings</li>
-                <li><strong>Voltage drop:</strong> Intermittent readings — check cable length and wire gauge</li>
-                <li><strong>False triggers:</strong> Unwanted switching — check for EMI, use screened cables</li>
+                <li>
+                  <strong>Contact bounce:</strong> Multiple rapid on/off readings — check debouncing
+                  settings
+                </li>
+                <li>
+                  <strong>Voltage drop:</strong> Intermittent readings — check cable length and wire
+                  gauge
+                </li>
+                <li>
+                  <strong>False triggers:</strong> Unwanted switching — check for EMI, use screened
+                  cables
+                </li>
               </ul>
             </div>
           </div>
@@ -228,30 +293,56 @@ const BMSModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Digital outputs control devices in binary form: <strong>on/off</strong> switching only.
-              They provide the interface between BMS logic and building equipment, enabling automated control of systems.
+              Digital outputs control devices in binary form: <strong>on/off</strong> switching
+              only. They provide the interface between BMS logic and building equipment, enabling
+              automated control of systems.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Examples</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Switching a fan on or off</strong></li>
-                <li><strong>Operating lighting relays</strong></li>
-                <li><strong>Triggering alarms or status indicators</strong></li>
-                <li><strong>Starting/stopping pumps</strong></li>
-                <li><strong>Motorised damper open/closed control</strong></li>
-                <li><strong>Boiler/chiller enable signals</strong></li>
-                <li><strong>Access control door locks</strong></li>
+                <li>
+                  <strong>Switching a fan on or off</strong>
+                </li>
+                <li>
+                  <strong>Operating lighting relays</strong>
+                </li>
+                <li>
+                  <strong>Triggering alarms or status indicators</strong>
+                </li>
+                <li>
+                  <strong>Starting/stopping pumps</strong>
+                </li>
+                <li>
+                  <strong>Motorised damper open/closed control</strong>
+                </li>
+                <li>
+                  <strong>Boiler/chiller enable signals</strong>
+                </li>
+                <li>
+                  <strong>Access control door locks</strong>
+                </li>
               </ul>
             </div>
 
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50 my-6">
-              <p className="text-red-400/90 text-sm font-medium mb-2">Load Switching and Protection</p>
+              <p className="text-red-400/90 text-sm font-medium mb-2">
+                Load Switching and Protection
+              </p>
               <ul className="text-sm text-white space-y-1">
-                <li><strong>Relay sizing:</strong> Coil voltage typically 24V DC, 10-50mA</li>
-                <li><strong>Contact ratings:</strong> Ensure contacts can handle switched load</li>
-                <li><strong>Inrush current:</strong> Factor in for motors, transformers, fluorescent lighting</li>
-                <li><strong>Arc suppression:</strong> Use snubber circuits for inductive loads</li>
+                <li>
+                  <strong>Relay sizing:</strong> Coil voltage typically 24V DC, 10-50mA
+                </li>
+                <li>
+                  <strong>Contact ratings:</strong> Ensure contacts can handle switched load
+                </li>
+                <li>
+                  <strong>Inrush current:</strong> Factor in for motors, transformers, fluorescent
+                  lighting
+                </li>
+                <li>
+                  <strong>Arc suppression:</strong> Use snubber circuits for inductive loads
+                </li>
               </ul>
             </div>
 
@@ -259,17 +350,32 @@ const BMSModule2Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Safety Interlocking</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Interlocks:</strong> Prevent unsafe combinations (e.g., heating + cooling)</li>
-                  <li><strong>Sequencing:</strong> Time delays prevent excessive electrical demand</li>
-                  <li><strong>Fail-safe:</strong> Define default states during power loss</li>
+                  <li>
+                    <strong>Interlocks:</strong> Prevent unsafe combinations (e.g., heating +
+                    cooling)
+                  </li>
+                  <li>
+                    <strong>Sequencing:</strong> Time delays prevent excessive electrical demand
+                  </li>
+                  <li>
+                    <strong>Fail-safe:</strong> Define default states during power loss
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voltage Compatibility</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Voltage Compatibility
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>24V systems:</strong> Most common, SELV classification</li>
-                  <li><strong>48V systems:</strong> Larger installations, higher power</li>
-                  <li><strong>230V switching:</strong> Via contactors/relays only, never direct</li>
+                  <li>
+                    <strong>24V systems:</strong> Most common, SELV classification
+                  </li>
+                  <li>
+                    <strong>48V systems:</strong> Larger installations, higher power
+                  </li>
+                  <li>
+                    <strong>230V switching:</strong> Via contactors/relays only, never direct
+                  </li>
                 </ul>
               </div>
             </div>
@@ -286,20 +392,35 @@ const BMSModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Analog inputs provide <strong>variable data</strong> to the BMS, representing continuous measurements.
-              These signals enable precise monitoring and control of building environmental conditions.
+              Analog inputs provide <strong>variable data</strong> to the BMS, representing
+              continuous measurements. These signals enable precise monitoring and control of
+              building environmental conditions.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Examples</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Temperature sensors</strong> — 0–50°C</li>
-                <li><strong>Humidity sensors</strong> — 0–100% RH</li>
-                <li><strong>CO2 concentration</strong> — 0-2000 ppm</li>
-                <li><strong>Pressure transmitters</strong> — 0-10 bar</li>
-                <li><strong>Light level sensors</strong> — 0-1000 lux</li>
-                <li><strong>Air velocity sensors</strong> — 0-30 m/s</li>
-                <li><strong>Power meters</strong> — kW, kVA, power factor</li>
+                <li>
+                  <strong>Temperature sensors</strong> — 0–50°C
+                </li>
+                <li>
+                  <strong>Humidity sensors</strong> — 0–100% RH
+                </li>
+                <li>
+                  <strong>CO2 concentration</strong> — 0-2000 ppm
+                </li>
+                <li>
+                  <strong>Pressure transmitters</strong> — 0-10 bar
+                </li>
+                <li>
+                  <strong>Light level sensors</strong> — 0-1000 lux
+                </li>
+                <li>
+                  <strong>Air velocity sensors</strong> — 0-30 m/s
+                </li>
+                <li>
+                  <strong>Power meters</strong> — kW, kVA, power factor
+                </li>
               </ul>
             </div>
 
@@ -349,10 +470,20 @@ const BMSModule2Section1 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 my-6">
               <p className="text-elec-yellow/90 text-sm font-medium mb-2">Wiring Best Practices</p>
               <ul className="text-sm text-white space-y-1">
-                <li><strong>Screened cables:</strong> Use individually screened pairs for each analog signal</li>
-                <li><strong>Screen termination:</strong> One end only to prevent ground loops</li>
-                <li><strong>Cable separation:</strong> Minimum 300mm from power cables, cross at 90°</li>
-                <li><strong>EMC:</strong> Twisted pair construction, avoid running parallel to fluorescents</li>
+                <li>
+                  <strong>Screened cables:</strong> Use individually screened pairs for each analog
+                  signal
+                </li>
+                <li>
+                  <strong>Screen termination:</strong> One end only to prevent ground loops
+                </li>
+                <li>
+                  <strong>Cable separation:</strong> Minimum 300mm from power cables, cross at 90°
+                </li>
+                <li>
+                  <strong>EMC:</strong> Twisted pair construction, avoid running parallel to
+                  fluorescents
+                </li>
               </ul>
             </div>
           </div>
@@ -368,26 +499,40 @@ const BMSModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Analog outputs allow the BMS to control devices with <strong>variable outputs</strong>, providing smooth,
-              continuous control instead of binary switching. They form the control interface for precise equipment modulation.
+              Analog outputs allow the BMS to control devices with <strong>variable outputs</strong>
+              , providing smooth, continuous control instead of binary switching. They form the
+              control interface for precise equipment modulation.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Examples</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Variable frequency drives</strong> — controlling fan/pump speed 0-100%</li>
-                <li><strong>Motorised valve actuators</strong> — adjusting to 40% open</li>
-                <li><strong>Lighting dimming systems</strong> — 10–100% brightness</li>
-                <li><strong>Damper actuators</strong> — precise airflow control</li>
-                <li><strong>Electric heating elements</strong> — modulated power control</li>
-                <li><strong>Cooling coil valves</strong> — chilled water flow control</li>
+                <li>
+                  <strong>Variable frequency drives</strong> — controlling fan/pump speed 0-100%
+                </li>
+                <li>
+                  <strong>Motorised valve actuators</strong> — adjusting to 40% open
+                </li>
+                <li>
+                  <strong>Lighting dimming systems</strong> — 10–100% brightness
+                </li>
+                <li>
+                  <strong>Damper actuators</strong> — precise airflow control
+                </li>
+                <li>
+                  <strong>Electric heating elements</strong> — modulated power control
+                </li>
+                <li>
+                  <strong>Cooling coil valves</strong> — chilled water flow control
+                </li>
               </ul>
             </div>
 
             <div className="p-3 rounded bg-elec-yellow/5 border border-elec-yellow/20 my-6">
               <p className="text-sm text-white">
-                <strong>Energy efficiency:</strong> Analog outputs enable precise control — a fan can run at 60% speed when only
-                partial cooling is needed, rather than just on/off operation.
+                <strong>Energy efficiency:</strong> Analog outputs enable precise control — a fan
+                can run at 60% speed when only partial cooling is needed, rather than just on/off
+                operation.
               </p>
             </div>
 
@@ -395,17 +540,29 @@ const BMSModule2Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Algorithms</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>PID Control:</strong> Proportional, Integral, Derivative</li>
-                  <li><strong>Modulation:</strong> PWM for efficient power control</li>
-                  <li><strong>Response tuning:</strong> Adjust to prevent oscillation</li>
+                  <li>
+                    <strong>PID Control:</strong> Proportional, Integral, Derivative
+                  </li>
+                  <li>
+                    <strong>Modulation:</strong> PWM for efficient power control
+                  </li>
+                  <li>
+                    <strong>Response tuning:</strong> Adjust to prevent oscillation
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Drive Capabilities</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Voltage output:</strong> 0-10V up to 10mA</li>
-                  <li><strong>Current output:</strong> 4-20mA up to 500Ω load</li>
-                  <li><strong>Resolution:</strong> 12-bit to 16-bit typical</li>
+                  <li>
+                    <strong>Voltage output:</strong> 0-10V up to 10mA
+                  </li>
+                  <li>
+                    <strong>Current output:</strong> 4-20mA up to 500Ω load
+                  </li>
+                  <li>
+                    <strong>Resolution:</strong> 12-bit to 16-bit typical
+                  </li>
                 </ul>
               </div>
             </div>
@@ -413,19 +570,36 @@ const BMSModule2Section1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Actuator Integration</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Position feedback:</strong> 0-10V or 4-20mA to verify actual position matches command</li>
-                <li><strong>Accuracy:</strong> ±1% typical for quality actuators, ±2-3% for less critical</li>
-                <li><strong>Response time:</strong> 60-180 seconds full travel typical for HVAC applications</li>
+                <li>
+                  <strong>Position feedback:</strong> 0-10V or 4-20mA to verify actual position
+                  matches command
+                </li>
+                <li>
+                  <strong>Accuracy:</strong> ±1% typical for quality actuators, ±2-3% for less
+                  critical
+                </li>
+                <li>
+                  <strong>Response time:</strong> 60-180 seconds full travel typical for HVAC
+                  applications
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Tests</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Signal verification:</strong> Check at 0%, 25%, 50%, 75%, 100% setpoints</li>
-                <li><strong>Loop tuning:</strong> Start P-only, add I, then D if needed</li>
-                <li><strong>Step response:</strong> Verify settling time and overshoot</li>
-                <li><strong>Load testing:</strong> Test under actual operating conditions</li>
+                <li>
+                  <strong>Signal verification:</strong> Check at 0%, 25%, 50%, 75%, 100% setpoints
+                </li>
+                <li>
+                  <strong>Loop tuning:</strong> Start P-only, add I, then D if needed
+                </li>
+                <li>
+                  <strong>Step response:</strong> Verify settling time and overshoot
+                </li>
+                <li>
+                  <strong>Load testing:</strong> Test under actual operating conditions
+                </li>
               </ul>
             </div>
           </div>
@@ -438,10 +612,15 @@ const BMSModule2Section1 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Best Practices</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Essential Best Practices
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Always confirm whether a point is digital or analog before wiring</li>
-                <li>Label terminations clearly (DI, DO, AI, AO) to avoid confusion during commissioning</li>
+                <li>
+                  Label terminations clearly (DI, DO, AI, AO) to avoid confusion during
+                  commissioning
+                </li>
                 <li>Be careful with analog wiring — poor connections cause inaccurate readings</li>
                 <li>Use a multimeter to check 0–10V or 4–20mA signals when commissioning</li>
                 <li>Follow cable segregation — keep analog signals away from mains power cables</li>
@@ -451,10 +630,22 @@ const BMSModule2Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong terminal type:</strong> — analog device wired to digital input gives on/off instead of variable reading</li>
-                <li><strong>Poor terminations:</strong> — loose connections cause intermittent or incorrect readings</li>
-                <li><strong>Missing screens:</strong> — unscreened analog cables pick up electrical noise</li>
-                <li><strong>Wrong polarity:</strong> — reversed connections can damage sensors or give negative readings</li>
+                <li>
+                  <strong>Wrong terminal type:</strong> — analog device wired to digital input gives
+                  on/off instead of variable reading
+                </li>
+                <li>
+                  <strong>Poor terminations:</strong> — loose connections cause intermittent or
+                  incorrect readings
+                </li>
+                <li>
+                  <strong>Missing screens:</strong> — unscreened analog cables pick up electrical
+                  noise
+                </li>
+                <li>
+                  <strong>Wrong polarity:</strong> — reversed connections can damage sensors or give
+                  negative readings
+                </li>
               </ul>
             </div>
           </div>
@@ -468,9 +659,9 @@ const BMSModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              On a commercial project, an electrician wired a temperature sensor (analog input) into a
-              digital input terminal by mistake. The BMS only read the signal as "on/off" instead of
-              a variable temperature, leading to incorrect HVAC control.
+              On a commercial project, an electrician wired a temperature sensor (analog input) into
+              a digital input terminal by mistake. The BMS only read the signal as "on/off" instead
+              of a variable temperature, leading to incorrect HVAC control.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -496,8 +687,9 @@ const BMSModule2Section1 = () => {
 
             <div className="p-3 rounded bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm text-white">
-                <strong>Key Lesson:</strong> Always verify whether a device requires digital or analog connection
-                before wiring. A few minutes checking the datasheet prevents hours of troubleshooting later.
+                <strong>Key Lesson:</strong> Always verify whether a device requires digital or
+                analog connection before wiring. A few minutes checking the datasheet prevents hours
+                of troubleshooting later.
               </p>
             </div>
           </div>
@@ -544,11 +736,11 @@ const BMSModule2Section1 = () => {
           <h2 className="text-xl font-semibold text-white mb-4">Summary</h2>
           <div className="space-y-2">
             {[
-              "Digital signals = on/off, open/closed states only",
-              "Analog signals = variable values (e.g., 0–10V, 4–20mA)",
-              "Digital inputs/outputs control binary states; analog inputs/outputs provide or adjust continuous values",
-              "Correct wiring and labelling are critical to avoid faults and system failures",
-              "Always verify signal type before termination to prevent commissioning delays"
+              'Digital signals = on/off, open/closed states only',
+              'Analog signals = variable values (e.g., 0–10V, 4–20mA)',
+              'Digital inputs/outputs control binary states; analog inputs/outputs provide or adjust continuous values',
+              'Correct wiring and labelling are critical to avoid faults and system failures',
+              'Always verify signal type before termination to prevent commissioning delays',
             ].map((point, index) => (
               <div key={index} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -560,10 +752,7 @@ const BMSModule2Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10">
-          <SingleQuestionQuiz
-            questions={bmsModule2Section1QuizData}
-            title="Test Your Knowledge"
-          />
+          <SingleQuestionQuiz questions={bmsModule2Section1QuizData} title="Test Your Knowledge" />
         </section>
 
         {/* Bottom Navigation */}

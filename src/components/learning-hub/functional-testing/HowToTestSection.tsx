@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Wrench, AlertTriangle, CheckCircle2, Clock, Settings, Eye, TestTube } from 'lucide-react';
@@ -9,10 +8,11 @@ const HowToTestSection = () => {
       <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
         <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
           <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-          <h4 className="text-base sm:text-lg font-semibold text-green-400">Comprehensive Functional Testing Procedure</h4>
+          <h4 className="text-base sm:text-lg font-semibold text-green-400">
+            Comprehensive Functional Testing Procedure
+          </h4>
         </div>
         <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm text-white leading-relaxed">
-          
           {/* Pre-Test Preparation */}
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground flex items-center gap-2">
@@ -22,21 +22,30 @@ const HowToTestSection = () => {
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
               <ol className="space-y-3 text-sm">
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                  <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                    1
+                  </span>
                   <div>
-                    <strong className="text-foreground">Site Coordination:</strong> Inform all relevant personnel about testing activities and expected disruptions
+                    <strong className="text-foreground">Site Coordination:</strong> Inform all
+                    relevant personnel about testing activities and expected disruptions
                   </div>
                 </li>
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                  <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                    2
+                  </span>
                   <div>
-                    <strong className="text-foreground">System Understanding:</strong> Review installation drawings, operation manuals, and control logic
+                    <strong className="text-foreground">System Understanding:</strong> Review
+                    installation drawings, operation manuals, and control logic
                   </div>
                 </li>
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                  <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                    3
+                  </span>
                   <div>
-                    <strong className="text-foreground">Safety Planning:</strong> Establish emergency procedures and communication protocols
+                    <strong className="text-foreground">Safety Planning:</strong> Establish
+                    emergency procedures and communication protocols
                   </div>
                 </li>
               </ol>
@@ -53,14 +62,18 @@ const HowToTestSection = () => {
             {/* Step 1: Visual Inspection */}
             <div className="space-y-3">
               <div className="flex gap-3">
-                <div className="flex-shrink-0 w-8 h-8 bg-green-500 text-foreground rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                <div className="flex-shrink-0 w-8 h-8 bg-green-500 text-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                  1
+                </div>
                 <div className="flex-1">
                   <h5 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                     <Eye className="h-4 w-4" />
                     Visual Inspection of Controls
                   </h5>
-                  <p className="text-sm mb-3">Comprehensive inspection of all switches, isolators, and control equipment</p>
-                  
+                  <p className="text-sm mb-3">
+                    Comprehensive inspection of all switches, isolators, and control equipment
+                  </p>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
                       <h6 className="font-medium text-white mb-2">Check Points:</h6>
@@ -83,9 +96,11 @@ const HowToTestSection = () => {
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3 text-xs">
-                    <span className="text-orange-400 font-medium">Safety Note:</span> Ensure all equipment is properly isolated before physical inspection. Use appropriate PPE and follow LOTO procedures.
+                    <span className="text-orange-400 font-medium">Safety Note:</span> Ensure all
+                    equipment is properly isolated before physical inspection. Use appropriate PPE
+                    and follow LOTO procedures.
                   </div>
                 </div>
               </div>
@@ -94,14 +109,18 @@ const HowToTestSection = () => {
             {/* Step 2: RCD Testing */}
             <div className="space-y-3">
               <div className="flex gap-3">
-                <div className="flex-shrink-0 w-8 h-8 bg-green-500 text-foreground rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                <div className="flex-shrink-0 w-8 h-8 bg-green-500 text-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                  2
+                </div>
                 <div className="flex-1">
                   <h5 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4" />
                     RCD Push Button Test
                   </h5>
-                  <p className="text-sm mb-3">Test RCD operation using the integral test button mechanism</p>
-                  
+                  <p className="text-sm mb-3">
+                    Test RCD operation using the integral test button mechanism
+                  </p>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
                       <h6 className="font-medium text-white mb-2">Test Procedure:</h6>
@@ -124,9 +143,11 @@ const HowToTestSection = () => {
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3 text-xs">
-                    <span className="text-blue-400 font-medium">Technical Note:</span> The test button creates an artificial earth fault current to verify RCD sensitivity. This test should be performed monthly.
+                    <span className="text-blue-400 font-medium">Technical Note:</span> The test
+                    button creates an artificial earth fault current to verify RCD sensitivity. This
+                    test should be performed monthly.
                   </div>
                 </div>
               </div>
@@ -135,14 +156,18 @@ const HowToTestSection = () => {
             {/* Step 3: Emergency Stop Testing */}
             <div className="space-y-3">
               <div className="flex gap-3">
-                <div className="flex-shrink-0 w-8 h-8 bg-green-500 text-foreground rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                <div className="flex-shrink-0 w-8 h-8 bg-green-500 text-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                  3
+                </div>
                 <div className="flex-1">
                   <h5 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4" />
                     Emergency Stop Testing
                   </h5>
-                  <p className="text-sm mb-3">Test operation of emergency stop controls and safety systems</p>
-                  
+                  <p className="text-sm mb-3">
+                    Test operation of emergency stop controls and safety systems
+                  </p>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
                       <h6 className="font-medium text-white mb-2">Test Sequence:</h6>
@@ -166,9 +191,11 @@ const HowToTestSection = () => {
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div className="bg-red-500/10 border border-red-500/20 rounded p-3 text-xs">
-                    <span className="text-red-400 font-medium">Critical Warning:</span> Only test emergency stops during planned maintenance windows. Coordinate with all stakeholders and have recovery procedures ready.
+                    <span className="text-red-400 font-medium">Critical Warning:</span> Only test
+                    emergency stops during planned maintenance windows. Coordinate with all
+                    stakeholders and have recovery procedures ready.
                   </div>
                 </div>
               </div>
@@ -177,14 +204,18 @@ const HowToTestSection = () => {
             {/* Step 4: Additional Functional Tests */}
             <div className="space-y-3">
               <div className="flex gap-3">
-                <div className="flex-shrink-0 w-8 h-8 bg-green-500 text-foreground rounded-full flex items-center justify-center text-sm font-bold">4</div>
+                <div className="flex-shrink-0 w-8 h-8 bg-green-500 text-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                  4
+                </div>
                 <div className="flex-1">
                   <h5 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                     <Settings className="h-4 w-4" />
                     Switchgear and Control Systems
                   </h5>
-                  <p className="text-sm mb-3">Test operation of main switchgear, control systems, and auxiliary equipment</p>
-                  
+                  <p className="text-sm mb-3">
+                    Test operation of main switchgear, control systems, and auxiliary equipment
+                  </p>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
                       <h6 className="font-medium text-white mb-2">Control Tests:</h6>

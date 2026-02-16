@@ -4,13 +4,14 @@ import { Badge } from '@/components/ui/badge';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { AtAGlanceSummary } from './AtAGlanceSummary';
 import { StructuredDesignSections } from './StructuredDesignSections';
-import { MobileJustificationAccordion, buildJustificationSections } from './mobile/MobileJustificationAccordion';
+import {
+  MobileJustificationAccordion,
+  buildJustificationSections,
+} from './mobile/MobileJustificationAccordion';
 import { MobileTestResultsCompact } from './mobile/MobileTestResultsCompact';
 import { MobileInstallationGuidanceSection } from './mobile/MobileInstallationGuidanceSection';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { 
-  CheckCircle2, AlertTriangle, AlertCircle, Zap, Calculator
-} from 'lucide-react';
+import { CheckCircle2, AlertTriangle, AlertCircle, Zap, Calculator } from 'lucide-react';
 
 interface CircuitCardProps {
   circuit: CircuitDesign;
@@ -21,9 +22,16 @@ interface CircuitCardProps {
   displayNumber?: number; // Override circuit number display (for array index consistency)
 }
 
-export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '', showFullDetails = false, displayNumber }: CircuitCardProps) => {
+export const CircuitCard = ({
+  circuit,
+  onViewWorkings,
+  onViewJustification,
+  className = '',
+  showFullDetails = false,
+  displayNumber,
+}: CircuitCardProps) => {
   const isMobile = useIsMobile();
-  
+
   // Use backend complianceStatus when available (same as desktop)
   // Fall back to simple calculation check for legacy data
   let status: 'pass' | 'warning' | 'fail' = 'pass';
@@ -41,7 +49,9 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
   }
 
   return (
-    <Card className={`bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10 mx-auto max-w-2xl ${className}`}>
+    <Card
+      className={`bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10 mx-auto max-w-2xl ${className}`}
+    >
       {/* Header */}
       <div className="bg-gradient-to-br from-elec-yellow/15 via-elec-yellow/10 to-transparent border-b border-elec-yellow/20 p-5 sm:p-6">
         <div className="flex items-start justify-between gap-3 mb-2">
@@ -53,21 +63,23 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
               </h3>
             </div>
             {circuit.phases === 'three' && (
-              <p className="text-sm font-medium text-elec-yellow/80 mb-1 pl-7">
-                (L1, L2, L3)
-              </p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-1 pl-7">(L1, L2, L3)</p>
             )}
             <p className="text-base sm:text-lg font-semibold text-elec-light/90">{circuit.name}</p>
             <p className="text-sm text-foreground/90 mt-1 capitalize">
               {circuit.loadType.replace('-', ' ')}
             </p>
           </div>
-          <Badge 
-            variant={status === 'pass' ? 'default' : status === 'warning' ? 'outline' : 'destructive'}
+          <Badge
+            variant={
+              status === 'pass' ? 'default' : status === 'warning' ? 'outline' : 'destructive'
+            }
             className={`${
-              status === 'pass' ? 'bg-green-500/20 text-green-400 border-green-500/30 animate-pulse-subtle' :
-              status === 'warning' ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' :
-              'bg-red-500/20 text-red-400 border-red-500/30 animate-pulse-subtle'
+              status === 'pass'
+                ? 'bg-green-500/20 text-green-400 border-green-500/30 animate-pulse-subtle'
+                : status === 'warning'
+                  ? 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+                  : 'bg-red-500/20 text-red-400 border-red-500/30 animate-pulse-subtle'
             } h-7 shrink-0 transition-all duration-300`}
           >
             {status === 'pass' && <CheckCircle2 className="h-3 w-3 mr-1" />}
@@ -78,39 +90,46 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
         </div>
 
         {/* Show validation issues when status is not pass */}
-        {status !== 'pass' && (circuit as any).validationIssues && (circuit as any).validationIssues.length > 0 && (
-          <div className="mt-2 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
-            {(circuit as any).validationIssues.map((issue: any, idx: number) => (
-              <p key={idx} className="text-[10px] text-red-300 mb-1">
-                • {issue.message} {issue.regulation && `(${issue.regulation})`}
-              </p>
-            ))}
-          </div>
-        )}
+        {status !== 'pass' &&
+          (circuit as any).validationIssues &&
+          (circuit as any).validationIssues.length > 0 && (
+            <div className="mt-2 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
+              {(circuit as any).validationIssues.map((issue: any, idx: number) => (
+                <p key={idx} className="text-[10px] text-red-300 mb-1">
+                  • {issue.message} {issue.regulation && `(${issue.regulation})`}
+                </p>
+              ))}
+            </div>
+          )}
 
         {/* Also show warnings if present */}
-        {status === 'warning' && circuit.warnings && circuit.warnings.length > 0 && !(circuit as any).validationIssues?.length && (
-          <div className="mt-2 bg-orange-500/10 border border-orange-500/20 rounded-lg p-2">
-            {circuit.warnings.map((warning: string, idx: number) => (
-              <p key={idx} className="text-[10px] text-orange-300 mb-1">• {warning}</p>
-            ))}
-          </div>
-        )}
+        {status === 'warning' &&
+          circuit.warnings &&
+          circuit.warnings.length > 0 &&
+          !(circuit as any).validationIssues?.length && (
+            <div className="mt-2 bg-orange-500/10 border border-orange-500/20 rounded-lg p-2">
+              {circuit.warnings.map((warning: string, idx: number) => (
+                <p key={idx} className="text-[10px] text-orange-300 mb-1">
+                  • {warning}
+                </p>
+              ))}
+            </div>
+          )}
       </div>
 
       {/* Content Area */}
       <div className="p-5 sm:p-6">
         {/* PHASE 5: Structured Output Display with null safety - check for actual content */}
-        {circuit.structuredOutput?.atAGlanceSummary && 
-         circuit.structuredOutput?.sections &&
-         Object.values(circuit.structuredOutput.sections).some(s => s && s.trim().length > 0) ? (
+        {circuit.structuredOutput?.atAGlanceSummary &&
+        circuit.structuredOutput?.sections &&
+        Object.values(circuit.structuredOutput.sections).some((s) => s && s.trim().length > 0) ? (
           <>
             {/* At a Glance Summary */}
-            <AtAGlanceSummary 
+            <AtAGlanceSummary
               summary={circuit.structuredOutput.atAGlanceSummary}
               circuit={circuit}
             />
-            
+
             {/* 9 Structured Sections */}
             <StructuredDesignSections sections={circuit.structuredOutput.sections} />
 
@@ -119,10 +138,10 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
               <div className="space-y-6 mt-6">
                 {/* Detailed Justifications Accordion */}
                 <MobileJustificationAccordion sections={buildJustificationSections(circuit)} />
-                
+
                 {/* Installation Guidance - Always shown on desktop, opt-in on mobile */}
                 <MobileInstallationGuidanceSection circuit={circuit} />
-                
+
                 {/* Expected Test Results */}
                 <MobileTestResultsCompact circuit={circuit} />
               </div>
@@ -132,12 +151,16 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
           <div className="text-center py-12 text-foreground/60">
             <AlertTriangle className="h-8 w-8 text-orange-400 mx-auto mb-3" />
             <p className="text-sm mb-2 text-foreground">Design data incomplete</p>
-            <p className="text-xs text-foreground/60">Some circuit details may be missing - try regenerating</p>
+            <p className="text-xs text-foreground/60">
+              Some circuit details may be missing - try regenerating
+            </p>
           </div>
         ) : (
           <div className="text-center py-12 text-foreground/60">
             <p className="text-sm mb-2">Legacy design format detected</p>
-            <p className="text-xs text-foreground/40">Regenerate this circuit to see the new structured output format</p>
+            <p className="text-xs text-foreground/40">
+              Regenerate this circuit to see the new structured output format
+            </p>
           </div>
         )}
       </div>

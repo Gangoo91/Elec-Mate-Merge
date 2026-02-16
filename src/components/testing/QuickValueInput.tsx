@@ -36,7 +36,7 @@ const QuickValueInput: React.FC<QuickValueInputProps> = ({
   fullScreen = false,
   presets = [],
   allowStepper = true,
-  step = 0.01
+  step = 0.01,
 }) => {
   const haptics = useHaptics();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -88,25 +88,29 @@ const QuickValueInput: React.FC<QuickValueInputProps> = ({
   };
 
   // Default presets for common test values
-  const defaultPresets = presets.length > 0 ? presets : [
-    '>200', '1.00', '0.50', '0.25'
-  ];
+  const defaultPresets = presets.length > 0 ? presets : ['>200', '1.00', '0.50', '0.25'];
 
   const getValidationBorder = () => {
     switch (validationStatus) {
-      case 'pass': return 'border-green-500 ring-green-500/20';
-      case 'warning': return 'border-amber-500 ring-amber-500/20';
-      case 'fail': return 'border-red-500 ring-red-500/20';
-      default: return 'border-elec-yellow ring-elec-yellow/20';
+      case 'pass':
+        return 'border-green-500 ring-green-500/20';
+      case 'warning':
+        return 'border-amber-500 ring-amber-500/20';
+      case 'fail':
+        return 'border-red-500 ring-red-500/20';
+      default:
+        return 'border-elec-yellow ring-elec-yellow/20';
     }
   };
 
   const content = (
-    <div className={cn(
-      "p-4 rounded-xl border-2 bg-card/95 backdrop-blur-md",
-      getValidationBorder(),
-      "ring-4"
-    )}>
+    <div
+      className={cn(
+        'p-4 rounded-xl border-2 bg-card/95 backdrop-blur-md',
+        getValidationBorder(),
+        'ring-4'
+      )}
+    >
       {/* Label */}
       <div className="flex items-center justify-between mb-3">
         <span className="text-sm font-medium text-white/80">{label}</span>
@@ -136,9 +140,9 @@ const QuickValueInput: React.FC<QuickValueInputProps> = ({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           className={cn(
-            "h-14 text-center text-2xl font-bold bg-transparent border-white/20",
-            "focus:ring-0 focus:border-white/40",
-            "touch-manipulation"
+            'h-14 text-center text-2xl font-bold bg-transparent border-white/20',
+            'focus:ring-0 focus:border-white/40',
+            'touch-manipulation'
           )}
         />
 
@@ -162,11 +166,11 @@ const QuickValueInput: React.FC<QuickValueInputProps> = ({
             key={preset}
             onClick={() => handlePresetClick(preset)}
             className={cn(
-              "px-3 py-2 rounded-lg text-sm font-medium transition-all",
-              "touch-manipulation active:scale-95",
+              'px-3 py-2 rounded-lg text-sm font-medium transition-all',
+              'touch-manipulation active:scale-95',
               localValue === preset
-                ? "bg-elec-yellow text-black"
-                : "bg-white/10 text-white/80 hover:bg-white/20"
+                ? 'bg-elec-yellow text-black'
+                : 'bg-white/10 text-white/80 hover:bg-white/20'
             )}
           >
             {preset}

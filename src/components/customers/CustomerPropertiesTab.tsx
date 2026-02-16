@@ -49,10 +49,7 @@ const propertyTypeLabels: Record<string, string> = {
   industrial: 'Industrial',
 };
 
-export const CustomerPropertiesTab = ({
-  customerId,
-  onRefresh,
-}: CustomerPropertiesTabProps) => {
+export const CustomerPropertiesTab = ({ customerId, onRefresh }: CustomerPropertiesTabProps) => {
   const {
     properties,
     isLoading,
@@ -129,10 +126,7 @@ export const CustomerPropertiesTab = ({
       ) : (
         <div className="space-y-3">
           {properties.map((property) => (
-            <Card
-              key={property.id}
-              className={property.isPrimary ? 'border-elec-yellow/50' : ''}
-            >
+            <Card key={property.id} className={property.isPrimary ? 'border-elec-yellow/50' : ''}>
               <CardContent className="p-4">
                 <div className="flex items-start gap-3">
                   {/* Icon */}
@@ -162,7 +156,8 @@ export const CustomerPropertiesTab = ({
                     {(property.certificateCount || 0) > 0 && (
                       <div className="flex items-center gap-1 mt-2 text-xs text-muted-foreground">
                         <FileText className="h-3 w-3" />
-                        {property.certificateCount} certificate{property.certificateCount !== 1 ? 's' : ''}
+                        {property.certificateCount} certificate
+                        {property.certificateCount !== 1 ? 's' : ''}
                       </div>
                     )}
                   </div>
@@ -229,7 +224,8 @@ export const CustomerPropertiesTab = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Property?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will remove this property. Certificates linked to this property will remain but won't be associated with any property.
+              This will remove this property. Certificates linked to this property will remain but
+              won't be associated with any property.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

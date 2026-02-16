@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Plus, X } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { parseCircuitText } from '@/utils/circuitTextParser';
 import { useToast } from '@/hooks/use-toast';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 interface ScribbleToTableDialogProps {
   onCircuitsAdded: (circuits: TestResult[]) => void;
@@ -22,9 +35,9 @@ const ScribbleToTableDialog = ({ onCircuitsAdded, onClose }: ScribbleToTableDial
   const handleParse = async () => {
     if (!text.trim()) {
       toast({
-        title: "No Text Entered",
-        description: "Please enter circuit information to parse",
-        variant: "destructive"
+        title: 'No Text Entered',
+        description: 'Please enter circuit information to parse',
+        variant: 'destructive',
       });
       return;
     }
@@ -33,25 +46,25 @@ const ScribbleToTableDialog = ({ onCircuitsAdded, onClose }: ScribbleToTableDial
     try {
       const circuits = await parseCircuitText(text);
       setParsedCircuits(circuits);
-      
+
       if (circuits.length === 0) {
         toast({
-          title: "No Circuits Found",
-          description: "Unable to parse circuit information from the text",
-          variant: "destructive"
+          title: 'No Circuits Found',
+          description: 'Unable to parse circuit information from the text',
+          variant: 'destructive',
         });
       } else {
         toast({
-          title: "Circuits Parsed",
+          title: 'Circuits Parsed',
           description: `Successfully detected ${circuits.length} circuit(s)`,
         });
       }
     } catch (error) {
       console.error('Parse error:', error);
       toast({
-        title: "Parse Failed",
-        description: error instanceof Error ? error.message : "Failed to parse circuits",
-        variant: "destructive"
+        title: 'Parse Failed',
+        description: error instanceof Error ? error.message : 'Failed to parse circuits',
+        variant: 'destructive',
       });
     } finally {
       setIsParsing(false);
@@ -75,7 +88,8 @@ C3 - Cooker - 6.0/2.5 - 40A - RCBO`;
         <DialogHeader>
           <DialogTitle>Text to Circuits</DialogTitle>
           <DialogDescription>
-            Enter circuit details in natural language or structured format. AI will parse and extract the information.
+            Enter circuit details in natural language or structured format. AI will parse and
+            extract the information.
           </DialogDescription>
         </DialogHeader>
 
@@ -90,11 +104,7 @@ C3 - Cooker - 6.0/2.5 - 40A - RCBO`;
             />
           </div>
 
-          <Button 
-            onClick={handleParse} 
-            disabled={isParsing || !text.trim()}
-            className="w-full"
-          >
+          <Button onClick={handleParse} disabled={isParsing || !text.trim()} className="w-full">
             {isParsing ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -138,7 +148,8 @@ C3 - Cooker - 6.0/2.5 - 40A - RCBO`;
               <div className="flex gap-2">
                 <Button onClick={handleAddCircuits} className="flex-1 gap-2">
                   <Plus className="h-4 w-4" />
-                  Add {parsedCircuits.length} Circuit{parsedCircuits.length !== 1 ? 's' : ''} to Table
+                  Add {parsedCircuits.length} Circuit{parsedCircuits.length !== 1 ? 's' : ''} to
+                  Table
                 </Button>
                 <Button onClick={onClose} variant="outline">
                   <X className="h-4 w-4" />

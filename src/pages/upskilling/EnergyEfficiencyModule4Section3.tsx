@@ -19,13 +19,14 @@ import {
   Settings,
   Zap,
   Clock,
-  Cpu
+  Cpu,
 } from 'lucide-react';
 
 const EnergyEfficiencyModule4Section3: React.FC = () => {
   useSEO({
     title: 'Energy-Efficient Controls: Timers & BMS | Module 4 Section 3',
-    description: 'Learn about time switches, Building Management Systems, BACnet/Modbus protocols, weather compensation, demand limiting, and renewable energy integration for UK buildings.',
+    description:
+      'Learn about time switches, Building Management Systems, BACnet/Modbus protocols, weather compensation, demand limiting, and renewable energy integration for UK buildings.',
     keywords: [
       'BMS',
       'Building Management Systems',
@@ -38,60 +39,68 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
       'demand limiting',
       'Part L controls',
       'energy efficiency',
-      'building controls'
+      'building controls',
     ],
-    canonicalUrl: '/upskilling/energy-efficiency/module-4/section-3'
+    canonicalUrl: '/upskilling/energy-efficiency/module-4/section-3',
   });
 
   const quickCheckQuestions = [
     {
       id: 'qc1',
-      question: 'What is the typical energy saving potential when installing a properly configured BMS in a commercial building?',
+      question:
+        'What is the typical energy saving potential when installing a properly configured BMS in a commercial building?',
       options: ['5-10%', '15-30%', '40-50%', '60-70%'],
       correctIndex: 1,
-      explanation: 'A properly configured Building Management System typically achieves 15-30% energy savings through optimised scheduling, setback control, and integrated systems management. This is well documented in CIBSE guidance and real-world case studies across UK commercial buildings.'
+      explanation:
+        'A properly configured Building Management System typically achieves 15-30% energy savings through optimised scheduling, setback control, and integrated systems management. This is well documented in CIBSE guidance and real-world case studies across UK commercial buildings.',
     },
     {
       id: 'qc2',
-      question: 'Which protocol is most commonly used for integrating diverse building systems from different manufacturers in the UK?',
+      question:
+        'Which protocol is most commonly used for integrating diverse building systems from different manufacturers in the UK?',
       options: ['LON (LonWorks)', 'KNX', 'BACnet', 'Modbus RTU'],
       correctIndex: 2,
-      explanation: 'BACnet (Building Automation and Control Networks) is the most widely adopted open protocol in the UK for integrating multi-vendor building systems. Its object-oriented architecture and ASHRAE standardisation make it ideal for complex installations requiring interoperability.'
+      explanation:
+        'BACnet (Building Automation and Control Networks) is the most widely adopted open protocol in the UK for integrating multi-vendor building systems. Its object-oriented architecture and ASHRAE standardisation make it ideal for complex installations requiring interoperability.',
     },
     {
       id: 'qc3',
-      question: 'What does an optimum start controller calculate to determine when heating should begin?',
+      question:
+        'What does an optimum start controller calculate to determine when heating should begin?',
       options: [
         'Only the outdoor temperature',
         'The time needed to reach setpoint based on thermal conditions',
         'The electricity tariff rates',
-        'The number of occupants expected'
+        'The number of occupants expected',
       ],
       correctIndex: 1,
-      explanation: 'Optimum start controllers use adaptive algorithms to calculate the minimum pre-heat time required based on indoor temperature, outdoor temperature, and building thermal characteristics. This prevents unnecessary early starts while ensuring comfort conditions are met at occupancy time.'
-    }
+      explanation:
+        'Optimum start controllers use adaptive algorithms to calculate the minimum pre-heat time required based on indoor temperature, outdoor temperature, and building thermal characteristics. This prevents unnecessary early starts while ensuring comfort conditions are met at occupancy time.',
+    },
   ];
 
   const quizQuestions = [
     {
-      question: 'Under Building Regulations Part L, what is the minimum requirement for heating system controls in new non-domestic buildings?',
+      question:
+        'Under Building Regulations Part L, what is the minimum requirement for heating system controls in new non-domestic buildings?',
       options: [
         'Simple on/off time switch only',
         'Time and temperature control with zone capability',
         'Manual control by building users',
-        'Thermostat only without timing'
+        'Thermostat only without timing',
       ],
-      correctAnswer: 'Time and temperature control with zone capability'
+      correctAnswer: 'Time and temperature control with zone capability',
     },
     {
-      question: 'What is the primary advantage of weather compensation control over fixed flow temperature systems?',
+      question:
+        'What is the primary advantage of weather compensation control over fixed flow temperature systems?',
       options: [
         'Lower installation cost',
         'Simpler programming requirements',
         'Reduced energy consumption by matching output to demand',
-        'Faster response to setpoint changes'
+        'Faster response to setpoint changes',
       ],
-      correctAnswer: 'Reduced energy consumption by matching output to demand'
+      correctAnswer: 'Reduced energy consumption by matching output to demand',
     },
     {
       question: 'In BMS terminology, what is a "setback" strategy?',
@@ -99,9 +108,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
         'Returning the system to factory defaults',
         'Reducing temperature setpoints during unoccupied periods',
         'Installing backup control systems',
-        'Reverting to manual override mode'
+        'Reverting to manual override mode',
       ],
-      correctAnswer: 'Reducing temperature setpoints during unoccupied periods'
+      correctAnswer: 'Reducing temperature setpoints during unoccupied periods',
     },
     {
       question: 'Which communication topology does Modbus RTU typically use?',
@@ -109,9 +118,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
         'Star topology with central hub',
         'Ring topology with token passing',
         'Multi-drop RS-485 serial bus',
-        'Mesh wireless network'
+        'Mesh wireless network',
       ],
-      correctAnswer: 'Multi-drop RS-485 serial bus'
+      correctAnswer: 'Multi-drop RS-485 serial bus',
     },
     {
       question: 'What is demand limiting in the context of building energy management?',
@@ -119,9 +128,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
         'Restricting the number of building users',
         'Automatically shedding loads to stay within maximum demand targets',
         'Limiting the size of new equipment installations',
-        'Reducing the operating hours of the building'
+        'Reducing the operating hours of the building',
       ],
-      correctAnswer: 'Automatically shedding loads to stay within maximum demand targets'
+      correctAnswer: 'Automatically shedding loads to stay within maximum demand targets',
     },
     {
       question: 'How does load cycling differ from load shedding?',
@@ -129,9 +138,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
         'Load cycling is permanent, shedding is temporary',
         'Load cycling rotates equipment operation, shedding removes loads entirely',
         'They are identical strategies with different names',
-        'Load cycling only applies to lighting systems'
+        'Load cycling only applies to lighting systems',
       ],
-      correctAnswer: 'Load cycling rotates equipment operation, shedding removes loads entirely'
+      correctAnswer: 'Load cycling rotates equipment operation, shedding removes loads entirely',
     },
     {
       question: 'What is the typical scan rate for a BMS monitoring critical HVAC parameters?',
@@ -139,19 +148,20 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
         'Once per hour',
         'Every 15-30 seconds',
         'Once per day',
-        'Continuous real-time (sub-second)'
+        'Continuous real-time (sub-second)',
       ],
-      correctAnswer: 'Every 15-30 seconds'
+      correctAnswer: 'Every 15-30 seconds',
     },
     {
-      question: 'When integrating solar PV with a BMS, what control strategy maximises self-consumption?',
+      question:
+        'When integrating solar PV with a BMS, what control strategy maximises self-consumption?',
       options: [
         'Export all generation to the grid',
         'Shift flexible loads to periods of high generation',
         'Disconnect the PV system during peak demand',
-        'Run heating systems at night only'
+        'Run heating systems at night only',
       ],
-      correctAnswer: 'Shift flexible loads to periods of high generation'
+      correctAnswer: 'Shift flexible loads to periods of high generation',
     },
     {
       question: 'What does BACnet MSTP stand for?',
@@ -159,47 +169,55 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
         'Master Slave Token Passing',
         'Multiple System Transfer Protocol',
         'Managed Service Transmission Point',
-        'Main Server Terminal Port'
+        'Main Server Terminal Port',
       ],
-      correctAnswer: 'Master Slave Token Passing'
+      correctAnswer: 'Master Slave Token Passing',
     },
     {
-      question: 'According to CIBSE guidance, what is the recommended night setback temperature for commercial office heating?',
+      question:
+        'According to CIBSE guidance, what is the recommended night setback temperature for commercial office heating?',
       options: [
         '5°C (frost protection only)',
         '10-12°C',
         '16-18°C',
-        'Full heating maintained 24/7'
+        'Full heating maintained 24/7',
       ],
-      correctAnswer: '10-12°C'
-    }
+      correctAnswer: '10-12°C',
+    },
   ];
 
   const faqs = [
     {
       question: 'What qualifications do I need to program and commission BMS systems in the UK?',
-      answer: 'While there is no single mandatory qualification, most BMS commissioning engineers hold relevant electrical qualifications (such as Level 3 Electrical Installation) plus manufacturer-specific training certifications. BSRIA and CIBSE offer recognised BMS training courses. Many employers also require experience with specific protocols (BACnet, Modbus) and familiarity with building regulations Part L. The ECA and other trade bodies provide CPD programmes covering controls and energy management.'
+      answer:
+        'While there is no single mandatory qualification, most BMS commissioning engineers hold relevant electrical qualifications (such as Level 3 Electrical Installation) plus manufacturer-specific training certifications. BSRIA and CIBSE offer recognised BMS training courses. Many employers also require experience with specific protocols (BACnet, Modbus) and familiarity with building regulations Part L. The ECA and other trade bodies provide CPD programmes covering controls and energy management.',
     },
     {
-      question: 'How do I determine the payback period for upgrading from time switches to a full BMS?',
-      answer: 'Calculate the payback by comparing current energy costs against projected savings (typically 15-30% for well-implemented systems). Factor in: equipment and installation costs, commissioning and training, annual maintenance contracts, and any available grants or Enhanced Capital Allowances. For a medium commercial building, payback periods of 3-7 years are typical. Use half-hourly meter data or sub-metering to establish accurate baselines before upgrade, and consider using the Carbon Trust\'s building energy benchmarking tools.'
+      question:
+        'How do I determine the payback period for upgrading from time switches to a full BMS?',
+      answer:
+        "Calculate the payback by comparing current energy costs against projected savings (typically 15-30% for well-implemented systems). Factor in: equipment and installation costs, commissioning and training, annual maintenance contracts, and any available grants or Enhanced Capital Allowances. For a medium commercial building, payback periods of 3-7 years are typical. Use half-hourly meter data or sub-metering to establish accurate baselines before upgrade, and consider using the Carbon Trust's building energy benchmarking tools.",
     },
     {
       question: 'Can existing older controls be integrated with modern BMS platforms?',
-      answer: 'Yes, through several approaches: protocol converters/gateways can translate between legacy protocols (like older Modbus variants) and modern BACnet/IP systems. Many BMS manufacturers offer interface modules for common legacy equipment. For very old pneumatic or simple electrical controls, replacement with modern actuators and sensors connected to the new BMS is often more cost-effective than conversion. Always conduct a controls audit to identify what can be retained versus what needs replacement.'
+      answer:
+        'Yes, through several approaches: protocol converters/gateways can translate between legacy protocols (like older Modbus variants) and modern BACnet/IP systems. Many BMS manufacturers offer interface modules for common legacy equipment. For very old pneumatic or simple electrical controls, replacement with modern actuators and sensors connected to the new BMS is often more cost-effective than conversion. Always conduct a controls audit to identify what can be retained versus what needs replacement.',
     },
     {
       question: 'What are the Part L requirements for replacement boiler controls?',
-      answer: 'When replacing boilers in existing buildings, Part L requires installation of appropriate controls including: time control, zone control where practical, weather compensation or load compensation for systems over 45kW, optimum start/stop control, and boiler sequence control for multi-boiler installations. The Non-Domestic Building Services Compliance Guide provides detailed minimum standards. Controls must be commissioned and a commissioning certificate provided to Building Control.'
+      answer:
+        'When replacing boilers in existing buildings, Part L requires installation of appropriate controls including: time control, zone control where practical, weather compensation or load compensation for systems over 45kW, optimum start/stop control, and boiler sequence control for multi-boiler installations. The Non-Domestic Building Services Compliance Guide provides detailed minimum standards. Controls must be commissioned and a commissioning certificate provided to Building Control.',
     },
     {
       question: 'How often should BMS control strategies be reviewed and optimised?',
-      answer: 'Best practice recommends: monthly review of energy consumption trends and alarm logs, quarterly review of schedules against actual occupancy, annual comprehensive review of all setpoints and control parameters, and immediate review after any building use changes. Many BMS platforms now include analytics that flag when performance deviates from expected patterns. CIBSE TM63 provides guidance on operational performance benchmarking. Budget approximately 2-4 days per year for optimisation on medium-sized commercial buildings.'
+      answer:
+        'Best practice recommends: monthly review of energy consumption trends and alarm logs, quarterly review of schedules against actual occupancy, annual comprehensive review of all setpoints and control parameters, and immediate review after any building use changes. Many BMS platforms now include analytics that flag when performance deviates from expected patterns. CIBSE TM63 provides guidance on operational performance benchmarking. Budget approximately 2-4 days per year for optimisation on medium-sized commercial buildings.',
     },
     {
       question: 'What cybersecurity considerations apply to networked BMS installations?',
-      answer: 'Modern IP-connected BMS systems require robust cybersecurity: segregate BMS networks from corporate IT networks using VLANs and firewalls, implement strong authentication (avoid default passwords), regularly update firmware and software, use encrypted connections for remote access, maintain access logs and review regularly, and conduct penetration testing. The NCSC (National Cyber Security Centre) provides guidance for operational technology security. BS EN ISO 27001 and IEC 62443 provide relevant standards frameworks.'
-    }
+      answer:
+        'Modern IP-connected BMS systems require robust cybersecurity: segregate BMS networks from corporate IT networks using VLANs and firewalls, implement strong authentication (avoid default passwords), regularly update firmware and software, use encrypted connections for remote access, maintain access logs and review regularly, and conduct penetration testing. The NCSC (National Cyber Security Centre) provides guidance for operational technology security. BS EN ISO 27001 and IEC 62443 provide relevant standards frameworks.',
+    },
   ];
 
   return (
@@ -207,7 +225,12 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-4">
               <ArrowLeft className="h-5 w-5" />
             </Link>
@@ -245,9 +268,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Time-based controls form the foundation of energy-efficient building operation in the UK.
-              Part L requires heating systems to have appropriate time control, with more sophisticated
-              requirements for larger installations.
+              Time-based controls form the foundation of energy-efficient building operation in the
+              UK. Part L requires heating systems to have appropriate time control, with more
+              sophisticated requirements for larger installations.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
@@ -258,19 +281,34 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span><strong className="text-white">Simple Time Switches:</strong> Basic 7-day programmable timers for on/off control. Suitable for small installations with predictable occupancy.</span>
+                  <span>
+                    <strong className="text-white">Simple Time Switches:</strong> Basic 7-day
+                    programmable timers for on/off control. Suitable for small installations with
+                    predictable occupancy.
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span><strong className="text-white">Optimised Start Controllers:</strong> Adaptive algorithms that calculate the minimum pre-heat time required to reach setpoint at occupancy time.</span>
+                  <span>
+                    <strong className="text-white">Optimised Start Controllers:</strong> Adaptive
+                    algorithms that calculate the minimum pre-heat time required to reach setpoint
+                    at occupancy time.
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span><strong className="text-white">Optimised Stop:</strong> Allows heating to switch off before the end of occupancy, using building thermal mass to maintain comfort.</span>
+                  <span>
+                    <strong className="text-white">Optimised Stop:</strong> Allows heating to switch
+                    off before the end of occupancy, using building thermal mass to maintain
+                    comfort.
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span><strong className="text-white">Calendar-Based Scheduling:</strong> Annual programmes accounting for holidays, bank holidays, and seasonal variations.</span>
+                  <span>
+                    <strong className="text-white">Calendar-Based Scheduling:</strong> Annual
+                    programmes accounting for holidays, bank holidays, and seasonal variations.
+                  </span>
                 </li>
               </ul>
             </div>
@@ -308,9 +346,10 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 <div>
                   <h4 className="text-amber-400 font-semibold">Part L Requirement</h4>
                   <p className="text-sm text-white/70">
-                    For non-domestic buildings with heating systems over 45kW output, Part L requires
-                    optimum start control. The controller must be capable of delaying start-up based
-                    on internal and external conditions to minimise pre-conditioning time.
+                    For non-domestic buildings with heating systems over 45kW output, Part L
+                    requires optimum start control. The controller must be capable of delaying
+                    start-up based on internal and external conditions to minimise pre-conditioning
+                    time.
                   </p>
                 </div>
               </div>
@@ -342,7 +381,10 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Management Level</p>
-                    <p className="text-sm text-white/60">Operator workstations, servers, data analytics, reporting, and remote access interfaces.</p>
+                    <p className="text-sm text-white/60">
+                      Operator workstations, servers, data analytics, reporting, and remote access
+                      interfaces.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
@@ -351,7 +393,10 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Automation Level</p>
-                    <p className="text-sm text-white/60">Network controllers, routers, and communication infrastructure connecting subsystems.</p>
+                    <p className="text-sm text-white/60">
+                      Network controllers, routers, and communication infrastructure connecting
+                      subsystems.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
@@ -360,7 +405,10 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Field Level</p>
-                    <p className="text-sm text-white/60">Sensors (temperature, humidity, CO2), actuators (valves, dampers), and local controllers.</p>
+                    <p className="text-sm text-white/60">
+                      Sensors (temperature, humidity, CO2), actuators (valves, dampers), and local
+                      controllers.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -412,13 +460,16 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             <p>
               Understanding building automation protocols is essential for system integration and
               troubleshooting. The UK market predominantly uses BACnet for large commercial
-              installations, with Modbus common for industrial applications and equipment interfaces.
+              installations, with Modbus common for industrial applications and equipment
+              interfaces.
             </p>
 
             <div className="space-y-4">
               {/* BACnet */}
               <div className="bg-white/5 rounded-lg p-4">
-                <h3 className="text-elec-yellow font-semibold mb-3">BACnet (Building Automation and Control Networks)</h3>
+                <h3 className="text-elec-yellow font-semibold mb-3">
+                  BACnet (Building Automation and Control Networks)
+                </h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-white/70 mb-2">
@@ -583,14 +634,16 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-elec-yellow font-semibold mb-3">Temperature Setback Strategies</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Temperature Setback Strategies
+              </h3>
               <div className="space-y-3">
                 <div className="p-3 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium">Night Setback</h4>
                   <p className="text-sm text-white/60 mt-1">
-                    Reduce heating setpoint during unoccupied night hours. CIBSE recommends
-                    10-12C for commercial offices (maintaining above 5C frost protection minimum).
-                    Savings of 5-15% on heating costs depending on building type.
+                    Reduce heating setpoint during unoccupied night hours. CIBSE recommends 10-12C
+                    for commercial offices (maintaining above 5C frost protection minimum). Savings
+                    of 5-15% on heating costs depending on building type.
                   </p>
                 </div>
                 <div className="p-3 bg-white/5 rounded-lg">
@@ -642,8 +695,8 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
               <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3">Demand Limiting</h3>
                 <p className="text-sm text-white/70 mb-3">
-                  Automatically reduces electrical load when approaching maximum demand targets.
-                  The BMS monitors real-time consumption and sheds non-essential loads in a
+                  Automatically reduces electrical load when approaching maximum demand targets. The
+                  BMS monitors real-time consumption and sheds non-essential loads in a
                   predetermined priority sequence.
                 </p>
                 <p className="text-sm font-medium text-white mb-2">Load Priority Hierarchy:</p>
@@ -673,27 +726,38 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-elec-yellow font-semibold mb-3">BMS Demand Response Configuration</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                BMS Demand Response Configuration
+              </h3>
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-3">
                   <Settings className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">Demand Setpoint</p>
-                    <p className="text-white/60">Set 5-10% below contracted maximum demand (kVA) to allow response time before penalties.</p>
+                    <p className="text-white/60">
+                      Set 5-10% below contracted maximum demand (kVA) to allow response time before
+                      penalties.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Settings className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">Monitoring Interval</p>
-                    <p className="text-white/60">Half-hourly metering standard in UK. BMS should sample every 1-5 minutes with predictive algorithms.</p>
+                    <p className="text-white/60">
+                      Half-hourly metering standard in UK. BMS should sample every 1-5 minutes with
+                      predictive algorithms.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Settings className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">Restore Delay</p>
-                    <p className="text-white/60">Stagger load restoration (typically 5-10 minute intervals) to prevent demand spikes.</p>
+                    <p className="text-white/60">
+                      Stagger load restoration (typically 5-10 minute intervals) to prevent demand
+                      spikes.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -735,13 +799,15 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Modern BMS installations increasingly integrate with on-site renewable generation
-              and battery storage to maximise self-consumption and reduce grid dependence.
-              Effective integration requires careful control strategy design.
+              Modern BMS installations increasingly integrate with on-site renewable generation and
+              battery storage to maximise self-consumption and reduce grid dependence. Effective
+              integration requires careful control strategy design.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h3 className="text-elec-yellow font-semibold mb-3">Solar PV Integration Strategies</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Solar PV Integration Strategies
+              </h3>
               <div className="space-y-3">
                 <div className="p-3 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium flex items-center gap-2">
@@ -760,9 +826,8 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                     Excess Generation Response
                   </h4>
                   <p className="text-sm text-white/60 mt-1">
-                    When generation exceeds demand, BMS can enable thermal storage charging,
-                    battery storage, or bring forward scheduled loads to absorb surplus before
-                    export.
+                    When generation exceeds demand, BMS can enable thermal storage charging, battery
+                    storage, or bring forward scheduled loads to absorb surplus before export.
                   </p>
                 </div>
                 <div className="p-3 bg-white/5 rounded-lg">
@@ -771,9 +836,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                     Weather Forecast Integration
                   </h4>
                   <p className="text-sm text-white/60 mt-1">
-                    Advanced systems use weather forecasting APIs to predict solar generation
-                    and adjust schedules proactively. Pre-condition buildings during expected
-                    high generation periods.
+                    Advanced systems use weather forecasting APIs to predict solar generation and
+                    adjust schedules proactively. Pre-condition buildings during expected high
+                    generation periods.
                   </p>
                 </div>
               </div>
@@ -826,7 +891,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             </div>
 
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-              <h4 className="text-blue-400 font-semibold mb-2">BMS Data Points for Renewable Integration</h4>
+              <h4 className="text-blue-400 font-semibold mb-2">
+                BMS Data Points for Renewable Integration
+              </h4>
               <div className="grid md:grid-cols-3 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white">Solar PV:</p>
@@ -866,7 +933,9 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold text-white mb-2">Part L Control Requirements (Non-Domestic)</h3>
+              <h3 className="font-semibold text-white mb-2">
+                Part L Control Requirements (Non-Domestic)
+              </h3>
               <ul className="text-sm space-y-1 text-white/80">
                 <li>Time and temperature control mandatory</li>
                 <li>Zone control where practical</li>

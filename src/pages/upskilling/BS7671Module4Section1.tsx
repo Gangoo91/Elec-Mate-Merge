@@ -1,84 +1,88 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "ads-purpose",
-    question: "What is the primary purpose of ADS in electrical systems?",
+    id: 'ads-purpose',
+    question: 'What is the primary purpose of ADS in electrical systems?',
     options: [
-      "To provide surge protection",
-      "To automatically disconnect supply during earth faults within safe time limits",
-      "To monitor power consumption",
-      "To improve power factor"
+      'To provide surge protection',
+      'To automatically disconnect supply during earth faults within safe time limits',
+      'To monitor power consumption',
+      'To improve power factor',
     ],
     correctIndex: 1,
-    explanation: "ADS (Automatic Disconnection of Supply) is designed to automatically disconnect the electrical supply when an earth fault occurs, within time limits that prevent dangerous touch voltages persisting long enough to cause harm."
+    explanation:
+      'ADS (Automatic Disconnection of Supply) is designed to automatically disconnect the electrical supply when an earth fault occurs, within time limits that prevent dangerous touch voltages persisting long enough to cause harm.',
   },
   {
-    id: "selv-characteristic",
-    question: "Which protection method provides safety through isolation with no earth reference?",
-    options: [
-      "PELV",
-      "FELV",
-      "SELV",
-      "ADS"
-    ],
+    id: 'selv-characteristic',
+    question: 'Which protection method provides safety through isolation with no earth reference?',
+    options: ['PELV', 'FELV', 'SELV', 'ADS'],
     correctIndex: 2,
-    explanation: "SELV (Safety Extra-Low Voltage) provides protection through complete isolation from earth and other circuits, with no intentional earth connections. The voltage limitation (≤50V AC) combined with isolation provides inherent safety."
+    explanation:
+      'SELV (Safety Extra-Low Voltage) provides protection through complete isolation from earth and other circuits, with no intentional earth connections. The voltage limitation (≤50V AC) combined with isolation provides inherent safety.',
   },
   {
-    id: "double-insulation",
-    question: "What protection does double insulation provide?",
+    id: 'double-insulation',
+    question: 'What protection does double insulation provide?',
     options: [
-      "Only basic protection",
-      "Only fault protection",
-      "Both basic and fault protection without requiring earthing",
-      "Surge protection only"
+      'Only basic protection',
+      'Only fault protection',
+      'Both basic and fault protection without requiring earthing',
+      'Surge protection only',
     ],
     correctIndex: 2,
-    explanation: "Double or reinforced insulation provides both basic and fault protection through two independent insulation layers, eliminating the need for protective earthing. Equipment marked with the Class II symbol (⧈) uses this protection method."
-  }
+    explanation:
+      'Double or reinforced insulation provides both basic and fault protection through two independent insulation layers, eliminating the need for protective earthing. Equipment marked with the Class II symbol (⧈) uses this protection method.',
+  },
 ];
 
 const faqs = [
   {
-    question: "When should I use SELV instead of PELV?",
-    answer: "Use SELV when complete isolation from earth is required for maximum safety—typically in high-risk locations like swimming pools, bathrooms (zone 0/1), and areas accessible to children. PELV is suitable when functional earthing is needed but extra-low voltage safety is still required, such as for EMC purposes in control systems."
+    question: 'When should I use SELV instead of PELV?',
+    answer:
+      'Use SELV when complete isolation from earth is required for maximum safety—typically in high-risk locations like swimming pools, bathrooms (zone 0/1), and areas accessible to children. PELV is suitable when functional earthing is needed but extra-low voltage safety is still required, such as for EMC purposes in control systems.',
   },
   {
     question: "Why isn't FELV recognised as a protective measure?",
-    answer: "FELV (Functional Extra-Low Voltage) lacks proper safety isolation from higher voltage circuits. It may be derived from autotransformers or have direct connections to mains, meaning a fault could expose users to dangerous voltages. FELV circuits must be treated as low voltage installations with full basic and fault protection."
+    answer:
+      'FELV (Functional Extra-Low Voltage) lacks proper safety isolation from higher voltage circuits. It may be derived from autotransformers or have direct connections to mains, meaning a fault could expose users to dangerous voltages. FELV circuits must be treated as low voltage installations with full basic and fault protection.',
   },
   {
-    question: "How do I choose between ADS and double insulation?",
-    answer: "ADS is the standard approach for most fixed installations where earthing is practical. Double insulation is preferred for portable equipment, situations where earthing is difficult or undesirable, and where equipment is marked Class II. Consider maintenance requirements—double insulation eliminates earth continuity testing."
+    question: 'How do I choose between ADS and double insulation?',
+    answer:
+      'ADS is the standard approach for most fixed installations where earthing is practical. Double insulation is preferred for portable equipment, situations where earthing is difficult or undesirable, and where equipment is marked Class II. Consider maintenance requirements—double insulation eliminates earth continuity testing.',
   },
   {
     question: "What's the relationship between basic and fault protection?",
-    answer: "Basic protection prevents contact with live parts during normal operation (insulation, barriers, enclosures). Fault protection activates when basic protection fails, ensuring dangerous voltages are cleared quickly (ADS, double insulation, equipotential bonding). Both must be present for complete shock protection."
-  }
+    answer:
+      'Basic protection prevents contact with live parts during normal operation (insulation, barriers, enclosures). Fault protection activates when basic protection fails, ensuring dangerous voltages are cleared quickly (ADS, double insulation, equipotential bonding). Both must be present for complete shock protection.',
+  },
 ];
 
 const quizQuestion = {
-  question: "Where is PELV typically more practical than SELV?",
+  question: 'Where is PELV typically more practical than SELV?',
   options: [
-    "In bathrooms only",
-    "Where functional earthing is required for equipment operation",
-    "In outdoor installations",
-    "For motor circuits only"
+    'In bathrooms only',
+    'Where functional earthing is required for equipment operation',
+    'In outdoor installations',
+    'For motor circuits only',
   ],
   correctAnswer: 1,
-  explanation: "PELV is used where equipment requires an earth connection for functional purposes (such as EMC screening or reference voltages) but you still want the safety benefits of extra-low voltage. SELV cannot have any earth connections."
+  explanation:
+    'PELV is used where equipment requires an earth connection for functional purposes (such as EMC screening or reference voltages) but you still want the safety benefits of extra-low voltage. SELV cannot have any earth connections.',
 };
 
 const BS7671Module4Section1 = () => {
   useSEO({
-    title: "Electric Shock Protection Methods | BS 7671 Module 4.1",
-    description: "Learn about SELV, PELV, ADS, double insulation and other protection methods against electric shock per BS 7671 requirements."
+    title: 'Electric Shock Protection Methods | BS 7671 Module 4.1',
+    description:
+      'Learn about SELV, PELV, ADS, double insulation and other protection methods against electric shock per BS 7671 requirements.',
   });
 
   return (
@@ -110,9 +114,7 @@ const BS7671Module4Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electric Shock Protection Methods
           </h1>
-          <p className="text-white/80">
-            SELV, PELV, ADS, and other protection strategies
-          </p>
+          <p className="text-white/80">SELV, PELV, ADS, and other protection strategies</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -120,17 +122,29 @@ const BS7671Module4Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Basic protection:</strong> Prevents contact during normal operation</li>
-              <li><strong>Fault protection:</strong> Activates when basic protection fails</li>
-              <li><strong>ADS:</strong> Most common method—rapid disconnection during faults</li>
+              <li>
+                <strong>Basic protection:</strong> Prevents contact during normal operation
+              </li>
+              <li>
+                <strong>Fault protection:</strong> Activates when basic protection fails
+              </li>
+              <li>
+                <strong>ADS:</strong> Most common method—rapid disconnection during faults
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>SELV:</strong> High-risk areas (pools, bathrooms zone 0/1)</li>
-              <li><strong>PELV:</strong> When functional earthing needed</li>
-              <li><strong>Double insulation:</strong> Portable equipment, Class II symbol ⧈</li>
+              <li>
+                <strong>SELV:</strong> High-risk areas (pools, bathrooms zone 0/1)
+              </li>
+              <li>
+                <strong>PELV:</strong> When functional earthing needed
+              </li>
+              <li>
+                <strong>Double insulation:</strong> Portable equipment, Class II symbol ⧈
+              </li>
             </ul>
           </div>
         </div>
@@ -140,12 +154,12 @@ const BS7671Module4Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Distinguish between basic and fault protection requirements",
-              "Apply ADS systems with correct earthing and device coordination",
-              "Specify SELV and PELV for special locations",
+              'Distinguish between basic and fault protection requirements',
+              'Apply ADS systems with correct earthing and device coordination',
+              'Specify SELV and PELV for special locations',
               "Select double insulation where protective earthing isn't practical",
-              "Understand why FELV is NOT a protective measure",
-              "Choose appropriate protection methods for different environments"
+              'Understand why FELV is NOT a protective measure',
+              'Choose appropriate protection methods for different environments',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -165,28 +179,48 @@ const BS7671Module4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 7671 distinguishes between two fundamental types of protection against electric shock. Both must be present for complete safety—basic protection is the first line of defence, fault protection is the backup.
+              BS 7671 distinguishes between two fundamental types of protection against electric
+              shock. Both must be present for complete safety—basic protection is the first line of
+              defence, fault protection is the backup.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Basic Protection</p>
-                <p className="text-xs text-white/70 mb-2">Prevents contact with live parts during normal operation</p>
+                <p className="text-xs text-white/70 mb-2">
+                  Prevents contact with live parts during normal operation
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Insulation:</strong> Cable and equipment insulation</li>
-                  <li><strong>Barriers:</strong> Physical prevention of access</li>
-                  <li><strong>Enclosures:</strong> IP-rated equipment housings</li>
-                  <li><strong>Positioning:</strong> Placing live parts out of reach</li>
+                  <li>
+                    <strong>Insulation:</strong> Cable and equipment insulation
+                  </li>
+                  <li>
+                    <strong>Barriers:</strong> Physical prevention of access
+                  </li>
+                  <li>
+                    <strong>Enclosures:</strong> IP-rated equipment housings
+                  </li>
+                  <li>
+                    <strong>Positioning:</strong> Placing live parts out of reach
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fault Protection</p>
                 <p className="text-xs text-white/70 mb-2">Activates when basic protection fails</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>ADS:</strong> Automatic disconnection during faults</li>
-                  <li><strong>Double insulation:</strong> Second layer if first fails</li>
-                  <li><strong>Equipotential bonding:</strong> Reducing potential differences</li>
-                  <li><strong>Electrical separation:</strong> Isolating circuits from earth</li>
+                  <li>
+                    <strong>ADS:</strong> Automatic disconnection during faults
+                  </li>
+                  <li>
+                    <strong>Double insulation:</strong> Second layer if first fails
+                  </li>
+                  <li>
+                    <strong>Equipotential bonding:</strong> Reducing potential differences
+                  </li>
+                  <li>
+                    <strong>Electrical separation:</strong> Isolating circuits from earth
+                  </li>
                 </ul>
               </div>
             </div>
@@ -206,7 +240,9 @@ const BS7671Module4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              ADS is the primary fault protection method in most UK installations. It relies on coordinated operation of earthing systems and protective devices to ensure rapid disconnection during earth faults.
+              ADS is the primary fault protection method in most UK installations. It relies on
+              coordinated operation of earthing systems and protective devices to ensure rapid
+              disconnection during earth faults.
             </p>
 
             <div className="p-5 rounded-lg bg-white/5 my-6">
@@ -225,10 +261,18 @@ const BS7671Module4Section1 = () => {
                 <div>
                   <p className="font-medium text-white mb-2">Disconnection Times:</p>
                   <ul className="text-white/90 space-y-1">
-                    <li><strong>Socket outlets:</strong> 0.4s maximum</li>
-                    <li><strong>Fixed equipment:</strong> 5s maximum</li>
-                    <li><strong>Distribution circuits:</strong> 5s maximum</li>
-                    <li><strong>Special locations:</strong> May require faster</li>
+                    <li>
+                      <strong>Socket outlets:</strong> 0.4s maximum
+                    </li>
+                    <li>
+                      <strong>Fixed equipment:</strong> 5s maximum
+                    </li>
+                    <li>
+                      <strong>Distribution circuits:</strong> 5s maximum
+                    </li>
+                    <li>
+                      <strong>Special locations:</strong> May require faster
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -264,36 +308,49 @@ const BS7671Module4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              SELV and PELV provide protection through voltage limitation rather than disconnection. Both limit voltage to ≤50V AC or ≤120V DC, but differ in their earthing arrangements.
+              SELV and PELV provide protection through voltage limitation rather than disconnection.
+              Both limit voltage to ≤50V AC or ≤120V DC, but differ in their earthing arrangements.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-green-400/80 mb-2">SELV (Safety Extra-Low Voltage)</p>
+                <p className="text-sm font-medium text-green-400/80 mb-2">
+                  SELV (Safety Extra-Low Voltage)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Maximum 50V AC / 120V DC</li>
                   <li>• NO connection to earth</li>
                   <li>• Complete isolation from other circuits</li>
                   <li>• Safety isolating transformer required</li>
-                  <li><strong>Use:</strong> Bathrooms, pools, children's areas</li>
+                  <li>
+                    <strong>Use:</strong> Bathrooms, pools, children's areas
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">PELV (Protective Extra-Low Voltage)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  PELV (Protective Extra-Low Voltage)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Maximum 50V AC / 120V DC</li>
                   <li>• Earth connection PERMITTED</li>
                   <li>• Safety isolation still required</li>
                   <li>• Functional earthing allowed</li>
-                  <li><strong>Use:</strong> Control systems, instrumentation</li>
+                  <li>
+                    <strong>Use:</strong> Control systems, instrumentation
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-red-500/5 border border-red-500/20 my-6">
-              <p className="text-sm font-medium text-red-400 mb-2">FELV - NOT a Protective Measure</p>
+              <p className="text-sm font-medium text-red-400 mb-2">
+                FELV - NOT a Protective Measure
+              </p>
               <p className="text-sm text-white">
-                Functional Extra-Low Voltage (FELV) operates at ELV but lacks safety isolation. It may be derived from autotransformers or have direct mains connection. FELV circuits must have full basic AND fault protection—treat as low voltage.
+                Functional Extra-Low Voltage (FELV) operates at ELV but lacks safety isolation. It
+                may be derived from autotransformers or have direct mains connection. FELV circuits
+                must have full basic AND fault protection—treat as low voltage.
               </p>
             </div>
           </div>
@@ -312,21 +369,28 @@ const BS7671Module4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Class II equipment provides both basic and fault protection through two independent insulation layers, eliminating the need for protective earthing.
+              Class II equipment provides both basic and fault protection through two independent
+              insulation layers, eliminating the need for protective earthing.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Double Insulation</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Basic insulation:</strong> Primary protection layer</li>
-                  <li><strong>Supplementary insulation:</strong> Independent second layer</li>
+                  <li>
+                    <strong>Basic insulation:</strong> Primary protection layer
+                  </li>
+                  <li>
+                    <strong>Supplementary insulation:</strong> Independent second layer
+                  </li>
                   <li>• No single point failure</li>
                   <li>• No earth terminal on equipment</li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reinforced Insulation</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Reinforced Insulation
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>• Single enhanced layer</li>
                   <li>• Equivalent to double insulation</li>
@@ -353,14 +417,20 @@ const BS7671Module4Section1 = () => {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-6">Real World Scenario</h2>
           <div className="p-5 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-            <h3 className="text-sm font-medium text-elec-yellow mb-3">Children's Play Centre Lighting Design</h3>
+            <h3 className="text-sm font-medium text-elec-yellow mb-3">
+              Children's Play Centre Lighting Design
+            </h3>
             <p className="text-sm text-white mb-3">
-              A new soft play centre requires low-level lighting in areas accessible to young children. Risk assessment identifies potential contact with lighting equipment during play activities.
+              A new soft play centre requires low-level lighting in areas accessible to young
+              children. Risk assessment identifies potential contact with lighting equipment during
+              play activities.
             </p>
             <div className="p-3 rounded bg-green-500/5 border border-green-500/20">
               <p className="text-sm text-green-400 font-medium mb-1">Design Solution:</p>
               <p className="text-sm text-white">
-                12V SELV lighting system using safety isolating transformers located outside the play area. Even if a child contacts the lighting circuit, the 12V SELV supply cannot cause electric shock, and complete isolation from 230V mains ensures safety.
+                12V SELV lighting system using safety isolating transformers located outside the
+                play area. Even if a child contacts the lighting circuit, the 12V SELV supply cannot
+                cause electric shock, and complete isolation from 230V mains ensures safety.
               </p>
             </div>
           </div>

@@ -7,28 +7,32 @@ const BS7671Module2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Navigating Part 2 – How Definitions Shape Application",
+      title: 'Navigating Part 2 – How Definitions Shape Application',
       icon: BookOpen,
-      description: "Understanding how definitions in Part 2 influence the application of regulations"
+      description:
+        'Understanding how definitions in Part 2 influence the application of regulations',
     },
     {
       id: 2,
-      title: "Key Terms: CPC, ADS, SELV, PELV, Protective Devices",
+      title: 'Key Terms: CPC, ADS, SELV, PELV, Protective Devices',
       icon: Key,
-      description: "Essential terminology for circuit protective conductors, automatic disconnection, and safety systems"
+      description:
+        'Essential terminology for circuit protective conductors, automatic disconnection, and safety systems',
     },
     {
       id: 3,
-      title: "New Definitions from Amendment 2 & 3 (AFDD, PEI, Bidirectional Protection)",
+      title: 'New Definitions from Amendment 2 & 3 (AFDD, PEI, Bidirectional Protection)',
       icon: AlertTriangle,
-      description: "Updated terminology from Amendment 2 and Amendment 3's bidirectional protection requirements"
+      description:
+        "Updated terminology from Amendment 2 and Amendment 3's bidirectional protection requirements",
     },
     {
       id: 4,
-      title: "Amendment 3 Highlights & Current Requirements",
+      title: 'Amendment 3 Highlights & Current Requirements',
       icon: Lightbulb,
-      description: "Key changes in Amendment 3 focusing on bidirectional protection and renewable energy safety"
-    }
+      description:
+        'Key changes in Amendment 3 focusing on bidirectional protection and renewable energy safety',
+    },
   ];
 
   return (

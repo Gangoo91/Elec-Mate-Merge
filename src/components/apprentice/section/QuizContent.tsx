@@ -1,14 +1,13 @@
-
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Clock, AlertTriangle } from "lucide-react";
-import UnitQuiz from "@/components/apprentice/UnitQuiz";
-import { healthAndSafetyQuizzes } from "@/data/unitQuizzes";
-import { useToast } from "@/components/ui/use-toast";
-import { Progress } from "@/components/ui/progress";
-import { useAuth } from "@/contexts/AuthContext";
-import { userKey } from "@/lib/userStorage";
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, Clock, AlertTriangle } from 'lucide-react';
+import UnitQuiz from '@/components/apprentice/UnitQuiz';
+import { healthAndSafetyQuizzes } from '@/data/unitQuizzes';
+import { useToast } from '@/components/ui/use-toast';
+import { Progress } from '@/components/ui/progress';
+import { useAuth } from '@/contexts/AuthContext';
+import { userKey } from '@/lib/userStorage';
 
 interface QuizContentProps {
   effectiveCourseSlug: string;
@@ -17,11 +16,11 @@ interface QuizContentProps {
   markAsComplete: () => void;
 }
 
-const QuizContent = ({ 
-  effectiveCourseSlug, 
-  effectiveUnitSlug, 
-  isCompleted, 
-  markAsComplete 
+const QuizContent = ({
+  effectiveCourseSlug,
+  effectiveUnitSlug,
+  isCompleted,
+  markAsComplete,
 }: QuizContentProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -29,10 +28,11 @@ const QuizContent = ({
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(30 * 60); // 30 minutes in seconds
-  
+
   // Extract unit code from the unitSlug
-  const unitCode = effectiveUnitSlug.includes('-') ? 
-    effectiveUnitSlug.split('-').slice(0, 2).join('/').toUpperCase() : 'ELEC2/01';
+  const unitCode = effectiveUnitSlug.includes('-')
+    ? effectiveUnitSlug.split('-').slice(0, 2).join('/').toUpperCase()
+    : 'ELEC2/01';
 
   // Format remaining time as mm:ss
   const formatTime = (seconds: number) => {
@@ -40,22 +40,22 @@ const QuizContent = ({
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
-  
+
   // Calculate progress percentage
-  const timeProgress = 100 - ((timeRemaining / (30 * 60)) * 100);
+  const timeProgress = 100 - (timeRemaining / (30 * 60)) * 100;
 
   // Timer effect to count down when quiz is started
   React.useEffect(() => {
     if (!quizStarted || quizSubmitted) return;
-    
+
     const timer = setInterval(() => {
-      setTimeRemaining(prev => {
+      setTimeRemaining((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
           toast({
             title: "Time's up!",
-            description: "Your quiz has been automatically submitted.",
-            variant: "destructive"
+            description: 'Your quiz has been automatically submitted.',
+            variant: 'destructive',
           });
           setQuizSubmitted(true);
           return 0;
@@ -63,53 +63,63 @@ const QuizContent = ({
         return prev - 1;
       });
     }, 1000);
-    
+
     return () => clearInterval(timer);
   }, [quizStarted, quizSubmitted, toast]);
 
   const handleStartQuiz = () => {
     setQuizStarted(true);
     toast({
-      title: "Quiz Started",
-      description: "You have 30 minutes to complete this assessment.",
+      title: 'Quiz Started',
+      description: 'You have 30 minutes to complete this assessment.',
     });
   };
 
   const handleQuizComplete = (score: number, totalQuestions: number) => {
     // Mark quiz as completed
     markAsComplete();
-    
+
     // Calculate time taken
-    const timeTaken = (30 * 60) - timeRemaining;
+    const timeTaken = 30 * 60 - timeRemaining;
     const minutesTaken = Math.ceil(timeTaken / 60);
-    
+
     // Add to off-the-job training record
     try {
       const uid = user?.id;
-      const existingTime = parseInt(localStorage.getItem(userKey(uid, `course_${effectiveCourseSlug}_todayTime`)) || '0');
+      const existingTime = parseInt(
+        localStorage.getItem(userKey(uid, `course_${effectiveCourseSlug}_todayTime`)) || '0'
+      );
       const newTime = existingTime + timeTaken;
-      localStorage.setItem(userKey(uid, `course_${effectiveCourseSlug}_todayTime`), newTime.toString());
+      localStorage.setItem(
+        userKey(uid, `course_${effectiveCourseSlug}_todayTime`),
+        newTime.toString()
+      );
 
       // Record quiz attempt in localStorage (user-scoped)
-      const attempts = JSON.parse(localStorage.getItem(userKey(uid, `unit_${unitCode}_quiz_attempts`)) || '[]');
+      const attempts = JSON.parse(
+        localStorage.getItem(userKey(uid, `unit_${unitCode}_quiz_attempts`)) || '[]'
+      );
       attempts.push({
         date: new Date().toISOString(),
         score,
         totalQuestions,
         timeTaken,
-        percentage: Math.round((score / totalQuestions) * 100)
+        percentage: Math.round((score / totalQuestions) * 100),
       });
-      localStorage.setItem(userKey(uid, `unit_${unitCode}_quiz_attempts`), JSON.stringify(attempts));
+      localStorage.setItem(
+        userKey(uid, `unit_${unitCode}_quiz_attempts`),
+        JSON.stringify(attempts)
+      );
     } catch (error) {
-      console.error("Error saving quiz result:", error);
+      console.error('Error saving quiz result:', error);
     }
-    
+
     // Show toast
     toast({
-      title: "Quiz Completed",
+      title: 'Quiz Completed',
       description: `You scored ${score} out of ${totalQuestions}. ${minutesTaken} minutes has been added to your off-the-job training.`,
     });
-    
+
     setQuizSubmitted(true);
   };
 
@@ -122,7 +132,7 @@ const QuizContent = ({
           </div>
           <h1 className="text-2xl font-semibold">Unit Assessment Quiz</h1>
         </div>
-        
+
         {isCompleted && (
           <div className="flex items-center text-green-500 gap-2">
             <CheckCircle className="h-5 w-5" />
@@ -130,16 +140,16 @@ const QuizContent = ({
           </div>
         )}
       </div>
-      
+
       {!quizStarted ? (
         <>
           <div className="mb-8">
             <p className="text-white">
-              This quiz will test your understanding of the key health and safety concepts 
-              covered in this unit. Complete the quiz to demonstrate your knowledge.
+              This quiz will test your understanding of the key health and safety concepts covered
+              in this unit. Complete the quiz to demonstrate your knowledge.
             </p>
           </div>
-          
+
           <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-6 mb-6">
             <h2 className="text-xl font-semibold mb-4 text-elec-yellow">Quiz Instructions</h2>
             <ul className="space-y-2 text-white">
@@ -150,16 +160,18 @@ const QuizContent = ({
               <li>• Take your time and read each question carefully</li>
             </ul>
           </div>
-          
+
           <div className="flex justify-between items-center pt-4">
             <Button
               variant="outline"
               className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-              onClick={() => navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}`)}
+              onClick={() =>
+                navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}`)
+              }
             >
               Back to Unit
             </Button>
-            
+
             <Button
               onClick={handleStartQuiz}
               disabled={isCompleted}
@@ -179,13 +191,15 @@ const QuizContent = ({
                 <Clock className="h-5 w-5 text-elec-yellow" />
                 <span className="font-semibold">Time Remaining</span>
               </div>
-              <span className={`font-mono text-lg ${timeRemaining < 300 ? 'text-red-500 animate-pulse' : 'text-elec-yellow'}`}>
+              <span
+                className={`font-mono text-lg ${timeRemaining < 300 ? 'text-red-500 animate-pulse' : 'text-elec-yellow'}`}
+              >
                 {formatTime(timeRemaining)}
               </span>
             </div>
             <Progress value={timeProgress} className="h-2" />
           </div>
-          
+
           {/* Quiz component */}
           <UnitQuiz
             unitCode={unitCode}

@@ -75,7 +75,7 @@ async function fetchUserCVs(userId: string): Promise<UserCV[]> {
     throw new Error(`Failed to fetch CVs: ${error.message}`);
   }
 
-  return (data || []).map(cv => ({
+  return (data || []).map((cv) => ({
     ...cv,
     template_id: cv.template_id as CVTemplateId,
     cv_data: cv.cv_data as CVData,
@@ -85,24 +85,22 @@ async function fetchUserCVs(userId: string): Promise<UserCV[]> {
 }
 
 async function fetchCV(cvId: string): Promise<UserCV | null> {
-  const { data, error } = await supabase
-    .from('user_cvs')
-    .select('*')
-    .eq('id', cvId)
-    .single();
+  const { data, error } = await supabase.from('user_cvs').select('*').eq('id', cvId).single();
 
   if (error) {
     if (error.code === 'PGRST116') return null; // Not found
     throw new Error(`Failed to fetch CV: ${error.message}`);
   }
 
-  return data ? {
-    ...data,
-    template_id: data.template_id as CVTemplateId,
-    cv_data: data.cv_data as CVData,
-    is_primary: data.is_primary ?? false,
-    title: data.title ?? 'My CV',
-  } : null;
+  return data
+    ? {
+        ...data,
+        template_id: data.template_id as CVTemplateId,
+        cv_data: data.cv_data as CVData,
+        is_primary: data.is_primary ?? false,
+        title: data.title ?? 'My CV',
+      }
+    : null;
 }
 
 async function fetchPrimaryCV(userId: string): Promise<UserCV | null> {
@@ -118,13 +116,15 @@ async function fetchPrimaryCV(userId: string): Promise<UserCV | null> {
     throw new Error(`Failed to fetch primary CV: ${error.message}`);
   }
 
-  return data ? {
-    ...data,
-    template_id: data.template_id as CVTemplateId,
-    cv_data: data.cv_data as CVData,
-    is_primary: true,
-    title: data.title ?? 'My CV',
-  } : null;
+  return data
+    ? {
+        ...data,
+        template_id: data.template_id as CVTemplateId,
+        cv_data: data.cv_data as CVData,
+        is_primary: true,
+        title: data.title ?? 'My CV',
+      }
+    : null;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -172,7 +172,8 @@ async function updateCV(cvId: string, input: UpdateCVInput): Promise<UserCV> {
   };
 
   if (input.template_id !== undefined) updateData.template_id = input.template_id;
-  if (input.cv_data !== undefined) updateData.cv_data = input.cv_data as unknown as Record<string, unknown>;
+  if (input.cv_data !== undefined)
+    updateData.cv_data = input.cv_data as unknown as Record<string, unknown>;
   if (input.title !== undefined) updateData.title = input.title;
   if (input.pdf_url !== undefined) updateData.pdf_url = input.pdf_url;
 
@@ -197,10 +198,7 @@ async function updateCV(cvId: string, input: UpdateCVInput): Promise<UserCV> {
 }
 
 async function deleteCV(cvId: string): Promise<void> {
-  const { error } = await supabase
-    .from('user_cvs')
-    .delete()
-    .eq('id', cvId);
+  const { error } = await supabase.from('user_cvs').delete().eq('id', cvId);
 
   if (error) {
     throw new Error(`Failed to delete CV: ${error.message}`);
@@ -307,8 +305,7 @@ export function useUpdateCV() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ cvId, ...input }: UpdateCVInput & { cvId: string }) =>
-      updateCV(cvId, input),
+    mutationFn: ({ cvId, ...input }: UpdateCVInput & { cvId: string }) => updateCV(cvId, input),
     onSuccess: (updatedCV) => {
       // Invalidate specific CV
       queryClient.invalidateQueries({ queryKey: cvQueryKeys.detail(updatedCV.id) });
@@ -391,10 +388,11 @@ export function calculateCVCompleteness(cvData: CVData): number {
   if (cvData.personalInfo.phone?.trim()) score += weights.phone;
   if (cvData.personalInfo.address?.trim()) score += weights.address;
   if (cvData.personalInfo.postcode?.trim()) score += weights.postcode;
-  if (cvData.personalInfo.professionalSummary?.trim().length >= 50) score += weights.professionalSummary;
+  if (cvData.personalInfo.professionalSummary?.trim().length >= 50)
+    score += weights.professionalSummary;
 
   // Experience (max weight if 2+ entries with descriptions)
-  if (cvData.experience.length >= 2 && cvData.experience.some(e => e.description)) {
+  if (cvData.experience.length >= 2 && cvData.experience.some((e) => e.description)) {
     score += weights.experience;
   } else if (cvData.experience.length >= 1) {
     score += weights.experience * 0.6;

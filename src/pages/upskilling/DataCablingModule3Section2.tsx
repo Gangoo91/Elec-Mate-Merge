@@ -1,69 +1,80 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Connector Types and Polish Grades | Data Cabling Module 3.2";
-const DESCRIPTION = "Learn fibre optic connector types (LC, SC, ST), polish grades (PC, UPC, APC), and professional termination techniques.";
+const TITLE = 'Connector Types and Polish Grades | Data Cabling Module 3.2';
+const DESCRIPTION =
+  'Learn fibre optic connector types (LC, SC, ST), polish grades (PC, UPC, APC), and professional termination techniques.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m3s2-check1",
-    question: "What is the typical return loss specification for APC connectors?",
-    options: ["14 dB", "26 dB", "40 dB", "60 dB"],
+    id: 'datacabling-m3s2-check1',
+    question: 'What is the typical return loss specification for APC connectors?',
+    options: ['14 dB', '26 dB', '40 dB', '60 dB'],
     correctIndex: 3,
-    explanation: "APC (Angled Physical Contact) connectors typically achieve return loss of 60 dB or better due to the 8-degree angled polish."
+    explanation:
+      'APC (Angled Physical Contact) connectors typically achieve return loss of 60 dB or better due to the 8-degree angled polish.',
   },
   {
-    id: "datacabling-m3s2-check2",
-    question: "Which connector type is standard for singlemode applications in modern installations?",
-    options: ["ST", "SC", "LC", "FC"],
+    id: 'datacabling-m3s2-check2',
+    question:
+      'Which connector type is standard for singlemode applications in modern installations?',
+    options: ['ST', 'SC', 'LC', 'FC'],
     correctIndex: 2,
-    explanation: "LC connectors are the current standard for singlemode applications due to their small form factor and excellent performance."
+    explanation:
+      'LC connectors are the current standard for singlemode applications due to their small form factor and excellent performance.',
   },
   {
-    id: "datacabling-m3s2-check3",
-    question: "Which polish type should NEVER be mated with PC or UPC connectors?",
-    options: ["PC", "UPC", "APC", "Any can be mixed"],
+    id: 'datacabling-m3s2-check3',
+    question: 'Which polish type should NEVER be mated with PC or UPC connectors?',
+    options: ['PC', 'UPC', 'APC', 'Any can be mixed'],
     correctIndex: 2,
-    explanation: "APC (Angled Physical Contact) connectors should never be mated with PC or UPC connectors due to the angled polish causing permanent damage."
-  }
+    explanation:
+      'APC (Angled Physical Contact) connectors should never be mated with PC or UPC connectors due to the angled polish causing permanent damage.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I identify APC vs UPC connectors?",
-    answer: "APC connectors always have green boots/bodies, while UPC connectors have blue boots. This colour coding is an industry standard - never ignore it. Mating APC with UPC causes permanent damage to both connectors."
+    question: 'How do I identify APC vs UPC connectors?',
+    answer:
+      'APC connectors always have green boots/bodies, while UPC connectors have blue boots. This colour coding is an industry standard - never ignore it. Mating APC with UPC causes permanent damage to both connectors.',
   },
   {
-    question: "When should I choose APC over UPC connectors?",
-    answer: "Use APC for high-performance singlemode applications requiring minimal back reflections, such as CATV distribution, broadcast systems, analytical equipment, and long-haul transmission. UPC is suitable for most standard data network applications."
+    question: 'When should I choose APC over UPC connectors?',
+    answer:
+      'Use APC for high-performance singlemode applications requiring minimal back reflections, such as CATV distribution, broadcast systems, analytical equipment, and long-haul transmission. UPC is suitable for most standard data network applications.',
   },
   {
-    question: "What ferrule material is best for fibre connectors?",
-    answer: "Ceramic (zirconia) ferrules provide the best performance and durability for most applications. Plastic ferrules are lower cost but have reduced durability and repeatability. For high-performance applications, always specify ceramic ferrules."
+    question: 'What ferrule material is best for fibre connectors?',
+    answer:
+      'Ceramic (zirconia) ferrules provide the best performance and durability for most applications. Plastic ferrules are lower cost but have reduced durability and repeatability. For high-performance applications, always specify ceramic ferrules.',
   },
   {
-    question: "How many times can I mate and unmate a fibre connector?",
-    answer: "High-quality connectors are typically rated for 500-1000 mating cycles. Each cycle slightly degrades performance. Always use protective caps when not in use, and clean before every mating to maximise connector life."
-  }
+    question: 'How many times can I mate and unmate a fibre connector?',
+    answer:
+      'High-quality connectors are typically rated for 500-1000 mating cycles. Each cycle slightly degrades performance. Always use protective caps when not in use, and clean before every mating to maximise connector life.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A client requires connectors for a CATV distribution system where minimising back reflections is critical. Which connector polish should you specify?",
-  options: [
-    "PC (Physical Contact)",
-    "UPC (Ultra Physical Contact)",
-    "APC (Angled Physical Contact)",
-    "Any polish type is suitable"
-  ],
-  correctAnswer: 2,
-  explanation: "APC connectors achieve 60+ dB return loss compared to 50-55 dB for UPC. For CATV and broadcast applications where back reflections cause picture degradation, APC is essential."
-  }
+    question:
+      'A client requires connectors for a CATV distribution system where minimising back reflections is critical. Which connector polish should you specify?',
+    options: [
+      'PC (Physical Contact)',
+      'UPC (Ultra Physical Contact)',
+      'APC (Angled Physical Contact)',
+      'Any polish type is suitable',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'APC connectors achieve 60+ dB return loss compared to 50-55 dB for UPC. For CATV and broadcast applications where back reflections cause picture degradation, APC is essential.',
+  },
 ];
 
 const DataCablingModule3Section2 = () => {
@@ -98,9 +109,7 @@ const DataCablingModule3Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Connector Types and Polish Grades
           </h1>
-          <p className="text-white/80">
-            Fibre optic connectors and termination quality
-          </p>
+          <p className="text-white/80">Fibre optic connectors and termination quality</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +117,26 @@ const DataCablingModule3Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>LC:</strong> Modern standard, small form factor</li>
-              <li><strong>UPC:</strong> Blue boots, 50-55dB return loss</li>
-              <li><strong>APC:</strong> Green boots, 60+dB return loss</li>
+              <li>
+                <strong>LC:</strong> Modern standard, small form factor
+              </li>
+              <li>
+                <strong>UPC:</strong> Blue boots, 50-55dB return loss
+              </li>
+              <li>
+                <strong>APC:</strong> Green boots, 60+dB return loss
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Green = APC, Blue = UPC (critical!)</li>
-              <li><strong>Use:</strong> Never mix APC with UPC connectors</li>
+              <li>
+                <strong>Spot:</strong> Green = APC, Blue = UPC (critical!)
+              </li>
+              <li>
+                <strong>Use:</strong> Never mix APC with UPC connectors
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +146,12 @@ const DataCablingModule3Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify common fibre connector types",
-              "Understand PC, UPC, and APC polish grades",
-              "Select connectors for specific applications",
-              "Apply proper installation techniques",
-              "Implement quality control procedures",
-              "Calculate link loss budgets with connectors"
+              'Identify common fibre connector types',
+              'Understand PC, UPC, and APC polish grades',
+              'Select connectors for specific applications',
+              'Apply proper installation techniques',
+              'Implement quality control procedures',
+              'Calculate link loss budgets with connectors',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -158,7 +177,9 @@ const DataCablingModule3Section2 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">LC (Lucent Connector)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  LC (Lucent Connector)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>1.25mm ferrule diameter</li>
                   <li>Push-pull latching mechanism</li>
@@ -167,7 +188,9 @@ const DataCablingModule3Section2 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">SC (Subscriber Connector)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  SC (Subscriber Connector)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>2.5mm ferrule diameter</li>
                   <li>Square body, push-pull</li>
@@ -211,9 +234,18 @@ const DataCablingModule3Section2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Polish Types:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>PC (Physical Contact):</strong> Slight curve, ~14dB return loss, basic applications</li>
-                <li><strong>UPC (Ultra Physical Contact):</strong> Enhanced curve, ~50-55dB RL, standard singlemode</li>
-                <li><strong>APC (Angled Physical Contact):</strong> 8° angle, ~60+dB RL, high-performance</li>
+                <li>
+                  <strong>PC (Physical Contact):</strong> Slight curve, ~14dB return loss, basic
+                  applications
+                </li>
+                <li>
+                  <strong>UPC (Ultra Physical Contact):</strong> Enhanced curve, ~50-55dB RL,
+                  standard singlemode
+                </li>
+                <li>
+                  <strong>APC (Angled Physical Contact):</strong> 8° angle, ~60+dB RL,
+                  high-performance
+                </li>
               </ul>
             </div>
 
@@ -255,22 +287,40 @@ const DataCablingModule3Section2 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Performance Specifications:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Performance Specifications:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Insertion Loss:</strong> ≤0.3 dB (Grade A), ≤0.5 dB (Grade B)</li>
-                <li><strong>Return Loss UPC:</strong> ≥50 dB (typical ≥55 dB)</li>
-                <li><strong>Return Loss APC:</strong> ≥60 dB</li>
-                <li><strong>Repeatability:</strong> ≤0.2 dB variation</li>
+                <li>
+                  <strong>Insertion Loss:</strong> ≤0.3 dB (Grade A), ≤0.5 dB (Grade B)
+                </li>
+                <li>
+                  <strong>Return Loss UPC:</strong> ≥50 dB (typical ≥55 dB)
+                </li>
+                <li>
+                  <strong>Return Loss APC:</strong> ≥60 dB
+                </li>
+                <li>
+                  <strong>Repeatability:</strong> ≤0.2 dB variation
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Control Steps:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1. Inspect:</strong> Use fibre microscope before mating</li>
-                <li><strong>2. Clean:</strong> IPA and lint-free wipes</li>
-                <li><strong>3. Test:</strong> Measure insertion and return loss</li>
-                <li><strong>4. Document:</strong> Record all test results</li>
+                <li>
+                  <strong>1. Inspect:</strong> Use fibre microscope before mating
+                </li>
+                <li>
+                  <strong>2. Clean:</strong> IPA and lint-free wipes
+                </li>
+                <li>
+                  <strong>3. Test:</strong> Measure insertion and return loss
+                </li>
+                <li>
+                  <strong>4. Document:</strong> Record all test results
+                </li>
               </ul>
             </div>
           </div>
@@ -295,10 +345,18 @@ const DataCablingModule3Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Critical Warning</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>NEVER mate APC with UPC:</strong> — Causes permanent damage</li>
-                <li><strong>Verify colour coding:</strong> — Green = APC, Blue = UPC</li>
-                <li><strong>Different angles:</strong> — 8° (APC) vs 0° (UPC) incompatible</li>
-                <li><strong>Separate inventory:</strong> — Maintain clear labelling systems</li>
+                <li>
+                  <strong>NEVER mate APC with UPC:</strong> — Causes permanent damage
+                </li>
+                <li>
+                  <strong>Verify colour coding:</strong> — Green = APC, Blue = UPC
+                </li>
+                <li>
+                  <strong>Different angles:</strong> — 8° (APC) vs 0° (UPC) incompatible
+                </li>
+                <li>
+                  <strong>Separate inventory:</strong> — Maintain clear labelling systems
+                </li>
               </ul>
             </div>
           </div>
@@ -342,10 +400,7 @@ const DataCablingModule3Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

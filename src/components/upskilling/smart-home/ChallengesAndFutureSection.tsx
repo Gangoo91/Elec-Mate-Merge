@@ -68,7 +68,7 @@ export const ChallengesAndFutureSection = () => {
                 <li>• Battery storage coordination</li>
               </ul>
             </div>
-            
+
             <div className="bg-green-950/30 border border-green-600 rounded-lg p-4">
               <h4 className="font-semibold text-green-200 mb-3">Advanced AI</h4>
               <ul className="space-y-1 text-green-100 text-sm">
@@ -78,7 +78,7 @@ export const ChallengesAndFutureSection = () => {
                 <li>• Multi-home learning networks</li>
               </ul>
             </div>
-            
+
             <div className="bg-purple-950/30 border border-purple-600 rounded-lg p-4">
               <h4 className="font-semibold text-purple-200 mb-3">Carbon Awareness</h4>
               <ul className="space-y-1 text-purple-100 text-sm">
@@ -93,7 +93,9 @@ export const ChallengesAndFutureSection = () => {
           <div className="bg-gray-800 border border-gray-600 rounded-lg p-4">
             <h4 className="font-semibold text-foreground mb-2">Industry Outlook</h4>
             <p className="text-gray-300 text-sm">
-              The future points towards hybrid systems that combine the reliability of schedules with the intelligence of AI learning, integrated with smart grids and renewable energy sources for optimal environmental and economic outcomes.
+              The future points towards hybrid systems that combine the reliability of schedules
+              with the intelligence of AI learning, integrated with smart grids and renewable energy
+              sources for optimal environmental and economic outcomes.
             </p>
           </div>
         </CardContent>

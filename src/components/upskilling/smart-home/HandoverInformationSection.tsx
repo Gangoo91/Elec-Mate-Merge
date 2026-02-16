@@ -12,7 +12,8 @@ const HandoverInformationSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Comprehensive handover information ensures clients have everything needed to operate and maintain their smart home system effectively.
+          Comprehensive handover information ensures clients have everything needed to operate and
+          maintain their smart home system effectively.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -22,7 +23,9 @@ const HandoverInformationSection = () => {
                 <Key className="h-4 w-4 text-green-400" />
                 Device Names and Locations
               </h4>
-              <p className="text-gray-300 text-sm mb-2">Provide clear identification for all devices:</p>
+              <p className="text-gray-300 text-sm mb-2">
+                Provide clear identification for all devices:
+              </p>
               <ul className="text-gray-300 text-sm space-y-1">
                 <li>• Descriptive names (e.g., "Kitchen Ceiling Light")</li>
                 <li>• Room-by-room device lists</li>
@@ -30,7 +33,7 @@ const HandoverInformationSection = () => {
                 <li>• Device serial numbers and model information</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-blue-500">
               <h4 className="font-medium text-foreground mb-2">Login Details and Access</h4>
               <p className="text-gray-300 text-sm mb-2">Securely provide access credentials:</p>
@@ -54,7 +57,7 @@ const HandoverInformationSection = () => {
                 <li>• Hours of operation for different services</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-amber-900/20 border border-amber-600/30 rounded-lg">
               <h4 className="font-medium text-amber-200 mb-2 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />

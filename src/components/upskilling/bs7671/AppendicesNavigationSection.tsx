@@ -10,11 +10,15 @@ const AppendicesNavigationSection = () => {
           <BookOpen className="h-6 w-6 text-elec-yellow" />
           Mastering Appendices Navigation
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">Essential Skills</Badge>
+        <Badge variant="secondary" className="w-fit bg-blue-600 text-foreground">
+          Essential Skills
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Appendix Structure and Organisation:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Appendix Structure and Organisation:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Current-Carrying Capacity Data:</h6>
@@ -43,20 +47,36 @@ const AppendicesNavigationSection = () => {
           <h5 className="text-elec-yellow font-semibold mb-3">Cross-Referencing Techniques:</h5>
           <div className="grid gap-4">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
-              <h6 className="font-bold text-green-400 mb-2">Step 1: Identify Installation Method</h6>
-              <p className="text-sm">Reference Table 4A2 to determine the correct installation method code (A1, B1, C, etc.) based on cable route and support systems.</p>
+              <h6 className="font-bold text-green-400 mb-2">
+                Step 1: Identify Installation Method
+              </h6>
+              <p className="text-sm">
+                Reference Table 4A2 to determine the correct installation method code (A1, B1, C,
+                etc.) based on cable route and support systems.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-2">Step 2: Select Appropriate Table</h6>
-              <p className="text-sm">Choose the correct current-carrying capacity table based on cable type, number of cores, and installation method.</p>
+              <p className="text-sm">
+                Choose the correct current-carrying capacity table based on cable type, number of
+                cores, and installation method.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <h6 className="font-bold text-yellow-400 mb-2">Step 3: Apply Correction Factors</h6>
-              <p className="text-sm">Use Tables 4B1-4B4 for ambient temperature, 4C1-4C6 for grouping, and 4D1A-4D5 for thermal insulation effects.</p>
+              <p className="text-sm">
+                Use Tables 4B1-4B4 for ambient temperature, 4C1-4C6 for grouping, and 4D1A-4D5 for
+                thermal insulation effects.
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-purple-400">
-              <h6 className="font-bold text-purple-400 mb-2">Step 4: Verify Protection Coordination</h6>
-              <p className="text-sm">Check Appendix 14 for maximum Zs values and confirm protective device characteristics match circuit requirements.</p>
+              <h6 className="font-bold text-purple-400 mb-2">
+                Step 4: Verify Protection Coordination
+              </h6>
+              <p className="text-sm">
+                Check Appendix 14 for maximum Zs values and confirm protective device
+                characteristics match circuit requirements.
+              </p>
             </div>
           </div>
         </div>

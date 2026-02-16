@@ -1,4 +1,3 @@
-
 export interface MaterialItem {
   id: number;
   name: string;
@@ -8,153 +7,153 @@ export interface MaterialItem {
   image: string;
   isOnSale?: boolean;
   salePrice?: string;
-  stockStatus?: "In Stock" | "Low Stock" | "Out of Stock";
+  stockStatus?: 'In Stock' | 'Low Stock' | 'Out of Stock';
   highlights?: string[];
 }
 
 export const productsBySupplier: Record<string, MaterialItem[]> = {
-  "screwfix": [
+  screwfix: [
     {
       id: 101,
-      name: "Double Socket Outlet 13A - White",
-      category: "Accessories",
-      price: "£6.75",
-      supplier: "Screwfix",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock" as "In Stock",
-      highlights: ["CE Marked", "Easy Install", "BS 1363"]
+      name: 'Double Socket Outlet 13A - White',
+      category: 'Accessories',
+      price: '£6.75',
+      supplier: 'Screwfix',
+      image: '/placeholder.svg',
+      stockStatus: 'In Stock' as 'In Stock',
+      highlights: ['CE Marked', 'Easy Install', 'BS 1363'],
     },
     {
       id: 102,
-      name: "2-Gang 2-Way Light Switch",
-      category: "Accessories",
-      price: "£4.99",
-      supplier: "Screwfix",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock" as "In Stock"
+      name: '2-Gang 2-Way Light Switch',
+      category: 'Accessories',
+      price: '£4.99',
+      supplier: 'Screwfix',
+      image: '/placeholder.svg',
+      stockStatus: 'In Stock' as 'In Stock',
     },
     {
       id: 103,
-      name: "Circuit Breaker Type C 32A",
-      category: "Protection",
-      price: "£8.50",
-      supplier: "Screwfix",
-      image: "/placeholder.svg",
-      stockStatus: "Low Stock" as "Low Stock"
-    }
+      name: 'Circuit Breaker Type C 32A',
+      category: 'Protection',
+      price: '£8.50',
+      supplier: 'Screwfix',
+      image: '/placeholder.svg',
+      stockStatus: 'Low Stock' as 'Low Stock',
+    },
   ],
-  "city-electrical-factors": [
+  'city-electrical-factors': [
     {
       id: 201,
-      name: "Consumer Unit 10-Way 100A Dual RCD",
-      category: "Distribution",
-      price: "£109.50",
-      supplier: "City Electrical Factors",
-      image: "/placeholder.svg",
+      name: 'Consumer Unit 10-Way 100A Dual RCD',
+      category: 'Distribution',
+      price: '£109.50',
+      supplier: 'City Electrical Factors',
+      image: '/placeholder.svg',
       isOnSale: true,
-      salePrice: "£95.75",
-      stockStatus: "In Stock" as "In Stock",
-      highlights: ["17th Edition", "Metal Enclosure", "Pre-Wired", "Dual RCD"]
+      salePrice: '£95.75',
+      stockStatus: 'In Stock' as 'In Stock',
+      highlights: ['17th Edition', 'Metal Enclosure', 'Pre-Wired', 'Dual RCD'],
     },
     {
       id: 202,
-      name: "RCD 30mA 40A Double Pole",
-      category: "Protection",
-      price: "£34.25",
-      supplier: "City Electrical Factors",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock" as "In Stock"
-    }
+      name: 'RCD 30mA 40A Double Pole',
+      category: 'Protection',
+      price: '£34.25',
+      supplier: 'City Electrical Factors',
+      image: '/placeholder.svg',
+      stockStatus: 'In Stock' as 'In Stock',
+    },
   ],
-  "electricaldirect": [
+  electricaldirect: [
     {
       id: 301,
-      name: "6242Y Twin & Earth Cable 2.5mm² - 100m",
-      category: "Cables",
-      price: "£85.99",
-      supplier: "ElectricalDirect",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock" as "In Stock",
-      highlights: ["BS 6724", "LSZH", "Fire Resistant", "Low Smoke"]
+      name: '6242Y Twin & Earth Cable 2.5mm² - 100m',
+      category: 'Cables',
+      price: '£85.99',
+      supplier: 'ElectricalDirect',
+      image: '/placeholder.svg',
+      stockStatus: 'In Stock' as 'In Stock',
+      highlights: ['BS 6724', 'LSZH', 'Fire Resistant', 'Low Smoke'],
     },
     {
       id: 302,
-      name: "32A Type B MCB Circuit Breaker",
-      category: "Protection",
-      price: "£7.50",
-      supplier: "ElectricalDirect",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock" as "In Stock"
+      name: '32A Type B MCB Circuit Breaker',
+      category: 'Protection',
+      price: '£7.50',
+      supplier: 'ElectricalDirect',
+      image: '/placeholder.svg',
+      stockStatus: 'In Stock' as 'In Stock',
     },
     {
       id: 303,
-      name: "SWA Cable 3-Core 2.5mm² - 50m Drum",
-      category: "Cables",
-      price: "£125.99",
-      supplier: "ElectricalDirect",
-      image: "/placeholder.svg",
+      name: 'SWA Cable 3-Core 2.5mm² - 50m Drum',
+      category: 'Cables',
+      price: '£125.99',
+      supplier: 'ElectricalDirect',
+      image: '/placeholder.svg',
       isOnSale: true,
-      salePrice: "£89.99",
-      stockStatus: "In Stock" as "In Stock",
-      highlights: ["Heavy Duty", "Armoured", "Underground Use"]
+      salePrice: '£89.99',
+      stockStatus: 'In Stock' as 'In Stock',
+      highlights: ['Heavy Duty', 'Armoured', 'Underground Use'],
     },
     {
       id: 304,
-      name: "Fire Rated Downlights 4-Pack SALE",
-      category: "Lighting",
-      price: "£45.99",
-      supplier: "ElectricalDirect", 
-      image: "/placeholder.svg",
+      name: 'Fire Rated Downlights 4-Pack SALE',
+      category: 'Lighting',
+      price: '£45.99',
+      supplier: 'ElectricalDirect',
+      image: '/placeholder.svg',
       isOnSale: true,
-      salePrice: "£29.99",
-      stockStatus: "In Stock" as "In Stock",
-      highlights: ["Fire Rated", "LED Compatible", "Easy Install"]
-    }
+      salePrice: '£29.99',
+      stockStatus: 'In Stock' as 'In Stock',
+      highlights: ['Fire Rated', 'LED Compatible', 'Easy Install'],
+    },
   ],
-  "toolstation": [
+  toolstation: [
     {
       id: 401,
-      name: "LED GU10 Bulbs 5W - Pack of 10",
-      category: "Lighting",
-      price: "£29.99",
-      supplier: "Toolstation",
-      image: "/placeholder.svg",
+      name: 'LED GU10 Bulbs 5W - Pack of 10',
+      category: 'Lighting',
+      price: '£29.99',
+      supplier: 'Toolstation',
+      image: '/placeholder.svg',
       isOnSale: true,
-      salePrice: "£24.99",
-      stockStatus: "In Stock" as "In Stock"
+      salePrice: '£24.99',
+      stockStatus: 'In Stock' as 'In Stock',
     },
     {
       id: 402,
-      name: "Weatherproof Junction Box",
-      category: "Accessories",
-      price: "£3.49",
-      supplier: "Toolstation",
-      image: "/placeholder.svg",
-      stockStatus: "In Stock" as "In Stock"
+      name: 'Weatherproof Junction Box',
+      category: 'Accessories',
+      price: '£3.49',
+      supplier: 'Toolstation',
+      image: '/placeholder.svg',
+      stockStatus: 'In Stock' as 'In Stock',
     },
     {
       id: 403,
-      name: "Outdoor Security Floodlight - Clearance",
-      category: "Lighting",
-      price: "£35.99",
-      supplier: "Toolstation",
-      image: "/placeholder.svg",
+      name: 'Outdoor Security Floodlight - Clearance',
+      category: 'Lighting',
+      price: '£35.99',
+      supplier: 'Toolstation',
+      image: '/placeholder.svg',
       isOnSale: true,
-      salePrice: "£19.99",
-      stockStatus: "Low Stock" as "Low Stock",
-      highlights: ["PIR Sensor", "LED", "Weather Resistant"]
+      salePrice: '£19.99',
+      stockStatus: 'Low Stock' as 'Low Stock',
+      highlights: ['PIR Sensor', 'LED', 'Weather Resistant'],
     },
     {
       id: 404,
-      name: "Industrial Extension Lead 25m",
-      category: "Accessories",
-      price: "£79.99",
-      supplier: "Toolstation",
-      image: "/placeholder.svg",
+      name: 'Industrial Extension Lead 25m',
+      category: 'Accessories',
+      price: '£79.99',
+      supplier: 'Toolstation',
+      image: '/placeholder.svg',
       isOnSale: true,
-      salePrice: "£59.99",
-      stockStatus: "In Stock" as "In Stock",
-      highlights: ["Heavy Duty", "IP44 Rated", "13A"]
-    }
-  ]
+      salePrice: '£59.99',
+      stockStatus: 'In Stock' as 'In Stock',
+      highlights: ['Heavy Duty', 'IP44 Rated', '13A'],
+    },
+  ],
 };

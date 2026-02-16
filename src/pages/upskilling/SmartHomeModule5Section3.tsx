@@ -1,126 +1,132 @@
-import { ArrowLeft, ArrowRight, Eye, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Eye, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Door/Window Contact Sensors and PIR";
-const DESCRIPTION = "Perimeter contacts and indoor motion detection for layered security systems";
+const TITLE = 'Door/Window Contact Sensors and PIR';
+const DESCRIPTION = 'Perimeter contacts and indoor motion detection for layered security systems';
 
 const quickCheckQuestions = [
   {
-    question: "What causes a magnetic contact sensor to trigger an alarm?",
+    question: 'What causes a magnetic contact sensor to trigger an alarm?',
     options: [
-      "Motion detected nearby",
-      "Temperature change",
-      "Separation of the magnet from the reed switch",
-      "Sound vibration"
+      'Motion detected nearby',
+      'Temperature change',
+      'Separation of the magnet from the reed switch',
+      'Sound vibration',
     ],
     correctAnswer: 2,
-    explanation: "Magnetic contact sensors trigger when the magnet (on the moving part) separates from the reed switch (on the fixed frame), breaking the magnetic field and changing the circuit state."
+    explanation:
+      'Magnetic contact sensors trigger when the magnet (on the moving part) separates from the reed switch (on the fixed frame), breaking the magnetic field and changing the circuit state.',
   },
   {
-    question: "Where should PIR sensors NOT be positioned?",
+    question: 'Where should PIR sensors NOT be positioned?',
     options: [
-      "Hallways and corridors",
-      "Directly facing windows or radiators",
-      "Living rooms",
-      "Stairwells"
+      'Hallways and corridors',
+      'Directly facing windows or radiators',
+      'Living rooms',
+      'Stairwells',
     ],
     correctAnswer: 1,
-    explanation: "PIR sensors detect infrared radiation changes from body heat. Positioning them facing windows (sunlight) or radiators (heat sources) causes false triggers from temperature fluctuations."
+    explanation:
+      'PIR sensors detect infrared radiation changes from body heat. Positioning them facing windows (sunlight) or radiators (heat sources) causes false triggers from temperature fluctuations.',
   },
   {
-    question: "What is the main advantage of layered security using both contact sensors and PIR?",
+    question: 'What is the main advantage of layered security using both contact sensors and PIR?',
     options: [
-      "Reduced installation cost",
-      "Simpler wiring requirements",
-      "Multiple detection points providing redundancy and earlier warning",
-      "Lower battery consumption"
+      'Reduced installation cost',
+      'Simpler wiring requirements',
+      'Multiple detection points providing redundancy and earlier warning',
+      'Lower battery consumption',
     ],
     correctAnswer: 2,
-    explanation: "Layered security provides multiple detection points: perimeter sensors trigger on entry attempt whilst interior PIR sensors detect movement if perimeter is bypassed, giving redundant protection."
-  }
+    explanation:
+      'Layered security provides multiple detection points: perimeter sensors trigger on entry attempt whilst interior PIR sensors detect movement if perimeter is bypassed, giving redundant protection.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "What type of sensor uses a reed switch and magnet combination?",
+    question: 'What type of sensor uses a reed switch and magnet combination?',
     options: [
-      "PIR motion sensor",
-      "Glass break sensor",
-      "Magnetic contact sensor",
-      "Vibration sensor"
+      'PIR motion sensor',
+      'Glass break sensor',
+      'Magnetic contact sensor',
+      'Vibration sensor',
     ],
     correctAnswer: 2,
-    explanation: "Magnetic contact sensors use a reed switch mounted on the door or window frame and a magnet on the moving part. When separated, the reed switch changes state and triggers the alarm."
+    explanation:
+      'Magnetic contact sensors use a reed switch mounted on the door or window frame and a magnet on the moving part. When separated, the reed switch changes state and triggers the alarm.',
   },
   {
-    question: "What does PIR stand for?",
+    question: 'What does PIR stand for?',
     options: [
-      "Passive Infrared Radiation",
-      "Proximity Infrared Response",
-      "Perimeter Intrusion Recognition",
-      "Programmed Instant Reaction"
+      'Passive Infrared Radiation',
+      'Proximity Infrared Response',
+      'Perimeter Intrusion Recognition',
+      'Programmed Instant Reaction',
     ],
     correctAnswer: 0,
-    explanation: "PIR stands for Passive Infrared Radiation. These sensors detect changes in infrared energy emitted by warm bodies moving across their detection field."
+    explanation:
+      'PIR stands for Passive Infrared Radiation. These sensors detect changes in infrared energy emitted by warm bodies moving across their detection field.',
   },
   {
-    question: "What is the typical detection range of a domestic PIR sensor?",
-    options: [
-      "2-3 metres",
-      "5-7 metres",
-      "10-12 metres",
-      "15-20 metres"
-    ],
+    question: 'What is the typical detection range of a domestic PIR sensor?',
+    options: ['2-3 metres', '5-7 metres', '10-12 metres', '15-20 metres'],
     correctAnswer: 2,
-    explanation: "Most domestic PIR sensors have a detection range of 10-12 metres with a field of view around 90-110 degrees, covering typical room dimensions effectively."
+    explanation:
+      'Most domestic PIR sensors have a detection range of 10-12 metres with a field of view around 90-110 degrees, covering typical room dimensions effectively.',
   },
   {
-    question: "Which pet immunity feature is used in PIR sensors?",
+    question: 'Which pet immunity feature is used in PIR sensors?',
     options: [
-      "Weight detection",
-      "Sound filtering",
-      "Dual-element detection and lens masking",
-      "Colour recognition"
+      'Weight detection',
+      'Sound filtering',
+      'Dual-element detection and lens masking',
+      'Colour recognition',
     ],
     correctAnswer: 2,
-    explanation: "Pet-immune PIR sensors use dual-element detection and specially designed lens patterns that distinguish between small animals (low/ground level heat signatures) and humans."
+    explanation:
+      'Pet-immune PIR sensors use dual-element detection and specially designed lens patterns that distinguish between small animals (low/ground level heat signatures) and humans.',
   },
   {
-    question: "What is the recommended mounting height for contact sensors on doors?",
+    question: 'What is the recommended mounting height for contact sensors on doors?',
     options: [
-      "Ground level",
-      "Mid-height of the door",
-      "Top third of the door, close to the frame edge",
-      "Above the door frame"
+      'Ground level',
+      'Mid-height of the door',
+      'Top third of the door, close to the frame edge',
+      'Above the door frame',
     ],
     correctAnswer: 2,
-    explanation: "Contact sensors should be mounted on the top third of the door, close to the frame edge where the gap remains smallest during frame movement, ensuring reliable triggering."
-  }
+    explanation:
+      'Contact sensors should be mounted on the top third of the door, close to the frame edge where the gap remains smallest during frame movement, ensuring reliable triggering.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How long do battery-powered contact sensors last?",
-    answer: "Most contact sensors use CR2032 or CR2450 coin cells lasting 2-5 years depending on transmission frequency. Low battery warnings are sent via the hub app well in advance of failure."
+    question: 'How long do battery-powered contact sensors last?',
+    answer:
+      'Most contact sensors use CR2032 or CR2450 coin cells lasting 2-5 years depending on transmission frequency. Low battery warnings are sent via the hub app well in advance of failure.',
   },
   {
-    question: "Can PIR sensors work through glass?",
-    answer: "No, standard PIR sensors cannot detect through glass as glass blocks the infrared radiation emitted by body heat. For windows, contact sensors or glass break detectors should be used instead."
+    question: 'Can PIR sensors work through glass?',
+    answer:
+      'No, standard PIR sensors cannot detect through glass as glass blocks the infrared radiation emitted by body heat. For windows, contact sensors or glass break detectors should be used instead.',
   },
   {
-    question: "What causes false alarms from contact sensors?",
-    answer: "Common causes include loose mounting allowing sensor movement, warped doors or windows affecting gap consistency, interference from nearby metal objects, and low batteries causing intermittent signals."
-  }
+    question: 'What causes false alarms from contact sensors?',
+    answer:
+      'Common causes include loose mounting allowing sensor movement, warped doors or windows affecting gap consistency, interference from nearby metal objects, and low batteries causing intermittent signals.',
+  },
 ];
 
 const SmartHomeModule5Section3 = () => {
   useSEO({
     title: `${TITLE} | Smart Home Module 5`,
-    description: DESCRIPTION
+    description: DESCRIPTION,
   });
 
   return (
@@ -148,7 +154,9 @@ const SmartHomeModule5Section3 = () => {
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
             <Eye className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-medium text-elec-yellow">Smart Security and Access Control</span>
+            <span className="text-sm font-medium text-elec-yellow">
+              Smart Security and Access Control
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{TITLE}</h1>
           <p className="text-lg text-white max-w-2xl mx-auto">{DESCRIPTION}</p>
@@ -184,19 +192,27 @@ const SmartHomeModule5Section3 = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Explain how magnetic contact sensors detect door and window opening</span>
+                <span className="text-white">
+                  Explain how magnetic contact sensors detect door and window opening
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Describe PIR sensor operation and appropriate mounting positions</span>
+                <span className="text-white">
+                  Describe PIR sensor operation and appropriate mounting positions
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Understand layered security concepts using perimeter and volumetric detection</span>
+                <span className="text-white">
+                  Understand layered security concepts using perimeter and volumetric detection
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Identify causes of false alarms and apply best practices to minimise them</span>
+                <span className="text-white">
+                  Identify causes of false alarms and apply best practices to minimise them
+                </span>
               </li>
             </ul>
           </div>
@@ -210,13 +226,18 @@ const SmartHomeModule5Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Magnetic contact sensors form the foundation of perimeter security. They detect when doors and windows are opened, providing the first line of defence against intrusion.
+              Magnetic contact sensors form the foundation of perimeter security. They detect when
+              doors and windows are opened, providing the first line of defence against intrusion.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
               <h3 className="font-semibold text-white mb-3">How Contact Sensors Work</h3>
               <p className="text-white mb-3">
-                Contact sensors consist of two parts: a reed switch (containing magnetically-sensitive contacts) and a magnet. When the two parts are close together, the magnetic field keeps the reed switch closed. Opening the door or window separates the components, breaking the magnetic field and changing the switch state.
+                Contact sensors consist of two parts: a reed switch (containing
+                magnetically-sensitive contacts) and a magnet. When the two parts are close
+                together, the magnetic field keeps the reed switch closed. Opening the door or
+                window separates the components, breaking the magnetic field and changing the switch
+                state.
               </p>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
@@ -233,7 +254,9 @@ const SmartHomeModule5Section3 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span>Wireless versions communicate via Zigbee, Z-Wave, or proprietary protocols</span>
+                  <span>
+                    Wireless versions communicate via Zigbee, Z-Wave, or proprietary protocols
+                  </span>
                 </li>
               </ul>
             </div>
@@ -276,13 +299,17 @@ const SmartHomeModule5Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Passive Infrared (PIR) sensors detect changes in infrared radiation caused by warm bodies moving through their detection field. They provide volumetric coverage of interior spaces.
+              Passive Infrared (PIR) sensors detect changes in infrared radiation caused by warm
+              bodies moving through their detection field. They provide volumetric coverage of
+              interior spaces.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
               <h3 className="font-semibold text-white mb-3">How PIR Detection Works</h3>
               <p className="text-white mb-3">
-                PIR sensors contain a pyroelectric element behind a segmented Fresnel lens. The lens divides the field of view into detection zones. When a warm body moves across zone boundaries, the sensor detects the change in infrared energy and triggers an alarm.
+                PIR sensors contain a pyroelectric element behind a segmented Fresnel lens. The lens
+                divides the field of view into detection zones. When a warm body moves across zone
+                boundaries, the sensor detects the change in infrared energy and triggers an alarm.
               </p>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
@@ -342,7 +369,8 @@ const SmartHomeModule5Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Many households have pets, making pet-immune PIR sensors essential to avoid false alarms whilst maintaining security effectiveness.
+              Many households have pets, making pet-immune PIR sensors essential to avoid false
+              alarms whilst maintaining security effectiveness.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
@@ -350,22 +378,36 @@ const SmartHomeModule5Section3 = () => {
               <ul className="space-y-3">
                 <li>
                   <strong className="text-elec-yellow">Dual-element detection:</strong>
-                  <span className="text-white"> Uses two pyroelectric elements that must both trigger simultaneously, filtering out small heat signatures from pets.</span>
+                  <span className="text-white">
+                    {' '}
+                    Uses two pyroelectric elements that must both trigger simultaneously, filtering
+                    out small heat signatures from pets.
+                  </span>
                 </li>
                 <li>
                   <strong className="text-elec-yellow">Lens masking:</strong>
-                  <span className="text-white"> Lower detection zones are masked or reduced in sensitivity to ignore ground-level movement.</span>
+                  <span className="text-white">
+                    {' '}
+                    Lower detection zones are masked or reduced in sensitivity to ignore
+                    ground-level movement.
+                  </span>
                 </li>
                 <li>
                   <strong className="text-elec-yellow">Signal processing:</strong>
-                  <span className="text-white"> Advanced algorithms analyse signal patterns to distinguish between human and animal movement characteristics.</span>
+                  <span className="text-white">
+                    {' '}
+                    Advanced algorithms analyse signal patterns to distinguish between human and
+                    animal movement characteristics.
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 p-4 rounded-r-lg">
               <p className="text-white">
-                <strong>Practical note:</strong> Pet immunity ratings (e.g., up to 25kg, up to 40kg) assume the pet remains at floor level. Cats climbing on furniture or shelves near the sensor may still trigger alarms.
+                <strong>Practical note:</strong> Pet immunity ratings (e.g., up to 25kg, up to 40kg)
+                assume the pet remains at floor level. Cats climbing on furniture or shelves near
+                the sensor may still trigger alarms.
               </p>
             </div>
           </div>
@@ -379,7 +421,9 @@ const SmartHomeModule5Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Effective security systems use multiple layers of detection to provide redundancy and early warning. This defence-in-depth approach ensures that bypassing one sensor does not compromise the entire system.
+              Effective security systems use multiple layers of detection to provide redundancy and
+              early warning. This defence-in-depth approach ensures that bypassing one sensor does
+              not compromise the entire system.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
@@ -388,19 +432,23 @@ const SmartHomeModule5Section3 = () => {
                 <div>
                   <h4 className="font-semibold text-elec-yellow">Perimeter Protection (Layer 1)</h4>
                   <p className="text-white text-sm">
-                    Contact sensors on all entry points - doors and accessible windows. Triggers immediately upon opening, providing earliest warning of intrusion attempt.
+                    Contact sensors on all entry points - doors and accessible windows. Triggers
+                    immediately upon opening, providing earliest warning of intrusion attempt.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-elec-yellow">Volumetric Detection (Layer 2)</h4>
                   <p className="text-white text-sm">
-                    PIR sensors covering interior spaces. Detects movement if perimeter is bypassed (e.g., glass broken without triggering contact). Covers hallways, landings, and high-value rooms.
+                    PIR sensors covering interior spaces. Detects movement if perimeter is bypassed
+                    (e.g., glass broken without triggering contact). Covers hallways, landings, and
+                    high-value rooms.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-elec-yellow">Specific Protection (Layer 3)</h4>
                   <p className="text-white text-sm">
-                    Glass break detectors, vibration sensors, and object protection for valuables. Provides targeted detection for specific threats.
+                    Glass break detectors, vibration sensors, and object protection for valuables.
+                    Provides targeted detection for specific threats.
                   </p>
                 </div>
               </div>
@@ -414,15 +462,22 @@ const SmartHomeModule5Section3 = () => {
               <ul className="space-y-2 text-white mt-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Away mode:</strong> All sensors active</span>
+                  <span>
+                    <strong>Away mode:</strong> All sensors active
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Night mode:</strong> Perimeter sensors active, interior PIR disabled for movement</span>
+                  <span>
+                    <strong>Night mode:</strong> Perimeter sensors active, interior PIR disabled for
+                    movement
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Partial arming:</strong> Specific zones enabled based on occupancy</span>
+                  <span>
+                    <strong>Partial arming:</strong> Specific zones enabled based on occupancy
+                  </span>
                 </li>
               </ul>
             </div>
@@ -439,7 +494,8 @@ const SmartHomeModule5Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              False alarms reduce system reliability and user confidence. Proper installation and configuration minimises nuisance triggers.
+              False alarms reduce system reliability and user confidence. Proper installation and
+              configuration minimises nuisance triggers.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">

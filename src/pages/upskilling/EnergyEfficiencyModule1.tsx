@@ -7,28 +7,28 @@ const EnergyEfficiencyModule1 = () => {
   const sections = [
     {
       id: 1,
-      title: "The Purpose and Business Case for Efficiency",
+      title: 'The Purpose and Business Case for Efficiency',
       icon: Target,
-      description: "Understanding the business benefits of energy efficiency"
+      description: 'Understanding the business benefits of energy efficiency',
     },
     {
       id: 2,
-      title: "UK Carbon Targets and Net Zero",
+      title: 'UK Carbon Targets and Net Zero',
       icon: Leaf,
-      description: "Government targets and environmental legislation"
+      description: 'Government targets and environmental legislation',
     },
     {
       id: 3,
-      title: "Identifying Waste in Electrical Systems",
+      title: 'Identifying Waste in Electrical Systems',
       icon: AlertTriangle,
-      description: "Common sources of energy waste and inefficiency"
+      description: 'Common sources of energy waste and inefficiency',
     },
     {
       id: 4,
-      title: "BS EN and ISO Standards Overview",
+      title: 'BS EN and ISO Standards Overview',
       icon: FileText,
-      description: "Relevant standards for energy management and efficiency"
-    }
+      description: 'Relevant standards for energy management and efficiency',
+    },
   ];
 
   return (

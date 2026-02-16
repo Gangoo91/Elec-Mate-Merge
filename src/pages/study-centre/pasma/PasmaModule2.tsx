@@ -1,40 +1,41 @@
-import { ArrowLeft, Layers, Wrench, Shield, ClipboardList } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Layers, Wrench, Shield, ClipboardList } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Tower Classifications",
+    title: 'Tower Classifications',
     icon: Layers,
-    description: "Standard, linked, bridge, high clearance, stairway towers, aluminium vs GRP",
+    description: 'Standard, linked, bridge, high clearance, stairway towers, aluminium vs GRP',
   },
   {
     id: 2,
-    title: "Structural Components",
+    title: 'Structural Components',
     icon: Wrench,
-    description: "End frames, braces, platforms, castors, base plates, spigots, adjustable legs",
+    description: 'End frames, braces, platforms, castors, base plates, spigots, adjustable legs',
   },
   {
     id: 3,
-    title: "Safety Components",
+    title: 'Safety Components',
     icon: Shield,
-    description: "Guardrails 950mm, mid-rails 470mm, toeboards 150mm, stabilisers, outriggers",
+    description: 'Guardrails 950mm, mid-rails 470mm, toeboards 150mm, stabilisers, outriggers',
   },
   {
     id: 4,
-    title: "Tower Selection & Planning",
+    title: 'Tower Selection & Planning',
     icon: ClipboardList,
-    description: "Indoor vs outdoor, single vs double width, height, environmental factors",
+    description: 'Indoor vs outdoor, single vs double width, height, environmental factors',
   },
 ];
 
 export default function PasmaModule2() {
   useSEO({
-    title: "Module 2: Tower Types & Components | PASMA Towers for Users",
-    description: "Tower classifications, structural and safety components, and tower selection principles for mobile access tower work.",
+    title: 'Module 2: Tower Types & Components | PASMA Towers for Users',
+    description:
+      'Tower classifications, structural and safety components, and tower selection principles for mobile access tower work.',
   });
 
   return (
@@ -73,7 +74,8 @@ export default function PasmaModule2() {
               Tower Types & Components
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Tower classifications, structural and safety components, and how to select the right tower for the task
+              Tower classifications, structural and safety components, and how to select the right
+              tower for the task
             </p>
           </div>
 

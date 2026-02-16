@@ -53,24 +53,16 @@ export function EmptyState({
 
   if (compact) {
     return (
-      <div className={cn('flex flex-col items-center justify-center py-8 px-4 text-center', className)}>
-        <div className={cn(
-          'p-2.5 rounded-xl bg-gradient-to-br border mb-3',
-          colorClasses
-        )}>
+      <div
+        className={cn('flex flex-col items-center justify-center py-8 px-4 text-center', className)}
+      >
+        <div className={cn('p-2.5 rounded-xl bg-gradient-to-br border mb-3', colorClasses)}>
           <Icon className="h-5 w-5" />
         </div>
         <p className="text-sm font-medium text-white/80">{title}</p>
-        {description && (
-          <p className="text-xs text-white/50 mt-1 max-w-[200px]">{description}</p>
-        )}
+        {description && <p className="text-xs text-white/50 mt-1 max-w-[200px]">{description}</p>}
         {action && (
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={action.onClick}
-            className="mt-3 h-8 text-xs"
-          >
+          <Button size="sm" variant="outline" onClick={action.onClick} className="mt-3 h-8 text-xs">
             {action.label}
           </Button>
         )}
@@ -79,30 +71,30 @@ export function EmptyState({
   }
 
   return (
-    <div className={cn(
-      'flex flex-col items-center justify-center py-12 px-6 text-center',
-      'rounded-xl border border-white/5 bg-white/[0.02]',
-      className
-    )}>
-      <div className={cn(
-        'p-4 rounded-2xl bg-gradient-to-br border mb-4',
-        colorClasses
-      )}>
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center py-12 px-6 text-center',
+        'rounded-xl border border-white/5 bg-white/[0.02]',
+        className
+      )}
+    >
+      <div className={cn('p-4 rounded-2xl bg-gradient-to-br border mb-4', colorClasses)}>
         <Icon className="h-8 w-8" />
       </div>
 
       <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
 
-      {description && (
-        <p className="text-sm text-white/60 max-w-sm mb-4">{description}</p>
-      )}
+      {description && <p className="text-sm text-white/60 max-w-sm mb-4">{description}</p>}
 
       {children}
 
       {(action || secondaryAction) && (
         <div className="flex flex-col sm:flex-row items-center gap-2 mt-4">
           {action && (
-            <Button onClick={action.onClick} className="bg-elec-yellow hover:bg-elec-yellow/90 text-black">
+            <Button
+              onClick={action.onClick}
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+            >
               {action.label}
             </Button>
           )}

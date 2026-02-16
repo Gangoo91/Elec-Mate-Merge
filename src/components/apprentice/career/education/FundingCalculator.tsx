@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Progress } from "@/components/ui/progress";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Progress } from '@/components/ui/progress';
 import {
   Calculator,
   ArrowLeft,
@@ -19,9 +19,9 @@ import {
   ExternalLink,
   Clock,
   Building2,
-  Sparkles
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+  Sparkles,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 // 2025 Funding rates
 const FUNDING_2025 = {
@@ -43,40 +43,40 @@ interface FundingResult {
 // Quick funding type cards
 const FUNDING_TYPES = [
   {
-    id: "level6",
-    title: "Degree (Level 6)",
+    id: 'level6',
+    title: 'Degree (Level 6)',
     subtitle: "Bachelor's, BEng",
-    amount: "£9,250/year",
+    amount: '£9,250/year',
     icon: GraduationCap,
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/10",
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/10',
   },
   {
-    id: "level7",
+    id: 'level7',
     title: "Master's (Level 7)",
-    subtitle: "MSc, MBA",
-    amount: "£12,858",
+    subtitle: 'MSc, MBA',
+    amount: '£12,858',
     icon: Sparkles,
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/10",
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/10',
   },
   {
-    id: "hnc",
-    title: "HNC/HND (Level 4-5)",
-    subtitle: "Higher National",
-    amount: "£6,500-£9,250",
+    id: 'hnc',
+    title: 'HNC/HND (Level 4-5)',
+    subtitle: 'Higher National',
+    amount: '£6,500-£9,250',
     icon: Building2,
-    color: "text-green-400",
-    bgColor: "bg-green-500/10",
+    color: 'text-green-400',
+    bgColor: 'bg-green-500/10',
   },
   {
-    id: "professional",
-    title: "Professional",
-    subtitle: "PRINCE2, NEBOSH",
-    amount: "£500-£5,000",
+    id: 'professional',
+    title: 'Professional',
+    subtitle: 'PRINCE2, NEBOSH',
+    amount: '£500-£5,000',
     icon: Briefcase,
-    color: "text-amber-400",
-    bgColor: "bg-amber-500/10",
+    color: 'text-amber-400',
+    bgColor: 'bg-amber-500/10',
   },
 ];
 
@@ -87,9 +87,9 @@ const FundingCalculator = () => {
   const [result, setResult] = useState<FundingResult | null>(null);
 
   // Form state
-  const [courseCost, setCourseCost] = useState("");
-  const [salary, setSalary] = useState("");
-  const [employerSupport, setEmployerSupport] = useState("");
+  const [courseCost, setCourseCost] = useState('');
+  const [salary, setSalary] = useState('');
+  const [employerSupport, setEmployerSupport] = useState('');
 
   const calculateFunding = () => {
     const cost = parseFloat(courseCost) || 0;
@@ -100,37 +100,37 @@ const FundingCalculator = () => {
     const sources: { name: string; amount: number; type: string }[] = [];
 
     if (employer > 0) {
-      sources.push({ name: "Employer Support", amount: employer, type: "employer" });
+      sources.push({ name: 'Employer Support', amount: employer, type: 'employer' });
     }
 
     // Add funding based on type
     switch (selectedType) {
-      case "level6":
+      case 'level6':
         const tuition = Math.min(cost - employer, FUNDING_2025.undergraduate.tuitionMax);
         if (tuition > 0) {
-          sources.push({ name: "Tuition Fee Loan", amount: tuition, type: "loan" });
+          sources.push({ name: 'Tuition Fee Loan', amount: tuition, type: 'loan' });
           totalFunding += tuition;
         }
         break;
-      case "level7":
+      case 'level7':
         const pgLoan = Math.min(cost - employer, FUNDING_2025.postgraduate.maxLoan);
         if (pgLoan > 0) {
-          sources.push({ name: "Postgraduate Loan", amount: pgLoan, type: "loan" });
+          sources.push({ name: 'Postgraduate Loan', amount: pgLoan, type: 'loan' });
           totalFunding += pgLoan;
         }
         break;
-      case "hnc":
+      case 'hnc':
         const allLoan = Math.min(cost - employer, 9250);
         if (allLoan > 0) {
-          sources.push({ name: "Advanced Learner Loan", amount: allLoan, type: "loan" });
+          sources.push({ name: 'Advanced Learner Loan', amount: allLoan, type: 'loan' });
           totalFunding += allLoan;
         }
         break;
-      case "professional":
+      case 'professional':
         // Skills Bank / Professional grants
         const skillsBank = Math.min(cost * 0.5, 2000);
         if (skillsBank > 0) {
-          sources.push({ name: "Skills Bank Grant", amount: skillsBank, type: "grant" });
+          sources.push({ name: 'Skills Bank Grant', amount: skillsBank, type: 'grant' });
           totalFunding += skillsBank;
         }
         break;
@@ -140,7 +140,10 @@ const FundingCalculator = () => {
     const coverage = cost > 0 ? Math.min((totalFunding / cost) * 100, 100) : 0;
 
     // Monthly repayment (9% above threshold)
-    const aboveThreshold = Math.max(0, currentSalary - FUNDING_2025.advancedLearner.repaymentThreshold);
+    const aboveThreshold = Math.max(
+      0,
+      currentSalary - FUNDING_2025.advancedLearner.repaymentThreshold
+    );
     const monthlyRepayment = (aboveThreshold * 0.09) / 12;
 
     setResult({
@@ -159,9 +162,9 @@ const FundingCalculator = () => {
     setShowCalculator(false);
     setShowResult(false);
     setResult(null);
-    setCourseCost("");
-    setSalary("");
-    setEmployerSupport("");
+    setCourseCost('');
+    setSalary('');
+    setEmployerSupport('');
   };
 
   return (
@@ -183,7 +186,9 @@ const FundingCalculator = () => {
               <h2 className="text-lg sm:text-xl font-semibold text-white">
                 Funding <span className="text-purple-400">Calculator</span>
               </h2>
-              <p className="text-xs text-white/60 hidden sm:block">2025 rates • Find your funding options</p>
+              <p className="text-xs text-white/60 hidden sm:block">
+                2025 rates • Find your funding options
+              </p>
             </div>
           </div>
 
@@ -222,17 +227,22 @@ const FundingCalculator = () => {
                 setShowCalculator(true);
               }}
               className={cn(
-                "relative p-4 rounded-xl text-left transition-all touch-manipulation",
-                "bg-white/5 border border-white/10 hover:bg-white/10",
-                selectedType === type.id && "ring-2 ring-purple-500 border-purple-500/50"
+                'relative p-4 rounded-xl text-left transition-all touch-manipulation',
+                'bg-white/5 border border-white/10 hover:bg-white/10',
+                selectedType === type.id && 'ring-2 ring-purple-500 border-purple-500/50'
               )}
             >
-              <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-2", type.bgColor)}>
-                <type.icon className={cn("h-5 w-5", type.color)} />
+              <div
+                className={cn(
+                  'w-10 h-10 rounded-lg flex items-center justify-center mb-2',
+                  type.bgColor
+                )}
+              >
+                <type.icon className={cn('h-5 w-5', type.color)} />
               </div>
               <h3 className="font-medium text-white text-sm">{type.title}</h3>
               <p className="text-xs text-white/50 mt-0.5">{type.subtitle}</p>
-              <p className={cn("text-sm font-semibold mt-2", type.color)}>{type.amount}</p>
+              <p className={cn('text-sm font-semibold mt-2', type.color)}>{type.amount}</p>
               <ChevronRight className="absolute top-4 right-3 h-4 w-4 text-white/30" />
             </motion.button>
           ))}
@@ -244,10 +254,10 @@ const FundingCalculator = () => {
         <p className="text-xs text-white/50 px-1">Official resources:</p>
         <div className="flex gap-2 overflow-x-auto -mx-4 px-4 pb-1 scrollbar-hide">
           {[
-            { label: "Student Finance", url: "https://www.gov.uk/student-finance" },
-            { label: "Learner Loans", url: "https://www.gov.uk/advanced-learner-loan" },
-            { label: "Skills Bank", url: "https://www.gov.uk/guidance/skills-bank" },
-            { label: "IET Funding", url: "https://www.theiet.org/membership/awards-scholarships/" },
+            { label: 'Student Finance', url: 'https://www.gov.uk/student-finance' },
+            { label: 'Learner Loans', url: 'https://www.gov.uk/advanced-learner-loan' },
+            { label: 'Skills Bank', url: 'https://www.gov.uk/guidance/skills-bank' },
+            { label: 'IET Funding', url: 'https://www.theiet.org/membership/awards-scholarships/' },
           ].map((link) => (
             <a
               key={link.label}
@@ -408,7 +418,9 @@ const FundingCalculator = () => {
                 <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-white/70">Funding Coverage</span>
-                    <span className="text-sm font-semibold text-white">{result.coverage.toFixed(0)}%</span>
+                    <span className="text-sm font-semibold text-white">
+                      {result.coverage.toFixed(0)}%
+                    </span>
                   </div>
                   <Progress value={result.coverage} className="h-3 bg-white/10" />
                   {result.fundingGap > 0 ? (
@@ -435,15 +447,21 @@ const FundingCalculator = () => {
                       <div className="flex items-center gap-3">
                         <div
                           className={cn(
-                            "w-8 h-8 rounded-lg flex items-center justify-center",
-                            source.type === "loan" && "bg-blue-500/20",
-                            source.type === "grant" && "bg-green-500/20",
-                            source.type === "employer" && "bg-amber-500/20"
+                            'w-8 h-8 rounded-lg flex items-center justify-center',
+                            source.type === 'loan' && 'bg-blue-500/20',
+                            source.type === 'grant' && 'bg-green-500/20',
+                            source.type === 'employer' && 'bg-amber-500/20'
                           )}
                         >
-                          {source.type === "loan" && <PoundSterling className="h-4 w-4 text-blue-400" />}
-                          {source.type === "grant" && <Sparkles className="h-4 w-4 text-green-400" />}
-                          {source.type === "employer" && <Building2 className="h-4 w-4 text-amber-400" />}
+                          {source.type === 'loan' && (
+                            <PoundSterling className="h-4 w-4 text-blue-400" />
+                          )}
+                          {source.type === 'grant' && (
+                            <Sparkles className="h-4 w-4 text-green-400" />
+                          )}
+                          {source.type === 'employer' && (
+                            <Building2 className="h-4 w-4 text-amber-400" />
+                          )}
                         </div>
                         <div>
                           <p className="text-sm font-medium text-white">{source.name}</p>
@@ -465,10 +483,12 @@ const FundingCalculator = () => {
                       <h4 className="text-sm font-medium text-white">Estimated Repayment</h4>
                     </div>
                     <p className="text-2xl font-bold text-blue-400">
-                      £{result.monthlyRepayment.toFixed(0)}<span className="text-sm font-normal">/month</span>
+                      £{result.monthlyRepayment.toFixed(0)}
+                      <span className="text-sm font-normal">/month</span>
                     </p>
                     <p className="text-xs text-white/50 mt-1">
-                      9% of earnings above £{FUNDING_2025.advancedLearner.repaymentThreshold.toLocaleString()}
+                      9% of earnings above £
+                      {FUNDING_2025.advancedLearner.repaymentThreshold.toLocaleString()}
                     </p>
                   </div>
                 )}

@@ -6,11 +6,9 @@ import { CompanyProfile } from '@/types/company';
 // Helper function to convert hex color to RGB array
 const hexToRgb = (hex: string): [number, number, number] => {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? [
-    parseInt(result[1], 16),
-    parseInt(result[2], 16),
-    parseInt(result[3], 16)
-  ] : [0, 0, 0];
+  return result
+    ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
+    : [0, 0, 0];
 };
 
 // Debug function to log company profile data
@@ -23,33 +21,35 @@ const debugCompanyProfile = (companyProfile?: CompanyProfile) => {
     hasLogo: !!companyProfile?.logo_data_url,
     colors: {
       primary: companyProfile?.primary_color,
-      secondary: companyProfile?.secondary_color
-    }
+      secondary: companyProfile?.secondary_color,
+    },
   });
 };
 
 export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: CompanyProfile) => {
   // Debug company profile data
   debugCompanyProfile(companyProfile);
-  
+
   // Validate company profile is loaded
   if (!companyProfile) {
     console.warn('PDF Generation: No company profile provided - using fallback branding');
   }
-  
+
   const doc = new jsPDF('p', 'mm', 'a4');
   doc.setFont('helvetica');
-  
+
   let currentY = 25;
   const pageWidth = doc.internal.pageSize.width;
   const margin = 20;
-  
+
   // Extract colors from company profile
-  const primaryColor = companyProfile?.primary_color ? 
-    hexToRgb(companyProfile.primary_color) : [245, 158, 11];
-  const secondaryColor = companyProfile?.secondary_color ? 
-    hexToRgb(companyProfile.secondary_color) : [31, 41, 55];
-  
+  const primaryColor = companyProfile?.primary_color
+    ? hexToRgb(companyProfile.primary_color)
+    : [245, 158, 11];
+  const secondaryColor = companyProfile?.secondary_color
+    ? hexToRgb(companyProfile.secondary_color)
+    : [31, 41, 55];
+
   // Clean Minimal Header Section
   if (companyProfile && companyProfile.company_name) {
     // Determine logo size based on setting
@@ -57,7 +57,7 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     const logoSizes = {
       small: { width: 20, height: 20 },
       medium: { width: 30, height: 30 },
-      large: { width: 45, height: 45 }
+      large: { width: 45, height: 45 },
     };
     const logoSize = logoSizes[logoSizeSetting as keyof typeof logoSizes] || logoSizes.medium;
 
@@ -67,7 +67,14 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     // Company logo (left aligned, clean)
     if (companyProfile.logo_data_url) {
       try {
-        doc.addImage(companyProfile.logo_data_url, 'PNG', margin, currentY, logoSize.width, logoSize.height);
+        doc.addImage(
+          companyProfile.logo_data_url,
+          'PNG',
+          margin,
+          currentY,
+          logoSize.width,
+          logoSize.height
+        );
       } catch (error) {
         console.warn('Could not add logo to PDF:', error);
       }
@@ -76,36 +83,36 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     // Company information (right side, clean layout) - adjust based on logo size
     const companyInfoX = margin + logoSize.width + 10;
     let companyY = currentY + 8;
-    
+
     // Company name (prominent but clean)
     doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(40, 40, 40);
     doc.text(companyProfile.company_name, companyInfoX, companyY);
     companyY += 8;
-    
+
     // Contact information (minimal formatting)
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(80, 80, 80);
-    
+
     const contactInfo = [];
     if (companyProfile.company_phone) contactInfo.push(companyProfile.company_phone);
     if (companyProfile.company_email) contactInfo.push(companyProfile.company_email);
     if (companyProfile.company_website) contactInfo.push(companyProfile.company_website);
-    
+
     if (contactInfo.length > 0) {
       doc.text(contactInfo.join(' • '), companyInfoX, companyY);
       companyY += 6;
     }
-    
+
     if (companyProfile.company_address) {
-      const addressText = companyProfile.company_postcode ? 
-        `${companyProfile.company_address}, ${companyProfile.company_postcode}` : 
-        companyProfile.company_address;
+      const addressText = companyProfile.company_postcode
+        ? `${companyProfile.company_address}, ${companyProfile.company_postcode}`
+        : companyProfile.company_address;
       doc.text(addressText, companyInfoX, companyY);
     }
-    
+
     currentY = headerHeight + 15;
   } else {
     // Fallback header
@@ -115,45 +122,46 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     doc.text('ELECTRICAL CONTRACTOR', margin, currentY);
     currentY += 20;
   }
-  
+
   // Minimal Quote Header
   doc.setFontSize(24);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
   doc.text('QUOTATION', margin, currentY);
-  
+
   // Quote details (simple, right aligned)
   doc.setFontSize(12);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(80, 80, 80);
   const quoteNumber = quote.quoteNumber || 'Q001';
-  const quoteDate = quote.createdAt?.toLocaleDateString('en-GB') || new Date().toLocaleDateString('en-GB');
+  const quoteDate =
+    quote.createdAt?.toLocaleDateString('en-GB') || new Date().toLocaleDateString('en-GB');
   doc.text(`${quoteNumber} • ${quoteDate}`, pageWidth - margin, currentY, { align: 'right' });
-  
+
   // Simple separator line
   currentY += 15;
   doc.setDrawColor(200, 200, 200);
   doc.setLineWidth(0.5);
   doc.line(margin, currentY, pageWidth - margin, currentY);
-  
+
   currentY += 20;
-  
+
   // Clean Two-Column Layout (No boxes)
   const leftColX = margin;
-  const rightColX = pageWidth/2 + 10;
-  const colWidth = (pageWidth/2) - margin - 15;
-  
+  const rightColX = pageWidth / 2 + 10;
+  const colWidth = pageWidth / 2 - margin - 15;
+
   // Client Details Section (Clean)
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
   doc.text('CLIENT DETAILS', leftColX, currentY);
-  
+
   let clientY = currentY + 10;
   doc.setFontSize(11);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(60, 60, 60);
-  
+
   if (quote.client?.name) {
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(40, 40, 40);
@@ -171,9 +179,9 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     clientY += 5;
   }
   if (quote.client?.address) {
-    const addressText = quote.client.postcode ? 
-      `${quote.client.address}, ${quote.client.postcode}` : 
-      quote.client.address;
+    const addressText = quote.client.postcode
+      ? `${quote.client.address}, ${quote.client.postcode}`
+      : quote.client.address;
     const addressLines = doc.splitTextToSize(addressText, colWidth);
     doc.text(addressLines, leftColX, clientY);
     clientY += addressLines.length * 5;
@@ -181,19 +189,19 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     doc.text(quote.client.postcode, leftColX, clientY);
     clientY += 5;
   }
-  
+
   // Job Details Section (Clean, right side)
   if (quote.jobDetails) {
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     doc.text('JOB DETAILS', rightColX, currentY);
-    
+
     let jobY = currentY + 10;
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(60, 60, 60);
-    
+
     if (quote.jobDetails.title) {
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(40, 40, 40);
@@ -203,28 +211,33 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
       doc.setTextColor(60, 60, 60);
       jobY += titleLines.length * 6;
     }
-    
+
     if (quote.jobDetails.location) {
       doc.text(`Location: ${quote.jobDetails.location}`, rightColX, jobY);
       jobY += 5;
     }
-    
+
     if (quote.jobDetails.estimatedDuration) {
-      const duration = quote.jobDetails.estimatedDuration === "Other" ? 
-        quote.jobDetails.customDuration || "Custom duration" : 
-        quote.jobDetails.estimatedDuration;
+      const duration =
+        quote.jobDetails.estimatedDuration === 'Other'
+          ? quote.jobDetails.customDuration || 'Custom duration'
+          : quote.jobDetails.estimatedDuration;
       doc.text(`Duration: ${duration}`, rightColX, jobY);
       jobY += 5;
     }
-    
+
     if (quote.jobDetails.workStartDate) {
-      doc.text(`Start Date: ${new Date(quote.jobDetails.workStartDate).toLocaleDateString('en-GB')}`, rightColX, jobY);
+      doc.text(
+        `Start Date: ${new Date(quote.jobDetails.workStartDate).toLocaleDateString('en-GB')}`,
+        rightColX,
+        jobY
+      );
       jobY += 5;
     }
   }
-  
+
   currentY += Math.max(clientY - currentY, 35) + 20;
-  
+
   // Project Description Section (Clean)
   if (quote.jobDetails?.description) {
     doc.setFontSize(14);
@@ -232,16 +245,19 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     doc.text('PROJECT DESCRIPTION', margin, currentY);
     currentY += 10;
-    
+
     // Clean description without background
-    const descriptionLines = doc.splitTextToSize(quote.jobDetails.description, pageWidth - (2 * margin));
+    const descriptionLines = doc.splitTextToSize(
+      quote.jobDetails.description,
+      pageWidth - 2 * margin
+    );
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(60, 60, 60);
     doc.text(descriptionLines, margin, currentY);
-    currentY += (descriptionLines.length * 6) + 15;
+    currentY += descriptionLines.length * 6 + 15;
   }
-  
+
   // Special Requirements Section (Clean)
   if (quote.jobDetails?.specialRequirements) {
     doc.setFontSize(14);
@@ -249,64 +265,68 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
     doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     doc.text('SPECIAL REQUIREMENTS', margin, currentY);
     currentY += 10;
-    
+
     // Clean requirements without background
-    const requirementsLines = doc.splitTextToSize(quote.jobDetails.specialRequirements, pageWidth - (2 * margin));
+    const requirementsLines = doc.splitTextToSize(
+      quote.jobDetails.specialRequirements,
+      pageWidth - 2 * margin
+    );
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(60, 60, 60);
     doc.text(requirementsLines, margin, currentY);
-    currentY += (requirementsLines.length * 6) + 15;
+    currentY += requirementsLines.length * 6 + 15;
   }
-  
+
   currentY += 10;
-  
+
   // Quote Items Table Section
   doc.setFontSize(16);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
   doc.text('QUOTE BREAKDOWN', margin, currentY);
   currentY += 15;
-  
+
   // Main table with line items only
-  const tableData = quote.items?.map(item => [
-    item.description,
-    item.quantity.toString(),
-    `£${item.unitPrice.toFixed(2)}`,
-    `£${item.totalPrice.toFixed(2)}`
-  ]) || [];
-  
+  const tableData =
+    quote.items?.map((item) => [
+      item.description,
+      item.quantity.toString(),
+      `£${item.unitPrice.toFixed(2)}`,
+      `£${item.totalPrice.toFixed(2)}`,
+    ]) || [];
+
   autoTable(doc, {
     startY: currentY,
     head: [['Description', 'Qty', 'Unit Price', 'Total']],
     body: tableData,
     theme: 'plain',
-    headStyles: { 
-      fillColor: primaryColor as [number, number, number], 
+    headStyles: {
+      fillColor: primaryColor as [number, number, number],
       textColor: [255, 255, 255],
       fontSize: 12,
       fontStyle: 'bold',
-      halign: 'left'
+      halign: 'left',
     },
-    styles: { 
+    styles: {
       fontSize: 11,
       cellPadding: 4,
       font: 'helvetica',
       lineColor: [220, 220, 220],
       lineWidth: 0.5,
-      textColor: [60, 60, 60]
+      textColor: [60, 60, 60],
     },
     columnStyles: {
       0: { cellWidth: 'auto', halign: 'left' },
       1: { halign: 'center', cellWidth: 20 },
       2: { halign: 'right', cellWidth: 30 },
-      3: { halign: 'right', fontStyle: 'bold', cellWidth: 30, textColor: [40, 40, 40] }
+      3: { halign: 'right', fontStyle: 'bold', cellWidth: 30, textColor: [40, 40, 40] },
     },
     margin: { left: margin, right: margin },
     tableLineColor: [220, 220, 220],
-    tableLineWidth: 0.5
+    tableLineWidth: 0.5,
   });
-  
+
   // Calculate final Y position after table
   const finalY = (doc as any).lastAutoTable.finalY + 15;
 
@@ -315,118 +335,142 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   const totalsBoxX = pageWidth - margin - 120;
   const totalsBoxWidth = 120;
   const rowHeight = 12;
-  
+
   // Calculate number of rows needed
   let totalRows = 2; // Subtotal + TOTAL
   if (quote.settings?.vatRegistered) {
     totalRows = 3; // Subtotal + VAT + TOTAL
   }
-  
+
   const boxHeight = totalRows * rowHeight;
-  
+
   // Draw outer border
   doc.setDrawColor(220, 220, 220);
   doc.setLineWidth(0.5);
   doc.rect(totalsBoxX, totalsBoxY, totalsBoxWidth, boxHeight);
-  
+
   currentY = totalsBoxY + 8;
   doc.setFontSize(11);
   doc.setFont('helvetica', 'normal');
-  
+
   // Subtotal row (white background)
   doc.setFillColor(255, 255, 255);
   doc.rect(totalsBoxX, totalsBoxY, totalsBoxWidth, rowHeight, 'F');
   doc.setTextColor(40, 40, 40);
   doc.text('Subtotal:', totalsBoxX + 5, currentY);
-  doc.text(`£${(quote.subtotal || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, currentY, { align: 'right' });
+  doc.text(`£${(quote.subtotal || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, currentY, {
+    align: 'right',
+  });
   currentY += rowHeight;
-  
+
   // VAT row (if applicable, white background)
   if (quote.settings?.vatRegistered) {
     doc.setFillColor(255, 255, 255);
     doc.rect(totalsBoxX, totalsBoxY + rowHeight, totalsBoxWidth, rowHeight, 'F');
     doc.text(`VAT (${quote.settings.vatRate}%):`, totalsBoxX + 5, currentY);
-    doc.text(`£${(quote.vatAmount || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, currentY, { align: 'right' });
+    doc.text(`£${(quote.vatAmount || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, currentY, {
+      align: 'right',
+    });
     currentY += rowHeight;
   }
-  
+
   // TOTAL row (orange background with white text)
-  const totalRowY = quote.settings?.vatRegistered ? totalsBoxY + (2 * rowHeight) : totalsBoxY + rowHeight;
+  const totalRowY = quote.settings?.vatRegistered
+    ? totalsBoxY + 2 * rowHeight
+    : totalsBoxY + rowHeight;
   doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
   doc.rect(totalsBoxX, totalRowY, totalsBoxWidth, rowHeight, 'F');
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(255, 255, 255);
   doc.text('TOTAL:', totalsBoxX + 5, currentY);
-  doc.text(`£${(quote.total || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, currentY, { align: 'right' });
-  
+  doc.text(`£${(quote.total || 0).toFixed(2)}`, totalsBoxX + totalsBoxWidth - 5, currentY, {
+    align: 'right',
+  });
+
   // Draw internal horizontal lines
   doc.setDrawColor(220, 220, 220);
   doc.setLineWidth(0.5);
   for (let i = 1; i < totalRows; i++) {
-    doc.line(totalsBoxX, totalsBoxY + (i * rowHeight), totalsBoxX + totalsBoxWidth, totalsBoxY + (i * rowHeight));
+    doc.line(
+      totalsBoxX,
+      totalsBoxY + i * rowHeight,
+      totalsBoxX + totalsBoxWidth,
+      totalsBoxY + i * rowHeight
+    );
   }
-  
+
   currentY = totalsBoxY + boxHeight + 20;
-  
+
   // Clean Footer Section
   const footerStartY = Math.max(currentY + 30, doc.internal.pageSize.height - 60);
-  
+
   // Payment Information Section (Clean layout)
-  if (companyProfile?.payment_terms || (companyProfile?.bank_details && Object.keys(companyProfile.bank_details).length > 0)) {
+  if (
+    companyProfile?.payment_terms ||
+    (companyProfile?.bank_details && Object.keys(companyProfile.bank_details).length > 0)
+  ) {
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
     doc.text('PAYMENT INFORMATION', margin, footerStartY);
-    
+
     const paymentY = footerStartY + 8;
     const leftColWidth = 90;
     const rightColWidth = 80;
-    
+
     // Payment Terms (Clean)
     if (companyProfile?.payment_terms) {
       doc.setFontSize(10);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(60, 60, 60);
       doc.text('Payment Terms', margin, paymentY);
-      
+
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(80, 80, 80);
       const paymentTermsLines = doc.splitTextToSize(companyProfile.payment_terms, leftColWidth);
       doc.text(paymentTermsLines, margin, paymentY + 6);
     }
-    
+
     // Bank Details (Clean)
     if (companyProfile?.bank_details && Object.keys(companyProfile.bank_details).length > 0) {
       const bankBoxX = margin + leftColWidth + 15;
-      
+
       doc.setFontSize(10);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(60, 60, 60);
       doc.text('Bank Details', bankBoxX, paymentY);
-      
+
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(80, 80, 80);
-      
+
       let bankY = paymentY + 6;
       if (companyProfile.bank_details.account_name) {
         doc.text(companyProfile.bank_details.account_name, bankBoxX, bankY);
         bankY += 4;
       }
       if (companyProfile.bank_details.sort_code && companyProfile.bank_details.account_number) {
-        doc.text(`${companyProfile.bank_details.sort_code} ${companyProfile.bank_details.account_number}`, bankBoxX, bankY);
+        doc.text(
+          `${companyProfile.bank_details.sort_code} ${companyProfile.bank_details.account_number}`,
+          bankBoxX,
+          bankY
+        );
       }
     }
   }
-  
+
   // Clean Footer
   const footerBarY = doc.internal.pageSize.height - 25;
-  
+
   // Compliance information (simplified)
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(100, 100, 100);
-  doc.text('This quote is valid for 30 days. All work complies with BS 7671:2018 (18th Edition) and Part P regulations.', margin, footerBarY);
-  
+  doc.text(
+    'This quote is valid for 30 days. All work complies with BS 7671:2018 (18th Edition) and Part P regulations.',
+    margin,
+    footerBarY
+  );
+
   // Save the PDF
   doc.save(`Quote-${quote.quoteNumber}.pdf`);
 };

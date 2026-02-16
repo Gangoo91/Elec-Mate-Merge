@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -24,31 +23,45 @@ interface TestStepCardProps {
   canGoNext: boolean;
 }
 
-const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: TestStepCardProps) => {
+const TestStepCard = ({
+  step,
+  onPrevious,
+  onNext,
+  canGoPrevious,
+  canGoNext,
+}: TestStepCardProps) => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'CRITICAL': return 'bg-red-500';
-      case 'HIGH': return 'bg-orange-500';
-      case 'MEDIUM': return 'bg-yellow-500';
-      default: return 'bg-gray-500';
+      case 'CRITICAL':
+        return 'bg-red-500';
+      case 'HIGH':
+        return 'bg-orange-500';
+      case 'MEDIUM':
+        return 'bg-yellow-500';
+      default:
+        return 'bg-gray-500';
     }
   };
 
   const getTestTypeColor = (testType: string) => {
     switch (testType) {
-      case 'isolation': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'dead': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'live': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      case 'isolation':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'dead':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'live':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      default:
+        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
   };
 
   return (
-    <Card className={`border-2 ${
-      step.priority === 'CRITICAL' 
-        ? 'border-red-500/50 bg-red-500/5' 
-        : 'border-border'
-    }`}>
+    <Card
+      className={`border-2 ${
+        step.priority === 'CRITICAL' ? 'border-red-500/50 bg-red-500/5' : 'border-border'
+      }`}
+    >
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -81,7 +94,9 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
               <span className="font-semibold text-orange-400">Priority Testing Method</span>
             </div>
             <p className="text-gray-300 text-sm">
-              <strong>Always test EARTH TO LINE first</strong> when measuring loop impedance. This provides maximum safety by ensuring the earth path is tested before line to neutral measurements.
+              <strong>Always test EARTH TO LINE first</strong> when measuring loop impedance. This
+              provides maximum safety by ensuring the earth path is tested before line to neutral
+              measurements.
             </p>
           </div>
         )}
@@ -92,19 +107,19 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
               <h4 className="font-semibold text-blue-400 mb-2">Description</h4>
               <p className="text-gray-300 text-sm">{step.description}</p>
             </div>
-            
+
             <div className="p-4 bg-muted/50 rounded-lg border border-green-500/30 min-h-[6rem]">
               <h4 className="font-semibold text-green-400 mb-2">Test Method</h4>
               <p className="text-gray-300 text-sm">{step.method}</p>
             </div>
           </div>
-          
+
           <div className="space-y-3">
             <div className="p-4 bg-muted/50 rounded-lg border border-yellow-500/30 min-h-[6rem]">
               <h4 className="font-semibold text-yellow-400 mb-2">Acceptance Criteria</h4>
               <p className="text-gray-300 text-sm">{step.acceptance}</p>
             </div>
-            
+
             <div className="p-4 bg-muted/50 rounded-lg border border-red-500/30 min-h-[6rem]">
               <h4 className="font-semibold text-red-400 mb-2 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
@@ -114,9 +129,9 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
             </div>
           </div>
         </div>
-        
+
         <div className="flex justify-between pt-4">
-          <Button 
+          <Button
             variant="outline"
             onClick={onPrevious}
             disabled={!canGoPrevious}
@@ -124,8 +139,8 @@ const TestStepCard = ({ step, onPrevious, onNext, canGoPrevious, canGoNext }: Te
           >
             Previous Step
           </Button>
-          
-          <Button 
+
+          <Button
             onClick={onNext}
             disabled={!canGoNext}
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90"

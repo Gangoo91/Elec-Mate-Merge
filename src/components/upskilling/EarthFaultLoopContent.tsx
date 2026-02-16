@@ -10,22 +10,27 @@ export const EarthFaultLoopContent = () => {
         <CardHeader>
           <div className="flex items-center gap-3">
             <Shield className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-foreground">Introduction to Earth Fault Loop Impedance</CardTitle>
+            <CardTitle className="text-foreground">
+              Introduction to Earth Fault Loop Impedance
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="text-foreground space-y-3 sm:space-y-4 lg:space-y-6">
           <p className="text-sm sm:text-base lg:text-lg leading-relaxed">
-            Earth fault loop impedance is one of the most critical electrical safety parameters in any installation. 
-            It determines whether protective devices will operate quickly enough to prevent dangerous electric shock 
-            or fire during an earth fault condition.
+            Earth fault loop impedance is one of the most critical electrical safety parameters in
+            any installation. It determines whether protective devices will operate quickly enough
+            to prevent dangerous electric shock or fire during an earth fault condition.
           </p>
-          
+
           <div className="bg-blue-900/20 border border-blue-600 p-4 rounded-lg">
-            <h4 className="text-blue-400 font-semibold mb-2">Why is Earth Fault Loop Impedance Critical?</h4>
+            <h4 className="text-blue-400 font-semibold mb-2">
+              Why is Earth Fault Loop Impedance Critical?
+            </h4>
             <p className="text-xs sm:text-sm leading-relaxed mb-3">
-              When an earth fault occurs, current must flow through the earth fault loop back to the source. 
-              The impedance of this path determines how much current will flow - and therefore how quickly 
-              the protective device will operate to disconnect the dangerous circuit.
+              When an earth fault occurs, current must flow through the earth fault loop back to the
+              source. The impedance of this path determines how much current will flow - and
+              therefore how quickly the protective device will operate to disconnect the dangerous
+              circuit.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
               <div>
@@ -52,11 +57,11 @@ export const EarthFaultLoopContent = () => {
           <div className="bg-yellow-900/20 border border-yellow-600 p-4 rounded-lg">
             <h4 className="text-yellow-400 font-semibold mb-2">Real-World Impact</h4>
             <p className="text-xs sm:text-sm leading-relaxed">
-              Consider a faulty kettle where the live conductor touches the metal casing. If the earth fault 
-              loop impedance is too high, insufficient current will flow to trip the MCB. The kettle casing 
-              will remain live at mains voltage, creating a lethal shock hazard for anyone who touches it. 
-              This is why accurate measurement and verification of earth fault loop impedance is absolutely 
-              essential for electrical safety.
+              Consider a faulty kettle where the live conductor touches the metal casing. If the
+              earth fault loop impedance is too high, insufficient current will flow to trip the
+              MCB. The kettle casing will remain live at mains voltage, creating a lethal shock
+              hazard for anyone who touches it. This is why accurate measurement and verification of
+              earth fault loop impedance is absolutely essential for electrical safety.
             </p>
           </div>
         </CardContent>
@@ -72,56 +77,91 @@ export const EarthFaultLoopContent = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-3 sm:space-y-4 lg:space-y-6">
           <p className="text-sm sm:text-base">By the end of this section, you will be able to:</p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="bg-green-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">1</div>
+                <div className="bg-green-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">
+                  1
+                </div>
                 <div>
                   <h4 className="text-foreground font-semibold">Distinguish Between Zs and Ze</h4>
-                  <p className="text-xs sm:text-sm leading-relaxed">Clearly explain the difference between external earth fault loop impedance (Ze) and total earth fault loop impedance (Zs), including when and how each is measured.</p>
+                  <p className="text-xs sm:text-sm leading-relaxed">
+                    Clearly explain the difference between external earth fault loop impedance (Ze)
+                    and total earth fault loop impedance (Zs), including when and how each is
+                    measured.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3">
-                <div className="bg-green-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">2</div>
+                <div className="bg-green-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">
+                  2
+                </div>
                 <div>
-                  <h4 className="text-foreground font-semibold">Calculate Earth Fault Loop Impedance</h4>
-                  <p className="text-sm">Apply the formula Zs = Ze + R1 + R2 to determine total earth fault loop impedance values and verify compliance with BS 7671 requirements.</p>
+                  <h4 className="text-foreground font-semibold">
+                    Calculate Earth Fault Loop Impedance
+                  </h4>
+                  <p className="text-sm">
+                    Apply the formula Zs = Ze + R1 + R2 to determine total earth fault loop
+                    impedance values and verify compliance with BS 7671 requirements.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3">
-                <div className="bg-green-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">3</div>
+                <div className="bg-green-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">
+                  3
+                </div>
                 <div>
                   <h4 className="text-foreground font-semibold">Apply Temperature Corrections</h4>
-                  <p className="text-sm">Correctly apply temperature correction factors to account for conductor resistance changes at maximum operating temperature.</p>
+                  <p className="text-sm">
+                    Correctly apply temperature correction factors to account for conductor
+                    resistance changes at maximum operating temperature.
+                  </p>
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="bg-blue-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">4</div>
+                <div className="bg-blue-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">
+                  4
+                </div>
                 <div>
                   <h4 className="text-foreground font-semibold">Interpret Maximum Values</h4>
-                  <p className="text-sm">Use BS 7671 tables to determine maximum permitted Zs values for different protective devices and circuit types.</p>
+                  <p className="text-sm">
+                    Use BS 7671 tables to determine maximum permitted Zs values for different
+                    protective devices and circuit types.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3">
-                <div className="bg-blue-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">5</div>
+                <div className="bg-blue-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">
+                  5
+                </div>
                 <div>
                   <h4 className="text-foreground font-semibold">Assess Safety Compliance</h4>
-                  <p className="text-sm">Evaluate test results to determine whether installations meet safety requirements and identify necessary remedial actions.</p>
+                  <p className="text-sm">
+                    Evaluate test results to determine whether installations meet safety
+                    requirements and identify necessary remedial actions.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3">
-                <div className="bg-blue-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">6</div>
+                <div className="bg-blue-600 text-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mt-1">
+                  6
+                </div>
                 <div>
-                  <h4 className="text-foreground font-semibold">Understand Fault Current Principles</h4>
-                  <p className="text-sm">Explain the relationship between earth fault loop impedance, fault current magnitude, and protective device operation times.</p>
+                  <h4 className="text-foreground font-semibold">
+                    Understand Fault Current Principles
+                  </h4>
+                  <p className="text-sm">
+                    Explain the relationship between earth fault loop impedance, fault current
+                    magnitude, and protective device operation times.
+                  </p>
                 </div>
               </div>
             </div>
@@ -134,26 +174,37 @@ export const EarthFaultLoopContent = () => {
         <CardHeader>
           <div className="flex items-center gap-3">
             <Calculator className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-foreground">Understanding Zs and Ze - Core Concepts</CardTitle>
+            <CardTitle className="text-foreground">
+              Understanding Zs and Ze - Core Concepts
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-lg mb-4">
-            Understanding the distinction between Ze and Zs is fundamental to electrical safety testing. 
-            These measurements represent different portions of the complete earth fault current path.
+            Understanding the distinction between Ze and Zs is fundamental to electrical safety
+            testing. These measurements represent different portions of the complete earth fault
+            current path.
           </p>
 
           {/* The Earth Fault Loop Path */}
           <div className="bg-elec-dark p-4 rounded-lg border border-purple-600">
-            <h4 className="text-purple-400 font-semibold mb-3">The Complete Earth Fault Loop Path</h4>
+            <h4 className="text-purple-400 font-semibold mb-3">
+              The Complete Earth Fault Loop Path
+            </h4>
             <p className="text-sm mb-3">
-              When an earth fault occurs, current flows through a complete loop from the fault point back to the 
-              source transformer neutral. This path includes several components, each contributing to the total impedance:
+              When an earth fault occurs, current flows through a complete loop from the fault point
+              back to the source transformer neutral. This path includes several components, each
+              contributing to the total impedance:
             </p>
             <div className="grid md:grid-cols-1 gap-3">
               <div className="bg-elec-gray p-3 rounded border-l-4 border-purple-400">
-                <p className="text-sm"><strong>Fault Point → Line Conductor (R1) → Consumer Unit → Supply Cable → Transformer → 
-                Neutral Conductor → Earth → Installation Earth → Protective Conductor (R2) → Fault Point</strong></p>
+                <p className="text-sm">
+                  <strong>
+                    Fault Point → Line Conductor (R1) → Consumer Unit → Supply Cable → Transformer →
+                    Neutral Conductor → Earth → Installation Earth → Protective Conductor (R2) →
+                    Fault Point
+                  </strong>
+                </p>
               </div>
             </div>
           </div>
@@ -161,8 +212,12 @@ export const EarthFaultLoopContent = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-elec-dark p-4 rounded-lg border border-blue-500">
               <div className="flex items-center gap-2 mb-3">
-                <Badge variant="secondary" className="bg-blue-600 text-foreground">Ze</Badge>
-                <h4 className="text-foreground font-semibold">External Earth Fault Loop Impedance</h4>
+                <Badge variant="secondary" className="bg-blue-600 text-foreground">
+                  Ze
+                </Badge>
+                <h4 className="text-foreground font-semibold">
+                  External Earth Fault Loop Impedance
+                </h4>
               </div>
               <div className="space-y-3 text-sm">
                 <div>
@@ -194,10 +249,12 @@ export const EarthFaultLoopContent = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border border-orange-500">
               <div className="flex items-center gap-2 mb-3">
-                <Badge variant="secondary" className="bg-orange-600 text-foreground">Zs</Badge>
+                <Badge variant="secondary" className="bg-orange-600 text-foreground">
+                  Zs
+                </Badge>
                 <h4 className="text-foreground font-semibold">Total Earth Fault Loop Impedance</h4>
               </div>
               <div className="space-y-3 text-sm">
@@ -222,16 +279,22 @@ export const EarthFaultLoopContent = () => {
                 </div>
                 <div className="bg-orange-900/30 p-2 rounded">
                   <p className="font-medium text-orange-200 mb-1">Formula:</p>
-                  <p><strong>Zs = Ze + R1 + R2</strong></p>
-                  <p className="text-xs mt-1">Where R1 and R2 are at maximum operating temperature</p>
+                  <p>
+                    <strong>Zs = Ze + R1 + R2</strong>
+                  </p>
+                  <p className="text-xs mt-1">
+                    Where R1 and R2 are at maximum operating temperature
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-          
+
           {/* Practical Example */}
           <div className="bg-green-900/20 border border-green-600 p-4 rounded-lg">
-            <h4 className="text-green-400 font-semibold mb-3">Practical Example: 32A Ring Circuit</h4>
+            <h4 className="text-green-400 font-semibold mb-3">
+              Practical Example: 32A Ring Circuit
+            </h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-medium text-green-300 mb-2">Given Values:</p>
@@ -250,7 +313,9 @@ export const EarthFaultLoopContent = () => {
                   <li>• (R1 + R2) at 70°C = 0.488 × 1.25 = 0.61Ω</li>
                   <li>• Zs = Ze + (R1 + R2) = 0.4 + 0.61 = 1.01Ω</li>
                   <li>• Maximum Zs for 32A Type B MCB = 1.44Ω</li>
-                  <li>• <strong>Result: COMPLIANT ✓</strong></li>
+                  <li>
+                    • <strong>Result: COMPLIANT ✓</strong>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -259,10 +324,10 @@ export const EarthFaultLoopContent = () => {
           <div className="bg-red-900/20 border border-red-600 p-4 rounded-lg">
             <h4 className="text-red-400 font-semibold mb-2">Critical Safety Point</h4>
             <p className="text-sm">
-              The relationship Zs = Ze + R1 + R2 shows that even if Ze is acceptable, poor installation 
-              practices (inadequate conductor sizes, poor connections, or excessive circuit lengths) can 
-              push Zs beyond safe limits. This is why both external and installation impedances must be 
-              carefully considered during design and verification.
+              The relationship Zs = Ze + R1 + R2 shows that even if Ze is acceptable, poor
+              installation practices (inadequate conductor sizes, poor connections, or excessive
+              circuit lengths) can push Zs beyond safe limits. This is why both external and
+              installation impedances must be carefully considered during design and verification.
             </p>
           </div>
         </CardContent>
@@ -273,23 +338,29 @@ export const EarthFaultLoopContent = () => {
         <CardHeader>
           <div className="flex items-center gap-3">
             <AlertTriangle className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-foreground">Temperature Correction - Critical for Accuracy</CardTitle>
+            <CardTitle className="text-foreground">
+              Temperature Correction - Critical for Accuracy
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <div className="bg-orange-900/20 border border-orange-600 p-4 rounded-lg">
-            <h4 className="text-orange-400 font-semibold mb-2">Why Temperature Correction is Essential</h4>
+            <h4 className="text-orange-400 font-semibold mb-2">
+              Why Temperature Correction is Essential
+            </h4>
             <p className="text-sm mb-3">
-              Conductor resistance increases significantly with temperature. Earth fault loop impedance 
-              tests are typically performed with cables at ambient temperature (around 20°C), but during 
-              normal operation, cables can reach 70°C or higher. This temperature rise can increase 
-              resistance by 25% or more, potentially pushing Zs beyond safe limits.
+              Conductor resistance increases significantly with temperature. Earth fault loop
+              impedance tests are typically performed with cables at ambient temperature (around
+              20°C), but during normal operation, cables can reach 70°C or higher. This temperature
+              rise can increase resistance by 25% or more, potentially pushing Zs beyond safe
+              limits.
             </p>
             <p className="text-sm font-medium text-orange-300">
-              Failure to apply temperature correction can result in dangerous overestimation of safety margins.
+              Failure to apply temperature correction can result in dangerous overestimation of
+              safety margins.
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-blue-500">
               <h4 className="text-foreground font-semibold mb-3">Copper Conductors</h4>
@@ -315,7 +386,7 @@ export const EarthFaultLoopContent = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-red-500">
               <h4 className="text-foreground font-semibold mb-3">Aluminium Conductors</h4>
               <div className="space-y-3 text-sm">
@@ -344,7 +415,9 @@ export const EarthFaultLoopContent = () => {
 
           {/* When to Apply Correction */}
           <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
-            <h4 className="text-foreground font-semibold mb-3">When and How to Apply Temperature Correction</h4>
+            <h4 className="text-foreground font-semibold mb-3">
+              When and How to Apply Temperature Correction
+            </h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-medium text-foreground mb-2">Apply Correction To:</p>
@@ -369,10 +442,13 @@ export const EarthFaultLoopContent = () => {
 
           {/* Practical Impact */}
           <div className="bg-yellow-900/20 border border-yellow-600 p-4 rounded-lg">
-            <h4 className="text-yellow-400 font-semibold mb-3">Practical Impact of Temperature Correction</h4>
+            <h4 className="text-yellow-400 font-semibold mb-3">
+              Practical Impact of Temperature Correction
+            </h4>
             <div className="text-sm space-y-2">
               <p>
-                <strong>Scenario:</strong> 32A Type B MCB circuit with Ze = 0.4Ω and measured (R1 + R2) = 0.9Ω at 20°C
+                <strong>Scenario:</strong> 32A Type B MCB circuit with Ze = 0.4Ω and measured (R1 +
+                R2) = 0.9Ω at 20°C
               </p>
               <div className="grid md:grid-cols-2 gap-4 mt-3">
                 <div className="bg-red-900/30 p-3 rounded">
@@ -389,7 +465,8 @@ export const EarthFaultLoopContent = () => {
                 </div>
               </div>
               <p className="font-medium text-yellow-300 mt-2">
-                Without temperature correction, this circuit would falsely appear safe, potentially creating a dangerous situation.
+                Without temperature correction, this circuit would falsely appear safe, potentially
+                creating a dangerous situation.
               </p>
             </div>
           </div>
@@ -401,20 +478,28 @@ export const EarthFaultLoopContent = () => {
         <CardHeader>
           <div className="flex items-center gap-3">
             <CheckCircle className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-foreground">BS 7671 Maximum Zs Values and Compliance</CardTitle>
+            <CardTitle className="text-foreground">
+              BS 7671 Maximum Zs Values and Compliance
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <div className="bg-blue-900/20 border border-blue-600 p-4 rounded-lg">
             <h4 className="text-blue-400 font-semibold mb-2">Understanding Maximum Zs Values</h4>
             <p className="text-sm mb-3">
-              The maximum Zs values in BS 7671 are calculated to ensure sufficient fault current flows 
-              to operate the protective device within the required disconnection time. These values are 
-              derived from the protective device characteristics and the maximum touch voltage limits.
+              The maximum Zs values in BS 7671 are calculated to ensure sufficient fault current
+              flows to operate the protective device within the required disconnection time. These
+              values are derived from the protective device characteristics and the maximum touch
+              voltage limits.
             </p>
             <div className="text-sm">
-              <p className="font-medium text-blue-300">Key Formula: Maximum Zs = Supply Voltage ÷ Required Fault Current</p>
-              <p className="text-xs mt-1">Where Required Fault Current = current needed for disconnection within specified time</p>
+              <p className="font-medium text-blue-300">
+                Key Formula: Maximum Zs = Supply Voltage ÷ Required Fault Current
+              </p>
+              <p className="text-xs mt-1">
+                Where Required Fault Current = current needed for disconnection within specified
+                time
+              </p>
             </div>
           </div>
 
@@ -425,7 +510,9 @@ export const EarthFaultLoopContent = () => {
                   <th className="text-left p-3 text-foreground font-semibold">Protective Device</th>
                   <th className="text-left p-3 text-foreground font-semibold">Rating (A)</th>
                   <th className="text-left p-3 text-foreground font-semibold">Max Zs (Ω)</th>
-                  <th className="text-left p-3 text-foreground font-semibold">Disconnection Time</th>
+                  <th className="text-left p-3 text-foreground font-semibold">
+                    Disconnection Time
+                  </th>
                   <th className="text-left p-3 text-foreground font-semibold">Application</th>
                 </tr>
               </thead>
@@ -495,7 +582,9 @@ export const EarthFaultLoopContent = () => {
             <div className="bg-green-900/20 border border-green-600 p-4 rounded-lg">
               <h4 className="text-green-400 font-semibold mb-2">0.4 Second Disconnection</h4>
               <div className="text-sm space-y-2">
-                <p><strong>Required for:</strong></p>
+                <p>
+                  <strong>Required for:</strong>
+                </p>
                 <ul className="space-y-1">
                   <li>• Socket outlet circuits</li>
                   <li>• Portable equipment circuits</li>
@@ -507,11 +596,13 @@ export const EarthFaultLoopContent = () => {
                 </p>
               </div>
             </div>
-            
+
             <div className="bg-blue-900/20 border border-blue-600 p-4 rounded-lg">
               <h4 className="text-blue-400 font-semibold mb-2">5 Second Disconnection</h4>
               <div className="text-sm space-y-2">
-                <p><strong>Acceptable for:</strong></p>
+                <p>
+                  <strong>Acceptable for:</strong>
+                </p>
                 <ul className="space-y-1">
                   <li>• Fixed equipment circuits</li>
                   <li>• Distribution circuits</li>
@@ -531,7 +622,9 @@ export const EarthFaultLoopContent = () => {
             <div className="grid md:grid-cols-3 gap-4 text-sm">
               <div className="bg-elec-dark p-3 rounded">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 bg-purple-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                  <div className="w-6 h-6 bg-purple-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                    1
+                  </div>
                   <p className="font-medium text-foreground">Identify Circuit</p>
                 </div>
                 <ul className="space-y-1">
@@ -540,10 +633,12 @@ export const EarthFaultLoopContent = () => {
                   <li>• Check required disconnection time</li>
                 </ul>
               </div>
-              
+
               <div className="bg-elec-dark p-3 rounded">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 bg-purple-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                  <div className="w-6 h-6 bg-purple-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                    2
+                  </div>
                   <p className="font-medium text-foreground">Calculate Zs</p>
                 </div>
                 <ul className="space-y-1">
@@ -552,10 +647,12 @@ export const EarthFaultLoopContent = () => {
                   <li>• Account for measurement uncertainty</li>
                 </ul>
               </div>
-              
+
               <div className="bg-elec-dark p-3 rounded">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 bg-purple-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                  <div className="w-6 h-6 bg-purple-600 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
+                    3
+                  </div>
                   <p className="font-medium text-foreground">Compare & Assess</p>
                 </div>
                 <ul className="space-y-1">

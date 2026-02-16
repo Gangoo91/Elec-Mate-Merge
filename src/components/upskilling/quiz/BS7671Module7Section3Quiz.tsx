@@ -15,64 +15,64 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: "What IP rating is generally required for outdoor switches?",
-    options: [
-      "IP44",
-      "IP54",
-      "IP65",
-      "IP20"
-    ],
+    question: 'What IP rating is generally required for outdoor switches?',
+    options: ['IP44', 'IP54', 'IP65', 'IP20'],
     correctAnswer: 1,
-    explanation: "Outdoor switches generally require IP54 rating minimum to protect against dust ingress and water splashing from any direction."
+    explanation:
+      'Outdoor switches generally require IP54 rating minimum to protect against dust ingress and water splashing from any direction.',
   },
   {
     id: 2,
-    question: "Why is bonding important in livestock buildings?",
+    question: 'Why is bonding important in livestock buildings?',
     options: [
-      "For aesthetic purposes",
-      "To prevent potential differences that could affect animals",
-      "To reduce energy costs",
-      "It's not actually required"
+      'For aesthetic purposes',
+      'To prevent potential differences that could affect animals',
+      'To reduce energy costs',
+      "It's not actually required",
     ],
     correctAnswer: 1,
-    explanation: "Animals are more sensitive to electrical potential differences than humans. Proper bonding prevents dangerous potential differences that could harm livestock."
+    explanation:
+      'Animals are more sensitive to electrical potential differences than humans. Proper bonding prevents dangerous potential differences that could harm livestock.',
   },
   {
     id: 3,
-    question: "What causes cable degradation in agricultural settings?",
+    question: 'What causes cable degradation in agricultural settings?',
     options: [
-      "Only mechanical damage",
-      "UV radiation, corrosive substances, and mechanical damage",
-      "Only temperature variations",
-      "Only moisture"
+      'Only mechanical damage',
+      'UV radiation, corrosive substances, and mechanical damage',
+      'Only temperature variations',
+      'Only moisture',
     ],
     correctAnswer: 1,
-    explanation: "Agricultural environments expose cables to UV radiation, corrosive substances from animal waste, mechanical damage from machinery, and extreme temperature variations."
+    explanation:
+      'Agricultural environments expose cables to UV radiation, corrosive substances from animal waste, mechanical damage from machinery, and extreme temperature variations.',
   },
   {
     id: 4,
-    question: "What protective device considerations apply?",
+    question: 'What protective device considerations apply?',
     options: [
-      "Standard domestic devices are sufficient",
-      "RCD protection and appropriate discrimination",
-      "No special requirements",
-      "Only surge protection needed"
+      'Standard domestic devices are sufficient',
+      'RCD protection and appropriate discrimination',
+      'No special requirements',
+      'Only surge protection needed',
     ],
     correctAnswer: 1,
-    explanation: "Outdoor and agricultural installations require RCD protection and careful consideration of discrimination to prevent nuisance tripping while maintaining safety."
+    explanation:
+      'Outdoor and agricultural installations require RCD protection and careful consideration of discrimination to prevent nuisance tripping while maintaining safety.',
   },
   {
     id: 5,
-    question: "How are underground cables protected?",
+    question: 'How are underground cables protected?',
     options: [
-      "No protection needed underground",
-      "Armoured cables and warning tape/tiles",
-      "Only plastic conduit required",
-      "Burial depth alone is sufficient"
+      'No protection needed underground',
+      'Armoured cables and warning tape/tiles',
+      'Only plastic conduit required',
+      'Burial depth alone is sufficient',
     ],
     correctAnswer: 1,
-    explanation: "Underground cables require armoured construction and warning tape or tiles to alert future excavators and prevent accidental damage."
-  }
+    explanation:
+      'Underground cables require armoured construction and warning tape or tiles to alert future excavators and prevent accidental damage.',
+  },
 ];
 
 const BS7671Module7Section3Quiz = () => {
@@ -129,9 +129,10 @@ const BS7671Module7Section3Quiz = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Test your understanding of outdoor and agricultural installation requirements with this 5-question quiz.
+            Test your understanding of outdoor and agricultural installation requirements with this
+            5-question quiz.
           </p>
-          <Button 
+          <Button
             onClick={() => setQuizStarted(true)}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -155,10 +156,14 @@ const BS7671Module7Section3Quiz = () => {
               {score}/{quizData.length}
             </div>
             <p className="text-gray-300 mt-2">
-              {score >= 4 ? 'Excellent knowledge of outdoor installations!' : score >= 3 ? 'Good understanding!' : 'Review the material and try again!'}
+              {score >= 4
+                ? 'Excellent knowledge of outdoor installations!'
+                : score >= 3
+                  ? 'Good understanding!'
+                  : 'Review the material and try again!'}
             </p>
           </div>
-          
+
           <div className="space-y-3">
             {quizData.map((question, index) => (
               <div key={question.id} className="bg-elec-dark p-3 rounded-md border border-gray-600">
@@ -172,16 +177,14 @@ const BS7671Module7Section3Quiz = () => {
                     <p className="text-sm font-semibold text-foreground mb-1">
                       {question.id}. {question.question}
                     </p>
-                    <p className="text-xs text-gray-400">
-                      {question.explanation}
-                    </p>
+                    <p className="text-xs text-gray-400">{question.explanation}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          <Button 
+
+          <Button
             onClick={handleRestart}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -205,7 +208,7 @@ const BS7671Module7Section3Quiz = () => {
           </Badge>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           ></div>
@@ -216,7 +219,7 @@ const BS7671Module7Section3Quiz = () => {
           <p className="text-foreground font-semibold mb-4">
             {question.id}. {question.question}
           </p>
-          
+
           <div className="space-y-2">
             {question.options.map((option, index) => {
               const answered = selectedAnswers[currentQuestion] !== undefined;
@@ -258,13 +261,17 @@ const BS7671Module7Section3Quiz = () => {
                   )}
                   <div>
                     <p className="text-sm font-semibold text-foreground">
-                      {selectedAnswers[currentQuestion] === question.correctAnswer ? 'Correct' : 'Incorrect'}
+                      {selectedAnswers[currentQuestion] === question.correctAnswer
+                        ? 'Correct'
+                        : 'Incorrect'}
                     </p>
                     <p className="text-xs text-gray-400">{question.explanation}</p>
                     {selectedAnswers[currentQuestion] !== question.correctAnswer && (
                       <p className="text-xs text-gray-400 mt-1">
-                        Correct answer: <span className="text-elec-yellow font-medium">
-                          {String.fromCharCode(65 + question.correctAnswer)}. {question.options[question.correctAnswer]}
+                        Correct answer:{' '}
+                        <span className="text-elec-yellow font-medium">
+                          {String.fromCharCode(65 + question.correctAnswer)}.{' '}
+                          {question.options[question.correctAnswer]}
                         </span>
                       </p>
                     )}
@@ -274,7 +281,7 @@ const BS7671Module7Section3Quiz = () => {
             )}
           </div>
         </div>
-        
+
         <div className="flex justify-between">
           <Button
             onClick={handlePrevious}
@@ -284,7 +291,7 @@ const BS7671Module7Section3Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

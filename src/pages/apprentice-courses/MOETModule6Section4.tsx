@@ -1,44 +1,44 @@
-import { ArrowLeft, Clock, UserCheck, Users, Handshake } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Clock, UserCheck, Users, Handshake } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule6Section4 = () => {
   useSEO(
-    "Section 6.4: Handovers and Stakeholder Communication - MOET Module 6",
-    "Shift handovers, stakeholder communication, professional behaviour and teamwork"
+    'Section 6.4: Handovers and Stakeholder Communication - MOET Module 6',
+    'Shift handovers, stakeholder communication, professional behaviour and teamwork'
   );
 
   const subsections = [
     {
-      number: "6.4.1",
-      title: "Shift Handover Procedures",
-      description: "Shift handover protocols, information transfer and continuity procedures",
+      number: '6.4.1',
+      title: 'Shift Handover Procedures',
+      description: 'Shift handover protocols, information transfer and continuity procedures',
       icon: Clock,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section4-1"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section4-1',
     },
     {
-      number: "6.4.2",
-      title: "Communicating with Supervisors and Engineers",
-      description: "Professional communication, reporting lines and technical discussions",
+      number: '6.4.2',
+      title: 'Communicating with Supervisors and Engineers',
+      description: 'Professional communication, reporting lines and technical discussions',
       icon: UserCheck,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section4-2"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section4-2',
     },
     {
-      number: "6.4.3",
-      title: "Liaising with Non-Technical Staff",
-      description: "Communication with operations, management and non-technical personnel",
+      number: '6.4.3',
+      title: 'Liaising with Non-Technical Staff',
+      description: 'Communication with operations, management and non-technical personnel',
       icon: Users,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section4-3"
+      href: '/study-centre/apprentice/m-o-e-t-module6-section4-3',
     },
     {
-      number: "6.4.4",
-      title: "Professional Behaviour and Teamwork",
-      description: "Professional standards, teamwork principles and workplace behaviour",
+      number: '6.4.4',
+      title: 'Professional Behaviour and Teamwork',
+      description: 'Professional standards, teamwork principles and workplace behaviour',
       icon: Handshake,
-      href: "/study-centre/apprentice/m-o-e-t-module6-section4-4"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module6-section4-4',
+    },
   ];
 
   return (
@@ -46,7 +46,11 @@ const MOETModule6Section4 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 6

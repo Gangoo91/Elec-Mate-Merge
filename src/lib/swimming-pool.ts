@@ -87,7 +87,7 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
     ambientTemperature,
     hasUnderwaterLighting,
     hasPoolCover,
-    hasEmergencyStop
+    hasEmergencyStop,
   } = inputs;
 
   // Calculate diversity factors
@@ -101,9 +101,8 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
   const diversifiedLightingLoad = lighting * lightingDiversity;
 
   const totalLoad = diversifiedHeaterLoad + diversifiedPumpLoad + diversifiedLightingLoad;
-  const totalCurrent = supplyVoltage === 400 
-    ? totalLoad / (supplyVoltage * Math.sqrt(3))
-    : totalLoad / supplyVoltage;
+  const totalCurrent =
+    supplyVoltage === 400 ? totalLoad / (supplyVoltage * Math.sqrt(3)) : totalLoad / supplyVoltage;
 
   // Temperature derating factor
   const temperatureDerating = ambientTemperature > 30 ? 0.87 : 1.0;
@@ -126,10 +125,16 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
       specialRequirements: [
         'Dedicated circuit required',
         'Emergency isolation required',
-        heatingType === 'electric' ? 'High temperature cable required' : 'Gas safety interlock required'
+        heatingType === 'electric'
+          ? 'High temperature cable required'
+          : 'Gas safety interlock required',
       ],
       complianceStatus: 'compliant',
-      reasonsForCompliance: ['30mA RCD protection', 'Dedicated circuit', 'Appropriate cable rating']
+      reasonsForCompliance: [
+        '30mA RCD protection',
+        'Dedicated circuit',
+        'Appropriate cable rating',
+      ],
     });
   }
 
@@ -148,10 +153,12 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
       specialRequirements: [
         'Motor starting current consideration',
         'Pump isolation switch required',
-        filtrationSystem === 'de' ? 'Additional earth fault protection' : 'Standard motor protection'
+        filtrationSystem === 'de'
+          ? 'Additional earth fault protection'
+          : 'Standard motor protection',
       ],
       complianceStatus: 'compliant',
-      reasonsForCompliance: ['Motor protection', '30mA RCD', 'Appropriate starting arrangements']
+      reasonsForCompliance: ['Motor protection', '30mA RCD', 'Appropriate starting arrangements'],
     });
   }
 
@@ -164,17 +171,19 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
       load: lighting,
       voltage: lightingVoltage,
       current: lightingCurrent,
-      cableSize: hasUnderwaterLighting ? '1.5mm²' : getCableSize(lightingCurrent, cableRunLength, temperatureDerating),
+      cableSize: hasUnderwaterLighting
+        ? '1.5mm²'
+        : getCableSize(lightingCurrent, cableRunLength, temperatureDerating),
       protectionRating: hasUnderwaterLighting ? 6 : getProtectionRating(lightingCurrent),
       rcdRequired: !hasUnderwaterLighting,
       ipRating: hasUnderwaterLighting ? 'IPX8' : 'IPX4',
-      specialRequirements: hasUnderwaterLighting 
+      specialRequirements: hasUnderwaterLighting
         ? ['SELV transformer required', 'Safety isolating transformer', 'Maximum 12V in Zone 0']
         : ['Minimum 2m from pool edge', 'RCD protection mandatory', 'Appropriate IP rating'],
       complianceStatus: hasUnderwaterLighting && lightingVoltage === 12 ? 'compliant' : 'warning',
-      reasonsForCompliance: hasUnderwaterLighting 
+      reasonsForCompliance: hasUnderwaterLighting
         ? ['SELV supply', 'IPX8 rating', 'Zone 0 compliance']
-        : ['Adequate distance from pool', 'RCD protection']
+        : ['Adequate distance from pool', 'RCD protection'],
     });
   }
 
@@ -191,14 +200,16 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
   }
 
   // Main protection
-  const mainProtection = poolType === 'private' 
-    ? '30mA RCD protection mandatory for all circuits'
-    : '30mA RCD + additional 10mA RCD for underwater equipment';
+  const mainProtection =
+    poolType === 'private'
+      ? '30mA RCD protection mandatory for all circuits'
+      : '30mA RCD + additional 10mA RCD for underwater equipment';
 
   // Earthing arrangements
-  const earthingArrangements = earthingSystem === 'TT' 
-    ? 'Earth electrode required. Resistance ≤ 200Ω. Additional earth electrode for pool equipment recommended.'
-    : 'Main earthing terminal connection. Supplementary bonding essential for all metalwork within 2m of pool.';
+  const earthingArrangements =
+    earthingSystem === 'TT'
+      ? 'Earth electrode required. Resistance ≤ 200Ω. Additional earth electrode for pool equipment recommended.'
+      : 'Main earthing terminal connection. Supplementary bonding essential for all metalwork within 2m of pool.';
 
   // Bonding requirements
   const bondingRequirements = [
@@ -209,26 +220,34 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
     'Bond access ladders and handrails',
     'Bond reinforcing steel in concrete',
     poolType !== 'private' ? 'Bond ventilation ducting' : '',
-    'Use 4mm² minimum bonding conductor'
+    'Use 4mm² minimum bonding conductor',
   ].filter(Boolean);
 
   // Zonal compliance
   const zonalCompliance = {
     zone0: {
-      permitted: ['12V SELV equipment only', 'IPX8 rated luminaires', 'Pool cleaning equipment (SELV)'],
+      permitted: [
+        '12V SELV equipment only',
+        'IPX8 rated luminaires',
+        'Pool cleaning equipment (SELV)',
+      ],
       prohibited: ['Socket outlets', 'Switches', '230V equipment', 'Junction boxes'],
-      ipRating: 'IPX8 minimum'
+      ipRating: 'IPX8 minimum',
     },
     zone1: {
-      permitted: ['12V SELV preferred', 'Limited 230V with additional protection', 'Emergency lighting (SELV)'],
+      permitted: [
+        '12V SELV preferred',
+        'Limited 230V with additional protection',
+        'Emergency lighting (SELV)',
+      ],
       prohibited: ['Socket outlets within 2m', 'Standard switches', 'Standard luminaires'],
-      ipRating: 'IPX4 minimum (IPX5 for commercial)'
+      ipRating: 'IPX4 minimum (IPX5 for commercial)',
     },
     zone2: {
       permitted: ['230V equipment with RCD', 'Socket outlets with RCD', 'Standard wiring methods'],
       prohibited: ['Equipment without RCD protection', 'Metal conduit without bonding'],
-      ipRating: 'IPX2 minimum (IPX4 recommended)'
-    }
+      ipRating: 'IPX2 minimum (IPX4 recommended)',
+    },
   };
 
   // Regulatory compliance
@@ -260,7 +279,7 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
     diversityFactor: poolType === 'private' ? 0.8 : 0.9,
     simultaneityFactor: 0.85,
     safetyMargin: 1.25,
-    temperatureDerating
+    temperatureDerating,
   };
 
   // Practical guidance
@@ -273,7 +292,7 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
       'Install equipment with appropriate IP ratings',
       'Connect and test all circuits',
       'Perform initial verification',
-      'Complete electrical installation certificate'
+      'Complete electrical installation certificate',
     ],
     testingRequirements: [
       'Continuity of bonding conductors (< 0.05Ω)',
@@ -283,7 +302,7 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
       'Earth fault loop impedance (Zs ≤ 1.44Ω for 30mA RCD)',
       'RCD operating times (≤ 300ms at rated current)',
       'Functional testing of emergency stops',
-      'PAT testing of portable equipment'
+      'PAT testing of portable equipment',
     ],
     maintenancePoints: [
       'Monthly RCD testing',
@@ -293,7 +312,7 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
       'Check IP rating integrity',
       'Inspect cable routes for damage',
       'Test emergency stop functions',
-      'Review and update risk assessments'
+      'Review and update risk assessments',
     ],
     commonPitfalls: [
       'Insufficient IP rating for zone requirements',
@@ -303,8 +322,8 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
       'Using standard cables in wet areas',
       'Forgetting diversity factors in calculations',
       'Not considering motor starting currents',
-      'Inadequate emergency isolation arrangements'
-    ]
+      'Inadequate emergency isolation arrangements',
+    ],
   };
 
   return {
@@ -321,16 +340,16 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
       ietCodeOfPractice: poolType === 'private',
       buildingRegs: true,
       issues: complianceIssues,
-      recommendations
+      recommendations,
     },
     safetyFactors,
-    practicalGuidance
+    practicalGuidance,
   };
 }
 
 function getCableSize(current: number, length: number, derating: number): string {
   const deratedCurrent = current / derating;
-  
+
   if (deratedCurrent <= 13) return '1.5mm²';
   if (deratedCurrent <= 17) return '2.5mm²';
   if (deratedCurrent <= 23) return '4.0mm²';

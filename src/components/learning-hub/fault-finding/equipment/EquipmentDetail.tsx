@@ -9,7 +9,7 @@ interface EquipmentDetailProps {
 }
 
 const EquipmentDetail = ({ equipmentId }: EquipmentDetailProps) => {
-  const equipment = testEquipment.find(e => e.id === equipmentId);
+  const equipment = testEquipment.find((e) => e.id === equipmentId);
 
   if (!equipment) {
     return (
@@ -110,9 +110,7 @@ const EquipmentDetail = ({ equipmentId }: EquipmentDetailProps) => {
             <Shield className="h-4 w-4" />
             Safety Requirements
           </h3>
-          <p className="text-sm text-foreground">
-            {equipment.safety}
-          </p>
+          <p className="text-sm text-foreground">{equipment.safety}</p>
         </CardContent>
       </Card>
     </div>

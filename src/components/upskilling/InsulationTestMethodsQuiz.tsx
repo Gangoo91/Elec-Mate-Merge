@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Brain } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -66,17 +65,17 @@ export const InsulationTestMethodsQuiz = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <QuizProgress 
-          currentQuestion={currentQuestion} 
-          totalQuestions={insulationTestMethodsQuizQuestions.length} 
+        <QuizProgress
+          currentQuestion={currentQuestion}
+          totalQuestions={insulationTestMethodsQuizQuestions.length}
         />
-        
+
         <TestProceduresQuizQuestion
           question={insulationTestMethodsQuizQuestions[currentQuestion]}
           selectedAnswer={answers[currentQuestion]}
           onAnswerSelect={handleAnswerSelect}
         />
-        
+
         <QuizNavigation
           currentQuestion={currentQuestion}
           totalQuestions={insulationTestMethodsQuizQuestions.length}

@@ -14,7 +14,7 @@ export const EmergencyLightingSummary2_6 = () => {
         <p className="text-lg font-medium text-elec-yellow mb-4">
           That closes Module 2 with six comprehensive sections:
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
@@ -30,7 +30,7 @@ export const EmergencyLightingSummary2_6 = () => {
               <span>Escape Route Lighting</span>
             </div>
           </div>
-          
+
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <CheckCircle className="h-4 w-4 text-green-400" />
@@ -42,11 +42,12 @@ export const EmergencyLightingSummary2_6 = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-4 mt-6">
           <p className="text-foreground font-medium">
-            🎉 Congratulations! You have completed Emergency Lighting Module 2. You now have comprehensive 
-            knowledge of emergency lighting systems, their applications, and maintenance requirements.
+            🎉 Congratulations! You have completed Emergency Lighting Module 2. You now have
+            comprehensive knowledge of emergency lighting systems, their applications, and
+            maintenance requirements.
           </p>
         </div>
       </CardContent>

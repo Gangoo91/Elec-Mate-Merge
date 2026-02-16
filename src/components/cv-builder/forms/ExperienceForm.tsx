@@ -1,13 +1,12 @@
-
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Plus, Trash2 } from "lucide-react";
-import { CVData, WorkExperience } from "../types";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Plus, Trash2 } from 'lucide-react';
+import { CVData, WorkExperience } from '../types';
 
 interface ExperienceFormProps {
   cvData: CVData;
@@ -18,34 +17,34 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
   const addExperience = () => {
     const newExperience: WorkExperience = {
       id: Date.now().toString(),
-      jobTitle: "",
-      company: "",
-      location: "",
-      startDate: "",
-      endDate: "",
+      jobTitle: '',
+      company: '',
+      location: '',
+      startDate: '',
+      endDate: '',
       current: false,
-      description: ""
+      description: '',
     };
 
     onChange({
       ...cvData,
-      experience: [...cvData.experience, newExperience]
+      experience: [...cvData.experience, newExperience],
     });
   };
 
   const updateExperience = (id: string, field: string, value: string | boolean) => {
     onChange({
       ...cvData,
-      experience: cvData.experience.map(exp =>
+      experience: cvData.experience.map((exp) =>
         exp.id === id ? { ...exp, [field]: value } : exp
-      )
+      ),
     });
   };
 
   const removeExperience = (id: string) => {
     onChange({
       ...cvData,
-      experience: cvData.experience.filter(exp => exp.id !== id)
+      experience: cvData.experience.filter((exp) => exp.id !== id),
     });
   };
 
@@ -78,7 +77,9 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor={`jobTitle-${exp.id}`} className="text-foreground">Job Title *</Label>
+                <Label htmlFor={`jobTitle-${exp.id}`} className="text-foreground">
+                  Job Title *
+                </Label>
                 <Input
                   id={`jobTitle-${exp.id}`}
                   value={exp.jobTitle}
@@ -89,7 +90,9 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
               </div>
 
               <div>
-                <Label htmlFor={`company-${exp.id}`} className="text-foreground">Company *</Label>
+                <Label htmlFor={`company-${exp.id}`} className="text-foreground">
+                  Company *
+                </Label>
                 <Input
                   id={`company-${exp.id}`}
                   value={exp.company}
@@ -100,7 +103,9 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
               </div>
 
               <div>
-                <Label htmlFor={`location-${exp.id}`} className="text-foreground">Location</Label>
+                <Label htmlFor={`location-${exp.id}`} className="text-foreground">
+                  Location
+                </Label>
                 <Input
                   id={`location-${exp.id}`}
                   value={exp.location}
@@ -111,7 +116,9 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
               </div>
 
               <div>
-                <Label htmlFor={`startDate-${exp.id}`} className="text-foreground">Start Date</Label>
+                <Label htmlFor={`startDate-${exp.id}`} className="text-foreground">
+                  Start Date
+                </Label>
                 <Input
                   id={`startDate-${exp.id}`}
                   type="month"
@@ -122,7 +129,9 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
               </div>
 
               <div>
-                <Label htmlFor={`endDate-${exp.id}`} className="text-foreground">End Date</Label>
+                <Label htmlFor={`endDate-${exp.id}`} className="text-foreground">
+                  End Date
+                </Label>
                 <Input
                   id={`endDate-${exp.id}`}
                   type="month"
@@ -144,12 +153,16 @@ export const ExperienceForm: React.FC<ExperienceFormProps> = ({ cvData, onChange
                     }
                   }}
                 />
-                <Label htmlFor={`current-${exp.id}`} className="text-foreground">Current Position</Label>
+                <Label htmlFor={`current-${exp.id}`} className="text-foreground">
+                  Current Position
+                </Label>
               </div>
             </div>
 
             <div>
-              <Label htmlFor={`description-${exp.id}`} className="text-foreground">Job Description</Label>
+              <Label htmlFor={`description-${exp.id}`} className="text-foreground">
+                Job Description
+              </Label>
               <Textarea
                 id={`description-${exp.id}`}
                 value={exp.description}

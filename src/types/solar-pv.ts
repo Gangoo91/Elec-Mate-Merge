@@ -14,7 +14,11 @@
 // ============================================================================
 
 export type SystemType = 'grid-tied' | 'hybrid' | 'off-grid';
-export type MountingType = 'roof-integrated' | 'roof-mounted' | 'ground-mounted' | 'building-integrated';
+export type MountingType =
+  | 'roof-integrated'
+  | 'roof-mounted'
+  | 'ground-mounted'
+  | 'building-integrated';
 export type InverterType = 'string' | 'micro' | 'hybrid' | 'central';
 export type PhaseType = 'single' | 'three';
 export type BatteryChemistry = 'lithium-ion' | 'lfp' | 'lead-acid' | 'other';
@@ -26,17 +30,29 @@ export type PhotoCategory = 'array' | 'inverter' | 'meter' | 'isolator' | 'label
 // MCS Compliance - Certificate Types per MIS-3002
 export type CertificateType = 'installation' | 'commissioning' | 'design-only';
 export type WorkType = 'new-installation' | 'retrofit' | 'extension' | 'replacement' | 'repair';
-export type YieldCalculationMethod = 'mcs-estimator' | 'sap-2012' | 'pvgis' | 'pvsyst' | 'manufacturer' | 'other';
+export type YieldCalculationMethod =
+  | 'mcs-estimator'
+  | 'sap-2012'
+  | 'pvgis'
+  | 'pvsyst'
+  | 'manufacturer'
+  | 'other';
 export type PropertyType = 'domestic' | 'commercial' | 'industrial' | 'agricultural' | 'mixed-use';
-export type OwnershipType = 'owner-occupied' | 'landlord' | 'tenant' | 'housing-association' | 'commercial-owner' | 'other';
+export type OwnershipType =
+  | 'owner-occupied'
+  | 'landlord'
+  | 'tenant'
+  | 'housing-association'
+  | 'commercial-owner'
+  | 'other';
 
 // ============================================================================
 // MCS Compliance
 // ============================================================================
 
 export interface MCSDetails {
-  installerNumber: string;        // MCS installer registration number
-  installationNumber: string;     // MCS installation certificate number
+  installerNumber: string; // MCS installer registration number
+  installationNumber: string; // MCS installation certificate number
   consumerCode: 'RECC' | 'HIES' | 'other' | '';
   consumerCodeOther?: string;
 }
@@ -52,37 +68,37 @@ export interface PVArray {
   // Panels
   panelMake: string;
   panelModel: string;
-  panelWattage: number;           // Wp per panel
+  panelWattage: number; // Wp per panel
   panelCount: number;
   mcsCertified: boolean;
 
   // Configuration
-  orientation: string;            // e.g., "South", "South-West", "180°"
-  tiltAngle: number;              // degrees from horizontal
-  shadingFactor: number;          // 0-1 (1 = no shading)
+  orientation: string; // e.g., "South", "South-West", "180°"
+  tiltAngle: number; // degrees from horizontal
+  shadingFactor: number; // 0-1 (1 = no shading)
   mountingType: MountingType;
 
   // Electrical - Open Circuit
-  vocRated: number;               // Voc rated (from datasheet)
-  iscRated: number;               // Isc rated (from datasheet)
-  vmpRated: number;               // Vmp rated (from datasheet)
-  impRated: number;               // Imp rated (from datasheet)
+  vocRated: number; // Voc rated (from datasheet)
+  iscRated: number; // Isc rated (from datasheet)
+  vmpRated: number; // Vmp rated (from datasheet)
+  impRated: number; // Imp rated (from datasheet)
 
   // String Configuration
-  stringsInParallel: number;      // Number of parallel strings
-  panelsPerString: number;        // Panels in series per string
-  stringVoltageVoc: number;       // String Voc (calculated)
-  stringVoltageVmp: number;       // String Vmp (calculated)
-  stringCurrentIsc: number;       // String Isc (calculated)
-  stringCurrentImp: number;       // String Imp (calculated)
+  stringsInParallel: number; // Number of parallel strings
+  panelsPerString: number; // Panels in series per string
+  stringVoltageVoc: number; // String Voc (calculated)
+  stringVoltageVmp: number; // String Vmp (calculated)
+  stringCurrentIsc: number; // String Isc (calculated)
+  stringCurrentImp: number; // String Imp (calculated)
 
   // Calculated
-  arrayCapacity: number;          // kWp (auto-calc: panels × wattage / 1000)
+  arrayCapacity: number; // kWp (auto-calc: panels × wattage / 1000)
 
   // DC Cabling
-  dcCableType: string;            // e.g., "H1Z2Z2-K Solar Cable"
-  dcCableSize: number;            // mm²
-  dcCableLength: number;          // metres (one way)
+  dcCableType: string; // e.g., "H1Z2Z2-K Solar Cable"
+  dcCableSize: number; // mm²
+  dcCableLength: number; // metres (one way)
 
   // Notes
   notes: string;
@@ -97,16 +113,16 @@ export interface Inverter {
   make: string;
   model: string;
   serialNumber: string;
-  ratedPowerAc: number;           // kW AC output
-  ratedPowerDc: number;           // kW DC input
+  ratedPowerAc: number; // kW AC output
+  ratedPowerDc: number; // kW DC input
   mcsCertified: boolean;
   type: InverterType;
-  mpptCount: number;              // Number of MPPT inputs
-  mpptVoltageRange: string;       // e.g., "150-850V"
-  maxInputVoltage: number;        // V
-  maxInputCurrent: number;        // A per MPPT
-  efficiency: number;             // % (e.g., 97.5)
-  location: string;               // Physical location
+  mpptCount: number; // Number of MPPT inputs
+  mpptVoltageRange: string; // e.g., "150-850V"
+  maxInputVoltage: number; // V
+  maxInputCurrent: number; // A per MPPT
+  efficiency: number; // % (e.g., 97.5)
+  location: string; // Physical location
   phases: PhaseType;
   g98g99Compliant: boolean;
 
@@ -126,14 +142,14 @@ export interface BatteryStorage {
   make?: string;
   model?: string;
   serialNumber?: string;
-  capacity?: number;              // kWh usable
-  capacityTotal?: number;         // kWh total
+  capacity?: number; // kWh usable
+  capacityTotal?: number; // kWh total
   chemistry?: BatteryChemistry;
-  voltage?: number;               // V nominal
-  maxChargePower?: number;        // kW
-  maxDischargePower?: number;     // kW
-  depthOfDischarge?: number;      // % (e.g., 90)
-  cycles?: number;                // Warranty cycles
+  voltage?: number; // V nominal
+  maxChargePower?: number; // kW
+  maxDischargePower?: number; // kW
+  depthOfDischarge?: number; // % (e.g., 90)
+  cycles?: number; // Warranty cycles
   location?: string;
   mcsCertified?: boolean;
   notes?: string;
@@ -144,12 +160,12 @@ export interface BatteryStorage {
 // ============================================================================
 
 export interface GridConnection {
-  dnoName: string;                // e.g., "UK Power Networks", "Western Power"
-  dnoRegion?: string;             // e.g., "Eastern", "Southern"
-  mpan: string;                   // Meter Point Admin Number (21 digits)
-  supplyVoltage: number;          // V (typically 230 or 400)
+  dnoName: string; // e.g., "UK Power Networks", "Western Power"
+  dnoRegion?: string; // e.g., "Eastern", "Southern"
+  mpan: string; // Meter Point Admin Number (21 digits)
+  supplyVoltage: number; // V (typically 230 or 400)
   supplyPhases: PhaseType;
-  maxSupplyFuse: number;          // A
+  maxSupplyFuse: number; // A
   cutOutLocation: string;
 
   // G98/G99 Application
@@ -163,7 +179,7 @@ export interface GridConnection {
   // Export Limiting
   exportLimited: boolean;
   exportLimitKw?: number;
-  exportLimitingMethod?: string;  // e.g., "Inverter setting", "Export limiter"
+  exportLimitingMethod?: string; // e.g., "Inverter setting", "Export limiter"
 
   // Notes
   notes: string;
@@ -179,13 +195,13 @@ export interface Metering {
   meterModel?: string;
   meterSerial?: string;
   meterLocation?: string;
-  ctInstalled?: boolean;          // CT clamp metering
-  ctRatio?: string;               // For CT metering, e.g., "100:5"
+  ctInstalled?: boolean; // CT clamp metering
+  ctRatio?: string; // For CT metering, e.g., "100:5"
   generationMeterRequired: boolean;
   exportMeterRequired: boolean;
   smartMeterCompatible: boolean;
-  segRegistered: boolean;         // Smart Export Guarantee
-  segSupplier?: string;           // SEG supplier name
+  segRegistered: boolean; // Smart Export Guarantee
+  segSupplier?: string; // SEG supplier name
   notes: string;
 }
 
@@ -198,30 +214,30 @@ export interface ArrayTestResult {
   arrayId: string;
 
   // Open Circuit Voltage
-  vocMeasured: number;            // V measured
-  vocExpected: number;            // V expected (from calculations)
-  vocWithinTolerance: boolean;    // Typically ±10%
+  vocMeasured: number; // V measured
+  vocExpected: number; // V expected (from calculations)
+  vocWithinTolerance: boolean; // Typically ±10%
 
   // Short Circuit Current
-  iscMeasured: number;            // A measured
-  iscExpected: number;            // A expected
-  iscWithinTolerance: boolean;    // Typically ±10%
+  iscMeasured: number; // A measured
+  iscExpected: number; // A expected
+  iscWithinTolerance: boolean; // Typically ±10%
 
   // Insulation Resistance (MΩ)
-  irPositiveToEarth: number;      // Positive to earth
-  irNegativeToEarth: number;      // Negative to earth
-  irPositiveToNegative?: number;  // Positive to negative (optional)
-  irMinimumRequired: number;      // Typically 1MΩ
-  irTestVoltage: number;          // V (typically 500V or 1000V)
+  irPositiveToEarth: number; // Positive to earth
+  irNegativeToEarth: number; // Negative to earth
+  irPositiveToNegative?: number; // Positive to negative (optional)
+  irMinimumRequired: number; // Typically 1MΩ
+  irTestVoltage: number; // V (typically 500V or 1000V)
 
   // Polarity & Continuity
   polarityCorrect: boolean;
   stringContinuity: boolean;
 
   // Environmental Conditions During Test
-  irradiance?: number;            // W/m² (affects Voc/Isc)
-  ambientTemp?: number;           // °C
-  moduleTemp?: number;            // °C
+  irradiance?: number; // W/m² (affects Voc/Isc)
+  ambientTemp?: number; // °C
+  moduleTemp?: number; // °C
 
   // Notes
   notes: string;
@@ -238,8 +254,8 @@ export interface InverterTestResult {
   acIsolatorLocation: string;
 
   // Protection
-  antiIslandingTest: boolean;     // G98/G99 requirement
-  antiIslandingMethod: string;    // How verified
+  antiIslandingTest: boolean; // G98/G99 requirement
+  antiIslandingMethod: string; // How verified
   earthFaultProtection: boolean;
   overvoltageProtection: boolean;
 
@@ -260,42 +276,42 @@ export interface InverterTestResult {
 export interface ACTestResults {
   // Earthing
   earthingArrangement: EarthingArrangement;
-  zeValue: number;                // Ω (external earth fault loop impedance)
-  zeLocation: string;             // Where measured
+  zeValue: number; // Ω (external earth fault loop impedance)
+  zeLocation: string; // Where measured
 
   // Loop Impedance
-  zsValue: number;                // Ω (earth fault loop impedance at furthest point)
-  zsLocation: string;             // Where measured
-  r1r2Value?: number;             // Ω (R1+R2)
+  zsValue: number; // Ω (earth fault loop impedance at furthest point)
+  zsLocation: string; // Where measured
+  r1r2Value?: number; // Ω (R1+R2)
 
   // RCD Protection
   rcdInstalled: boolean;
-  rcdType: string;                // Type A, Type B, etc.
-  rcdRating: number;              // mA (typically 30)
-  rcdTripTime: number;            // ms at rated current
-  rcdTripTimeAt5x?: number;       // ms at 5× rated (for Type A)
+  rcdType: string; // Type A, Type B, etc.
+  rcdRating: number; // mA (typically 30)
+  rcdTripTime: number; // ms at rated current
+  rcdTripTimeAt5x?: number; // ms at 5× rated (for Type A)
 
   // Insulation Resistance
-  insulationResistance: number;   // MΩ
-  irTestVoltage: number;          // V (typically 500V)
+  insulationResistance: number; // MΩ
+  irTestVoltage: number; // V (typically 500V)
 
   // Polarity
   polarityCorrect: boolean;
 
   // Protection Device
-  mcbRating: number;              // A
-  mcbType: string;                // B, C, D curve
+  mcbRating: number; // A
+  mcbType: string; // B, C, D curve
   mcbLocation: string;
 
   // Bidirectional Protection (BS 7671:2018+A3:2024 Reg. 530.3.201)
   // Required for generating sets including solar PV, battery storage, V2G
   bidirectionalDeviceInstalled: boolean;
-  bidirectionalDeviceType?: string;     // e.g., "Type B RCBO", "Bidirectional MCB"
+  bidirectionalDeviceType?: string; // e.g., "Type B RCBO", "Bidirectional MCB"
   bidirectionalDeviceMake?: string;
   bidirectionalDeviceModel?: string;
 
   // Prospective Fault Current
-  pfc: number;                    // kA
+  pfc: number; // kA
 
   // Notes
   notes: string;
@@ -320,7 +336,7 @@ export interface CommissioningResults {
   warrantyDetailsExplained: boolean;
 
   // Initial performance check
-  initialPowerOutput?: number;    // kW observed
+  initialPowerOutput?: number; // kW observed
   weatherConditions?: string;
 
   // Notes
@@ -394,11 +410,11 @@ export interface InstallerDeclaration {
 }
 
 export interface ElectricianDeclaration {
-  required: boolean;              // Different person than installer?
+  required: boolean; // Different person than installer?
   electricianName?: string;
   electricianCompany?: string;
-  electricianRegistration?: string;  // NICEIC, NAPIT, ELECSA, etc.
-  electricianScheme?: string;     // Which scheme
+  electricianRegistration?: string; // NICEIC, NAPIT, ELECSA, etc.
+  electricianScheme?: string; // Which scheme
   electricianSignature?: string;
   electricianDate?: string;
 }
@@ -411,8 +427,8 @@ export interface SolarPVFormData {
   // ========== Metadata ==========
   id?: string;
   certificateNumber: string;
-  certificateType: CertificateType;       // MCS requirement: Installation/Commissioning/Design
-  workType: WorkType;                      // New install/Retrofit/Extension
+  certificateType: CertificateType; // MCS requirement: Installation/Commissioning/Design
+  workType: WorkType; // New install/Retrofit/Extension
   installationDate: string;
   commissioningDate: string;
   status: 'draft' | 'in-progress' | 'completed';
@@ -427,16 +443,16 @@ export interface SolarPVFormData {
   // ========== Property & Ownership (MCS Requirement) ==========
   propertyType: PropertyType;
   ownershipType: OwnershipType;
-  ownershipOther?: string;                 // If 'other' selected
-  propertyAge?: string;                    // Approximate age/era
-  roofAge?: string;                        // Roof condition consideration
+  ownershipOther?: string; // If 'other' selected
+  propertyAge?: string; // Approximate age/era
+  roofAge?: string; // Roof condition consideration
 
   // ========== Site Access & Safety ==========
-  siteAccessNotes: string;                 // Access requirements, parking, etc.
-  safeIsolationVerified: boolean;          // MCS requirement
-  asbestosCheckRequired: boolean;          // Pre-2000 properties
+  siteAccessNotes: string; // Access requirements, parking, etc.
+  safeIsolationVerified: boolean; // MCS requirement
+  asbestosCheckRequired: boolean; // Pre-2000 properties
   asbestosCheckCompleted: boolean;
-  structuralAssessmentRequired: boolean;   // For heavier systems
+  structuralAssessmentRequired: boolean; // For heavier systems
   structuralAssessmentCompleted: boolean;
 
   // ========== Installation Address (if different) ==========
@@ -449,14 +465,14 @@ export interface SolarPVFormData {
 
   // ========== System Overview ==========
   systemType: SystemType;
-  totalCapacity: number;          // kWp (auto-calc from arrays)
-  estimatedAnnualYield: number;   // kWh
+  totalCapacity: number; // kWp (auto-calc from arrays)
+  estimatedAnnualYield: number; // kWh
   yieldCalculationMethod: YieldCalculationMethod;
   yieldCalculationNotes?: string; // Additional notes on yield calculation
-  co2SavingsAnnual?: number;      // kg CO2/year
+  co2SavingsAnnual?: number; // kg CO2/year
 
   // ========== Design Reference ==========
-  designReference?: string;       // Internal design/quote reference
+  designReference?: string; // Internal design/quote reference
   previousInstallationRef?: string; // If retrofit/extension, reference to prior work
 
   // ========== PV Arrays ==========
@@ -769,9 +785,18 @@ export const getDefaultSolarPVFormData = (): SolarPVFormData => ({
 
 export const UK_DNOS = [
   { name: 'UK Power Networks', regions: ['Eastern', 'London', 'South Eastern'] },
-  { name: 'Western Power Distribution', regions: ['West Midlands', 'East Midlands', 'South West', 'South Wales'] },
-  { name: 'Scottish Power Energy Networks', regions: ['North Wales', 'Merseyside', 'South Scotland'] },
-  { name: 'Scottish & Southern Electricity Networks', regions: ['North Scotland', 'Southern England'] },
+  {
+    name: 'Western Power Distribution',
+    regions: ['West Midlands', 'East Midlands', 'South West', 'South Wales'],
+  },
+  {
+    name: 'Scottish Power Energy Networks',
+    regions: ['North Wales', 'Merseyside', 'South Scotland'],
+  },
+  {
+    name: 'Scottish & Southern Electricity Networks',
+    regions: ['North Scotland', 'Southern England'],
+  },
   { name: 'Northern Powergrid', regions: ['North East', 'Yorkshire'] },
   { name: 'Electricity North West', regions: ['North West England'] },
   { name: 'NIE Networks', regions: ['Northern Ireland'] },
@@ -799,8 +824,8 @@ export const ORIENTATIONS = [
 export const SHADING_FACTORS = [
   { value: 1.0, label: 'No shading (100%)', description: 'Completely unshaded' },
   { value: 0.95, label: 'Minimal shading (95%)', description: 'Very minor obstructions' },
-  { value: 0.90, label: 'Light shading (90%)', description: 'Some shading at edges' },
+  { value: 0.9, label: 'Light shading (90%)', description: 'Some shading at edges' },
   { value: 0.85, label: 'Moderate shading (85%)', description: 'Partial shading at times' },
-  { value: 0.80, label: 'Significant shading (80%)', description: 'Regular partial shading' },
+  { value: 0.8, label: 'Significant shading (80%)', description: 'Regular partial shading' },
   { value: 0.75, label: 'Heavy shading (75%)', description: 'Frequent significant shading' },
 ] as const;

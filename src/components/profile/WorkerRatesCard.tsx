@@ -29,11 +29,7 @@ const workerTypeLabels: { key: keyof WorkerRates; name: string; description: str
   { key: 'owner', name: 'Business Owner', description: 'Senior electrician' },
 ];
 
-const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({
-  companyProfile,
-  onSave,
-  isLoading,
-}) => {
+const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({ companyProfile, onSave, isLoading }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -61,7 +57,7 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({
   };
 
   const updateRate = (key: keyof WorkerRates, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [key]: parseFloat(value) || 0,
     }));
@@ -96,7 +92,9 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({
               <PoundSterling className="h-4 w-4 text-green-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Electrician Rate</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Electrician Rate
+              </p>
               <p className="text-[15px] text-white">£{electricianRate.toFixed(2)}/hr</p>
             </div>
           </div>
@@ -106,20 +104,23 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({
               <Users className="h-4 w-4 text-blue-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">All Worker Types</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                All Worker Types
+              </p>
               <p className="text-[15px] text-white">
                 {hasCustomRates ? 'Custom rates set' : 'Using defaults'}
               </p>
-              <p className="text-[12px] text-white/50 mt-0.5">
-                Used in quotes & invoices
-              </p>
+              <p className="text-[12px] text-white/50 mt-0.5">Used in quotes & invoices</p>
             </div>
           </div>
         </div>
       </motion.div>
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -140,7 +141,11 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({
               {isSaving ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : showSuccess ? (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500 }}
+                >
                   <Check className="h-5 w-5 text-green-400" />
                 </motion.div>
               ) : (
@@ -151,7 +156,8 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-2 pb-8">
             <p className="text-[13px] text-white/50 px-1 mb-4">
-              Set hourly rates for different worker types. These rates are used as defaults when creating quotes and invoices.
+              Set hourly rates for different worker types. These rates are used as defaults when
+              creating quotes and invoices.
             </p>
 
             {workerTypeLabels.map((worker) => (

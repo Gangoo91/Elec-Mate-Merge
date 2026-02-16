@@ -112,7 +112,9 @@ export const PaymentHistoryDialog = ({
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <PoundSterling className="h-4 w-4 text-success" />
-                          <span className="font-bold text-lg">{formatCurrency(payment.amount)}</span>
+                          <span className="font-bold text-lg">
+                            {formatCurrency(payment.amount)}
+                          </span>
                         </div>
                         <Badge variant="outline" className="text-xs">
                           {payment.payment_method.replace(/_/g, ' ')}

@@ -12,115 +12,125 @@ export const SmartHomeModule5Section6Quiz = () => {
 
   const questions = [
     {
-      question: "Why is network security essential in smart homes?",
+      question: 'Why is network security essential in smart homes?',
       options: [
-        "To make devices work faster",
-        "To prevent unauthorised access and protect data",
-        "To reduce electricity bills",
-        "To make installation easier"
+        'To make devices work faster',
+        'To prevent unauthorised access and protect data',
+        'To reduce electricity bills',
+        'To make installation easier',
       ],
       correct: 1,
-      explanation: "Network security prevents unauthorised access to devices and protects personal data from theft or misuse."
+      explanation:
+        'Network security prevents unauthorised access to devices and protects personal data from theft or misuse.',
     },
     {
-      question: "Name two communication methods used by smart devices.",
+      question: 'Name two communication methods used by smart devices.',
       options: [
-        "Radio and television",
-        "Wi-Fi and Bluetooth",
-        "Telephone and fax",
-        "Post and email"
+        'Radio and television',
+        'Wi-Fi and Bluetooth',
+        'Telephone and fax',
+        'Post and email',
       ],
       correct: 1,
-      explanation: "Smart devices commonly use Wi-Fi, Bluetooth, Zigbee, and Z-Wave for communication."
+      explanation:
+        'Smart devices commonly use Wi-Fi, Bluetooth, Zigbee, and Z-Wave for communication.',
     },
     {
-      question: "What kind of data could be stolen if a system is hacked?",
+      question: 'What kind of data could be stolen if a system is hacked?',
       options: [
-        "Only device serial numbers",
-        "Video feeds, access logs, and personal details",
-        "Just the Wi-Fi password",
-        "Nothing important"
+        'Only device serial numbers',
+        'Video feeds, access logs, and personal details',
+        'Just the Wi-Fi password',
+        'Nothing important',
       ],
       correct: 1,
-      explanation: "Hackers can access video feeds, door access logs, personal schedules, and other sensitive information."
+      explanation:
+        'Hackers can access video feeds, door access logs, personal schedules, and other sensitive information.',
     },
     {
-      question: "Give one example of a privacy risk in smart homes.",
+      question: 'Give one example of a privacy risk in smart homes.',
       options: [
-        "Lights being too bright",
-        "Smart speakers recording conversations",
-        "Wi-Fi being slow",
-        "Devices using electricity"
+        'Lights being too bright',
+        'Smart speakers recording conversations',
+        'Wi-Fi being slow',
+        'Devices using electricity',
       ],
       correct: 1,
-      explanation: "Smart speakers can capture and store personal conversations, creating privacy risks."
+      explanation:
+        'Smart speakers can capture and store personal conversations, creating privacy risks.',
     },
     {
-      question: "How can location data reveal when a home is vulnerable?",
+      question: 'How can location data reveal when a home is vulnerable?',
       options: [
         "It shows the home's address",
-        "It reveals usage patterns indicating when occupants are away",
-        "It displays the property value",
-        "It shows the neighbourhood"
+        'It reveals usage patterns indicating when occupants are away',
+        'It displays the property value',
+        'It shows the neighbourhood',
       ],
       correct: 1,
-      explanation: "Location and usage data can reveal patterns showing when homes are empty, making them vulnerable to burglary."
+      explanation:
+        'Location and usage data can reveal patterns showing when homes are empty, making them vulnerable to burglary.',
     },
     {
-      question: "What is the recommended Wi-Fi encryption standard?",
+      question: 'What is the recommended Wi-Fi encryption standard?',
       options: [
-        "No encryption needed",
-        "WPA3 (or at least WPA2)",
-        "WEP encryption",
-        "Open network"
+        'No encryption needed',
+        'WPA3 (or at least WPA2)',
+        'WEP encryption',
+        'Open network',
       ],
       correct: 1,
-      explanation: "WPA3 is the most secure current standard, with WPA2 as an acceptable minimum. WEP is outdated and insecure."
+      explanation:
+        'WPA3 is the most secure current standard, with WPA2 as an acceptable minimum. WEP is outdated and insecure.',
     },
     {
-      question: "Why should clients change default device passwords?",
+      question: 'Why should clients change default device passwords?',
       options: [
-        "To make them easier to remember",
-        "Default passwords are easily found online and exploited",
-        "To match their other passwords",
-        "It's not necessary"
+        'To make them easier to remember',
+        'Default passwords are easily found online and exploited',
+        'To match their other passwords',
+        "It's not necessary",
       ],
       correct: 1,
-      explanation: "Default passwords are publicly available and commonly targeted by attackers for easy system access."
+      explanation:
+        'Default passwords are publicly available and commonly targeted by attackers for easy system access.',
     },
     {
-      question: "Give one advantage of setting up a guest Wi-Fi network.",
+      question: 'Give one advantage of setting up a guest Wi-Fi network.',
       options: [
-        "It makes Wi-Fi faster",
-        "It isolates smart devices from main network",
-        "It uses less electricity",
-        "It's required by law"
+        'It makes Wi-Fi faster',
+        'It isolates smart devices from main network',
+        'It uses less electricity',
+        "It's required by law",
       ],
       correct: 1,
-      explanation: "Guest networks can isolate IoT devices, limiting potential security breaches from affecting the main network."
+      explanation:
+        'Guest networks can isolate IoT devices, limiting potential security breaches from affecting the main network.',
     },
     {
-      question: "What role does an electrician play in ensuring system security?",
+      question: 'What role does an electrician play in ensuring system security?',
       options: [
-        "Only installing the physical devices",
-        "Changing default passwords and educating clients",
-        "Just providing the user manual",
-        "Security isn't their responsibility"
+        'Only installing the physical devices',
+        'Changing default passwords and educating clients',
+        'Just providing the user manual',
+        "Security isn't their responsibility",
       ],
       correct: 1,
-      explanation: "Electricians must ensure secure installation, change default passwords, and educate clients about security practices."
+      explanation:
+        'Electricians must ensure secure installation, change default passwords, and educate clients about security practices.',
     },
     {
-      question: "What real-world example shows the danger of weak passwords in smart devices?",
+      question: 'What real-world example shows the danger of weak passwords in smart devices?',
       options: [
-        "Smart lights flickering occasionally",
-        "Baby monitor hack due to default password",
-        "Wi-Fi occasionally dropping connection",
-        "Smart thermostat displaying wrong temperature"
+        'Smart lights flickering occasionally',
+        'Baby monitor hack due to default password',
+        'Wi-Fi occasionally dropping connection',
+        'Smart thermostat displaying wrong temperature',
       ],
       correct: 1,
-      explanation: "The baby monitor hack case demonstrates how default passwords can lead to serious privacy breaches and unauthorised access."
-    }
+      explanation:
+        'The baby monitor hack case demonstrates how default passwords can lead to serious privacy breaches and unauthorised access.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -193,10 +203,13 @@ export const SmartHomeModule5Section6Quiz = () => {
               {Math.round((score / questions.length) * 100)}%
             </Badge>
             <p className="text-foreground">
-              {score === questions.length ? "Perfect score! Excellent understanding of network security." :
-               score >= 8 ? "Great job! You have a solid grasp of smart home security principles." :
-               score >= 6 ? "Good effort! Review the areas you missed to strengthen your knowledge." :
-               "Keep studying! Network security is crucial for professional installations."}
+              {score === questions.length
+                ? 'Perfect score! Excellent understanding of network security.'
+                : score >= 8
+                  ? 'Great job! You have a solid grasp of smart home security principles.'
+                  : score >= 6
+                    ? 'Good effort! Review the areas you missed to strengthen your knowledge.'
+                    : 'Keep studying! Network security is crucial for professional installations.'}
             </p>
           </div>
 
@@ -204,11 +217,16 @@ export const SmartHomeModule5Section6Quiz = () => {
             {questions.map((question, index) => {
               const userAnswer = parseInt(selectedAnswers[index]);
               const isCorrect = userAnswer === question.correct;
-              
+
               return (
-                <div key={index} className={`p-3 rounded-lg border ${
-                  isCorrect ? 'bg-green-950/20 border-green-800/30' : 'bg-red-950/20 border-red-800/30'
-                }`}>
+                <div
+                  key={index}
+                  className={`p-3 rounded-lg border ${
+                    isCorrect
+                      ? 'bg-green-950/20 border-green-800/30'
+                      : 'bg-red-950/20 border-red-800/30'
+                  }`}
+                >
                   <div className="flex items-center gap-2 mb-2">
                     {isCorrect ? (
                       <CheckCircle className="h-4 w-4 text-green-400" />
@@ -220,11 +238,13 @@ export const SmartHomeModule5Section6Quiz = () => {
                   <p className="text-gray-300 text-sm mb-2">{question.question}</p>
                   {!isCorrect && (
                     <p className="text-gray-300 text-sm">
-                      <span className="text-red-400">Your answer:</span> {question.options[userAnswer]}
+                      <span className="text-red-400">Your answer:</span>{' '}
+                      {question.options[userAnswer]}
                     </p>
                   )}
                   <p className="text-gray-300 text-sm">
-                    <span className="text-green-400">Correct answer:</span> {question.options[question.correct]}
+                    <span className="text-green-400">Correct answer:</span>{' '}
+                    {question.options[question.correct]}
                   </p>
                   <p className="text-gray-400 text-xs mt-1">{question.explanation}</p>
                 </div>
@@ -232,8 +252,8 @@ export const SmartHomeModule5Section6Quiz = () => {
             })}
           </div>
 
-          <Button 
-            onClick={resetQuiz} 
+          <Button
+            onClick={resetQuiz}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-500"
           >
             <RotateCcw className="mr-2 h-4 w-4" />
@@ -252,9 +272,11 @@ export const SmartHomeModule5Section6Quiz = () => {
           Knowledge Check Quiz
         </CardTitle>
         <div className="flex items-center gap-2">
-          <span className="text-gray-400">Question {currentQuestion + 1} of {questions.length}</span>
+          <span className="text-gray-400">
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <div className="flex-1 bg-gray-700 h-2 rounded-full">
-            <div 
+            <div
               className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
               style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
             />
@@ -266,7 +288,7 @@ export const SmartHomeModule5Section6Quiz = () => {
           <h3 className="text-xl font-semibold text-foreground">
             {questions[currentQuestion].question}
           </h3>
-          
+
           <div className="space-y-2">
             {questions[currentQuestion].options.map((option, index) => (
               <Button
@@ -279,9 +301,7 @@ export const SmartHomeModule5Section6Quiz = () => {
                 }`}
                 onClick={() => handleAnswerSelect(index)}
               >
-                <span className="font-medium mr-3">
-                  {String.fromCharCode(65 + index)}.
-                </span>
+                <span className="font-medium mr-3">{String.fromCharCode(65 + index)}.</span>
                 {option}
               </Button>
             ))}
@@ -297,7 +317,7 @@ export const SmartHomeModule5Section6Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={nextQuestion}
             disabled={!selectedAnswers[currentQuestion]}

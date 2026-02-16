@@ -7,12 +7,12 @@ export const BridgeExampleQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Give one example of a smart home bridge:";
+  const question = 'Give one example of a smart home bridge:';
   const options = [
     { id: 'a', text: 'Philips Hue Bridge', correct: true },
     { id: 'b', text: 'Amazon Echo Dot', correct: false },
     { id: 'c', text: 'Samsung TV', correct: false },
-    { id: 'd', text: 'iPhone app', correct: false }
+    { id: 'd', text: 'iPhone app', correct: false },
   ];
 
   const handleSubmit = () => {
@@ -34,7 +34,7 @@ export const BridgeExampleQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option) => (
             <div
@@ -52,13 +52,13 @@ export const BridgeExampleQuickCheck = () => {
             >
               <div className="flex items-center justify-between">
                 <span className="text-gray-300">{option.text}</span>
-                {showResult && selectedAnswer === option.id && (
-                  option.correct ? (
+                {showResult &&
+                  selectedAnswer === option.id &&
+                  (option.correct ? (
                     <CheckCircle className="h-5 w-5 text-green-400" />
                   ) : (
                     <XCircle className="h-5 w-5 text-red-400" />
-                  )
-                )}
+                  ))}
               </div>
             </div>
           ))}
@@ -67,7 +67,9 @@ export const BridgeExampleQuickCheck = () => {
         {showResult && (
           <div className="mt-4 p-4 bg-green-900/10 border border-green-600/20 rounded-lg">
             <p className="text-green-200 text-sm">
-              <strong>Explanation:</strong> The Philips Hue Bridge is a classic example of a smart home bridge, translating between Zigbee bulbs and Wi-Fi networks to enable voice control and cloud connectivity.
+              <strong>Explanation:</strong> The Philips Hue Bridge is a classic example of a smart
+              home bridge, translating between Zigbee bulbs and Wi-Fi networks to enable voice
+              control and cloud connectivity.
             </p>
           </div>
         )}

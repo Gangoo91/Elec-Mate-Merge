@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeSection3LearningOutcomes = () => {
   const outcomes = [
-    "Define and differentiate between sensors, actuators, and controllers",
-    "Identify common types of sensors used in smart homes",
-    "Explain how actuators translate digital commands into physical actions",
-    "Describe how controllers coordinate devices in automation systems",
-    "Recognise integration challenges and future trends in smart home components"
+    'Define and differentiate between sensors, actuators, and controllers',
+    'Identify common types of sensors used in smart homes',
+    'Explain how actuators translate digital commands into physical actions',
+    'Describe how controllers coordinate devices in automation systems',
+    'Recognise integration challenges and future trends in smart home components',
   ];
 
   return (
@@ -19,7 +19,9 @@ export const SmartHomeSection3LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="text-foreground">
-        <p className="mb-4 text-foreground">By the end of this section, learners will be able to:</p>
+        <p className="mb-4 text-foreground">
+          By the end of this section, learners will be able to:
+        </p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3">

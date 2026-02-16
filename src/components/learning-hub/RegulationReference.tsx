@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,12 +6,18 @@ import { BookOpen, FileText, Search } from 'lucide-react';
 
 const RegulationReference = () => {
   const navigate = useNavigate();
-  
+
   const regulationTopics = [
     { title: 'Part 1: Scope & Definitions', description: 'Fundamental concepts and terminology' },
-    { title: 'Part 4: Protection for Safety', description: 'Shock protection and fault protection' },
+    {
+      title: 'Part 4: Protection for Safety',
+      description: 'Shock protection and fault protection',
+    },
     { title: 'Part 5: Selection & Erection', description: 'Equipment selection and installation' },
-    { title: 'Part 6: Inspection & Testing', description: 'Verification procedures and requirements' },
+    {
+      title: 'Part 6: Inspection & Testing',
+      description: 'Verification procedures and requirements',
+    },
   ];
 
   return (
@@ -36,14 +41,17 @@ const RegulationReference = () => {
           ))}
         </div>
         <div className="flex gap-2">
-          <Button 
+          <Button
             className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
             onClick={() => navigate('/tools/regulation-search')}
           >
             <Search className="h-4 w-4 mr-2" />
             Search Regulations
           </Button>
-          <Button variant="outline" className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black">
+          <Button
+            variant="outline"
+            className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
+          >
             <FileText className="h-4 w-4 mr-2" />
             Quick Reference
           </Button>

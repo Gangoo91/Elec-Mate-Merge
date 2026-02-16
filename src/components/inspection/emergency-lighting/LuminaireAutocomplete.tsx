@@ -19,11 +19,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Badge } from '@/components/ui/badge';
@@ -106,25 +102,29 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
     }
     const results = searchLuminaires(searchQuery);
     // Re-group filtered results
-    return results.reduce((acc, luminaire) => {
-      if (!acc[luminaire.make]) {
-        acc[luminaire.make] = [];
-      }
-      acc[luminaire.make].push(luminaire);
-      return acc;
-    }, {} as Record<string, EmergencyLuminaire[]>);
+    return results.reduce(
+      (acc, luminaire) => {
+        if (!acc[luminaire.make]) {
+          acc[luminaire.make] = [];
+        }
+        acc[luminaire.make].push(luminaire);
+        return acc;
+      },
+      {} as Record<string, EmergencyLuminaire[]>
+    );
   }, [searchQuery, luminairesGrouped]);
 
-  const handleSelect = useCallback((luminaire: EmergencyLuminaire) => {
-    onSelect(luminaire);
-    setOpen(false);
-    setSearchQuery('');
-  }, [onSelect]);
+  const handleSelect = useCallback(
+    (luminaire: EmergencyLuminaire) => {
+      onSelect(luminaire);
+      setOpen(false);
+      setSearchQuery('');
+    },
+    [onSelect]
+  );
 
   // Display value
-  const displayValue = value
-    ? `${value.make} ${value.model}`
-    : null;
+  const displayValue = value ? `${value.make} ${value.model}` : null;
 
   // Check if luminaire is selected
   const isLuminaireSelected = (luminaire: EmergencyLuminaire) => {
@@ -140,11 +140,11 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
       disabled={disabled}
       onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
-        "w-full h-11 justify-between text-left font-normal",
-        "bg-elec-gray border-white/30 hover:bg-elec-gray/80",
-        "focus:border-elec-yellow focus:ring-elec-yellow",
-        "touch-manipulation",
-        !displayValue && "text-muted-foreground",
+        'w-full h-11 justify-between text-left font-normal',
+        'bg-elec-gray border-white/30 hover:bg-elec-gray/80',
+        'focus:border-elec-yellow focus:ring-elec-yellow',
+        'touch-manipulation',
+        !displayValue && 'text-muted-foreground',
         className
       )}
     >
@@ -173,10 +173,10 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
         key={luminaire.id}
         onClick={() => handleSelect(luminaire)}
         className={cn(
-          "rounded-lg cursor-pointer transition-colors flex items-center",
-          forMobile ? "px-4 py-4 min-h-[56px]" : "px-2 py-2",
-          "hover:bg-elec-yellow/10 active:bg-elec-yellow/20",
-          isSelected && "bg-elec-yellow/20"
+          'rounded-lg cursor-pointer transition-colors flex items-center',
+          forMobile ? 'px-4 py-4 min-h-[56px]' : 'px-2 py-2',
+          'hover:bg-elec-yellow/10 active:bg-elec-yellow/20',
+          isSelected && 'bg-elec-yellow/20'
         )}
       >
         <Check
@@ -188,24 +188,26 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
         />
         <div className="flex flex-col flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className={cn("font-medium truncate", forMobile && "text-base")}>
+            <span className={cn('font-medium truncate', forMobile && 'text-base')}>
               {luminaire.model}
             </span>
             <Badge
               variant="secondary"
               className={cn(
-                "shrink-0",
-                forMobile ? "text-xs" : "text-xs",
+                'shrink-0',
+                forMobile ? 'text-xs' : 'text-xs',
                 getLuminaireTypeBadgeColor(luminaire.luminaireType)
               )}
             >
               {getLuminaireTypeIcon(luminaire.luminaireType)} {luminaire.luminaireType}
             </Badge>
           </div>
-          <div className={cn(
-            "text-muted-foreground flex items-center gap-2 flex-wrap",
-            forMobile ? "text-sm mt-1" : "text-xs"
-          )}>
+          <div
+            className={cn(
+              'text-muted-foreground flex items-center gap-2 flex-wrap',
+              forMobile ? 'text-sm mt-1' : 'text-xs'
+            )}
+          >
             <span>{luminaire.wattage}W</span>
             <span>•</span>
             <span>{luminaire.lightOutput}lm</span>
@@ -294,9 +296,7 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
   // Desktop: Use Popover
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        {triggerButton}
-      </PopoverTrigger>
+      <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
       <PopoverContent
         className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border-border"
         align="start"
@@ -313,9 +313,7 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
               <div className="py-6 text-center text-sm">
                 <Lightbulb className="h-8 w-8 mx-auto mb-2 opacity-50" />
                 <p>No luminaire found.</p>
-                <p className="text-muted-foreground text-xs mt-1">
-                  Try a different search term
-                </p>
+                <p className="text-muted-foreground text-xs mt-1">Try a different search term</p>
               </div>
             </CommandEmpty>
 
@@ -331,25 +329,24 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
                     <div className="flex items-center gap-2 flex-1 min-w-0">
                       <Check
                         className={cn(
-                          "h-4 w-4 shrink-0",
+                          'h-4 w-4 shrink-0',
                           value?.make === luminaire.make && value?.model === luminaire.model
-                            ? "opacity-100 text-elec-yellow"
-                            : "opacity-0"
+                            ? 'opacity-100 text-elec-yellow'
+                            : 'opacity-0'
                         )}
                       />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium truncate">
-                            {luminaire.model}
-                          </span>
+                          <span className="font-medium truncate">{luminaire.model}</span>
                           <Badge
                             variant="secondary"
                             className={cn(
-                              "text-xs shrink-0",
+                              'text-xs shrink-0',
                               getLuminaireTypeBadgeColor(luminaire.luminaireType)
                             )}
                           >
-                            {getLuminaireTypeIcon(luminaire.luminaireType)} {luminaire.luminaireType}
+                            {getLuminaireTypeIcon(luminaire.luminaireType)}{' '}
+                            {luminaire.luminaireType}
                           </Badge>
                         </div>
                         <div className="text-xs text-muted-foreground flex items-center gap-2">

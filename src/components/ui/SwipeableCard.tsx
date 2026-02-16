@@ -54,38 +54,44 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   const hasStartedDragRef = useRef(false);
   const isScrollingRef = useRef(false);
 
-  const applyTransform = useCallback((translateX: number) => {
-    if (cardRef.current) {
-      cardRef.current.style.transform = `translateX(${translateX}px)`;
-    }
-    if (leftRevealRef.current) {
-      leftRevealRef.current.style.opacity = String(Math.min(Math.abs(translateX) / threshold, 1));
-    }
-    if (rightRevealRef.current) {
-      rightRevealRef.current.style.opacity = String(Math.min(translateX / threshold, 1));
-    }
-    currentTranslateRef.current = translateX;
-  }, [threshold]);
-
-  const resetTransform = useCallback((animated = true) => {
-    if (cardRef.current) {
-      if (animated) {
-        cardRef.current.style.transition = 'transform 200ms ease-out';
-        requestAnimationFrame(() => {
-          applyTransform(0);
-          // Remove transition after animation
-          setTimeout(() => {
-            if (cardRef.current) {
-              cardRef.current.style.transition = '';
-            }
-          }, 200);
-        });
-      } else {
-        cardRef.current.style.transition = '';
-        applyTransform(0);
+  const applyTransform = useCallback(
+    (translateX: number) => {
+      if (cardRef.current) {
+        cardRef.current.style.transform = `translateX(${translateX}px)`;
       }
-    }
-  }, [applyTransform]);
+      if (leftRevealRef.current) {
+        leftRevealRef.current.style.opacity = String(Math.min(Math.abs(translateX) / threshold, 1));
+      }
+      if (rightRevealRef.current) {
+        rightRevealRef.current.style.opacity = String(Math.min(translateX / threshold, 1));
+      }
+      currentTranslateRef.current = translateX;
+    },
+    [threshold]
+  );
+
+  const resetTransform = useCallback(
+    (animated = true) => {
+      if (cardRef.current) {
+        if (animated) {
+          cardRef.current.style.transition = 'transform 200ms ease-out';
+          requestAnimationFrame(() => {
+            applyTransform(0);
+            // Remove transition after animation
+            setTimeout(() => {
+              if (cardRef.current) {
+                cardRef.current.style.transition = '';
+              }
+            }, 200);
+          });
+        } else {
+          cardRef.current.style.transition = '';
+          applyTransform(0);
+        }
+      }
+    },
+    [applyTransform]
+  );
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
@@ -135,9 +141,8 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
       if (Math.abs(diffX) > maxSwipe) {
         const overflow = Math.abs(diffX) - maxSwipe;
         const resistance = 0.3;
-        newTranslateX = diffX > 0
-          ? maxSwipe + overflow * resistance
-          : -(maxSwipe + overflow * resistance);
+        newTranslateX =
+          diffX > 0 ? maxSwipe + overflow * resistance : -(maxSwipe + overflow * resistance);
       }
 
       // Only allow swipe in directions that have actions
@@ -201,7 +206,12 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
           )}
           style={{ opacity: 0 }}
         >
-          <div className={cn("flex flex-col items-center gap-1", rightAction.textColor || 'text-white')}>
+          <div
+            className={cn(
+              'flex flex-col items-center gap-1',
+              rightAction.textColor || 'text-white'
+            )}
+          >
             {rightAction.icon}
             <span className="text-xs font-medium">{rightAction.label}</span>
           </div>
@@ -218,7 +228,9 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
           )}
           style={{ opacity: 0 }}
         >
-          <div className={cn("flex flex-col items-center gap-1", leftAction.textColor || 'text-white')}>
+          <div
+            className={cn('flex flex-col items-center gap-1', leftAction.textColor || 'text-white')}
+          >
             {leftAction.icon}
             <span className="text-xs font-medium">{leftAction.label}</span>
           </div>

@@ -1,14 +1,15 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
-import { School, Award, BookOpen } from "lucide-react";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
+import { School, Award, BookOpen } from 'lucide-react';
 
 const HigherLearning = () => {
   return (
     <div className="bg-background text-foreground">
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 space-y-4 sm:space-y-6 animate-fade-in">
         <div className="flex flex-col items-center justify-center mb-2 sm:mb-4">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4">Higher Learning</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4">
+            Higher Learning
+          </h1>
           <SmartBackButton />
         </div>
 
@@ -63,7 +64,9 @@ const HigherLearning = () => {
         </div>
 
         <Card className="bg-card border-border/30 p-4 sm:p-6">
-          <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 text-foreground">Advanced Qualification Pathways</h3>
+          <h3 className="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 text-foreground">
+            Advanced Qualification Pathways
+          </h3>
           <p className="mb-3 sm:mb-4 text-sm sm:text-base text-white leading-relaxed">
             Higher learning qualifications provide opportunities to advance your electrical career
             through formal academic and vocational routes. These qualifications can open doors to
@@ -71,7 +74,8 @@ const HigherLearning = () => {
           </p>
           <p className="text-sm sm:text-base text-white leading-relaxed">
             Each pathway offers a structured curriculum designed to build on your existing skills
-            while introducing advanced concepts and methodologies relevant to the electrical industry.
+            while introducing advanced concepts and methodologies relevant to the electrical
+            industry.
           </p>
         </Card>
       </div>

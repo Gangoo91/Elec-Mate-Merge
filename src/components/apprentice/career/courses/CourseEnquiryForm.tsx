@@ -1,18 +1,17 @@
-
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Loader2, User, Mail, Phone, Calendar, MessageSquare } from "lucide-react";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { Loader2, User, Mail, Phone, Calendar, MessageSquare } from 'lucide-react';
 
 const enquirySchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
   phone: z.string().optional(),
   preferredStartDate: z.string().optional(),
   message: z.string().optional(),
@@ -37,7 +36,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm<EnquiryFormData>({
     resolver: zodResolver(enquirySchema),
   });
@@ -56,7 +55,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
           enquirerPhone: data.phone,
           message: data.message,
           preferredStartDate: data.preferredStartDate,
-        }
+        },
       });
 
       if (error) {
@@ -68,20 +67,19 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
       }
 
       toast({
-        title: "Enquiry Sent Successfully",
-        description: "The course provider will contact you soon.",
-        variant: "success"
+        title: 'Enquiry Sent Successfully',
+        description: 'The course provider will contact you soon.',
+        variant: 'success',
       });
 
       reset();
       onSuccess?.();
-
     } catch (error: any) {
       console.error('Error submitting enquiry:', error);
       toast({
-        title: "Failed to Send Enquiry",
-        description: error.message || "Please try again later.",
-        variant: "destructive"
+        title: 'Failed to Send Enquiry',
+        description: error.message || 'Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -98,13 +96,11 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
           </Label>
           <Input
             id="name"
-            {...register("name")}
+            {...register('name')}
             placeholder="Enter your full name"
             className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
           />
-          {errors.name && (
-            <p className="text-sm text-red-400">{errors.name.message}</p>
-          )}
+          {errors.name && <p className="text-sm text-red-400">{errors.name.message}</p>}
         </div>
 
         <div className="space-y-2">
@@ -115,13 +111,11 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
           <Input
             id="email"
             type="email"
-            {...register("email")}
+            {...register('email')}
             placeholder="Enter your email address"
             className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
           />
-          {errors.email && (
-            <p className="text-sm text-red-400">{errors.email.message}</p>
-          )}
+          {errors.email && <p className="text-sm text-red-400">{errors.email.message}</p>}
         </div>
       </div>
 
@@ -134,7 +128,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
           <Input
             id="phone"
             type="tel"
-            {...register("phone")}
+            {...register('phone')}
             placeholder="Enter your phone number"
             className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
           />
@@ -148,7 +142,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
           <Input
             id="preferredStartDate"
             type="date"
-            {...register("preferredStartDate")}
+            {...register('preferredStartDate')}
             className="h-11 bg-white/5 border-white/20 text-white"
           />
         </div>
@@ -161,7 +155,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
         </Label>
         <textarea
           id="message"
-          {...register("message")}
+          {...register('message')}
           rows={4}
           placeholder="Any specific questions or requirements..."
           className="w-full px-3 py-3 border border-white/20 bg-white/5 rounded-lg text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50 transition-all"

@@ -18,7 +18,7 @@ import {
   getPanelDefaults,
   getPanelManufacturers,
   getPanelsGroupedByManufacturer,
-  FireAlarmPanel
+  FireAlarmPanel,
 } from '@/data/fireAlarmEquipmentDatabase';
 import {
   validateSoundLevel,
@@ -31,7 +31,7 @@ import {
   SYSTEM_CATEGORIES,
   type AreaType,
   type SystemCategoryType,
-  type ValidationResult
+  type ValidationResult,
 } from '@/data/fireAlarmCompliance';
 
 export interface SmartFormProfile {
@@ -51,8 +51,8 @@ export interface SoundValidationResult {
 }
 
 export interface ServiceDates {
-  nextService: string;      // 6-monthly
-  nextInspection: string;   // Annual
+  nextService: string; // 6-monthly
+  nextInspection: string; // Annual
   nextServiceDate: Date;
   nextInspectionDate: Date;
 }
@@ -85,7 +85,7 @@ export const useFireAlarmSmartForm = () => {
       company: profile.companyName || companyProfile?.company_name || '',
       qualifications,
       signature: profile.signatureData,
-      date: new Date().toISOString().split('T')[0]
+      date: new Date().toISOString().split('T')[0],
     };
   }, [getDefaultProfile, companyProfile]);
 
@@ -115,10 +115,12 @@ export const useFireAlarmSmartForm = () => {
       companyEmail: companyProfile?.company_email || profile?.companyEmail || '',
       companyWebsite: companyProfile?.website || profile?.companyWebsite || '',
       // CRITICAL: Use logo_data_url first (for PDF embedding), then logo_url as fallback
-      companyLogo: companyProfile?.logo_data_url || companyProfile?.logo_url || profile?.companyLogo || '',
+      companyLogo:
+        companyProfile?.logo_data_url || companyProfile?.logo_url || profile?.companyLogo || '',
       accentColor: companyProfile?.primary_color || '#dc2626',
-      registrationSchemeLogo: companyProfile?.registration_scheme_logo || profile?.registrationSchemeLogo || '',
-      registrationScheme: companyProfile?.registration_scheme || profile?.registrationScheme || ''
+      registrationSchemeLogo:
+        companyProfile?.registration_scheme_logo || profile?.registrationSchemeLogo || '',
+      registrationScheme: companyProfile?.registration_scheme || profile?.registrationScheme || '',
     };
   }, [getDefaultProfile, companyProfile]);
 
@@ -126,30 +128,39 @@ export const useFireAlarmSmartForm = () => {
    * Check if company branding is available
    */
   const hasSavedCompanyBranding = useMemo(() => {
-    return !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+    return !!(
+      companyProfile?.company_name ||
+      companyProfile?.logo_url ||
+      companyProfile?.logo_data_url
+    );
   }, [companyProfile]);
 
   /**
    * Apply panel defaults when a panel is selected
    * Returns the default values to auto-fill in the form
    */
-  const applyPanelDefaults = useCallback((panelId: string): {
-    networkType: string;
-    zonesCount: number;
-    loopCapacity: number;
-    protocol: string;
-    panel: FireAlarmPanel | null;
-  } | null => {
-    const defaults = getPanelDefaults(panelId);
-    const panel = findPanelById(panelId);
+  const applyPanelDefaults = useCallback(
+    (
+      panelId: string
+    ): {
+      networkType: string;
+      zonesCount: number;
+      loopCapacity: number;
+      protocol: string;
+      panel: FireAlarmPanel | null;
+    } | null => {
+      const defaults = getPanelDefaults(panelId);
+      const panel = findPanelById(panelId);
 
-    if (!defaults || !panel) return null;
+      if (!defaults || !panel) return null;
 
-    return {
-      ...defaults,
-      panel
-    };
-  }, []);
+      return {
+        ...defaults,
+        panel,
+      };
+    },
+    []
+  );
 
   /**
    * Search for panels by query
@@ -175,32 +186,35 @@ export const useFireAlarmSmartForm = () => {
   /**
    * Validate a sound level reading against BS 5839-1
    */
-  const validateSoundReading = useCallback((
-    dbReading: number | string,
-    areaType: AreaType = 'general',
-    ambientNoise?: number
-  ): SoundValidationResult => {
-    const db = typeof dbReading === 'string' ? parseFloat(dbReading) : dbReading;
+  const validateSoundReading = useCallback(
+    (
+      dbReading: number | string,
+      areaType: AreaType = 'general',
+      ambientNoise?: number
+    ): SoundValidationResult => {
+      const db = typeof dbReading === 'string' ? parseFloat(dbReading) : dbReading;
 
-    if (isNaN(db) || db <= 0) {
+      if (isNaN(db) || db <= 0) {
+        return {
+          isValid: false,
+          status: 'warning',
+          message: 'Enter a valid dB reading',
+          minRequired: getMinDbRequired(areaType),
+        };
+      }
+
+      const result = validateSoundLevel(db, areaType, ambientNoise);
+
       return {
-        isValid: false,
-        status: 'warning',
-        message: 'Enter a valid dB reading',
-        minRequired: getMinDbRequired(areaType)
+        isValid: result.valid,
+        status: result.status,
+        message: result.message,
+        minRequired: getMinDbRequired(areaType),
+        reference: result.reference,
       };
-    }
-
-    const result = validateSoundLevel(db, areaType, ambientNoise);
-
-    return {
-      isValid: result.valid,
-      status: result.status,
-      message: result.message,
-      minRequired: getMinDbRequired(areaType),
-      reference: result.reference
-    };
-  }, []);
+    },
+    []
+  );
 
   /**
    * Get minimum required dB for an area type
@@ -220,7 +234,7 @@ export const useFireAlarmSmartForm = () => {
         nextService: '',
         nextInspection: '',
         nextServiceDate: now,
-        nextInspectionDate: now
+        nextInspectionDate: now,
       };
     }
 
@@ -230,7 +244,7 @@ export const useFireAlarmSmartForm = () => {
       nextService: dates.formatted.nextSixMonthly,
       nextInspection: dates.formatted.nextAnnual,
       nextServiceDate: dates.nextSixMonthly,
-      nextInspectionDate: dates.nextAnnual
+      nextInspectionDate: dates.nextAnnual,
     };
   }, []);
 
@@ -240,7 +254,8 @@ export const useFireAlarmSmartForm = () => {
   const calculateNextServiceISO = useCallback((commissioningDate: string | Date): string => {
     if (!commissioningDate) return '';
 
-    const date = typeof commissioningDate === 'string' ? new Date(commissioningDate) : commissioningDate;
+    const date =
+      typeof commissioningDate === 'string' ? new Date(commissioningDate) : commissioningDate;
     if (isNaN(date.getTime())) return '';
 
     const nextService = new Date(date);
@@ -255,7 +270,8 @@ export const useFireAlarmSmartForm = () => {
   const calculateNextInspectionISO = useCallback((commissioningDate: string | Date): string => {
     if (!commissioningDate) return '';
 
-    const date = typeof commissioningDate === 'string' ? new Date(commissioningDate) : commissioningDate;
+    const date =
+      typeof commissioningDate === 'string' ? new Date(commissioningDate) : commissioningDate;
     if (isNaN(date.getTime())) return '';
 
     const nextInspection = new Date(date);
@@ -267,20 +283,23 @@ export const useFireAlarmSmartForm = () => {
   /**
    * Suggest system category based on premises type
    */
-  const suggestCategoryForPremises = useCallback((premisesType: string): CategorySuggestion | null => {
-    if (!premisesType) return null;
+  const suggestCategoryForPremises = useCallback(
+    (premisesType: string): CategorySuggestion | null => {
+      if (!premisesType) return null;
 
-    const suggestion = suggestSystemCategory(premisesType);
-    if (!suggestion) return null;
+      const suggestion = suggestSystemCategory(premisesType);
+      if (!suggestion) return null;
 
-    return {
-      recommended: suggestion.recommended,
-      minimum: suggestion.minimum,
-      reason: suggestion.reason,
-      description: suggestion.categoryDetails.description,
-      coverage: suggestion.categoryDetails.coverage
-    };
-  }, []);
+      return {
+        recommended: suggestion.recommended,
+        minimum: suggestion.minimum,
+        reason: suggestion.reason,
+        description: suggestion.categoryDetails.description,
+        coverage: suggestion.categoryDetails.coverage,
+      };
+    },
+    []
+  );
 
   /**
    * Get system category details
@@ -292,39 +311,47 @@ export const useFireAlarmSmartForm = () => {
   /**
    * Suggest defect severity based on description
    */
-  const suggestDefectSeverityFromDescription = useCallback((description: string): {
-    severity: 'critical' | 'non-critical' | 'recommendation';
-    reason: string;
-  } => {
-    return suggestDefectSeverity(description);
-  }, []);
+  const suggestDefectSeverityFromDescription = useCallback(
+    (
+      description: string
+    ): {
+      severity: 'critical' | 'non-critical' | 'recommendation';
+      reason: string;
+    } => {
+      return suggestDefectSeverity(description);
+    },
+    []
+  );
 
   /**
    * Check if installer and commissioner details match
    * (to enable "Same as Installer" checkbox)
    */
-  const areDetailsMatching = useCallback((
-    installer: SmartFormProfile | null,
-    commissioner: SmartFormProfile | null
-  ): boolean => {
-    if (!installer || !commissioner) return false;
+  const areDetailsMatching = useCallback(
+    (installer: SmartFormProfile | null, commissioner: SmartFormProfile | null): boolean => {
+      if (!installer || !commissioner) return false;
 
-    return (
-      installer.name === commissioner.name &&
-      installer.company === commissioner.company &&
-      installer.qualifications === commissioner.qualifications
-    );
-  }, []);
+      return (
+        installer.name === commissioner.name &&
+        installer.company === commissioner.company &&
+        installer.qualifications === commissioner.qualifications
+      );
+    },
+    []
+  );
 
   /**
    * Copy installer details to commissioner
    */
-  const copyInstallerToCommissioner = useCallback((installer: SmartFormProfile): SmartFormProfile => {
-    return {
-      ...installer,
-      date: new Date().toISOString().split('T')[0]
-    };
-  }, []);
+  const copyInstallerToCommissioner = useCallback(
+    (installer: SmartFormProfile): SmartFormProfile => {
+      return {
+        ...installer,
+        date: new Date().toISOString().split('T')[0],
+      };
+    },
+    []
+  );
 
   /**
    * Format date to UK format for display
@@ -381,7 +408,7 @@ export const useFireAlarmSmartForm = () => {
     // Utility functions
     areDetailsMatching,
     copyInstallerToCommissioner,
-    formatToUKDate
+    formatToUKDate,
   };
 };
 

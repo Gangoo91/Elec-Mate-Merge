@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,21 +17,21 @@ const TestingStandardsSection = () => {
         { item: 'Test current', value: 'Between 4mA and 24mA DC', critical: true },
         { item: 'Maximum resistance', value: 'R1 + R2 ≤ tabulated values', critical: true },
         { item: 'Ring circuit test', value: 'Cross-connection method required', critical: false },
-        { item: 'Test leads resistance', value: 'Must be nulled out first', critical: true }
+        { item: 'Test leads resistance', value: 'Must be nulled out first', critical: true },
       ],
       procedure: [
         'Isolate circuit and prove dead',
         'Null test leads if required',
         'Test protective conductor continuity',
         'For rings: cross-connect and test',
-        'Record R1, R2, and R1+R2 values'
+        'Record R1, R2, and R1+R2 values',
       ],
       commonIssues: [
         'High resistance joints',
         'Broken neutral in ring circuits',
         'Poor earth connections',
-        'Parallel earth paths affecting readings'
-      ]
+        'Parallel earth paths affecting readings',
+      ],
     },
     insulation: {
       title: 'Insulation Resistance',
@@ -42,21 +41,21 @@ const TestingStandardsSection = () => {
         { item: 'Test voltage', value: '250V DC (SELV), 500V DC (LV)', critical: true },
         { item: 'Minimum resistance', value: '≥1MΩ (≥0.5MΩ for some circuits)', critical: true },
         { item: 'Test duration', value: 'Until reading stabilises', critical: false },
-        { item: 'Circuit isolation', value: 'All equipment disconnected', critical: true }
+        { item: 'Circuit isolation', value: 'All equipment disconnected', critical: true },
       ],
       procedure: [
         'Isolate circuit completely',
         'Remove/isolate sensitive equipment',
         'Select appropriate test voltage',
         'Test between all conductor combinations',
-        'Test all conductors to earth'
+        'Test all conductors to earth',
       ],
       commonIssues: [
         'Moisture ingress reducing readings',
         'Equipment not properly isolated',
         'Parallel paths affecting results',
-        'Surge protection devices not isolated'
-      ]
+        'Surge protection devices not isolated',
+      ],
     },
     zs: {
       title: 'Earth Fault Loop Impedance',
@@ -66,21 +65,21 @@ const TestingStandardsSection = () => {
         { item: 'Maximum Zs', value: 'Per BS 7671 Tables 41.2-41.5', critical: true },
         { item: 'Test method', value: 'Loop impedance tester', critical: true },
         { item: 'RCD isolation', value: 'Must be isolated during test', critical: true },
-        { item: 'Temperature correction', value: 'Apply factors if required', critical: false }
+        { item: 'Temperature correction', value: 'Apply factors if required', critical: false },
       ],
       procedure: [
         'Test external earth fault loop impedance (Ze)',
         'Test earth fault loop impedance (Zs) at each point',
         'Isolate RCDs during testing',
         'Check readings against maximum values',
-        'Apply temperature correction if needed'
+        'Apply temperature correction if needed',
       ],
       commonIssues: [
         'Zs readings too high for protective device',
         'RCD not isolated during test',
         'Poor earth electrode connection',
-        'TNS system mistaken for TN-C-S'
-      ]
+        'TNS system mistaken for TN-C-S',
+      ],
     },
     rcd: {
       title: 'RCD Testing',
@@ -90,22 +89,22 @@ const TestingStandardsSection = () => {
         { item: 'Trip time at IΔn', value: '≤300ms (≤40ms for Type S)', critical: true },
         { item: 'Trip time at 5×IΔn', value: '≤40ms', critical: true },
         { item: 'Non-trip at 50% IΔn', value: 'Should not trip', critical: true },
-        { item: 'Test current accuracy', value: '±10% of nominal', critical: false }
+        { item: 'Test current accuracy', value: '±10% of nominal', critical: false },
       ],
       procedure: [
         'Check RCD rating and type',
         'Test at 50% rated current (should not trip)',
         'Test at 100% rated current (should trip)',
         'Test at 500% rated current (fast trip)',
-        'Test ramp function if available'
+        'Test ramp function if available',
       ],
       commonIssues: [
         'RCD tripping at 50% current',
         'Slow tripping times',
         'RCD not tripping at all',
-        'Type AC RCD with DC components'
-      ]
-    }
+        'Type AC RCD with DC components',
+      ],
+    },
   };
 
   const testEquipment = [
@@ -113,26 +112,26 @@ const TestingStandardsSection = () => {
       name: 'Multifunction Tester',
       uses: ['Insulation resistance', 'Continuity', 'RCD testing', 'Loop impedance'],
       calibration: 'Annual calibration required',
-      standards: 'IEC 61557 series'
+      standards: 'IEC 61557 series',
     },
     {
       name: 'Loop Impedance Tester',
       uses: ['Earth fault loop impedance', 'Prospective fault current'],
       calibration: 'Annual calibration required',
-      standards: 'IEC 61557-3'
+      standards: 'IEC 61557-3',
     },
     {
       name: 'RCD Tester',
       uses: ['RCD trip times', 'RCD sensitivity', 'Ramp testing'],
       calibration: 'Annual calibration required',
-      standards: 'IEC 61557-6'
+      standards: 'IEC 61557-6',
     },
     {
       name: 'Continuity Tester',
       uses: ['Low resistance measurement', 'Protective conductor continuity'],
       calibration: 'Annual calibration required',
-      standards: 'IEC 61557-4'
-    }
+      standards: 'IEC 61557-4',
+    },
   ];
 
   const currentTest = testStandards[selectedTestType as keyof typeof testStandards];
@@ -148,8 +147,8 @@ const TestingStandardsSection = () => {
       <SmartTabs
         tabs={[
           {
-            value: "continuity",
-            label: "Continuity",
+            value: 'continuity',
+            label: 'Continuity',
             content: (
               <div className="mt-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -172,13 +171,16 @@ const TestingStandardsSection = () => {
                         <h4 className="font-medium text-foreground mb-3">Test Requirements</h4>
                         <div className="space-y-2">
                           {testStandards.continuity.requirements.map((req, index) => (
-                            <div key={index} className="flex justify-between items-center p-2 bg-muted rounded">
+                            <div
+                              key={index}
+                              className="flex justify-between items-center p-2 bg-muted rounded"
+                            >
                               <span className="text-sm text-white">{req.item}</span>
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-foreground">{req.value}</span>
-                                {req.critical && (
-                                  <AlertTriangle className="h-4 w-4 text-red-400" />
-                                )}
+                                <span className="text-sm font-medium text-foreground">
+                                  {req.value}
+                                </span>
+                                {req.critical && <AlertTriangle className="h-4 w-4 text-red-400" />}
                               </div>
                             </div>
                           ))}
@@ -214,7 +216,10 @@ const TestingStandardsSection = () => {
                         </h4>
                         <div className="space-y-2">
                           {testStandards.continuity.commonIssues.map((issue, index) => (
-                            <div key={index} className="text-sm text-white/80 flex items-center gap-2">
+                            <div
+                              key={index}
+                              className="text-sm text-white/80 flex items-center gap-2"
+                            >
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
                             </div>
@@ -225,11 +230,11 @@ const TestingStandardsSection = () => {
                   </Card>
                 </div>
               </div>
-            )
+            ),
           },
           {
-            value: "insulation",
-            label: "Insulation",
+            value: 'insulation',
+            label: 'Insulation',
             content: (
               <div className="mt-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -252,13 +257,16 @@ const TestingStandardsSection = () => {
                         <h4 className="font-medium text-foreground mb-3">Test Requirements</h4>
                         <div className="space-y-2">
                           {testStandards.insulation.requirements.map((req, index) => (
-                            <div key={index} className="flex justify-between items-center p-2 bg-muted rounded">
+                            <div
+                              key={index}
+                              className="flex justify-between items-center p-2 bg-muted rounded"
+                            >
                               <span className="text-sm text-white">{req.item}</span>
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-foreground">{req.value}</span>
-                                {req.critical && (
-                                  <AlertTriangle className="h-4 w-4 text-red-400" />
-                                )}
+                                <span className="text-sm font-medium text-foreground">
+                                  {req.value}
+                                </span>
+                                {req.critical && <AlertTriangle className="h-4 w-4 text-red-400" />}
                               </div>
                             </div>
                           ))}
@@ -294,7 +302,10 @@ const TestingStandardsSection = () => {
                         </h4>
                         <div className="space-y-2">
                           {testStandards.insulation.commonIssues.map((issue, index) => (
-                            <div key={index} className="text-sm text-white/80 flex items-center gap-2">
+                            <div
+                              key={index}
+                              className="text-sm text-white/80 flex items-center gap-2"
+                            >
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
                             </div>
@@ -305,11 +316,11 @@ const TestingStandardsSection = () => {
                   </Card>
                 </div>
               </div>
-            )
+            ),
           },
           {
-            value: "zs",
-            label: "Loop Impedance",
+            value: 'zs',
+            label: 'Loop Impedance',
             content: (
               <div className="mt-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -332,13 +343,16 @@ const TestingStandardsSection = () => {
                         <h4 className="font-medium text-foreground mb-3">Test Requirements</h4>
                         <div className="space-y-2">
                           {testStandards.zs.requirements.map((req, index) => (
-                            <div key={index} className="flex justify-between items-center p-2 bg-muted rounded">
+                            <div
+                              key={index}
+                              className="flex justify-between items-center p-2 bg-muted rounded"
+                            >
                               <span className="text-sm text-white">{req.item}</span>
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-foreground">{req.value}</span>
-                                {req.critical && (
-                                  <AlertTriangle className="h-4 w-4 text-red-400" />
-                                )}
+                                <span className="text-sm font-medium text-foreground">
+                                  {req.value}
+                                </span>
+                                {req.critical && <AlertTriangle className="h-4 w-4 text-red-400" />}
                               </div>
                             </div>
                           ))}
@@ -374,7 +388,10 @@ const TestingStandardsSection = () => {
                         </h4>
                         <div className="space-y-2">
                           {testStandards.zs.commonIssues.map((issue, index) => (
-                            <div key={index} className="text-sm text-white/80 flex items-center gap-2">
+                            <div
+                              key={index}
+                              className="text-sm text-white/80 flex items-center gap-2"
+                            >
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
                             </div>
@@ -385,11 +402,11 @@ const TestingStandardsSection = () => {
                   </Card>
                 </div>
               </div>
-            )
+            ),
           },
           {
-            value: "rcd",
-            label: "RCD Testing",
+            value: 'rcd',
+            label: 'RCD Testing',
             content: (
               <div className="mt-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -412,13 +429,16 @@ const TestingStandardsSection = () => {
                         <h4 className="font-medium text-foreground mb-3">Test Requirements</h4>
                         <div className="space-y-2">
                           {testStandards.rcd.requirements.map((req, index) => (
-                            <div key={index} className="flex justify-between items-center p-2 bg-muted rounded">
+                            <div
+                              key={index}
+                              className="flex justify-between items-center p-2 bg-muted rounded"
+                            >
                               <span className="text-sm text-white">{req.item}</span>
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-foreground">{req.value}</span>
-                                {req.critical && (
-                                  <AlertTriangle className="h-4 w-4 text-red-400" />
-                                )}
+                                <span className="text-sm font-medium text-foreground">
+                                  {req.value}
+                                </span>
+                                {req.critical && <AlertTriangle className="h-4 w-4 text-red-400" />}
                               </div>
                             </div>
                           ))}
@@ -454,7 +474,10 @@ const TestingStandardsSection = () => {
                         </h4>
                         <div className="space-y-2">
                           {testStandards.rcd.commonIssues.map((issue, index) => (
-                            <div key={index} className="text-sm text-white/80 flex items-center gap-2">
+                            <div
+                              key={index}
+                              className="text-sm text-white/80 flex items-center gap-2"
+                            >
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
                             </div>
@@ -465,8 +488,8 @@ const TestingStandardsSection = () => {
                   </Card>
                 </div>
               </div>
-            )
-          }
+            ),
+          },
         ]}
         value={selectedTestType}
         onValueChange={setSelectedTestType}

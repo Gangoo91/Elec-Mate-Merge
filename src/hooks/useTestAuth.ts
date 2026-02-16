@@ -14,8 +14,10 @@ export const useTestAuth = () => {
     const initAuth = async () => {
       try {
         // Check if already signed in
-        const { data: { user: existingUser } } = await supabase.auth.getUser();
-        
+        const {
+          data: { user: existingUser },
+        } = await supabase.auth.getUser();
+
         if (existingUser) {
           setUser(existingUser);
           setIsAuthenticating(false);

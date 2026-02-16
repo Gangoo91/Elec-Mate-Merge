@@ -1,13 +1,12 @@
+import { QuizNavigationProps } from '@/types/quiz';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { QuizNavigationProps } from "@/types/quiz";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
-const QuizNavigation = ({ 
-  questionsCount, 
-  activeQuestion, 
-  userAnswers, 
-  onNavigate 
+const QuizNavigation = ({
+  questionsCount,
+  activeQuestion,
+  userAnswers,
+  onNavigate,
 }: QuizNavigationProps) => {
   const handlePrevious = () => {
     if (activeQuestion > 0) {
@@ -34,7 +33,7 @@ const QuizNavigation = ({
 
       <span className="text-sm text-white order-first sm:order-none">
         Question {activeQuestion + 1} of {questionsCount}
-        {userAnswers[activeQuestion] !== null && " • Answered"}
+        {userAnswers[activeQuestion] !== null && ' • Answered'}
       </span>
 
       <Button

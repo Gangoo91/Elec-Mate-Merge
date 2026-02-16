@@ -11,7 +11,6 @@ export const EmergencyLightingModule5Section3Summary = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Key Points */}
         <div className="space-y-3">
           <h4 className="text-lg font-semibold text-foreground flex items-center gap-2">
@@ -21,22 +20,34 @@ export const EmergencyLightingModule5Section3Summary = () => {
           <div className="grid gap-3">
             <div className="bg-green-500/10 border-l-4 border-green-500 p-4 rounded-r-lg">
               <p className="text-foreground text-sm sm:text-base">
-                <strong className="text-green-400">Monthly Functional Tests:</strong> Short-duration tests (few minutes) carried out every 30 days to confirm luminaires switch to emergency mode and batteries are charging. Kept brief to avoid unnecessary battery drain.
+                <strong className="text-green-400">Monthly Functional Tests:</strong> Short-duration
+                tests (few minutes) carried out every 30 days to confirm luminaires switch to
+                emergency mode and batteries are charging. Kept brief to avoid unnecessary battery
+                drain.
               </p>
             </div>
             <div className="bg-blue-500/10 border-l-4 border-blue-500 p-4 rounded-r-lg">
               <p className="text-foreground text-sm sm:text-base">
-                <strong className="text-blue-400">Annual Duration Tests:</strong> Full 3-hour tests carried out annually to prove batteries can sustain illumination for the complete rated period. Must be scheduled during low occupancy and allow 24-hour recharge afterwards.
+                <strong className="text-blue-400">Annual Duration Tests:</strong> Full 3-hour tests
+                carried out annually to prove batteries can sustain illumination for the complete
+                rated period. Must be scheduled during low occupancy and allow 24-hour recharge
+                afterwards.
               </p>
             </div>
             <div className="bg-purple-500/10 border-l-4 border-purple-500 p-4 rounded-r-lg">
               <p className="text-foreground text-sm sm:text-base">
-                <strong className="text-purple-400">Logbook Documentation:</strong> All tests must be recorded with five essential details: date, test type, person conducting test, pass/fail result, and any defects with remedial action. Records must be kept on-site for inspectors.
+                <strong className="text-purple-400">Logbook Documentation:</strong> All tests must
+                be recorded with five essential details: date, test type, person conducting test,
+                pass/fail result, and any defects with remedial action. Records must be kept on-site
+                for inspectors.
               </p>
             </div>
             <div className="bg-red-500/10 border-l-4 border-red-500 p-4 rounded-r-lg">
               <p className="text-foreground text-sm sm:text-base">
-                <strong className="text-red-400">Legal Compliance:</strong> Testing is mandatory under the Fire Safety Order 2005 and BS 5266-8. Failure to test or maintain records can result in invalid insurance, enforcement notices, unlimited fines, and prosecution.
+                <strong className="text-red-400">Legal Compliance:</strong> Testing is mandatory
+                under the Fire Safety Order 2005 and BS 5266-8. Failure to test or maintain records
+                can result in invalid insurance, enforcement notices, unlimited fines, and
+                prosecution.
               </p>
             </div>
           </div>
@@ -54,36 +65,76 @@ export const EmergencyLightingModule5Section3Summary = () => {
             </p>
             <div className="space-y-2">
               <label className="flex items-start gap-3 text-foreground text-sm cursor-pointer group">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark" />
-                <span className="group-hover:text-elec-yellow transition-colors">Monthly functional tests scheduled every 30 days</span>
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark"
+                />
+                <span className="group-hover:text-elec-yellow transition-colors">
+                  Monthly functional tests scheduled every 30 days
+                </span>
               </label>
               <label className="flex items-start gap-3 text-foreground text-sm cursor-pointer group">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark" />
-                <span className="group-hover:text-elec-yellow transition-colors">Annual 3-hour duration tests scheduled during low occupancy</span>
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark"
+                />
+                <span className="group-hover:text-elec-yellow transition-colors">
+                  Annual 3-hour duration tests scheduled during low occupancy
+                </span>
               </label>
               <label className="flex items-start gap-3 text-foreground text-sm cursor-pointer group">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark" />
-                <span className="group-hover:text-elec-yellow transition-colors">Emergency lighting logbook maintained and kept on-site</span>
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark"
+                />
+                <span className="group-hover:text-elec-yellow transition-colors">
+                  Emergency lighting logbook maintained and kept on-site
+                </span>
               </label>
               <label className="flex items-start gap-3 text-foreground text-sm cursor-pointer group">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark" />
-                <span className="group-hover:text-elec-yellow transition-colors">All five required details recorded for each test</span>
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark"
+                />
+                <span className="group-hover:text-elec-yellow transition-colors">
+                  All five required details recorded for each test
+                </span>
               </label>
               <label className="flex items-start gap-3 text-foreground text-sm cursor-pointer group">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark" />
-                <span className="group-hover:text-elec-yellow transition-colors">Failed luminaires repaired promptly with retesting documented</span>
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark"
+                />
+                <span className="group-hover:text-elec-yellow transition-colors">
+                  Failed luminaires repaired promptly with retesting documented
+                </span>
               </label>
               <label className="flex items-start gap-3 text-foreground text-sm cursor-pointer group">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark" />
-                <span className="group-hover:text-elec-yellow transition-colors">Responsible Person understands their legal obligations</span>
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark"
+                />
+                <span className="group-hover:text-elec-yellow transition-colors">
+                  Responsible Person understands their legal obligations
+                </span>
               </label>
               <label className="flex items-start gap-3 text-foreground text-sm cursor-pointer group">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark" />
-                <span className="group-hover:text-elec-yellow transition-colors">Logbook accessible to fire authorities and insurers</span>
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark"
+                />
+                <span className="group-hover:text-elec-yellow transition-colors">
+                  Logbook accessible to fire authorities and insurers
+                </span>
               </label>
               <label className="flex items-start gap-3 text-foreground text-sm cursor-pointer group">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark" />
-                <span className="group-hover:text-elec-yellow transition-colors">Battery recharge verified after duration tests (24 hours)</span>
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 rounded border-gray-600 text-elec-yellow focus:ring-elec-yellow focus:ring-offset-elec-dark"
+                />
+                <span className="group-hover:text-elec-yellow transition-colors">
+                  Battery recharge verified after duration tests (24 hours)
+                </span>
               </label>
             </div>
           </div>
@@ -129,12 +180,17 @@ export const EmergencyLightingModule5Section3Summary = () => {
                 Key Takeaway for Electricians
               </p>
               <p className="text-foreground text-sm leading-relaxed">
-                Testing without documentation is legally worthless. As an electrician, your role extends beyond conducting tests — you must ensure proper logbook records are maintained and educate clients about their legal obligations under the Fire Safety Order 2005. Implement systematic testing procedures, recommend self-test systems for large installations, and always follow up failed tests with prompt corrective action. Regular testing compliance protects lives, maintains insurance validity, and prevents costly enforcement actions.
+                Testing without documentation is legally worthless. As an electrician, your role
+                extends beyond conducting tests — you must ensure proper logbook records are
+                maintained and educate clients about their legal obligations under the Fire Safety
+                Order 2005. Implement systematic testing procedures, recommend self-test systems for
+                large installations, and always follow up failed tests with prompt corrective
+                action. Regular testing compliance protects lives, maintains insurance validity, and
+                prevents costly enforcement actions.
               </p>
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

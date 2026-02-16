@@ -306,80 +306,201 @@ Example:
 
 // Navigation section enum values
 const NAVIGATION_SECTIONS = [
-  'overview', 'dashboard', 'home',
-  'peoplehub', 'people-hub',
-  'financehub', 'finance-hub', 'finance',
-  'jobshub', 'jobs-hub',
-  'safetyhub', 'safety-hub', 'safety',
-  'employees', 'team', 'workers', 'staff',
-  'elecid', 'elec-id', 'credentials',
-  'timesheets', 'leave',
-  'comms', 'communications', 'messages',
-  'talentpool', 'talent-pool', 'candidates',
-  'vacancies', 'job-vacancies', 'recruitment',
-  'quotes', 'invoices', 'quotes-invoices', 'billing',
-  'tenders', 'bids',
-  'expenses', 'receipts',
-  'procurement', 'materials', 'purchasing',
-  'financials', 'job-financials',
-  'reports', 'analytics',
-  'signatures', 'sign-offs',
-  'pricebook', 'price-book', 'pricing',
-  'jobpacks', 'job-packs', 'documentation',
-  'jobs', 'projects', 'sites',
-  'jobboard', 'job-board',
-  'timeline', 'job-timeline', 'schedule',
-  'tracking', 'worker-tracking', 'location', 'gps',
-  'progresslogs', 'progress-logs', 'progress', 'diary',
-  'issues', 'job-issues', 'problems',
-  'testing', 'testing-workflow', 'inspections',
-  'quality', 'snags', 'defects',
-  'clientportal', 'client-portal',
-  'fleet', 'vehicles', 'vans', 'transport',
-  'photogallery', 'photo-gallery', 'photos', 'gallery',
-  'rams', 'risk-assessments', 'method-statements',
-  'incidents', 'accidents', 'near-misses',
-  'policies', 'procedures',
-  'contracts', 'agreements',
-  'training', 'training-records', 'certifications', 'certs',
-  'briefings', 'toolbox-talks',
-  'compliance', 'regulations', 'audits',
-  'settings', 'preferences', 'configuration'
+  'overview',
+  'dashboard',
+  'home',
+  'peoplehub',
+  'people-hub',
+  'financehub',
+  'finance-hub',
+  'finance',
+  'jobshub',
+  'jobs-hub',
+  'safetyhub',
+  'safety-hub',
+  'safety',
+  'employees',
+  'team',
+  'workers',
+  'staff',
+  'elecid',
+  'elec-id',
+  'credentials',
+  'timesheets',
+  'leave',
+  'comms',
+  'communications',
+  'messages',
+  'talentpool',
+  'talent-pool',
+  'candidates',
+  'vacancies',
+  'job-vacancies',
+  'recruitment',
+  'quotes',
+  'invoices',
+  'quotes-invoices',
+  'billing',
+  'tenders',
+  'bids',
+  'expenses',
+  'receipts',
+  'procurement',
+  'materials',
+  'purchasing',
+  'financials',
+  'job-financials',
+  'reports',
+  'analytics',
+  'signatures',
+  'sign-offs',
+  'pricebook',
+  'price-book',
+  'pricing',
+  'jobpacks',
+  'job-packs',
+  'documentation',
+  'jobs',
+  'projects',
+  'sites',
+  'jobboard',
+  'job-board',
+  'timeline',
+  'job-timeline',
+  'schedule',
+  'tracking',
+  'worker-tracking',
+  'location',
+  'gps',
+  'progresslogs',
+  'progress-logs',
+  'progress',
+  'diary',
+  'issues',
+  'job-issues',
+  'problems',
+  'testing',
+  'testing-workflow',
+  'inspections',
+  'quality',
+  'snags',
+  'defects',
+  'clientportal',
+  'client-portal',
+  'fleet',
+  'vehicles',
+  'vans',
+  'transport',
+  'photogallery',
+  'photo-gallery',
+  'photos',
+  'gallery',
+  'rams',
+  'risk-assessments',
+  'method-statements',
+  'incidents',
+  'accidents',
+  'near-misses',
+  'policies',
+  'procedures',
+  'contracts',
+  'agreements',
+  'training',
+  'training-records',
+  'certifications',
+  'certs',
+  'briefings',
+  'toolbox-talks',
+  'compliance',
+  'regulations',
+  'audits',
+  'settings',
+  'preferences',
+  'configuration',
 ];
 
 const DIALOG_TYPES = [
-  'quote', 'createquote',
-  'job', 'addjob', 'newjob',
-  'employee', 'addemployee', 'worker',
-  'invoice', 'createinvoice',
-  'expense', 'createexpense',
-  'timeentry', 'manualtimeentry',
-  'certification', 'addcertification',
-  'order', 'createorder',
-  'supplier', 'createsupplier',
-  'vacancy', 'postvacancy',
-  'jobpack', 'addjobpack',
-  'rams', 'createrams',
-  'tender', 'createtender',
-  'incident', 'reportincident',
-  'training', 'addtraining',
-  'briefing', 'createbriefing',
-  'skill', 'addskill',
-  'note', 'addnote',
-  'workhistory', 'addworkhistory'
+  'quote',
+  'createquote',
+  'job',
+  'addjob',
+  'newjob',
+  'employee',
+  'addemployee',
+  'worker',
+  'invoice',
+  'createinvoice',
+  'expense',
+  'createexpense',
+  'timeentry',
+  'manualtimeentry',
+  'certification',
+  'addcertification',
+  'order',
+  'createorder',
+  'supplier',
+  'createsupplier',
+  'vacancy',
+  'postvacancy',
+  'jobpack',
+  'addjobpack',
+  'rams',
+  'createrams',
+  'tender',
+  'createtender',
+  'incident',
+  'reportincident',
+  'training',
+  'addtraining',
+  'briefing',
+  'createbriefing',
+  'skill',
+  'addskill',
+  'note',
+  'addnote',
+  'workhistory',
+  'addworkhistory',
 ];
 
 const VIEW_MODES = ['list', 'grid', 'kanban', 'map', 'calendar', 'timeline'];
 
-const JOB_STATUSES = ['Active', 'Pending', 'Completed', 'On Hold', 'Cancelled', 'Quote Sent', 'Won', 'Lost'];
+const JOB_STATUSES = [
+  'Active',
+  'Pending',
+  'Completed',
+  'On Hold',
+  'Cancelled',
+  'Quote Sent',
+  'Won',
+  'Lost',
+];
 
 const INCIDENT_SEVERITIES = ['Low', 'Medium', 'High', 'Critical'];
 
 const LEAVE_TYPES = ['annual', 'sick', 'unpaid', 'compassionate', 'training', 'bank_holiday'];
 
-const EXPENSE_CATEGORIES = ['materials', 'tools', 'fuel', 'travel', 'accommodation', 'subsistence', 'ppe', 'training', 'other'];
+const EXPENSE_CATEGORIES = [
+  'materials',
+  'tools',
+  'fuel',
+  'travel',
+  'accommodation',
+  'subsistence',
+  'ppe',
+  'training',
+  'other',
+];
 
-const DOCUMENT_TYPES = ['rams', 'method_statement', 'briefing', 'permit', 'drawing', 'specification', 'certificate', 'photo'];
+const DOCUMENT_TYPES = [
+  'rams',
+  'method_statement',
+  'briefing',
+  'permit',
+  'drawing',
+  'specification',
+  'certificate',
+  'photo',
+];
 
 const VEHICLE_TYPES = ['van', 'truck', 'car', 'pickup', 'trailer'];
 
@@ -393,60 +514,69 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'navigate_to',
-    description: 'Navigate to any section of the ELEC-MATE app. Use when the user wants to go to a different page, view, or section.',
+    description:
+      'Navigate to any section of the ELEC-MATE app. Use when the user wants to go to a different page, view, or section.',
     category: 'Navigation & UI',
-    parameters: [{
-      name: 'section',
-      type: 'string',
-      required: true,
-      description: 'The section to navigate to',
-      enumValues: NAVIGATION_SECTIONS
-    }],
+    parameters: [
+      {
+        name: 'section',
+        type: 'string',
+        required: true,
+        description: 'The section to navigate to',
+        enumValues: NAVIGATION_SECTIONS,
+      },
+    ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'go_back',
-    description: 'Go back to the previous section or page. Use when user says "go back", "previous page", or "return".',
+    description:
+      'Go back to the previous section or page. Use when user says "go back", "previous page", or "return".',
     category: 'Navigation & UI',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'go_home',
-    description: 'Return to the main dashboard/overview. Use when user says "go home", "main page", or "dashboard".',
+    description:
+      'Return to the main dashboard/overview. Use when user says "go home", "main page", or "dashboard".',
     category: 'Navigation & UI',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'open_dialog',
-    description: 'Open a form dialog or modal. Use when user wants to create, add, or open a specific form.',
+    description:
+      'Open a form dialog or modal. Use when user wants to create, add, or open a specific form.',
     category: 'Navigation & UI',
-    parameters: [{
-      name: 'dialog',
-      type: 'string',
-      required: true,
-      description: 'The dialog/form to open',
-      enumValues: DIALOG_TYPES
-    }],
+    parameters: [
+      {
+        name: 'dialog',
+        type: 'string',
+        required: true,
+        description: 'The dialog/form to open',
+        enumValues: DIALOG_TYPES,
+      },
+    ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'close_dialog',
-    description: 'Close the currently open dialog or form. Use when user says "close", "cancel", or "exit".',
+    description:
+      'Close the currently open dialog or form. Use when user says "close", "cancel", or "exit".',
     category: 'Navigation & UI',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'scroll_up',
@@ -455,95 +585,109 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'scroll_down',
-    description: 'Scroll the page downward. Use when user says "scroll down", "go down", or "more".',
+    description:
+      'Scroll the page downward. Use when user says "scroll down", "go down", or "more".',
     category: 'Navigation & UI',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'refresh_data',
-    description: 'Refresh all data in the current view. Use when user says "refresh", "reload", or "update".',
+    description:
+      'Refresh all data in the current view. Use when user says "refresh", "reload", or "update".',
     category: 'Navigation & UI',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'toggle_view',
-    description: 'Switch between different view modes (list, grid, kanban, etc). Use when user wants to change how data is displayed.',
+    description:
+      'Switch between different view modes (list, grid, kanban, etc). Use when user wants to change how data is displayed.',
     category: 'Navigation & UI',
-    parameters: [{
-      name: 'mode',
-      type: 'string',
-      required: true,
-      description: 'The view mode to switch to',
-      enumValues: VIEW_MODES
-    }],
+    parameters: [
+      {
+        name: 'mode',
+        type: 'string',
+        required: true,
+        description: 'The view mode to switch to',
+        enumValues: VIEW_MODES,
+      },
+    ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'filter_by',
-    description: 'Apply a filter to the current view. Use when user wants to filter by status, type, date, etc.',
+    description:
+      'Apply a filter to the current view. Use when user wants to filter by status, type, date, etc.',
     category: 'Navigation & UI',
-    parameters: [{
-      name: 'filter',
-      type: 'string',
-      required: true,
-      description: 'The filter value or criteria to apply'
-    }],
+    parameters: [
+      {
+        name: 'filter',
+        type: 'string',
+        required: true,
+        description: 'The filter value or criteria to apply',
+      },
+    ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'clear_filters',
-    description: 'Remove all active filters. Use when user says "clear filters", "show all", or "reset".',
+    description:
+      'Remove all active filters. Use when user says "clear filters", "show all", or "reset".',
     category: 'Navigation & UI',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'search_for',
-    description: 'Search for items in the current section. Use when user wants to find something specific.',
+    description:
+      'Search for items in the current section. Use when user wants to find something specific.',
     category: 'Navigation & UI',
-    parameters: [{
-      name: 'query',
-      type: 'string',
-      required: true,
-      description: 'The search query or term'
-    }],
+    parameters: [
+      {
+        name: 'query',
+        type: 'string',
+        required: true,
+        description: 'The search query or term',
+      },
+    ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'show_help',
-    description: 'Show help information or available commands. Use when user asks for help or what they can do.',
+    description:
+      'Show help information or available commands. Use when user asks for help or what they can do.',
     category: 'Navigation & UI',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'toggle_sidebar',
-    description: 'Open or close the sidebar navigation. Use when user says "open menu", "close menu", or "sidebar".',
+    description:
+      'Open or close the sidebar navigation. Use when user says "open menu", "close menu", or "sidebar".',
     category: 'Navigation & UI',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
 
   // ============================================
@@ -551,127 +695,178 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'fill_field',
-    description: 'Fill a specific field in the current form. Use when user provides a value for a form field.',
+    description:
+      'Fill a specific field in the current form. Use when user provides a value for a form field.',
     category: 'Form Interaction',
     parameters: [
-      { name: 'field', type: 'string', required: true, description: 'The field name or label to fill' },
-      { name: 'value', type: 'string', required: true, description: 'The value to set in the field' }
+      {
+        name: 'field',
+        type: 'string',
+        required: true,
+        description: 'The field name or label to fill',
+      },
+      {
+        name: 'value',
+        type: 'string',
+        required: true,
+        description: 'The value to set in the field',
+      },
     ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'add_labour_item',
-    description: 'Add a labour line item to a quote or invoice. Use when user describes work hours to add.',
+    description:
+      'Add a labour line item to a quote or invoice. Use when user describes work hours to add.',
     category: 'Form Interaction',
     parameters: [
-      { name: 'description', type: 'string', required: true, description: 'Description of the labour work' },
+      {
+        name: 'description',
+        type: 'string',
+        required: true,
+        description: 'Description of the labour work',
+      },
       { name: 'hours', type: 'number', required: true, description: 'Number of hours' },
-      { name: 'rate', type: 'number', required: true, description: 'Hourly rate in pounds' }
+      { name: 'rate', type: 'number', required: true, description: 'Hourly rate in pounds' },
     ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'add_material_item',
-    description: 'Add a material line item to a quote or invoice. Use when user describes materials to add.',
+    description:
+      'Add a material line item to a quote or invoice. Use when user describes materials to add.',
     category: 'Form Interaction',
     parameters: [
-      { name: 'description', type: 'string', required: true, description: 'Description of the material' },
+      {
+        name: 'description',
+        type: 'string',
+        required: true,
+        description: 'Description of the material',
+      },
       { name: 'quantity', type: 'number', required: true, description: 'Quantity of items' },
-      { name: 'unitPrice', type: 'number', required: true, description: 'Price per unit in pounds' }
+      {
+        name: 'unitPrice',
+        type: 'number',
+        required: true,
+        description: 'Price per unit in pounds',
+      },
     ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'add_line_item',
     description: 'Add a generic line item to a quote or invoice. Use for any priced item.',
     category: 'Form Interaction',
     parameters: [
-      { name: 'description', type: 'string', required: true, description: 'Description of the item' },
+      {
+        name: 'description',
+        type: 'string',
+        required: true,
+        description: 'Description of the item',
+      },
       { name: 'quantity', type: 'number', required: true, description: 'Quantity' },
-      { name: 'unitPrice', type: 'number', required: true, description: 'Price per unit in pounds' },
-      { name: 'unit', type: 'string', required: false, description: 'Unit of measurement (each, metre, hour, etc)' }
+      {
+        name: 'unitPrice',
+        type: 'number',
+        required: true,
+        description: 'Price per unit in pounds',
+      },
+      {
+        name: 'unit',
+        type: 'string',
+        required: false,
+        description: 'Unit of measurement (each, metre, hour, etc)',
+      },
     ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'remove_last_item',
-    description: 'Remove the last added line item from the current form. Use when user says "remove last", "delete that", or "undo".',
+    description:
+      'Remove the last added line item from the current form. Use when user says "remove last", "delete that", or "undo".',
     category: 'Form Interaction',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'next_step',
-    description: 'Move to the next step in a multi-step form. Use when user says "next", "continue", or "proceed".',
+    description:
+      'Move to the next step in a multi-step form. Use when user says "next", "continue", or "proceed".',
     category: 'Form Interaction',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'previous_step',
-    description: 'Go back to the previous step in a multi-step form. Use when user says "back", "previous step".',
+    description:
+      'Go back to the previous step in a multi-step form. Use when user says "back", "previous step".',
     category: 'Form Interaction',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'submit_form',
-    description: 'Submit the current form. Use when user says "submit", "save", "done", or "create it".',
+    description:
+      'Submit the current form. Use when user says "submit", "save", "done", or "create it".',
     category: 'Form Interaction',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'clear_form',
-    description: 'Clear all fields in the current form. Use when user says "clear", "start over", or "reset form".',
+    description:
+      'Clear all fields in the current form. Use when user says "clear", "start over", or "reset form".',
     category: 'Form Interaction',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'cancel_form',
-    description: 'Cancel and close the current form without saving. Use when user says "cancel", "never mind", or "forget it".',
+    description:
+      'Cancel and close the current form without saving. Use when user says "cancel", "never mind", or "forget it".',
     category: 'Form Interaction',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'get_form_status',
-    description: 'Get the current status of the form - what fields are filled and what is remaining.',
+    description:
+      'Get the current status of the form - what fields are filled and what is remaining.',
     category: 'Form Interaction',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'preview_form',
-    description: 'Preview the form before submitting. Use when user says "preview", "let me see", or "show me".',
+    description:
+      'Preview the form before submitting. Use when user says "preview", "let me see", or "show me".',
     category: 'Form Interaction',
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
 
   // ============================================
@@ -679,39 +874,43 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'get_dashboard_summary',
-    description: 'Get an overview of the business - jobs, employees, pending items, revenue. Use when user asks for a summary or overview.',
+    description:
+      'Get an overview of the business - jobs, employees, pending items, revenue. Use when user asks for a summary or overview.',
     category: 'Query - Dashboard',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_todays_schedule',
-    description: 'Get today\'s work schedule - who is working where. Use when user asks about today\'s schedule or who is on site.',
+    description:
+      "Get today's work schedule - who is working where. Use when user asks about today's schedule or who is on site.",
     category: 'Query - Dashboard',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_pending_approvals',
-    description: 'Get all items awaiting approval - timesheets, leave, expenses. Use when user asks what needs approving.',
+    description:
+      'Get all items awaiting approval - timesheets, leave, expenses. Use when user asks what needs approving.',
     category: 'Query - Dashboard',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_urgent_items',
-    description: 'Get urgent items needing attention - overdue invoices, expiring certs, incidents. Use when user asks what needs attention.',
+    description:
+      'Get urgent items needing attention - overdue invoices, expiring certs, incidents. Use when user asks what needs attention.',
     category: 'Query - Dashboard',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_weekly_summary',
@@ -720,7 +919,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_monthly_summary',
@@ -729,7 +928,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -737,81 +936,84 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'get_employee_info',
-    description: 'Get information about an employee by name. Use when user asks about a specific person.',
+    description:
+      'Get information about an employee by name. Use when user asks about a specific person.',
     category: 'Query - Employees',
     parameters: [
-      { name: 'name', type: 'string', required: false, description: 'Employee name to search for. If not provided, lists all employees.' }
+      {
+        name: 'name',
+        type: 'string',
+        required: false,
+        description: 'Employee name to search for. If not provided, lists all employees.',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employee_phone',
-    description: 'Get an employee\'s phone number. Use when user wants to call or contact someone.',
+    description: "Get an employee's phone number. Use when user wants to call or contact someone.",
     category: 'Query - Employees',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employee_email',
-    description: 'Get an employee\'s email address.',
+    description: "Get an employee's email address.",
     category: 'Query - Employees',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employee_certifications',
-    description: 'Get all certifications for an employee. Use when user asks about someone\'s qualifications.',
+    description:
+      "Get all certifications for an employee. Use when user asks about someone's qualifications.",
     category: 'Query - Employees',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employee_hours',
-    description: 'Get hours worked by an employee in a period. Use when user asks how many hours someone has worked.',
+    description:
+      'Get hours worked by an employee in a period. Use when user asks how many hours someone has worked.',
     category: 'Query - Employees',
     parameters: [
       { name: 'name', type: 'string', required: true, description: 'Employee name' },
-      { name: 'days', type: 'number', required: false, description: 'Number of days to look back (default 7)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Number of days to look back (default 7)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employee_jobs',
     description: 'Get jobs an employee is currently assigned to.',
     category: 'Query - Employees',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employee_leave_balance',
     description: 'Get remaining holiday allowance for an employee.',
     category: 'Query - Employees',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_active_employees',
@@ -820,40 +1022,51 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employees_by_role',
     description: 'Get employees filtered by role (electrician, apprentice, supervisor, etc).',
     category: 'Query - Employees',
     parameters: [
-      { name: 'role', type: 'string', required: true, description: 'Role to filter by' }
+      { name: 'role', type: 'string', required: true, description: 'Role to filter by' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_available_workers',
-    description: 'Get workers who are available (not assigned to jobs today). Use for last-minute job assignments.',
+    description:
+      'Get workers who are available (not assigned to jobs today). Use for last-minute job assignments.',
     category: 'Query - Employees',
     parameters: [
-      { name: 'date', type: 'string', required: false, description: 'Date to check (default today)' }
+      {
+        name: 'date',
+        type: 'string',
+        required: false,
+        description: 'Date to check (default today)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employees_on_leave',
     description: 'Get employees currently on leave or with upcoming leave.',
     category: 'Query - Employees',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 7)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 7)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_pending_timesheets',
@@ -862,7 +1075,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_pending_leave',
@@ -871,29 +1084,32 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_expiring_certifications',
     description: 'Get certifications expiring soon across all employees.',
     category: 'Query - Employees',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employee_training_status',
     description: 'Get training completion status for an employee.',
     category: 'Query - Employees',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employee_expenses',
@@ -901,33 +1117,34 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Query - Employees',
     parameters: [
       { name: 'name', type: 'string', required: true, description: 'Employee name' },
-      { name: 'status', type: 'string', required: false, description: 'Filter by status (pending, approved, rejected)' }
+      {
+        name: 'status',
+        type: 'string',
+        required: false,
+        description: 'Filter by status (pending, approved, rejected)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employee_elecid',
     description: 'Get ElecID profile and credentials for an employee.',
     category: 'Query - Employees',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'search_employees',
     description: 'Search employees by name, skill, or certification.',
     category: 'Query - Employees',
-    parameters: [
-      { name: 'query', type: 'string', required: true, description: 'Search term' }
-    ],
+    parameters: [{ name: 'query', type: 'string', required: true, description: 'Search term' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -935,91 +1152,78 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'get_job_info',
-    description: 'Get information about a job by title or client. Use when user asks about a specific job.',
+    description:
+      'Get information about a job by title or client. Use when user asks about a specific job.',
     category: 'Query - Jobs',
     parameters: [
-      { name: 'title', type: 'string', required: false, description: 'Job title to search for' }
+      { name: 'title', type: 'string', required: false, description: 'Job title to search for' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_workers',
     description: 'Get workers assigned to a specific job.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_progress',
     description: 'Get progress status and checklist completion for a job.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_client_info',
     description: 'Get client contact details for a job.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_financials',
     description: 'Get financial summary for a job - budget, spent, profit margin.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_photos',
     description: 'Get photo count and recent photos for a job.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_issues',
     description: 'Get open issues or snags for a job.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_documents',
     description: 'Get documents associated with a job (RAMS, permits, drawings).',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_active_jobs',
@@ -1028,40 +1232,49 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_jobs_by_client',
     description: 'Get all jobs for a specific client.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'client', type: 'string', required: true, description: 'Client name' }
-    ],
+    parameters: [{ name: 'client', type: 'string', required: true, description: 'Client name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_jobs_by_status',
     description: 'Get jobs filtered by status.',
     category: 'Query - Jobs',
     parameters: [
-      { name: 'status', type: 'string', required: true, description: 'Job status', enumValues: JOB_STATUSES }
+      {
+        name: 'status',
+        type: 'string',
+        required: true,
+        description: 'Job status',
+        enumValues: JOB_STATUSES,
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_upcoming_deadlines',
     description: 'Get jobs with deadlines coming up soon.',
     category: 'Query - Jobs',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 14)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 14)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_overdue_jobs',
@@ -1070,104 +1283,109 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_jobs_starting_soon',
     description: 'Get jobs scheduled to start soon.',
     category: 'Query - Jobs',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 7)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 7)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_pack_status',
     description: 'Check if a job has a complete job pack with all required documents.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_jobs_without_rams',
-    description: 'Get jobs that don\'t have RAMS documents.',
+    description: "Get jobs that don't have RAMS documents.",
     category: 'Query - Jobs',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_jobs_by_location',
     description: 'Get jobs in a specific area or location.',
     category: 'Query - Jobs',
     parameters: [
-      { name: 'location', type: 'string', required: true, description: 'Location or area to search' }
+      {
+        name: 'location',
+        type: 'string',
+        required: true,
+        description: 'Location or area to search',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_timeline',
     description: 'Get the activity timeline for a job.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_checklist',
     description: 'Get the checklist items for a job.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_archived_jobs',
     description: 'Get archived/completed jobs.',
     category: 'Query - Jobs',
     parameters: [
-      { name: 'limit', type: 'number', required: false, description: 'Number of jobs to return (default 10)' }
+      {
+        name: 'limit',
+        type: 'number',
+        required: false,
+        description: 'Number of jobs to return (default 10)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'search_jobs',
     description: 'Search jobs by title, client, or location.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'query', type: 'string', required: true, description: 'Search term' }
-    ],
+    parameters: [{ name: 'query', type: 'string', required: true, description: 'Search term' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_value',
     description: 'Get the value/worth of a job.',
     category: 'Query - Jobs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -1175,35 +1393,44 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'get_worker_locations',
-    description: 'Get all workers\' current locations. Use when user asks where everyone is.',
+    description: "Get all workers' current locations. Use when user asks where everyone is.",
     category: 'Query - Location',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_worker_location',
-    description: 'Get a specific worker\'s current location.',
+    description: "Get a specific worker's current location.",
     category: 'Query - Location',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_nearest_worker',
-    description: 'Find the nearest available worker to a job or location. Use for urgent call-outs.',
+    description:
+      'Find the nearest available worker to a job or location. Use for urgent call-outs.',
     category: 'Query - Location',
     parameters: [
-      { name: 'jobTitle', type: 'string', required: false, description: 'Job title to check distance from' },
-      { name: 'location', type: 'string', required: false, description: 'Location to check distance from' }
+      {
+        name: 'jobTitle',
+        type: 'string',
+        required: false,
+        description: 'Job title to check distance from',
+      },
+      {
+        name: 'location',
+        type: 'string',
+        required: false,
+        description: 'Location to check distance from',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_workers_on_site',
@@ -1212,7 +1439,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_workers_en_route',
@@ -1221,7 +1448,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_workers_at_office',
@@ -1230,29 +1457,25 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_worker_check_in_time',
     description: 'Get when a worker checked in at their current location.',
     category: 'Query - Location',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_workers_at_job',
     description: 'Get workers currently at a specific job site.',
     category: 'Query - Location',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -1264,11 +1487,16 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Query - Finance',
     parameters: [
       { name: 'client', type: 'string', required: false, description: 'Client name to filter' },
-      { name: 'status', type: 'string', required: false, description: 'Status to filter (draft, sent, accepted, rejected)' }
+      {
+        name: 'status',
+        type: 'string',
+        required: false,
+        description: 'Status to filter (draft, sent, accepted, rejected)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_invoice_info',
@@ -1276,11 +1504,16 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Query - Finance',
     parameters: [
       { name: 'client', type: 'string', required: false, description: 'Client name to filter' },
-      { name: 'status', type: 'string', required: false, description: 'Status to filter (draft, sent, paid, overdue)' }
+      {
+        name: 'status',
+        type: 'string',
+        required: false,
+        description: 'Status to filter (draft, sent, paid, overdue)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_overdue_invoices',
@@ -1289,7 +1522,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_pending_expenses',
@@ -1298,29 +1531,34 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_supplier_info',
     description: 'Get information about suppliers.',
     category: 'Query - Finance',
     parameters: [
-      { name: 'name', type: 'string', required: false, description: 'Supplier name to search' }
+      { name: 'name', type: 'string', required: false, description: 'Supplier name to search' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_revenue_summary',
     description: 'Get revenue collected in a period.',
     category: 'Query - Finance',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_outstanding_amount',
@@ -1329,7 +1567,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_quotes_pending',
@@ -1338,18 +1576,23 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_quotes_expiring',
     description: 'Get quotes expiring soon.',
     category: 'Query - Finance',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 7)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 7)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_quote_conversion_rate',
@@ -1358,7 +1601,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_invoices_due_today',
@@ -1367,29 +1610,25 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_client_balance',
     description: 'Get outstanding balance for a client.',
     category: 'Query - Finance',
-    parameters: [
-      { name: 'client', type: 'string', required: true, description: 'Client name' }
-    ],
+    parameters: [{ name: 'client', type: 'string', required: true, description: 'Client name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_supplier_balance',
     description: 'Get balance owed to a supplier.',
     category: 'Query - Finance',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Supplier name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Supplier name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_pending_orders',
@@ -1398,29 +1637,32 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_expense_total',
     description: 'Get total expenses for a period.',
     category: 'Query - Finance',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_price_book_item',
     description: 'Get price for an item from the price book.',
     category: 'Query - Finance',
-    parameters: [
-      { name: 'item', type: 'string', required: true, description: 'Item name or SKU' }
-    ],
+    parameters: [{ name: 'item', type: 'string', required: true, description: 'Item name or SKU' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_labour_rates',
@@ -1429,40 +1671,41 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_cash_flow_forecast',
     description: 'Get expected cash flow based on invoices and expenses.',
     category: 'Query - Finance',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to forecast (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to forecast (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_profit_by_job',
     description: 'Get profit margin for a job.',
     category: 'Query - Finance',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'search_quotes',
     description: 'Search quotes by client, number, or description.',
     category: 'Query - Finance',
-    parameters: [
-      { name: 'query', type: 'string', required: true, description: 'Search term' }
-    ],
+    parameters: [{ name: 'query', type: 'string', required: true, description: 'Search term' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -1475,73 +1718,84 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tender_info',
     description: 'Get detailed information about a specific tender.',
     category: 'Query - Tenders',
     parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Tender title or reference' }
+      { name: 'title', type: 'string', required: true, description: 'Tender title or reference' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tender_deadlines',
     description: 'Get tenders with upcoming submission deadlines.',
     category: 'Query - Tenders',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 14)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 14)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tender_value',
     description: 'Get the estimated value of a tender.',
     category: 'Query - Tenders',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Tender title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Tender title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tender_documents',
     description: 'Get documents attached to a tender.',
     category: 'Query - Tenders',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Tender title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Tender title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_won_tenders',
     description: 'Get tenders that have been won.',
     category: 'Query - Tenders',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 90)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 90)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_lost_tenders',
     description: 'Get tenders that were lost.',
     category: 'Query - Tenders',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 90)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 90)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tender_win_rate',
@@ -1550,7 +1804,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tender_pipeline',
@@ -1559,29 +1813,25 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tenders_by_client',
     description: 'Get tenders for a specific client.',
     category: 'Query - Tenders',
-    parameters: [
-      { name: 'client', type: 'string', required: true, description: 'Client name' }
-    ],
+    parameters: [{ name: 'client', type: 'string', required: true, description: 'Client name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tender_status',
     description: 'Get the current status of a tender.',
     category: 'Query - Tenders',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Tender title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Tender title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_submitted_tenders',
@@ -1590,7 +1840,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_draft_tenders',
@@ -1599,7 +1849,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'compare_tenders',
@@ -1608,7 +1858,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -1621,29 +1871,29 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_incident_info',
     description: 'Get details about a specific incident.',
     category: 'Query - Safety',
     parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Incident title or reference' }
+      { name: 'title', type: 'string', required: true, description: 'Incident title or reference' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_rams_status',
     description: 'Get RAMS document status.',
     category: 'Query - Safety',
     parameters: [
-      { name: 'title', type: 'string', required: false, description: 'RAMS or job title' }
+      { name: 'title', type: 'string', required: false, description: 'RAMS or job title' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_pending_rams',
@@ -1652,40 +1902,48 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_rams_expiring',
     description: 'Get RAMS documents expiring soon.',
     category: 'Query - Safety',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_rams',
     description: 'Get RAMS for a specific job.',
     category: 'Query - Safety',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_training_due',
     description: 'Get training records expiring soon.',
     category: 'Query - Safety',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_briefings_due',
@@ -1694,7 +1952,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_compliance_status',
@@ -1703,73 +1961,85 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_incidents_by_job',
     description: 'Get incidents for a specific job.',
     category: 'Query - Safety',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_incidents_by_severity',
     description: 'Get incidents filtered by severity.',
     category: 'Query - Safety',
     parameters: [
-      { name: 'severity', type: 'string', required: true, description: 'Severity level', enumValues: INCIDENT_SEVERITIES }
+      {
+        name: 'severity',
+        type: 'string',
+        required: true,
+        description: 'Severity level',
+        enumValues: INCIDENT_SEVERITIES,
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_incident_count',
     description: 'Get incident count for a period.',
     category: 'Query - Safety',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_policy_status',
     description: 'Get policy acknowledgement status.',
     category: 'Query - Safety',
-    parameters: [
-      { name: 'policy', type: 'string', required: false, description: 'Policy name' }
-    ],
+    parameters: [{ name: 'policy', type: 'string', required: false, description: 'Policy name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_workers_missing_briefing',
-    description: 'Get workers who haven\'t completed required briefings.',
+    description: "Get workers who haven't completed required briefings.",
     category: 'Query - Safety',
     parameters: [
-      { name: 'briefing', type: 'string', required: false, description: 'Briefing type' }
+      { name: 'briefing', type: 'string', required: false, description: 'Briefing type' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_near_misses',
     description: 'Get recent near-miss reports.',
     category: 'Query - Safety',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_safety_stats',
@@ -1778,7 +2048,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -1789,11 +2059,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     description: 'Get job pack details and document list.',
     category: 'Query - Job Packs',
     parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job pack or job title' }
+      { name: 'title', type: 'string', required: true, description: 'Job pack or job title' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_incomplete_job_packs',
@@ -1802,49 +2072,43 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_pack_documents',
     description: 'List all documents in a job pack.',
     category: 'Query - Job Packs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job pack title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job pack title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_pack_acknowledgements',
     description: 'Get worker acknowledgements for a job pack.',
     category: 'Query - Job Packs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job pack title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job pack title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_worker_job_packs',
     description: 'Get job packs assigned to a worker.',
     category: 'Query - Job Packs',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Worker name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Worker name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_packs_not_sent',
-    description: 'Get job packs that haven\'t been sent to workers.',
+    description: "Get job packs that haven't been sent to workers.",
     category: 'Query - Job Packs',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_packs_awaiting_ack',
@@ -1853,60 +2117,59 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_pack_missing_docs',
     description: 'Get which documents are missing from a job pack.',
     category: 'Query - Job Packs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job pack title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job pack title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_jobs_awaiting_pack',
-    description: 'Get jobs that don\'t have job packs created.',
+    description: "Get jobs that don't have job packs created.",
     category: 'Query - Job Packs',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_job_pack_status',
     description: 'Get the status of a job pack (draft, complete, sent).',
     category: 'Query - Job Packs',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job pack title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job pack title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_recent_job_packs',
     description: 'Get recently created or updated job packs.',
     category: 'Query - Job Packs',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 7)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 7)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'search_job_packs',
     description: 'Search job packs by title, client, or content.',
     category: 'Query - Job Packs',
-    parameters: [
-      { name: 'query', type: 'string', required: true, description: 'Search term' }
-    ],
+    parameters: [{ name: 'query', type: 'string', required: true, description: 'Search term' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -1919,73 +2182,93 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_vehicle_info',
     description: 'Get details about a specific vehicle.',
     category: 'Query - Fleet',
     parameters: [
-      { name: 'registration', type: 'string', required: true, description: 'Vehicle registration or name' }
+      {
+        name: 'registration',
+        type: 'string',
+        required: true,
+        description: 'Vehicle registration or name',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_vehicle_location',
     description: 'Get current location of a vehicle.',
     category: 'Query - Fleet',
     parameters: [
-      { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' }
+      { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_mot_due',
     description: 'Get vehicles with MOT due soon.',
     category: 'Query - Fleet',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_service_due',
     description: 'Get vehicles due for service.',
     category: 'Query - Fleet',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_fuel_costs',
     description: 'Get fuel spending summary.',
     category: 'Query - Fleet',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_vehicle_assigned_to',
     description: 'Get who is assigned to a vehicle.',
     category: 'Query - Fleet',
     parameters: [
-      { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' }
+      { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_vehicle_issues',
@@ -1994,29 +2277,29 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_vehicle_history',
     description: 'Get service and usage history for a vehicle.',
     category: 'Query - Fleet',
     parameters: [
-      { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' }
+      { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_vehicle_documents',
     description: 'Get documents for a vehicle (insurance, MOT, etc).',
     category: 'Query - Fleet',
     parameters: [
-      { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' }
+      { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_available_vehicles',
@@ -2025,7 +2308,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_fleet_summary',
@@ -2034,7 +2317,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -2047,29 +2330,27 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_snags_by_job',
     description: 'Get snags for a specific job.',
     category: 'Query - Quality',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_snag_info',
     description: 'Get details about a specific snag.',
     category: 'Query - Quality',
     parameters: [
-      { name: 'id', type: 'string', required: true, description: 'Snag ID or description' }
+      { name: 'id', type: 'string', required: true, description: 'Snag ID or description' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_snag_count',
@@ -2078,29 +2359,32 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_snag_history',
     description: 'Get snag resolution history.',
     category: 'Query - Quality',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_worker_snags',
     description: 'Get snags assigned to a worker.',
     category: 'Query - Quality',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Worker name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Worker name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_urgent_snags',
@@ -2109,29 +2393,32 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_snag_photos',
     description: 'Get photos attached to snags.',
     category: 'Query - Quality',
-    parameters: [
-      { name: 'id', type: 'string', required: true, description: 'Snag ID' }
-    ],
+    parameters: [{ name: 'id', type: 'string', required: true, description: 'Snag ID' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_recent_snags',
     description: 'Get recently logged snags.',
     category: 'Query - Quality',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 7)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 7)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_snag_resolution_time',
@@ -2140,7 +2427,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -2153,29 +2440,27 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tests_by_job',
     description: 'Get tests for a specific job.',
     category: 'Query - Testing',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_test_certificates',
     description: 'Get test certificates generated.',
     category: 'Query - Testing',
     parameters: [
-      { name: 'jobTitle', type: 'string', required: false, description: 'Filter by job' }
+      { name: 'jobTitle', type: 'string', required: false, description: 'Filter by job' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_failed_tests',
@@ -2184,7 +2469,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_test_summary',
@@ -2193,18 +2478,18 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_qualified_testers',
     description: 'Get employees qualified to perform tests.',
     category: 'Query - Testing',
     parameters: [
-      { name: 'testType', type: 'string', required: false, description: 'Type of test' }
+      { name: 'testType', type: 'string', required: false, description: 'Type of test' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_retests_due',
@@ -2213,7 +2498,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_test_types',
@@ -2222,7 +2507,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_tester_workload',
@@ -2231,18 +2516,23 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_test_schedule',
     description: 'Get scheduled tests.',
     category: 'Query - Testing',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to show (default 7)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to show (default 7)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -2252,45 +2542,44 @@ export const voiceToolsRegistry: VoiceTool[] = [
     name: 'get_job_photos',
     description: 'Get photos for a job.',
     category: 'Query - Photos',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_recent_photos',
     description: 'Get recently uploaded photos.',
     category: 'Query - Photos',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 7)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 7)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_photo_count',
     description: 'Get photo count for a job.',
     category: 'Query - Photos',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_photos_by_worker',
     description: 'Get photos uploaded by a worker.',
     category: 'Query - Photos',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Worker name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Worker name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_photos_by_type',
@@ -2298,42 +2587,38 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Query - Photos',
     parameters: [
       { name: 'type', type: 'string', required: true, description: 'Photo type' },
-      { name: 'jobTitle', type: 'string', required: false, description: 'Filter by job' }
+      { name: 'jobTitle', type: 'string', required: false, description: 'Filter by job' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_photo_timeline',
     description: 'Get chronological photo timeline for a job.',
     category: 'Query - Photos',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_before_after_photos',
     description: 'Get before and after comparison photos.',
     category: 'Query - Photos',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_jobs_without_photos',
-    description: 'Get jobs that don\'t have any photos.',
+    description: "Get jobs that don't have any photos.",
     category: 'Query - Photos',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -2343,12 +2628,10 @@ export const voiceToolsRegistry: VoiceTool[] = [
     name: 'get_progress_logs',
     description: 'Get progress logs for a job.',
     category: 'Query - Progress',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_todays_logs',
@@ -2357,51 +2640,57 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_worker_logs',
     description: 'Get progress logs by a worker.',
     category: 'Query - Progress',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Worker name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Worker name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_recent_progress',
     description: 'Get recent progress across all jobs.',
     category: 'Query - Progress',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 3)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 3)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_progress_summary',
     description: 'Get AI-generated progress summary for a job.',
     category: 'Query - Progress',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_jobs_without_updates',
-    description: 'Get jobs that haven\'t had progress updates recently.',
+    description: "Get jobs that haven't had progress updates recently.",
     category: 'Query - Progress',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days without updates (default 3)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days without updates (default 3)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_delays_reported',
@@ -2410,18 +2699,18 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_progress_by_date',
     description: 'Get progress logs for a specific date.',
     category: 'Query - Progress',
     parameters: [
-      { name: 'date', type: 'string', required: true, description: 'Date (YYYY-MM-DD)' }
+      { name: 'date', type: 'string', required: true, description: 'Date (YYYY-MM-DD)' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -2431,23 +2720,21 @@ export const voiceToolsRegistry: VoiceTool[] = [
     name: 'get_client_portal_status',
     description: 'Get client portal access status for a job.',
     category: 'Query - Client Portal',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_client_messages',
     description: 'Get messages from clients.',
     category: 'Query - Client Portal',
     parameters: [
-      { name: 'jobTitle', type: 'string', required: false, description: 'Filter by job' }
+      { name: 'jobTitle', type: 'string', required: false, description: 'Filter by job' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_pending_signoffs',
@@ -2456,29 +2743,32 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_client_signoffs',
     description: 'Get signoffs for a job.',
     category: 'Query - Client Portal',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_client_feedback',
     description: 'Get feedback received from clients.',
     category: 'Query - Client Portal',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_unread_client_messages',
@@ -2487,7 +2777,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_active_portal_invites',
@@ -2496,18 +2786,16 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_client_portal_activity',
     description: 'Get recent client portal activity.',
     category: 'Query - Client Portal',
-    parameters: [
-      { name: 'title', type: 'string', required: false, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: false, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -2517,65 +2805,64 @@ export const voiceToolsRegistry: VoiceTool[] = [
     name: 'get_elecid_info',
     description: 'Get ElecID details for an employee.',
     category: 'Query - ElecID',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'verify_elecid',
     description: 'Verify an ElecID number is valid.',
     category: 'Query - ElecID',
     parameters: [
-      { name: 'elecidNumber', type: 'string', required: true, description: 'ElecID number' }
+      { name: 'elecidNumber', type: 'string', required: true, description: 'ElecID number' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_elecid_credentials',
     description: 'Get verified credentials from an ElecID.',
     category: 'Query - ElecID',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_elecids_expiring',
     description: 'Get ElecIDs with certifications expiring soon.',
     category: 'Query - ElecID',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days ahead to check (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days ahead to check (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_employees_without_elecid',
-    description: 'Get employees who don\'t have an ElecID.',
+    description: "Get employees who don't have an ElecID.",
     category: 'Query - ElecID',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_elecid_verification_history',
     description: 'Get verification history for an ElecID.',
     category: 'Query - ElecID',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_unverified_elecids',
@@ -2584,18 +2871,23 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_elecid_scan_log',
     description: 'Get recent ElecID scans.',
     category: 'Query - ElecID',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Days to look back (default 7)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Days to look back (default 7)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -2606,12 +2898,22 @@ export const voiceToolsRegistry: VoiceTool[] = [
     description: 'Approve timesheets for an employee.',
     category: 'Approvals',
     parameters: [
-      { name: 'employeeName', type: 'string', required: false, description: 'Employee name. If not provided, approves all pending.' },
-      { name: 'approveAll', type: 'boolean', required: false, description: 'Approve all pending timesheets' }
+      {
+        name: 'employeeName',
+        type: 'string',
+        required: false,
+        description: 'Employee name. If not provided, approves all pending.',
+      },
+      {
+        name: 'approveAll',
+        type: 'boolean',
+        required: false,
+        description: 'Approve all pending timesheets',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'reject_timesheet',
@@ -2619,22 +2921,22 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Approvals',
     parameters: [
       { name: 'employeeName', type: 'string', required: true, description: 'Employee name' },
-      { name: 'reason', type: 'string', required: false, description: 'Rejection reason' }
+      { name: 'reason', type: 'string', required: false, description: 'Rejection reason' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'approve_leave',
     description: 'Approve a leave request.',
     category: 'Approvals',
     parameters: [
-      { name: 'employeeName', type: 'string', required: true, description: 'Employee name' }
+      { name: 'employeeName', type: 'string', required: true, description: 'Employee name' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'reject_leave',
@@ -2642,11 +2944,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Approvals',
     parameters: [
       { name: 'employeeName', type: 'string', required: true, description: 'Employee name' },
-      { name: 'reason', type: 'string', required: false, description: 'Rejection reason' }
+      { name: 'reason', type: 'string', required: false, description: 'Rejection reason' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'approve_expense',
@@ -2654,11 +2956,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Approvals',
     parameters: [
       { name: 'employeeName', type: 'string', required: false, description: 'Employee name' },
-      { name: 'approveAll', type: 'boolean', required: false, description: 'Approve all pending' }
+      { name: 'approveAll', type: 'boolean', required: false, description: 'Approve all pending' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'reject_expense',
@@ -2666,22 +2968,20 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Approvals',
     parameters: [
       { name: 'employeeName', type: 'string', required: true, description: 'Employee name' },
-      { name: 'reason', type: 'string', required: false, description: 'Rejection reason' }
+      { name: 'reason', type: 'string', required: false, description: 'Rejection reason' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'approve_rams',
     description: 'Approve a RAMS document.',
     category: 'Approvals',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'RAMS title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'RAMS title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'reject_rams',
@@ -2689,55 +2989,59 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Approvals',
     parameters: [
       { name: 'title', type: 'string', required: true, description: 'RAMS title' },
-      { name: 'reason', type: 'string', required: true, description: 'Rejection reason' }
+      { name: 'reason', type: 'string', required: true, description: 'Rejection reason' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'approve_all_pending',
     description: 'Approve all pending items (timesheets, leave, expenses).',
     category: 'Approvals',
     parameters: [
-      { name: 'type', type: 'string', required: true, description: 'Type to approve', enumValues: ['timesheets', 'leave', 'expenses', 'all'] }
+      {
+        name: 'type',
+        type: 'string',
+        required: true,
+        description: 'Type to approve',
+        enumValues: ['timesheets', 'leave', 'expenses', 'all'],
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'approve_quote',
     description: 'Mark a quote as approved internally.',
     category: 'Approvals',
     parameters: [
-      { name: 'quoteNumber', type: 'string', required: true, description: 'Quote number' }
+      { name: 'quoteNumber', type: 'string', required: true, description: 'Quote number' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'approve_order',
     description: 'Approve a material order.',
     category: 'Approvals',
     parameters: [
-      { name: 'orderNumber', type: 'string', required: true, description: 'Order number' }
+      { name: 'orderNumber', type: 'string', required: true, description: 'Order number' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'approve_job_pack',
     description: 'Approve a job pack as complete.',
     category: 'Approvals',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job pack title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job pack title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -2745,56 +3049,154 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'create_quote',
-    description: 'Create a simple quote with basic details. For comprehensive quotes with full client info, labour, and materials, use create_and_send_quote instead.',
+    description:
+      'Create a simple quote with basic details. For comprehensive quotes with full client info, labour, and materials, use create_and_send_quote instead.',
     category: 'Creation',
     parameters: [
       { name: 'client', type: 'string', required: true, description: 'Client name' },
       { name: 'description', type: 'string', required: false, description: 'Quote description' },
       { name: 'value', type: 'number', required: false, description: 'Quote value in pounds' },
-      { name: 'email', type: 'string', required: false, description: 'Client email' }
+      { name: 'email', type: 'string', required: false, description: 'Client email' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_and_send_quote',
-    description: 'Create a quote and save it as a draft for review. By default saves WITHOUT sending email. Set sendNow=true only if user explicitly asks to send immediately.',
+    description:
+      'Create a quote and save it as a draft for review. By default saves WITHOUT sending email. Set sendNow=true only if user explicitly asks to send immediately.',
     category: 'Creation',
     parameters: [
       // Client details - MUST match edge function param names exactly
       { name: 'clientName', type: 'string', required: true, description: 'Client full name' },
       { name: 'clientEmail', type: 'string', required: true, description: 'Client email address' },
       { name: 'clientPhone', type: 'string', required: false, description: 'Client phone number' },
-      { name: 'clientAddress', type: 'string', required: false, description: 'Client street address' },
+      {
+        name: 'clientAddress',
+        type: 'string',
+        required: false,
+        description: 'Client street address',
+      },
       { name: 'clientPostcode', type: 'string', required: false, description: 'Client postcode' },
       // Job details
-      { name: 'jobTitle', type: 'string', required: true, description: 'Short job title e.g. Kitchen Rewire' },
-      { name: 'jobDescription', type: 'string', required: false, description: 'Detailed scope of work' },
-      { name: 'jobLocation', type: 'string', required: false, description: 'Job site address if different from client' },
+      {
+        name: 'jobTitle',
+        type: 'string',
+        required: true,
+        description: 'Short job title e.g. Kitchen Rewire',
+      },
+      {
+        name: 'jobDescription',
+        type: 'string',
+        required: false,
+        description: 'Detailed scope of work',
+      },
+      {
+        name: 'jobLocation',
+        type: 'string',
+        required: false,
+        description: 'Job site address if different from client',
+      },
       { name: 'estimatedDuration', type: 'string', required: false, description: 'e.g. 2 days' },
-      { name: 'workStartDate', type: 'string', required: false, description: 'Proposed start date' },
-      { name: 'specialRequirements', type: 'string', required: false, description: 'Any special requirements' },
+      {
+        name: 'workStartDate',
+        type: 'string',
+        required: false,
+        description: 'Proposed start date',
+      },
+      {
+        name: 'specialRequirements',
+        type: 'string',
+        required: false,
+        description: 'Any special requirements',
+      },
       // Line item - use these for the quote total
-      { name: 'itemDescription', type: 'string', required: true, description: 'Work item description e.g. Consumer unit upgrade' },
-      { name: 'itemQuantity', type: 'number', required: false, description: 'Quantity (default 1)' },
-      { name: 'itemUnitPrice', type: 'number', required: true, description: 'Unit price in pounds' },
-      { name: 'itemCategory', type: 'string', required: false, description: 'labour, materials, or other', enumValues: ['labour', 'materials', 'other'] },
+      {
+        name: 'itemDescription',
+        type: 'string',
+        required: true,
+        description: 'Work item description e.g. Consumer unit upgrade',
+      },
+      {
+        name: 'itemQuantity',
+        type: 'number',
+        required: false,
+        description: 'Quantity (default 1)',
+      },
+      {
+        name: 'itemUnitPrice',
+        type: 'number',
+        required: true,
+        description: 'Unit price in pounds',
+      },
+      {
+        name: 'itemCategory',
+        type: 'string',
+        required: false,
+        description: 'labour, materials, or other',
+        enumValues: ['labour', 'materials', 'other'],
+      },
       // Financial settings
-      { name: 'labourRate', type: 'number', required: false, description: 'Labour rate per hour (default 45)' },
-      { name: 'overheadPercentage', type: 'number', required: false, description: 'Overhead percentage (default 10)' },
-      { name: 'profitMargin', type: 'number', required: false, description: 'Profit margin percentage (default 15)' },
-      { name: 'vatRate', type: 'number', required: false, description: 'VAT rate percentage (default 20)' },
-      { name: 'vatRegistered', type: 'boolean', required: false, description: 'Include VAT in quote (default true)' },
-      { name: 'breakdownMaterials', type: 'boolean', required: false, description: 'Show materials breakdown (default false)' },
+      {
+        name: 'labourRate',
+        type: 'number',
+        required: false,
+        description: 'Labour rate per hour (default 45)',
+      },
+      {
+        name: 'overheadPercentage',
+        type: 'number',
+        required: false,
+        description: 'Overhead percentage (default 10)',
+      },
+      {
+        name: 'profitMargin',
+        type: 'number',
+        required: false,
+        description: 'Profit margin percentage (default 15)',
+      },
+      {
+        name: 'vatRate',
+        type: 'number',
+        required: false,
+        description: 'VAT rate percentage (default 20)',
+      },
+      {
+        name: 'vatRegistered',
+        type: 'boolean',
+        required: false,
+        description: 'Include VAT in quote (default true)',
+      },
+      {
+        name: 'breakdownMaterials',
+        type: 'boolean',
+        required: false,
+        description: 'Show materials breakdown (default false)',
+      },
       // Extras
-      { name: 'notes', type: 'string', required: false, description: 'Additional notes for the quote' },
-      { name: 'expiryDays', type: 'number', required: false, description: 'Days until quote expires (default 30)' },
-      { name: 'sendNow', type: 'boolean', required: false, description: 'Send email immediately (true) or save as draft (false, default)' }
+      {
+        name: 'notes',
+        type: 'string',
+        required: false,
+        description: 'Additional notes for the quote',
+      },
+      {
+        name: 'expiryDays',
+        type: 'number',
+        required: false,
+        description: 'Days until quote expires (default 30)',
+      },
+      {
+        name: 'sendNow',
+        type: 'boolean',
+        required: false,
+        description: 'Send email immediately (true) or save as draft (false, default)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: true,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_job',
@@ -2805,11 +3207,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'client', type: 'string', required: true, description: 'Client name' },
       { name: 'location', type: 'string', required: true, description: 'Job location/address' },
       { name: 'description', type: 'string', required: false, description: 'Job description' },
-      { name: 'value', type: 'number', required: false, description: 'Job value in pounds' }
+      { name: 'value', type: 'number', required: false, description: 'Job value in pounds' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_employee',
@@ -2820,11 +3222,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'role', type: 'string', required: false, description: 'Job role' },
       { name: 'email', type: 'string', required: false, description: 'Email address' },
       { name: 'phone', type: 'string', required: false, description: 'Phone number' },
-      { name: 'hourlyRate', type: 'number', required: false, description: 'Hourly rate in pounds' }
+      { name: 'hourlyRate', type: 'number', required: false, description: 'Hourly rate in pounds' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_invoice',
@@ -2834,11 +3236,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'client', type: 'string', required: true, description: 'Client name' },
       { name: 'amount', type: 'number', required: false, description: 'Invoice amount' },
       { name: 'project', type: 'string', required: false, description: 'Related job/project' },
-      { name: 'quoteId', type: 'string', required: false, description: 'Quote to convert' }
+      { name: 'quoteId', type: 'string', required: false, description: 'Quote to convert' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_expense',
@@ -2847,13 +3249,19 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'employeeName', type: 'string', required: true, description: 'Employee name' },
       { name: 'amount', type: 'number', required: true, description: 'Expense amount' },
-      { name: 'category', type: 'string', required: false, description: 'Expense category', enumValues: EXPENSE_CATEGORIES },
+      {
+        name: 'category',
+        type: 'string',
+        required: false,
+        description: 'Expense category',
+        enumValues: EXPENSE_CATEGORIES,
+      },
       { name: 'description', type: 'string', required: false, description: 'Description' },
-      { name: 'jobTitle', type: 'string', required: false, description: 'Related job' }
+      { name: 'jobTitle', type: 'string', required: false, description: 'Related job' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_time_entry',
@@ -2864,11 +3272,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'hours', type: 'number', required: true, description: 'Hours worked' },
       { name: 'jobTitle', type: 'string', required: false, description: 'Job worked on' },
       { name: 'date', type: 'string', required: false, description: 'Date (YYYY-MM-DD)' },
-      { name: 'notes', type: 'string', required: false, description: 'Work notes' }
+      { name: 'notes', type: 'string', required: false, description: 'Work notes' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_incident',
@@ -2877,13 +3285,19 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'title', type: 'string', required: true, description: 'Incident title' },
       { name: 'description', type: 'string', required: false, description: 'What happened' },
-      { name: 'severity', type: 'string', required: false, description: 'Severity level', enumValues: INCIDENT_SEVERITIES },
+      {
+        name: 'severity',
+        type: 'string',
+        required: false,
+        description: 'Severity level',
+        enumValues: INCIDENT_SEVERITIES,
+      },
       { name: 'location', type: 'string', required: false, description: 'Where it happened' },
-      { name: 'jobTitle', type: 'string', required: false, description: 'Related job' }
+      { name: 'jobTitle', type: 'string', required: false, description: 'Related job' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'post_vacancy',
@@ -2894,11 +3308,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'location', type: 'string', required: true, description: 'Work location' },
       { name: 'salaryMin', type: 'number', required: false, description: 'Minimum salary' },
       { name: 'salaryMax', type: 'number', required: false, description: 'Maximum salary' },
-      { name: 'type', type: 'string', required: false, description: 'Employment type' }
+      { name: 'type', type: 'string', required: false, description: 'Employment type' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_rams',
@@ -2907,22 +3321,22 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'title', type: 'string', required: true, description: 'RAMS title' },
       { name: 'jobTitle', type: 'string', required: false, description: 'Related job' },
-      { name: 'scope', type: 'string', required: false, description: 'Scope of work' }
+      { name: 'scope', type: 'string', required: false, description: 'Scope of work' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_rams_ai',
     description: 'AI-generate RAMS from job description.',
     category: 'Creation',
     parameters: [
-      { name: 'jobTitle', type: 'string', required: true, description: 'Job to generate RAMS for' }
+      { name: 'jobTitle', type: 'string', required: true, description: 'Job to generate RAMS for' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_job_pack',
@@ -2931,11 +3345,16 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job to create pack for' },
       { name: 'includeRams', type: 'boolean', required: false, description: 'Include RAMS' },
-      { name: 'includeBriefing', type: 'boolean', required: false, description: 'Include briefing' }
+      {
+        name: 'includeBriefing',
+        type: 'boolean',
+        required: false,
+        description: 'Include briefing',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_tender',
@@ -2945,11 +3364,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'title', type: 'string', required: true, description: 'Tender title' },
       { name: 'client', type: 'string', required: true, description: 'Client name' },
       { name: 'value', type: 'number', required: false, description: 'Estimated value' },
-      { name: 'deadline', type: 'string', required: false, description: 'Submission deadline' }
+      { name: 'deadline', type: 'string', required: false, description: 'Submission deadline' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_order',
@@ -2958,11 +3377,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'supplier', type: 'string', required: true, description: 'Supplier name' },
       { name: 'jobTitle', type: 'string', required: false, description: 'Job for order' },
-      { name: 'items', type: 'string', required: false, description: 'Items to order' }
+      { name: 'items', type: 'string', required: false, description: 'Items to order' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_supplier',
@@ -2972,11 +3391,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'name', type: 'string', required: true, description: 'Supplier name' },
       { name: 'email', type: 'string', required: false, description: 'Email address' },
       { name: 'phone', type: 'string', required: false, description: 'Phone number' },
-      { name: 'category', type: 'string', required: false, description: 'Supplier category' }
+      { name: 'category', type: 'string', required: false, description: 'Supplier category' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_training_record',
@@ -2987,11 +3406,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'trainingName', type: 'string', required: true, description: 'Training/course name' },
       { name: 'completedDate', type: 'string', required: false, description: 'Completion date' },
       { name: 'expiryDate', type: 'string', required: false, description: 'Expiry date' },
-      { name: 'provider', type: 'string', required: false, description: 'Training provider' }
+      { name: 'provider', type: 'string', required: false, description: 'Training provider' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_briefing',
@@ -3000,11 +3419,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'title', type: 'string', required: true, description: 'Briefing title' },
       { name: 'jobTitle', type: 'string', required: false, description: 'Related job' },
-      { name: 'content', type: 'string', required: false, description: 'Briefing content' }
+      { name: 'content', type: 'string', required: false, description: 'Briefing content' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_certification',
@@ -3015,22 +3434,27 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'certName', type: 'string', required: true, description: 'Certification name' },
       { name: 'issueDate', type: 'string', required: false, description: 'Issue date' },
       { name: 'expiryDate', type: 'string', required: false, description: 'Expiry date' },
-      { name: 'certificateNumber', type: 'string', required: false, description: 'Certificate number' }
+      {
+        name: 'certificateNumber',
+        type: 'string',
+        required: false,
+        description: 'Certificate number',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_elecid',
     description: 'Create an ElecID for an employee.',
     category: 'Creation',
     parameters: [
-      { name: 'employeeName', type: 'string', required: true, description: 'Employee name' }
+      { name: 'employeeName', type: 'string', required: true, description: 'Employee name' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'log_snag',
@@ -3039,11 +3463,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job the snag is on' },
       { name: 'description', type: 'string', required: true, description: 'Description of issue' },
-      { name: 'severity', type: 'string', required: false, description: 'Severity level' }
+      { name: 'severity', type: 'string', required: false, description: 'Severity level' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_test',
@@ -3052,11 +3476,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job to test' },
       { name: 'testType', type: 'string', required: true, description: 'Type of test' },
-      { name: 'tester', type: 'string', required: false, description: 'Tester name' }
+      { name: 'tester', type: 'string', required: false, description: 'Tester name' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'log_progress',
@@ -3065,11 +3489,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
       { name: 'notes', type: 'string', required: true, description: 'Progress notes' },
-      { name: 'workerName', type: 'string', required: false, description: 'Worker logging' }
+      { name: 'workerName', type: 'string', required: false, description: 'Worker logging' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'log_fuel',
@@ -3079,11 +3503,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'vehicle', type: 'string', required: true, description: 'Vehicle registration' },
       { name: 'amount', type: 'number', required: true, description: 'Cost in pounds' },
       { name: 'litres', type: 'number', required: false, description: 'Litres purchased' },
-      { name: 'mileage', type: 'number', required: false, description: 'Current mileage' }
+      { name: 'mileage', type: 'number', required: false, description: 'Current mileage' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'report_vehicle_issue',
@@ -3092,11 +3516,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'vehicle', type: 'string', required: true, description: 'Vehicle registration' },
       { name: 'issue', type: 'string', required: true, description: 'Description of issue' },
-      { name: 'severity', type: 'string', required: false, description: 'Severity level' }
+      { name: 'severity', type: 'string', required: false, description: 'Severity level' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_leave_request',
@@ -3104,14 +3528,20 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Creation',
     parameters: [
       { name: 'employeeName', type: 'string', required: true, description: 'Employee name' },
-      { name: 'type', type: 'string', required: true, description: 'Leave type', enumValues: LEAVE_TYPES },
+      {
+        name: 'type',
+        type: 'string',
+        required: true,
+        description: 'Leave type',
+        enumValues: LEAVE_TYPES,
+      },
       { name: 'startDate', type: 'string', required: true, description: 'Start date' },
       { name: 'endDate', type: 'string', required: true, description: 'End date' },
-      { name: 'reason', type: 'string', required: false, description: 'Reason for leave' }
+      { name: 'reason', type: 'string', required: false, description: 'Reason for leave' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'add_price_book_item',
@@ -3122,11 +3552,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'category', type: 'string', required: true, description: 'Category' },
       { name: 'buyPrice', type: 'number', required: true, description: 'Buy price' },
       { name: 'sellPrice', type: 'number', required: true, description: 'Sell price' },
-      { name: 'unit', type: 'string', required: false, description: 'Unit of measurement' }
+      { name: 'unit', type: 'string', required: false, description: 'Unit of measurement' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'add_vehicle',
@@ -3134,13 +3564,19 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Creation',
     parameters: [
       { name: 'registration', type: 'string', required: true, description: 'Registration number' },
-      { name: 'type', type: 'string', required: true, description: 'Vehicle type', enumValues: VEHICLE_TYPES },
+      {
+        name: 'type',
+        type: 'string',
+        required: true,
+        description: 'Vehicle type',
+        enumValues: VEHICLE_TYPES,
+      },
       { name: 'make', type: 'string', required: false, description: 'Make/manufacturer' },
-      { name: 'model', type: 'string', required: false, description: 'Model' }
+      { name: 'model', type: 'string', required: false, description: 'Model' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'schedule_interview',
@@ -3150,11 +3586,16 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'candidateName', type: 'string', required: true, description: 'Candidate name' },
       { name: 'date', type: 'string', required: true, description: 'Interview date' },
       { name: 'time', type: 'string', required: true, description: 'Interview time' },
-      { name: 'vacancyTitle', type: 'string', required: false, description: 'Vacancy applying for' }
+      {
+        name: 'vacancyTitle',
+        type: 'string',
+        required: false,
+        description: 'Vacancy applying for',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'create_contract',
@@ -3164,11 +3605,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'title', type: 'string', required: true, description: 'Contract title' },
       { name: 'client', type: 'string', required: true, description: 'Client name' },
       { name: 'value', type: 'number', required: false, description: 'Contract value' },
-      { name: 'startDate', type: 'string', required: false, description: 'Start date' }
+      { name: 'startDate', type: 'string', required: false, description: 'Start date' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'request_client_signoff',
@@ -3176,11 +3617,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Creation',
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
-      { name: 'stage', type: 'string', required: true, description: 'Stage to sign off' }
+      { name: 'stage', type: 'string', required: true, description: 'Stage to sign off' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -3192,11 +3633,17 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'title', type: 'string', required: true, description: 'Job title' },
-      { name: 'status', type: 'string', required: true, description: 'New status', enumValues: JOB_STATUSES }
+      {
+        name: 'status',
+        type: 'string',
+        required: true,
+        description: 'New status',
+        enumValues: JOB_STATUSES,
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'update_job_progress',
@@ -3204,11 +3651,16 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'title', type: 'string', required: true, description: 'Job title' },
-      { name: 'progress', type: 'number', required: true, description: 'Progress percentage (0-100)' }
+      {
+        name: 'progress',
+        type: 'number',
+        required: true,
+        description: 'Progress percentage (0-100)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'assign_worker_to_job',
@@ -3217,11 +3669,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'workerName', type: 'string', required: true, description: 'Worker name' },
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
-      { name: 'startDate', type: 'string', required: false, description: 'Start date' }
+      { name: 'startDate', type: 'string', required: false, description: 'Start date' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'remove_worker_from_job',
@@ -3229,11 +3681,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'workerName', type: 'string', required: true, description: 'Worker name' },
-      { name: 'jobTitle', type: 'string', required: true, description: 'Job title' }
+      { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'update_quote_status',
@@ -3241,22 +3693,28 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'quoteNumber', type: 'string', required: true, description: 'Quote number' },
-      { name: 'status', type: 'string', required: true, description: 'New status', enumValues: ['draft', 'sent', 'accepted', 'rejected', 'expired'] }
+      {
+        name: 'status',
+        type: 'string',
+        required: true,
+        description: 'New status',
+        enumValues: ['draft', 'sent', 'accepted', 'rejected', 'expired'],
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'mark_invoice_paid',
     description: 'Mark an invoice as paid.',
     category: 'Updates',
     parameters: [
-      { name: 'invoiceNumber', type: 'string', required: true, description: 'Invoice number' }
+      { name: 'invoiceNumber', type: 'string', required: true, description: 'Invoice number' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'update_tender_status',
@@ -3264,11 +3722,17 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'title', type: 'string', required: true, description: 'Tender title' },
-      { name: 'status', type: 'string', required: true, description: 'New status', enumValues: ['draft', 'submitted', 'won', 'lost', 'withdrawn'] }
+      {
+        name: 'status',
+        type: 'string',
+        required: true,
+        description: 'New status',
+        enumValues: ['draft', 'submitted', 'won', 'lost', 'withdrawn'],
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'resolve_snag',
@@ -3276,11 +3740,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'id', type: 'string', required: true, description: 'Snag ID or description' },
-      { name: 'resolution', type: 'string', required: false, description: 'How it was resolved' }
+      { name: 'resolution', type: 'string', required: false, description: 'How it was resolved' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'escalate_snag',
@@ -3288,11 +3752,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'id', type: 'string', required: true, description: 'Snag ID' },
-      { name: 'reason', type: 'string', required: false, description: 'Escalation reason' }
+      { name: 'reason', type: 'string', required: false, description: 'Escalation reason' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'close_incident',
@@ -3300,11 +3764,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'title', type: 'string', required: true, description: 'Incident title' },
-      { name: 'resolution', type: 'string', required: false, description: 'Resolution notes' }
+      { name: 'resolution', type: 'string', required: false, description: 'Resolution notes' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'record_test_result',
@@ -3312,12 +3776,18 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'testId', type: 'string', required: true, description: 'Test ID' },
-      { name: 'result', type: 'string', required: true, description: 'Pass or Fail', enumValues: ['pass', 'fail'] },
-      { name: 'notes', type: 'string', required: false, description: 'Result notes' }
+      {
+        name: 'result',
+        type: 'string',
+        required: true,
+        description: 'Pass or Fail',
+        enumValues: ['pass', 'fail'],
+      },
+      { name: 'notes', type: 'string', required: false, description: 'Result notes' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'complete_checklist_item',
@@ -3325,11 +3795,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
-      { name: 'item', type: 'string', required: true, description: 'Checklist item' }
+      { name: 'item', type: 'string', required: true, description: 'Checklist item' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'assign_vehicle',
@@ -3337,11 +3807,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' },
-      { name: 'employeeName', type: 'string', required: true, description: 'Employee name' }
+      { name: 'employeeName', type: 'string', required: true, description: 'Employee name' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'update_mileage',
@@ -3349,22 +3819,22 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'registration', type: 'string', required: true, description: 'Vehicle registration' },
-      { name: 'mileage', type: 'number', required: true, description: 'Current mileage' }
+      { name: 'mileage', type: 'number', required: true, description: 'Current mileage' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'mark_order_received',
     description: 'Mark a material order as received.',
     category: 'Updates',
     parameters: [
-      { name: 'orderNumber', type: 'string', required: true, description: 'Order number' }
+      { name: 'orderNumber', type: 'string', required: true, description: 'Order number' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'assign_snag',
@@ -3372,11 +3842,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'id', type: 'string', required: true, description: 'Snag ID' },
-      { name: 'workerName', type: 'string', required: true, description: 'Worker to assign' }
+      { name: 'workerName', type: 'string', required: true, description: 'Worker to assign' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'assign_tester',
@@ -3384,11 +3854,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'testId', type: 'string', required: true, description: 'Test ID' },
-      { name: 'testerName', type: 'string', required: true, description: 'Tester name' }
+      { name: 'testerName', type: 'string', required: true, description: 'Tester name' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'assign_rams_to_job',
@@ -3396,11 +3866,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'ramsTitle', type: 'string', required: true, description: 'RAMS title' },
-      { name: 'jobTitle', type: 'string', required: true, description: 'Job title' }
+      { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'add_document_to_job_pack',
@@ -3408,11 +3878,17 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'jobPackTitle', type: 'string', required: true, description: 'Job pack title' },
-      { name: 'documentType', type: 'string', required: true, description: 'Document type', enumValues: DOCUMENT_TYPES }
+      {
+        name: 'documentType',
+        type: 'string',
+        required: true,
+        description: 'Document type',
+        enumValues: DOCUMENT_TYPES,
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'update_employee_status',
@@ -3420,11 +3896,17 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'name', type: 'string', required: true, description: 'Employee name' },
-      { name: 'status', type: 'string', required: true, description: 'New status', enumValues: ['Active', 'Inactive', 'On Leave'] }
+      {
+        name: 'status',
+        type: 'string',
+        required: true,
+        description: 'New status',
+        enumValues: ['Active', 'Inactive', 'On Leave'],
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'flag_delay',
@@ -3433,11 +3915,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
       { name: 'reason', type: 'string', required: true, description: 'Delay reason' },
-      { name: 'days', type: 'number', required: false, description: 'Days delayed' }
+      { name: 'days', type: 'number', required: false, description: 'Days delayed' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'mark_briefing_attended',
@@ -3445,22 +3927,20 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'briefingTitle', type: 'string', required: true, description: 'Briefing title' },
-      { name: 'workerName', type: 'string', required: true, description: 'Worker name' }
+      { name: 'workerName', type: 'string', required: true, description: 'Worker name' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'archive_job',
     description: 'Archive a completed job.',
     category: 'Updates',
-    parameters: [
-      { name: 'title', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'title', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'duplicate_job',
@@ -3468,11 +3948,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Updates',
     parameters: [
       { name: 'title', type: 'string', required: true, description: 'Job to duplicate' },
-      { name: 'newTitle', type: 'string', required: false, description: 'New job title' }
+      { name: 'newTitle', type: 'string', required: false, description: 'New job title' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -3483,22 +3963,27 @@ export const voiceToolsRegistry: VoiceTool[] = [
     description: 'Email a quote to the client.',
     category: 'Communication',
     parameters: [
-      { name: 'quoteNumber', type: 'string', required: true, description: 'Quote number to send' }
+      { name: 'quoteNumber', type: 'string', required: true, description: 'Quote number to send' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_invoice',
     description: 'Email an invoice to the client.',
     category: 'Communication',
     parameters: [
-      { name: 'invoiceNumber', type: 'string', required: true, description: 'Invoice number to send' }
+      {
+        name: 'invoiceNumber',
+        type: 'string',
+        required: true,
+        description: 'Invoice number to send',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'email_worker',
@@ -3507,11 +3992,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'workerName', type: 'string', required: true, description: 'Worker name' },
       { name: 'subject', type: 'string', required: true, description: 'Email subject' },
-      { name: 'message', type: 'string', required: true, description: 'Email message' }
+      { name: 'message', type: 'string', required: true, description: 'Email message' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_worker_message',
@@ -3519,11 +4004,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Communication',
     parameters: [
       { name: 'workerName', type: 'string', required: true, description: 'Worker name' },
-      { name: 'message', type: 'string', required: true, description: 'Message content' }
+      { name: 'message', type: 'string', required: true, description: 'Message content' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_team_message',
@@ -3531,11 +4016,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Communication',
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
-      { name: 'message', type: 'string', required: true, description: 'Message to send' }
+      { name: 'message', type: 'string', required: true, description: 'Message to send' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_job_update_to_client',
@@ -3543,22 +4028,22 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Communication',
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
-      { name: 'message', type: 'string', required: true, description: 'Update message' }
+      { name: 'message', type: 'string', required: true, description: 'Update message' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_job_pack',
     description: 'Email a job pack to assigned workers.',
     category: 'Communication',
     parameters: [
-      { name: 'jobPackTitle', type: 'string', required: true, description: 'Job pack title' }
+      { name: 'jobPackTitle', type: 'string', required: true, description: 'Job pack title' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_rams',
@@ -3566,11 +4051,16 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Communication',
     parameters: [
       { name: 'ramsTitle', type: 'string', required: true, description: 'RAMS title' },
-      { name: 'workerName', type: 'string', required: false, description: 'Specific worker (optional)' }
+      {
+        name: 'workerName',
+        type: 'string',
+        required: false,
+        description: 'Specific worker (optional)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_client_portal_invite',
@@ -3579,22 +4069,20 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
       { name: 'clientEmail', type: 'string', required: true, description: 'Client email' },
-      { name: 'clientName', type: 'string', required: false, description: 'Client name' }
+      { name: 'clientName', type: 'string', required: false, description: 'Client name' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'share_photos_with_client',
     description: 'Share job photos with the client.',
     category: 'Communication',
-    parameters: [
-      { name: 'jobTitle', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'jobTitle', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'email_certificate',
@@ -3602,22 +4090,22 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Communication',
     parameters: [
       { name: 'certificateId', type: 'string', required: true, description: 'Certificate ID' },
-      { name: 'email', type: 'string', required: false, description: 'Recipient email' }
+      { name: 'email', type: 'string', required: false, description: 'Recipient email' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_training_reminder',
     description: 'Send training expiry reminder.',
     category: 'Communication',
     parameters: [
-      { name: 'workerName', type: 'string', required: true, description: 'Worker name' }
+      { name: 'workerName', type: 'string', required: true, description: 'Worker name' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_briefing_invite',
@@ -3625,11 +4113,16 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Communication',
     parameters: [
       { name: 'briefingTitle', type: 'string', required: true, description: 'Briefing title' },
-      { name: 'workers', type: 'string', required: false, description: 'Worker names (comma-separated)' }
+      {
+        name: 'workers',
+        type: 'string',
+        required: false,
+        description: 'Worker names (comma-separated)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'send_policy_for_acknowledgement',
@@ -3637,11 +4130,16 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Communication',
     parameters: [
       { name: 'policyTitle', type: 'string', required: true, description: 'Policy title' },
-      { name: 'workers', type: 'string', required: false, description: 'Worker names (all if not specified)' }
+      {
+        name: 'workers',
+        type: 'string',
+        required: false,
+        description: 'Worker names (all if not specified)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'share_elecid',
@@ -3649,45 +4147,43 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'Communication',
     parameters: [
       { name: 'workerName', type: 'string', required: true, description: 'Worker name' },
-      { name: 'recipientEmail', type: 'string', required: true, description: 'Recipient email' }
+      { name: 'recipientEmail', type: 'string', required: true, description: 'Recipient email' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'initiate_call',
     description: 'Start a phone call to an employee or client.',
     category: 'Communication',
     parameters: [
-      { name: 'phoneNumber', type: 'string', required: true, description: 'Phone number to call' }
+      { name: 'phoneNumber', type: 'string', required: true, description: 'Phone number to call' },
     ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'get_employee_phone',
-    description: 'Get an employee\'s phone number before calling.',
+    description: "Get an employee's phone number before calling.",
     category: 'Communication',
-    parameters: [
-      { name: 'name', type: 'string', required: true, description: 'Employee name' }
-    ],
+    parameters: [{ name: 'name', type: 'string', required: true, description: 'Employee name' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_client_phone',
-    description: 'Get a client\'s phone number.',
+    description: "Get a client's phone number.",
     category: 'Communication',
     parameters: [
       { name: 'client', type: 'string', required: false, description: 'Client name' },
-      { name: 'jobTitle', type: 'string', required: false, description: 'Job to get client from' }
+      { name: 'jobTitle', type: 'string', required: false, description: 'Job to get client from' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -3700,55 +4196,61 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'startDate', type: 'string', required: false, description: 'Report start date' },
       { name: 'endDate', type: 'string', required: false, description: 'Report end date' },
-      { name: 'employeeName', type: 'string', required: false, description: 'Filter by employee' }
+      { name: 'employeeName', type: 'string', required: false, description: 'Filter by employee' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_job_report',
     description: 'Generate a job status report.',
     category: 'Reports',
     parameters: [
-      { name: 'jobTitle', type: 'string', required: false, description: 'Specific job or all jobs' }
+      {
+        name: 'jobTitle',
+        type: 'string',
+        required: false,
+        description: 'Specific job or all jobs',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_financial_report',
     description: 'Generate a financial summary report.',
     category: 'Reports',
     parameters: [
-      { name: 'period', type: 'string', required: false, description: 'Report period (week, month, quarter, year)' }
+      {
+        name: 'period',
+        type: 'string',
+        required: false,
+        description: 'Report period (week, month, quarter, year)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_safety_report',
     description: 'Generate a safety and incident report.',
     category: 'Reports',
-    parameters: [
-      { name: 'period', type: 'string', required: false, description: 'Report period' }
-    ],
+    parameters: [{ name: 'period', type: 'string', required: false, description: 'Report period' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_snag_report',
     description: 'Generate a snag/quality report for a job.',
     category: 'Reports',
-    parameters: [
-      { name: 'jobTitle', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'jobTitle', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_training_matrix',
@@ -3757,7 +4259,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_compliance_report',
@@ -3766,40 +4268,42 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_fleet_report',
     description: 'Generate a fleet status and costs report.',
     category: 'Reports',
-    parameters: [
-      { name: 'period', type: 'string', required: false, description: 'Report period' }
-    ],
+    parameters: [{ name: 'period', type: 'string', required: false, description: 'Report period' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_tender_report',
     description: 'Generate a tender performance report.',
     category: 'Reports',
-    parameters: [
-      { name: 'period', type: 'string', required: false, description: 'Report period' }
-    ],
+    parameters: [{ name: 'period', type: 'string', required: false, description: 'Report period' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'export_data',
     description: 'Export data to CSV.',
     category: 'Reports',
     parameters: [
-      { name: 'dataType', type: 'string', required: true, description: 'Data to export', enumValues: ['jobs', 'employees', 'timesheets', 'quotes', 'invoices', 'expenses'] }
+      {
+        name: 'dataType',
+        type: 'string',
+        required: true,
+        description: 'Data to export',
+        enumValues: ['jobs', 'employees', 'timesheets', 'quotes', 'invoices', 'expenses'],
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -3810,22 +4314,20 @@ export const voiceToolsRegistry: VoiceTool[] = [
     description: 'AI-generate RAMS from job description.',
     category: 'AI Generation',
     parameters: [
-      { name: 'jobTitle', type: 'string', required: true, description: 'Job to generate RAMS for' }
+      { name: 'jobTitle', type: 'string', required: true, description: 'Job to generate RAMS for' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_method_statement',
     description: 'AI-generate a method statement.',
     category: 'AI Generation',
-    parameters: [
-      { name: 'jobTitle', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'jobTitle', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_briefing',
@@ -3833,55 +4335,58 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'AI Generation',
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
-      { name: 'topics', type: 'string', required: false, description: 'Specific topics to cover' }
+      { name: 'topics', type: 'string', required: false, description: 'Specific topics to cover' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_tender_estimate',
     description: 'AI-generate a tender cost estimate.',
     category: 'AI Generation',
     parameters: [
-      { name: 'tenderTitle', type: 'string', required: true, description: 'Tender title' }
+      { name: 'tenderTitle', type: 'string', required: true, description: 'Tender title' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'expand_description',
     description: 'AI-expand a brief job description.',
     category: 'AI Generation',
     parameters: [
-      { name: 'description', type: 'string', required: true, description: 'Brief description to expand' }
+      {
+        name: 'description',
+        type: 'string',
+        required: true,
+        description: 'Brief description to expand',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'summarise_progress',
     description: 'AI-summarise job progress.',
     category: 'AI Generation',
-    parameters: [
-      { name: 'jobTitle', type: 'string', required: true, description: 'Job title' }
-    ],
+    parameters: [{ name: 'jobTitle', type: 'string', required: true, description: 'Job title' }],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_quote_from_description',
     description: 'AI-generate quote line items from a description.',
     category: 'AI Generation',
     parameters: [
-      { name: 'description', type: 'string', required: true, description: 'Work description' }
+      { name: 'description', type: 'string', required: true, description: 'Work description' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'generate_test_certificate',
@@ -3889,11 +4394,11 @@ export const voiceToolsRegistry: VoiceTool[] = [
     category: 'AI Generation',
     parameters: [
       { name: 'jobTitle', type: 'string', required: true, description: 'Job title' },
-      { name: 'testType', type: 'string', required: true, description: 'Type of test' }
+      { name: 'testType', type: 'string', required: true, description: 'Type of test' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -3901,16 +4406,33 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'get_quote_suggestions',
-    description: 'Get AI-powered suggestions for items to include in a quote based on the job type. Use this when the user describes a job they need to quote for, especially for complex jobs like office fit outs, rewires, or commercial installations. The AI will suggest commonly missed items, relevant BS 7671 regulations, and pricing guidance.',
+    description:
+      'Get AI-powered suggestions for items to include in a quote based on the job type. Use this when the user describes a job they need to quote for, especially for complex jobs like office fit outs, rewires, or commercial installations. The AI will suggest commonly missed items, relevant BS 7671 regulations, and pricing guidance.',
     category: 'AI Quote Advisor',
     parameters: [
-      { name: 'jobDescription', type: 'string', required: true, description: 'Description of the job type (e.g., "office fit out 200sqm", "domestic rewire 3-bed house", "consumer unit replacement")' },
-      { name: 'itemsAlreadyAdded', type: 'string', required: false, description: 'Items already added to the quote, comma-separated' },
-      { name: 'isCommercial', type: 'boolean', required: false, description: 'Whether this is a commercial job (affects regulations and complexity)' }
+      {
+        name: 'jobDescription',
+        type: 'string',
+        required: true,
+        description:
+          'Description of the job type (e.g., "office fit out 200sqm", "domestic rewire 3-bed house", "consumer unit replacement")',
+      },
+      {
+        name: 'itemsAlreadyAdded',
+        type: 'string',
+        required: false,
+        description: 'Items already added to the quote, comma-separated',
+      },
+      {
+        name: 'isCommercial',
+        type: 'boolean',
+        required: false,
+        description: 'Whether this is a commercial job (affects regulations and complexity)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: true,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -3918,34 +4440,49 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'lookup_price',
-    description: 'Look up the price, stock level and margin for a material or product from the price book. Use this when users ask about prices, costs, or want to check material pricing.',
+    description:
+      'Look up the price, stock level and margin for a material or product from the price book. Use this when users ask about prices, costs, or want to check material pricing.',
     category: 'Price Book',
     parameters: [
-      { name: 'searchTerm', type: 'string', required: true, description: 'Material or product name to search for (e.g., "2.5mm twin and earth", "consumer unit", "LED downlight")' }
+      {
+        name: 'searchTerm',
+        type: 'string',
+        required: true,
+        description:
+          'Material or product name to search for (e.g., "2.5mm twin and earth", "consumer unit", "LED downlight")',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'search_price_book_category',
-    description: 'List all items in a price book category. Use this when users want to see what products are available in a category like cables, lighting, accessories, etc.',
+    description:
+      'List all items in a price book category. Use this when users want to see what products are available in a category like cables, lighting, accessories, etc.',
     category: 'Price Book',
     parameters: [
-      { name: 'category', type: 'string', required: true, description: 'Category name to search (e.g., "Cables", "Lighting", "Accessories", "Consumer Units")' }
+      {
+        name: 'category',
+        type: 'string',
+        required: true,
+        description:
+          'Category name to search (e.g., "Cables", "Lighting", "Accessories", "Consumer Units")',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_low_stock_items',
-    description: 'Get a list of materials and products that are below their reorder level. Use when users ask what needs reordering or which items are low on stock.',
+    description:
+      'Get a list of materials and products that are below their reorder level. Use when users ask what needs reordering or which items are low on stock.',
     category: 'Price Book',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
 
   // ============================================
@@ -3953,15 +4490,26 @@ export const voiceToolsRegistry: VoiceTool[] = [
   // ============================================
   {
     name: 'add_circuit',
-    description: 'Add a new circuit to the schedule of tests. Use when recording test results for a new circuit.',
+    description:
+      'Add a new circuit to the schedule of tests. Use when recording test results for a new circuit.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'type', type: 'string', required: false, description: 'Circuit type (e.g., ring, radial, lighting)' },
-      { name: 'rating', type: 'string', required: false, description: 'Protective device rating (e.g., 32A, 20A, 6A)' }
+      {
+        name: 'type',
+        type: 'string',
+        required: false,
+        description: 'Circuit type (e.g., ring, radial, lighting)',
+      },
+      {
+        name: 'rating',
+        type: 'string',
+        required: false,
+        description: 'Protective device rating (e.g., 32A, 20A, 6A)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'next_circuit',
@@ -3970,7 +4518,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'previous_circuit',
@@ -3979,18 +4527,18 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'select_circuit',
     description: 'Select a specific circuit by number.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'number', type: 'number', required: true, description: 'Circuit number to select' }
+      { name: 'number', type: 'number', required: true, description: 'Circuit number to select' },
     ],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'remove_circuit',
@@ -3999,7 +4547,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'set_polarity_ok',
@@ -4008,175 +4556,280 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [],
     waitForResponse: false,
     disableInterruptions: false,
-    executionMode: 'immediate'
+    executionMode: 'immediate',
   },
   {
     name: 'set_test_result',
     description: 'Set a specific test result value for the current circuit.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'field', type: 'string', required: true, description: 'Test field (zs, r1r2, ir, rcd_time, etc.)' },
-      { name: 'value', type: 'string', required: true, description: 'Test result value' }
+      {
+        name: 'field',
+        type: 'string',
+        required: true,
+        description: 'Test field (zs, r1r2, ir, rcd_time, etc.)',
+      },
+      { name: 'value', type: 'string', required: true, description: 'Test result value' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   // BULK CIRCUIT TOOLS - For filling multiple circuits at once
   {
     name: 'set_field_all_circuits',
-    description: 'Set the same value for a specific field across ALL circuits at once. Use when the user says "set IR voltage to 500 for all circuits" or "all circuits polarity OK". Much faster than setting one at a time.',
+    description:
+      'Set the same value for a specific field across ALL circuits at once. Use when the user says "set IR voltage to 500 for all circuits" or "all circuits polarity OK". Much faster than setting one at a time.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'field', type: 'string', required: true, description: 'Field name (insulationTestVoltage, polarity, zs, r1r2, rcdOneX, etc.)' },
-      { name: 'value', type: 'string', required: true, description: 'Value to set for all circuits' }
+      {
+        name: 'field',
+        type: 'string',
+        required: true,
+        description: 'Field name (insulationTestVoltage, polarity, zs, r1r2, rcdOneX, etc.)',
+      },
+      {
+        name: 'value',
+        type: 'string',
+        required: true,
+        description: 'Value to set for all circuits',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'set_circuit_field',
-    description: 'Set a specific field value for a specific circuit number directly, without having to navigate to it first. Use this to update any circuit by number.',
+    description:
+      'Set a specific field value for a specific circuit number directly, without having to navigate to it first. Use this to update any circuit by number.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'circuit_number', type: 'number', required: true, description: 'Circuit number (1, 2, 3, etc.)' },
-      { name: 'field', type: 'string', required: true, description: 'Field name (zs, r1r2, insulationTestVoltage, polarity, etc.)' },
-      { name: 'value', type: 'string', required: true, description: 'Value to set' }
+      {
+        name: 'circuit_number',
+        type: 'number',
+        required: true,
+        description: 'Circuit number (1, 2, 3, etc.)',
+      },
+      {
+        name: 'field',
+        type: 'string',
+        required: true,
+        description: 'Field name (zs, r1r2, insulationTestVoltage, polarity, etc.)',
+      },
+      { name: 'value', type: 'string', required: true, description: 'Value to set' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'set_multiple_fields',
-    description: 'Set multiple field values at once for a circuit. Use when user gives several test results together like "Zs 0.45, R1+R2 0.28, polarity OK".',
+    description:
+      'Set multiple field values at once for a circuit. Use when user gives several test results together like "Zs 0.45, R1+R2 0.28, polarity OK".',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'circuit_number', type: 'number', required: false, description: 'Circuit number (optional, uses current circuit if not specified)' },
-      { name: 'zs', type: 'string', required: false, description: 'Earth fault loop impedance value' },
+      {
+        name: 'circuit_number',
+        type: 'number',
+        required: false,
+        description: 'Circuit number (optional, uses current circuit if not specified)',
+      },
+      {
+        name: 'zs',
+        type: 'string',
+        required: false,
+        description: 'Earth fault loop impedance value',
+      },
       { name: 'r1r2', type: 'string', required: false, description: 'R1+R2 continuity value' },
-      { name: 'polarity', type: 'string', required: false, description: 'Polarity result (OK, Correct, etc.)' },
-      { name: 'insulationTestVoltage', type: 'string', required: false, description: 'IR test voltage (250, 500, 1000)' },
-      { name: 'insulationLiveEarth', type: 'string', required: false, description: 'Live-Earth insulation reading' },
-      { name: 'insulationLiveNeutral', type: 'string', required: false, description: 'Live-Neutral insulation reading' },
+      {
+        name: 'polarity',
+        type: 'string',
+        required: false,
+        description: 'Polarity result (OK, Correct, etc.)',
+      },
+      {
+        name: 'insulationTestVoltage',
+        type: 'string',
+        required: false,
+        description: 'IR test voltage (250, 500, 1000)',
+      },
+      {
+        name: 'insulationLiveEarth',
+        type: 'string',
+        required: false,
+        description: 'Live-Earth insulation reading',
+      },
+      {
+        name: 'insulationLiveNeutral',
+        type: 'string',
+        required: false,
+        description: 'Live-Neutral insulation reading',
+      },
       { name: 'rcdOneX', type: 'string', required: false, description: 'RCD trip time at 1x' },
-      { name: 'pfc', type: 'string', required: false, description: 'Prospective fault current' }
+      { name: 'pfc', type: 'string', required: false, description: 'Prospective fault current' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_circuits_status',
-    description: 'Get a summary of all circuits showing which fields are filled and which are missing. Use to check progress and identify incomplete circuits.',
+    description:
+      'Get a summary of all circuits showing which fields are filled and which are missing. Use to check progress and identify incomplete circuits.',
     category: 'Certificate Testing',
     parameters: [],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   // SUB-BOARD TOOLS - For working with multiple distribution boards
   {
     name: 'select_board',
-    description: 'Select a distribution board to work with (main consumer unit or sub-board). All subsequent circuit operations will apply to the selected board.',
+    description:
+      'Select a distribution board to work with (main consumer unit or sub-board). All subsequent circuit operations will apply to the selected board.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'board', type: 'string', required: true, description: 'Board name or reference (main, main-cu, sub-db-1, garage, kitchen, etc.)' }
+      {
+        name: 'board',
+        type: 'string',
+        required: true,
+        description: 'Board name or reference (main, main-cu, sub-db-1, garage, kitchen, etc.)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'add_circuit_to_board',
-    description: 'Add a new circuit directly to a specific board without having to select it first.',
+    description:
+      'Add a new circuit directly to a specific board without having to select it first.',
     category: 'Certificate Testing',
     parameters: [
       { name: 'board', type: 'string', required: true, description: 'Board name or reference' },
-      { name: 'type', type: 'string', required: false, description: 'Circuit type (ring, radial, lighting, cooker, shower)' },
-      { name: 'rating', type: 'string', required: false, description: 'Protective device rating (32A, 20A, 6A, etc.)' },
-      { name: 'description', type: 'string', required: false, description: 'Circuit description' }
+      {
+        name: 'type',
+        type: 'string',
+        required: false,
+        description: 'Circuit type (ring, radial, lighting, cooker, shower)',
+      },
+      {
+        name: 'rating',
+        type: 'string',
+        required: false,
+        description: 'Protective device rating (32A, 20A, 6A, etc.)',
+      },
+      { name: 'description', type: 'string', required: false, description: 'Circuit description' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'set_board_field_all_circuits',
-    description: 'Set the same value for a specific field across ALL circuits on a SPECIFIC board. Use when filling common values for one board at a time.',
+    description:
+      'Set the same value for a specific field across ALL circuits on a SPECIFIC board. Use when filling common values for one board at a time.',
     category: 'Certificate Testing',
     parameters: [
       { name: 'board', type: 'string', required: true, description: 'Board name or reference' },
       { name: 'field', type: 'string', required: true, description: 'Field name' },
-      { name: 'value', type: 'string', required: true, description: 'Value to set' }
+      { name: 'value', type: 'string', required: true, description: 'Value to set' },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_board_status',
-    description: 'Get status of all circuits on a specific board, or all boards if not specified. Shows which fields are missing.',
+    description:
+      'Get status of all circuits on a specific board, or all boards if not specified. Shows which fields are missing.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'board', type: 'string', required: false, description: 'Board name (shows all boards if not specified)' }
+      {
+        name: 'board',
+        type: 'string',
+        required: false,
+        description: 'Board name (shows all boards if not specified)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'scan_board',
-    description: 'Run AI board scanner on a specific board to auto-detect circuits from a photo. Takes a photo or uses existing photo of the board.',
+    description:
+      'Run AI board scanner on a specific board to auto-detect circuits from a photo. Takes a photo or uses existing photo of the board.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'board', type: 'string', required: true, description: 'Board to scan (main, sub-db-1, etc.)' }
+      {
+        name: 'board',
+        type: 'string',
+        required: true,
+        description: 'Board to scan (main, sub-db-1, etc.)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_cert_info',
     description: 'Query saved EICR and EIC certificates. Returns certificate details and status.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'certNumber', type: 'string', required: false, description: 'Certificate number to search for' },
-      { name: 'status', type: 'string', required: false, description: 'Filter by status (draft, completed, etc.)' }
+      {
+        name: 'certNumber',
+        type: 'string',
+        required: false,
+        description: 'Certificate number to search for',
+      },
+      {
+        name: 'status',
+        type: 'string',
+        required: false,
+        description: 'Filter by status (draft, completed, etc.)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
+    executionMode: 'wait',
   },
   {
     name: 'get_recent_certificates',
     description: 'Get recently created certificates within a specified time period.',
     category: 'Certificate Testing',
     parameters: [
-      { name: 'days', type: 'number', required: false, description: 'Number of days to look back (default 30)' }
+      {
+        name: 'days',
+        type: 'number',
+        required: false,
+        description: 'Number of days to look back (default 30)',
+      },
     ],
     waitForResponse: true,
     disableInterruptions: false,
-    executionMode: 'wait'
-  }
+    executionMode: 'wait',
+  },
 ];
 
 // Helper functions
 export const getToolsByCategory = (category: string): VoiceTool[] => {
-  return voiceToolsRegistry.filter(t => t.category === category);
+  return voiceToolsRegistry.filter((t) => t.category === category);
 };
 
 export const getCategories = (): string[] => {
-  return [...new Set(voiceToolsRegistry.map(t => t.category))];
+  return [...new Set(voiceToolsRegistry.map((t) => t.category))];
 };
 
 export const searchTools = (query: string): VoiceTool[] => {
   const q = query.toLowerCase();
-  return voiceToolsRegistry.filter(t =>
-    t.name.toLowerCase().includes(q) ||
-    t.description.toLowerCase().includes(q) ||
-    t.category.toLowerCase().includes(q)
+  return voiceToolsRegistry.filter(
+    (t) =>
+      t.name.toLowerCase().includes(q) ||
+      t.description.toLowerCase().includes(q) ||
+      t.category.toLowerCase().includes(q)
   );
 };
 
@@ -4189,15 +4842,15 @@ export const formatToolForElevenLabs = (tool: VoiceTool): object => {
   return {
     name: tool.name,
     description: tool.description,
-    parameters: tool.parameters.map(p => ({
+    parameters: tool.parameters.map((p) => ({
       type: p.type,
       identifier: p.name,
       required: p.required,
       description: p.description,
-      enum_values: p.enumValues || []
+      enum_values: p.enumValues || [],
     })),
     wait_for_response: tool.waitForResponse,
-    disable_interruptions: tool.disableInterruptions
+    disable_interruptions: tool.disableInterruptions,
   };
 };
 

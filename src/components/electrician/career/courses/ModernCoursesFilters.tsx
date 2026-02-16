@@ -1,17 +1,17 @@
-import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, X, SlidersHorizontal, ArrowUpDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, X, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { courseCategories } from "@/components/apprentice/career/courses/enhancedCoursesData";
-import type { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
+} from '@/components/ui/select';
+import { courseCategories } from '@/components/apprentice/career/courses/enhancedCoursesData';
+import type { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
 
 export interface CourseFilters {
   searchTerm: string;
@@ -31,21 +31,33 @@ interface ModernCoursesFiltersProps {
 }
 
 const categoryColors: Record<string, { bg: string; activeBg: string; text: string }> = {
-  "All Categories": { bg: "bg-white/10", activeBg: "bg-blue-500", text: "text-white" },
-  "Essential Updates": { bg: "bg-red-500/20", activeBg: "bg-red-500", text: "text-red-300" },
-  "Emerging Technologies": { bg: "bg-green-500/20", activeBg: "bg-green-500", text: "text-green-300" },
-  "Safety & Compliance": { bg: "bg-blue-500/20", activeBg: "bg-blue-500", text: "text-blue-300" },
-  "Specialised Systems": { bg: "bg-purple-500/20", activeBg: "bg-purple-500", text: "text-purple-300" },
-  "Professional Development": { bg: "bg-orange-500/20", activeBg: "bg-orange-500", text: "text-orange-300" },
-  "Business Skills": { bg: "bg-cyan-500/20", activeBg: "bg-cyan-500", text: "text-cyan-300" },
+  'All Categories': { bg: 'bg-white/10', activeBg: 'bg-blue-500', text: 'text-white' },
+  'Essential Updates': { bg: 'bg-red-500/20', activeBg: 'bg-red-500', text: 'text-red-300' },
+  'Emerging Technologies': {
+    bg: 'bg-green-500/20',
+    activeBg: 'bg-green-500',
+    text: 'text-green-300',
+  },
+  'Safety & Compliance': { bg: 'bg-blue-500/20', activeBg: 'bg-blue-500', text: 'text-blue-300' },
+  'Specialised Systems': {
+    bg: 'bg-purple-500/20',
+    activeBg: 'bg-purple-500',
+    text: 'text-purple-300',
+  },
+  'Professional Development': {
+    bg: 'bg-orange-500/20',
+    activeBg: 'bg-orange-500',
+    text: 'text-orange-300',
+  },
+  'Business Skills': { bg: 'bg-cyan-500/20', activeBg: 'bg-cyan-500', text: 'text-cyan-300' },
 };
 
 const sortOptions = [
-  { value: "rating", label: "Highest Rated" },
-  { value: "demand", label: "Highest Demand" },
-  { value: "title", label: "A-Z" },
-  { value: "duration", label: "Shortest" },
-  { value: "price", label: "Lowest Price" },
+  { value: 'rating', label: 'Highest Rated' },
+  { value: 'demand', label: 'Highest Demand' },
+  { value: 'title', label: 'A-Z' },
+  { value: 'duration', label: 'Shortest' },
+  { value: 'price', label: 'Lowest Price' },
 ];
 
 const ModernCoursesFilters = ({
@@ -53,7 +65,7 @@ const ModernCoursesFilters = ({
   filters,
   onFiltersChange,
   onReset,
-  resultCount
+  resultCount,
 }: ModernCoursesFiltersProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -61,8 +73,8 @@ const ModernCoursesFilters = ({
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   // Extract unique values for filter options
-  const levels = Array.from(new Set(courses.map(c => c.level))).sort();
-  const formats = Array.from(new Set(courses.map(c => c.format.split(',')[0].trim()))).sort();
+  const levels = Array.from(new Set(courses.map((c) => c.level))).sort();
+  const formats = Array.from(new Set(courses.map((c) => c.format.split(',')[0].trim()))).sort();
 
   const updateScrollButtons = () => {
     if (scrollRef.current) {
@@ -86,7 +98,7 @@ const ModernCoursesFilters = ({
       const scrollAmount = 200;
       scrollRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   };
@@ -96,18 +108,18 @@ const ModernCoursesFilters = ({
   };
 
   const handleCategorySelect = (category: string) => {
-    const newCategory = category === "All Categories" ? "" : category;
-    handleFilterChange("category", newCategory);
+    const newCategory = category === 'All Categories' ? '' : category;
+    handleFilterChange('category', newCategory);
   };
 
   const clearAllFilters = () => {
     onFiltersChange({
-      searchTerm: "",
-      category: "",
-      level: "",
-      format: "",
-      location: "",
-      sortBy: "rating"
+      searchTerm: '',
+      category: '',
+      level: '',
+      format: '',
+      location: '',
+      sortBy: 'rating',
     });
     onReset();
   };
@@ -116,10 +128,10 @@ const ModernCoursesFilters = ({
     filters.category,
     filters.level,
     filters.format,
-    filters.location
+    filters.location,
   ].filter(Boolean).length;
 
-  const selectedCategory = filters.category || "All Categories";
+  const selectedCategory = filters.category || 'All Categories';
 
   return (
     <motion.div
@@ -151,7 +163,7 @@ const ModernCoursesFilters = ({
         >
           {courseCategories.map((category) => {
             const isSelected = selectedCategory === category;
-            const colors = categoryColors[category] || categoryColors["All Categories"];
+            const colors = categoryColors[category] || categoryColors['All Categories'];
 
             return (
               <button
@@ -202,14 +214,21 @@ const ModernCoursesFilters = ({
           </Button>
 
           {/* Sort Dropdown */}
-          <Select value={filters.sortBy} onValueChange={(value) => handleFilterChange("sortBy", value)}>
+          <Select
+            value={filters.sortBy}
+            onValueChange={(value) => handleFilterChange('sortBy', value)}
+          >
             <SelectTrigger className="h-9 w-36 bg-white/5 border-white/10 text-white text-sm">
               <ArrowUpDown className="h-3 w-3 mr-1" />
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-white/10">
               {sortOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value} className="text-white hover:bg-white/10">
+                <SelectItem
+                  key={option.value}
+                  value={option.value}
+                  className="text-white hover:bg-white/10"
+                >
                   {option.label}
                 </SelectItem>
               ))}
@@ -232,7 +251,8 @@ const ModernCoursesFilters = ({
 
         {/* Results Count */}
         <div className="text-sm text-white">
-          <span className="font-bold text-blue-400">{resultCount}</span> {resultCount === 1 ? 'course' : 'courses'}
+          <span className="font-bold text-blue-400">{resultCount}</span>{' '}
+          {resultCount === 1 ? 'course' : 'courses'}
         </div>
       </div>
 
@@ -240,21 +260,28 @@ const ModernCoursesFilters = ({
       {showAdvanced && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
+          animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
           className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-white/5 rounded-xl border border-white/10"
         >
           {/* Level Filter */}
           <div className="space-y-1">
             <label className="text-xs font-medium text-white">Level</label>
-            <Select value={filters.level || "all"} onValueChange={(value) => handleFilterChange("level", value === "all" ? "" : value)}>
+            <Select
+              value={filters.level || 'all'}
+              onValueChange={(value) => handleFilterChange('level', value === 'all' ? '' : value)}
+            >
               <SelectTrigger className="h-9 bg-white/5 border-white/10 text-white text-sm">
                 <SelectValue placeholder="All Levels" />
               </SelectTrigger>
               <SelectContent className="bg-elec-gray border-white/10">
-                <SelectItem value="all" className="text-white hover:bg-white/10">All Levels</SelectItem>
+                <SelectItem value="all" className="text-white hover:bg-white/10">
+                  All Levels
+                </SelectItem>
                 {levels.map((level) => (
-                  <SelectItem key={level} value={level} className="text-white hover:bg-white/10">{level}</SelectItem>
+                  <SelectItem key={level} value={level} className="text-white hover:bg-white/10">
+                    {level}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -263,14 +290,21 @@ const ModernCoursesFilters = ({
           {/* Format Filter */}
           <div className="space-y-1">
             <label className="text-xs font-medium text-white">Format</label>
-            <Select value={filters.format || "all"} onValueChange={(value) => handleFilterChange("format", value === "all" ? "" : value)}>
+            <Select
+              value={filters.format || 'all'}
+              onValueChange={(value) => handleFilterChange('format', value === 'all' ? '' : value)}
+            >
               <SelectTrigger className="h-9 bg-white/5 border-white/10 text-white text-sm">
                 <SelectValue placeholder="All Formats" />
               </SelectTrigger>
               <SelectContent className="bg-elec-gray border-white/10">
-                <SelectItem value="all" className="text-white hover:bg-white/10">All Formats</SelectItem>
+                <SelectItem value="all" className="text-white hover:bg-white/10">
+                  All Formats
+                </SelectItem>
                 {formats.map((format) => (
-                  <SelectItem key={format} value={format} className="text-white hover:bg-white/10">{format}</SelectItem>
+                  <SelectItem key={format} value={format} className="text-white hover:bg-white/10">
+                    {format}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -279,15 +313,28 @@ const ModernCoursesFilters = ({
           {/* Demand Filter */}
           <div className="space-y-1">
             <label className="text-xs font-medium text-white">Demand</label>
-            <Select value={filters.location || "all"} onValueChange={(value) => handleFilterChange("location", value === "all" ? "" : value)}>
+            <Select
+              value={filters.location || 'all'}
+              onValueChange={(value) =>
+                handleFilterChange('location', value === 'all' ? '' : value)
+              }
+            >
               <SelectTrigger className="h-9 bg-white/5 border-white/10 text-white text-sm">
                 <SelectValue placeholder="All Demand" />
               </SelectTrigger>
               <SelectContent className="bg-elec-gray border-white/10">
-                <SelectItem value="all" className="text-white hover:bg-white/10">All Demand</SelectItem>
-                <SelectItem value="High" className="text-white hover:bg-white/10">High Demand</SelectItem>
-                <SelectItem value="Medium" className="text-white hover:bg-white/10">Medium Demand</SelectItem>
-                <SelectItem value="Low" className="text-white hover:bg-white/10">Low Demand</SelectItem>
+                <SelectItem value="all" className="text-white hover:bg-white/10">
+                  All Demand
+                </SelectItem>
+                <SelectItem value="High" className="text-white hover:bg-white/10">
+                  High Demand
+                </SelectItem>
+                <SelectItem value="Medium" className="text-white hover:bg-white/10">
+                  Medium Demand
+                </SelectItem>
+                <SelectItem value="Low" className="text-white hover:bg-white/10">
+                  Low Demand
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -302,7 +349,7 @@ const ModernCoursesFilters = ({
               {filters.category}
               <X
                 className="h-3 w-3 cursor-pointer hover:text-white"
-                onClick={() => handleFilterChange("category", "")}
+                onClick={() => handleFilterChange('category', '')}
               />
             </Badge>
           )}
@@ -311,7 +358,7 @@ const ModernCoursesFilters = ({
               {filters.level}
               <X
                 className="h-3 w-3 cursor-pointer hover:text-white"
-                onClick={() => handleFilterChange("level", "")}
+                onClick={() => handleFilterChange('level', '')}
               />
             </Badge>
           )}
@@ -320,7 +367,7 @@ const ModernCoursesFilters = ({
               {filters.format}
               <X
                 className="h-3 w-3 cursor-pointer hover:text-white"
-                onClick={() => handleFilterChange("format", "")}
+                onClick={() => handleFilterChange('format', '')}
               />
             </Badge>
           )}

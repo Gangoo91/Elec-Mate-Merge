@@ -1,7 +1,7 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Calculator, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Calculator, Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SmartContinueButtonProps {
   canProceed: boolean;
@@ -20,7 +20,7 @@ export const SmartContinueButton = ({
   onNext,
   onGenerate,
   className,
-  isGenerating = false
+  isGenerating = false,
 }: SmartContinueButtonProps) => {
   if (isLastStep) {
     return (
@@ -28,7 +28,7 @@ export const SmartContinueButton = ({
         onClick={onGenerate}
         disabled={!canProceed || isGenerating}
         className={cn(
-          "w-full h-12 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base sm:text-sm",
+          'w-full h-12 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base sm:text-sm',
           className
         )}
       >
@@ -52,13 +52,11 @@ export const SmartContinueButton = ({
       onClick={onNext}
       disabled={!canProceed}
       className={cn(
-        "w-full h-12 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base sm:text-sm",
+        'w-full h-12 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base sm:text-sm',
         className
       )}
     >
-      <span className="truncate">
-        Continue to {nextStepTitle}
-      </span>
+      <span className="truncate">Continue to {nextStepTitle}</span>
       <ArrowRight className="ml-2 h-4 w-4 flex-shrink-0" />
     </Button>
   );

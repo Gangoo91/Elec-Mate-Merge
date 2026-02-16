@@ -71,7 +71,9 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
   const loadEICRData = async () => {
     setIsLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const data = await reportCloud.getReportData(reportId, user.id);
@@ -98,7 +100,9 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
 
     setIsExporting(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       // Transform EICR to EIC data
@@ -155,9 +159,7 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
               <ArrowRight className="h-5 w-5 text-elec-yellow" />
               Export EICR to EIC
             </SheetTitle>
-            <SheetDescription>
-              Create a new EIC certificate from this inspection
-            </SheetDescription>
+            <SheetDescription>Create a new EIC certificate from this inspection</SheetDescription>
           </SheetHeader>
 
           <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
@@ -169,12 +171,14 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
             ) : validation && summary ? (
               <>
                 {/* Validation Status */}
-                <div className={cn(
-                  'rounded-lg border p-4',
-                  validation.isValid
-                    ? 'border-green-500/30 bg-green-500/10'
-                    : 'border-red-500/30 bg-red-500/10'
-                )}>
+                <div
+                  className={cn(
+                    'rounded-lg border p-4',
+                    validation.isValid
+                      ? 'border-green-500/30 bg-green-500/10'
+                      : 'border-red-500/30 bg-red-500/10'
+                  )}
+                >
                   <div className="flex items-start gap-3">
                     {validation.isValid ? (
                       <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
@@ -182,13 +186,13 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
                       <AlertCircle className="h-5 w-5 text-red-500 mt-0.5" />
                     )}
                     <div>
-                      <p className={cn(
-                        'font-medium',
-                        validation.isValid ? 'text-green-400' : 'text-red-400'
-                      )}>
-                        {validation.isValid
-                          ? 'Ready to export'
-                          : 'Cannot export - issues found'}
+                      <p
+                        className={cn(
+                          'font-medium',
+                          validation.isValid ? 'text-green-400' : 'text-red-400'
+                        )}
+                      >
+                        {validation.isValid ? 'Ready to export' : 'Cannot export - issues found'}
                       </p>
                       {validation.errors.length > 0 && (
                         <ul className="mt-2 space-y-1 text-sm text-red-300">

@@ -4,71 +4,73 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 export const SmartHomeModule2Section5Recap = () => {
   const keyPoints = [
     {
-      topic: "Hub Definition",
-      summary: "Central device that coordinates communication, bridges protocols, and runs local automation",
-      importance: "Foundation of reliable smart home architecture"
+      topic: 'Hub Definition',
+      summary:
+        'Central device that coordinates communication, bridges protocols, and runs local automation',
+      importance: 'Foundation of reliable smart home architecture',
     },
     {
-      topic: "Hub Advantages",
-      summary: "Local control, better scalability, mesh networking, protocol interoperability",
-      importance: "Critical for medium-large installations (10+ devices)"
+      topic: 'Hub Advantages',
+      summary: 'Local control, better scalability, mesh networking, protocol interoperability',
+      importance: 'Critical for medium-large installations (10+ devices)',
     },
     {
-      topic: "Hubless Benefits",
-      summary: "Simple setup, lower initial cost, no additional hardware required",
-      importance: "Perfect for small-scale implementations (1-10 devices)"
+      topic: 'Hubless Benefits',
+      summary: 'Simple setup, lower initial cost, no additional hardware required',
+      importance: 'Perfect for small-scale implementations (1-10 devices)',
     },
     {
-      topic: "Scalability Limits",
-      summary: "Wi-Fi congestion becomes problematic beyond 15-20 smart devices",
-      importance: "Key decision factor for system architecture choice"
+      topic: 'Scalability Limits',
+      summary: 'Wi-Fi congestion becomes problematic beyond 15-20 smart devices',
+      importance: 'Key decision factor for system architecture choice',
     },
     {
-      topic: "Hybrid Approaches",
-      summary: "Combining hub reliability with cloud convenience and voice integration",
-      importance: "Best of both worlds for comprehensive systems"
+      topic: 'Hybrid Approaches',
+      summary: 'Combining hub reliability with cloud convenience and voice integration',
+      importance: 'Best of both worlds for comprehensive systems',
     },
     {
-      topic: "Future Evolution",
-      summary: "Matter standard reducing hub dependency while edge computing enhances local processing",
-      importance: "Informs long-term planning and investment decisions"
-    }
+      topic: 'Future Evolution',
+      summary:
+        'Matter standard reducing hub dependency while edge computing enhances local processing',
+      importance: 'Informs long-term planning and investment decisions',
+    },
   ];
 
   const decisionMatrix = [
     {
-      factor: "Installation Size",
-      small: "Hubless suitable",
-      medium: "Hub recommended", 
-      large: "Hub essential"
+      factor: 'Installation Size',
+      small: 'Hubless suitable',
+      medium: 'Hub recommended',
+      large: 'Hub essential',
     },
     {
-      factor: "Technical Expertise",
-      small: "Basic setup skills",
-      medium: "Moderate networking knowledge",
-      large: "Professional installation"
+      factor: 'Technical Expertise',
+      small: 'Basic setup skills',
+      medium: 'Moderate networking knowledge',
+      large: 'Professional installation',
     },
     {
-      factor: "Budget Priority",
-      small: "Low initial cost",
-      medium: "Balanced investment",
-      large: "Long-term value"
+      factor: 'Budget Priority',
+      small: 'Low initial cost',
+      medium: 'Balanced investment',
+      large: 'Long-term value',
     },
     {
-      factor: "Reliability Needs",
-      small: "Cloud dependency OK",
-      medium: "Local backup preferred",
-      large: "Local control essential"
-    }
+      factor: 'Reliability Needs',
+      small: 'Cloud dependency OK',
+      medium: 'Local backup preferred',
+      large: 'Local control essential',
+    },
   ];
 
   const learningCheckpoints = [
-    "Can explain the role of a hub in smart home ecosystems",
-    "Understand the trade-offs between hub-based and hubless systems",
-    "Can recommend appropriate architecture based on project requirements",
-    "Recognize the limitations of Wi-Fi-only implementations at scale",
-    "Appreciate the benefits of hybrid approaches",
-    "Aware of future trends affecting hub necessity"
+    'Can explain the role of a hub in smart home ecosystems',
+    'Understand the trade-offs between hub-based and hubless systems',
+    'Can recommend appropriate architecture based on project requirements',
+    'Recognize the limitations of Wi-Fi-only implementations at scale',
+    'Appreciate the benefits of hybrid approaches',
+    'Aware of future trends affecting hub necessity',
   ];
 
   return (
@@ -81,8 +83,9 @@ export const SmartHomeModule2Section5Recap = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p className="text-foreground">
-          This section covered the fundamental architectural choice between hub-based and hubless smart home systems. 
-          Understanding this decision is crucial for designing appropriate solutions for different client needs.
+          This section covered the fundamental architectural choice between hub-based and hubless
+          smart home systems. Understanding this decision is crucial for designing appropriate
+          solutions for different client needs.
         </p>
 
         <div className="grid md:grid-cols-2 gap-4">
@@ -143,7 +146,9 @@ export const SmartHomeModule2Section5Recap = () => {
           <h4 className="text-purple-400 font-semibold mb-3">Key Installer Takeaways</h4>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <h5 className="font-medium text-foreground mb-2">For Small Projects (1-10 devices)</h5>
+              <h5 className="font-medium text-foreground mb-2">
+                For Small Projects (1-10 devices)
+              </h5>
               <ul className="text-sm text-foreground space-y-1">
                 <li>• Hubless is often sufficient and cost-effective</li>
                 <li>• Focus on strong Wi-Fi coverage</li>
@@ -164,8 +169,9 @@ export const SmartHomeModule2Section5Recap = () => {
         <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Next Steps:</h4>
           <p className="text-sm text-foreground">
-            Now that you understand hub vs hubless architectures, the next section will cover compatibility mapping 
-            and how to bridge different protocols and legacy systems in mixed environments.
+            Now that you understand hub vs hubless architectures, the next section will cover
+            compatibility mapping and how to bridge different protocols and legacy systems in mixed
+            environments.
           </p>
         </div>
       </CardContent>

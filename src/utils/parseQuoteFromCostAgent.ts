@@ -1,4 +1,4 @@
-import { QuoteItem, Quote, QuoteClient, JobDetails, QuoteSettings } from "@/types/quote";
+import { QuoteItem, Quote, QuoteClient, JobDetails, QuoteSettings } from '@/types/quote';
 
 /**
  * Parses the Cost Engineer agent's response to extract quote data
@@ -15,17 +15,20 @@ export function parseQuoteFromCostAgent(
   let finalTotal = 0;
 
   // Extract materials
-  const materialsSectionMatch = costEngineerResponse.match(/MATERIALS BREAKDOWN([\s\S]*?)(?:Subtotal Materials:|LABOUR ESTIMATE|$)/i);
+  const materialsSectionMatch = costEngineerResponse.match(
+    /MATERIALS BREAKDOWN([\s\S]*?)(?:Subtotal Materials:|LABOUR ESTIMATE|$)/i
+  );
   if (materialsSectionMatch) {
     const materialsText = materialsSectionMatch[1];
     // Match bullet point items: • [Item] (qty) - £[price] from [Supplier]
-    const materialRegex = /[•\-\*]\s*(.+?)\s*\(([^)]+)\)\s*-\s*£([\d.,]+)(?:\s+from\s+(.+?))?(?:\s+[✓⚠].*)?$/gm;
+    const materialRegex =
+      /[•\-\*]\s*(.+?)\s*\(([^)]+)\)\s*-\s*£([\d.,]+)(?:\s+from\s+(.+?))?(?:\s+[✓⚠].*)?$/gm;
     let match;
-    
+
     while ((match = materialRegex.exec(materialsText)) !== null) {
       const [, itemName, quantity, price, supplier] = match;
       const unitPrice = parseFloat(price.replace(/,/g, ''));
-      
+
       items.push({
         id: `mat-${items.length + 1}`,
         description: itemName.trim(),
@@ -34,9 +37,9 @@ export function parseQuoteFromCostAgent(
         unitPrice,
         totalPrice: unitPrice,
         category: 'materials',
-        materialCode: generateMaterialCode(itemName.trim())
+        materialCode: generateMaterialCode(itemName.trim()),
       });
-      
+
       materialsSubtotal += unitPrice;
     }
   }
@@ -48,20 +51,22 @@ export function parseQuoteFromCostAgent(
   }
 
   // Extract labour
-  const labourSectionMatch = costEngineerResponse.match(/LABOUR ESTIMATE([\s\S]*?)(?:Subtotal Labour:|PROJECT TOTAL|$)/i);
+  const labourSectionMatch = costEngineerResponse.match(
+    /LABOUR ESTIMATE([\s\S]*?)(?:Subtotal Labour:|PROJECT TOTAL|$)/i
+  );
   if (labourSectionMatch) {
     const labourText = labourSectionMatch[1];
-    
+
     // Extract installation time
     const timeMatch = labourText.match(/Installation time:\s*([\d.]+)\s*hours?/i);
     const rateMatch = labourText.match(/Rate:\s*£([\d.,]+)\/day/i);
     const costMatch = labourText.match(/Labour cost:\s*£([\d.,]+)/i);
-    
+
     if (timeMatch && costMatch) {
       const hours = parseFloat(timeMatch[1]);
       const cost = parseFloat(costMatch[1].replace(/,/g, ''));
       const rate = rateMatch ? parseFloat(rateMatch[1].replace(/,/g, '')) : 0;
-      
+
       items.push({
         id: 'labour-1',
         description: `Installation Labour (${hours} hours)`,
@@ -69,9 +74,9 @@ export function parseQuoteFromCostAgent(
         unit: 'hours',
         unitPrice: rate / 8, // Convert day rate to hourly
         totalPrice: cost,
-        category: 'labour'
+        category: 'labour',
       });
-      
+
       labourSubtotal = cost;
     }
   }
@@ -95,7 +100,7 @@ export function parseQuoteFromCostAgent(
 
   // Calculate subtotal if not found
   const subtotal = materialsSubtotal + labourSubtotal;
-  
+
   // Calculate VAT if not found (20%)
   if (!vatAmount) {
     vatAmount = subtotal * 0.2;
@@ -110,25 +115,26 @@ export function parseQuoteFromCostAgent(
   const quote: Partial<Quote> = {
     items,
     client: {
-      name: client?.name || "Client Name",
-      email: client?.email || "",
-      phone: client?.phone || "",
-      address: client?.address || "",
-      postcode: ""
+      name: client?.name || 'Client Name',
+      email: client?.email || '',
+      phone: client?.phone || '',
+      address: client?.address || '',
+      postcode: '',
     },
     jobDetails: {
-      title: jobDetails?.title || "Electrical Installation",
-      description: jobDetails?.description || "",
-      location: jobDetails?.location || ""
+      title: jobDetails?.title || 'Electrical Installation',
+      description: jobDetails?.description || '',
+      location: jobDetails?.location || '',
     },
     settings: {
-      labourRate: labourSubtotal > 0 && items.find(i => i.category === 'labour') 
-        ? (items.find(i => i.category === 'labour')!.unitPrice * 8) 
-        : 250,
+      labourRate:
+        labourSubtotal > 0 && items.find((i) => i.category === 'labour')
+          ? items.find((i) => i.category === 'labour')!.unitPrice * 8
+          : 250,
       overheadPercentage: 0,
       profitMargin: 0,
       vatRate: 20,
-      vatRegistered: true
+      vatRegistered: true,
     },
     subtotal,
     overhead: 0,
@@ -139,7 +145,7 @@ export function parseQuoteFromCostAgent(
     status: 'draft',
     expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   };
 
   return quote;
@@ -159,8 +165,11 @@ function determineUnit(quantityStr: string): string {
 }
 
 function generateMaterialCode(itemName: string): string {
-  const words = itemName.split(' ').filter(w => w.length > 2);
-  return words.slice(0, 3).map(w => w.substring(0, 3).toUpperCase()).join('-');
+  const words = itemName.split(' ').filter((w) => w.length > 2);
+  return words
+    .slice(0, 3)
+    .map((w) => w.substring(0, 3).toUpperCase())
+    .join('-');
 }
 
 function generateQuoteNumber(): string {

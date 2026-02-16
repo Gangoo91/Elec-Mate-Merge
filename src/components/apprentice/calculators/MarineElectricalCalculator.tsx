@@ -1,103 +1,176 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ResultCard } from "@/components/ui/result-card";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Badge } from "@/components/ui/badge";
-import { Calculator, RotateCcw, Anchor, Battery, Zap, Cable, Ship, Settings, Clock, Home } from "lucide-react";
-import { calculateMarine, MarineInputs, MarineResults, vesselTypeOptions, batteryTypeOptions, systemVoltageOptions } from "@/lib/marine";
-import MarineGuidance from "./marine/MarineGuidance";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ResultCard } from '@/components/ui/result-card';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { MobileButton } from '@/components/ui/mobile-button';
+import {
+  MobileSelect,
+  MobileSelectContent,
+  MobileSelectItem,
+  MobileSelectTrigger,
+  MobileSelectValue,
+} from '@/components/ui/mobile-select';
+import { Badge } from '@/components/ui/badge';
+import {
+  Calculator,
+  RotateCcw,
+  Anchor,
+  Battery,
+  Zap,
+  Cable,
+  Ship,
+  Settings,
+  Clock,
+  Home,
+} from 'lucide-react';
+import {
+  calculateMarine,
+  MarineInputs,
+  MarineResults,
+  vesselTypeOptions,
+  batteryTypeOptions,
+  systemVoltageOptions,
+} from '@/lib/marine';
+import MarineGuidance from './marine/MarineGuidance';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
 
 const MarineElectricalCalculator = () => {
   // Vessel details
-  const [vesselType, setVesselType] = useState("yacht");
-  const [vesselLength, setVesselLength] = useState("");
+  const [vesselType, setVesselType] = useState('yacht');
+  const [vesselLength, setVesselLength] = useState('');
   const [systemVoltage, setSystemVoltage] = useState(12);
-  
+
   // Load inputs
-  const [navigationLights, setNavigationLights] = useState("");
-  const [cabinLights, setCabinLights] = useState("");
-  const [galleyLoad, setGalleyLoad] = useState("");
-  const [freshWaterPump, setFreshWaterPump] = useState("");
-  const [bilgePump, setBilgePump] = useState("");
-  const [ventilationFans, setVentilationFans] = useState("");
-  const [electronics, setElectronics] = useState("");
-  const [winch, setWinch] = useState("");
-  const [additionalLoad, setAdditionalLoad] = useState("");
-  
+  const [navigationLights, setNavigationLights] = useState('');
+  const [cabinLights, setCabinLights] = useState('');
+  const [galleyLoad, setGalleyLoad] = useState('');
+  const [freshWaterPump, setFreshWaterPump] = useState('');
+  const [bilgePump, setBilgePump] = useState('');
+  const [ventilationFans, setVentilationFans] = useState('');
+  const [electronics, setElectronics] = useState('');
+  const [winch, setWinch] = useState('');
+  const [additionalLoad, setAdditionalLoad] = useState('');
+
   // Usage patterns
-  const [dailyUsageHours, setDailyUsageHours] = useState("12");
-  const [motoring, setMotoring] = useState("30");
-  const [anchored, setAnchored] = useState("70");
-  
+  const [dailyUsageHours, setDailyUsageHours] = useState('12');
+  const [motoring, setMotoring] = useState('30');
+  const [anchored, setAnchored] = useState('70');
+
   // Battery specifications
-  const [batteryType, setBatteryType] = useState("agm");
-  const [batteryVoltage, setBatteryVoltage] = useState("12");
-  const [maxDischarge, setMaxDischarge] = useState("80");
-  
+  const [batteryType, setBatteryType] = useState('agm');
+  const [batteryVoltage, setBatteryVoltage] = useState('12');
+  const [maxDischarge, setMaxDischarge] = useState('80');
+
   // Charging systems
-  const [alternatorRating, setAlternatorRating] = useState("");
-  const [solarPanels, setSolarPanels] = useState("");
-  const [windGenerator, setWindGenerator] = useState("");
-  const [shoreCharger, setShoreCharger] = useState("");
-  
+  const [alternatorRating, setAlternatorRating] = useState('');
+  const [solarPanels, setSolarPanels] = useState('');
+  const [windGenerator, setWindGenerator] = useState('');
+  const [shoreCharger, setShoreCharger] = useState('');
+
   // Cabling & environment
-  const [cableLength, setCableLength] = useState("5");
-  const [voltageDropLimit, setVoltageDropLimit] = useState("3");
-  const [temperature, setTemperature] = useState("15");
+  const [cableLength, setCableLength] = useState('5');
+  const [voltageDropLimit, setVoltageDropLimit] = useState('3');
+  const [temperature, setTemperature] = useState('15');
   const [saltwaterExposure, setSaltwaterExposure] = useState(true);
-  
+
   const [results, setResults] = useState<MarineResults | null>(null);
 
   // Quick preset scenarios
   const quickPresets = [
     {
-      name: "Small Sailing Yacht",
-      description: "25ft sailing yacht with basic systems",
+      name: 'Small Sailing Yacht',
+      description: '25ft sailing yacht with basic systems',
       values: {
-        vesselLength: "7.6", navigationLights: "15", cabinLights: "60", galleyLoad: "120",
-        freshWaterPump: "50", bilgePump: "30", electronics: "80", alternatorRating: "60",
-        solarPanels: "100", dailyUsageHours: "10"
-      }
+        vesselLength: '7.6',
+        navigationLights: '15',
+        cabinLights: '60',
+        galleyLoad: '120',
+        freshWaterPump: '50',
+        bilgePump: '30',
+        electronics: '80',
+        alternatorRating: '60',
+        solarPanels: '100',
+        dailyUsageHours: '10',
+      },
     },
     {
-      name: "Motor Cruiser",
-      description: "35ft motor cruiser with full equipment",
+      name: 'Motor Cruiser',
+      description: '35ft motor cruiser with full equipment',
       values: {
-        vesselLength: "10.7", navigationLights: "25", cabinLights: "120", galleyLoad: "200",
-        freshWaterPump: "80", bilgePump: "50", electronics: "150", winch: "800",
-        alternatorRating: "120", solarPanels: "200", dailyUsageHours: "14"
-      }
+        vesselLength: '10.7',
+        navigationLights: '25',
+        cabinLights: '120',
+        galleyLoad: '200',
+        freshWaterPump: '80',
+        bilgePump: '50',
+        electronics: '150',
+        winch: '800',
+        alternatorRating: '120',
+        solarPanels: '200',
+        dailyUsageHours: '14',
+      },
     },
     {
-      name: "Offshore Fishing",
-      description: "Commercial fishing vessel setup",
+      name: 'Offshore Fishing',
+      description: 'Commercial fishing vessel setup',
       values: {
-        vesselType: "fishing", vesselLength: "12", navigationLights: "40", electronics: "300",
-        winch: "1200", alternatorRating: "200", batteryType: "lithium", systemVoltage: "24"
-      }
-    }
+        vesselType: 'fishing',
+        vesselLength: '12',
+        navigationLights: '40',
+        electronics: '300',
+        winch: '1200',
+        alternatorRating: '200',
+        batteryType: 'lithium',
+        systemVoltage: '24',
+      },
+    },
   ];
 
   const applyPreset = (preset: any) => {
     Object.entries(preset.values).forEach(([key, value]) => {
       switch (key) {
-        case "vesselType": setVesselType(value as string); break;
-        case "vesselLength": setVesselLength(value as string); break;
-        case "navigationLights": setNavigationLights(value as string); break;
-        case "cabinLights": setCabinLights(value as string); break;
-        case "galleyLoad": setGalleyLoad(value as string); break;
-        case "freshWaterPump": setFreshWaterPump(value as string); break;
-        case "bilgePump": setBilgePump(value as string); break;
-        case "electronics": setElectronics(value as string); break;
-        case "winch": setWinch(value as string); break;
-        case "alternatorRating": setAlternatorRating(value as string); break;
-        case "solarPanels": setSolarPanels(value as string); break;
-        case "dailyUsageHours": setDailyUsageHours(value as string); break;
-        case "batteryType": setBatteryType(value as string); break;
-        case "systemVoltage": setSystemVoltage(Number(value)); break;
+        case 'vesselType':
+          setVesselType(value as string);
+          break;
+        case 'vesselLength':
+          setVesselLength(value as string);
+          break;
+        case 'navigationLights':
+          setNavigationLights(value as string);
+          break;
+        case 'cabinLights':
+          setCabinLights(value as string);
+          break;
+        case 'galleyLoad':
+          setGalleyLoad(value as string);
+          break;
+        case 'freshWaterPump':
+          setFreshWaterPump(value as string);
+          break;
+        case 'bilgePump':
+          setBilgePump(value as string);
+          break;
+        case 'electronics':
+          setElectronics(value as string);
+          break;
+        case 'winch':
+          setWinch(value as string);
+          break;
+        case 'alternatorRating':
+          setAlternatorRating(value as string);
+          break;
+        case 'solarPanels':
+          setSolarPanels(value as string);
+          break;
+        case 'dailyUsageHours':
+          setDailyUsageHours(value as string);
+          break;
+        case 'batteryType':
+          setBatteryType(value as string);
+          break;
+        case 'systemVoltage':
+          setSystemVoltage(Number(value));
+          break;
       }
     });
   };
@@ -132,7 +205,7 @@ const MarineElectricalCalculator = () => {
       cableLength: parseFloat(cableLength) || 5,
       voltageDropLimit: parseFloat(voltageDropLimit) || 3,
       temperature: parseFloat(temperature) || 15,
-      saltwaterExposure
+      saltwaterExposure,
     };
 
     const calculationResults = calculateMarine(inputs);
@@ -140,31 +213,31 @@ const MarineElectricalCalculator = () => {
   };
 
   const reset = () => {
-    setVesselType("yacht");
-    setVesselLength("");
+    setVesselType('yacht');
+    setVesselLength('');
     setSystemVoltage(12);
-    setNavigationLights("");
-    setCabinLights("");
-    setGalleyLoad("");
-    setFreshWaterPump("");
-    setBilgePump("");
-    setVentilationFans("");
-    setElectronics("");
-    setWinch("");
-    setAdditionalLoad("");
-    setDailyUsageHours("12");
-    setMotoring("30");
-    setAnchored("70");
-    setBatteryType("agm");
-    setBatteryVoltage("12");
-    setMaxDischarge("80");
-    setAlternatorRating("");
-    setSolarPanels("");
-    setWindGenerator("");
-    setShoreCharger("");
-    setCableLength("5");
-    setVoltageDropLimit("3");
-    setTemperature("15");
+    setNavigationLights('');
+    setCabinLights('');
+    setGalleyLoad('');
+    setFreshWaterPump('');
+    setBilgePump('');
+    setVentilationFans('');
+    setElectronics('');
+    setWinch('');
+    setAdditionalLoad('');
+    setDailyUsageHours('12');
+    setMotoring('30');
+    setAnchored('70');
+    setBatteryType('agm');
+    setBatteryVoltage('12');
+    setMaxDischarge('80');
+    setAlternatorRating('');
+    setSolarPanels('');
+    setWindGenerator('');
+    setShoreCharger('');
+    setCableLength('5');
+    setVoltageDropLimit('3');
+    setTemperature('15');
     setSaltwaterExposure(true);
     setResults(null);
   };
@@ -187,8 +260,8 @@ const MarineElectricalCalculator = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {quickPresets.map((preset, index) => (
-                <Card 
-                  key={index} 
+                <Card
+                  key={index}
                   className="cursor-pointer hover:border-elec-yellow/40 active:scale-[0.98] transition-all touch-manipulation p-3 bg-elec-card"
                   onClick={() => applyPreset(preset)}
                 >
@@ -226,7 +299,10 @@ const MarineElectricalCalculator = () => {
                 placeholder="e.g., 12"
                 unit="m"
               />
-              <MobileSelect value={systemVoltage.toString()} onValueChange={(value) => setSystemVoltage(Number(value))}>
+              <MobileSelect
+                value={systemVoltage.toString()}
+                onValueChange={(value) => setSystemVoltage(Number(value))}
+              >
                 <MobileSelectTrigger label="System Voltage">
                   <MobileSelectValue />
                 </MobileSelectTrigger>
@@ -476,7 +552,9 @@ const MarineElectricalCalculator = () => {
                   onChange={(e) => setSaltwaterExposure(e.target.checked)}
                   className="rounded border-elec-yellow/20"
                 />
-                <label htmlFor="saltwater" className="text-sm">Saltwater Exposure</label>
+                <label htmlFor="saltwater" className="text-sm">
+                  Saltwater Exposure
+                </label>
               </div>
             </div>
           </div>
@@ -532,7 +610,7 @@ const MarineElectricalCalculator = () => {
                   value={results.recommendedBatteryCapacity}
                   unit="Ah"
                   subtitle={`${results.numberOfBatteries} x 100Ah batteries`}
-                  status={results.energyBalance > 0 ? "success" : "warning"}
+                  status={results.energyBalance > 0 ? 'success' : 'warning'}
                   icon={<Battery className="h-5 w-5" />}
                 />
                 <ResultCard
@@ -548,7 +626,7 @@ const MarineElectricalCalculator = () => {
                   value={results.recommendedCableSize}
                   unit="mm²"
                   subtitle={`${results.actualVoltageDropPercentage.toFixed(1)}% voltage drop`}
-                  status={results.actualVoltageDropPercentage <= 3 ? "success" : "warning"}
+                  status={results.actualVoltageDropPercentage <= 3 ? 'success' : 'warning'}
                   icon={<Cable className="h-5 w-5" />}
                 />
               </div>
@@ -559,43 +637,46 @@ const MarineElectricalCalculator = () => {
           <WhyThisMatters
             title="Why Marine Electrical Systems Matter"
             points={[
-              "Vessel safety depends on reliable electrical systems for navigation, communication, and safety equipment",
-              "Proper load calculation prevents battery failure and equipment damage in marine environments",
-              "Compliance with marine standards (ISO 13297, MCA regulations) is legally required for UK waters",
-              "Adequate charging capacity ensures vessel autonomy during extended cruising or emergencies",
-              "Correct cable sizing prevents dangerous voltage drops and potential fire hazards at sea"
+              'Vessel safety depends on reliable electrical systems for navigation, communication, and safety equipment',
+              'Proper load calculation prevents battery failure and equipment damage in marine environments',
+              'Compliance with marine standards (ISO 13297, MCA regulations) is legally required for UK waters',
+              'Adequate charging capacity ensures vessel autonomy during extended cruising or emergencies',
+              'Correct cable sizing prevents dangerous voltage drops and potential fire hazards at sea',
             ]}
           />
 
           {/* Detailed Guidance */}
-          <MarineGuidance results={results} inputs={{
-            vesselType,
-            vesselLength: parseFloat(vesselLength) || 0,
-            systemVoltage,
-            navigationLights: parseFloat(navigationLights) || 0,
-            cabinLights: parseFloat(cabinLights) || 0,
-            galleyLoad: parseFloat(galleyLoad) || 0,
-            freshWaterPump: parseFloat(freshWaterPump) || 0,
-            bilgePump: parseFloat(bilgePump) || 0,
-            ventilationFans: parseFloat(ventilationFans) || 0,
-            electronics: parseFloat(electronics) || 0,
-            winch: parseFloat(winch) || 0,
-            additionalLoad: parseFloat(additionalLoad) || 0,
-            dailyUsageHours: parseFloat(dailyUsageHours) || 12,
-            motoring: parseFloat(motoring) || 30,
-            anchored: parseFloat(anchored) || 70,
-            batteryType,
-            batteryVoltage: parseFloat(batteryVoltage) || systemVoltage,
-            maxDischarge: parseFloat(maxDischarge) || 80,
-            alternatorRating: parseFloat(alternatorRating) || 0,
-            solarPanels: parseFloat(solarPanels) || 0,
-            windGenerator: parseFloat(windGenerator) || 0,
-            shoreCharger: parseFloat(shoreCharger) || 0,
-            cableLength: parseFloat(cableLength) || 5,
-            voltageDropLimit: parseFloat(voltageDropLimit) || 3,
-            temperature: parseFloat(temperature) || 15,
-            saltwaterExposure
-          }} />
+          <MarineGuidance
+            results={results}
+            inputs={{
+              vesselType,
+              vesselLength: parseFloat(vesselLength) || 0,
+              systemVoltage,
+              navigationLights: parseFloat(navigationLights) || 0,
+              cabinLights: parseFloat(cabinLights) || 0,
+              galleyLoad: parseFloat(galleyLoad) || 0,
+              freshWaterPump: parseFloat(freshWaterPump) || 0,
+              bilgePump: parseFloat(bilgePump) || 0,
+              ventilationFans: parseFloat(ventilationFans) || 0,
+              electronics: parseFloat(electronics) || 0,
+              winch: parseFloat(winch) || 0,
+              additionalLoad: parseFloat(additionalLoad) || 0,
+              dailyUsageHours: parseFloat(dailyUsageHours) || 12,
+              motoring: parseFloat(motoring) || 30,
+              anchored: parseFloat(anchored) || 70,
+              batteryType,
+              batteryVoltage: parseFloat(batteryVoltage) || systemVoltage,
+              maxDischarge: parseFloat(maxDischarge) || 80,
+              alternatorRating: parseFloat(alternatorRating) || 0,
+              solarPanels: parseFloat(solarPanels) || 0,
+              windGenerator: parseFloat(windGenerator) || 0,
+              shoreCharger: parseFloat(shoreCharger) || 0,
+              cableLength: parseFloat(cableLength) || 5,
+              voltageDropLimit: parseFloat(voltageDropLimit) || 3,
+              temperature: parseFloat(temperature) || 15,
+              saltwaterExposure,
+            }}
+          />
         </div>
       )}
     </div>

@@ -1,20 +1,20 @@
-import { useState, useMemo } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { QuickStats } from "@/components/employer/QuickStats";
-import { Skeleton } from "@/components/ui/skeleton";
-import { PolicyViewer } from "@/components/employer/PolicyViewer";
+import { useState, useMemo } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { QuickStats } from '@/components/employer/QuickStats';
+import { Skeleton } from '@/components/ui/skeleton';
+import { PolicyViewer } from '@/components/employer/PolicyViewer';
 import {
   usePolicyTemplates,
   useUserPolicies,
   useAdoptedTemplateIds,
   type PolicyTemplate,
   type UserPolicy,
-} from "@/hooks/usePolicies";
+} from '@/hooks/usePolicies';
 import {
   BookOpen,
   Shield,
@@ -26,10 +26,10 @@ import {
   Sparkles,
   ChevronRight,
   Scale,
-} from "lucide-react";
+} from 'lucide-react';
 
 export function PoliciesSection() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState<PolicyTemplate | null>(null);
   const [selectedUserPolicy, setSelectedUserPolicy] = useState<UserPolicy | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
@@ -43,29 +43,27 @@ export function PoliciesSection() {
 
   // Filter templates and user policies
   const filteredTemplates = useMemo(() => {
-    return templates.filter(t =>
-      t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.category.toLowerCase().includes(searchQuery.toLowerCase())
+    return templates.filter(
+      (t) =>
+        t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        t.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [templates, searchQuery]);
 
   const filteredUserPolicies = useMemo(() => {
-    return userPolicies.filter(p =>
-      p.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    return userPolicies.filter((p) => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
   }, [userPolicies, searchQuery]);
 
   // Group templates by category
-  const safetyTemplates = filteredTemplates.filter(t => t.category === "Safety");
-  const hrTemplates = filteredTemplates.filter(t => t.category === "HR");
-  const legalTemplates = filteredTemplates.filter(t => t.category === "Legal");
+  const safetyTemplates = filteredTemplates.filter((t) => t.category === 'Safety');
+  const hrTemplates = filteredTemplates.filter((t) => t.category === 'HR');
+  const legalTemplates = filteredTemplates.filter((t) => t.category === 'Legal');
 
   // Stats
   const totalTemplates = templates.length;
   const adoptedCount = userPolicies.length;
-  const reviewDue = userPolicies.filter(p =>
-    p.status === "Review Due" ||
-    (p.review_date && new Date(p.review_date) <= new Date())
+  const reviewDue = userPolicies.filter(
+    (p) => p.status === 'Review Due' || (p.review_date && new Date(p.review_date) <= new Date())
   ).length;
 
   const handleViewTemplate = (template: PolicyTemplate) => {
@@ -82,11 +80,11 @@ export function PoliciesSection() {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case "Safety":
+      case 'Safety':
         return Shield;
-      case "HR":
+      case 'HR':
         return Users;
-      case "Legal":
+      case 'Legal':
         return Scale;
       default:
         return FileText;
@@ -95,14 +93,14 @@ export function PoliciesSection() {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Safety":
-        return "text-success";
-      case "HR":
-        return "text-elec-yellow";
-      case "Legal":
-        return "text-info";
+      case 'Safety':
+        return 'text-success';
+      case 'HR':
+        return 'text-elec-yellow';
+      case 'Legal':
+        return 'text-info';
       default:
-        return "text-muted-foreground";
+        return 'text-muted-foreground';
     }
   };
 
@@ -120,7 +118,7 @@ export function PoliciesSection() {
           <Skeleton className="h-16 w-24 shrink-0" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          {[1, 2, 3, 4].map(i => (
+          {[1, 2, 3, 4].map((i) => (
             <Skeleton key={i} className="h-20" />
           ))}
         </div>
@@ -144,7 +142,7 @@ export function PoliciesSection() {
           placeholder="Search policies..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className={cn("h-11", !searchQuery && "pl-9")}
+          className={cn('h-11', !searchQuery && 'pl-9')}
         />
       </div>
 
@@ -154,22 +152,26 @@ export function PoliciesSection() {
           {
             icon: BookOpen,
             value: totalTemplates,
-            label: "Available",
-            color: "blue",
+            label: 'Available',
+            color: 'blue',
           },
           {
             icon: CheckCircle2,
             value: adoptedCount,
-            label: "Adopted",
-            color: "green",
+            label: 'Adopted',
+            color: 'green',
           },
-          ...(reviewDue > 0 ? [{
-            icon: Clock,
-            value: reviewDue,
-            label: "Review Due",
-            color: "yellow" as const,
-            pulse: true,
-          }] : []),
+          ...(reviewDue > 0
+            ? [
+                {
+                  icon: Clock,
+                  value: reviewDue,
+                  label: 'Review Due',
+                  color: 'yellow' as const,
+                  pulse: true,
+                },
+              ]
+            : []),
         ]}
       />
 
@@ -185,9 +187,7 @@ export function PoliciesSection() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {filteredUserPolicies.map((policy) => {
-              const CategoryIcon = getCategoryIcon(
-                policy.template?.category || "Other"
-              );
+              const CategoryIcon = getCategoryIcon(policy.template?.category || 'Other');
               return (
                 <Card
                   key={policy.id}
@@ -199,7 +199,7 @@ export function PoliciesSection() {
                       <div className="flex items-center gap-3 min-w-0">
                         <CategoryIcon
                           className={`h-5 w-5 ${getCategoryColor(
-                            policy.template?.category || "Other"
+                            policy.template?.category || 'Other'
                           )}`}
                         />
                         <div className="min-w-0">
@@ -207,7 +207,7 @@ export function PoliciesSection() {
                             {policy.name}
                           </p>
                           <p className="text-xs text-muted-foreground">
-                            {policy.company_name || "No company set"}
+                            {policy.company_name || 'No company set'}
                           </p>
                         </div>
                       </div>
@@ -215,11 +215,11 @@ export function PoliciesSection() {
                         <Badge
                           variant="secondary"
                           className={
-                            policy.status === "Active"
-                              ? "bg-success/10 text-success"
-                              : policy.status === "Review Due"
-                              ? "bg-warning/10 text-warning"
-                              : "bg-muted"
+                            policy.status === 'Active'
+                              ? 'bg-success/10 text-success'
+                              : policy.status === 'Review Due'
+                                ? 'bg-warning/10 text-warning'
+                                : 'bg-muted'
                           }
                         >
                           {policy.status}
@@ -244,13 +244,10 @@ export function PoliciesSection() {
                 <Sparkles className="h-5 w-5 text-info" />
               </div>
               <div>
-                <h3 className="font-medium text-foreground mb-1">
-                  Pre-Written Policies
-                </h3>
+                <h3 className="font-medium text-foreground mb-1">Pre-Written Policies</h3>
                 <p className="text-sm text-muted-foreground">
-                  Browse the templates below and click <strong>Adopt</strong> to
-                  add them to your company policies. You can customise them with
-                  your company name.
+                  Browse the templates below and click <strong>Adopt</strong> to add them to your
+                  company policies. You can customise them with your company name.
                 </p>
               </div>
             </div>
@@ -272,7 +269,7 @@ export function PoliciesSection() {
                 <Card
                   key={template.id}
                   className={`hover:bg-muted/50 transition-colors cursor-pointer ${
-                    isAdopted ? "border-success/20 bg-success/5" : ""
+                    isAdopted ? 'border-success/20 bg-success/5' : ''
                   }`}
                   onClick={() => handleViewTemplate(template)}
                 >
@@ -284,17 +281,12 @@ export function PoliciesSection() {
                           <p className="font-medium text-foreground text-sm truncate">
                             {template.name}
                           </p>
-                          <p className="text-xs text-muted-foreground">
-                            v{template.version}
-                          </p>
+                          <p className="text-xs text-muted-foreground">v{template.version}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         {isAdopted ? (
-                          <Badge
-                            variant="secondary"
-                            className="bg-success/10 text-success"
-                          >
+                          <Badge variant="secondary" className="bg-success/10 text-success">
                             <CheckCircle2 className="h-3 w-3 mr-1" />
                             Adopted
                           </Badge>
@@ -326,7 +318,7 @@ export function PoliciesSection() {
                 <Card
                   key={template.id}
                   className={`hover:bg-muted/50 transition-colors cursor-pointer ${
-                    isAdopted ? "border-success/20 bg-success/5" : ""
+                    isAdopted ? 'border-success/20 bg-success/5' : ''
                   }`}
                   onClick={() => handleViewTemplate(template)}
                 >
@@ -338,17 +330,12 @@ export function PoliciesSection() {
                           <p className="font-medium text-foreground text-sm truncate">
                             {template.name}
                           </p>
-                          <p className="text-xs text-muted-foreground">
-                            v{template.version}
-                          </p>
+                          <p className="text-xs text-muted-foreground">v{template.version}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         {isAdopted ? (
-                          <Badge
-                            variant="secondary"
-                            className="bg-success/10 text-success"
-                          >
+                          <Badge variant="secondary" className="bg-success/10 text-success">
                             <CheckCircle2 className="h-3 w-3 mr-1" />
                             Adopted
                           </Badge>
@@ -380,7 +367,7 @@ export function PoliciesSection() {
                 <Card
                   key={template.id}
                   className={`hover:bg-muted/50 transition-colors cursor-pointer ${
-                    isAdopted ? "border-success/20 bg-success/5" : ""
+                    isAdopted ? 'border-success/20 bg-success/5' : ''
                   }`}
                   onClick={() => handleViewTemplate(template)}
                 >
@@ -392,17 +379,12 @@ export function PoliciesSection() {
                           <p className="font-medium text-foreground text-sm truncate">
                             {template.name}
                           </p>
-                          <p className="text-xs text-muted-foreground">
-                            v{template.version}
-                          </p>
+                          <p className="text-xs text-muted-foreground">v{template.version}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         {isAdopted ? (
-                          <Badge
-                            variant="secondary"
-                            className="bg-success/10 text-success"
-                          >
+                          <Badge variant="secondary" className="bg-success/10 text-success">
                             <CheckCircle2 className="h-3 w-3 mr-1" />
                             Adopted
                           </Badge>
@@ -425,12 +407,8 @@ export function PoliciesSection() {
         <Card className="border-dashed">
           <CardContent className="p-8 text-center">
             <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-medium text-foreground mb-2">
-              No policies found
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Try adjusting your search query
-            </p>
+            <h3 className="font-medium text-foreground mb-2">No policies found</h3>
+            <p className="text-sm text-muted-foreground">Try adjusting your search query</p>
           </CardContent>
         </Card>
       )}
@@ -441,11 +419,7 @@ export function PoliciesSection() {
         onOpenChange={setViewerOpen}
         template={selectedTemplate}
         userPolicy={selectedUserPolicy}
-        isAdopted={
-          selectedTemplate
-            ? adoptedTemplateIds.includes(selectedTemplate.id)
-            : false
-        }
+        isAdopted={selectedTemplate ? adoptedTemplateIds.includes(selectedTemplate.id) : false}
       />
     </div>
   );

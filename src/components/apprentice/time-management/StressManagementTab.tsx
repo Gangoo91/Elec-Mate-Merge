@@ -1,5 +1,4 @@
-
-import StressManagementTabContent from "@/components/mental-health/stress/StressManagementTab";
+import StressManagementTabContent from '@/components/mental-health/stress/StressManagementTab';
 
 const StressManagementTab = () => {
   return <StressManagementTabContent />;

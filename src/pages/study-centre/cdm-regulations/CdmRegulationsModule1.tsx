@@ -1,45 +1,45 @@
-import { ArrowLeft, BookOpen, Clock, FileText, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, BookOpen, Clock, FileText, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "What Are the CDM Regulations?",
+    title: 'What Are the CDM Regulations?',
     icon: BookOpen,
     description:
-      "An overview of the Construction (Design and Management) Regulations 2015 and their purpose in improving health and safety outcomes across all construction projects",
+      'An overview of the Construction (Design and Management) Regulations 2015 and their purpose in improving health and safety outcomes across all construction projects',
   },
   {
     id: 2,
-    title: "History & Evolution",
+    title: 'History & Evolution',
     icon: Clock,
     description:
-      "How CDM regulations have evolved from CDM 1994 through CDM 2007 to the current 2015 version, and the key changes at each stage",
+      'How CDM regulations have evolved from CDM 1994 through CDM 2007 to the current 2015 version, and the key changes at each stage',
   },
   {
     id: 3,
-    title: "Key Definitions & Scope",
+    title: 'Key Definitions & Scope',
     icon: FileText,
     description:
-      "Essential terminology including construction work, structure, contractor, designer, and domestic client, plus what falls within the scope of CDM 2015",
+      'Essential terminology including construction work, structure, contractor, designer, and domestic client, plus what falls within the scope of CDM 2015',
   },
   {
     id: 4,
-    title: "When CDM Applies",
+    title: 'When CDM Applies',
     icon: CheckCircle,
     description:
-      "Understanding which projects CDM applies to, the thresholds for notification to the HSE, and the distinction between domestic and commercial projects",
+      'Understanding which projects CDM applies to, the thresholds for notification to the HSE, and the distinction between domestic and commercial projects',
   },
 ];
 
 export default function CdmRegulationsModule1() {
   useSEO({
-    title: "Module 1: Introduction to CDM 2015 | CDM Regulations Awareness",
+    title: 'Module 1: Introduction to CDM 2015 | CDM Regulations Awareness',
     description:
-      "Learn what the CDM Regulations are, their history and evolution, key definitions and scope, and when CDM applies to construction projects.",
+      'Learn what the CDM Regulations are, their history and evolution, key definitions and scope, and when CDM applies to construction projects.',
   });
 
   return (

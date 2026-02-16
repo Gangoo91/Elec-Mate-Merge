@@ -54,10 +54,7 @@ export const ElecIdBanner = ({ variant = 'electrician' }: ElecIdBannerProps) => 
                 )}
               </div>
               <p className="text-xs text-white/60">
-                {hasElecId
-                  ? 'Worker-owned professional identity'
-                  : 'Get your free credential'
-                }
+                {hasElecId ? 'Worker-owned professional identity' : 'Get your free credential'}
               </p>
             </div>
           </div>

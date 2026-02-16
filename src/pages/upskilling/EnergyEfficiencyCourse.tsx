@@ -1,5 +1,13 @@
 import React from 'react';
-import { ArrowLeft, BookOpen, Gauge, Search, TrendingDown, BarChart, FileCheck } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookOpen,
+  Gauge,
+  Search,
+  TrendingDown,
+  BarChart,
+  FileCheck,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -14,46 +22,46 @@ const EnergyEfficiencyCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Introduction to Energy Efficiency",
-      description: "Understanding the fundamentals of energy efficiency",
-      duration: "45 mins",
-      icon: BookOpen
+      title: 'Introduction to Energy Efficiency',
+      description: 'Understanding the fundamentals of energy efficiency',
+      duration: '45 mins',
+      icon: BookOpen,
     },
     {
       id: 2,
-      title: "Power Quality and Load Analysis",
-      description: "Power quality issues and load characteristics",
-      duration: "55 mins",
-      icon: Gauge
+      title: 'Power Quality and Load Analysis',
+      description: 'Power quality issues and load characteristics',
+      duration: '55 mins',
+      icon: Gauge,
     },
     {
       id: 3,
-      title: "Energy Auditing Methods",
-      description: "Comprehensive auditing techniques",
-      duration: "60 mins",
-      icon: Search
+      title: 'Energy Auditing Methods',
+      description: 'Comprehensive auditing techniques',
+      duration: '60 mins',
+      icon: Search,
     },
     {
       id: 4,
-      title: "Reducing Demand and Improving Efficiency",
-      description: "Practical measures for efficiency",
-      duration: "50 mins",
-      icon: TrendingDown
+      title: 'Reducing Demand and Improving Efficiency',
+      description: 'Practical measures for efficiency',
+      duration: '50 mins',
+      icon: TrendingDown,
     },
     {
       id: 5,
-      title: "Monitoring, Analytics, and Smart Metering",
-      description: "Advanced monitoring systems",
-      duration: "55 mins",
-      icon: BarChart
+      title: 'Monitoring, Analytics, and Smart Metering',
+      description: 'Advanced monitoring systems',
+      duration: '55 mins',
+      icon: BarChart,
     },
     {
       id: 6,
-      title: "Regulations, Carbon Compliance, and ROI",
-      description: "Compliance and financial modelling",
-      duration: "40 mins",
-      icon: FileCheck
-    }
+      title: 'Regulations, Carbon Compliance, and ROI',
+      description: 'Compliance and financial modelling',
+      duration: '40 mins',
+      icon: FileCheck,
+    },
   ];
 
   return (

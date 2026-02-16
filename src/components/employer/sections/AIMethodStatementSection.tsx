@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { JobPackSelector } from "@/components/employer/smart-docs/JobPackSelector";
-import { useJobPacks, useUpdateJobPack } from "@/hooks/useJobPacks";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import type { Section } from "@/pages/employer/EmployerDashboard";
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
+import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   ClipboardList,
   Sparkles,
@@ -18,8 +18,8 @@ import {
   AlertTriangle,
   Download,
   FileText,
-  RefreshCw
-} from "lucide-react";
+  RefreshCw,
+} from 'lucide-react';
 
 interface AIMethodStatementSectionProps {
   onNavigate: (section: Section) => void;
@@ -31,57 +31,60 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
   const { toast } = useToast();
 
   const [selectedJobPackId, setSelectedJobPackId] = useState<string | null>(null);
-  const [scopeDescription, setScopeDescription] = useState("");
+  const [scopeDescription, setScopeDescription] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [currentStep, setCurrentStep] = useState("");
+  const [currentStep, setCurrentStep] = useState('');
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const selectedJobPack = jobPacks.find(jp => jp.id === selectedJobPackId);
+  const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
 
   useEffect(() => {
     if (selectedJobPack) {
-      setScopeDescription(selectedJobPack.scope || "");
+      setScopeDescription(selectedJobPack.scope || '');
     }
   }, [selectedJobPack]);
 
   const handleGenerate = async () => {
     if (!scopeDescription.trim()) {
       toast({
-        title: "Missing Information",
-        description: "Please provide a scope description.",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please provide a scope description.',
+        variant: 'destructive',
       });
       return;
     }
 
     setIsGenerating(true);
     setProgress(0);
-    setCurrentStep("Generating method statement...");
+    setCurrentStep('Generating method statement...');
     setError(null);
     setResult(null);
 
     // Simulate progress for method statement generation
     const progressInterval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 90) return prev;
         return prev + Math.random() * 10;
       });
     }, 500);
 
     try {
-      const { data, error: invokeError } = await supabase.functions.invoke('generate-method-statement-pdf', {
-        body: {
-          jobDescription: scopeDescription,
-          projectInfo: {
-            projectName: selectedJobPack?.title || "Untitled Project",
-            location: selectedJobPack?.location || "",
-            contractor: "",
-            supervisor: ""
-          }
+      const { data, error: invokeError } = await supabase.functions.invoke(
+        'generate-method-statement-pdf',
+        {
+          body: {
+            jobDescription: scopeDescription,
+            projectInfo: {
+              projectName: selectedJobPack?.title || 'Untitled Project',
+              location: selectedJobPack?.location || '',
+              contractor: '',
+              supervisor: '',
+            },
+          },
         }
-      });
+      );
 
       clearInterval(progressInterval);
 
@@ -94,25 +97,24 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
       setIsGenerating(false);
 
       toast({
-        title: "Method Statement Generated!",
-        description: "Your method statement has been created successfully.",
+        title: 'Method Statement Generated!',
+        description: 'Your method statement has been created successfully.',
       });
 
       if (selectedJobPackId) {
         updateJobPack.mutate({
           id: selectedJobPackId,
-          data: { method_statement_generated: true }
+          data: { method_statement_generated: true },
         });
       }
-
     } catch (err: any) {
       clearInterval(progressInterval);
       setIsGenerating(false);
       setError(err.message);
       toast({
-        title: "Error",
+        title: 'Error',
         description: err.message,
-        variant: "destructive"
+        variant: 'destructive',
       });
     }
   };
@@ -133,7 +135,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
     setResult(null);
     setError(null);
     setProgress(0);
-    setCurrentStep("");
+    setCurrentStep('');
   };
 
   return (
@@ -160,7 +162,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
               <JobPackSelector
                 selectedJobPackId={selectedJobPackId}
                 onSelect={setSelectedJobPackId}
-                onCreateNew={() => onNavigate("jobpacks")}
+                onCreateNew={() => onNavigate('jobpacks')}
               />
             </CardContent>
           </Card>
@@ -262,7 +264,11 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                       <Download className="h-4 w-4 mr-2" />
                       Download
                     </Button>
-                    <Button variant="outline" onClick={handleReset} className="border-elec-yellow/30">
+                    <Button
+                      variant="outline"
+                      onClick={handleReset}
+                      className="border-elec-yellow/30"
+                    >
                       <RefreshCw className="h-4 w-4 mr-2" />
                       New
                     </Button>

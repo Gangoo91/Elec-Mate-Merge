@@ -1,4 +1,3 @@
-
 import { useMemo } from 'react';
 
 export interface ValidationRule {
@@ -27,7 +26,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
       errors.push({
         field: 'clientName',
         message: 'Client name is required for legal identification',
-        severity: 'error'
+        severity: 'error',
       });
     } else {
       completedFields++;
@@ -37,7 +36,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
       errors.push({
         field: 'installationAddress',
         message: 'Installation address is required',
-        severity: 'error'
+        severity: 'error',
       });
     } else {
       completedFields++;
@@ -47,7 +46,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
       errors.push({
         field: 'installationDate',
         message: 'Installation date is required',
-        severity: 'error'
+        severity: 'error',
       });
     } else {
       completedFields++;
@@ -57,7 +56,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
       warnings.push({
         field: 'installationType',
         message: 'Installation type should be specified',
-        severity: 'warning'
+        severity: 'warning',
       });
     } else {
       completedFields++;
@@ -69,7 +68,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'supplyVoltage',
         message: 'Supply voltage is required for safety calculations',
         severity: 'error',
-        regulation: 'BS 7671:2018 Chapter 31'
+        regulation: 'BS 7671:2018 Chapter 31',
       });
     } else {
       completedFields++;
@@ -80,7 +79,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'earthingArrangement',
         message: 'Earthing arrangement must be specified',
         severity: 'error',
-        regulation: 'BS 7671:2018 Chapter 54'
+        regulation: 'BS 7671:2018 Chapter 54',
       });
     } else {
       completedFields++;
@@ -91,7 +90,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'mainProtectiveDevice',
         message: 'Main protective device specification required',
         severity: 'error',
-        regulation: 'BS 7671:2018 Chapter 43'
+        regulation: 'BS 7671:2018 Chapter 43',
       });
     } else {
       completedFields++;
@@ -103,7 +102,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'designerName',
         message: 'Designer name is legally required',
         severity: 'error',
-        regulation: 'BS 7671:2018 Part 6'
+        regulation: 'BS 7671:2018 Part 6',
       });
     } else {
       completedFields++;
@@ -114,7 +113,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'designerSignature',
         message: 'Designer signature is legally required',
         severity: 'error',
-        regulation: 'BS 7671:2018 Part 6'
+        regulation: 'BS 7671:2018 Part 6',
       });
     } else {
       completedFields++;
@@ -125,7 +124,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'constructorName',
         message: 'Constructor name is legally required',
         severity: 'error',
-        regulation: 'BS 7671:2018 Part 6'
+        regulation: 'BS 7671:2018 Part 6',
       });
     } else {
       completedFields++;
@@ -136,7 +135,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'constructorSignature',
         message: 'Constructor signature is legally required',
         severity: 'error',
-        regulation: 'BS 7671:2018 Part 6'
+        regulation: 'BS 7671:2018 Part 6',
       });
     } else {
       completedFields++;
@@ -147,7 +146,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'inspectorName',
         message: 'Inspector name is legally required',
         severity: 'error',
-        regulation: 'BS 7671:2018 Part 6'
+        regulation: 'BS 7671:2018 Part 6',
       });
     } else {
       completedFields++;
@@ -158,19 +157,23 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'inspectorSignature',
         message: 'Inspector signature is legally required',
         severity: 'error',
-        regulation: 'BS 7671:2018 Part 6'
+        regulation: 'BS 7671:2018 Part 6',
       });
     } else {
       completedFields++;
     }
 
     // Technical Validation Warnings
-    if (formData.supplyVoltage && formData.supplyVoltage !== '230' && formData.supplyVoltage !== '400') {
+    if (
+      formData.supplyVoltage &&
+      formData.supplyVoltage !== '230' &&
+      formData.supplyVoltage !== '400'
+    ) {
       warnings.push({
         field: 'supplyVoltage',
         message: 'Non-standard supply voltage - verify specification',
         severity: 'warning',
-        regulation: 'BS 7671:2018 Section 312'
+        regulation: 'BS 7671:2018 Section 312',
       });
     }
 
@@ -179,7 +182,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'scheduleOfTests',
         message: 'No test results recorded - testing required for EIC',
         severity: 'warning',
-        regulation: 'BS 7671:2018 Chapter 61'
+        regulation: 'BS 7671:2018 Chapter 61',
       });
     }
 
@@ -188,7 +191,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
         field: 'inspections',
         message: 'No inspections recorded - visual inspection required',
         severity: 'warning',
-        regulation: 'BS 7671:2018 Chapter 61'
+        regulation: 'BS 7671:2018 Chapter 61',
       });
     }
 
@@ -197,7 +200,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
       warnings.push({
         field: 'designerQualifications',
         message: 'Designer qualifications recommended for competency verification',
-        severity: 'info'
+        severity: 'info',
       });
     }
 
@@ -205,7 +208,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
       warnings.push({
         field: 'constructorQualifications',
         message: 'Constructor qualifications recommended for competency verification',
-        severity: 'info'
+        severity: 'info',
       });
     }
 
@@ -216,7 +219,7 @@ export const useEICValidation = (formData: any): ValidationResult => {
       isValid,
       errors,
       warnings,
-      completionPercentage
+      completionPercentage,
     };
   }, [formData]);
 };

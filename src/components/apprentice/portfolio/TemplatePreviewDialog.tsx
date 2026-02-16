@@ -1,15 +1,14 @@
-
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Download, Eye, CheckCircle } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Download, Eye, CheckCircle } from 'lucide-react';
 
 interface PortfolioTemplate {
   id: string;
   name: string;
   description: string;
   category: string;
-  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   sections: string[];
   downloadUrl?: string;
 }
@@ -21,15 +20,24 @@ interface TemplatePreviewDialogProps {
   onDownload: (templateId: string) => void;
 }
 
-const TemplatePreviewDialog = ({ template, isOpen, onClose, onDownload }: TemplatePreviewDialogProps) => {
+const TemplatePreviewDialog = ({
+  template,
+  isOpen,
+  onClose,
+  onDownload,
+}: TemplatePreviewDialogProps) => {
   if (!template) return null;
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Beginner": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Intermediate": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "Advanced": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-white/10 text-white border-white/30";
+      case 'Beginner':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'Intermediate':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'Advanced':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/30';
     }
   };
 
@@ -44,10 +52,10 @@ const TemplatePreviewDialog = ({ template, isOpen, onClose, onDownload }: Templa
             </Badge>
           </DialogTitle>
         </DialogHeader>
-        
+
         <div className="space-y-4">
           <p className="text-white">{template.description}</p>
-          
+
           <div>
             <h4 className="font-medium text-white mb-2">Template Includes:</h4>
             <div className="grid grid-cols-2 gap-2">
@@ -59,7 +67,7 @@ const TemplatePreviewDialog = ({ template, isOpen, onClose, onDownload }: Templa
               ))}
             </div>
           </div>
-          
+
           <div className="p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
             <h5 className="font-medium text-blue-400 mb-2">What You'll Get:</h5>
             <ul className="text-sm text-white space-y-1">
@@ -69,7 +77,7 @@ const TemplatePreviewDialog = ({ template, isOpen, onClose, onDownload }: Templa
               <li>• Evidence collection prompts</li>
             </ul>
           </div>
-          
+
           <div className="flex gap-3">
             <Button onClick={() => onDownload(template.id)} className="flex-1">
               <Download className="h-4 w-4 mr-2" />

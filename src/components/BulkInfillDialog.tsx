@@ -31,27 +31,46 @@ const BulkInfillDialog: React.FC<BulkInfillDialogProps> = ({
 
   // Fields that can be filled (excluding identifiers and metadata)
   const fillableFields: (keyof TestResult)[] = [
-    'typeOfWiring', 'referenceMethod', 'pointsServed',
-    'liveSize', 'cpcSize',
-    'bsStandard', 'protectiveDeviceType', 'protectiveDeviceCurve', 
-    'protectiveDeviceRating', 'protectiveDeviceKaRating', 'maxZs',
-    'rcdBsStandard', 'rcdType', 'rcdRating', 'rcdRatingA',
-    'ringR1', 'ringRn', 'ringR2',
-    'r1r2', 'r2',
-    'insulationTestVoltage', 'insulationLiveNeutral', 'insulationLiveEarth',
-    'polarity', 'zs',
-    'rcdOneX', 'rcdTestButton', 'afddTest',
-    'pfc', 'notes'
+    'typeOfWiring',
+    'referenceMethod',
+    'pointsServed',
+    'liveSize',
+    'cpcSize',
+    'bsStandard',
+    'protectiveDeviceType',
+    'protectiveDeviceCurve',
+    'protectiveDeviceRating',
+    'protectiveDeviceKaRating',
+    'maxZs',
+    'rcdBsStandard',
+    'rcdType',
+    'rcdRating',
+    'rcdRatingA',
+    'ringR1',
+    'ringRn',
+    'ringR2',
+    'r1r2',
+    'r2',
+    'insulationTestVoltage',
+    'insulationLiveNeutral',
+    'insulationLiveEarth',
+    'polarity',
+    'zs',
+    'rcdOneX',
+    'rcdTestButton',
+    'afddTest',
+    'pfc',
+    'notes',
   ];
 
   // Calculate preview stats
   const calculatePreview = () => {
     let fieldsCount = 0;
-    testResults.forEach(result => {
-      fillableFields.forEach(field => {
+    testResults.forEach((result) => {
+      fillableFields.forEach((field) => {
         const currentValue = result[field];
         const isEmpty = !currentValue || currentValue.toString().trim() === '';
-        
+
         if (selectedMode === 'all' || (selectedMode === 'empty' && isEmpty)) {
           fieldsCount++;
         }
@@ -111,7 +130,10 @@ const BulkInfillDialog: React.FC<BulkInfillDialogProps> = ({
           {/* Mode Selection */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Fill Mode</Label>
-            <RadioGroup value={selectedMode} onValueChange={(v) => setSelectedMode(v as 'all' | 'empty')}>
+            <RadioGroup
+              value={selectedMode}
+              onValueChange={(v) => setSelectedMode(v as 'all' | 'empty')}
+            >
               <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer active:bg-accent/70 transition-all touch-manipulation">
                 <RadioGroupItem value="all" id="mode-all" />
                 <Label htmlFor="mode-all" className="flex-1 cursor-pointer text-sm">
@@ -143,7 +165,9 @@ const BulkInfillDialog: React.FC<BulkInfillDialogProps> = ({
               </div>
               <div className="mt-1.5 pt-1.5 border-t border-border/50">
                 <span>
-                  Value "<span className="font-mono font-semibold text-foreground">{selectedValue}</span>" will be applied
+                  Value "
+                  <span className="font-mono font-semibold text-foreground">{selectedValue}</span>"
+                  will be applied
                 </span>
               </div>
             </div>
@@ -154,7 +178,7 @@ const BulkInfillDialog: React.FC<BulkInfillDialogProps> = ({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button 
+          <Button
             onClick={handleApply}
             className="bg-purple-600 hover:bg-purple-700 text-foreground"
           >

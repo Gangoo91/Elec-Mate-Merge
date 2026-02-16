@@ -1,8 +1,7 @@
-
-import React, { useState } from "react";
-import { FolderKanban, Plus, Trash2, ChevronDown, ChevronUp, Building2 } from "lucide-react";
-import { CVData, KeyProject } from "../types";
-import { SmartContentAssistant } from "../ai/SmartContentAssistant";
+import React, { useState } from 'react';
+import { FolderKanban, Plus, Trash2, ChevronDown, ChevronUp, Building2 } from 'lucide-react';
+import { CVData, KeyProject } from '../types';
+import { SmartContentAssistant } from '../ai/SmartContentAssistant';
 
 interface KeyProjectsFormProps {
   cvData: CVData;
@@ -20,11 +19,11 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
       value: '',
       role: '',
       description: '',
-      completionDate: ''
+      completionDate: '',
     };
     onChange({
       ...cvData,
-      keyProjects: [...cvData.keyProjects, newProject]
+      keyProjects: [...cvData.keyProjects, newProject],
     });
     setExpandedProject(newProject.id);
   };
@@ -32,16 +31,16 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
   const updateProject = (id: string, field: keyof KeyProject, value: string) => {
     onChange({
       ...cvData,
-      keyProjects: cvData.keyProjects.map(project =>
+      keyProjects: cvData.keyProjects.map((project) =>
         project.id === id ? { ...project, [field]: value } : project
-      )
+      ),
     });
   };
 
   const removeProject = (id: string) => {
     onChange({
       ...cvData,
-      keyProjects: cvData.keyProjects.filter(project => project.id !== id)
+      keyProjects: cvData.keyProjects.filter((project) => project.id !== id),
     });
   };
 
@@ -55,7 +54,7 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
     projectTitle: project.title || 'Electrical Project',
     role: project.role || 'Electrician',
     client: project.client || '',
-    existingDescription: project.description
+    existingDescription: project.description,
   });
 
   return (
@@ -66,7 +65,8 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
           Key Projects
         </h3>
         <p className="text-sm text-elec-light/60 mb-6">
-          Showcase your most impressive electrical projects. This helps employers see the scale and type of work you've handled.
+          Showcase your most impressive electrical projects. This helps employers see the scale and
+          type of work you've handled.
         </p>
 
         {/* Project Cards */}
@@ -78,7 +78,9 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
             >
               {/* Header */}
               <button
-                onClick={() => setExpandedProject(expandedProject === project.id ? null : project.id)}
+                onClick={() =>
+                  setExpandedProject(expandedProject === project.id ? null : project.id)
+                }
                 className="w-full flex items-center justify-between p-4 text-left touch-manipulation"
               >
                 <div className="flex items-center gap-3 min-w-0">
@@ -116,9 +118,7 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
               {expandedProject === project.id && (
                 <div className="p-4 pt-0 space-y-4 border-t border-elec-light/10">
                   <div className="space-y-3">
-                    <label className="text-sm font-semibold text-elec-light">
-                      Project Title *
-                    </label>
+                    <label className="text-sm font-semibold text-elec-light">Project Title *</label>
                     <input
                       type="text"
                       value={project.title}
@@ -142,9 +142,7 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
                       />
                     </div>
                     <div className="space-y-3">
-                      <label className="text-sm font-semibold text-elec-light">
-                        Project Value
-                      </label>
+                      <label className="text-sm font-semibold text-elec-light">Project Value</label>
                       <input
                         type="text"
                         value={project.value || ''}
@@ -157,9 +155,7 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-3">
-                      <label className="text-sm font-semibold text-elec-light">
-                        Your Role *
-                      </label>
+                      <label className="text-sm font-semibold text-elec-light">Your Role *</label>
                       <input
                         type="text"
                         value={project.role}
@@ -175,7 +171,9 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
                       <input
                         type="month"
                         value={project.completionDate || ''}
-                        onChange={(e) => updateProject(project.id, 'completionDate', e.target.value)}
+                        onChange={(e) =>
+                          updateProject(project.id, 'completionDate', e.target.value)
+                        }
                         className="flex min-h-[48px] w-full rounded-md border border-input bg-card px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 touch-manipulation"
                       />
                     </div>
@@ -193,7 +191,8 @@ export const KeyProjectsForm: React.FC<KeyProjectsFormProps> = ({ cvData, onChan
                       rows={4}
                     />
                     <p className="text-xs text-elec-light/60">
-                      Include key details like: systems installed, team size, any challenges overcome
+                      Include key details like: systems installed, team size, any challenges
+                      overcome
                     </p>
                   </div>
 

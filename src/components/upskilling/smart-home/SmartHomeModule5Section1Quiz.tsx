@@ -6,121 +6,134 @@ import { Brain, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
 
 export const SmartHomeModule5Section1Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(new Array(10).fill(null));
+  const [selectedAnswers, setSelectedAnswers] = useState<(string | null)[]>(
+    new Array(10).fill(null)
+  );
   const [showResults, setShowResults] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
   const questions = [
     {
-      question: "What is a smart lock?",
+      question: 'What is a smart lock?',
       options: [
-        "A lock that can only be opened with a smartphone",
-        "An electronic lock controlled via app, keypad, biometrics, or key fob",
-        "A mechanical lock with Bluetooth capability",
-        "A lock that automatically opens when you approach"
+        'A lock that can only be opened with a smartphone',
+        'An electronic lock controlled via app, keypad, biometrics, or key fob',
+        'A mechanical lock with Bluetooth capability',
+        'A lock that automatically opens when you approach',
       ],
       correct: 1,
-      explanation: "Smart locks are electronic locks that can be controlled through multiple methods including apps, keypads, biometrics, or key fobs."
+      explanation:
+        'Smart locks are electronic locks that can be controlled through multiple methods including apps, keypads, biometrics, or key fobs.',
     },
     {
-      question: "Name two connectivity methods used in smart locks:",
+      question: 'Name two connectivity methods used in smart locks:',
       options: [
-        "Bluetooth and NFC",
-        "Wi-Fi and Ethernet", 
-        "Bluetooth and Wi-Fi",
-        "Zigbee and infrared"
+        'Bluetooth and NFC',
+        'Wi-Fi and Ethernet',
+        'Bluetooth and Wi-Fi',
+        'Zigbee and infrared',
       ],
       correct: 2,
-      explanation: "Bluetooth and Wi-Fi are the two most common connectivity methods, though Zigbee and Z-Wave are also used."
+      explanation:
+        'Bluetooth and Wi-Fi are the two most common connectivity methods, though Zigbee and Z-Wave are also used.',
     },
     {
-      question: "What is the difference between retrofit and replacement locks?",
+      question: 'What is the difference between retrofit and replacement locks?',
       options: [
-        "Retrofit locks are wireless, replacement locks are wired",
-        "Retrofit locks fit over existing deadbolts, replacement locks fully replace the original lock",
-        "Retrofit locks are cheaper, replacement locks are more expensive",
-        "There is no difference"
+        'Retrofit locks are wireless, replacement locks are wired',
+        'Retrofit locks fit over existing deadbolts, replacement locks fully replace the original lock',
+        'Retrofit locks are cheaper, replacement locks are more expensive',
+        'There is no difference',
       ],
       correct: 1,
-      explanation: "Retrofit locks fit over existing deadbolts while replacement locks completely replace the traditional lock mechanism."
+      explanation:
+        'Retrofit locks fit over existing deadbolts while replacement locks completely replace the traditional lock mechanism.',
     },
     {
-      question: "Give one example of a biometric smart lock feature:",
+      question: 'Give one example of a biometric smart lock feature:',
       options: [
-        "PIN code entry",
-        "Bluetooth connectivity",
-        "Fingerprint recognition",
-        "Mobile app control"
+        'PIN code entry',
+        'Bluetooth connectivity',
+        'Fingerprint recognition',
+        'Mobile app control',
       ],
       correct: 2,
-      explanation: "Fingerprint recognition is a biometric feature that identifies users based on their unique biological characteristics."
+      explanation:
+        'Fingerprint recognition is a biometric feature that identifies users based on their unique biological characteristics.',
     },
     {
-      question: "What is a benefit of keypad PIN entry?",
+      question: 'What is a benefit of keypad PIN entry?',
       options: [
-        "Faster entry than keys",
-        "No physical keys needed and ability to create temporary codes",
-        "Better security than biometrics",
-        "Lower cost than traditional locks"
+        'Faster entry than keys',
+        'No physical keys needed and ability to create temporary codes',
+        'Better security than biometrics',
+        'Lower cost than traditional locks',
       ],
       correct: 1,
-      explanation: "Keypad PIN entry eliminates the need for physical keys and allows creation of temporary codes for guests or service providers."
+      explanation:
+        'Keypad PIN entry eliminates the need for physical keys and allows creation of temporary codes for guests or service providers.',
     },
     {
-      question: "What is a drawback of using PIN codes?",
+      question: 'What is a drawback of using PIN codes?',
       options: [
-        "They are too expensive to implement",
-        "Codes must be managed and changed for security, and code sharing reduces security",
+        'They are too expensive to implement',
+        'Codes must be managed and changed for security, and code sharing reduces security',
         "They don't work in cold weather",
-        "They require internet connection"
+        'They require internet connection',
       ],
       correct: 1,
-      explanation: "PIN codes need regular management and updates, and sharing codes carelessly can compromise security."
+      explanation:
+        'PIN codes need regular management and updates, and sharing codes carelessly can compromise security.',
     },
     {
-      question: "Name one way smart locks integrate with wider smart homes:",
+      question: 'Name one way smart locks integrate with wider smart homes:',
       options: [
-        "They make other devices work faster",
-        "Unlocking can trigger security scenes like disarming alarms and turning on lights",
-        "They control the heating system",
-        "They manage internet connectivity"
+        'They make other devices work faster',
+        'Unlocking can trigger security scenes like disarming alarms and turning on lights',
+        'They control the heating system',
+        'They manage internet connectivity',
       ],
       correct: 1,
-      explanation: "Smart locks can trigger automation scenes, such as disarming security systems and turning on lights when unlocked."
+      explanation:
+        'Smart locks can trigger automation scenes, such as disarming security systems and turning on lights when unlocked.',
     },
     {
-      question: "True or False: Smart locks never need battery changes.",
+      question: 'True or False: Smart locks never need battery changes.',
       options: [
-        "True - they are powered by the door mechanism",
-        "False - most smart locks are battery-powered and need regular replacement",
-        "True - they are always hardwired",
-        "False - they use solar power"
+        'True - they are powered by the door mechanism',
+        'False - most smart locks are battery-powered and need regular replacement',
+        'True - they are always hardwired',
+        'False - they use solar power',
       ],
       correct: 1,
-      explanation: "Most smart locks are battery-powered and require regular battery replacement, typically every 6-12 months."
+      explanation:
+        'Most smart locks are battery-powered and require regular battery replacement, typically every 6-12 months.',
     },
     {
-      question: "What should always be provided as a backup with smart locks?",
+      question: 'What should always be provided as a backup with smart locks?',
       options: [
-        "A second smart lock",
-        "A mechanical key override",
-        "A smartphone app",
-        "A PIN code"
+        'A second smart lock',
+        'A mechanical key override',
+        'A smartphone app',
+        'A PIN code',
       ],
       correct: 1,
-      explanation: "A mechanical key override is essential as a backup in case of electronic failure or battery depletion."
+      explanation:
+        'A mechanical key override is essential as a backup in case of electronic failure or battery depletion.',
     },
     {
-      question: "Scenario: A family wants to let their cleaner in once a week without giving them a key. Which smart lock feature would you recommend?",
+      question:
+        'Scenario: A family wants to let their cleaner in once a week without giving them a key. Which smart lock feature would you recommend?',
       options: [
-        "Permanent PIN code that never changes",
-        "Temporary or scheduled PIN codes that can be time-limited",
-        "Biometric fingerprint access",
-        "Bluetooth proximity unlock"
+        'Permanent PIN code that never changes',
+        'Temporary or scheduled PIN codes that can be time-limited',
+        'Biometric fingerprint access',
+        'Bluetooth proximity unlock',
       ],
       correct: 1,
-      explanation: "Temporary or scheduled PIN codes provide secure access for service providers without the security risks of permanent codes or physical keys."
-    }
+      explanation:
+        'Temporary or scheduled PIN codes provide secure access for service providers without the security risks of permanent codes or physical keys.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
@@ -181,21 +194,20 @@ export const SmartHomeModule5Section1Quiz = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="text-center">
-            <div className={`text-4xl font-bold mb-2 ${getScoreColor(score)}`}>
-              {score}/10
-            </div>
-            <p className="text-gray-300">
-              {getScoreMessage(score)}
-            </p>
+            <div className={`text-4xl font-bold mb-2 ${getScoreColor(score)}`}>{score}/10</div>
+            <p className="text-gray-300">{getScoreMessage(score)}</p>
           </div>
 
           <div className="space-y-4">
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer !== null && parseInt(userAnswer) === question.correct;
-              
+
               return (
-                <div key={index} className={`p-4 rounded-lg border ${isCorrect ? 'border-green-600 bg-green-900/20' : 'border-red-600 bg-red-900/20'}`}>
+                <div
+                  key={index}
+                  className={`p-4 rounded-lg border ${isCorrect ? 'border-green-600 bg-green-900/20' : 'border-red-600 bg-red-900/20'}`}
+                >
                   <div className="flex items-start gap-3">
                     {isCorrect ? (
                       <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -214,9 +226,7 @@ export const SmartHomeModule5Section1Quiz = () => {
                           <strong>Your answer:</strong> {question.options[parseInt(userAnswer)]}
                         </p>
                       )}
-                      <p className="text-xs text-gray-400">
-                        {question.explanation}
-                      </p>
+                      <p className="text-xs text-gray-400">{question.explanation}</p>
                     </div>
                   </div>
                 </div>
@@ -225,7 +235,7 @@ export const SmartHomeModule5Section1Quiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={resetQuiz}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
             >
@@ -254,15 +264,15 @@ export const SmartHomeModule5Section1Quiz = () => {
           <h3 className="text-lg font-semibold text-foreground">
             {questions[currentQuestion].question}
           </h3>
-          
+
           <div className="space-y-3">
             {questions[currentQuestion].options.map((option, index) => (
               <Button
                 key={index}
                 variant="outline"
                 className={`w-full justify-start text-left p-4 h-auto border-gray-600 hover:border-elec-yellow hover:bg-elec-yellow/10 ${
-                  selectedAnswers[currentQuestion] === index.toString() 
-                    ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow' 
+                  selectedAnswers[currentQuestion] === index.toString()
+                    ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
                     : 'text-gray-300'
                 }`}
                 onClick={() => handleAnswerSelect(index.toString())}
@@ -283,7 +293,7 @@ export const SmartHomeModule5Section1Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNextQuestion}
             disabled={selectedAnswers[currentQuestion] === null}
@@ -294,7 +304,7 @@ export const SmartHomeModule5Section1Quiz = () => {
         </div>
 
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
           />

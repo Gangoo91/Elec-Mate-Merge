@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule4Section2LearningOutcomes = () => {
   const outcomes = [
-    "Explain how smart radiator valves (TRVs) function",
-    "Describe how boilers are integrated into smart systems",
-    "Understand how heat pumps operate with smart controls",
-    "Recognise compatibility issues with heating equipment",
-    "Recommend appropriate control methods for different property types"
+    'Explain how smart radiator valves (TRVs) function',
+    'Describe how boilers are integrated into smart systems',
+    'Understand how heat pumps operate with smart controls',
+    'Recognise compatibility issues with heating equipment',
+    'Recommend appropriate control methods for different property types',
   ];
 
   return (

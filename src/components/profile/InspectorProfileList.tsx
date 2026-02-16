@@ -43,10 +43,7 @@ export const InspectorProfileList: React.FC<InspectorProfileListProps> = ({
         {isLoading ? (
           <div className="space-y-2">
             {[1, 2].map((i) => (
-              <div
-                key={i}
-                className="h-16 rounded-lg bg-muted/50 animate-pulse"
-              />
+              <div key={i} className="h-16 rounded-lg bg-muted/50 animate-pulse" />
             ))}
           </div>
         ) : profiles.length === 0 ? (

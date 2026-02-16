@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Calculator } from 'lucide-react';
 import { ZsTestResult } from './types';
@@ -15,11 +14,17 @@ const ZsTemperatureCorrectionCard = ({ currentTest }: ZsTemperatureCorrectionCar
     </div>
     <div className="space-y-2 text-sm text-white">
       <p>Zs values must be corrected to maximum conductor operating temperature (70°C)</p>
-      <p><strong>Formula:</strong> Zs(corrected) = Zs(measured) × (230 + 70) / (230 + test temp)</p>
+      <p>
+        <strong>Formula:</strong> Zs(corrected) = Zs(measured) × (230 + 70) / (230 + test temp)
+      </p>
       {currentTest.zsReading && currentTest.temperature && (
         <div className="mt-3 p-2 bg-card rounded">
-          <p><strong>Measured Zs:</strong> {currentTest.zsReading}Ω at {currentTest.temperature}°C</p>
-          <p><strong>Corrected Zs:</strong> {currentTest.correctedZs}Ω (at 70°C)</p>
+          <p>
+            <strong>Measured Zs:</strong> {currentTest.zsReading}Ω at {currentTest.temperature}°C
+          </p>
+          <p>
+            <strong>Corrected Zs:</strong> {currentTest.correctedZs}Ω (at 70°C)
+          </p>
         </div>
       )}
     </div>

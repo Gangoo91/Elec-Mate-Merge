@@ -1,9 +1,15 @@
-
-import { useState, useEffect, useCallback } from "react";
-import { PortfolioEntry, PortfolioCategory, PortfolioAnalytics, PortfolioActivity, PortfolioGroup, PortfolioFile } from "@/types/portfolio";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
+import { useState, useEffect, useCallback } from 'react';
+import {
+  PortfolioEntry,
+  PortfolioCategory,
+  PortfolioAnalytics,
+  PortfolioActivity,
+  PortfolioGroup,
+  PortfolioFile,
+} from '@/types/portfolio';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { useLearningXP } from '@/hooks/useLearningXP';
 
 const defaultCategories: PortfolioCategory[] = [
@@ -16,7 +22,7 @@ const defaultCategories: PortfolioCategory[] = [
     requiredEntries: 8,
     completedEntries: 0,
     groupTheme: 'core-technical',
-    competencyLevel: 'foundation'
+    competencyLevel: 'foundation',
   },
   {
     id: 'health-safety',
@@ -27,7 +33,7 @@ const defaultCategories: PortfolioCategory[] = [
     requiredEntries: 5,
     completedEntries: 0,
     groupTheme: 'safety-compliance',
-    competencyLevel: 'foundation'
+    competencyLevel: 'foundation',
   },
   {
     id: 'testing-inspection',
@@ -38,7 +44,7 @@ const defaultCategories: PortfolioCategory[] = [
     requiredEntries: 6,
     completedEntries: 0,
     groupTheme: 'core-technical',
-    competencyLevel: 'intermediate'
+    competencyLevel: 'intermediate',
   },
   {
     id: 'customer-service',
@@ -49,7 +55,7 @@ const defaultCategories: PortfolioCategory[] = [
     requiredEntries: 4,
     completedEntries: 0,
     groupTheme: 'professional-skills',
-    competencyLevel: 'foundation'
+    competencyLevel: 'foundation',
   },
   {
     id: 'professional-development',
@@ -60,7 +66,7 @@ const defaultCategories: PortfolioCategory[] = [
     requiredEntries: 3,
     completedEntries: 0,
     groupTheme: 'professional-skills',
-    competencyLevel: 'intermediate'
+    competencyLevel: 'intermediate',
   },
   {
     id: 'advanced-installations',
@@ -71,7 +77,7 @@ const defaultCategories: PortfolioCategory[] = [
     requiredEntries: 4,
     completedEntries: 0,
     groupTheme: 'core-technical',
-    competencyLevel: 'advanced'
+    competencyLevel: 'advanced',
   },
   {
     id: 'regulatory-compliance',
@@ -82,7 +88,7 @@ const defaultCategories: PortfolioCategory[] = [
     requiredEntries: 3,
     completedEntries: 0,
     groupTheme: 'safety-compliance',
-    competencyLevel: 'intermediate'
+    competencyLevel: 'intermediate',
   },
   {
     id: 'site-diary-evidence',
@@ -93,31 +99,44 @@ const defaultCategories: PortfolioCategory[] = [
     requiredEntries: 0,
     completedEntries: 0,
     groupTheme: 'professional-skills',
-    competencyLevel: 'foundation'
-  }
+    competencyLevel: 'foundation',
+  },
 ];
 
+// Map a junction-table evidence file row to PortfolioFile
+const mapEvidenceFileRow = (row: any): PortfolioFile => ({
+  id: row.id,
+  name: row.file_name || 'Unknown',
+  type: row.file_type || 'unknown',
+  size: Number(row.file_size) || 0,
+  url: row.public_url,
+  uploadDate: row.created_at,
+});
+
 // Map database row to PortfolioEntry
-const mapDbToEntry = (row: any): PortfolioEntry => {
-  const category = defaultCategories.find(c => c.id === row.category) || {
+// `evidenceFileRows` comes from the junction table join; falls back to legacy storage_urls
+const mapDbToEntry = (row: any, evidenceFileRows?: any[]): PortfolioEntry => {
+  const category = defaultCategories.find((c) => c.id === row.category) || {
     id: row.category,
     name: row.category,
     description: '',
     icon: 'folder',
     color: 'gray',
     requiredEntries: 0,
-    completedEntries: 0
+    completedEntries: 0,
   };
 
-  // Parse storage_urls to PortfolioFile array
-  const evidenceFiles: PortfolioFile[] = (row.storage_urls || []).map((file: any, idx: number) => ({
-    id: file.id || `file_${idx}`,
-    name: file.name || 'Unknown',
-    type: file.type || 'unknown',
-    size: file.size || 0,
-    url: file.url,
-    uploadDate: file.uploadDate || row.created_at
-  }));
+  // Prefer junction-table rows; fall back to legacy storage_urls JSONB
+  const evidenceFiles: PortfolioFile[] = evidenceFileRows
+    ? evidenceFileRows.map(mapEvidenceFileRow)
+    : (row.storage_urls || []).map((file: any, idx: number) => ({
+        id: file.id || `file_${idx}`,
+        name: file.name || 'Unknown',
+        type: file.type || 'unknown',
+        size: file.size || 0,
+        url: file.url,
+        uploadDate: file.uploadDate || row.created_at,
+      }));
 
   return {
     id: row.id,
@@ -144,14 +163,15 @@ const mapDbToEntry = (row: any): PortfolioEntry => {
 // Map PortfolioEntry to database row
 const mapEntryToDb = (entry: Omit<PortfolioEntry, 'id' | 'dateCreated'>, userId: string) => {
   // Convert evidenceFiles to storage_urls format
-  const storageUrls = entry.evidenceFiles?.map(file => ({
-    id: file.id,
-    name: file.name,
-    type: file.type,
-    size: file.size,
-    url: file.url,
-    uploadDate: file.uploadDate
-  })) || [];
+  const storageUrls =
+    entry.evidenceFiles?.map((file) => ({
+      id: file.id,
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      url: file.url,
+      uploadDate: file.uploadDate,
+    })) || [];
 
   return {
     user_id: userId,
@@ -170,7 +190,7 @@ const mapEntryToDb = (entry: Omit<PortfolioEntry, 'id' | 'dateCreated'>, userId:
     awarding_body_standards: entry.awardingBodyStandards,
     storage_urls: storageUrls,
     evidence_count: storageUrls.length,
-    date_completed: entry.status === 'completed' ? new Date().toISOString() : null
+    date_completed: entry.status === 'completed' ? new Date().toISOString() : null,
   };
 };
 
@@ -182,31 +202,33 @@ const getGroupInfo = (theme: string) => {
       description: 'Fundamental electrical installations and technical competencies',
       icon: 'zap',
       color: 'blue',
-      competencyLevel: 'foundation' as const
+      competencyLevel: 'foundation' as const,
     },
     'safety-compliance': {
       name: 'Safety & Compliance',
       description: 'Health, safety, and regulatory compliance requirements',
       icon: 'shield',
       color: 'green',
-      competencyLevel: 'foundation' as const
+      competencyLevel: 'foundation' as const,
     },
     'professional-skills': {
       name: 'Professional Skills',
       description: 'Communication, customer service, and professional development',
       icon: 'users',
       color: 'purple',
-      competencyLevel: 'intermediate' as const
-    }
+      competencyLevel: 'intermediate' as const,
+    },
   };
 
-  return groupMap[theme as keyof typeof groupMap] || {
-    name: theme,
-    description: '',
-    icon: 'folder',
-    color: 'gray',
-    competencyLevel: 'foundation' as const
-  };
+  return (
+    groupMap[theme as keyof typeof groupMap] || {
+      name: theme,
+      description: '',
+      icon: 'folder',
+      color: 'gray',
+      competencyLevel: 'foundation' as const,
+    }
+  );
 };
 
 export const usePortfolioData = () => {
@@ -228,22 +250,41 @@ export const usePortfolioData = () => {
 
     try {
       setIsLoading(true);
-      const { data, error } = await supabase
+
+      // Try join with junction table; fall back to plain query if table doesn't exist yet
+      let rows: any[] | null = null;
+      const joinResult = await supabase
         .from('portfolio_items')
-        .select('*')
+        .select('*, portfolio_evidence_files(*)')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (!joinResult.error) {
+        rows = joinResult.data;
+      } else {
+        // Junction table not deployed yet — fall back to legacy storage_urls
+        const fallback = await supabase
+          .from('portfolio_items')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+        if (fallback.error) throw fallback.error;
+        rows = fallback.data;
+      }
 
-      const mappedEntries = (data || []).map(mapDbToEntry);
+      const mappedEntries = (rows || []).map((row: any) => {
+        const junctionFiles = Array.isArray(row.portfolio_evidence_files)
+          ? row.portfolio_evidence_files
+          : undefined;
+        return mapDbToEntry(row, junctionFiles);
+      });
       setEntries(mappedEntries);
     } catch (error) {
       console.error('Error loading portfolio data:', error);
       toast({
-        title: "Error loading portfolio",
-        description: "Failed to load your portfolio data. Please try again.",
-        variant: "destructive"
+        title: 'Error loading portfolio',
+        description: 'Failed to load your portfolio data. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -267,17 +308,17 @@ export const usePortfolioData = () => {
           event: '*',
           schema: 'public',
           table: 'portfolio_items',
-          filter: `user_id=eq.${user.id}`
+          filter: `user_id=eq.${user.id}`,
         },
         (payload) => {
           if (payload.eventType === 'INSERT') {
             const newEntry = mapDbToEntry(payload.new);
-            setEntries(prev => [newEntry, ...prev]);
+            setEntries((prev) => [newEntry, ...prev]);
           } else if (payload.eventType === 'UPDATE') {
             const updatedEntry = mapDbToEntry(payload.new);
-            setEntries(prev => prev.map(e => e.id === updatedEntry.id ? updatedEntry : e));
+            setEntries((prev) => prev.map((e) => (e.id === updatedEntry.id ? updatedEntry : e)));
           } else if (payload.eventType === 'DELETE') {
-            setEntries(prev => prev.filter(e => e.id !== payload.old.id));
+            setEntries((prev) => prev.filter((e) => e.id !== payload.old.id));
           }
         }
       )
@@ -292,31 +333,40 @@ export const usePortfolioData = () => {
   useEffect(() => {
     // Calculate analytics
     const totalEntries = entries.length;
-    const completedEntries = entries.filter(e => e.status === 'completed').length;
+    const completedEntries = entries.filter((e) => e.status === 'completed').length;
     const totalTimeSpent = entries.reduce((total, entry) => total + entry.timeSpent, 0);
-    const validRatings = entries.filter(e => e.selfAssessment > 0);
-    const averageRating = validRatings.length > 0
-      ? validRatings.reduce((total, entry) => total + entry.selfAssessment, 0) / validRatings.length
-      : 0;
+    const validRatings = entries.filter((e) => e.selfAssessment > 0);
+    const averageRating =
+      validRatings.length > 0
+        ? validRatings.reduce((total, entry) => total + entry.selfAssessment, 0) /
+          validRatings.length
+        : 0;
 
     const categoriesProgress: { [key: string]: number } = {};
-    categories.forEach(category => {
-      const categoryEntries = entries.filter(e => e.category.id === category.id && e.status === 'completed');
-      categoriesProgress[category.id] = Math.min((categoryEntries.length / category.requiredEntries) * 100, 100);
+    categories.forEach((category) => {
+      const categoryEntries = entries.filter(
+        (e) => e.category.id === category.id && e.status === 'completed'
+      );
+      categoriesProgress[category.id] = Math.min(
+        (categoryEntries.length / category.requiredEntries) * 100,
+        100
+      );
     });
 
-    const skillsDemo = [...new Set(entries.flatMap(entry => entry.skills))];
+    const skillsDemo = [...new Set(entries.flatMap((entry) => entry.skills))];
 
-    const recentActivity: PortfolioActivity[] = entries
-      .slice(0, 5)
-      .map(entry => ({
-        id: `activity_${entry.id}`,
-        type: entry.status === 'completed' ? 'completed' :
-              entry.status === 'reviewed' ? 'reviewed' : 'created',
-        entryId: entry.id,
-        entryTitle: entry.title,
-        date: entry.dateCreated
-      }));
+    const recentActivity: PortfolioActivity[] = entries.slice(0, 5).map((entry) => ({
+      id: `activity_${entry.id}`,
+      type:
+        entry.status === 'completed'
+          ? 'completed'
+          : entry.status === 'reviewed'
+            ? 'reviewed'
+            : 'created',
+      entryId: entry.id,
+      entryTitle: entry.title,
+      date: entry.dateCreated,
+    }));
 
     setAnalytics({
       totalEntries,
@@ -325,16 +375,18 @@ export const usePortfolioData = () => {
       averageRating,
       categoriesProgress,
       skillsDemo,
-      recentActivity
+      recentActivity,
     });
 
     // Calculate groups
-    const groupThemes = [...new Set(categories.map(cat => cat.groupTheme).filter(Boolean))];
-    const newGroups: PortfolioGroup[] = groupThemes.map(theme => {
-      const themeCategories = categories.filter(cat => cat.groupTheme === theme);
+    const groupThemes = [...new Set(categories.map((cat) => cat.groupTheme).filter(Boolean))];
+    const newGroups: PortfolioGroup[] = groupThemes.map((theme) => {
+      const themeCategories = categories.filter((cat) => cat.groupTheme === theme);
       const totalRequired = themeCategories.reduce((sum, cat) => sum + cat.requiredEntries, 0);
       const totalCompleted = themeCategories.reduce((sum, cat) => {
-        const completedEntries = entries.filter(e => e.category.id === cat.id && e.status === 'completed').length;
+        const completedEntries = entries.filter(
+          (e) => e.category.id === cat.id && e.status === 'completed'
+        ).length;
         return sum + completedEntries;
       }, 0);
 
@@ -349,8 +401,9 @@ export const usePortfolioData = () => {
         categories: themeCategories,
         totalRequired,
         totalCompleted,
-        progressPercentage: totalRequired > 0 ? Math.round((totalCompleted / totalRequired) * 100) : 0,
-        competencyLevel: groupInfo.competencyLevel
+        progressPercentage:
+          totalRequired > 0 ? Math.round((totalCompleted / totalRequired) * 100) : 0,
+        competencyLevel: groupInfo.competencyLevel,
       };
     });
 
@@ -360,9 +413,9 @@ export const usePortfolioData = () => {
   const addEntry = async (entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>) => {
     if (!user?.id) {
       toast({
-        title: "Not authenticated",
-        description: "Please sign in to add portfolio entries.",
-        variant: "destructive"
+        title: 'Not authenticated',
+        description: 'Please sign in to add portfolio entries.',
+        variant: 'destructive',
       });
       return null;
     }
@@ -378,9 +431,23 @@ export const usePortfolioData = () => {
 
       if (error) throw error;
 
+      // Write evidence files to junction table
+      if (entryData.evidenceFiles?.length) {
+        const fileRows = entryData.evidenceFiles.map((file) => ({
+          portfolio_item_id: data.id,
+          user_id: user.id,
+          file_name: file.name,
+          file_type: file.type,
+          file_size: file.size,
+          public_url: file.url,
+          metadata: { legacy_id: file.id, upload_date: file.uploadDate },
+        }));
+        await supabase.from('portfolio_evidence_files').insert(fileRows);
+      }
+
       toast({
-        title: "Portfolio entry added",
-        description: "Your new portfolio entry has been saved successfully."
+        title: 'Portfolio entry added',
+        description: 'Your new portfolio entry has been saved successfully.',
       });
 
       // Log XP for portfolio evidence
@@ -398,9 +465,9 @@ export const usePortfolioData = () => {
     } catch (error) {
       console.error('Error adding entry:', error);
       toast({
-        title: "Error saving portfolio",
-        description: "Failed to save your portfolio entry. Please try again.",
-        variant: "destructive"
+        title: 'Error saving portfolio',
+        description: 'Failed to save your portfolio entry. Please try again.',
+        variant: 'destructive',
       });
       return null;
     }
@@ -410,9 +477,9 @@ export const usePortfolioData = () => {
     if (!user?.id) return;
 
     // Optimistic update
-    setEntries(prev => prev.map(entry =>
-      entry.id === entryId ? { ...entry, ...updates } : entry
-    ));
+    setEntries((prev) =>
+      prev.map((entry) => (entry.id === entryId ? { ...entry, ...updates } : entry))
+    );
 
     try {
       const updateData: any = {};
@@ -423,9 +490,12 @@ export const usePortfolioData = () => {
       if (updates.skills !== undefined) updateData.skills_demonstrated = updates.skills;
       if (updates.reflection !== undefined) updateData.reflection_notes = updates.reflection;
       if (updates.tags !== undefined) updateData.tags = updates.tags;
-      if (updates.assessmentCriteria !== undefined) updateData.assessment_criteria_met = updates.assessmentCriteria;
-      if (updates.learningOutcomes !== undefined) updateData.learning_outcomes_met = updates.learningOutcomes;
-      if (updates.supervisorFeedback !== undefined) updateData.supervisor_feedback = updates.supervisorFeedback;
+      if (updates.assessmentCriteria !== undefined)
+        updateData.assessment_criteria_met = updates.assessmentCriteria;
+      if (updates.learningOutcomes !== undefined)
+        updateData.learning_outcomes_met = updates.learningOutcomes;
+      if (updates.supervisorFeedback !== undefined)
+        updateData.supervisor_feedback = updates.supervisorFeedback;
       if (updates.selfAssessment !== undefined) updateData.self_assessment = updates.selfAssessment;
       if (updates.status !== undefined) {
         updateData.status = updates.status;
@@ -434,15 +504,16 @@ export const usePortfolioData = () => {
         }
       }
       if (updates.timeSpent !== undefined) updateData.time_spent = updates.timeSpent;
-      if (updates.awardingBodyStandards !== undefined) updateData.awarding_body_standards = updates.awardingBodyStandards;
+      if (updates.awardingBodyStandards !== undefined)
+        updateData.awarding_body_standards = updates.awardingBodyStandards;
       if (updates.evidenceFiles !== undefined) {
-        updateData.storage_urls = updates.evidenceFiles.map(file => ({
+        updateData.storage_urls = updates.evidenceFiles.map((file) => ({
           id: file.id,
           name: file.name,
           type: file.type,
           size: file.size,
           url: file.url,
-          uploadDate: file.uploadDate
+          uploadDate: file.uploadDate,
         }));
         updateData.evidence_count = updates.evidenceFiles.length;
       }
@@ -457,18 +528,41 @@ export const usePortfolioData = () => {
 
       if (error) throw error;
 
+      // Sync junction table when evidence files change
+      if (updates.evidenceFiles !== undefined) {
+        // Delete existing junction rows and re-insert
+        await supabase
+          .from('portfolio_evidence_files')
+          .delete()
+          .eq('portfolio_item_id', entryId)
+          .eq('user_id', user.id);
+
+        if (updates.evidenceFiles.length > 0) {
+          const fileRows = updates.evidenceFiles.map((file) => ({
+            portfolio_item_id: entryId,
+            user_id: user.id,
+            file_name: file.name,
+            file_type: file.type,
+            file_size: file.size,
+            public_url: file.url,
+            metadata: { legacy_id: file.id, upload_date: file.uploadDate },
+          }));
+          await supabase.from('portfolio_evidence_files').insert(fileRows);
+        }
+      }
+
       toast({
-        title: "Portfolio entry updated",
-        description: "Your changes have been saved successfully."
+        title: 'Portfolio entry updated',
+        description: 'Your changes have been saved successfully.',
       });
     } catch (error) {
       console.error('Error updating entry:', error);
       // Revert optimistic update
       loadData();
       toast({
-        title: "Error updating portfolio",
-        description: "Failed to save your changes. Please try again.",
-        variant: "destructive"
+        title: 'Error updating portfolio',
+        description: 'Failed to save your changes. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -477,17 +571,17 @@ export const usePortfolioData = () => {
     if (!user?.id) return;
 
     // Get the entry to delete its files from storage
-    const entryToDelete = entries.find(e => e.id === entryId);
+    const entryToDelete = entries.find((e) => e.id === entryId);
 
     // Optimistic update
-    setEntries(prev => prev.filter(entry => entry.id !== entryId));
+    setEntries((prev) => prev.filter((entry) => entry.id !== entryId));
 
     try {
       // Delete files from storage if any
       if (entryToDelete?.evidenceFiles?.length) {
         const filePaths = entryToDelete.evidenceFiles
-          .filter(f => f.url)
-          .map(f => {
+          .filter((f) => f.url)
+          .map((f) => {
             // Extract path from URL
             const url = f.url!;
             const match = url.match(/portfolio-evidence\/(.+)$/);
@@ -496,12 +590,11 @@ export const usePortfolioData = () => {
           .filter(Boolean);
 
         if (filePaths.length > 0) {
-          await supabase.storage
-            .from('portfolio-evidence')
-            .remove(filePaths as string[]);
+          await supabase.storage.from('portfolio-evidence').remove(filePaths as string[]);
         }
       }
 
+      // Junction table rows cascade-delete, but clean up storage first
       const { error } = await supabase
         .from('portfolio_items')
         .delete()
@@ -511,29 +604,33 @@ export const usePortfolioData = () => {
       if (error) throw error;
 
       toast({
-        title: "Portfolio entry deleted",
-        description: "The portfolio entry has been removed."
+        title: 'Portfolio entry deleted',
+        description: 'The portfolio entry has been removed.',
       });
     } catch (error) {
       console.error('Error deleting entry:', error);
       // Revert optimistic update
       loadData();
       toast({
-        title: "Error deleting portfolio",
-        description: "Failed to delete the entry. Please try again.",
-        variant: "destructive"
+        title: 'Error deleting portfolio',
+        description: 'Failed to delete the entry. Please try again.',
+        variant: 'destructive',
       });
     }
   };
 
   const getEntriesByGroup = (groupId: string) => {
-    const groupCategories = categories.filter(cat => cat.groupTheme === groupId).map(cat => cat.id);
-    return entries.filter(entry => groupCategories.includes(entry.category.id));
+    const groupCategories = categories
+      .filter((cat) => cat.groupTheme === groupId)
+      .map((cat) => cat.id);
+    return entries.filter((entry) => groupCategories.includes(entry.category.id));
   };
 
   const getEntriesByCompetencyLevel = (level: 'foundation' | 'intermediate' | 'advanced') => {
-    const levelCategories = categories.filter(cat => cat.competencyLevel === level).map(cat => cat.id);
-    return entries.filter(entry => levelCategories.includes(entry.category.id));
+    const levelCategories = categories
+      .filter((cat) => cat.competencyLevel === level)
+      .map((cat) => cat.id);
+    return entries.filter((entry) => levelCategories.includes(entry.category.id));
   };
 
   return {
@@ -547,6 +644,6 @@ export const usePortfolioData = () => {
     deleteEntry,
     loadData,
     getEntriesByGroup,
-    getEntriesByCompetencyLevel
+    getEntriesByCompetencyLevel,
   };
 };

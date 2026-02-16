@@ -120,226 +120,253 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
   }, []);
 
   // Disconnect a provider
-  const disconnectProvider = useCallback(async (provider: AccountingProvider) => {
-    try {
-      setConnecting(true);
-      const { data: session } = await supabase.auth.getSession();
+  const disconnectProvider = useCallback(
+    async (provider: AccountingProvider) => {
+      try {
+        setConnecting(true);
+        const { data: session } = await supabase.auth.getSession();
 
-      if (!session.session) {
-        toast.error('Please log in');
-        return;
+        if (!session.session) {
+          toast.error('Please log in');
+          return;
+        }
+
+        const response = await supabase.functions.invoke('accounting-disconnect', {
+          headers: { Authorization: `Bearer ${session.session.access_token}` },
+          body: { provider },
+        });
+
+        if (response.error) {
+          throw new Error(response.error.message || 'Failed to disconnect');
+        }
+
+        toast.success(`${getProviderDisplayName(provider)} disconnected`);
+
+        // Refresh status
+        await refreshStatus();
+      } catch (error: any) {
+        console.error(`Error disconnecting ${provider}:`, error);
+        toast.error(error?.message || `Failed to disconnect ${getProviderDisplayName(provider)}`);
+      } finally {
+        setConnecting(false);
       }
-
-      const response = await supabase.functions.invoke('accounting-disconnect', {
-        headers: { Authorization: `Bearer ${session.session.access_token}` },
-        body: { provider },
-      });
-
-      if (response.error) {
-        throw new Error(response.error.message || 'Failed to disconnect');
-      }
-
-      toast.success(`${getProviderDisplayName(provider)} disconnected`);
-
-      // Refresh status
-      await refreshStatus();
-    } catch (error: any) {
-      console.error(`Error disconnecting ${provider}:`, error);
-      toast.error(error?.message || `Failed to disconnect ${getProviderDisplayName(provider)}`);
-    } finally {
-      setConnecting(false);
-    }
-  }, [refreshStatus]);
+    },
+    [refreshStatus]
+  );
 
   // Sync an invoice to connected accounting software
-  const syncInvoice = useCallback(async (
-    invoiceId: string,
-    provider?: AccountingProvider
-  ): Promise<boolean> => {
-    try {
-      // Validate invoice ID before making API call
-      if (!invoiceId || invoiceId === 'undefined' || invoiceId === 'null') {
-        console.error('syncInvoice called with invalid invoiceId:', invoiceId);
-        toast.error('Invalid invoice - please try again');
-        return false;
-      }
-
-      // Validate UUID format
-      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-      if (!uuidRegex.test(invoiceId)) {
-        console.error('syncInvoice called with malformed invoiceId:', invoiceId);
-        toast.error('Invalid invoice ID format');
-        return false;
-      }
-
-      const { data: session } = await supabase.auth.getSession();
-
-      if (!session.session) {
-        toast.error('Please log in to sync invoices');
-        return false;
-      }
-
-      // If no provider specified, use first connected provider
-      const targetProvider = provider || integrations.find(i => i.status === 'connected')?.provider;
-
-      if (!targetProvider) {
-        toast.error('No accounting software connected');
-        return false;
-      }
-
-      console.log('%c=== ACCOUNTING SYNC START ===', 'background: blue; color: white; font-size: 14px;');
-      console.log('Invoice ID:', invoiceId);
-      console.log('Provider:', targetProvider);
-
-      const response = await supabase.functions.invoke('accounting-sync-invoice', {
-        headers: { Authorization: `Bearer ${session.session.access_token}` },
-        body: { invoiceId, provider: targetProvider },
-      });
-
-      // Log full response for debugging - use console.warn for visibility
-      console.log('%c=== SYNC RESPONSE ===', 'background: green; color: white; font-size: 14px;');
-      console.warn('Full response object:', response);
-      console.warn('Response error:', response.error);
-      console.warn('Response data:', response.data);
-
-      // Check for error in response data (we now return 200 with success: false for errors)
-      if (response.data?.success === false || response.data?.error) {
-        console.log('%c=== SYNC ERROR ===', 'background: red; color: white; font-size: 16px;');
-        console.error('Full error response:', JSON.stringify(response.data, null, 2));
-        // Show the main error in toast, and log the detail
-        const mainError = response.data?.error || 'Failed to sync invoice';
-        const detail = response.data?.detail;
-        console.error('%cERROR DETAIL:', 'color: red; font-weight: bold;', detail);
-        // Show truncated detail in toast for visibility
-        const toastMsg = detail ? `${mainError}: ${detail.substring(0, 200)}` : mainError;
-        toast.error(toastMsg, { duration: 10000 }); // Longer duration to read error
-        return false;
-      }
-
-      if (response.error) {
-        // Log full error details for debugging
-        console.error('Sync invoice response error:', response.error);
-        console.error('Sync invoice response data:', response.data);
-
-        // Try to get error detail from response data if available
-        const errorDetail = response.data?.detail || response.data?.error || response.error.message || 'Failed to sync invoice';
-        console.error('Error detail extracted:', errorDetail);
-        throw new Error(errorDetail);
-      }
-
-      toast.success(`Invoice synced to ${getProviderDisplayName(targetProvider)}`);
-
-      // Refresh status to update lastSyncAt
-      await refreshStatus();
-
-      return true;
-    } catch (error: any) {
-      console.error('Error syncing invoice:', error);
-      toast.error(error?.message || 'Failed to sync invoice');
-      return false;
-    }
-  }, [integrations, refreshStatus]);
-
-  // Sync expenses to connected accounting software
-  const syncExpenses = useCallback(async (
-    expenseIds: string[],
-    provider: AccountingProvider
-  ): Promise<boolean> => {
-    try {
-      // Validate expense IDs
-      if (!expenseIds.length) {
-        toast.error('No expenses to sync');
-        return false;
-      }
-
-      // Validate all expense IDs are proper UUIDs
-      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-      for (const expenseId of expenseIds) {
-        if (!expenseId || !uuidRegex.test(expenseId)) {
-          console.error('syncExpenses called with invalid expenseId:', expenseId);
-          toast.error('Invalid expense ID format');
+  const syncInvoice = useCallback(
+    async (invoiceId: string, provider?: AccountingProvider): Promise<boolean> => {
+      try {
+        // Validate invoice ID before making API call
+        if (!invoiceId || invoiceId === 'undefined' || invoiceId === 'null') {
+          console.error('syncInvoice called with invalid invoiceId:', invoiceId);
+          toast.error('Invalid invoice - please try again');
           return false;
         }
-      }
 
-      const { data: session } = await supabase.auth.getSession();
+        // Validate UUID format
+        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        if (!uuidRegex.test(invoiceId)) {
+          console.error('syncInvoice called with malformed invoiceId:', invoiceId);
+          toast.error('Invalid invoice ID format');
+          return false;
+        }
 
-      if (!session.session) {
-        toast.error('Please log in to sync expenses');
+        const { data: session } = await supabase.auth.getSession();
+
+        if (!session.session) {
+          toast.error('Please log in to sync invoices');
+          return false;
+        }
+
+        // If no provider specified, use first connected provider
+        const targetProvider =
+          provider || integrations.find((i) => i.status === 'connected')?.provider;
+
+        if (!targetProvider) {
+          toast.error('No accounting software connected');
+          return false;
+        }
+
+        console.log(
+          '%c=== ACCOUNTING SYNC START ===',
+          'background: blue; color: white; font-size: 14px;'
+        );
+        console.log('Invoice ID:', invoiceId);
+        console.log('Provider:', targetProvider);
+
+        const response = await supabase.functions.invoke('accounting-sync-invoice', {
+          headers: { Authorization: `Bearer ${session.session.access_token}` },
+          body: { invoiceId, provider: targetProvider },
+        });
+
+        // Log full response for debugging - use console.warn for visibility
+        console.log('%c=== SYNC RESPONSE ===', 'background: green; color: white; font-size: 14px;');
+        console.warn('Full response object:', response);
+        console.warn('Response error:', response.error);
+        console.warn('Response data:', response.data);
+
+        // Check for error in response data (we now return 200 with success: false for errors)
+        if (response.data?.success === false || response.data?.error) {
+          console.log('%c=== SYNC ERROR ===', 'background: red; color: white; font-size: 16px;');
+          console.error('Full error response:', JSON.stringify(response.data, null, 2));
+          // Show the main error in toast, and log the detail
+          const mainError = response.data?.error || 'Failed to sync invoice';
+          const detail = response.data?.detail;
+          console.error('%cERROR DETAIL:', 'color: red; font-weight: bold;', detail);
+          // Show truncated detail in toast for visibility
+          const toastMsg = detail ? `${mainError}: ${detail.substring(0, 200)}` : mainError;
+          toast.error(toastMsg, { duration: 10000 }); // Longer duration to read error
+          return false;
+        }
+
+        if (response.error) {
+          // Log full error details for debugging
+          console.error('Sync invoice response error:', response.error);
+          console.error('Sync invoice response data:', response.data);
+
+          // Try to get error detail from response data if available
+          const errorDetail =
+            response.data?.detail ||
+            response.data?.error ||
+            response.error.message ||
+            'Failed to sync invoice';
+          console.error('Error detail extracted:', errorDetail);
+          throw new Error(errorDetail);
+        }
+
+        toast.success(`Invoice synced to ${getProviderDisplayName(targetProvider)}`);
+
+        // Refresh status to update lastSyncAt
+        await refreshStatus();
+
+        return true;
+      } catch (error: any) {
+        console.error('Error syncing invoice:', error);
+        toast.error(error?.message || 'Failed to sync invoice');
         return false;
       }
+    },
+    [integrations, refreshStatus]
+  );
 
-      // Check if provider is connected
-      const targetProvider = provider || integrations.find(i => i.status === 'connected')?.provider;
+  // Sync expenses to connected accounting software
+  const syncExpenses = useCallback(
+    async (expenseIds: string[], provider: AccountingProvider): Promise<boolean> => {
+      try {
+        // Validate expense IDs
+        if (!expenseIds.length) {
+          toast.error('No expenses to sync');
+          return false;
+        }
 
-      if (!targetProvider) {
-        toast.error('No accounting software connected');
+        // Validate all expense IDs are proper UUIDs
+        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        for (const expenseId of expenseIds) {
+          if (!expenseId || !uuidRegex.test(expenseId)) {
+            console.error('syncExpenses called with invalid expenseId:', expenseId);
+            toast.error('Invalid expense ID format');
+            return false;
+          }
+        }
+
+        const { data: session } = await supabase.auth.getSession();
+
+        if (!session.session) {
+          toast.error('Please log in to sync expenses');
+          return false;
+        }
+
+        // Check if provider is connected
+        const targetProvider =
+          provider || integrations.find((i) => i.status === 'connected')?.provider;
+
+        if (!targetProvider) {
+          toast.error('No accounting software connected');
+          return false;
+        }
+
+        console.log(
+          '%c=== ACCOUNTING EXPENSE SYNC START ===',
+          'background: blue; color: white; font-size: 14px;'
+        );
+        console.log('Expense IDs:', expenseIds);
+        console.log('Provider:', targetProvider);
+
+        const response = await supabase.functions.invoke('accounting-sync-expense', {
+          headers: { Authorization: `Bearer ${session.session.access_token}` },
+          body: { expenseIds, provider: targetProvider },
+        });
+
+        // Log full response for debugging
+        console.log('%c=== SYNC RESPONSE ===', 'background: green; color: white; font-size: 14px;');
+        console.log('Response data:', JSON.stringify(response.data, null, 2));
+        console.log('Response error:', response.error);
+
+        // Check for error in response data
+        if (response.data?.success === false || response.data?.error) {
+          console.log('%c=== SYNC ERROR ===', 'background: red; color: white; font-size: 16px;');
+          console.error('Full error response:', JSON.stringify(response.data, null, 2));
+          const mainError = response.data?.error || 'Failed to sync expenses';
+          const detail = response.data?.detail;
+          const toastMsg = detail ? `${mainError}: ${detail.substring(0, 200)}` : mainError;
+          toast.error(toastMsg, { duration: 10000 });
+          return false;
+        }
+
+        if (response.error) {
+          console.error('Sync expenses response error:', response.error);
+          const errorDetail =
+            response.data?.detail ||
+            response.data?.error ||
+            response.error.message ||
+            'Failed to sync expenses';
+          throw new Error(errorDetail);
+        }
+
+        const syncedCount = response.data?.synced?.length || 0;
+        const errorCount = response.data?.errors?.length || 0;
+
+        if (errorCount > 0 && syncedCount > 0) {
+          toast.warning(`Synced ${syncedCount} expense(s), ${errorCount} failed`);
+        } else if (syncedCount > 0) {
+          toast.success(
+            `${syncedCount} expense(s) synced to ${getProviderDisplayName(targetProvider)}`
+          );
+        } else if (errorCount > 0) {
+          toast.error(`Failed to sync ${errorCount} expense(s)`);
+          return false;
+        }
+
+        // Refresh status to update lastSyncAt
+        await refreshStatus();
+
+        return syncedCount > 0;
+      } catch (error: any) {
+        console.error('Error syncing expenses:', error);
+        toast.error(error?.message || 'Failed to sync expenses');
         return false;
       }
-
-      console.log('%c=== ACCOUNTING EXPENSE SYNC START ===', 'background: blue; color: white; font-size: 14px;');
-      console.log('Expense IDs:', expenseIds);
-      console.log('Provider:', targetProvider);
-
-      const response = await supabase.functions.invoke('accounting-sync-expense', {
-        headers: { Authorization: `Bearer ${session.session.access_token}` },
-        body: { expenseIds, provider: targetProvider },
-      });
-
-      // Log full response for debugging
-      console.log('%c=== SYNC RESPONSE ===', 'background: green; color: white; font-size: 14px;');
-      console.log('Response data:', JSON.stringify(response.data, null, 2));
-      console.log('Response error:', response.error);
-
-      // Check for error in response data
-      if (response.data?.success === false || response.data?.error) {
-        console.log('%c=== SYNC ERROR ===', 'background: red; color: white; font-size: 16px;');
-        console.error('Full error response:', JSON.stringify(response.data, null, 2));
-        const mainError = response.data?.error || 'Failed to sync expenses';
-        const detail = response.data?.detail;
-        const toastMsg = detail ? `${mainError}: ${detail.substring(0, 200)}` : mainError;
-        toast.error(toastMsg, { duration: 10000 });
-        return false;
-      }
-
-      if (response.error) {
-        console.error('Sync expenses response error:', response.error);
-        const errorDetail = response.data?.detail || response.data?.error || response.error.message || 'Failed to sync expenses';
-        throw new Error(errorDetail);
-      }
-
-      const syncedCount = response.data?.synced?.length || 0;
-      const errorCount = response.data?.errors?.length || 0;
-
-      if (errorCount > 0 && syncedCount > 0) {
-        toast.warning(`Synced ${syncedCount} expense(s), ${errorCount} failed`);
-      } else if (syncedCount > 0) {
-        toast.success(`${syncedCount} expense(s) synced to ${getProviderDisplayName(targetProvider)}`);
-      } else if (errorCount > 0) {
-        toast.error(`Failed to sync ${errorCount} expense(s)`);
-        return false;
-      }
-
-      // Refresh status to update lastSyncAt
-      await refreshStatus();
-
-      return syncedCount > 0;
-    } catch (error: any) {
-      console.error('Error syncing expenses:', error);
-      toast.error(error?.message || 'Failed to sync expenses');
-      return false;
-    }
-  }, [integrations, refreshStatus]);
+    },
+    [integrations, refreshStatus]
+  );
 
   // Helper: Get integration by provider
-  const getIntegration = useCallback((provider: AccountingProvider): AccountingIntegration | undefined => {
-    return integrations.find(i => i.provider === provider);
-  }, [integrations]);
+  const getIntegration = useCallback(
+    (provider: AccountingProvider): AccountingIntegration | undefined => {
+      return integrations.find((i) => i.provider === provider);
+    },
+    [integrations]
+  );
 
   // Helper: Check if provider is connected
-  const isProviderConnected = useCallback((provider: AccountingProvider): boolean => {
-    return integrations.some(i => i.provider === provider && i.status === 'connected');
-  }, [integrations]);
+  const isProviderConnected = useCallback(
+    (provider: AccountingProvider): boolean => {
+      return integrations.some((i) => i.provider === provider && i.status === 'connected');
+    },
+    [integrations]
+  );
 
   return {
     integrations,

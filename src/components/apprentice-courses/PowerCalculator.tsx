@@ -2,7 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Calculator, Zap } from 'lucide-react';
 
@@ -174,15 +180,15 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
             <div className="text-2xl font-bold text-foreground mb-1">
               {result.value} {result.unit}
             </div>
-            <div className="text-sm text-muted-foreground">
-              Using: {result.formula}
-            </div>
+            <div className="text-sm text-muted-foreground">Using: {result.formula}</div>
           </div>
         )}
 
         {/* Helper Text */}
         <div className="text-xs text-muted-foreground space-y-1">
-          <p>💡 <strong>Tip:</strong> Enter any two known values to calculate the third.</p>
+          <p>
+            💡 <strong>Tip:</strong> Enter any two known values to calculate the third.
+          </p>
           <p>⚡ Common UK voltages: 230V (single-phase), 400V (three-phase)</p>
           <p>📖 Remember: These calculations apply to resistive loads</p>
         </div>

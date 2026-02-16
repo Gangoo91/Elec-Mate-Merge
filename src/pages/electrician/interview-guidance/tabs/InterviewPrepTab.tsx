@@ -1,78 +1,82 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { AccordionItem } from "@/components/ui/accordion";
-import { 
-  FileText, 
-  Clock, 
-  CheckCircle, 
-  Target, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
+import { AccordionItem } from '@/components/ui/accordion';
+import {
+  FileText,
+  Clock,
+  CheckCircle,
+  Target,
   Briefcase,
   MapPin,
   AlertCircle,
   Star,
   BookOpen,
-  Settings
-} from "lucide-react";
+  Settings,
+} from 'lucide-react';
 
 export default function InterviewPrepTab() {
   const preparationAreas = [
     {
-      id: "research",
-      title: "Company & Role Research",
+      id: 'research',
+      title: 'Company & Role Research',
       icon: <FileText className="h-5 w-5" />,
       items: [
-        "Study company website, recent projects, and values",
-        "Research interviewer backgrounds on LinkedIn",
-        "Understand the specific role requirements and responsibilities",
-        "Review company safety policies and procedures",
-        "Check recent news or industry developments about the company"
-      ]
+        'Study company website, recent projects, and values',
+        'Research interviewer backgrounds on LinkedIn',
+        'Understand the specific role requirements and responsibilities',
+        'Review company safety policies and procedures',
+        'Check recent news or industry developments about the company',
+      ],
     },
     {
-      id: "technical",
-      title: "Technical Preparation",
+      id: 'technical',
+      title: 'Technical Preparation',
       icon: <Settings className="h-5 w-5" />,
       items: [
-        "Review BS 7671 18th Edition key points and recent amendments",
+        'Review BS 7671 18th Edition key points and recent amendments',
         "Prepare examples of complex installations you've completed",
-        "Refresh knowledge on current electrical regulations",
-        "Practice explaining technical concepts in simple terms",
-        "Prepare for practical demonstrations or technical tests"
-      ]
+        'Refresh knowledge on current electrical regulations',
+        'Practice explaining technical concepts in simple terms',
+        'Prepare for practical demonstrations or technical tests',
+      ],
     },
     {
-      id: "documentation",
-      title: "Documentation & Portfolio",
+      id: 'documentation',
+      title: 'Documentation & Portfolio',
       icon: <Briefcase className="h-5 w-5" />,
       items: [
-        "Update CV with recent qualifications and experience",
-        "Prepare portfolio of completed projects with photos",
-        "Organize certificates and qualifications in order",
-        "Create a professional reference list with contact details",
-        "Prepare copies of key certifications (ECS card, qualification certificates)"
-      ]
+        'Update CV with recent qualifications and experience',
+        'Prepare portfolio of completed projects with photos',
+        'Organize certificates and qualifications in order',
+        'Create a professional reference list with contact details',
+        'Prepare copies of key certifications (ECS card, qualification certificates)',
+      ],
     },
     {
-      id: "logistics",
-      title: "Logistics & Timing",
+      id: 'logistics',
+      title: 'Logistics & Timing',
       icon: <Clock className="h-5 w-5" />,
       items: [
-        "Plan route and travel time, arriving 10-15 minutes early",
-        "Prepare professional attire appropriate for the role",
-        "Charge phone and prepare any digital portfolios",
-        "Research parking options or public transport",
-        "Have backup plans for unexpected delays"
-      ]
-    }
+        'Plan route and travel time, arriving 10-15 minutes early',
+        'Prepare professional attire appropriate for the role',
+        'Charge phone and prepare any digital portfolios',
+        'Research parking options or public transport',
+        'Have backup plans for unexpected delays',
+      ],
+    },
   ];
 
   const keyMetrics = [
-    { label: "Research Time", value: "2-3 Hours", icon: <BookOpen className="h-4 w-4" /> },
-    { label: "Practice Sessions", value: "3-5", icon: <Target className="h-4 w-4" /> },
-    { label: "Arrival Buffer", value: "15 Minutes", icon: <Clock className="h-4 w-4" /> },
-    { label: "Success Rate", value: "85%+", icon: <Star className="h-4 w-4" /> }
+    { label: 'Research Time', value: '2-3 Hours', icon: <BookOpen className="h-4 w-4" /> },
+    { label: 'Practice Sessions', value: '3-5', icon: <Target className="h-4 w-4" /> },
+    { label: 'Arrival Buffer', value: '15 Minutes', icon: <Clock className="h-4 w-4" /> },
+    { label: 'Success Rate', value: '85%+', icon: <Star className="h-4 w-4" /> },
   ];
 
   return (
@@ -82,9 +86,7 @@ export default function InterviewPrepTab() {
         {keyMetrics.map((metric, index) => (
           <Card key={index} className="text-center">
             <CardContent className="pt-4">
-              <div className="flex justify-center mb-2">
-                {metric.icon}
-              </div>
+              <div className="flex justify-center mb-2">{metric.icon}</div>
               <div className="text-2xl font-bold text-primary">{metric.value}</div>
               <div className="text-sm text-muted-foreground">{metric.label}</div>
             </CardContent>
@@ -96,7 +98,8 @@ export default function InterviewPrepTab() {
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription>
-          <strong>Success Tip:</strong> Preparation is 80% of interview success. Invest time in research and practice to stand out from other candidates.
+          <strong>Success Tip:</strong> Preparation is 80% of interview success. Invest time in
+          research and practice to stand out from other candidates.
         </AlertDescription>
       </Alert>
 
@@ -112,9 +115,7 @@ export default function InterviewPrepTab() {
           <MobileAccordion type="single" collapsible defaultValue="research">
             {preparationAreas.map((area) => (
               <AccordionItem key={area.id} value={area.id}>
-                <MobileAccordionTrigger icon={area.icon}>
-                  {area.title}
-                </MobileAccordionTrigger>
+                <MobileAccordionTrigger icon={area.icon}>{area.title}</MobileAccordionTrigger>
                 <MobileAccordionContent>
                   <div className="space-y-2">
                     {area.items.map((item, index) => (

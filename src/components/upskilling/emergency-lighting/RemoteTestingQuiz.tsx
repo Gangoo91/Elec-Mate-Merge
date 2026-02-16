@@ -3,7 +3,7 @@ import { remoteTestingQuizData } from '@/data/upskilling/emergencyLightingModule
 
 export const RemoteTestingQuiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={remoteTestingQuizData}
       title="Section 5 Quiz: Remote Testing and Monitoring Systems"
     />

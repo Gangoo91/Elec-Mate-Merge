@@ -18,56 +18,69 @@ interface UseDraggableOptions {
 
 export function useDraggable(
   elementRef: RefObject<HTMLElement>,
-  { storageKey = 'draggable-position', defaultPosition = { x: 16, y: 80 }, bounds }: UseDraggableOptions = {}
+  {
+    storageKey = 'draggable-position',
+    defaultPosition = { x: 16, y: 80 },
+    bounds,
+  }: UseDraggableOptions = {}
 ) {
   const [position, setPosition] = useState<Position>(defaultPosition);
 
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState<Position>({ x: 0, y: 0 });
 
-  const constrainPosition = useCallback((pos: Position): Position => {
-    if (!bounds) return pos;
-    
-    const element = elementRef.current;
-    if (!element) return pos;
-    
-    const rect = element.getBoundingClientRect();
-    
-    return {
-      x: Math.max(bounds.left, Math.min(pos.x, bounds.right - rect.width)),
-      y: Math.max(bounds.top, Math.min(pos.y, bounds.bottom - rect.height))
-    };
-  }, [bounds, elementRef]);
+  const constrainPosition = useCallback(
+    (pos: Position): Position => {
+      if (!bounds) return pos;
 
-  const handleMouseDown = useCallback((e: MouseEvent | TouchEvent) => {
-    // Guard preventDefault with cancelable check to avoid Android intervention warnings
-    if (e.cancelable) {
-      e.preventDefault();
-    }
-    setIsDragging(true);
-    
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    
-    setDragStart({
-      x: clientX - position.x,
-      y: clientY - position.y
-    });
-  }, [position]);
+      const element = elementRef.current;
+      if (!element) return pos;
 
-  const handleMouseMove = useCallback((e: MouseEvent | TouchEvent) => {
-    if (!isDragging) return;
-    
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    
-    const newPosition = constrainPosition({
-      x: clientX - dragStart.x,
-      y: clientY - dragStart.y
-    });
-    
-    setPosition(newPosition);
-  }, [isDragging, dragStart, constrainPosition]);
+      const rect = element.getBoundingClientRect();
+
+      return {
+        x: Math.max(bounds.left, Math.min(pos.x, bounds.right - rect.width)),
+        y: Math.max(bounds.top, Math.min(pos.y, bounds.bottom - rect.height)),
+      };
+    },
+    [bounds, elementRef]
+  );
+
+  const handleMouseDown = useCallback(
+    (e: MouseEvent | TouchEvent) => {
+      // Guard preventDefault with cancelable check to avoid Android intervention warnings
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+      setIsDragging(true);
+
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
+      setDragStart({
+        x: clientX - position.x,
+        y: clientY - position.y,
+      });
+    },
+    [position]
+  );
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent | TouchEvent) => {
+      if (!isDragging) return;
+
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
+      const newPosition = constrainPosition({
+        x: clientX - dragStart.x,
+        y: clientY - dragStart.y,
+      });
+
+      setPosition(newPosition);
+    },
+    [isDragging, dragStart, constrainPosition]
+  );
 
   const handleMouseUp = useCallback(async () => {
     if (isDragging) {
@@ -130,6 +143,6 @@ export function useDraggable(
   return {
     position,
     isDragging,
-    resetPosition
+    resetPosition,
   };
 }

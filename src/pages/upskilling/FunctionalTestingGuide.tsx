@@ -1,4 +1,15 @@
-import { ArrowLeft, Settings, CheckCircle, Power, RotateCcw, AlertTriangle, FileText, Eye, Zap, Shield } from 'lucide-react';
+import {
+  ArrowLeft,
+  Settings,
+  CheckCircle,
+  Power,
+  RotateCcw,
+  AlertTriangle,
+  FileText,
+  Eye,
+  Zap,
+  Shield,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -26,10 +37,16 @@ const FunctionalTestingGuide = () => {
           {/* Header */}
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-white">Functional Testing Guide</h1>
-            <p className="text-xl text-white">Complete procedures for testing operation of electrical equipment and controls</p>
+            <p className="text-xl text-white">
+              Complete procedures for testing operation of electrical equipment and controls
+            </p>
             <div className="flex justify-center gap-3">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">BS 7671:2018+A3:2024</Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">Section 643</Badge>
+              <Badge variant="secondary" className="bg-yellow-400 text-black">
+                BS 7671:2018+A3:2024
+              </Badge>
+              <Badge variant="outline" className="border-gray-600 text-white">
+                Section 643
+              </Badge>
             </div>
           </div>
 
@@ -43,8 +60,9 @@ const FunctionalTestingGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-white">
-                Functional testing verifies that all electrical equipment, protective devices, switchgear, 
-                and control systems operate correctly and safely as designed. This is the final test in the inspection and testing sequence.
+                Functional testing verifies that all electrical equipment, protective devices,
+                switchgear, and control systems operate correctly and safely as designed. This is
+                the final test in the inspection and testing sequence.
               </p>
               <div className="bg-card p-4 rounded">
                 <h4 className="text-white font-semibold mb-2">Key Requirements:</h4>
@@ -194,11 +212,14 @@ const FunctionalTestingGuide = () => {
 
               {/* Step 2: Main Switching */}
               <div className="space-y-3">
-                <h3 className="text-lg font-semibold text-yellow-400">2. Main Switching and Isolation</h3>
+                <h3 className="text-lg font-semibold text-yellow-400">
+                  2. Main Switching and Isolation
+                </h3>
                 <div className="bg-card p-4 rounded space-y-3">
                   <h4 className="text-white font-semibold">Test Sequence:</h4>
                   <ol className="text-sm space-y-2 list-decimal list-inside">
-                    <li><strong>Main Switch Operation:</strong>
+                    <li>
+                      <strong>Main Switch Operation:</strong>
                       <ul className="ml-6 mt-1 space-y-1 text-white">
                         <li>• Operate main switch OFF - all circuits should disconnect</li>
                         <li>• Check switch operates smoothly without sticking</li>
@@ -206,7 +227,8 @@ const FunctionalTestingGuide = () => {
                         <li>• Operate switch ON - supply should restore</li>
                       </ul>
                     </li>
-                    <li><strong>Individual MCB/RCBO Testing:</strong>
+                    <li>
+                      <strong>Individual MCB/RCBO Testing:</strong>
                       <ul className="ml-6 mt-1 space-y-1 text-white">
                         <li>• Test each MCB/RCBO operates correctly</li>
                         <li>• Check switching action is positive and firm</li>
@@ -220,7 +242,9 @@ const FunctionalTestingGuide = () => {
 
               {/* Step 3: RCD Testing */}
               <div className="space-y-3">
-                <h3 className="text-lg font-semibold text-yellow-400">3. RCD Test Button Operation</h3>
+                <h3 className="text-lg font-semibold text-yellow-400">
+                  3. RCD Test Button Operation
+                </h3>
                 <div className="bg-card p-4 rounded space-y-3">
                   <h4 className="text-white font-semibold">Test Button Procedure:</h4>
                   <ol className="text-sm space-y-2 list-decimal list-inside">
@@ -231,14 +255,19 @@ const FunctionalTestingGuide = () => {
                     <li>Verify power restoration to all circuits</li>
                   </ol>
                   <div className="bg-yellow-950/30 border border-yellow-400/30 p-3 rounded mt-3">
-                    <p className="text-yellow-200 text-sm"><strong>Note:</strong> Test button only confirms RCD mechanical operation - electrical testing still required separately.</p>
+                    <p className="text-yellow-200 text-sm">
+                      <strong>Note:</strong> Test button only confirms RCD mechanical operation -
+                      electrical testing still required separately.
+                    </p>
                   </div>
                 </div>
               </div>
 
               {/* Step 4: Lighting Controls */}
               <div className="space-y-3">
-                <h3 className="text-lg font-semibold text-yellow-400">4. Lighting Control Systems</h3>
+                <h3 className="text-lg font-semibold text-yellow-400">
+                  4. Lighting Control Systems
+                </h3>
                 <div className="bg-card p-4 rounded space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -269,21 +298,36 @@ const FunctionalTestingGuide = () => {
                 <div className="bg-card p-4 rounded space-y-3">
                   <h4 className="text-white font-semibold">Test Procedure:</h4>
                   <ol className="text-sm space-y-2 list-decimal list-inside">
-                    <li><strong>Visual Check:</strong> Secure mounting, no damage, correct faceplate</li>
-                    <li><strong>Polarity Verification:</strong> Use socket tester or multimeter</li>
-                    <li><strong>Earth Connection:</strong> Verify earth pin connectivity</li>
-                    <li><strong>Load Test:</strong> Connect suitable test load and verify operation</li>
-                    <li><strong>Switched Sockets:</strong> Test switch operation (where fitted)</li>
+                    <li>
+                      <strong>Visual Check:</strong> Secure mounting, no damage, correct faceplate
+                    </li>
+                    <li>
+                      <strong>Polarity Verification:</strong> Use socket tester or multimeter
+                    </li>
+                    <li>
+                      <strong>Earth Connection:</strong> Verify earth pin connectivity
+                    </li>
+                    <li>
+                      <strong>Load Test:</strong> Connect suitable test load and verify operation
+                    </li>
+                    <li>
+                      <strong>Switched Sockets:</strong> Test switch operation (where fitted)
+                    </li>
                   </ol>
                   <div className="bg-yellow-950/20 border border-yellow-400/30 p-3 rounded mt-3">
-                    <p className="text-blue-200 text-sm"><strong>Equipment:</strong> Use socket outlet tester with visual indicators for quick polarity and earth checks.</p>
+                    <p className="text-blue-200 text-sm">
+                      <strong>Equipment:</strong> Use socket outlet tester with visual indicators
+                      for quick polarity and earth checks.
+                    </p>
                   </div>
                 </div>
               </div>
 
               {/* Step 6: Fixed Equipment */}
               <div className="space-y-3">
-                <h3 className="text-lg font-semibold text-yellow-400">6. Fixed Equipment and Controls</h3>
+                <h3 className="text-lg font-semibold text-yellow-400">
+                  6. Fixed Equipment and Controls
+                </h3>
                 <div className="bg-card p-4 rounded space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -343,12 +387,14 @@ const FunctionalTestingGuide = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="mt-4">
                   <h4 className="text-white font-semibold mb-2">Lighting Circuit Performance:</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div>
-                      <p className="text-yellow-400 font-medium mb-1">LED and Fluorescent Testing:</p>
+                      <p className="text-yellow-400 font-medium mb-1">
+                        LED and Fluorescent Testing:
+                      </p>
                       <ul className="space-y-1">
                         <li>• Check for immediate start-up</li>
                         <li>• Verify no flickering or strobing</li>
@@ -358,7 +404,9 @@ const FunctionalTestingGuide = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="text-yellow-400 font-medium mb-1">Control System Performance:</p>
+                      <p className="text-yellow-400 font-medium mb-1">
+                        Control System Performance:
+                      </p>
                       <ul className="space-y-1">
                         <li>• PIR detection range and timing</li>
                         <li>• Photocell operation in varying light</li>
@@ -384,9 +432,13 @@ const FunctionalTestingGuide = () => {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 gap-4">
                 <div className="bg-card p-4 rounded border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Bathroom and Wet Areas (Section 701)</h4>
+                  <h4 className="text-yellow-400 font-semibold mb-2">
+                    Bathroom and Wet Areas (Section 701)
+                  </h4>
                   <div className="text-sm space-y-2">
-                    <p><strong>Additional Tests Required:</strong></p>
+                    <p>
+                      <strong>Additional Tests Required:</strong>
+                    </p>
                     <ul className="list-disc list-inside space-y-1">
                       <li>Verify IP rating compliance for zone requirements</li>
                       <li>Test supplementary equipotential bonding</li>
@@ -397,11 +449,15 @@ const FunctionalTestingGuide = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="bg-card p-4 rounded border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Swimming Pools (Section 702)</h4>
+                  <h4 className="text-yellow-400 font-semibold mb-2">
+                    Swimming Pools (Section 702)
+                  </h4>
                   <div className="text-sm space-y-2">
-                    <p><strong>Functional Testing Requirements:</strong></p>
+                    <p>
+                      <strong>Functional Testing Requirements:</strong>
+                    </p>
                     <ul className="list-disc list-inside space-y-1">
                       <li>Test underwater lighting systems at correct voltage</li>
                       <li>Verify pool water circulation pump controls</li>
@@ -412,11 +468,15 @@ const FunctionalTestingGuide = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="bg-card p-4 rounded border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Construction Sites (Section 704)</h4>
+                  <h4 className="text-yellow-400 font-semibold mb-2">
+                    Construction Sites (Section 704)
+                  </h4>
                   <div className="text-sm space-y-2">
-                    <p><strong>Site-Specific Testing:</strong></p>
+                    <p>
+                      <strong>Site-Specific Testing:</strong>
+                    </p>
                     <ul className="list-disc list-inside space-y-1">
                       <li>Test portable distribution units (PDUs)</li>
                       <li>Verify 30mA RCD protection for all socket outlets</li>
@@ -427,11 +487,15 @@ const FunctionalTestingGuide = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="bg-card p-4 rounded border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Medical Locations (Section 710)</h4>
+                  <h4 className="text-yellow-400 font-semibold mb-2">
+                    Medical Locations (Section 710)
+                  </h4>
                   <div className="text-sm space-y-2">
-                    <p><strong>Critical System Testing:</strong></p>
+                    <p>
+                      <strong>Critical System Testing:</strong>
+                    </p>
                     <ul className="list-disc list-inside space-y-1">
                       <li>Test medical IT system isolation monitoring</li>
                       <li>Verify uninterruptible power supply (UPS) operation</li>
@@ -480,7 +544,7 @@ const FunctionalTestingGuide = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="mt-4 bg-yellow-950/20 border border-yellow-400/30 p-3 rounded">
                   <h5 className="text-blue-300 font-semibold mb-2">Digital Documentation Tips:</h5>
                   <ul className="text-sm space-y-1 text-blue-200">
@@ -524,9 +588,11 @@ const FunctionalTestingGuide = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="bg-green-950/30 border border-green-500/50 p-4 rounded">
-                  <h4 className="text-green-300 font-semibold mb-2">✅ Signs of Good Installation:</h4>
+                  <h4 className="text-green-300 font-semibold mb-2">
+                    ✅ Signs of Good Installation:
+                  </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <ul className="space-y-1 text-green-200">
                       <li>• All switches operate smoothly and positively</li>
@@ -558,12 +624,28 @@ const FunctionalTestingGuide = () => {
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
               <ul className="space-y-2">
-                <li><strong>Plan Your Sequence:</strong> Test in logical order to minimise disruption to building occupants</li>
-                <li><strong>Safety First:</strong> Always complete dead testing before functional testing</li>
-                <li><strong>Document Everything:</strong> Record all tests, even if they're working correctly</li>
-                <li><strong>Check Twice:</strong> If something doesn't work, verify your test method before marking as defective</li>
-                <li><strong>Use Correct Tools:</strong> Socket testers save time for polarity checks</li>
-                <li><strong>Be Systematic:</strong> Work methodically through each circuit and system</li>
+                <li>
+                  <strong>Plan Your Sequence:</strong> Test in logical order to minimise disruption
+                  to building occupants
+                </li>
+                <li>
+                  <strong>Safety First:</strong> Always complete dead testing before functional
+                  testing
+                </li>
+                <li>
+                  <strong>Document Everything:</strong> Record all tests, even if they're working
+                  correctly
+                </li>
+                <li>
+                  <strong>Check Twice:</strong> If something doesn't work, verify your test method
+                  before marking as defective
+                </li>
+                <li>
+                  <strong>Use Correct Tools:</strong> Socket testers save time for polarity checks
+                </li>
+                <li>
+                  <strong>Be Systematic:</strong> Work methodically through each circuit and system
+                </li>
               </ul>
             </CardContent>
           </Card>
@@ -574,10 +656,18 @@ const FunctionalTestingGuide = () => {
               <CardTitle className="text-yellow-400">BS 7671 Reference</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
-              <p><strong>Section 643:</strong> Functional testing requirements</p>
-              <p><strong>Section 537:</strong> Isolating and switching devices</p>
-              <p><strong>Section 416:</strong> Provisions for basic protection</p>
-              <p><strong>Appendix 6:</strong> Model forms for certification</p>
+              <p>
+                <strong>Section 643:</strong> Functional testing requirements
+              </p>
+              <p>
+                <strong>Section 537:</strong> Isolating and switching devices
+              </p>
+              <p>
+                <strong>Section 416:</strong> Provisions for basic protection
+              </p>
+              <p>
+                <strong>Appendix 6:</strong> Model forms for certification
+              </p>
             </CardContent>
           </Card>
         </div>

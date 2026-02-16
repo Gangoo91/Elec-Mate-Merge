@@ -1,4 +1,13 @@
-import { Shield, Zap, AlertTriangle, CheckCircle, Target, Info, Settings, TestTube } from 'lucide-react';
+import {
+  Shield,
+  Zap,
+  AlertTriangle,
+  CheckCircle,
+  Target,
+  Info,
+  Settings,
+  TestTube,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
@@ -15,8 +24,9 @@ export const EarthingProtectionContent = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-base leading-relaxed">
-            BS 7671 provides multiple protective measures against electric shock, each suited to different installation types and risk levels. 
-            Understanding when and how to apply each measure is crucial for safe electrical design.
+            BS 7671 provides multiple protective measures against electric shock, each suited to
+            different installation types and risk levels. Understanding when and how to apply each
+            measure is crucial for safe electrical design.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -27,9 +37,14 @@ export const EarthingProtectionContent = () => {
                 Automatic Disconnection of Supply (ADS)
               </h4>
               <div className="space-y-3">
-                <p className="text-sm">Most common protective measure, relies on automatic disconnection during fault conditions.</p>
+                <p className="text-sm">
+                  Most common protective measure, relies on automatic disconnection during fault
+                  conditions.
+                </p>
                 <div className="bg-blue-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Essential Requirements:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Essential Requirements:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Protective earthing of exposed-conductive-parts</li>
                     <li>• Protective equipotential bonding</li>
@@ -56,9 +71,13 @@ export const EarthingProtectionContent = () => {
                 SELV and PELV Systems
               </h4>
               <div className="space-y-3">
-                <p className="text-sm">Safety through voltage limitation and electrical separation.</p>
+                <p className="text-sm">
+                  Safety through voltage limitation and electrical separation.
+                </p>
                 <div className="bg-green-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">SELV (Safety Extra Low Voltage):</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    SELV (Safety Extra Low Voltage):
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Nominal voltage ≤50V AC or ≤120V DC</li>
                     <li>• Separated from other systems</li>
@@ -67,7 +86,9 @@ export const EarthingProtectionContent = () => {
                   </ul>
                 </div>
                 <div className="bg-green-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">PELV (Protective Extra Low Voltage):</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    PELV (Protective Extra Low Voltage):
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Similar voltage limits to SELV</li>
                     <li>• Earthed at one point only</li>
@@ -85,7 +106,9 @@ export const EarthingProtectionContent = () => {
                 Electrical Separation
               </h4>
               <div className="space-y-3">
-                <p className="text-sm">Isolation from earth and other circuits through separation transformers.</p>
+                <p className="text-sm">
+                  Isolation from earth and other circuits through separation transformers.
+                </p>
                 <div className="bg-yellow-900/20 p-3 rounded">
                   <p className="text-foreground font-semibold text-sm mb-2">Requirements:</p>
                   <ul className="text-xs space-y-1">
@@ -114,14 +137,26 @@ export const EarthingProtectionContent = () => {
                 RCD Protection Systems
               </h4>
               <div className="space-y-3">
-                <p className="text-sm">Residual current protection for enhanced safety and TT system requirements.</p>
+                <p className="text-sm">
+                  Residual current protection for enhanced safety and TT system requirements.
+                </p>
                 <div className="bg-purple-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">RCD Types and Applications:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    RCD Types and Applications:
+                  </p>
                   <ul className="text-xs space-y-1">
-                    <li>• <strong>Type AC:</strong> AC fault currents only</li>
-                    <li>• <strong>Type A:</strong> AC + pulsing DC currents</li>
-                    <li>• <strong>Type B:</strong> All current types including smooth DC</li>
-                    <li>• <strong>Type F:</strong> Higher frequency compatibility</li>
+                    <li>
+                      • <strong>Type AC:</strong> AC fault currents only
+                    </li>
+                    <li>
+                      • <strong>Type A:</strong> AC + pulsing DC currents
+                    </li>
+                    <li>
+                      • <strong>Type B:</strong> All current types including smooth DC
+                    </li>
+                    <li>
+                      • <strong>Type F:</strong> Higher frequency compatibility
+                    </li>
                   </ul>
                 </div>
                 <div className="bg-purple-900/20 p-3 rounded">
@@ -149,31 +184,47 @@ export const EarthingProtectionContent = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-base leading-relaxed">
-            Earth fault loop impedance determines how quickly protective devices operate during earth faults. 
-            Understanding Zs calculation and testing is essential for ADS compliance.
+            Earth fault loop impedance determines how quickly protective devices operate during
+            earth faults. Understanding Zs calculation and testing is essential for ADS compliance.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h4 className="text-elec-yellow font-semibold text-lg mb-3">Zs Calculation and Components</h4>
+              <h4 className="text-elec-yellow font-semibold text-lg mb-3">
+                Zs Calculation and Components
+              </h4>
               <div className="bg-blue-900/30 p-3 rounded mb-3">
-                <p className="text-foreground font-mono text-center text-lg mb-2">Zs = Ze + R1 + R2</p>
-                <p className="text-xs text-foreground text-center">Total earth fault loop impedance</p>
+                <p className="text-foreground font-mono text-center text-lg mb-2">
+                  Zs = Ze + R1 + R2
+                </p>
+                <p className="text-xs text-foreground text-center">
+                  Total earth fault loop impedance
+                </p>
               </div>
               <div className="space-y-2 text-sm">
-                <p><strong>Ze:</strong> External earth fault loop impedance (supply authority)</p>
-                <p><strong>R1:</strong> Resistance of line conductor to point of fault</p>
-                <p><strong>R2:</strong> Resistance of protective conductor to point of fault</p>
+                <p>
+                  <strong>Ze:</strong> External earth fault loop impedance (supply authority)
+                </p>
+                <p>
+                  <strong>R1:</strong> Resistance of line conductor to point of fault
+                </p>
+                <p>
+                  <strong>R2:</strong> Resistance of protective conductor to point of fault
+                </p>
               </div>
               <div className="bg-gray-800 p-3 rounded mt-3">
                 <p className="text-foreground font-semibold text-sm mb-2">Alternative Method:</p>
                 <p className="font-mono text-xs">Zs = Ze + (R1 + R2) × m × L</p>
-                <p className="text-xs text-foreground mt-1">Where m = multiplier from tables, L = length</p>
+                <p className="text-xs text-foreground mt-1">
+                  Where m = multiplier from tables, L = length
+                </p>
               </div>
             </div>
 
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h4 className="text-elec-yellow font-semibold text-lg mb-3">Maximum Zs Values Table</h4>
+              <h4 className="text-elec-yellow font-semibold text-lg mb-3">
+                Maximum Zs Values Table
+              </h4>
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
@@ -217,7 +268,9 @@ export const EarthingProtectionContent = () => {
           </div>
 
           <div className="bg-orange-600/10 p-4 rounded-lg border border-orange-600/30">
-            <h4 className="text-orange-300 font-semibold mb-3">Practical Zs Testing Considerations</h4>
+            <h4 className="text-orange-300 font-semibold mb-3">
+              Practical Zs Testing Considerations
+            </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-foreground font-semibold text-sm mb-2">Testing Method:</p>
@@ -256,7 +309,9 @@ export const EarthingProtectionContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* TN Systems */}
             <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-              <h4 className="text-green-300 font-semibold text-lg mb-3">TN Systems (TN-S, TN-C-S)</h4>
+              <h4 className="text-green-300 font-semibold text-lg mb-3">
+                TN Systems (TN-S, TN-C-S)
+              </h4>
               <div className="space-y-3">
                 <div className="bg-green-900/20 p-3 rounded">
                   <p className="text-foreground font-semibold text-sm mb-2">Characteristics:</p>
@@ -277,7 +332,9 @@ export const EarthingProtectionContent = () => {
                   </ul>
                 </div>
                 <div className="bg-green-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Design Considerations:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Design Considerations:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Calculate Zs for each circuit</li>
                     <li>• Ensure protective device coordination</li>
@@ -311,7 +368,9 @@ export const EarthingProtectionContent = () => {
                   </ul>
                 </div>
                 <div className="bg-yellow-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm mb-2">Design Considerations:</p>
+                  <p className="text-foreground font-semibold text-sm mb-2">
+                    Design Considerations:
+                  </p>
                   <ul className="text-xs space-y-1">
                     <li>• Earth electrode design and installation</li>
                     <li>• RCD sensitivity selection</li>
@@ -360,8 +419,10 @@ export const EarthingProtectionContent = () => {
           <Alert className="border-blue-600/30 bg-blue-900/20">
             <Info className="h-4 w-4 text-blue-400" />
             <AlertDescription className="text-foreground">
-              <strong className="text-blue-300">System Selection Guidance:</strong> The choice of earthing system affects the entire protection philosophy. 
-              TN systems are most common in the UK, TT systems for remote locations, and IT systems for special applications requiring continuity of supply.
+              <strong className="text-blue-300">System Selection Guidance:</strong> The choice of
+              earthing system affects the entire protection philosophy. TN systems are most common
+              in the UK, TT systems for remote locations, and IT systems for special applications
+              requiring continuity of supply.
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -379,48 +440,97 @@ export const EarthingProtectionContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="bg-purple-600/10 p-4 rounded-lg border border-purple-600/30">
-                <h4 className="text-purple-300 font-semibold mb-3">Protective Device Coordination</h4>
+                <h4 className="text-purple-300 font-semibold mb-3">
+                  Protective Device Coordination
+                </h4>
                 <ul className="text-sm space-y-2">
-                  <li>• <strong>Selectivity:</strong> Closest protective device to fault operates first</li>
-                  <li>• <strong>Discrimination:</strong> Time/current grading between devices</li>
-                  <li>• <strong>Back-up Protection:</strong> Upstream device provides backup</li>
-                  <li>• <strong>RCD Coordination:</strong> Time-delayed upstream, instantaneous downstream</li>
-                  <li>• <strong>Current Limitation:</strong> Consider prospective fault current</li>
+                  <li>
+                    • <strong>Selectivity:</strong> Closest protective device to fault operates
+                    first
+                  </li>
+                  <li>
+                    • <strong>Discrimination:</strong> Time/current grading between devices
+                  </li>
+                  <li>
+                    • <strong>Back-up Protection:</strong> Upstream device provides backup
+                  </li>
+                  <li>
+                    • <strong>RCD Coordination:</strong> Time-delayed upstream, instantaneous
+                    downstream
+                  </li>
+                  <li>
+                    • <strong>Current Limitation:</strong> Consider prospective fault current
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
                 <h4 className="text-blue-300 font-semibold mb-3">Equipotential Bonding</h4>
                 <ul className="text-sm space-y-2">
-                  <li>• <strong>Main Bonding:</strong> Services entering building (gas, water, etc.)</li>
-                  <li>• <strong>Supplementary Bonding:</strong> Local equipotential zones</li>
-                  <li>• <strong>Conductor Sizing:</strong> Half the earthing conductor (minimum 6mm²)</li>
-                  <li>• <strong>Special Locations:</strong> Enhanced bonding requirements</li>
-                  <li>• <strong>Testing:</strong> Verify low resistance paths</li>
+                  <li>
+                    • <strong>Main Bonding:</strong> Services entering building (gas, water, etc.)
+                  </li>
+                  <li>
+                    • <strong>Supplementary Bonding:</strong> Local equipotential zones
+                  </li>
+                  <li>
+                    • <strong>Conductor Sizing:</strong> Half the earthing conductor (minimum 6mm²)
+                  </li>
+                  <li>
+                    • <strong>Special Locations:</strong> Enhanced bonding requirements
+                  </li>
+                  <li>
+                    • <strong>Testing:</strong> Verify low resistance paths
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="space-y-4">
               <div className="bg-orange-600/10 p-4 rounded-lg border border-orange-600/30">
-                <h4 className="text-orange-300 font-semibold mb-3">Special Location Requirements</h4>
+                <h4 className="text-orange-300 font-semibold mb-3">
+                  Special Location Requirements
+                </h4>
                 <ul className="text-sm space-y-2">
-                  <li>• <strong>Bathrooms:</strong> Supplementary bonding, 30mA RCD protection</li>
-                  <li>• <strong>Swimming Pools:</strong> SELV in zones 0 and 1, enhanced protection</li>
-                  <li>• <strong>Medical Locations:</strong> IT systems, enhanced monitoring</li>
-                  <li>• <strong>Construction Sites:</strong> Reduced voltage, enhanced earth monitoring</li>
-                  <li>• <strong>Agricultural:</strong> Enhanced protection against touch voltage</li>
+                  <li>
+                    • <strong>Bathrooms:</strong> Supplementary bonding, 30mA RCD protection
+                  </li>
+                  <li>
+                    • <strong>Swimming Pools:</strong> SELV in zones 0 and 1, enhanced protection
+                  </li>
+                  <li>
+                    • <strong>Medical Locations:</strong> IT systems, enhanced monitoring
+                  </li>
+                  <li>
+                    • <strong>Construction Sites:</strong> Reduced voltage, enhanced earth
+                    monitoring
+                  </li>
+                  <li>
+                    • <strong>Agricultural:</strong> Enhanced protection against touch voltage
+                  </li>
                 </ul>
               </div>
 
               <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
                 <h4 className="text-green-300 font-semibold mb-3">Modern Protection Challenges</h4>
                 <ul className="text-sm space-y-2">
-                  <li>• <strong>Harmonic Currents:</strong> Effects on RCD operation and neutral sizing</li>
-                  <li>• <strong>DC Components:</strong> EV charging, solar PV affecting RCD selection</li>
-                  <li>• <strong>High-Frequency Effects:</strong> IT equipment and LED drivers</li>
-                  <li>• <strong>Earth Electrode Corrosion:</strong> Long-term performance degradation</li>
-                  <li>• <strong>Smart Grid Integration:</strong> Bidirectional power flow considerations</li>
+                  <li>
+                    • <strong>Harmonic Currents:</strong> Effects on RCD operation and neutral
+                    sizing
+                  </li>
+                  <li>
+                    • <strong>DC Components:</strong> EV charging, solar PV affecting RCD selection
+                  </li>
+                  <li>
+                    • <strong>High-Frequency Effects:</strong> IT equipment and LED drivers
+                  </li>
+                  <li>
+                    • <strong>Earth Electrode Corrosion:</strong> Long-term performance degradation
+                  </li>
+                  <li>
+                    • <strong>Smart Grid Integration:</strong> Bidirectional power flow
+                    considerations
+                  </li>
                 </ul>
               </div>
             </div>
@@ -429,8 +539,10 @@ export const EarthingProtectionContent = () => {
           <Alert className="border-red-600/30 bg-red-900/20">
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <AlertDescription className="text-foreground">
-              <strong className="text-red-300">Critical Safety Note:</strong> Protection system design must account for all credible fault scenarios. 
-              Regular testing and maintenance of protective devices is essential to ensure continued safe operation throughout the installation's life.
+              <strong className="text-red-300">Critical Safety Note:</strong> Protection system
+              design must account for all credible fault scenarios. Regular testing and maintenance
+              of protective devices is essential to ensure continued safe operation throughout the
+              installation's life.
             </AlertDescription>
           </Alert>
         </CardContent>

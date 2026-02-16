@@ -12,15 +12,18 @@ const SmartHomeModule7Section4RealWorld = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <h4 className="font-semibold text-foreground">Case Study: Smart Relay Installation in Birmingham</h4>
-          
+          <h4 className="font-semibold text-foreground">
+            Case Study: Smart Relay Installation in Birmingham
+          </h4>
+
           <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h5 className="font-semibold text-red-200 mb-2">The Incident</h5>
                 <p className="text-red-100 text-sm mb-3">
-                  During a retrofit installation, an installer connected a smart relay to a lighting circuit without following proper isolation procedures:
+                  During a retrofit installation, an installer connected a smart relay to a lighting
+                  circuit without following proper isolation procedures:
                 </p>
                 <ul className="space-y-1 text-red-100 text-sm ml-4">
                   <li>• Relied on wall switch for isolation instead of consumer unit</li>
@@ -76,23 +79,28 @@ const SmartHomeModule7Section4RealWorld = () => {
             <ul className="space-y-2 text-gray-300 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Never compromise on isolation:</strong> Even "simple" connections can be dangerous
+                <strong>Never compromise on isolation:</strong> Even "simple" connections can be
+                dangerous
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Proper procedures prevent incidents:</strong> BS 7671 requirements exist for good reasons
+                <strong>Proper procedures prevent incidents:</strong> BS 7671 requirements exist for
+                good reasons
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Testing saves time and money:</strong> Finding faults before energising prevents damage
+                <strong>Testing saves time and money:</strong> Finding faults before energising
+                prevents damage
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Client confidence matters:</strong> Professional approach builds trust and reduces liability
+                <strong>Client confidence matters:</strong> Professional approach builds trust and
+                reduces liability
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <strong>Documentation protects everyone:</strong> Proper records demonstrate competence and compliance
+                <strong>Documentation protects everyone:</strong> Proper records demonstrate
+                competence and compliance
               </li>
             </ul>
           </div>

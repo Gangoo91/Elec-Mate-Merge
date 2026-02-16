@@ -123,7 +123,9 @@ export const ContributePhotoModal: React.FC<ContributePhotoModalProps> = ({
 
   // Generate anonymous user hash for deduplication
   const generateAnonymousHash = useCallback(async (): Promise<string> => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return uuidv4();
 
     // Create a hash that's consistent for the user but not reversible
@@ -131,7 +133,10 @@ export const ContributePhotoModal: React.FC<ContributePhotoModalProps> = ({
     const data = encoder.encode(user.id + 'board-scanner-training');
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 32);
+    return hashArray
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('')
+      .slice(0, 32);
   }, []);
 
   // Check what fields were corrected
@@ -153,7 +158,7 @@ export const ContributePhotoModal: React.FC<ContributePhotoModalProps> = ({
     }> = [];
 
     circuits.forEach((corrected) => {
-      const original = originalCircuits.find(o => o.id === corrected.id);
+      const original = originalCircuits.find((o) => o.id === corrected.id);
       if (!original) return;
 
       const deviceTypeChanged = corrected.device !== original.device;
@@ -213,16 +218,18 @@ export const ContributePhotoModal: React.FC<ContributePhotoModalProps> = ({
       setUploadProgress(60);
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('board-reference-images')
-        .getPublicUrl(fileName);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('board-reference-images').getPublicUrl(fileName);
 
       setUploadStatus('saving');
       setUploadProgress(80);
 
       // Get user info
       const anonymousHash = await generateAnonymousHash();
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const scanSessionId = uuidv4();
 
       // Get corrections
@@ -230,7 +237,7 @@ export const ContributePhotoModal: React.FC<ContributePhotoModalProps> = ({
 
       // Insert training data for each circuit
       const trainingRecords = circuits.map((circuit, index) => {
-        const correction = corrections.find(c => c.circuit_position === circuit.position);
+        const correction = corrections.find((c) => c.circuit_position === circuit.position);
 
         return {
           image_url: publicUrl,
@@ -276,7 +283,6 @@ export const ContributePhotoModal: React.FC<ContributePhotoModalProps> = ({
         setUploadStatus('idle');
         setUploadProgress(0);
       }, 1500);
-
     } catch (error) {
       console.error('Contribution error:', error);
       setUploadStatus('error');
@@ -292,7 +298,8 @@ export const ContributePhotoModal: React.FC<ContributePhotoModalProps> = ({
     }
   };
 
-  const isUploading = uploadStatus !== 'idle' && uploadStatus !== 'complete' && uploadStatus !== 'error';
+  const isUploading =
+    uploadStatus !== 'idle' && uploadStatus !== 'complete' && uploadStatus !== 'error';
   const correctionsCount = getCorrections().length;
 
   return (
@@ -315,11 +322,7 @@ export const ContributePhotoModal: React.FC<ContributePhotoModalProps> = ({
         <div className="p-4 space-y-4">
           {/* Photo preview */}
           <div className="relative w-full h-32 rounded-lg overflow-hidden bg-muted/20 border border-border/30">
-            <img
-              src={photoUrl}
-              alt="Board scan"
-              className="w-full h-full object-cover"
-            />
+            <img src={photoUrl} alt="Board scan" className="w-full h-full object-cover" />
             <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
               {circuits.length} circuits detected
             </div>

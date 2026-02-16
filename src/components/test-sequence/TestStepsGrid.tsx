@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -21,26 +20,34 @@ interface TestStepsGridProps {
 const TestStepsGrid = ({ steps, currentStep, onStepClick }: TestStepsGridProps) => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'CRITICAL': return 'bg-red-500';
-      case 'HIGH': return 'bg-orange-500';
-      case 'MEDIUM': return 'bg-yellow-500';
-      default: return 'bg-gray-500';
+      case 'CRITICAL':
+        return 'bg-red-500';
+      case 'HIGH':
+        return 'bg-orange-500';
+      case 'MEDIUM':
+        return 'bg-yellow-500';
+      default:
+        return 'bg-gray-500';
     }
   };
 
   const getTestTypeColor = (testType: string) => {
     switch (testType) {
-      case 'isolation': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'dead': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'live': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      case 'isolation':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'dead':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'live':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      default:
+        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
     }
   };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {steps.map((step, index) => (
-        <Card 
+        <Card
           key={index}
           className={`cursor-pointer transition-all duration-200 h-36 ${
             index === currentStep
@@ -52,14 +59,16 @@ const TestStepsGrid = ({ steps, currentStep, onStepClick }: TestStepsGridProps) 
           <CardContent className="p-4 h-full flex flex-col">
             <div className="flex items-center gap-3 mb-2">
               <div className="text-xl">{step.icon}</div>
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                index === currentStep 
-                  ? 'bg-elec-yellow text-black' 
-                  : 'bg-muted text-foreground'
-              }`}>
+              <div
+                className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                  index === currentStep ? 'bg-elec-yellow text-black' : 'bg-muted text-foreground'
+                }`}
+              >
                 {step.step + 1}
               </div>
-              <Badge className={`${getPriorityColor(step.priority)} text-foreground text-xs ml-auto`}>
+              <Badge
+                className={`${getPriorityColor(step.priority)} text-foreground text-xs ml-auto`}
+              >
                 {step.priority}
               </Badge>
             </div>

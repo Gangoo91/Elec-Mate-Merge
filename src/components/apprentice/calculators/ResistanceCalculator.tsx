@@ -1,12 +1,8 @@
-import React, { useMemo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Info, BookOpen, ChevronDown, Thermometer } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+import React, { useMemo, useState } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Info, BookOpen, ChevronDown, Thermometer } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -17,7 +13,7 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 function round(value: number, dp: number) {
   const p = Math.pow(10, dp);
@@ -39,15 +35,15 @@ interface ResistanceResult {
 const ResistanceCalculator: React.FC = () => {
   const config = CALCULATOR_CONFIG['power'];
 
-  const [material, setMaterial] = useState<string>("copper");
+  const [material, setMaterial] = useState<string>('copper');
   const [rhoNano, setRhoNano] = useState<string>(String(MATERIALS.copper.rho_nano));
   const [alpha, setAlpha] = useState<string>(String(MATERIALS.copper.alpha));
-  const [length, setLength] = useState<string>("30");
-  const [csa, setCsa] = useState<string>("2.5");
-  const [temp, setTemp] = useState<string>("20");
+  const [length, setLength] = useState<string>('30');
+  const [csa, setCsa] = useState<string>('2.5');
+  const [temp, setTemp] = useState<string>('20');
   const [useTemp, setUseTemp] = useState<boolean>(false);
-  const [current, setCurrent] = useState<string>("");
-  const [dp, setDp] = useState<string>("3");
+  const [current, setCurrent] = useState<string>('');
+  const [dp, setDp] = useState<string>('3');
 
   const [showGuidance, setShowGuidance] = useState(false);
   const [showBsRegs, setShowBsRegs] = useState(false);
@@ -55,7 +51,7 @@ const ResistanceCalculator: React.FC = () => {
 
   function onMaterialChange(value: string) {
     setMaterial(value);
-    if (value !== "custom") {
+    if (value !== 'custom') {
       const m = MATERIALS[value as keyof typeof MATERIALS];
       setRhoNano(String(m.rho_nano));
       setAlpha(String(m.alpha));
@@ -72,7 +68,7 @@ const ResistanceCalculator: React.FC = () => {
 
     const rho = rho_n * 1e-9;
     const A = A_mm2 * 1e-6;
-    const R20 = rho * L / A;
+    const R20 = (rho * L) / A;
     const RT = useTemp ? R20 * (1 + a * (T - 20)) : R20;
 
     const I = Number(current);
@@ -84,13 +80,13 @@ const ResistanceCalculator: React.FC = () => {
   }, [length, csa, rhoNano, alpha, temp, useTemp, current]);
 
   function reset() {
-    onMaterialChange("copper");
-    setLength("30");
-    setCsa("2.5");
-    setTemp("20");
+    onMaterialChange('copper');
+    setLength('30');
+    setCsa('2.5');
+    setTemp('20');
     setUseTemp(false);
-    setCurrent("");
-    setDp("3");
+    setCurrent('');
+    setDp('3');
   }
 
   const hasValidInputs = () => length && csa;
@@ -109,9 +105,9 @@ const ResistanceCalculator: React.FC = () => {
           value={material}
           onChange={onMaterialChange}
           options={[
-            { value: "copper", label: "Copper (p = 17.2 nO.m)" },
-            { value: "aluminium", label: "Aluminium (p = 28.2 nO.m)" },
-            { value: "custom", label: "Custom Material" },
+            { value: 'copper', label: 'Copper (p = 17.2 nO.m)' },
+            { value: 'aluminium', label: 'Aluminium (p = 28.2 nO.m)' },
+            { value: 'custom', label: 'Custom Material' },
           ]}
         />
 
@@ -136,7 +132,7 @@ const ResistanceCalculator: React.FC = () => {
           />
         </CalculatorInputGrid>
 
-        {material === "custom" && (
+        {material === 'custom' && (
           <CalculatorInputGrid columns={2}>
             <CalculatorInput
               label="Resistivity (p)"
@@ -169,13 +165,13 @@ const ResistanceCalculator: React.FC = () => {
             <button
               onClick={() => setUseTemp(!useTemp)}
               className={cn(
-                "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
+                'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
                 useTemp
-                  ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                  : "bg-white/5 text-white/60 border border-white/10 hover:bg-white/10"
+                  ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                  : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
               )}
             >
-              {useTemp ? "Enabled" : "Disabled"}
+              {useTemp ? 'Enabled' : 'Disabled'}
             </button>
           </div>
           <CalculatorInput
@@ -217,18 +213,20 @@ const ResistanceCalculator: React.FC = () => {
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-sm text-white/60">Resistance Results</span>
               <Badge variant="outline" className="text-amber-400 border-amber-400/50">
-                {material === "custom" ? "Custom" : material === "copper" ? "Copper" : "Aluminium"}
+                {material === 'custom' ? 'Custom' : material === 'copper' ? 'Copper' : 'Aluminium'}
               </Badge>
             </div>
 
             {/* Primary Result */}
             <div className="text-center py-4">
               <p className="text-sm text-white/60 mb-1">
-                Resistance at {useTemp ? `${temp}C` : "20C"}
+                Resistance at {useTemp ? `${temp}C` : '20C'}
               </p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
                 {round(results.RT, decimalPlaces)} O
               </div>
@@ -300,37 +298,68 @@ const ResistanceCalculator: React.FC = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-purple-300">How It Worked Out</span>
+                  <span className="text-sm sm:text-base font-medium text-purple-300">
+                    How It Worked Out
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showCalculation && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showCalculation && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-3">
                 <div className="space-y-2">
                   <p className="text-sm text-purple-200 font-medium">Step 1: Input Values</p>
                   <div className="p-3 rounded-lg bg-purple-500/10 font-mono text-xs text-purple-100 space-y-1">
-                    <p>Material: {material === "copper" ? "Copper" : material === "aluminium" ? "Aluminium" : "Custom"}</p>
-                    <p>Resistivity (p): {rhoNano} nO.m = {(parseFloat(rhoNano) * 1e-9).toExponential(3)} O.m</p>
+                    <p>
+                      Material:{' '}
+                      {material === 'copper'
+                        ? 'Copper'
+                        : material === 'aluminium'
+                          ? 'Aluminium'
+                          : 'Custom'}
+                    </p>
+                    <p>
+                      Resistivity (p): {rhoNano} nO.m ={' '}
+                      {(parseFloat(rhoNano) * 1e-9).toExponential(3)} O.m
+                    </p>
                     <p>Length (L): {length} m</p>
-                    <p>CSA (A): {csa} mm2 = {(parseFloat(csa) * 1e-6).toExponential(3)} m2</p>
-                    {useTemp && <p>Temperature: {temp}C (a = {alpha} per C)</p>}
+                    <p>
+                      CSA (A): {csa} mm2 = {(parseFloat(csa) * 1e-6).toExponential(3)} m2
+                    </p>
+                    {useTemp && (
+                      <p>
+                        Temperature: {temp}C (a = {alpha} per C)
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-sm text-purple-200 font-medium">Step 2: Base Resistance at 20C</p>
+                  <p className="text-sm text-purple-200 font-medium">
+                    Step 2: Base Resistance at 20C
+                  </p>
                   <div className="p-3 rounded-lg bg-purple-500/10 font-mono text-xs text-purple-100">
                     <p>R = p x L / A</p>
-                    <p>R = {rhoNano} x 10^-9 x {length} / ({csa} x 10^-6)</p>
+                    <p>
+                      R = {rhoNano} x 10^-9 x {length} / ({csa} x 10^-6)
+                    </p>
                     <p className="text-purple-300">R20 = {round(results.R20, decimalPlaces)} O</p>
                   </div>
                 </div>
 
                 {useTemp && (
                   <div className="space-y-2">
-                    <p className="text-sm text-purple-200 font-medium">Step 3: Temperature Correction</p>
+                    <p className="text-sm text-purple-200 font-medium">
+                      Step 3: Temperature Correction
+                    </p>
                     <div className="p-3 rounded-lg bg-purple-500/10 font-mono text-xs text-purple-100">
                       <p>RT = R20 x (1 + a x (T - 20))</p>
-                      <p>RT = {round(results.R20, decimalPlaces)} x (1 + {alpha} x ({temp} - 20))</p>
+                      <p>
+                        RT = {round(results.R20, decimalPlaces)} x (1 + {alpha} x ({temp} - 20))
+                      </p>
                       <p className="text-purple-300">RT = {round(results.RT, decimalPlaces)} O</p>
                     </div>
                   </div>
@@ -338,10 +367,18 @@ const ResistanceCalculator: React.FC = () => {
 
                 {results.Vdrop !== undefined && (
                   <div className="space-y-2">
-                    <p className="text-sm text-purple-200 font-medium">Step {useTemp ? "4" : "3"}: Voltage Drop & Power Loss</p>
+                    <p className="text-sm text-purple-200 font-medium">
+                      Step {useTemp ? '4' : '3'}: Voltage Drop & Power Loss
+                    </p>
                     <div className="p-3 rounded-lg bg-purple-500/10 font-mono text-xs text-purple-100">
-                      <p>Vdrop = I x R = {current} x {round(results.RT, decimalPlaces)} = {round(results.Vdrop!, decimalPlaces)} V</p>
-                      <p>Ploss = I2 x R = {current}2 x {round(results.RT, decimalPlaces)} = {round(results.Ploss!, decimalPlaces)} W</p>
+                      <p>
+                        Vdrop = I x R = {current} x {round(results.RT, decimalPlaces)} ={' '}
+                        {round(results.Vdrop!, decimalPlaces)} V
+                      </p>
+                      <p>
+                        Ploss = I2 x R = {current}2 x {round(results.RT, decimalPlaces)} ={' '}
+                        {round(results.Ploss!, decimalPlaces)} W
+                      </p>
                     </div>
                   </div>
                 )}
@@ -355,22 +392,33 @@ const ResistanceCalculator: React.FC = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showGuidance && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0 space-y-2">
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Conductor Resistance:</strong> The resistance increases with length and decreases with larger cross-sectional area.
+                  <strong className="text-blue-300">Conductor Resistance:</strong> The resistance
+                  increases with length and decreases with larger cross-sectional area.
                 </p>
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Temperature Effect:</strong> Copper resistance increases approximately 0.4% per degree Celsius above 20C.
+                  <strong className="text-blue-300">Temperature Effect:</strong> Copper resistance
+                  increases approximately 0.4% per degree Celsius above 20C.
                 </p>
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Voltage Drop:</strong> Critical for circuit design - BS 7671 limits voltage drop to 3-5% depending on circuit type.
+                  <strong className="text-blue-300">Voltage Drop:</strong> Critical for circuit
+                  design - BS 7671 limits voltage drop to 3-5% depending on circuit type.
                 </p>
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Power Loss:</strong> Heat generated in the conductor due to I2R losses - affects cable rating.
+                  <strong className="text-blue-300">Power Loss:</strong> Heat generated in the
+                  conductor due to I2R losses - affects cable rating.
                 </p>
               </CollapsibleContent>
             </div>
@@ -382,16 +430,35 @@ const ResistanceCalculator: React.FC = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Reference</span>
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    BS 7671 Reference
+                  </span>
                 </div>
-                <ChevronDown className={cn("h-4 w-4 text-white/70 transition-transform duration-200", showBsRegs && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showBsRegs && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">
-                  <p><strong className="text-amber-300">Appendix 4:</strong> Contains resistivity values and temperature coefficients for various conductor materials</p>
-                  <p><strong className="text-amber-300">Section 525:</strong> Voltage drop limits - typically 3% for lighting, 5% for other circuits</p>
-                  <p><strong className="text-amber-300">Section 523:</strong> Current-carrying capacity must account for grouping and thermal conditions</p>
-                  <p><strong className="text-amber-300">Note:</strong> Always verify against manufacturer data and current BS 7671 edition</p>
+                  <p>
+                    <strong className="text-amber-300">Appendix 4:</strong> Contains resistivity
+                    values and temperature coefficients for various conductor materials
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Section 525:</strong> Voltage drop limits -
+                    typically 3% for lighting, 5% for other circuits
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Section 523:</strong> Current-carrying
+                    capacity must account for grouping and thermal conditions
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Note:</strong> Always verify against
+                    manufacturer data and current BS 7671 edition
+                  </p>
                 </div>
               </CollapsibleContent>
             </div>
@@ -404,7 +471,8 @@ const ResistanceCalculator: React.FC = () => {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
           <div className="text-sm text-amber-200">
-            <strong>Formula:</strong> R = pL/A where p = resistivity (O.m), L = length (m), A = area (m2)
+            <strong>Formula:</strong> R = pL/A where p = resistivity (O.m), L = length (m), A = area
+            (m2)
           </div>
         </div>
       </div>

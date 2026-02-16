@@ -1,6 +1,6 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowUp, Hammer, Flame, Box, Zap } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ArrowUp, Hammer, Flame, Box, Zap } from 'lucide-react';
 
 interface ConditionalFlags {
   work_at_height?: boolean;
@@ -15,11 +15,14 @@ interface ConditionalProceduresSectionProps {
   workAtHeightEquipment?: string[];
 }
 
-export const ConditionalProceduresSection = ({ flags, workAtHeightEquipment }: ConditionalProceduresSectionProps) => {
+export const ConditionalProceduresSection = ({
+  flags,
+  workAtHeightEquipment,
+}: ConditionalProceduresSectionProps) => {
   if (!flags) return null;
 
   const activeFlags = Object.entries(flags).filter(([_, value]) => value === true);
-  
+
   if (activeFlags.length === 0) return null;
 
   return (
@@ -32,8 +35,10 @@ export const ConditionalProceduresSection = ({ flags, workAtHeightEquipment }: C
               <ArrowUp className="h-5 w-5 text-warning" />
             </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-sm text-foreground mb-2">Work at Height Procedures</h4>
-              
+              <h4 className="font-semibold text-sm text-foreground mb-2">
+                Work at Height Procedures
+              </h4>
+
               {workAtHeightEquipment && workAtHeightEquipment.length > 0 && (
                 <div className="mb-3">
                   <div className="text-xs text-muted-foreground mb-1">Equipment Required</div>
@@ -70,7 +75,9 @@ export const ConditionalProceduresSection = ({ flags, workAtHeightEquipment }: C
               <Zap className="h-5 w-5 text-warning" />
             </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-sm text-foreground mb-2">Services & Utilities Detection</h4>
+              <h4 className="font-semibold text-sm text-foreground mb-2">
+                Services & Utilities Detection
+              </h4>
               <div className="text-xs text-muted-foreground space-y-1">
                 <div>• Use CAT & Genny scan before excavation</div>
                 <div>• Review site drawings for buried services</div>
@@ -90,8 +97,12 @@ export const ConditionalProceduresSection = ({ flags, workAtHeightEquipment }: C
               <Flame className="h-5 w-5 text-destructive" />
             </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-sm text-foreground mb-2">Hot Works Permit Required</h4>
-              <Badge variant="destructive" className="mb-2">High Risk Activity</Badge>
+              <h4 className="font-semibold text-sm text-foreground mb-2">
+                Hot Works Permit Required
+              </h4>
+              <Badge variant="destructive" className="mb-2">
+                High Risk Activity
+              </Badge>
               <div className="text-xs text-muted-foreground space-y-1">
                 <div>• Obtain hot works permit before starting</div>
                 <div>• Fire extinguisher within 3m of work area</div>
@@ -111,8 +122,12 @@ export const ConditionalProceduresSection = ({ flags, workAtHeightEquipment }: C
               <Box className="h-5 w-5 text-destructive" />
             </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-sm text-foreground mb-2">Confined Space Entry Procedures</h4>
-              <Badge variant="destructive" className="mb-2">Permit to Work Required</Badge>
+              <h4 className="font-semibold text-sm text-foreground mb-2">
+                Confined Space Entry Procedures
+              </h4>
+              <Badge variant="destructive" className="mb-2">
+                Permit to Work Required
+              </Badge>
               <div className="text-xs text-muted-foreground space-y-1">
                 <div>• Atmosphere testing before entry</div>
                 <div>• Forced ventilation system required</div>
@@ -132,8 +147,12 @@ export const ConditionalProceduresSection = ({ flags, workAtHeightEquipment }: C
               <Zap className="h-5 w-5 text-destructive" />
             </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-sm text-foreground mb-2">Live Electrical Work Authorization</h4>
-              <Badge variant="destructive" className="mb-2">Exceptional Circumstances Only</Badge>
+              <h4 className="font-semibold text-sm text-foreground mb-2">
+                Live Electrical Work Authorization
+              </h4>
+              <Badge variant="destructive" className="mb-2">
+                Exceptional Circumstances Only
+              </Badge>
               <div className="text-xs text-muted-foreground space-y-1">
                 <div>• Written justification required (dead working not feasible)</div>
                 <div>• AP certification mandatory (18th Edition insufficient)</div>

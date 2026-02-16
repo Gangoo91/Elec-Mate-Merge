@@ -1,17 +1,16 @@
-
-import React from "react";
+import React from 'react';
 
 const AccessEquipmentSelection = () => {
   return (
     <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
       <h3 className="text-xl font-bold text-elec-yellow">Access Equipment Selection</h3>
-      
+
       <div className="space-y-4">
         <p>
-          Selecting appropriate access equipment is critical for electrical workers. 
-          The task, environment, duration, and risk level all influence the choice of equipment.
+          Selecting appropriate access equipment is critical for electrical workers. The task,
+          environment, duration, and risk level all influence the choice of equipment.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold text-elec-yellow mb-3">Ladders and Stepladders</h4>
@@ -25,9 +24,11 @@ const AccessEquipmentSelection = () => {
               <li>Inspect before each use for defects</li>
             </ul>
           </div>
-          
+
           <div>
-            <h4 className="font-semibold text-elec-yellow mb-3">Mobile Elevated Work Platforms (MEWPs)</h4>
+            <h4 className="font-semibold text-elec-yellow mb-3">
+              Mobile Elevated Work Platforms (MEWPs)
+            </h4>
             <ul className="list-disc pl-5 space-y-2">
               <li>Suitable for extended work at height in electrical installations</li>
               <li>Requires specific IPAF operator training</li>
@@ -39,7 +40,7 @@ const AccessEquipmentSelection = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
           <div>
             <h4 className="font-semibold text-elec-yellow mb-3">Mobile Scaffold Towers</h4>
@@ -53,9 +54,11 @@ const AccessEquipmentSelection = () => {
               <li>Regular inspections required (pre-use, weekly, after alteration)</li>
             </ul>
           </div>
-          
+
           <div>
-            <h4 className="font-semibold text-elec-yellow mb-3">Podium Steps/Low-Level Work Platforms</h4>
+            <h4 className="font-semibold text-elec-yellow mb-3">
+              Podium Steps/Low-Level Work Platforms
+            </h4>
             <ul className="list-disc pl-5 space-y-2">
               <li>Ideal for electrical work at low/medium height (up to 3m)</li>
               <li>Must have guardrails on all working platforms</li>
@@ -67,9 +70,11 @@ const AccessEquipmentSelection = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4 mt-4">
-          <h4 className="font-semibold text-elec-yellow mb-3">Selection Factors for Electrical Work</h4>
+          <h4 className="font-semibold text-elec-yellow mb-3">
+            Selection Factors for Electrical Work
+          </h4>
           <ul className="list-disc pl-5 space-y-2">
             <li>Presence of electrical hazards (live/isolated equipment)</li>
             <li>Need for electrical insulation on access equipment</li>

@@ -24,7 +24,8 @@ export const EmergencyLightingPracticalSection2_5 = () => {
             <ul className="space-y-2 text-foreground">
               <li className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400" />
-                Always ensure exit signage points toward the true direction of travel — incorrect arrows are a common installation fault
+                Always ensure exit signage points toward the true direction of travel — incorrect
+                arrows are a common installation fault
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400" />
@@ -60,7 +61,8 @@ export const EmergencyLightingPracticalSection2_5 = () => {
             <ul className="space-y-2 text-foreground">
               <li className="flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-yellow-400" />
-                Avoid mixing old "EXIT" text-only signs with new ISO 7010 pictograms — consistency is key
+                Avoid mixing old "EXIT" text-only signs with new ISO 7010 pictograms — consistency
+                is key
               </li>
               <li className="flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-yellow-400" />
@@ -104,7 +106,10 @@ export const EmergencyLightingPracticalSection2_5 = () => {
             <div>
               <h4 className="font-semibold text-red-400 mb-2">Critical Installation Points</h4>
               <p className="text-foreground">
-                Poor exit signage installation can have serious consequences during emergencies. Always double-check arrow directions, verify visibility from all approach angles, and ensure signs meet the required illumination levels. Take time to walk through escape routes from an occupant's perspective.
+                Poor exit signage installation can have serious consequences during emergencies.
+                Always double-check arrow directions, verify visibility from all approach angles,
+                and ensure signs meet the required illumination levels. Take time to walk through
+                escape routes from an occupant's perspective.
               </p>
             </div>
           </div>

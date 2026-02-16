@@ -1,48 +1,62 @@
-
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const WeeklyOverview = () => {
   const { entries } = useTimeEntries();
   const [chartData, setChartData] = useState<any[]>([]);
   const [weeks, setWeeks] = useState<string[]>([]);
-  const [selectedWeek, setSelectedWeek] = useState<string>("current");
+  const [selectedWeek, setSelectedWeek] = useState<string>('current');
 
   // Process entries data for the chart
   useEffect(() => {
     // Get current date
     const currentDate = new Date();
-    
+
     // Get an array of weeks
     const uniqueWeeks: string[] = [];
     const processedWeeks = new Set<string>();
-    
-    entries.forEach(entry => {
+
+    entries.forEach((entry) => {
       const entryDate = new Date(entry.date);
       const weekStart = new Date(entryDate);
       weekStart.setDate(entryDate.getDate() - entryDate.getDay());
       const weekEnd = new Date(weekStart);
       weekEnd.setDate(weekStart.getDate() + 6);
-      
+
       const weekKey = `${weekStart.toISOString().split('T')[0]}_${weekEnd.toISOString().split('T')[0]}`;
       if (!processedWeeks.has(weekKey)) {
         processedWeeks.add(weekKey);
         uniqueWeeks.push(weekKey);
       }
     });
-    
+
     // Sort weeks in descending order
     uniqueWeeks.sort((a, b) => {
       const dateA = new Date(a.split('_')[0]);
       const dateB = new Date(b.split('_')[0]);
       return dateB.getTime() - dateA.getTime();
     });
-    
+
     setWeeks(uniqueWeeks);
-    
+
     // Set default to current week
     const today = new Date();
     const dayOfWeek = today.getDay();
@@ -50,51 +64,53 @@ const WeeklyOverview = () => {
     startOfWeek.setDate(today.getDate() - dayOfWeek);
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 6);
-    
+
     const currentWeekKey = `${startOfWeek.toISOString().split('T')[0]}_${endOfWeek.toISOString().split('T')[0]}`;
-    setSelectedWeek(uniqueWeeks.includes(currentWeekKey) ? currentWeekKey : uniqueWeeks[0] || "current");
-    
+    setSelectedWeek(
+      uniqueWeeks.includes(currentWeekKey) ? currentWeekKey : uniqueWeeks[0] || 'current'
+    );
+
     // Process chart data
     processChartData(selectedWeek);
   }, [entries, selectedWeek]);
 
   const processChartData = (weekKey: string) => {
-    if (weekKey === "current" || !weekKey) {
+    if (weekKey === 'current' || !weekKey) {
       const today = new Date();
       const dayOfWeek = today.getDay();
       const startOfWeek = new Date(today);
       startOfWeek.setDate(today.getDate() - dayOfWeek);
       const endOfWeek = new Date(startOfWeek);
       endOfWeek.setDate(startOfWeek.getDate() + 6);
-      
+
       weekKey = `${startOfWeek.toISOString().split('T')[0]}_${endOfWeek.toISOString().split('T')[0]}`;
     }
-    
+
     const [startDateStr, endDateStr] = weekKey.split('_');
     const startDate = new Date(startDateStr);
     const endDate = new Date(endDateStr);
-    
+
     // Initialize data for each day of the week
     const weekData: any[] = [];
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    
+
     for (let i = 0; i < 7; i++) {
       const currentDay = new Date(startDate);
       currentDay.setDate(startDate.getDate() + i);
       const dayStr = currentDay.toISOString().split('T')[0];
-      
+
       // Filter entries for this day
-      const dayEntries = entries.filter(entry => entry.date === dayStr);
-      
+      const dayEntries = entries.filter((entry) => entry.date === dayStr);
+
       // Calculate manual and automatic hours
       const manualMinutes = dayEntries
-        .filter(entry => !entry.isAutomatic)
+        .filter((entry) => !entry.isAutomatic)
         .reduce((total, entry) => total + entry.duration, 0);
-      
+
       const automaticMinutes = dayEntries
-        .filter(entry => entry.isAutomatic)
+        .filter((entry) => entry.isAutomatic)
         .reduce((total, entry) => total + entry.duration, 0);
-      
+
       weekData.push({
         name: dayNames[i],
         date: dayStr,
@@ -102,7 +118,7 @@ const WeeklyOverview = () => {
         automatic: Math.round(automaticMinutes / 6) / 10,
       });
     }
-    
+
     setChartData(weekData);
   };
 
@@ -113,12 +129,12 @@ const WeeklyOverview = () => {
 
   // Format dates for display
   const formatDateRange = (weekKey: string) => {
-    if (!weekKey || weekKey === "current") return "Current Week";
-    
+    if (!weekKey || weekKey === 'current') return 'Current Week';
+
     const [startStr, endStr] = weekKey.split('_');
     const start = new Date(startStr);
     const end = new Date(endStr);
-    
+
     return `${start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`;
   };
 
@@ -161,15 +177,17 @@ const WeeklyOverview = () => {
         <CardContent className="pt-6">
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={chartData}
-                margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-              >
+              <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#444" />
                 <XAxis dataKey="name" stroke="#888" />
-                <YAxis 
-                  stroke="#888" 
-                  label={{ value: 'Hours', angle: -90, position: 'insideLeft', style: { textFill: '#888' } }} 
+                <YAxis
+                  stroke="#888"
+                  label={{
+                    value: 'Hours',
+                    angle: -90,
+                    position: 'insideLeft',
+                    style: { textFill: '#888' },
+                  }}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend wrapperStyle={{ paddingTop: '10px' }} />
@@ -178,7 +196,7 @@ const WeeklyOverview = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          
+
           <div className="mt-4 text-sm text-white text-center">
             <p>Weekly summary for {formatDateRange(selectedWeek)}</p>
           </div>
@@ -194,7 +212,7 @@ const WeeklyOverview = () => {
             <p className="text-sm text-white mt-1">Total Hours This Week</p>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-white/10 border-elec-yellow/10">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center">
             <div className="text-2xl font-bold text-elec-yellow">
@@ -203,7 +221,7 @@ const WeeklyOverview = () => {
             <p className="text-sm text-white mt-1">Manual Hours</p>
           </CardContent>
         </Card>
-        
+
         <Card className="bg-white/10 border-elec-yellow/10">
           <CardContent className="p-4 flex flex-col items-center justify-center text-center">
             <div className="text-2xl font-bold text-elec-yellow">

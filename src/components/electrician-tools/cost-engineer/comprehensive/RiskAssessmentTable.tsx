@@ -1,6 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { AlertTriangle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { AlertTriangle } from 'lucide-react';
 
 interface RiskAssessmentTableProps {
   risks: any[];
@@ -8,21 +15,26 @@ interface RiskAssessmentTableProps {
 
 const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
   const getRiskDot = (severity: string) => {
-    switch(severity) {
-      case 'critical': return '🔴';
-      case 'high': return '🔴';
-      case 'medium': return '🟡';
-      case 'low': return '🟢';
-      default: return '⚪';
+    switch (severity) {
+      case 'critical':
+        return '🔴';
+      case 'high':
+        return '🔴';
+      case 'medium':
+        return '🟡';
+      case 'low':
+        return '🟢';
+      default:
+        return '⚪';
     }
   };
 
   const getCategoryBadge = (category: string) => {
     const colors: Record<string, string> = {
-      'Technical': 'bg-blue-500/20 text-blue-500',
-      'Financial': 'bg-green-500/20 text-green-500',
-      'Schedule': 'bg-orange-500/20 text-orange-500',
-      'Safety': 'bg-red-500/20 text-red-500'
+      Technical: 'bg-blue-500/20 text-blue-500',
+      Financial: 'bg-green-500/20 text-green-500',
+      Schedule: 'bg-orange-500/20 text-orange-500',
+      Safety: 'bg-red-500/20 text-red-500',
     };
     return colors[category] || 'bg-gray-500/20 text-gray-500';
   };
@@ -43,9 +55,13 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
               <div className="flex items-start gap-3 mb-3">
                 <span className="text-2xl flex-shrink-0">{getRiskDot(risk.severity)}</span>
                 <div className="flex-1">
-                  <div className="font-medium text-foreground text-base leading-snug">{risk.risk}</div>
+                  <div className="font-medium text-foreground text-base leading-snug">
+                    {risk.risk}
+                  </div>
                   <div className="flex flex-wrap items-center gap-2 mt-2">
-                    <span className={`px-2 py-0.5 rounded text-sm ${getCategoryBadge(risk.category)}`}>
+                    <span
+                      className={`px-2 py-0.5 rounded text-sm ${getCategoryBadge(risk.category)}`}
+                    >
                       {risk.category}
                     </span>
                     <span className="text-sm text-foreground/70">{risk.likelihood} likelihood</span>
@@ -71,17 +87,21 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12 text-foreground font-semibold text-base sm:text-sm"></TableHead>
-                <TableHead className="text-foreground font-semibold text-base sm:text-sm">Risk</TableHead>
-                <TableHead className="text-foreground font-semibold text-base sm:text-sm">Category</TableHead>
-                <TableHead className="text-foreground font-semibold text-base sm:text-sm">Mitigation</TableHead>
+                <TableHead className="text-foreground font-semibold text-base sm:text-sm">
+                  Risk
+                </TableHead>
+                <TableHead className="text-foreground font-semibold text-base sm:text-sm">
+                  Category
+                </TableHead>
+                <TableHead className="text-foreground font-semibold text-base sm:text-sm">
+                  Mitigation
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {risks.map((risk, idx) => (
                 <TableRow key={idx}>
-                  <TableCell className="text-center text-xl">
-                    {getRiskDot(risk.severity)}
-                  </TableCell>
+                  <TableCell className="text-center text-xl">{getRiskDot(risk.severity)}</TableCell>
                   <TableCell className="font-medium text-foreground">
                     <span className="text-base sm:text-sm">{risk.risk}</span>
                     <div className="text-sm text-foreground mt-1">
@@ -92,7 +112,9 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className={`px-2 py-1 rounded text-sm sm:text-xs ${getCategoryBadge(risk.category)}`}>
+                    <span
+                      className={`px-2 py-1 rounded text-sm sm:text-xs ${getCategoryBadge(risk.category)}`}
+                    >
                       {risk.category}
                     </span>
                   </TableCell>

@@ -5,7 +5,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { FileText, Download, Sparkles, BookOpen, Settings2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { generateLaTeXStylePDF, sampleMarkdown } from '@/utils/professional-latex-style-pdf';
@@ -25,9 +31,9 @@ const LaTeXStylePDFGenerator = () => {
   const handleGeneratePDF = async () => {
     if (!markdownContent.trim()) {
       toast({
-        title: "Content Required",
-        description: "Please provide markdown content to generate the PDF.",
-        variant: "destructive"
+        title: 'Content Required',
+        description: 'Please provide markdown content to generate the PDF.',
+        variant: 'destructive',
       });
       return;
     }
@@ -43,19 +49,20 @@ const LaTeXStylePDFGenerator = () => {
         includeTableOfContents,
         fontFamily,
         fontSize,
-        margins: { top: 25, right: 20, bottom: 25, left: 20 }
+        margins: { top: 25, right: 20, bottom: 25, left: 20 },
       });
 
       toast({
-        title: "PDF Generated Successfully! ✨",
-        description: "Your professional LaTeX-style PDF has been downloaded with beautiful formatting.",
+        title: 'PDF Generated Successfully! ✨',
+        description:
+          'Your professional LaTeX-style PDF has been downloaded with beautiful formatting.',
       });
     } catch (error) {
       console.error('PDF generation error:', error);
       toast({
-        title: "PDF Generation Failed",
-        description: "There was an error generating your professional PDF. Please try again.",
-        variant: "destructive"
+        title: 'PDF Generation Failed',
+        description: 'There was an error generating your professional PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -68,10 +75,10 @@ const LaTeXStylePDFGenerator = () => {
     setAuthor('Lovable PDF Generator');
     setSubject('LaTeX-Style Professional Document');
     setKeywords('professional, latex, document, pdf, markdown');
-    
+
     toast({
-      title: "Sample Content Loaded ✨",
-      description: "Beautiful sample markdown content has been loaded for you to try.",
+      title: 'Sample Content Loaded ✨',
+      description: 'Beautiful sample markdown content has been loaded for you to try.',
     });
   };
 
@@ -89,8 +96,9 @@ const LaTeXStylePDFGenerator = () => {
             </h1>
           </div>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Transform your Markdown into stunning, professional PDFs with LaTeX-quality typography and formatting. 
-            Perfect for academic papers, business reports, and professional documentation.
+            Transform your Markdown into stunning, professional PDFs with LaTeX-quality typography
+            and formatting. Perfect for academic papers, business reports, and professional
+            documentation.
           </p>
         </div>
 
@@ -115,7 +123,7 @@ const LaTeXStylePDFGenerator = () => {
                   Load Sample
                 </Button>
               </div>
-              
+
               <Textarea
                 value={markdownContent}
                 onChange={(e) => setMarkdownContent(e.target.value)}
@@ -146,7 +154,7 @@ Write your content in Markdown format...
                 <h3 className="font-semibold text-slate-800 border-b border-slate-200 pb-2">
                   Document Information
                 </h3>
-                
+
                 <div className="space-y-3">
                   <div>
                     <Label htmlFor="title" className="text-sm font-medium text-slate-700">
@@ -160,7 +168,7 @@ Write your content in Markdown format...
                       className="border-slate-200 focus:border-purple-400 focus:ring-purple-400"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="author" className="text-sm font-medium text-slate-700">
                       Author
@@ -173,7 +181,7 @@ Write your content in Markdown format...
                       className="border-slate-200 focus:border-purple-400 focus:ring-purple-400"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="subject" className="text-sm font-medium text-slate-700">
                       Subject
@@ -186,7 +194,7 @@ Write your content in Markdown format...
                       className="border-slate-200 focus:border-purple-400 focus:ring-purple-400"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="keywords" className="text-sm font-medium text-slate-700">
                       Keywords
@@ -207,13 +215,18 @@ Write your content in Markdown format...
                 <h3 className="font-semibold text-slate-800 border-b border-slate-200 pb-2">
                   Typography & Layout
                 </h3>
-                
+
                 <div className="space-y-3">
                   <div>
                     <Label htmlFor="fontFamily" className="text-sm font-medium text-slate-700">
                       Font Family
                     </Label>
-                    <Select value={fontFamily} onValueChange={(value: 'serif' | 'sans-serif' | 'monospace') => setFontFamily(value)}>
+                    <Select
+                      value={fontFamily}
+                      onValueChange={(value: 'serif' | 'sans-serif' | 'monospace') =>
+                        setFontFamily(value)
+                      }
+                    >
                       <SelectTrigger className="border-slate-200 focus:border-purple-400 focus:ring-purple-400">
                         <SelectValue />
                       </SelectTrigger>
@@ -224,7 +237,7 @@ Write your content in Markdown format...
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="fontSize" className="text-sm font-medium text-slate-700">
                       Font Size: {fontSize}pt
@@ -244,7 +257,7 @@ Write your content in Markdown format...
                       <span>14pt</span>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                     <div>
                       <Label htmlFor="toc" className="text-sm font-medium text-slate-700">
@@ -298,27 +311,33 @@ Write your content in Markdown format...
                   <FileText className="h-6 w-6 text-blue-600" />
                 </div>
                 <h4 className="font-semibold text-slate-800">LaTeX-Quality Typography</h4>
-                <p className="text-sm text-slate-600">Professional fonts, spacing, and layout that rivals academic publications</p>
+                <p className="text-sm text-slate-600">
+                  Professional fonts, spacing, and layout that rivals academic publications
+                </p>
               </div>
               <div className="text-center space-y-2">
                 <div className="bg-purple-100 p-3 rounded-full w-fit mx-auto">
                   <BookOpen className="h-6 w-6 text-purple-600" />
                 </div>
                 <h4 className="font-semibold text-slate-800">Automatic TOC Generation</h4>
-                <p className="text-sm text-slate-600">Beautiful table of contents with page numbers and navigation</p>
+                <p className="text-sm text-slate-600">
+                  Beautiful table of contents with page numbers and navigation
+                </p>
               </div>
               <div className="text-center space-y-2">
                 <div className="bg-pink-100 p-3 rounded-full w-fit mx-auto">
                   <Sparkles className="h-6 w-6 text-pink-600" />
                 </div>
                 <h4 className="font-semibold text-slate-800">Professional Polish</h4>
-                <p className="text-sm text-slate-600">Headers, footers, page numbers, and elegant title pages</p>
+                <p className="text-sm text-slate-600">
+                  Headers, footers, page numbers, and elegant title pages
+                </p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
-      
+
       <style>{`
         .slider::-webkit-slider-thumb {
           appearance: none;

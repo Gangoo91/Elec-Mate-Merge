@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Trash2, Plus, MapPin, Thermometer, Shield, AlertTriangle } from "lucide-react";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { MultiSelectDropdown } from "@/components/ui/multi-select-dropdown";
-import { EnvironmentalSettings, InstallationZone, Circuit } from "./types";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Trash2, Plus, MapPin, Thermometer, Shield, AlertTriangle } from 'lucide-react';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { MultiSelectDropdown } from '@/components/ui/multi-select-dropdown';
+import { EnvironmentalSettings, InstallationZone, Circuit } from './types';
+import { v4 as uuidv4 } from 'uuid';
 
 interface EnvironmentalContextManagerProps {
   environmentalSettings: EnvironmentalSettings;
@@ -20,123 +20,129 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
   environmentalSettings,
   circuits,
   onUpdateEnvironmentalSettings,
-  onUpdateCircuits
+  onUpdateCircuits,
 }) => {
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<string>("global");
+  const [activeTab, setActiveTab] = useState<string>('global');
 
   // Simplified environmental conditions that affect cable choice
   const environmentalConditions = [
-    "Indoor dry locations",
-    "Outdoor locations", 
-    "Underground installations"
+    'Indoor dry locations',
+    'Outdoor locations',
+    'Underground installations',
   ];
 
   // Simplified special requirements that actually matter
   const specialRequirements = [
-    "Fire escape routes",
-    "Wet/damp areas", 
-    "High temperature areas",
-    "Multiple circuits grouped"
+    'Fire escape routes',
+    'Wet/damp areas',
+    'High temperature areas',
+    'Multiple circuits grouped',
   ];
 
   const addInstallationZone = () => {
     const newZone: InstallationZone = {
       id: uuidv4(),
-      name: "New Zone",
-      description: "",
+      name: 'New Zone',
+      description: '',
       ambientTemperature: environmentalSettings.ambientTemperature,
       environmentalConditions: environmentalSettings.environmentalConditions,
       specialRequirements: [],
-      circuitIds: []
+      circuitIds: [],
     };
 
     onUpdateEnvironmentalSettings({
       ...environmentalSettings,
-      installationZones: [...(environmentalSettings.installationZones || []), newZone]
+      installationZones: [...(environmentalSettings.installationZones || []), newZone],
     });
   };
 
   const updateZone = (zoneId: string, updates: Partial<InstallationZone>) => {
-    const updatedZones = (environmentalSettings.installationZones || []).map(zone =>
+    const updatedZones = (environmentalSettings.installationZones || []).map((zone) =>
       zone.id === zoneId ? { ...zone, ...updates } : zone
     );
 
     onUpdateEnvironmentalSettings({
       ...environmentalSettings,
-      installationZones: updatedZones
+      installationZones: updatedZones,
     });
   };
 
   const deleteZone = (zoneId: string) => {
-    const updatedZones = (environmentalSettings.installationZones || []).filter(zone => zone.id !== zoneId);
-    
+    const updatedZones = (environmentalSettings.installationZones || []).filter(
+      (zone) => zone.id !== zoneId
+    );
+
     // Remove zone assignment from circuits
-    const updatedCircuits = circuits.map(circuit => ({
+    const updatedCircuits = circuits.map((circuit) => ({
       ...circuit,
-      installationZone: circuit.installationZone === zoneId ? undefined : circuit.installationZone
+      installationZone: circuit.installationZone === zoneId ? undefined : circuit.installationZone,
     }));
 
     onUpdateEnvironmentalSettings({
       ...environmentalSettings,
-      installationZones: updatedZones
+      installationZones: updatedZones,
     });
     onUpdateCircuits(updatedCircuits);
   };
 
   const assignCircuitToZone = (circuitId: string, zoneId: string | null) => {
-    const updatedCircuits = circuits.map(circuit =>
+    const updatedCircuits = circuits.map((circuit) =>
       circuit.id === circuitId ? { ...circuit, installationZone: zoneId || undefined } : circuit
     );
 
     // Update zone circuit IDs
-    const updatedZones = (environmentalSettings.installationZones || []).map(zone => ({
+    const updatedZones = (environmentalSettings.installationZones || []).map((zone) => ({
       ...zone,
-      circuitIds: zone.id === zoneId 
-        ? [...zone.circuitIds.filter(id => id !== circuitId), circuitId]
-        : zone.circuitIds.filter(id => id !== circuitId)
+      circuitIds:
+        zone.id === zoneId
+          ? [...zone.circuitIds.filter((id) => id !== circuitId), circuitId]
+          : zone.circuitIds.filter((id) => id !== circuitId),
     }));
 
     onUpdateEnvironmentalSettings({
       ...environmentalSettings,
-      installationZones: updatedZones
+      installationZones: updatedZones,
     });
     onUpdateCircuits(updatedCircuits);
   };
 
   const getTemperatureGuidance = (temp: number) => {
     if (temp <= 25) {
-      return { color: "text-green-400", message: "Ideal temperature conditions" };
+      return { color: 'text-green-400', message: 'Ideal temperature conditions' };
     } else if (temp <= 35) {
-      return { color: "text-yellow-400", message: "Moderate temperature - may require derating" };
+      return { color: 'text-yellow-400', message: 'Moderate temperature - may require derating' };
     } else if (temp <= 45) {
-      return { color: "text-orange-400", message: "High temperature - derating required" };
+      return { color: 'text-orange-400', message: 'High temperature - derating required' };
     } else {
-      return { color: "text-red-400", message: "Very high temperature - special cable may be needed" };
+      return {
+        color: 'text-red-400',
+        message: 'Very high temperature - special cable may be needed',
+      };
     }
   };
 
   const tabOptions = [
-    { value: "global", label: "Global Settings" },
-    { value: "zones", label: "Installation Zones" },
-    { value: "assignments", label: "Circuit Assignments" }
+    { value: 'global', label: 'Global Settings' },
+    { value: 'zones', label: 'Installation Zones' },
+    { value: 'assignments', label: 'Circuit Assignments' },
   ];
 
-  const specialRequirementsOptions = specialRequirements.map(req => ({
+  const specialRequirementsOptions = specialRequirements.map((req) => ({
     value: req,
-    label: req
+    label: req,
   }));
 
-  const environmentalConditionsOptions = environmentalConditions.map(condition => ({
+  const environmentalConditionsOptions = environmentalConditions.map((condition) => ({
     value: condition,
-    label: condition
+    label: condition,
   }));
 
   const earthingSystemOptions = [
-    { value: "TN-S", label: "TN-S" },
-    { value: "TN-C-S", label: "TN-C-S (PME)" },
-    { value: "TT", label: "TT" },
-    { value: "IT", label: "IT" }
+    { value: 'TN-S', label: 'TN-S' },
+    { value: 'TN-C-S', label: 'TN-C-S (PME)' },
+    { value: 'TT', label: 'TT' },
+    { value: 'IT', label: 'IT' },
   ];
 
   return (
@@ -153,11 +159,13 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
       </div>
 
       {/* Global Settings Content */}
-      {activeTab === "global" && (
+      {activeTab === 'global' && (
         <div className="space-y-6 pt-4 px-2">
           <div className="space-y-4">
             <div className="space-y-2">
-              <span className="text-sm font-semibold text-elec-light">Default Ambient Temperature (°C)</span>
+              <span className="text-sm font-semibold text-elec-light">
+                Default Ambient Temperature (°C)
+              </span>
               <MobileInputWrapper
                 type="number"
                 value={environmentalSettings.ambientTemperature.toString()}
@@ -165,21 +173,23 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                   console.log('Temperature updated:', value);
                   onUpdateEnvironmentalSettings({
                     ...environmentalSettings,
-                    ambientTemperature: Number(value)
+                    ambientTemperature: Number(value),
                   });
                 }}
               />
             </div>
 
             <div className="space-y-2">
-              <span className="text-sm font-semibold text-elec-light">Default Environmental Conditions</span>
+              <span className="text-sm font-semibold text-elec-light">
+                Default Environmental Conditions
+              </span>
               <MobileSelectWrapper
                 value={environmentalSettings.environmentalConditions}
                 onValueChange={(value) => {
                   console.log('Environmental conditions updated:', value);
                   onUpdateEnvironmentalSettings({
                     ...environmentalSettings,
-                    environmentalConditions: value
+                    environmentalConditions: value,
                   });
                 }}
                 options={environmentalConditionsOptions}
@@ -196,26 +206,26 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                   // Auto-update Ze values based on earthing system
                   let newZe = environmentalSettings.ze;
                   switch (value) {
-                    case "TT":
-                      newZe = 0.80;
+                    case 'TT':
+                      newZe = 0.8;
                       break;
-                    case "TN-S":
+                    case 'TN-S':
                       newZe = 0.35;
                       break;
-                    case "TN-C-S":
+                    case 'TN-C-S':
                       newZe = 0.35;
                       break;
-                    case "IT":
+                    case 'IT':
                       newZe = 1.0;
                       break;
                     default:
                       newZe = 0.35;
                   }
-                  
+
                   onUpdateEnvironmentalSettings({
                     ...environmentalSettings,
                     earthingSystem: value,
-                    ze: newZe
+                    ze: newZe,
                   });
                 }}
                 options={earthingSystemOptions}
@@ -225,11 +235,15 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
 
             <div className="space-y-3">
               <span className="text-sm font-semibold text-elec-light">Ze Value (Ω)</span>
-              
+
               {/* Prominent Ze Value Display */}
               <div className="bg-elec-dark/30 border border-elec-yellow/30 rounded-lg p-4 text-center">
-                <div className="text-xs text-muted-foreground mb-1">External earth fault loop impedance</div>
-                <div className="text-2xl font-bold text-elec-yellow mb-2">{environmentalSettings.ze}</div>
+                <div className="text-xs text-muted-foreground mb-1">
+                  External earth fault loop impedance
+                </div>
+                <div className="text-2xl font-bold text-elec-yellow mb-2">
+                  {environmentalSettings.ze}
+                </div>
                 <MobileInputWrapper
                   type="number"
                   value={environmentalSettings.ze.toString()}
@@ -237,7 +251,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                     console.log('Ze value updated:', value);
                     onUpdateEnvironmentalSettings({
                       ...environmentalSettings,
-                      ze: Number(value)
+                      ze: Number(value),
                     });
                   }}
                   step="0.01"
@@ -252,7 +266,10 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
               </div>
               <div className="space-y-3">
                 {specialRequirements.map((requirement) => (
-                  <div key={requirement} className="flex items-start space-x-3 p-4 rounded-lg bg-elec-gray border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
+                  <div
+                    key={requirement}
+                    className="flex items-start space-x-3 p-4 rounded-lg bg-elec-gray border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors"
+                  >
                     <div className="flex items-center h-5">
                       <input
                         type="checkbox"
@@ -263,19 +280,22 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                           if (e.target.checked) {
                             onUpdateEnvironmentalSettings({
                               ...environmentalSettings,
-                              specialRequirements: [...current, requirement]
+                              specialRequirements: [...current, requirement],
                             });
                           } else {
                             onUpdateEnvironmentalSettings({
                               ...environmentalSettings,
-                              specialRequirements: current.filter(req => req !== requirement)
+                              specialRequirements: current.filter((req) => req !== requirement),
                             });
                           }
                         }}
                         className="w-4 h-4 text-elec-yellow bg-elec-gray border border-elec-yellow/50 rounded focus:ring-2 focus:ring-elec-yellow focus:ring-offset-0 checked:bg-elec-yellow checked:border-elec-yellow"
                       />
                     </div>
-                    <label htmlFor={requirement} className="text-sm text-elec-light cursor-pointer flex-1 leading-relaxed">
+                    <label
+                      htmlFor={requirement}
+                      className="text-sm text-elec-light cursor-pointer flex-1 leading-relaxed"
+                    >
                       {requirement}
                     </label>
                   </div>
@@ -287,12 +307,12 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
       )}
 
       {/* Installation Zones Content */}
-      {activeTab === "zones" && (
+      {activeTab === 'zones' && (
         <div className="space-y-4">
           <div className="flex flex-col space-y-3">
             <h3 className="text-lg font-medium text-elec-light text-center">Installation Zones</h3>
-            <Button 
-              onClick={addInstallationZone} 
+            <Button
+              onClick={addInstallationZone}
               className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium w-full py-3 text-sm h-12"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -302,7 +322,10 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
 
           <div className="space-y-4">
             {(environmentalSettings.installationZones || []).map((zone) => (
-              <div key={zone.id} className="border border-elec-yellow/20 rounded-lg p-4 space-y-4 bg-elec-card/30">
+              <div
+                key={zone.id}
+                className="border border-elec-yellow/20 rounded-lg p-4 space-y-4 bg-elec-card/30"
+              >
                 <div className="flex flex-col space-y-3">
                   <div className="flex items-center justify-center gap-2 text-elec-light text-base font-medium">
                     <MapPin className="h-4 w-4 text-elec-yellow" />
@@ -318,7 +341,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                     Delete Zone
                   </Button>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <span className="text-sm font-medium text-elec-light">Zone Name</span>
@@ -339,22 +362,32 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                   </div>
 
                   <div className="space-y-2">
-                    <span className="text-sm font-medium text-elec-light">Ambient Temperature (°C)</span>
+                    <span className="text-sm font-medium text-elec-light">
+                      Ambient Temperature (°C)
+                    </span>
                     <MobileInputWrapper
                       type="number"
                       value={zone.ambientTemperature.toString()}
-                      onChange={(value) => updateZone(zone.id, { ambientTemperature: Number(value) })}
+                      onChange={(value) =>
+                        updateZone(zone.id, { ambientTemperature: Number(value) })
+                      }
                     />
-                    <div className={`text-xs ${getTemperatureGuidance(zone.ambientTemperature).color} mt-1`}>
+                    <div
+                      className={`text-xs ${getTemperatureGuidance(zone.ambientTemperature).color} mt-1`}
+                    >
                       {getTemperatureGuidance(zone.ambientTemperature).message}
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <span className="text-sm font-medium text-elec-light">Environmental Conditions</span>
+                    <span className="text-sm font-medium text-elec-light">
+                      Environmental Conditions
+                    </span>
                     <MobileSelectWrapper
                       value={zone.environmentalConditions}
-                      onValueChange={(value) => updateZone(zone.id, { environmentalConditions: value })}
+                      onValueChange={(value) =>
+                        updateZone(zone.id, { environmentalConditions: value })
+                      }
                       options={environmentalConditionsOptions}
                       placeholder="Select environmental conditions..."
                     />
@@ -368,9 +401,13 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {zone.circuitIds.map((circuitId) => {
-                          const circuit = circuits.find(c => c.id === circuitId);
+                          const circuit = circuits.find((c) => c.id === circuitId);
                           return circuit ? (
-                            <Badge key={circuitId} variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs px-2 py-1">
+                            <Badge
+                              key={circuitId}
+                              variant="outline"
+                              className="border-elec-yellow/30 text-elec-yellow text-xs px-2 py-1"
+                            >
                               {circuit.name}
                             </Badge>
                           ) : null;
@@ -389,8 +426,8 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 <p className="text-elec-light/70 mb-6 px-4">
                   Create zones to group circuits with similar environmental conditions.
                 </p>
-                <Button 
-                  onClick={addInstallationZone} 
+                <Button
+                  onClick={addInstallationZone}
                   className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold w-full max-w-xs py-3"
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -403,7 +440,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
       )}
 
       {/* Circuit Assignments Content */}
-      {activeTab === "assignments" && (
+      {activeTab === 'assignments' && (
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-elec-light">Circuit Zone Assignments</h3>
 
@@ -419,15 +456,18 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
             <div className="space-y-3">
               {circuits.map((circuit) => {
                 const zoneOptions = [
-                  { value: "no-zone", label: "No specific zone" },
-                  ...(environmentalSettings.installationZones || []).map(zone => ({
+                  { value: 'no-zone', label: 'No specific zone' },
+                  ...(environmentalSettings.installationZones || []).map((zone) => ({
                     value: zone.id,
-                    label: zone.name
-                  }))
+                    label: zone.name,
+                  })),
                 ];
 
                 return (
-                  <div key={circuit.id} className="border border-elec-yellow/20 rounded-lg p-4 space-y-4 bg-elec-card/30">
+                  <div
+                    key={circuit.id}
+                    className="border border-elec-yellow/20 rounded-lg p-4 space-y-4 bg-elec-card/30"
+                  >
                     <div className="text-center">
                       <h4 className="font-medium text-elec-light mb-3">{circuit.name}</h4>
                       <div className="flex flex-col sm:grid sm:grid-cols-3 gap-2 text-sm">
@@ -445,11 +485,13 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                         </div>
                       </div>
                     </div>
-                    
+
                     <MobileSelectWrapper
                       label="Zone Assignment"
-                      value={circuit.installationZone || "no-zone"}
-                      onValueChange={(value) => assignCircuitToZone(circuit.id, value === "no-zone" ? null : value)}
+                      value={circuit.installationZone || 'no-zone'}
+                      onValueChange={(value) =>
+                        assignCircuitToZone(circuit.id, value === 'no-zone' ? null : value)
+                      }
                       options={zoneOptions}
                       placeholder="Assign to zone..."
                     />

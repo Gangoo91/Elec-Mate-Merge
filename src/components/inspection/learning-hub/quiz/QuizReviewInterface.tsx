@@ -4,17 +4,17 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { 
-  CheckCircle, 
-  XCircle, 
-  ArrowLeft, 
-  ArrowRight, 
-  Eye, 
+import {
+  CheckCircle,
+  XCircle,
+  ArrowLeft,
+  ArrowRight,
+  Eye,
   EyeOff,
   BookOpen,
   Clock,
   Target,
-  Info
+  Info,
 } from 'lucide-react';
 import { QuizQuestion, QuizAnswer, Assessment } from '@/types/quiz';
 
@@ -29,23 +29,23 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
   assessment,
   questions,
   answers,
-  onBack
+  onBack,
 }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showExplanations, setShowExplanations] = useState(true);
 
   const currentQuestion = questions[currentQuestionIndex];
-  const currentAnswer = answers.find(a => a.questionId === currentQuestion?.id);
+  const currentAnswer = answers.find((a) => a.questionId === currentQuestion?.id);
 
   const nextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
+      setCurrentQuestionIndex((prev) => prev + 1);
     }
   };
 
   const previousQuestion = () => {
     if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(prev => prev - 1);
+      setCurrentQuestionIndex((prev) => prev - 1);
     }
   };
 
@@ -73,22 +73,26 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
 
   const getDifficultyColor = (difficulty: string): string => {
     switch (difficulty) {
-      case 'Beginner': return 'bg-green-500/20 text-green-400 border-green-500/50';
-      case 'Intermediate': return 'bg-amber-500/20 text-amber-400 border-amber-500/50';
-      case 'Advanced': return 'bg-red-500/20 text-red-400 border-red-500/50';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/50';
+      case 'Beginner':
+        return 'bg-green-500/20 text-green-400 border-green-500/50';
+      case 'Intermediate':
+        return 'bg-amber-500/20 text-amber-400 border-amber-500/50';
+      case 'Advanced':
+        return 'bg-red-500/20 text-red-400 border-red-500/50';
+      default:
+        return 'bg-gray-500/20 text-gray-400 border-gray-500/50';
     }
   };
 
   const getQuestionStatus = (index: number) => {
     const question = questions[index];
-    const answer = answers.find(a => a.questionId === question.id);
-    
+    const answer = answers.find((a) => a.questionId === question.id);
+
     if (!answer) return 'unanswered';
     return answer.isCorrect ? 'correct' : 'incorrect';
   };
 
-  const correctCount = answers.filter(a => a.isCorrect).length;
+  const correctCount = answers.filter((a) => a.isCorrect).length;
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   if (!currentQuestion) {
@@ -112,7 +116,10 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
               <div>
                 <CardTitle className="text-xl">Review: {assessment.title}</CardTitle>
                 <div className="flex items-center gap-4 mt-2">
-                  <Badge variant="outline" className={getDifficultyColor(currentQuestion.difficulty)}>
+                  <Badge
+                    variant="outline"
+                    className={getDifficultyColor(currentQuestion.difficulty)}
+                  >
                     {currentQuestion.difficulty}
                   </Badge>
                   {currentQuestion.regulation && (
@@ -123,10 +130,11 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
                 </div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-4">
               <div className="text-sm text-muted-foreground">
-                {correctCount}/{questions.length} correct ({Math.round((correctCount / questions.length) * 100)}%)
+                {correctCount}/{questions.length} correct (
+                {Math.round((correctCount / questions.length) * 100)}%)
               </div>
               <Button variant="outline" onClick={onBack}>
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -142,25 +150,31 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
         <CardContent className="p-4">
           <div className="space-y-4">
             <div className="flex items-center justify-between text-sm">
-              <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
+              <span>
+                Question {currentQuestionIndex + 1} of {questions.length}
+              </span>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setShowExplanations(!showExplanations)}
               >
-                {showExplanations ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
+                {showExplanations ? (
+                  <EyeOff className="h-4 w-4 mr-2" />
+                ) : (
+                  <Eye className="h-4 w-4 mr-2" />
+                )}
                 {showExplanations ? 'Hide' : 'Show'} Explanations
               </Button>
             </div>
             <Progress value={progress} className="h-2" />
-            
+
             <ScrollArea className="w-full">
               <div className="flex gap-2 pb-2">
                 {questions.map((_, index) => {
                   const status = getQuestionStatus(index);
                   let bgColor = 'bg-gray-700';
                   let textColor = 'text-gray-300';
-                  
+
                   if (status === 'correct') {
                     bgColor = 'bg-green-600';
                     textColor = 'text-foreground';
@@ -168,11 +182,11 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
                     bgColor = 'bg-red-600';
                     textColor = 'text-foreground';
                   }
-                  
+
                   return (
                     <Button
                       key={index}
-                      variant={index === currentQuestionIndex ? "default" : "outline"}
+                      variant={index === currentQuestionIndex ? 'default' : 'outline'}
                       size="sm"
                       className={`h-8 w-8 p-0 flex-shrink-0 ${bgColor} ${textColor}`}
                       onClick={() => jumpToQuestion(index)}
@@ -215,14 +229,10 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
       {/* Question */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg leading-relaxed">
-            {currentQuestion.question}
-          </CardTitle>
-          <div className="text-sm text-muted-foreground">
-            Category: {currentQuestion.category}
-          </div>
+          <CardTitle className="text-lg leading-relaxed">{currentQuestion.question}</CardTitle>
+          <div className="text-sm text-muted-foreground">Category: {currentQuestion.category}</div>
         </CardHeader>
-        
+
         <CardContent>
           <div className="space-y-3">
             {currentQuestion.options.map((option, index) => (
@@ -241,16 +251,18 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
                         Correct
                       </Badge>
                     )}
-                    {index === currentAnswer?.selectedAnswer && index !== currentQuestion.correctAnswer && (
-                      <Badge variant="outline" className="text-red-400 border-red-500/50">
-                        Your Answer
-                      </Badge>
-                    )}
-                    {index === currentAnswer?.selectedAnswer && index === currentQuestion.correctAnswer && (
-                      <Badge variant="outline" className="text-green-400 border-green-500/50">
-                        Your Answer (Correct)
-                      </Badge>
-                    )}
+                    {index === currentAnswer?.selectedAnswer &&
+                      index !== currentQuestion.correctAnswer && (
+                        <Badge variant="outline" className="text-red-400 border-red-500/50">
+                          Your Answer
+                        </Badge>
+                      )}
+                    {index === currentAnswer?.selectedAnswer &&
+                      index === currentQuestion.correctAnswer && (
+                        <Badge variant="outline" className="text-green-400 border-green-500/50">
+                          Your Answer (Correct)
+                        </Badge>
+                      )}
                   </div>
                 </div>
               </div>
@@ -295,10 +307,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
               Question {currentQuestionIndex + 1} of {questions.length}
             </div>
 
-            <Button
-              onClick={nextQuestion}
-              disabled={currentQuestionIndex === questions.length - 1}
-            >
+            <Button onClick={nextQuestion} disabled={currentQuestionIndex === questions.length - 1}>
               Next
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>

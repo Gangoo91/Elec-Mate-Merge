@@ -25,7 +25,7 @@ const CostAnalysisProcessingView = ({
   isCancelling = false,
   status = 'processing',
   error,
-  onRetry
+  onRetry,
 }: CostAnalysisProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startTime] = useState(Date.now());
@@ -47,7 +47,7 @@ const CostAnalysisProcessingView = ({
       setEstimatedCost(Math.round(baseEstimate + fluctuation + elapsedTime * 10));
     } else if (elapsedTime >= 150) {
       // Stabilize near the end
-      setEstimatedCost(prev => prev ? Math.round(prev * 0.99 + (prev + 50) * 0.01) : null);
+      setEstimatedCost((prev) => (prev ? Math.round(prev * 0.99 + (prev + 50) * 0.01) : null));
     }
   }, [elapsedTime]);
 
@@ -78,17 +78,16 @@ const CostAnalysisProcessingView = ({
         <motion.div
           className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-elec-yellow/5 blur-[80px]"
           animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="absolute bottom-1/4 left-1/4 w-[200px] h-[200px] rounded-full bg-amber-500/5 blur-[60px]"
           animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         />
       </div>
 
       <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-md mx-auto w-full">
-
         {/* Error State */}
         {status === 'failed' && (
           <motion.div
@@ -129,84 +128,85 @@ const CostAnalysisProcessingView = ({
         {/* Processing State */}
         {status !== 'failed' && (
           <>
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-2"
-        >
-          <h2 className="text-xl font-bold text-white">AI Cost Analysis</h2>
-          <p className="text-xs text-white/50">Searching 45,000+ UK pricing items</p>
-        </motion.div>
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center space-y-2"
+            >
+              <h2 className="text-xl font-bold text-white">AI Cost Analysis</h2>
+              <p className="text-xs text-white/50">Searching 45,000+ UK pricing items</p>
+            </motion.div>
 
-        {/* Premium Processing Ring */}
-        <ProcessingRing
-          progress={progress}
-          estimatedCost={estimatedCost}
-          showCostPreview={elapsedTime > 30}
-        />
+            {/* Premium Processing Ring */}
+            <ProcessingRing
+              progress={progress}
+              estimatedCost={estimatedCost}
+              showCostPreview={elapsedTime > 30}
+            />
 
-        {/* Premium Stage Cards */}
-        <StageCards
-          progress={progress}
-          currentStep={getActivityMessage()}
-        />
+            {/* Premium Stage Cards */}
+            <StageCards progress={progress} currentStep={getActivityMessage()} />
 
-        {/* Stats Row */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="flex items-center justify-center gap-6"
-        >
-          <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-            <div className="flex items-center justify-center gap-1 mb-1">
-              <Clock className="h-3 w-3 text-white/40" />
-              <span className="text-[10px] text-white/40">Elapsed</span>
-            </div>
-            <p className="text-lg font-bold text-white tabular-nums">
-              {formatTime(elapsedTime)}
-            </p>
-          </div>
-          <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-            <div className="flex items-center justify-center gap-1 mb-1">
-              <Loader2 className="h-3 w-3 text-white/40 animate-spin" />
-              <span className="text-[10px] text-white/40">Remaining</span>
-            </div>
-            <p className="text-lg font-bold text-white tabular-nums">
-              ~{formatTime(remainingTime)}
-            </p>
-          </div>
-        </motion.div>
+            {/* Stats Row */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="flex items-center justify-center gap-6"
+            >
+              <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Clock className="h-3 w-3 text-white/40" />
+                  <span className="text-[10px] text-white/40">Elapsed</span>
+                </div>
+                <p className="text-lg font-bold text-white tabular-nums">
+                  {formatTime(elapsedTime)}
+                </p>
+              </div>
+              <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Loader2 className="h-3 w-3 text-white/40 animate-spin" />
+                  <span className="text-[10px] text-white/40">Remaining</span>
+                </div>
+                <p className="text-lg font-bold text-white tabular-nums">
+                  ~{formatTime(remainingTime)}
+                </p>
+              </div>
+            </motion.div>
 
-        {/* Overdue Warning */}
-        {elapsedTime > ESTIMATED_TIME && (
-          <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20"
-          >
-            <p className="text-xs text-amber-200 text-center">
-              Taking longer than usual. Complex estimates may take up to 4 minutes.
-            </p>
-          </motion.div>
-        )}
+            {/* Overdue Warning */}
+            {elapsedTime > ESTIMATED_TIME && (
+              <motion.div
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20"
+              >
+                <p className="text-xs text-amber-200 text-center">
+                  Taking longer than usual. Complex estimates may take up to 4 minutes.
+                </p>
+              </motion.div>
+            )}
 
-        {/* Cancel Button */}
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          onClick={onCancel}
-          disabled={isCancelling}
-          className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 border border-white/5"
-        >
-          {isCancelling ? (
-            <><Loader2 className="w-3 h-3 animate-spin" /> Cancelling...</>
-          ) : (
-            <><XCircle className="w-3 h-3" /> Cancel</>
-          )}
-        </motion.button>
+            {/* Cancel Button */}
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              onClick={onCancel}
+              disabled={isCancelling}
+              className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 border border-white/5"
+            >
+              {isCancelling ? (
+                <>
+                  <Loader2 className="w-3 h-3 animate-spin" /> Cancelling...
+                </>
+              ) : (
+                <>
+                  <XCircle className="w-3 h-3" /> Cancel
+                </>
+              )}
+            </motion.button>
           </>
         )}
       </div>

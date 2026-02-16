@@ -14,23 +14,28 @@ export const SmartHomeModule5Section5SecurityIntegration = () => {
         <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
           <h4 className="text-foreground font-semibold mb-3">Automated Security Response</h4>
           <p className="text-sm mb-3">
-            When motion is detected by an outdoor PIR, security lights can activate automatically, 
-            creating both a deterrent effect and improved visibility for security cameras. Interior 
-            lights can be triggered to simulate occupancy, discouraging intruders who might be 
+            When motion is detected by an outdoor PIR, security lights can activate automatically,
+            creating both a deterrent effect and improved visibility for security cameras. Interior
+            lights can be triggered to simulate occupancy, discouraging intruders who might be
             watching the property for signs of vacancy.
           </p>
           <p className="text-sm">
-            Lights linked with CCTV can highlight an area when a camera is activated, improving 
-            recording quality and providing better identification capabilities during security events.
+            Lights linked with CCTV can highlight an area when a camera is activated, improving
+            recording quality and providing better identification capabilities during security
+            events.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Deterrent Lighting Strategies</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Deterrent Lighting Strategies
+            </h4>
             <div className="space-y-3">
               <div className="bg-yellow-600/20 p-3 rounded border border-yellow-600/40">
-                <p className="text-yellow-400 font-semibold text-sm mb-1">Motion-Activated Floodlights</p>
+                <p className="text-yellow-400 font-semibold text-sm mb-1">
+                  Motion-Activated Floodlights
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Sudden bright illumination startles intruders</li>
                   <li>• Wide-angle coverage of vulnerable areas</li>
@@ -48,7 +53,9 @@ export const SmartHomeModule5Section5SecurityIntegration = () => {
                 </ul>
               </div>
               <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
-                <p className="text-purple-400 font-semibold text-sm mb-1">Perimeter Security Lighting</p>
+                <p className="text-purple-400 font-semibold text-sm mb-1">
+                  Perimeter Security Lighting
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Pathway illumination preventing hiding spots</li>
                   <li>• Garden and boundary fence lighting</li>
@@ -60,10 +67,14 @@ export const SmartHomeModule5Section5SecurityIntegration = () => {
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">CCTV and Lighting Integration</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              CCTV and Lighting Integration
+            </h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
-                <p className="text-cyan-400 font-semibold text-sm mb-1">Camera-Triggered Lighting</p>
+                <p className="text-cyan-400 font-semibold text-sm mb-1">
+                  Camera-Triggered Lighting
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Lights activate when camera detects motion</li>
                   <li>• Infrared illuminators for night vision</li>

@@ -1,12 +1,12 @@
-import { ArrowLeft, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Calendar } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule4Section1_1 = () => {
   useSEO(
-    "Section 4.1.1: Principles of PPM - MOET Module 4",
-    "Understanding preventive maintenance philosophy, benefits and implementation strategies"
+    'Section 4.1.1: Principles of PPM - MOET Module 4',
+    'Understanding preventive maintenance philosophy, benefits and implementation strategies'
   );
 
   return (
@@ -14,7 +14,11 @@ const MOETModule4Section1_1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module4-section1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4.1
@@ -33,7 +37,8 @@ const MOETModule4Section1_1 = () => {
                 Section 4.1.1: Principles of PPM
               </h1>
               <p className="text-muted-foreground mt-2">
-                Understanding preventive maintenance philosophy, benefits and implementation strategies
+                Understanding preventive maintenance philosophy, benefits and implementation
+                strategies
               </p>
             </div>
           </div>
@@ -41,7 +46,9 @@ const MOETModule4Section1_1 = () => {
 
         <div className="prose prose-invert max-w-none">
           <div className="bg-card/30 border border-elec-yellow/30 rounded-lg p-6 mb-8">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">Learning Objectives</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
+              Learning Objectives
+            </h2>
             <ul className="space-y-2 text-muted-foreground">
               <li>• Understand the fundamental principles of planned preventive maintenance</li>
               <li>• Recognise the benefits and cost implications of PPM programmes</li>
@@ -51,10 +58,14 @@ const MOETModule4Section1_1 = () => {
           </div>
 
           <p className="text-lg text-muted-foreground">
-            This section covers the fundamental principles of Planned Preventive Maintenance (PPM) and its role in maintaining electrical systems reliability and safety.
+            This section covers the fundamental principles of Planned Preventive Maintenance (PPM)
+            and its role in maintaining electrical systems reliability and safety.
           </p>
-          
-          <p>Content for this subsection will be added here covering the principles and implementation of PPM strategies.</p>
+
+          <p>
+            Content for this subsection will be added here covering the principles and
+            implementation of PPM strategies.
+          </p>
         </div>
       </div>
     </div>

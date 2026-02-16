@@ -31,17 +31,45 @@ export const EXPENSE_CATEGORIES: ExpenseCategoryConfig[] = [
   { id: 'materials', label: 'Materials', icon: 'Package', colour: 'cyan-500', taxDeductible: true },
   { id: 'hotels', label: 'Hotels', icon: 'Hotel', colour: 'purple-500', taxDeductible: true },
   { id: 'mileage', label: 'Mileage', icon: 'Car', colour: 'green-500', taxDeductible: true },
-  { id: 'training', label: 'Training', icon: 'GraduationCap', colour: 'teal-500', taxDeductible: true },
+  {
+    id: 'training',
+    label: 'Training',
+    icon: 'GraduationCap',
+    colour: 'teal-500',
+    taxDeductible: true,
+  },
   { id: 'vehicle', label: 'Vehicle', icon: 'Truck', colour: 'slate-500', taxDeductible: true },
-  { id: 'insurance', label: 'Insurance', icon: 'Shield', colour: 'indigo-500', taxDeductible: true },
-  { id: 'subscriptions', label: 'Subscriptions', icon: 'CreditCard', colour: 'pink-500', taxDeductible: true },
-  { id: 'meals', label: 'Meals', icon: 'UtensilsCrossed', colour: 'rose-500', taxDeductible: true, taxNote: 'Limited' },
+  {
+    id: 'insurance',
+    label: 'Insurance',
+    icon: 'Shield',
+    colour: 'indigo-500',
+    taxDeductible: true,
+  },
+  {
+    id: 'subscriptions',
+    label: 'Subscriptions',
+    icon: 'CreditCard',
+    colour: 'pink-500',
+    taxDeductible: true,
+  },
+  {
+    id: 'meals',
+    label: 'Meals',
+    icon: 'UtensilsCrossed',
+    colour: 'rose-500',
+    taxDeductible: true,
+    taxNote: 'Limited',
+  },
   { id: 'other', label: 'Other', icon: 'MoreHorizontal', colour: 'gray-500', taxDeductible: true },
 ];
 
 // Helper function to get category config by id
 export function getCategoryConfig(categoryId: ExpenseCategory): ExpenseCategoryConfig {
-  return EXPENSE_CATEGORIES.find(c => c.id === categoryId) || EXPENSE_CATEGORIES[EXPENSE_CATEGORIES.length - 1];
+  return (
+    EXPENSE_CATEGORIES.find((c) => c.id === categoryId) ||
+    EXPENSE_CATEGORIES[EXPENSE_CATEGORIES.length - 1]
+  );
 }
 
 // Core expense interface matching database schema
@@ -171,8 +199,8 @@ export interface AccountingExpenseSync {
   userId: string;
   expenseId: string;
   provider: 'xero' | 'quickbooks' | 'sage';
-  externalExpenseId?: string;  // ID in the accounting system
-  externalUrl?: string;        // Link to view in accounting system
+  externalExpenseId?: string; // ID in the accounting system
+  externalUrl?: string; // Link to view in accounting system
   status: ExpenseSyncStatus;
   errorMessage?: string;
   syncedAt?: string;

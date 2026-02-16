@@ -40,7 +40,7 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
     if (newValue !== previousValueRef.current) {
       previousValueRef.current = newValue;
       onChange(newValue);
-      
+
       // Hide validation while typing, show after 250ms pause
       setShowValidation(false);
       if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
@@ -57,15 +57,21 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
   const getValidationIcon = () => {
     if (!showValidation || !validation) return null;
     if (!('type' in validation)) return null;
-    
+
     const validationType = validation.type;
     switch (validationType) {
       case 'success':
-        return <CircleCheck className="h-3.5 w-3.5 text-success absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />;
+        return (
+          <CircleCheck className="h-3.5 w-3.5 text-success absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+        );
       case 'warning':
-        return <AlertTriangle className="h-3.5 w-3.5 text-warning absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />;
+        return (
+          <AlertTriangle className="h-3.5 w-3.5 text-warning absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+        );
       case 'error':
-        return <CircleX className="h-3.5 w-3.5 text-destructive absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />;
+        return (
+          <CircleX className="h-3.5 w-3.5 text-destructive absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" />
+        );
       default:
         return null;
     }
@@ -74,7 +80,7 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
   const getValidationBorder = () => {
     if (!showValidation || !validation) return '';
     if (!('type' in validation)) return '';
-    
+
     const validationType = validation.type;
     switch (validationType) {
       case 'success':
@@ -128,7 +134,6 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
       return;
     }
   };
-
 
   return (
     <div className="relative group z-0">

@@ -38,12 +38,14 @@ const PATTestingClientDetails: React.FC<PATTestingClientDetailsProps> = ({
     <div className="space-y-6">
       {/* Client Details */}
       <Collapsible open={openSections.client} onOpenChange={() => toggleSection('client')}>
-        <div className={cn(isMobile ? "" : "eicr-section-card")}>
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
           <CollapsibleTrigger asChild>
-            <div className={cn(
-              "cursor-pointer transition-colors p-4",
-              isMobile ? "bg-card/30 border-y border-border/20" : "hover:bg-muted/50"
-            )}>
+            <div
+              className={cn(
+                'cursor-pointer transition-colors p-4',
+                isMobile ? 'bg-card/30 border-y border-border/20' : 'hover:bg-muted/50'
+              )}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
@@ -51,7 +53,12 @@ const PATTestingClientDetails: React.FC<PATTestingClientDetailsProps> = ({
                   </div>
                   <span className="font-semibold text-lg">Client Details</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 transition-transform", openSections.client && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 transition-transform',
+                    openSections.client && 'rotate-180'
+                  )}
+                />
               </div>
             </div>
           </CollapsibleTrigger>
@@ -120,12 +127,14 @@ const PATTestingClientDetails: React.FC<PATTestingClientDetailsProps> = ({
 
       {/* Site Details */}
       <Collapsible open={openSections.site} onOpenChange={() => toggleSection('site')}>
-        <div className={cn(isMobile ? "" : "eicr-section-card")}>
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
           <CollapsibleTrigger asChild>
-            <div className={cn(
-              "cursor-pointer transition-colors p-4",
-              isMobile ? "border-b border-border/20" : "hover:bg-muted/50"
-            )}>
+            <div
+              className={cn(
+                'cursor-pointer transition-colors p-4',
+                isMobile ? 'border-b border-border/20' : 'hover:bg-muted/50'
+              )}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-xl bg-green-500/20 flex items-center justify-center">
@@ -133,7 +142,9 @@ const PATTestingClientDetails: React.FC<PATTestingClientDetailsProps> = ({
                   </div>
                   <span className="font-semibold text-lg">Site Details</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 transition-transform", openSections.site && "rotate-180")} />
+                <ChevronDown
+                  className={cn('h-5 w-5 transition-transform', openSections.site && 'rotate-180')}
+                />
               </div>
             </div>
           </CollapsibleTrigger>
@@ -189,12 +200,14 @@ const PATTestingClientDetails: React.FC<PATTestingClientDetailsProps> = ({
 
       {/* Test Equipment */}
       <Collapsible open={openSections.equipment} onOpenChange={() => toggleSection('equipment')}>
-        <div className={cn(isMobile ? "" : "eicr-section-card")}>
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
           <CollapsibleTrigger asChild>
-            <div className={cn(
-              "cursor-pointer transition-colors p-4",
-              isMobile ? "border-b border-border/20" : "hover:bg-muted/50"
-            )}>
+            <div
+              className={cn(
+                'cursor-pointer transition-colors p-4',
+                isMobile ? 'border-b border-border/20' : 'hover:bg-muted/50'
+              )}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
@@ -202,7 +215,12 @@ const PATTestingClientDetails: React.FC<PATTestingClientDetailsProps> = ({
                   </div>
                   <span className="font-semibold text-lg">Test Equipment</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 transition-transform", openSections.equipment && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 transition-transform',
+                    openSections.equipment && 'rotate-180'
+                  )}
+                />
               </div>
             </div>
           </CollapsibleTrigger>

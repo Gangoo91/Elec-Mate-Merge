@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   ArrowLeft,
   Zap,
@@ -8,19 +8,19 @@ import {
   GraduationCap,
   BookOpen,
   GraduationCap as HatIcon,
-} from "lucide-react";
-import { CourseCard } from "@/components/upskilling/cards";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+} from 'lucide-react';
+import { CourseCard } from '@/components/upskilling/cards';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 type CourseLevel =
-  | "Essential"
-  | "Foundation"
-  | "Intermediate"
-  | "Advanced"
-  | "Specialist"
-  | "Expert";
+  | 'Essential'
+  | 'Foundation'
+  | 'Intermediate'
+  | 'Advanced'
+  | 'Specialist'
+  | 'Expert';
 
 interface Course {
   id: number;
@@ -36,59 +36,58 @@ interface Course {
 const availableCourses: Course[] = [
   {
     id: 1,
-    title: "Level 2 Electrical Installation",
-    description: "Foundation electrical installation skills and safety",
+    title: 'Level 2 Electrical Installation',
+    description: 'Foundation electrical installation skills and safety',
     icon: Zap,
-    level: "Foundation",
-    duration: "2 years",
-    link: "level2",
+    level: 'Foundation',
+    duration: '2 years',
+    link: 'level2',
   },
   {
     id: 2,
-    title: "Level 3 Electrical Installation",
-    description: "Advanced electrical installation techniques",
+    title: 'Level 3 Electrical Installation',
+    description: 'Advanced electrical installation techniques',
     icon: CheckCircle,
-    level: "Intermediate",
-    duration: "2 years",
-    link: "level3",
+    level: 'Intermediate',
+    duration: '2 years',
+    link: 'level3',
   },
   {
     id: 3,
-    title: "AM 2 Preparation and Guidance",
-    description: "Assessment preparation and practical guidance",
+    title: 'AM 2 Preparation and Guidance',
+    description: 'Assessment preparation and practical guidance',
     icon: Award,
-    level: "Intermediate",
-    duration: "1 day",
-    link: "am2",
+    level: 'Intermediate',
+    duration: '1 day',
+    link: 'am2',
   },
   {
     id: 4,
-    title: "HNC Electrical Engineering",
+    title: 'HNC Electrical Engineering',
     description:
-      "Higher National Certificate in Electrical and Electronic Engineering for Building Services",
+      'Higher National Certificate in Electrical and Electronic Engineering for Building Services',
     icon: GraduationCap,
-    level: "Advanced",
-    duration: "2 years",
-    link: "hnc",
+    level: 'Advanced',
+    duration: '2 years',
+    link: 'hnc',
   },
   {
     id: 5,
-    title: "MOET",
-    description: "Maintenance Operations Engineering Technician training",
+    title: 'MOET',
+    description: 'Maintenance Operations Engineering Technician training',
     icon: Shield,
-    level: "Intermediate",
-    duration: "18 months",
-    link: "moet",
+    level: 'Intermediate',
+    duration: '18 months',
+    link: 'moet',
   },
   {
     id: 6,
-    title: "Functional Skills",
-    description:
-      "Essential maths, English and IT skills for electrical apprentices",
+    title: 'Functional Skills',
+    description: 'Essential maths, English and IT skills for electrical apprentices',
     icon: BookOpen,
-    level: "Essential",
-    duration: "Ongoing",
-    link: "functional-skills",
+    level: 'Essential',
+    duration: 'Ongoing',
+    link: 'functional-skills',
   },
 ];
 
@@ -96,8 +95,8 @@ const comingSoonCourses: Course[] = [];
 
 const Index = () => {
   useSEO(
-    "Apprentice Courses - Elec-Mate",
-    "Comprehensive electrical apprenticeship courses covering Level 2, Level 3, AM2 preparation, HNC, MOET and Functional Skills"
+    'Apprentice Courses - Elec-Mate',
+    'Comprehensive electrical apprenticeship courses covering Level 2, Level 3, AM2 preparation, HNC, MOET and Functional Skills'
   );
 
   return (
@@ -149,8 +148,8 @@ const Index = () => {
               </span>
             </h1>
             <p className="text-sm text-white/50 max-w-lg mx-auto mb-5">
-              Structured learning pathways from foundation to advanced level,
-              designed for electrical apprentices at every stage
+              Structured learning pathways from foundation to advanced level, designed for
+              electrical apprentices at every stage
             </p>
 
             {/* Stats pills */}
@@ -162,15 +161,11 @@ const Index = () => {
                 <span className="text-xs text-white/50">Courses</span>
               </div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-                <span className="text-xs font-semibold text-green-400">
-                  Level 2-4
-                </span>
+                <span className="text-xs font-semibold text-green-400">Level 2-4</span>
                 <span className="text-xs text-white/50">Range</span>
               </div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-                <span className="text-xs font-semibold text-blue-400">
-                  Ongoing
-                </span>
+                <span className="text-xs font-semibold text-blue-400">Ongoing</span>
                 <span className="text-xs text-white/50">Support</span>
               </div>
             </div>

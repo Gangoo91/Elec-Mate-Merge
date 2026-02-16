@@ -1,7 +1,13 @@
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Calendar, Shield } from "lucide-react";
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Calendar, Shield } from 'lucide-react';
 
 interface InsuranceDetailsFormProps {
   provider: string;
@@ -15,16 +21,16 @@ interface InsuranceDetailsFormProps {
 }
 
 const UK_INSURANCE_PROVIDERS = [
-  { value: "none", label: "None" },
-  { value: "axa", label: "AXA" },
-  { value: "hiscox", label: "Hiscox" },
-  { value: "zurich", label: "Zurich" },
-  { value: "aviva", label: "Aviva" },
-  { value: "allianz", label: "Allianz" },
-  { value: "simplebusiness", label: "Simply Business" },
-  { value: "direct-line", label: "Direct Line for Business" },
-  { value: "gallagher", label: "Gallagher" },
-  { value: "other", label: "Other" },
+  { value: 'none', label: 'None' },
+  { value: 'axa', label: 'AXA' },
+  { value: 'hiscox', label: 'Hiscox' },
+  { value: 'zurich', label: 'Zurich' },
+  { value: 'aviva', label: 'Aviva' },
+  { value: 'allianz', label: 'Allianz' },
+  { value: 'simplebusiness', label: 'Simply Business' },
+  { value: 'direct-line', label: 'Direct Line for Business' },
+  { value: 'gallagher', label: 'Gallagher' },
+  { value: 'other', label: 'Other' },
 ];
 
 export function InsuranceDetailsForm({
@@ -37,7 +43,7 @@ export function InsuranceDetailsForm({
   onCoverageChange,
   onExpiryChange,
 }: InsuranceDetailsFormProps) {
-  const showFields = provider && provider !== "none";
+  const showFields = provider && provider !== 'none';
 
   return (
     <div className="space-y-4">
@@ -46,7 +52,10 @@ export function InsuranceDetailsForm({
           Insurance Provider <span className="text-red-500 text-base font-bold">*</span>
         </Label>
         <Select value={provider} onValueChange={onProviderChange}>
-          <SelectTrigger id="insuranceProvider" className="mt-1.5 h-12 min-h-[48px] bg-background border-elec-gray-light">
+          <SelectTrigger
+            id="insuranceProvider"
+            className="mt-1.5 h-12 min-h-[48px] bg-background border-elec-gray-light"
+          >
             <SelectValue placeholder="Select a provider" />
           </SelectTrigger>
           <SelectContent className="bg-elec-gray border-elec-gray-light">
@@ -75,7 +84,10 @@ export function InsuranceDetailsForm({
           </div>
 
           <div>
-            <Label htmlFor="insuranceCoverage" className="text-foreground font-semibold flex items-center gap-2">
+            <Label
+              htmlFor="insuranceCoverage"
+              className="text-foreground font-semibold flex items-center gap-2"
+            >
               <Shield className="h-4 w-4 text-elec-yellow" />
               Coverage Amount (£)
             </Label>
@@ -90,7 +102,10 @@ export function InsuranceDetailsForm({
           </div>
 
           <div className="md:col-span-2">
-            <Label htmlFor="insuranceExpiry" className="text-foreground font-semibold flex items-center gap-2">
+            <Label
+              htmlFor="insuranceExpiry"
+              className="text-foreground font-semibold flex items-center gap-2"
+            >
               <Calendar className="h-4 w-4 text-elec-yellow" />
               Expiry Date
             </Label>

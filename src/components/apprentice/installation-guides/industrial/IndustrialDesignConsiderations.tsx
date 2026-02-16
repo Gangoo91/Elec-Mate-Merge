@@ -1,39 +1,38 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, Factory, Zap } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Settings, Factory, Zap } from 'lucide-react';
 
 const IndustrialDesignConsiderations = () => {
   const designConsiderations = [
     {
-      category: "Motor Control Systems",
+      category: 'Motor Control Systems',
       considerations: [
-        "Soft-start requirements for large motors",
-        "Variable frequency drive integration",
-        "Motor protection and overload settings",
-        "Emergency stop circuit design",
-        "Control voltage selection (24V/110V/240V)"
-      ]
+        'Soft-start requirements for large motors',
+        'Variable frequency drive integration',
+        'Motor protection and overload settings',
+        'Emergency stop circuit design',
+        'Control voltage selection (24V/110V/240V)',
+      ],
     },
     {
-      category: "Hazardous Areas",
+      category: 'Hazardous Areas',
       considerations: [
-        "ATEX zone classifications (Zone 0, 1, 2)",
-        "Temperature class requirements",
-        "Gas group classifications",
-        "Ingress protection ratings",
-        "Explosive atmosphere protection methods"
-      ]
+        'ATEX zone classifications (Zone 0, 1, 2)',
+        'Temperature class requirements',
+        'Gas group classifications',
+        'Ingress protection ratings',
+        'Explosive atmosphere protection methods',
+      ],
     },
     {
-      category: "Heavy Machinery",
+      category: 'Heavy Machinery',
       considerations: [
-        "Load calculations for large motors",
-        "Starting current and diversity factors",
-        "Mechanical protection requirements",
-        "Maintenance access provisions",
-        "Lifting and handling considerations"
-      ]
-    }
+        'Load calculations for large motors',
+        'Starting current and diversity factors',
+        'Mechanical protection requirements',
+        'Maintenance access provisions',
+        'Lifting and handling considerations',
+      ],
+    },
   ];
 
   return (

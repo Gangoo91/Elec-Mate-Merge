@@ -1,12 +1,12 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { motion } from "framer-motion";
-import { CheckCircle, ArrowLeft, FileText, ClipboardCheck } from "lucide-react";
-import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard";
-import { useQuoteStorage } from "@/hooks/useQuoteStorage";
-import { useState, useEffect } from "react";
-import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
-import { Button } from "@/components/ui/button";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { motion } from 'framer-motion';
+import { CheckCircle, ArrowLeft, FileText, ClipboardCheck } from 'lucide-react';
+import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
+import { useQuoteStorage } from '@/hooks/useQuoteStorage';
+import { useState, useEffect } from 'react';
+import { VoiceFormProvider } from '@/contexts/VoiceFormContext';
+import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,7 +16,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 const QuoteBuilderCreate = () => {
   const navigate = useNavigate();
@@ -188,7 +188,10 @@ const QuoteBuilderCreate = () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel className="rounded-xl">Keep Editing</AlertDialogCancel>
-              <AlertDialogAction onClick={confirmExit} className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl">
+              <AlertDialogAction
+                onClick={confirmExit}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl"
+              >
                 Discard
               </AlertDialogAction>
             </AlertDialogFooter>

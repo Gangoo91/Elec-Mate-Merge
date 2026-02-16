@@ -20,7 +20,7 @@ import {
   Sparkles,
   AlertTriangle,
   Eye,
-  EyeOff
+  EyeOff,
 } from 'lucide-react';
 import { storeConsent } from '@/services/consentService';
 import { supabase } from '@/integrations/supabase/client';
@@ -55,7 +55,7 @@ interface InputFieldProps {
 
 const InputField = ({
   label,
-  type = "text",
+  type = 'text',
   value,
   onChange,
   placeholder,
@@ -66,32 +66,34 @@ const InputField = ({
   showToggle = false,
   isVisible = false,
   onToggle = () => {},
-  showSuccess = false
+  showSuccess = false,
 }: InputFieldProps) => (
   <div className="space-y-2">
     <label className="block text-[13px] font-medium text-white/70 ml-1">{label}</label>
     <div className="relative">
-      <div className={cn(
-        "absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200",
-        focusedField === field ? "text-elec-yellow" : "text-white/40"
-      )}>
+      <div
+        className={cn(
+          'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
+          focusedField === field ? 'text-elec-yellow' : 'text-white/40'
+        )}
+      >
         <Icon className="h-5 w-5" />
       </div>
       <input
-        type={showToggle ? (isVisible ? "text" : "password") : type}
+        type={showToggle ? (isVisible ? 'text' : 'password') : type}
         value={value}
         onChange={onChange}
         onFocus={() => setFocusedField(field)}
         onBlur={() => setFocusedField(null)}
         placeholder={placeholder}
-        autoComplete={type === "email" ? "email" : type === "password" ? "new-password" : "off"}
+        autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'off'}
         className={cn(
-          "w-full h-14 pl-14 pr-12 rounded-2xl",
-          "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
-          "text-[16px] outline-none transition-all duration-200",
+          'w-full h-14 pl-14 pr-12 rounded-2xl',
+          'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+          'text-[16px] outline-none transition-all duration-200',
           focusedField === field
-            ? "border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
-            : "border-white/10 hover:border-white/20"
+            ? 'border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+            : 'border-white/10 hover:border-white/20'
         )}
       />
       {showToggle && (
@@ -159,7 +161,7 @@ const SignUp = () => {
     { value: 'apprentice', label: 'Apprentice', icon: GraduationCap },
   ];
 
-  const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every(req => req.test(password));
+  const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every((req) => req.test(password));
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
   const [checkingEmail, setCheckingEmail] = useState(false);
@@ -231,7 +233,9 @@ const SignUp = () => {
     }
     setIsSubmitting(true);
     setError(null);
-    addBreadcrumb('Signup step: consent completed, submitting', 'signup', { marketingOptIn: consent.marketingOptIn });
+    addBreadcrumb('Signup step: consent completed, submitting', 'signup', {
+      marketingOptIn: consent.marketingOptIn,
+    });
 
     try {
       const { error, data } = await signUp(email, password, fullName);
@@ -248,16 +252,19 @@ const SignUp = () => {
 
         // Retry the profile update to handle trigger timing race condition
         const saveRole = async (retries = 3): Promise<boolean> => {
-          const { error: profileError } = await supabase.from('profiles').update({
-            role: profile.role,
-            onboarding_completed: false,
-            updated_at: new Date().toISOString(),
-          }).eq('id', data.user!.id);
+          const { error: profileError } = await supabase
+            .from('profiles')
+            .update({
+              role: profile.role,
+              onboarding_completed: false,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', data.user!.id);
 
           if (profileError) {
             console.error('Error saving profile role:', profileError);
             if (retries > 0) {
-              await new Promise(r => setTimeout(r, 500));
+              await new Promise((r) => setTimeout(r, 500));
               return saveRole(retries - 1);
             }
             return false;
@@ -276,7 +283,7 @@ const SignUp = () => {
         privacy_accepted: consent.privacyAccepted,
         data_processing_accepted: consent.dataProcessingAccepted,
         marketing_opt_in: consent.marketingOptIn,
-        consent_timestamp: new Date().toISOString()
+        consent_timestamp: new Date().toISOString(),
       });
 
       if (!consentResult.success) {
@@ -284,15 +291,17 @@ const SignUp = () => {
       }
 
       // Send welcome email (non-blocking)
-      supabase.functions.invoke('send-welcome-email', {
-        body: {
-          userId: data?.user?.id,
-          email: email,
-          fullName: fullName,
-        },
-      }).catch((emailErr) => {
-        console.warn('Welcome email failed (non-critical):', emailErr);
-      });
+      supabase.functions
+        .invoke('send-welcome-email', {
+          body: {
+            userId: data?.user?.id,
+            email: email,
+            fullName: fullName,
+          },
+        })
+        .catch((emailErr) => {
+          console.warn('Welcome email failed (non-critical):', emailErr);
+        });
 
       // Store planId + priceId for checkout page based on role
       const rolePrice = ROLE_TO_PRICE[profile.role];
@@ -323,12 +332,11 @@ const SignUp = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col overflow-auto">
-
       {/* Animated background */}
       <div className="fixed inset-0 pointer-events-none">
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.12, 0.08] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-elec-yellow/20 blur-[150px]"
         />
       </div>
@@ -342,12 +350,18 @@ const SignUp = () => {
       >
         <div className="flex items-center justify-between max-w-md mx-auto">
           {step === 'account' ? (
-            <Link to="/" className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl">
+            <Link
+              to="/"
+              className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl"
+            >
               <ChevronLeft className="h-5 w-5" />
               <span className="text-[15px] font-medium">Back</span>
             </Link>
           ) : (
-            <button onClick={goBack} className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl">
+            <button
+              onClick={goBack}
+              className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl"
+            >
               <ChevronLeft className="h-5 w-5" />
               <span className="text-[15px] font-medium">Back</span>
             </button>
@@ -396,8 +410,12 @@ const SignUp = () => {
                         <Gift className="h-5 w-5 text-green-400" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-green-400">Special Offer Applied</p>
-                        <p className="text-xs text-white/60">Your discount will be applied at checkout</p>
+                        <p className="text-sm font-semibold text-green-400">
+                          Special Offer Applied
+                        </p>
+                        <p className="text-xs text-white/60">
+                          Your discount will be applied at checkout
+                        </p>
                       </div>
                     </div>
                   </motion.div>
@@ -472,10 +490,15 @@ const SignUp = () => {
                       <div className="space-y-2 mt-2">
                         <div className="flex gap-1.5">
                           {PASSWORD_REQUIREMENTS.map((req) => (
-                            <div key={req.id} className={cn(
-                              "flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all",
-                              req.test(password) ? "bg-green-500/20 text-green-400" : "bg-white/5 text-white/40"
-                            )}>
+                            <div
+                              key={req.id}
+                              className={cn(
+                                'flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all',
+                                req.test(password)
+                                  ? 'bg-green-500/20 text-green-400'
+                                  : 'bg-white/5 text-white/40'
+                              )}
+                            >
                               {req.label}
                             </div>
                           ))}
@@ -509,16 +532,20 @@ const SignUp = () => {
                     type="submit"
                     disabled={checkingEmail}
                     className={cn(
-                      "w-full h-14 rounded-2xl text-[16px] font-semibold",
-                      "bg-elec-yellow hover:bg-elec-yellow/90 text-black",
-                      "shadow-lg shadow-elec-yellow/25 transition-all duration-200",
-                      "disabled:opacity-50"
+                      'w-full h-14 rounded-2xl text-[16px] font-semibold',
+                      'bg-elec-yellow hover:bg-elec-yellow/90 text-black',
+                      'shadow-lg shadow-elec-yellow/25 transition-all duration-200',
+                      'disabled:opacity-50'
                     )}
                   >
                     {checkingEmail ? (
-                      <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Checking...</>
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Checking...
+                      </>
                     ) : (
-                      <>Continue <ArrowRight className="ml-2 h-5 w-5" /></>
+                      <>
+                        Continue <ArrowRight className="ml-2 h-5 w-5" />
+                      </>
                     )}
                   </Button>
                 </form>
@@ -534,7 +561,10 @@ const SignUp = () => {
                 <div className="text-center">
                   <p className="text-[14px] text-white/40 mb-2">Already have an account?</p>
                   <Link to="/auth/signin">
-                    <Button variant="outline" className="w-full h-13 rounded-2xl text-[15px] font-semibold bg-transparent border-2 border-white/10 text-white hover:bg-white/5">
+                    <Button
+                      variant="outline"
+                      className="w-full h-13 rounded-2xl text-[15px] font-semibold bg-transparent border-2 border-white/10 text-white hover:bg-white/5"
+                    >
                       Sign In
                     </Button>
                   </Link>
@@ -551,7 +581,9 @@ const SignUp = () => {
                 exit={{ opacity: 0, x: -20 }}
               >
                 <div className="text-center mb-6">
-                  <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">What's your role?</h1>
+                  <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
+                    What's your role?
+                  </h1>
                   <p className="text-[15px] text-white/50">We'll personalise your experience</p>
                 </div>
 
@@ -578,21 +610,30 @@ const SignUp = () => {
                       type="button"
                       onClick={() => setProfile({ ...profile, role: option.value })}
                       className={cn(
-                        "w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation",
+                        'w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation',
                         profile.role === option.value
-                          ? "border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
-                          : "border-white/10 bg-white/[0.03] hover:border-white/20"
+                          ? 'border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+                          : 'border-white/10 bg-white/[0.03] hover:border-white/20'
                       )}
                     >
                       <div className="flex items-center gap-4">
-                        <div className={cn(
-                          "w-12 h-12 rounded-xl flex items-center justify-center",
-                          profile.role === option.value ? "bg-elec-yellow/20" : "bg-white/10"
-                        )}>
-                          <option.icon className={cn("h-6 w-6", profile.role === option.value ? "text-elec-yellow" : "text-white/50")} />
+                        <div
+                          className={cn(
+                            'w-12 h-12 rounded-xl flex items-center justify-center',
+                            profile.role === option.value ? 'bg-elec-yellow/20' : 'bg-white/10'
+                          )}
+                        >
+                          <option.icon
+                            className={cn(
+                              'h-6 w-6',
+                              profile.role === option.value ? 'text-elec-yellow' : 'text-white/50'
+                            )}
+                          />
                         </div>
                         <span className="font-semibold text-white text-[16px]">{option.label}</span>
-                        {profile.role === option.value && <Check className="h-5 w-5 text-elec-yellow ml-auto" />}
+                        {profile.role === option.value && (
+                          <Check className="h-5 w-5 text-elec-yellow ml-auto" />
+                        )}
                       </div>
                     </button>
                   ))}
@@ -620,7 +661,9 @@ const SignUp = () => {
                   <div className="w-14 h-14 rounded-2xl bg-green-500/20 flex items-center justify-center mx-auto mb-4">
                     <Shield className="h-7 w-7 text-green-400" />
                   </div>
-                  <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">Almost there!</h1>
+                  <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
+                    Almost there!
+                  </h1>
                   <p className="text-[15px] text-white/50">Your data, your control</p>
                 </div>
 
@@ -645,17 +688,22 @@ const SignUp = () => {
                     { key: 'termsAccepted', label: 'Terms of Service', required: true },
                     { key: 'privacyAccepted', label: 'Privacy Policy', required: true },
                     { key: 'dataProcessingAccepted', label: 'Data processing', required: true },
-                    { key: 'marketingOptIn', label: 'Updates & offers', required: false }
+                    { key: 'marketingOptIn', label: 'Updates & offers', required: false },
                   ].map((item) => (
                     <button
                       key={item.key}
                       type="button"
-                      onClick={() => setConsent({ ...consent, [item.key]: !consent[item.key as keyof typeof consent] })}
+                      onClick={() =>
+                        setConsent({
+                          ...consent,
+                          [item.key]: !consent[item.key as keyof typeof consent],
+                        })
+                      }
                       className={cn(
-                        "w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation flex items-center gap-3",
+                        'w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation flex items-center gap-3',
                         consent[item.key as keyof typeof consent]
-                          ? "border-green-500/50 bg-green-500/10"
-                          : "border-white/10 bg-white/[0.03] hover:border-white/20"
+                          ? 'border-green-500/50 bg-green-500/10'
+                          : 'border-white/10 bg-white/[0.03] hover:border-white/20'
                       )}
                     >
                       <Checkbox
@@ -663,20 +711,31 @@ const SignUp = () => {
                         className="h-6 w-6 border-2 border-green-500 data-[state=checked]:bg-green-500 data-[state=checked]:text-white"
                       />
                       <span className="text-[15px] text-white">{item.label}</span>
-                      {item.required && <span className="text-elec-yellow text-[12px] ml-auto">Required</span>}
+                      {item.required && (
+                        <span className="text-elec-yellow text-[12px] ml-auto">Required</span>
+                      )}
                     </button>
                   ))}
                 </div>
 
                 <Button
                   onClick={handleFinalSubmit}
-                  disabled={isSubmitting || !consent.termsAccepted || !consent.privacyAccepted || !consent.dataProcessingAccepted}
+                  disabled={
+                    isSubmitting ||
+                    !consent.termsAccepted ||
+                    !consent.privacyAccepted ||
+                    !consent.dataProcessingAccepted
+                  }
                   className="w-full h-14 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-lg shadow-elec-yellow/25 disabled:opacity-50"
                 >
                   {isSubmitting ? (
-                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Creating Account...</>
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Creating Account...
+                    </>
                   ) : (
-                    <>Create Account <ArrowRight className="ml-2 h-5 w-5" /></>
+                    <>
+                      Create Account <ArrowRight className="ml-2 h-5 w-5" />
+                    </>
                   )}
                 </Button>
               </motion.div>

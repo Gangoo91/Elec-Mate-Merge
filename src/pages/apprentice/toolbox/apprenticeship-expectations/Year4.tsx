@@ -1,8 +1,7 @@
-
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import {
   Award,
   Briefcase,
@@ -28,11 +27,16 @@ import {
   PartyPopper,
   Rocket,
   DollarSign,
-  Heart
-} from "lucide-react";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+  Heart,
+} from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  MobileAccordion,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileAccordionContent,
+} from '@/components/ui/mobile-accordion';
 
 const Year4 = () => {
   const isMobile = useIsMobile();
@@ -41,194 +45,200 @@ const Year4 = () => {
 
   const monthlyBreakdown = [
     {
-      month: "Month 37-38",
-      title: "Specialisation Focus",
-      focus: "Choose and develop specialist skills",
+      month: 'Month 37-38',
+      title: 'Specialisation Focus',
+      focus: 'Choose and develop specialist skills',
       icon: Target,
-      color: "text-purple-400",
+      color: 'text-purple-400',
       activities: [
-        "Select specialisation pathway - industrial, renewables, smart tech, or testing",
-        "Advanced technical training - specialist courses and certifications",
-        "Industry certification pursuit - manufacturer training and accreditations",
-        "Specialist project involvement - getting hands-on with your chosen area"
+        'Select specialisation pathway - industrial, renewables, smart tech, or testing',
+        'Advanced technical training - specialist courses and certifications',
+        'Industry certification pursuit - manufacturer training and accreditations',
+        'Specialist project involvement - getting hands-on with your chosen area',
       ],
-      dayInLife: "This is where you start to shape your future. The specialisation you choose now can define your career for years."
+      dayInLife:
+        'This is where you start to shape your future. The specialisation you choose now can define your career for years.',
     },
     {
-      month: "Month 39-40",
-      title: "EPA Execution",
-      focus: "Complete End Point Assessment",
+      month: 'Month 39-40',
+      title: 'EPA Execution',
+      focus: 'Complete End Point Assessment',
       icon: Award,
-      color: "text-yellow-400",
+      color: 'text-yellow-400',
       activities: [
-        "Final EPA preparation - mock assessments and revision",
-        "Practical assessment completion - 6 hours of demonstration",
-        "Professional discussion - 1 hour presenting your portfolio",
-        "Knowledge test completion - 90-minute written exam"
+        'Final EPA preparation - mock assessments and revision',
+        'Practical assessment completion - 6 hours of demonstration',
+        'Professional discussion - 1 hour presenting your portfolio',
+        'Knowledge test completion - 90-minute written exam',
       ],
-      dayInLife: "The big moment arrives. Everything you've worked for over 4 years comes down to these assessments. You've got this."
+      dayInLife:
+        "The big moment arrives. Everything you've worked for over 4 years comes down to these assessments. You've got this.",
     },
     {
-      month: "Month 41-42",
-      title: "Career Preparation",
-      focus: "Transition to qualified electrician",
+      month: 'Month 41-42',
+      title: 'Career Preparation',
+      focus: 'Transition to qualified electrician',
       icon: Briefcase,
-      color: "text-blue-400",
+      color: 'text-blue-400',
       activities: [
         "Job market research - understanding what's out there",
-        "CV and portfolio finalisation - showing your best work",
-        "Interview preparation - practicing common questions",
-        "Professional networking - making connections in the industry"
+        'CV and portfolio finalisation - showing your best work',
+        'Interview preparation - practicing common questions',
+        'Professional networking - making connections in the industry',
       ],
-      dayInLife: "You've passed EPA - now it's about your next chapter. This is an exciting time of possibilities."
+      dayInLife:
+        "You've passed EPA - now it's about your next chapter. This is an exciting time of possibilities.",
     },
     {
-      month: "Month 43-44",
-      title: "Professional Development",
-      focus: "Industry recognition and advancement",
+      month: 'Month 43-44',
+      title: 'Professional Development',
+      focus: 'Industry recognition and advancement',
       icon: GraduationCap,
-      color: "text-green-400",
+      color: 'text-green-400',
       activities: [
-        "Professional body membership - JIB, IET, or similar",
-        "Continuing Professional Development planning - staying sharp",
-        "Advanced qualification research - HNC, degree apprenticeship?",
-        "Mentoring program participation - giving back to new apprentices"
+        'Professional body membership - JIB, IET, or similar',
+        'Continuing Professional Development planning - staying sharp',
+        'Advanced qualification research - HNC, degree apprenticeship?',
+        'Mentoring program participation - giving back to new apprentices',
       ],
-      dayInLife: "As a qualified sparky, you're now investing in your longer-term career development and reputation."
+      dayInLife:
+        "As a qualified sparky, you're now investing in your longer-term career development and reputation.",
     },
     {
-      month: "Month 45-46",
-      title: "Transition Planning",
-      focus: "Prepare for post-apprenticeship career",
+      month: 'Month 45-46',
+      title: 'Transition Planning',
+      focus: 'Prepare for post-apprenticeship career',
       icon: Rocket,
-      color: "text-cyan-400",
+      color: 'text-cyan-400',
       activities: [
-        "Employment contract negotiation - getting the pay you deserve",
+        'Employment contract negotiation - getting the pay you deserve',
         "Further education planning - if that's your path",
-        "Professional goal setting - where do you want to be in 5 years?",
-        "Industry networking expansion - building your reputation"
+        'Professional goal setting - where do you want to be in 5 years?',
+        'Industry networking expansion - building your reputation',
       ],
-      dayInLife: "Whether staying with your employer or moving on, you're now negotiating as a qualified professional."
+      dayInLife:
+        "Whether staying with your employer or moving on, you're now negotiating as a qualified professional.",
     },
     {
-      month: "Month 47-48",
-      title: "Completion & Qualification",
-      focus: "Apprenticeship completion and celebration",
+      month: 'Month 47-48',
+      title: 'Completion & Qualification',
+      focus: 'Apprenticeship completion and celebration',
       icon: PartyPopper,
-      color: "text-elec-yellow",
+      color: 'text-elec-yellow',
       activities: [
-        "Final assessments and reviews - wrapping up loose ends",
-        "Qualification certification - official recognition",
-        "Career transition completion - starting your new role",
-        "Apprenticeship graduation ceremony - celebrating your achievement!"
+        'Final assessments and reviews - wrapping up loose ends',
+        'Qualification certification - official recognition',
+        'Career transition completion - starting your new role',
+        'Apprenticeship graduation ceremony - celebrating your achievement!',
       ],
-      dayInLife: "You did it! From that nervous first day to fully qualified electrician. Take a moment to appreciate how far you've come."
-    }
+      dayInLife:
+        "You did it! From that nervous first day to fully qualified electrician. Take a moment to appreciate how far you've come.",
+    },
   ];
 
   const specialisationOptions = [
     {
-      title: "Industrial Electrical Systems",
+      title: 'Industrial Electrical Systems',
       icon: Zap,
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-500/20",
-      description: "High-voltage systems, motor control, and industrial automation",
-      careerPaths: ["Industrial Electrician", "Maintenance Engineer", "Automation Specialist"],
-      averageSalary: "£35k - £45k",
-      growth: "Strong demand",
-      qualifications: ["CompEx", "HV Switching", "PLC Programming"]
+      color: 'text-yellow-400',
+      bgColor: 'bg-yellow-500/20',
+      description: 'High-voltage systems, motor control, and industrial automation',
+      careerPaths: ['Industrial Electrician', 'Maintenance Engineer', 'Automation Specialist'],
+      averageSalary: '£35k - £45k',
+      growth: 'Strong demand',
+      qualifications: ['CompEx', 'HV Switching', 'PLC Programming'],
     },
     {
-      title: "Renewable Energy Systems",
+      title: 'Renewable Energy Systems',
       icon: Sun,
-      color: "text-green-400",
-      bgColor: "bg-green-500/20",
-      description: "Solar PV, battery storage, EV charging, and green technology",
-      careerPaths: ["Solar PV Installer", "EV Charger Specialist", "Energy Systems Designer"],
-      averageSalary: "£32k - £42k",
-      growth: "Rapid growth sector",
-      qualifications: ["MCS Certification", "Solar PV Design", "EV Installation"]
+      color: 'text-green-400',
+      bgColor: 'bg-green-500/20',
+      description: 'Solar PV, battery storage, EV charging, and green technology',
+      careerPaths: ['Solar PV Installer', 'EV Charger Specialist', 'Energy Systems Designer'],
+      averageSalary: '£32k - £42k',
+      growth: 'Rapid growth sector',
+      qualifications: ['MCS Certification', 'Solar PV Design', 'EV Installation'],
     },
     {
-      title: "Smart Building Technology",
+      title: 'Smart Building Technology',
       icon: Building2,
-      color: "text-blue-400",
-      bgColor: "bg-blue-500/20",
-      description: "Building automation, IoT systems, and intelligent controls",
-      careerPaths: ["Smart Building Specialist", "BMS Engineer", "Home Automation Expert"],
-      averageSalary: "£34k - £44k",
-      growth: "Growing demand",
-      qualifications: ["KNX Certification", "BMS Programming", "Network Fundamentals"]
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-500/20',
+      description: 'Building automation, IoT systems, and intelligent controls',
+      careerPaths: ['Smart Building Specialist', 'BMS Engineer', 'Home Automation Expert'],
+      averageSalary: '£34k - £44k',
+      growth: 'Growing demand',
+      qualifications: ['KNX Certification', 'BMS Programming', 'Network Fundamentals'],
     },
     {
-      title: "Testing & Inspection",
+      title: 'Testing & Inspection',
       icon: Search,
-      color: "text-purple-400",
-      bgColor: "bg-purple-500/20",
-      description: "Electrical testing, EICR, and compliance verification",
-      careerPaths: ["Testing Engineer", "Inspection Contractor", "Compliance Specialist"],
-      averageSalary: "£30k - £40k",
-      growth: "Steady demand",
-      qualifications: ["2391 Inspection & Testing", "18th Edition", "Advanced Testing"]
-    }
+      color: 'text-purple-400',
+      bgColor: 'bg-purple-500/20',
+      description: 'Electrical testing, EICR, and compliance verification',
+      careerPaths: ['Testing Engineer', 'Inspection Contractor', 'Compliance Specialist'],
+      averageSalary: '£30k - £40k',
+      growth: 'Steady demand',
+      qualifications: ['2391 Inspection & Testing', '18th Edition', 'Advanced Testing'],
+    },
   ];
 
   const careerPathways = [
     {
-      path: "Employed Electrician",
+      path: 'Employed Electrician',
       icon: Building2,
-      color: "text-blue-400",
-      description: "Join an established electrical contracting company",
+      color: 'text-blue-400',
+      description: 'Join an established electrical contracting company',
       advantages: [
-        "Steady income and job security",
-        "Continued learning from experienced colleagues",
-        "Team support and resources",
-        "Clear career progression structure"
+        'Steady income and job security',
+        'Continued learning from experienced colleagues',
+        'Team support and resources',
+        'Clear career progression structure',
       ],
       considerations: [
-        "Limited control over work schedule",
-        "Earning potential may be capped",
-        "Subject to company policies"
+        'Limited control over work schedule',
+        'Earning potential may be capped',
+        'Subject to company policies',
       ],
-      typicalSalary: "£28k - £40k"
+      typicalSalary: '£28k - £40k',
     },
     {
-      path: "Self-Employed Contractor",
+      path: 'Self-Employed Contractor',
       icon: Rocket,
-      color: "text-green-400",
-      description: "Start your own electrical contracting business",
+      color: 'text-green-400',
+      description: 'Start your own electrical contracting business',
       advantages: [
-        "Higher earning potential",
-        "Flexible working schedule",
-        "Choose your own clients and jobs",
-        "Build your own reputation and brand"
+        'Higher earning potential',
+        'Flexible working schedule',
+        'Choose your own clients and jobs',
+        'Build your own reputation and brand',
       ],
       considerations: [
-        "Business management responsibilities",
-        "Variable income - especially initially",
-        "Need to handle insurance, tax, accounts",
-        "Must find your own work"
+        'Business management responsibilities',
+        'Variable income - especially initially',
+        'Need to handle insurance, tax, accounts',
+        'Must find your own work',
       ],
-      typicalSalary: "£35k - £60k+ (variable)"
+      typicalSalary: '£35k - £60k+ (variable)',
     },
     {
-      path: "Further Education Route",
+      path: 'Further Education Route',
       icon: GraduationCap,
-      color: "text-purple-400",
-      description: "Pursue higher qualifications while working",
+      color: 'text-purple-400',
+      description: 'Pursue higher qualifications while working',
       advantages: [
-        "Enhanced career prospects",
-        "Path to engineering roles",
-        "Higher earning potential long-term",
-        "Professional recognition and respect"
+        'Enhanced career prospects',
+        'Path to engineering roles',
+        'Higher earning potential long-term',
+        'Professional recognition and respect',
       ],
       considerations: [
-        "Time commitment for study",
-        "Course costs (though often employer-sponsored)",
-        "Balancing work, study, and life"
+        'Time commitment for study',
+        'Course costs (though often employer-sponsored)',
+        'Balancing work, study, and life',
       ],
-      typicalSalary: "£35k - £55k (as engineer)"
-    }
+      typicalSalary: '£35k - £55k (as engineer)',
+    },
   ];
 
   const epaResults = {
@@ -236,47 +246,47 @@ const Year4 = () => {
       overall: 87,
       practical: 89,
       professional: 85,
-      knowledge: 91
+      knowledge: 91,
     },
     tips: [
-      "Start preparation 6+ months before EPA",
-      "Complete portfolio well in advance",
-      "Attend all mock assessments offered",
-      "Get good sleep before each assessment"
-    ]
+      'Start preparation 6+ months before EPA',
+      'Complete portfolio well in advance',
+      'Attend all mock assessments offered',
+      'Get good sleep before each assessment',
+    ],
   };
 
   const jobSearchTips = [
     {
-      category: "CV & Portfolio",
+      category: 'CV & Portfolio',
       icon: FileText,
       tips: [
-        "Keep it to 2 pages maximum",
-        "Lead with your qualifications and EPA result",
-        "Include specific projects with photos",
-        "Get it reviewed by your mentor or tutor"
-      ]
+        'Keep it to 2 pages maximum',
+        'Lead with your qualifications and EPA result',
+        'Include specific projects with photos',
+        'Get it reviewed by your mentor or tutor',
+      ],
     },
     {
-      category: "Interview Prep",
+      category: 'Interview Prep',
       icon: Users,
       tips: [
-        "Research the company before interview",
+        'Research the company before interview',
         "Prepare examples of complex jobs you've done",
-        "Be ready to discuss health & safety",
-        "Ask questions about their projects and culture"
-      ]
+        'Be ready to discuss health & safety',
+        'Ask questions about their projects and culture',
+      ],
     },
     {
-      category: "Salary Negotiation",
+      category: 'Salary Negotiation',
       icon: DollarSign,
       tips: [
-        "Research market rates for your area",
+        'Research market rates for your area',
         "Know your worth - you're newly qualified!",
-        "Consider whole package: van, tools, training",
-        "Don't accept the first offer if below market"
-      ]
-    }
+        'Consider whole package: van, tools, training',
+        "Don't accept the first offer if below market",
+      ],
+    },
   ];
 
   const renderHeroSection = () => (
@@ -293,13 +303,16 @@ const Year4 = () => {
             <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 mb-2">
               The Final Year
             </Badge>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">Year 4: Qualification & Career Launch</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              Year 4: Qualification & Career Launch
+            </h1>
           </div>
         </div>
 
         <p className="text-white text-lg mb-6 max-w-3xl">
-          The finish line is in sight. Year 4 is about completing your EPA, choosing your specialisation,
-          and launching your career as a fully qualified electrician. This is what you've been working towards.
+          The finish line is in sight. Year 4 is about completing your EPA, choosing your
+          specialisation, and launching your career as a fully qualified electrician. This is what
+          you've been working towards.
         </p>
 
         {/* Progress indicator - complete! */}
@@ -376,8 +389,9 @@ const Year4 = () => {
         </div>
         <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
           <p className="text-white text-sm">
-            <strong className="text-green-400">The payoff:</strong> From £16.5k to £35k+ in 4 years - more than
-            double your starting salary. Specialists and those who go self-employed can earn £45k-£60k+.
+            <strong className="text-green-400">The payoff:</strong> From £16.5k to £35k+ in 4 years
+            - more than double your starting salary. Specialists and those who go self-employed can
+            earn £45k-£60k+.
           </p>
         </div>
       </CardContent>
@@ -404,28 +418,36 @@ const Year4 = () => {
                 <span className="text-white text-sm">Overall EPA</span>
                 <div className="flex items-center gap-2">
                   <Progress value={epaResults.passRates.overall} className="w-20 h-2" />
-                  <span className="text-sm font-bold text-green-400">{epaResults.passRates.overall}%</span>
+                  <span className="text-sm font-bold text-green-400">
+                    {epaResults.passRates.overall}%
+                  </span>
                 </div>
               </div>
               <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
                 <span className="text-white text-sm">Practical Assessment</span>
                 <div className="flex items-center gap-2">
                   <Progress value={epaResults.passRates.practical} className="w-20 h-2" />
-                  <span className="text-sm font-bold text-green-400">{epaResults.passRates.practical}%</span>
+                  <span className="text-sm font-bold text-green-400">
+                    {epaResults.passRates.practical}%
+                  </span>
                 </div>
               </div>
               <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
                 <span className="text-white text-sm">Professional Discussion</span>
                 <div className="flex items-center gap-2">
                   <Progress value={epaResults.passRates.professional} className="w-20 h-2" />
-                  <span className="text-sm font-bold text-green-400">{epaResults.passRates.professional}%</span>
+                  <span className="text-sm font-bold text-green-400">
+                    {epaResults.passRates.professional}%
+                  </span>
                 </div>
               </div>
               <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
                 <span className="text-white text-sm">Knowledge Test</span>
                 <div className="flex items-center gap-2">
                   <Progress value={epaResults.passRates.knowledge} className="w-20 h-2" />
-                  <span className="text-sm font-bold text-green-400">{epaResults.passRates.knowledge}%</span>
+                  <span className="text-sm font-bold text-green-400">
+                    {epaResults.passRates.knowledge}%
+                  </span>
                 </div>
               </div>
             </div>
@@ -453,9 +475,7 @@ const Year4 = () => {
           <Target className="h-5 w-5" />
           Specialisation Pathways
         </CardTitle>
-        <p className="text-white text-sm">
-          Choose your area of expertise to focus your career
-        </p>
+        <p className="text-white text-sm">Choose your area of expertise to focus your career</p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -474,7 +494,9 @@ const Year4 = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-white text-xs">Market:</span>
-                  <Badge variant="outline" className="text-xs bg-white/10">{option.growth}</Badge>
+                  <Badge variant="outline" className="text-xs bg-white/10">
+                    {option.growth}
+                  </Badge>
                 </div>
               </div>
 
@@ -493,7 +515,11 @@ const Year4 = () => {
                 <p className="text-white text-xs mb-1">Useful qualifications:</p>
                 <div className="flex flex-wrap gap-1">
                   {option.qualifications.map((qual, idx) => (
-                    <Badge key={idx} variant="outline" className={`text-xs ${option.bgColor} ${option.color}`}>
+                    <Badge
+                      key={idx}
+                      variant="outline"
+                      className={`text-xs ${option.bgColor} ${option.color}`}
+                    >
                       {qual}
                     </Badge>
                   ))}
@@ -513,9 +539,7 @@ const Year4 = () => {
           <Briefcase className="h-5 w-5" />
           Post-Apprenticeship Career Options
         </CardTitle>
-        <p className="text-white text-sm">
-          Three main paths for newly qualified electricians
-        </p>
+        <p className="text-white text-sm">Three main paths for newly qualified electricians</p>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
@@ -589,9 +613,7 @@ const Year4 = () => {
           <Calendar className="h-5 w-5 text-elec-yellow" />
           Your Final Year Journey
         </CardTitle>
-        <p className="text-white text-sm">
-          Click each period to see what to expect
-        </p>
+        <p className="text-white text-sm">Click each period to see what to expect</p>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
@@ -658,9 +680,7 @@ const Year4 = () => {
           <Briefcase className="h-5 w-5" />
           Job Search Success Guide
         </CardTitle>
-        <p className="text-white text-sm">
-          Practical tips for landing your first qualified role
-        </p>
+        <p className="text-white text-sm">Practical tips for landing your first qualified role</p>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -750,8 +770,8 @@ const Year4 = () => {
             <div>
               <p className="text-white font-medium mb-1">Congratulations on making it this far!</p>
               <p className="text-white text-sm">
-                Whatever your first day felt like, you've grown into a skilled professional. Be proud of
-                your achievement - you've earned the right to call yourself an electrician.
+                Whatever your first day felt like, you've grown into a skilled professional. Be
+                proud of your achievement - you've earned the right to call yourself an electrician.
               </p>
             </div>
           </div>
@@ -833,7 +853,9 @@ const Year4 = () => {
                   <period.icon className={`h-4 w-4 ${period.color}`} />
                   <span className="font-medium text-white">{period.title}</span>
                 </div>
-                <Badge variant="outline" className="mb-2 text-xs">{period.month}</Badge>
+                <Badge variant="outline" className="mb-2 text-xs">
+                  {period.month}
+                </Badge>
                 <p className="text-white text-xs">{period.focus}</p>
               </div>
             ))}

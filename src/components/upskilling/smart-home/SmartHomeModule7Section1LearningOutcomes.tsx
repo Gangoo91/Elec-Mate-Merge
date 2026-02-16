@@ -3,10 +3,10 @@ import { CheckCircle } from 'lucide-react';
 
 const SmartHomeModule7Section1LearningOutcomes = () => {
   const outcomes = [
-    "Identify the wiring requirements for typical smart home devices",
-    "Understand the importance of selecting the correct power supply type and rating",
-    "Explain the role of containment in protecting cables and maintaining safety",
-    "Apply UK electrical standards to ensure compliance during installation"
+    'Identify the wiring requirements for typical smart home devices',
+    'Understand the importance of selecting the correct power supply type and rating',
+    'Explain the role of containment in protecting cables and maintaining safety',
+    'Apply UK electrical standards to ensure compliance during installation',
   ];
 
   return (
@@ -18,9 +18,7 @@ const SmartHomeModule7Section1LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
-        <p className="text-gray-300 mb-4">
-          By the end of this section, you should be able to:
-        </p>
+        <p className="text-gray-300 mb-4">By the end of this section, you should be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3">

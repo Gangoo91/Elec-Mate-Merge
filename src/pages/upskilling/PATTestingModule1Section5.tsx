@@ -1,212 +1,233 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "PAT Testing Implementation and Best Practices - PAT Testing Module 1";
-const DESCRIPTION = "Learn how to implement an effective PAT testing programme, including planning, testing processes, record keeping, staff training, and handling failed equipment.";
+const TITLE = 'PAT Testing Implementation and Best Practices - PAT Testing Module 1';
+const DESCRIPTION =
+  'Learn how to implement an effective PAT testing programme, including planning, testing processes, record keeping, staff training, and handling failed equipment.';
 
 const quickCheckQuestions = [
   {
-    id: "pat-components",
-    question: "What are the two main components of PAT testing?",
+    id: 'pat-components',
+    question: 'What are the two main components of PAT testing?',
     options: [
-      "Visual inspection and user training",
-      "Visual inspection and electrical testing",
-      "Electrical testing and documentation",
-      "Documentation and user training"
+      'Visual inspection and user training',
+      'Visual inspection and electrical testing',
+      'Electrical testing and documentation',
+      'Documentation and user training',
     ],
     correctIndex: 1,
-    explanation: "PAT testing consists of visual inspection (checking for obvious damage) and electrical testing (measuring safety parameters like earth continuity and insulation resistance)."
+    explanation:
+      'PAT testing consists of visual inspection (checking for obvious damage) and electrical testing (measuring safety parameters like earth continuity and insulation resistance).',
   },
   {
-    id: "visual-inspection",
-    question: "What should you check during visual inspection?",
+    id: 'visual-inspection',
+    question: 'What should you check during visual inspection?',
     options: [
-      "Only the plug and cable",
-      "Just the equipment casing",
-      "Cable, plug, equipment casing, and any obvious damage",
-      "Only internal components"
+      'Only the plug and cable',
+      'Just the equipment casing',
+      'Cable, plug, equipment casing, and any obvious damage',
+      'Only internal components',
     ],
     correctIndex: 2,
-    explanation: "Visual inspection should cover the entire appliance including cable condition, plug integrity, equipment casing, and any signs of damage, overheating, or wear."
+    explanation:
+      'Visual inspection should cover the entire appliance including cable condition, plug integrity, equipment casing, and any signs of damage, overheating, or wear.',
   },
   {
-    id: "who-can-test",
-    question: "Who can perform PAT testing?",
+    id: 'who-can-test',
+    question: 'Who can perform PAT testing?',
     options: [
-      "Only qualified electricians",
-      "Anyone with basic training and competence",
-      "Only the equipment manufacturer",
-      "Only certified PAT testing companies"
+      'Only qualified electricians',
+      'Anyone with basic training and competence',
+      'Only the equipment manufacturer',
+      'Only certified PAT testing companies',
     ],
     correctIndex: 1,
-    explanation: "PAT testing can be performed by competent persons with adequate training, not necessarily qualified electricians, though they must understand the equipment and testing procedures."
+    explanation:
+      'PAT testing can be performed by competent persons with adequate training, not necessarily qualified electricians, though they must understand the equipment and testing procedures.',
   },
   {
-    id: "failed-equipment",
-    question: "What happens if equipment fails PAT testing?",
+    id: 'failed-equipment',
+    question: 'What happens if equipment fails PAT testing?',
     options: [
-      "It can continue to be used with caution",
-      "It must be removed from service immediately",
-      "It can be used for one more month",
-      "Only the failed test needs to be repeated"
+      'It can continue to be used with caution',
+      'It must be removed from service immediately',
+      'It can be used for one more month',
+      'Only the failed test needs to be repeated',
     ],
     correctIndex: 1,
-    explanation: "Equipment that fails PAT testing must be removed from service immediately to prevent potential electrical hazards. It can only be returned to service after repair and successful retesting."
-  }
+    explanation:
+      'Equipment that fails PAT testing must be removed from service immediately to prevent potential electrical hazards. It can only be returned to service after repair and successful retesting.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What are the two main components of PAT testing?",
+    question: 'What are the two main components of PAT testing?',
     options: [
-      "Visual inspection and user training",
-      "Visual inspection and electrical testing",
-      "Electrical testing and documentation",
-      "Documentation and user training"
+      'Visual inspection and user training',
+      'Visual inspection and electrical testing',
+      'Electrical testing and documentation',
+      'Documentation and user training',
     ],
     correctAnswer: 1,
-    explanation: "PAT testing consists of visual inspection (checking for obvious damage) and electrical testing (measuring safety parameters like earth continuity and insulation resistance)."
+    explanation:
+      'PAT testing consists of visual inspection (checking for obvious damage) and electrical testing (measuring safety parameters like earth continuity and insulation resistance).',
   },
   {
     id: 2,
-    question: "What should you check during visual inspection?",
+    question: 'What should you check during visual inspection?',
     options: [
-      "Only the plug and cable",
-      "Just the equipment casing",
-      "Cable, plug, equipment casing, and any obvious damage",
-      "Only internal components"
+      'Only the plug and cable',
+      'Just the equipment casing',
+      'Cable, plug, equipment casing, and any obvious damage',
+      'Only internal components',
     ],
     correctAnswer: 2,
-    explanation: "Visual inspection should cover the entire appliance including cable condition, plug integrity, equipment casing, and any signs of damage, overheating, or wear."
+    explanation:
+      'Visual inspection should cover the entire appliance including cable condition, plug integrity, equipment casing, and any signs of damage, overheating, or wear.',
   },
   {
     id: 3,
-    question: "Who can perform PAT testing?",
+    question: 'Who can perform PAT testing?',
     options: [
-      "Only qualified electricians",
-      "Anyone with basic training and competence",
-      "Only the equipment manufacturer",
-      "Only certified PAT testing companies"
+      'Only qualified electricians',
+      'Anyone with basic training and competence',
+      'Only the equipment manufacturer',
+      'Only certified PAT testing companies',
     ],
     correctAnswer: 1,
-    explanation: "PAT testing can be performed by competent persons with adequate training, not necessarily qualified electricians, though they must understand the equipment and testing procedures."
+    explanation:
+      'PAT testing can be performed by competent persons with adequate training, not necessarily qualified electricians, though they must understand the equipment and testing procedures.',
   },
   {
     id: 4,
-    question: "What happens if equipment fails PAT testing?",
+    question: 'What happens if equipment fails PAT testing?',
     options: [
-      "It can continue to be used with caution",
-      "It must be removed from service immediately",
-      "It can be used for one more month",
-      "Only the failed test needs to be repeated"
+      'It can continue to be used with caution',
+      'It must be removed from service immediately',
+      'It can be used for one more month',
+      'Only the failed test needs to be repeated',
     ],
     correctAnswer: 1,
-    explanation: "Equipment that fails PAT testing must be removed from service immediately to prevent potential electrical hazards. It can only be returned to service after repair and successful retesting."
+    explanation:
+      'Equipment that fails PAT testing must be removed from service immediately to prevent potential electrical hazards. It can only be returned to service after repair and successful retesting.',
   },
   {
     id: 5,
-    question: "How should PAT testing results be recorded?",
+    question: 'How should PAT testing results be recorded?',
     options: [
-      "Mental notes are sufficient",
-      "Simple pass/fail labels only",
-      "Detailed records with dates, results, and equipment identification",
-      "Only failed tests need recording"
+      'Mental notes are sufficient',
+      'Simple pass/fail labels only',
+      'Detailed records with dates, results, and equipment identification',
+      'Only failed tests need recording',
     ],
     correctAnswer: 2,
-    explanation: "Comprehensive records should include equipment identification, test dates, detailed results, tester identity, and any remedial actions taken."
+    explanation:
+      'Comprehensive records should include equipment identification, test dates, detailed results, tester identity, and any remedial actions taken.',
   },
   {
     id: 6,
-    question: "What is the first phase of implementing a PAT programme?",
+    question: 'What is the first phase of implementing a PAT programme?',
     options: [
-      "Buying testing equipment",
-      "Training staff",
-      "Equipment audit and risk assessment",
-      "Testing all equipment immediately"
+      'Buying testing equipment',
+      'Training staff',
+      'Equipment audit and risk assessment',
+      'Testing all equipment immediately',
     ],
     correctAnswer: 2,
-    explanation: "The first phase is assessment - conducting an equipment audit, risk assessing each area, defining testing frequencies, and creating an equipment register."
+    explanation:
+      'The first phase is assessment - conducting an equipment audit, risk assessing each area, defining testing frequencies, and creating an equipment register.',
   },
   {
     id: 7,
-    question: "Which of these is an essential component of PAT tester training?",
+    question: 'Which of these is an essential component of PAT tester training?',
     options: [
-      "How to repair failed equipment",
-      "Understanding electrical safety principles and test interpretation",
-      "Only how to use the testing equipment",
-      "Legal qualifications in electrical installation"
+      'How to repair failed equipment',
+      'Understanding electrical safety principles and test interpretation',
+      'Only how to use the testing equipment',
+      'Legal qualifications in electrical installation',
     ],
     correctAnswer: 1,
-    explanation: "Essential training includes understanding electrical safety principles, equipment classification, testing equipment operation, and interpreting test results correctly."
+    explanation:
+      'Essential training includes understanding electrical safety principles, equipment classification, testing equipment operation, and interpreting test results correctly.',
   },
   {
     id: 8,
-    question: "What should be done with failed equipment that cannot be repaired?",
+    question: 'What should be done with failed equipment that cannot be repaired?',
     options: [
-      "Return it to the manufacturer",
+      'Return it to the manufacturer',
       "Store it in case it's needed later",
-      "Dispose of it safely and update records",
-      "Use it only for non-critical tasks"
+      'Dispose of it safely and update records',
+      'Use it only for non-critical tasks',
     ],
     correctAnswer: 2,
-    explanation: "Equipment that cannot be economically repaired should be disposed of safely (following WEEE regulations) and records updated to remove it from the equipment register."
+    explanation:
+      'Equipment that cannot be economically repaired should be disposed of safely (following WEEE regulations) and records updated to remove it from the equipment register.',
   },
   {
     id: 9,
-    question: "How often should PAT testing competency be reassessed?",
+    question: 'How often should PAT testing competency be reassessed?',
     options: [
-      "Only at initial training",
-      "Every 5 years minimum",
-      "Regularly, with ongoing development",
-      "Never, once trained always competent"
+      'Only at initial training',
+      'Every 5 years minimum',
+      'Regularly, with ongoing development',
+      'Never, once trained always competent',
     ],
     correctAnswer: 2,
-    explanation: "Competency should be regularly assessed and maintained through ongoing training, updates on regulatory changes, and practical skills evaluation."
+    explanation:
+      'Competency should be regularly assessed and maintained through ongoing training, updates on regulatory changes, and practical skills evaluation.',
   },
   {
     id: 10,
-    question: "What is a common implementation pitfall to avoid?",
+    question: 'What is a common implementation pitfall to avoid?',
     options: [
-      "Starting with conservative testing frequencies",
-      "Training multiple staff members",
-      "Treating PAT as a one-size-fits-all solution",
-      "Maintaining detailed records"
+      'Starting with conservative testing frequencies',
+      'Training multiple staff members',
+      'Treating PAT as a one-size-fits-all solution',
+      'Maintaining detailed records',
     ],
     correctAnswer: 2,
-    explanation: "A common pitfall is treating PAT as one-size-fits-all rather than adapting the programme to specific equipment types, environments, and risk levels."
-  }
+    explanation:
+      'A common pitfall is treating PAT as one-size-fits-all rather than adapting the programme to specific equipment types, environments, and risk levels.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Do I need formal qualifications to do PAT testing?",
-    answer: "No formal qualifications are legally required, but testers must be 'competent' - meaning they have sufficient training, knowledge, and experience. Most employers require completion of a recognised PAT testing course and ongoing competency assessment."
+    question: 'Do I need formal qualifications to do PAT testing?',
+    answer:
+      "No formal qualifications are legally required, but testers must be 'competent' - meaning they have sufficient training, knowledge, and experience. Most employers require completion of a recognised PAT testing course and ongoing competency assessment.",
   },
   {
-    question: "What equipment do I need to start PAT testing?",
-    answer: "At minimum, you need a PAT tester (combined or separate instruments), test labels or tags, a means of recording results, and appropriate PPE. More comprehensive programmes may include barcode scanners, database software, and calibration equipment."
+    question: 'What equipment do I need to start PAT testing?',
+    answer:
+      'At minimum, you need a PAT tester (combined or separate instruments), test labels or tags, a means of recording results, and appropriate PPE. More comprehensive programmes may include barcode scanners, database software, and calibration equipment.',
   },
   {
-    question: "How long does it take to test one appliance?",
-    answer: "A typical appliance takes 2-5 minutes including visual inspection, electrical tests, labelling, and recording. Complex equipment or those requiring repair assessment take longer. Experienced testers can process 100-150 items per day."
+    question: 'How long does it take to test one appliance?',
+    answer:
+      'A typical appliance takes 2-5 minutes including visual inspection, electrical tests, labelling, and recording. Complex equipment or those requiring repair assessment take longer. Experienced testers can process 100-150 items per day.',
   },
   {
-    question: "Can we use in-house staff or should we outsource?",
-    answer: "Both options are valid. In-house testing offers flexibility and lower per-test costs but requires training investment. Outsourcing provides expertise and equipment without capital outlay. Many organisations use a hybrid approach - in-house for routine testing and contractors for specialist equipment."
+    question: 'Can we use in-house staff or should we outsource?',
+    answer:
+      'Both options are valid. In-house testing offers flexibility and lower per-test costs but requires training investment. Outsourcing provides expertise and equipment without capital outlay. Many organisations use a hybrid approach - in-house for routine testing and contractors for specialist equipment.',
   },
   {
-    question: "What happens if equipment is damaged between tests?",
-    answer: "Users should report damage immediately, and equipment should be removed from service until inspected. User awareness training is essential - staff should know how to identify obvious damage and the importance of reporting it rather than continuing to use faulty equipment."
+    question: 'What happens if equipment is damaged between tests?',
+    answer:
+      'Users should report damage immediately, and equipment should be removed from service until inspected. User awareness training is essential - staff should know how to identify obvious damage and the importance of reporting it rather than continuing to use faulty equipment.',
   },
   {
     question: "How do we handle equipment that's always in use?",
-    answer: "Schedule testing during downtime, maintenance windows, or shift changes. For critical equipment, have spare units available or plan testing during annual shutdowns. Some organisations use portable testers that can be brought to equipment locations."
-  }
+    answer:
+      'Schedule testing during downtime, maintenance windows, or shift changes. For critical equipment, have spare units available or plan testing during annual shutdowns. Some organisations use portable testers that can be brought to equipment locations.',
+  },
 ];
 
 const PATTestingModule1Section5 = () => {
@@ -217,7 +238,12 @@ const PATTestingModule1Section5 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/pat-testing-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -228,7 +254,6 @@ const PATTestingModule1Section5 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -248,18 +273,32 @@ const PATTestingModule1Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Two stages:</strong> Visual inspection + electrical testing</li>
-              <li><strong>Competence:</strong> Training required, not just qualifications</li>
-              <li><strong>Failed items:</strong> Remove from service immediately</li>
-              <li><strong>Records:</strong> Essential for compliance and improvement</li>
+              <li>
+                <strong>Two stages:</strong> Visual inspection + electrical testing
+              </li>
+              <li>
+                <strong>Competence:</strong> Training required, not just qualifications
+              </li>
+              <li>
+                <strong>Failed items:</strong> Remove from service immediately
+              </li>
+              <li>
+                <strong>Records:</strong> Essential for compliance and improvement
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Damage, wear, overheating signs</li>
-              <li><strong>Use:</strong> Systematic approach for consistent results</li>
-              <li><strong>Apply:</strong> Clear procedures and documentation</li>
+              <li>
+                <strong>Spot:</strong> Damage, wear, overheating signs
+              </li>
+              <li>
+                <strong>Use:</strong> Systematic approach for consistent results
+              </li>
+              <li>
+                <strong>Apply:</strong> Clear procedures and documentation
+              </li>
             </ul>
           </div>
         </div>
@@ -269,12 +308,12 @@ const PATTestingModule1Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Plan and implement a PAT testing programme",
-              "Understand the complete testing process",
-              "Develop effective record-keeping systems",
-              "Train staff and manage ongoing competence",
-              "Handle failed equipment and remedial actions",
-              "Optimise costs while maintaining safety standards"
+              'Plan and implement a PAT testing programme',
+              'Understand the complete testing process',
+              'Develop effective record-keeping systems',
+              'Train staff and manage ongoing competence',
+              'Handle failed equipment and remedial actions',
+              'Optimise costs while maintaining safety standards',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -295,8 +334,9 @@ const PATTestingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Understanding PAT testing theory is one thing — implementing it effectively is another.
-              A successful programme combines visual inspection with electrical testing in a systematic approach.
+              Understanding PAT testing theory is one thing — implementing it effectively is
+              another. A successful programme combines visual inspection with electrical testing in
+              a systematic approach.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -338,8 +378,8 @@ const PATTestingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Visual inspection is critical — it catches approximately 95% of faults. A thorough visual check
-              should be performed before any electrical testing.
+              Visual inspection is critical — it catches approximately 95% of faults. A thorough
+              visual check should be performed before any electrical testing.
             </p>
 
             <div className="my-6">
@@ -441,7 +481,9 @@ const PATTestingModule1Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Technical Knowledge Required</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Technical Knowledge Required
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Electrical safety principles</li>
                   <li>Equipment classification systems</li>
@@ -451,7 +493,9 @@ const PATTestingModule1Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Practical Skills Required</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Practical Skills Required
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Visual inspection techniques</li>
                   <li>Safe testing procedures</li>
@@ -465,15 +509,24 @@ const PATTestingModule1Section5 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow mb-1">Initial Training</p>
-                <p className="text-xs text-white">2-3 days formal course covering legal requirements, testing theory, hands-on practice, and assessment</p>
+                <p className="text-xs text-white">
+                  2-3 days formal course covering legal requirements, testing theory, hands-on
+                  practice, and assessment
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow mb-1">Ongoing Development</p>
-                <p className="text-xs text-white">Regular updates on regulatory changes, new equipment types, improved techniques, and incident learning</p>
+                <p className="text-xs text-white">
+                  Regular updates on regulatory changes, new equipment types, improved techniques,
+                  and incident learning
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow mb-1">Competency Assessment</p>
-                <p className="text-xs text-white">Regular evaluation of technical knowledge, practical skills, record accuracy, and safety compliance</p>
+                <p className="text-xs text-white">
+                  Regular evaluation of technical knowledge, practical skills, record accuracy, and
+                  safety compliance
+                </p>
               </div>
             </div>
           </div>
@@ -487,15 +540,35 @@ const PATTestingModule1Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">When equipment fails PAT testing:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                When equipment fails PAT testing:
+              </p>
               <ol className="text-sm text-white space-y-2 ml-4">
-                <li><strong>1. Immediately remove from service</strong> — disconnect and isolate the equipment</li>
-                <li><strong>2. Apply a FAIL label</strong> — clearly mark as unsafe, including date and reason</li>
-                <li><strong>3. Inform the user</strong> — explain why equipment cannot be used</li>
-                <li><strong>4. Assess for repair</strong> — determine if economically viable to repair</li>
-                <li><strong>5. Repair or dispose</strong> — repair by competent person or safely dispose</li>
-                <li><strong>6. Retest after repair</strong> — must pass all tests before returning to service</li>
-                <li><strong>7. Update records</strong> — document all actions taken</li>
+                <li>
+                  <strong>1. Immediately remove from service</strong> — disconnect and isolate the
+                  equipment
+                </li>
+                <li>
+                  <strong>2. Apply a FAIL label</strong> — clearly mark as unsafe, including date
+                  and reason
+                </li>
+                <li>
+                  <strong>3. Inform the user</strong> — explain why equipment cannot be used
+                </li>
+                <li>
+                  <strong>4. Assess for repair</strong> — determine if economically viable to repair
+                </li>
+                <li>
+                  <strong>5. Repair or dispose</strong> — repair by competent person or safely
+                  dispose
+                </li>
+                <li>
+                  <strong>6. Retest after repair</strong> — must pass all tests before returning to
+                  service
+                </li>
+                <li>
+                  <strong>7. Update records</strong> — document all actions taken
+                </li>
               </ol>
             </div>
 
@@ -549,7 +622,9 @@ const PATTestingModule1Section5 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Setting Up a Programme</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Setting Up a Programme
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Start with a comprehensive equipment audit</li>
                 <li>Involve stakeholders from all departments</li>
@@ -559,7 +634,9 @@ const PATTestingModule1Section5 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Conducting Tests</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When Conducting Tests
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Always complete visual inspection first</li>
                 <li>Follow a consistent testing sequence</li>
@@ -571,10 +648,18 @@ const PATTestingModule1Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Skipping visual inspection</strong> — it catches 95% of faults</li>
-                <li><strong>Rushing through tests</strong> — thoroughness prevents accidents</li>
-                <li><strong>Poor labelling</strong> — clear labels prevent confusion</li>
-                <li><strong>Delayed record updates</strong> — update immediately for accuracy</li>
+                <li>
+                  <strong>Skipping visual inspection</strong> — it catches 95% of faults
+                </li>
+                <li>
+                  <strong>Rushing through tests</strong> — thoroughness prevents accidents
+                </li>
+                <li>
+                  <strong>Poor labelling</strong> — clear labels prevent confusion
+                </li>
+                <li>
+                  <strong>Delayed record updates</strong> — update immediately for accuracy
+                </li>
               </ul>
             </div>
           </div>
@@ -625,28 +710,33 @@ const PATTestingModule1Section5 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/pat-testing-module-1">
               Complete Module
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

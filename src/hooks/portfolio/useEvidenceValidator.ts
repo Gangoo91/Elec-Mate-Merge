@@ -53,9 +53,7 @@ export function useEvidenceValidator() {
   const [error, setError] = useState<string | null>(null);
 
   const validate = useCallback(
-    async (
-      options: ValidateOptions
-    ): Promise<EvidenceValidationResult | null> => {
+    async (options: ValidateOptions): Promise<EvidenceValidationResult | null> => {
       // Check cache first
       if (options.portfolioItemId) {
         const cacheKey = getCacheKey(options.portfolioItemId);
@@ -82,18 +80,15 @@ export function useEvidenceValidator() {
           throw new Error('Not authenticated');
         }
 
-        const response = await supabase.functions.invoke(
-          'validate-evidence-quality',
-          {
-            body: {
-              portfolio_item_id: options.portfolioItemId,
-              evidence_text: options.evidenceText,
-              evidence_urls: options.evidenceUrls,
-              claimed_acs: options.claimedACs,
-              qualification_code: options.qualificationCode,
-            },
-          }
-        );
+        const response = await supabase.functions.invoke('validate-evidence-quality', {
+          body: {
+            portfolio_item_id: options.portfolioItemId,
+            evidence_text: options.evidenceText,
+            evidence_urls: options.evidenceUrls,
+            claimed_acs: options.claimedACs,
+            qualification_code: options.qualificationCode,
+          },
+        });
 
         if (response.error) throw response.error;
 
@@ -126,8 +121,7 @@ export function useEvidenceValidator() {
         toast.success('Evidence validation complete');
         return validationResult;
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : 'Validation failed';
+        const message = err instanceof Error ? err.message : 'Validation failed';
         console.error('Evidence validation error:', err);
         setError(message);
         toast.error(message);
@@ -154,9 +148,7 @@ export function useEvidenceValidator() {
 }
 
 // Helper: get grade colour
-export function getGradeColour(
-  grade: string
-): { bg: string; text: string; border: string } {
+export function getGradeColour(grade: string): { bg: string; text: string; border: string } {
   switch (grade) {
     case 'A':
       return {
@@ -192,9 +184,7 @@ export function getGradeColour(
 }
 
 // Helper: get status colour
-export function getStatusColour(
-  status: string
-): { bg: string; text: string } {
+export function getStatusColour(status: string): { bg: string; text: string } {
   switch (status) {
     case 'sufficient':
       return { bg: 'bg-emerald-500', text: 'text-emerald-400' };

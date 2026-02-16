@@ -9,19 +9,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import {
-  ArrowLeft,
-  Plug,
-  Save,
-  Download,
-  Loader2,
-  FileText,
-  Receipt,
-} from 'lucide-react';
+import { ArrowLeft, Plug, Save, Download, Loader2, FileText, Receipt } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
-import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import {
+  createQuoteFromCertificate,
+  createInvoiceFromCertificate,
+} from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
 
 import PATTestingFormTabs from '@/components/inspection/pat-testing/PATTestingFormTabs';
@@ -40,7 +35,9 @@ export default function PATTestingCertificate() {
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isLoading, setIsLoading] = useState(!isNew);
-  const [savedReportId, setSavedReportId] = useState<string | null>(id !== 'new' ? id || null : null);
+  const [savedReportId, setSavedReportId] = useState<string | null>(
+    id !== 'new' ? id || null : null
+  );
 
   // Hooks for tabs
   const tabProps = usePATTestingTabs(formData);
@@ -49,7 +46,11 @@ export default function PATTestingCertificate() {
   const { companyProfile } = useCompanyProfile();
 
   // Check if company branding is available
-  const hasSavedCompanyBranding = !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+  const hasSavedCompanyBranding = !!(
+    companyProfile?.company_name ||
+    companyProfile?.logo_url ||
+    companyProfile?.logo_data_url
+  );
 
   // Load company branding for PDF
   const loadCompanyBranding = () => {
@@ -67,7 +68,7 @@ export default function PATTestingCertificate() {
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#3b82f6',
       registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
-      registrationScheme: companyProfile.registration_scheme || ''
+      registrationScheme: companyProfile.registration_scheme || '',
     };
   };
 
@@ -76,7 +77,9 @@ export default function PATTestingCertificate() {
     const loadReport = async () => {
       if (!isNew && id) {
         try {
-          const { data: { user } } = await supabase.auth.getUser();
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
           if (!user) return;
 
           const report = await reportCloud.getReport(id, user.id);
@@ -107,7 +110,9 @@ export default function PATTestingCertificate() {
   const handleSaveDraft = async () => {
     setIsSaving(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         toast.error('Please sign in to save');
         return;
@@ -132,7 +137,11 @@ export default function PATTestingCertificate() {
         if (result.success && result.reportId) {
           setSavedReportId(result.reportId);
           toast.success('Draft saved');
-          window.history.replaceState(null, '', `/electrician/inspection-testing/pat-testing/${result.reportId}`);
+          window.history.replaceState(
+            null,
+            '',
+            `/electrician/inspection-testing/pat-testing/${result.reportId}`
+          );
         } else {
           throw new Error(result.error?.message || 'Failed to create report');
         }
@@ -225,9 +234,12 @@ export default function PATTestingCertificate() {
       };
 
       // Call edge function
-      const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-pat-testing-pdf', {
-        body: { formData: pdfData },
-      });
+      const { data: functionData, error: functionError } = await supabase.functions.invoke(
+        'generate-pat-testing-pdf',
+        {
+          body: { formData: pdfData },
+        }
+      );
 
       if (functionError) {
         throw new Error(functionError.message || 'Failed to generate PDF');
@@ -366,9 +378,7 @@ export default function PATTestingCertificate() {
                 {isNew ? 'New PAT Testing' : 'PAT Testing'}
               </h1>
               <h1 className="text-base font-bold text-white -mt-0.5">Certificate</h1>
-              <p className="text-[11px] text-white/50">
-                IET Code of Practice
-              </p>
+              <p className="text-[11px] text-white/50">IET Code of Practice</p>
             </div>
           </div>
         </div>

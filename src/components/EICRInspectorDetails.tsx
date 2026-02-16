@@ -3,9 +3,27 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { AlertTriangle, User, Upload, X, ChevronDown, Award, Building2, Palette, Shield, Check, Settings } from 'lucide-react';
+import {
+  AlertTriangle,
+  User,
+  Upload,
+  X,
+  ChevronDown,
+  Award,
+  Building2,
+  Palette,
+  Shield,
+  Check,
+  Settings,
+} from 'lucide-react';
 import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProfiles';
 import InspectorProfileDialog from './InspectorProfileDialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -23,7 +41,14 @@ interface EICRInspectorDetailsProps {
 }
 
 // Section header - MUST be outside main component to prevent focus loss
-const SectionTitle = ({ icon: Icon, title, color = "blue", isOpen, badge, isMobile }: {
+const SectionTitle = ({
+  icon: Icon,
+  title,
+  color = 'blue',
+  isOpen,
+  badge,
+  isMobile,
+}: {
   icon: React.ElementType;
   title: string;
   color?: string;
@@ -33,27 +58,33 @@ const SectionTitle = ({ icon: Icon, title, color = "blue", isOpen, badge, isMobi
 }) => (
   <div
     className={cn(
-      "w-full flex items-center gap-3 py-4 text-left touch-manipulation transition-colors cursor-pointer",
-      isMobile ? "px-4 bg-card/30 border-y border-border/20" : "pb-3 border-b border-border/30",
-      "active:bg-card/50"
+      'w-full flex items-center gap-3 py-4 text-left touch-manipulation transition-colors cursor-pointer',
+      isMobile ? 'px-4 bg-card/30 border-y border-border/20' : 'pb-3 border-b border-border/30',
+      'active:bg-card/50'
     )}
   >
-    <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center", `bg-${color}-500/20`)}>
-      <Icon className={cn("h-5 w-5", `text-${color}-400`)} />
+    <div
+      className={cn('h-10 w-10 rounded-xl flex items-center justify-center', `bg-${color}-500/20`)}
+    >
+      <Icon className={cn('h-5 w-5', `text-${color}-400`)} />
     </div>
     <div className="flex-1 min-w-0">
       <h3 className="font-semibold text-foreground">{title}</h3>
       {badge && <span className="text-xs text-muted-foreground">{badge}</span>}
     </div>
-    <ChevronDown className={cn(
-      "h-5 w-5 text-muted-foreground transition-transform",
-      isOpen && "rotate-180"
-    )} />
+    <ChevronDown
+      className={cn('h-5 w-5 text-muted-foreground transition-transform', isOpen && 'rotate-180')}
+    />
   </div>
 );
 
 // Form field wrapper - MUST be outside main component to prevent focus loss
-const FormField = ({ label, required, hint, children }: {
+const FormField = ({
+  label,
+  required,
+  hint,
+  children,
+}: {
   label: string;
   required?: boolean;
   hint?: string;
@@ -77,7 +108,7 @@ const availableQualifications = [
   'NAPIT Registered',
   'ECA Member',
   'JIB Approved',
-  'CompEx Certified'
+  'CompEx Certified',
 ];
 
 const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps) => {
@@ -109,7 +140,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
 
   const toggleSection = (section: string) => {
     haptics.tap();
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   // Load default profile on mount if fields are empty
@@ -159,7 +190,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
   const toggleQualification = (qualification: string) => {
     haptics.tap();
     const updated = selectedQualifications.includes(qualification)
-      ? selectedQualifications.filter(q => q !== qualification)
+      ? selectedQualifications.filter((q) => q !== qualification)
       : [...selectedQualifications, qualification];
     setSelectedQualifications(updated);
     onUpdate('inspectorQualifications', updated.join(', '));
@@ -171,12 +202,20 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
 
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
     if (!validTypes.includes(file.type)) {
-      toast({ title: "Invalid file type", description: "Please upload a JPG, PNG, GIF, or WebP image.", variant: "destructive" });
+      toast({
+        title: 'Invalid file type',
+        description: 'Please upload a JPG, PNG, GIF, or WebP image.',
+        variant: 'destructive',
+      });
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      toast({ title: "File too large", description: "Please upload an image smaller than 5MB.", variant: "destructive" });
+      toast({
+        title: 'File too large',
+        description: 'Please upload an image smaller than 5MB.',
+        variant: 'destructive',
+      });
       return;
     }
 
@@ -184,7 +223,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     reader.onload = (e) => {
       onUpdate('companyLogo', e.target?.result as string);
       haptics.success();
-      toast({ title: "Logo uploaded", description: "Company logo uploaded successfully." });
+      toast({ title: 'Logo uploaded', description: 'Company logo uploaded successfully.' });
     };
     reader.readAsDataURL(file);
   };
@@ -192,7 +231,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
   const handleRemoveLogo = () => {
     haptics.tap();
     onUpdate('companyLogo', '');
-    toast({ title: "Logo removed", description: "Company logo has been removed." });
+    toast({ title: 'Logo removed', description: 'Company logo has been removed.' });
   };
 
   // Load ALL details from both Business Settings AND saved Inspector Profile
@@ -203,9 +242,9 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     if (!companyProfile && !inspectorProfile) {
       haptics.warning();
       toast({
-        title: "No Saved Settings Found",
-        description: "Please set up your Business Settings or Inspector Profile first.",
-        variant: "destructive"
+        title: 'No Saved Settings Found',
+        description: 'Please set up your Business Settings or Inspector Profile first.',
+        variant: 'destructive',
       });
       return;
     }
@@ -238,31 +277,37 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     }
 
     // Load registration details - Company Profile takes priority
-    const registrationScheme = companyProfile?.registration_scheme || inspectorProfile?.registrationScheme;
+    const registrationScheme =
+      companyProfile?.registration_scheme || inspectorProfile?.registrationScheme;
     if (registrationScheme) {
       onUpdate('registrationScheme', registrationScheme);
       loadedItems.push('Registration');
     }
-    const registrationNumber = companyProfile?.registration_number || inspectorProfile?.registrationNumber;
+    const registrationNumber =
+      companyProfile?.registration_number || inspectorProfile?.registrationNumber;
     if (registrationNumber) {
       onUpdate('registrationNumber', registrationNumber);
     }
-    const registrationExpiry = companyProfile?.registration_expiry || inspectorProfile?.registrationExpiry;
+    const registrationExpiry =
+      companyProfile?.registration_expiry || inspectorProfile?.registrationExpiry;
     if (registrationExpiry) {
       onUpdate('registrationExpiry', registrationExpiry);
     }
 
     // Load insurance details - Company Profile takes priority
-    const insuranceProvider = companyProfile?.insurance_provider || inspectorProfile?.insuranceProvider;
+    const insuranceProvider =
+      companyProfile?.insurance_provider || inspectorProfile?.insuranceProvider;
     if (insuranceProvider) {
       onUpdate('insuranceProvider', insuranceProvider);
       loadedItems.push('Insurance');
     }
-    const insurancePolicyNumber = companyProfile?.insurance_policy_number || inspectorProfile?.insurancePolicyNumber;
+    const insurancePolicyNumber =
+      companyProfile?.insurance_policy_number || inspectorProfile?.insurancePolicyNumber;
     if (insurancePolicyNumber) {
       onUpdate('insurancePolicyNumber', insurancePolicyNumber);
     }
-    const insuranceCoverage = companyProfile?.insurance_coverage || inspectorProfile?.insuranceCoverage;
+    const insuranceCoverage =
+      companyProfile?.insurance_coverage || inspectorProfile?.insuranceCoverage;
     if (insuranceCoverage) {
       onUpdate('insuranceCoverage', insuranceCoverage);
     }
@@ -324,26 +369,27 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     }
 
     toast({
-      title: "Details Loaded",
-      description: loadedItems.length > 0
-        ? `Loaded: ${loadedItems.join(', ')}`
-        : "Your saved details have been applied."
+      title: 'Details Loaded',
+      description:
+        loadedItems.length > 0
+          ? `Loaded: ${loadedItems.join(', ')}`
+          : 'Your saved details have been applied.',
     });
   };
 
   const getValidationStatus = () => {
     const required = ['inspectorName', 'inspectorQualifications'];
-    const missing = required.filter(field => !formData[field]?.trim());
+    const missing = required.filter((field) => !formData[field]?.trim());
     return { isValid: missing.length === 0, missingFields: missing };
   };
 
   const validation = getValidationStatus();
 
   return (
-    <div className={cn("space-y-2", isMobile && "-mx-4")}>
+    <div className={cn('space-y-2', isMobile && '-mx-4')}>
       {/* Validation Alert */}
       {!validation.isValid && (
-        <div className={cn("px-4", isMobile && "px-4")}>
+        <div className={cn('px-4', isMobile && 'px-4')}>
           <Alert className="border-orange-500/30 bg-orange-500/10">
             <AlertTriangle className="h-4 w-4 text-orange-400" />
             <AlertDescription className="text-orange-400 text-sm">
@@ -355,7 +401,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
 
       {/* Quick Load Button - Loads ALL saved details */}
       {(companyProfile || getAvailableProfile()) && (
-        <div className={cn("px-4 py-2", isMobile && "px-4")}>
+        <div className={cn('px-4 py-2', isMobile && 'px-4')}>
           <Button
             onClick={handleLoadFromBusinessSettings}
             disabled={companyProfileLoading}
@@ -382,7 +428,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
             <FormField label="Inspector Name" required>
               <Input
                 value={formData.inspectorName || ''}
@@ -403,7 +449,10 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       </Collapsible>
 
       {/* Qualifications Section */}
-      <Collapsible open={openSections.qualifications} onOpenChange={() => toggleSection('qualifications')}>
+      <Collapsible
+        open={openSections.qualifications}
+        onOpenChange={() => toggleSection('qualifications')}
+      >
         <CollapsibleTrigger asChild>
           <div>
             <SectionTitle
@@ -417,7 +466,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn("py-4", isMobile ? "px-4" : "")}>
+          <div className={cn('py-4', isMobile ? 'px-4' : '')}>
             <p className="text-xs text-muted-foreground mb-3">Tap to select your qualifications</p>
             <div className="flex flex-wrap gap-2">
               {availableQualifications.map((qualification) => {
@@ -428,12 +477,12 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
                     type="button"
                     onClick={() => toggleQualification(qualification)}
                     className={cn(
-                      "px-3 py-2 rounded-lg text-sm font-medium transition-all touch-manipulation",
-                      "flex items-center gap-2",
-                      "active:scale-95",
+                      'px-3 py-2 rounded-lg text-sm font-medium transition-all touch-manipulation',
+                      'flex items-center gap-2',
+                      'active:scale-95',
                       isSelected
-                        ? "bg-elec-yellow text-black"
-                        : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                     )}
                   >
                     {isSelected && <Check className="h-4 w-4" />}
@@ -447,7 +496,10 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       </Collapsible>
 
       {/* Professional Registration Section */}
-      <Collapsible open={openSections.registration} onOpenChange={() => toggleSection('registration')}>
+      <Collapsible
+        open={openSections.registration}
+        onOpenChange={() => toggleSection('registration')}
+      >
         <CollapsibleTrigger asChild>
           <div>
             <SectionTitle
@@ -460,9 +512,15 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
             <FormField label="Registration Scheme">
-              <Select value={formData.registrationScheme || ''} onValueChange={(value) => { haptics.tap(); onUpdate('registrationScheme', value); }}>
+              <Select
+                value={formData.registrationScheme || ''}
+                onValueChange={(value) => {
+                  haptics.tap();
+                  onUpdate('registrationScheme', value);
+                }}
+              >
                 <SelectTrigger className="h-11 touch-manipulation bg-card/50 border-border/30">
                   <SelectValue placeholder="Select scheme" />
                 </SelectTrigger>
@@ -512,7 +570,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
             <div className="flex justify-end">
               <InspectorProfileDialog onProfileSelected={handleProfileSelect} />
             </div>
@@ -571,7 +629,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
             {/* Logo Upload */}
             <div className="space-y-3">
               <Label className="text-sm text-foreground/80">Company Logo</Label>
@@ -600,10 +658,18 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
                 >
                   <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                   <p className="text-sm text-muted-foreground">Tap to upload logo</p>
-                  <p className="text-xs text-muted-foreground mt-1">JPG, PNG, GIF or WebP (max 5MB)</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    JPG, PNG, GIF or WebP (max 5MB)
+                  </p>
                 </button>
               )}
-              <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" id="logo-upload" />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleLogoUpload}
+                className="hidden"
+                id="logo-upload"
+              />
             </div>
 
             {/* Branding Details */}

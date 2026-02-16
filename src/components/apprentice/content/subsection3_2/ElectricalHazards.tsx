@@ -1,6 +1,5 @@
-
-import React from "react";
-import { AlertTriangle } from "lucide-react";
+import React from 'react';
+import { AlertTriangle } from 'lucide-react';
 
 const ElectricalHazards = () => {
   return (
@@ -9,13 +8,13 @@ const ElectricalHazards = () => {
         <AlertTriangle className="h-6 w-6 mr-2" />
         Common Electrical Hazards
       </h3>
-      
+
       <p className="mb-4 text-elec-light/90">
-        Identifying and understanding electrical hazards is essential for implementing 
-        effective control measures. The IET Code of Practice for Electrical Safety 
-        Management provides comprehensive guidance on hazard identification and risk assessment.
+        Identifying and understanding electrical hazards is essential for implementing effective
+        control measures. The IET Code of Practice for Electrical Safety Management provides
+        comprehensive guidance on hazard identification and risk assessment.
       </p>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h4 className="font-semibold text-elec-yellow mb-3">Hazard Types:</h4>
@@ -29,7 +28,7 @@ const ElectricalHazards = () => {
             <li>EMF exposure from high-current systems</li>
           </ul>
         </div>
-        
+
         <div>
           <h4 className="font-semibold text-elec-yellow mb-3">Common Issues:</h4>
           <ul className="list-disc pl-5 space-y-2">

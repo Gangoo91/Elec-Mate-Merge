@@ -1,8 +1,21 @@
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
-import { Calculator, RotateCcw } from "lucide-react";
-import { fuseTypes, fuseRatings, curveTypes, mcbRatings, disconnectionTimes, rcdRatings } from "./ZsValuesData";
+import { MobileInput } from '@/components/ui/mobile-input';
+import { MobileButton } from '@/components/ui/mobile-button';
+import {
+  MobileSelect,
+  MobileSelectContent,
+  MobileSelectItem,
+  MobileSelectTrigger,
+  MobileSelectValue,
+} from '@/components/ui/mobile-select';
+import { Calculator, RotateCcw } from 'lucide-react';
+import {
+  fuseTypes,
+  fuseRatings,
+  curveTypes,
+  mcbRatings,
+  disconnectionTimes,
+  rcdRatings,
+} from './ZsValuesData';
 
 interface ZsCalculatorFormProps {
   mcbRating: string;
@@ -52,10 +65,10 @@ const ZsCalculatorForm = ({
   setR1R2,
   onCalculate,
   onReset,
-  disconnectionTime = "0.4",
+  disconnectionTime = '0.4',
   setDisconnectionTime,
-  rcdRating = "30",
-  setRcdRating
+  rcdRating = '30',
+  setRcdRating,
 }: ZsCalculatorFormProps) => {
   return (
     <div className="space-y-4">
@@ -72,20 +85,23 @@ const ZsCalculatorForm = ({
       </MobileSelect>
 
       {/* Disconnection Time Selector - for MCB, RCBO, and Fuse */}
-      {(protectionType === "mcb" || protectionType === "rcbo" || protectionType === "fuse") && setDisconnectionTime && (
-        <MobileSelect value={disconnectionTime} onValueChange={setDisconnectionTime}>
-          <MobileSelectTrigger label="Disconnection Time">
-            <MobileSelectValue placeholder="Select disconnection time" />
-          </MobileSelectTrigger>
-          <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
-            {Object.entries(disconnectionTimes).map(([key, label]) => (
-              <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
-            ))}
-          </MobileSelectContent>
-        </MobileSelect>
-      )}
+      {(protectionType === 'mcb' || protectionType === 'rcbo' || protectionType === 'fuse') &&
+        setDisconnectionTime && (
+          <MobileSelect value={disconnectionTime} onValueChange={setDisconnectionTime}>
+            <MobileSelectTrigger label="Disconnection Time">
+              <MobileSelectValue placeholder="Select disconnection time" />
+            </MobileSelectTrigger>
+            <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
+              {Object.entries(disconnectionTimes).map(([key, label]) => (
+                <MobileSelectItem key={key} value={key}>
+                  {label}
+                </MobileSelectItem>
+              ))}
+            </MobileSelectContent>
+          </MobileSelect>
+        )}
 
-      {protectionType === "mcb" && (
+      {protectionType === 'mcb' && (
         <>
           <MobileSelect value={mcbCurve} onValueChange={setMcbCurve}>
             <MobileSelectTrigger label="MCB Curve Type (BS EN 60898)">
@@ -93,7 +109,9 @@ const ZsCalculatorForm = ({
             </MobileSelectTrigger>
             <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
               {Object.entries(curveTypes).map(([key, label]) => (
-                <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
+                <MobileSelectItem key={key} value={key}>
+                  {label}
+                </MobileSelectItem>
               ))}
             </MobileSelectContent>
           </MobileSelect>
@@ -104,14 +122,16 @@ const ZsCalculatorForm = ({
             </MobileSelectTrigger>
             <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
               {mcbRatings.map((rating) => (
-                <MobileSelectItem key={rating} value={rating.toString()}>{rating}A</MobileSelectItem>
+                <MobileSelectItem key={rating} value={rating.toString()}>
+                  {rating}A
+                </MobileSelectItem>
               ))}
             </MobileSelectContent>
           </MobileSelect>
         </>
       )}
 
-      {protectionType === "rcbo" && (
+      {protectionType === 'rcbo' && (
         <>
           <MobileSelect value={rcboCurve} onValueChange={setRcboCurve}>
             <MobileSelectTrigger label="RCBO Curve Type (BS EN 61009-1)">
@@ -119,7 +139,9 @@ const ZsCalculatorForm = ({
             </MobileSelectTrigger>
             <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
               {Object.entries(curveTypes).map(([key, label]) => (
-                <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
+                <MobileSelectItem key={key} value={key}>
+                  {label}
+                </MobileSelectItem>
               ))}
             </MobileSelectContent>
           </MobileSelect>
@@ -130,25 +152,32 @@ const ZsCalculatorForm = ({
             </MobileSelectTrigger>
             <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
               {mcbRatings.map((rating) => (
-                <MobileSelectItem key={rating} value={rating.toString()}>{rating}A</MobileSelectItem>
+                <MobileSelectItem key={rating} value={rating.toString()}>
+                  {rating}A
+                </MobileSelectItem>
               ))}
             </MobileSelectContent>
           </MobileSelect>
         </>
       )}
 
-      {protectionType === "fuse" && (
+      {protectionType === 'fuse' && (
         <>
-          <MobileSelect value={fuseType} onValueChange={(value) => {
-            setFuseType(value);
-            setFusRating(""); // Reset rating when type changes
-          }}>
+          <MobileSelect
+            value={fuseType}
+            onValueChange={(value) => {
+              setFuseType(value);
+              setFusRating(''); // Reset rating when type changes
+            }}
+          >
             <MobileSelectTrigger label="Fuse Type">
               <MobileSelectValue placeholder="Select fuse type" />
             </MobileSelectTrigger>
             <MobileSelectContent className="bg-elec-dark border-elec-yellow/20 max-h-48">
               {Object.entries(fuseTypes).map(([key, label]) => (
-                <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
+                <MobileSelectItem key={key} value={key}>
+                  {label}
+                </MobileSelectItem>
               ))}
             </MobileSelectContent>
           </MobileSelect>
@@ -170,14 +199,16 @@ const ZsCalculatorForm = ({
         </>
       )}
 
-      {protectionType === "rcd" && setRcdRating && (
+      {protectionType === 'rcd' && setRcdRating && (
         <MobileSelect value={rcdRating} onValueChange={setRcdRating}>
           <MobileSelectTrigger label="RCD Rated Residual Current (mA)">
             <MobileSelectValue placeholder="Select RCD rating" />
           </MobileSelectTrigger>
           <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
             {rcdRatings.map((rating) => (
-              <MobileSelectItem key={rating} value={rating.toString()}>{rating}mA</MobileSelectItem>
+              <MobileSelectItem key={rating} value={rating.toString()}>
+                {rating}mA
+              </MobileSelectItem>
             ))}
           </MobileSelectContent>
         </MobileSelect>
@@ -209,11 +240,12 @@ const ZsCalculatorForm = ({
           onClick={onCalculate}
           variant="elec"
           className="flex-1 min-h-[48px]"
-          disabled={!protectionType ||
-            (protectionType === "mcb" && (!mcbRating || !mcbCurve)) ||
-            (protectionType === "rcbo" && (!rcboRating || !rcboCurve)) ||
-            (protectionType === "fuse" && (!fuseType || !fusRating)) ||
-            (protectionType === "rcd" && !rcdRating)
+          disabled={
+            !protectionType ||
+            (protectionType === 'mcb' && (!mcbRating || !mcbCurve)) ||
+            (protectionType === 'rcbo' && (!rcboRating || !rcboCurve)) ||
+            (protectionType === 'fuse' && (!fuseType || !fusRating)) ||
+            (protectionType === 'rcd' && !rcdRating)
           }
         >
           <Calculator className="mr-2 h-4 w-4" />

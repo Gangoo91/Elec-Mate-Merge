@@ -5,7 +5,7 @@ import { Wifi, Settings, FileText, CheckCircle } from 'lucide-react';
 
 const GridTiedSizingPractical = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("gridtied") || "sizing";
+  const activeTab = searchParams.get('gridtied') || 'sizing';
   const setActiveTab = (tab: string) => setSearchParams({ gridtied: tab }, { replace: false });
 
   return (
@@ -19,19 +19,31 @@ const GridTiedSizingPractical = () => {
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-4 bg-elec-dark">
-            <TabsTrigger value="sizing" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="sizing"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <Settings className="h-4 w-4 mr-1" />
               System Sizing
             </TabsTrigger>
-            <TabsTrigger value="export" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="export"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <Wifi className="h-4 w-4 mr-1" />
               Export Setup
             </TabsTrigger>
-            <TabsTrigger value="applications" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="applications"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <FileText className="h-4 w-4 mr-1" />
               DNO Applications
             </TabsTrigger>
-            <TabsTrigger value="compliance" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="compliance"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <CheckCircle className="h-4 w-4 mr-1" />
               Compliance
             </TabsTrigger>
@@ -39,7 +51,9 @@ const GridTiedSizingPractical = () => {
 
           <TabsContent value="sizing" className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h3 className="text-elec-yellow font-semibold mb-3">Grid-Tied System Sizing Calculator</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Grid-Tied System Sizing Calculator
+              </h3>
               <div className="space-y-4 text-sm">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-gray-800 p-3 rounded">
@@ -47,7 +61,10 @@ const GridTiedSizingPractical = () => {
                     <div className="text-gray-300 space-y-2">
                       <p>Annual usage: 4,000 kWh</p>
                       <p>UK solar yield: 900 kWh/kW</p>
-                      <p>Required capacity: 4,000 ÷ 900 = <span className="text-elec-yellow">4.4kW</span></p>
+                      <p>
+                        Required capacity: 4,000 ÷ 900 ={' '}
+                        <span className="text-elec-yellow">4.4kW</span>
+                      </p>
                       <p className="text-xs">Assumes 100% self-consumption</p>
                     </div>
                   </div>
@@ -56,13 +73,17 @@ const GridTiedSizingPractical = () => {
                     <div className="text-gray-300 space-y-2">
                       <p>Available roof area: 30m²</p>
                       <p>Panel efficiency: 20% (400W/2m²)</p>
-                      <p>Max capacity: 30 ÷ 2 × 0.4 = <span className="text-elec-yellow">6kW</span></p>
+                      <p>
+                        Max capacity: 30 ÷ 2 × 0.4 = <span className="text-elec-yellow">6kW</span>
+                      </p>
                       <p className="text-xs">Limited by physical space</p>
                     </div>
                   </div>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Self-Consumption Optimisation</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Self-Consumption Optimisation
+                  </h4>
                   <div className="grid grid-cols-3 gap-3 text-gray-300">
                     <div>
                       <p className="text-foreground font-medium">High Day Use</p>
@@ -202,7 +223,9 @@ const GridTiedSizingPractical = () => {
               <h3 className="text-elec-yellow font-semibold mb-3">G99/G100 Compliance Checklist</h3>
               <div className="space-y-4 text-sm">
                 <div className="border border-gray-600 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Pre-Installation Requirements</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Pre-Installation Requirements
+                  </h4>
                   <ul className="text-gray-300 space-y-1">
                     <li>□ DNO approval received and conditions noted</li>
                     <li>□ MCS certified installer confirmed</li>
@@ -223,7 +246,9 @@ const GridTiedSizingPractical = () => {
                   </ul>
                 </div>
                 <div className="border border-gray-600 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Post-Installation Notifications</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Post-Installation Notifications
+                  </h4>
                   <ul className="text-gray-300 space-y-1">
                     <li>□ Commissioning certificate submitted to DNO</li>
                     <li>□ MCS certificate provided to customer</li>

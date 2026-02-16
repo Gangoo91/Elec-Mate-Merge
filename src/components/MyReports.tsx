@@ -57,12 +57,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   AlertDialog,
@@ -82,7 +77,16 @@ interface MyReportsProps {
 }
 
 type StatusFilter = 'all' | 'draft' | 'in-progress' | 'completed';
-type TypeFilter = 'all' | 'eicr' | 'eic' | 'minor-works' | 'solar-pv' | 'ev-charging' | 'fire-alarm' | 'emergency-lighting' | 'pat-testing';
+type TypeFilter =
+  | 'all'
+  | 'eicr'
+  | 'eic'
+  | 'minor-works'
+  | 'solar-pv'
+  | 'ev-charging'
+  | 'fire-alarm'
+  | 'emergency-lighting'
+  | 'pat-testing';
 
 const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport }) => {
   const { toast } = useToast();
@@ -229,13 +233,9 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       case 'cert-desc':
         return sorted.sort((a, b) => b.report_id.localeCompare(a.report_id));
       case 'client-asc':
-        return sorted.sort((a, b) =>
-          (a.client_name || '').localeCompare(b.client_name || '')
-        );
+        return sorted.sort((a, b) => (a.client_name || '').localeCompare(b.client_name || ''));
       case 'client-desc':
-        return sorted.sort((a, b) =>
-          (b.client_name || '').localeCompare(a.client_name || '')
-        );
+        return sorted.sort((a, b) => (b.client_name || '').localeCompare(a.client_name || ''));
       case 'status':
         const statusOrder = { draft: 0, 'in-progress': 1, completed: 2 };
         return sorted.sort(
@@ -678,8 +678,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 setShowSearch(!showSearch);
               }}
               className={cn(
-                "touch-manipulation",
-                showSearch ? "text-elec-yellow" : "text-white/60"
+                'touch-manipulation',
+                showSearch ? 'text-elec-yellow' : 'text-white/60'
               )}
             >
               <Search className="h-5 w-5" />
@@ -784,7 +784,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             {[
               { value: 'all' as StatusFilter, label: 'All', count: statusCounts.all },
               { value: 'draft' as StatusFilter, label: 'Drafts', count: statusCounts.draft },
-              { value: 'in-progress' as StatusFilter, label: 'Progress', count: statusCounts['in-progress'] },
+              {
+                value: 'in-progress' as StatusFilter,
+                label: 'Progress',
+                count: statusCounts['in-progress'],
+              },
               { value: 'completed' as StatusFilter, label: 'Done', count: statusCounts.completed },
             ].map(({ value, label, count }) => (
               <button
@@ -794,10 +798,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   setStatusFilter(value);
                 }}
                 className={cn(
-                  "flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-all touch-manipulation",
+                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-all touch-manipulation',
                   statusFilter === value
-                    ? "bg-elec-yellow text-black border-elec-yellow"
-                    : "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 active:bg-elec-yellow/20"
+                    ? 'bg-elec-yellow text-black border-elec-yellow'
+                    : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 active:bg-elec-yellow/20'
                 )}
               >
                 {label} {count > 0 && <span className="ml-1 opacity-70">{count}</span>}
@@ -826,10 +830,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   setTypeFilter(value);
                 }}
                 className={cn(
-                  "flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-all touch-manipulation",
+                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-all touch-manipulation',
                   typeFilter === value
-                    ? "bg-elec-yellow text-black border-elec-yellow"
-                    : "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 active:bg-elec-yellow/20"
+                    ? 'bg-elec-yellow text-black border-elec-yellow'
+                    : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 active:bg-elec-yellow/20'
                 )}
               >
                 {label}
@@ -934,7 +938,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             {[
               { type: 'eicr', label: 'EICR', desc: 'Electrical Installation Condition Report' },
               { type: 'eic', label: 'EIC', desc: 'Electrical Installation Certificate' },
-              { type: 'minor-works', label: 'Minor Works', desc: 'Minor Electrical Installation Works' },
+              {
+                type: 'minor-works',
+                label: 'Minor Works',
+                desc: 'Minor Electrical Installation Works',
+              },
             ].map(({ type, label, desc }) => (
               <button
                 key={type}
@@ -1021,8 +1029,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Certificate</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this certificate? It will be removed from all
-              your devices.
+              Are you sure you want to delete this certificate? It will be removed from all your
+              devices.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -1091,8 +1099,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               {reportToLink && (
                 <>
                   Link certificate{' '}
-                  <span className="font-mono text-elec-yellow">{reportToLink.report_id}</span> to
-                  a customer
+                  <span className="font-mono text-elec-yellow">{reportToLink.report_id}</span> to a
+                  customer
                 </>
               )}
             </DialogDescription>

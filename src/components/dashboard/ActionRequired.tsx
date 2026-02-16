@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { AlertCircle, Clock, FileText, CheckCircle2, ChevronRight } from "lucide-react";
-import { useQuoteStorage } from "@/hooks/useQuoteStorage";
-import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
-import { useNavigate } from "react-router-dom";
-import { differenceInDays, isPast } from "date-fns";
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { AlertCircle, Clock, FileText, CheckCircle2, ChevronRight } from 'lucide-react';
+import { useQuoteStorage } from '@/hooks/useQuoteStorage';
+import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { useNavigate } from 'react-router-dom';
+import { differenceInDays, isPast } from 'date-fns';
 
 interface ActionItemProps {
-  type: "urgent" | "warning" | "info";
+  type: 'urgent' | 'warning' | 'info';
   title: string;
   description: string;
   action: string;
@@ -17,17 +17,17 @@ interface ActionItemProps {
 function ActionItem({ type, title, description, action, onAction }: ActionItemProps) {
   const colors = {
     urgent: {
-      border: "border-l-red-500",
-      icon: "text-red-400",
+      border: 'border-l-red-500',
+      icon: 'text-red-400',
     },
     warning: {
-      border: "border-l-amber-500",
-      icon: "text-amber-400",
+      border: 'border-l-amber-500',
+      icon: 'text-amber-400',
     },
     info: {
-      border: "border-l-blue-500",
-      icon: "text-blue-400",
-    }
+      border: 'border-l-blue-500',
+      icon: 'text-blue-400',
+    },
   };
 
   const style = colors[type];
@@ -44,9 +44,13 @@ function ActionItem({ type, title, description, action, onAction }: ActionItemPr
       `}
     >
       <div className={`${style.icon} flex-shrink-0`}>
-        {type === "urgent" ? <AlertCircle className="h-5 w-5" /> :
-         type === "warning" ? <Clock className="h-5 w-5" /> :
-         <FileText className="h-5 w-5" />}
+        {type === 'urgent' ? (
+          <AlertCircle className="h-5 w-5" />
+        ) : type === 'warning' ? (
+          <Clock className="h-5 w-5" />
+        ) : (
+          <FileText className="h-5 w-5" />
+        )}
       </div>
 
       <div className="flex-1 min-w-0">
@@ -66,33 +70,33 @@ export function ActionRequired() {
 
   const actionItems: ActionItemProps[] = [];
 
-  const overdueInvoices = invoices?.filter(inv => {
-    if (!inv.due_date || inv.invoice_status === "paid") return false;
-    return isPast(new Date(inv.due_date));
-  }) || [];
+  const overdueInvoices =
+    invoices?.filter((inv) => {
+      if (!inv.due_date || inv.invoice_status === 'paid') return false;
+      return isPast(new Date(inv.due_date));
+    }) || [];
 
-  overdueInvoices.slice(0, 2).forEach(inv => {
+  overdueInvoices.slice(0, 2).forEach((inv) => {
     const daysOverdue = differenceInDays(new Date(), new Date(inv.due_date!));
     actionItems.push({
-      type: "urgent",
+      type: 'urgent',
       title: `Invoice #${inv.invoice_number || inv.id?.slice(0, 6)}`,
-      description: `${daysOverdue}d overdue · ${inv.client_name || "Client"}`,
-      action: "View",
-      onAction: () => navigate(`/electrician/invoices/${inv.id}`)
+      description: `${daysOverdue}d overdue · ${inv.client_name || 'Client'}`,
+      action: 'View',
+      onAction: () => navigate(`/electrician/invoices/${inv.id}`),
     });
   });
 
-  const pendingQuotes = savedQuotes?.filter(q =>
-    q.status === "sent" && q.acceptance_status === "pending"
-  ) || [];
+  const pendingQuotes =
+    savedQuotes?.filter((q) => q.status === 'sent' && q.acceptance_status === 'pending') || [];
 
-  pendingQuotes.slice(0, 2).forEach(quote => {
+  pendingQuotes.slice(0, 2).forEach((quote) => {
     actionItems.push({
-      type: "warning",
+      type: 'warning',
       title: `Quote #${quote.quote_number || quote.id?.slice(0, 6)}`,
-      description: `£${quote.total?.toLocaleString() || 0} · ${quote.client_name || "Client"}`,
-      action: "Follow Up",
-      onAction: () => navigate(`/electrician/quotes/${quote.id}`)
+      description: `£${quote.total?.toLocaleString() || 0} · ${quote.client_name || 'Client'}`,
+      action: 'Follow Up',
+      onAction: () => navigate(`/electrician/quotes/${quote.id}`),
     });
   });
 
@@ -130,7 +134,7 @@ export function ActionRequired() {
           <Button
             variant="ghost"
             className="w-full text-elec-yellow hover:text-black hover:bg-elec-yellow text-xs h-11 touch-manipulation"
-            onClick={() => navigate("/electrician/quotes")}
+            onClick={() => navigate('/electrician/quotes')}
           >
             View All ({actionItems.length - 4} more)
           </Button>

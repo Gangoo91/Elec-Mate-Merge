@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import MobileTestProgress from './MobileTestProgress';
@@ -10,7 +9,12 @@ interface MobileTestScheduleHeaderProps {
   circuits: any[];
 }
 
-const MobileTestScheduleHeader = ({ progress, completedTestsCount, totalTests, circuits }: MobileTestScheduleHeaderProps) => {
+const MobileTestScheduleHeader = ({
+  progress,
+  completedTestsCount,
+  totalTests,
+  circuits,
+}: MobileTestScheduleHeaderProps) => {
   return (
     <Card>
       <CardHeader>
@@ -19,7 +23,7 @@ const MobileTestScheduleHeader = ({ progress, completedTestsCount, totalTests, c
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <MobileTestProgress 
+        <MobileTestProgress
           progress={progress}
           completedTests={completedTestsCount}
           totalTests={totalTests}

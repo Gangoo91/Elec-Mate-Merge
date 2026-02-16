@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
-import { Search, MapPin, Loader2, Edit3, Check } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { cn } from "@/lib/utils";
-import { Input } from "./input";
-import { Textarea } from "./textarea";
+import { useState, useEffect, useRef } from 'react';
+import { Search, MapPin, Loader2, Edit3, Check } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { cn } from '@/lib/utils';
+import { Input } from './input';
+import { Textarea } from './textarea';
 
 interface UnifiedAddressFinderProps {
   onAddressSelect: (address: string, postcode: string) => void;
@@ -45,25 +45,32 @@ const parseAddressAndPostcode = (fullAddress: string): { address: string; postco
   if (match) {
     const postcode = match[1].toUpperCase();
     // Remove the postcode from the address (and any trailing comma/space)
-    const address = fullAddress.replace(postcodeRegex, '').replace(/,?\s*$/, '').trim();
+    const address = fullAddress
+      .replace(postcodeRegex, '')
+      .replace(/,?\s*$/, '')
+      .trim();
     return { address, postcode };
   }
 
-  return { address: fullAddress.trim(), postcode: "" };
+  return { address: fullAddress.trim(), postcode: '' };
 };
 
 export const UnifiedAddressFinder = ({
   onAddressSelect,
-  defaultValue = "",
+  defaultValue = '',
   className,
 }: UnifiedAddressFinderProps) => {
   const [searchValue, setSearchValue] = useState(defaultValue);
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState<{ address: string; postcode: string; fullAddress: string } | null>(null);
+  const [selectedAddress, setSelectedAddress] = useState<{
+    address: string;
+    postcode: string;
+    fullAddress: string;
+  } | null>(null);
   const [showManualEntry, setShowManualEntry] = useState(false);
-  const [manualAddress, setManualAddress] = useState("");
+  const [manualAddress, setManualAddress] = useState('');
   const [postcodeResults, setPostcodeResults] = useState<PostcodeResult[]>([]);
   const [isPostcodeMode, setIsPostcodeMode] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -87,8 +94,8 @@ export const UnifiedAddressFinder = ({
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // Fetch addresses by postcode using postcodes.io
@@ -107,32 +114,36 @@ export const UnifiedAddressFinder = ({
         // Create a single result for the postcode area
         const postcodeResult: PostcodeResult = {
           postcode: result.postcode,
-          line_1: "",
-          line_2: result.admin_ward || "",
-          post_town: result.admin_district || result.parliamentary_constituency || "",
-          county: result.region || "",
+          line_1: '',
+          line_2: result.admin_ward || '',
+          post_town: result.admin_district || result.parliamentary_constituency || '',
+          county: result.region || '',
         };
         setPostcodeResults([postcodeResult]);
         setPredictions([]);
         setShowDropdown(true);
       } else {
         // Try autocomplete for partial postcodes
-        const autocompleteResponse = await fetch(`https://api.postcodes.io/postcodes/${cleanPostcode}/autocomplete`);
+        const autocompleteResponse = await fetch(
+          `https://api.postcodes.io/postcodes/${cleanPostcode}/autocomplete`
+        );
         const autocompleteData = await autocompleteResponse.json();
 
         if (autocompleteData.status === 200 && autocompleteData.result?.length > 0) {
           // Fetch details for each suggested postcode (limit to 5)
           const postcodes = autocompleteData.result.slice(0, 5);
           const detailPromises = postcodes.map(async (pc: string) => {
-            const detailResponse = await fetch(`https://api.postcodes.io/postcodes/${pc.replace(/\s+/g, '')}`);
+            const detailResponse = await fetch(
+              `https://api.postcodes.io/postcodes/${pc.replace(/\s+/g, '')}`
+            );
             const detailData = await detailResponse.json();
             if (detailData.status === 200 && detailData.result) {
               return {
                 postcode: detailData.result.postcode,
-                line_1: "",
-                line_2: detailData.result.admin_ward || "",
-                post_town: detailData.result.admin_district || "",
-                county: detailData.result.region || "",
+                line_1: '',
+                line_2: detailData.result.admin_ward || '',
+                post_town: detailData.result.admin_district || '',
+                county: detailData.result.region || '',
               } as PostcodeResult;
             }
             return null;
@@ -147,7 +158,7 @@ export const UnifiedAddressFinder = ({
         }
       }
     } catch (error) {
-      console.error("Error fetching postcode:", error);
+      console.error('Error fetching postcode:', error);
       setPostcodeResults([]);
     } finally {
       setIsLoading(false);
@@ -171,7 +182,7 @@ export const UnifiedAddressFinder = ({
     setIsPostcodeMode(false);
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke("google-places-autocomplete", {
+      const { data, error } = await supabase.functions.invoke('google-places-autocomplete', {
         body: { input },
       });
 
@@ -180,7 +191,7 @@ export const UnifiedAddressFinder = ({
       setPostcodeResults([]);
       setShowDropdown(true);
     } catch (error) {
-      console.error("Error fetching suggestions:", error);
+      console.error('Error fetching suggestions:', error);
       setPredictions([]);
     } finally {
       setIsLoading(false);
@@ -208,7 +219,7 @@ export const UnifiedAddressFinder = ({
     setShowDropdown(false);
 
     try {
-      const { data, error } = await supabase.functions.invoke("google-place-details", {
+      const { data, error } = await supabase.functions.invoke('google-place-details', {
         body: { placeId: prediction.place_id },
       });
 
@@ -220,16 +231,16 @@ export const UnifiedAddressFinder = ({
         data.address.line_2,
         data.address.post_town,
       ].filter(Boolean);
-      
+
       const address = addressParts.join(', ') || data.address.formatted_address;
-      const postcode = data.address.postcode || "";
+      const postcode = data.address.postcode || '';
       const fullAddress = postcode ? `${address}, ${postcode}` : address;
 
       setSelectedAddress({ address, postcode, fullAddress });
       setSearchValue(fullAddress);
       onAddressSelect(address, postcode);
     } catch (error) {
-      console.error("Error fetching place details:", error);
+      console.error('Error fetching place details:', error);
     } finally {
       setIsLoading(false);
     }
@@ -256,7 +267,7 @@ export const UnifiedAddressFinder = ({
 
   if (showManualEntry) {
     return (
-      <div className={cn("space-y-3", className)}>
+      <div className={cn('space-y-3', className)}>
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium flex items-center gap-2">
             <Edit3 className="h-4 w-4 text-elec-yellow" />
@@ -266,9 +277,9 @@ export const UnifiedAddressFinder = ({
             type="button"
             onClick={() => {
               setShowManualEntry(false);
-              setSearchValue("");
+              setSearchValue('');
               setSelectedAddress(null);
-              setManualAddress("");
+              setManualAddress('');
             }}
             className="text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
@@ -289,11 +300,9 @@ export const UnifiedAddressFinder = ({
   }
 
   return (
-    <div ref={wrapperRef} className={cn("relative space-y-4", className)}>
+    <div ref={wrapperRef} className={cn('relative space-y-4', className)}>
       <div>
-        <label className="text-sm font-medium mb-2 block">
-          Search Address *
-        </label>
+        <label className="text-sm font-medium mb-2 block">Search Address *</label>
         <div className="relative">
           {!searchValue && (
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none sm:hidden" />
@@ -302,7 +311,7 @@ export const UnifiedAddressFinder = ({
             value={searchValue}
             onChange={(e) => handleInputChange(e.target.value)}
             placeholder="Enter address or postcode..."
-            className={cn(!searchValue && "pl-12 sm:pl-4")}
+            className={cn(!searchValue && 'pl-12 sm:pl-4')}
           />
           {isLoading && (
             <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 animate-spin text-muted-foreground" />
@@ -376,9 +385,7 @@ export const UnifiedAddressFinder = ({
       </button>
 
       {/* Google Attribution */}
-      <div className="text-xs text-muted-foreground">
-        Powered by Google Places
-      </div>
+      <div className="text-xs text-muted-foreground">Powered by Google Places</div>
     </div>
   );
 };

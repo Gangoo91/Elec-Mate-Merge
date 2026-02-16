@@ -12,9 +12,12 @@ export const LightingTypesOverviewSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-lg">
-          <h4 className="text-elec-yellow font-semibold mb-3">Decision Framework: Which System When?</h4>
+          <h4 className="text-elec-yellow font-semibold mb-3">
+            Decision Framework: Which System When?
+          </h4>
           <p className="text-sm mb-4">
-            Each lighting system excels in specific scenarios. Understanding these patterns helps you recommend the right solution first time.
+            Each lighting system excels in specific scenarios. Understanding these patterns helps
+            you recommend the right solution first time.
           </p>
         </div>
 
@@ -22,7 +25,9 @@ export const LightingTypesOverviewSection = () => {
           <div className="p-4 bg-blue-600/10 border-l-4 border-blue-500 rounded-lg">
             <div className="flex justify-between items-start mb-2">
               <h4 className="font-semibold text-blue-200">1. Smart Bulbs (Wireless Individual)</h4>
-              <span className="text-xs bg-blue-600/20 text-blue-200 px-2 py-1 rounded">Entry Level</span>
+              <span className="text-xs bg-blue-600/20 text-blue-200 px-2 py-1 rounded">
+                Entry Level
+              </span>
             </div>
             <div className="grid md:grid-cols-3 gap-3 text-sm">
               <div>
@@ -49,7 +54,9 @@ export const LightingTypesOverviewSection = () => {
           <div className="p-4 bg-green-600/10 border-l-4 border-green-500 rounded-lg">
             <div className="flex justify-between items-start mb-2">
               <h4 className="font-semibold text-green-200">2. Smart Switches (Circuit Control)</h4>
-              <span className="text-xs bg-green-600/20 text-green-200 px-2 py-1 rounded">Practical</span>
+              <span className="text-xs bg-green-600/20 text-green-200 px-2 py-1 rounded">
+                Practical
+              </span>
             </div>
             <div className="grid md:grid-cols-3 gap-3 text-sm">
               <div>
@@ -75,8 +82,12 @@ export const LightingTypesOverviewSection = () => {
 
           <div className="p-4 bg-purple-600/10 border-l-4 border-purple-500 rounded-lg">
             <div className="flex justify-between items-start mb-2">
-              <h4 className="font-semibold text-purple-200">3. Centralised Systems (Professional)</h4>
-              <span className="text-xs bg-purple-600/20 text-purple-200 px-2 py-1 rounded">Premium</span>
+              <h4 className="font-semibold text-purple-200">
+                3. Centralised Systems (Professional)
+              </h4>
+              <span className="text-xs bg-purple-600/20 text-purple-200 px-2 py-1 rounded">
+                Premium
+              </span>
             </div>
             <div className="grid md:grid-cols-3 gap-3 text-sm">
               <div>
@@ -103,7 +114,9 @@ export const LightingTypesOverviewSection = () => {
           <div className="p-4 bg-orange-600/10 border-l-4 border-orange-500 rounded-lg">
             <div className="flex justify-between items-start mb-2">
               <h4 className="font-semibold text-orange-200">4. Hybrid Systems (Balanced)</h4>
-              <span className="text-xs bg-orange-600/20 text-orange-200 px-2 py-1 rounded">Optimal</span>
+              <span className="text-xs bg-orange-600/20 text-orange-200 px-2 py-1 rounded">
+                Optimal
+              </span>
             </div>
             <div className="grid md:grid-cols-3 gap-3 text-sm">
               <div>
@@ -131,11 +144,21 @@ export const LightingTypesOverviewSection = () => {
         <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
           <h5 className="text-yellow-200 font-medium mb-2">Quick Selection Guide</h5>
           <div className="text-sm text-yellow-100 space-y-1">
-            <p><strong>Budget under £500:</strong> Smart bulbs for key rooms</p>
-            <p><strong>Renting property:</strong> Smart bulbs only</p>
-            <p><strong>Own home, tight budget:</strong> Smart switches</p>
-            <p><strong>New build/major renovation:</strong> Centralised system</p>
-            <p><strong>Existing home, future-proofing:</strong> Hybrid approach</p>
+            <p>
+              <strong>Budget under £500:</strong> Smart bulbs for key rooms
+            </p>
+            <p>
+              <strong>Renting property:</strong> Smart bulbs only
+            </p>
+            <p>
+              <strong>Own home, tight budget:</strong> Smart switches
+            </p>
+            <p>
+              <strong>New build/major renovation:</strong> Centralised system
+            </p>
+            <p>
+              <strong>Existing home, future-proofing:</strong> Hybrid approach
+            </p>
           </div>
         </div>
       </CardContent>

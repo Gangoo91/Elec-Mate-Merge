@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import { Camera, ChevronLeft, ChevronRight, RotateCcw, X, Maximize2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { Camera, ChevronLeft, ChevronRight, RotateCcw, X, Maximize2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 export interface ComparePhoto {
   id: string;
@@ -80,18 +80,18 @@ export const PhotoCompareSlider = ({
     };
 
     if (isDragging) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", handleEnd);
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleEnd);
       // Use passive: true to avoid blocking scroll on Android
-      window.addEventListener("touchmove", handleTouchMove, { passive: true });
-      window.addEventListener("touchend", handleEnd);
+      window.addEventListener('touchmove', handleTouchMove, { passive: true });
+      window.addEventListener('touchend', handleEnd);
     }
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleEnd);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleEnd);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleEnd);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleEnd);
     };
   }, [isDragging, handleMove]);
 
@@ -137,7 +137,7 @@ export const PhotoCompareSlider = ({
               variant="ghost"
               className="h-8 w-8 text-foreground/70 hover:text-foreground"
               onClick={toggleOrientation}
-              title={isVertical ? "Horizontal split" : "Vertical split"}
+              title={isVertical ? 'Horizontal split' : 'Vertical split'}
             >
               <RotateCcw className="h-4 w-4" />
             </Button>
@@ -189,32 +189,28 @@ export const PhotoCompareSlider = ({
           {/* Slider line and handle */}
           <div
             className={cn(
-              "absolute z-10",
+              'absolute z-10',
               isVertical
-                ? "left-0 right-0 h-1 -translate-y-1/2"
-                : "top-0 bottom-0 w-1 -translate-x-1/2"
+                ? 'left-0 right-0 h-1 -translate-y-1/2'
+                : 'top-0 bottom-0 w-1 -translate-x-1/2'
             )}
-            style={
-              isVertical
-                ? { top: `${sliderPosition}%` }
-                : { left: `${sliderPosition}%` }
-            }
+            style={isVertical ? { top: `${sliderPosition}%` } : { left: `${sliderPosition}%` }}
           >
             {/* Line */}
             <div
               className={cn(
-                "absolute bg-white/80 shadow-lg",
-                isVertical ? "inset-x-0 h-0.5" : "inset-y-0 w-0.5"
+                'absolute bg-white/80 shadow-lg',
+                isVertical ? 'inset-x-0 h-0.5' : 'inset-y-0 w-0.5'
               )}
             />
 
             {/* Handle */}
             <div
               className={cn(
-                "absolute z-10 flex items-center justify-center bg-white rounded-full shadow-lg cursor-grab active:cursor-grabbing",
+                'absolute z-10 flex items-center justify-center bg-white rounded-full shadow-lg cursor-grab active:cursor-grabbing',
                 isVertical
-                  ? "left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-8"
-                  : "top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-12"
+                  ? 'left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-8'
+                  : 'top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-12'
               )}
             >
               {isVertical ? (
@@ -234,16 +230,16 @@ export const PhotoCompareSlider = ({
           {/* Labels */}
           <div
             className={cn(
-              "absolute z-10 px-3 py-1.5 rounded-full bg-blue-500/90 text-foreground text-xs font-medium",
-              isVertical ? "top-4 left-4" : "top-4 left-4"
+              'absolute z-10 px-3 py-1.5 rounded-full bg-blue-500/90 text-foreground text-xs font-medium',
+              isVertical ? 'top-4 left-4' : 'top-4 left-4'
             )}
           >
             Before
           </div>
           <div
             className={cn(
-              "absolute z-10 px-3 py-1.5 rounded-full bg-green-500/90 text-foreground text-xs font-medium",
-              isVertical ? "bottom-4 right-4" : "top-4 right-4"
+              'absolute z-10 px-3 py-1.5 rounded-full bg-green-500/90 text-foreground text-xs font-medium',
+              isVertical ? 'bottom-4 right-4' : 'top-4 right-4'
             )}
           >
             After

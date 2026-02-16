@@ -11,113 +11,106 @@ export const SmartHomeModule2Section6Quiz = () => {
 
   const questions = [
     {
-      question: "Define compatibility in smart home systems:",
+      question: 'Define compatibility in smart home systems:',
       options: [
-        "Devices must be from the same manufacturer",
-        "Ability of devices to work together within an ecosystem",
-        "Devices must use the same power supply",
-        "Devices must be installed on the same day"
+        'Devices must be from the same manufacturer',
+        'Ability of devices to work together within an ecosystem',
+        'Devices must use the same power supply',
+        'Devices must be installed on the same day',
       ],
       correct: 1,
-      explanation: "Compatibility refers to the ability of devices to work together within an ecosystem, regardless of manufacturer, as long as they support compatible protocols and platforms."
+      explanation:
+        'Compatibility refers to the ability of devices to work together within an ecosystem, regardless of manufacturer, as long as they support compatible protocols and platforms.',
     },
     {
-      question: "What is the role of a bridge?",
+      question: 'What is the role of a bridge?',
       options: [
-        "To provide power to devices",
-        "To translate between protocols or ecosystems",
-        "To increase Wi-Fi signal strength",
-        "To store device data locally"
+        'To provide power to devices',
+        'To translate between protocols or ecosystems',
+        'To increase Wi-Fi signal strength',
+        'To store device data locally',
       ],
       correct: 1,
-      explanation: "A bridge acts as a translator between different protocols or ecosystems, enabling devices that wouldn't normally communicate to work together."
+      explanation:
+        "A bridge acts as a translator between different protocols or ecosystems, enabling devices that wouldn't normally communicate to work together.",
     },
     {
-      question: "Give one example of a popular bridge:",
-      options: [
-        "Amazon Echo Dot",
-        "Philips Hue Bridge",
-        "Samsung TV",
-        "Google Nest Thermostat"
-      ],
+      question: 'Give one example of a popular bridge:',
+      options: ['Amazon Echo Dot', 'Philips Hue Bridge', 'Samsung TV', 'Google Nest Thermostat'],
       correct: 1,
-      explanation: "The Philips Hue Bridge is a classic example of a smart home bridge, translating between Zigbee bulbs and Wi-Fi/cloud services."
+      explanation:
+        'The Philips Hue Bridge is a classic example of a smart home bridge, translating between Zigbee bulbs and Wi-Fi/cloud services.',
     },
     {
       question: "What's the main drawback of using bridges?",
       options: [
         "They're too expensive",
-        "They use too much power",
-        "They add complexity and potential failure points",
-        "They only work with new devices"
+        'They use too much power',
+        'They add complexity and potential failure points',
+        'They only work with new devices',
       ],
       correct: 2,
-      explanation: "Bridges add complexity to the system and create additional potential failure points. If a bridge fails, all connected devices become uncontrollable."
+      explanation:
+        'Bridges add complexity to the system and create additional potential failure points. If a bridge fails, all connected devices become uncontrollable.',
     },
     {
-      question: "Which protocol do Philips Hue bulbs use?",
+      question: 'Which protocol do Philips Hue bulbs use?',
+      options: ['Wi-Fi', 'Zigbee', 'Z-Wave', 'Bluetooth'],
+      correct: 1,
+      explanation:
+        'Philips Hue bulbs use the Zigbee protocol, which is why they require the Hue Bridge to connect to Wi-Fi networks and voice assistants.',
+    },
+    {
+      question: 'Why is latency sometimes higher when using a bridge?',
       options: [
-        "Wi-Fi",
-        "Zigbee",
-        "Z-Wave",
-        "Bluetooth"
+        'Bridges are slow processors',
+        'Additional protocol translation and routing steps',
+        'Bridges require internet connectivity',
+        'Bridges are wirelessly connected',
       ],
       correct: 1,
-      explanation: "Philips Hue bulbs use the Zigbee protocol, which is why they require the Hue Bridge to connect to Wi-Fi networks and voice assistants."
+      explanation:
+        'Bridges add latency because commands must be translated between protocols and routed through additional steps, increasing total response time.',
     },
     {
-      question: "Why is latency sometimes higher when using a bridge?",
-      options: [
-        "Bridges are slow processors",
-        "Additional protocol translation and routing steps",
-        "Bridges require internet connectivity",
-        "Bridges are wirelessly connected"
-      ],
-      correct: 1,
-      explanation: "Bridges add latency because commands must be translated between protocols and routed through additional steps, increasing total response time."
-    },
-    {
-      question: "True or False: Home Assistant can act as a software bridge:",
-      options: [
-        "True",
-        "False"
-      ],
+      question: 'True or False: Home Assistant can act as a software bridge:',
+      options: ['True', 'False'],
       correct: 0,
-      explanation: "True. Home Assistant is a software platform that can act as a bridge, supporting multiple protocols and enabling integration between different ecosystems."
+      explanation:
+        'True. Home Assistant is a software platform that can act as a bridge, supporting multiple protocols and enabling integration between different ecosystems.',
     },
     {
-      question: "What should installers always check before buying devices?",
+      question: 'What should installers always check before buying devices?',
       options: [
-        "Device colour options",
+        'Device colour options',
         "Compatibility with client's chosen ecosystem",
-        "Manufacturer warranty length",
-        "Device physical dimensions"
+        'Manufacturer warranty length',
+        'Device physical dimensions',
       ],
       correct: 1,
-      explanation: "Installers should always verify compatibility with the client's chosen ecosystem, including protocol support and platform integration, before purchasing devices."
+      explanation:
+        "Installers should always verify compatibility with the client's chosen ecosystem, including protocol support and platform integration, before purchasing devices.",
     },
     {
-      question: "What future standard is designed to reduce the need for bridges?",
-      options: [
-        "Zigbee 4.0",
-        "Wi-Fi 7",
-        "Matter protocol",
-        "Bluetooth 6.0"
-      ],
+      question: 'What future standard is designed to reduce the need for bridges?',
+      options: ['Zigbee 4.0', 'Wi-Fi 7', 'Matter protocol', 'Bluetooth 6.0'],
       correct: 2,
-      explanation: "Matter (formerly Project CHIP) is designed to create universal compatibility across smart home ecosystems, reducing the need for bridges."
+      explanation:
+        'Matter (formerly Project CHIP) is designed to create universal compatibility across smart home ecosystems, reducing the need for bridges.',
     },
     {
-      question: "Scenario: A client buys a Zigbee sensor but only has a Wi-Fi hub. What's the solution?",
+      question:
+        "Scenario: A client buys a Zigbee sensor but only has a Wi-Fi hub. What's the solution?",
       options: [
-        "Return the sensor",
-        "Buy a different hub with Zigbee support or add a bridge",
-        "Use the sensor with Bluetooth instead",
-        "Convert the sensor to Wi-Fi"
+        'Return the sensor',
+        'Buy a different hub with Zigbee support or add a bridge',
+        'Use the sensor with Bluetooth instead',
+        'Convert the sensor to Wi-Fi',
       ],
       correct: 1,
-      explanation: "The solution is to either replace the hub with one that has built-in Zigbee support, or add a bridge device that can translate between Zigbee and Wi-Fi."
-    }
+      explanation:
+        'The solution is to either replace the hub with one that has built-in Zigbee support, or add a bridge device that can translate between Zigbee and Wi-Fi.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -178,13 +171,13 @@ export const SmartHomeModule2Section6Quiz = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score)} mb-2`}>
               {score}/{questions.length}
             </div>
-            <div className={`text-xl ${getScoreColor(score)} mb-4`}>
-              {percentage}% Score
-            </div>
+            <div className={`text-xl ${getScoreColor(score)} mb-4`}>{percentage}% Score</div>
             <p className="text-foreground">
-              {percentage >= 80 ? 'Excellent! You have a strong understanding of compatibility and bridges.' :
-               percentage >= 60 ? 'Good work! Review the areas you missed to strengthen your knowledge.' :
-               'Keep studying! Review the section content and try again.'}
+              {percentage >= 80
+                ? 'Excellent! You have a strong understanding of compatibility and bridges.'
+                : percentage >= 60
+                  ? 'Good work! Review the areas you missed to strengthen your knowledge.'
+                  : 'Keep studying! Review the section content and try again.'}
             </p>
           </div>
 
@@ -193,9 +186,12 @@ export const SmartHomeModule2Section6Quiz = () => {
             {questions.map((q, index) => {
               const userAnswer = parseInt(selectedAnswers[index]);
               const isCorrect = userAnswer === q.correct;
-              
+
               return (
-                <div key={index} className={`p-3 rounded-lg border ${isCorrect ? 'border-green-600/30 bg-green-900/10' : 'border-red-600/30 bg-red-900/10'}`}>
+                <div
+                  key={index}
+                  className={`p-3 rounded-lg border ${isCorrect ? 'border-green-600/30 bg-green-900/10' : 'border-red-600/30 bg-red-900/10'}`}
+                >
                   <div className="flex items-start gap-2">
                     {isCorrect ? (
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -203,8 +199,12 @@ export const SmartHomeModule2Section6Quiz = () => {
                       <XCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     )}
                     <div className="flex-1">
-                      <p className="text-foreground text-sm font-medium mb-1">Q{index + 1}: {q.question}</p>
-                      <p className={`text-xs mb-1 ${isCorrect ? 'text-green-200' : 'text-red-200'}`}>
+                      <p className="text-foreground text-sm font-medium mb-1">
+                        Q{index + 1}: {q.question}
+                      </p>
+                      <p
+                        className={`text-xs mb-1 ${isCorrect ? 'text-green-200' : 'text-red-200'}`}
+                      >
                         Your answer: {q.options[userAnswer]}
                       </p>
                       {!isCorrect && (
@@ -247,8 +247,11 @@ export const SmartHomeModule2Section6Quiz = () => {
             <div
               key={index}
               className={`h-2 flex-1 rounded-full ${
-                index < currentQuestion ? 'bg-green-500' :
-                index === currentQuestion ? 'bg-blue-500' : 'bg-gray-600'
+                index < currentQuestion
+                  ? 'bg-green-500'
+                  : index === currentQuestion
+                    ? 'bg-blue-500'
+                    : 'bg-gray-600'
               }`}
             />
           ))}
@@ -260,7 +263,7 @@ export const SmartHomeModule2Section6Quiz = () => {
               Question {currentQuestion + 1} of {questions.length}
             </span>
           </div>
-          
+
           <h3 className="text-foreground font-semibold mb-4">
             {questions[currentQuestion].question}
           </h3>
@@ -291,7 +294,7 @@ export const SmartHomeModule2Section6Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={nextQuestion}
             disabled={!selectedAnswers[currentQuestion]}

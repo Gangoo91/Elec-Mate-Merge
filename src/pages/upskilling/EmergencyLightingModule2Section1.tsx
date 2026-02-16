@@ -1,72 +1,82 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m2s1-check1",
-    question: "What is the minimum illumination level required for escape route lighting?",
-    options: ["0.5 lux", "1 lux", "2 lux", "5 lux"],
+    id: 'emergencylighting-m2s1-check1',
+    question: 'What is the minimum illumination level required for escape route lighting?',
+    options: ['0.5 lux', '1 lux', '2 lux', '5 lux'],
     correctIndex: 1,
-    explanation: "BS 5266-1 requires minimum 1 lux at floor level along the centre line of escape routes. This ensures occupants can see their way clearly during evacuation."
+    explanation:
+      'BS 5266-1 requires minimum 1 lux at floor level along the centre line of escape routes. This ensures occupants can see their way clearly during evacuation.',
   },
   {
-    id: "emergencylighting-m2s1-check2",
-    question: "What is the maximum uniformity ratio allowed for escape route lighting?",
-    options: ["10:1", "20:1", "40:1", "60:1"],
+    id: 'emergencylighting-m2s1-check2',
+    question: 'What is the maximum uniformity ratio allowed for escape route lighting?',
+    options: ['10:1', '20:1', '40:1', '60:1'],
     correctIndex: 2,
-    explanation: "The maximum uniformity ratio is 40:1 (maximum to minimum illumination). This prevents dark spots along escape routes that could cause trips or falls."
+    explanation:
+      'The maximum uniformity ratio is 40:1 (maximum to minimum illumination). This prevents dark spots along escape routes that could cause trips or falls.',
   },
   {
-    id: "emergencylighting-m2s1-check3",
-    question: "What percentage of required illumination must be achieved within 5 seconds?",
-    options: ["25%", "50%", "75%", "100%"],
+    id: 'emergencylighting-m2s1-check3',
+    question: 'What percentage of required illumination must be achieved within 5 seconds?',
+    options: ['25%', '50%', '75%', '100%'],
     correctIndex: 1,
-    explanation: "50% of required illumination must be achieved within 5 seconds of mains failure. Full illumination (100%) must be reached within 60 seconds."
-  }
+    explanation:
+      '50% of required illumination must be achieved within 5 seconds of mains failure. Full illumination (100%) must be reached within 60 seconds.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What width escape routes require escape route lighting?",
-    answer: "All defined escape routes require lighting regardless of width. Routes up to 2m wide require 1 lux minimum along the centre line. Wider routes may need additional luminaires to maintain uniformity."
+    question: 'What width escape routes require escape route lighting?',
+    answer:
+      'All defined escape routes require lighting regardless of width. Routes up to 2m wide require 1 lux minimum along the centre line. Wider routes may need additional luminaires to maintain uniformity.',
   },
   {
-    question: "How do I calculate luminaire spacing for escape routes?",
-    answer: "Spacing is determined by manufacturer photometric data to achieve 1 lux minimum with 40:1 uniformity. Typically, spacing is 4× mounting height for most LED emergency luminaires."
+    question: 'How do I calculate luminaire spacing for escape routes?',
+    answer:
+      'Spacing is determined by manufacturer photometric data to achieve 1 lux minimum with 40:1 uniformity. Typically, spacing is 4× mounting height for most LED emergency luminaires.',
   },
   {
-    question: "Do escape routes need illuminated exit signs as well as luminaires?",
-    answer: "Yes, escape route lighting provides illumination while exit signs provide wayfinding. Both are required under BS 5266-1. Exit signs must be visible from any point on the escape route."
+    question: 'Do escape routes need illuminated exit signs as well as luminaires?',
+    answer:
+      'Yes, escape route lighting provides illumination while exit signs provide wayfinding. Both are required under BS 5266-1. Exit signs must be visible from any point on the escape route.',
   },
   {
-    question: "What about externally illuminated signs vs internally illuminated?",
-    answer: "Internally illuminated signs are preferred as they remain visible during power failure without additional lighting. Externally illuminated signs need a dedicated luminaire within 2m."
-  }
+    question: 'What about externally illuminated signs vs internally illuminated?',
+    answer:
+      'Internally illuminated signs are preferred as they remain visible during power failure without additional lighting. Externally illuminated signs need a dedicated luminaire within 2m.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An escape route is 1.8m wide. What illumination level must be achieved along the centre line?",
-  options: [
-    "0.5 lux (anti-panic level)",
-    "1 lux (escape route level)",
-    "2 lux (enhanced level)",
-    "15 lux (high-risk task level)"
-  ],
-  correctAnswer: 1,
-  explanation: "Escape routes up to 2m wide require minimum 1 lux at floor level along the centre line. The width doesn't change the illumination requirement - it affects spacing and uniformity calculations."
-  }
+    question:
+      'An escape route is 1.8m wide. What illumination level must be achieved along the centre line?',
+    options: [
+      '0.5 lux (anti-panic level)',
+      '1 lux (escape route level)',
+      '2 lux (enhanced level)',
+      '15 lux (high-risk task level)',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Escape routes up to 2m wide require minimum 1 lux at floor level along the centre line. The width doesn't change the illumination requirement - it affects spacing and uniformity calculations.",
+  },
 ];
 
 const EmergencyLightingModule2Section1 = () => {
   useSEO({
-    title: "Emergency Escape Lighting | Emergency Lighting Module 2.1",
-    description: "Learn about emergency escape lighting systems, BS 5266-1 requirements, illuminance levels, spacing calculations, and exit route lighting design."
+    title: 'Emergency Escape Lighting | Emergency Lighting Module 2.1',
+    description:
+      'Learn about emergency escape lighting systems, BS 5266-1 requirements, illuminance levels, spacing calculations, and exit route lighting design.',
   });
 
   return (
@@ -108,17 +118,29 @@ const EmergencyLightingModule2Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Level:</strong> 1 lux minimum at floor</li>
-              <li><strong>Uniformity:</strong> Maximum 40:1 ratio</li>
-              <li><strong>Response:</strong> 50% in 5 seconds</li>
+              <li>
+                <strong>Level:</strong> 1 lux minimum at floor
+              </li>
+              <li>
+                <strong>Uniformity:</strong> Maximum 40:1 ratio
+              </li>
+              <li>
+                <strong>Response:</strong> 50% in 5 seconds
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Route Coverage</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Centre line:</strong> 1 lux measured</li>
-              <li><strong>Width:</strong> Up to 2m per luminaire row</li>
-              <li><strong>Duration:</strong> 3 hours minimum</li>
+              <li>
+                <strong>Centre line:</strong> 1 lux measured
+              </li>
+              <li>
+                <strong>Width:</strong> Up to 2m per luminaire row
+              </li>
+              <li>
+                <strong>Duration:</strong> 3 hours minimum
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +150,12 @@ const EmergencyLightingModule2Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Design escape route lighting to BS 5266-1",
-              "Calculate luminaire spacing and uniformity",
-              "Position luminaires at critical points",
-              "Understand response time requirements",
-              "Integrate with exit signage",
-              "Verify compliance with lux meter"
+              'Design escape route lighting to BS 5266-1',
+              'Calculate luminaire spacing and uniformity',
+              'Position luminaires at critical points',
+              'Understand response time requirements',
+              'Integrate with exit signage',
+              'Verify compliance with lux meter',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,27 +175,43 @@ const EmergencyLightingModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Escape route lighting must provide sufficient illumination for safe evacuation.
-              BS 5266-1 specifies minimum levels measured at floor level along the route centre.
+              Escape route lighting must provide sufficient illumination for safe evacuation. BS
+              5266-1 specifies minimum levels measured at floor level along the route centre.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Illumination Levels</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Centre line:</strong> 1 lux minimum</li>
-                  <li><strong>Band width:</strong> 50% of route width</li>
-                  <li><strong>Uniformity:</strong> Max 40:1 ratio</li>
-                  <li><strong>CRI:</strong> Minimum Ra 40</li>
+                  <li>
+                    <strong>Centre line:</strong> 1 lux minimum
+                  </li>
+                  <li>
+                    <strong>Band width:</strong> 50% of route width
+                  </li>
+                  <li>
+                    <strong>Uniformity:</strong> Max 40:1 ratio
+                  </li>
+                  <li>
+                    <strong>CRI:</strong> Minimum Ra 40
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Response Times</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>5 seconds:</strong> 50% illumination</li>
-                  <li><strong>60 seconds:</strong> 100% illumination</li>
-                  <li><strong>Duration:</strong> 3 hours minimum</li>
-                  <li><strong>Activation:</strong> Automatic on mains fail</li>
+                  <li>
+                    <strong>5 seconds:</strong> 50% illumination
+                  </li>
+                  <li>
+                    <strong>60 seconds:</strong> 100% illumination
+                  </li>
+                  <li>
+                    <strong>Duration:</strong> 3 hours minimum
+                  </li>
+                  <li>
+                    <strong>Activation:</strong> Automatic on mains fail
+                  </li>
                 </ul>
               </div>
             </div>
@@ -190,8 +228,8 @@ const EmergencyLightingModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Correct positioning ensures adequate illumination and uniformity. Luminaires must
-              be placed at specific locations to highlight hazards and exits.
+              Correct positioning ensures adequate illumination and uniformity. Luminaires must be
+              placed at specific locations to highlight hazards and exits.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -244,18 +282,28 @@ const EmergencyLightingModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              After installation, escape route lighting must be verified to confirm it meets
-              BS 5266-1 requirements. This includes lux measurements and uniformity checks.
+              After installation, escape route lighting must be verified to confirm it meets BS
+              5266-1 requirements. This includes lux measurements and uniformity checks.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Verification Steps:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Lux meter:</strong> Calibrated, measuring at floor level</li>
-                <li><strong>Centre line:</strong> 1 lux minimum confirmed</li>
-                <li><strong>Dark spots:</strong> No areas below 0.5 lux</li>
-                <li><strong>Response time:</strong> 50% within 5 seconds verified</li>
-                <li><strong>Duration:</strong> Full 3-hour test annually</li>
+                <li>
+                  <strong>Lux meter:</strong> Calibrated, measuring at floor level
+                </li>
+                <li>
+                  <strong>Centre line:</strong> 1 lux minimum confirmed
+                </li>
+                <li>
+                  <strong>Dark spots:</strong> No areas below 0.5 lux
+                </li>
+                <li>
+                  <strong>Response time:</strong> 50% within 5 seconds verified
+                </li>
+                <li>
+                  <strong>Duration:</strong> Full 3-hour test annually
+                </li>
               </ul>
             </div>
           </div>
@@ -280,10 +328,18 @@ const EmergencyLightingModule2Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Design Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Spacing too wide:</strong> — Verify with manufacturer data</li>
-                <li><strong>Dark spots at corners:</strong> — Add luminaire at direction changes</li>
-                <li><strong>Signs not illuminated:</strong> — Position within 2m of signs</li>
-                <li><strong>Assuming walls reflect:</strong> — Dark surfaces need more luminaires</li>
+                <li>
+                  <strong>Spacing too wide:</strong> — Verify with manufacturer data
+                </li>
+                <li>
+                  <strong>Dark spots at corners:</strong> — Add luminaire at direction changes
+                </li>
+                <li>
+                  <strong>Signs not illuminated:</strong> — Position within 2m of signs
+                </li>
+                <li>
+                  <strong>Assuming walls reflect:</strong> — Dark surfaces need more luminaires
+                </li>
               </ul>
             </div>
           </div>
@@ -329,10 +385,7 @@ const EmergencyLightingModule2Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

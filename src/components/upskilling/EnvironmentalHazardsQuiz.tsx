@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,64 +17,71 @@ const EnvironmentalHazardsQuiz = () => {
       id: 1,
       question: "What's a key hazard when testing near a leaking ceiling?",
       options: [
-        "Poor lighting reduces visibility",
-        "Moisture significantly increases shock risk and could damage test equipment",
-        "Ceiling tiles might fall",
-        "The noise from dripping water"
+        'Poor lighting reduces visibility',
+        'Moisture significantly increases shock risk and could damage test equipment',
+        'Ceiling tiles might fall',
+        'The noise from dripping water',
       ],
       correctAnswer: 1,
-      explanation: "Moisture significantly increases shock risk and could cause serious damage to sensitive test equipment, making it the primary safety concern."
+      explanation:
+        'Moisture significantly increases shock risk and could cause serious damage to sensitive test equipment, making it the primary safety concern.',
     },
     {
       id: 2,
-      question: "Which of these environmental factors can impact the accuracy or safety of electrical testing?",
+      question:
+        'Which of these environmental factors can impact the accuracy or safety of electrical testing?',
       options: [
-        "Only temperature extremes",
-        "Only excessive moisture",
-        "Dust accumulation, temperature extremes, and inadequate lighting",
-        "Only poor ventilation"
+        'Only temperature extremes',
+        'Only excessive moisture',
+        'Dust accumulation, temperature extremes, and inadequate lighting',
+        'Only poor ventilation',
       ],
       correctAnswer: 2,
-      explanation: "Dust accumulation, temperature extremes, and inadequate lighting can all significantly affect both safety and test accuracy in different ways."
+      explanation:
+        'Dust accumulation, temperature extremes, and inadequate lighting can all significantly affect both safety and test accuracy in different ways.',
     },
     {
       id: 3,
-      question: "You should proceed with testing even if access is poor, as long as the distribution board is properly isolated.",
-      options: [
-        "True",
-        "False"
-      ],
+      question:
+        'You should proceed with testing even if access is poor, as long as the distribution board is properly isolated.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False - Poor access creates additional safety risks and can compromise both the quality of testing and emergency response procedures."
+      explanation:
+        'False - Poor access creates additional safety risks and can compromise both the quality of testing and emergency response procedures.',
     },
     {
       id: 4,
-      question: "How can you effectively reduce trip hazards when conducting electrical testing?",
+      question: 'How can you effectively reduce trip hazards when conducting electrical testing?',
       options: [
-        "Work as quickly as possible",
-        "Keep all leads properly organised, use cable protectors, and implement appropriate floor signage",
-        "Only test during quiet periods",
-        "Use shorter test leads only"
+        'Work as quickly as possible',
+        'Keep all leads properly organised, use cable protectors, and implement appropriate floor signage',
+        'Only test during quiet periods',
+        'Use shorter test leads only',
       ],
       correctAnswer: 1,
-      explanation: "Keeping all leads properly organised and positioned, using cable protectors where necessary, and implementing appropriate floor signage to warn others are the most effective measures."
+      explanation:
+        'Keeping all leads properly organised and positioned, using cable protectors where necessary, and implementing appropriate floor signage to warn others are the most effective measures.',
     },
     {
       id: 5,
-      question: "What should you do before starting testing work in an unfamiliar commercial or industrial site?",
+      question:
+        'What should you do before starting testing work in an unfamiliar commercial or industrial site?',
       options: [
-        "Start testing immediately if you have the right equipment",
-        "Request and participate in a comprehensive site walkthrough or formal local induction",
-        "Only check the distribution board location",
-        "Ask for the building plans"
+        'Start testing immediately if you have the right equipment',
+        'Request and participate in a comprehensive site walkthrough or formal local induction',
+        'Only check the distribution board location',
+        'Ask for the building plans',
       ],
       correctAnswer: 1,
-      explanation: "You should request and participate in a comprehensive site walkthrough or formal local induction to identify hazards and understand site-specific procedures."
-    }
+      explanation:
+        'You should request and participate in a comprehensive site walkthrough or formal local induction to identify hazards and understand site-specific procedures.',
+    },
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(questions.length).fill(null));
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(
+    new Array(questions.length).fill(null)
+  );
   const [showResults, setShowResults] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
@@ -120,7 +126,7 @@ const EnvironmentalHazardsQuiz = () => {
   if (showResults) {
     const score = calculateScore();
     const percentage = getScorePercentage();
-    
+
     return (
       <Card className="bg-gradient-to-br from-purple-900/20 to-blue-900/20 border-purple-500/30">
         <CardHeader>
@@ -134,17 +140,21 @@ const EnvironmentalHazardsQuiz = () => {
             <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
               {score}/{questions.length}
             </div>
-            <div className="text-xl text-foreground">
-              {percentage}% Complete
-            </div>
-            <div className={`text-lg font-semibold ${
-              percentage >= 80 ? 'text-green-400' : 
-              percentage >= 60 ? 'text-yellow-400' : 
-              'text-red-400'
-            }`}>
-              {percentage >= 80 ? "Excellent work!" : 
-               percentage >= 60 ? "Good effort!" : 
-               "Consider reviewing the material again."}
+            <div className="text-xl text-foreground">{percentage}% Complete</div>
+            <div
+              className={`text-lg font-semibold ${
+                percentage >= 80
+                  ? 'text-green-400'
+                  : percentage >= 60
+                    ? 'text-yellow-400'
+                    : 'text-red-400'
+              }`}
+            >
+              {percentage >= 80
+                ? 'Excellent work!'
+                : percentage >= 60
+                  ? 'Good effort!'
+                  : 'Consider reviewing the material again.'}
             </div>
           </div>
 
@@ -153,9 +163,12 @@ const EnvironmentalHazardsQuiz = () => {
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
-                <div key={question.id} className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 p-4 rounded-lg border border-gray-700/30">
+                <div
+                  key={question.id}
+                  className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 p-4 rounded-lg border border-gray-700/30"
+                >
                   <div className="flex items-center gap-2 mb-2">
                     {isCorrect ? (
                       <CheckCircle className="h-4 w-4 text-green-400" />
@@ -166,21 +179,24 @@ const EnvironmentalHazardsQuiz = () => {
                   </div>
                   <p className="text-sm text-gray-300 mb-2">{question.question}</p>
                   <p className="text-xs text-gray-400 mb-2">
-                    Your answer: {userAnswer !== null ? question.options[userAnswer] : "Not answered"}
+                    Your answer:{' '}
+                    {userAnswer !== null ? question.options[userAnswer] : 'Not answered'}
                   </p>
                   {!isCorrect && (
                     <p className="text-xs text-green-400 mb-2">
                       Correct answer: {question.options[question.correctAnswer]}
                     </p>
                   )}
-                  <p className="text-xs text-gray-400 bg-gray-800/30 p-2 rounded">{question.explanation}</p>
+                  <p className="text-xs text-gray-400 bg-gray-800/30 p-2 rounded">
+                    {question.explanation}
+                  </p>
                 </div>
               );
             })}
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={handleRestart}
               className="bg-gradient-to-r from-purple-600 to-blue-600 text-foreground hover:from-purple-700 hover:to-blue-700"
             >
@@ -211,11 +227,9 @@ const EnvironmentalHazardsQuiz = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 p-4 rounded-lg border border-gray-700/30">
-          <h4 className="font-semibold text-orange-400 mb-3">
-            Question {currentQuestion + 1}
-          </h4>
+          <h4 className="font-semibold text-orange-400 mb-3">Question {currentQuestion + 1}</h4>
           <p className="text-sm mb-4">{question.question}</p>
-          
+
           <div className="space-y-2">
             {question.options.map((option, index) => (
               <button
@@ -228,11 +242,13 @@ const EnvironmentalHazardsQuiz = () => {
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className={`w-6 h-6 rounded text-xs flex items-center justify-center font-semibold ${
-                    selectedAnswer === index 
-                      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-foreground shadow-md' 
-                      : 'bg-gray-600 text-foreground'
-                  }`}>
+                  <span
+                    className={`w-6 h-6 rounded text-xs flex items-center justify-center font-semibold ${
+                      selectedAnswer === index
+                        ? 'bg-gradient-to-r from-orange-500 to-red-500 text-foreground shadow-md'
+                        : 'bg-gray-600 text-foreground'
+                    }`}
+                  >
                     {String.fromCharCode(65 + index)}
                   </span>
                   <span>{option}</span>
@@ -251,7 +267,7 @@ const EnvironmentalHazardsQuiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswer === null}
@@ -262,9 +278,7 @@ const EnvironmentalHazardsQuiz = () => {
         </div>
 
         {selectedAnswer === null && (
-          <p className="text-center text-sm text-gray-500">
-            Please select an answer to continue
-          </p>
+          <p className="text-center text-sm text-gray-500">Please select an answer to continue</p>
         )}
       </CardContent>
     </Card>

@@ -3,103 +3,125 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { circuitTypes } from '@/types/circuitTypes';
-import { protectiveDeviceTypeOptions, protectiveDeviceRatingOptions, bsStandardOptions, protectiveDeviceCurveOptions, rcdBsStandardOptions, bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
+import {
+  protectiveDeviceTypeOptions,
+  protectiveDeviceRatingOptions,
+  bsStandardOptions,
+  protectiveDeviceCurveOptions,
+  rcdBsStandardOptions,
+  bsStandardRequiresCurve,
+} from '@/types/protectiveDeviceTypes';
 import { cableSizeOptions, referenceMethodOptions } from '@/types/cableTypes';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
 import { wiringTypeOptions, rcdTypeOptions } from '@/types/wiringTypes';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 
-
 // Memoized FormField component defined OUTSIDE to prevent recreation on every render
-const FormField = memo(({ 
-  label, 
-  id, 
-  value, 
-  onChange, 
-  type = 'input',
-  options = [],
-  placeholder = ''
-}: { 
-  label: string;
-  id: string;
-  value: string;
-  onChange: (value: string) => void;
-  type?: 'input' | 'select';
-  options?: Array<{ value: string; label: string }>;
-  placeholder?: string;
-}) => {
-  const [localValue, setLocalValue] = useState(value);
-  const debounceTimerRef = useRef<NodeJS.Timeout>();
+const FormField = memo(
+  ({
+    label,
+    id,
+    value,
+    onChange,
+    type = 'input',
+    options = [],
+    placeholder = '',
+  }: {
+    label: string;
+    id: string;
+    value: string;
+    onChange: (value: string) => void;
+    type?: 'input' | 'select';
+    options?: Array<{ value: string; label: string }>;
+    placeholder?: string;
+  }) => {
+    const [localValue, setLocalValue] = useState(value);
+    const debounceTimerRef = useRef<NodeJS.Timeout>();
 
-  // Update local value when prop value changes
-  useEffect(() => {
-    setLocalValue(value);
-  }, [value]);
+    // Update local value when prop value changes
+    useEffect(() => {
+      setLocalValue(value);
+    }, [value]);
 
-  // Debounced onChange for inputs only
-  const handleInputChange = useCallback((newValue: string) => {
-    setLocalValue(newValue);
-    
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
-    
-    debounceTimerRef.current = setTimeout(() => {
-      onChange(newValue);
-    }, 300);
-  }, [onChange]);
+    // Debounced onChange for inputs only
+    const handleInputChange = useCallback(
+      (newValue: string) => {
+        setLocalValue(newValue);
 
-  // Cleanup timer on unmount
-  useEffect(() => {
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-    };
-  }, []);
+        if (debounceTimerRef.current) {
+          clearTimeout(debounceTimerRef.current);
+        }
 
-  return (
-    <div className="space-y-2">
-      <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
-      {type === 'input' ? (
-        <Input
-          id={id}
-          value={localValue}
-          onChange={(e) => handleInputChange(e.target.value)}
-          placeholder={placeholder}
-          className="h-12 text-base touch-manipulation"
-        />
-      ) : (
-        <div 
-          className="relative" 
-          onClick={(e) => e.stopPropagation()}
-          onTouchStart={(e) => e.stopPropagation()}
-        >
-          <Select value={value} onValueChange={onChange}>
-            <SelectTrigger className="h-12 text-base touch-manipulation">
-              <SelectValue placeholder={placeholder || `Select ${label.toLowerCase()}`} />
-            </SelectTrigger>
-            <SelectContent className="bg-popover max-w-[calc(100vw-2rem)] w-auto z-[100]" position="popper">
-              {options.map((option) => (
-                <SelectItem 
-                  key={option.value} 
-                  value={option.value} 
-                  className="text-base py-3 whitespace-normal break-words"
-                >
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      )}
-    </div>
-  );
-});
+        debounceTimerRef.current = setTimeout(() => {
+          onChange(newValue);
+        }, 300);
+      },
+      [onChange]
+    );
+
+    // Cleanup timer on unmount
+    useEffect(() => {
+      return () => {
+        if (debounceTimerRef.current) {
+          clearTimeout(debounceTimerRef.current);
+        }
+      };
+    }, []);
+
+    return (
+      <div className="space-y-2">
+        <Label htmlFor={id} className="text-sm font-medium">
+          {label}
+        </Label>
+        {type === 'input' ? (
+          <Input
+            id={id}
+            value={localValue}
+            onChange={(e) => handleInputChange(e.target.value)}
+            placeholder={placeholder}
+            className="h-12 text-base touch-manipulation"
+          />
+        ) : (
+          <div
+            className="relative"
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
+          >
+            <Select value={value} onValueChange={onChange}>
+              <SelectTrigger className="h-12 text-base touch-manipulation">
+                <SelectValue placeholder={placeholder || `Select ${label.toLowerCase()}`} />
+              </SelectTrigger>
+              <SelectContent
+                className="bg-popover max-w-[calc(100vw-2rem)] w-auto z-[100]"
+                position="popper"
+              >
+                {options.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    className="text-base py-3 whitespace-normal break-words"
+                  >
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+      </div>
+    );
+  }
+);
 
 FormField.displayName = 'FormField';
 
@@ -114,19 +136,21 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
   testResults,
   onUpdate,
   onRemove,
-  onBulkUpdate
+  onBulkUpdate,
 }) => {
-  const [expandedCircuits, setExpandedCircuits] = useState<Set<string>>(new Set([testResults[0]?.id]));
+  const [expandedCircuits, setExpandedCircuits] = useState<Set<string>>(
+    new Set([testResults[0]?.id])
+  );
   const [expandedSections, setExpandedSections] = useState<Record<string, Set<string>>>({});
 
   // Auto-fill maxZs when device details change
   const autoFillMaxZs = (resultId: string, bsStandard: string, curve: string, rating: string) => {
     if (!bsStandard || !rating) return;
-    
+
     // For fuses, curve is not needed
     const needsCurve = bsStandardRequiresCurve(bsStandard);
     if (needsCurve && !curve) return;
-    
+
     const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, rating);
     if (maxZs !== null) {
       onUpdate(resultId, 'maxZs', maxZs.toString());
@@ -136,7 +160,12 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
   // Handle BS Standard change
   const handleBsStandardChange = (resultId: string, value: string, result: TestResult) => {
     onUpdate(resultId, 'bsStandard', value);
-    autoFillMaxZs(resultId, value, result.protectiveDeviceCurve || '', result.protectiveDeviceRating || '');
+    autoFillMaxZs(
+      resultId,
+      value,
+      result.protectiveDeviceCurve || '',
+      result.protectiveDeviceRating || ''
+    );
   };
 
   // Handle Curve change
@@ -171,13 +200,16 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
     }
     setExpandedSections({
       ...expandedSections,
-      [circuitId]: newSections
+      [circuitId]: newSections,
     });
   };
 
-  const isSectionExpanded = useCallback((circuitId: string, section: string) => {
-    return expandedSections[circuitId]?.has(section) || section === 'circuit';
-  }, [expandedSections]);
+  const isSectionExpanded = useCallback(
+    (circuitId: string, section: string) => {
+      return expandedSections[circuitId]?.has(section) || section === 'circuit';
+    },
+    [expandedSections]
+  );
 
   const getBorderColor = useCallback((result: TestResult) => {
     if (result.sourceCircuitId) return 'border-l-blue-500';
@@ -187,39 +219,39 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
 
   // RCD Quick Fill handlers
   const handleFillAllRcdBsStandard = (value: string) => {
-    testResults.forEach(result => {
+    testResults.forEach((result) => {
       onUpdate(result.id, 'rcdBsStandard', value);
     });
   };
 
   const handleFillAllRcdType = (value: string) => {
-    testResults.forEach(result => {
+    testResults.forEach((result) => {
       onUpdate(result.id, 'rcdType', value);
     });
   };
 
   const handleFillAllRcdRating = (value: string) => {
-    testResults.forEach(result => {
+    testResults.forEach((result) => {
       onUpdate(result.id, 'rcdRating', value);
     });
   };
 
   const handleFillAllRcdRatingA = (value: string) => {
-    testResults.forEach(result => {
+    testResults.forEach((result) => {
       onUpdate(result.id, 'rcdRatingA', value);
     });
   };
 
-  const SectionHeader = ({ 
-    circuitId, 
-    section, 
-    title, 
-    icon 
-  }: { 
-    circuitId: string; 
-    section: string; 
-    title: string; 
-    icon?: string; 
+  const SectionHeader = ({
+    circuitId,
+    section,
+    title,
+    icon,
+  }: {
+    circuitId: string;
+    section: string;
+    title: string;
+    icon?: string;
   }) => (
     <button
       onClick={() => toggleSection(circuitId, section)}
@@ -240,8 +272,8 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
   return (
     <div className="space-y-4">
       {testResults.map((result) => (
-        <Card 
-          key={result.id} 
+        <Card
+          key={result.id}
           className={`border-l-4 ${getBorderColor(result)} overflow-hidden bg-card shadow-sm`}
           data-circuit-id={result.id}
         >
@@ -274,7 +306,12 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
             <CardContent className="p-0">
               {/* Circuit Details Section */}
               <div className="border-t border-border/50">
-                <SectionHeader circuitId={result.id} section="circuit" title="Circuit Details" icon="⚡" />
+                <SectionHeader
+                  circuitId={result.id}
+                  section="circuit"
+                  title="Circuit Details"
+                  icon="⚡"
+                />
                 {isSectionExpanded(result.id, 'circuit') && (
                   <div className="p-4 space-y-4 bg-card">
                     <FormField
@@ -320,7 +357,12 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
 
               {/* Conductor Details Section */}
               <div className="border-t border-border/50">
-                <SectionHeader circuitId={result.id} section="conductors" title="Conductor Details" icon="🔌" />
+                <SectionHeader
+                  circuitId={result.id}
+                  section="conductors"
+                  title="Conductor Details"
+                  icon="🔌"
+                />
                 {isSectionExpanded(result.id, 'conductors') && (
                   <div className="p-4 space-y-4 bg-card">
                     <FormField
@@ -345,7 +387,12 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
 
               {/* Protective Device Section */}
               <div className="border-t border-border/50 bg-amber-50/20">
-                <SectionHeader circuitId={result.id} section="protection" title="Overcurrent Protective Device" icon="🛡️" />
+                <SectionHeader
+                  circuitId={result.id}
+                  section="protection"
+                  title="Overcurrent Protective Device"
+                  icon="🛡️"
+                />
                 {isSectionExpanded(result.id, 'protection') && (
                   <div className="p-4 space-y-4 bg-card">
                     <FormField
@@ -436,12 +483,19 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
 
               {/* Test Results Section */}
               <div className="border-t border-border/50">
-                <SectionHeader circuitId={result.id} section="tests" title="Continuity (Ω)" icon="📊" />
+                <SectionHeader
+                  circuitId={result.id}
+                  section="tests"
+                  title="Continuity (Ω)"
+                  icon="📊"
+                />
                 {isSectionExpanded(result.id, 'tests') && (
                   <div className="p-4 space-y-4 bg-card">
                     {/* Ring Final Circuit Continuity */}
                     <div className="space-y-3 rounded-md">
-                      <h4 className="font-medium text-sm text-muted-foreground">Ring Final Circuit Continuity</h4>
+                      <h4 className="font-medium text-sm text-muted-foreground">
+                        Ring Final Circuit Continuity
+                      </h4>
                       <FormField
                         label="r₁ (line) (Ω)"
                         id={`ringR1-${result.id}`}
@@ -486,7 +540,9 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
 
                     {/* Insulation Resistance */}
                     <div className="space-y-3 rounded-md mt-3">
-                      <h4 className="font-medium text-sm text-muted-foreground">Insulation Resistance</h4>
+                      <h4 className="font-medium text-sm text-muted-foreground">
+                        Insulation Resistance
+                      </h4>
                       <FormField
                         label="Test Voltage (V)"
                         id={`insulationTestVoltage-${result.id}`}
@@ -523,7 +579,7 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                         options={[
                           { value: 'Correct', label: 'Correct' },
                           { value: 'Incorrect', label: 'Incorrect' },
-                          { value: 'N/A', label: 'N/A' }
+                          { value: 'N/A', label: 'N/A' },
                         ]}
                       />
                       <FormField
@@ -554,7 +610,7 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                         options={[
                           { value: '✓', label: '✓ Pass' },
                           { value: '✗', label: '✗ Fail' },
-                          { value: 'N/A', label: 'N/A' }
+                          { value: 'N/A', label: 'N/A' },
                         ]}
                       />
                     </div>
@@ -571,7 +627,7 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                         options={[
                           { value: '✓', label: '✓ Pass' },
                           { value: '✗', label: '✗ Fail' },
-                          { value: 'N/A', label: 'N/A' }
+                          { value: 'N/A', label: 'N/A' },
                         ]}
                       />
                     </div>
@@ -581,7 +637,12 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
 
               {/* Functional Test Section */}
               <div className="border-t border-border/50">
-                <SectionHeader circuitId={result.id} section="functional" title="Functional Test" icon="✓" />
+                <SectionHeader
+                  circuitId={result.id}
+                  section="functional"
+                  title="Functional Test"
+                  icon="✓"
+                />
                 {isSectionExpanded(result.id, 'functional') && (
                   <div className="p-4 space-y-4 bg-card">
                     <FormField
@@ -593,7 +654,7 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                       options={[
                         { value: '✓', label: '✓ Satisfactory' },
                         { value: '✗', label: '✗ Unsatisfactory' },
-                        { value: 'N/A', label: 'N/A' }
+                        { value: 'N/A', label: 'N/A' },
                       ]}
                     />
                   </div>

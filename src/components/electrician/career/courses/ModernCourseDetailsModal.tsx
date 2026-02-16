@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -6,19 +6,19 @@ import {
   ResponsiveDialogTitle,
   ResponsiveDialogBody,
   ResponsiveDialogFooter,
-} from "@/components/ui/responsive-dialog";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { 
-  ExternalLink, 
-  Star, 
-  Clock, 
-  Users, 
-  PoundSterling, 
-  MapPin, 
+} from '@/components/ui/responsive-dialog';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  ExternalLink,
+  Star,
+  Clock,
+  Users,
+  PoundSterling,
+  MapPin,
   Calendar,
   ChevronDown,
   ChevronUp,
@@ -27,9 +27,9 @@ import {
   BookOpen,
   Phone,
   Mail,
-  Wifi
-} from "lucide-react";
-import { EnhancedCareerCourse } from "../../../apprentice/career/courses/enhancedCoursesData";
+  Wifi,
+} from 'lucide-react';
+import { EnhancedCareerCourse } from '../../../apprentice/career/courses/enhancedCoursesData';
 
 interface ModernCourseDetailsModalProps {
   course: EnhancedCareerCourse | null;
@@ -37,7 +37,11 @@ interface ModernCourseDetailsModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDetailsModalProps) => {
+const ModernCourseDetailsModal = ({
+  course,
+  open,
+  onOpenChange,
+}: ModernCourseDetailsModalProps) => {
   const [showMoreDetails, setShowMoreDetails] = useState(false);
 
   // Early return if no course data
@@ -59,43 +63,48 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
       'Specialised Skills': 'bg-purple-500/10 text-purple-400 border-purple-500/30',
       'Business & Management': 'bg-green-500/10 text-green-400 border-green-500/30',
     };
-    return colors[category as keyof typeof colors] || 'bg-blue-500/10 text-blue-400 border-blue-500/30';
+    return (
+      colors[category as keyof typeof colors] || 'bg-blue-500/10 text-blue-400 border-blue-500/30'
+    );
   };
 
   const getDemandColor = (demand: string) => {
     switch (demand) {
-      case "High": return "bg-green-500/10 text-green-400 border-green-500/30";
-      case "Medium": return "bg-yellow-500/10 text-yellow-400 border-yellow-500/30";
-      default: return "bg-gray-500/10 text-gray-400 border-gray-500/30";
+      case 'High':
+        return 'bg-green-500/10 text-green-400 border-green-500/30';
+      case 'Medium':
+        return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
+      default:
+        return 'bg-gray-500/10 text-gray-400 border-gray-500/30';
     }
   };
 
   // Fallback data for missing information
-  const displayCourseOutline = course.courseOutline?.length 
-    ? course.courseOutline 
+  const displayCourseOutline = course.courseOutline?.length
+    ? course.courseOutline
     : [
-        "Course fundamentals and overview",
-        "Core principles and regulations", 
-        "Practical application techniques",
-        "Assessment and certification"
+        'Course fundamentals and overview',
+        'Core principles and regulations',
+        'Practical application techniques',
+        'Assessment and certification',
       ];
 
   const displayCareerOutcomes = course.careerOutcomes?.length
     ? course.careerOutcomes
     : [
-        "Enhanced professional qualifications",
-        "Improved career advancement opportunities", 
-        "Access to specialised project work",
-        "Increased earning potential"
+        'Enhanced professional qualifications',
+        'Improved career advancement opportunities',
+        'Access to specialised project work',
+        'Increased earning potential',
       ];
 
-  const displayLocations = course.locations?.length 
-    ? course.locations 
-    : ["Multiple UK locations", "Online delivery available"];
+  const displayLocations = course.locations?.length
+    ? course.locations
+    : ['Multiple UK locations', 'Online delivery available'];
 
-  const displayNextDates = course.nextDates?.length 
-    ? course.nextDates 
-    : ["Contact provider for available dates"];
+  const displayNextDates = course.nextDates?.length
+    ? course.nextDates
+    : ['Contact provider for available dates'];
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
@@ -106,14 +115,14 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
             <div className="flex-1 space-y-2 sm:space-y-3">
               {/* Badges */}
               <div className="flex flex-wrap items-center gap-2">
-                <Badge
-                  variant="outline"
-                  className={`text-xs ${getCategoryColor(course.category)}`}
-                >
+                <Badge variant="outline" className={`text-xs ${getCategoryColor(course.category)}`}>
                   {course.category}
                 </Badge>
                 {course.isLive && (
-                  <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30 flex items-center gap-1">
+                  <Badge
+                    variant="outline"
+                    className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30 flex items-center gap-1"
+                  >
                     <Wifi className="h-3 w-3" />
                     Live Data
                   </Badge>
@@ -154,7 +163,7 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                 <div className="text-xs text-muted-foreground">Duration</div>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-background/50 border-border/50">
               <CardContent className="p-3 sm:p-4 text-center">
                 <Users className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
@@ -162,7 +171,7 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                 <div className="text-xs text-muted-foreground">Level</div>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-background/50 border-border/50">
               <CardContent className="p-3 sm:p-4 text-center">
                 <PoundSterling className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
@@ -170,7 +179,7 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                 <div className="text-xs text-muted-foreground">Price</div>
               </CardContent>
             </Card>
-            
+
             <Card className="bg-background/50 border-border/50">
               <CardContent className="p-3 sm:p-4 text-center">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
@@ -186,8 +195,8 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
               <CardContent className="p-3 sm:p-4">
                 <div className="flex items-center justify-between">
                   <span className="text-xs sm:text-sm font-medium">Industry Demand</span>
-                  <Badge 
-                    variant="outline" 
+                  <Badge
+                    variant="outline"
                     className={`text-xs ${getDemandColor(course.industryDemand)}`}
                   >
                     {course.industryDemand}
@@ -234,11 +243,7 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
           {/* More Details - Collapsible */}
           <Collapsible open={showMoreDetails} onOpenChange={setShowMoreDetails}>
             <CollapsibleTrigger asChild>
-              <Button 
-                variant="outline" 
-                className="w-full justify-between"
-                size="sm"
-              >
+              <Button variant="outline" className="w-full justify-between" size="sm">
                 <span className="text-xs sm:text-sm">More Course Details</span>
                 {showMoreDetails ? (
                   <ChevronUp className="h-4 w-4" />
@@ -247,10 +252,10 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                 )}
               </Button>
             </CollapsibleTrigger>
-            
+
             <CollapsibleContent className="space-y-3 sm:space-y-4 mt-3 sm:mt-4">
               <Separator />
-              
+
               {/* Course Outline & Career Outcomes */}
               <div className="grid grid-cols-1 gap-4 sm:gap-6">
                 <Card className="bg-background/50 border-border/50">
@@ -261,7 +266,10 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                     </div>
                     <div className="space-y-1 sm:space-y-2">
                       {displayCourseOutline.map((item, idx) => (
-                        <div key={idx} className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2">
+                        <div
+                          key={idx}
+                          className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2"
+                        >
                           <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 shrink-0" />
                           <span>{item}</span>
                         </div>
@@ -278,7 +286,10 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                     </div>
                     <div className="space-y-1 sm:space-y-2">
                       {displayCareerOutcomes.map((outcome, idx) => (
-                        <div key={idx} className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2">
+                        <div
+                          key={idx}
+                          className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2"
+                        >
                           <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 shrink-0" />
                           <span>{outcome}</span>
                         </div>
@@ -294,7 +305,9 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                   <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-xs sm:text-sm">Salary Impact</span>
-                      <span className="text-green-400 font-medium text-xs sm:text-sm">{course.salaryImpact}</span>
+                      <span className="text-green-400 font-medium text-xs sm:text-sm">
+                        {course.salaryImpact}
+                      </span>
                     </div>
                   </CardContent>
                 </Card>
@@ -308,12 +321,13 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                     <span className="font-medium text-xs sm:text-sm">Get in Touch</span>
                   </div>
                   <p className="text-xs sm:text-sm text-muted-foreground">
-                    Contact {course.provider} directly for course availability, pricing details, and enrollment information.
+                    Contact {course.provider} directly for course availability, pricing details, and
+                    enrollment information.
                   </p>
                   {course.external_url && (
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
                       className="mt-2 sm:mt-3 w-full"
                       onClick={handleViewProvider}
                     >

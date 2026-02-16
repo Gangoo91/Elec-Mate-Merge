@@ -1,21 +1,27 @@
-import React, { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
-import { Calculator } from "lucide-react";
+import React, { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from '@/components/ui/select';
+import { Calculator } from 'lucide-react';
 
-export type PowerMode = "single" | "three";
-export type CalcType = "power" | "current";
+export type PowerMode = 'single' | 'three';
+export type CalcType = 'power' | 'current';
 
 export const PowerQuickCalc: React.FC = () => {
-  const [mode, setMode] = useState<PowerMode>("single");
-  const [calc, setCalc] = useState<CalcType>("power");
-  const [volts, setVolts] = useState<string>("230");
-  const [amps, setAmps] = useState<string>("");
-  const [pf, setPf] = useState<string>("1");
-  const [kw, setKw] = useState<string>("");
+  const [mode, setMode] = useState<PowerMode>('single');
+  const [calc, setCalc] = useState<CalcType>('power');
+  const [volts, setVolts] = useState<string>('230');
+  const [amps, setAmps] = useState<string>('');
+  const [pf, setPf] = useState<string>('1');
+  const [kw, setKw] = useState<string>('');
   const [result, setResult] = useState<{ label: string; value: number; unit: string } | null>(null);
 
   const handleCalculate = () => {
@@ -27,23 +33,23 @@ export const PowerQuickCalc: React.FC = () => {
     };
 
     let calculationResult;
-    if (calc === "power") {
-      if (mode === "single") {
+    if (calc === 'power') {
+      if (mode === 'single') {
         const P = parsed.V * parsed.I * parsed.pf; // watts
-        calculationResult = { label: "Power", value: isFinite(P) ? P / 1000 : 0, unit: "kW" };
+        calculationResult = { label: 'Power', value: isFinite(P) ? P / 1000 : 0, unit: 'kW' };
       } else {
         const P = Math.sqrt(3) * parsed.V * parsed.I * parsed.pf; // watts (V is line-to-line in 3φ)
-        calculationResult = { label: "Power", value: isFinite(P) ? P / 1000 : 0, unit: "kW" };
+        calculationResult = { label: 'Power', value: isFinite(P) ? P / 1000 : 0, unit: 'kW' };
       }
     } else {
       // current from power
       const P = parsed.kW * 1000; // watts
-      if (mode === "single") {
+      if (mode === 'single') {
         const I = parsed.pf > 0 ? P / (parsed.V * parsed.pf) : 0;
-        calculationResult = { label: "Current", value: isFinite(I) ? I : 0, unit: "A" };
+        calculationResult = { label: 'Current', value: isFinite(I) ? I : 0, unit: 'A' };
       } else {
         const I = parsed.pf > 0 ? P / (Math.sqrt(3) * parsed.V * parsed.pf) : 0;
-        calculationResult = { label: "Current", value: isFinite(I) ? I : 0, unit: "A" };
+        calculationResult = { label: 'Current', value: isFinite(I) ? I : 0, unit: 'A' };
       }
     }
     setResult(calculationResult);
@@ -102,11 +108,11 @@ export const PowerQuickCalc: React.FC = () => {
             className="mt-1 border-purple-200/50 focus:border-purple-400"
             value={volts}
             onChange={(e) => setVolts(e.target.value)}
-            placeholder={mode === "single" ? "230" : "400"}
+            placeholder={mode === 'single' ? '230' : '400'}
             aria-label="Voltage"
           />
         </div>
-        {calc === "power" ? (
+        {calc === 'power' ? (
           <div>
             <Label className="text-sm text-muted-foreground">Current (A)</Label>
             <Input
@@ -148,13 +154,15 @@ export const PowerQuickCalc: React.FC = () => {
         <div className="mt-4 p-4 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-950/30 dark:to-blue-950/30 rounded-lg border border-emerald-200/50">
           <Label className="text-sm font-semibold text-foreground">{result.label}</Label>
           <div className="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-            {result.value.toFixed(3)} <span className="text-lg text-muted-foreground">{result.unit}</span>
+            {result.value.toFixed(3)}{' '}
+            <span className="text-lg text-muted-foreground">{result.unit}</span>
           </div>
         </div>
       )}
 
       <p className="mt-3 text-xs text-muted-foreground">
-        Three‑phase uses line‑to‑line voltage (400 V typical). Results are approximate; always verify against manufacturer data and BS 7671 design checks.
+        Three‑phase uses line‑to‑line voltage (400 V typical). Results are approximate; always
+        verify against manufacturer data and BS 7671 design checks.
       </p>
     </Card>
   );

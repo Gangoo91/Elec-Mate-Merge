@@ -43,10 +43,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 
 // Email whitelist for Worker Tools (beta testing)
-const EMPLOYER_ALLOWED_EMAILS = [
-  'founder@elec-mate.com',
-  'andrewgangoo91@gmail.com',
-];
+const EMPLOYER_ALLOWED_EMAILS = ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'];
 
 // Animation variants - Smooth, fast entrance
 const containerVariants = {
@@ -97,12 +94,8 @@ function ElectricalHero() {
           </div>
 
           {/* Greeting and Name */}
-          <p className="text-sm text-white/50 mb-0.5">
-            {getGreeting()}
-          </p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">
-            {firstName}
-          </h1>
+          <p className="text-sm text-white/50 mb-0.5">{getGreeting()}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">{firstName}</h1>
 
           {/* Status badges - horizontal row */}
           <div className="flex items-center gap-2 mt-3">
@@ -170,9 +163,10 @@ function ElectricalStatsBar() {
       value: business.overdueInvoices,
       icon: business.overdueInvoices === 0 ? CheckCircle : AlertCircle,
       variant: business.overdueInvoices === 0 ? 'success' : 'danger',
-      navigateTo: business.overdueInvoices > 0
-        ? '/electrician/invoices?filter=overdue'
-        : '/electrician/invoices',
+      navigateTo:
+        business.overdueInvoices > 0
+          ? '/electrician/invoices?filter=overdue'
+          : '/electrician/invoices',
     },
   ];
 
@@ -208,29 +202,41 @@ function ElectricalStatsBar() {
             className="touch-manipulation cursor-pointer group w-full"
             aria-label={`View ${stat.label}`}
           >
-            <div className={cn(
-              'glass-premium rounded-xl p-4 h-[100px]',
-              'group-hover:bg-white/[0.04] group-active:bg-white/[0.02]',
-              'transition-all duration-200',
-              'group-hover:shadow-lg group-hover:shadow-elec-yellow/5'
-            )}>
+            <div
+              className={cn(
+                'glass-premium rounded-xl p-4 h-[100px]',
+                'group-hover:bg-white/[0.04] group-active:bg-white/[0.02]',
+                'transition-all duration-200',
+                'group-hover:shadow-lg group-hover:shadow-elec-yellow/5'
+              )}
+            >
               <div className="flex flex-col items-center justify-center h-full text-center">
                 {/* Icon */}
-                <div className={cn(
-                  'p-2 rounded-lg mb-2 transition-colors',
-                  isSuccess ? 'bg-green-500/10 group-hover:bg-green-500/20' : isDanger ? 'bg-red-500/10 group-hover:bg-red-500/20' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
-                )}>
-                  <Icon className={cn(
-                    'h-5 w-5',
-                    isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                  )} />
+                <div
+                  className={cn(
+                    'p-2 rounded-lg mb-2 transition-colors',
+                    isSuccess
+                      ? 'bg-green-500/10 group-hover:bg-green-500/20'
+                      : isDanger
+                        ? 'bg-red-500/10 group-hover:bg-red-500/20'
+                        : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
+                  )}
+                >
+                  <Icon
+                    className={cn(
+                      'h-5 w-5',
+                      isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
+                    )}
+                  />
                 </div>
                 {/* Value and label - centered */}
                 {stat.formatAsCurrency ? (
-                  <span className={cn(
-                    'text-xl font-bold',
-                    isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                  )}>
+                  <span
+                    className={cn(
+                      'text-xl font-bold',
+                      isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
+                    )}
+                  >
                     {business.formattedQuoteValue}
                   </span>
                 ) : (
@@ -243,9 +249,7 @@ function ElectricalStatsBar() {
                     )}
                   />
                 )}
-                <p className="text-[11px] text-white/60 mt-0.5">
-                  {stat.label}
-                </p>
+                <p className="text-[11px] text-white/60 mt-0.5">{stat.label}</p>
               </div>
             </div>
           </motion.button>
@@ -258,7 +262,10 @@ function ElectricalStatsBar() {
 // Featured Card Component - Elec-AI
 function FeaturedCard() {
   return (
-    <Link to="/electrician-tools/ai-tooling/assistant" className="block group touch-manipulation active:opacity-90">
+    <Link
+      to="/electrician-tools/ai-tooling/assistant"
+      className="block group touch-manipulation active:opacity-90"
+    >
       <motion.div
         whileHover={{ y: -2, scale: 1.01 }}
         whileTap={{ scale: 0.97 }}
@@ -273,9 +280,7 @@ function FeaturedCard() {
             <Brain className="h-8 w-8 text-purple-400" />
           </div>
 
-          <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-            Elec-AI
-          </h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Elec-AI</h3>
           <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
             Your personal electrical adviser — circuit design, fault finding, regs queries & more
           </p>
@@ -316,9 +321,7 @@ function ToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
             <h3 className="text-base sm:text-lg font-semibold text-white mb-1 group-hover:text-elec-yellow group-active:text-elec-yellow transition-colors">
               {title}
             </h3>
-            <p className="text-sm text-white/70 leading-relaxed line-clamp-2">
-              {description}
-            </p>
+            <p className="text-sm text-white/70 leading-relaxed line-clamp-2">{description}</p>
           </div>
 
           <ChevronRight className="h-5 w-5 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-1 group-active:text-elec-yellow group-active:translate-x-1 transition-all flex-shrink-0" />
@@ -345,9 +348,7 @@ function CompactToolCard({ title, description, icon: Icon, link }: ToolCardProps
           <h3 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-elec-yellow transition-colors">
             {title}
           </h3>
-          <p className="text-xs text-white/60 line-clamp-2 hidden sm:block">
-            {description}
-          </p>
+          <p className="text-xs text-white/60 line-clamp-2 hidden sm:block">{description}</p>
         </div>
       </motion.div>
     </Link>
@@ -404,7 +405,6 @@ const mainResources: ToolCardProps[] = [
   },
 ];
 
-
 // Company resources - employer integration features (Hidden until employer area launches)
 // const companyResources: ToolCardProps[] = [
 //   {
@@ -455,11 +455,13 @@ const ElectricalHub = () => {
   // SEO for electrician hub - high priority for Google ranking
   useSEO({
     title: 'Electrician Tools & Certificates | BS 7671 Compliant',
-    description: 'Professional tools for UK electricians: cable calculators, voltage drop, EICR/EIC/Minor Works certificates, 5 AI specialists, cost engineering, and 60+ electrical calculators. BS 7671 18th Edition compliant.',
+    description:
+      'Professional tools for UK electricians: cable calculators, voltage drop, EICR/EIC/Minor Works certificates, 5 AI specialists, cost engineering, and 60+ electrical calculators. BS 7671 18th Edition compliant.',
     schema: {
       '@type': 'CollectionPage',
       name: 'Electrician Professional Tools',
-      description: 'Suite of professional electrical tools and certification software for UK electricians',
+      description:
+        'Suite of professional electrical tools and certification software for UK electricians',
       provider: {
         '@type': 'Organization',
         name: 'Elec-Mate',
@@ -471,7 +473,9 @@ const ElectricalHub = () => {
   const { data: profileData } = useQuery({
     queryKey: ['onboarding-check-with-email'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return null;
 
       const { data } = await supabase
@@ -507,89 +511,89 @@ const ElectricalHub = () => {
   return (
     <div className="bg-[hsl(240,5.9%,10%)]">
       <div className="mx-auto max-w-6xl">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="space-y-4 sm:space-y-6"
-          >
-            {/* Back Button - Larger touch target */}
-            <motion.div variants={itemVariants} className="px-4 sm:px-0">
-              <Link to="/dashboard">
-                <Button
-                  variant="ghost"
-                  className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
-                >
-                  <ArrowLeft className="mr-2 h-5 w-5" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-            </motion.div>
-
-            {/* Hero */}
-            <motion.section variants={itemVariants} className="px-4 sm:px-0">
-              <ElectricalHero />
-            </motion.section>
-
-            {/* Stats Bar - Now visible on mobile as carousel */}
-            <motion.section variants={itemVariants} className="sm:px-0">
-              <ElectricalStatsBar />
-            </motion.section>
-
-            {/* Elec-ID Banner */}
-            <motion.section variants={itemVariants} className="px-4 sm:px-0">
-              <ElecIdBanner variant="electrician" />
-            </motion.section>
-
-            {/* Setup Incomplete Banner */}
-            <motion.section variants={itemVariants} className="px-4 sm:px-0">
-              <SetupIncompleteBanner />
-            </motion.section>
-
-            {/* Elec-AI Featured Card */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="Elec-AI" />
-              <FeaturedCard />
-            </motion.section>
-
-            {/* Core Daily Tools */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="Core Daily Tools" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 touch-grid">
-                {mainResources.map((resource) => (
-                  <ToolCard key={resource.link} {...resource} />
-                ))}
-                {/* Worker Tools - visible when user has employee record or is whitelisted */}
-                {showWorkerTools && (
-                  <ToolCard
-                    title="Worker Tools"
-                    description="Status, timesheets, leave & comms"
-                    icon={Users}
-                    link="/electrician/worker-tools"
-                  />
-                )}
-              </div>
-            </motion.section>
-
-            {/* Business & Development */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="Business & Development" />
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 touch-grid">
-                {additionalResources.map((resource) => (
-                  <CompactToolCard key={resource.link} {...resource} />
-                ))}
-              </div>
-            </motion.section>
-
-            {/* Latest Jobs */}
-            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-              <SectionHeader title="Career Opportunities" />
-              <LatestJobsWidget />
-            </motion.section>
-
-            {/* Footer spacing for mobile nav */}
-            <div className="h-6 sm:h-8" />
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4 sm:space-y-6"
+        >
+          {/* Back Button - Larger touch target */}
+          <motion.div variants={itemVariants} className="px-4 sm:px-0">
+            <Link to="/dashboard">
+              <Button
+                variant="ghost"
+                className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+              >
+                <ArrowLeft className="mr-2 h-5 w-5" />
+                Back to Dashboard
+              </Button>
+            </Link>
           </motion.div>
+
+          {/* Hero */}
+          <motion.section variants={itemVariants} className="px-4 sm:px-0">
+            <ElectricalHero />
+          </motion.section>
+
+          {/* Stats Bar - Now visible on mobile as carousel */}
+          <motion.section variants={itemVariants} className="sm:px-0">
+            <ElectricalStatsBar />
+          </motion.section>
+
+          {/* Elec-ID Banner */}
+          <motion.section variants={itemVariants} className="px-4 sm:px-0">
+            <ElecIdBanner variant="electrician" />
+          </motion.section>
+
+          {/* Setup Incomplete Banner */}
+          <motion.section variants={itemVariants} className="px-4 sm:px-0">
+            <SetupIncompleteBanner />
+          </motion.section>
+
+          {/* Elec-AI Featured Card */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="Elec-AI" />
+            <FeaturedCard />
+          </motion.section>
+
+          {/* Core Daily Tools */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="Core Daily Tools" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 touch-grid">
+              {mainResources.map((resource) => (
+                <ToolCard key={resource.link} {...resource} />
+              ))}
+              {/* Worker Tools - visible when user has employee record or is whitelisted */}
+              {showWorkerTools && (
+                <ToolCard
+                  title="Worker Tools"
+                  description="Status, timesheets, leave & comms"
+                  icon={Users}
+                  link="/electrician/worker-tools"
+                />
+              )}
+            </div>
+          </motion.section>
+
+          {/* Business & Development */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="Business & Development" />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 touch-grid">
+              {additionalResources.map((resource) => (
+                <CompactToolCard key={resource.link} {...resource} />
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Latest Jobs */}
+          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+            <SectionHeader title="Career Opportunities" />
+            <LatestJobsWidget />
+          </motion.section>
+
+          {/* Footer spacing for mobile nav */}
+          <div className="h-6 sm:h-8" />
+        </motion.div>
       </div>
 
       {/* Setup Wizard */}

@@ -1,12 +1,21 @@
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { FileText, Clock, Award, CheckCircle, Star, Zap, Lock, ArrowRight, GraduationCap } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { useAuth } from "@/contexts/AuthContext";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  FileText,
+  Clock,
+  Award,
+  CheckCircle,
+  Star,
+  Zap,
+  Lock,
+  ArrowRight,
+  GraduationCap,
+} from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { DropdownTabs } from '@/components/ui/dropdown-tabs';
+import { useAuth } from '@/contexts/AuthContext';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 interface MockExam {
   id: string;
@@ -21,50 +30,55 @@ interface MockExam {
 // Mock data for exams
 const mockExams: MockExam[] = [
   {
-    id: "level2-am2",
-    title: "Level 2 - AM2 Practice Exam",
-    description: "Comprehensive practice exam covering all Level 2 topics with an emphasis on AM2 assessment preparation.",
+    id: 'level2-am2',
+    title: 'Level 2 - AM2 Practice Exam',
+    description:
+      'Comprehensive practice exam covering all Level 2 topics with an emphasis on AM2 assessment preparation.',
     duration: 120,
     questionCount: 60,
-    level: "Level 2",
+    level: 'Level 2',
     isPremium: false,
   },
   {
-    id: "level2-unit1",
-    title: "Level 2 - Unit 1 Health & Safety",
-    description: "Practice exam focused on health and safety principles for electrical installation work.",
+    id: 'level2-unit1',
+    title: 'Level 2 - Unit 1 Health & Safety',
+    description:
+      'Practice exam focused on health and safety principles for electrical installation work.',
     duration: 45,
     questionCount: 30,
-    level: "Level 2",
+    level: 'Level 2',
     isPremium: false,
   },
   {
-    id: "level3-full",
-    title: "Level 3 - Full Practice Exam",
-    description: "Complete mock exam covering all Level 3 topics including electrical science and fault diagnosis.",
+    id: 'level3-full',
+    title: 'Level 3 - Full Practice Exam',
+    description:
+      'Complete mock exam covering all Level 3 topics including electrical science and fault diagnosis.',
     duration: 180,
     questionCount: 80,
-    level: "Level 3",
+    level: 'Level 3',
     isPremium: true,
   },
   {
-    id: "level3-inspection",
-    title: "Level 3 - Inspection & Testing",
-    description: "Specialised practice test focusing on inspection, testing and commissioning procedures.",
+    id: 'level3-inspection',
+    title: 'Level 3 - Inspection & Testing',
+    description:
+      'Specialised practice test focusing on inspection, testing and commissioning procedures.',
     duration: 60,
     questionCount: 40,
-    level: "Level 3",
+    level: 'Level 3',
     isPremium: true,
   },
   {
-    id: "level4-design",
-    title: "Level 4 - Electrical Design",
-    description: "Advanced mock exam on electrical system design principles for experienced electricians.",
+    id: 'level4-design',
+    title: 'Level 4 - Electrical Design',
+    description:
+      'Advanced mock exam on electrical system design principles for experienced electricians.',
     duration: 120,
     questionCount: 50,
-    level: "Level 4",
+    level: 'Level 4',
     isPremium: true,
-  }
+  },
 ];
 
 // Reusable ExamCard component
@@ -91,9 +105,11 @@ const ExamCard = ({ exam, isSubscribed }: { exam: MockExam; isSubscribed: boolea
             <Badge
               variant="outline"
               className={`mt-2 text-xs ${
-                exam.level === 'Level 2' ? 'border-green-500/50 text-green-400' :
-                exam.level === 'Level 3' ? 'border-blue-500/50 text-blue-400' :
-                'border-purple-500/50 text-purple-400'
+                exam.level === 'Level 2'
+                  ? 'border-green-500/50 text-green-400'
+                  : exam.level === 'Level 3'
+                    ? 'border-blue-500/50 text-blue-400'
+                    : 'border-purple-500/50 text-purple-400'
               }`}
             >
               {exam.level}
@@ -135,11 +151,7 @@ const ExamCard = ({ exam, isSubscribed }: { exam: MockExam; isSubscribed: boolea
             </Button>
           </div>
         ) : (
-          <Button
-            asChild
-            variant="accent"
-            className="w-full font-semibold group/btn"
-          >
+          <Button asChild variant="accent" className="w-full font-semibold group/btn">
             <Link to={`/apprentice/study/mock-exams/${exam.id}`}>
               Start Exam
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
@@ -155,9 +167,7 @@ const ExamCard = ({ exam, isSubscribed }: { exam: MockExam; isSubscribed: boolea
 const ExamGrid = ({ exams, isSubscribed }: { exams: MockExam[]; isSubscribed: boolean }) => (
   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
     {exams.length > 0 ? (
-      exams.map((exam) => (
-        <ExamCard key={exam.id} exam={exam} isSubscribed={isSubscribed} />
-      ))
+      exams.map((exam) => <ExamCard key={exam.id} exam={exam} isSubscribed={isSubscribed} />)
     ) : (
       <div className="col-span-full text-center py-12 text-white">
         No exams available for this level yet.
@@ -168,15 +178,15 @@ const ExamGrid = ({ exams, isSubscribed }: { exams: MockExam[]; isSubscribed: bo
 
 const MockExams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "all";
+  const activeTab = searchParams.get('tab') || 'all';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const { isSubscribed } = useAuth();
 
   // Filter exams based on the active tab
   const getFilteredExams = (level: string): MockExam[] => {
-    return level === "all"
+    return level === 'all'
       ? mockExams
-      : mockExams.filter(exam => exam.level.toLowerCase().includes(level));
+      : mockExams.filter((exam) => exam.level.toLowerCase().includes(level));
   };
 
   return (
@@ -208,7 +218,7 @@ const MockExams = () => {
         <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-green-500/5">
           <CardContent className="p-3 sm:p-4 text-center">
             <div className="text-2xl font-bold text-green-400">
-              {mockExams.filter(e => !e.isPremium).length}
+              {mockExams.filter((e) => !e.isPremium).length}
             </div>
             <div className="text-xs text-white">Free Exams</div>
           </CardContent>
@@ -216,7 +226,7 @@ const MockExams = () => {
         <Card className="border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-amber-500/5">
           <CardContent className="p-3 sm:p-4 text-center">
             <div className="text-2xl font-bold text-amber-400">
-              {mockExams.filter(e => e.isPremium).length}
+              {mockExams.filter((e) => e.isPremium).length}
             </div>
             <div className="text-xs text-white">Premium</div>
           </CardContent>
@@ -238,29 +248,29 @@ const MockExams = () => {
         onValueChange={setActiveTab}
         tabs={[
           {
-            value: "all",
-            label: "All Exams",
+            value: 'all',
+            label: 'All Exams',
             icon: CheckCircle,
-            content: <ExamGrid exams={getFilteredExams("all")} isSubscribed={isSubscribed} />
+            content: <ExamGrid exams={getFilteredExams('all')} isSubscribed={isSubscribed} />,
           },
           {
-            value: "level 2",
-            label: "Level 2",
+            value: 'level 2',
+            label: 'Level 2',
             icon: Star,
-            content: <ExamGrid exams={getFilteredExams("level 2")} isSubscribed={isSubscribed} />
+            content: <ExamGrid exams={getFilteredExams('level 2')} isSubscribed={isSubscribed} />,
           },
           {
-            value: "level 3",
-            label: "Level 3",
+            value: 'level 3',
+            label: 'Level 3',
             icon: Zap,
-            content: <ExamGrid exams={getFilteredExams("level 3")} isSubscribed={isSubscribed} />
+            content: <ExamGrid exams={getFilteredExams('level 3')} isSubscribed={isSubscribed} />,
           },
           {
-            value: "level 4",
-            label: "Level 4",
+            value: 'level 4',
+            label: 'Level 4',
             icon: Award,
-            content: <ExamGrid exams={getFilteredExams("level 4")} isSubscribed={isSubscribed} />
-          }
+            content: <ExamGrid exams={getFilteredExams('level 4')} isSubscribed={isSubscribed} />,
+          },
         ]}
       />
     </div>

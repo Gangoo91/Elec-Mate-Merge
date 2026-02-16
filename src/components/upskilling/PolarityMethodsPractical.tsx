@@ -13,7 +13,6 @@ export const PolarityMethodsPractical = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
-          
           {/* Equipment Setup */}
           <div className="space-y-4">
             <h4 className="text-foreground font-semibold flex items-center gap-2">
@@ -29,11 +28,12 @@ export const PolarityMethodsPractical = () => {
                 <li>Crocodile clips for hands-free testing</li>
                 <li>Probe adaptors for accessing tight spaces</li>
               </ul>
-              
+
               <div className="bg-blue-900/20 border border-blue-700/30 rounded-lg p-3 mt-3">
                 <p className="text-blue-200 text-sm">
-                  <strong>Setup:</strong> Set MFT to continuity/low resistance mode. Typical test current: 4-200mA. 
-                  Verify test leads have low resistance (&lt;0.1Ω) by touching probes together.
+                  <strong>Setup:</strong> Set MFT to continuity/low resistance mode. Typical test
+                  current: 4-200mA. Verify test leads have low resistance (&lt;0.1Ω) by touching
+                  probes together.
                 </p>
               </div>
             </div>
@@ -45,12 +45,14 @@ export const PolarityMethodsPractical = () => {
               <TestTube className="h-5 w-5 text-elec-yellow" />
               Step-by-Step Testing Procedures
             </h4>
-            
+
             {/* Socket Outlets */}
             <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
               <h5 className="text-elec-yellow font-medium">Socket Outlet Testing</h5>
               <div className="space-y-2">
-                <Badge variant="outline" className="border-blue-600 text-blue-300">Procedure 1</Badge>
+                <Badge variant="outline" className="border-blue-600 text-blue-300">
+                  Procedure 1
+                </Badge>
                 <ol className="list-decimal list-inside space-y-1 text-sm">
                   <li>Ensure circuit is isolated and proven dead</li>
                   <li>Connect one test probe to line terminal at distribution board</li>
@@ -62,8 +64,8 @@ export const PolarityMethodsPractical = () => {
               </div>
               <div className="bg-green-900/20 border border-green-700/30 rounded-lg p-2">
                 <p className="text-green-200 text-xs">
-                  <strong>Expected Result:</strong> Low resistance reading confirms correct polarity. 
-                  High resistance or open circuit indicates wiring error.
+                  <strong>Expected Result:</strong> Low resistance reading confirms correct
+                  polarity. High resistance or open circuit indicates wiring error.
                 </p>
               </div>
             </div>
@@ -72,7 +74,9 @@ export const PolarityMethodsPractical = () => {
             <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
               <h5 className="text-elec-yellow font-medium">Lighting Circuit Testing</h5>
               <div className="space-y-2">
-                <Badge variant="outline" className="border-purple-600 text-purple-300">Procedure 2</Badge>
+                <Badge variant="outline" className="border-purple-600 text-purple-300">
+                  Procedure 2
+                </Badge>
                 <ol className="list-decimal list-inside space-y-1 text-sm">
                   <li>Test each switch position: DB line terminal to switch line terminal</li>
                   <li>For lampholders: DB line terminal to lampholder centre contact</li>
@@ -84,8 +88,8 @@ export const PolarityMethodsPractical = () => {
               </div>
               <div className="bg-orange-900/20 border border-orange-700/30 rounded-lg p-2">
                 <p className="text-orange-200 text-xs">
-                  <strong>Critical:</strong> Centre contact of Edison screw lampholders MUST be connected 
-                  to line conductor. Screw thread must be neutral.
+                  <strong>Critical:</strong> Centre contact of Edison screw lampholders MUST be
+                  connected to line conductor. Screw thread must be neutral.
                 </p>
               </div>
             </div>
@@ -94,7 +98,9 @@ export const PolarityMethodsPractical = () => {
             <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
               <h5 className="text-elec-yellow font-medium">Fixed Equipment Testing</h5>
               <div className="space-y-2">
-                <Badge variant="outline" className="border-red-600 text-red-300">Procedure 3</Badge>
+                <Badge variant="outline" className="border-red-600 text-red-300">
+                  Procedure 3
+                </Badge>
                 <ol className="list-decimal list-inside space-y-1 text-sm">
                   <li>Locate equipment isolation switch/FCU</li>
                   <li>Test DB line terminal to equipment line terminal via switch</li>
@@ -114,7 +120,6 @@ export const PolarityMethodsPractical = () => {
               Interpreting Test Results
             </h4>
             <div className="grid gap-4">
-              
               <div className="bg-green-900/20 border border-green-700/30 rounded-lg p-4">
                 <h5 className="text-green-200 font-medium mb-2">Correct Polarity Results</h5>
                 <ul className="list-disc list-inside space-y-1 text-sm text-green-200">
@@ -144,7 +149,6 @@ export const PolarityMethodsPractical = () => {
               Troubleshooting Common Issues
             </h4>
             <div className="space-y-3">
-              
               <div className="bg-elec-dark/50 rounded-lg p-4">
                 <h5 className="text-orange-300 font-medium">High Resistance Readings</h5>
                 <p className="text-sm mb-2">Possible causes:</p>

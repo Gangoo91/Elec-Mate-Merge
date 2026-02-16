@@ -3,239 +3,262 @@
  * Following Level3ContentTemplate.tsx design pattern
  */
 
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Attending Courses and Seminars - Level 3 Module 7 Section 4.2";
-const DESCRIPTION = "Understanding formal CPD opportunities including training courses, industry seminars, manufacturer training, and professional development events.";
+const TITLE = 'Attending Courses and Seminars - Level 3 Module 7 Section 4.2';
+const DESCRIPTION =
+  'Understanding formal CPD opportunities including training courses, industry seminars, manufacturer training, and professional development events.';
 
 const quickCheckQuestions = [
   {
-    id: "check-1",
-    question: "What is the purpose of 18th Edition update training?",
+    id: 'check-1',
+    question: 'What is the purpose of 18th Edition update training?',
     options: [
-      "To replace the original 18th Edition qualification",
-      "To learn about changes and amendments since the last edition you trained on",
+      'To replace the original 18th Edition qualification',
+      'To learn about changes and amendments since the last edition you trained on',
       "It's only required for new electricians",
-      "To qualify for building control approval"
+      'To qualify for building control approval',
     ],
     correctIndex: 1,
-    explanation: "Update training covers changes between editions or amendments. If you qualified on the 18th Edition but Amendment 2 has been published, update training ensures you understand the changes. It builds on existing knowledge rather than starting from scratch."
+    explanation:
+      'Update training covers changes between editions or amendments. If you qualified on the 18th Edition but Amendment 2 has been published, update training ensures you understand the changes. It builds on existing knowledge rather than starting from scratch.',
   },
   {
-    id: "check-2",
-    question: "Which organisations commonly offer training for electricians in the UK?",
+    id: 'check-2',
+    question: 'Which organisations commonly offer training for electricians in the UK?',
     options: [
-      "Only colleges with City & Guilds centres",
-      "Training providers, manufacturers, competent person schemes, trade bodies, and colleges",
-      "Only the JIB",
-      "Only the IET"
+      'Only colleges with City & Guilds centres',
+      'Training providers, manufacturers, competent person schemes, trade bodies, and colleges',
+      'Only the JIB',
+      'Only the IET',
     ],
     correctIndex: 1,
-    explanation: "Many organisations provide training: private training providers, manufacturers (product-specific), competent person schemes (NICEIC, NAPIT), trade bodies, local colleges, and online providers. Choose based on your needs and their reputation."
+    explanation:
+      'Many organisations provide training: private training providers, manufacturers (product-specific), competent person schemes (NICEIC, NAPIT), trade bodies, local colleges, and online providers. Choose based on your needs and their reputation.',
   },
   {
-    id: "check-3",
-    question: "Manufacturer training is valuable because it:",
+    id: 'check-3',
+    question: 'Manufacturer training is valuable because it:',
     options: [
-      "Replaces the need for BS 7671 knowledge",
-      "Provides specific knowledge about products and often comes with recognised certificates",
-      "Is only useful for sales purposes",
-      "Is always free of charge"
+      'Replaces the need for BS 7671 knowledge',
+      'Provides specific knowledge about products and often comes with recognised certificates',
+      'Is only useful for sales purposes',
+      'Is always free of charge',
     ],
     correctIndex: 1,
-    explanation: "Manufacturer training provides detailed knowledge about specific products, installation requirements, commissioning, and troubleshooting. Many offer certificates that demonstrate competence with their equipment, which can be valuable for clients and employers."
+    explanation:
+      'Manufacturer training provides detailed knowledge about specific products, installation requirements, commissioning, and troubleshooting. Many offer certificates that demonstrate competence with their equipment, which can be valuable for clients and employers.',
   },
   {
-    id: "check-4",
-    question: "When choosing a training course, you should consider:",
+    id: 'check-4',
+    question: 'When choosing a training course, you should consider:',
     options: [
-      "Only the price - cheaper is always better",
-      "Course content, provider reputation, practical vs theory balance, and certification provided",
-      "Only courses your employer chooses",
-      "Only courses available locally"
+      'Only the price - cheaper is always better',
+      'Course content, provider reputation, practical vs theory balance, and certification provided',
+      'Only courses your employer chooses',
+      'Only courses available locally',
     ],
     correctIndex: 1,
-    explanation: "Evaluate courses on multiple factors: content relevance to your needs, provider reputation and qualifications, balance of practical and theory, what certification is provided, cost versus value, and logistics like location and timing."
-  }
+    explanation:
+      'Evaluate courses on multiple factors: content relevance to your needs, provider reputation and qualifications, balance of practical and theory, what certification is provided, cost versus value, and logistics like location and timing.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "A City & Guilds 2382 qualification covers:",
+    question: 'A City & Guilds 2382 qualification covers:',
     options: [
-      "Practical installation skills",
-      "Understanding and applying BS 7671 (IET Wiring Regulations)",
-      "Business management for electricians",
-      "Health and safety only"
+      'Practical installation skills',
+      'Understanding and applying BS 7671 (IET Wiring Regulations)',
+      'Business management for electricians',
+      'Health and safety only',
     ],
     correctAnswer: 1,
-    explanation: "The City & Guilds 2382 is the qualification for understanding and applying BS 7671 (IET Wiring Regulations). It's essential for anyone involved in designing, installing, or certifying electrical work."
+    explanation:
+      "The City & Guilds 2382 is the qualification for understanding and applying BS 7671 (IET Wiring Regulations). It's essential for anyone involved in designing, installing, or certifying electrical work.",
   },
   {
     id: 2,
-    question: "Competent person schemes like NICEIC and NAPIT offer members:",
+    question: 'Competent person schemes like NICEIC and NAPIT offer members:',
     options: [
-      "No training support",
-      "Technical helplines, training events, and updates on regulatory changes",
-      "Only certification services",
-      "Only public liability insurance"
+      'No training support',
+      'Technical helplines, training events, and updates on regulatory changes',
+      'Only certification services',
+      'Only public liability insurance',
     ],
     correctAnswer: 1,
-    explanation: "Competent person schemes support members through technical helplines for advice, training events and seminars, updates on regulatory changes, and various resources. These are valuable CPD opportunities included with membership."
+    explanation:
+      'Competent person schemes support members through technical helplines for advice, training events and seminars, updates on regulatory changes, and various resources. These are valuable CPD opportunities included with membership.',
   },
   {
     id: 3,
-    question: "Trade exhibitions and conferences are useful for:",
+    question: 'Trade exhibitions and conferences are useful for:',
     options: [
       "Nothing practical - they're just marketing events",
-      "Learning about new products, networking, and attending technical seminars",
-      "Only sales staff",
-      "Only company owners"
+      'Learning about new products, networking, and attending technical seminars',
+      'Only sales staff',
+      'Only company owners',
     ],
     correctAnswer: 1,
-    explanation: "Trade exhibitions and conferences (like ELEX shows) offer opportunities to see new products, attend technical seminars, network with peers and suppliers, and learn about industry developments. They combine multiple CPD benefits."
+    explanation:
+      'Trade exhibitions and conferences (like ELEX shows) offer opportunities to see new products, attend technical seminars, network with peers and suppliers, and learn about industry developments. They combine multiple CPD benefits.',
   },
   {
     id: 4,
-    question: "When your employer pays for training, you should:",
+    question: 'When your employer pays for training, you should:',
     options: [
-      "See it as entirely their responsibility",
-      "Take it seriously, apply what you learn, and provide value in return",
+      'See it as entirely their responsibility',
+      'Take it seriously, apply what you learn, and provide value in return',
       "Only attend if it's during work hours",
-      "Request time off in compensation"
+      'Request time off in compensation',
     ],
     correctAnswer: 1,
-    explanation: "Employer-funded training is an investment in you. Maximise the benefit by engaging fully, applying what you learn to improve your work, and demonstrating the value of the investment. This encourages further training opportunities."
+    explanation:
+      'Employer-funded training is an investment in you. Maximise the benefit by engaging fully, applying what you learn to improve your work, and demonstrating the value of the investment. This encourages further training opportunities.',
   },
   {
     id: 5,
-    question: "The IET provides members with:",
+    question: 'The IET provides members with:',
     options: [
-      "Only the BS 7671 book",
-      "Technical publications, guidance notes, events, and professional recognition",
-      "Guaranteed employment",
-      "Exemption from regulations"
+      'Only the BS 7671 book',
+      'Technical publications, guidance notes, events, and professional recognition',
+      'Guaranteed employment',
+      'Exemption from regulations',
     ],
     correctAnswer: 1,
-    explanation: "IET membership provides access to technical publications and guidance notes, professional development events, networking opportunities, and professional recognition. These resources support ongoing learning and career development."
+    explanation:
+      'IET membership provides access to technical publications and guidance notes, professional development events, networking opportunities, and professional recognition. These resources support ongoing learning and career development.',
   },
   {
     id: 6,
-    question: "Short courses (1-2 days) are best suited for:",
+    question: 'Short courses (1-2 days) are best suited for:',
     options: [
-      "Complete career changes",
-      "Specific topics, updates, or refresher training",
-      "Only beginners",
-      "Nothing useful"
+      'Complete career changes',
+      'Specific topics, updates, or refresher training',
+      'Only beginners',
+      'Nothing useful',
     ],
     correctAnswer: 1,
-    explanation: "Short courses are effective for focused topics like regulatory updates, specific equipment training, refresher sessions, or adding knowledge in defined areas. They fit around work commitments better than longer programmes."
+    explanation:
+      'Short courses are effective for focused topics like regulatory updates, specific equipment training, refresher sessions, or adding knowledge in defined areas. They fit around work commitments better than longer programmes.',
   },
   {
     id: 7,
-    question: "Before attending a course, you should:",
+    question: 'Before attending a course, you should:',
     options: [
-      "Do nothing - the trainer will explain everything",
-      "Review pre-course material, identify learning goals, and prepare questions",
-      "Assume you already know everything",
-      "Wait for instructions from your employer"
+      'Do nothing - the trainer will explain everything',
+      'Review pre-course material, identify learning goals, and prepare questions',
+      'Assume you already know everything',
+      'Wait for instructions from your employer',
     ],
     correctAnswer: 1,
-    explanation: "Preparation maximises learning: review any pre-course material, think about what you want to gain, prepare questions about areas you find challenging, and arrive ready to engage. Active participation improves outcomes."
+    explanation:
+      'Preparation maximises learning: review any pre-course material, think about what you want to gain, prepare questions about areas you find challenging, and arrive ready to engage. Active participation improves outcomes.',
   },
   {
     id: 8,
-    question: "Certificates from training courses:",
+    question: 'Certificates from training courses:',
     options: [
-      "Are worthless pieces of paper",
-      "Provide evidence of CPD for ECS cards, scheme membership, and employers",
-      "Replace the need for NVQ qualifications",
-      "Are only useful for your first job"
+      'Are worthless pieces of paper',
+      'Provide evidence of CPD for ECS cards, scheme membership, and employers',
+      'Replace the need for NVQ qualifications',
+      'Are only useful for your first job',
     ],
     correctAnswer: 1,
-    explanation: "Training certificates provide evidence of your CPD. Keep them safely - they support ECS card applications and renewals, competent person scheme requirements, job applications, and your professional portfolio."
+    explanation:
+      'Training certificates provide evidence of your CPD. Keep them safely - they support ECS card applications and renewals, competent person scheme requirements, job applications, and your professional portfolio.',
   },
   {
     id: 9,
-    question: "Seminars differ from courses primarily in that seminars:",
+    question: 'Seminars differ from courses primarily in that seminars:',
     options: [
-      "Are always longer",
-      "Typically focus on information sharing and updates rather than assessed learning",
-      "Are only for managers",
-      "Never provide useful information"
+      'Are always longer',
+      'Typically focus on information sharing and updates rather than assessed learning',
+      'Are only for managers',
+      'Never provide useful information',
     ],
     correctAnswer: 1,
-    explanation: "Seminars focus on sharing information, discussing developments, or exploring topics - often without formal assessment. Courses typically include structured learning with assessment. Both have value for different purposes."
+    explanation:
+      'Seminars focus on sharing information, discussing developments, or exploring topics - often without formal assessment. Courses typically include structured learning with assessment. Both have value for different purposes.',
   },
   {
     id: 10,
-    question: "Networking at training events can:",
+    question: 'Networking at training events can:',
     options: [
-      "Waste time that should be spent learning",
-      "Create opportunities for knowledge sharing, career development, and business contacts",
-      "Only benefit salespeople",
-      "Be inappropriate in professional settings"
+      'Waste time that should be spent learning',
+      'Create opportunities for knowledge sharing, career development, and business contacts',
+      'Only benefit salespeople',
+      'Be inappropriate in professional settings',
     ],
     correctAnswer: 1,
-    explanation: "Networking during breaks and at training events creates valuable connections. Peers share practical experiences, industry contacts can lead to opportunities, and suppliers provide product insights. Don't undervalue informal interaction."
+    explanation:
+      "Networking during breaks and at training events creates valuable connections. Peers share practical experiences, industry contacts can lead to opportunities, and suppliers provide product insights. Don't undervalue informal interaction.",
   },
   {
     id: 11,
-    question: "If you disagree with something taught on a course, you should:",
+    question: 'If you disagree with something taught on a course, you should:',
     options: [
-      "Stay silent and ignore it",
-      "Raise questions professionally and seek clarification or evidence",
-      "Walk out immediately",
-      "Argue loudly with the trainer"
+      'Stay silent and ignore it',
+      'Raise questions professionally and seek clarification or evidence',
+      'Walk out immediately',
+      'Argue loudly with the trainer',
     ],
     correctAnswer: 1,
-    explanation: "Question professionally if something seems incorrect or unclear. Good trainers welcome challenges - it leads to better understanding for everyone. You might learn something new, or help correct an error."
+    explanation:
+      'Question professionally if something seems incorrect or unclear. Good trainers welcome challenges - it leads to better understanding for everyone. You might learn something new, or help correct an error.',
   },
   {
     id: 12,
-    question: "Applying learning after a course is important because:",
+    question: 'Applying learning after a course is important because:',
     options: [
       "It's not important - the certificate is all that matters",
-      "Knowledge is quickly forgotten if not applied, and application demonstrates value",
+      'Knowledge is quickly forgotten if not applied, and application demonstrates value',
       "Employers don't expect you to change anything",
-      "Regulations prevent you from using new knowledge"
+      'Regulations prevent you from using new knowledge',
     ],
     correctAnswer: 1,
-    explanation: "Learning fades quickly without application. Actively using new knowledge reinforces it, improves your work, and demonstrates the value of training. Keep course notes for reference and look for opportunities to apply what you learned."
-  }
+    explanation:
+      'Learning fades quickly without application. Actively using new knowledge reinforces it, improves your work, and demonstrates the value of training. Keep course notes for reference and look for opportunities to apply what you learned.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I find reputable training providers?",
-    answer: "Check if they're approved by awarding bodies (City & Guilds, EAL), look at reviews and recommendations, ask colleagues about their experiences, and verify trainer qualifications. Competent person schemes can recommend approved providers. Cheaper isn't always better - quality matters."
+    question: 'How do I find reputable training providers?',
+    answer:
+      "Check if they're approved by awarding bodies (City & Guilds, EAL), look at reviews and recommendations, ask colleagues about their experiences, and verify trainer qualifications. Competent person schemes can recommend approved providers. Cheaper isn't always better - quality matters.",
   },
   {
-    question: "Should I train during work time or personal time?",
-    answer: "This depends on your employer and the training type. Many employers provide time for essential training (like regulations updates). For career development beyond your current role, some personal time investment may be appropriate. Discuss with your employer - they may be more supportive than you expect."
+    question: 'Should I train during work time or personal time?',
+    answer:
+      'This depends on your employer and the training type. Many employers provide time for essential training (like regulations updates). For career development beyond your current role, some personal time investment may be appropriate. Discuss with your employer - they may be more supportive than you expect.',
   },
   {
-    question: "What if I fail a course assessment?",
-    answer: "Most courses offer resit opportunities. Review what went wrong, do additional study, and try again. A single fail isn't the end - it's part of learning. Some find that struggling with a topic initially leads to deeper understanding after additional work."
+    question: 'What if I fail a course assessment?',
+    answer:
+      "Most courses offer resit opportunities. Review what went wrong, do additional study, and try again. A single fail isn't the end - it's part of learning. Some find that struggling with a topic initially leads to deeper understanding after additional work.",
   },
   {
-    question: "How often should I attend formal training?",
-    answer: "At minimum, attend training when regulations update (typically every 3-4 years). Beyond that, aim for at least one meaningful training event annually. Combine formal courses with informal learning for balanced development."
+    question: 'How often should I attend formal training?',
+    answer:
+      'At minimum, attend training when regulations update (typically every 3-4 years). Beyond that, aim for at least one meaningful training event annually. Combine formal courses with informal learning for balanced development.',
   },
   {
-    question: "Are online courses as good as classroom training?",
-    answer: "Online courses offer flexibility and often lower cost. They work well for theory and knowledge-based learning. Practical skills typically need hands-on training. Consider a mix - online for theory, classroom for practical applications and networking."
+    question: 'Are online courses as good as classroom training?',
+    answer:
+      'Online courses offer flexibility and often lower cost. They work well for theory and knowledge-based learning. Practical skills typically need hands-on training. Consider a mix - online for theory, classroom for practical applications and networking.',
   },
   {
     question: "What's the difference between a certificate and a qualification?",
-    answer: "Qualifications (like 2382 or 2391) are formally assessed against defined standards and registered with awarding bodies. Certificates of attendance or completion show you participated in training but may not be formally assessed. Both have value but serve different purposes."
-  }
+    answer:
+      'Qualifications (like 2382 or 2391) are formally assessed against defined standards and registered with awarding bodies. Certificates of attendance or completion show you participated in training but may not be formally assessed. Both have value but serve different purposes.',
+  },
 ];
 
 const Level3Module7Section4_2 = () => {
@@ -243,7 +266,6 @@ const Level3Module7Section4_2 = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
-
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
@@ -263,35 +285,45 @@ const Level3Module7Section4_2 = () => {
 
       {/* Main Article Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Header */}
-        
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Updates:</strong> Essential when regulations change</li>
-              <li><strong>Providers:</strong> Many options - choose quality</li>
-              <li><strong>Certificates:</strong> Evidence for ECS and schemes</li>
-              <li><strong>Application:</strong> Use learning or lose it</li>
+              <li>
+                <strong>Updates:</strong> Essential when regulations change
+              </li>
+              <li>
+                <strong>Providers:</strong> Many options - choose quality
+              </li>
+              <li>
+                <strong>Certificates:</strong> Evidence for ECS and schemes
+              </li>
+              <li>
+                <strong>Application:</strong> Use learning or lose it
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Common Course Types</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Regulations:</strong> 18th Edition and amendments</li>
-              <li><strong>Testing:</strong> Inspection and certification</li>
-              <li><strong>Specialist:</strong> Solar, EV, fire alarms</li>
-              <li><strong>Safety:</strong> PAT, working at height</li>
+              <li>
+                <strong>Regulations:</strong> 18th Edition and amendments
+              </li>
+              <li>
+                <strong>Testing:</strong> Inspection and certification
+              </li>
+              <li>
+                <strong>Specialist:</strong> Solar, EV, fire alarms
+              </li>
+              <li>
+                <strong>Safety:</strong> PAT, working at height
+              </li>
             </ul>
           </div>
         </div>
-
-        
-
-        
 
         {/* Section 01: Types of Formal Training */}
         <section className="mb-10">
@@ -301,27 +333,50 @@ const Level3Module7Section4_2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Formal training comes in many forms, from short update seminars to extensive qualifications. Understanding what's available helps you choose training that meets your needs and supports your career development effectively.
+              Formal training comes in many forms, from short update seminars to extensive
+              qualifications. Understanding what's available helps you choose training that meets
+              your needs and supports your career development effectively.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Common training types for electricians:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Common training types for electricians:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Regulation updates:</strong> 18th Edition amendment courses, BS 7671 changes</li>
-                <li><strong>Qualifications:</strong> 2382 (Regulations), 2391 (Inspection & Testing), 2377 (PAT)</li>
-                <li><strong>Specialist areas:</strong> Solar PV, EV charging, fire alarm systems, emergency lighting</li>
-                <li><strong>Manufacturer training:</strong> Specific products and systems</li>
-                <li><strong>Safety training:</strong> Working at height, confined spaces, first aid</li>
-                <li><strong>Business skills:</strong> Estimating, project management, customer service</li>
+                <li>
+                  <strong>Regulation updates:</strong> 18th Edition amendment courses, BS 7671
+                  changes
+                </li>
+                <li>
+                  <strong>Qualifications:</strong> 2382 (Regulations), 2391 (Inspection & Testing),
+                  2377 (PAT)
+                </li>
+                <li>
+                  <strong>Specialist areas:</strong> Solar PV, EV charging, fire alarm systems,
+                  emergency lighting
+                </li>
+                <li>
+                  <strong>Manufacturer training:</strong> Specific products and systems
+                </li>
+                <li>
+                  <strong>Safety training:</strong> Working at height, confined spaces, first aid
+                </li>
+                <li>
+                  <strong>Business skills:</strong> Estimating, project management, customer service
+                </li>
               </ul>
             </div>
 
             <p>
-              Match training to your needs. If your employer works on solar installations, solar training is directly valuable. If you're planning to go self-employed, business skills training makes sense. Strategic choices maximise return on training investment.
+              Match training to your needs. If your employer works on solar installations, solar
+              training is directly valuable. If you're planning to go self-employed, business skills
+              training makes sense. Strategic choices maximise return on training investment.
             </p>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Some training is essential (regulations updates), some is valuable for current work, and some prepares for future opportunities. Balance immediate needs with longer-term development.
+              <strong>Remember:</strong> Some training is essential (regulations updates), some is
+              valuable for current work, and some prepares for future opportunities. Balance
+              immediate needs with longer-term development.
             </p>
           </div>
         </section>
@@ -336,7 +391,10 @@ const Level3Module7Section4_2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The quality of training varies significantly between providers. A cheap course from an unknown provider may waste time and money. Investing in quality training from reputable organisations ensures you learn effectively and get recognised certification.
+              The quality of training varies significantly between providers. A cheap course from an
+              unknown provider may waste time and money. Investing in quality training from
+              reputable organisations ensures you learn effectively and get recognised
+              certification.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -366,11 +424,15 @@ const Level3Module7Section4_2 = () => {
             </div>
 
             <p>
-              Ask colleagues for recommendations. Check reviews online but be aware that extreme views may not be representative. Contact providers to ask about trainers, facilities, and course structure. Good providers are happy to explain what they offer.
+              Ask colleagues for recommendations. Check reviews online but be aware that extreme
+              views may not be representative. Contact providers to ask about trainers, facilities,
+              and course structure. Good providers are happy to explain what they offer.
             </p>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> For an 18th Edition update, a City & Guilds approved centre with experienced trainers and hands-on examples will likely provide more value than an unknown provider offering the same content for half the price.
+              <strong>Example:</strong> For an 18th Edition update, a City & Guilds approved centre
+              with experienced trainers and hands-on examples will likely provide more value than an
+              unknown provider offering the same content for half the price.
             </p>
           </div>
         </section>
@@ -385,11 +447,16 @@ const Level3Module7Section4_2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Beyond generic qualifications, manufacturers and trade bodies offer valuable training. Manufacturer training provides deep knowledge of specific products. Trade body events offer networking and industry insights. Both contribute to well-rounded professional development.
+              Beyond generic qualifications, manufacturers and trade bodies offer valuable training.
+              Manufacturer training provides deep knowledge of specific products. Trade body events
+              offer networking and industry insights. Both contribute to well-rounded professional
+              development.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Benefits of manufacturer training:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Benefits of manufacturer training:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Detailed product knowledge beyond data sheets</li>
                 <li>Correct installation and commissioning procedures</li>
@@ -401,11 +468,17 @@ const Level3Module7Section4_2 = () => {
             </div>
 
             <p>
-              Major manufacturers like Schneider Electric, Hager, and ABB have training centres and online courses. EV charging manufacturers (Pod Point, Andersen, etc.) offer installation training. Solar and battery system manufacturers provide accreditation programmes. These add valuable specialisations.
+              Major manufacturers like Schneider Electric, Hager, and ABB have training centres and
+              online courses. EV charging manufacturers (Pod Point, Andersen, etc.) offer
+              installation training. Solar and battery system manufacturers provide accreditation
+              programmes. These add valuable specialisations.
             </p>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Industry events:</strong> Trade shows like ELEX and conferences combine product exhibitions with technical seminars. Competent person schemes hold annual events. These combine learning with networking opportunities - valuable on multiple levels.
+              <strong>Industry events:</strong> Trade shows like ELEX and conferences combine
+              product exhibitions with technical seminars. Competent person schemes hold annual
+              events. These combine learning with networking opportunities - valuable on multiple
+              levels.
             </p>
           </div>
         </section>
@@ -420,13 +493,18 @@ const Level3Module7Section4_2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The value from training depends not just on the course quality but on your engagement before, during, and after. Active participation, thoughtful note-taking, and deliberate application of learning multiply the return on your time and money investment.
+              The value from training depends not just on the course quality but on your engagement
+              before, during, and after. Active participation, thoughtful note-taking, and
+              deliberate application of learning multiply the return on your time and money
+              investment.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Before</p>
-                <p className="text-white/90 text-xs">Review materials, identify goals, prepare questions</p>
+                <p className="text-white/90 text-xs">
+                  Review materials, identify goals, prepare questions
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">During</p>
@@ -434,16 +512,23 @@ const Level3Module7Section4_2 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">After</p>
-                <p className="text-white/90 text-xs">Review notes, apply learning, share knowledge</p>
+                <p className="text-white/90 text-xs">
+                  Review notes, apply learning, share knowledge
+                </p>
               </div>
             </div>
 
             <p>
-              Don't just attend training - participate. Ask questions, discuss with other attendees during breaks, and challenge yourself to understand rather than just remember. The more you engage, the more you retain and the more value you extract.
+              Don't just attend training - participate. Ask questions, discuss with other attendees
+              during breaks, and challenge yourself to understand rather than just remember. The
+              more you engage, the more you retain and the more value you extract.
             </p>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Application is key:</strong> Research shows we forget most of what we learn within weeks if we don't apply it. Look for opportunities to use new knowledge immediately. Discuss it with colleagues. Refer back to course materials. Active application embeds learning.
+              <strong>Application is key:</strong> Research shows we forget most of what we learn
+              within weeks if we don't apply it. Look for opportunities to use new knowledge
+              immediately. Discuss it with colleagues. Refer back to course materials. Active
+              application embeds learning.
             </p>
           </div>
         </section>
@@ -458,7 +543,9 @@ const Level3Module7Section4_2 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Getting Maximum Value</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Getting Maximum Value
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Research and prepare before attending</li>
                 <li>Take notes you'll actually review later</li>
@@ -478,11 +565,19 @@ const Level3Module7Section4_2 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Training Mistakes to Avoid</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Training Mistakes to Avoid
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Price focus:</strong> Cheapest isn't always best value</li>
-                <li><strong>Passive attendance:</strong> Just being present doesn't create learning</li>
-                <li><strong>No follow-up:</strong> Learning fades without application</li>
+                <li>
+                  <strong>Price focus:</strong> Cheapest isn't always best value
+                </li>
+                <li>
+                  <strong>Passive attendance:</strong> Just being present doesn't create learning
+                </li>
+                <li>
+                  <strong>No follow-up:</strong> Learning fades without application
+                </li>
               </ul>
             </div>
           </div>
@@ -534,10 +629,7 @@ const Level3Module7Section4_2 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
@@ -564,7 +656,6 @@ const Level3Module7Section4_2 = () => {
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

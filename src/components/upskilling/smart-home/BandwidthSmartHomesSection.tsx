@@ -3,19 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const BandwidthSmartHomesSection = () => {
   const highBandwidth = [
-    "Security cameras (1-10 Mbps each)",
-    "Video doorbells with live streaming",
-    "Smart speakers with music streaming",
-    "Smart TVs and media devices",
-    "High-resolution touchscreen panels"
+    'Security cameras (1-10 Mbps each)',
+    'Video doorbells with live streaming',
+    'Smart speakers with music streaming',
+    'Smart TVs and media devices',
+    'High-resolution touchscreen panels',
   ];
 
   const lowBandwidth = [
-    "Temperature and humidity sensors",
-    "Door/window contact sensors",
-    "Motion detectors and PIR sensors",
-    "Smart switches and dimmers",
-    "Smart thermostats and HVAC controls"
+    'Temperature and humidity sensors',
+    'Door/window contact sensors',
+    'Motion detectors and PIR sensors',
+    'Smart switches and dimmers',
+    'Smart thermostats and HVAC controls',
   ];
 
   return (
@@ -28,7 +28,8 @@ export const BandwidthSmartHomesSection = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p className="text-foreground">
-          Not all smart home devices are created equal when it comes to bandwidth requirements. Understanding these differences is crucial for network planning and protocol selection.
+          Not all smart home devices are created equal when it comes to bandwidth requirements.
+          Understanding these differences is crucial for network planning and protocol selection.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -75,7 +76,10 @@ export const BandwidthSmartHomesSection = () => {
             Network Scaling Considerations
           </h4>
           <div className="text-sm text-foreground space-y-2">
-            <p>• Wi-Fi handles a few high-bandwidth devices well, but struggles with dozens of always-on sensors</p>
+            <p>
+              • Wi-Fi handles a few high-bandwidth devices well, but struggles with dozens of
+              always-on sensors
+            </p>
             <p>• Mesh protocols (Zigbee/Z-Wave/Thread) are designed for many low-data devices</p>
             <p>• Mixed networks often work best: Wi-Fi for cameras, mesh for sensors</p>
             <p>• Consider network segmentation for large installations (100+ devices)</p>
@@ -84,7 +88,10 @@ export const BandwidthSmartHomesSection = () => {
 
         <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Quick Check:</h4>
-          <p className="text-sm text-foreground">Why does Wi-Fi struggle with dozens of always-on sensors, even though they use minimal bandwidth?</p>
+          <p className="text-sm text-foreground">
+            Why does Wi-Fi struggle with dozens of always-on sensors, even though they use minimal
+            bandwidth?
+          </p>
         </div>
       </CardContent>
     </Card>

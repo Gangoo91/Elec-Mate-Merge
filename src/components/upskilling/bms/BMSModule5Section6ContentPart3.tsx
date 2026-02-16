@@ -12,23 +12,34 @@ export const BMSModule5Section6ContentPart3 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          Latency is the delay between sending a message and receiving a response. In BMS, high latency means commands take too long to action — e.g., a damper taking 10 seconds to respond to a fire alarm signal. Understanding and managing latency is critical for safe and efficient building operation.
+          Latency is the delay between sending a message and receiving a response. In BMS, high
+          latency means commands take too long to action — e.g., a damper taking 10 seconds to
+          respond to a fire alarm signal. Understanding and managing latency is critical for safe
+          and efficient building operation.
         </p>
 
         <div className="bg-red-600/20 border border-red-600/40 rounded-lg p-4 mb-6">
           <p className="text-red-100 font-medium">
-            <strong>Safety Critical:</strong> High latency in life safety systems can mean the difference between a successful evacuation and a disaster. Fire dampers must respond within seconds, not minutes. BS EN 54 requires fire safety system response times under 10 seconds.
+            <strong>Safety Critical:</strong> High latency in life safety systems can mean the
+            difference between a successful evacuation and a disaster. Fire dampers must respond
+            within seconds, not minutes. BS EN 54 requires fire safety system response times under
+            10 seconds.
           </p>
         </div>
 
-        <h3 className="text-xl font-semibold text-foreground mb-4">Understanding Latency Components</h3>
+        <h3 className="text-xl font-semibold text-foreground mb-4">
+          Understanding Latency Components
+        </h3>
 
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600 mb-6">
-          <h4 className="font-semibold text-yellow-300 text-lg mb-4">Total System Latency Breakdown</h4>
+          <h4 className="font-semibold text-yellow-300 text-lg mb-4">
+            Total System Latency Breakdown
+          </h4>
           <p className="text-gray-300 mb-4">
-            Total system latency is the sum of multiple components. Understanding each helps identify where improvements can be made:
+            Total system latency is the sum of multiple components. Understanding each helps
+            identify where improvements can be made:
           </p>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded">
@@ -40,7 +51,7 @@ export const BMSModule5Section6ContentPart3 = () => {
                   <li>• Increases linearly with device count</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-green-500/10 border border-green-500/20 rounded">
                 <p className="font-medium text-green-200">2. Transmission Time</p>
                 <ul className="text-sm text-green-100 mt-2 space-y-1">
@@ -51,7 +62,7 @@ export const BMSModule5Section6ContentPart3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <div className="p-3 bg-orange-500/10 border border-orange-500/20 rounded">
                 <p className="font-medium text-orange-200">3. Processing Time</p>
@@ -62,7 +73,7 @@ export const BMSModule5Section6ContentPart3 = () => {
                   <li>• Can be 100ms+ for complex controllers</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded">
                 <p className="font-medium text-purple-200">4. Physical Response Time</p>
                 <ul className="text-sm text-purple-100 mt-2 space-y-1">
@@ -88,9 +99,13 @@ export const BMSModule5Section6ContentPart3 = () => {
             <div className="space-y-4">
               <div className="p-3 bg-red-500/10 border border-red-500/20 rounded">
                 <p className="font-medium text-red-200">Network Overloading</p>
-                <p className="text-sm text-red-100 mb-2">Mathematical relationship between devices and latency:</p>
+                <p className="text-sm text-red-100 mb-2">
+                  Mathematical relationship between devices and latency:
+                </p>
                 <div className="bg-red-400/10 rounded p-2">
-                  <p className="font-mono text-red-100 text-xs">Latency = N × (Token_Time + Processing_Time)</p>
+                  <p className="font-mono text-red-100 text-xs">
+                    Latency = N × (Token_Time + Processing_Time)
+                  </p>
                   <p className="text-xs text-red-100 mt-1">Where N = device count on segment</p>
                 </div>
                 <ul className="text-xs text-red-100 mt-2 space-y-1">
@@ -99,7 +114,7 @@ export const BMSModule5Section6ContentPart3 = () => {
                   <li>• 100 devices: ~5 second cycle time</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-orange-500/10 border border-orange-500/20 rounded">
                 <p className="font-medium text-orange-200">Electromagnetic Interference (EMI)</p>
                 <ul className="text-sm text-orange-100 mt-2 space-y-1">
@@ -110,7 +125,7 @@ export const BMSModule5Section6ContentPart3 = () => {
                   <li>• Each retry adds 50-200ms delay</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">
                 <p className="font-medium text-yellow-200">Network Infrastructure Issues</p>
                 <ul className="text-sm text-yellow-100 mt-2 space-y-1">
@@ -141,7 +156,7 @@ export const BMSModule5Section6ContentPart3 = () => {
                   <li>• Use protocol analysers to verify performance</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded">
                 <p className="font-medium text-blue-200">Advanced Network Hardware</p>
                 <ul className="text-sm text-blue-100 mt-2 space-y-1">
@@ -152,7 +167,7 @@ export const BMSModule5Section6ContentPart3 = () => {
                   <li>• Redundant network paths for critical systems</li>
                 </ul>
               </div>
-              
+
               <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded">
                 <p className="font-medium text-purple-200">Installation Best Practices</p>
                 <ul className="text-sm text-purple-100 mt-2 space-y-1">
@@ -167,11 +182,15 @@ export const BMSModule5Section6ContentPart3 = () => {
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold text-foreground mb-4">Latency Requirements by Application</h3>
+        <h3 className="text-xl font-semibold text-foreground mb-4">
+          Latency Requirements by Application
+        </h3>
 
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600 mb-6">
-          <h4 className="font-semibold text-blue-300 text-lg mb-4">Professional Latency Standards</h4>
-          
+          <h4 className="font-semibold text-blue-300 text-lg mb-4">
+            Professional Latency Standards
+          </h4>
+
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-4 bg-red-500/10 border border-red-500/20 rounded">
               <h5 className="font-medium text-red-200 mb-2">Life Safety Systems</h5>
@@ -188,7 +207,7 @@ export const BMSModule5Section6ContentPart3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded">
               <h5 className="font-medium text-yellow-200 mb-2">HVAC Control Systems</h5>
               <div className="space-y-2">
@@ -204,7 +223,7 @@ export const BMSModule5Section6ContentPart3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="p-4 bg-green-500/10 border border-green-500/20 rounded">
               <h5 className="font-medium text-green-200 mb-2">Monitoring & Reporting</h5>
               <div className="space-y-2">
@@ -223,66 +242,90 @@ export const BMSModule5Section6ContentPart3 = () => {
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold text-foreground mb-4">Latency Testing and Verification</h3>
+        <h3 className="text-xl font-semibold text-foreground mb-4">
+          Latency Testing and Verification
+        </h3>
 
         <div className="bg-elec-dark p-6 rounded-lg border border-gray-600">
-          <h4 className="font-semibold text-orange-300 text-lg mb-4">Professional Testing Methodology</h4>
-          
+          <h4 className="font-semibold text-orange-300 text-lg mb-4">
+            Professional Testing Methodology
+          </h4>
+
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h5 className="font-medium text-orange-200 mb-3">Testing Equipment Required:</h5>
               <ul className="text-sm text-orange-100 space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400 mt-1">•</span>
-                  <span><strong>Protocol Analyser:</strong> Wireshark for Ethernet, dedicated tools for serial protocols</span>
+                  <span>
+                    <strong>Protocol Analyser:</strong> Wireshark for Ethernet, dedicated tools for
+                    serial protocols
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400 mt-1">•</span>
-                  <span><strong>Network Tester:</strong> Fluke Networks or similar for cable testing</span>
+                  <span>
+                    <strong>Network Tester:</strong> Fluke Networks or similar for cable testing
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400 mt-1">•</span>
-                  <span><strong>Oscilloscope:</strong> For signal quality analysis on RS-485</span>
+                  <span>
+                    <strong>Oscilloscope:</strong> For signal quality analysis on RS-485
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400 mt-1">•</span>
-                  <span><strong>BMS Software:</strong> Built-in diagnostics and timing tools</span>
+                  <span>
+                    <strong>BMS Software:</strong> Built-in diagnostics and timing tools
+                  </span>
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h5 className="font-medium text-orange-200 mb-3">Test Procedures:</h5>
               <ol className="text-sm text-orange-100 space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400 font-bold">1.</span>
-                  <span><strong>Baseline Testing:</strong> Measure response times with minimal load</span>
+                  <span>
+                    <strong>Baseline Testing:</strong> Measure response times with minimal load
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400 font-bold">2.</span>
-                  <span><strong>Load Testing:</strong> Add devices gradually, measure impact</span>
+                  <span>
+                    <strong>Load Testing:</strong> Add devices gradually, measure impact
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400 font-bold">3.</span>
-                  <span><strong>Stress Testing:</strong> Maximum load with multiple simultaneous commands</span>
+                  <span>
+                    <strong>Stress Testing:</strong> Maximum load with multiple simultaneous
+                    commands
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400 font-bold">4.</span>
-                  <span><strong>EMI Testing:</strong> Measure performance near noise sources</span>
+                  <span>
+                    <strong>EMI Testing:</strong> Measure performance near noise sources
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400 font-bold">5.</span>
-                  <span><strong>Documentation:</strong> Record all results for commissioning report</span>
+                  <span>
+                    <strong>Documentation:</strong> Record all results for commissioning report
+                  </span>
                 </li>
               </ol>
             </div>
           </div>
-          
+
           <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded">
             <p className="font-medium text-blue-200">Acceptance Criteria:</p>
             <p className="text-sm text-blue-100 mt-1">
-              95% of commands must meet target latency under normal operating conditions. 
-              100% must meet safety requirements under all conditions including single point failures.
+              95% of commands must meet target latency under normal operating conditions. 100% must
+              meet safety requirements under all conditions including single point failures.
             </p>
           </div>
         </div>
@@ -310,7 +353,9 @@ export const BMSModule5Section6ContentPart3 = () => {
 
         <div className="bg-orange-600/20 border border-orange-600/40 rounded-lg p-4">
           <p className="text-orange-100 font-medium">
-            <strong>Commissioning Tip:</strong> Always test response times with a protocol analyser during commissioning. Don't rely on "it seems to work" — measure actual latency and document the results.
+            <strong>Commissioning Tip:</strong> Always test response times with a protocol analyser
+            during commissioning. Don't rely on "it seems to work" — measure actual latency and
+            document the results.
           </p>
         </div>
       </CardContent>

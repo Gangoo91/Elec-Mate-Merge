@@ -1,69 +1,93 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "spd-purpose",
-    question: "What is the main purpose of an SPD?",
-    options: ["Provide overcurrent protection", "Divert surge energy to earth and clamp voltage", "Detect earth faults", "Provide isolation"],
+    id: 'spd-purpose',
+    question: 'What is the main purpose of an SPD?',
+    options: [
+      'Provide overcurrent protection',
+      'Divert surge energy to earth and clamp voltage',
+      'Detect earth faults',
+      'Provide isolation',
+    ],
     correctIndex: 1,
-    explanation: "SPDs protect against transient overvoltages by diverting surge energy to earth and clamping voltage to safe levels, protecting connected equipment."
+    explanation:
+      'SPDs protect against transient overvoltages by diverting surge energy to earth and clamping voltage to safe levels, protecting connected equipment.',
   },
   {
-    id: "type1-spd",
-    question: "When is a Type 1 SPD used?",
-    options: ["General protection in consumer units", "Point-of-use protection", "Direct lightning strikes at main distribution boards", "Only industrial installations"],
+    id: 'type1-spd',
+    question: 'When is a Type 1 SPD used?',
+    options: [
+      'General protection in consumer units',
+      'Point-of-use protection',
+      'Direct lightning strikes at main distribution boards',
+      'Only industrial installations',
+    ],
     correctIndex: 2,
-    explanation: "Type 1 SPDs are designed for direct lightning strikes or external surges and are typically installed at the main distribution board."
+    explanation:
+      'Type 1 SPDs are designed for direct lightning strikes or external surges and are typically installed at the main distribution board.',
   },
   {
-    id: "spd-location",
-    question: "Where should SPDs be placed for effective protection?",
-    options: ["At the end of long cable runs", "As close as possible to the origin of the installation", "Only in outdoor locations", "In every room"],
+    id: 'spd-location',
+    question: 'Where should SPDs be placed for effective protection?',
+    options: [
+      'At the end of long cable runs',
+      'As close as possible to the origin of the installation',
+      'Only in outdoor locations',
+      'In every room',
+    ],
     correctIndex: 1,
-    explanation: "SPDs should be placed as close as possible to the origin of the installation to provide effective protection, typically at the main distribution board."
-  }
+    explanation:
+      'SPDs should be placed as close as possible to the origin of the installation to provide effective protection, typically at the main distribution board.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Are SPDs mandatory in all installations?",
-    answer: "SPDs are mandatory where consequences could cause serious injury/loss of life, affect public services or cultural heritage, damage commercial/industrial activity, or affect large groups. Risk assessment determines the need."
+    question: 'Are SPDs mandatory in all installations?',
+    answer:
+      'SPDs are mandatory where consequences could cause serious injury/loss of life, affect public services or cultural heritage, damage commercial/industrial activity, or affect large groups. Risk assessment determines the need.',
   },
   {
     question: "What's the difference between Type 2 and Type 3 SPDs?",
-    answer: "Type 2 SPDs provide general protection from switching surges in distribution boards. Type 3 SPDs offer point-of-use protection for sensitive electronics and are used alongside upstream Type 2 SPDs."
+    answer:
+      'Type 2 SPDs provide general protection from switching surges in distribution boards. Type 3 SPDs offer point-of-use protection for sensitive electronics and are used alongside upstream Type 2 SPDs.',
   },
   {
-    question: "How long do SPD connection leads need to be?",
-    answer: "Connection leads should be as short as possible - maximum 0.5m total lead length. Shorter leads reduce inductance and improve protection effectiveness."
+    question: 'How long do SPD connection leads need to be?',
+    answer:
+      'Connection leads should be as short as possible - maximum 0.5m total lead length. Shorter leads reduce inductance and improve protection effectiveness.',
   },
   {
-    question: "Do SPDs need replacing after a surge event?",
-    answer: "SPDs have status indicators showing their condition. MOV-based SPDs degrade with each surge event and may need replacement when the indicator shows end-of-life. Regular inspection is essential."
-  }
+    question: 'Do SPDs need replacing after a surge event?',
+    answer:
+      'SPDs have status indicators showing their condition. MOV-based SPDs degrade with each surge event and may need replacement when the indicator shows end-of-life. Regular inspection is essential.',
+  },
 ];
 
 const quizQuestion = {
-  question: "What four consequences trigger mandatory SPD installation under BS 7671?",
+  question: 'What four consequences trigger mandatory SPD installation under BS 7671?',
   options: [
-    "Cost, availability, installation time, maintenance",
-    "Serious injury/loss of life, public services/cultural heritage, commercial/industrial damage, affecting large groups",
-    "Voltage levels, current ratings, environmental conditions, building type",
-    "Lightning risk, switching surges, utility faults, equipment sensitivity"
+    'Cost, availability, installation time, maintenance',
+    'Serious injury/loss of life, public services/cultural heritage, commercial/industrial damage, affecting large groups',
+    'Voltage levels, current ratings, environmental conditions, building type',
+    'Lightning risk, switching surges, utility faults, equipment sensitivity',
   ],
   correctAnswer: 1,
-  explanation: "SPDs are mandatory where consequences could cause serious injury/loss of life, affect public services or cultural heritage, damage commercial/industrial activity, or affect large groups of people."
+  explanation:
+    'SPDs are mandatory where consequences could cause serious injury/loss of life, affect public services or cultural heritage, damage commercial/industrial activity, or affect large groups of people.',
 };
 
 const BS7671Module4Section5 = () => {
   useSEO({
-    title: "Surge Protection Devices (SPDs) | BS7671 Module 4.5",
-    description: "Learn about SPD types, when they're required under BS 7671, and how to protect electrical installations against transient overvoltages."
+    title: 'Surge Protection Devices (SPDs) | BS7671 Module 4.5',
+    description:
+      "Learn about SPD types, when they're required under BS 7671, and how to protect electrical installations against transient overvoltages.",
   });
 
   return (
@@ -71,7 +95,12 @@ const BS7671Module4Section5 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bs7671-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -90,9 +119,7 @@ const BS7671Module4Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Surge Protection Devices (SPDs)
           </h1>
-          <p className="text-white/80">
-            When and Why They're Required
-          </p>
+          <p className="text-white/80">When and Why They're Required</p>
         </header>
 
         {/* Quick Summary */}
@@ -100,16 +127,26 @@ const BS7671Module4Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Function:</strong> Divert surge energy, clamp voltage</li>
-              <li><strong>Types:</strong> 1 (lightning), 2 (switching), 3 (point-of-use)</li>
-              <li><strong>Location:</strong> Close to origin of installation</li>
+              <li>
+                <strong>Function:</strong> Divert surge energy, clamp voltage
+              </li>
+              <li>
+                <strong>Types:</strong> 1 (lightning), 2 (switching), 3 (point-of-use)
+              </li>
+              <li>
+                <strong>Location:</strong> Close to origin of installation
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Consumer units, distribution boards, near sensitive equipment</li>
-              <li><strong>Use:</strong> Risk assessment determines need</li>
+              <li>
+                <strong>Spot:</strong> Consumer units, distribution boards, near sensitive equipment
+              </li>
+              <li>
+                <strong>Use:</strong> Risk assessment determines need
+              </li>
             </ul>
           </div>
         </div>
@@ -119,10 +156,10 @@ const BS7671Module4Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand what causes surges and how they affect installations",
-              "Identify when SPDs are required under BS 7671",
-              "Learn about the different types and locations for SPDs",
-              "Understand coordination with other protective devices"
+              'Understand what causes surges and how they affect installations',
+              'Identify when SPDs are required under BS 7671',
+              'Learn about the different types and locations for SPDs',
+              'Understand coordination with other protective devices',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -142,7 +179,9 @@ const BS7671Module4Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Electrical surges are transient overvoltages caused by lightning strikes, switching events, or utility faults. Though they typically last only microseconds, they can cause insulation breakdown, equipment damage, or data loss.
+              Electrical surges are transient overvoltages caused by lightning strikes, switching
+              events, or utility faults. Though they typically last only microseconds, they can
+              cause insulation breakdown, equipment damage, or data loss.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
@@ -163,8 +202,14 @@ const BS7671Module4Section5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-red-400/80 mb-2">Potential Damage:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Immediate:</strong> Equipment destruction, data corruption, system shutdowns, fire risk</li>
-                <li><strong>Long-term:</strong> Reduced equipment lifespan, degraded performance, increased maintenance</li>
+                <li>
+                  <strong>Immediate:</strong> Equipment destruction, data corruption, system
+                  shutdowns, fire risk
+                </li>
+                <li>
+                  <strong>Long-term:</strong> Reduced equipment lifespan, degraded performance,
+                  increased maintenance
+                </li>
               </ul>
             </div>
           </div>
@@ -178,17 +223,29 @@ const BS7671Module4Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              SPDs provide a low-impedance path to earth, diverting dangerous surge currents away from sensitive equipment and limiting (clamping) the voltage to safe levels.
+              SPDs provide a low-impedance path to earth, diverting dangerous surge currents away
+              from sensitive equipment and limiting (clamping) the voltage to safe levels.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operating Sequence:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1. Normal:</strong> SPD presents high impedance, allows normal current flow</li>
-                <li><strong>2. Detection:</strong> When voltage exceeds threshold, SPD activates</li>
-                <li><strong>3. Diversion:</strong> SPD conducts surge current to earth</li>
-                <li><strong>4. Clamping:</strong> Voltage limited to safe level</li>
-                <li><strong>5. Reset:</strong> After surge passes, returns to high impedance</li>
+                <li>
+                  <strong>1. Normal:</strong> SPD presents high impedance, allows normal current
+                  flow
+                </li>
+                <li>
+                  <strong>2. Detection:</strong> When voltage exceeds threshold, SPD activates
+                </li>
+                <li>
+                  <strong>3. Diversion:</strong> SPD conducts surge current to earth
+                </li>
+                <li>
+                  <strong>4. Clamping:</strong> Voltage limited to safe level
+                </li>
+                <li>
+                  <strong>5. Reset:</strong> After surge passes, returns to high impedance
+                </li>
               </ul>
             </div>
           </div>
@@ -258,7 +315,8 @@ const BS7671Module4Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              SPDs are mandatory where the consequences of failure could be serious. Risk assessment determines the need based on lightning activity, building exposure, and consequences.
+              SPDs are mandatory where the consequences of failure could be serious. Risk assessment
+              determines the need based on lightning activity, building exposure, and consequences.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -273,7 +331,9 @@ const BS7671Module4Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Risk Assessment Factors</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Risk Assessment Factors
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Lightning activity level (Ng value)</li>
                   <li>Building height and exposure</li>
@@ -297,7 +357,9 @@ const BS7671Module4Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Location Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Location Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>As close as possible to origin</li>
                   <li>Short connection leads (max 0.5m total)</li>
@@ -306,7 +368,9 @@ const BS7671Module4Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Coordination Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Coordination Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Upstream overcurrent protection</li>
                   <li>Selectivity with other devices</li>
@@ -317,7 +381,9 @@ const BS7671Module4Section5 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-red-400/80 mb-2">Critical Installation Points:</p>
+              <p className="text-sm font-medium text-red-400/80 mb-2">
+                Critical Installation Points:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Low impedance earth connection is essential</li>
                 <li>Keep connection leads as short as possible</li>
@@ -336,12 +402,16 @@ const BS7671Module4Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Amendment 3 introduces specific SPD considerations for EV charging infrastructure and renewable energy installations, addressing unique surge risks from bidirectional power flow and DC circuits.
+              Amendment 3 introduces specific SPD considerations for EV charging infrastructure and
+              renewable energy installations, addressing unique surge risks from bidirectional power
+              flow and DC circuits.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">EV Charging Protection</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  EV Charging Protection
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Type 2 SPDs mandatory for EV circuits</li>
                   <li>Coordination with DC fault protection</li>
@@ -350,7 +420,9 @@ const BS7671Module4Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Renewable Energy Systems</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Renewable Energy Systems
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>SPDs for both AC and DC sides</li>
                   <li>Battery storage protection</li>
@@ -410,13 +482,22 @@ const BS7671Module4Section5 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bs7671-module-4-section-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bs7671-module-4-section-6">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

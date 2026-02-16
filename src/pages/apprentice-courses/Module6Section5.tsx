@@ -1,37 +1,37 @@
-import { ArrowLeft, Shield, TestTube, Eye, Wrench } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Shield, TestTube, Eye, Wrench } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Purpose of Insulation Resistance Testing",
-    description: "Understanding why insulation resistance testing is essential",
+    number: 'Subsection 1',
+    title: 'Purpose of Insulation Resistance Testing',
+    description: 'Understanding why insulation resistance testing is essential',
     icon: Shield,
-    href: "5-1"
+    href: '5-1',
   },
   {
-    number: "Subsection 2",
-    title: "Test Equipment and Safety Considerations",
-    description: "Understanding the correct equipment and safety precautions for IR testing",
+    number: 'Subsection 2',
+    title: 'Test Equipment and Safety Considerations',
+    description: 'Understanding the correct equipment and safety precautions for IR testing',
     icon: TestTube,
-    href: "5-2"
+    href: '5-2',
   },
   {
-    number: "Subsection 3",
-    title: "Performing the Insulation Resistance Test",
-    description: "Step-by-step procedures for conducting accurate IR tests",
+    number: 'Subsection 3',
+    title: 'Performing the Insulation Resistance Test',
+    description: 'Step-by-step procedures for conducting accurate IR tests',
     icon: Eye,
-    href: "5-3"
+    href: '5-3',
   },
   {
-    number: "Subsection 4",
-    title: "Interpreting Results Against Standards",
-    description: "Understanding BS 7671 requirements and making professional judgements",
+    number: 'Subsection 4',
+    title: 'Interpreting Results Against Standards',
+    description: 'Understanding BS 7671 requirements and making professional judgements',
     icon: Wrench,
-    href: "5-4"
-  }
+    href: '5-4',
+  },
 ];
 
 const Section5 = () => {

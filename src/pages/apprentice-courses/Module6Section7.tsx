@@ -1,37 +1,37 @@
-import { ArrowLeft, FileText, Award, ClipboardCheck, Users } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, FileText, Award, ClipboardCheck, Users } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Why Certification Is Required (BS 7671 Compliance)",
-    description: "Understanding the legal requirement for electrical certification",
+    number: 'Subsection 1',
+    title: 'Why Certification Is Required (BS 7671 Compliance)',
+    description: 'Understanding the legal requirement for electrical certification',
     icon: FileText,
-    href: "7-1"
+    href: '7-1',
   },
   {
-    number: "Subsection 2",
-    title: "Awareness of Electrical Installation Certificates (EICs)",
-    description: "Introduction to electrical installation certificates",
+    number: 'Subsection 2',
+    title: 'Awareness of Electrical Installation Certificates (EICs)',
+    description: 'Introduction to electrical installation certificates',
     icon: Award,
-    href: "7-2"
+    href: '7-2',
   },
   {
-    number: "Subsection 3",
-    title: "Minor Works Certificates (Awareness Level)",
-    description: "Understanding minor works certification requirements",
+    number: 'Subsection 3',
+    title: 'Minor Works Certificates (Awareness Level)',
+    description: 'Understanding minor works certification requirements',
     icon: ClipboardCheck,
-    href: "7-3"
+    href: '7-3',
   },
   {
-    number: "Subsection 4",
-    title: "Who Can Sign Off Work and What Level 2 Can Do Legally",
-    description: "Legal responsibilities and limitations for Level 2 electricians",
+    number: 'Subsection 4',
+    title: 'Who Can Sign Off Work and What Level 2 Can Do Legally',
+    description: 'Legal responsibilities and limitations for Level 2 electricians',
     icon: Users,
-    href: "7-4"
-  }
+    href: '7-4',
+  },
 ];
 
 const Section7 = () => {

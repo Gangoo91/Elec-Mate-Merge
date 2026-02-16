@@ -1,340 +1,227 @@
+import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ChevronRight, Search, X, GraduationCap } from 'lucide-react';
+import { siteJargonTerms, siteJargonCategories } from '@/data/apprentice/siteJargonData';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import JargonTermCard from '@/components/apprentice/site-jargon/JargonTermCard';
 
-import { useState, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { MessageCircle, BookOpen, Users, Lightbulb, Search, Layers, GraduationCap } from "lucide-react";
-import { siteJargonTerms, siteJargonCategories } from "@/data/apprentice/siteJargonData";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import JargonSearchAndFilter from "@/components/apprentice/site-jargon/JargonSearchAndFilter";
-import JargonTermCard from "@/components/apprentice/site-jargon/JargonTermCard";
-import LearningFeatures from "@/components/apprentice/site-jargon/LearningFeatures";
-import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
-
-const SiteJargon = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("all");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const activeTab = searchParams.get("tab") || "browse";
-  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
-  const isMobile = useIsMobile();
-
-  // Get all available tags
-  const availableTags = useMemo(() => {
-    const tags = new Set<string>();
-    siteJargonTerms.forEach(term => {
-      term.tags?.forEach(tag => tags.add(tag));
-    });
-    return Array.from(tags).sort();
-  }, []);
-
-  // Filter terms based on search and filters
-  const filteredTerms = useMemo(() => {
-    return siteJargonTerms.filter(term => {
-      // Search filter
-      if (searchTerm) {
-        const search = searchTerm.toLowerCase();
-        const matchesTerm = term.term.toLowerCase().includes(search);
-        const matchesDefinition = term.definition.toLowerCase().includes(search);
-        const matchesUsage = term.commonUsage?.toLowerCase().includes(search);
-        const matchesRelated = term.relatedTerms?.some(related =>
-          related.toLowerCase().includes(search)
-        );
-
-        if (!matchesTerm && !matchesDefinition && !matchesUsage && !matchesRelated) {
-          return false;
-        }
-      }
-
-      // Category filter
-      if (selectedCategory !== "all" && term.category !== selectedCategory) {
-        return false;
-      }
-
-      // Difficulty filter
-      if (selectedDifficulty !== "all" && term.difficulty !== selectedDifficulty) {
-        return false;
-      }
-
-      // Tags filter
-      if (selectedTags.length > 0) {
-        const termTags = term.tags || [];
-        if (!selectedTags.some(tag => termTags.includes(tag))) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-  }, [searchTerm, selectedCategory, selectedDifficulty, selectedTags]);
-
-  // Group filtered terms by category
-  const termsByCategory = useMemo(() => {
-    const grouped: { [key: string]: typeof filteredTerms } = {};
-
-    siteJargonCategories.forEach(category => {
-      grouped[category.id] = filteredTerms.filter(term => term.category === category.id);
-    });
-
-    return grouped;
-  }, [filteredTerms]);
-
-  // Get icon component by name
-  const getIconComponent = (iconName: string) => {
-    const icons: { [key: string]: any } = {
-      'MessageCircle': MessageCircle,
-      'BookOpen': BookOpen,
-      'Users': Users,
-      'Lightbulb': Lightbulb
-    };
-    return icons[iconName] || MessageCircle;
+const categoryStyles: Record<string, { emoji: string; colour: string; border: string; bg: string }> =
+  {
+    'electrical-terms': {
+      emoji: '⚡',
+      colour: 'text-blue-400',
+      border: 'border-blue-500/30',
+      bg: 'bg-blue-500/10',
+    },
+    'tools-equipment': {
+      emoji: '🔧',
+      colour: 'text-orange-400',
+      border: 'border-orange-500/30',
+      bg: 'bg-orange-500/10',
+    },
+    'safety-terms': {
+      emoji: '🛡',
+      colour: 'text-red-400',
+      border: 'border-red-500/30',
+      bg: 'bg-red-500/10',
+    },
+    'site-language': {
+      emoji: '💬',
+      colour: 'text-green-400',
+      border: 'border-green-500/30',
+      bg: 'bg-green-500/10',
+    },
+    'regulations-standards': {
+      emoji: '📋',
+      colour: 'text-purple-400',
+      border: 'border-purple-500/30',
+      bg: 'bg-purple-500/10',
+    },
+    'installation-methods': {
+      emoji: '🔌',
+      colour: 'text-cyan-400',
+      border: 'border-cyan-500/30',
+      bg: 'bg-cyan-500/10',
+    },
+    'testing-terminology': {
+      emoji: '🔬',
+      colour: 'text-amber-400',
+      border: 'border-amber-500/30',
+      bg: 'bg-amber-500/10',
+    },
+    'commercial-industrial': {
+      emoji: '🏭',
+      colour: 'text-indigo-400',
+      border: 'border-indigo-500/30',
+      bg: 'bg-indigo-500/10',
+    },
   };
 
-  const categoryStats = useMemo(() => {
-    return siteJargonCategories.map(category => ({
-      ...category,
-      count: filteredTerms.filter(term => term.category === category.id).length,
-      totalCount: siteJargonTerms.filter(term => term.category === category.id).length
-    }));
-  }, [filteredTerms]);
+const SiteJargon = () => {
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const renderBrowseContent = () => (
-    <div className="space-y-6">
-      {/* Search and Filter */}
-      <JargonSearchAndFilter
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        selectedDifficulty={selectedDifficulty}
-        onDifficultyChange={setSelectedDifficulty}
-        selectedTags={selectedTags}
-        onTagsChange={setSelectedTags}
-        availableTags={availableTags}
-        totalTerms={siteJargonTerms.length}
-        filteredCount={filteredTerms.length}
-      />
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    siteJargonTerms.forEach((term) => {
+      counts[term.category] = (counts[term.category] || 0) + 1;
+    });
+    return counts;
+  }, []);
 
-      {/* Terms Grid */}
-      {filteredTerms.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
-          {filteredTerms.map((term, index) => (
-            <JargonTermCard key={index} term={term} />
-          ))}
-        </div>
-      ) : (
-        <Card className="border-elec-yellow/20 bg-white/5">
-          <CardContent className="text-center py-12">
-            <MessageCircle className="h-12 w-12 text-white/50 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">No terms found</h3>
-            <p className="text-white">
-              Try adjusting your search or filter criteria.
-            </p>
-          </CardContent>
-        </Card>
-      )}
-    </div>
-  );
+  const searchResults = useMemo(() => {
+    if (!searchTerm) return [];
+    const search = searchTerm.toLowerCase();
+    return siteJargonTerms.filter((term) => {
+      const matchesTerm = term.term.toLowerCase().includes(search);
+      const matchesDefinition = term.definition.toLowerCase().includes(search);
+      const matchesUsage = term.commonUsage?.toLowerCase().includes(search);
+      const matchesRelated = term.relatedTerms?.some((r) => r.toLowerCase().includes(search));
+      return matchesTerm || matchesDefinition || matchesUsage || matchesRelated;
+    });
+  }, [searchTerm]);
 
-  const renderCategoriesContent = () => (
-    <div className="grid gap-6">
-      {categoryStats.map((category) => {
-        const IconComponent = getIconComponent(category.icon);
-        const categoryTerms = termsByCategory[category.id] || [];
-
-        return (
-          <Card key={category.id} className="border-elec-yellow/20 bg-white/5">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10">
-                    <IconComponent className="h-6 w-6 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-lg text-white">{category.name}</CardTitle>
-                    <p className="text-sm text-white mt-1">
-                      {category.description}
-                    </p>
-                  </div>
-                </div>
-                <Badge variant="outline" className="text-white border-white/20">
-                  {category.count} terms
-                </Badge>
-              </div>
-            </CardHeader>
-
-            {categoryTerms.length > 0 && (
-              <CardContent>
-                <div className="grid gap-3">
-                  {categoryTerms.slice(0, 5).map((term, index) => (
-                    <div key={index} className="flex items-start justify-between p-3 bg-white/5 border border-white/10 rounded-lg hover:border-elec-yellow/30 transition-all">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-elec-yellow text-sm">{term.term}</h4>
-                        <p className="text-xs text-white mt-1 line-clamp-2">
-                          {term.definition}
-                        </p>
-                      </div>
-                      {term.difficulty && (
-                        <Badge
-                          variant="outline"
-                          className="ml-2 text-xs text-white border-white/20"
-                        >
-                          {term.difficulty}
-                        </Badge>
-                      )}
-                    </div>
-                  ))}
-
-                  {categoryTerms.length > 5 && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setSelectedCategory(category.id);
-                        setActiveTab("browse");
-                      }}
-                      className="mt-2 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                    >
-                      View all {categoryTerms.length} terms
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            )}
-          </Card>
-        );
-      })}
-    </div>
-  );
-
-  const renderMobileContent = () => (
-    <MobileAccordion type="single" collapsible defaultValue="browse" className="w-full">
-      <MobileAccordionItem value="browse">
-        <MobileAccordionTrigger className="text-elec-yellow">
-          <div className="flex items-center gap-2">
-            <Search className="h-5 w-5" />
-            Browse Terms
-          </div>
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderBrowseContent()}
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="categories">
-        <MobileAccordionTrigger className="text-elec-yellow">
-          <div className="flex items-center gap-2">
-            <Layers className="h-5 w-5" />
-            By Category
-          </div>
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          {renderCategoriesContent()}
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-
-      <MobileAccordionItem value="study">
-        <MobileAccordionTrigger className="text-elec-yellow">
-          <div className="flex items-center gap-2">
-            <GraduationCap className="h-5 w-5" />
-            Study Mode
-          </div>
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <LearningFeatures terms={filteredTerms} />
-        </MobileAccordionContent>
-      </MobileAccordionItem>
-    </MobileAccordion>
-  );
+  const basicCount = siteJargonTerms.filter((t) => t.difficulty === 'basic').length;
+  const intermediateCount = siteJargonTerms.filter((t) => t.difficulty === 'intermediate').length;
+  const advancedCount = siteJargonTerms.filter((t) => t.difficulty === 'advanced').length;
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
-      {/* Hero Header */}
-      <div className="flex flex-col items-center justify-center mb-6 text-center">
-        <div className="p-3 bg-elec-yellow/20 rounded-2xl mb-4">
-          <MessageCircle className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
-        </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
-          Site Jargon & Terminology
-        </h1>
-        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
-          Master the language of the electrical trade with our comprehensive terminology database.
-          From basic electrical terms to complex industry jargon, learn what every electrician needs to know.
-        </p>
+    <div className="max-w-2xl mx-auto space-y-6 animate-fade-in px-4 pb-20">
+      {/* Header */}
+      <div className="flex items-center gap-3">
         <SmartBackButton />
+        <div>
+          <h1 className="text-xl font-bold text-white">Site Jargon & Terminology</h1>
+          <p className="text-sm text-white">Master the language of the electrical trade</p>
+        </div>
       </div>
 
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-orange-500/5">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow">{siteJargonTerms.length}</div>
-            <div className="text-sm text-white">Total Terms</div>
-          </CardContent>
-        </Card>
-        <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-400">
-              {siteJargonTerms.filter(t => t.difficulty === 'basic').length}
+      {/* Intro Card */}
+      <Card className="border-elec-yellow/20 bg-white/5">
+        <CardContent className="p-4 space-y-3">
+          <p className="text-sm text-white">
+            Every trade has its own language and the electrical industry is no different. From your
+            first day on site you will hear terms like "bang", "spur", and "first fix" — knowing
+            what they mean helps you stay safe, communicate clearly, and avoid looking lost.
+          </p>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="p-2 bg-green-500/10 border border-green-500/20 rounded-lg text-center">
+              <div className="text-lg font-bold text-green-400">{basicCount}</div>
+              <div className="text-xs text-white">Basic</div>
             </div>
-            <div className="text-sm text-white">Basic Level</div>
-          </CardContent>
-        </Card>
-        <Card className="border-yellow-500/20 bg-gradient-to-br from-yellow-500/10 to-amber-500/5">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-400">
-              {siteJargonTerms.filter(t => t.difficulty === 'intermediate').length}
+            <div className="p-2 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-center">
+              <div className="text-lg font-bold text-yellow-400">{intermediateCount}</div>
+              <div className="text-xs text-white">Intermediate</div>
             </div>
-            <div className="text-sm text-white">Intermediate</div>
-          </CardContent>
-        </Card>
-        <Card className="border-red-500/20 bg-gradient-to-br from-red-500/10 to-rose-500/5">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-red-400">
-              {siteJargonTerms.filter(t => t.difficulty === 'advanced').length}
+            <div className="p-2 bg-red-500/10 border border-red-500/20 rounded-lg text-center">
+              <div className="text-lg font-bold text-red-400">{advancedCount}</div>
+              <div className="text-xs text-white">Advanced</div>
             </div>
-            <div className="text-sm text-white">Advanced</div>
-          </CardContent>
-        </Card>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Search */}
+      <div className="relative">
+        {!searchTerm && (
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+        )}
+        <Input
+          placeholder="Search any term, definition, or usage..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={`h-11 touch-manipulation ${!searchTerm ? 'pl-10' : ''}`}
+        />
+        {searchTerm && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setSearchTerm('')}
+            className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 touch-manipulation"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        )}
       </div>
 
-      {/* Desktop Tabs / Mobile Accordion */}
-      {isMobile ? (
-        renderMobileContent()
+      {/* Search Results OR Category Cards */}
+      {searchTerm ? (
+        <div className="space-y-3">
+          <p className="text-sm text-white">
+            {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "
+            {searchTerm}"
+          </p>
+          {searchResults.length > 0 ? (
+            searchResults.map((term, i) => <JargonTermCard key={i} term={term} />)
+          ) : (
+            <Card className="border-elec-yellow/20 bg-white/5">
+              <CardContent className="text-center py-8">
+                <p className="text-white">No terms found. Try a different search.</p>
+              </CardContent>
+            </Card>
+          )}
+        </div>
       ) : (
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 h-auto p-1 bg-white/5 border border-white/10">
-            <TabsTrigger value="browse" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
-              <Search className="h-4 w-4" />
-              Browse Terms
-            </TabsTrigger>
-            <TabsTrigger value="categories" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
-              <Layers className="h-4 w-4" />
-              By Category
-            </TabsTrigger>
-            <TabsTrigger value="study" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark py-3 gap-2">
-              <GraduationCap className="h-4 w-4" />
-              Study Mode
-            </TabsTrigger>
-          </TabsList>
+        <>
+          {/* Category Cards */}
+          <div className="space-y-3">
+            <h2 className="text-lg font-semibold text-white">Browse by Category</h2>
+            {siteJargonCategories.map((cat) => {
+              const style = categoryStyles[cat.id];
+              const count = categoryCounts[cat.id] || 0;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => navigate(`/apprentice/toolbox/site-jargon/${cat.id}`)}
+                  className={`w-full text-left p-4 rounded-lg border ${style.border} ${style.bg} flex items-center gap-3 touch-manipulation active:scale-[0.98] transition-transform`}
+                >
+                  <span className="text-2xl flex-shrink-0">{style.emoji}</span>
+                  <div className="flex-1 min-w-0">
+                    <h3 className={`font-semibold ${style.colour}`}>{cat.name}</h3>
+                    <p className="text-xs text-white line-clamp-1">{cat.description}</p>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <span className="text-sm font-medium text-white">{count}</span>
+                    <ChevronRight className="h-4 w-4 text-white" />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
 
-          <TabsContent value="browse" className="mt-6">
-            {renderBrowseContent()}
-          </TabsContent>
+          {/* Study Mode */}
+          <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <GraduationCap className="h-5 w-5 text-elec-yellow" />
+                <h3 className="font-semibold text-elec-yellow">Study Mode</h3>
+              </div>
+              <p className="text-sm text-white">
+                Test your knowledge with interactive flashcards. Terms are shuffled randomly — see
+                the term first, then tap to reveal the definition, context, and usage examples.
+              </p>
+              <Button
+                onClick={() => navigate('/apprentice/toolbox/site-jargon/study')}
+                className="w-full h-11 touch-manipulation active:scale-[0.98]"
+              >
+                <GraduationCap className="h-4 w-4 mr-2" />
+                Start Flashcards ({siteJargonTerms.length} terms)
+              </Button>
+            </CardContent>
+          </Card>
 
-          <TabsContent value="categories" className="mt-6">
-            {renderCategoriesContent()}
-          </TabsContent>
-
-          <TabsContent value="study" className="mt-6">
-            <LearningFeatures terms={filteredTerms} />
-          </TabsContent>
-        </Tabs>
+          {/* Tip */}
+          <div className="p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg">
+            <p className="text-xs text-white">
+              <strong className="text-elec-yellow">New to site?</strong> Start with Basic level
+              terms in Electrical Terms and Site Language — these are the ones you will hear most
+              on your first day.
+            </p>
+          </div>
+        </>
       )}
     </div>
   );

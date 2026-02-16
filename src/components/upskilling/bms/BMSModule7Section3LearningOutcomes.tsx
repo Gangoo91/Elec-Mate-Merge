@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule7Section3LearningOutcomes = () => {
   const outcomes = [
-    "Explain the purpose of addressing in BMS networks",
-    "Describe how device mapping links physical I/O to software",
-    "Identify addressing methods for BACnet, Modbus, and KNX devices",
-    "Apply best practices for labelling and testing addressed devices"
+    'Explain the purpose of addressing in BMS networks',
+    'Describe how device mapping links physical I/O to software',
+    'Identify addressing methods for BACnet, Modbus, and KNX devices',
+    'Apply best practices for labelling and testing addressed devices',
   ];
 
   return (

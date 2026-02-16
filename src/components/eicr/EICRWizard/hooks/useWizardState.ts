@@ -78,9 +78,7 @@ export function useWizardState({
   const nextStep = useCallback(() => {
     setState((prev) => {
       const currentStepConfig = steps[prev.currentStep];
-      const isValid = currentStepConfig.validate
-        ? currentStepConfig.validate(prev.data)
-        : true;
+      const isValid = currentStepConfig.validate ? currentStepConfig.validate(prev.data) : true;
 
       if (!isValid && !currentStepConfig.isOptional) {
         return prev;
@@ -120,38 +118,30 @@ export function useWizardState({
   }, []);
 
   // Go to specific step (only if visited or adjacent)
-  const goToStep = useCallback(
-    (stepIndex: number) => {
-      setState((prev) => {
-        // Can only navigate to visited steps or the next step
-        if (
-          !prev.visitedSteps.has(stepIndex) &&
-          stepIndex !== prev.currentStep + 1
-        ) {
-          return prev;
-        }
+  const goToStep = useCallback((stepIndex: number) => {
+    setState((prev) => {
+      // Can only navigate to visited steps or the next step
+      if (!prev.visitedSteps.has(stepIndex) && stepIndex !== prev.currentStep + 1) {
+        return prev;
+      }
 
-        const newVisited = new Set(prev.visitedSteps);
-        newVisited.add(stepIndex);
+      const newVisited = new Set(prev.visitedSteps);
+      newVisited.add(stepIndex);
 
-        return {
-          ...prev,
-          currentStep: stepIndex,
-          visitedSteps: newVisited,
-        };
-      });
-    },
-    []
-  );
+      return {
+        ...prev,
+        currentStep: stepIndex,
+        visitedSteps: newVisited,
+      };
+    });
+  }, []);
 
   // Update wizard data
   const updateData = useCallback(
     (updates: Record<string, any> | ((prev: Record<string, any>) => Record<string, any>)) => {
       setState((prev) => ({
         ...prev,
-        data: typeof updates === 'function'
-          ? updates(prev.data)
-          : { ...prev.data, ...updates },
+        data: typeof updates === 'function' ? updates(prev.data) : { ...prev.data, ...updates },
       }));
     },
     []

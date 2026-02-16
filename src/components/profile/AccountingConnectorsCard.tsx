@@ -29,19 +29,19 @@ import { formatDistanceToNow } from 'date-fns';
 // Proper brand logos as SVG components
 const XeroLogo = () => (
   <svg viewBox="0 0 512 512" className="h-7 w-7" fill="currentColor">
-    <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm127.3 295.3l-67.9-67.9 67.9-67.9c8.3-8.3 8.3-21.8 0-30.2-8.3-8.3-21.8-8.3-30.2 0L285.2 197l-67.9-67.9c-8.3-8.3-21.8-8.3-30.2 0-8.3 8.3-8.3 21.8 0 30.2l67.9 67.9-67.9 67.9c-8.3 8.3-8.3 21.8 0 30.2 4.2 4.2 9.6 6.2 15.1 6.2s10.9-2.1 15.1-6.2l67.9-67.9 67.9 67.9c4.2 4.2 9.6 6.2 15.1 6.2s10.9-2.1 15.1-6.2c8.3-8.4 8.3-21.9 0-30.2z"/>
+    <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm127.3 295.3l-67.9-67.9 67.9-67.9c8.3-8.3 8.3-21.8 0-30.2-8.3-8.3-21.8-8.3-30.2 0L285.2 197l-67.9-67.9c-8.3-8.3-21.8-8.3-30.2 0-8.3 8.3-8.3 21.8 0 30.2l67.9 67.9-67.9 67.9c-8.3 8.3-8.3 21.8 0 30.2 4.2 4.2 9.6 6.2 15.1 6.2s10.9-2.1 15.1-6.2l67.9-67.9 67.9 67.9c4.2 4.2 9.6 6.2 15.1 6.2s10.9-2.1 15.1-6.2c8.3-8.4 8.3-21.9 0-30.2z" />
   </svg>
 );
 
 const QuickBooksLogo = () => (
   <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
-    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM9.5 16.5c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5c-.827 0-1.5.673-1.5 1.5s.673 1.5 1.5 1.5h3c.828 0 1.5-.672 1.5-1.5V9c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5v3c0 2.485-2.015 4.5-4.5 4.5h-3zm5-9c2.485 0 4.5 2.015 4.5 4.5s-2.015 4.5-4.5 4.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5c.827 0 1.5-.673 1.5-1.5s-.673-1.5-1.5-1.5h-3c-.828 0-1.5.672-1.5 1.5v3c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5v-3c0-2.485 2.015-4.5 4.5-4.5h3z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM9.5 16.5c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5c-.827 0-1.5.673-1.5 1.5s.673 1.5 1.5 1.5h3c.828 0 1.5-.672 1.5-1.5V9c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5v3c0 2.485-2.015 4.5-4.5 4.5h-3zm5-9c2.485 0 4.5 2.015 4.5 4.5s-2.015 4.5-4.5 4.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5c.827 0 1.5-.673 1.5-1.5s-.673-1.5-1.5-1.5h-3c-.828 0-1.5.672-1.5 1.5v3c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5v-3c0-2.485 2.015-4.5 4.5-4.5h3z" />
   </svg>
 );
 
 const SageLogo = () => (
   <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-5h2v5zm0-7h-2V7h2v2z"/>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-5h2v5zm0-7h-2V7h2v2z" />
   </svg>
 );
 
@@ -90,7 +90,7 @@ const AccountingConnectorsCard: React.FC = () => {
   }, []);
 
   // Get first connected integration for preview
-  const connectedIntegration = integrations.find(i => i.status === 'connected');
+  const connectedIntegration = integrations.find((i) => i.status === 'connected');
 
   // Active providers - Xero and QuickBooks
   const activeProviders: AccountingProvider[] = ['xero', 'quickbooks'];
@@ -102,7 +102,11 @@ const AccountingConnectorsCard: React.FC = () => {
   };
 
   const handleDisconnect = async (provider: AccountingProvider) => {
-    if (window.confirm(`Disconnect ${ACCOUNTING_PROVIDERS[provider].name}? You can reconnect anytime.`)) {
+    if (
+      window.confirm(
+        `Disconnect ${ACCOUNTING_PROVIDERS[provider].name}? You can reconnect anytime.`
+      )
+    ) {
       await disconnectProvider(provider);
     }
   };
@@ -186,7 +190,10 @@ const AccountingConnectorsCard: React.FC = () => {
               )}
               {connectedIntegration?.lastSyncAt && (
                 <p className="text-[12px] text-white/40">
-                  Last sync: {formatDistanceToNow(new Date(connectedIntegration.lastSyncAt), { addSuffix: true })}
+                  Last sync:{' '}
+                  {formatDistanceToNow(new Date(connectedIntegration.lastSyncAt), {
+                    addSuffix: true,
+                  })}
                 </p>
               )}
             </div>
@@ -196,7 +203,10 @@ const AccountingConnectorsCard: React.FC = () => {
 
       {/* Edit Sheet */}
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#0f0f13] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#0f0f13] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -247,9 +257,7 @@ const AccountingConnectorsCard: React.FC = () => {
                     {/* Provider Logo */}
                     <div
                       className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                        providerId === 'xero'
-                          ? 'bg-[#13B5EA]/20'
-                          : 'bg-[#2CA01C]/20'
+                        providerId === 'xero' ? 'bg-[#13B5EA]/20' : 'bg-[#2CA01C]/20'
                       }`}
                     >
                       <span className={providerId === 'xero' ? 'text-[#13B5EA]' : 'text-[#2CA01C]'}>
@@ -291,7 +299,10 @@ const AccountingConnectorsCard: React.FC = () => {
                       )}
                       {integration?.lastSyncAt && (
                         <p className="text-[11px] text-white/30 mt-1">
-                          Last synced {formatDistanceToNow(new Date(integration.lastSyncAt), { addSuffix: true })}
+                          Last synced{' '}
+                          {formatDistanceToNow(new Date(integration.lastSyncAt), {
+                            addSuffix: true,
+                          })}
                         </p>
                       )}
                     </div>
@@ -380,8 +391,8 @@ const AccountingConnectorsCard: React.FC = () => {
                 <div>
                   <h3 className="text-[14px] font-semibold text-white mb-1">How it works</h3>
                   <p className="text-[12px] text-white/50 leading-relaxed">
-                    When connected, you can sync invoices directly from the invoice page.
-                    Contacts and line items are created automatically in your accounting software.
+                    When connected, you can sync invoices directly from the invoice page. Contacts
+                    and line items are created automatically in your accounting software.
                   </p>
                 </div>
               </div>

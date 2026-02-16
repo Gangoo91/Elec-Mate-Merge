@@ -1,5 +1,4 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface BrandCardProps {
   category: string;
@@ -15,7 +14,9 @@ const BrandCard = ({ category, brands }: BrandCardProps) => {
       <CardContent>
         <ul className="list-disc pl-6 space-y-1">
           {brands.map((brand, i) => (
-            <li key={i} className="text-sm">{brand}</li>
+            <li key={i} className="text-sm">
+              {brand}
+            </li>
           ))}
         </ul>
       </CardContent>

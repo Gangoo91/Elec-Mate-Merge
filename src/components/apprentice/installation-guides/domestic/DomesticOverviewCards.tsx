@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   Home,
   Zap,
@@ -17,202 +16,275 @@ import {
   ChefHat,
   Sun,
   Box,
-  Info
-} from "lucide-react";
+  Info,
+} from 'lucide-react';
 
 const DomesticOverviewCards = () => {
   const overviewStats = [
-    { label: "Average Project Duration", value: "3-5 days", icon: Clock },
-    { label: "Typical Budget Range", value: "£2,000-£8,000", icon: BadgePoundSterling },
-    { label: "Skill Level Required", value: "Intermediate", icon: Users },
-    { label: "Certification Required", value: "Part P", icon: Book }
+    { label: 'Average Project Duration', value: '3-5 days', icon: Clock },
+    { label: 'Typical Budget Range', value: '£2,000-£8,000', icon: BadgePoundSterling },
+    { label: 'Skill Level Required', value: 'Intermediate', icon: Users },
+    { label: 'Certification Required', value: 'Part P', icon: Book },
   ];
 
   const projectComplexity = [
-    { type: "Socket Addition", complexity: 20, duration: "2-4 hours", cost: "£150-£300" },
-    { type: "Kitchen Rewire", complexity: 60, duration: "2-3 days", cost: "£1,500-£3,000" },
-    { type: "Consumer Unit Upgrade", complexity: 40, duration: "4-6 hours", cost: "£400-£800" },
-    { type: "Full House Rewire", complexity: 90, duration: "5-10 days", cost: "£4,000-£12,000" }
+    { type: 'Socket Addition', complexity: 20, duration: '2-4 hours', cost: '£150-£300' },
+    { type: 'Kitchen Rewire', complexity: 60, duration: '2-3 days', cost: '£1,500-£3,000' },
+    { type: 'Consumer Unit Upgrade', complexity: 40, duration: '4-6 hours', cost: '£400-£800' },
+    { type: 'Full House Rewire', complexity: 90, duration: '5-10 days', cost: '£4,000-£12,000' },
   ];
 
   const safetyPriorities = [
-    { priority: "Safe Isolation", description: "Always isolate and test before work", level: "Critical" },
-    { priority: "RCD Protection", description: "30mA RCD required for all circuits", level: "Essential" },
-    { priority: "Part P Compliance", description: "Building Regulations notification required", level: "Legal" },
-    { priority: "Testing & Certification", description: "Proper testing and certification mandatory", level: "Essential" }
+    {
+      priority: 'Safe Isolation',
+      description: 'Always isolate and test before work',
+      level: 'Critical',
+    },
+    {
+      priority: 'RCD Protection',
+      description: '30mA RCD required for all circuits',
+      level: 'Essential',
+    },
+    {
+      priority: 'Part P Compliance',
+      description: 'Building Regulations notification required',
+      level: 'Legal',
+    },
+    {
+      priority: 'Testing & Certification',
+      description: 'Proper testing and certification mandatory',
+      level: 'Essential',
+    },
   ];
 
   const kitchenRequirements = {
-    title: "Kitchen Installations",
+    title: 'Kitchen Installations',
     icon: ChefHat,
     regulations: [
-      "All socket outlets must have 30mA RCD protection (Reg 411.3.3)",
-      "Dedicated circuits required for high-power appliances (cooker, hob)",
-      "Socket outlets positioned away from sink (300mm minimum recommended)",
-      "Cooker control unit within 2m of appliance",
-      "Extraction fan on separate circuit or fused connection unit"
+      'All socket outlets must have 30mA RCD protection (Reg 411.3.3)',
+      'Dedicated circuits required for high-power appliances (cooker, hob)',
+      'Socket outlets positioned away from sink (300mm minimum recommended)',
+      'Cooker control unit within 2m of appliance',
+      'Extraction fan on separate circuit or fused connection unit',
     ],
     circuits: [
-      { name: "Ring Final Circuit", cable: "2.5mm² T&E", protection: "32A RCBO" },
-      { name: "Cooker Circuit", cable: "6mm² T&E (up to 13kW)", protection: "32A RCBO" },
-      { name: "Hob Circuit (if separate)", cable: "6mm² or 10mm² T&E", protection: "32A/40A RCBO" },
-      { name: "Oven Circuit (if separate)", cable: "2.5mm² T&E", protection: "20A RCBO" },
-      { name: "Fridge/Freezer", cable: "2.5mm² T&E", protection: "16A RCBO (dedicated recommended)" },
-      { name: "Dishwasher", cable: "2.5mm² T&E", protection: "16A RCBO" }
+      { name: 'Ring Final Circuit', cable: '2.5mm² T&E', protection: '32A RCBO' },
+      { name: 'Cooker Circuit', cable: '6mm² T&E (up to 13kW)', protection: '32A RCBO' },
+      { name: 'Hob Circuit (if separate)', cable: '6mm² or 10mm² T&E', protection: '32A/40A RCBO' },
+      { name: 'Oven Circuit (if separate)', cable: '2.5mm² T&E', protection: '20A RCBO' },
+      {
+        name: 'Fridge/Freezer',
+        cable: '2.5mm² T&E',
+        protection: '16A RCBO (dedicated recommended)',
+      },
+      { name: 'Dishwasher', cable: '2.5mm² T&E', protection: '16A RCBO' },
     ],
     tips: [
-      "Consider future appliance upgrades when sizing cables",
-      "Position switches within easy reach but away from cooking areas",
-      "Use IP-rated accessories near water sources",
-      "Label circuits clearly for appliance identification"
-    ]
+      'Consider future appliance upgrades when sizing cables',
+      'Position switches within easy reach but away from cooking areas',
+      'Use IP-rated accessories near water sources',
+      'Label circuits clearly for appliance identification',
+    ],
   };
 
   const bathroomZones = {
-    title: "Bathroom Zones & IP Ratings",
+    title: 'Bathroom Zones & IP Ratings',
     icon: Droplets,
     zones: [
       {
-        zone: "Zone 0",
-        description: "Inside the bath or shower tray",
-        color: "red",
+        zone: 'Zone 0',
+        description: 'Inside the bath or shower tray',
+        color: 'red',
         requirements: [
-          "Maximum 12V SELV only",
-          "IPX7 rating required (protected against immersion)",
-          "Equipment specifically designed for zone 0 use",
-          "No switches or accessories permitted"
-        ]
+          'Maximum 12V SELV only',
+          'IPX7 rating required (protected against immersion)',
+          'Equipment specifically designed for zone 0 use',
+          'No switches or accessories permitted',
+        ],
       },
       {
-        zone: "Zone 1",
-        description: "Above bath/shower to 2.25m from floor",
-        color: "orange",
+        zone: 'Zone 1',
+        description: 'Above bath/shower to 2.25m from floor',
+        color: 'orange',
         requirements: [
-          "SELV or 230V with 30mA RCD protection",
-          "IPX4 rating minimum (splash-proof)",
-          "IPX5 if water jets likely (showers)",
-          "Fixed equipment only (no socket outlets)",
-          "Shower units, instantaneous water heaters permitted"
-        ]
+          'SELV or 230V with 30mA RCD protection',
+          'IPX4 rating minimum (splash-proof)',
+          'IPX5 if water jets likely (showers)',
+          'Fixed equipment only (no socket outlets)',
+          'Shower units, instantaneous water heaters permitted',
+        ],
       },
       {
-        zone: "Zone 2",
-        description: "0.6m horizontally from Zone 1 boundary",
-        color: "yellow",
+        zone: 'Zone 2',
+        description: '0.6m horizontally from Zone 1 boundary',
+        color: 'yellow',
         requirements: [
-          "IPX4 rating minimum",
-          "30mA RCD protection required",
-          "Shaver sockets (BS EN 61558-2-5) permitted",
-          "Luminaires, fans, and heating units permitted",
-          "No socket outlets except shaver units"
-        ]
+          'IPX4 rating minimum',
+          '30mA RCD protection required',
+          'Shaver sockets (BS EN 61558-2-5) permitted',
+          'Luminaires, fans, and heating units permitted',
+          'No socket outlets except shaver units',
+        ],
       },
       {
-        zone: "Outside Zones",
-        description: "Beyond Zone 2 boundaries",
-        color: "green",
+        zone: 'Outside Zones',
+        description: 'Beyond Zone 2 boundaries',
+        color: 'green',
         requirements: [
-          "30mA RCD protection still required",
-          "Standard accessories may be used",
-          "Normal IP ratings acceptable",
-          "Socket outlets permitted (with RCD protection)"
-        ]
-      }
+          '30mA RCD protection still required',
+          'Standard accessories may be used',
+          'Normal IP ratings acceptable',
+          'Socket outlets permitted (with RCD protection)',
+        ],
+      },
     ],
     generalRequirements: [
-      "All circuits supplying bathroom must have 30mA RCD protection (Reg 701.411.3.3)",
-      "Supplementary bonding may be omitted if all extraneous-conductive-parts are effectively connected to protective earth and RCD protection is provided",
-      "Pull-cord switches preferred within zones (no metallic parts accessible)",
-      "SELV transformer located outside zones 0, 1, and 2"
-    ]
+      'All circuits supplying bathroom must have 30mA RCD protection (Reg 701.411.3.3)',
+      'Supplementary bonding may be omitted if all extraneous-conductive-parts are effectively connected to protective earth and RCD protection is provided',
+      'Pull-cord switches preferred within zones (no metallic parts accessible)',
+      'SELV transformer located outside zones 0, 1, and 2',
+    ],
   };
 
   const consumerUnitRequirements = {
-    title: "Consumer Unit Requirements (18th Edition AMD3)",
+    title: 'Consumer Unit Requirements (18th Edition AMD3)',
     icon: Box,
     keyChanges: [
       {
-        requirement: "All Consumer Units Must Be Metal",
-        details: "All consumer units in domestic premises must be constructed of non-combustible material (typically steel enclosure)",
-        regulation: "Reg 421.1.201"
+        requirement: 'All Consumer Units Must Be Metal',
+        details:
+          'All consumer units in domestic premises must be constructed of non-combustible material (typically steel enclosure)',
+        regulation: 'Reg 421.1.201',
       },
       {
-        requirement: "RCD Protection for All Circuits",
-        details: "All final circuits require 30mA RCD protection, regardless of location or circuit type",
-        regulation: "Reg 411.3.4"
+        requirement: 'RCD Protection for All Circuits',
+        details:
+          'All final circuits require 30mA RCD protection, regardless of location or circuit type',
+        regulation: 'Reg 411.3.4',
       },
       {
-        requirement: "Surge Protection Devices (SPD)",
-        details: "SPDs required where consequences of overvoltage could affect life, public installations, commercial/industrial, or IT equipment",
-        regulation: "Reg 443.4"
+        requirement: 'Surge Protection Devices (SPD)',
+        details:
+          'SPDs required where consequences of overvoltage could affect life, public installations, commercial/industrial, or IT equipment',
+        regulation: 'Reg 443.4',
       },
       {
-        requirement: "Arc Fault Detection Devices (AFDD)",
-        details: "Recommended for locations with sleeping accommodation, fire risk, combustible construction, or irreplaceable goods",
-        regulation: "Reg 421.1.7 (Recommendation)"
-      }
+        requirement: 'Arc Fault Detection Devices (AFDD)',
+        details:
+          'Recommended for locations with sleeping accommodation, fire risk, combustible construction, or irreplaceable goods',
+        regulation: 'Reg 421.1.7 (Recommendation)',
+      },
     ],
     specifications: [
-      { item: "Enclosure Material", value: "Non-combustible (steel)" },
-      { item: "IP Rating", value: "IP2X minimum (fingers protected)" },
-      { item: "Mounting Height", value: "1.2m - 1.4m centre (accessibility)" },
-      { item: "Working Space", value: "600mm clear access minimum" },
-      { item: "Cable Entry", value: "Through glands or grommets" }
+      { item: 'Enclosure Material', value: 'Non-combustible (steel)' },
+      { item: 'IP Rating', value: 'IP2X minimum (fingers protected)' },
+      { item: 'Mounting Height', value: '1.2m - 1.4m centre (accessibility)' },
+      { item: 'Working Space', value: '600mm clear access minimum' },
+      { item: 'Cable Entry', value: 'Through glands or grommets' },
     ],
     layout: [
-      "Main switch (100A typical for domestic)",
-      "Type 2 SPD (if required)",
-      "RCBOs for individual circuit protection (preferred)",
-      "Or split-load arrangement with RCDs",
-      "MCBs for non-RCD protected circuits (if any)",
-      "Adequate spare ways for future expansion (minimum 2)"
-    ]
+      'Main switch (100A typical for domestic)',
+      'Type 2 SPD (if required)',
+      'RCBOs for individual circuit protection (preferred)',
+      'Or split-load arrangement with RCDs',
+      'MCBs for non-RCD protected circuits (if any)',
+      'Adequate spare ways for future expansion (minimum 2)',
+    ],
   };
 
   const outdoorInstallations = {
-    title: "Outdoor & Garden Installations",
+    title: 'Outdoor & Garden Installations',
     icon: Sun,
     ipRatings: [
-      { rating: "IP44", description: "Protected against objects >1mm and splashing water", use: "Sheltered outdoor use, under canopy" },
-      { rating: "IP54", description: "Dust protected and splash-proof", use: "General outdoor use" },
-      { rating: "IP55", description: "Dust protected and water jet resistant", use: "Exposed locations" },
-      { rating: "IP65", description: "Dust-tight and water jet resistant", use: "Washdown areas, fully exposed" },
-      { rating: "IP66", description: "Dust-tight and powerful water jet resistant", use: "High-pressure cleaning areas" },
-      { rating: "IP67", description: "Dust-tight and temporary immersion resistant", use: "Ground-level or flood risk areas" }
+      {
+        rating: 'IP44',
+        description: 'Protected against objects >1mm and splashing water',
+        use: 'Sheltered outdoor use, under canopy',
+      },
+      {
+        rating: 'IP54',
+        description: 'Dust protected and splash-proof',
+        use: 'General outdoor use',
+      },
+      {
+        rating: 'IP55',
+        description: 'Dust protected and water jet resistant',
+        use: 'Exposed locations',
+      },
+      {
+        rating: 'IP65',
+        description: 'Dust-tight and water jet resistant',
+        use: 'Washdown areas, fully exposed',
+      },
+      {
+        rating: 'IP66',
+        description: 'Dust-tight and powerful water jet resistant',
+        use: 'High-pressure cleaning areas',
+      },
+      {
+        rating: 'IP67',
+        description: 'Dust-tight and temporary immersion resistant',
+        use: 'Ground-level or flood risk areas',
+      },
     ],
     cableRequirements: [
       {
-        location: "Underground",
-        cable: "SWA (Steel Wire Armoured) or cable in conduit",
-        depth: "Minimum 450mm (pedestrian), 600mm (vehicles)",
-        notes: "Route tape 150mm above cable, sand surround recommended"
+        location: 'Underground',
+        cable: 'SWA (Steel Wire Armoured) or cable in conduit',
+        depth: 'Minimum 450mm (pedestrian), 600mm (vehicles)',
+        notes: 'Route tape 150mm above cable, sand surround recommended',
       },
       {
-        location: "Surface Run",
-        cable: "SWA or conduit/trunking with appropriate IP rating",
-        depth: "N/A",
-        notes: "Protected from mechanical damage, UV-resistant if exposed"
+        location: 'Surface Run',
+        cable: 'SWA or conduit/trunking with appropriate IP rating',
+        depth: 'N/A',
+        notes: 'Protected from mechanical damage, UV-resistant if exposed',
       },
       {
-        location: "Overhead",
-        cable: "Insulated overhead cable or catenary wire support",
-        depth: "Minimum 3.5m clearance (5.2m over driveways)",
-        notes: "Proper strain relief and weather protection"
-      }
+        location: 'Overhead',
+        cable: 'Insulated overhead cable or catenary wire support',
+        depth: 'Minimum 3.5m clearance (5.2m over driveways)',
+        notes: 'Proper strain relief and weather protection',
+      },
     ],
     rcdRequirements: [
-      "All outdoor circuits require 30mA RCD protection",
-      "Consider time-delayed RCD at origin to prevent nuisance tripping",
-      "Socket outlets: Additional 30mA RCD at the accessory (double protection)",
-      "Lighting circuits: 30mA RCD protection required"
+      'All outdoor circuits require 30mA RCD protection',
+      'Consider time-delayed RCD at origin to prevent nuisance tripping',
+      'Socket outlets: Additional 30mA RCD at the accessory (double protection)',
+      'Lighting circuits: 30mA RCD protection required',
     ],
     commonApplications: [
-      { application: "Garden Lighting", circuit: "Radial 6A", cable: "1.5mm² SWA", protection: "6A RCBO" },
-      { application: "Outdoor Sockets", circuit: "Radial 20A", cable: "2.5mm² SWA", protection: "20A RCBO" },
-      { application: "Garden Building", circuit: "Radial 32A or submain", cable: "4mm² or 6mm² SWA", protection: "32A RCBO + local CU" },
-      { application: "Pond Pump", circuit: "Dedicated radial", cable: "1.5mm² SWA", protection: "6A RCBO" },
-      { application: "EV Charger", circuit: "Dedicated radial 32A", cable: "6mm² SWA", protection: "32A Type B RCBO" }
-    ]
+      {
+        application: 'Garden Lighting',
+        circuit: 'Radial 6A',
+        cable: '1.5mm² SWA',
+        protection: '6A RCBO',
+      },
+      {
+        application: 'Outdoor Sockets',
+        circuit: 'Radial 20A',
+        cable: '2.5mm² SWA',
+        protection: '20A RCBO',
+      },
+      {
+        application: 'Garden Building',
+        circuit: 'Radial 32A or submain',
+        cable: '4mm² or 6mm² SWA',
+        protection: '32A RCBO + local CU',
+      },
+      {
+        application: 'Pond Pump',
+        circuit: 'Dedicated radial',
+        cable: '1.5mm² SWA',
+        protection: '6A RCBO',
+      },
+      {
+        application: 'EV Charger',
+        circuit: 'Dedicated radial 32A',
+        cable: '6mm² SWA',
+        protection: '32A Type B RCBO',
+      },
+    ],
   };
 
   return (
@@ -278,7 +350,8 @@ const DomesticOverviewCards = () => {
           <Alert className="border-amber-500/50 bg-amber-500/10">
             <Info className="h-4 w-4 text-amber-400" />
             <AlertDescription className="text-amber-200 text-sm">
-              Kitchens are high-demand areas requiring careful circuit design and RCD protection for all socket outlets.
+              Kitchens are high-demand areas requiring careful circuit design and RCD protection for
+              all socket outlets.
             </AlertDescription>
           </Alert>
 
@@ -339,7 +412,8 @@ const DomesticOverviewCards = () => {
           <Alert className="border-cyan-500/50 bg-cyan-500/10">
             <AlertTriangle className="h-4 w-4 text-cyan-400" />
             <AlertDescription className="text-cyan-200 text-sm">
-              <strong>BS 7671 Section 701:</strong> Special requirements apply to bathroom installations due to increased risk of electric shock.
+              <strong>BS 7671 Section 701:</strong> Special requirements apply to bathroom
+              installations due to increased risk of electric shock.
             </AlertDescription>
           </Alert>
 
@@ -348,42 +422,58 @@ const DomesticOverviewCards = () => {
               <div
                 key={idx}
                 className={`p-4 rounded-lg border ${
-                  zone.color === 'red' ? 'bg-red-500/10 border-red-500/30' :
-                  zone.color === 'orange' ? 'bg-orange-500/10 border-orange-500/30' :
-                  zone.color === 'yellow' ? 'bg-yellow-500/10 border-yellow-500/30' :
-                  'bg-green-500/10 border-green-500/30'
+                  zone.color === 'red'
+                    ? 'bg-red-500/10 border-red-500/30'
+                    : zone.color === 'orange'
+                      ? 'bg-orange-500/10 border-orange-500/30'
+                      : zone.color === 'yellow'
+                        ? 'bg-yellow-500/10 border-yellow-500/30'
+                        : 'bg-green-500/10 border-green-500/30'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Badge
                     variant="outline"
                     className={`text-xs ${
-                      zone.color === 'red' ? 'border-red-400 text-red-300' :
-                      zone.color === 'orange' ? 'border-orange-400 text-orange-300' :
-                      zone.color === 'yellow' ? 'border-yellow-400 text-yellow-300' :
-                      'border-green-400 text-green-300'
+                      zone.color === 'red'
+                        ? 'border-red-400 text-red-300'
+                        : zone.color === 'orange'
+                          ? 'border-orange-400 text-orange-300'
+                          : zone.color === 'yellow'
+                            ? 'border-yellow-400 text-yellow-300'
+                            : 'border-green-400 text-green-300'
                     }`}
                   >
                     {zone.zone}
                   </Badge>
                 </div>
-                <p className={`text-sm mb-3 ${
-                  zone.color === 'red' ? 'text-red-200' :
-                  zone.color === 'orange' ? 'text-orange-200' :
-                  zone.color === 'yellow' ? 'text-yellow-200' :
-                  'text-green-200'
-                }`}>
+                <p
+                  className={`text-sm mb-3 ${
+                    zone.color === 'red'
+                      ? 'text-red-200'
+                      : zone.color === 'orange'
+                        ? 'text-orange-200'
+                        : zone.color === 'yellow'
+                          ? 'text-yellow-200'
+                          : 'text-green-200'
+                  }`}
+                >
                   {zone.description}
                 </p>
                 <ul className="space-y-1">
                   {zone.requirements.map((req, reqIdx) => (
                     <li key={reqIdx} className="text-xs text-white flex items-start gap-2">
-                      <span className={`w-1 h-1 rounded-full mt-1.5 flex-shrink-0 ${
-                        zone.color === 'red' ? 'bg-red-400' :
-                        zone.color === 'orange' ? 'bg-orange-400' :
-                        zone.color === 'yellow' ? 'bg-yellow-400' :
-                        'bg-green-400'
-                      }`}></span>
+                      <span
+                        className={`w-1 h-1 rounded-full mt-1.5 flex-shrink-0 ${
+                          zone.color === 'red'
+                            ? 'bg-red-400'
+                            : zone.color === 'orange'
+                              ? 'bg-orange-400'
+                              : zone.color === 'yellow'
+                                ? 'bg-yellow-400'
+                                : 'bg-green-400'
+                        }`}
+                      ></span>
                       {req}
                     </li>
                   ))}
@@ -418,16 +508,23 @@ const DomesticOverviewCards = () => {
           <Alert className="border-violet-500/50 bg-violet-500/10">
             <Info className="h-4 w-4 text-violet-400" />
             <AlertDescription className="text-violet-200 text-sm">
-              The 18th Edition (Amendment 3) introduced significant changes to consumer unit requirements in domestic premises.
+              The 18th Edition (Amendment 3) introduced significant changes to consumer unit
+              requirements in domestic premises.
             </AlertDescription>
           </Alert>
 
           <div className="space-y-3">
             {consumerUnitRequirements.keyChanges.map((change, idx) => (
-              <div key={idx} className="bg-violet-500/10 p-4 rounded-lg border border-violet-500/20">
+              <div
+                key={idx}
+                className="bg-violet-500/10 p-4 rounded-lg border border-violet-500/20"
+              >
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <h4 className="font-medium text-white text-sm">{change.requirement}</h4>
-                  <Badge variant="outline" className="border-violet-400 text-violet-300 text-xs flex-shrink-0">
+                  <Badge
+                    variant="outline"
+                    className="border-violet-400 text-violet-300 text-xs flex-shrink-0"
+                  >
                     {change.regulation}
                   </Badge>
                 </div>
@@ -477,12 +574,20 @@ const DomesticOverviewCards = () => {
             <h4 className="font-medium text-white mb-3">IP Ratings Guide</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {outdoorInstallations.ipRatings.map((ip, idx) => (
-                <div key={idx} className="bg-emerald-600/10 p-3 rounded border border-emerald-500/30">
-                  <Badge variant="outline" className="border-emerald-400 text-emerald-300 text-xs mb-2">
+                <div
+                  key={idx}
+                  className="bg-emerald-600/10 p-3 rounded border border-emerald-500/30"
+                >
+                  <Badge
+                    variant="outline"
+                    className="border-emerald-400 text-emerald-300 text-xs mb-2"
+                  >
                     {ip.rating}
                   </Badge>
                   <p className="text-xs text-emerald-100 mb-1">{ip.description}</p>
-                  <p className="text-xs text-white"><strong>Use:</strong> {ip.use}</p>
+                  <p className="text-xs text-white">
+                    <strong>Use:</strong> {ip.use}
+                  </p>
                 </div>
               ))}
             </div>
@@ -492,14 +597,22 @@ const DomesticOverviewCards = () => {
             <h4 className="font-medium text-white mb-3">Cable Installation Methods</h4>
             <div className="space-y-3">
               {outdoorInstallations.cableRequirements.map((cable, idx) => (
-                <div key={idx} className="bg-emerald-600/10 p-3 rounded border border-emerald-500/30">
+                <div
+                  key={idx}
+                  className="bg-emerald-600/10 p-3 rounded border border-emerald-500/30"
+                >
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="outline" className="border-emerald-400 text-emerald-300 text-xs">
+                    <Badge
+                      variant="outline"
+                      className="border-emerald-400 text-emerald-300 text-xs"
+                    >
                       {cable.location}
                     </Badge>
                     <span className="text-sm text-white">{cable.cable}</span>
                   </div>
-                  <p className="text-xs text-emerald-100 mb-1"><strong>Depth/Clearance:</strong> {cable.depth}</p>
+                  <p className="text-xs text-emerald-100 mb-1">
+                    <strong>Depth/Clearance:</strong> {cable.depth}
+                  </p>
                   <p className="text-xs text-white">{cable.notes}</p>
                 </div>
               ))}
@@ -556,7 +669,10 @@ const DomesticOverviewCards = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           {safetyPriorities.map((safety, index) => (
-            <div key={index} className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
+            <div
+              key={index}
+              className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20"
+            >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
                   <h4 className="font-medium text-orange-200 mb-1">{safety.priority}</h4>
@@ -565,9 +681,11 @@ const DomesticOverviewCards = () => {
                 <Badge
                   variant="outline"
                   className={`text-xs ${
-                    safety.level === 'Critical' ? 'border-red-500 text-red-400' :
-                    safety.level === 'Legal' ? 'border-purple-500 text-purple-400' :
-                    'border-orange-500 text-orange-400'
+                    safety.level === 'Critical'
+                      ? 'border-red-500 text-red-400'
+                      : safety.level === 'Legal'
+                        ? 'border-purple-500 text-purple-400'
+                        : 'border-orange-500 text-orange-400'
                   }`}
                 >
                   {safety.level}
@@ -588,12 +706,12 @@ const DomesticOverviewCards = () => {
         </CardHeader>
         <CardContent className="space-y-2">
           {[
-            "Obtain necessary permits and notifications",
-            "Complete thorough site survey and risk assessment",
-            "Ensure proper PPE and safety equipment available",
-            "Confirm main switch isolation and testing equipment",
-            "Check cable routes and access requirements",
-            "Plan waste disposal and material deliveries"
+            'Obtain necessary permits and notifications',
+            'Complete thorough site survey and risk assessment',
+            'Ensure proper PPE and safety equipment available',
+            'Confirm main switch isolation and testing equipment',
+            'Check cable routes and access requirements',
+            'Plan waste disposal and material deliveries',
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-2 text-sm">
               <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />

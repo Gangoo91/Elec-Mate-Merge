@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection2_3 = () => {
   const outcomes = [
-    "Explain why high-risk task area lighting is necessary",
-    "Identify workplaces and tasks that require high-risk task area lighting",
-    "Apply design standards including required lux levels and uniformity", 
-    "Install systems that provide reliable emergency illumination",
-    "Test and maintain lighting to ensure continuous compliance and safety"
+    'Explain why high-risk task area lighting is necessary',
+    'Identify workplaces and tasks that require high-risk task area lighting',
+    'Apply design standards including required lux levels and uniformity',
+    'Install systems that provide reliable emergency illumination',
+    'Test and maintain lighting to ensure continuous compliance and safety',
   ];
 
   return (
@@ -19,9 +19,7 @@ export const EmergencyLightingLearningOutcomesSection2_3 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By completing this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By completing this section, you will be able to:</p>
         <div className="grid grid-cols-1 gap-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">

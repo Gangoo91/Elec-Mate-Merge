@@ -29,53 +29,51 @@ import {
   Building2,
   Gauge,
   PieChart,
-  LineChart
+  LineChart,
 } from 'lucide-react';
 
 const EnergyEfficiencyModule5Section2: React.FC = () => {
   useSEO({
     title: 'Energy Dashboards and Cloud Portals | Energy Efficiency Module 5 Section 2 | Elec-Mate',
-    description: 'Learn about energy management dashboards, cloud portals, KPIs, data visualisation, and UK platforms including Energy Elephant, ECON, and Stark. Professional upskilling for electricians.',
-    keywords: 'energy dashboard, cloud portal, energy management, KPIs, Energy Elephant, ECON, Stark, data visualisation, UK energy platforms, building energy management'
+    description:
+      'Learn about energy management dashboards, cloud portals, KPIs, data visualisation, and UK platforms including Energy Elephant, ECON, and Stark. Professional upskilling for electricians.',
+    keywords:
+      'energy dashboard, cloud portal, energy management, KPIs, Energy Elephant, ECON, Stark, data visualisation, UK energy platforms, building energy management',
   });
 
   const quickCheckQuestions = [
     {
       id: 'qc1',
-      question: 'What is the recommended maximum data refresh rate for real-time energy dashboards in most commercial applications?',
-      options: [
-        'Every 1 second',
-        'Every 15-30 seconds',
-        'Every 5 minutes',
-        'Every hour'
-      ],
+      question:
+        'What is the recommended maximum data refresh rate for real-time energy dashboards in most commercial applications?',
+      options: ['Every 1 second', 'Every 15-30 seconds', 'Every 5 minutes', 'Every hour'],
       correctIndex: 1,
-      explanation: 'A 15-30 second refresh rate provides a good balance between real-time visibility and system performance. More frequent updates rarely add value for decision-making but significantly increase server load and data costs.'
+      explanation:
+        'A 15-30 second refresh rate provides a good balance between real-time visibility and system performance. More frequent updates rarely add value for decision-making but significantly increase server load and data costs.',
     },
     {
       id: 'qc2',
-      question: 'Which user role should typically have access to modify alarm thresholds and configure automated reports?',
-      options: [
-        'Viewer',
-        'Operator',
-        'Energy Manager',
-        'All users'
-      ],
+      question:
+        'Which user role should typically have access to modify alarm thresholds and configure automated reports?',
+      options: ['Viewer', 'Operator', 'Energy Manager', 'All users'],
       correctIndex: 2,
-      explanation: 'Energy Managers require elevated access to configure alarm thresholds, set up automated reports, and adjust system parameters. Operators can acknowledge alarms and view data, while Viewers have read-only access to dashboards and reports.'
+      explanation:
+        'Energy Managers require elevated access to configure alarm thresholds, set up automated reports, and adjust system parameters. Operators can acknowledge alarms and view data, while Viewers have read-only access to dashboards and reports.',
     },
     {
       id: 'qc3',
-      question: 'When comparing cloud vs on-premise energy management platforms, which is typically a key advantage of cloud solutions?',
+      question:
+        'When comparing cloud vs on-premise energy management platforms, which is typically a key advantage of cloud solutions?',
       options: [
         'Lower latency for real-time control',
         'No internet dependency',
         'Automatic updates and reduced IT overhead',
-        'Complete data sovereignty'
+        'Complete data sovereignty',
       ],
       correctIndex: 2,
-      explanation: 'Cloud platforms offer automatic software updates, reduced IT infrastructure requirements, and lower upfront costs. However, on-premise solutions provide better latency for real-time control and complete data sovereignty, which some organisations require.'
-    }
+      explanation:
+        'Cloud platforms offer automatic software updates, reduced IT infrastructure requirements, and lower upfront costs. However, on-premise solutions provide better latency for real-time control and complete data sovereignty, which some organisations require.',
+    },
   ];
 
   const quizQuestions = [
@@ -85,9 +83,9 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'To replace the building management system entirely',
         'To provide visual representation of energy consumption patterns and KPIs',
         'To automatically reduce energy consumption without human intervention',
-        'To generate invoices for energy suppliers'
+        'To generate invoices for energy suppliers',
       ],
-      correctAnswer: 'To provide visual representation of energy consumption patterns and KPIs'
+      correctAnswer: 'To provide visual representation of energy consumption patterns and KPIs',
     },
     {
       question: 'Which KPI measures the energy consumption per square metre of floor space?',
@@ -95,9 +93,9 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Power Factor',
         'Peak Demand (kW)',
         'Energy Use Intensity (EUI)',
-        'Carbon Intensity'
+        'Carbon Intensity',
       ],
-      correctAnswer: 'Energy Use Intensity (EUI)'
+      correctAnswer: 'Energy Use Intensity (EUI)',
     },
     {
       question: 'Energy Elephant is a UK-based energy management platform primarily focused on:',
@@ -105,9 +103,9 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Industrial process control only',
         'Multi-site portfolio management and sustainability reporting',
         'Residential smart home automation',
-        'Grid-scale renewable energy trading'
+        'Grid-scale renewable energy trading',
       ],
-      correctAnswer: 'Multi-site portfolio management and sustainability reporting'
+      correctAnswer: 'Multi-site portfolio management and sustainability reporting',
     },
     {
       question: 'What does ECON Energy specialise in for UK commercial buildings?',
@@ -115,59 +113,64 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Solar panel installation',
         'Automatic Meter Reading (AMR) and energy monitoring',
         'HVAC equipment manufacturing',
-        'Electricity generation'
+        'Electricity generation',
       ],
-      correctAnswer: 'Automatic Meter Reading (AMR) and energy monitoring'
+      correctAnswer: 'Automatic Meter Reading (AMR) and energy monitoring',
     },
     {
-      question: 'When designing dashboard layouts, which principle ensures users can quickly identify critical information?',
+      question:
+        'When designing dashboard layouts, which principle ensures users can quickly identify critical information?',
       options: [
         'Maximising data density on every screen',
         'Using identical colours for all metrics',
         'Visual hierarchy with important KPIs prominently displayed',
-        'Hiding navigation menus to increase screen space'
+        'Hiding navigation menus to increase screen space',
       ],
-      correctAnswer: 'Visual hierarchy with important KPIs prominently displayed'
+      correctAnswer: 'Visual hierarchy with important KPIs prominently displayed',
     },
     {
-      question: 'What is a key consideration when implementing role-based access control (RBAC) on energy platforms?',
+      question:
+        'What is a key consideration when implementing role-based access control (RBAC) on energy platforms?',
       options: [
         'All users should have administrator access for convenience',
         'Access levels should align with job responsibilities and data sensitivity',
         'Passwords should be shared among team members',
-        'Only IT staff should have any access to energy data'
+        'Only IT staff should have any access to energy data',
       ],
-      correctAnswer: 'Access levels should align with job responsibilities and data sensitivity'
+      correctAnswer: 'Access levels should align with job responsibilities and data sensitivity',
     },
     {
-      question: 'Which data visualisation type is most appropriate for showing energy consumption trends over a 12-month period?',
+      question:
+        'Which data visualisation type is most appropriate for showing energy consumption trends over a 12-month period?',
       options: [
         'Pie chart',
         'Single number display',
         'Line chart or area chart',
-        'Traffic light indicator'
+        'Traffic light indicator',
       ],
-      correctAnswer: 'Line chart or area chart'
+      correctAnswer: 'Line chart or area chart',
     },
     {
-      question: 'Stark Group provides energy management services in the UK with particular strength in:',
+      question:
+        'Stark Group provides energy management services in the UK with particular strength in:',
       options: [
         'Residential solar installations',
         'Bureau services including bill validation and procurement',
         'Electric vehicle charging networks',
-        'Wind turbine maintenance'
+        'Wind turbine maintenance',
       ],
-      correctAnswer: 'Bureau services including bill validation and procurement'
+      correctAnswer: 'Bureau services including bill validation and procurement',
     },
     {
-      question: 'What is the typical data retention requirement for energy consumption data under UK regulations for large organisations?',
+      question:
+        'What is the typical data retention requirement for energy consumption data under UK regulations for large organisations?',
       options: [
         '30 days',
         '6 months',
         '2-7 years depending on reporting requirements',
-        'No retention requirement exists'
+        'No retention requirement exists',
       ],
-      correctAnswer: '2-7 years depending on reporting requirements'
+      correctAnswer: '2-7 years depending on reporting requirements',
     },
     {
       question: 'Which feature is essential for mobile access to energy dashboards?',
@@ -175,37 +178,43 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         'Flash-based animations',
         'Responsive design that adapts to screen size',
         'Desktop-only viewing mode',
-        'Mandatory landscape orientation'
+        'Mandatory landscape orientation',
       ],
-      correctAnswer: 'Responsive design that adapts to screen size'
-    }
+      correctAnswer: 'Responsive design that adapts to screen size',
+    },
   ];
 
   const faqs = [
     {
       question: 'How often should energy dashboard data be refreshed for optimal performance?',
-      answer: 'For most commercial applications, a 15-30 second refresh rate provides adequate real-time visibility without overloading systems. Critical process monitoring may require 5-10 second updates, while trend analysis dashboards can refresh every 5-15 minutes. Consider that more frequent updates increase server load, data storage requirements, and potentially API costs for cloud platforms. Most UK energy management platforms allow configurable refresh rates per dashboard or widget.'
+      answer:
+        'For most commercial applications, a 15-30 second refresh rate provides adequate real-time visibility without overloading systems. Critical process monitoring may require 5-10 second updates, while trend analysis dashboards can refresh every 5-15 minutes. Consider that more frequent updates increase server load, data storage requirements, and potentially API costs for cloud platforms. Most UK energy management platforms allow configurable refresh rates per dashboard or widget.',
     },
     {
       question: 'What are the main differences between Energy Elephant, ECON, and Stark platforms?',
-      answer: 'Energy Elephant excels at multi-site portfolio management with strong sustainability reporting features, making it ideal for organisations with numerous buildings requiring SECR or ESOS compliance. ECON Energy focuses on Automatic Meter Reading (AMR) with robust sub-metering and monitoring capabilities, particularly strong for industrial and manufacturing environments. Stark Group offers comprehensive bureau services including bill validation, procurement support, and energy management, making them suitable for organisations wanting a managed service approach rather than self-service software.'
+      answer:
+        'Energy Elephant excels at multi-site portfolio management with strong sustainability reporting features, making it ideal for organisations with numerous buildings requiring SECR or ESOS compliance. ECON Energy focuses on Automatic Meter Reading (AMR) with robust sub-metering and monitoring capabilities, particularly strong for industrial and manufacturing environments. Stark Group offers comprehensive bureau services including bill validation, procurement support, and energy management, making them suitable for organisations wanting a managed service approach rather than self-service software.',
     },
     {
       question: 'Should we choose cloud-based or on-premise energy management software?',
-      answer: 'Cloud platforms suit most organisations due to lower upfront costs, automatic updates, reduced IT overhead, and anywhere access. Choose on-premise when you have strict data sovereignty requirements, need ultra-low latency for real-time control systems, have limited internet reliability, or operate in highly regulated industries requiring air-gapped systems. Many modern deployments use hybrid approaches with local data collection and cloud analytics. Consider that cloud solutions typically involve ongoing subscription costs while on-premise has higher initial investment but lower long-term costs.'
+      answer:
+        'Cloud platforms suit most organisations due to lower upfront costs, automatic updates, reduced IT overhead, and anywhere access. Choose on-premise when you have strict data sovereignty requirements, need ultra-low latency for real-time control systems, have limited internet reliability, or operate in highly regulated industries requiring air-gapped systems. Many modern deployments use hybrid approaches with local data collection and cloud analytics. Consider that cloud solutions typically involve ongoing subscription costs while on-premise has higher initial investment but lower long-term costs.',
     },
     {
       question: 'What user roles should be configured on an energy management platform?',
-      answer: 'Typical role structure includes: Viewer (read-only access to dashboards and reports), Operator (can acknowledge alarms and add comments), Energy Manager (configure alarms, create reports, manage targets), Administrator (full system access including user management and integrations), and Executive (summary dashboards and high-level reports only). Some platforms offer site-specific roles limiting users to particular buildings or meters. Always follow the principle of least privilege - users should only have access necessary for their job function.'
+      answer:
+        'Typical role structure includes: Viewer (read-only access to dashboards and reports), Operator (can acknowledge alarms and add comments), Energy Manager (configure alarms, create reports, manage targets), Administrator (full system access including user management and integrations), and Executive (summary dashboards and high-level reports only). Some platforms offer site-specific roles limiting users to particular buildings or meters. Always follow the principle of least privilege - users should only have access necessary for their job function.',
     },
     {
       question: 'What KPIs should appear on a building energy dashboard?',
-      answer: 'Essential KPIs include: Total consumption (kWh) with comparison to previous period, Peak demand (kW) and time of occurrence, Energy Use Intensity (kWh/m2), Cost per day/week/month, Carbon emissions (kgCO2e), Power factor (for sites with reactive power charges), and Degree day normalised consumption. Advanced dashboards may include occupancy-adjusted metrics, renewable generation percentage, and target vs actual comparisons. Prioritise 5-7 key metrics on the main dashboard with drill-down capability for detailed analysis.'
+      answer:
+        'Essential KPIs include: Total consumption (kWh) with comparison to previous period, Peak demand (kW) and time of occurrence, Energy Use Intensity (kWh/m2), Cost per day/week/month, Carbon emissions (kgCO2e), Power factor (for sites with reactive power charges), and Degree day normalised consumption. Advanced dashboards may include occupancy-adjusted metrics, renewable generation percentage, and target vs actual comparisons. Prioritise 5-7 key metrics on the main dashboard with drill-down capability for detailed analysis.',
     },
     {
       question: 'How do we ensure data security on cloud energy platforms?',
-      answer: 'Key security measures include: Ensure the provider holds ISO 27001 certification and complies with UK GDPR. Use platforms with data centres in the UK or EU for data residency compliance. Implement strong authentication including multi-factor authentication (MFA) for all users. Review and configure role-based access control appropriately. Ensure data encryption both in transit (TLS 1.2+) and at rest. Establish clear data processing agreements and understand data ownership terms. Regular security audits and penetration testing should be part of the provider\'s practices.'
-    }
+      answer:
+        "Key security measures include: Ensure the provider holds ISO 27001 certification and complies with UK GDPR. Use platforms with data centres in the UK or EU for data residency compliance. Implement strong authentication including multi-factor authentication (MFA) for all users. Review and configure role-based access control appropriately. Ensure data encryption both in transit (TLS 1.2+) and at rest. Establish clear data processing agreements and understand data ownership terms. Regular security audits and penetration testing should be part of the provider's practices.",
+    },
   ];
 
   return (
@@ -213,7 +222,12 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-white hover:text-elec-yellow hover:bg-transparent p-2"
+          >
             <Link to="/electrician/upskilling/energy-efficiency-module-5">
               <ArrowLeft className="h-5 w-5" />
             </Link>
@@ -229,11 +243,11 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
           <p className="text-white/90 leading-relaxed">
-            Energy dashboards and cloud portals transform raw consumption data into actionable insights.
-            This section covers dashboard design principles, key performance indicators (KPIs), cloud vs
-            on-premise considerations, and an overview of popular UK energy management platforms including
-            Energy Elephant, ECON, and Stark. Understanding these systems helps electricians support
-            effective energy management implementations.
+            Energy dashboards and cloud portals transform raw consumption data into actionable
+            insights. This section covers dashboard design principles, key performance indicators
+            (KPIs), cloud vs on-premise considerations, and an overview of popular UK energy
+            management platforms including Energy Elephant, ECON, and Stark. Understanding these
+            systems helps electricians support effective energy management implementations.
           </p>
         </div>
 
@@ -259,15 +273,24 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-1">-</span>
-                  <span><strong className="text-white">Primary Zone:</strong> Key KPIs and alerts at top or centre - users should see critical information within 3 seconds</span>
+                  <span>
+                    <strong className="text-white">Primary Zone:</strong> Key KPIs and alerts at top
+                    or centre - users should see critical information within 3 seconds
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-1">-</span>
-                  <span><strong className="text-white">Secondary Zone:</strong> Trend charts and comparisons - supporting context for primary metrics</span>
+                  <span>
+                    <strong className="text-white">Secondary Zone:</strong> Trend charts and
+                    comparisons - supporting context for primary metrics
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-1">-</span>
-                  <span><strong className="text-white">Tertiary Zone:</strong> Detailed data tables and drill-down options - for investigation and analysis</span>
+                  <span>
+                    <strong className="text-white">Tertiary Zone:</strong> Detailed data tables and
+                    drill-down options - for investigation and analysis
+                  </span>
                 </li>
               </ul>
             </div>
@@ -301,10 +324,10 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                 Mobile-First Considerations
               </h4>
               <p className="text-sm text-white/80">
-                With increasing mobile access, design dashboards responsively. Touch targets should be
-                minimum 44x44 pixels. Consider creating separate mobile-optimised views showing only
-                essential KPIs rather than scaling down desktop layouts. UK platforms like Energy Elephant
-                and ECON offer dedicated mobile apps for field access.
+                With increasing mobile access, design dashboards responsively. Touch targets should
+                be minimum 44x44 pixels. Consider creating separate mobile-optimised views showing
+                only essential KPIs rather than scaling down desktop layouts. UK platforms like
+                Energy Elephant and ECON offer dedicated mobile apps for field access.
               </p>
             </div>
           </div>
@@ -392,19 +415,27 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3 border border-white/10">
                   <span className="text-elec-yellow font-medium">Comparison to Target</span>
-                  <p className="text-sm mt-1 text-white/70">Show percentage variance from budget or reduction target</p>
+                  <p className="text-sm mt-1 text-white/70">
+                    Show percentage variance from budget or reduction target
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3 border border-white/10">
                   <span className="text-elec-yellow font-medium">Same Period Last Year</span>
-                  <p className="text-sm mt-1 text-white/70">Year-on-year comparison accounting for seasonality</p>
+                  <p className="text-sm mt-1 text-white/70">
+                    Year-on-year comparison accounting for seasonality
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3 border border-white/10">
                   <span className="text-elec-yellow font-medium">Degree Day Normalisation</span>
-                  <p className="text-sm mt-1 text-white/70">Weather-adjusted consumption for fair comparison</p>
+                  <p className="text-sm mt-1 text-white/70">
+                    Weather-adjusted consumption for fair comparison
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3 border border-white/10">
                   <span className="text-elec-yellow font-medium">Benchmark Comparison</span>
-                  <p className="text-sm mt-1 text-white/70">Industry or portfolio averages for context</p>
+                  <p className="text-sm mt-1 text-white/70">
+                    Industry or portfolio averages for context
+                  </p>
                 </div>
               </div>
             </div>
@@ -441,15 +472,33 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <h3 className="text-blue-400 font-medium">Cloud Platform (SaaS)</h3>
                 </div>
                 <div className="space-y-2 text-sm text-white/70">
-                  <p><span className="text-green-400">+</span> Lower upfront investment (OpEx model)</p>
-                  <p><span className="text-green-400">+</span> Automatic updates and new features</p>
-                  <p><span className="text-green-400">+</span> Access from anywhere with internet</p>
-                  <p><span className="text-green-400">+</span> Scalable - add sites easily</p>
-                  <p><span className="text-green-400">+</span> Reduced IT infrastructure needs</p>
-                  <p><span className="text-red-400">-</span> Ongoing subscription costs</p>
-                  <p><span className="text-red-400">-</span> Internet dependency</p>
-                  <p><span className="text-red-400">-</span> Data sovereignty considerations</p>
-                  <p><span className="text-red-400">-</span> Potential latency for real-time control</p>
+                  <p>
+                    <span className="text-green-400">+</span> Lower upfront investment (OpEx model)
+                  </p>
+                  <p>
+                    <span className="text-green-400">+</span> Automatic updates and new features
+                  </p>
+                  <p>
+                    <span className="text-green-400">+</span> Access from anywhere with internet
+                  </p>
+                  <p>
+                    <span className="text-green-400">+</span> Scalable - add sites easily
+                  </p>
+                  <p>
+                    <span className="text-green-400">+</span> Reduced IT infrastructure needs
+                  </p>
+                  <p>
+                    <span className="text-red-400">-</span> Ongoing subscription costs
+                  </p>
+                  <p>
+                    <span className="text-red-400">-</span> Internet dependency
+                  </p>
+                  <p>
+                    <span className="text-red-400">-</span> Data sovereignty considerations
+                  </p>
+                  <p>
+                    <span className="text-red-400">-</span> Potential latency for real-time control
+                  </p>
                 </div>
               </div>
 
@@ -459,15 +508,34 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <h3 className="text-orange-400 font-medium">On-Premise Platform</h3>
                 </div>
                 <div className="space-y-2 text-sm text-white/70">
-                  <p><span className="text-green-400">+</span> Complete data sovereignty</p>
-                  <p><span className="text-green-400">+</span> No internet dependency</p>
-                  <p><span className="text-green-400">+</span> Lower latency for real-time control</p>
-                  <p><span className="text-green-400">+</span> One-time licence (potentially lower TCO)</p>
-                  <p><span className="text-green-400">+</span> Full customisation control</p>
-                  <p><span className="text-red-400">-</span> Higher upfront costs (CapEx)</p>
-                  <p><span className="text-red-400">-</span> IT infrastructure required</p>
-                  <p><span className="text-red-400">-</span> Manual updates and maintenance</p>
-                  <p><span className="text-red-400">-</span> Remote access requires VPN setup</p>
+                  <p>
+                    <span className="text-green-400">+</span> Complete data sovereignty
+                  </p>
+                  <p>
+                    <span className="text-green-400">+</span> No internet dependency
+                  </p>
+                  <p>
+                    <span className="text-green-400">+</span> Lower latency for real-time control
+                  </p>
+                  <p>
+                    <span className="text-green-400">+</span> One-time licence (potentially lower
+                    TCO)
+                  </p>
+                  <p>
+                    <span className="text-green-400">+</span> Full customisation control
+                  </p>
+                  <p>
+                    <span className="text-red-400">-</span> Higher upfront costs (CapEx)
+                  </p>
+                  <p>
+                    <span className="text-red-400">-</span> IT infrastructure required
+                  </p>
+                  <p>
+                    <span className="text-red-400">-</span> Manual updates and maintenance
+                  </p>
+                  <p>
+                    <span className="text-red-400">-</span> Remote access requires VPN setup
+                  </p>
                 </div>
               </div>
             </div>
@@ -478,32 +546,47 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                 Hybrid Architecture
               </h4>
               <p className="text-sm text-white/80">
-                Many modern deployments use hybrid approaches: local data loggers or edge devices collect
-                and store data on-site, while cloud platforms provide analytics, reporting, and remote access.
-                This provides resilience (local data storage if internet fails), reduced latency for critical
-                monitoring, and the benefits of cloud-based analytics and accessibility. UK platforms like
-                ECON typically support this architecture with their AMR hardware.
+                Many modern deployments use hybrid approaches: local data loggers or edge devices
+                collect and store data on-site, while cloud platforms provide analytics, reporting,
+                and remote access. This provides resilience (local data storage if internet fails),
+                reduced latency for critical monitoring, and the benefits of cloud-based analytics
+                and accessibility. UK platforms like ECON typically support this architecture with
+                their AMR hardware.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h3 className="text-elec-yellow font-medium mb-3">Decision Factors for UK Organisations</h3>
+              <h3 className="text-elec-yellow font-medium mb-3">
+                Decision Factors for UK Organisations
+              </h3>
               <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong className="text-white">Data Protection:</strong> Ensure cloud providers comply with UK GDPR. Check if data centres are UK/EU-based.</span>
+                  <span>
+                    <strong className="text-white">Data Protection:</strong> Ensure cloud providers
+                    comply with UK GDPR. Check if data centres are UK/EU-based.
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong className="text-white">Integration Needs:</strong> On-premise may be required for tight integration with legacy BMS systems.</span>
+                  <span>
+                    <strong className="text-white">Integration Needs:</strong> On-premise may be
+                    required for tight integration with legacy BMS systems.
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong className="text-white">Multi-Site Operations:</strong> Cloud platforms excel for portfolio management across multiple locations.</span>
+                  <span>
+                    <strong className="text-white">Multi-Site Operations:</strong> Cloud platforms
+                    excel for portfolio management across multiple locations.
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong className="text-white">Budget Structure:</strong> Cloud suits OpEx budgets; on-premise suits CapEx availability.</span>
+                  <span>
+                    <strong className="text-white">Budget Structure:</strong> Cloud suits OpEx
+                    budgets; on-premise suits CapEx availability.
+                  </span>
                 </li>
               </ul>
             </div>
@@ -520,8 +603,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
 
           <div className="space-y-4 text-white/80">
             <p>
-              Choosing appropriate visualisation types ensures data is communicated effectively
-              and users can quickly extract meaningful insights.
+              Choosing appropriate visualisation types ensures data is communicated effectively and
+              users can quickly extract meaningful insights.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -590,20 +673,26 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               <div className="grid md:grid-cols-3 gap-3 text-sm">
                 <div>
                   <span className="text-green-400 font-medium">Green</span>
-                  <p className="text-xs text-white/60">On target, normal operation, good performance</p>
+                  <p className="text-xs text-white/60">
+                    On target, normal operation, good performance
+                  </p>
                 </div>
                 <div>
                   <span className="text-amber-400 font-medium">Amber/Yellow</span>
-                  <p className="text-xs text-white/60">Warning, approaching limits, attention needed</p>
+                  <p className="text-xs text-white/60">
+                    Warning, approaching limits, attention needed
+                  </p>
                 </div>
                 <div>
                   <span className="text-red-400 font-medium">Red</span>
-                  <p className="text-xs text-white/60">Alert, exceeded threshold, immediate action</p>
+                  <p className="text-xs text-white/60">
+                    Alert, exceeded threshold, immediate action
+                  </p>
                 </div>
               </div>
               <p className="text-xs text-white/60 mt-2">
-                Ensure sufficient contrast and consider colour-blind users (approximately 8% of males).
-                Use patterns or icons alongside colours where possible.
+                Ensure sufficient contrast and consider colour-blind users (approximately 8% of
+                males). Use patterns or icons alongside colours where possible.
               </p>
             </div>
 
@@ -668,7 +757,9 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <Eye className="w-5 h-5 text-white/60" />
                   <h4 className="font-medium text-white">Viewer</h4>
                 </div>
-                <p className="text-sm text-white/60 mb-2">Read-only access to assigned dashboards and reports</p>
+                <p className="text-sm text-white/60 mb-2">
+                  Read-only access to assigned dashboards and reports
+                </p>
                 <ul className="text-xs text-white/50 grid grid-cols-2 gap-1">
                   <li>- View dashboards</li>
                   <li>- Download reports</li>
@@ -682,7 +773,9 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <Settings className="w-5 h-5 text-blue-400" />
                   <h4 className="font-medium text-white">Operator</h4>
                 </div>
-                <p className="text-sm text-white/60 mb-2">Day-to-day monitoring and alarm response</p>
+                <p className="text-sm text-white/60 mb-2">
+                  Day-to-day monitoring and alarm response
+                </p>
                 <ul className="text-xs text-white/50 grid grid-cols-2 gap-1">
                   <li>- All Viewer permissions</li>
                   <li>- Acknowledge alarms</li>
@@ -889,8 +982,9 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               <p className="text-sm text-white/80">
                 When selecting a platform, consider: number of sites, sub-metering requirements,
                 internal technical capability, reporting obligations (SECR, ESOS), budget model
-                (subscription vs capital), and integration requirements with existing BMS or ERP systems.
-                Request demonstrations and reference sites from shortlisted vendors before committing.
+                (subscription vs capital), and integration requirements with existing BMS or ERP
+                systems. Request demonstrations and reference sites from shortlisted vendors before
+                committing.
               </p>
             </div>
           </div>
@@ -938,9 +1032,16 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             <div>
               <h3 className="text-white font-medium mb-2">Platform Quick Comparison</h3>
               <ul className="text-sm text-white/80 space-y-1">
-                <li>- <span className="text-green-400">Energy Elephant:</span> Portfolio and sustainability</li>
-                <li>- <span className="text-blue-400">ECON:</span> AMR and sub-metering</li>
-                <li>- <span className="text-orange-400">Stark:</span> Bureau and procurement</li>
+                <li>
+                  - <span className="text-green-400">Energy Elephant:</span> Portfolio and
+                  sustainability
+                </li>
+                <li>
+                  - <span className="text-blue-400">ECON:</span> AMR and sub-metering
+                </li>
+                <li>
+                  - <span className="text-orange-400">Stark:</span> Bureau and procurement
+                </li>
               </ul>
             </div>
 
@@ -959,7 +1060,9 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
 
         {/* FAQs */}
         <section className="bg-white/5 rounded-lg p-6 border border-white/10">
-          <h2 className="text-xl font-semibold text-elec-yellow mb-4">Frequently Asked Questions</h2>
+          <h2 className="text-xl font-semibold text-elec-yellow mb-4">
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
@@ -981,13 +1084,20 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
-          <Button variant="outline" asChild className="min-h-[44px] touch-manipulation bg-transparent border-white/20 text-white hover:bg-white/5 hover:border-elec-yellow">
+          <Button
+            variant="outline"
+            asChild
+            className="min-h-[44px] touch-manipulation bg-transparent border-white/20 text-white hover:bg-white/5 hover:border-elec-yellow"
+          >
             <Link to="../section-1">
               <ArrowLeft className="w-5 h-5 mr-2" />
               Previous: Section 1
             </Link>
           </Button>
-          <Button asChild className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
+          <Button
+            asChild
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
             <Link to="../section-3">
               Next: Section 3
               <ArrowRight className="w-5 h-5 ml-2" />

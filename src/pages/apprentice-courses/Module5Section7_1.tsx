@@ -1,35 +1,59 @@
-import { ArrowLeft, ArrowRight, FileText, Target, CheckCircle, AlertTriangle, Clipboard } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  ArrowRight,
+  FileText,
+  Target,
+  CheckCircle,
+  AlertTriangle,
+  Clipboard,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Importance of Accurate Records for Compliance and Safety - Module 5.7.1 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn why accurate records are essential in electrical work for BS 7671 compliance, safety, and future maintenance. Understand key documentation requirements.";
+const TITLE =
+  'Importance of Accurate Records for Compliance and Safety - Module 5.7.1 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn why accurate records are essential in electrical work for BS 7671 compliance, safety, and future maintenance. Understand key documentation requirements.';
 
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Which wiring regulation standard requires proper documentation of electrical installations?",
-    options: ["BS 5266", "BS 7671", "ISO 14001", "BS 6004"],
+    question:
+      'Which wiring regulation standard requires proper documentation of electrical installations?',
+    options: ['BS 5266', 'BS 7671', 'ISO 14001', 'BS 6004'],
     correctIndex: 1,
-    explanation: "BS 7671 is the UK wiring regulations standard that requires proper documentation of all electrical installations to prove compliance."
+    explanation:
+      'BS 7671 is the UK wiring regulations standard that requires proper documentation of all electrical installations to prove compliance.',
   },
   {
     id: 2,
-    question: "What is the main purpose of inspection and test records?",
-    options: ["To provide an installation design", "To prove safety and compliance", "To track project costs", "To record material usage"],
+    question: 'What is the main purpose of inspection and test records?',
+    options: [
+      'To provide an installation design',
+      'To prove safety and compliance',
+      'To track project costs',
+      'To record material usage',
+    ],
     correctIndex: 1,
-    explanation: "Inspection and test records provide essential proof that installations are safe and comply with BS 7671 requirements."
+    explanation:
+      'Inspection and test records provide essential proof that installations are safe and comply with BS 7671 requirements.',
   },
   {
     id: 3,
-    question: "When should documentation be completed?",
-    options: ["At the end of the project", "Weekly", "Immediately after the work is carried out", "Monthly"],
+    question: 'When should documentation be completed?',
+    options: [
+      'At the end of the project',
+      'Weekly',
+      'Immediately after the work is carried out',
+      'Monthly',
+    ],
     correctIndex: 2,
-    explanation: "Documentation should always be completed immediately after work is carried out to ensure accuracy and prevent loss of important details."
-  }
+    explanation:
+      'Documentation should always be completed immediately after work is carried out to ensure accuracy and prevent loss of important details.',
+  },
 ];
 
 const Module5Section7_1 = () => {
@@ -38,97 +62,159 @@ const Module5Section7_1 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "Which wiring regulation standard requires proper documentation of electrical installations?",
-      options: ["BS 5266", "BS 7671", "ISO 14001", "BS 6004"],
+      question:
+        'Which wiring regulation standard requires proper documentation of electrical installations?',
+      options: ['BS 5266', 'BS 7671', 'ISO 14001', 'BS 6004'],
       correctAnswer: 1,
-      explanation: "BS 7671 is the UK wiring regulations standard that requires proper documentation of all electrical installations to prove compliance."
+      explanation:
+        'BS 7671 is the UK wiring regulations standard that requires proper documentation of all electrical installations to prove compliance.',
     },
     {
       id: 2,
-      question: "Which certificate is used for small alterations or additions to electrical systems?",
-      options: ["Installation Certificate", "Minor Works Certificate", "Fire Safety Certificate", "Compliance Certificate"],
+      question:
+        'Which certificate is used for small alterations or additions to electrical systems?',
+      options: [
+        'Installation Certificate',
+        'Minor Works Certificate',
+        'Fire Safety Certificate',
+        'Compliance Certificate',
+      ],
       correctAnswer: 1,
-      explanation: "Minor Works Certificates are specifically designed for documenting small alterations, additions, or replacements to existing electrical installations."
+      explanation:
+        'Minor Works Certificates are specifically designed for documenting small alterations, additions, or replacements to existing electrical installations.',
     },
     {
       id: 3,
-      question: "What is the main purpose of inspection and test records?",
-      options: ["To provide an installation design", "To prove safety and compliance", "To track project costs", "To record equipment deliveries"],
+      question: 'What is the main purpose of inspection and test records?',
+      options: [
+        'To provide an installation design',
+        'To prove safety and compliance',
+        'To track project costs',
+        'To record equipment deliveries',
+      ],
       correctAnswer: 1,
-      explanation: "Inspection and test records provide essential proof that installations are safe, properly installed, and comply with BS 7671 requirements."
+      explanation:
+        'Inspection and test records provide essential proof that installations are safe, properly installed, and comply with BS 7671 requirements.',
     },
     {
       id: 4,
-      question: "What is a RAMS document used for?",
-      options: ["Recording site deliveries", "Health and safety planning", "Checking circuit continuity", "Material specifications"],
+      question: 'What is a RAMS document used for?',
+      options: [
+        'Recording site deliveries',
+        'Health and safety planning',
+        'Checking circuit continuity',
+        'Material specifications',
+      ],
       correctAnswer: 1,
-      explanation: "RAMS (Risk Assessments and Method Statements) are used for health and safety planning, identifying hazards and control measures."
+      explanation:
+        'RAMS (Risk Assessments and Method Statements) are used for health and safety planning, identifying hazards and control measures.',
     },
     {
       id: 5,
-      question: "What is a site diary or work log used for?",
-      options: ["Recording testing only", "Recording daily progress, incidents, and variations", "Recording equipment stock", "Recording client meetings"],
+      question: 'What is a site diary or work log used for?',
+      options: [
+        'Recording testing only',
+        'Recording daily progress, incidents, and variations',
+        'Recording equipment stock',
+        'Recording client meetings',
+      ],
       correctAnswer: 1,
-      explanation: "Site diaries or work logs record daily progress, incidents, variations, delays, and other important project information for traceability."
+      explanation:
+        'Site diaries or work logs record daily progress, incidents, variations, delays, and other important project information for traceability.',
     },
     {
       id: 6,
-      question: "What is one key consequence of poor record keeping?",
-      options: ["Reduced installation time", "Better site communication", "Increased risk of legal and safety issues", "Lower material costs"],
+      question: 'What is one key consequence of poor record keeping?',
+      options: [
+        'Reduced installation time',
+        'Better site communication',
+        'Increased risk of legal and safety issues',
+        'Lower material costs',
+      ],
       correctAnswer: 2,
-      explanation: "Poor record keeping increases the risk of legal penalties, safety issues, compliance failures, and costly rework."
+      explanation:
+        'Poor record keeping increases the risk of legal penalties, safety issues, compliance failures, and costly rework.',
     },
     {
       id: 7,
-      question: "When should documentation be completed?",
-      options: ["At the end of the project", "Weekly", "Immediately after the work is carried out", "Monthly"],
+      question: 'When should documentation be completed?',
+      options: [
+        'At the end of the project',
+        'Weekly',
+        'Immediately after the work is carried out',
+        'Monthly',
+      ],
       correctAnswer: 2,
-      explanation: "Documentation should always be completed immediately after work is carried out to ensure accuracy and prevent loss of important details."
+      explanation:
+        'Documentation should always be completed immediately after work is carried out to ensure accuracy and prevent loss of important details.',
     },
     {
       id: 8,
-      question: "Why are accurate records important for future maintenance?",
-      options: ["They allow reuse of old materials", "They help electricians quickly understand the system", "They reduce paperwork", "They eliminate testing requirements"],
+      question: 'Why are accurate records important for future maintenance?',
+      options: [
+        'They allow reuse of old materials',
+        'They help electricians quickly understand the system',
+        'They reduce paperwork',
+        'They eliminate testing requirements',
+      ],
       correctAnswer: 1,
-      explanation: "Accurate records help future electricians quickly understand the installation without guesswork, making maintenance safer and more efficient."
+      explanation:
+        'Accurate records help future electricians quickly understand the installation without guesswork, making maintenance safer and more efficient.',
     },
     {
       id: 9,
-      question: "Who is responsible for ensuring accurate records are kept?",
-      options: ["The apprentice only", "The site manager and responsible electricians", "The client only", "The supplier only"],
+      question: 'Who is responsible for ensuring accurate records are kept?',
+      options: [
+        'The apprentice only',
+        'The site manager and responsible electricians',
+        'The client only',
+        'The supplier only',
+      ],
       correctAnswer: 1,
-      explanation: "The site manager and responsible electricians are accountable for ensuring accurate records are kept throughout the project."
+      explanation:
+        'The site manager and responsible electricians are accountable for ensuring accurate records are kept throughout the project.',
     },
     {
       id: 10,
-      question: "In the real-world scenario, what problem occurred due to missing records?",
-      options: ["The client failed an audit and the project was delayed", "The cables overheated", "The client refused to pay", "The materials were stolen"],
+      question: 'In the real-world scenario, what problem occurred due to missing records?',
+      options: [
+        'The client failed an audit and the project was delayed',
+        'The cables overheated',
+        'The client refused to pay',
+        'The materials were stolen',
+      ],
       correctAnswer: 0,
-      explanation: "Missing records led to duplicated work, missed faults, compliance audit failure, and costly project delays."
-    }
+      explanation:
+        'Missing records led to duplicated work, missed faults, compliance audit failure, and costly project delays.',
+    },
   ];
 
   const faqs = [
     {
       question: "What happens if I don't keep proper records?",
-      answer: "Poor record keeping can result in legal penalties, failed compliance audits, increased safety risks, costly rework, and potential disputes with clients or inspectors."
+      answer:
+        'Poor record keeping can result in legal penalties, failed compliance audits, increased safety risks, costly rework, and potential disputes with clients or inspectors.',
     },
     {
-      question: "How long should electrical records be kept?",
-      answer: "Installation certificates and test results should be kept for the life of the installation. Other project records should typically be retained for at least 6 years for contractual purposes."
+      question: 'How long should electrical records be kept?',
+      answer:
+        'Installation certificates and test results should be kept for the life of the installation. Other project records should typically be retained for at least 6 years for contractual purposes.',
     },
     {
-      question: "Can I use digital systems for record keeping?",
-      answer: "Yes, digital systems are acceptable and often preferred for their accuracy and accessibility. Ensure proper backup systems and that digital signatures comply with legal requirements."
+      question: 'Can I use digital systems for record keeping?',
+      answer:
+        'Yes, digital systems are acceptable and often preferred for their accuracy and accessibility. Ensure proper backup systems and that digital signatures comply with legal requirements.',
     },
     {
-      question: "What should I do if I make an error in documentation?",
-      answer: "Never alter or cover up errors. Cross out mistakes clearly, initial and date the correction, then write the correct information. For digital records, use the amendment function."
+      question: 'What should I do if I make an error in documentation?',
+      answer:
+        'Never alter or cover up errors. Cross out mistakes clearly, initial and date the correction, then write the correct information. For digital records, use the amendment function.',
     },
     {
-      question: "Who can access electrical installation records?",
-      answer: "Records should be accessible to authorised personnel including the installation owner, competent electricians, inspectors, and emergency services when required for safety purposes."
-    }
+      question: 'Who can access electrical installation records?',
+      answer:
+        'Records should be accessible to authorised personnel including the installation owner, competent electricians, inspectors, and emergency services when required for safety purposes.',
+    },
   ];
 
   return (
@@ -163,7 +249,8 @@ const Module5Section7_1 = () => {
               Importance of Accurate Records for Compliance and Safety
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Understanding why accurate documentation is vital for legal compliance, safety, and effective maintenance in electrical work
+              Understanding why accurate documentation is vital for legal compliance, safety, and
+              effective maintenance in electrical work
             </p>
           </header>
 
@@ -177,17 +264,31 @@ const Module5Section7_1 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Accurate records prove compliance with BS 7671 and support safe working practices</li>
+                  <li>
+                    Accurate records prove compliance with BS 7671 and support safe working
+                    practices
+                  </li>
                   <li>Documentation provides traceability and helps future maintenance work</li>
-                  <li>Poor record keeping can cause legal issues, safety hazards, and costly delays</li>
+                  <li>
+                    Poor record keeping can cause legal issues, safety hazards, and costly delays
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li><strong>Spot:</strong> Installation certificates, test results, RAMS documents, site logs</li>
-                  <li><strong>Use:</strong> Complete documentation immediately, use standard templates, store securely</li>
-                  <li><strong>Check:</strong> Records are accurate, complete, and comply with requirements</li>
+                  <li>
+                    <strong>Spot:</strong> Installation certificates, test results, RAMS documents,
+                    site logs
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Complete documentation immediately, use standard
+                    templates, store securely
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Records are accurate, complete, and comply with
+                    requirements
+                  </li>
                 </ul>
               </div>
             </div>
@@ -204,7 +305,9 @@ const Module5Section7_1 = () => {
               <li>Identify key documents used in electrical projects</li>
               <li>Recognise the consequences of poor record keeping</li>
               <li>Apply best practices for storing and maintaining documentation</li>
-              <li>Understand how accurate records assist with future maintenance and inspections</li>
+              <li>
+                Understand how accurate records assist with future maintenance and inspections
+              </li>
             </ul>
           </section>
 
@@ -215,42 +318,75 @@ const Module5Section7_1 = () => {
               Why Records Are Essential
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Accurate records form the foundation of professional electrical installation work and serve multiple critical purposes:
+              Accurate records form the foundation of professional electrical installation work and
+              serve multiple critical purposes:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Legal and Regulatory Compliance</p>
-                <p className="text-white/80 text-sm mb-2"><strong>Compliance with BS 7671:</strong> Every installation must be documented to prove it meets current wiring regulations.</p>
+                <p className="text-white/80 text-sm mb-2">
+                  <strong>Compliance with BS 7671:</strong> Every installation must be documented to
+                  prove it meets current wiring regulations.
+                </p>
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
-                  <li>Installation certificates demonstrate compliance with electrical safety standards</li>
-                  <li>Test results provide evidence that installations are safe and correctly installed</li>
-                  <li>Documentation supports building regulations approval and insurance requirements</li>
-                  <li>Records enable effective inspection and maintenance throughout the installation's life</li>
+                  <li>
+                    Installation certificates demonstrate compliance with electrical safety
+                    standards
+                  </li>
+                  <li>
+                    Test results provide evidence that installations are safe and correctly
+                    installed
+                  </li>
+                  <li>
+                    Documentation supports building regulations approval and insurance requirements
+                  </li>
+                  <li>
+                    Records enable effective inspection and maintenance throughout the
+                    installation's life
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Health and Safety</p>
-                <p className="text-white/80 text-sm mb-2">Keeping track of risks, inspections, and incidents ensures safe working conditions.</p>
+                <p className="text-white/80 text-sm mb-2">
+                  Keeping track of risks, inspections, and incidents ensures safe working
+                  conditions.
+                </p>
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
                   <li>RAMS documents identify hazards and control measures for safe working</li>
-                  <li>Incident records help prevent similar accidents and demonstrate due diligence</li>
+                  <li>
+                    Incident records help prevent similar accidents and demonstrate due diligence
+                  </li>
                   <li>Regular inspection records track safety performance over time</li>
-                  <li>Emergency procedures documentation ensures rapid, effective response to incidents</li>
+                  <li>
+                    Emergency procedures documentation ensures rapid, effective response to
+                    incidents
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Traceability</p>
-                <p className="text-white/80 text-sm mb-2">Provides a clear history of who completed which tasks, when, and to what standard.</p>
+                <p className="text-white/80 text-sm mb-2">
+                  Provides a clear history of who completed which tasks, when, and to what standard.
+                </p>
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
-                  <li>Individual accountability for specific work activities and quality standards</li>
+                  <li>
+                    Individual accountability for specific work activities and quality standards
+                  </li>
                   <li>Timeline documentation for project progress and milestone achievement</li>
-                  <li>Material traceability from delivery through to final installation location</li>
+                  <li>
+                    Material traceability from delivery through to final installation location
+                  </li>
                   <li>Change management records showing design modifications and approvals</li>
                 </ul>
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm text-white/90"><strong className="text-red-400">Legal requirement:</strong> Failure to maintain proper records can result in prosecution and unlimited fines under health and safety legislation</p>
+              <p className="text-sm text-white/90">
+                <strong className="text-red-400">Legal requirement:</strong> Failure to maintain
+                proper records can result in prosecution and unlimited fines under health and safety
+                legislation
+              </p>
             </div>
           </section>
 
@@ -269,7 +405,8 @@ const Module5Section7_1 = () => {
               Key Types of Records
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Different types of records serve specific purposes in electrical installation projects:
+              Different types of records serve specific purposes in electrical installation
+              projects:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
@@ -278,7 +415,9 @@ const Module5Section7_1 = () => {
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
                   <li>Required for all new electrical installations under BS 7671</li>
                   <li>Certify that design, construction, and testing meet regulatory standards</li>
-                  <li>Must be completed by competent electricians with appropriate qualifications</li>
+                  <li>
+                    Must be completed by competent electricians with appropriate qualifications
+                  </li>
                   <li>Include details of design calculations, materials used, and test results</li>
                 </ul>
               </div>
@@ -288,7 +427,9 @@ const Module5Section7_1 = () => {
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
                   <li>Cover additions, alterations, or replacements to existing installations</li>
                   <li>Simpler format than full installation certificates but equally important</li>
-                  <li>Include essential safety tests and verification of existing protective measures</li>
+                  <li>
+                    Include essential safety tests and verification of existing protective measures
+                  </li>
                   <li>Must reference relevant sections of BS 7671 and building regulations</li>
                 </ul>
               </div>
@@ -296,14 +437,19 @@ const Module5Section7_1 = () => {
                 <p className="font-medium text-white mb-2">Inspection & Test Results</p>
                 <p className="text-white/80 text-sm mb-2">Essential for proving safety.</p>
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
-                  <li>Document all electrical safety tests including continuity, insulation, and earth fault loop impedance</li>
+                  <li>
+                    Document all electrical safety tests including continuity, insulation, and earth
+                    fault loop impedance
+                  </li>
                   <li>Provide benchmark readings for future testing and maintenance</li>
                   <li>Include photographic evidence where appropriate for future reference</li>
                   <li>Must be signed and dated by the person carrying out the tests</li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
-                <p className="font-medium text-white mb-2">Risk Assessments & Method Statements (RAMS)</p>
+                <p className="font-medium text-white mb-2">
+                  Risk Assessments & Method Statements (RAMS)
+                </p>
                 <p className="text-white/80 text-sm mb-2">For health and safety compliance.</p>
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
                   <li>Identify specific hazards associated with electrical installation work</li>
@@ -314,7 +460,9 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-teal-500/50">
                 <p className="font-medium text-white mb-2">Site Diaries / Work Logs</p>
-                <p className="text-white/80 text-sm mb-2">Progress, delays, accidents, and variations.</p>
+                <p className="text-white/80 text-sm mb-2">
+                  Progress, delays, accidents, and variations.
+                </p>
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
                   <li>Daily record of work progress and activities completed</li>
                   <li>Weather conditions affecting outdoor or temporary installations</li>
@@ -324,7 +472,11 @@ const Module5Section7_1 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm text-white/90"><strong className="text-blue-400">Retention period:</strong> Electrical certificates and test results should be kept for the entire life of the installation. Other project records should typically be retained for at least 6 years</p>
+              <p className="text-sm text-white/90">
+                <strong className="text-blue-400">Retention period:</strong> Electrical certificates
+                and test results should be kept for the entire life of the installation. Other
+                project records should typically be retained for at least 6 years
+              </p>
             </div>
           </section>
 
@@ -343,14 +495,17 @@ const Module5Section7_1 = () => {
               Consequences of Poor Record Keeping
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Inadequate documentation can have serious consequences for projects, organisations, and individual professionals:
+              Inadequate documentation can have serious consequences for projects, organisations,
+              and individual professionals:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-2">Legal Penalties</p>
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
                   <li>Prosecution under health and safety legislation with unlimited fines</li>
-                  <li>Contractual disputes leading to financial penalties and damaged reputation</li>
+                  <li>
+                    Contractual disputes leading to financial penalties and damaged reputation
+                  </li>
                   <li>Insurance claims rejection due to inability to prove compliance</li>
                   <li>Potential criminal liability for serious accidents or fatalities</li>
                 </ul>
@@ -368,14 +523,19 @@ const Module5Section7_1 = () => {
                 <p className="font-medium text-white mb-2">Commercial Impact</p>
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
                   <li>Duplicated work due to uncertainty about completed tasks</li>
-                  <li>Extended project timelines causing cost overruns and client dissatisfaction</li>
+                  <li>
+                    Extended project timelines causing cost overruns and client dissatisfaction
+                  </li>
                   <li>Rework requirements when inspections fail due to missing documentation</li>
                   <li>Loss of competitive advantage and damage to professional reputation</li>
                 </ul>
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm text-white/90"><strong className="text-green-400">Prevention:</strong> Implement robust documentation procedures from project start to avoid these costly consequences</p>
+              <p className="text-sm text-white/90">
+                <strong className="text-green-400">Prevention:</strong> Implement robust
+                documentation procedures from project start to avoid these costly consequences
+              </p>
             </div>
           </section>
 
@@ -401,7 +561,9 @@ const Module5Section7_1 = () => {
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Maintenance Support</p>
                 <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
-                  <li>Future electricians can quickly understand the installation without guesswork</li>
+                  <li>
+                    Future electricians can quickly understand the installation without guesswork
+                  </li>
                   <li>Circuit identification reduces fault-finding time</li>
                   <li>Historical test results show performance trends</li>
                   <li>Modification records prevent accidental damage</li>
@@ -418,7 +580,10 @@ const Module5Section7_1 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm text-white/90"><strong className="text-elec-yellow">Investment return:</strong> Time spent on proper documentation saves significantly more time in the long term</p>
+              <p className="text-sm text-white/90">
+                <strong className="text-elec-yellow">Investment return:</strong> Time spent on
+                proper documentation saves significantly more time in the long term
+              </p>
             </div>
           </section>
 
@@ -440,9 +605,16 @@ const Module5Section7_1 = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="font-medium text-white mb-2">Missing Records Lead to Project Delays</h3>
+                  <h3 className="font-medium text-white mb-2">
+                    Missing Records Lead to Project Delays
+                  </h3>
                   <p className="text-white/80 text-sm mb-3">
-                    You are working on a new office installation. Halfway through the project, a different team takes over the lighting circuits. Without proper records, they don't know which circuits have been tested or which cables serve which areas. This results in duplicated testing, wasted time, and eventually a missed fault on one circuit. The client fails their compliance audit, and the contractor faces costly delays.
+                    You are working on a new office installation. Halfway through the project, a
+                    different team takes over the lighting circuits. Without proper records, they
+                    don't know which circuits have been tested or which cables serve which areas.
+                    This results in duplicated testing, wasted time, and eventually a missed fault
+                    on one circuit. The client fails their compliance audit, and the contractor
+                    faces costly delays.
                   </p>
                   <div className="bg-amber-500/10 p-3 rounded-lg mb-3">
                     <p className="font-medium text-amber-400 text-sm mb-1">What went wrong:</p>
@@ -470,16 +642,21 @@ const Module5Section7_1 = () => {
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h4 className="font-medium text-white mb-2 text-sm">Incomplete Test Records</h4>
                 <p className="text-white/70 text-xs mb-2">
-                  An apprentice fails to record RCD test results. Six months later, an electrical incident occurs and the insurance company refuses the claim because compliance cannot be proven.
+                  An apprentice fails to record RCD test results. Six months later, an electrical
+                  incident occurs and the insurance company refuses the claim because compliance
+                  cannot be proven.
                 </p>
                 <p className="text-red-400 text-xs font-medium">Impact: £50,000+ claim rejection</p>
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h4 className="font-medium text-white mb-2 text-sm">Missing Risk Assessments</h4>
                 <p className="text-white/70 text-xs mb-2">
-                  A contractor starts work without completing RAMS documentation. An accident occurs and HSE investigation reveals poor planning. Result: prosecution and £75,000 fine.
+                  A contractor starts work without completing RAMS documentation. An accident occurs
+                  and HSE investigation reveals poor planning. Result: prosecution and £75,000 fine.
                 </p>
-                <p className="text-red-400 text-xs font-medium">Impact: Unlimited fine + prosecution</p>
+                <p className="text-red-400 text-xs font-medium">
+                  Impact: Unlimited fine + prosecution
+                </p>
               </div>
             </div>
           </section>
@@ -593,14 +770,26 @@ const Module5Section7_1 = () => {
               </div>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-white mb-2">✅ Always document installations, tests, and modifications</p>
-                  <p className="font-medium text-white mb-2">✅ Use the correct certificates (Installation, Minor Works)</p>
-                  <p className="font-medium text-white mb-2">✅ Keep daily site logs for traceability</p>
+                  <p className="font-medium text-white mb-2">
+                    ✅ Always document installations, tests, and modifications
+                  </p>
+                  <p className="font-medium text-white mb-2">
+                    ✅ Use the correct certificates (Installation, Minor Works)
+                  </p>
+                  <p className="font-medium text-white mb-2">
+                    ✅ Keep daily site logs for traceability
+                  </p>
                 </div>
                 <div>
-                  <p className="font-medium text-white mb-2">✅ Store records securely but accessibly</p>
-                  <p className="font-medium text-white mb-2">✅ Update documents with every change</p>
-                  <p className="font-medium text-white mb-2">✅ Complete documentation immediately after work</p>
+                  <p className="font-medium text-white mb-2">
+                    ✅ Store records securely but accessibly
+                  </p>
+                  <p className="font-medium text-white mb-2">
+                    ✅ Update documents with every change
+                  </p>
+                  <p className="font-medium text-white mb-2">
+                    ✅ Complete documentation immediately after work
+                  </p>
                 </div>
               </div>
             </div>
@@ -614,7 +803,10 @@ const Module5Section7_1 = () => {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
+                >
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
                   <p className="text-white/80 text-sm">A: {faq.answer}</p>
                 </div>
@@ -629,12 +821,22 @@ const Module5Section7_1 = () => {
               <h2 className="text-xl font-semibold text-white">Recap</h2>
             </div>
             <p className="text-white/80 mb-4">
-              In this subsection, you learned the importance of accurate records for compliance and safety. You explored the types of records used in electrical work, the risks of poor documentation, and how proper record keeping ensures compliance, safety, and efficiency.
+              In this subsection, you learned the importance of accurate records for compliance and
+              safety. You explored the types of records used in electrical work, the risks of poor
+              documentation, and how proper record keeping ensures compliance, safety, and
+              efficiency.
             </p>
             <ul className="list-disc pl-6 space-y-2 text-white/80">
-              <li>Accurate records prove compliance with BS 7671 and support safe working practices</li>
-              <li>Key documents include installation certificates, test results, RAMS, and site logs</li>
-              <li>Poor record keeping can result in legal penalties, safety hazards, and commercial losses</li>
+              <li>
+                Accurate records prove compliance with BS 7671 and support safe working practices
+              </li>
+              <li>
+                Key documents include installation certificates, test results, RAMS, and site logs
+              </li>
+              <li>
+                Poor record keeping can result in legal penalties, safety hazards, and commercial
+                losses
+              </li>
               <li>Documentation should be completed immediately and stored securely</li>
             </ul>
           </section>

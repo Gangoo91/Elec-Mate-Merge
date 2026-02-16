@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
 import {
   ResponsiveFormModal,
   ResponsiveFormModalContent,
@@ -6,17 +6,32 @@ import {
   ResponsiveFormModalTitle,
   ResponsiveFormModalBody,
   ResponsiveFormModalFooter,
-} from "@/components/ui/responsive-form-modal";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useUpdateEmployee, useDeleteEmployee } from "@/hooks/useEmployees";
-import { uploadEmployeePhoto } from "@/services/photoUploadService";
-import { toast } from "@/hooks/use-toast";
-import { UserCog, Trash2, Camera, Loader2, User, Briefcase, PoundSterling, CreditCard } from "lucide-react";
-import type { Employee, PayType } from "@/services/employeeService";
+} from '@/components/ui/responsive-form-modal';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useUpdateEmployee, useDeleteEmployee } from '@/hooks/useEmployees';
+import { uploadEmployeePhoto } from '@/services/photoUploadService';
+import { toast } from '@/hooks/use-toast';
+import {
+  UserCog,
+  Trash2,
+  Camera,
+  Loader2,
+  User,
+  Briefcase,
+  PoundSterling,
+  CreditCard,
+} from 'lucide-react';
+import type { Employee, PayType } from '@/services/employeeService';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,16 +41,23 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useElecIdProfileByEmployee } from "@/hooks/useElecId";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/alert-dialog';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useElecIdProfileByEmployee } from '@/hooks/useElecId';
+import { Badge } from '@/components/ui/badge';
 
-type TeamRole = "QS" | "Supervisor" | "Operative" | "Apprentice" | "Project Manager";
+type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 
-const TEAM_ROLES: TeamRole[] = ["QS", "Supervisor", "Operative", "Apprentice", "Project Manager"];
-const JOB_ROLES = ["Senior Electrician", "Electrician", "Apprentice", "Project Manager", "Site Supervisor", "Estimator"];
-const STATUSES = ["Active", "On Leave", "Archived"];
+const TEAM_ROLES: TeamRole[] = ['QS', 'Supervisor', 'Operative', 'Apprentice', 'Project Manager'];
+const JOB_ROLES = [
+  'Senior Electrician',
+  'Electrician',
+  'Apprentice',
+  'Project Manager',
+  'Site Supervisor',
+  'Estimator',
+];
+const STATUSES = ['Active', 'On Leave', 'Archived'];
 
 interface EditEmployeeDialogProps {
   employee: Employee | null;
@@ -50,40 +72,40 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-  
-  const { data: elecIdProfile } = useElecIdProfileByEmployee(employee?.id || "");
-  
+
+  const { data: elecIdProfile } = useElecIdProfileByEmployee(employee?.id || '');
+
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    role: "",
-    team_role: "" as TeamRole,
-    status: "",
-    payType: "hourly" as PayType,
-    hourlyRate: "25",
-    annualSalary: "",
-    dayRate: "",
+    name: '',
+    email: '',
+    phone: '',
+    role: '',
+    team_role: '' as TeamRole,
+    status: '',
+    payType: 'hourly' as PayType,
+    hourlyRate: '25',
+    annualSalary: '',
+    dayRate: '',
   });
 
   useEffect(() => {
     if (employee) {
-      let hourlyRate = employee.hourly_rate?.toString() || "25";
-      let annualSalary = employee.annual_salary?.toString() || "";
-      let dayRate = "";
+      let hourlyRate = employee.hourly_rate?.toString() || '25';
+      let annualSalary = employee.annual_salary?.toString() || '';
+      let dayRate = '';
 
-      if (employee.pay_type === "day_rate" && employee.hourly_rate) {
+      if (employee.pay_type === 'day_rate' && employee.hourly_rate) {
         dayRate = (employee.hourly_rate * 8).toString();
       }
 
       setFormData({
         name: employee.name,
-        email: employee.email || "",
-        phone: employee.phone || "",
+        email: employee.email || '',
+        phone: employee.phone || '',
         role: employee.role,
         team_role: employee.team_role as TeamRole,
         status: employee.status,
-        payType: employee.pay_type || "hourly",
+        payType: employee.pay_type || 'hourly',
         hourlyRate,
         annualSalary,
         dayRate,
@@ -93,15 +115,15 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
   }, [employee]);
 
   const calculateEquivalent = () => {
-    if (formData.payType === "hourly" && formData.hourlyRate) {
+    if (formData.payType === 'hourly' && formData.hourlyRate) {
       const annual = parseFloat(formData.hourlyRate) * 40 * 52;
       return `≈ £${annual.toLocaleString()} p.a.`;
     }
-    if (formData.payType === "annual" && formData.annualSalary) {
+    if (formData.payType === 'annual' && formData.annualSalary) {
       const hourly = parseFloat(formData.annualSalary) / (40 * 52);
       return `≈ £${hourly.toFixed(2)}/hr`;
     }
-    if (formData.payType === "day_rate" && formData.dayRate) {
+    if (formData.payType === 'day_rate' && formData.dayRate) {
       const annual = parseFloat(formData.dayRate) * 5 * 52;
       return `≈ £${annual.toLocaleString()} p.a.`;
     }
@@ -114,18 +136,18 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
 
     if (!file.type.startsWith('image/')) {
       toast({
-        title: "Invalid File",
-        description: "Please select an image file.",
-        variant: "destructive",
+        title: 'Invalid File',
+        description: 'Please select an image file.',
+        variant: 'destructive',
       });
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
       toast({
-        title: "File Too Large",
-        description: "Please select an image under 5MB.",
-        variant: "destructive",
+        title: 'File Too Large',
+        description: 'Please select an image under 5MB.',
+        variant: 'destructive',
       });
       return;
     }
@@ -140,17 +162,17 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           updates: { photo_url: url },
         });
         toast({
-          title: "Photo Updated",
-          description: "Profile photo has been updated.",
+          title: 'Photo Updated',
+          description: 'Profile photo has been updated.',
         });
       } else {
-        throw new Error("Upload failed");
+        throw new Error('Upload failed');
       }
     } catch (error) {
       toast({
-        title: "Upload Failed",
-        description: "Failed to upload photo. Please try again.",
-        variant: "destructive",
+        title: 'Upload Failed',
+        description: 'Failed to upload photo. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsUploading(false);
@@ -162,14 +184,14 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!employee) return;
 
     if (!formData.name || !formData.role || !formData.team_role) {
       toast({
-        title: "Missing Fields",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
+        title: 'Missing Fields',
+        description: 'Please fill in all required fields.',
+        variant: 'destructive',
       });
       return;
     }
@@ -177,10 +199,10 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
     let hourlyRate = parseFloat(formData.hourlyRate) || 25;
     let annualSalary: number | null = null;
 
-    if (formData.payType === "annual" && formData.annualSalary) {
+    if (formData.payType === 'annual' && formData.annualSalary) {
       annualSalary = parseFloat(formData.annualSalary);
       hourlyRate = annualSalary / (40 * 52);
-    } else if (formData.payType === "day_rate" && formData.dayRate) {
+    } else if (formData.payType === 'day_rate' && formData.dayRate) {
       const dayRate = parseFloat(formData.dayRate);
       hourlyRate = dayRate / 8;
       annualSalary = dayRate * 5 * 52;
@@ -203,36 +225,36 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
       });
 
       toast({
-        title: "Employee Updated",
+        title: 'Employee Updated',
         description: `${formData.name}'s profile has been updated.`,
       });
 
       onOpenChange(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update employee. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update employee. Please try again.',
+        variant: 'destructive',
       });
     }
   };
 
   const handleDelete = async () => {
     if (!employee) return;
-    
+
     try {
       await deleteEmployee.mutateAsync(employee.id);
       toast({
-        title: "Employee Archived",
+        title: 'Employee Archived',
         description: `${employee.name} has been archived.`,
       });
       setShowDeleteConfirm(false);
       onOpenChange(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to archive employee. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to archive employee. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -249,7 +271,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
               Edit Team Member
             </ResponsiveFormModalTitle>
           </ResponsiveFormModalHeader>
-          
+
           <ResponsiveFormModalBody>
             <form id="edit-employee-form" onSubmit={handleSubmit} className="space-y-6 py-2">
               {/* Photo Upload Section */}
@@ -286,7 +308,10 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
               {/* Elec-ID Status */}
               <div className="flex items-center justify-center">
                 {elecIdProfile ? (
-                  <Badge variant="secondary" className="flex items-center gap-1.5 px-3 py-1.5 text-sm">
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm"
+                  >
                     <CreditCard className="h-3.5 w-3.5" />
                     Elec-ID: {elecIdProfile.elec_id_number}
                   </Badge>
@@ -307,33 +332,39 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                 </div>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="name" className="text-sm font-medium">Full Name *</Label>
+                    <Label htmlFor="name" className="text-sm font-medium">
+                      Full Name *
+                    </Label>
                     <Input
                       id="name"
                       value={formData.name}
-                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
                       className="h-12 text-base"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                    <Label htmlFor="email" className="text-sm font-medium">
+                      Email
+                    </Label>
                     <Input
                       id="email"
                       type="email"
                       inputMode="email"
                       value={formData.email}
-                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
                       className="h-12 text-base"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-sm font-medium">Phone</Label>
+                    <Label htmlFor="phone" className="text-sm font-medium">
+                      Phone
+                    </Label>
                     <Input
                       id="phone"
                       type="tel"
                       inputMode="tel"
                       value={formData.phone}
-                      onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
                       placeholder="07700 900000"
                       className="h-12 text-base"
                     />
@@ -351,41 +382,64 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                 </div>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="role" className="text-sm font-medium">Job Role *</Label>
-                    <Select value={formData.role} onValueChange={(val) => setFormData(prev => ({ ...prev, role: val }))}>
+                    <Label htmlFor="role" className="text-sm font-medium">
+                      Job Role *
+                    </Label>
+                    <Select
+                      value={formData.role}
+                      onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
+                    >
                       <SelectTrigger className="h-12 text-base">
                         <SelectValue placeholder="Select role..." />
                       </SelectTrigger>
                       <SelectContent>
-                        {JOB_ROLES.map(role => (
-                          <SelectItem key={role} value={role} className="h-12">{role}</SelectItem>
+                        {JOB_ROLES.map((role) => (
+                          <SelectItem key={role} value={role} className="h-12">
+                            {role}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-2">
-                      <Label htmlFor="teamRole" className="text-sm font-medium">Team Role *</Label>
-                      <Select value={formData.team_role} onValueChange={(val) => setFormData(prev => ({ ...prev, team_role: val as TeamRole }))}>
+                      <Label htmlFor="teamRole" className="text-sm font-medium">
+                        Team Role *
+                      </Label>
+                      <Select
+                        value={formData.team_role}
+                        onValueChange={(val) =>
+                          setFormData((prev) => ({ ...prev, team_role: val as TeamRole }))
+                        }
+                      >
                         <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
-                          {TEAM_ROLES.map(role => (
-                            <SelectItem key={role} value={role} className="h-12">{role}</SelectItem>
+                          {TEAM_ROLES.map((role) => (
+                            <SelectItem key={role} value={role} className="h-12">
+                              {role}
+                            </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="status" className="text-sm font-medium">Status</Label>
-                      <Select value={formData.status} onValueChange={(val) => setFormData(prev => ({ ...prev, status: val }))}>
+                      <Label htmlFor="status" className="text-sm font-medium">
+                        Status
+                      </Label>
+                      <Select
+                        value={formData.status}
+                        onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
+                      >
                         <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
-                          {STATUSES.map(status => (
-                            <SelectItem key={status} value={status} className="h-12">{status}</SelectItem>
+                          {STATUSES.map((status) => (
+                            <SelectItem key={status} value={status} className="h-12">
+                              {status}
+                            </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
@@ -405,16 +459,22 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                 <div className="space-y-4">
                   <RadioGroup
                     value={formData.payType}
-                    onValueChange={(val) => setFormData(prev => ({ ...prev, payType: val as PayType }))}
+                    onValueChange={(val) =>
+                      setFormData((prev) => ({ ...prev, payType: val as PayType }))
+                    }
                     className="flex flex-col gap-2"
                   >
                     {[
-                      { value: "hourly", label: "Hourly Rate" },
-                      { value: "annual", label: "Annual Salary" },
-                      { value: "day_rate", label: "Day Rate" },
+                      { value: 'hourly', label: 'Hourly Rate' },
+                      { value: 'annual', label: 'Annual Salary' },
+                      { value: 'day_rate', label: 'Day Rate' },
                     ].map((option) => (
                       <div key={option.value}>
-                        <RadioGroupItem value={option.value} id={`edit-${option.value}`} className="peer sr-only" />
+                        <RadioGroupItem
+                          value={option.value}
+                          id={`edit-${option.value}`}
+                          className="peer sr-only"
+                        />
                         <Label
                           htmlFor={`edit-${option.value}`}
                           className="flex items-center justify-center rounded-xl border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-elec-yellow/10 cursor-pointer transition-all touch-feedback"
@@ -426,9 +486,11 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                   </RadioGroup>
 
                   <div className="space-y-2 animate-fade-in">
-                    {formData.payType === "hourly" && (
+                    {formData.payType === 'hourly' && (
                       <>
-                        <Label htmlFor="hourlyRate" className="text-sm font-medium">Hourly Rate (£)</Label>
+                        <Label htmlFor="hourlyRate" className="text-sm font-medium">
+                          Hourly Rate (£)
+                        </Label>
                         <Input
                           id="hourlyRate"
                           type="number"
@@ -436,14 +498,18 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                           min="0"
                           step="0.50"
                           value={formData.hourlyRate}
-                          onChange={(e) => setFormData(prev => ({ ...prev, hourlyRate: e.target.value }))}
+                          onChange={(e) =>
+                            setFormData((prev) => ({ ...prev, hourlyRate: e.target.value }))
+                          }
                           className="h-12 text-base"
                         />
                       </>
                     )}
-                    {formData.payType === "annual" && (
+                    {formData.payType === 'annual' && (
                       <>
-                        <Label htmlFor="annualSalary" className="text-sm font-medium">Annual Salary (£)</Label>
+                        <Label htmlFor="annualSalary" className="text-sm font-medium">
+                          Annual Salary (£)
+                        </Label>
                         <Input
                           id="annualSalary"
                           type="number"
@@ -451,15 +517,19 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                           min="0"
                           step="1000"
                           value={formData.annualSalary}
-                          onChange={(e) => setFormData(prev => ({ ...prev, annualSalary: e.target.value }))}
+                          onChange={(e) =>
+                            setFormData((prev) => ({ ...prev, annualSalary: e.target.value }))
+                          }
                           placeholder="45000"
                           className="h-12 text-base"
                         />
                       </>
                     )}
-                    {formData.payType === "day_rate" && (
+                    {formData.payType === 'day_rate' && (
                       <>
-                        <Label htmlFor="dayRate" className="text-sm font-medium">Day Rate (£)</Label>
+                        <Label htmlFor="dayRate" className="text-sm font-medium">
+                          Day Rate (£)
+                        </Label>
                         <Input
                           id="dayRate"
                           type="number"
@@ -467,7 +537,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                           min="0"
                           step="10"
                           value={formData.dayRate}
-                          onChange={(e) => setFormData(prev => ({ ...prev, dayRate: e.target.value }))}
+                          onChange={(e) =>
+                            setFormData((prev) => ({ ...prev, dayRate: e.target.value }))
+                          }
                           placeholder="250"
                           className="h-12 text-base"
                         />
@@ -484,25 +556,25 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
 
           <ResponsiveFormModalFooter>
             <div className="flex gap-3">
-              <Button 
-                type="button" 
-                variant="destructive" 
+              <Button
+                type="button"
+                variant="destructive"
                 size="icon"
                 className="h-12 w-12 shrink-0"
                 onClick={() => setShowDeleteConfirm(true)}
               >
                 <Trash2 className="h-5 w-5" />
               </Button>
-              <Button 
-                type="button" 
-                variant="outline" 
+              <Button
+                type="button"
+                variant="outline"
                 className="flex-1 h-12 text-base"
                 onClick={() => onOpenChange(false)}
               >
                 Cancel
               </Button>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 form="edit-employee-form"
                 className="flex-1 h-12 text-base font-semibold"
                 disabled={updateEmployee.isPending}
@@ -513,7 +585,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     Saving...
                   </>
                 ) : (
-                  "Save Changes"
+                  'Save Changes'
                 )}
               </Button>
             </div>
@@ -526,17 +598,18 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           <AlertDialogHeader>
             <AlertDialogTitle>Archive Employee?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will archive {employee?.name}. They will no longer appear in active team lists but their records will be preserved.
+              This will archive {employee?.name}. They will no longer appear in active team lists
+              but their records will be preserved.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={handleDelete} 
+            <AlertDialogAction
+              onClick={handleDelete}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={deleteEmployee.isPending}
             >
-              {deleteEmployee.isPending ? "Archiving..." : "Archive"}
+              {deleteEmployee.isPending ? 'Archiving...' : 'Archive'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

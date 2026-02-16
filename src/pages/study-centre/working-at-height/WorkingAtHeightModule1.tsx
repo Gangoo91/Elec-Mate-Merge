@@ -1,45 +1,45 @@
-import { ArrowLeft, BookOpen, Scale, Search, Shield } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, BookOpen, Scale, Search, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "What Is Working at Height?",
+    title: 'What Is Working at Height?',
     icon: BookOpen,
     description:
-      "WAH Regulations 2005 definition, common scenarios, fatal fall statistics, and what counts as working at height",
+      'WAH Regulations 2005 definition, common scenarios, fatal fall statistics, and what counts as working at height',
   },
   {
     id: 2,
-    title: "The Legal Framework",
+    title: 'The Legal Framework',
     icon: Scale,
     description:
-      "WAH Regs 2005, HASAWA 1974, CDM 2015, LOLER 1998, PUWER 1998, and employer/employee duties",
+      'WAH Regs 2005, HASAWA 1974, CDM 2015, LOLER 1998, PUWER 1998, and employer/employee duties',
   },
   {
     id: 3,
-    title: "Risk Assessment for Working at Height",
+    title: 'Risk Assessment for Working at Height',
     icon: Search,
     description:
-      "Five-step risk assessment process, site-specific factors, dynamic risk assessment, and weather considerations",
+      'Five-step risk assessment process, site-specific factors, dynamic risk assessment, and weather considerations',
   },
   {
     id: 4,
-    title: "The Hierarchy of Controls",
+    title: 'The Hierarchy of Controls',
     icon: Shield,
     description:
-      "Avoid, prevent, mitigate — collective vs personal protection and the control hierarchy",
+      'Avoid, prevent, mitigate — collective vs personal protection and the control hierarchy',
   },
 ];
 
 export default function WorkingAtHeightModule1() {
   useSEO({
-    title: "Module 1: Understanding Working at Height | Working at Height",
+    title: 'Module 1: Understanding Working at Height | Working at Height',
     description:
-      "WAH Regulations 2005 definition, the legal framework, risk assessment process, and the hierarchy of controls for working at height.",
+      'WAH Regulations 2005 definition, the legal framework, risk assessment process, and the hierarchy of controls for working at height.',
   });
 
   return (
@@ -66,9 +66,7 @@ export default function WorkingAtHeightModule1() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 mb-3">
-              <span className="text-amber-400 text-xs font-semibold">
-                MODULE 1
-              </span>
+              <span className="text-amber-400 text-xs font-semibold">MODULE 1</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -78,8 +76,8 @@ export default function WorkingAtHeightModule1() {
               Understanding Working at Height
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              The regulations, legal duties, risk assessment process, and
-              hierarchy of controls for safe working at height
+              The regulations, legal duties, risk assessment process, and hierarchy of controls for
+              safe working at height
             </p>
           </div>
 

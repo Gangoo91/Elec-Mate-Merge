@@ -1,9 +1,8 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, XCircle, AlertTriangle, Calculator, Thermometer } from "lucide-react";
-import { useState } from "react";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, XCircle, AlertTriangle, Calculator, Thermometer } from 'lucide-react';
+import { useState } from 'react';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Label } from '@/components/ui/label';
 
 interface EnhancedZsCalculatorResultProps {
   result: number | null;
@@ -24,7 +23,7 @@ const EnhancedZsCalculatorResult = ({
   fusRating,
   fuseType,
   mcbCurve,
-  rcboCurve
+  rcboCurve,
 }: EnhancedZsCalculatorResultProps) => {
   const [testTemperature, setTestTemperature] = useState('20');
   const [operatingTemperature, setOperatingTemperature] = useState('70');
@@ -43,14 +42,14 @@ const EnhancedZsCalculatorResult = ({
   }
 
   const getDeviceDescription = () => {
-    if (protectionType === "mcb") {
+    if (protectionType === 'mcb') {
       return `${mcbRating}A ${mcbCurve}-curve MCB`;
-    } else if (protectionType === "rcbo") {
+    } else if (protectionType === 'rcbo') {
       return `${rcboRating}A ${rcboCurve}-curve RCBO`;
-    } else if (protectionType === "fuse") {
+    } else if (protectionType === 'fuse') {
       return `${fusRating}A ${fuseType}`;
     }
-    return "Unknown device";
+    return 'Unknown device';
   };
 
   // Temperature correction calculations
@@ -63,7 +62,7 @@ const EnhancedZsCalculatorResult = ({
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold">Enhanced Zs Analysis</h3>
-      
+
       {/* Temperature Input Controls */}
       <Card className="border-blue-500/30 bg-blue-500/5">
         <CardHeader>
@@ -102,13 +101,11 @@ const EnhancedZsCalculatorResult = ({
           </p>
         </CardContent>
       </Card>
-      
+
       {/* Device and Limits */}
       <Card className="border-green-500/30 bg-green-500/5">
         <CardHeader>
-          <CardTitle className="text-green-300 text-lg">
-            {getDeviceDescription()}
-          </CardTitle>
+          <CardTitle className="text-green-300 text-lg">{getDeviceDescription()}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-3">
@@ -118,7 +115,7 @@ const EnhancedZsCalculatorResult = ({
                 {result.toFixed(2)} Ω
               </span>
             </div>
-            
+
             <div className="border-t border-green-500/20 pt-3">
               <div className="flex justify-between items-center">
                 <span className="text-yellow-200">80% Test Value (20°C):</span>
@@ -151,7 +148,7 @@ const EnhancedZsCalculatorResult = ({
               <AlertTriangle className="h-4 w-4" />
               Safety Analysis
             </h4>
-            
+
             {/* Temperature Effect Warning */}
             {Math.abs(testTemp - 20) > 5 && (
               <div className="bg-amber-500/20 border border-amber-500/30 rounded p-3">
@@ -159,8 +156,8 @@ const EnhancedZsCalculatorResult = ({
                   ⚠️ Non-standard test temperature detected
                 </p>
                 <p className="text-amber-200/80 text-xs mt-1">
-                  Test temperature of {testTemp}°C differs significantly from standard 20°C. 
-                  Use temperature-corrected limit: {getTemperatureCorrectedLimit().toFixed(3)} Ω
+                  Test temperature of {testTemp}°C differs significantly from standard 20°C. Use
+                  temperature-corrected limit: {getTemperatureCorrectedLimit().toFixed(3)} Ω
                 </p>
               </div>
             )}
@@ -172,8 +169,8 @@ const EnhancedZsCalculatorResult = ({
                   🔥 High Operating Temperature Alert
                 </p>
                 <p className="text-red-200/80 text-xs mt-1">
-                  Operating temperature of {opTemp}°C exceeds standard 70°C. 
-                  Consider cable derating and installation method review.
+                  Operating temperature of {opTemp}°C exceeds standard 70°C. Consider cable derating
+                  and installation method review.
                 </p>
               </div>
             )}
@@ -181,11 +178,15 @@ const EnhancedZsCalculatorResult = ({
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400" />
-                <span className="text-green-300">Measured Zs ≤ {getTemperatureCorrectedLimit().toFixed(3)} Ω = Compliant</span>
+                <span className="text-green-300">
+                  Measured Zs ≤ {getTemperatureCorrectedLimit().toFixed(3)} Ω = Compliant
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <XCircle className="h-4 w-4 text-red-400" />
-                <span className="text-red-300">Measured Zs {">"} {getTemperatureCorrectedLimit().toFixed(3)} Ω = Non-compliant</span>
+                <span className="text-red-300">
+                  Measured Zs {'>'} {getTemperatureCorrectedLimit().toFixed(3)} Ω = Non-compliant
+                </span>
               </div>
             </div>
           </div>
@@ -202,7 +203,10 @@ const EnhancedZsCalculatorResult = ({
             </h4>
             <ul className="space-y-1 text-blue-200 text-sm">
               <li>• Record actual test temperature for accurate assessment</li>
-              <li>• Use temperature-corrected limits: {getTemperatureCorrectedLimit().toFixed(3)} Ω at {testTemp}°C</li>
+              <li>
+                • Use temperature-corrected limits: {getTemperatureCorrectedLimit().toFixed(3)} Ω at{' '}
+                {testTemp}°C
+              </li>
               <li>• Test at furthest point of circuit under normal conditions</li>
               <li>• Consider parallel earth paths and bonding connections</li>
               <li>• Verify RCD isolation during testing to avoid nuisance tripping</li>

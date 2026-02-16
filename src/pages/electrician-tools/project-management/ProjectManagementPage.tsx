@@ -1,13 +1,12 @@
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ClipboardList, FileText, Calendar, Users, PieChart, ArrowLeft } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ClipboardList, FileText, Calendar, Users, PieChart, ArrowLeft } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
 
 const ProjectManagementPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "overview";
+  const activeTab = searchParams.get('tab') || 'overview';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
 
   return (
@@ -54,23 +53,31 @@ const ProjectManagementPage = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <p>Effective project management is vital for electrical contractors to deliver work on time, within budget, and to specification. Follow these key principles:</p>
-                  
+                  <p>
+                    Effective project management is vital for electrical contractors to deliver work
+                    on time, within budget, and to specification. Follow these key principles:
+                  </p>
+
                   <ul className="list-disc pl-5 space-y-2">
                     <li>
-                      <strong>Clear scope definition</strong> - Ensure all parties understand the exact requirements, deliverables and constraints before work begins
+                      <strong>Clear scope definition</strong> - Ensure all parties understand the
+                      exact requirements, deliverables and constraints before work begins
                     </li>
                     <li>
-                      <strong>Detailed planning</strong> - Break projects into manageable tasks with assigned responsibilities and realistic timeframes
+                      <strong>Detailed planning</strong> - Break projects into manageable tasks with
+                      assigned responsibilities and realistic timeframes
                     </li>
                     <li>
-                      <strong>Risk assessment</strong> - Identify potential issues early and develop mitigation strategies
+                      <strong>Risk assessment</strong> - Identify potential issues early and develop
+                      mitigation strategies
                     </li>
                     <li>
-                      <strong>Regular communication</strong> - Keep clients and team members informed with progress updates and issues
+                      <strong>Regular communication</strong> - Keep clients and team members
+                      informed with progress updates and issues
                     </li>
                     <li>
-                      <strong>Quality control</strong> - Implement inspection points throughout the project to maintain standards
+                      <strong>Quality control</strong> - Implement inspection points throughout the
+                      project to maintain standards
                     </li>
                   </ul>
                 </div>
@@ -85,7 +92,7 @@ const ProjectManagementPage = () => {
               <CardContent>
                 <div className="space-y-4">
                   <p>Access these resources to improve your project management capabilities:</p>
-                  
+
                   <ul className="list-disc pl-5 space-y-2">
                     <li>Project schedule templates</li>
                     <li>Risk assessment documentation</li>
@@ -93,7 +100,7 @@ const ProjectManagementPage = () => {
                     <li>Quality control checklists</li>
                     <li>Project handover documents</li>
                   </ul>
-                  
+
                   <Button className="w-full mt-4">Access Resources</Button>
                 </div>
               </CardContent>
@@ -110,26 +117,46 @@ const ProjectManagementPage = () => {
                 <div className="grid gap-4 md:grid-cols-2">
                   <div>
                     <h3 className="text-lg font-semibold mb-2">Scope Creep</h3>
-                    <p className="text-sm">When clients request additional work beyond the original agreement.</p>
-                    <p className="text-sm mt-2"><strong>Solution:</strong> Document all requirements thoroughly in initial contracts and use change orders for additional requests. Clarify the impact on timeline and cost.</p>
+                    <p className="text-sm">
+                      When clients request additional work beyond the original agreement.
+                    </p>
+                    <p className="text-sm mt-2">
+                      <strong>Solution:</strong> Document all requirements thoroughly in initial
+                      contracts and use change orders for additional requests. Clarify the impact on
+                      timeline and cost.
+                    </p>
                   </div>
-                  
+
                   <div>
                     <h3 className="text-lg font-semibold mb-2">Resource Allocation</h3>
-                    <p className="text-sm">Managing staff and materials across multiple projects.</p>
-                    <p className="text-sm mt-2"><strong>Solution:</strong> Use resource scheduling software to track availability and implement just-in-time ordering for materials to reduce wastage.</p>
+                    <p className="text-sm">
+                      Managing staff and materials across multiple projects.
+                    </p>
+                    <p className="text-sm mt-2">
+                      <strong>Solution:</strong> Use resource scheduling software to track
+                      availability and implement just-in-time ordering for materials to reduce
+                      wastage.
+                    </p>
                   </div>
-                  
+
                   <div>
                     <h3 className="text-lg font-semibold mb-2">Regulatory Compliance</h3>
-                    <p className="text-sm">Ensuring all work meets current standards and building regulations.</p>
-                    <p className="text-sm mt-2"><strong>Solution:</strong> Stay updated with BS 7671 requirements and implement compliance checklists at key project milestones.</p>
+                    <p className="text-sm">
+                      Ensuring all work meets current standards and building regulations.
+                    </p>
+                    <p className="text-sm mt-2">
+                      <strong>Solution:</strong> Stay updated with BS 7671 requirements and
+                      implement compliance checklists at key project milestones.
+                    </p>
                   </div>
-                  
+
                   <div>
                     <h3 className="text-lg font-semibold mb-2">Client Communication</h3>
                     <p className="text-sm">Keeping clients informed without overwhelming them.</p>
-                    <p className="text-sm mt-2"><strong>Solution:</strong> Establish regular update schedules and use visual progress reports that clients can easily understand.</p>
+                    <p className="text-sm mt-2">
+                      <strong>Solution:</strong> Establish regular update schedules and use visual
+                      progress reports that clients can easily understand.
+                    </p>
                   </div>
                 </div>
               </div>

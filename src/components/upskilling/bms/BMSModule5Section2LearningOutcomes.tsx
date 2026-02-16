@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule5Section2LearningOutcomes = () => {
   const outcomes = [
-    "Describe the main types of BACnet networks",
-    "Identify the common BACnet device types",
-    "Understand how BACnet MSTP (RS-485) differs from BACnet/IP",
-    "Apply correct installation and wiring practices for BACnet systems"
+    'Describe the main types of BACnet networks',
+    'Identify the common BACnet device types',
+    'Understand how BACnet MSTP (RS-485) differs from BACnet/IP',
+    'Apply correct installation and wiring practices for BACnet systems',
   ];
 
   return (

@@ -1,13 +1,9 @@
-import { 
-  getTemperatureFactor, 
-  getSoilTemperatureFactor, 
-  getGroupingFactor 
+import {
+  getTemperatureFactor,
+  getSoilTemperatureFactor,
+  getGroupingFactor,
 } from '../bs7671-data/temperatureFactors';
-import { 
-  getCableCapacity, 
-  getNextCableSize, 
-  CableType 
-} from '../bs7671-data/cableCapacities';
+import { getCableCapacity, getNextCableSize, CableType } from '../bs7671-data/cableCapacities';
 import { getReferenceMethod } from '../bs7671-data/installationMethodFactors';
 
 export interface CableCapacityInputs {
@@ -45,15 +41,15 @@ export interface CableCapacityResult {
 }
 
 export const calculateCableCapacity = (inputs: CableCapacityInputs): CableCapacityResult | null => {
-  const { 
-    cableType, 
-    cableSize, 
-    ambientTemp, 
-    groupingCircuits, 
-    designCurrent, 
+  const {
+    cableType,
+    cableSize,
+    ambientTemp,
+    groupingCircuits,
+    designCurrent,
     deviceRating,
     installationMethod,
-    soilTemp = 20
+    soilTemp = 20,
   } = inputs;
 
   // Get tabulated cable capacity
@@ -62,49 +58,55 @@ export const calculateCableCapacity = (inputs: CableCapacityInputs): CableCapaci
 
   // Get reference method and base capacity
   const referenceMethod = getReferenceMethod(installationMethod);
-  const IzTabulated = cableData.capacities[referenceMethod] || Math.min(...Object.values(cableData.capacities));
-  
+  const IzTabulated =
+    cableData.capacities[referenceMethod] || Math.min(...Object.values(cableData.capacities));
+
   // Determine temperature rating based on cable type
-  const temperatureRating = cableType.includes('xlpe') || cableType.includes('aluminium') ? '90C' : '70C';
-  
+  const temperatureRating =
+    cableType.includes('xlpe') || cableType.includes('aluminium') ? '90C' : '70C';
+
   // Get derating factors using BS 7671 tables
-  const temperatureFactor = installationMethod.includes('buried') || installationMethod.includes('underground')
-    ? getSoilTemperatureFactor(soilTemp, temperatureRating)
-    : getTemperatureFactor(ambientTemp, temperatureRating);
-    
+  const temperatureFactor =
+    installationMethod.includes('buried') || installationMethod.includes('underground')
+      ? getSoilTemperatureFactor(soilTemp, temperatureRating)
+      : getTemperatureFactor(ambientTemp, temperatureRating);
+
   const groupingFactor = getGroupingFactor(groupingCircuits);
   const overallFactor = temperatureFactor * groupingFactor;
-  
+
   // Calculate derated capacity
   const Iz = IzTabulated * overallFactor;
-  
+
   // Check compliance with BS 7671 requirements
   const IbLeIn = designCurrent <= deviceRating;
   const InLeIz = deviceRating <= Iz;
   const overallCompliant = IbLeIn && InLeIz;
-  
+
   // Calculate safety margin
   const safetyMargin = ((Iz - deviceRating) / deviceRating) * 100;
-  
+
   // Find next sizes if not compliant
   let nextSizes: { cable?: { size: number; capacity: number }; device?: number } = {};
-  
+
   if (!InLeIz) {
     const nextCable = getNextCableSize(cableType, cableSize);
     if (nextCable) {
-      const nextCableCapacity = nextCable.capacities[referenceMethod] || Math.min(...Object.values(nextCable.capacities));
+      const nextCableCapacity =
+        nextCable.capacities[referenceMethod] || Math.min(...Object.values(nextCable.capacities));
       const nextIz = nextCableCapacity * overallFactor;
-      nextSizes.cable = { 
-        size: nextCable.size, 
-        capacity: Math.round(nextIz) 
+      nextSizes.cable = {
+        size: nextCable.size,
+        capacity: Math.round(nextIz),
       };
     }
   }
-  
+
   if (!IbLeIn) {
     // Standard device ratings: 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125
-    const standardRatings = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400];
-    const nextDevice = standardRatings.find(rating => rating >= designCurrent && rating <= Iz);
+    const standardRatings = [
+      6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400,
+    ];
+    const nextDevice = standardRatings.find((rating) => rating >= designCurrent && rating <= Iz);
     if (nextDevice) {
       nextSizes.device = nextDevice;
     }
@@ -113,9 +115,9 @@ export const calculateCableCapacity = (inputs: CableCapacityInputs): CableCapaci
   // Build equation string
   const factorStrings = [
     `Ca = ${temperatureFactor.toFixed(3)}`,
-    `Cg = ${groupingFactor.toFixed(3)}`
+    `Cg = ${groupingFactor.toFixed(3)}`,
   ];
-  
+
   const equation = `Iz = It × Ca × Cg = ${IzTabulated} × ${factorStrings.join(' × ')} = ${Iz.toFixed(1)}A`;
 
   return {
@@ -126,38 +128,44 @@ export const calculateCableCapacity = (inputs: CableCapacityInputs): CableCapaci
     factors: {
       temperature: temperatureFactor,
       grouping: groupingFactor,
-      overall: overallFactor
+      overall: overallFactor,
     },
     compliance: {
       IbLeIn,
       InLeIz,
       overallCompliant,
-      safetyMargin: Math.round(safetyMargin * 10) / 10
+      safetyMargin: Math.round(safetyMargin * 10) / 10,
     },
     nextSizes,
-    equation
+    equation,
   };
 };
 
 export const getRecommendations = (result: CableCapacityResult): string[] => {
   const recommendations: string[] = [];
-  
+
   if (!result.compliance.IbLeIn) {
     if (result.nextSizes.device) {
-      recommendations.push(`Increase protective device to ${result.nextSizes.device}A or reduce design current`);
+      recommendations.push(
+        `Increase protective device to ${result.nextSizes.device}A or reduce design current`
+      );
     } else {
-      recommendations.push('Design current exceeds maximum protective device rating for this cable');
+      recommendations.push(
+        'Design current exceeds maximum protective device rating for this cable'
+      );
     }
   }
-  
+
   if (!result.compliance.InLeIz) {
     if (result.nextSizes.cable) {
-      recommendations.push(`Upgrade to ${result.nextSizes.cable.size}mm² cable (Iz = ${result.nextSizes.cable.capacity}A)`);
+      recommendations.push(
+        `Upgrade to ${result.nextSizes.cable.size}mm² cable (Iz = ${result.nextSizes.cable.capacity}A)`
+      );
     } else {
       recommendations.push('Consider alternative installation method or cable type');
     }
   }
-  
+
   if (result.compliance.overallCompliant) {
     if (result.compliance.safetyMargin < 10) {
       recommendations.push('Consider next size up for improved safety margin');
@@ -165,10 +173,10 @@ export const getRecommendations = (result: CableCapacityResult): string[] => {
       recommendations.push('Cable may be oversized - consider smaller size if installation allows');
     }
   }
-  
+
   if (result.factors.overall < 0.7) {
     recommendations.push('Low derating factors - review installation conditions');
   }
-  
+
   return recommendations;
 };

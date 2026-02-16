@@ -3,10 +3,10 @@ import { Badge } from '@/components/ui/badge';
 
 const SmartHomeModule6Section3LearningOutcomes = () => {
   const outcomes = [
-    "Explain what routines and logic mapping are in smart homes",
-    "Describe how voice assistants process commands and triggers",
-    "Program simple and advanced routines for smart home devices",
-    "Identify common issues in routine mapping and how to troubleshoot them"
+    'Explain what routines and logic mapping are in smart homes',
+    'Describe how voice assistants process commands and triggers',
+    'Program simple and advanced routines for smart home devices',
+    'Identify common issues in routine mapping and how to troubleshoot them',
   ];
 
   return (
@@ -17,7 +17,10 @@ const SmartHomeModule6Section3LearningOutcomes = () => {
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">
-              <Badge variant="secondary" className="bg-elec-yellow text-elec-dark font-bold min-w-[24px] h-6 flex items-center justify-center text-sm">
+              <Badge
+                variant="secondary"
+                className="bg-elec-yellow text-elec-dark font-bold min-w-[24px] h-6 flex items-center justify-center text-sm"
+              >
                 {index + 1}
               </Badge>
               <p className="text-foreground flex-1 leading-relaxed">{outcome}</p>

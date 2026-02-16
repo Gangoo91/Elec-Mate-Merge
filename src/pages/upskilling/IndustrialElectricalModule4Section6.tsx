@@ -22,7 +22,7 @@ import {
   Target,
   Clock,
   FileText,
-  Settings
+  Settings,
 } from 'lucide-react';
 
 const IndustrialElectricalModule4Section6: React.FC = () => {
@@ -30,7 +30,8 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
 
   useSEO({
     title: 'Safety PLC and Machine Guarding | Industrial Electrical Module 4 Section 6 | Elec-Mate',
-    description: 'Learn about Safety PLC architecture, Safety Integrity Levels (SIL), Performance Levels (PL), light curtains, safety mats, two-hand controls, and machine guarding compliance with IEC 62061 and ISO 13849-1.',
+    description:
+      'Learn about Safety PLC architecture, Safety Integrity Levels (SIL), Performance Levels (PL), light curtains, safety mats, two-hand controls, and machine guarding compliance with IEC 62061 and ISO 13849-1.',
     keywords: [
       'Safety PLC',
       'machine guarding',
@@ -42,9 +43,9 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
       'IEC 62061',
       'ISO 13849-1',
       'PUWER',
-      'functional safety'
+      'functional safety',
     ],
-    canonicalUrl: '/study-centre/upskilling/industrial-electrical/module-4/section-6'
+    canonicalUrl: '/study-centre/upskilling/industrial-electrical/module-4/section-6',
   });
 
   const quickCheckQuestions = [
@@ -55,22 +56,25 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
         'Safety PLCs are faster',
         'Safety PLCs use redundant processors with cross-checking',
         'Safety PLCs have more I/O points',
-        'Safety PLCs use different programming languages'
+        'Safety PLCs use different programming languages',
       ],
       correctIndex: 1,
-      explanation: 'Safety PLCs use redundant (dual or triple) processors that continuously cross-check each other. If any discrepancy is detected, the system goes to a safe state. This architecture is fundamental to achieving the required Safety Integrity Levels (SIL) per IEC 61508.'
+      explanation:
+        'Safety PLCs use redundant (dual or triple) processors that continuously cross-check each other. If any discrepancy is detected, the system goes to a safe state. This architecture is fundamental to achieving the required Safety Integrity Levels (SIL) per IEC 61508.',
     },
     {
       id: 'qc2-safety-plc-m4s6',
-      question: 'According to ISO 13849-1, what Performance Level (PL) is typically required for a power press emergency stop?',
+      question:
+        'According to ISO 13849-1, what Performance Level (PL) is typically required for a power press emergency stop?',
       options: [
         'PL a - Low risk',
         'PL b - Low to medium risk',
         'PL c - Medium risk',
-        'PL d or PL e - High risk'
+        'PL d or PL e - High risk',
       ],
       correctIndex: 3,
-      explanation: 'Power presses present severe hazards with potential for serious injury or death. ISO 13849-1 risk assessment typically requires PL d or PL e for emergency stops on such machinery. This corresponds to SIL 2 or SIL 3 under IEC 62061.'
+      explanation:
+        'Power presses present severe hazards with potential for serious injury or death. ISO 13849-1 risk assessment typically requires PL d or PL e for emergency stops on such machinery. This corresponds to SIL 2 or SIL 3 under IEC 62061.',
     },
     {
       id: 'qc3-safety-plc-m4s6',
@@ -79,18 +83,20 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
         'To verify production output',
         'To detect dangerous undetected faults before they cause harm',
         'To calibrate sensors for accuracy',
-        'To update the PLC firmware'
+        'To update the PLC firmware',
       ],
       correctIndex: 1,
-      explanation: 'Proof testing is performed at defined intervals to detect dangerous undetected faults that automatic diagnostics cannot find. The proof test interval is a critical factor in calculating the Probability of Failure on Demand (PFD) and maintaining the required SIL/PL over the equipment lifetime.'
-    }
+      explanation:
+        'Proof testing is performed at defined intervals to detect dangerous undetected faults that automatic diagnostics cannot find. The proof test interval is a critical factor in calculating the Probability of Failure on Demand (PFD) and maintaining the required SIL/PL over the equipment lifetime.',
+    },
   ];
 
   const quizQuestions = [
     {
-      question: 'Which standard specifically addresses functional safety of electrical/electronic/programmable electronic safety-related systems?',
+      question:
+        'Which standard specifically addresses functional safety of electrical/electronic/programmable electronic safety-related systems?',
       options: ['ISO 9001', 'IEC 61508', 'BS 7671', 'ISO 14001'],
-      correctAnswer: 'IEC 61508'
+      correctAnswer: 'IEC 61508',
     },
     {
       question: 'What does SIL stand for in functional safety?',
@@ -98,92 +104,101 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
         'Safety Inspection Level',
         'System Integration Layer',
         'Safety Integrity Level',
-        'Standard Industrial Limit'
+        'Standard Industrial Limit',
       ],
-      correctAnswer: 'Safety Integrity Level'
+      correctAnswer: 'Safety Integrity Level',
     },
     {
-      question: 'In a Category 3 safety system per ISO 13849-1, what happens when a single fault occurs?',
+      question:
+        'In a Category 3 safety system per ISO 13849-1, what happens when a single fault occurs?',
       options: [
         'The system stops immediately',
         'The safety function is still performed',
         'An alarm sounds but operation continues',
-        'The system requires manual reset'
+        'The system requires manual reset',
       ],
-      correctAnswer: 'The safety function is still performed'
+      correctAnswer: 'The safety function is still performed',
     },
     {
-      question: 'What is the minimum safety distance calculation for a light curtain primarily based on?',
+      question:
+        'What is the minimum safety distance calculation for a light curtain primarily based on?',
       options: [
         'The machine cycle time',
         'The hand speed constant and stopping time',
         'The production rate required',
-        'The light curtain resolution'
+        'The light curtain resolution',
       ],
-      correctAnswer: 'The hand speed constant and stopping time'
+      correctAnswer: 'The hand speed constant and stopping time',
     },
     {
-      question: 'What is the typical hand approach speed (K value) used in safety distance calculations per EN ISO 13855?',
+      question:
+        'What is the typical hand approach speed (K value) used in safety distance calculations per EN ISO 13855?',
       options: ['1000 mm/s', '1600 mm/s', '2000 mm/s', '2500 mm/s'],
-      correctAnswer: '2000 mm/s'
+      correctAnswer: '2000 mm/s',
     },
     {
-      question: 'Which UK regulation specifically requires machinery to be safe and properly guarded?',
-      options: [
-        'COSHH Regulations',
-        'PUWER 1998',
-        'CDM Regulations',
-        'RIDDOR'
-      ],
-      correctAnswer: 'PUWER 1998'
+      question:
+        'Which UK regulation specifically requires machinery to be safe and properly guarded?',
+      options: ['COSHH Regulations', 'PUWER 1998', 'CDM Regulations', 'RIDDOR'],
+      correctAnswer: 'PUWER 1998',
     },
     {
-      question: 'What software tool is commonly used to calculate Performance Levels according to ISO 13849-1?',
+      question:
+        'What software tool is commonly used to calculate Performance Levels according to ISO 13849-1?',
       options: ['AutoCAD', 'SISTEMA', 'MATLAB', 'LabVIEW'],
-      correctAnswer: 'SISTEMA'
+      correctAnswer: 'SISTEMA',
     },
     {
-      question: 'In two-hand control systems, what is the maximum allowable time between actuating both controls?',
+      question:
+        'In two-hand control systems, what is the maximum allowable time between actuating both controls?',
       options: ['0.5 seconds', '1.0 second', '0.25 seconds', '2.0 seconds'],
-      correctAnswer: '0.5 seconds'
+      correctAnswer: '0.5 seconds',
     },
     {
-      question: 'What type of safety device would you use to detect a person standing in a hazardous area at floor level?',
+      question:
+        'What type of safety device would you use to detect a person standing in a hazardous area at floor level?',
       options: ['Light curtain', 'Safety mat', 'Interlock switch', 'Two-hand control'],
-      correctAnswer: 'Safety mat'
+      correctAnswer: 'Safety mat',
     },
     {
-      question: 'According to IEC 62061, what is the maximum achievable SIL for a subsystem without redundancy (HFT=0)?',
+      question:
+        'According to IEC 62061, what is the maximum achievable SIL for a subsystem without redundancy (HFT=0)?',
       options: ['SIL 1', 'SIL 2', 'SIL 3', 'SIL 4'],
-      correctAnswer: 'SIL 2'
-    }
+      correctAnswer: 'SIL 2',
+    },
   ];
 
   const faqItems = [
     {
       question: 'What is the difference between SIL (IEC 62061) and PL (ISO 13849-1)?',
-      answer: 'SIL (Safety Integrity Level) from IEC 62061 and PL (Performance Level) from ISO 13849-1 are both measures of safety system reliability, but use different calculation methods. SIL uses Probability of Dangerous Failure per Hour (PFH), while PL uses a combination of categories, MTTFd, DCavg, and CCF. For machinery, both standards are harmonised under the Machinery Directive. A rough equivalence: PL a = no SIL, PL b = SIL 1, PL c = SIL 1, PL d = SIL 2, PL e = SIL 3. Many engineers use SISTEMA software to calculate PL and can correlate to SIL requirements.'
+      answer:
+        'SIL (Safety Integrity Level) from IEC 62061 and PL (Performance Level) from ISO 13849-1 are both measures of safety system reliability, but use different calculation methods. SIL uses Probability of Dangerous Failure per Hour (PFH), while PL uses a combination of categories, MTTFd, DCavg, and CCF. For machinery, both standards are harmonised under the Machinery Directive. A rough equivalence: PL a = no SIL, PL b = SIL 1, PL c = SIL 1, PL d = SIL 2, PL e = SIL 3. Many engineers use SISTEMA software to calculate PL and can correlate to SIL requirements.',
     },
     {
       question: 'How often should safety systems be proof tested?',
-      answer: 'Proof test intervals depend on the required SIL/PL and the components used. Typically, proof tests are performed annually, but some systems may require more frequent testing (monthly or quarterly) or allow longer intervals (up to 10 years for some SIL 1 systems). The interval is determined during the safety system design and documented in the safety manual. Testing must verify all safety functions operate correctly, including redundant channels, diagnostics, and safe state behaviour. All proof tests must be documented with date, tester name, tests performed, and results.'
+      answer:
+        'Proof test intervals depend on the required SIL/PL and the components used. Typically, proof tests are performed annually, but some systems may require more frequent testing (monthly or quarterly) or allow longer intervals (up to 10 years for some SIL 1 systems). The interval is determined during the safety system design and documented in the safety manual. Testing must verify all safety functions operate correctly, including redundant channels, diagnostics, and safe state behaviour. All proof tests must be documented with date, tester name, tests performed, and results.',
     },
     {
       question: 'Can I use a standard PLC for safety functions if I add redundancy?',
-      answer: 'No, simply adding redundancy to a standard PLC does not make it suitable for safety functions. Safety PLCs are designed from the ground up with specific architectural features: certified processors with built-in self-test, diversified redundancy (different processor types), certified safety function blocks, watchdog timers with safe state outputs, and comprehensive diagnostics. The entire development process follows IEC 61508, with documented failure modes and proven-in-use data. Standard PLCs lack these features and cannot achieve SIL certification regardless of external redundancy.'
+      answer:
+        'No, simply adding redundancy to a standard PLC does not make it suitable for safety functions. Safety PLCs are designed from the ground up with specific architectural features: certified processors with built-in self-test, diversified redundancy (different processor types), certified safety function blocks, watchdog timers with safe state outputs, and comprehensive diagnostics. The entire development process follows IEC 61508, with documented failure modes and proven-in-use data. Standard PLCs lack these features and cannot achieve SIL certification regardless of external redundancy.',
     },
     {
       question: 'What documentation is required for machine safety systems under PUWER?',
-      answer: 'Under PUWER (Provision and Use of Work Equipment Regulations 1998) and the Machinery Directive, required documentation includes: Risk Assessment documenting all hazards and risk reduction measures; Safety Requirements Specification (SRS) defining required safety functions and their SIL/PL; System design documentation including circuit diagrams, component selection justification, and safety distance calculations; Validation and verification test reports; Proof test procedures and records; Maintenance schedules and records; Training records for operators and maintenance personnel; and a Declaration of Conformity with CE/UKCA marking.'
+      answer:
+        'Under PUWER (Provision and Use of Work Equipment Regulations 1998) and the Machinery Directive, required documentation includes: Risk Assessment documenting all hazards and risk reduction measures; Safety Requirements Specification (SRS) defining required safety functions and their SIL/PL; System design documentation including circuit diagrams, component selection justification, and safety distance calculations; Validation and verification test reports; Proof test procedures and records; Maintenance schedules and records; Training records for operators and maintenance personnel; and a Declaration of Conformity with CE/UKCA marking.',
     },
     {
       question: 'How do I calculate the safety distance for a light curtain?',
-      answer: 'Safety distance is calculated using the formula from EN ISO 13855: S = (K x T) + C, where S is the minimum safety distance in mm, K is the hand approach speed (typically 2000 mm/s for hand approach, 1600 mm/s for walk-up approach), T is the total stopping time in seconds (machine stopping time + light curtain response time), and C is the intrusion distance based on light curtain resolution. For finger detection (14mm resolution or less), C = 8 x (d - 14) where d is the resolution. For hand detection (greater than 14mm to 40mm), additional penetration factors apply. Always verify the calculation with actual measured stopping times.'
+      answer:
+        'Safety distance is calculated using the formula from EN ISO 13855: S = (K x T) + C, where S is the minimum safety distance in mm, K is the hand approach speed (typically 2000 mm/s for hand approach, 1600 mm/s for walk-up approach), T is the total stopping time in seconds (machine stopping time + light curtain response time), and C is the intrusion distance based on light curtain resolution. For finger detection (14mm resolution or less), C = 8 x (d - 14) where d is the resolution. For hand detection (greater than 14mm to 40mm), additional penetration factors apply. Always verify the calculation with actual measured stopping times.',
     },
     {
       question: 'What is the role of enabling devices in safety systems?',
-      answer: 'Enabling devices (also called hold-to-run or deadman switches) are three-position devices that permit machine motion only when held in the middle position. Position 1 (released) = stop, Position 2 (held) = motion permitted, Position 3 (panic pressed) = stop. They are used for setup, teaching, or maintenance when guards must be bypassed. The operator must consciously hold the device, and any panic reaction (releasing or squeezing harder) stops motion. EN ISO 13849-1 typically requires PL d for enabling device circuits. They must be used with reduced speed mode and are not a substitute for proper guarding during normal operation.'
-    }
+      answer:
+        'Enabling devices (also called hold-to-run or deadman switches) are three-position devices that permit machine motion only when held in the middle position. Position 1 (released) = stop, Position 2 (held) = motion permitted, Position 3 (panic pressed) = stop. They are used for setup, teaching, or maintenance when guards must be bypassed. The operator must consciously hold the device, and any panic reaction (releasing or squeezing harder) stops motion. EN ISO 13849-1 typically requires PL d for enabling device circuits. They must be used with reduced speed mode and are not a substitute for proper guarding during normal operation.',
+    },
   ];
 
   return (
@@ -191,7 +206,12 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
       {/* Sticky Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground hover:text-foreground"
+            asChild
+          >
             <Link to="/electrician/upskilling/industrial-electrical-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -222,12 +242,12 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div>
               <h2 className="font-semibold text-red-400 mb-2">Critical Safety Topic</h2>
               <p className="text-sm text-red-300">
-                Functional safety in machinery is governed by international standards including
-                IEC 61508, IEC 62061, and ISO 13849-1. In the UK, PUWER 1998 (Provision and Use
-                of Work Equipment Regulations) mandates that machinery must be safe and properly
-                guarded. Understanding Safety PLCs, Safety Integrity Levels, and protective
-                devices is essential for designing, installing, and maintaining compliant
-                machine safety systems.
+                Functional safety in machinery is governed by international standards including IEC
+                61508, IEC 62061, and ISO 13849-1. In the UK, PUWER 1998 (Provision and Use of Work
+                Equipment Regulations) mandates that machinery must be safe and properly guarded.
+                Understanding Safety PLCs, Safety Integrity Levels, and protective devices is
+                essential for designing, installing, and maintaining compliant machine safety
+                systems.
               </p>
             </div>
           </div>
@@ -320,10 +340,12 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
               <div className="flex items-start gap-3">
                 <Settings className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-medium text-foreground text-sm">Diversified Redundancy:</span>
+                  <span className="font-medium text-foreground text-sm">
+                    Diversified Redundancy:
+                  </span>
                   <span className="text-xs text-muted-foreground ml-2">
-                    Uses different processor types or instruction sequences to prevent
-                    common-cause failures from affecting both channels
+                    Uses different processor types or instruction sequences to prevent common-cause
+                    failures from affecting both channels
                   </span>
                 </div>
               </div>
@@ -332,15 +354,17 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
                 <div>
                   <span className="font-medium text-foreground text-sm">Watchdog Timers:</span>
                   <span className="text-xs text-muted-foreground ml-2">
-                    Hardware watchdogs ensure the system goes to safe state if program
-                    execution fails or exceeds time limits
+                    Hardware watchdogs ensure the system goes to safe state if program execution
+                    fails or exceeds time limits
                   </span>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <FileCheck className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-medium text-foreground text-sm">Certified Function Blocks:</span>
+                  <span className="font-medium text-foreground text-sm">
+                    Certified Function Blocks:
+                  </span>
                   <span className="text-xs text-muted-foreground ml-2">
                     Pre-certified safety function blocks for emergency stop, guard monitoring,
                     two-hand control, muting, and other safety functions
@@ -354,10 +378,10 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
               <p className="text-sm text-blue-300">
-                <strong>EN 61508 Compliance:</strong> Safety PLCs must be developed according
-                to IEC 61508 lifecycle requirements, including hazard analysis, safety
-                requirements specification, design, implementation, validation, and operation/maintenance
-                phases. Manufacturers must provide safety manuals detailing safe use parameters.
+                <strong>EN 61508 Compliance:</strong> Safety PLCs must be developed according to IEC
+                61508 lifecycle requirements, including hazard analysis, safety requirements
+                specification, design, implementation, validation, and operation/maintenance phases.
+                Manufacturers must provide safety manuals detailing safe use parameters.
               </p>
             </div>
           </div>
@@ -377,15 +401,17 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
                 <h3 className="font-semibold text-foreground mb-2">Understanding SIL and PL</h3>
                 <p className="text-sm text-muted-foreground">
                   SIL (IEC 62061) and PL (ISO 13849-1) are quantitative measures of safety system
-                  reliability. Both standards are harmonised under the EU Machinery Directive and
-                  UK Supply of Machinery (Safety) Regulations.
+                  reliability. Both standards are harmonised under the EU Machinery Directive and UK
+                  Supply of Machinery (Safety) Regulations.
                 </p>
               </div>
             </div>
           </div>
 
           <div className="bg-card/50 border border-white/10 rounded-lg p-4 overflow-x-auto">
-            <h3 className="font-semibold text-foreground mb-3">Safety Integrity Levels (IEC 62061)</h3>
+            <h3 className="font-semibold text-foreground mb-3">
+              Safety Integrity Levels (IEC 62061)
+            </h3>
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-white/10">
@@ -472,7 +498,9 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="space-y-2 text-sm">
               <div className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold min-w-[50px]">Cat B:</span>
-                <span className="text-muted-foreground">Basic safety principles, no fault tolerance</span>
+                <span className="text-muted-foreground">
+                  Basic safety principles, no fault tolerance
+                </span>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold min-w-[50px]">Cat 1:</span>
@@ -480,15 +508,21 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold min-w-[50px]">Cat 2:</span>
-                <span className="text-muted-foreground">Periodic testing by the machine control system</span>
+                <span className="text-muted-foreground">
+                  Periodic testing by the machine control system
+                </span>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold min-w-[50px]">Cat 3:</span>
-                <span className="text-muted-foreground">Single fault tolerance - safety function maintained</span>
+                <span className="text-muted-foreground">
+                  Single fault tolerance - safety function maintained
+                </span>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold min-w-[50px]">Cat 4:</span>
-                <span className="text-muted-foreground">Single fault tolerance with fault detection</span>
+                <span className="text-muted-foreground">
+                  Single fault tolerance with fault detection
+                </span>
               </div>
             </div>
           </div>
@@ -497,11 +531,11 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
               <p className="text-sm text-orange-300">
-                <strong>SISTEMA Software:</strong> The German IFA provides free SISTEMA software
-                for calculating Performance Levels according to ISO 13849-1. It requires input
-                of component data (MTTFd, B10d values), system architecture (category), and
-                diagnostic coverage to calculate the achieved PL. This is the industry-standard
-                tool for PL verification.
+                <strong>SISTEMA Software:</strong> The German IFA provides free SISTEMA software for
+                calculating Performance Levels according to ISO 13849-1. It requires input of
+                component data (MTTFd, B10d values), system architecture (category), and diagnostic
+                coverage to calculate the achieved PL. This is the industry-standard tool for PL
+                verification.
               </p>
             </div>
           </div>
@@ -527,7 +561,9 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="flex items-start gap-4">
               <Eye className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Electro-Sensitive Protective Equipment</h3>
+                <h3 className="font-semibold text-foreground mb-2">
+                  Electro-Sensitive Protective Equipment
+                </h3>
                 <p className="text-sm text-muted-foreground">
                   Electro-sensitive protective equipment (ESPE) provides non-contact safeguarding
                   that allows frequent access while maintaining protection. Light curtains and
@@ -540,18 +576,25 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
           <div className="bg-card/50 border border-white/10 rounded-lg p-4">
             <h3 className="font-semibold text-foreground mb-3">Light Curtains (AOPD)</h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Active Opto-electronic Protective Devices create an infrared sensing field
-              between transmitter and receiver units. Breaking any beam triggers the safety
-              output.
+              Active Opto-electronic Protective Devices create an infrared sensing field between
+              transmitter and receiver units. Breaking any beam triggers the safety output.
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-foreground text-sm mb-2">Resolution Types</h4>
                 <ul className="space-y-1 text-xs text-muted-foreground">
-                  <li>- <strong className="text-foreground">14mm:</strong> Finger detection</li>
-                  <li>- <strong className="text-foreground">20-30mm:</strong> Hand detection</li>
-                  <li>- <strong className="text-foreground">40mm+:</strong> Arm detection</li>
-                  <li>- <strong className="text-foreground">50-90mm:</strong> Body detection</li>
+                  <li>
+                    - <strong className="text-foreground">14mm:</strong> Finger detection
+                  </li>
+                  <li>
+                    - <strong className="text-foreground">20-30mm:</strong> Hand detection
+                  </li>
+                  <li>
+                    - <strong className="text-foreground">40mm+:</strong> Arm detection
+                  </li>
+                  <li>
+                    - <strong className="text-foreground">50-90mm:</strong> Body detection
+                  </li>
                 </ul>
               </div>
               <div>
@@ -578,23 +621,28 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold min-w-[30px]">K</span>
-                <span className="text-muted-foreground">= Approach speed (2000mm/s hand, 1600mm/s body per EN ISO 13855)</span>
+                <span className="text-muted-foreground">
+                  = Approach speed (2000mm/s hand, 1600mm/s body per EN ISO 13855)
+                </span>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold min-w-[30px]">T</span>
-                <span className="text-muted-foreground">= Total stopping time (machine + light curtain response)</span>
+                <span className="text-muted-foreground">
+                  = Total stopping time (machine + light curtain response)
+                </span>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold min-w-[30px]">C</span>
-                <span className="text-muted-foreground">= Intrusion distance based on resolution (8 x (d-14) for finger detection)</span>
+                <span className="text-muted-foreground">
+                  = Intrusion distance based on resolution (8 x (d-14) for finger detection)
+                </span>
               </div>
             </div>
             <div className="mt-3 p-3 bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg">
               <p className="text-xs text-muted-foreground">
                 <strong className="text-foreground">Example:</strong> Machine stopping time 150ms,
                 light curtain 15ms, 14mm resolution:
-                <br />
-                S = (2000 x 0.165) + 0 = 330mm minimum
+                <br />S = (2000 x 0.165) + 0 = 330mm minimum
               </p>
             </div>
           </div>
@@ -602,9 +650,8 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
           <div className="bg-card/50 border border-white/10 rounded-lg p-4">
             <h3 className="font-semibold text-foreground mb-3">Safety Mats</h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Pressure-sensitive mats detect when a person is standing in a hazardous area.
-              Used for floor-level detection where light curtains cannot provide adequate
-              coverage.
+              Pressure-sensitive mats detect when a person is standing in a hazardous area. Used for
+              floor-level detection where light curtains cannot provide adequate coverage.
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
@@ -632,10 +679,10 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
               <p className="text-sm text-blue-300">
-                <strong>Muting and Blanking:</strong> Light curtains can be configured with
-                muting (temporary bypass for material passage) or blanking (fixed blind zones).
-                Muting requires additional sensors to detect legitimate material and prevent
-                personnel bypass. Both features require careful design to maintain safety integrity.
+                <strong>Muting and Blanking:</strong> Light curtains can be configured with muting
+                (temporary bypass for material passage) or blanking (fixed blind zones). Muting
+                requires additional sensors to detect legitimate material and prevent personnel
+                bypass. Both features require careful design to maintain safety integrity.
               </p>
             </div>
           </div>
@@ -652,7 +699,9 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="flex items-start gap-4">
               <Hand className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Operator-Actuated Safety Devices</h3>
+                <h3 className="font-semibold text-foreground mb-2">
+                  Operator-Actuated Safety Devices
+                </h3>
                 <p className="text-sm text-muted-foreground">
                   Two-hand controls and enabling devices are operator-actuated safety devices that
                   ensure hands are in safe positions during hazardous machine operations.
@@ -664,18 +713,28 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
           <div className="bg-card/50 border border-white/10 rounded-lg p-4">
             <h3 className="font-semibold text-foreground mb-3">Two-Hand Control (EN 574)</h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Requires simultaneous actuation of two control devices using both hands to
-              initiate machine motion, keeping hands away from the danger zone.
+              Requires simultaneous actuation of two control devices using both hands to initiate
+              machine motion, keeping hands away from the danger zone.
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-foreground text-sm mb-2">Type Requirements</h4>
                 <ul className="space-y-1 text-xs text-muted-foreground">
-                  <li>- <strong className="text-foreground">Type I:</strong> Basic synchronicity</li>
-                  <li>- <strong className="text-foreground">Type II:</strong> +Anti-tie-down</li>
-                  <li>- <strong className="text-foreground">Type IIIA:</strong> +0.5s sync time</li>
-                  <li>- <strong className="text-foreground">Type IIIB:</strong> +Single-stroke</li>
-                  <li>- <strong className="text-foreground">Type IIIC:</strong> +Both features</li>
+                  <li>
+                    - <strong className="text-foreground">Type I:</strong> Basic synchronicity
+                  </li>
+                  <li>
+                    - <strong className="text-foreground">Type II:</strong> +Anti-tie-down
+                  </li>
+                  <li>
+                    - <strong className="text-foreground">Type IIIA:</strong> +0.5s sync time
+                  </li>
+                  <li>
+                    - <strong className="text-foreground">Type IIIB:</strong> +Single-stroke
+                  </li>
+                  <li>
+                    - <strong className="text-foreground">Type IIIC:</strong> +Both features
+                  </li>
                 </ul>
               </div>
               <div>
@@ -691,13 +750,17 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
           </div>
 
           <div className="bg-card/50 border border-white/10 rounded-lg p-4">
-            <h3 className="font-semibold text-foreground mb-3">Enabling Devices (EN ISO 13849-1)</h3>
+            <h3 className="font-semibold text-foreground mb-3">
+              Enabling Devices (EN ISO 13849-1)
+            </h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Three-position devices that permit motion only when held in the middle position.
-              Used for setup, teaching, or maintenance operations.
+              Three-position devices that permit motion only when held in the middle position. Used
+              for setup, teaching, or maintenance operations.
             </p>
             <div className="bg-elec-yellow/5 rounded-lg p-4 mt-3">
-              <h4 className="font-medium text-foreground mb-3 text-center text-sm">Three-Position Operation</h4>
+              <h4 className="font-medium text-foreground mb-3 text-center text-sm">
+                Three-Position Operation
+              </h4>
               <div className="flex justify-between items-center text-sm">
                 <div className="text-center">
                   <div className="w-12 h-12 bg-green-500/20 border border-green-500/50 rounded-full flex items-center justify-center mx-auto mb-2">
@@ -729,8 +792,8 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
               </p>
               <p>
                 <strong className="text-foreground">Requirement:</strong> Must be used with reduced
-                speed mode (&lt;250mm/s for robots) and cannot replace proper guarding during
-                normal operation
+                speed mode (&lt;250mm/s for robots) and cannot replace proper guarding during normal
+                operation
               </p>
             </div>
           </div>
@@ -739,10 +802,10 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" />
               <p className="text-sm text-orange-300">
-                <strong>Safety Distance:</strong> Two-hand controls must be positioned so that
-                the operator cannot release the controls and reach the hazard zone before
-                machine motion stops. Calculate using S = K x T where K = 1600mm/s for the
-                distance from controls to hazard.
+                <strong>Safety Distance:</strong> Two-hand controls must be positioned so that the
+                operator cannot release the controls and reach the hazard zone before machine motion
+                stops. Calculate using S = K x T where K = 1600mm/s for the distance from controls
+                to hazard.
               </p>
             </div>
           </div>
@@ -768,7 +831,9 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="flex items-start gap-4">
               <FileCheck className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Structured Safety Programming</h3>
+                <h3 className="font-semibold text-foreground mb-2">
+                  Structured Safety Programming
+                </h3>
                 <p className="text-sm text-muted-foreground">
                   Safety PLC programming follows structured methodologies with certified function
                   blocks. Validation ensures the safety system meets its Safety Requirements
@@ -781,8 +846,8 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
           <div className="bg-card/50 border border-white/10 rounded-lg p-4">
             <h3 className="font-semibold text-foreground mb-3">Certified Safety Function Blocks</h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Safety PLCs provide pre-certified function blocks that have been validated to
-              IEC 61508. Using these ensures software does not compromise the achieved SIL.
+              Safety PLCs provide pre-certified function blocks that have been validated to IEC
+              61508. Using these ensures software does not compromise the achieved SIL.
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
@@ -819,8 +884,8 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
                 <div>
                   <span className="font-medium text-foreground text-sm">Design Review:</span>
                   <span className="text-xs text-muted-foreground ml-2">
-                    Verify safety function design against SRS, check component selection,
-                    review circuit diagrams
+                    Verify safety function design against SRS, check component selection, review
+                    circuit diagrams
                   </span>
                 </div>
               </div>
@@ -829,10 +894,12 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
                   2
                 </div>
                 <div>
-                  <span className="font-medium text-foreground text-sm">Fault Injection Testing:</span>
+                  <span className="font-medium text-foreground text-sm">
+                    Fault Injection Testing:
+                  </span>
                   <span className="text-xs text-muted-foreground ml-2">
-                    Simulate faults (open circuits, short circuits, stuck-at faults) to
-                    verify safe state behaviour
+                    Simulate faults (open circuits, short circuits, stuck-at faults) to verify safe
+                    state behaviour
                   </span>
                 </div>
               </div>
@@ -843,8 +910,7 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
                 <div>
                   <span className="font-medium text-foreground text-sm">Functional Testing:</span>
                   <span className="text-xs text-muted-foreground ml-2">
-                    Test each safety function operates correctly under all specified
-                    conditions
+                    Test each safety function operates correctly under all specified conditions
                   </span>
                 </div>
               </div>
@@ -853,7 +919,9 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
                   4
                 </div>
                 <div>
-                  <span className="font-medium text-foreground text-sm">Stopping Time Measurement:</span>
+                  <span className="font-medium text-foreground text-sm">
+                    Stopping Time Measurement:
+                  </span>
                   <span className="text-xs text-muted-foreground ml-2">
                     Measure actual stopping times to verify safety distance calculations
                   </span>
@@ -878,23 +946,33 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-3 p-2 bg-green-500/10 border-l-2 border-green-500 rounded-r-lg">
                 <CheckCircle2 className="w-5 h-5 text-green-400" />
-                <span className="text-muted-foreground">Program CRC checked at startup and runtime</span>
+                <span className="text-muted-foreground">
+                  Program CRC checked at startup and runtime
+                </span>
               </div>
               <div className="flex items-center gap-3 p-2 bg-green-500/10 border-l-2 border-green-500 rounded-r-lg">
                 <CheckCircle2 className="w-5 h-5 text-green-400" />
-                <span className="text-muted-foreground">Password protection for safety program changes</span>
+                <span className="text-muted-foreground">
+                  Password protection for safety program changes
+                </span>
               </div>
               <div className="flex items-center gap-3 p-2 bg-green-500/10 border-l-2 border-green-500 rounded-r-lg">
                 <CheckCircle2 className="w-5 h-5 text-green-400" />
-                <span className="text-muted-foreground">Program version control and change management</span>
+                <span className="text-muted-foreground">
+                  Program version control and change management
+                </span>
               </div>
               <div className="flex items-center gap-3 p-2 bg-green-500/10 border-l-2 border-green-500 rounded-r-lg">
                 <CheckCircle2 className="w-5 h-5 text-green-400" />
-                <span className="text-muted-foreground">Separation of safety and standard programs</span>
+                <span className="text-muted-foreground">
+                  Separation of safety and standard programs
+                </span>
               </div>
               <div className="flex items-center gap-3 p-2 bg-green-500/10 border-l-2 border-green-500 rounded-r-lg">
                 <CheckCircle2 className="w-5 h-5 text-green-400" />
-                <span className="text-muted-foreground">Diagnostic data logging and fault history</span>
+                <span className="text-muted-foreground">
+                  Diagnostic data logging and fault history
+                </span>
               </div>
             </div>
           </div>
@@ -924,8 +1002,8 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
           <div className="bg-card/50 border border-white/10 rounded-lg p-4 overflow-x-auto">
             <h3 className="font-semibold text-foreground mb-3">Proof Test Requirements</h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Proof tests detect dangerous undetected faults that automatic diagnostics
-              cannot find. The proof test interval affects the calculated PFH/PFD.
+              Proof tests detect dangerous undetected faults that automatic diagnostics cannot find.
+              The proof test interval affects the calculated PFH/PFD.
             </p>
             <table className="w-full text-sm">
               <thead>
@@ -966,7 +1044,9 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
           </div>
 
           <div className="bg-card/50 border border-white/10 rounded-lg p-4">
-            <h3 className="font-semibold text-foreground mb-3">Required Documentation (PUWER/Machinery Directive)</h3>
+            <h3 className="font-semibold text-foreground mb-3">
+              Required Documentation (PUWER/Machinery Directive)
+            </h3>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-foreground text-sm mb-2 flex items-center gap-2">
@@ -1018,11 +1098,15 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-green-400" />
-                <span className="text-muted-foreground">Pass/fail result with measurements where applicable</span>
+                <span className="text-muted-foreground">
+                  Pass/fail result with measurements where applicable
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-green-400" />
-                <span className="text-muted-foreground">Any defects found and corrective actions</span>
+                <span className="text-muted-foreground">
+                  Any defects found and corrective actions
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-green-400" />
@@ -1035,11 +1119,11 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-red-300">
-                <strong>Legal Requirement:</strong> Under PUWER Regulation 6, work equipment
-                must be maintained in an efficient state, in efficient working order, and in
-                good repair. Failure to maintain safety systems can result in prosecution
-                under the Health and Safety at Work Act 1974, with unlimited fines and
-                potential imprisonment for individuals.
+                <strong>Legal Requirement:</strong> Under PUWER Regulation 6, work equipment must be
+                maintained in an efficient state, in efficient working order, and in good repair.
+                Failure to maintain safety systems can result in prosecution under the Health and
+                Safety at Work Act 1974, with unlimited fines and potential imprisonment for
+                individuals.
               </div>
             </div>
           </div>
@@ -1070,28 +1154,36 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
                     <Zap className="w-4 h-4 text-elec-yellow mt-0.5" />
                     <div>
                       <span className="font-medium text-foreground">IEC 61508:</span>
-                      <span className="text-muted-foreground ml-1">Functional safety base standard</span>
+                      <span className="text-muted-foreground ml-1">
+                        Functional safety base standard
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-elec-yellow mt-0.5" />
                     <div>
                       <span className="font-medium text-foreground">IEC 62061:</span>
-                      <span className="text-muted-foreground ml-1">Machinery safety (SIL method)</span>
+                      <span className="text-muted-foreground ml-1">
+                        Machinery safety (SIL method)
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-elec-yellow mt-0.5" />
                     <div>
                       <span className="font-medium text-foreground">ISO 13849-1:</span>
-                      <span className="text-muted-foreground ml-1">Machinery safety (PL method)</span>
+                      <span className="text-muted-foreground ml-1">
+                        Machinery safety (PL method)
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-elec-yellow mt-0.5" />
                     <div>
                       <span className="font-medium text-foreground">EN ISO 13855:</span>
-                      <span className="text-muted-foreground ml-1">Safety distance calculation</span>
+                      <span className="text-muted-foreground ml-1">
+                        Safety distance calculation
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
@@ -1133,11 +1225,10 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
               <div className="sm:col-span-2">
                 <h4 className="font-semibold text-foreground mb-3">Safety Distance Formula</h4>
                 <div className="bg-background/50 rounded-lg p-4 text-center">
-                  <div className="font-mono text-lg text-elec-yellow mb-2">
-                    S = (K x T) + C
-                  </div>
+                  <div className="font-mono text-lg text-elec-yellow mb-2">S = (K x T) + C</div>
                   <div className="text-sm text-muted-foreground">
-                    S = Safety distance (mm) | K = Approach speed (mm/s) | T = Stopping time (s) | C = Intrusion distance (mm)
+                    S = Safety distance (mm) | K = Approach speed (mm/s) | T = Stopping time (s) | C
+                    = Intrusion distance (mm)
                   </div>
                 </div>
               </div>
@@ -1176,7 +1267,10 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
           <h2 className="text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {faqItems.map((faq, index) => (
-              <div key={index} className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+              <div
+                key={index}
+                className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4"
+              >
                 <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
                 <p className="text-sm text-muted-foreground">{faq.answer}</p>
               </div>
@@ -1202,13 +1296,20 @@ const IndustrialElectricalModule4Section6: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation border-white/20" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation border-white/20"
+            asChild
+          >
             <Link to="/study-centre/upskilling/industrial-electrical/module-4/section-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Section 5 - SCADA
             </Link>
           </Button>
-          <Button className="min-h-[44px] touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90" asChild>
+          <Button
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90"
+            asChild
+          >
             <Link to="/study-centre/upskilling/industrial-electrical/module-5">
               Next: Module 5
               <ArrowRight className="w-4 h-4 ml-2" />

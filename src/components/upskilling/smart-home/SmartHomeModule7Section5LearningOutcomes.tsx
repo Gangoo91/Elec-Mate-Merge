@@ -3,14 +3,14 @@ import { Target, CheckCircle } from 'lucide-react';
 
 const SmartHomeModule7Section5LearningOutcomes = () => {
   const outcomes = [
-    "Explain the purpose of a smart home handover process",
-    "Demonstrate how to walk a client through their app and system features", 
-    "Identify key information that must be communicated during training",
-    "Provide aftercare advice and set realistic expectations for system performance",
-    "Structure an effective client training session for maximum confidence building",
-    "Create user-friendly documentation and reference materials",
-    "Handle client questions and concerns professionally during handover",
-    "Establish clear support boundaries and contact procedures"
+    'Explain the purpose of a smart home handover process',
+    'Demonstrate how to walk a client through their app and system features',
+    'Identify key information that must be communicated during training',
+    'Provide aftercare advice and set realistic expectations for system performance',
+    'Structure an effective client training session for maximum confidence building',
+    'Create user-friendly documentation and reference materials',
+    'Handle client questions and concerns professionally during handover',
+    'Establish clear support boundaries and contact procedures',
   ];
 
   return (

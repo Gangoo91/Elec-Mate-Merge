@@ -1,74 +1,84 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Fault Finding, Handover and Maintenance | Data Cabling Module 3.6";
-const DESCRIPTION = "Learn systematic fibre troubleshooting, OTDR fault signatures, handover documentation requirements, and preventative maintenance practices.";
+const TITLE = 'Fault Finding, Handover and Maintenance | Data Cabling Module 3.6';
+const DESCRIPTION =
+  'Learn systematic fibre troubleshooting, OTDR fault signatures, handover documentation requirements, and preventative maintenance practices.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m3s6-check1",
-    question: "Which tool quickly locates near-end breaks or mispatches?",
-    options: ["OTDR", "VFL (Visual Fault Locator)", "OLTS only", "Fusion splicer"],
+    id: 'datacabling-m3s6-check1',
+    question: 'Which tool quickly locates near-end breaks or mispatches?',
+    options: ['OTDR', 'VFL (Visual Fault Locator)', 'OLTS only', 'Fusion splicer'],
     correctIndex: 1,
-    explanation: "A VFL (Visual Fault Locator) injects visible red light to show breaks, bends, or mismatches close to the end-face - ideal for quick visual inspection."
+    explanation:
+      'A VFL (Visual Fault Locator) injects visible red light to show breaks, bends, or mismatches close to the end-face - ideal for quick visual inspection.',
   },
   {
-    id: "datacabling-m3s6-check2",
-    question: "A non-reflective step loss on OTDR most likely indicates:",
-    options: ["Connector reflection", "Fibre break", "Fusion splice or bend", "Power failure"],
+    id: 'datacabling-m3s6-check2',
+    question: 'A non-reflective step loss on OTDR most likely indicates:',
+    options: ['Connector reflection', 'Fibre break', 'Fusion splice or bend', 'Power failure'],
     correctIndex: 2,
-    explanation: "Splices and bends present as non-reflective losses - they attenuate the signal without causing a reflection spike."
+    explanation:
+      'Splices and bends present as non-reflective losses - they attenuate the signal without causing a reflection spike.',
   },
   {
-    id: "datacabling-m3s6-check3",
-    question: "Why keep baseline traces?",
+    id: 'datacabling-m3s6-check3',
+    question: 'Why keep baseline traces?',
     options: [
-      "To reduce loss",
-      "To compare future tests and identify changes",
-      "For marketing",
-      "They are not useful"
+      'To reduce loss',
+      'To compare future tests and identify changes',
+      'For marketing',
+      'They are not useful',
     ],
     correctIndex: 1,
-    explanation: "Baseline traces make deviations obvious and speed up troubleshooting by showing exactly what has changed since installation."
-  }
+    explanation:
+      'Baseline traces make deviations obvious and speed up troubleshooting by showing exactly what has changed since installation.',
+  },
 ];
 
 const faqs = [
   {
     question: "What's the first step when troubleshooting a fibre fault?",
-    answer: "Start with visual inspection: check labels, patching, tray routing, bend radius, and visible damage. Then clean and inspect both end-faces. Many faults are simply dirty connectors - always clean and retest before changing anything else."
+    answer:
+      'Start with visual inspection: check labels, patching, tray routing, bend radius, and visible damage. Then clean and inspect both end-faces. Many faults are simply dirty connectors - always clean and retest before changing anything else.',
   },
   {
-    question: "How do I interpret a high reflectance spike on OTDR?",
-    answer: "A high reflectance spike typically indicates a damaged connector, air gap, or break. If at a known connector location, clean and inspect first. If within the cable, it may indicate a break or severe damage requiring repair."
+    question: 'How do I interpret a high reflectance spike on OTDR?',
+    answer:
+      'A high reflectance spike typically indicates a damaged connector, air gap, or break. If at a known connector location, clean and inspect first. If within the cable, it may indicate a break or severe damage requiring repair.',
   },
   {
-    question: "What should be included in a handover documentation pack?",
-    answer: "Include as-built drawings, fibre schedules with unique IDs, OLTS tables and OTDR traces (.sor files), equipment calibration details, cleaning records, photos of key terminations, labelling scheme, and panel maps."
+    question: 'What should be included in a handover documentation pack?',
+    answer:
+      'Include as-built drawings, fibre schedules with unique IDs, OLTS tables and OTDR traces (.sor files), equipment calibration details, cleaning records, photos of key terminations, labelling scheme, and panel maps.',
   },
   {
-    question: "How often should fibre links be re-tested?",
-    answer: "Re-test when performance issues arise, after any modifications, or as part of scheduled maintenance (typically annually for critical links). Always compare to baseline traces to identify degradation trends."
-  }
+    question: 'How often should fibre links be re-tested?',
+    answer:
+      'Re-test when performance issues arise, after any modifications, or as part of scheduled maintenance (typically annually for critical links). Always compare to baseline traces to identify degradation trends.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An existing SM link shows intermittent errors. OLTS passes but OTDR reveals periodic non-reflective steps every ~20m. What is the most likely cause?",
-  options: [
-    "Dirty connectors",
-    "Fibre type mismatch",
-    "Cable being compressed or bent at supports",
-    "Wrong wavelength used"
-  ],
-  correctAnswer: 2,
-  explanation: "Periodic non-reflective steps at regular intervals suggest mechanical stress at support points. Investigation often reveals tight containment lids, cable ties, or supports compressing the cable and causing bend losses."
-  }
+    question:
+      'An existing SM link shows intermittent errors. OLTS passes but OTDR reveals periodic non-reflective steps every ~20m. What is the most likely cause?',
+    options: [
+      'Dirty connectors',
+      'Fibre type mismatch',
+      'Cable being compressed or bent at supports',
+      'Wrong wavelength used',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Periodic non-reflective steps at regular intervals suggest mechanical stress at support points. Investigation often reveals tight containment lids, cable ties, or supports compressing the cable and causing bend losses.',
+  },
 ];
 
 const DataCablingModule3Section6 = () => {
@@ -103,9 +113,7 @@ const DataCablingModule3Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fault Finding, Handover and Maintenance
           </h1>
-          <p className="text-white/80">
-            Systematic troubleshooting and documentation
-          </p>
+          <p className="text-white/80">Systematic troubleshooting and documentation</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -113,16 +121,26 @@ const DataCablingModule3Section6 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>VFL:</strong> Quick visual fault location</li>
-              <li><strong>OTDR signatures:</strong> Identify fault types</li>
-              <li><strong>Baseline:</strong> Compare future tests to original</li>
+              <li>
+                <strong>VFL:</strong> Quick visual fault location
+              </li>
+              <li>
+                <strong>OTDR signatures:</strong> Identify fault types
+              </li>
+              <li>
+                <strong>Baseline:</strong> Compare future tests to original
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Red light from VFL escaping at faults</li>
-              <li><strong>Use:</strong> Clean first, then test systematically</li>
+              <li>
+                <strong>Spot:</strong> Red light from VFL escaping at faults
+              </li>
+              <li>
+                <strong>Use:</strong> Clean first, then test systematically
+              </li>
             </ul>
           </div>
         </div>
@@ -132,12 +150,12 @@ const DataCablingModule3Section6 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Apply systematic troubleshooting methodology",
-              "Interpret common OTDR fault signatures",
-              "Use VFL for quick fault location",
-              "Create comprehensive handover packs",
-              "Implement preventative maintenance",
-              "Maintain baseline trace libraries"
+              'Apply systematic troubleshooting methodology',
+              'Interpret common OTDR fault signatures',
+              'Use VFL for quick fault location',
+              'Create comprehensive handover packs',
+              'Implement preventative maintenance',
+              'Maintain baseline trace libraries',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -157,19 +175,31 @@ const DataCablingModule3Section6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A methodical approach to fault finding saves time and ensures the root cause is identified
-              rather than just treating symptoms.
+              A methodical approach to fault finding saves time and ensures the root cause is
+              identified rather than just treating symptoms.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Troubleshooting Flow:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>1. <strong>Visual:</strong> Check labels, patching, routing, bend radius</li>
-                <li>2. <strong>Clean & inspect:</strong> Both end-faces before changing anything</li>
-                <li>3. <strong>Continuity:</strong> Use VFL for near-end breaks/mispatches</li>
-                <li>4. <strong>OLTS:</strong> Measure end-to-end at relevant wavelengths</li>
-                <li>5. <strong>OTDR:</strong> Locate events; compare to baseline traces</li>
-                <li>6. <strong>Isolate:</strong> Swap jumpers, move ports to narrow down</li>
+                <li>
+                  1. <strong>Visual:</strong> Check labels, patching, routing, bend radius
+                </li>
+                <li>
+                  2. <strong>Clean & inspect:</strong> Both end-faces before changing anything
+                </li>
+                <li>
+                  3. <strong>Continuity:</strong> Use VFL for near-end breaks/mispatches
+                </li>
+                <li>
+                  4. <strong>OLTS:</strong> Measure end-to-end at relevant wavelengths
+                </li>
+                <li>
+                  5. <strong>OTDR:</strong> Locate events; compare to baseline traces
+                </li>
+                <li>
+                  6. <strong>Isolate:</strong> Swap jumpers, move ports to narrow down
+                </li>
               </ul>
             </div>
 
@@ -212,7 +242,9 @@ const DataCablingModule3Section6 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">High Reflectance Spike</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  High Reflectance Spike
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Damaged connector or air gap</li>
                   <li>Clean or replace connector</li>
@@ -239,7 +271,9 @@ const DataCablingModule3Section6 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Large End Reflection + Loss</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Large End Reflection + Loss
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Open connector or break</li>
                   <li>Inspect connector and tail lead</li>
@@ -280,7 +314,9 @@ const DataCablingModule3Section6 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Handover Pack Contents:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Handover Pack Contents:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>As-built drawings and fibre schedules with unique IDs</li>
                 <li>OLTS tables and OTDR traces per core and wavelength</li>
@@ -292,7 +328,9 @@ const DataCablingModule3Section6 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Preventative Maintenance</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Preventative Maintenance
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Clean-before-connect policy</li>
                   <li>Keep caps on unused ports</li>
@@ -320,7 +358,9 @@ const DataCablingModule3Section6 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Maintenance Best Practices</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Maintenance Best Practices
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Store baseline traces securely for future comparison</li>
                 <li>Schedule periodic visual inspections of splice trays</li>
@@ -332,10 +372,18 @@ const DataCablingModule3Section6 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Skipping cleaning:</strong> — Most faults are dirt-related</li>
-                <li><strong>No baseline:</strong> — Cannot compare to original state</li>
-                <li><strong>Incomplete records:</strong> — Warranty and handover issues</li>
-                <li><strong>Random changes:</strong> — Change one variable at a time</li>
+                <li>
+                  <strong>Skipping cleaning:</strong> — Most faults are dirt-related
+                </li>
+                <li>
+                  <strong>No baseline:</strong> — Cannot compare to original state
+                </li>
+                <li>
+                  <strong>Incomplete records:</strong> — Warranty and handover issues
+                </li>
+                <li>
+                  <strong>Random changes:</strong> — Change one variable at a time
+                </li>
               </ul>
             </div>
           </div>
@@ -379,10 +427,7 @@ const DataCablingModule3Section6 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -10,54 +10,128 @@ const ReferenceChartsSection = () => {
           <BarChart3 className="h-6 w-6 text-elec-yellow" />
           Reference Charts and Design Tools
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-purple-600 text-foreground">Quick Reference</Badge>
+        <Badge variant="secondary" className="w-fit bg-purple-600 text-foreground">
+          Quick Reference
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
           <h5 className="text-elec-yellow font-semibold mb-3">Derating Factor Quick Reference:</h5>
-          
+
           <div className="space-y-4">
             <div className="bg-gray-800 p-4 rounded border-l-4 border-red-400">
-              <h6 className="font-bold text-red-400 mb-3 text-sm sm:text-base">Ambient Temperature Factors</h6>
+              <h6 className="font-bold text-red-400 mb-3 text-sm sm:text-base">
+                Ambient Temperature Factors
+              </h6>
               <div className="grid grid-cols-2 gap-2 text-sm sm:text-base">
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>15°C:</span><span className="font-mono">1.10</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>20°C:</span><span className="font-mono">1.05</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>25°C:</span><span className="font-mono">1.02</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>30°C:</span><span className="font-mono">1.00</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>35°C:</span><span className="font-mono">0.94</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>40°C:</span><span className="font-mono">0.87</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>45°C:</span><span className="font-mono">0.79</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>50°C:</span><span className="font-mono">0.71</span></div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>15°C:</span>
+                  <span className="font-mono">1.10</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>20°C:</span>
+                  <span className="font-mono">1.05</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>25°C:</span>
+                  <span className="font-mono">1.02</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>30°C:</span>
+                  <span className="font-mono">1.00</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>35°C:</span>
+                  <span className="font-mono">0.94</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>40°C:</span>
+                  <span className="font-mono">0.87</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>45°C:</span>
+                  <span className="font-mono">0.79</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>50°C:</span>
+                  <span className="font-mono">0.71</span>
+                </div>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-blue-400">
-              <h6 className="font-bold text-blue-400 mb-3 text-sm sm:text-base">Grouping Factors (Circuits)</h6>
+              <h6 className="font-bold text-blue-400 mb-3 text-sm sm:text-base">
+                Grouping Factors (Circuits)
+              </h6>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>1 circuit:</span><span className="font-mono">1.00</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>2 circuits:</span><span className="font-mono">0.80</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>3 circuits:</span><span className="font-mono">0.70</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>4-5 circuits:</span><span className="font-mono">0.65</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>6-8 circuits:</span><span className="font-mono">0.60</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>9-11 circuits:</span><span className="font-mono">0.55</span></div>
-                <div className="flex justify-between py-1"><span>12+ circuits:</span><span className="font-mono">0.50</span></div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>1 circuit:</span>
+                  <span className="font-mono">1.00</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>2 circuits:</span>
+                  <span className="font-mono">0.80</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>3 circuits:</span>
+                  <span className="font-mono">0.70</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>4-5 circuits:</span>
+                  <span className="font-mono">0.65</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>6-8 circuits:</span>
+                  <span className="font-mono">0.60</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>9-11 circuits:</span>
+                  <span className="font-mono">0.55</span>
+                </div>
+                <div className="flex justify-between py-1">
+                  <span>12+ circuits:</span>
+                  <span className="font-mono">0.50</span>
+                </div>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-green-400">
-              <h6 className="font-bold text-green-400 mb-3 text-sm sm:text-base">Thermal Insulation Factors</h6>
+              <h6 className="font-bold text-green-400 mb-3 text-sm sm:text-base">
+                Thermal Insulation Factors
+              </h6>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm sm:text-base">
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>50mm insulation:</span><span className="font-mono">0.94</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>100mm insulation:</span><span className="font-mono">0.88</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>150mm insulation:</span><span className="font-mono">0.83</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>200mm insulation:</span><span className="font-mono">0.78</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>250mm insulation:</span><span className="font-mono">0.73</span></div>
-                <div className="flex justify-between py-1 border-b border-gray-600"><span>300mm insulation:</span><span className="font-mono">0.70</span></div>
-                <div className="flex justify-between py-1"><span>400mm+ insulation:</span><span className="font-mono">0.63</span></div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>50mm insulation:</span>
+                  <span className="font-mono">0.94</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>100mm insulation:</span>
+                  <span className="font-mono">0.88</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>150mm insulation:</span>
+                  <span className="font-mono">0.83</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>200mm insulation:</span>
+                  <span className="font-mono">0.78</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>250mm insulation:</span>
+                  <span className="font-mono">0.73</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-gray-600">
+                  <span>300mm insulation:</span>
+                  <span className="font-mono">0.70</span>
+                </div>
+                <div className="flex justify-between py-1">
+                  <span>400mm+ insulation:</span>
+                  <span className="font-mono">0.63</span>
+                </div>
               </div>
             </div>
           </div>
-          
+
           <div className="hidden lg:block overflow-x-auto mt-6">
             <table className="w-full text-sm border border-gray-600">
               <thead>
@@ -106,45 +180,55 @@ const ReferenceChartsSection = () => {
               <h6 className="font-bold text-foreground mb-2">Cable Size Selection</h6>
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between border-b border-gray-600 pb-1">
-                  <span>1.5mm² T&E:</span><span>29 mV/A/m</span>
+                  <span>1.5mm² T&E:</span>
+                  <span>29 mV/A/m</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-600 pb-1">
-                  <span>2.5mm² T&E:</span><span>18 mV/A/m</span>
+                  <span>2.5mm² T&E:</span>
+                  <span>18 mV/A/m</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-600 pb-1">
-                  <span>4mm² T&E:</span><span>11 mV/A/m</span>
+                  <span>4mm² T&E:</span>
+                  <span>11 mV/A/m</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-600 pb-1">
-                  <span>6mm² T&E:</span><span>7.3 mV/A/m</span>
+                  <span>6mm² T&E:</span>
+                  <span>7.3 mV/A/m</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>10mm² T&E:</span><span>4.4 mV/A/m</span>
+                  <span>10mm² T&E:</span>
+                  <span>4.4 mV/A/m</span>
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded">
               <TrendingUp className="h-5 w-5 text-elec-yellow mb-2" />
               <h6 className="font-bold text-foreground mb-2">Maximum Circuit Lengths</h6>
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between border-b border-gray-600 pb-1">
-                  <span>6A lighting (1.5mm²):</span><span>66m</span>
+                  <span>6A lighting (1.5mm²):</span>
+                  <span>66m</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-600 pb-1">
-                  <span>16A radial (2.5mm²):</span><span>40m</span>
+                  <span>16A radial (2.5mm²):</span>
+                  <span>40m</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-600 pb-1">
-                  <span>20A radial (4mm²):</span><span>25m</span>
+                  <span>20A radial (4mm²):</span>
+                  <span>25m</span>
                 </div>
                 <div className="flex justify-between border-b border-gray-600 pb-1">
-                  <span>32A ring (2.5mm²):</span><span>106m total</span>
+                  <span>32A ring (2.5mm²):</span>
+                  <span>106m total</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>40A shower (6mm²):</span><span>25m</span>
+                  <span>40A shower (6mm²):</span>
+                  <span>25m</span>
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gray-800 p-3 rounded">
               <BarChart3 className="h-5 w-5 text-elec-yellow mb-2" />
               <h6 className="font-bold text-foreground mb-2">Common Applications</h6>
@@ -171,27 +255,33 @@ const ReferenceChartsSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-4 text-base sm:text-lg">Installation Method Reference:</h5>
-          
+          <h5 className="text-elec-yellow font-semibold mb-4 text-base sm:text-lg">
+            Installation Method Reference:
+          </h5>
+
           <div className="space-y-4 lg:hidden">
             <div className="bg-gray-800 p-4 rounded border-l-4 border-blue-400">
               <div className="flex items-center justify-between mb-2">
                 <h6 className="font-bold text-blue-400 text-lg">A1</h6>
                 <Badge className="bg-yellow-600 text-foreground text-xs">Reduced</Badge>
               </div>
-              <p className="text-sm sm:text-base mb-1 font-medium">Conduit in thermally insulated wall</p>
+              <p className="text-sm sm:text-base mb-1 font-medium">
+                Conduit in thermally insulated wall
+              </p>
               <p className="text-xs text-gray-400">Modern cavity wall construction</p>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-blue-400">
               <div className="flex items-center justify-between mb-2">
                 <h6 className="font-bold text-blue-400 text-lg">A2</h6>
                 <Badge className="bg-yellow-600 text-foreground text-xs">Reduced</Badge>
               </div>
-              <p className="text-sm sm:text-base mb-1 font-medium">Cable in thermally insulated wall</p>
+              <p className="text-sm sm:text-base mb-1 font-medium">
+                Cable in thermally insulated wall
+              </p>
               <p className="text-xs text-gray-400">Direct burial in insulated wall</p>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-green-400">
               <div className="flex items-center justify-between mb-2">
                 <h6 className="font-bold text-green-400 text-lg">B1</h6>
@@ -200,7 +290,7 @@ const ReferenceChartsSection = () => {
               <p className="text-sm sm:text-base mb-1 font-medium">Conduit on wall or trunking</p>
               <p className="text-xs text-gray-400">Surface mounted systems</p>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-green-400">
               <div className="flex items-center justify-between mb-2">
                 <h6 className="font-bold text-green-400 text-lg">B2</h6>
@@ -209,7 +299,7 @@ const ReferenceChartsSection = () => {
               <p className="text-sm sm:text-base mb-1 font-medium">Cable tray, ladder, basket</p>
               <p className="text-xs text-gray-400">Industrial installations</p>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-purple-400">
               <div className="flex items-center justify-between mb-2">
                 <h6 className="font-bold text-purple-400 text-lg">C</h6>
@@ -218,7 +308,7 @@ const ReferenceChartsSection = () => {
               <p className="text-sm sm:text-base mb-1 font-medium">Clipped direct or embedded</p>
               <p className="text-xs text-gray-400">T&E on joists, SWA buried</p>
             </div>
-            
+
             <div className="bg-gray-800 p-4 rounded border-l-4 border-purple-400">
               <div className="flex items-center justify-between mb-2">
                 <h6 className="font-bold text-purple-400 text-lg">E</h6>
@@ -228,7 +318,7 @@ const ReferenceChartsSection = () => {
               <p className="text-xs text-gray-400">Overhead lines, air cables</p>
             </div>
           </div>
-          
+
           <div className="hidden lg:block overflow-x-auto">
             <table className="w-full text-sm border border-gray-600">
               <thead>
@@ -282,50 +372,70 @@ const ReferenceChartsSection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600">
-          <h5 className="text-elec-yellow font-semibold mb-3">Protective Device Characteristics:</h5>
+          <h5 className="text-elec-yellow font-semibold mb-3">
+            Protective Device Characteristics:
+          </h5>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h6 className="text-yellow-400 font-medium mb-2">MCB Time-Current Characteristics:</h6>
+              <h6 className="text-yellow-400 font-medium mb-2">
+                MCB Time-Current Characteristics:
+              </h6>
               <div className="bg-gray-800 p-3 rounded">
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between border-b border-gray-600 pb-1">
-                    <span><strong>Type B:</strong> 3-5 × In</span>
+                    <span>
+                      <strong>Type B:</strong> 3-5 × In
+                    </span>
                     <span>General purpose</span>
                   </div>
                   <div className="flex justify-between border-b border-gray-600 pb-1">
-                    <span><strong>Type C:</strong> 5-10 × In</span>
+                    <span>
+                      <strong>Type C:</strong> 5-10 × In
+                    </span>
                     <span>Motor loads</span>
                   </div>
                   <div className="flex justify-between border-b border-gray-600 pb-1">
-                    <span><strong>Type D:</strong> 10-20 × In</span>
+                    <span>
+                      <strong>Type D:</strong> 10-20 × In
+                    </span>
                     <span>High inrush</span>
                   </div>
                   <div className="flex justify-between">
-                    <span><strong>Type K:</strong> 8-12 × In</span>
+                    <span>
+                      <strong>Type K:</strong> 8-12 × In
+                    </span>
                     <span>Motor protection</span>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">RCD Operation Parameters:</h6>
               <div className="bg-gray-800 p-3 rounded">
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between border-b border-gray-600 pb-1">
-                    <span><strong>30mA RCD:</strong> ≤300ms</span>
+                    <span>
+                      <strong>30mA RCD:</strong> ≤300ms
+                    </span>
                     <span>Additional protection</span>
                   </div>
                   <div className="flex justify-between border-b border-gray-600 pb-1">
-                    <span><strong>100mA RCD:</strong> ≤300ms</span>
+                    <span>
+                      <strong>100mA RCD:</strong> ≤300ms
+                    </span>
                     <span>Fire protection</span>
                   </div>
                   <div className="flex justify-between border-b border-gray-600 pb-1">
-                    <span><strong>300mA RCD:</strong> ≤300ms</span>
+                    <span>
+                      <strong>300mA RCD:</strong> ≤300ms
+                    </span>
                     <span>Equipment protection</span>
                   </div>
                   <div className="flex justify-between">
-                    <span><strong>Type AC/A/F/B:</strong> Waveform</span>
+                    <span>
+                      <strong>Type AC/A/F/B:</strong> Waveform
+                    </span>
                     <span>Load dependent</span>
                   </div>
                 </div>
@@ -339,19 +449,29 @@ const ReferenceChartsSection = () => {
           <div className="grid gap-3">
             <div className="bg-gray-800 p-3 rounded border-l-4 border-blue-400">
               <h6 className="font-bold text-blue-400 mb-1">Step 1: Load Analysis</h6>
-              <p className="text-sm">Calculate design current (Ib) → Select protective device (In ≥ Ib) → Determine maximum demand</p>
+              <p className="text-sm">
+                Calculate design current (Ib) → Select protective device (In ≥ Ib) → Determine
+                maximum demand
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-green-400">
               <h6 className="font-bold text-green-400 mb-1">Step 2: Cable Selection</h6>
-              <p className="text-sm">Installation method → Correction factors → Required It → Select cable (Iz ≥ It)</p>
+              <p className="text-sm">
+                Installation method → Correction factors → Required It → Select cable (Iz ≥ It)
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-yellow-400">
               <h6 className="font-bold text-yellow-400 mb-1">Step 3: Protection Verification</h6>
-              <p className="text-sm">Calculate Zs → Compare with tables → Verify discrimination → Check voltage drop</p>
+              <p className="text-sm">
+                Calculate Zs → Compare with tables → Verify discrimination → Check voltage drop
+              </p>
             </div>
             <div className="bg-gray-800 p-3 rounded border-l-4 border-purple-400">
               <h6 className="font-bold text-purple-400 mb-1">Step 4: Documentation</h6>
-              <p className="text-sm">Complete schedules → Verify calculations → Prepare certificates → Test and commission</p>
+              <p className="text-sm">
+                Complete schedules → Verify calculations → Prepare certificates → Test and
+                commission
+              </p>
             </div>
           </div>
         </div>

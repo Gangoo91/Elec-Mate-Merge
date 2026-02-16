@@ -28,7 +28,7 @@ export class AgentChatErrorBoundary extends Component<Props, State> {
       error: error.message,
       stack: error.stack,
       componentStack: errorInfo.componentStack,
-      errorType: error.name
+      errorType: error.name,
     });
   }
 
@@ -61,12 +61,7 @@ export class AgentChatErrorBoundary extends Component<Props, State> {
                 )}
               </div>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={this.handleReset}
-              className="w-full"
-            >
+            <Button variant="outline" size="sm" onClick={this.handleReset} className="w-full">
               <RotateCcw className="h-4 w-4 mr-2" />
               Continue Chat
             </Button>

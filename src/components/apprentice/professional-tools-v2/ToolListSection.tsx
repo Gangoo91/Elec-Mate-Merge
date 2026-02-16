@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { ChevronDown, ChevronRight, AlertTriangle, Star, ThumbsUp } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import type { Tool } from "@/data/professional-tools/types";
+import { useState } from 'react';
+import { ChevronDown, ChevronRight, AlertTriangle, Star, ThumbsUp } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import type { Tool } from '@/data/professional-tools/types';
 
 interface ToolListSectionProps {
   id: string;
@@ -13,18 +13,18 @@ interface ToolListSectionProps {
 
 const priorityConfig = {
   essential: {
-    label: "Essential",
-    className: "bg-red-500/20 text-red-300 border border-red-500/30",
+    label: 'Essential',
+    className: 'bg-red-500/20 text-red-300 border border-red-500/30',
     icon: AlertTriangle,
   },
   recommended: {
-    label: "Recommended",
-    className: "bg-amber-500/20 text-amber-300 border border-amber-500/30",
+    label: 'Recommended',
+    className: 'bg-amber-500/20 text-amber-300 border border-amber-500/30',
     icon: Star,
   },
-  "nice-to-have": {
-    label: "Nice to Have",
-    className: "bg-blue-500/20 text-blue-300 border border-blue-500/30",
+  'nice-to-have': {
+    label: 'Nice to Have',
+    className: 'bg-blue-500/20 text-blue-300 border border-blue-500/30',
     icon: ThumbsUp,
   },
 };
@@ -33,7 +33,7 @@ const ToolListSection = ({
   title,
   tools,
   defaultOpen = false,
-  accentColour = "cyan",
+  accentColour = 'cyan',
 }: ToolListSectionProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -44,7 +44,7 @@ const ToolListSection = ({
           className={`w-full flex items-center justify-between p-3 rounded-lg transition-all touch-manipulation active:scale-[0.99] ${
             isOpen
               ? `bg-${accentColour}-500/10 border border-${accentColour}-500/20`
-              : "bg-white/5 border border-white/10 hover:border-white/20"
+              : 'bg-white/5 border border-white/10 hover:border-white/20'
           }`}
         >
           <div className="flex items-center gap-2">
@@ -71,9 +71,7 @@ const ToolListSection = ({
                 className="p-3 rounded-lg bg-white/[0.02] border border-white/5 space-y-2"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <h4 className="text-sm font-semibold text-white">
-                    {tool.name}
-                  </h4>
+                  <h4 className="text-sm font-semibold text-white">{tool.name}</h4>
                   <span
                     className={`flex items-center gap-1 text-xs px-2 py-0.5 rounded-full whitespace-nowrap ${config.className}`}
                   >
@@ -81,17 +79,14 @@ const ToolListSection = ({
                     {config.label}
                   </span>
                 </div>
-                <p className="text-xs text-white leading-relaxed">
-                  {tool.description}
-                </p>
+                <p className="text-xs text-white leading-relaxed">{tool.description}</p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-white">
                   <span>
                     <span className="font-medium">Price:</span> {tool.price}
                   </span>
                   {tool.standard && (
                     <span>
-                      <span className="font-medium">Standard:</span>{" "}
-                      {tool.standard}
+                      <span className="font-medium">Standard:</span> {tool.standard}
                     </span>
                   )}
                 </div>
@@ -108,9 +103,7 @@ const ToolListSection = ({
                 {tool.apprenticeTip && (
                   <div className="p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
                     <p className="text-xs text-white">
-                      <span className="font-semibold text-amber-300">
-                        Tip:{" "}
-                      </span>
+                      <span className="font-semibold text-amber-300">Tip: </span>
                       {tool.apprenticeTip}
                     </p>
                   </div>

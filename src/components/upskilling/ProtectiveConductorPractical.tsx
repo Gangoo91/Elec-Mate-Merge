@@ -12,11 +12,12 @@ export const ProtectiveConductorPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Best Practice 1 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Best Practice 1</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Best Practice 1
+            </Badge>
             <h3 className="text-foreground font-semibold">CPC Testing Methodology</h3>
           </div>
           <div className="space-y-4">
@@ -25,7 +26,9 @@ export const ProtectiveConductorPractical = () => {
             </p>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <div className="space-y-2 sm:space-y-3">
-                <h4 className="text-elec-yellow font-medium text-sm sm:text-base">R1+R2 Method (Preferred):</h4>
+                <h4 className="text-elec-yellow font-medium text-sm sm:text-base">
+                  R1+R2 Method (Preferred):
+                </h4>
                 <ul className="text-foreground text-xs sm:text-sm space-y-1 sm:space-y-2 leading-relaxed">
                   <li>• Test line and CPC together from origin</li>
                   <li>• Provides end-to-end verification</li>
@@ -35,7 +38,9 @@ export const ProtectiveConductorPractical = () => {
                 </ul>
               </div>
               <div className="space-y-2 sm:space-y-3">
-                <h4 className="text-elec-yellow font-medium text-sm sm:text-base">Direct CPC Method:</h4>
+                <h4 className="text-elec-yellow font-medium text-sm sm:text-base">
+                  Direct CPC Method:
+                </h4>
                 <ul className="text-foreground text-xs sm:text-sm space-y-1 sm:space-y-2 leading-relaxed">
                   <li>• Test CPC alone from origin to extremity</li>
                   <li>• Useful for fault-finding</li>
@@ -51,7 +56,9 @@ export const ProtectiveConductorPractical = () => {
         {/* Best Practice 2 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Best Practice 2</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Best Practice 2
+            </Badge>
             <h3 className="text-foreground font-semibold">Bonding Conductor Testing</h3>
           </div>
           <div className="space-y-4">
@@ -62,10 +69,14 @@ export const ProtectiveConductorPractical = () => {
               <div className="flex items-start gap-3">
                 <Shield className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="text-blue-400 font-medium mb-3 text-sm sm:text-base">Main Bonding Conductor Testing:</h4>
+                  <h4 className="text-blue-400 font-medium mb-3 text-sm sm:text-base">
+                    Main Bonding Conductor Testing:
+                  </h4>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm">
                     <div>
-                      <h5 className="text-foreground font-medium mb-2 text-sm sm:text-base">Test Points:</h5>
+                      <h5 className="text-foreground font-medium mb-2 text-sm sm:text-base">
+                        Test Points:
+                      </h5>
                       <ul className="text-foreground space-y-1 sm:space-y-2 leading-relaxed">
                         <li>• Main earthing terminal to water pipe</li>
                         <li>• Main earthing terminal to gas pipe</li>
@@ -75,7 +86,9 @@ export const ProtectiveConductorPractical = () => {
                       </ul>
                     </div>
                     <div>
-                      <h5 className="text-foreground font-medium mb-2 text-sm sm:text-base">Acceptance Criteria:</h5>
+                      <h5 className="text-foreground font-medium mb-2 text-sm sm:text-base">
+                        Acceptance Criteria:
+                      </h5>
                       <ul className="text-foreground space-y-1 sm:space-y-2 leading-relaxed">
                         <li>• Resistance ≤ 0.05Ω for main bonding</li>
                         <li>• Consistent readings across multiple tests</li>
@@ -94,7 +107,9 @@ export const ProtectiveConductorPractical = () => {
         {/* Best Practice 3 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Troubleshooting</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Troubleshooting
+            </Badge>
             <h3 className="text-foreground font-semibold">Common Issues & Solutions</h3>
           </div>
           <div className="space-y-4">
@@ -103,9 +118,13 @@ export const ProtectiveConductorPractical = () => {
             </p>
             <div className="space-y-3 sm:space-y-4">
               <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4 sm:p-5">
-                <h4 className="text-red-400 font-medium mb-2 sm:mb-3 text-sm sm:text-base">Issue: CPC Open Circuit</h4>
+                <h4 className="text-red-400 font-medium mb-2 sm:mb-3 text-sm sm:text-base">
+                  Issue: CPC Open Circuit
+                </h4>
                 <div className="text-foreground text-xs sm:text-sm space-y-2 sm:space-y-3 leading-relaxed">
-                  <p><strong>Immediate Actions:</strong></p>
+                  <p>
+                    <strong>Immediate Actions:</strong>
+                  </p>
                   <ul className="list-disc list-inside space-y-1 sm:space-y-2">
                     <li>Stop all testing immediately</li>
                     <li>Do not energise the circuit</li>
@@ -116,9 +135,13 @@ export const ProtectiveConductorPractical = () => {
                 </div>
               </div>
               <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4 sm:p-5">
-                <h4 className="text-yellow-400 font-medium mb-2 sm:mb-3 text-sm sm:text-base">Issue: High Bonding Resistance</h4>
+                <h4 className="text-yellow-400 font-medium mb-2 sm:mb-3 text-sm sm:text-base">
+                  Issue: High Bonding Resistance
+                </h4>
                 <div className="text-foreground text-xs sm:text-sm space-y-2 sm:space-y-3 leading-relaxed">
-                  <p><strong>Investigation Steps:</strong></p>
+                  <p>
+                    <strong>Investigation Steps:</strong>
+                  </p>
                   <ul className="list-disc list-inside space-y-1 sm:space-y-2">
                     <li>Check clamp connections are tight and clean</li>
                     <li>Verify correct bonding clamp type for pipe material</li>
@@ -135,7 +158,9 @@ export const ProtectiveConductorPractical = () => {
         {/* Best Practice 4 */}
         <div className="bg-[#323232] rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Advanced Techniques</Badge>
+            <Badge variant="secondary" className="bg-elec-yellow text-black">
+              Advanced Techniques
+            </Badge>
             <h3 className="text-foreground font-semibold">Specialised Testing Scenarios</h3>
           </div>
           <div className="space-y-4">
@@ -146,19 +171,36 @@ export const ProtectiveConductorPractical = () => {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-purple-500 mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="text-purple-400 font-medium mb-3 text-sm sm:text-base">Special Considerations:</h4>
+                  <h4 className="text-purple-400 font-medium mb-3 text-sm sm:text-base">
+                    Special Considerations:
+                  </h4>
                   <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm">
                     <div>
-                      <h5 className="text-foreground font-medium text-sm sm:text-base">Ring Circuit CPCs:</h5>
-                      <p className="text-foreground leading-relaxed">Test each leg of the ring separately, then verify ring integrity. Cross-connection between legs invalidates the ring circuit.</p>
+                      <h5 className="text-foreground font-medium text-sm sm:text-base">
+                        Ring Circuit CPCs:
+                      </h5>
+                      <p className="text-foreground leading-relaxed">
+                        Test each leg of the ring separately, then verify ring integrity.
+                        Cross-connection between legs invalidates the ring circuit.
+                      </p>
                     </div>
                     <div>
-                      <h5 className="text-foreground font-medium text-sm sm:text-base">Steel Wire Armoured (SWA) Cables:</h5>
-                      <p className="text-foreground leading-relaxed">Armour can be used as CPC if properly connected and meets fault current requirements. Test armour continuity and connection integrity.</p>
+                      <h5 className="text-foreground font-medium text-sm sm:text-base">
+                        Steel Wire Armoured (SWA) Cables:
+                      </h5>
+                      <p className="text-foreground leading-relaxed">
+                        Armour can be used as CPC if properly connected and meets fault current
+                        requirements. Test armour continuity and connection integrity.
+                      </p>
                     </div>
                     <div>
-                      <h5 className="text-foreground font-medium text-sm sm:text-base">Data Centre Environments:</h5>
-                      <p className="text-foreground leading-relaxed">Consider separate functional earth requirements. Test both protective and functional earth systems independently.</p>
+                      <h5 className="text-foreground font-medium text-sm sm:text-base">
+                        Data Centre Environments:
+                      </h5>
+                      <p className="text-foreground leading-relaxed">
+                        Consider separate functional earth requirements. Test both protective and
+                        functional earth systems independently.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -171,7 +213,9 @@ export const ProtectiveConductorPractical = () => {
           <div className="flex items-start gap-3">
             <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
             <div>
-              <h4 className="text-green-400 font-medium mb-3 text-sm sm:text-base">Key Success Factors</h4>
+              <h4 className="text-green-400 font-medium mb-3 text-sm sm:text-base">
+                Key Success Factors
+              </h4>
               <ul className="text-foreground text-xs sm:text-sm space-y-1 sm:space-y-2 leading-relaxed">
                 <li>• Protective conductor continuity is non-negotiable for safety</li>
                 <li>• Systematic testing prevents dangerous oversights</li>

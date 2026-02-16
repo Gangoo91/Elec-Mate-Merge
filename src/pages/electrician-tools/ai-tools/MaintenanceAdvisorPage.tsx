@@ -1,10 +1,10 @@
-import { ArrowLeft, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { useMaintenanceAdvisor } from "@/components/electrician-tools/ai-tools/maintenance/useMaintenanceAdvisor";
-import { MaintenanceInput } from "@/components/electrician-tools/ai-tools/maintenance/MaintenanceInput";
-import { MaintenanceProcessingView } from "@/components/electrician-tools/ai-tools/maintenance/MaintenanceProcessingView";
-import { MaintenanceResults } from "@/components/electrician-tools/ai-tools/maintenance/MaintenanceResults";
+import { ArrowLeft, Calendar } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { useMaintenanceAdvisor } from '@/components/electrician-tools/ai-tools/maintenance/useMaintenanceAdvisor';
+import { MaintenanceInput } from '@/components/electrician-tools/ai-tools/maintenance/MaintenanceInput';
+import { MaintenanceProcessingView } from '@/components/electrician-tools/ai-tools/maintenance/MaintenanceProcessingView';
+import { MaintenanceResults } from '@/components/electrician-tools/ai-tools/maintenance/MaintenanceResults';
 
 const MaintenanceAdvisorPage = () => {
   const {

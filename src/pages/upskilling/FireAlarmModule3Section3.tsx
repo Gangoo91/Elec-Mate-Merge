@@ -1,119 +1,181 @@
-import { ArrowLeft, ArrowRight, Volume2, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Volume2, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    question: "A hotel has noisy plant on the ground floor with ambient levels around 70 dB(A). What sounder level is required?",
-    answer: "Sounders must achieve 75 dB(A) (5 dB above the 70 dB(A) ambient). Additionally, as a hotel with sleeping risk, bedrooms require 75 dB(A) at bedhead regardless of ambient levels."
+    question:
+      'A hotel has noisy plant on the ground floor with ambient levels around 70 dB(A). What sounder level is required?',
+    answer:
+      'Sounders must achieve 75 dB(A) (5 dB above the 70 dB(A) ambient). Additionally, as a hotel with sleeping risk, bedrooms require 75 dB(A) at bedhead regardless of ambient levels.',
   },
   {
-    question: "Why must VADs be synchronised when multiple devices are visible from the same location?",
-    answer: "Synchronisation reduces photosensitive epilepsy risk and provides a clearer, more recognisable warning signal. Unsynchronised flashing can cause disorientation and discomfort."
+    question:
+      'Why must VADs be synchronised when multiple devices are visible from the same location?',
+    answer:
+      'Synchronisation reduces photosensitive epilepsy risk and provides a clearer, more recognisable warning signal. Unsynchronised flashing can cause disorientation and discomfort.',
   },
   {
-    question: "What is the difference between alert and evacuate signals in phased evacuation?",
-    answer: "Alert (intermittent tone) tells occupants to prepare and await instruction. Evacuate (continuous tone) instructs immediate departure. Fire floor and floor above receive immediate evacuate; other floors receive alert first."
-  }
+    question: 'What is the difference between alert and evacuate signals in phased evacuation?',
+    answer:
+      'Alert (intermittent tone) tells occupants to prepare and await instruction. Evacuate (continuous tone) instructs immediate departure. Fire floor and floor above receive immediate evacuate; other floors receive alert first.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "What is the general audibility target for fire alarm sounders in most occupied areas?",
-    options: ["55 dB(A)", "65 dB(A) or 5 dB above ambient", "75 dB(A) everywhere", "85 dB(A)"],
+    question:
+      'What is the general audibility target for fire alarm sounders in most occupied areas?',
+    options: ['55 dB(A)', '65 dB(A) or 5 dB above ambient', '75 dB(A) everywhere', '85 dB(A)'],
     correctAnswer: 1,
-    explanation: "BS 5839-1 specifies 65 dB(A) or 5 dB above ambient noise - whichever is greater."
+    explanation: 'BS 5839-1 specifies 65 dB(A) or 5 dB above ambient noise - whichever is greater.',
   },
   {
-    question: "What audibility level is required at the bedhead in sleeping accommodation?",
-    options: ["55 dB(A)", "65 dB(A)", "75 dB(A) with doors closed", "85 dB(A)"],
+    question: 'What audibility level is required at the bedhead in sleeping accommodation?',
+    options: ['55 dB(A)', '65 dB(A)', '75 dB(A) with doors closed', '85 dB(A)'],
     correctAnswer: 2,
-    explanation: "Sleeping areas require 75 dB(A) at the bedhead with bedroom doors closed to ensure occupants are awakened."
+    explanation:
+      'Sleeping areas require 75 dB(A) at the bedhead with bedroom doors closed to ensure occupants are awakened.',
   },
   {
-    question: "Why should multiple visual alarm devices (VADs) be synchronised?",
-    options: ["To save power", "To reduce photosensitive risk and provide clear, unified signalling", "For aesthetic reasons", "It is not required"],
+    question: 'Why should multiple visual alarm devices (VADs) be synchronised?',
+    options: [
+      'To save power',
+      'To reduce photosensitive risk and provide clear, unified signalling',
+      'For aesthetic reasons',
+      'It is not required',
+    ],
     correctAnswer: 1,
-    explanation: "Synchronised VADs reduce photosensitive risk and provide clearer, more recognisable warning signals."
+    explanation:
+      'Synchronised VADs reduce photosensitive risk and provide clearer, more recognisable warning signals.',
   },
   {
-    question: "What distinguishes an alert signal from an evacuate signal in phased evacuation?",
-    options: ["Volume only", "Alert prepares occupants to standby; evacuate instructs immediate departure", "They are identical", "Alert is visual only"],
+    question: 'What distinguishes an alert signal from an evacuate signal in phased evacuation?',
+    options: [
+      'Volume only',
+      'Alert prepares occupants to standby; evacuate instructs immediate departure',
+      'They are identical',
+      'Alert is visual only',
+    ],
     correctAnswer: 1,
-    explanation: "Alert signals prepare occupants in adjacent areas while evacuate signals instruct immediate departure from the affected zone."
+    explanation:
+      'Alert signals prepare occupants in adjacent areas while evacuate signals instruct immediate departure from the affected zone.',
   },
   {
-    question: "For voice alarm systems, what is more important than maximum loudness?",
-    options: ["Lowest cost", "Intelligibility (speech transmission index)", "Number of speakers", "Aesthetic appearance"],
+    question: 'For voice alarm systems, what is more important than maximum loudness?',
+    options: [
+      'Lowest cost',
+      'Intelligibility (speech transmission index)',
+      'Number of speakers',
+      'Aesthetic appearance',
+    ],
     correctAnswer: 1,
-    explanation: "Speech intelligibility (measured by STI) is critical - occupants must understand evacuation instructions clearly."
+    explanation:
+      'Speech intelligibility (measured by STI) is critical - occupants must understand evacuation instructions clearly.',
   },
   {
-    question: "What is the primary purpose of sounder zones in fire alarm design?",
-    options: ["Reduce equipment costs", "Enable selective alerting based on fire location and evacuation strategy", "Simplify wiring", "Meet aesthetic requirements"],
+    question: 'What is the primary purpose of sounder zones in fire alarm design?',
+    options: [
+      'Reduce equipment costs',
+      'Enable selective alerting based on fire location and evacuation strategy',
+      'Simplify wiring',
+      'Meet aesthetic requirements',
+    ],
     correctAnswer: 1,
-    explanation: "Sounder zones enable selective alerting, supporting phased evacuation and preventing unnecessary building-wide alarm."
+    explanation:
+      'Sounder zones enable selective alerting, supporting phased evacuation and preventing unnecessary building-wide alarm.',
   },
   {
-    question: "When should different alarm tones be used within the same building?",
-    options: ["Never - one tone throughout", "To distinguish different alarm types (e.g., fire vs. gas)", "Based on occupant preferences", "Only in hospitals"],
+    question: 'When should different alarm tones be used within the same building?',
+    options: [
+      'Never - one tone throughout',
+      'To distinguish different alarm types (e.g., fire vs. gas)',
+      'Based on occupant preferences',
+      'Only in hospitals',
+    ],
     correctAnswer: 1,
-    explanation: "Different tones can distinguish alarm types (fire, gas, security) but must be clearly recognisable and documented in fire procedures."
+    explanation:
+      'Different tones can distinguish alarm types (fire, gas, security) but must be clearly recognisable and documented in fire procedures.',
   },
   {
-    question: "What consideration is needed for sounder placement in high-ceiling areas?",
-    options: ["Ceiling height has no effect", "Sound may need to be supplemented or speakers angled to maintain audibility at occupant level", "Only VADs are needed", "Use louder sounders automatically"],
+    question: 'What consideration is needed for sounder placement in high-ceiling areas?',
+    options: [
+      'Ceiling height has no effect',
+      'Sound may need to be supplemented or speakers angled to maintain audibility at occupant level',
+      'Only VADs are needed',
+      'Use louder sounders automatically',
+    ],
     correctAnswer: 1,
-    explanation: "High ceilings can affect sound distribution; supplementary wall-mounted sounders or angled speakers may be needed to maintain audibility at floor level."
+    explanation:
+      'High ceilings can affect sound distribution; supplementary wall-mounted sounders or angled speakers may be needed to maintain audibility at floor level.',
   },
   {
-    question: "How should class change or test signals differ from fire alarms?",
-    options: ["They should sound identical", "Clearly distinguishable tones to prevent confusion or inappropriate response", "No signal should be used", "Visual only"],
+    question: 'How should class change or test signals differ from fire alarms?',
+    options: [
+      'They should sound identical',
+      'Clearly distinguishable tones to prevent confusion or inappropriate response',
+      'No signal should be used',
+      'Visual only',
+    ],
     correctAnswer: 1,
-    explanation: "Test and class change signals must be clearly distinguishable from fire alarms to prevent confusion and maintain appropriate response to actual fire signals."
+    explanation:
+      'Test and class change signals must be clearly distinguishable from fire alarms to prevent confusion and maintain appropriate response to actual fire signals.',
   },
   {
-    question: "What documentation should specify sounder zone arrangements?",
-    options: ["No documentation needed", "Cause and effect matrix and zone drawings", "Only verbal instructions", "Manufacturer catalogues only"],
+    question: 'What documentation should specify sounder zone arrangements?',
+    options: [
+      'No documentation needed',
+      'Cause and effect matrix and zone drawings',
+      'Only verbal instructions',
+      'Manufacturer catalogues only',
+    ],
     correctAnswer: 1,
-    explanation: "Cause and effect documentation and zone drawings must clearly specify which sounders operate for each detection zone and scenario."
-  }
+    explanation:
+      'Cause and effect documentation and zone drawings must clearly specify which sounders operate for each detection zone and scenario.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can sounder zones differ from detection zones?",
-    answer: "Yes - sounder zones are designed around evacuation strategy and may not match detection zones exactly. The cause and effect matrix defines how detection zones trigger sounder zones."
+    question: 'Can sounder zones differ from detection zones?',
+    answer:
+      'Yes - sounder zones are designed around evacuation strategy and may not match detection zones exactly. The cause and effect matrix defines how detection zones trigger sounder zones.',
   },
   {
-    question: "Is voice alarm always required?",
-    answer: "No - voice alarm is beneficial for complex buildings, phased evacuation, and multilingual environments but is not mandatory for all premises."
+    question: 'Is voice alarm always required?',
+    answer:
+      'No - voice alarm is beneficial for complex buildings, phased evacuation, and multilingual environments but is not mandatory for all premises.',
   },
   {
-    question: "How do I calculate required sounder coverage?",
-    answer: "Use manufacturer data for sounder output and coverage patterns. Account for distance attenuation, absorption, and barriers. Verify with commissioning measurements."
+    question: 'How do I calculate required sounder coverage?',
+    answer:
+      'Use manufacturer data for sounder output and coverage patterns. Account for distance attenuation, absorption, and barriers. Verify with commissioning measurements.',
   },
   {
-    question: "Do VADs replace sounders?",
-    answer: "No - VADs supplement sounders. They provide visual warning for hearing-impaired occupants and noisy areas but do not replace audible warning."
+    question: 'Do VADs replace sounders?',
+    answer:
+      'No - VADs supplement sounders. They provide visual warning for hearing-impaired occupants and noisy areas but do not replace audible warning.',
   },
   {
-    question: "What about test and class change signals?",
-    answer: "These must be clearly distinguishable from fire alarms. Use different tones, patterns, or pre-announcements to prevent confusion."
+    question: 'What about test and class change signals?',
+    answer:
+      'These must be clearly distinguishable from fire alarms. Use different tones, patterns, or pre-announcements to prevent confusion.',
   },
   {
-    question: "How should sounders operate during a fire drill?",
-    answer: "Fire drills should use the same signals as actual fire conditions to ensure familiarity. Brief occupants beforehand and record the drill in the logbook."
-  }
+    question: 'How should sounders operate during a fire drill?',
+    answer:
+      'Fire drills should use the same signals as actual fire conditions to ensure familiarity. Brief occupants beforehand and record the drill in the logbook.',
+  },
 ];
 
 const FireAlarmModule3Section3 = () => {
   useSEO({
-    title: "Sounder Zones - Fire Alarm Course",
-    description: "BS 5839-1 sounder zone design: audibility requirements, alarm signals, voice alarm systems, VADs, and phased evacuation considerations."
+    title: 'Sounder Zones - Fire Alarm Course',
+    description:
+      'BS 5839-1 sounder zone design: audibility requirements, alarm signals, voice alarm systems, VADs, and phased evacuation considerations.',
   });
 
   return (
@@ -121,7 +183,12 @@ const FireAlarmModule3Section3 = () => {
       {/* Header */}
       <header className="border-b border-white/10 bg-background/95 backdrop-blur-sm sticky top-0 z-10">
         <div className="px-4 py-4 flex items-center justify-between max-w-3xl mx-auto">
-          <Button variant="ghost" size="sm" asChild className="gap-2 text-white hover:text-elec-yellow">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="gap-2 text-white hover:text-elec-yellow"
+          >
             <Link to="/electrician/upskilling/fire-alarm-course/module-3">
               <ArrowLeft className="h-4 w-4" />
               <span className="hidden sm:inline">Back to Module</span>
@@ -138,7 +205,10 @@ const FireAlarmModule3Section3 = () => {
             <Volume2 className="h-8 w-8 text-elec-yellow" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">Sounder Zones</h1>
-          <p className="text-white">Designing effective alarm signalling with audibility, voice alarm, VADs, and phased evacuation support</p>
+          <p className="text-white">
+            Designing effective alarm signalling with audibility, voice alarm, VADs, and phased
+            evacuation support
+          </p>
         </div>
 
         {/* Learning Outcomes */}
@@ -180,7 +250,8 @@ const FireAlarmModule3Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Fire alarm sounders must provide adequate warning throughout all occupied areas. BS 5839-1 sets clear audibility targets that depend on the type of occupancy.
+              Fire alarm sounders must provide adequate warning throughout all occupied areas. BS
+              5839-1 sets clear audibility targets that depend on the type of occupancy.
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -188,21 +259,32 @@ const FireAlarmModule3Section3 = () => {
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>General areas:</strong> 65 dB(A) or 5 dB above ambient noise (whichever is greater)</span>
+                  <span>
+                    <strong>General areas:</strong> 65 dB(A) or 5 dB above ambient noise (whichever
+                    is greater)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Sleeping areas:</strong> 75 dB(A) at the bedhead with bedroom doors closed</span>
+                  <span>
+                    <strong>Sleeping areas:</strong> 75 dB(A) at the bedhead with bedroom doors
+                    closed
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Noisy environments:</strong> consider ambient noise levels during typical occupied hours</span>
+                  <span>
+                    <strong>Noisy environments:</strong> consider ambient noise levels during
+                    typical occupied hours
+                  </span>
                 </li>
               </ul>
             </div>
 
             <p>
-              Sound level calculations should account for absorption, distance, and intervening barriers. Always measure ambient noise during typical occupied hours rather than when the building is empty.
+              Sound level calculations should account for absorption, distance, and intervening
+              barriers. Always measure ambient noise during typical occupied hours rather than when
+              the building is empty.
             </p>
           </div>
         </section>
@@ -215,7 +297,9 @@ const FireAlarmModule3Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Sounder zones enable selective alerting based on fire location and evacuation strategy. This supports phased evacuation and prevents unnecessary building-wide alarm.
+              Sounder zones enable selective alerting based on fire location and evacuation
+              strategy. This supports phased evacuation and prevents unnecessary building-wide
+              alarm.
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -241,7 +325,9 @@ const FireAlarmModule3Section3 = () => {
             </div>
 
             <p>
-              Sounder zones do not need to match detection zones exactly. The cause and effect matrix defines how detection in one zone triggers sounders in other zones based on the fire strategy.
+              Sounder zones do not need to match detection zones exactly. The cause and effect
+              matrix defines how detection in one zone triggers sounders in other zones based on the
+              fire strategy.
             </p>
           </div>
         </section>
@@ -262,17 +348,24 @@ const FireAlarmModule3Section3 = () => {
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Alert (intermittent tone):</strong> prepare to leave, await further instruction</span>
+                  <span>
+                    <strong>Alert (intermittent tone):</strong> prepare to leave, await further
+                    instruction
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Evacuate (continuous tone):</strong> leave immediately via nearest escape route</span>
+                  <span>
+                    <strong>Evacuate (continuous tone):</strong> leave immediately via nearest
+                    escape route
+                  </span>
                 </li>
               </ul>
             </div>
 
             <p>
-              The fire floor and floor above typically receive immediate evacuate signal, while other floors receive an alert signal that can escalate to full evacuation if needed.
+              The fire floor and floor above typically receive immediate evacuate signal, while
+              other floors receive an alert signal that can escalate to full evacuation if needed.
             </p>
           </div>
         </section>
@@ -290,7 +383,9 @@ const FireAlarmModule3Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Voice alarm provides clear spoken instructions rather than tones alone. This is particularly valuable for complex buildings, phased evacuation, and multilingual environments.
+              Voice alarm provides clear spoken instructions rather than tones alone. This is
+              particularly valuable for complex buildings, phased evacuation, and multilingual
+              environments.
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -298,25 +393,36 @@ const FireAlarmModule3Section3 = () => {
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Intelligibility:</strong> prioritise STI (Speech Transmission Index) over loudness</span>
+                  <span>
+                    <strong>Intelligibility:</strong> prioritise STI (Speech Transmission Index)
+                    over loudness
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Reverberation:</strong> control acoustic environment to maintain clarity</span>
+                  <span>
+                    <strong>Reverberation:</strong> control acoustic environment to maintain clarity
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Messages:</strong> pre-recorded and live announcement capability</span>
+                  <span>
+                    <strong>Messages:</strong> pre-recorded and live announcement capability
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Zoning:</strong> enable targeted messages per zone or floor</span>
+                  <span>
+                    <strong>Zoning:</strong> enable targeted messages per zone or floor
+                  </span>
                 </li>
               </ul>
             </div>
 
             <p>
-              Occupants must be able to clearly understand evacuation instructions. A highly intelligible message at moderate volume is more effective than a loud but unintelligible one.
+              Occupants must be able to clearly understand evacuation instructions. A highly
+              intelligible message at moderate volume is more effective than a loud but
+              unintelligible one.
             </p>
           </div>
         </section>
@@ -329,7 +435,8 @@ const FireAlarmModule3Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              VADs provide visual warning for hearing-impaired occupants and in noisy environments where audible alarms may not be heard.
+              VADs provide visual warning for hearing-impaired occupants and in noisy environments
+              where audible alarms may not be heard.
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -337,25 +444,35 @@ const FireAlarmModule3Section3 = () => {
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Category W:</strong> wall-mounted - coverage specified in height x width</span>
+                  <span>
+                    <strong>Category W:</strong> wall-mounted - coverage specified in height x width
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Category C:</strong> ceiling-mounted - circular coverage pattern</span>
+                  <span>
+                    <strong>Category C:</strong> ceiling-mounted - circular coverage pattern
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Category O:</strong> open area - large space coverage</span>
+                  <span>
+                    <strong>Category O:</strong> open area - large space coverage
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span><strong>Synchronisation:</strong> required where multiple VADs are visible</span>
+                  <span>
+                    <strong>Synchronisation:</strong> required where multiple VADs are visible
+                  </span>
                 </li>
               </ul>
             </div>
 
             <p>
-              Synchronisation is critical when multiple VADs are visible from the same location. Unsynchronised flashing increases photosensitive epilepsy risk and makes the warning less recognisable.
+              Synchronisation is critical when multiple VADs are visible from the same location.
+              Unsynchronised flashing increases photosensitive epilepsy risk and makes the warning
+              less recognisable.
             </p>
           </div>
         </section>
@@ -373,7 +490,8 @@ const FireAlarmModule3Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Effective sounder placement ensures audibility throughout the protected area while avoiding excessive noise that could cause distress or confusion.
+              Effective sounder placement ensures audibility throughout the protected area while
+              avoiding excessive noise that could cause distress or confusion.
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -389,17 +507,22 @@ const FireAlarmModule3Section3 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>Open-plan areas need distributed coverage rather than single powerful sounders</span>
+                  <span>
+                    Open-plan areas need distributed coverage rather than single powerful sounders
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span>Avoid excessive loudness that causes sound masking or occupant distress</span>
+                  <span>
+                    Avoid excessive loudness that causes sound masking or occupant distress
+                  </span>
                 </li>
               </ul>
             </div>
 
             <p>
-              Consider future use changes when designing sounder coverage. A plant room today may become an occupied office tomorrow, requiring adequate audibility.
+              Consider future use changes when designing sounder coverage. A plant room today may
+              become an occupied office tomorrow, requiring adequate audibility.
             </p>
           </div>
         </section>
@@ -419,7 +542,10 @@ const FireAlarmModule3Section3 = () => {
             <ul className="space-y-2 text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>Measure ambient noise during typical occupied hours, not when the building is empty</span>
+                <span>
+                  Measure ambient noise during typical occupied hours, not when the building is
+                  empty
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
@@ -427,7 +553,9 @@ const FireAlarmModule3Section3 = () => {
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span>Document sounder zones clearly in cause and effect matrix for commissioning</span>
+                <span>
+                  Document sounder zones clearly in cause and effect matrix for commissioning
+                </span>
               </li>
             </ul>
           </div>

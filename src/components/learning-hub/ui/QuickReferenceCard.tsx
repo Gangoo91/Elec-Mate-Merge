@@ -33,10 +33,7 @@ export const QuickReferenceCard: React.FC<QuickReferenceCardProps> = ({
       <CardContent className="pt-0">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {items.map((item, index) => (
-            <div 
-              key={index}
-              className="bg-background/50 rounded-lg p-3 border border-muted"
-            >
+            <div key={index} className="bg-background/50 rounded-lg p-3 border border-muted">
               <div className={cn('text-muted-foreground mb-1', responsiveBody.small)}>
                 {item.label}
               </div>

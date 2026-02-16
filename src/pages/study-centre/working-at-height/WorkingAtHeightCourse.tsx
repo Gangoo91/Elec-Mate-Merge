@@ -1,65 +1,83 @@
-import { ArrowLeft, ArrowUpFromLine, BookOpen, Wrench, Shield, ClipboardCheck, Siren, GraduationCap, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  ArrowUpFromLine,
+  BookOpen,
+  Wrench,
+  Shield,
+  ClipboardCheck,
+  Siren,
+  GraduationCap,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Understanding Working at Height",
-    description: "WAH Regulations 2005 definition, legal framework, risk assessment, and the hierarchy of controls",
+    title: 'Understanding Working at Height',
+    description:
+      'WAH Regulations 2005 definition, legal framework, risk assessment, and the hierarchy of controls',
     icon: BookOpen,
-    duration: "30 mins",
-    link: "../working-at-height-module-1",
+    duration: '30 mins',
+    link: '../working-at-height-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Access Equipment & Selection",
-    description: "Ladders, stepladders, scaffolding, MEWPs, podium steps, and equipment selection criteria",
+    title: 'Access Equipment & Selection',
+    description:
+      'Ladders, stepladders, scaffolding, MEWPs, podium steps, and equipment selection criteria',
     icon: Wrench,
-    duration: "30 mins",
-    link: "../working-at-height-module-2",
+    duration: '30 mins',
+    link: '../working-at-height-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Fall Protection & Prevention",
-    description: "Collective fall prevention, personal fall protection systems, fragile surfaces, and equipment inspection",
+    title: 'Fall Protection & Prevention',
+    description:
+      'Collective fall prevention, personal fall protection systems, fragile surfaces, and equipment inspection',
     icon: Shield,
-    duration: "30 mins",
-    link: "../working-at-height-module-3",
+    duration: '30 mins',
+    link: '../working-at-height-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Safe Systems of Work",
-    description: "Planning, permit-to-work systems, method statements, rescue plans, and environmental considerations",
+    title: 'Safe Systems of Work',
+    description:
+      'Planning, permit-to-work systems, method statements, rescue plans, and environmental considerations',
     icon: ClipboardCheck,
-    duration: "30 mins",
-    link: "../working-at-height-module-4",
+    duration: '30 mins',
+    link: '../working-at-height-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Incident Response & Responsibilities",
-    description: "Emergency procedures, RIDDOR reporting, roles and competence, inspection regimes and record keeping",
+    title: 'Incident Response & Responsibilities',
+    description:
+      'Emergency procedures, RIDDOR reporting, roles and competence, inspection regimes and record keeping',
     icon: Siren,
-    duration: "30 mins",
-    link: "../working-at-height-module-5",
+    duration: '30 mins',
+    link: '../working-at-height-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../working-at-height-module-6",
+    duration: '30 mins',
+    link: '../working-at-height-module-6',
     isExam: true,
   },
 ];
 
 export default function WorkingAtHeightCourse() {
   useSEO({
-    title: "Working at Height | General Upskilling",
-    description: "Complete working at height training covering risk assessment, fall prevention, access equipment, safe systems of work, and mock exam preparation.",
+    title: 'Working at Height | General Upskilling',
+    description:
+      'Complete working at height training covering risk assessment, fall prevention, access equipment, safe systems of work, and mock exam preparation.',
   });
 
   return (

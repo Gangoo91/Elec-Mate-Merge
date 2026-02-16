@@ -1,132 +1,173 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Users, MessageCircle, Calendar, MapPin, Clock, Star, BookOpen, Target } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Users,
+  MessageCircle,
+  Calendar,
+  MapPin,
+  Clock,
+  Star,
+  BookOpen,
+  Target,
+} from 'lucide-react';
 
 const StudyGroupsTab = () => {
   const studyGroups = [
     {
-      name: "18th Edition Warriors",
+      name: '18th Edition Warriors',
       members: 24,
-      location: "Manchester",
-      nextSession: "Tomorrow, 7:00 PM",
-      focus: "BS 7671 Regulations",
-      level: "Intermediate",
+      location: 'Manchester',
+      nextSession: 'Tomorrow, 7:00 PM',
+      focus: 'BS 7671 Regulations',
+      level: 'Intermediate',
       rating: 4.8,
-      description: "Dedicated group focusing on mastering the 18th Edition. Weekly sessions with mock exams and regulation deep-dives.",
-      tags: ["18th Edition", "Mock Exams", "Regulations"]
+      description:
+        'Dedicated group focusing on mastering the 18th Edition. Weekly sessions with mock exams and regulation deep-dives.',
+      tags: ['18th Edition', 'Mock Exams', 'Regulations'],
     },
     {
-      name: "Level 3 Theory Masters",
+      name: 'Level 3 Theory Masters',
       members: 18,
-      location: "Birmingham", 
-      nextSession: "Saturday, 10:00 AM",
-      focus: "AC Theory & Calculations",
-      level: "Advanced",
+      location: 'Birmingham',
+      nextSession: 'Saturday, 10:00 AM',
+      focus: 'AC Theory & Calculations',
+      level: 'Advanced',
       rating: 4.9,
-      description: "Advanced theory group tackling complex calculations and AC principles. Perfect for Level 3 diploma preparation.",
-      tags: ["Level 3", "AC Theory", "Calculations"]
+      description:
+        'Advanced theory group tackling complex calculations and AC principles. Perfect for Level 3 diploma preparation.',
+      tags: ['Level 3', 'AC Theory', 'Calculations'],
     },
     {
-      name: "AM2 Practice Squad",
+      name: 'AM2 Practice Squad',
       members: 12,
-      location: "London",
-      nextSession: "Sunday, 2:00 PM", 
-      focus: "Practical Skills",
-      level: "Advanced",
+      location: 'London',
+      nextSession: 'Sunday, 2:00 PM',
+      focus: 'Practical Skills',
+      level: 'Advanced',
       rating: 4.7,
-      description: "Hands-on practice group for AM2 preparation. Access to practice rigs and testing equipment.",
-      tags: ["AM2", "Practical", "Testing"]
+      description:
+        'Hands-on practice group for AM2 preparation. Access to practice rigs and testing equipment.',
+      tags: ['AM2', 'Practical', 'Testing'],
     },
     {
-      name: "Apprentice Beginners",
+      name: 'Apprentice Beginners',
       members: 35,
-      location: "Online",
-      nextSession: "Tonight, 8:00 PM",
-      focus: "Fundamentals",
-      level: "Beginner",
+      location: 'Online',
+      nextSession: 'Tonight, 8:00 PM',
+      focus: 'Fundamentals',
+      level: 'Beginner',
       rating: 4.6,
-      description: "Welcoming group for new apprentices. Covers basic electrical principles and industry knowledge.",
-      tags: ["Beginners", "Online", "Fundamentals"]
-    }
+      description:
+        'Welcoming group for new apprentices. Covers basic electrical principles and industry knowledge.',
+      tags: ['Beginners', 'Online', 'Fundamentals'],
+    },
   ];
 
   const groupBenefits = [
     {
       icon: Users,
-      title: "Peer Learning",
-      description: "Learn from fellow apprentices and share experiences",
-      benefits: ["Different perspectives on complex topics", "Motivation through shared goals", "Real-world application examples"]
+      title: 'Peer Learning',
+      description: 'Learn from fellow apprentices and share experiences',
+      benefits: [
+        'Different perspectives on complex topics',
+        'Motivation through shared goals',
+        'Real-world application examples',
+      ],
     },
     {
       icon: MessageCircle,
-      title: "Discussion & Debate",
-      description: "Engage in meaningful discussions about electrical concepts",
-      benefits: ["Clarify confusing topics", "Test your understanding", "Learn teaching skills"]
+      title: 'Discussion & Debate',
+      description: 'Engage in meaningful discussions about electrical concepts',
+      benefits: ['Clarify confusing topics', 'Test your understanding', 'Learn teaching skills'],
     },
     {
       icon: Target,
-      title: "Accountability",
-      description: "Stay motivated with regular group commitments",
-      benefits: ["Consistent study schedule", "Progress tracking", "Mutual encouragement"]
+      title: 'Accountability',
+      description: 'Stay motivated with regular group commitments',
+      benefits: ['Consistent study schedule', 'Progress tracking', 'Mutual encouragement'],
     },
     {
       icon: BookOpen,
-      title: "Resource Sharing",
-      description: "Access pooled study materials and resources",
-      benefits: ["Shared notes and summaries", "Practice questions", "Industry insights"]
-    }
+      title: 'Resource Sharing',
+      description: 'Access pooled study materials and resources',
+      benefits: ['Shared notes and summaries', 'Practice questions', 'Industry insights'],
+    },
   ];
 
   const virtualStudyTips = [
     {
-      platform: "Discord Study Servers",
-      description: "Join dedicated electrical study Discord servers for 24/7 support",
-      features: ["Voice study rooms", "Screen sharing", "File sharing", "Study timers"]
+      platform: 'Discord Study Servers',
+      description: 'Join dedicated electrical study Discord servers for 24/7 support',
+      features: ['Voice study rooms', 'Screen sharing', 'File sharing', 'Study timers'],
     },
     {
-      platform: "Zoom Study Sessions",
-      description: "Organised video calls with structured learning activities",
-      features: ["Recorded sessions", "Breakout rooms", "Whiteboard sharing", "Calendar integration"]
+      platform: 'Zoom Study Sessions',
+      description: 'Organised video calls with structured learning activities',
+      features: [
+        'Recorded sessions',
+        'Breakout rooms',
+        'Whiteboard sharing',
+        'Calendar integration',
+      ],
     },
     {
-      platform: "WhatsApp Groups",
-      description: "Quick questions and daily motivation through messaging groups",
-      features: ["Instant messaging", "Photo sharing", "Voice messages", "File documents"]
+      platform: 'WhatsApp Groups',
+      description: 'Quick questions and daily motivation through messaging groups',
+      features: ['Instant messaging', 'Photo sharing', 'Voice messages', 'File documents'],
     },
     {
-      platform: "Study Apps",
-      description: "Collaborative study apps for shared flashcards and quizzes",
-      features: ["Shared flashcard decks", "Group challenges", "Progress tracking", "Leaderboards"]
-    }
+      platform: 'Study Apps',
+      description: 'Collaborative study apps for shared flashcards and quizzes',
+      features: ['Shared flashcard decks', 'Group challenges', 'Progress tracking', 'Leaderboards'],
+    },
   ];
 
   const studyGroupFormats = [
     {
-      format: "Question & Answer Sessions",
-      duration: "1-2 hours",
-      description: "Focused sessions where members bring their toughest questions",
-      structure: ["Problem presentation (10 mins)", "Group discussion (20 mins)", "Solution summary (10 mins)", "Next problem"]
+      format: 'Question & Answer Sessions',
+      duration: '1-2 hours',
+      description: 'Focused sessions where members bring their toughest questions',
+      structure: [
+        'Problem presentation (10 mins)',
+        'Group discussion (20 mins)',
+        'Solution summary (10 mins)',
+        'Next problem',
+      ],
     },
     {
-      format: "Mock Exam Practice",
-      duration: "2-3 hours", 
-      description: "Timed practice exams followed by group review and discussion",
-      structure: ["Exam setup (15 mins)", "Timed exam (90 mins)", "Break (15 mins)", "Group review (45 mins)"]
+      format: 'Mock Exam Practice',
+      duration: '2-3 hours',
+      description: 'Timed practice exams followed by group review and discussion',
+      structure: [
+        'Exam setup (15 mins)',
+        'Timed exam (90 mins)',
+        'Break (15 mins)',
+        'Group review (45 mins)',
+      ],
     },
     {
-      format: "Teaching Rotations",
-      duration: "1.5-2 hours",
-      description: "Members take turns teaching topics to reinforce their own learning",
-      structure: ["Preparation time (15 mins)", "Teaching session (20 mins)", "Q&A (10 mins)", "Feedback (5 mins)"]
+      format: 'Teaching Rotations',
+      duration: '1.5-2 hours',
+      description: 'Members take turns teaching topics to reinforce their own learning',
+      structure: [
+        'Preparation time (15 mins)',
+        'Teaching session (20 mins)',
+        'Q&A (10 mins)',
+        'Feedback (5 mins)',
+      ],
     },
     {
-      format: "Case Study Analysis",
-      duration: "2 hours",
-      description: "Real-world electrical scenarios discussed and solved as a group",
-      structure: ["Case presentation (20 mins)", "Individual analysis (30 mins)", "Group discussion (60 mins)", "Summary (10 mins)"]
-    }
+      format: 'Case Study Analysis',
+      duration: '2 hours',
+      description: 'Real-world electrical scenarios discussed and solved as a group',
+      structure: [
+        'Case presentation (20 mins)',
+        'Individual analysis (30 mins)',
+        'Group discussion (60 mins)',
+        'Summary (10 mins)',
+      ],
+    },
   ];
 
   return (
@@ -136,13 +177,15 @@ const StudyGroupsTab = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Users className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Study Groups & Collaborative Learning</CardTitle>
+            <CardTitle className="text-elec-yellow">
+              Study Groups & Collaborative Learning
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <p className="text-white mb-4">
-            Join fellow electrical apprentices in structured study groups. Research shows that collaborative learning 
-            can improve retention by up to 90% compared to studying alone.
+            Join fellow electrical apprentices in structured study groups. Research shows that
+            collaborative learning can improve retention by up to 90% compared to studying alone.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center p-3 border border-elec-yellow/20 rounded-lg">
@@ -196,22 +239,27 @@ const StudyGroupsTab = () => {
                       </span>
                     </div>
                   </div>
-                  <Badge variant="outline" className={`text-xs ${
-                    group.level === 'Beginner' ? 'border-green-400 text-green-400' :
-                    group.level === 'Intermediate' ? 'border-yellow-400 text-yellow-400' :
-                    'border-red-400 text-red-400'
-                  }`}>
+                  <Badge
+                    variant="outline"
+                    className={`text-xs ${
+                      group.level === 'Beginner'
+                        ? 'border-green-400 text-green-400'
+                        : group.level === 'Intermediate'
+                          ? 'border-yellow-400 text-yellow-400'
+                          : 'border-red-400 text-red-400'
+                    }`}
+                  >
                     {group.level}
                   </Badge>
                 </div>
-                
+
                 <p className="text-sm text-white mb-3">{group.description}</p>
-                
+
                 <div className="flex items-center gap-2 mb-3">
                   <Clock className="h-4 w-4 text-elec-yellow" />
                   <span className="text-sm text-white">Next: {group.nextSession}</span>
                 </div>
-                
+
                 <div className="flex flex-wrap gap-1 mb-3">
                   {group.tags.map((tag, tagIndex) => (
                     <Badge key={tagIndex} variant="outline" className="text-xs border-white/20">
@@ -219,10 +267,14 @@ const StudyGroupsTab = () => {
                     </Badge>
                   ))}
                 </div>
-                
+
                 <div className="flex gap-2">
-                  <Button size="sm" className="flex-1">Join Group</Button>
-                  <Button size="sm" variant="outline">View Details</Button>
+                  <Button size="sm" className="flex-1">
+                    Join Group
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    View Details
+                  </Button>
                 </div>
               </div>
             ))}
@@ -274,7 +326,10 @@ const StudyGroupsTab = () => {
                 <p className="text-sm text-white mb-3">{tip.description}</p>
                 <div className="space-y-1">
                   {tip.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="text-xs text-blue-300 flex items-center gap-2">
+                    <div
+                      key={featureIndex}
+                      className="text-xs text-blue-300 flex items-center gap-2"
+                    >
                       <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
                       {feature}
                     </div>
@@ -321,9 +376,12 @@ const StudyGroupsTab = () => {
       {/* Call to Action */}
       <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
         <CardContent className="p-6 text-center">
-          <h3 className="text-xl font-semibold text-elec-yellow mb-2">Ready to Join a Study Group?</h3>
+          <h3 className="text-xl font-semibold text-elec-yellow mb-2">
+            Ready to Join a Study Group?
+          </h3>
           <p className="text-white mb-4">
-            Connect with fellow apprentices and accelerate your learning through collaborative study.
+            Connect with fellow apprentices and accelerate your learning through collaborative
+            study.
           </p>
           <div className="flex flex-wrap justify-center gap-2">
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">

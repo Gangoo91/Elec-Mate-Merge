@@ -68,7 +68,9 @@ class SyncQueueManager {
    * Add an operation to the sync queue
    * Called when offline or when cloud sync fails
    */
-  async enqueue(operation: Omit<SyncOperation, 'id' | 'timestamp' | 'retryCount' | 'lastRetry'>): Promise<string> {
+  async enqueue(
+    operation: Omit<SyncOperation, 'id' | 'timestamp' | 'retryCount' | 'lastRetry'>
+  ): Promise<string> {
     try {
       const db = await this.getDB();
       const tx = db.transaction(STORE_NAME, 'readwrite');
@@ -89,7 +91,11 @@ class SyncQueueManager {
         request.onerror = () => reject(request.error);
       });
 
-      console.log('[SyncQueue] Operation queued:', { id, type: operation.type, reportType: operation.reportType });
+      console.log('[SyncQueue] Operation queued:', {
+        id,
+        type: operation.type,
+        reportType: operation.reportType,
+      });
       return id;
     } catch (error) {
       console.error('[SyncQueue] Failed to enqueue:', error);
@@ -127,7 +133,7 @@ class SyncQueueManager {
    */
   async getPendingForUser(userId: string): Promise<SyncOperation[]> {
     const all = await this.getPending();
-    return all.filter(op => op.userId === userId);
+    return all.filter((op) => op.userId === userId);
   }
 
   /**
@@ -177,7 +183,10 @@ class SyncQueueManager {
           request.onerror = () => reject(request.error);
         });
 
-        console.log('[SyncQueue] Retry count incremented:', { id: operationId, retryCount: operation.retryCount });
+        console.log('[SyncQueue] Retry count incremented:', {
+          id: operationId,
+          retryCount: operation.retryCount,
+        });
         return operation.retryCount;
       }
 
@@ -233,7 +242,7 @@ class SyncQueueManager {
   async clearForReport(reportId: string): Promise<void> {
     try {
       const operations = await this.getPending();
-      const toDelete = operations.filter(op => op.reportId === reportId);
+      const toDelete = operations.filter((op) => op.reportId === reportId);
 
       for (const op of toDelete) {
         await this.complete(op.id);
@@ -272,7 +281,7 @@ class SyncQueueManager {
   async getFailedOperations(): Promise<SyncOperation[]> {
     const MAX_RETRIES = 10;
     const operations = await this.getPending();
-    return operations.filter(op => op.retryCount >= MAX_RETRIES);
+    return operations.filter((op) => op.retryCount >= MAX_RETRIES);
   }
 }
 

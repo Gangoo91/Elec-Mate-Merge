@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Link } from 'react-router-dom';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   ArrowRight,
   Shield,
@@ -14,61 +14,64 @@ import {
   GraduationCap,
   PlayCircle,
   Sparkles,
-} from "lucide-react";
+} from 'lucide-react';
 
 const InspectionTesting = () => {
   const topics = [
     {
-      id: "safe-isolation",
-      title: "Safe Isolation",
-      description: "Life-critical procedures for safely isolating electrical systems before testing",
+      id: 'safe-isolation',
+      title: 'Safe Isolation',
+      description:
+        'Life-critical procedures for safely isolating electrical systems before testing',
       icon: Shield,
-      iconColor: "text-red-400",
-      gradientFrom: "from-red-500/15",
-      gradientTo: "to-red-500/5",
-      borderColor: "border-red-500/20 hover:border-red-500/40",
-      link: "/apprentice/on-job-tools/bs7671-runthrough",
-      badge: "Safety Critical",
-      badgeColor: "bg-red-500/20 text-red-300 border border-red-500/30",
+      iconColor: 'text-red-400',
+      gradientFrom: 'from-red-500/15',
+      gradientTo: 'to-red-500/5',
+      borderColor: 'border-red-500/20 hover:border-red-500/40',
+      link: '/apprentice/on-job-tools/bs7671-runthrough',
+      badge: 'Safety Critical',
+      badgeColor: 'bg-red-500/20 text-red-300 border border-red-500/30',
     },
     {
-      id: "initial-vs-periodic",
-      title: "Initial vs Periodic Inspection",
-      description: "Understanding the differences between initial verification and periodic inspection and testing",
+      id: 'initial-vs-periodic',
+      title: 'Initial vs Periodic Inspection',
+      description:
+        'Understanding the differences between initial verification and periodic inspection and testing',
       icon: FileSearch,
-      iconColor: "text-blue-400",
-      gradientFrom: "from-blue-500/15",
-      gradientTo: "to-blue-500/5",
-      borderColor: "border-blue-500/20 hover:border-blue-500/40",
-      link: "/apprentice/on-job-tools/bs7671-runthrough",
-      badge: "Documentation",
-      badgeColor: "bg-blue-500/20 text-blue-300 border border-blue-500/30",
+      iconColor: 'text-blue-400',
+      gradientFrom: 'from-blue-500/15',
+      gradientTo: 'to-blue-500/5',
+      borderColor: 'border-blue-500/20 hover:border-blue-500/40',
+      link: '/apprentice/on-job-tools/bs7671-runthrough',
+      badge: 'Documentation',
+      badgeColor: 'bg-blue-500/20 text-blue-300 border border-blue-500/30',
     },
     {
-      id: "testing-methods",
-      title: "Testing Methods",
-      description: "Continuity, insulation resistance, loop impedance, RCD testing and polarity checks",
+      id: 'testing-methods',
+      title: 'Testing Methods',
+      description:
+        'Continuity, insulation resistance, loop impedance, RCD testing and polarity checks',
       icon: Zap,
-      iconColor: "text-elec-yellow",
-      gradientFrom: "from-elec-yellow/15",
-      gradientTo: "to-elec-yellow/5",
-      borderColor: "border-elec-yellow/20 hover:border-elec-yellow/40",
-      link: "/apprentice/on-job-tools/bs7671-runthrough",
-      badge: "Electrical Testing",
-      badgeColor: "bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30",
+      iconColor: 'text-elec-yellow',
+      gradientFrom: 'from-elec-yellow/15',
+      gradientTo: 'to-elec-yellow/5',
+      borderColor: 'border-elec-yellow/20 hover:border-elec-yellow/40',
+      link: '/apprentice/on-job-tools/bs7671-runthrough',
+      badge: 'Electrical Testing',
+      badgeColor: 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30',
     },
     {
-      id: "certificates",
-      title: "Certificate Completion",
-      description: "How to properly complete EIC, EICR, and Minor Works certificates",
+      id: 'certificates',
+      title: 'Certificate Completion',
+      description: 'How to properly complete EIC, EICR, and Minor Works certificates',
       icon: FileText,
-      iconColor: "text-purple-400",
-      gradientFrom: "from-purple-500/15",
-      gradientTo: "to-purple-500/5",
-      borderColor: "border-purple-500/20 hover:border-purple-500/40",
-      link: "/apprentice/on-job-tools/bs7671-runthrough",
-      badge: "Documentation",
-      badgeColor: "bg-purple-500/20 text-purple-300 border border-purple-500/30",
+      iconColor: 'text-purple-400',
+      gradientFrom: 'from-purple-500/15',
+      gradientTo: 'to-purple-500/5',
+      borderColor: 'border-purple-500/20 hover:border-purple-500/40',
+      link: '/apprentice/on-job-tools/bs7671-runthrough',
+      badge: 'Documentation',
+      badgeColor: 'bg-purple-500/20 text-purple-300 border border-purple-500/30',
     },
   ];
 
@@ -96,7 +99,8 @@ const InspectionTesting = () => {
                       BS7671 Inspection & Testing
                     </h1>
                     <p className="hidden sm:block text-lg text-white max-w-2xl leading-relaxed">
-                      Master the essential procedures for electrical inspection and testing with comprehensive learning materials
+                      Master the essential procedures for electrical inspection and testing with
+                      comprehensive learning materials
                     </p>
                   </div>
                 </div>
@@ -113,7 +117,10 @@ const InspectionTesting = () => {
                     <div className="space-y-1">
                       <p className="text-sm font-semibold text-white">Safety First</p>
                       <p className="text-sm text-white leading-relaxed">
-                        <span className="text-red-400 font-medium">Always work under supervision</span> when performing electrical testing. Follow your company's procedures.
+                        <span className="text-red-400 font-medium">
+                          Always work under supervision
+                        </span>{' '}
+                        when performing electrical testing. Follow your company's procedures.
                       </p>
                     </div>
                   </div>
@@ -128,7 +135,9 @@ const InspectionTesting = () => {
                     <div className="space-y-1">
                       <p className="text-sm font-semibold text-white">Training Aid</p>
                       <p className="text-sm text-white leading-relaxed">
-                        Supplements your <span className="text-amber-400 font-medium">2391 qualification</span> training. Not a replacement for formal qualifications.
+                        Supplements your{' '}
+                        <span className="text-amber-400 font-medium">2391 qualification</span>{' '}
+                        training. Not a replacement for formal qualifications.
                       </p>
                     </div>
                   </div>
@@ -163,20 +172,32 @@ const InspectionTesting = () => {
                       </div>
                       <div className="flex-1 space-y-4">
                         <div className="flex flex-wrap items-center gap-3">
-                          <h3 className="text-2xl font-bold text-white">Inspection & Testing Hub</h3>
+                          <h3 className="text-2xl font-bold text-white">
+                            Inspection & Testing Hub
+                          </h3>
                           <span className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-elec-yellow/20 text-elec-yellow font-semibold border border-elec-yellow/30">
                             <Sparkles className="h-3 w-3" />
                             Recommended
                           </span>
                         </div>
                         <p className="text-base text-white leading-relaxed max-w-xl">
-                          Access comprehensive inspection and testing training with interactive modules covering testing procedures, fault finding techniques, BS 7671 regulations reference, and knowledge assessments.
+                          Access comprehensive inspection and testing training with interactive
+                          modules covering testing procedures, fault finding techniques, BS 7671
+                          regulations reference, and knowledge assessments.
                         </p>
                         <div className="flex flex-wrap gap-2">
-                          <span className="text-xs px-3 py-1.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/20 font-medium">Testing Procedures</span>
-                          <span className="text-xs px-3 py-1.5 rounded-full bg-green-500/15 text-green-300 border border-green-500/20 font-medium">Fault Finding</span>
-                          <span className="text-xs px-3 py-1.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/20 font-medium">Regulations</span>
-                          <span className="text-xs px-3 py-1.5 rounded-full bg-orange-500/15 text-orange-300 border border-orange-500/20 font-medium">Quizzes</span>
+                          <span className="text-xs px-3 py-1.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/20 font-medium">
+                            Testing Procedures
+                          </span>
+                          <span className="text-xs px-3 py-1.5 rounded-full bg-green-500/15 text-green-300 border border-green-500/20 font-medium">
+                            Fault Finding
+                          </span>
+                          <span className="text-xs px-3 py-1.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/20 font-medium">
+                            Regulations
+                          </span>
+                          <span className="text-xs px-3 py-1.5 rounded-full bg-orange-500/15 text-orange-300 border border-orange-500/20 font-medium">
+                            Quizzes
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -210,21 +231,25 @@ const InspectionTesting = () => {
                 to={topic.link}
                 className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-xl group"
               >
-                <Card className={`bg-gradient-to-br ${topic.gradientFrom} ${topic.gradientTo} ${topic.borderColor} backdrop-blur-sm hover:shadow-lg transition-all duration-300 active:scale-[0.98] h-full`}>
+                <Card
+                  className={`bg-gradient-to-br ${topic.gradientFrom} ${topic.gradientTo} ${topic.borderColor} backdrop-blur-sm hover:shadow-lg transition-all duration-300 active:scale-[0.98] h-full`}
+                >
                   <CardContent className="p-5 sm:p-6">
                     <div className="flex items-start gap-4">
-                      <div className={`min-w-[52px] min-h-[52px] p-3 rounded-xl bg-white/10 group-hover:bg-white/15 group-hover:scale-110 transition-all duration-300 flex-shrink-0 border border-white/10`}>
+                      <div
+                        className={`min-w-[52px] min-h-[52px] p-3 rounded-xl bg-white/10 group-hover:bg-white/15 group-hover:scale-110 transition-all duration-300 flex-shrink-0 border border-white/10`}
+                      >
                         <topic.icon className={`h-7 w-7 ${topic.iconColor}`} />
                       </div>
                       <div className="flex-1 min-w-0 space-y-3">
                         <h3 className="text-lg font-bold text-white group-hover:text-white transition-colors">
                           {topic.title}
                         </h3>
-                        <p className="text-sm text-white leading-relaxed">
-                          {topic.description}
-                        </p>
+                        <p className="text-sm text-white leading-relaxed">{topic.description}</p>
                         <div className="flex items-center justify-between pt-1">
-                          <span className={`text-xs px-3 py-1.5 rounded-full ${topic.badgeColor} font-medium`}>
+                          <span
+                            className={`text-xs px-3 py-1.5 rounded-full ${topic.badgeColor} font-medium`}
+                          >
                             {topic.badge}
                           </span>
                           <div className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-lg bg-white/5 group-hover:bg-white/10 flex items-center justify-center transition-all duration-300">
@@ -335,9 +360,10 @@ const InspectionTesting = () => {
               <div className="space-y-1">
                 <p className="text-sm font-semibold text-white">Disclaimer</p>
                 <p className="text-sm text-white leading-relaxed">
-                  These inspection and testing materials are for educational purposes only.
-                  Always follow your employer's procedures and work under appropriate supervision.
-                  For formal qualifications, contact City & Guilds, EAL, or your registered training provider.
+                  These inspection and testing materials are for educational purposes only. Always
+                  follow your employer's procedures and work under appropriate supervision. For
+                  formal qualifications, contact City & Guilds, EAL, or your registered training
+                  provider.
                 </p>
               </div>
             </div>

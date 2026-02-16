@@ -1,126 +1,139 @@
-import { ArrowLeft, ArrowRight, Lightbulb, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Lightbulb, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Linking with Lighting and Emergency Scenes";
-const DESCRIPTION = "Integrating lighting automation with security systems and emergency protocols";
+const TITLE = 'Linking with Lighting and Emergency Scenes';
+const DESCRIPTION = 'Integrating lighting automation with security systems and emergency protocols';
 
 const quickCheckQuestions = [
   {
-    question: "What is a lighting scene in smart home terminology?",
+    question: 'What is a lighting scene in smart home terminology?',
     options: [
-      "A single light bulb",
-      "A pre-configured combination of multiple lights at specific settings",
-      "A light switch",
-      "A dimmer dial"
+      'A single light bulb',
+      'A pre-configured combination of multiple lights at specific settings',
+      'A light switch',
+      'A dimmer dial',
     ],
     correctAnswer: 1,
-    explanation: "A lighting scene is a pre-configured combination of multiple lights set to specific brightness levels and colours, activated with a single command to create a desired ambiance."
+    explanation:
+      'A lighting scene is a pre-configured combination of multiple lights set to specific brightness levels and colours, activated with a single command to create a desired ambiance.',
   },
   {
-    question: "How can security lighting deter intruders?",
+    question: 'How can security lighting deter intruders?',
     options: [
-      "By staying off at all times",
-      "By simulating occupancy when away and activating on motion detection",
-      "By using only low-brightness settings",
-      "By operating on a fixed schedule only"
+      'By staying off at all times',
+      'By simulating occupancy when away and activating on motion detection',
+      'By using only low-brightness settings',
+      'By operating on a fixed schedule only',
     ],
     correctAnswer: 1,
-    explanation: "Security lighting deters intruders by simulating occupancy patterns when the home is empty and activating bright lights when motion is detected, making the property appear occupied and monitored."
+    explanation:
+      'Security lighting deters intruders by simulating occupancy patterns when the home is empty and activating bright lights when motion is detected, making the property appear occupied and monitored.',
   },
   {
-    question: "What should happen to smart lighting when a fire alarm triggers?",
+    question: 'What should happen to smart lighting when a fire alarm triggers?',
     options: [
-      "Lights should turn off to save energy",
-      "Lights should flash red",
-      "All lights should turn on fully to illuminate escape routes",
-      "Only bedroom lights should activate"
+      'Lights should turn off to save energy',
+      'Lights should flash red',
+      'All lights should turn on fully to illuminate escape routes',
+      'Only bedroom lights should activate',
     ],
     correctAnswer: 2,
-    explanation: "When a fire alarm triggers, smart lighting should turn on fully throughout the property to illuminate escape routes, helping occupants navigate safely in smoke or darkness."
-  }
+    explanation:
+      'When a fire alarm triggers, smart lighting should turn on fully throughout the property to illuminate escape routes, helping occupants navigate safely in smoke or darkness.',
+  },
 ];
 
 const quizQuestions = [
   {
     question: "What is the purpose of an 'Away' lighting scene?",
     options: [
-      "To turn all lights off permanently",
-      "To simulate occupancy by varying lights throughout the evening",
-      "To provide maximum brightness",
-      "To disable the smart home system"
+      'To turn all lights off permanently',
+      'To simulate occupancy by varying lights throughout the evening',
+      'To provide maximum brightness',
+      'To disable the smart home system',
     ],
     correctAnswer: 1,
-    explanation: "An 'Away' scene simulates occupancy by turning lights on and off at realistic intervals throughout the evening, deterring burglars who target empty properties."
+    explanation:
+      "An 'Away' scene simulates occupancy by turning lights on and off at realistic intervals throughout the evening, deterring burglars who target empty properties.",
   },
   {
     question: "What trigger could activate a 'Panic' lighting scene?",
     options: [
-      "Sunset",
-      "Alarm trigger or manual panic button activation",
-      "Low battery warning",
-      "Wi-Fi disconnection"
+      'Sunset',
+      'Alarm trigger or manual panic button activation',
+      'Low battery warning',
+      'Wi-Fi disconnection',
     ],
     correctAnswer: 1,
-    explanation: "A 'Panic' scene activates when an alarm triggers or the homeowner presses a panic button, turning on all external lights at maximum brightness and potentially flashing to attract attention."
+    explanation:
+      "A 'Panic' scene activates when an alarm triggers or the homeowner presses a panic button, turning on all external lights at maximum brightness and potentially flashing to attract attention.",
   },
   {
-    question: "Why is it important that emergency lighting operates independently of smart home hubs?",
+    question:
+      'Why is it important that emergency lighting operates independently of smart home hubs?',
     options: [
-      "To reduce energy consumption",
-      "To ensure function even if the smart system fails",
-      "To save money",
-      "To improve aesthetics"
+      'To reduce energy consumption',
+      'To ensure function even if the smart system fails',
+      'To save money',
+      'To improve aesthetics',
     ],
     correctAnswer: 1,
-    explanation: "Emergency lighting must operate independently to ensure it functions even if the smart home hub fails, loses power, or experiences software issues during an emergency."
+    explanation:
+      'Emergency lighting must operate independently to ensure it functions even if the smart home hub fails, loses power, or experiences software issues during an emergency.',
   },
   {
-    question: "What is the recommended action when linking lighting to a security alarm?",
+    question: 'What is the recommended action when linking lighting to a security alarm?',
     options: [
-      "Keep all lights off during an alarm",
-      "Turn on all lights to illuminate the property and deter intruders",
-      "Only use coloured lights",
-      "Disable automatic responses"
+      'Keep all lights off during an alarm',
+      'Turn on all lights to illuminate the property and deter intruders',
+      'Only use coloured lights',
+      'Disable automatic responses',
     ],
     correctAnswer: 1,
-    explanation: "Linking lighting to security alarms should turn on all lights to illuminate the property, making it harder for intruders to hide and drawing attention to the incident."
+    explanation:
+      'Linking lighting to security alarms should turn on all lights to illuminate the property, making it harder for intruders to hide and drawing attention to the incident.',
   },
   {
-    question: "What should electricians verify when integrating smart lighting with emergency systems?",
+    question:
+      'What should electricians verify when integrating smart lighting with emergency systems?',
     options: [
-      "That the lights are the cheapest available",
-      "That emergency functions work without smart system dependency",
-      "That only one light is connected",
-      "That the system uses maximum wattage"
+      'That the lights are the cheapest available',
+      'That emergency functions work without smart system dependency',
+      'That only one light is connected',
+      'That the system uses maximum wattage',
     ],
     correctAnswer: 1,
-    explanation: "Electricians must verify that emergency lighting functions independently and is not solely dependent on the smart system, ensuring safety compliance and reliable operation during emergencies."
-  }
+    explanation:
+      'Electricians must verify that emergency lighting functions independently and is not solely dependent on the smart system, ensuring safety compliance and reliable operation during emergencies.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can smart lighting replace emergency lighting?",
-    answer: "No, smart lighting cannot replace properly certified emergency lighting in commercial or rental properties. Building regulations require specific emergency lighting systems with battery backup that operate independently. Smart lighting can complement but not substitute for compliant emergency lighting."
+    question: 'Can smart lighting replace emergency lighting?',
+    answer:
+      'No, smart lighting cannot replace properly certified emergency lighting in commercial or rental properties. Building regulations require specific emergency lighting systems with battery backup that operate independently. Smart lighting can complement but not substitute for compliant emergency lighting.',
   },
   {
-    question: "What happens to lighting scenes if the internet goes down?",
-    answer: "Local hubs (Zigbee, Z-Wave) continue operating scenes without internet. Cloud-dependent systems may lose scene functionality during outages. For security-critical lighting, ensure the system can operate locally without cloud connectivity."
+    question: 'What happens to lighting scenes if the internet goes down?',
+    answer:
+      'Local hubs (Zigbee, Z-Wave) continue operating scenes without internet. Cloud-dependent systems may lose scene functionality during outages. For security-critical lighting, ensure the system can operate locally without cloud connectivity.',
   },
   {
-    question: "How do I prevent neighbours being disturbed by security lighting?",
-    answer: "Use motion-activated lights with appropriate sensitivity settings, PIR detection angles that avoid triggering from public paths, warm colour temperatures for less intrusive illumination, and ensure lights are positioned to illuminate your property without light spill onto neighbouring properties."
-  }
+    question: 'How do I prevent neighbours being disturbed by security lighting?',
+    answer:
+      'Use motion-activated lights with appropriate sensitivity settings, PIR detection angles that avoid triggering from public paths, warm colour temperatures for less intrusive illumination, and ensure lights are positioned to illuminate your property without light spill onto neighbouring properties.',
+  },
 ];
 
 const SmartHomeModule5Section5 = () => {
   useSEO({
     title: `${TITLE} | Smart Home Module 5`,
-    description: DESCRIPTION
+    description: DESCRIPTION,
   });
 
   return (
@@ -148,7 +161,9 @@ const SmartHomeModule5Section5 = () => {
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
             <Lightbulb className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-medium text-elec-yellow">Smart Security and Access Control</span>
+            <span className="text-sm font-medium text-elec-yellow">
+              Smart Security and Access Control
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{TITLE}</h1>
           <p className="text-lg text-white max-w-2xl mx-auto">{DESCRIPTION}</p>
@@ -184,19 +199,27 @@ const SmartHomeModule5Section5 = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Understand lighting scenes and their role in smart home automation</span>
+                <span className="text-white">
+                  Understand lighting scenes and their role in smart home automation
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Configure security lighting responses linked to alarm events</span>
+                <span className="text-white">
+                  Configure security lighting responses linked to alarm events
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Design emergency lighting protocols for fire and panic situations</span>
+                <span className="text-white">
+                  Design emergency lighting protocols for fire and panic situations
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Apply best practices for testing and failsafe design in lighting integration</span>
+                <span className="text-white">
+                  Apply best practices for testing and failsafe design in lighting integration
+                </span>
               </li>
             </ul>
           </div>
@@ -210,7 +233,9 @@ const SmartHomeModule5Section5 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Lighting scenes are pre-configured combinations of multiple lights set to specific brightness levels, colours, and states. They enable complex lighting arrangements to be activated with a single command.
+              Lighting scenes are pre-configured combinations of multiple lights set to specific
+              brightness levels, colours, and states. They enable complex lighting arrangements to
+              be activated with a single command.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
@@ -219,25 +244,29 @@ const SmartHomeModule5Section5 = () => {
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Evening</h4>
                   <p className="text-white text-sm">
-                    Warm, dimmed lighting in living areas for relaxation. Kitchen and utility at functional brightness.
+                    Warm, dimmed lighting in living areas for relaxation. Kitchen and utility at
+                    functional brightness.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Movie</h4>
                   <p className="text-white text-sm">
-                    Living room lights dimmed to 10-20%, bias lighting behind TV, other rooms off or minimal.
+                    Living room lights dimmed to 10-20%, bias lighting behind TV, other rooms off or
+                    minimal.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Night</h4>
                   <p className="text-white text-sm">
-                    All main lights off, motion-activated pathway lighting at low brightness for safe navigation.
+                    All main lights off, motion-activated pathway lighting at low brightness for
+                    safe navigation.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Away</h4>
                   <p className="text-white text-sm">
-                    Simulated occupancy with lights turning on and off at realistic intervals throughout evening hours.
+                    Simulated occupancy with lights turning on and off at realistic intervals
+                    throughout evening hours.
                   </p>
                 </div>
               </div>
@@ -248,23 +277,33 @@ const SmartHomeModule5Section5 = () => {
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Manual:</strong> Button press, app activation, voice command</span>
+                  <span>
+                    <strong>Manual:</strong> Button press, app activation, voice command
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Time-based:</strong> Sunset/sunrise, scheduled times</span>
+                  <span>
+                    <strong>Time-based:</strong> Sunset/sunrise, scheduled times
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Motion:</strong> PIR or camera detection activating pathway lighting</span>
+                  <span>
+                    <strong>Motion:</strong> PIR or camera detection activating pathway lighting
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Security:</strong> Alarm arm/disarm, sensor triggers</span>
+                  <span>
+                    <strong>Security:</strong> Alarm arm/disarm, sensor triggers
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Location:</strong> Geofencing when approaching or leaving home</span>
+                  <span>
+                    <strong>Location:</strong> Geofencing when approaching or leaving home
+                  </span>
                 </li>
               </ul>
             </div>
@@ -281,7 +320,9 @@ const SmartHomeModule5Section5 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Linking lighting to security systems enhances both deterrence and response capabilities. Smart integration allows lighting to respond automatically to security events.
+              Linking lighting to security systems enhances both deterrence and response
+              capabilities. Smart integration allows lighting to respond automatically to security
+              events.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
@@ -289,19 +330,31 @@ const SmartHomeModule5Section5 = () => {
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Occupancy simulation:</strong> Random light patterns when away to suggest presence</span>
+                  <span>
+                    <strong>Occupancy simulation:</strong> Random light patterns when away to
+                    suggest presence
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Dusk-to-dawn:</strong> Exterior lights activate at sunset, turn off at sunrise</span>
+                  <span>
+                    <strong>Dusk-to-dawn:</strong> Exterior lights activate at sunset, turn off at
+                    sunrise
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Motion-activated:</strong> Flood lights trigger on external PIR detection</span>
+                  <span>
+                    <strong>Motion-activated:</strong> Flood lights trigger on external PIR
+                    detection
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Approach lighting:</strong> Pathway lights activate as someone approaches</span>
+                  <span>
+                    <strong>Approach lighting:</strong> Pathway lights activate as someone
+                    approaches
+                  </span>
                 </li>
               </ul>
             </div>
@@ -348,7 +401,9 @@ const SmartHomeModule5Section5 = () => {
           <div className="space-y-4 text-white">
             <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
               <p className="text-white">
-                <strong>Important:</strong> Smart home lighting must not be the sole emergency lighting provision in properties where building regulations require dedicated emergency lighting systems.
+                <strong>Important:</strong> Smart home lighting must not be the sole emergency
+                lighting provision in properties where building regulations require dedicated
+                emergency lighting systems.
               </p>
             </div>
 
@@ -380,7 +435,8 @@ const SmartHomeModule5Section5 = () => {
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
               <h3 className="font-semibold text-white mb-3">Panic Scene</h3>
               <p className="text-white mb-3">
-                A panic scene activates when homeowners feel threatened or require urgent assistance:
+                A panic scene activates when homeowners feel threatened or require urgent
+                assistance:
               </p>
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
@@ -404,7 +460,9 @@ const SmartHomeModule5Section5 = () => {
 
             <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 p-4 rounded-r-lg">
               <p className="text-white">
-                <strong>Best practice:</strong> Emergency scenes should override all other automations and remain active until manually cancelled, ensuring lighting support during the entire emergency response period.
+                <strong>Best practice:</strong> Emergency scenes should override all other
+                automations and remain active until manually cancelled, ensuring lighting support
+                during the entire emergency response period.
               </p>
             </div>
           </div>
@@ -424,23 +482,38 @@ const SmartHomeModule5Section5 = () => {
               <ol className="space-y-3">
                 <li className="flex items-start gap-3">
                   <span className="text-elec-yellow font-semibold">1.</span>
-                  <span><strong>Map all lights:</strong> Document which lights are included in each scene and their intended settings.</span>
+                  <span>
+                    <strong>Map all lights:</strong> Document which lights are included in each
+                    scene and their intended settings.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-elec-yellow font-semibold">2.</span>
-                  <span><strong>Define triggers:</strong> Clearly specify what events should activate each scene.</span>
+                  <span>
+                    <strong>Define triggers:</strong> Clearly specify what events should activate
+                    each scene.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-elec-yellow font-semibold">3.</span>
-                  <span><strong>Set priorities:</strong> Ensure emergency scenes take precedence over routine automations.</span>
+                  <span>
+                    <strong>Set priorities:</strong> Ensure emergency scenes take precedence over
+                    routine automations.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-elec-yellow font-semibold">4.</span>
-                  <span><strong>Test failsafes:</strong> Verify lights respond correctly if hub loses power or connectivity.</span>
+                  <span>
+                    <strong>Test failsafes:</strong> Verify lights respond correctly if hub loses
+                    power or connectivity.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-elec-yellow font-semibold">5.</span>
-                  <span><strong>Document handover:</strong> Provide customer with written guide to scene operation.</span>
+                  <span>
+                    <strong>Document handover:</strong> Provide customer with written guide to scene
+                    operation.
+                  </span>
                 </li>
               </ol>
             </div>
@@ -470,7 +543,9 @@ const SmartHomeModule5Section5 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span>Validate external lighting does not cause light pollution to neighbours</span>
+                  <span>
+                    Validate external lighting does not cause light pollution to neighbours
+                  </span>
                 </li>
               </ul>
             </div>

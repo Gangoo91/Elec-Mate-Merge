@@ -1,4 +1,3 @@
-
 export interface CPDEntry {
   id: string;
   date: string;
@@ -71,9 +70,9 @@ class CPDDataService {
 
   updateEntry(id: string, updates: Partial<CPDEntry>): CPDEntry | null {
     const entries = this.getEntries();
-    const index = entries.findIndex(entry => entry.id === id);
+    const index = entries.findIndex((entry) => entry.id === id);
     if (index === -1) return null;
-    
+
     entries[index] = {
       ...entries[index],
       ...updates,
@@ -85,7 +84,7 @@ class CPDDataService {
 
   deleteEntry(id: string): boolean {
     const entries = this.getEntries();
-    const filteredEntries = entries.filter(entry => entry.id !== id);
+    const filteredEntries = entries.filter((entry) => entry.id !== id);
     if (filteredEntries.length === entries.length) return false;
     this.saveEntries(filteredEntries);
     return true;
@@ -116,9 +115,9 @@ class CPDDataService {
 
   updateGoal(id: string, updates: Partial<CPDGoal>): CPDGoal | null {
     const goals = this.getGoals();
-    const index = goals.findIndex(goal => goal.id === id);
+    const index = goals.findIndex((goal) => goal.id === id);
     if (index === -1) return null;
-    
+
     goals[index] = { ...goals[index], ...updates };
     this.saveGoals(goals);
     return goals[index];
@@ -126,7 +125,7 @@ class CPDDataService {
 
   deleteGoal(id: string): boolean {
     const goals = this.getGoals();
-    const filteredGoals = goals.filter(goal => goal.id !== id);
+    const filteredGoals = goals.filter((goal) => goal.id !== id);
     if (filteredGoals.length === goals.length) return false;
     this.saveGoals(filteredGoals);
     return true;
@@ -141,33 +140,32 @@ class CPDDataService {
     const entries = this.getEntries();
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
-    
-    const yearEntries = entries.filter(entry => 
-      new Date(entry.date).getFullYear() === currentYear
+
+    const yearEntries = entries.filter(
+      (entry) => new Date(entry.date).getFullYear() === currentYear
     );
-    
-    const monthEntries = entries.filter(entry => {
+
+    const monthEntries = entries.filter((entry) => {
       const entryDate = new Date(entry.date);
-      return entryDate.getFullYear() === currentYear && 
-             entryDate.getMonth() === currentMonth;
+      return entryDate.getFullYear() === currentYear && entryDate.getMonth() === currentMonth;
     });
 
     const totalHours = entries.reduce((sum, entry) => sum + entry.hours, 0);
     const hoursThisYear = yearEntries.reduce((sum, entry) => sum + entry.hours, 0);
     const hoursThisMonth = monthEntries.reduce((sum, entry) => sum + entry.hours, 0);
-    
+
     const targetHours = 35; // Default annual target
     const completionPercentage = Math.round((hoursThisYear / targetHours) * 100);
-    
+
     const now = new Date();
     const endOfYear = new Date(currentYear, 11, 31);
     const daysRemaining = Math.ceil((endOfYear.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     const averageHoursPerMonth = hoursThisYear / (currentMonth + 1);
 
     // Category breakdown
     const categoryMap = new Map<string, number>();
-    yearEntries.forEach(entry => {
+    yearEntries.forEach((entry) => {
       const current = categoryMap.get(entry.category) || 0;
       categoryMap.set(entry.category, current + entry.hours);
     });

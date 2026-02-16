@@ -7,15 +7,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  MapPin,
-  Building2,
-  Navigation,
-  Clock,
-  X,
-  Loader2,
-  CheckCircle,
-} from 'lucide-react';
+import { MapPin, Building2, Navigation, Clock, X, Loader2, CheckCircle } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -37,7 +29,12 @@ import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
 import { useActiveJobs } from '@/hooks/useJobs';
 import { WorkerStatus } from '@/services/locationService';
 
-const STATUS_OPTIONS: { value: WorkerStatus; label: string; icon: typeof MapPin; colour: string }[] = [
+const STATUS_OPTIONS: {
+  value: WorkerStatus;
+  label: string;
+  icon: typeof MapPin;
+  colour: string;
+}[] = [
   { value: 'Office', label: 'Office', icon: Building2, colour: 'text-elec-yellow' },
   { value: 'En Route', label: 'En Route', icon: Navigation, colour: 'text-amber-400' },
   { value: 'On Site', label: 'On Site', icon: MapPin, colour: 'text-green-400' },
@@ -92,7 +89,8 @@ export function StatusSheet({ open, onOpenChange }: StatusSheetProps) {
         lat,
         lng,
         status: selectedStatus,
-        jobId: selectedStatus === 'On Site' || selectedStatus === 'En Route' ? selectedJobId : undefined,
+        jobId:
+          selectedStatus === 'On Site' || selectedStatus === 'En Route' ? selectedJobId : undefined,
         accuracy,
       });
 
@@ -121,7 +119,10 @@ export function StatusSheet({ open, onOpenChange }: StatusSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
@@ -179,16 +180,18 @@ export function StatusSheet({ open, onOpenChange }: StatusSheetProps) {
                           : 'bg-white/[0.03] border-white/10 hover:bg-white/[0.06]'
                       )}
                     >
-                      <Icon className={cn('h-5 w-5', isSelected ? option.colour : 'text-white/60')} />
-                      <span className={cn(
-                        'text-sm font-medium',
-                        isSelected ? 'text-white' : 'text-white/70'
-                      )}>
+                      <Icon
+                        className={cn('h-5 w-5', isSelected ? option.colour : 'text-white/60')}
+                      />
+                      <span
+                        className={cn(
+                          'text-sm font-medium',
+                          isSelected ? 'text-white' : 'text-white/70'
+                        )}
+                      >
                         {option.label}
                       </span>
-                      {isSelected && (
-                        <CheckCircle className="h-4 w-4 text-elec-yellow ml-auto" />
-                      )}
+                      {isSelected && <CheckCircle className="h-4 w-4 text-elec-yellow ml-auto" />}
                     </button>
                   );
                 })}

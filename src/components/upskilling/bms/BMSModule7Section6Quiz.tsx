@@ -3,7 +3,7 @@ import { bmsModule7Section6QuizData } from '@/data/upskilling/bmsModule7Section6
 
 const BMSModule7Section6Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={bmsModule7Section6QuizData}
       title="Section 6 Quiz: Client Handover and Documentation Requirements"
     />

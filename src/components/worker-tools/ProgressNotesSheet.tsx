@@ -6,15 +6,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  FileText,
-  Camera,
-  X,
-  Loader2,
-  Send,
-  Clock,
-  ChevronDown,
-} from 'lucide-react';
+import { FileText, Camera, X, Loader2, Send, Clock, ChevronDown } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -78,7 +70,10 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+      >
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
@@ -106,11 +101,7 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
             {/* Job selector */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-white/80">Select Job</label>
-              <Select
-                value={selectedJobId}
-                onValueChange={setSelectedJobId}
-                disabled={jobsLoading}
-              >
+              <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
                 <SelectTrigger className="h-12 bg-white/[0.03] border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Choose a job..." />
                 </SelectTrigger>
@@ -162,10 +153,9 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
                 >
                   <FileText className="h-4 w-4" />
                   Recent Notes
-                  <ChevronDown className={cn(
-                    'h-4 w-4 transition-transform',
-                    showRecent && 'rotate-180'
-                  )} />
+                  <ChevronDown
+                    className={cn('h-4 w-4 transition-transform', showRecent && 'rotate-180')}
+                  />
                 </button>
 
                 <AnimatePresence>

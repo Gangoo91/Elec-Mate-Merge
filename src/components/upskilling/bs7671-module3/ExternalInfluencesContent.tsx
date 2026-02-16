@@ -1,4 +1,14 @@
-import { AlertTriangle, Shield, Thermometer, Droplets, Zap, Eye, Info, CheckCircle, Star } from 'lucide-react';
+import {
+  AlertTriangle,
+  Shield,
+  Thermometer,
+  Droplets,
+  Zap,
+  Eye,
+  Info,
+  CheckCircle,
+  Star,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
@@ -15,8 +25,9 @@ export const ExternalInfluencesContent = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-base leading-relaxed">
-            BS 7671 uses a systematic approach to categorise environmental conditions that affect electrical installations. 
-            Each classification code helps determine appropriate material selection, installation methods, and protection requirements.
+            BS 7671 uses a systematic approach to categorise environmental conditions that affect
+            electrical installations. Each classification code helps determine appropriate material
+            selection, installation methods, and protection requirements.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -29,12 +40,16 @@ export const ExternalInfluencesContent = () => {
               <div className="space-y-3">
                 <div className="bg-red-900/20 p-3 rounded">
                   <p className="text-foreground font-semibold text-sm">AA1: -60°C to +5°C</p>
-                  <p className="text-xs text-foreground">Cold storage facilities, refrigerated warehouses</p>
+                  <p className="text-xs text-foreground">
+                    Cold storage facilities, refrigerated warehouses
+                  </p>
                   <p className="text-xs text-red-300">Special low-temperature cables required</p>
                 </div>
                 <div className="bg-red-900/20 p-3 rounded">
                   <p className="text-foreground font-semibold text-sm">AA4: -5°C to +40°C</p>
-                  <p className="text-xs text-foreground">Normal indoor environments (most common)</p>
+                  <p className="text-xs text-foreground">
+                    Normal indoor environments (most common)
+                  </p>
                   <p className="text-xs text-green-300">Standard PVC cables suitable</p>
                 </div>
                 <div className="bg-red-900/20 p-3 rounded">
@@ -63,7 +78,9 @@ export const ExternalInfluencesContent = () => {
                   <p className="text-xs text-blue-300">IP44 minimum required</p>
                 </div>
                 <div className="bg-blue-900/20 p-3 rounded">
-                  <p className="text-foreground font-semibold text-sm">AD7/AE7: Temporary immersion</p>
+                  <p className="text-foreground font-semibold text-sm">
+                    AD7/AE7: Temporary immersion
+                  </p>
                   <p className="text-xs text-foreground">Areas subject to flooding</p>
                   <p className="text-xs text-blue-300">IP67 protection essential</p>
                 </div>
@@ -133,7 +150,8 @@ export const ExternalInfluencesContent = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-base leading-relaxed">
-            Systematic approach to matching environmental conditions with appropriate materials and installation methods.
+            Systematic approach to matching environmental conditions with appropriate materials and
+            installation methods.
           </p>
 
           <div className="overflow-x-auto">
@@ -232,7 +250,9 @@ export const ExternalInfluencesContent = () => {
 
             <div className="space-y-4">
               <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
-                <h4 className="text-green-300 font-semibold mb-3">Chemical and Biological Factors</h4>
+                <h4 className="text-green-300 font-semibold mb-3">
+                  Chemical and Biological Factors
+                </h4>
                 <ul className="text-sm space-y-2">
                   <li>• Rodent protection in agricultural/rural areas</li>
                   <li>• Fungal growth prevention in damp conditions</li>
@@ -258,8 +278,10 @@ export const ExternalInfluencesContent = () => {
           <Alert className="border-orange-600/30 bg-orange-900/20">
             <AlertTriangle className="h-4 w-4 text-orange-400" />
             <AlertDescription className="text-foreground">
-              <strong className="text-orange-300">Critical Assessment Point:</strong> Multiple environmental factors often combine in real installations. 
-              Always assess the most severe condition from each category and design accordingly. When in doubt, upgrade to the next protection level.
+              <strong className="text-orange-300">Critical Assessment Point:</strong> Multiple
+              environmental factors often combine in real installations. Always assess the most
+              severe condition from each category and design accordingly. When in doubt, upgrade to
+              the next protection level.
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -275,50 +297,62 @@ export const ExternalInfluencesContent = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-base leading-relaxed">
-            Systematic approach to environmental assessment ensures comprehensive evaluation and appropriate material selection.
+            Systematic approach to environmental assessment ensures comprehensive evaluation and
+            appropriate material selection.
           </p>
 
           <div className="space-y-4">
             {[
               {
                 step: 1,
-                title: "Site Survey and Documentation",
-                content: "Visit the installation location during different conditions (day/night, seasons if possible). Document all environmental factors, existing infrastructure, and operational requirements. Take photographs and measurements.",
-                color: "blue"
+                title: 'Site Survey and Documentation',
+                content:
+                  'Visit the installation location during different conditions (day/night, seasons if possible). Document all environmental factors, existing infrastructure, and operational requirements. Take photographs and measurements.',
+                color: 'blue',
               },
               {
                 step: 2,
-                title: "Environmental Classification",
-                content: "Apply BS 7671 influence codes systematically. Assess temperature ranges, water/moisture exposure, chemical presence, mechanical risks, and biological factors. Consider future changes in building use.",
-                color: "yellow"
+                title: 'Environmental Classification',
+                content:
+                  'Apply BS 7671 influence codes systematically. Assess temperature ranges, water/moisture exposure, chemical presence, mechanical risks, and biological factors. Consider future changes in building use.',
+                color: 'yellow',
               },
               {
                 step: 3,
-                title: "Risk Analysis and Mitigation",
-                content: "Identify the most severe conditions from each category. Consider combined effects and worst-case scenarios. Develop mitigation strategies for identified risks.",
-                color: "orange"
+                title: 'Risk Analysis and Mitigation',
+                content:
+                  'Identify the most severe conditions from each category. Consider combined effects and worst-case scenarios. Develop mitigation strategies for identified risks.',
+                color: 'orange',
               },
               {
                 step: 4,
-                title: "Material and Method Selection",
-                content: "Choose cables, protection methods, and installation techniques based on environmental assessment. Ensure compatibility between all system components and future expansion needs.",
-                color: "green"
+                title: 'Material and Method Selection',
+                content:
+                  'Choose cables, protection methods, and installation techniques based on environmental assessment. Ensure compatibility between all system components and future expansion needs.',
+                color: 'green',
               },
               {
                 step: 5,
-                title: "Validation and Documentation",
-                content: "Verify all selections meet or exceed requirements. Document decisions with justification for compliance and future reference. Consider maintenance accessibility.",
-                color: "purple"
-              }
+                title: 'Validation and Documentation',
+                content:
+                  'Verify all selections meet or exceed requirements. Document decisions with justification for compliance and future reference. Consider maintenance accessibility.',
+                color: 'purple',
+              },
             ].map((item, index) => (
               <div key={index} className="flex gap-4">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${
-                  item.color === 'blue' ? 'bg-blue-500 text-foreground' :
-                  item.color === 'yellow' ? 'bg-yellow-500 text-black' :
-                  item.color === 'orange' ? 'bg-orange-500 text-foreground' :
-                  item.color === 'green' ? 'bg-green-500 text-foreground' :
-                  'bg-purple-500 text-foreground'
-                }`}>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${
+                    item.color === 'blue'
+                      ? 'bg-blue-500 text-foreground'
+                      : item.color === 'yellow'
+                        ? 'bg-yellow-500 text-black'
+                        : item.color === 'orange'
+                          ? 'bg-orange-500 text-foreground'
+                          : item.color === 'green'
+                            ? 'bg-green-500 text-foreground'
+                            : 'bg-purple-500 text-foreground'
+                  }`}
+                >
                   {item.step}
                 </div>
                 <div className="flex-1">

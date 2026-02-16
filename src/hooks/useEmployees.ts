@@ -21,13 +21,9 @@ export const useEmployees = () => {
   useEffect(() => {
     const channel = supabase
       .channel('employer-employees-changes')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'employer_employees' },
-        () => {
-          queryClient.invalidateQueries({ queryKey: EMPLOYEES_KEY });
-        }
-      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_employees' }, () => {
+        queryClient.invalidateQueries({ queryKey: EMPLOYEES_KEY });
+      })
       .subscribe();
 
     return () => {
@@ -39,7 +35,7 @@ export const useEmployees = () => {
     queryKey: EMPLOYEES_KEY,
     queryFn: getEmployees,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
   });
 };
 

@@ -1,65 +1,75 @@
-import { ArrowLeft, Plug, FileText, Wrench, CheckCircle, Ruler, Shield, HardHat, Package } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  Plug,
+  FileText,
+  Wrench,
+  CheckCircle,
+  Ruler,
+  Shield,
+  HardHat,
+  Package,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Mounting Socket Outlets, Switches, and Spurs",
-    description: "Installation techniques for common electrical accessories",
+    number: 'Subsection 1',
+    title: 'Mounting Socket Outlets, Switches, and Spurs',
+    description: 'Installation techniques for common electrical accessories',
     icon: Plug,
-    href: "5-1"
+    href: '5-1',
   },
   {
-    number: "Subsection 2",
-    title: "Installing Lighting Points and Pendants",
-    description: "Proper installation of lighting fixtures and pendants",
+    number: 'Subsection 2',
+    title: 'Installing Lighting Points and Pendants',
+    description: 'Proper installation of lighting fixtures and pendants',
     icon: FileText,
-    href: "5-2"
+    href: '5-2',
   },
   {
-    number: "Subsection 3",
-    title: "Terminating Twin & Earth, Singles, and Flex",
-    description: "Correct termination methods for different cable types",
+    number: 'Subsection 3',
+    title: 'Terminating Twin & Earth, Singles, and Flex',
+    description: 'Correct termination methods for different cable types',
     icon: Wrench,
-    href: "5-3"
+    href: '5-3',
   },
   {
-    number: "Subsection 4",
-    title: "Using Ferrules, Sleeving, Glands, and Crimps",
-    description: "Application of cable termination accessories",
+    number: 'Subsection 4',
+    title: 'Using Ferrules, Sleeving, Glands, and Crimps',
+    description: 'Application of cable termination accessories',
     icon: CheckCircle,
-    href: "5-4"
+    href: '5-4',
   },
   {
-    number: "Subsection 5",
-    title: "Dressing Cables Neatly Within Boxes and Enclosures",
-    description: "Professional cable management in enclosures",
+    number: 'Subsection 5',
+    title: 'Dressing Cables Neatly Within Boxes and Enclosures',
+    description: 'Professional cable management in enclosures',
     icon: Ruler,
-    href: "5-5"
+    href: '5-5',
   },
   {
-    number: "Subsection 6",
-    title: "Testing for Polarity and Continuity During Install",
-    description: "Basic testing procedures during installation",
+    number: 'Subsection 6',
+    title: 'Testing for Polarity and Continuity During Install',
+    description: 'Basic testing procedures during installation',
     icon: Shield,
-    href: "5-6"
+    href: '5-6',
   },
   {
-    number: "Subsection 7",
-    title: "Making Final Fixes to Accessories",
-    description: "Completing final installation and securing of accessories",
+    number: 'Subsection 7',
+    title: 'Making Final Fixes to Accessories',
+    description: 'Completing final installation and securing of accessories',
     icon: HardHat,
-    href: "5-7"
+    href: '5-7',
   },
   {
-    number: "Subsection 8",
-    title: "Common Faults and How to Correct Them",
-    description: "Identifying and rectifying common installation faults",
+    number: 'Subsection 8',
+    title: 'Common Faults and How to Correct Them',
+    description: 'Identifying and rectifying common installation faults',
     icon: Package,
-    href: "5-8"
-  }
+    href: '5-8',
+  },
 ];
 
 const Section5 = () => {

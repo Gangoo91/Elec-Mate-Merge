@@ -14,20 +14,22 @@ export const SmartHomeModule5Section4Risks = () => {
         <div className="bg-red-600/10 p-4 rounded-lg border border-red-600/30">
           <h4 className="text-foreground font-semibold mb-3">Critical Risk Assessment</h4>
           <p className="text-sm mb-3">
-            While remote access provides tremendous convenience, it introduces several risks that 
-            must be carefully managed. Understanding these challenges is essential for electricians 
+            While remote access provides tremendous convenience, it introduces several risks that
+            must be carefully managed. Understanding these challenges is essential for electricians
             to provide secure installations and educate customers about potential vulnerabilities.
           </p>
           <p className="text-sm">
-            Dependence on stable internet connectivity, cybersecurity risks from weak passwords or 
-            outdated firmware, and false alerts from poorly configured devices can all cause 
+            Dependence on stable internet connectivity, cybersecurity risks from weak passwords or
+            outdated firmware, and false alerts from poorly configured devices can all cause
             significant problems if not properly addressed.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Technical and Connectivity Risks</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Technical and Connectivity Risks
+            </h4>
             <div className="space-y-3">
               <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
                 <p className="text-red-400 font-semibold text-sm mb-1">Internet Dependency</p>
@@ -39,7 +41,9 @@ export const SmartHomeModule5Section4Risks = () => {
                 </ul>
               </div>
               <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
-                <p className="text-orange-400 font-semibold text-sm mb-1">Device Reliability Issues</p>
+                <p className="text-orange-400 font-semibold text-sm mb-1">
+                  Device Reliability Issues
+                </p>
                 <ul className="text-xs text-foreground space-y-1">
                   <li>• Firmware bugs causing system instability</li>
                   <li>• Battery failure in wireless devices</li>
@@ -60,7 +64,9 @@ export const SmartHomeModule5Section4Risks = () => {
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Security and Privacy Vulnerabilities</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Security and Privacy Vulnerabilities
+            </h4>
             <div className="space-y-3">
               <div className="bg-red-600/20 p-3 rounded border border-red-600/40">
                 <p className="text-red-400 font-semibold text-sm mb-1">Cybersecurity Threats</p>
@@ -115,7 +121,9 @@ export const SmartHomeModule5Section4Risks = () => {
               </ul>
             </div>
             <div>
-              <p className="text-foreground font-semibold text-sm mb-2">Configuration Best Practices:</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Configuration Best Practices:
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Proper sensor placement and calibration</li>
                 <li>• Intelligent alert filtering and grouping</li>

@@ -1,161 +1,210 @@
-
-import { Settings, Zap, FileCheck, Eye, AlertTriangle, Table, CheckCircle, Clock, Users, BookOpen } from 'lucide-react';
+import {
+  Settings,
+  Zap,
+  FileCheck,
+  Eye,
+  AlertTriangle,
+  Table,
+  CheckCircle,
+  Clock,
+  Users,
+  BookOpen,
+} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const InsulationTestMethodsContent = () => {
   const setupSteps = [
-    "Use a multifunction tester (MFT) or dedicated IR tester",
-    "Select the appropriate test voltage—typically 500 V DC for circuits up to 500 V",
-    "Ensure the circuit is safely isolated and proven dead",
-    "Disconnect electronic devices that could be damaged by the test voltage"
+    'Use a multifunction tester (MFT) or dedicated IR tester',
+    'Select the appropriate test voltage—typically 500 V DC for circuits up to 500 V',
+    'Ensure the circuit is safely isolated and proven dead',
+    'Disconnect electronic devices that could be damaged by the test voltage',
   ];
 
   const testCombinations = [
     {
-      test: "Line to Neutral (L–N)",
-      purpose: "Tests insulation between live conductors",
-      procedure: "Connect probes between Line and Neutral conductors"
+      test: 'Line to Neutral (L–N)',
+      purpose: 'Tests insulation between live conductors',
+      procedure: 'Connect probes between Line and Neutral conductors',
     },
     {
-      test: "Line to Earth (L–E)",
-      purpose: "Tests insulation between Line and protective conductor",
-      procedure: "Connect probes between Line conductor and Earth terminal"
+      test: 'Line to Earth (L–E)',
+      purpose: 'Tests insulation between Line and protective conductor',
+      procedure: 'Connect probes between Line conductor and Earth terminal',
     },
     {
-      test: "Neutral to Earth (N–E)",
-      purpose: "Tests insulation between Neutral and protective conductor",
-      procedure: "Connect probes between Neutral conductor and Earth terminal"
-    }
+      test: 'Neutral to Earth (N–E)',
+      purpose: 'Tests insulation between Neutral and protective conductor',
+      procedure: 'Connect probes between Neutral conductor and Earth terminal',
+    },
   ];
 
   const finalCircuitProcedure = [
-    "Disconnect the live conductors at the origin (e.g. MCB/RCBO terminals)",
+    'Disconnect the live conductors at the origin (e.g. MCB/RCBO terminals)',
     "Link L & N together if testing L+N to Earth (common where loads can't be disconnected)",
     "Test between the conductor pairs using the meter's probes",
-    "Maintain probe contact for several seconds until the reading stabilises"
+    'Maintain probe contact for several seconds until the reading stabilises',
   ];
 
   const interpretationCriteria = [
-    { result: "≥ 1 MΩ", status: "Pass", action: "Acceptable - record actual value", color: "green" },
-    { result: "< 1 MΩ", status: "Fail", action: "Investigate and rectify before proceeding", color: "red" }
+    {
+      result: '≥ 1 MΩ',
+      status: 'Pass',
+      action: 'Acceptable - record actual value',
+      color: 'green',
+    },
+    {
+      result: '< 1 MΩ',
+      status: 'Fail',
+      action: 'Investigate and rectify before proceeding',
+      color: 'red',
+    },
   ];
 
   const investigationSteps = [
-    "Check for moisture in fittings and enclosures",
-    "Inspect for damaged cable insulation",
-    "Look for incorrectly terminated conductors",
-    "Verify no foreign objects in termination points",
-    "Consider environmental factors (humidity, contamination)"
+    'Check for moisture in fittings and enclosures',
+    'Inspect for damaged cable insulation',
+    'Look for incorrectly terminated conductors',
+    'Verify no foreign objects in termination points',
+    'Consider environmental factors (humidity, contamination)',
   ];
 
   const advancedTechniques = [
     {
-      title: "Progressive Testing Method",
-      description: "Test circuits in stages, starting from the distribution board and working outward to isolate problem areas",
-      when: "When initial readings are marginal or when faults are suspected"
+      title: 'Progressive Testing Method',
+      description:
+        'Test circuits in stages, starting from the distribution board and working outward to isolate problem areas',
+      when: 'When initial readings are marginal or when faults are suspected',
     },
     {
-      title: "Sectional Testing",
-      description: "Divide long circuits into sections to pinpoint specific problem areas more accurately",
-      when: "For long cable runs or complex installations with multiple junction points"
+      title: 'Sectional Testing',
+      description:
+        'Divide long circuits into sections to pinpoint specific problem areas more accurately',
+      when: 'For long cable runs or complex installations with multiple junction points',
     },
     {
-      title: "Comparative Testing",
-      description: "Compare readings between similar circuits to identify anomalies or degradation patterns",
-      when: "During periodic testing or when investigating intermittent problems"
-    }
+      title: 'Comparative Testing',
+      description:
+        'Compare readings between similar circuits to identify anomalies or degradation patterns',
+      when: 'During periodic testing or when investigating intermittent problems',
+    },
   ];
 
   const environmentalFactors = [
     {
-      factor: "Temperature",
-      impact: "Higher temperatures generally reduce IR readings due to increased molecular movement",
-      compensation: "Test during consistent temperature conditions and note ambient temperature"
+      factor: 'Temperature',
+      impact:
+        'Higher temperatures generally reduce IR readings due to increased molecular movement',
+      compensation: 'Test during consistent temperature conditions and note ambient temperature',
     },
     {
-      factor: "Humidity",
-      impact: "High humidity can significantly reduce readings, especially on surface contamination",
-      compensation: "Avoid testing in very humid conditions or ensure surfaces are clean and dry"
+      factor: 'Humidity',
+      impact:
+        'High humidity can significantly reduce readings, especially on surface contamination',
+      compensation: 'Avoid testing in very humid conditions or ensure surfaces are clean and dry',
     },
     {
-      factor: "Contamination",
-      impact: "Dust, dirt, or conductive deposits can create false low readings",
-      compensation: "Clean termination points and cable surfaces before testing"
-    }
+      factor: 'Contamination',
+      impact: 'Dust, dirt, or conductive deposits can create false low readings',
+      compensation: 'Clean termination points and cable surfaces before testing',
+    },
   ];
 
   const installationSpecifics = [
     {
-      type: "Domestic Installations",
+      type: 'Domestic Installations',
       considerations: [
-        "Test individual circuits separately where possible",
-        "Pay attention to RCD-protected circuits - may need special handling",
-        "Document any loads that cannot be disconnected",
-        "Consider impact of smart devices and electronic equipment"
-      ]
+        'Test individual circuits separately where possible',
+        'Pay attention to RCD-protected circuits - may need special handling',
+        'Document any loads that cannot be disconnected',
+        'Consider impact of smart devices and electronic equipment',
+      ],
     },
     {
-      type: "Commercial Installations",
+      type: 'Commercial Installations',
       considerations: [
-        "Coordinate with building management for access and isolation",
-        "Consider impact on business operations during testing",
-        "Document complex sub-distribution arrangements",
-        "Account for emergency lighting and fire alarm circuits"
-      ]
+        'Coordinate with building management for access and isolation',
+        'Consider impact on business operations during testing',
+        'Document complex sub-distribution arrangements',
+        'Account for emergency lighting and fire alarm circuits',
+      ],
     },
     {
-      type: "Industrial Installations",
+      type: 'Industrial Installations',
       considerations: [
-        "Follow permit-to-work procedures strictly",
-        "Consider impact of motor circuits and large equipment",
-        "Account for process control systems that cannot be isolated",
-        "Document any explosion-proof or hazardous area requirements"
-      ]
-    }
+        'Follow permit-to-work procedures strictly',
+        'Consider impact of motor circuits and large equipment',
+        'Account for process control systems that cannot be isolated',
+        'Document any explosion-proof or hazardous area requirements',
+      ],
+    },
   ];
 
   const troubleshootingGuide = [
     {
-      problem: "Readings fluctuating widely",
-      causes: ["Poor probe contact", "Contaminated surfaces", "Parallel paths through equipment"],
-      solutions: ["Clean contact points", "Ensure firm probe connection", "Disconnect more equipment", "Check for alternative earth paths"]
+      problem: 'Readings fluctuating widely',
+      causes: ['Poor probe contact', 'Contaminated surfaces', 'Parallel paths through equipment'],
+      solutions: [
+        'Clean contact points',
+        'Ensure firm probe connection',
+        'Disconnect more equipment',
+        'Check for alternative earth paths',
+      ],
     },
     {
-      problem: "Unexpectedly high readings (>999 MΩ)",
-      causes: ["Open circuit", "Disconnected neutral", "Meter range selection"],
-      solutions: ["Verify circuit continuity first", "Check all connections", "Confirm correct meter range", "Test with known good circuit"]
+      problem: 'Unexpectedly high readings (>999 MΩ)',
+      causes: ['Open circuit', 'Disconnected neutral', 'Meter range selection'],
+      solutions: [
+        'Verify circuit continuity first',
+        'Check all connections',
+        'Confirm correct meter range',
+        'Test with known good circuit',
+      ],
     },
     {
-      problem: "Readings improving during test",
-      causes: ["Capacitive charging", "Moisture evaporation", "Contact cleaning effect"],
-      solutions: ["Allow longer stabilisation time", "Repeat test after interval", "Clean terminations thoroughly"]
+      problem: 'Readings improving during test',
+      causes: ['Capacitive charging', 'Moisture evaporation', 'Contact cleaning effect'],
+      solutions: [
+        'Allow longer stabilisation time',
+        'Repeat test after interval',
+        'Clean terminations thoroughly',
+      ],
     },
     {
-      problem: "Different readings on similar circuits",
-      causes: ["Age differences", "Installation methods", "Environmental exposure", "Load differences"],
-      solutions: ["Investigate installation history", "Check environmental conditions", "Look for moisture ingress", "Document differences"]
-    }
+      problem: 'Different readings on similar circuits',
+      causes: [
+        'Age differences',
+        'Installation methods',
+        'Environmental exposure',
+        'Load differences',
+      ],
+      solutions: [
+        'Investigate installation history',
+        'Check environmental conditions',
+        'Look for moisture ingress',
+        'Document differences',
+      ],
+    },
   ];
 
   const documentationRequirements = [
-    "Circuit identification and description",
-    "Test voltage used and reason for selection",
-    "Actual measured values (not just pass/fail)",
-    "Temperature and environmental conditions",
-    "Any limitations or deviations from standard procedure",
-    "Equipment used (model, calibration date)",
-    "Date, time, and duration of test",
-    "Name and signature of competent person"
+    'Circuit identification and description',
+    'Test voltage used and reason for selection',
+    'Actual measured values (not just pass/fail)',
+    'Temperature and environmental conditions',
+    'Any limitations or deviations from standard procedure',
+    'Equipment used (model, calibration date)',
+    'Date, time, and duration of test',
+    'Name and signature of competent person',
   ];
 
   const safetyReminders = [
-    "Always prove dead before testing - IR testing uses high voltage",
-    "Ensure all personnel are clear of the circuit during testing",
-    "Use appropriate PPE including insulated gloves when handling test leads",
-    "Never touch probe tips during testing - they carry high voltage",
-    "Be aware that some IR testers can deliver a significant shock",
-    "Ensure test leads are in good condition with no damaged insulation",
-    "Always discharge circuits after testing before reconnection"
+    'Always prove dead before testing - IR testing uses high voltage',
+    'Ensure all personnel are clear of the circuit during testing',
+    'Use appropriate PPE including insulated gloves when handling test leads',
+    'Never touch probe tips during testing - they carry high voltage',
+    'Be aware that some IR testers can deliver a significant shock',
+    'Ensure test leads are in good condition with no damaged insulation',
+    'Always discharge circuits after testing before reconnection',
   ];
 
   return (
@@ -181,7 +230,7 @@ export const InsulationTestMethodsContent = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
             <h4 className="text-blue-200 font-medium mb-3">Test Voltage Selection</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -214,10 +263,17 @@ export const InsulationTestMethodsContent = () => {
           </p>
           <div className="space-y-4">
             {testCombinations.map((test, index) => (
-              <div key={index} className="bg-[#323232] rounded-lg p-4 border-l-4 border-elec-yellow/50">
+              <div
+                key={index}
+                className="bg-[#323232] rounded-lg p-4 border-l-4 border-elec-yellow/50"
+              >
                 <h4 className="text-foreground font-medium mb-2">{test.test}</h4>
-                <p className="text-foreground text-sm mb-2"><strong>Purpose:</strong> {test.purpose}</p>
-                <p className="text-blue-300 text-sm"><strong>Procedure:</strong> {test.procedure}</p>
+                <p className="text-foreground text-sm mb-2">
+                  <strong>Purpose:</strong> {test.purpose}
+                </p>
+                <p className="text-blue-300 text-sm">
+                  <strong>Procedure:</strong> {test.procedure}
+                </p>
               </div>
             ))}
           </div>
@@ -245,15 +301,16 @@ export const InsulationTestMethodsContent = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="text-yellow-200 font-medium mb-2">Important</h4>
                 <p className="text-foreground text-sm leading-relaxed">
-                  Maintain probe contact for several seconds to allow the reading to stabilise. 
-                  Capacitive effects in cables can cause initial high readings that settle to the true value.
+                  Maintain probe contact for several seconds to allow the reading to stabilise.
+                  Capacitive effects in cables can cause initial high readings that settle to the
+                  true value.
                 </p>
               </div>
             </div>
@@ -271,14 +328,20 @@ export const InsulationTestMethodsContent = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-foreground">
-            Beyond basic IR testing, these advanced techniques can help diagnose complex problems and provide more detailed analysis.
+            Beyond basic IR testing, these advanced techniques can help diagnose complex problems
+            and provide more detailed analysis.
           </p>
           <div className="space-y-4">
             {advancedTechniques.map((technique, index) => (
-              <div key={index} className="bg-[#323232] rounded-lg p-4 border-l-4 border-blue-500/50">
+              <div
+                key={index}
+                className="bg-[#323232] rounded-lg p-4 border-l-4 border-blue-500/50"
+              >
                 <h4 className="text-foreground font-medium mb-2">{technique.title}</h4>
                 <p className="text-foreground text-sm mb-2">{technique.description}</p>
-                <p className="text-blue-300 text-sm"><strong>When to use:</strong> {technique.when}</p>
+                <p className="text-blue-300 text-sm">
+                  <strong>When to use:</strong> {technique.when}
+                </p>
               </div>
             ))}
           </div>
@@ -295,14 +358,19 @@ export const InsulationTestMethodsContent = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-foreground">
-            Environmental conditions significantly impact IR test results. Understanding these factors helps interpret readings correctly.
+            Environmental conditions significantly impact IR test results. Understanding these
+            factors helps interpret readings correctly.
           </p>
           <div className="space-y-4">
             {environmentalFactors.map((factor, index) => (
               <div key={index} className="bg-[#323232] rounded-lg p-4">
                 <h4 className="text-foreground font-medium mb-2">{factor.factor}</h4>
-                <p className="text-foreground text-sm mb-2"><strong>Impact:</strong> {factor.impact}</p>
-                <p className="text-green-300 text-sm"><strong>Compensation:</strong> {factor.compensation}</p>
+                <p className="text-foreground text-sm mb-2">
+                  <strong>Impact:</strong> {factor.impact}
+                </p>
+                <p className="text-green-300 text-sm">
+                  <strong>Compensation:</strong> {factor.compensation}
+                </p>
               </div>
             ))}
           </div>
@@ -319,7 +387,8 @@ export const InsulationTestMethodsContent = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-foreground">
-            Different installation types require specific approaches and considerations during IR testing.
+            Different installation types require specific approaches and considerations during IR
+            testing.
           </p>
           <div className="space-y-6">
             {installationSpecifics.map((installation, index) => (
@@ -351,14 +420,23 @@ export const InsulationTestMethodsContent = () => {
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {interpretationCriteria.map((item, index) => (
-                <div key={index} className={`p-4 rounded border-l-4 ${
-                  item.color === 'green' ? 'bg-green-600/10 border-green-500/50' : 'bg-red-600/10 border-red-500/50'
-                }`}>
+                <div
+                  key={index}
+                  className={`p-4 rounded border-l-4 ${
+                    item.color === 'green'
+                      ? 'bg-green-600/10 border-green-500/50'
+                      : 'bg-red-600/10 border-red-500/50'
+                  }`}
+                >
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-foreground font-medium">{item.result}</span>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      item.color === 'green' ? 'bg-green-600/20 text-green-200' : 'bg-red-600/20 text-red-200'
-                    }`}>
+                    <span
+                      className={`px-2 py-1 rounded text-xs font-medium ${
+                        item.color === 'green'
+                          ? 'bg-green-600/20 text-green-200'
+                          : 'bg-red-600/20 text-red-200'
+                      }`}
+                    >
                       {item.status}
                     </span>
                   </div>
@@ -367,12 +445,13 @@ export const InsulationTestMethodsContent = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
             <h4 className="text-green-200 font-medium mb-3">Healthy Circuit Indicators</h4>
             <p className="text-foreground text-sm leading-relaxed">
-              Higher values (e.g. 200+ MΩ) are common in healthy circuits. New installations often show 
-              readings well above the minimum requirement, indicating excellent insulation integrity.
+              Higher values (e.g. 200+ MΩ) are common in healthy circuits. New installations often
+              show readings well above the minimum requirement, indicating excellent insulation
+              integrity.
             </p>
           </div>
 
@@ -400,7 +479,8 @@ export const InsulationTestMethodsContent = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-foreground">
-            Understanding common IR testing problems and their solutions helps ensure accurate results and efficient testing.
+            Understanding common IR testing problems and their solutions helps ensure accurate
+            results and efficient testing.
           </p>
           <div className="space-y-4">
             {troubleshootingGuide.map((item, index) => (
@@ -411,7 +491,9 @@ export const InsulationTestMethodsContent = () => {
                     <h5 className="text-foreground text-sm font-medium mb-2">Possible Causes:</h5>
                     <ul className="space-y-1">
                       {item.causes.map((cause, idx) => (
-                        <li key={idx} className="text-foreground text-sm">• {cause}</li>
+                        <li key={idx} className="text-foreground text-sm">
+                          • {cause}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -419,7 +501,9 @@ export const InsulationTestMethodsContent = () => {
                     <h5 className="text-foreground text-sm font-medium mb-2">Solutions:</h5>
                     <ul className="space-y-1">
                       {item.solutions.map((solution, idx) => (
-                        <li key={idx} className="text-green-300 text-sm">• {solution}</li>
+                        <li key={idx} className="text-green-300 text-sm">
+                          • {solution}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -440,7 +524,8 @@ export const InsulationTestMethodsContent = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-foreground">
-            Proper documentation is essential for compliance and future reference. Record all relevant information systematically.
+            Proper documentation is essential for compliance and future reference. Record all
+            relevant information systematically.
           </p>
           <div className="bg-[#323232] rounded-lg p-4">
             <h4 className="text-foreground font-medium mb-3">Essential Information to Record:</h4>
@@ -453,13 +538,15 @@ export const InsulationTestMethodsContent = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
             <h4 className="text-blue-200 font-medium mb-3">Additional Best Practices</h4>
             <ul className="space-y-2 text-foreground text-sm">
               <li>• Include photographs of problem areas or unique configurations</li>
               <li>• Record any unusual environmental conditions during testing</li>
-              <li>• Note any equipment that required special handling or couldn't be disconnected</li>
+              <li>
+                • Note any equipment that required special handling or couldn't be disconnected
+              </li>
               <li>• Document recommendations for future testing or maintenance</li>
             </ul>
           </div>
@@ -478,7 +565,8 @@ export const InsulationTestMethodsContent = () => {
           <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
             <h4 className="text-blue-200 font-medium mb-3">Alternative Testing Method</h4>
             <p className="text-foreground text-sm leading-relaxed mb-3">
-              If there are sensitive devices (e.g. dimmers, smart gear, LED drivers), use the L+N to Earth test only.
+              If there are sensitive devices (e.g. dimmers, smart gear, LED drivers), use the L+N to
+              Earth test only.
             </p>
             <div className="bg-[#2a2a2a] p-3 rounded">
               <p className="text-foreground font-medium mb-2">Procedure:</p>
@@ -490,7 +578,7 @@ export const InsulationTestMethodsContent = () => {
               </ol>
             </div>
           </div>
-          
+
           <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
@@ -543,7 +631,7 @@ export const InsulationTestMethodsContent = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-[#323232] rounded-lg p-4">
               <h4 className="text-foreground font-medium mb-3">Testing Requirements</h4>
-               <ul className="space-y-2 text-foreground text-sm">
+              <ul className="space-y-2 text-foreground text-sm">
                 <li>• Test insulation resistance on each conductor loop</li>
                 <li>• L–N, L–E, and N–E must all meet minimum IR values</li>
                 <li>• Test with ring ends separated at the distribution board</li>

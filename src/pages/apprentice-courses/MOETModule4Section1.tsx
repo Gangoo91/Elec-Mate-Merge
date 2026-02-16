@@ -1,51 +1,53 @@
-import { ArrowLeft, Calendar, FileText, Settings, CheckSquare, Scale } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Calendar, FileText, Settings, CheckSquare, Scale } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule4Section1 = () => {
   useSEO(
-    "Section 4.1: Planned Preventive Maintenance (PPM) - MOET Module 4",
-    "Principles of PPM, maintenance scheduling, records, lubrication, inspection routines and regulatory compliance"
+    'Section 4.1: Planned Preventive Maintenance (PPM) - MOET Module 4',
+    'Principles of PPM, maintenance scheduling, records, lubrication, inspection routines and regulatory compliance'
   );
 
   const subsections = [
     {
-      number: "4.1.1",
-      title: "Principles of PPM",
-      description: "Understanding preventive maintenance philosophy, benefits and implementation strategies",
+      number: '4.1.1',
+      title: 'Principles of PPM',
+      description:
+        'Understanding preventive maintenance philosophy, benefits and implementation strategies',
       icon: Calendar,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section1-1"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section1-1',
     },
     {
-      number: "4.1.2",
-      title: "Maintenance Scheduling and Records",
-      description: "Creating maintenance schedules, record keeping and documentation systems",
+      number: '4.1.2',
+      title: 'Maintenance Scheduling and Records',
+      description: 'Creating maintenance schedules, record keeping and documentation systems',
       icon: FileText,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section1-2"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section1-2',
     },
     {
-      number: "4.1.3",
-      title: "Lubrication, Cleaning and Adjustments",
-      description: "Routine maintenance tasks including lubrication schedules and equipment adjustments",
+      number: '4.1.3',
+      title: 'Lubrication, Cleaning and Adjustments',
+      description:
+        'Routine maintenance tasks including lubrication schedules and equipment adjustments',
       icon: Settings,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section1-3"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section1-3',
     },
     {
-      number: "4.1.4",
-      title: "Electrical Inspection Routines",
-      description: "Systematic electrical inspection procedures and safety checks",
+      number: '4.1.4',
+      title: 'Electrical Inspection Routines',
+      description: 'Systematic electrical inspection procedures and safety checks',
       icon: CheckSquare,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section1-4"
+      href: '/study-centre/apprentice/m-o-e-t-module4-section1-4',
     },
     {
-      number: "4.1.5",
-      title: "Legal and Regulatory Compliance in PPM",
-      description: "Regulatory requirements, standards compliance and legal obligations",
+      number: '4.1.5',
+      title: 'Legal and Regulatory Compliance in PPM',
+      description: 'Regulatory requirements, standards compliance and legal obligations',
       icon: Scale,
-      href: "/study-centre/apprentice/m-o-e-t-module4-section1-5"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module4-section1-5',
+    },
   ];
 
   return (
@@ -53,7 +55,11 @@ const MOETModule4Section1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 4
@@ -69,7 +75,8 @@ const MOETModule4Section1 = () => {
             Section 4.1: Planned Preventive Maintenance (PPM)
           </h1>
           <p className="text-xl text-muted-foreground max-w-5xl">
-            Principles of PPM, maintenance scheduling, records, lubrication, inspection routines and regulatory compliance.
+            Principles of PPM, maintenance scheduling, records, lubrication, inspection routines and
+            regulatory compliance.
           </p>
         </div>
 

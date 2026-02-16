@@ -1,178 +1,182 @@
-import { ArrowLeft, ArrowRight, MessageSquare, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, MessageSquare, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Why is clear verbal communication important on site?",
+    question: 'Why is clear verbal communication important on site?',
     options: [
-      "It prevents mistakes, improves coordination, and reduces risks of accidents",
-      "It helps you finish work faster",
-      "It impresses supervisors",
-      "It's a legal requirement"
+      'It prevents mistakes, improves coordination, and reduces risks of accidents',
+      'It helps you finish work faster',
+      'It impresses supervisors',
+      "It's a legal requirement",
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
   },
   {
     id: 2,
-    question: "What are the three key characteristics of professional communication?",
+    question: 'What are the three key characteristics of professional communication?',
     options: [
-      "Loud, fast, and technical",
-      "Clarity, conciseness, and professionalism",
-      "Formal, complex, and detailed",
-      "Casual, friendly, and relaxed"
+      'Loud, fast, and technical',
+      'Clarity, conciseness, and professionalism',
+      'Formal, complex, and detailed',
+      'Casual, friendly, and relaxed',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 3,
-    question: "Give one example of technical jargon that might confuse a non-electrician.",
+    question: 'Give one example of technical jargon that might confuse a non-electrician.',
     options: [
       "Using 'cable' instead of 'wire'",
       "Using 'MCB' instead of saying 'circuit breaker'",
       "Using 'socket' instead of 'outlet'",
-      "Using 'switch' instead of 'control'"
+      "Using 'switch' instead of 'control'",
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 4,
-    question: "What should you do before giving verbal instructions?",
+    question: 'What should you do before giving verbal instructions?',
     options: [
-      "Speak as quickly as possible",
-      "Use lots of technical terms",
-      "Plan what you need to say and structure it clearly",
-      "Assume everyone understands"
+      'Speak as quickly as possible',
+      'Use lots of technical terms',
+      'Plan what you need to say and structure it clearly',
+      'Assume everyone understands',
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
   },
   {
     id: 5,
-    question: "What does it mean to be concise?",
+    question: 'What does it mean to be concise?',
     options: [
-      "Using big words to sound professional",
-      "Speaking very quietly",
-      "Delivering your message quickly and directly, without unnecessary words",
-      "Using only technical terminology"
+      'Using big words to sound professional',
+      'Speaking very quietly',
+      'Delivering your message quickly and directly, without unnecessary words',
+      'Using only technical terminology',
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
   },
   {
     id: 6,
-    question: "How can background noise affect communication?",
+    question: 'How can background noise affect communication?',
     options: [
-      "It makes you sound more professional",
-      "It can cause misheard instructions and mistakes",
+      'It makes you sound more professional',
+      'It can cause misheard instructions and mistakes',
       "It doesn't affect communication",
-      "It helps focus attention"
+      'It helps focus attention',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 7,
-    question: "What is the purpose of repeating back instructions?",
+    question: 'What is the purpose of repeating back instructions?',
     options: [
-      "To waste time",
+      'To waste time',
       "To show you're listening",
-      "To confirm understanding and avoid errors",
-      "To practice speaking"
+      'To confirm understanding and avoid errors',
+      'To practice speaking',
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
   },
   {
     id: 8,
-    question: "Give one example of professional body language.",
+    question: 'Give one example of professional body language.',
     options: [
-      "Looking at your phone while listening",
-      "Maintaining eye contact while giving instructions",
-      "Crossing your arms",
-      "Turning your back to the speaker"
+      'Looking at your phone while listening',
+      'Maintaining eye contact while giving instructions',
+      'Crossing your arms',
+      'Turning your back to the speaker',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 9,
     question: "What should you do if you don't understand an instruction?",
     options: [
-      "Guess what they meant",
-      "Ask for clarification immediately",
-      "Ignore it and move on",
-      "Ask someone else later"
+      'Guess what they meant',
+      'Ask for clarification immediately',
+      'Ignore it and move on',
+      'Ask someone else later',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 10,
-    question: "How does active listening help communication?",
+    question: 'How does active listening help communication?',
     options: [
-      "It makes you look busy",
-      "It ensures you fully understand the message and can confirm it back",
-      "It impresses your supervisor",
-      "It saves time"
+      'It makes you look busy',
+      'It ensures you fully understand the message and can confirm it back',
+      'It impresses your supervisor',
+      'It saves time',
     ],
-    correctAnswer: 1
-  }
+    correctAnswer: 1,
+  },
 ];
 
 const quickCheckQuestions = [
   {
-    id: "comm1",
-    question: "What is one benefit of clear verbal communication on site?",
+    id: 'comm1',
+    question: 'What is one benefit of clear verbal communication on site?',
     options: [
-      "It makes you sound professional",
-      "It prevents mistakes and improves safety",
-      "It saves time",
-      "It impresses supervisors"
+      'It makes you sound professional',
+      'It prevents mistakes and improves safety',
+      'It saves time',
+      'It impresses supervisors',
     ],
     correctIndex: 1,
-    explanation: "Clear verbal communication prevents mistakes in installation and reduces risks of accidents caused by misheard instructions."
+    explanation:
+      'Clear verbal communication prevents mistakes in installation and reduces risks of accidents caused by misheard instructions.',
   },
   {
-    id: "comm2",
-    question: "Which is a barrier to effective communication on construction sites?",
+    id: 'comm2',
+    question: 'Which is a barrier to effective communication on construction sites?',
     options: [
-      "Using clear language",
-      "Background noise",
-      "Maintaining eye contact",
-      "Asking questions"
+      'Using clear language',
+      'Background noise',
+      'Maintaining eye contact',
+      'Asking questions',
     ],
     correctIndex: 1,
-    explanation: "Background noise is common on construction sites and can cause misheard instructions and mistakes."
+    explanation:
+      'Background noise is common on construction sites and can cause misheard instructions and mistakes.',
   },
   {
-    id: "comm3",
-    question: "What should you do when receiving important instructions?",
+    id: 'comm3',
+    question: 'What should you do when receiving important instructions?',
     options: [
-      "Continue working while listening",
+      'Continue working while listening',
       "Stop what you're doing and give full attention",
-      "Wait until later to ask questions",
-      "Write it down without confirming"
+      'Wait until later to ask questions',
+      'Write it down without confirming',
     ],
     correctIndex: 1,
-    explanation: "Active listening requires stopping your current task and giving full attention to ensure you understand the instructions correctly."
+    explanation:
+      'Active listening requires stopping your current task and giving full attention to ensure you understand the instructions correctly.',
   },
   {
-    id: "comm4",
+    id: 'comm4',
     question: "What is the 'who, what, when, where' structure used for?",
     options: [
-      "Writing reports",
-      "Giving clear instructions",
-      "Safety briefings only",
-      "Client presentations"
+      'Writing reports',
+      'Giving clear instructions',
+      'Safety briefings only',
+      'Client presentations',
     ],
     correctIndex: 1,
-    explanation: "The 'who, what, when, where' structure helps ensure instructions are complete and clear, reducing the chance of misunderstandings."
-  }
+    explanation:
+      "The 'who, what, when, where' structure helps ensure instructions are complete and clear, reducing the chance of misunderstandings.",
+  },
 ];
 
 const Module5Section6_1 = () => {
   useSEO(
-    "Verbal Communication: Being Clear, Concise, and Professional | Electrical Training",
-    "Learn essential verbal communication skills for electricians, including clear instructions, professional tone, and active listening techniques for construction sites."
+    'Verbal Communication: Being Clear, Concise, and Professional | Electrical Training',
+    'Learn essential verbal communication skills for electricians, including clear instructions, professional tone, and active listening techniques for construction sites.'
   );
 
   return (
@@ -226,9 +230,15 @@ const Module5Section6_1 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="text-white/80 text-sm space-y-1">
-                  <li>• <strong>Spot:</strong> Plan your words before speaking</li>
-                  <li>• <strong>Use:</strong> Check understanding after giving instructions</li>
-                  <li>• <strong>Check:</strong> Use "who, what, when, where" structure</li>
+                  <li>
+                    • <strong>Spot:</strong> Plan your words before speaking
+                  </li>
+                  <li>
+                    • <strong>Use:</strong> Check understanding after giving instructions
+                  </li>
+                  <li>
+                    • <strong>Check:</strong> Use "who, what, when, where" structure
+                  </li>
                 </ul>
               </div>
             </div>
@@ -241,9 +251,13 @@ const Module5Section6_1 = () => {
               Learning Outcomes
             </h2>
             <ul className="text-white/80 space-y-2 leading-relaxed">
-              <li>• Explain why professional verbal communication is essential in electrical work</li>
+              <li>
+                • Explain why professional verbal communication is essential in electrical work
+              </li>
               <li>• Identify common barriers to clear communication on site</li>
-              <li>• Apply techniques for being concise and professional when speaking with others</li>
+              <li>
+                • Apply techniques for being concise and professional when speaking with others
+              </li>
               <li>• Demonstrate active listening skills to ensure mutual understanding</li>
             </ul>
           </section>
@@ -256,13 +270,16 @@ const Module5Section6_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Effective communication is the foundation of safe and efficient electrical work. Poor communication leads to serious consequences:
+                Effective communication is the foundation of safe and efficient electrical work.
+                Poor communication leads to serious consequences:
               </p>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Safety Implications</p>
                 <ul className="text-sm space-y-1 text-white/70">
-                  <li>• Prevents mistakes in installation (e.g., misunderstanding circuit layouts)</li>
+                  <li>
+                    • Prevents mistakes in installation (e.g., misunderstanding circuit layouts)
+                  </li>
                   <li>• Reduces risks of accidents caused by misheard instructions</li>
                   <li>• Ensures proper isolation procedures are communicated</li>
                   <li>• Prevents incorrect tool or material usage</li>
@@ -289,25 +306,38 @@ const Module5Section6_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Professional communication has four key characteristics that distinguish it from casual conversation:
+                Professional communication has four key characteristics that distinguish it from
+                casual conversation:
               </p>
 
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Clarity</p>
-                  <p className="text-sm text-white/70">Speak in straightforward language. Avoid unnecessary jargon unless everyone understands it. Use specific terms rather than vague descriptions.</p>
+                  <p className="text-sm text-white/70">
+                    Speak in straightforward language. Avoid unnecessary jargon unless everyone
+                    understands it. Use specific terms rather than vague descriptions.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Conciseness</p>
-                  <p className="text-sm text-white/70">Get to the point quickly. Deliver your message without rambling. Focus on essential information first.</p>
+                  <p className="text-sm text-white/70">
+                    Get to the point quickly. Deliver your message without rambling. Focus on
+                    essential information first.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Professional Tone</p>
-                  <p className="text-sm text-white/70">Maintain a respectful, calm, and confident manner. Show respect for all team members regardless of rank.</p>
+                  <p className="text-sm text-white/70">
+                    Maintain a respectful, calm, and confident manner. Show respect for all team
+                    members regardless of rank.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Accuracy</p>
-                  <p className="text-sm text-white/70">Use correct terminology. Reference specific locations, quantities, and specifications. Double-check facts before communicating them.</p>
+                  <p className="text-sm text-white/70">
+                    Use correct terminology. Reference specific locations, quantities, and
+                    specifications. Double-check facts before communicating them.
+                  </p>
                 </div>
               </div>
             </div>
@@ -323,7 +353,8 @@ const Module5Section6_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Construction sites present unique challenges to clear communication. Understanding these barriers helps you overcome them:
+                Construction sites present unique challenges to clear communication. Understanding
+                these barriers helps you overcome them:
               </p>
 
               <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
@@ -331,15 +362,24 @@ const Module5Section6_1 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Environmental</p>
-                    <p className="text-white/70">Background noise, distance, poor lighting, interference from machinery and tools.</p>
+                    <p className="text-white/70">
+                      Background noise, distance, poor lighting, interference from machinery and
+                      tools.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Language and Cultural</p>
-                    <p className="text-white/70">Technical jargon, language differences, varying levels of technical knowledge, regional terminology.</p>
+                    <p className="text-white/70">
+                      Technical jargon, language differences, varying levels of technical knowledge,
+                      regional terminology.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Personal</p>
-                    <p className="text-white/70">Not actively listening, assumptions about what others know, stress, fear of asking questions.</p>
+                    <p className="text-white/70">
+                      Not actively listening, assumptions about what others know, stress, fear of
+                      asking questions.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -355,9 +395,7 @@ const Module5Section6_1 = () => {
               Techniques for Clear and Professional Speech
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>
-                Master these practical techniques to improve your verbal communication on site:
-              </p>
+              <p>Master these practical techniques to improve your verbal communication on site:</p>
 
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -381,8 +419,12 @@ const Module5Section6_1 = () => {
                 <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
                   <p className="font-semibold text-blue-400 mb-2">Confirmation Techniques</p>
                   <ul className="text-sm space-y-1 text-white/70">
-                    <li>• Check understanding – ask the listener to repeat back key instructions</li>
-                    <li>• Use open questions: "What questions do you have?" not "Do you understand?"</li>
+                    <li>
+                      • Check understanding – ask the listener to repeat back key instructions
+                    </li>
+                    <li>
+                      • Use open questions: "What questions do you have?" not "Do you understand?"
+                    </li>
                     <li>• Watch for non-verbal cues that suggest confusion</li>
                   </ul>
                 </div>
@@ -400,7 +442,8 @@ const Module5Section6_1 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Active listening is just as important as speaking clearly. It ensures you fully understand instructions and can respond appropriately:
+                Active listening is just as important as speaking clearly. It ensures you fully
+                understand instructions and can respond appropriately:
               </p>
 
               <div className="p-4 rounded-lg bg-cyan-500/5 border-l-2 border-cyan-500/50">
@@ -408,15 +451,24 @@ const Module5Section6_1 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Physical Attention</p>
-                    <p className="text-white/70">Give full attention (don't keep working when someone's talking to you). Face the speaker and maintain appropriate eye contact.</p>
+                    <p className="text-white/70">
+                      Give full attention (don't keep working when someone's talking to you). Face
+                      the speaker and maintain appropriate eye contact.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Verbal and Non-Verbal Feedback</p>
-                    <p className="text-white/70">Nod or give verbal cues ("yes," "I understand," "right"). Use appropriate facial expressions to show engagement.</p>
+                    <p className="text-white/70">
+                      Nod or give verbal cues ("yes," "I understand," "right"). Use appropriate
+                      facial expressions to show engagement.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Confirmation and Clarification</p>
-                    <p className="text-white/70">Repeat or paraphrase key points to confirm understanding. Ask specific questions about unclear instructions.</p>
+                    <p className="text-white/70">
+                      Repeat or paraphrase key points to confirm understanding. Ask specific
+                      questions about unclear instructions.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -432,33 +484,48 @@ const Module5Section6_1 = () => {
               Practical Application: The "Who, What, When, Where" Structure
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>
-                Use this structured approach for giving clear instructions:
-              </p>
+              <p>Use this structured approach for giving clear instructions:</p>
 
               <div className="p-4 rounded-lg bg-indigo-500/5 border-l-2 border-indigo-500/50">
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-white mb-1">WHO: Address the person specifically</p>
-                    <p className="text-white/70">Use the person's name to get their attention. Ensure they are ready to receive the instruction.</p>
+                    <p className="font-medium text-white mb-1">
+                      WHO: Address the person specifically
+                    </p>
+                    <p className="text-white/70">
+                      Use the person's name to get their attention. Ensure they are ready to receive
+                      the instruction.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">WHAT: Describe the task clearly</p>
-                    <p className="text-white/70">Be specific about materials (e.g., "2.5mm twin and earth cable"). Specify the method or standard required.</p>
+                    <p className="text-white/70">
+                      Be specific about materials (e.g., "2.5mm twin and earth cable"). Specify the
+                      method or standard required.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">WHEN: Set clear timescales</p>
-                    <p className="text-white/70">Give specific deadlines ("before lunch," "by 3pm"). Indicate priority level if multiple tasks.</p>
+                    <p className="text-white/70">
+                      Give specific deadlines ("before lunch," "by 3pm"). Indicate priority level if
+                      multiple tasks.
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">WHERE: Specify exact locations</p>
-                    <p className="text-white/70">Use specific references ("socket three on the north wall"). Reference drawings or room numbers where available.</p>
+                    <p className="text-white/70">
+                      Use specific references ("socket three on the north wall"). Reference drawings
+                      or room numbers where available.
+                    </p>
                   </div>
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded border border-white/10">
                   <p className="text-sm text-white/80">
-                    <strong className="text-white">Example:</strong> "John (WHO), I need you to run 2.5mm twin and earth cable from the consumer unit to socket three on the north wall (WHAT), and get it done before lunch (WHEN). The socket location is marked on drawing E-02 (WHERE)."
+                    <strong className="text-white">Example:</strong> "John (WHO), I need you to run
+                    2.5mm twin and earth cable from the consumer unit to socket three on the north
+                    wall (WHAT), and get it done before lunch (WHEN). The socket location is marked
+                    on drawing E-02 (WHERE)."
                   </p>
                 </div>
               </div>

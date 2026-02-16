@@ -16,35 +16,35 @@ const categories: Category[] = [
     label: 'All Podcasts',
     icon: <Headphones className="h-4 w-4" />,
     color: 'text-orange-400',
-    bgColor: 'bg-orange-500/20 border-orange-500/40'
+    bgColor: 'bg-orange-500/20 border-orange-500/40',
   },
   {
     id: 'trades-specific',
     label: 'Trades & Construction',
     icon: <Wrench className="h-4 w-4" />,
     color: 'text-amber-400',
-    bgColor: 'bg-amber-500/20 border-amber-500/40'
+    bgColor: 'bg-amber-500/20 border-amber-500/40',
   },
   {
     id: 'general-mental-health',
     label: 'General Wellbeing',
     icon: <Brain className="h-4 w-4" />,
     color: 'text-blue-400',
-    bgColor: 'bg-blue-500/20 border-blue-500/40'
+    bgColor: 'bg-blue-500/20 border-blue-500/40',
   },
   {
     id: 'personal-stories',
     label: 'Personal Stories',
     icon: <BookOpen className="h-4 w-4" />,
     color: 'text-pink-400',
-    bgColor: 'bg-pink-500/20 border-pink-500/40'
+    bgColor: 'bg-pink-500/20 border-pink-500/40',
   },
   {
     id: 'sleep-anxiety',
     label: 'Sleep & Anxiety',
     icon: <Moon className="h-4 w-4" />,
     color: 'text-indigo-400',
-    bgColor: 'bg-indigo-500/20 border-indigo-500/40'
+    bgColor: 'bg-indigo-500/20 border-indigo-500/40',
   },
 ];
 
@@ -54,7 +54,11 @@ interface CategoryFilterBarProps {
   podcastCounts?: Record<string, number>;
 }
 
-const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }: CategoryFilterBarProps) => {
+const CategoryFilterBar = ({
+  selectedCategory,
+  onCategoryChange,
+  podcastCounts,
+}: CategoryFilterBarProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -79,7 +83,7 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
       const scrollAmount = 200;
       container.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
       setTimeout(checkScrollButtons, 300);
     }
@@ -127,16 +131,15 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
                 relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl border
                 transition-all duration-300 whitespace-nowrap flex-shrink-0
                 touch-manipulation active:scale-95
-                ${isSelected
-                  ? `${category.bgColor} ${category.color} shadow-lg`
-                  : 'bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/20'
+                ${
+                  isSelected
+                    ? `${category.bgColor} ${category.color} shadow-lg`
+                    : 'bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/20'
                 }
               `}
             >
               {/* Icon */}
-              <span className={isSelected ? category.color : 'text-white'}>
-                {category.icon}
-              </span>
+              <span className={isSelected ? category.color : 'text-white'}>{category.icon}</span>
 
               {/* Label */}
               <span className={`text-xs sm:text-sm font-medium ${isSelected ? '' : 'text-white'}`}>
@@ -145,13 +148,12 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
 
               {/* Count Badge - hidden on mobile */}
               {count !== undefined && (
-                <span className={`
+                <span
+                  className={`
                   hidden sm:inline text-xs px-1.5 py-0.5 rounded-full
-                  ${isSelected
-                    ? 'bg-white/20 text-white'
-                    : 'bg-white/10 text-white'
-                  }
-                `}>
+                  ${isSelected ? 'bg-white/20 text-white' : 'bg-white/10 text-white'}
+                `}
+                >
                   {count}
                 </span>
               )}

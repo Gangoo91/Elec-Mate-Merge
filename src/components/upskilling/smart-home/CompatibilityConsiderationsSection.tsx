@@ -4,65 +4,65 @@ import { AlertTriangle, Link, CheckCircle, XCircle } from 'lucide-react';
 export const CompatibilityConsiderationsSection = () => {
   const zigbeeCompatibility = [
     {
-      issue: "Profile Compatibility",
-      description: "Devices must use the same Zigbee profile (ZHA, ZLL, Zigbee 3.0)",
-      impact: "Mix of profiles may not work together",
-      solution: "Choose Zigbee 3.0 devices for best compatibility"
+      issue: 'Profile Compatibility',
+      description: 'Devices must use the same Zigbee profile (ZHA, ZLL, Zigbee 3.0)',
+      impact: 'Mix of profiles may not work together',
+      solution: 'Choose Zigbee 3.0 devices for best compatibility',
     },
     {
-      issue: "Brand Ecosystems",
-      description: "Some brands create closed ecosystems (e.g., Philips Hue)",
-      impact: "Limited integration with other brands",
-      solution: "Use universal hubs like SmartThings or Hubitat"
+      issue: 'Brand Ecosystems',
+      description: 'Some brands create closed ecosystems (e.g., Philips Hue)',
+      impact: 'Limited integration with other brands',
+      solution: 'Use universal hubs like SmartThings or Hubitat',
     },
     {
-      issue: "Hub Requirements",
-      description: "Most Zigbee devices need a compatible hub/bridge",
-      impact: "Additional cost and complexity",
-      solution: "Plan hub selection based on device ecosystem"
-    }
+      issue: 'Hub Requirements',
+      description: 'Most Zigbee devices need a compatible hub/bridge',
+      impact: 'Additional cost and complexity',
+      solution: 'Plan hub selection based on device ecosystem',
+    },
   ];
 
   const zwaveCompatibility = [
     {
-      issue: "Backward Compatibility",
-      description: "Z-Wave devices are generally backward compatible",
-      impact: "Older devices work with newer hubs",
-      solution: "Strong compatibility across generations"
+      issue: 'Backward Compatibility',
+      description: 'Z-Wave devices are generally backward compatible',
+      impact: 'Older devices work with newer hubs',
+      solution: 'Strong compatibility across generations',
     },
     {
-      issue: "Regional Frequencies",
-      description: "Different frequencies in US (908MHz) vs Europe (868MHz)",
-      impact: "Devices are region-locked",
-      solution: "Ensure devices match local frequency"
+      issue: 'Regional Frequencies',
+      description: 'Different frequencies in US (908MHz) vs Europe (868MHz)',
+      impact: 'Devices are region-locked',
+      solution: 'Ensure devices match local frequency',
     },
     {
-      issue: "Limited Vendors",
-      description: "Fewer manufacturers compared to Zigbee",
-      impact: "Less choice but better guaranteed compatibility",
-      solution: "Select from certified Z-Wave Alliance members"
-    }
+      issue: 'Limited Vendors',
+      description: 'Fewer manufacturers compared to Zigbee',
+      impact: 'Less choice but better guaranteed compatibility',
+      solution: 'Select from certified Z-Wave Alliance members',
+    },
   ];
 
   const hubRequirements = [
     {
-      protocol: "Zigbee",
+      protocol: 'Zigbee',
       hubOptions: [
-        { name: "Samsung SmartThings", type: "Cloud-based", compatibility: "Excellent" },
-        { name: "Hubitat Elevation", type: "Local processing", compatibility: "Excellent" },
-        { name: "Philips Hue Bridge", type: "Brand-specific", compatibility: "Limited" },
-        { name: "Amazon Echo Plus", type: "Built-in hub", compatibility: "Basic" }
-      ]
+        { name: 'Samsung SmartThings', type: 'Cloud-based', compatibility: 'Excellent' },
+        { name: 'Hubitat Elevation', type: 'Local processing', compatibility: 'Excellent' },
+        { name: 'Philips Hue Bridge', type: 'Brand-specific', compatibility: 'Limited' },
+        { name: 'Amazon Echo Plus', type: 'Built-in hub', compatibility: 'Basic' },
+      ],
     },
     {
-      protocol: "Z-Wave",
+      protocol: 'Z-Wave',
       hubOptions: [
-        { name: "SmartThings Hub", type: "Cloud-based", compatibility: "Excellent" },
-        { name: "Hubitat Elevation", type: "Local processing", compatibility: "Excellent" },
-        { name: "Vera Controllers", type: "Dedicated Z-Wave", compatibility: "Excellent" },
-        { name: "HomeSeer", type: "Professional grade", compatibility: "Excellent" }
-      ]
-    }
+        { name: 'SmartThings Hub', type: 'Cloud-based', compatibility: 'Excellent' },
+        { name: 'Hubitat Elevation', type: 'Local processing', compatibility: 'Excellent' },
+        { name: 'Vera Controllers', type: 'Dedicated Z-Wave', compatibility: 'Excellent' },
+        { name: 'HomeSeer', type: 'Professional grade', compatibility: 'Excellent' },
+      ],
+    },
   ];
 
   return (
@@ -75,9 +75,10 @@ export const CompatibilityConsiderationsSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="text-lg font-medium text-foreground mb-6">
-          Understanding compatibility requirements ensures smooth integration and avoids costly mistakes.
+          Understanding compatibility requirements ensures smooth integration and avoids costly
+          mistakes.
         </p>
-        
+
         {/* Zigbee Compatibility Issues */}
         <div className="p-4 bg-blue-900/20 border border-blue-600 rounded-lg">
           <h4 className="font-semibold text-blue-200 mb-4 flex items-center gap-2">
@@ -141,18 +142,30 @@ export const CompatibilityConsiderationsSection = () => {
           <h4 className="font-semibold text-foreground mb-4">Hub Integration Requirements</h4>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {hubRequirements.map((protocol, protocolIndex) => (
-              <div key={protocolIndex} className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
-                <h5 className="font-semibold text-foreground mb-3">{protocol.protocol} Hub Options</h5>
+              <div
+                key={protocolIndex}
+                className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg"
+              >
+                <h5 className="font-semibold text-foreground mb-3">
+                  {protocol.protocol} Hub Options
+                </h5>
                 <div className="space-y-3">
                   {protocol.hubOptions.map((hub, hubIndex) => (
-                    <div key={hubIndex} className="p-2 bg-[#0f0f0f] border border-gray-700 rounded text-sm">
+                    <div
+                      key={hubIndex}
+                      className="p-2 bg-[#0f0f0f] border border-gray-700 rounded text-sm"
+                    >
                       <div className="flex justify-between items-center mb-1">
                         <span className="font-medium text-foreground">{hub.name}</span>
-                        <span className={`text-xs px-2 py-1 rounded ${
-                          hub.compatibility === 'Excellent' ? 'bg-green-600 text-green-100' :
-                          hub.compatibility === 'Basic' ? 'bg-yellow-600 text-yellow-100' :
-                          'bg-orange-600 text-orange-100'
-                        }`}>
+                        <span
+                          className={`text-xs px-2 py-1 rounded ${
+                            hub.compatibility === 'Excellent'
+                              ? 'bg-green-600 text-green-100'
+                              : hub.compatibility === 'Basic'
+                                ? 'bg-yellow-600 text-yellow-100'
+                                : 'bg-orange-600 text-orange-100'
+                          }`}
+                        >
                           {hub.compatibility}
                         </span>
                       </div>
@@ -218,9 +231,12 @@ export const CompatibilityConsiderationsSection = () => {
         <div className="p-4 bg-yellow-900/20 border border-yellow-600 rounded-lg">
           <h4 className="font-semibold text-yellow-200 mb-3">Key Recommendation</h4>
           <p className="text-yellow-100 text-sm">
-            <strong>Both protocols require hubs for integration with Wi-Fi/cloud ecosystems.</strong> Choose your hub platform first, 
-            then select devices compatible with that hub. This approach ensures all devices can communicate effectively and be 
-            controlled from a single interface, avoiding costly compatibility issues later.
+            <strong>
+              Both protocols require hubs for integration with Wi-Fi/cloud ecosystems.
+            </strong>{' '}
+            Choose your hub platform first, then select devices compatible with that hub. This
+            approach ensures all devices can communicate effectively and be controlled from a single
+            interface, avoiding costly compatibility issues later.
           </p>
         </div>
       </CardContent>

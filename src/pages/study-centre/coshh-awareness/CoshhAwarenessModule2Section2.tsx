@@ -7,95 +7,89 @@ import {
   FileText,
   ShieldCheck,
   RefreshCw,
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "coshh-assessment-requirement",
+    id: 'coshh-assessment-requirement',
     question:
-      "Under Regulation 6 of the COSHH Regulations 2002, when must an employer carry out a COSHH risk assessment?",
+      'Under Regulation 6 of the COSHH Regulations 2002, when must an employer carry out a COSHH risk assessment?',
     options: [
-      "Only after a worker has reported ill health",
-      "Before any work begins that is liable to expose employees to hazardous substances",
-      "Only when the HSE requests one during an inspection",
-      "Once a year, during the annual health and safety review",
+      'Only after a worker has reported ill health',
+      'Before any work begins that is liable to expose employees to hazardous substances',
+      'Only when the HSE requests one during an inspection',
+      'Once a year, during the annual health and safety review',
     ],
     correctIndex: 1,
     explanation:
-      "Regulation 6 requires the employer to carry out a suitable and sufficient assessment of the risk to health created by work which is liable to expose employees to hazardous substances BEFORE that work begins. The assessment must be in place before exposure occurs — it is not a reactive measure.",
+      'Regulation 6 requires the employer to carry out a suitable and sufficient assessment of the risk to health created by work which is liable to expose employees to hazardous substances BEFORE that work begins. The assessment must be in place before exposure occurs — it is not a reactive measure.',
   },
   {
-    id: "competent-person",
-    question:
-      "Who should carry out a COSHH risk assessment?",
+    id: 'competent-person',
+    question: 'Who should carry out a COSHH risk assessment?',
     options: [
-      "Only a qualified chemist or occupational hygienist",
-      "Any employee who happens to be available on the day",
-      "A competent person with sufficient training, knowledge, and experience of the work and the substances involved",
-      "The HSE inspector assigned to the workplace",
+      'Only a qualified chemist or occupational hygienist',
+      'Any employee who happens to be available on the day',
+      'A competent person with sufficient training, knowledge, and experience of the work and the substances involved',
+      'The HSE inspector assigned to the workplace',
     ],
     correctIndex: 2,
     explanation:
-      "The assessment must be carried out by a competent person — someone with sufficient training, knowledge, and experience to understand the hazards, evaluate the risks, and decide on appropriate control measures. This could be the employer, a supervisor, a safety officer, or an external specialist, provided they have the right competence for the specific assessment.",
+      'The assessment must be carried out by a competent person — someone with sufficient training, knowledge, and experience to understand the hazards, evaluate the risks, and decide on appropriate control measures. This could be the employer, a supervisor, a safety officer, or an external specialist, provided they have the right competence for the specific assessment.',
   },
   {
-    id: "review-triggers",
+    id: 'review-triggers',
     question:
-      "Which of the following would NOT normally trigger a review of an existing COSHH assessment?",
+      'Which of the following would NOT normally trigger a review of an existing COSHH assessment?',
     options: [
-      "A change from one brand of PVC cement to another with different ingredients",
-      "An employee changing their work boots to a different colour",
-      "A near miss involving solvent fumes in an enclosed space",
-      "New HSE guidance on workplace exposure limits for a substance in use",
+      'A change from one brand of PVC cement to another with different ingredients',
+      'An employee changing their work boots to a different colour',
+      'A near miss involving solvent fumes in an enclosed space',
+      'New HSE guidance on workplace exposure limits for a substance in use',
     ],
     correctIndex: 1,
     explanation:
-      "A COSHH assessment must be reviewed when there is a significant change in work practices, substances, or processes; when new health and safety information becomes available; when an incident or near miss occurs; or routinely (annual review is good practice). An employee changing the colour of their work boots does not affect substance exposure and would not trigger a review.",
+      'A COSHH assessment must be reviewed when there is a significant change in work practices, substances, or processes; when new health and safety information becomes available; when an incident or near miss occurs; or routinely (annual review is good practice). An employee changing the colour of their work boots does not affect substance exposure and would not trigger a review.',
   },
 ];
 
 const faqs = [
   {
-    question:
-      "Can I use a generic COSHH assessment for all my electrical work?",
+    question: 'Can I use a generic COSHH assessment for all my electrical work?',
     answer:
       "Generic assessments can be a useful starting point, but they must be adapted to reflect the specific conditions of each task and workplace. A generic assessment for 'PVC solvent cement use' might cover the substance hazards, but you still need to consider the specific location (confined space vs open air), duration of exposure, ventilation available, and whether other workers are nearby. The HSE accepts generic assessments only where the work and conditions are genuinely similar. If the conditions differ significantly, a task-specific assessment is needed.",
   },
   {
-    question:
-      "What is the difference between a COSHH assessment and a general risk assessment?",
+    question: 'What is the difference between a COSHH assessment and a general risk assessment?',
     answer:
-      "A general risk assessment under the Management of Health and Safety at Work Regulations 1999 covers all workplace hazards — slips, trips, falls, manual handling, electrical safety, and so on. A COSHH assessment is a specific, detailed assessment focused solely on the risks to health from hazardous substances. It requires you to consider the nature of each substance, the route of exposure (inhalation, skin contact, ingestion), the duration and frequency of exposure, workplace exposure limits, and specific control measures for chemical hazards. Both are legal requirements and complement each other.",
+      'A general risk assessment under the Management of Health and Safety at Work Regulations 1999 covers all workplace hazards — slips, trips, falls, manual handling, electrical safety, and so on. A COSHH assessment is a specific, detailed assessment focused solely on the risks to health from hazardous substances. It requires you to consider the nature of each substance, the route of exposure (inhalation, skin contact, ingestion), the duration and frequency of exposure, workplace exposure limits, and specific control measures for chemical hazards. Both are legal requirements and complement each other.',
   },
   {
-    question:
-      "Do I need a COSHH assessment for every single substance on site?",
+    question: 'Do I need a COSHH assessment for every single substance on site?',
     answer:
-      "You need a COSHH assessment for every hazardous substance that workers are liable to be exposed to during their work. This includes substances you use directly (adhesives, solvents, cleaning agents), substances generated by your work (fumes from soldering, dust from cutting), and substances already present in the workplace (asbestos, lead paint). You do not need a separate assessment for substances that are not hazardous or that workers will never come into contact with. Where multiple substances pose similar risks and are used in similar conditions, a single assessment may cover them — but the reasoning must be documented.",
+      'You need a COSHH assessment for every hazardous substance that workers are liable to be exposed to during their work. This includes substances you use directly (adhesives, solvents, cleaning agents), substances generated by your work (fumes from soldering, dust from cutting), and substances already present in the workplace (asbestos, lead paint). You do not need a separate assessment for substances that are not hazardous or that workers will never come into contact with. Where multiple substances pose similar risks and are used in similar conditions, a single assessment may cover them — but the reasoning must be documented.',
   },
   {
-    question:
-      "How long should I keep COSHH assessment records?",
+    question: 'How long should I keep COSHH assessment records?',
     answer:
-      "COSHH assessments should be kept for as long as they are relevant, plus a reasonable period afterwards. Where health surveillance records are involved (Regulation 11), individual health records must be kept for at least 40 years from the date of the last entry. For routine COSHH assessments without health surveillance, the HSE recommends keeping records for a minimum of 5 years. Many employers keep them indefinitely as part of their health and safety management system. Electronic records are perfectly acceptable provided they are secure, backed up, and accessible when needed.",
+      'COSHH assessments should be kept for as long as they are relevant, plus a reasonable period afterwards. Where health surveillance records are involved (Regulation 11), individual health records must be kept for at least 40 years from the date of the last entry. For routine COSHH assessments without health surveillance, the HSE recommends keeping records for a minimum of 5 years. Many employers keep them indefinitely as part of their health and safety management system. Electronic records are perfectly acceptable provided they are secure, backed up, and accessible when needed.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question:
-      "What standard must a COSHH risk assessment meet under Regulation 6?",
+    question: 'What standard must a COSHH risk assessment meet under Regulation 6?',
     options: [
-      "It must be approved by the HSE before work begins",
+      'It must be approved by the HSE before work begins',
       "It must be 'suitable and sufficient'",
-      "It must be signed by a NEBOSH-qualified person",
-      "It must be reviewed by an occupational hygienist",
+      'It must be signed by a NEBOSH-qualified person',
+      'It must be reviewed by an occupational hygienist',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,55 +97,53 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      "What is the FIRST step in a COSHH risk assessment?",
+    question: 'What is the FIRST step in a COSHH risk assessment?',
     options: [
-      "Decide what PPE is needed",
-      "Gather information about the substances, the work, and the working practices",
-      "Record the assessment findings",
-      "Monitor employee exposure levels",
+      'Decide what PPE is needed',
+      'Gather information about the substances, the work, and the working practices',
+      'Record the assessment findings',
+      'Monitor employee exposure levels',
     ],
     correctAnswer: 1,
     explanation:
-      "The first step is always to gather information — identify what hazardous substances are present or will be used, understand the work being done, and review how substances are handled. Without this foundation, the rest of the assessment cannot be carried out properly.",
+      'The first step is always to gather information — identify what hazardous substances are present or will be used, understand the work being done, and review how substances are handled. Without this foundation, the rest of the assessment cannot be carried out properly.',
   },
   {
     id: 3,
     question:
-      "Which of the following is the MOST important source of substance hazard information for a COSHH assessment?",
+      'Which of the following is the MOST important source of substance hazard information for a COSHH assessment?',
     options: [
-      "The product label only",
-      "Advice from colleagues who have used the substance before",
-      "The Safety Data Sheet (SDS) provided by the manufacturer or supplier",
-      "A general internet search about the substance",
+      'The product label only',
+      'Advice from colleagues who have used the substance before',
+      'The Safety Data Sheet (SDS) provided by the manufacturer or supplier',
+      'A general internet search about the substance',
     ],
     correctAnswer: 2,
     explanation:
-      "The Safety Data Sheet (SDS) is the primary and most authoritative source of hazard information. It provides detailed information across 16 standardised sections covering hazard identification, composition, first-aid measures, handling and storage, exposure controls, toxicological information, and more. Suppliers are legally required to provide an SDS for hazardous substances.",
+      'The Safety Data Sheet (SDS) is the primary and most authoritative source of hazard information. It provides detailed information across 16 standardised sections covering hazard identification, composition, first-aid measures, handling and storage, exposure controls, toxicological information, and more. Suppliers are legally required to provide an SDS for hazardous substances.',
   },
   {
     id: 4,
     question:
-      "An electrician uses PVC solvent cement for 20 minutes in a well-ventilated plant room. A colleague uses the same product for 4 hours in a small, unventilated cupboard. Can the same COSHH assessment cover both tasks?",
+      'An electrician uses PVC solvent cement for 20 minutes in a well-ventilated plant room. A colleague uses the same product for 4 hours in a small, unventilated cupboard. Can the same COSHH assessment cover both tasks?',
     options: [
-      "Yes — the substance is the same, so one assessment covers all uses",
-      "No — the exposure conditions are significantly different, so separate assessments (or separate sections within the same assessment) are needed",
-      "Yes — generic assessments always cover all situations",
-      "No — COSHH assessments cannot cover the same substance used in different locations",
+      'Yes — the substance is the same, so one assessment covers all uses',
+      'No — the exposure conditions are significantly different, so separate assessments (or separate sections within the same assessment) are needed',
+      'Yes — generic assessments always cover all situations',
+      'No — COSHH assessments cannot cover the same substance used in different locations',
     ],
     correctAnswer: 1,
     explanation:
-      "Although the substance is the same, the risk to health is significantly different because the duration of exposure and the ventilation conditions differ substantially. The 4-hour task in an unventilated cupboard presents a much higher risk than the 20-minute task in a ventilated room. Either separate assessments or separate sections within the same assessment are needed to address the different exposure scenarios and their respective control measures.",
+      'Although the substance is the same, the risk to health is significantly different because the duration of exposure and the ventilation conditions differ substantially. The 4-hour task in an unventilated cupboard presents a much higher risk than the 20-minute task in a ventilated room. Either separate assessments or separate sections within the same assessment are needed to address the different exposure scenarios and their respective control measures.',
   },
   {
     id: 5,
-    question:
-      "What does EH40 provide?",
+    question: 'What does EH40 provide?',
     options: [
-      "A list of approved PPE manufacturers",
-      "Workplace Exposure Limits (WELs) for hazardous substances",
-      "COSHH assessment templates for download",
-      "Training requirements for COSHH assessors",
+      'A list of approved PPE manufacturers',
+      'Workplace Exposure Limits (WELs) for hazardous substances',
+      'COSHH assessment templates for download',
+      'Training requirements for COSHH assessors',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,53 +151,47 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question:
-      "When recording a COSHH assessment, which of the following must be included?",
+    question: 'When recording a COSHH assessment, which of the following must be included?',
     options: [
-      "Only the name of the substance and the date of the assessment",
-      "The significant findings, the groups of employees at risk, and the steps taken to prevent or adequately control exposure",
-      "A photograph of the substance packaging only",
-      "The name and qualifications of every employee in the building",
+      'Only the name of the substance and the date of the assessment',
+      'The significant findings, the groups of employees at risk, and the steps taken to prevent or adequately control exposure',
+      'A photograph of the substance packaging only',
+      'The name and qualifications of every employee in the building',
     ],
     correctAnswer: 1,
     explanation:
-      "The recorded assessment must include the significant findings of the assessment (hazards identified, who is at risk, the nature and degree of exposure), the steps taken or to be taken to prevent or control exposure, and enough detail for another competent person to understand the reasoning. Recording requirements are set out in Regulation 6(4).",
+      'The recorded assessment must include the significant findings of the assessment (hazards identified, who is at risk, the nature and degree of exposure), the steps taken or to be taken to prevent or control exposure, and enough detail for another competent person to understand the reasoning. Recording requirements are set out in Regulation 6(4).',
   },
   {
     id: 7,
     question:
-      "Which HSE tool helps small businesses carry out COSHH assessments without specialist knowledge?",
-    options: [
-      "EH40",
-      "COSHH Essentials",
-      "The Asbestos Register",
-      "RIDDOR Online Reporting",
-    ],
+      'Which HSE tool helps small businesses carry out COSHH assessments without specialist knowledge?',
+    options: ['EH40', 'COSHH Essentials', 'The Asbestos Register', 'RIDDOR Online Reporting'],
     correctAnswer: 1,
     explanation:
-      "COSHH Essentials is a free, web-based tool provided by the HSE. It uses a simple step-by-step approach — asking about the substance, the task, and the conditions — to generate guidance on the level of control needed. It is designed for small and medium-sized businesses that may not have access to specialist occupational hygiene advice, though it should not replace a full assessment for complex or high-risk work.",
+      'COSHH Essentials is a free, web-based tool provided by the HSE. It uses a simple step-by-step approach — asking about the substance, the task, and the conditions — to generate guidance on the level of control needed. It is designed for small and medium-sized businesses that may not have access to specialist occupational hygiene advice, though it should not replace a full assessment for complex or high-risk work.',
   },
   {
     id: 8,
     question:
-      "A COSHH assessment for flux fumes during soldering was last reviewed 14 months ago. No changes have occurred in the work, the substance, or the workplace. Is the assessment still valid?",
+      'A COSHH assessment for flux fumes during soldering was last reviewed 14 months ago. No changes have occurred in the work, the substance, or the workplace. Is the assessment still valid?',
     options: [
-      "No — all COSHH assessments expire after exactly 12 months",
-      "Yes — there is no fixed expiry period, but the employer should review it soon as annual review is good practice",
-      "No — COSHH assessments must be renewed every 6 months",
-      "Yes — COSHH assessments never need reviewing unless the HSE requests it",
+      'No — all COSHH assessments expire after exactly 12 months',
+      'Yes — there is no fixed expiry period, but the employer should review it soon as annual review is good practice',
+      'No — COSHH assessments must be renewed every 6 months',
+      'Yes — COSHH assessments never need reviewing unless the HSE requests it',
     ],
     correctAnswer: 1,
     explanation:
-      "There is no fixed statutory expiry period for COSHH assessments. An assessment remains valid as long as the work, substances, and conditions have not changed and no new information has become available. However, annual review is widely regarded as good practice. At 14 months without review, the assessment is not automatically invalid, but the employer should arrange a review promptly to confirm it is still current.",
+      'There is no fixed statutory expiry period for COSHH assessments. An assessment remains valid as long as the work, substances, and conditions have not changed and no new information has become available. However, annual review is widely regarded as good practice. At 14 months without review, the assessment is not automatically invalid, but the employer should arrange a review promptly to confirm it is still current.',
   },
 ];
 
 export default function CoshhAwarenessModule2Section2() {
   useSEO({
-    title: "COSHH Risk Assessment | COSHH Awareness Module 2.2",
+    title: 'COSHH Risk Assessment | COSHH Awareness Module 2.2',
     description:
-      "Learn the 8-step COSHH risk assessment process — gathering information, evaluating risks, deciding on controls, recording findings, implementing and maintaining measures, monitoring exposure, and reviewing assessments.",
+      'Learn the 8-step COSHH risk assessment process — gathering information, evaluating risks, deciding on controls, recording findings, implementing and maintaining measures, monitoring exposure, and reviewing assessments.',
   });
 
   return (
@@ -238,13 +224,11 @@ export default function CoshhAwarenessModule2Section2() {
             <span className="text-white/40 mx-2">&middot;</span>
             <span className="text-white/60">SECTION 2</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-            COSHH Risk Assessment
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">COSHH Risk Assessment</h1>
           <p className="text-white/70 max-w-xl mx-auto">
-            Understanding the 8-step COSHH assessment process, who should carry
-            it out, what to record, and when to review — with practical examples
-            for electricians and construction workers
+            Understanding the 8-step COSHH assessment process, who should carry it out, what to
+            record, and when to review — with practical examples for electricians and construction
+            workers
           </p>
         </div>
 
@@ -256,31 +240,29 @@ export default function CoshhAwarenessModule2Section2() {
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Regulation 6:</strong> employers
-                  must assess the risk to health from hazardous substances before
-                  work begins
+                  <strong className="text-white">Regulation 6:</strong> employers must assess the
+                  risk to health from hazardous substances before work begins
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Standard:</strong> the
-                  assessment must be &ldquo;suitable and sufficient&rdquo;
+                  <strong className="text-white">Standard:</strong> the assessment must be
+                  &ldquo;suitable and sufficient&rdquo;
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">8 steps:</strong> gather
-                  information, evaluate risks, decide controls, record, implement,
-                  maintain, monitor, review
+                  <strong className="text-white">8 steps:</strong> gather information, evaluate
+                  risks, decide controls, record, implement, maintain, monitor, review
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Review:</strong> whenever
-                  conditions change, after incidents, or at least annually
+                  <strong className="text-white">Review:</strong> whenever conditions change, after
+                  incidents, or at least annually
                 </span>
               </li>
             </ul>
@@ -291,30 +273,29 @@ export default function CoshhAwarenessModule2Section2() {
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Before using any
-                  substance:</strong>{" "}
-                  check the COSHH assessment is in place and current
+                  <strong className="text-white">Before using any substance:</strong> check the
+                  COSHH assessment is in place and current
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Read the SDS:</strong> know the
-                  hazards, first aid measures, and required PPE
+                  <strong className="text-white">Read the SDS:</strong> know the hazards, first aid
+                  measures, and required PPE
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Conditions differ?</strong>{" "}
-                  Reassess — a confined space changes everything
+                  <strong className="text-white">Conditions differ?</strong> Reassess — a confined
+                  space changes everything
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
-                  <strong className="text-white">Report issues:</strong> if
-                  controls are not working, stop and tell your supervisor
+                  <strong className="text-white">Report issues:</strong> if controls are not
+                  working, stop and tell your supervisor
                 </span>
               </li>
             </ul>
@@ -323,22 +304,18 @@ export default function CoshhAwarenessModule2Section2() {
 
         {/* Learning Outcomes */}
         <section className="mb-10">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
-            Learning Outcomes
-          </h2>
-          <p className="text-white/70 mb-4">
-            By the end of this section, you will be able to:
-          </p>
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               "Explain why COSHH risk assessment is a legal requirement under Regulation 6 and what 'suitable and sufficient' means in practice",
-              "Identify who should carry out a COSHH assessment and what competence is required",
-              "Describe each of the 8 steps in the COSHH assessment process with relevant examples",
-              "List the key information sources used in COSHH assessment including Safety Data Sheets, EH40, and COSHH Essentials",
-              "Explain when a COSHH assessment must be reviewed and what triggers a review",
-              "Apply the 8-step process to practical electrical work scenarios such as cable jointing, soldering, and solvent use",
-              "Distinguish between generic assessments and task-specific assessments and know when each is appropriate",
-              "State what must be recorded in a COSHH assessment and the options for electronic vs paper records",
+              'Identify who should carry out a COSHH assessment and what competence is required',
+              'Describe each of the 8 steps in the COSHH assessment process with relevant examples',
+              'List the key information sources used in COSHH assessment including Safety Data Sheets, EH40, and COSHH Essentials',
+              'Explain when a COSHH assessment must be reviewed and what triggers a review',
+              'Apply the 8-step process to practical electrical work scenarios such as cable jointing, soldering, and solvent use',
+              'Distinguish between generic assessments and task-specific assessments and know when each is appropriate',
+              'State what must be recorded in a COSHH assessment and the options for electronic vs paper records',
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-violet-400/70 mt-0.5 flex-shrink-0" />
@@ -359,17 +336,13 @@ export default function CoshhAwarenessModule2Section2() {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                <strong className="text-white">Regulation 6</strong> of the
-                Control of Substances Hazardous to Health Regulations 2002
-                (COSHH) requires every employer to carry out a{" "}
-                <strong className="text-white">
-                  suitable and sufficient assessment
-                </strong>{" "}
-                of the risk to the health of employees arising from work that is
-                liable to expose them to hazardous substances. This assessment
-                must be carried out{" "}
-                <strong className="text-white">before</strong> the work begins —
-                it is a preventive measure, not a reactive one.
+                <strong className="text-white">Regulation 6</strong> of the Control of Substances
+                Hazardous to Health Regulations 2002 (COSHH) requires every employer to carry out a{' '}
+                <strong className="text-white">suitable and sufficient assessment</strong> of the
+                risk to the health of employees arising from work that is liable to expose them to
+                hazardous substances. This assessment must be carried out{' '}
+                <strong className="text-white">before</strong> the work begins — it is a preventive
+                measure, not a reactive one.
               </p>
 
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
@@ -377,58 +350,48 @@ export default function CoshhAwarenessModule2Section2() {
                   Key Definition: Suitable and Sufficient
                 </h3>
                 <p className="text-white/80 text-sm">
-                  A <strong className="text-white">suitable and sufficient</strong>{" "}
-                  assessment is one that is appropriate to the nature and scale of
-                  the risk, identifies all significant hazards, considers who is
-                  exposed and how, evaluates the level of risk, and leads to
-                  practical decisions about prevention or control. It does not
-                  need to be perfect or account for every conceivable scenario —
-                  but it must address all the risks that a reasonable person would
-                  recognise as significant.
+                  A <strong className="text-white">suitable and sufficient</strong> assessment is
+                  one that is appropriate to the nature and scale of the risk, identifies all
+                  significant hazards, considers who is exposed and how, evaluates the level of
+                  risk, and leads to practical decisions about prevention or control. It does not
+                  need to be perfect or account for every conceivable scenario — but it must address
+                  all the risks that a reasonable person would recognise as significant.
                 </p>
               </div>
 
               <p>
-                The purpose of the assessment is to enable the employer to make
-                informed decisions about:
+                The purpose of the assessment is to enable the employer to make informed decisions
+                about:
               </p>
 
               <ul className="text-white/70 space-y-2 text-sm pl-1">
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                   <div>
-                    <strong className="text-white">
-                      What hazardous substances are present
-                    </strong>{" "}
-                    — substances used directly, generated by the work, or already
-                    present in the workplace
+                    <strong className="text-white">What hazardous substances are present</strong> —
+                    substances used directly, generated by the work, or already present in the
+                    workplace
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                   <div>
-                    <strong className="text-white">
-                      Who might be harmed and how
-                    </strong>{" "}
-                    — employees, contractors, visitors, members of the public
+                    <strong className="text-white">Who might be harmed and how</strong> — employees,
+                    contractors, visitors, members of the public
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                   <div>
-                    <strong className="text-white">
-                      What control measures are needed
-                    </strong>{" "}
-                    — prevention, engineering controls, PPE, safe systems of work
+                    <strong className="text-white">What control measures are needed</strong> —
+                    prevention, engineering controls, PPE, safe systems of work
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                   <div>
-                    <strong className="text-white">
-                      Whether existing controls are adequate
-                    </strong>{" "}
-                    — or whether additional measures are required
+                    <strong className="text-white">Whether existing controls are adequate</strong> —
+                    or whether additional measures are required
                   </div>
                 </li>
               </ul>
@@ -436,29 +399,25 @@ export default function CoshhAwarenessModule2Section2() {
               <div className="bg-white/5 border border-violet-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-violet-300">
-                    No Assessment = No Work
-                  </h3>
+                  <h3 className="font-semibold text-violet-300">No Assessment = No Work</h3>
                 </div>
                 <p className="text-white/70 text-sm">
-                  Work that is liable to expose employees to hazardous substances
-                  must <strong className="text-white">not begin</strong> until a
-                  COSHH assessment has been carried out and the necessary control
-                  measures are in place. Starting work without an assessment is a
-                  breach of Regulation 6 and can lead to enforcement action,
-                  prosecution, and unlimited fines.
+                  Work that is liable to expose employees to hazardous substances must{' '}
+                  <strong className="text-white">not begin</strong> until a COSHH assessment has
+                  been carried out and the necessary control measures are in place. Starting work
+                  without an assessment is a breach of Regulation 6 and can lead to enforcement
+                  action, prosecution, and unlimited fines.
                 </p>
               </div>
 
               <p>
-                The assessment must also consider{" "}
+                The assessment must also consider{' '}
                 <strong className="text-white">
                   non-routine and foreseeable emergency situations
-                </strong>{" "}
-                — for example, what happens if a solvent container is spilled, if
-                ventilation equipment fails, or if a worker removes their RPE in
-                a contaminated area. A suitable assessment anticipates these
-                scenarios and plans for them.
+                </strong>{' '}
+                — for example, what happens if a solvent container is spilled, if ventilation
+                equipment fails, or if a worker removes their RPE in a contaminated area. A suitable
+                assessment anticipates these scenarios and plans for them.
               </p>
             </div>
           </div>
@@ -473,120 +432,98 @@ export default function CoshhAwarenessModule2Section2() {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                The COSHH assessment must be carried out by a{" "}
-                <strong className="text-white">competent person</strong> — someone
-                who has sufficient training, knowledge, and experience to
-                understand the hazards posed by hazardous substances, evaluate the
-                risks in the specific work context, and decide on appropriate
-                prevention and control measures.
+                The COSHH assessment must be carried out by a{' '}
+                <strong className="text-white">competent person</strong> — someone who has
+                sufficient training, knowledge, and experience to understand the hazards posed by
+                hazardous substances, evaluate the risks in the specific work context, and decide on
+                appropriate prevention and control measures.
               </p>
 
               <p>
-                &ldquo;Competent&rdquo; does not mean the person needs a specific
-                qualification or certificate. It means they must have:
+                &ldquo;Competent&rdquo; does not mean the person needs a specific qualification or
+                certificate. It means they must have:
               </p>
 
               <div className="bg-white/5 border border-violet-400/30 p-4 rounded-lg">
-                <h3 className="text-violet-300 font-medium mb-3">
-                  Competence Requirements
-                </h3>
+                <h3 className="text-violet-300 font-medium mb-3">Competence Requirements</h3>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Knowledge of the substances:
-                      </strong>{" "}
-                      understanding the hazardous properties, routes of exposure,
-                      and health effects of the substances in question
+                      <strong className="text-white">Knowledge of the substances:</strong>{' '}
+                      understanding the hazardous properties, routes of exposure, and health effects
+                      of the substances in question
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Knowledge of the work:
-                      </strong>{" "}
-                      understanding how the substances are used, the tasks
-                      involved, the working environment, and the duration and
-                      frequency of exposure
+                      <strong className="text-white">Knowledge of the work:</strong> understanding
+                      how the substances are used, the tasks involved, the working environment, and
+                      the duration and frequency of exposure
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Knowledge of control measures:
-                      </strong>{" "}
-                      understanding the hierarchy of control, available
-                      engineering controls, PPE options, and best practice for
-                      the industry
+                      <strong className="text-white">Knowledge of control measures:</strong>{' '}
+                      understanding the hierarchy of control, available engineering controls, PPE
+                      options, and best practice for the industry
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">
-                        Ability to interpret information:
-                      </strong>{" "}
-                      being able to read and apply Safety Data Sheets, EH40
-                      workplace exposure limits, and HSE guidance
+                      <strong className="text-white">Ability to interpret information:</strong>{' '}
+                      being able to read and apply Safety Data Sheets, EH40 workplace exposure
+                      limits, and HSE guidance
                     </div>
                   </li>
                 </ul>
               </div>
 
-              <p>
-                In practice, the person carrying out the assessment might be:
-              </p>
+              <p>In practice, the person carrying out the assessment might be:</p>
 
               <ul className="text-white/70 space-y-2 text-sm pl-1">
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                   <div>
-                    <strong className="text-white">The employer</strong> — in a
-                    small electrical contracting firm, the owner may carry out
-                    assessments with appropriate training
+                    <strong className="text-white">The employer</strong> — in a small electrical
+                    contracting firm, the owner may carry out assessments with appropriate training
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                   <div>
-                    <strong className="text-white">A site supervisor or
-                    contracts manager</strong> — who understands both the
-                    substances and the work context
+                    <strong className="text-white">A site supervisor or contracts manager</strong> —
+                    who understands both the substances and the work context
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                   <div>
-                    <strong className="text-white">A health and safety
-                    advisor</strong> — either in-house or external, with COSHH
-                    assessment experience
+                    <strong className="text-white">A health and safety advisor</strong> — either
+                    in-house or external, with COSHH assessment experience
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                   <div>
-                    <strong className="text-white">An occupational hygienist</strong>{" "}
-                    — for complex or high-risk assessments involving workplace
-                    exposure monitoring
+                    <strong className="text-white">An occupational hygienist</strong> — for complex
+                    or high-risk assessments involving workplace exposure monitoring
                   </div>
                 </li>
               </ul>
 
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-violet-400">
-                  Involve the Workers
-                </h3>
+                <h3 className="font-semibold mb-2 text-violet-400">Involve the Workers</h3>
                 <p className="text-white/80 text-sm">
-                  Whoever carries out the assessment should always{" "}
-                  <strong className="text-white">consult with the workers</strong>{" "}
-                  who actually do the job. They often know more about the
-                  real-world conditions — confined spaces, poor ventilation,
-                  time pressures, improvised methods — than someone assessing
-                  from an office. Worker involvement improves the quality of the
-                  assessment and increases buy-in for the control measures.
+                  Whoever carries out the assessment should always{' '}
+                  <strong className="text-white">consult with the workers</strong> who actually do
+                  the job. They often know more about the real-world conditions — confined spaces,
+                  poor ventilation, time pressures, improvised methods — than someone assessing from
+                  an office. Worker involvement improves the quality of the assessment and increases
+                  buy-in for the control measures.
                 </p>
               </div>
             </div>
@@ -602,11 +539,9 @@ export default function CoshhAwarenessModule2Section2() {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                The HSE recommends an{" "}
-                <strong className="text-white">8-step approach</strong> to carrying
-                out a COSHH risk assessment. This structured process ensures that
-                nothing is missed and that the assessment leads to practical,
-                effective control measures.
+                The HSE recommends an <strong className="text-white">8-step approach</strong> to
+                carrying out a COSHH risk assessment. This structured process ensures that nothing
+                is missed and that the assessment leads to practical, effective control measures.
               </p>
 
               {/* 8-Step Assessment Process Flowchart */}
@@ -622,7 +557,9 @@ export default function CoshhAwarenessModule2Section2() {
                       <span className="text-violet-300 text-xs font-bold">1</span>
                     </div>
                     <div className="flex-1 bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2">
-                      <p className="text-white text-sm font-medium">Gather information about substances, work, and working practices</p>
+                      <p className="text-white text-sm font-medium">
+                        Gather information about substances, work, and working practices
+                      </p>
                     </div>
                   </div>
                   <div className="flex justify-start ml-4">
@@ -648,7 +585,9 @@ export default function CoshhAwarenessModule2Section2() {
                       <span className="text-violet-300 text-xs font-bold">3</span>
                     </div>
                     <div className="flex-1 bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2">
-                      <p className="text-white text-sm font-medium">Decide what needs to be done (prevention or control)</p>
+                      <p className="text-white text-sm font-medium">
+                        Decide what needs to be done (prevention or control)
+                      </p>
                     </div>
                   </div>
                   <div className="flex justify-start ml-4">
@@ -687,7 +626,9 @@ export default function CoshhAwarenessModule2Section2() {
                       <span className="text-violet-300 text-xs font-bold">6</span>
                     </div>
                     <div className="flex-1 bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2">
-                      <p className="text-white text-sm font-medium">Ensure controls are used and maintained</p>
+                      <p className="text-white text-sm font-medium">
+                        Ensure controls are used and maintained
+                      </p>
                     </div>
                   </div>
                   <div className="flex justify-start ml-4">
@@ -700,7 +641,9 @@ export default function CoshhAwarenessModule2Section2() {
                       <span className="text-violet-300 text-xs font-bold">7</span>
                     </div>
                     <div className="flex-1 bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2">
-                      <p className="text-white text-sm font-medium">Monitor exposure and health surveillance</p>
+                      <p className="text-white text-sm font-medium">
+                        Monitor exposure and health surveillance
+                      </p>
                     </div>
                   </div>
                   <div className="flex justify-start ml-4">
@@ -713,7 +656,9 @@ export default function CoshhAwarenessModule2Section2() {
                       <span className="text-violet-300 text-xs font-bold">8</span>
                     </div>
                     <div className="flex-1 bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2">
-                      <p className="text-white text-sm font-medium">Review the assessment regularly and when conditions change</p>
+                      <p className="text-white text-sm font-medium">
+                        Review the assessment regularly and when conditions change
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -730,10 +675,10 @@ export default function CoshhAwarenessModule2Section2() {
               </div>
 
               <p>
-                Each step builds on the previous one. The process is{" "}
-                <strong className="text-white">cyclical</strong> — when you review
-                the assessment (Step 8) and find that conditions have changed, you
-                go back to Step 1 and work through the process again.
+                Each step builds on the previous one. The process is{' '}
+                <strong className="text-white">cyclical</strong> — when you review the assessment
+                (Step 8) and find that conditions have changed, you go back to Step 1 and work
+                through the process again.
               </p>
             </div>
           </div>
@@ -756,61 +701,57 @@ export default function CoshhAwarenessModule2Section2() {
                   Step 1: Gather Information
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  Before you can assess the risk, you need to know what you are
-                  dealing with. This means gathering information about:
+                  Before you can assess the risk, you need to know what you are dealing with. This
+                  means gathering information about:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">The substances:</strong>{" "}
-                      What hazardous substances are involved? Check product labels,
-                      Safety Data Sheets (SDS), and the EH40 workplace exposure
-                      limits document
+                      <strong className="text-white">The substances:</strong> What hazardous
+                      substances are involved? Check product labels, Safety Data Sheets (SDS), and
+                      the EH40 workplace exposure limits document
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">The work:</strong> What tasks
-                      involve the substance? How is it used — sprayed, brushed,
-                      heated, mixed? How long does the task take?
+                      <strong className="text-white">The work:</strong> What tasks involve the
+                      substance? How is it used — sprayed, brushed, heated, mixed? How long does the
+                      task take?
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">The workplace:</strong> Where
-                      is the work done? Is it indoors or outdoors? Is there natural
-                      or mechanical ventilation? Is the space confined?
+                      <strong className="text-white">The workplace:</strong> Where is the work done?
+                      Is it indoors or outdoors? Is there natural or mechanical ventilation? Is the
+                      space confined?
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">The workers:</strong> Who is
-                      exposed? Are any workers particularly vulnerable — young
-                      workers, pregnant women, workers with pre-existing
-                      respiratory conditions?
+                      <strong className="text-white">The workers:</strong> Who is exposed? Are any
+                      workers particularly vulnerable — young workers, pregnant women, workers with
+                      pre-existing respiratory conditions?
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Existing controls:</strong>{" "}
-                      What controls are already in place? Are they effective?
+                      <strong className="text-white">Existing controls:</strong> What controls are
+                      already in place? Are they effective?
                     </div>
                   </li>
                 </ul>
                 <div className="mt-3 bg-violet-500/10 border border-violet-500/20 p-3 rounded-lg">
-                  <p className="text-violet-300 text-xs font-medium mb-1">
-                    Electrician Example:
-                  </p>
+                  <p className="text-violet-300 text-xs font-medium mb-1">Electrician Example:</p>
                   <p className="text-white/70 text-xs">
-                    Before using PVC solvent cement to bond conduit, gather the
-                    SDS from the manufacturer, note the location (a ventilated
-                    plant room vs a sealed ceiling void), identify who else is
-                    working nearby, and check what ventilation is available.
+                    Before using PVC solvent cement to bond conduit, gather the SDS from the
+                    manufacturer, note the location (a ventilated plant room vs a sealed ceiling
+                    void), identify who else is working nearby, and check what ventilation is
+                    available.
                   </p>
                 </div>
               </div>
@@ -821,64 +762,59 @@ export default function CoshhAwarenessModule2Section2() {
                   Step 2: Evaluate the Risks to Health
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  Using the information gathered in Step 1, evaluate the actual
-                  risk to health. Consider:
+                  Using the information gathered in Step 1, evaluate the actual risk to health.
+                  Consider:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Hazard classification:</strong>{" "}
-                      What are the GHS hazard statements on the SDS? Is the
-                      substance toxic, harmful, corrosive, a sensitiser, a
-                      carcinogen?
+                      <strong className="text-white">Hazard classification:</strong> What are the
+                      GHS hazard statements on the SDS? Is the substance toxic, harmful, corrosive,
+                      a sensitiser, a carcinogen?
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Route of exposure:</strong>{" "}
-                      Is the main risk from inhalation, skin contact, ingestion,
-                      or eye contact? Most substances have a primary route.
+                      <strong className="text-white">Route of exposure:</strong> Is the main risk
+                      from inhalation, skin contact, ingestion, or eye contact? Most substances have
+                      a primary route.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Duration and frequency:</strong>{" "}
-                      A 5-minute task once a month poses a very different risk
-                      from the same task carried out for 6 hours every day.
+                      <strong className="text-white">Duration and frequency:</strong> A 5-minute
+                      task once a month poses a very different risk from the same task carried out
+                      for 6 hours every day.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Exposure level:</strong>{" "}
-                      Is the exposure likely to be above or below the Workplace
-                      Exposure Limit (WEL)? Consider both the 8-hour TWA and the
-                      15-minute STEL.
+                      <strong className="text-white">Exposure level:</strong> Is the exposure likely
+                      to be above or below the Workplace Exposure Limit (WEL)? Consider both the
+                      8-hour TWA and the 15-minute STEL.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Combined effects:</strong>{" "}
-                      Are multiple substances used together? Some combinations
-                      have additive or synergistic effects.
+                      <strong className="text-white">Combined effects:</strong> Are multiple
+                      substances used together? Some combinations have additive or synergistic
+                      effects.
                     </div>
                   </li>
                 </ul>
                 <div className="mt-3 bg-violet-500/10 border border-violet-500/20 p-3 rounded-lg">
-                  <p className="text-violet-300 text-xs font-medium mb-1">
-                    Electrician Example:
-                  </p>
+                  <p className="text-violet-300 text-xs font-medium mb-1">Electrician Example:</p>
                   <p className="text-white/70 text-xs">
-                    Soldering electrical connections produces rosin flux fumes.
-                    The SDS identifies the fumes as a respiratory sensitiser
-                    (can cause occupational asthma). The WEL for rosin-based
-                    solder flux fume is 0.05 mg/m&sup3; (8-hour TWA) and
-                    0.15 mg/m&sup3; (15-minute STEL). Frequent soldering in a
-                    poorly ventilated area could easily exceed these limits.
+                    Soldering electrical connections produces rosin flux fumes. The SDS identifies
+                    the fumes as a respiratory sensitiser (can cause occupational asthma). The WEL
+                    for rosin-based solder flux fume is 0.05 mg/m&sup3; (8-hour TWA) and 0.15
+                    mg/m&sup3; (15-minute STEL). Frequent soldering in a poorly ventilated area
+                    could easily exceed these limits.
                   </p>
                 </div>
               </div>
@@ -890,8 +826,8 @@ export default function CoshhAwarenessModule2Section2() {
                   Step 3: Decide What Needs to Be Done
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  Based on the risk evaluation, decide what measures are needed
-                  to prevent or adequately control exposure. Apply the{" "}
+                  Based on the risk evaluation, decide what measures are needed to prevent or
+                  adequately control exposure. Apply the{' '}
                   <strong className="text-white">hierarchy of control</strong>:
                 </p>
                 <div className="space-y-2">
@@ -902,8 +838,8 @@ export default function CoshhAwarenessModule2Section2() {
                     <div>
                       <p className="text-white font-medium text-sm">Elimination</p>
                       <p className="text-white/60 text-xs">
-                        Can you remove the hazardous substance entirely? Use a
-                        non-hazardous alternative?
+                        Can you remove the hazardous substance entirely? Use a non-hazardous
+                        alternative?
                       </p>
                     </div>
                   </div>
@@ -914,8 +850,8 @@ export default function CoshhAwarenessModule2Section2() {
                     <div>
                       <p className="text-white font-medium text-sm">Substitution</p>
                       <p className="text-white/60 text-xs">
-                        Can you replace it with a less hazardous substance? E.g.
-                        water-based adhesive instead of solvent-based.
+                        Can you replace it with a less hazardous substance? E.g. water-based
+                        adhesive instead of solvent-based.
                       </p>
                     </div>
                   </div>
@@ -924,12 +860,10 @@ export default function CoshhAwarenessModule2Section2() {
                       <span className="text-yellow-300 text-xs font-bold">3</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium text-sm">
-                        Engineering controls
-                      </p>
+                      <p className="text-white font-medium text-sm">Engineering controls</p>
                       <p className="text-white/60 text-xs">
-                        Local exhaust ventilation (LEV), enclosed processes,
-                        fume extraction at source.
+                        Local exhaust ventilation (LEV), enclosed processes, fume extraction at
+                        source.
                       </p>
                     </div>
                   </div>
@@ -938,12 +872,10 @@ export default function CoshhAwarenessModule2Section2() {
                       <span className="text-yellow-300 text-xs font-bold">4</span>
                     </div>
                     <div>
-                      <p className="text-white font-medium text-sm">
-                        Administrative controls
-                      </p>
+                      <p className="text-white font-medium text-sm">Administrative controls</p>
                       <p className="text-white/60 text-xs">
-                        Safe systems of work, reduced exposure time, job rotation,
-                        signage, training.
+                        Safe systems of work, reduced exposure time, job rotation, signage,
+                        training.
                       </p>
                     </div>
                   </div>
@@ -954,24 +886,21 @@ export default function CoshhAwarenessModule2Section2() {
                     <div>
                       <p className="text-white font-medium text-sm">PPE (last resort)</p>
                       <p className="text-white/60 text-xs">
-                        Respiratory protective equipment, chemical-resistant gloves,
-                        goggles, protective clothing — used only when higher-level
-                        controls are not reasonably practicable or as a supplement.
+                        Respiratory protective equipment, chemical-resistant gloves, goggles,
+                        protective clothing — used only when higher-level controls are not
+                        reasonably practicable or as a supplement.
                       </p>
                     </div>
                   </div>
                 </div>
                 <div className="mt-3 bg-violet-500/10 border border-violet-500/20 p-3 rounded-lg">
-                  <p className="text-violet-300 text-xs font-medium mb-1">
-                    Electrician Example:
-                  </p>
+                  <p className="text-violet-300 text-xs font-medium mb-1">Electrician Example:</p>
                   <p className="text-white/70 text-xs">
-                    For cable jointing compounds: can a less toxic compound be
-                    used (substitution)? If not, can fume extraction be provided
-                    (engineering control)? Can the work be done outdoors or in a
-                    well-ventilated area (administrative control)? If none of
-                    those are sufficient, appropriate RPE and chemical-resistant
-                    gloves must be provided (PPE).
+                    For cable jointing compounds: can a less toxic compound be used (substitution)?
+                    If not, can fume extraction be provided (engineering control)? Can the work be
+                    done outdoors or in a well-ventilated area (administrative control)? If none of
+                    those are sufficient, appropriate RPE and chemical-resistant gloves must be
+                    provided (PPE).
                   </p>
                 </div>
               </div>
@@ -994,67 +923,60 @@ export default function CoshhAwarenessModule2Section2() {
                   Step 4: Record the Assessment
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  If you employ five or more people, you{" "}
-                  <strong className="text-white">must</strong> record the
-                  significant findings of the assessment. Even if you employ
-                  fewer than five, recording is strongly recommended — and is
-                  essential evidence of compliance if the HSE inspects.
+                  If you employ five or more people, you{' '}
+                  <strong className="text-white">must</strong> record the significant findings of
+                  the assessment. Even if you employ fewer than five, recording is strongly
+                  recommended — and is essential evidence of compliance if the HSE inspects.
                 </p>
-                <p className="text-white/70 text-sm mb-3">
-                  The recorded assessment must include:
-                </p>
+                <p className="text-white/70 text-sm mb-3">The recorded assessment must include:</p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Hazards identified:</strong>{" "}
-                      the substances, their hazardous properties, and the GHS
-                      classification
+                      <strong className="text-white">Hazards identified:</strong> the substances,
+                      their hazardous properties, and the GHS classification
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Who is at risk:</strong>{" "}
-                      the groups of employees (and others) who may be exposed
+                      <strong className="text-white">Who is at risk:</strong> the groups of
+                      employees (and others) who may be exposed
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Nature and degree of
-                      exposure:</strong> route, duration, frequency, and estimated
-                      level of exposure
+                      <strong className="text-white">Nature and degree of exposure:</strong> route,
+                      duration, frequency, and estimated level of exposure
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Control measures:</strong>{" "}
-                      the steps taken (or to be taken) to prevent or adequately
-                      control exposure
+                      <strong className="text-white">Control measures:</strong> the steps taken (or
+                      to be taken) to prevent or adequately control exposure
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Conclusions and
-                      actions:</strong> what was decided, who is responsible, and
-                      when actions must be completed
+                      <strong className="text-white">Conclusions and actions:</strong> what was
+                      decided, who is responsible, and when actions must be completed
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Date and assessor:</strong>{" "}
-                      when the assessment was carried out and by whom
+                      <strong className="text-white">Date and assessor:</strong> when the assessment
+                      was carried out and by whom
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Review date:</strong>{" "}
-                      when the assessment is next due for review
+                      <strong className="text-white">Review date:</strong> when the assessment is
+                      next due for review
                     </div>
                   </li>
                 </ul>
@@ -1062,9 +984,7 @@ export default function CoshhAwarenessModule2Section2() {
                 {/* Electronic vs Paper Recording */}
                 <div className="mt-4 grid sm:grid-cols-2 gap-3">
                   <div className="bg-violet-500/10 border border-violet-500/20 p-3 rounded-lg">
-                    <p className="text-violet-300 text-xs font-semibold mb-1">
-                      Electronic Records
-                    </p>
+                    <p className="text-violet-300 text-xs font-semibold mb-1">Electronic Records</p>
                     <ul className="text-white/60 text-xs space-y-1">
                       <li>Easily searchable and shareable</li>
                       <li>Can be accessed on site via mobile devices</li>
@@ -1074,9 +994,7 @@ export default function CoshhAwarenessModule2Section2() {
                     </ul>
                   </div>
                   <div className="bg-violet-500/10 border border-violet-500/20 p-3 rounded-lg">
-                    <p className="text-violet-300 text-xs font-semibold mb-1">
-                      Paper Records
-                    </p>
+                    <p className="text-violet-300 text-xs font-semibold mb-1">Paper Records</p>
                     <ul className="text-white/60 text-xs space-y-1">
                       <li>No technology required</li>
                       <li>Harder to search across multiple assessments</li>
@@ -1090,58 +1008,52 @@ export default function CoshhAwarenessModule2Section2() {
 
               {/* Step 5 Detail */}
               <div className="bg-white/5 border border-violet-400/30 p-4 rounded-lg">
-                <h3 className="text-violet-300 font-medium mb-3">
-                  Step 5: Implement the Controls
-                </h3>
+                <h3 className="text-violet-300 font-medium mb-3">Step 5: Implement the Controls</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  An assessment is worthless if the control measures it identifies
-                  are never put in place. Implementation means:
+                  An assessment is worthless if the control measures it identifies are never put in
+                  place. Implementation means:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Procuring equipment:</strong>{" "}
-                      purchasing LEV systems, PPE, spill kits, or alternative
-                      substances as specified in the assessment
+                      <strong className="text-white">Procuring equipment:</strong> purchasing LEV
+                      systems, PPE, spill kits, or alternative substances as specified in the
+                      assessment
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Training workers:</strong>{" "}
-                      ensuring everyone understands the hazards, the controls, and
-                      how to use them correctly
+                      <strong className="text-white">Training workers:</strong> ensuring everyone
+                      understands the hazards, the controls, and how to use them correctly
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Updating procedures:</strong>{" "}
-                      revising method statements, safe systems of work, and
-                      permits to work to reflect the assessment findings
+                      <strong className="text-white">Updating procedures:</strong> revising method
+                      statements, safe systems of work, and permits to work to reflect the
+                      assessment findings
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Providing information:</strong>{" "}
-                      making the assessment available to workers, displaying
-                      safety signage, and ensuring SDS are accessible
+                      <strong className="text-white">Providing information:</strong> making the
+                      assessment available to workers, displaying safety signage, and ensuring SDS
+                      are accessible
                     </div>
                   </li>
                 </ul>
                 <div className="mt-3 bg-violet-500/10 border border-violet-500/20 p-3 rounded-lg">
-                  <p className="text-violet-300 text-xs font-medium mb-1">
-                    Electrician Example:
-                  </p>
+                  <p className="text-violet-300 text-xs font-medium mb-1">Electrician Example:</p>
                   <p className="text-white/70 text-xs">
-                    After assessing the risk from cleaning solvents used to
-                    degrease switchgear, the controls include: switching to a
-                    less volatile solvent (substitution), ensuring the work area
-                    is well ventilated (engineering/administrative), providing
-                    nitrile gloves and safety goggles (PPE), and briefing all
-                    operatives on the safe system of work before they start.
+                    After assessing the risk from cleaning solvents used to degrease switchgear, the
+                    controls include: switching to a less volatile solvent (substitution), ensuring
+                    the work area is well ventilated (engineering/administrative), providing nitrile
+                    gloves and safety goggles (PPE), and briefing all operatives on the safe system
+                    of work before they start.
                   </p>
                 </div>
               </div>
@@ -1165,34 +1077,33 @@ export default function CoshhAwarenessModule2Section2() {
                   Step 6: Ensure Controls Are Used and Maintained
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  Controls only work if they are actually used and kept in good
-                  working order. This step involves:
+                  Controls only work if they are actually used and kept in good working order. This
+                  step involves:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Supervision:</strong>{" "}
-                      checking that workers actually follow the safe system of
-                      work and use the controls specified in the assessment
+                      <strong className="text-white">Supervision:</strong> checking that workers
+                      actually follow the safe system of work and use the controls specified in the
+                      assessment
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Maintenance:</strong>{" "}
-                      LEV systems must be examined and tested at least every 14
-                      months (Regulation 9). RPE must be inspected before each use
-                      and maintained according to the manufacturer&rsquo;s
+                      <strong className="text-white">Maintenance:</strong> LEV systems must be
+                      examined and tested at least every 14 months (Regulation 9). RPE must be
+                      inspected before each use and maintained according to the manufacturer&rsquo;s
                       instructions
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Employee duties:</strong>{" "}
-                      employees have a legal duty under Regulation 8(2) to make
-                      proper use of controls and to report defects immediately
+                      <strong className="text-white">Employee duties:</strong> employees have a
+                      legal duty under Regulation 8(2) to make proper use of controls and to report
+                      defects immediately
                     </div>
                   </li>
                 </ul>
@@ -1204,51 +1115,44 @@ export default function CoshhAwarenessModule2Section2() {
                   Step 7: Monitor Exposure and Health
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  Depending on the substances and the level of risk, the employer
-                  may need to:
+                  Depending on the substances and the level of risk, the employer may need to:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Monitor workplace
-                      exposure:</strong> air sampling, personal exposure
-                      monitoring, surface contamination checks — especially where
-                      WELs exist and exposure levels are uncertain
+                      <strong className="text-white">Monitor workplace exposure:</strong> air
+                      sampling, personal exposure monitoring, surface contamination checks —
+                      especially where WELs exist and exposure levels are uncertain
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Health surveillance:</strong>{" "}
-                      required under Regulation 11 where there is a reasonable
-                      likelihood that an identifiable disease or adverse health
-                      effect will result from exposure — for example, skin
-                      checks for workers using sensitising substances, lung
-                      function tests for workers exposed to respiratory sensitisers
+                      <strong className="text-white">Health surveillance:</strong> required under
+                      Regulation 11 where there is a reasonable likelihood that an identifiable
+                      disease or adverse health effect will result from exposure — for example, skin
+                      checks for workers using sensitising substances, lung function tests for
+                      workers exposed to respiratory sensitisers
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Biological monitoring:</strong>{" "}
-                      measuring levels of a substance or its metabolites in blood,
-                      urine, or breath — used for some substances to confirm
-                      that control measures are effective
+                      <strong className="text-white">Biological monitoring:</strong> measuring
+                      levels of a substance or its metabolites in blood, urine, or breath — used for
+                      some substances to confirm that control measures are effective
                     </div>
                   </li>
                 </ul>
                 <div className="mt-3 bg-violet-500/10 border border-violet-500/20 p-3 rounded-lg">
-                  <p className="text-violet-300 text-xs font-medium mb-1">
-                    Electrician Example:
-                  </p>
+                  <p className="text-violet-300 text-xs font-medium mb-1">Electrician Example:</p>
                   <p className="text-white/70 text-xs">
-                    An electrician who regularly solders using rosin-based flux
-                    should be included in a health surveillance programme for
-                    occupational asthma. This typically involves a baseline
-                    questionnaire and lung function test, followed by periodic
-                    reviews. If symptoms develop, the worker must be referred
-                    for medical assessment and exposure must be reviewed.
+                    An electrician who regularly solders using rosin-based flux should be included
+                    in a health surveillance programme for occupational asthma. This typically
+                    involves a baseline questionnaire and lung function test, followed by periodic
+                    reviews. If symptoms develop, the worker must be referred for medical assessment
+                    and exposure must be reviewed.
                   </p>
                 </div>
               </div>
@@ -1260,51 +1164,48 @@ export default function CoshhAwarenessModule2Section2() {
                   Step 8: Review the Assessment
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  A COSHH assessment is not a one-off document. It must be
-                  reviewed and updated to ensure it remains valid. Reviews are
-                  triggered by:
+                  A COSHH assessment is not a one-off document. It must be reviewed and updated to
+                  ensure it remains valid. Reviews are triggered by:
                 </p>
                 <ul className="text-white/70 space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Significant change in
-                      work or substances:</strong> a new product, a change in
-                      process, a different work location, or altered working
-                      hours
+                      <strong className="text-white">
+                        Significant change in work or substances:
+                      </strong>{' '}
+                      a new product, a change in process, a different work location, or altered
+                      working hours
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">New information:</strong>{" "}
-                      updated SDS, revised WELs in EH40, new HSE guidance, new
-                      research on health effects
+                      <strong className="text-white">New information:</strong> updated SDS, revised
+                      WELs in EH40, new HSE guidance, new research on health effects
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Incident or near miss:</strong>{" "}
-                      a spill, a worker reporting symptoms, a control measure
-                      failing, an exposure event
+                      <strong className="text-white">Incident or near miss:</strong> a spill, a
+                      worker reporting symptoms, a control measure failing, an exposure event
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Health surveillance
-                      findings:</strong> if monitoring reveals that workers are
-                      being adversely affected despite the controls in place
+                      <strong className="text-white">Health surveillance findings:</strong> if
+                      monitoring reveals that workers are being adversely affected despite the
+                      controls in place
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong className="text-white">Routine review:</strong>{" "}
-                      annual review is widely regarded as good practice, even if
-                      nothing has changed — it confirms the assessment is still
-                      current and captures any overlooked developments
+                      <strong className="text-white">Routine review:</strong> annual review is
+                      widely regarded as good practice, even if nothing has changed — it confirms
+                      the assessment is still current and captures any overlooked developments
                     </div>
                   </li>
                 </ul>
@@ -1322,8 +1223,8 @@ export default function CoshhAwarenessModule2Section2() {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                A good COSHH assessment depends on good information. The following
-                sources are essential tools for anyone carrying out an assessment:
+                A good COSHH assessment depends on good information. The following sources are
+                essential tools for anyone carrying out an assessment:
               </p>
 
               {/* Information Sources Diagram */}
@@ -1337,9 +1238,7 @@ export default function CoshhAwarenessModule2Section2() {
                       <FileText className="h-6 w-6 text-violet-300" />
                     </div>
                     <div className="bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2 text-center w-full">
-                      <p className="text-violet-300 font-medium text-xs">
-                        Safety Data Sheets
-                      </p>
+                      <p className="text-violet-300 font-medium text-xs">Safety Data Sheets</p>
                       <p className="text-white/50 text-[10px] mt-1">
                         16 sections of hazard, handling, and exposure data
                       </p>
@@ -1350,9 +1249,7 @@ export default function CoshhAwarenessModule2Section2() {
                       <ClipboardCheck className="h-6 w-6 text-violet-300" />
                     </div>
                     <div className="bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2 text-center w-full">
-                      <p className="text-violet-300 font-medium text-xs">
-                        EH40
-                      </p>
+                      <p className="text-violet-300 font-medium text-xs">EH40</p>
                       <p className="text-white/50 text-[10px] mt-1">
                         Workplace Exposure Limits for hundreds of substances
                       </p>
@@ -1363,9 +1260,7 @@ export default function CoshhAwarenessModule2Section2() {
                       <Search className="h-6 w-6 text-violet-300" />
                     </div>
                     <div className="bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2 text-center w-full">
-                      <p className="text-violet-300 font-medium text-xs">
-                        COSHH Essentials
-                      </p>
+                      <p className="text-violet-300 font-medium text-xs">COSHH Essentials</p>
                       <p className="text-white/50 text-[10px] mt-1">
                         Free HSE web tool for control guidance
                       </p>
@@ -1376,9 +1271,7 @@ export default function CoshhAwarenessModule2Section2() {
                       <ShieldCheck className="h-6 w-6 text-violet-300" />
                     </div>
                     <div className="bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2 text-center w-full">
-                      <p className="text-violet-300 font-medium text-xs">
-                        HSE Guidance
-                      </p>
+                      <p className="text-violet-300 font-medium text-xs">HSE Guidance</p>
                       <p className="text-white/50 text-[10px] mt-1">
                         INDG136, L5 ACoP, sector-specific guidance
                       </p>
@@ -1388,85 +1281,113 @@ export default function CoshhAwarenessModule2Section2() {
               </div>
 
               <div className="bg-white/5 border border-violet-400/30 p-4 rounded-lg">
-                <h3 className="text-violet-300 font-medium mb-3">
-                  Safety Data Sheets (SDS)
-                </h3>
+                <h3 className="text-violet-300 font-medium mb-3">Safety Data Sheets (SDS)</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  The SDS is the single most important document for COSHH
-                  assessment. Suppliers are legally required to provide an SDS for
-                  any hazardous substance they sell. The SDS contains 16
-                  standardised sections covering:
+                  The SDS is the single most important document for COSHH assessment. Suppliers are
+                  legally required to provide an SDS for any hazardous substance they sell. The SDS
+                  contains 16 standardised sections covering:
                 </p>
                 <ul className="text-white/70 space-y-1 text-xs">
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">01</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      01
+                    </span>
                     <span>Identification of the substance and supplier</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">02</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      02
+                    </span>
                     <span>Hazards identification (GHS classification and label elements)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">03</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      03
+                    </span>
                     <span>Composition/information on ingredients</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">04</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      04
+                    </span>
                     <span>First-aid measures</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">05</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      05
+                    </span>
                     <span>Firefighting measures</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">06</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      06
+                    </span>
                     <span>Accidental release measures</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">07</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      07
+                    </span>
                     <span>Handling and storage</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">08</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      08
+                    </span>
                     <span>Exposure controls/personal protection</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">09</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      09
+                    </span>
                     <span>Physical and chemical properties</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">10</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      10
+                    </span>
                     <span>Stability and reactivity</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">11</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      11
+                    </span>
                     <span>Toxicological information</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">12</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      12
+                    </span>
                     <span>Ecological information</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">13</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      13
+                    </span>
                     <span>Disposal considerations</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">14</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      14
+                    </span>
                     <span>Transport information</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">15</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      15
+                    </span>
                     <span>Regulatory information</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">16</span>
+                    <span className="text-violet-400 font-mono text-[10px] mt-0.5 w-4 flex-shrink-0">
+                      16
+                    </span>
                     <span>Other information</span>
                   </li>
                 </ul>
                 <p className="text-white/60 text-xs mt-3">
-                  For a COSHH assessment, sections 2 (hazards), 3 (composition),
-                  4 (first aid), 7 (handling), 8 (exposure controls), and 11
-                  (toxicology) are the most critical.
+                  For a COSHH assessment, sections 2 (hazards), 3 (composition), 4 (first aid), 7
+                  (handling), 8 (exposure controls), and 11 (toxicology) are the most critical.
                 </p>
               </div>
 
@@ -1475,39 +1396,29 @@ export default function CoshhAwarenessModule2Section2() {
                   EH40: Workplace Exposure Limits
                 </h3>
                 <p className="text-white/70 text-sm">
-                  EH40 is an HSE publication that lists the{" "}
-                  <strong className="text-white">
-                    Workplace Exposure Limits (WELs)
-                  </strong>{" "}
-                  for hazardous substances in the workplace. WELs are expressed as
-                  concentrations of airborne substances over reference periods —
-                  typically an{" "}
-                  <strong className="text-white">8-hour time-weighted average
-                  (TWA)</strong> and a{" "}
-                  <strong className="text-white">15-minute short-term exposure
-                  limit (STEL)</strong>. If a substance has a WEL, the employer
-                  must ensure that exposure does not exceed it. EH40 is regularly
-                  updated — always use the most current edition when carrying
+                  EH40 is an HSE publication that lists the{' '}
+                  <strong className="text-white">Workplace Exposure Limits (WELs)</strong> for
+                  hazardous substances in the workplace. WELs are expressed as concentrations of
+                  airborne substances over reference periods — typically an{' '}
+                  <strong className="text-white">8-hour time-weighted average (TWA)</strong> and a{' '}
+                  <strong className="text-white">15-minute short-term exposure limit (STEL)</strong>
+                  . If a substance has a WEL, the employer must ensure that exposure does not exceed
+                  it. EH40 is regularly updated — always use the most current edition when carrying
                   out assessments.
                 </p>
               </div>
 
               <div className="bg-white/5 border border-violet-400/30 p-4 rounded-lg">
-                <h3 className="text-violet-300 font-medium mb-3">
-                  COSHH Essentials
-                </h3>
+                <h3 className="text-violet-300 font-medium mb-3">COSHH Essentials</h3>
                 <p className="text-white/70 text-sm">
-                  <strong className="text-white">COSHH Essentials</strong> is a
-                  free, web-based tool provided by the HSE. It helps small and
-                  medium-sized businesses carry out COSHH assessments without
-                  specialist occupational hygiene knowledge. You enter basic
-                  information about the substance (from the SDS) and the task,
-                  and the tool generates{" "}
-                  <strong className="text-white">control guidance sheets</strong>{" "}
-                  recommending the level of control needed — from general
-                  ventilation to full containment. It is a useful starting point,
-                  though for high-risk or complex work, specialist assessment is
-                  recommended.
+                  <strong className="text-white">COSHH Essentials</strong> is a free, web-based tool
+                  provided by the HSE. It helps small and medium-sized businesses carry out COSHH
+                  assessments without specialist occupational hygiene knowledge. You enter basic
+                  information about the substance (from the SDS) and the task, and the tool
+                  generates <strong className="text-white">control guidance sheets</strong>{' '}
+                  recommending the level of control needed — from general ventilation to full
+                  containment. It is a useful starting point, though for high-risk or complex work,
+                  specialist assessment is recommended.
                 </p>
               </div>
             </div>
@@ -1525,51 +1436,44 @@ export default function CoshhAwarenessModule2Section2() {
             </h2>
             <div className="space-y-4 text-white/80">
               <p>
-                Electricians and construction workers encounter hazardous
-                substances regularly — often without realising they require a
-                COSHH assessment. The following examples illustrate how the
-                8-step process applies to common electrical work scenarios.
+                Electricians and construction workers encounter hazardous substances regularly —
+                often without realising they require a COSHH assessment. The following examples
+                illustrate how the 8-step process applies to common electrical work scenarios.
               </p>
 
               {/* Cable Jointing Compounds */}
               <div className="bg-white/5 border border-violet-400/30 p-4 rounded-lg">
-                <h3 className="text-violet-300 font-medium mb-3">
-                  Cable Jointing Compounds
-                </h3>
+                <h3 className="text-violet-300 font-medium mb-3">Cable Jointing Compounds</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  Two-part epoxy and polyurethane resin compounds used in cable
-                  jointing contain hazardous chemicals including isocyanates (a
-                  potent respiratory sensitiser) and epoxy hardeners (a skin
-                  sensitiser).
+                  Two-part epoxy and polyurethane resin compounds used in cable jointing contain
+                  hazardous chemicals including isocyanates (a potent respiratory sensitiser) and
+                  epoxy hardeners (a skin sensitiser).
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Gather:</strong> Obtain the
-                      SDS for both the resin and the hardener. Note the GHS
-                      hazard statements — typically H317 (skin sensitiser),
-                      H334 (respiratory sensitiser), H315 (skin irritation).
+                      <strong className="text-white">Gather:</strong> Obtain the SDS for both the
+                      resin and the hardener. Note the GHS hazard statements — typically H317 (skin
+                      sensitiser), H334 (respiratory sensitiser), H315 (skin irritation).
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Evaluate:</strong> Mixing
-                      the two components releases fumes. Working in a cable
-                      chamber or joint bay with limited ventilation increases the
-                      risk significantly. Duration is typically 30–60 minutes per
-                      joint.
+                      <strong className="text-white">Evaluate:</strong> Mixing the two components
+                      releases fumes. Working in a cable chamber or joint bay with limited
+                      ventilation increases the risk significantly. Duration is typically 30–60
+                      minutes per joint.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Controls:</strong> Forced
-                      ventilation of the joint bay, chemical-resistant gloves
-                      (nitrile, minimum 0.3 mm), safety goggles, RPE if
-                      ventilation is insufficient. Barrier cream for additional
-                      skin protection.
+                      <strong className="text-white">Controls:</strong> Forced ventilation of the
+                      joint bay, chemical-resistant gloves (nitrile, minimum 0.3 mm), safety
+                      goggles, RPE if ventilation is insufficient. Barrier cream for additional skin
+                      protection.
                     </div>
                   </div>
                 </div>
@@ -1577,41 +1481,37 @@ export default function CoshhAwarenessModule2Section2() {
 
               {/* PVC Solvent Cement */}
               <div className="bg-white/5 border border-violet-400/30 p-4 rounded-lg">
-                <h3 className="text-violet-300 font-medium mb-3">
-                  PVC Solvent Cement
-                </h3>
+                <h3 className="text-violet-300 font-medium mb-3">PVC Solvent Cement</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  Used for bonding PVC conduit and trunking. Contains
-                  tetrahydrofuran (THF) and other volatile organic solvents.
+                  Used for bonding PVC conduit and trunking. Contains tetrahydrofuran (THF) and
+                  other volatile organic solvents.
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Gather:</strong> THF is
-                      classified as harmful by inhalation (H332) and causes
-                      serious eye irritation (H319). The WEL is 50 ppm (8-hour
-                      TWA) and 100 ppm (15-minute STEL).
+                      <strong className="text-white">Gather:</strong> THF is classified as harmful
+                      by inhalation (H332) and causes serious eye irritation (H319). The WEL is 50
+                      ppm (8-hour TWA) and 100 ppm (15-minute STEL).
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Evaluate:</strong> Brief use
-                      in a well-ventilated area is low risk. Extended use in a
-                      confined space (ceiling void, riser, under-floor duct) can
-                      produce concentrations above the WEL within minutes.
+                      <strong className="text-white">Evaluate:</strong> Brief use in a
+                      well-ventilated area is low risk. Extended use in a confined space (ceiling
+                      void, riser, under-floor duct) can produce concentrations above the WEL within
+                      minutes.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Controls:</strong> Work in
-                      well-ventilated areas where possible. For confined spaces,
-                      use forced ventilation. Minimise the amount of cement used
-                      at any one time. Provide nitrile gloves and ensure good
-                      personal hygiene (no eating, drinking, or smoking until
-                      hands are washed).
+                      <strong className="text-white">Controls:</strong> Work in well-ventilated
+                      areas where possible. For confined spaces, use forced ventilation. Minimise
+                      the amount of cement used at any one time. Provide nitrile gloves and ensure
+                      good personal hygiene (no eating, drinking, or smoking until hands are
+                      washed).
                     </div>
                   </div>
                 </div>
@@ -1619,42 +1519,36 @@ export default function CoshhAwarenessModule2Section2() {
 
               {/* Flux Fumes from Soldering */}
               <div className="bg-white/5 border border-violet-400/30 p-4 rounded-lg">
-                <h3 className="text-violet-300 font-medium mb-3">
-                  Flux Fumes from Soldering
-                </h3>
+                <h3 className="text-violet-300 font-medium mb-3">Flux Fumes from Soldering</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  Soldering electrical connections using rosin-cored (colophony)
-                  solder produces fumes that are a known cause of occupational
-                  asthma.
+                  Soldering electrical connections using rosin-cored (colophony) solder produces
+                  fumes that are a known cause of occupational asthma.
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Gather:</strong> Rosin-based
-                      solder flux fume has a very low WEL: 0.05 mg/m&sup3;
-                      (8-hour TWA) and 0.15 mg/m&sup3; (15-minute STEL). The
-                      fume is classified as a respiratory sensitiser.
+                      <strong className="text-white">Gather:</strong> Rosin-based solder flux fume
+                      has a very low WEL: 0.05 mg/m&sup3; (8-hour TWA) and 0.15 mg/m&sup3;
+                      (15-minute STEL). The fume is classified as a respiratory sensitiser.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Evaluate:</strong> Even
-                      brief soldering produces visible fume. Without local
-                      exhaust ventilation, the WEL can be exceeded in minutes.
-                      Once a worker becomes sensitised, even very low exposures
+                      <strong className="text-white">Evaluate:</strong> Even brief soldering
+                      produces visible fume. Without local exhaust ventilation, the WEL can be
+                      exceeded in minutes. Once a worker becomes sensitised, even very low exposures
                       can trigger asthma attacks.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Controls:</strong> Use fume
-                      extraction at source (portable solder fume extractor). Where
-                      possible, use non-rosin flux (substitution). Ensure good
-                      general ventilation. Health surveillance for occupational
-                      asthma is required for regular soldering work.
+                      <strong className="text-white">Controls:</strong> Use fume extraction at
+                      source (portable solder fume extractor). Where possible, use non-rosin flux
+                      (substitution). Ensure good general ventilation. Health surveillance for
+                      occupational asthma is required for regular soldering work.
                     </div>
                   </div>
                 </div>
@@ -1662,44 +1556,38 @@ export default function CoshhAwarenessModule2Section2() {
 
               {/* Cleaning Solvents */}
               <div className="bg-white/5 border border-violet-400/30 p-4 rounded-lg">
-                <h3 className="text-violet-300 font-medium mb-3">
-                  Cleaning Solvents
-                </h3>
+                <h3 className="text-violet-300 font-medium mb-3">Cleaning Solvents</h3>
                 <p className="text-white/70 text-sm mb-3">
-                  Electrical contact cleaners, degreasers, and switch cleaners
-                  contain volatile solvents (often naphtha, isopropanol, or
-                  acetone) that evaporate rapidly, creating high short-term
-                  airborne concentrations.
+                  Electrical contact cleaners, degreasers, and switch cleaners contain volatile
+                  solvents (often naphtha, isopropanol, or acetone) that evaporate rapidly, creating
+                  high short-term airborne concentrations.
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Gather:</strong> Check the
-                      SDS — most contact cleaners contain multiple solvents,
-                      each with its own WEL. They are typically flammable (H225/
-                      H226), harmful by inhalation (H332), and cause skin
-                      defatting on prolonged contact.
+                      <strong className="text-white">Gather:</strong> Check the SDS — most contact
+                      cleaners contain multiple solvents, each with its own WEL. They are typically
+                      flammable (H225/ H226), harmful by inhalation (H332), and cause skin defatting
+                      on prolonged contact.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Evaluate:</strong> Short
-                      bursts of aerosol spray in a large, ventilated switchroom
-                      may be low risk. Prolonged use in a small distribution
-                      board cupboard is higher risk. Fire/explosion risk must
+                      <strong className="text-white">Evaluate:</strong> Short bursts of aerosol
+                      spray in a large, ventilated switchroom may be low risk. Prolonged use in a
+                      small distribution board cupboard is higher risk. Fire/explosion risk must
                       also be considered near live equipment.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Controls:</strong> Ensure
-                      adequate ventilation. Minimise spray duration and quantity.
-                      Isolate electrical supplies before spraying near live parts
-                      (flammable vapour + arc = flash fire). Nitrile gloves for
-                      prolonged use. No ignition sources nearby.
+                      <strong className="text-white">Controls:</strong> Ensure adequate ventilation.
+                      Minimise spray duration and quantity. Isolate electrical supplies before
+                      spraying near live parts (flammable vapour + arc = flash fire). Nitrile gloves
+                      for prolonged use. No ignition sources nearby.
                     </div>
                   </div>
                 </div>
@@ -1717,56 +1605,57 @@ export default function CoshhAwarenessModule2Section2() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Copying assessments
-                      without adapting them:</strong> using a downloaded template
-                      without tailoring it to your specific work, location, and
-                      conditions
+                      <strong className="text-white">
+                        Copying assessments without adapting them:
+                      </strong>{' '}
+                      using a downloaded template without tailoring it to your specific work,
+                      location, and conditions
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Relying on PPE alone:</strong>{" "}
-                      PPE should be the last resort — not the first and only
-                      control measure. Assessments that jump straight to &ldquo;wear
-                      gloves and a mask&rdquo; without considering elimination,
-                      substitution, or engineering controls are inadequate
+                      <strong className="text-white">Relying on PPE alone:</strong> PPE should be
+                      the last resort — not the first and only control measure. Assessments that
+                      jump straight to &ldquo;wear gloves and a mask&rdquo; without considering
+                      elimination, substitution, or engineering controls are inadequate
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Not consulting
-                      workers:</strong> the people doing the work often know the
-                      real conditions, short-cuts, and problems that are not
-                      visible from an office
+                      <strong className="text-white">Not consulting workers:</strong> the people
+                      doing the work often know the real conditions, short-cuts, and problems that
+                      are not visible from an office
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Forgetting substances
-                      generated by work:</strong> assessing only the products you
-                      buy, and overlooking fumes, dusts, and vapours created
-                      during the work itself (cutting, grinding, heating, soldering)
+                      <strong className="text-white">
+                        Forgetting substances generated by work:
+                      </strong>{' '}
+                      assessing only the products you buy, and overlooking fumes, dusts, and vapours
+                      created during the work itself (cutting, grinding, heating, soldering)
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Failing to review:</strong>{" "}
-                      writing the assessment and filing it away without ever
-                      looking at it again — assessments must be living documents
+                      <strong className="text-white">Failing to review:</strong> writing the
+                      assessment and filing it away without ever looking at it again — assessments
+                      must be living documents
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div className="text-white/70">
-                      <strong className="text-white">Using a generic
-                      assessment for different conditions:</strong> applying a
-                      single assessment to tasks in vastly different environments
-                      (e.g. open workshop vs confined ceiling void) without
-                      recognising the different risk profiles
+                      <strong className="text-white">
+                        Using a generic assessment for different conditions:
+                      </strong>{' '}
+                      applying a single assessment to tasks in vastly different environments (e.g.
+                      open workshop vs confined ceiling void) without recognising the different risk
+                      profiles
                     </div>
                   </div>
                 </div>
@@ -1778,11 +1667,10 @@ export default function CoshhAwarenessModule2Section2() {
                   Generic Assessments vs Task-Specific Assessments
                 </h3>
                 <p className="text-white/70 text-sm mb-3">
-                  The HSE recognises that employers may use{" "}
-                  <strong className="text-white">generic assessments</strong> as a
-                  starting point — these cover common tasks and substances that
-                  are carried out repeatedly under similar conditions. However,
-                  generic assessments have limitations:
+                  The HSE recognises that employers may use{' '}
+                  <strong className="text-white">generic assessments</strong> as a starting point —
+                  these cover common tasks and substances that are carried out repeatedly under
+                  similar conditions. However, generic assessments have limitations:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-violet-500/10 border border-violet-500/20 p-3 rounded-lg">
@@ -1833,12 +1721,11 @@ export default function CoshhAwarenessModule2Section2() {
                   </div>
                 </div>
                 <p className="text-white/60 text-xs mt-3">
-                  <strong className="text-white/80">Good practice:</strong> maintain
-                  a library of generic assessments for your commonly used
-                  substances and standard tasks, but carry out a task-specific
-                  assessment whenever the work location, conditions, or
-                  circumstances differ from the generic. Always note on the
-                  generic assessment the conditions under which it is valid.
+                  <strong className="text-white/80">Good practice:</strong> maintain a library of
+                  generic assessments for your commonly used substances and standard tasks, but
+                  carry out a task-specific assessment whenever the work location, conditions, or
+                  circumstances differ from the generic. Always note on the generic assessment the
+                  conditions under which it is valid.
                 </p>
               </div>
             </div>
@@ -1852,16 +1739,9 @@ export default function CoshhAwarenessModule2Section2() {
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="pb-4 border-b border-white/5 last:border-0"
-              >
-                <h3 className="font-semibold text-white mb-2">
-                  {faq.question}
-                </h3>
-                <p className="text-white/70 text-sm leading-relaxed">
-                  {faq.answer}
-                </p>
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1869,10 +1749,7 @@ export default function CoshhAwarenessModule2Section2() {
 
         {/* Quiz */}
         <div className="mt-12">
-          <Quiz
-            title="Section 2 Knowledge Check"
-            questions={quizQuestions}
-          />
+          <Quiz title="Section 2 Knowledge Check" questions={quizQuestions} />
         </div>
 
         {/* Bottom Navigation */}

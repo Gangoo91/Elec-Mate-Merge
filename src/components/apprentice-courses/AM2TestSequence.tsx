@@ -45,10 +45,7 @@ export const AM2TestSequence = memo(function AM2TestSequence({
         return (
           <div
             key={index}
-            className={cn(
-              'relative',
-              'ios-animate-in-delayed'
-            )}
+            className={cn('relative', 'ios-animate-in-delayed')}
             style={{ '--ios-delay': `${index * 75}ms` } as React.CSSProperties}
           >
             <div className="flex gap-4">
@@ -133,10 +130,9 @@ export const AM2TestSequence = memo(function AM2TestSequence({
                       isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
                     )}
                   >
-                    <div className={cn(
-                      'pt-2 pb-1',
-                      'text-ios-subhead text-white/60 leading-relaxed'
-                    )}>
+                    <div
+                      className={cn('pt-2 pb-1', 'text-ios-subhead text-white/60 leading-relaxed')}
+                    >
                       {step.description}
                     </div>
                   </div>

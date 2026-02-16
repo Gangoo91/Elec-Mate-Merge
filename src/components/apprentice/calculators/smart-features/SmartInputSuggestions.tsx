@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Lightbulb, Zap } from "lucide-react";
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Lightbulb, Zap } from 'lucide-react';
 
 interface SmartSuggestion {
   value: string;
@@ -22,7 +21,7 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
   fieldType,
   currentValue,
   onSuggestionSelect,
-  calculatorType
+  calculatorType,
 }) => {
   const [suggestions, setSuggestions] = useState<SmartSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -31,21 +30,56 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
     switch (type) {
       case 'voltage':
         return [
-          { value: '230', label: '230V', category: 'Domestic', description: 'UK domestic single-phase' },
-          { value: '400', label: '400V', category: 'Commercial', description: 'UK three-phase supply' },
-          { value: '415', label: '415V', category: 'Industrial', description: 'UK industrial supply' },
-          { value: '12', label: '12V', category: 'Low Voltage', description: 'Automotive/LED lighting' },
+          {
+            value: '230',
+            label: '230V',
+            category: 'Domestic',
+            description: 'UK domestic single-phase',
+          },
+          {
+            value: '400',
+            label: '400V',
+            category: 'Commercial',
+            description: 'UK three-phase supply',
+          },
+          {
+            value: '415',
+            label: '415V',
+            category: 'Industrial',
+            description: 'UK industrial supply',
+          },
+          {
+            value: '12',
+            label: '12V',
+            category: 'Low Voltage',
+            description: 'Automotive/LED lighting',
+          },
           { value: '24', label: '24V', category: 'Low Voltage', description: 'Control systems' },
-          { value: '110', label: '110V', category: 'Site Supply', description: 'Construction site supply' }
+          {
+            value: '110',
+            label: '110V',
+            category: 'Site Supply',
+            description: 'Construction site supply',
+          },
         ];
       case 'current':
         return [
-          { value: '6', label: '6A', category: 'Lighting', description: 'Typical lighting circuit' },
+          {
+            value: '6',
+            label: '6A',
+            category: 'Lighting',
+            description: 'Typical lighting circuit',
+          },
           { value: '16', label: '16A', category: 'Power', description: 'Socket outlet circuit' },
           { value: '32', label: '32A', category: 'Power', description: 'High power appliances' },
           { value: '40', label: '40A', category: 'Cooker', description: 'Electric cooker circuit' },
-          { value: '63', label: '63A', category: 'Distribution', description: 'Sub-main distribution' },
-          { value: '100', label: '100A', category: 'Main Supply', description: 'Main incomer' }
+          {
+            value: '63',
+            label: '63A',
+            category: 'Distribution',
+            description: 'Sub-main distribution',
+          },
+          { value: '100', label: '100A', category: 'Main Supply', description: 'Main incomer' },
         ];
       case 'power':
         return [
@@ -53,15 +87,35 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
           { value: '500', label: '500W', category: 'Appliance', description: 'Microwave oven' },
           { value: '2000', label: '2kW', category: 'Heating', description: 'Electric heater' },
           { value: '3000', label: '3kW', category: 'Appliance', description: 'Kettle/toaster' },
-          { value: '7400', label: '7.4kW', category: 'EV Charging', description: 'Type 2 EV charger' },
-          { value: '22000', label: '22kW', category: 'EV Charging', description: 'Fast EV charger' }
+          {
+            value: '7400',
+            label: '7.4kW',
+            category: 'EV Charging',
+            description: 'Type 2 EV charger',
+          },
+          {
+            value: '22000',
+            label: '22kW',
+            category: 'EV Charging',
+            description: 'Fast EV charger',
+          },
         ];
       case 'length':
         return [
-          { value: '10', label: '10m', category: 'Short Run', description: 'Room to consumer unit' },
+          {
+            value: '10',
+            label: '10m',
+            category: 'Short Run',
+            description: 'Room to consumer unit',
+          },
           { value: '25', label: '25m', category: 'Medium Run', description: 'Across building' },
           { value: '50', label: '50m', category: 'Long Run', description: 'Outbuilding supply' },
-          { value: '100', label: '100m', category: 'Very Long', description: 'Remote installation' }
+          {
+            value: '100',
+            label: '100m',
+            category: 'Very Long',
+            description: 'Remote installation',
+          },
         ];
       case 'cableSize':
         return [
@@ -69,8 +123,18 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
           { value: '2.5', label: '2.5mm²', category: 'Power', description: 'Socket outlets' },
           { value: '4', label: '4mm²', category: 'Cooker', description: 'Small cooker circuits' },
           { value: '6', label: '6mm²', category: 'Cooker', description: 'Large cooker circuits' },
-          { value: '10', label: '10mm²', category: 'Distribution', description: 'Sub-main circuits' },
-          { value: '16', label: '16mm²', category: 'Distribution', description: 'Main distribution' }
+          {
+            value: '10',
+            label: '10mm²',
+            category: 'Distribution',
+            description: 'Sub-main circuits',
+          },
+          {
+            value: '16',
+            label: '16mm²',
+            category: 'Distribution',
+            description: 'Main distribution',
+          },
         ];
       default:
         return [];
@@ -82,8 +146,8 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
     setSuggestions(allSuggestions);
   }, [fieldType]);
 
-  const filteredSuggestions = suggestions.filter(suggestion => 
-    !currentValue || suggestion.value !== currentValue
+  const filteredSuggestions = suggestions.filter(
+    (suggestion) => !currentValue || suggestion.value !== currentValue
   );
 
   if (filteredSuggestions.length === 0) return null;
@@ -99,7 +163,7 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
         <Lightbulb className="mr-1 h-3 w-3" />
         {showSuggestions ? 'Hide' : 'Show'} common values
       </Button>
-      
+
       {showSuggestions && (
         <div className="mt-2 space-y-2">
           <div className="grid grid-cols-2 gap-1">

@@ -1,38 +1,50 @@
-import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { useEmployer } from "@/contexts/EmployerContext";
-import { toast } from "@/hooks/use-toast";
-import { Briefcase, Plus, X } from "lucide-react";
-import { useOptionalVoiceFormContext } from "@/contexts/VoiceFormContext";
+import { useState, useEffect } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { useEmployer } from '@/contexts/EmployerContext';
+import { toast } from '@/hooks/use-toast';
+import { Briefcase, Plus, X } from 'lucide-react';
+import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 
-const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Temporary"];
-const SALARY_PERIODS = ["per annum", "per day", "per hour"];
+const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Temporary'];
+const SALARY_PERIODS = ['per annum', 'per day', 'per hour'];
 const COMMON_REQUIREMENTS = [
-  "18th Edition",
-  "ECS Gold Card",
-  "Full UK Driving Licence",
-  "Own Tools",
-  "Part P Qualified",
-  "3+ Years Experience",
-  "Commercial Experience",
-  "Domestic Experience",
-  "EV Installation Experience",
+  '18th Edition',
+  'ECS Gold Card',
+  'Full UK Driving Licence',
+  'Own Tools',
+  'Part P Qualified',
+  '3+ Years Experience',
+  'Commercial Experience',
+  'Domestic Experience',
+  'EV Installation Experience',
 ];
 const COMMON_BENEFITS = [
-  "Company Van",
-  "Fuel Card",
-  "Pension",
-  "25 Days Holiday",
-  "Training Budget",
-  "Tool Allowance",
-  "Overtime Available",
-  "Flexible Hours",
+  'Company Van',
+  'Fuel Card',
+  'Pension',
+  '25 Days Holiday',
+  'Training Budget',
+  'Tool Allowance',
+  'Overtime Available',
+  'Flexible Hours',
 ];
 
 interface PostVacancyDialogProps {
@@ -41,33 +53,37 @@ interface PostVacancyDialogProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange }: PostVacancyDialogProps) {
+export function PostVacancyDialog({
+  trigger,
+  open: controlledOpen,
+  onOpenChange,
+}: PostVacancyDialogProps) {
   const { addVacancy } = useEmployer();
   const [internalOpen, setInternalOpen] = useState(false);
-  
+
   const open = controlledOpen ?? internalOpen;
   const setOpen = onOpenChange ?? setInternalOpen;
   const [formData, setFormData] = useState({
-    title: "",
-    location: "",
-    type: "Full-time",
-    salaryMin: "",
-    salaryMax: "",
-    salaryPeriod: "per annum",
-    description: "",
+    title: '',
+    location: '',
+    type: 'Full-time',
+    salaryMin: '',
+    salaryMax: '',
+    salaryPeriod: 'per annum',
+    description: '',
     requirements: [] as string[],
     benefits: [] as string[],
-    closingDate: "",
+    closingDate: '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.title || !formData.location || !formData.salaryMin || !formData.closingDate) {
       toast({
-        title: "Missing Fields",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
+        title: 'Missing Fields',
+        description: 'Please fill in all required fields.',
+        variant: 'destructive',
       });
       return;
     }
@@ -76,7 +92,7 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
       title: formData.title,
       location: formData.location,
       type: formData.type,
-      status: "Open",
+      status: 'Open',
       salary: {
         min: parseInt(formData.salaryMin),
         max: parseInt(formData.salaryMax) || parseInt(formData.salaryMin),
@@ -89,31 +105,31 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
     });
 
     toast({
-      title: "Vacancy Posted",
+      title: 'Vacancy Posted',
       description: `${formData.title} has been posted successfully.`,
     });
 
     setFormData({
-      title: "",
-      location: "",
-      type: "Full-time",
-      salaryMin: "",
-      salaryMax: "",
-      salaryPeriod: "per annum",
-      description: "",
+      title: '',
+      location: '',
+      type: 'Full-time',
+      salaryMin: '',
+      salaryMax: '',
+      salaryPeriod: 'per annum',
+      description: '',
       requirements: [],
       benefits: [],
-      closingDate: "",
+      closingDate: '',
     });
     setOpen(false);
   };
 
   // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
-  
+
   useEffect(() => {
     if (!open || !voiceContext) return;
-    
+
     voiceContext.registerForm({
       formId: 'post-vacancy',
       formName: 'Post Vacancy',
@@ -129,7 +145,7 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
       ],
       onFillField: (field, value) => {
         const strValue = String(value);
-        setFormData(prev => ({ ...prev, [field]: strValue }));
+        setFormData((prev) => ({ ...prev, [field]: strValue }));
       },
       onSubmit: () => {
         const form = document.getElementById('vacancy-form') as HTMLFormElement;
@@ -137,15 +153,15 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
       },
       onCancel: () => setOpen(false),
     });
-    
+
     return () => voiceContext.unregisterForm('post-vacancy');
   }, [open, voiceContext]);
 
   const toggleItem = (field: 'requirements' | 'benefits', item: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [field]: prev[field].includes(item)
-        ? prev[field].filter(i => i !== item)
+        ? prev[field].filter((i) => i !== item)
         : [...prev[field], item],
     }));
   };
@@ -178,7 +194,7 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
               <Input
                 id="title"
                 value={formData.title}
-                onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                 placeholder="e.g. Electrician"
               />
             </div>
@@ -187,7 +203,7 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
               <Input
                 id="location"
                 value={formData.location}
-                onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
                 placeholder="e.g. Manchester, M1"
               />
             </div>
@@ -196,13 +212,18 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="space-y-2">
               <Label htmlFor="type">Job Type</Label>
-              <Select value={formData.type} onValueChange={(val) => setFormData(prev => ({ ...prev, type: val }))}>
+              <Select
+                value={formData.type}
+                onValueChange={(val) => setFormData((prev) => ({ ...prev, type: val }))}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {JOB_TYPES.map(type => (
-                    <SelectItem key={type} value={type}>{type}</SelectItem>
+                  {JOB_TYPES.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -213,7 +234,7 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
                 id="salaryMin"
                 type="number"
                 value={formData.salaryMin}
-                onChange={(e) => setFormData(prev => ({ ...prev, salaryMin: e.target.value }))}
+                onChange={(e) => setFormData((prev) => ({ ...prev, salaryMin: e.target.value }))}
                 placeholder="35000"
               />
             </div>
@@ -223,19 +244,24 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
                 id="salaryMax"
                 type="number"
                 value={formData.salaryMax}
-                onChange={(e) => setFormData(prev => ({ ...prev, salaryMax: e.target.value }))}
+                onChange={(e) => setFormData((prev) => ({ ...prev, salaryMax: e.target.value }))}
                 placeholder="45000"
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="salaryPeriod">Period</Label>
-              <Select value={formData.salaryPeriod} onValueChange={(val) => setFormData(prev => ({ ...prev, salaryPeriod: val }))}>
+              <Select
+                value={formData.salaryPeriod}
+                onValueChange={(val) => setFormData((prev) => ({ ...prev, salaryPeriod: val }))}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {SALARY_PERIODS.map(period => (
-                    <SelectItem key={period} value={period}>{period}</SelectItem>
+                  {SALARY_PERIODS.map((period) => (
+                    <SelectItem key={period} value={period}>
+                      {period}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -247,7 +273,7 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
             <Textarea
               id="description"
               value={formData.description}
-              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
               placeholder="Describe the role and responsibilities..."
               rows={3}
             />
@@ -256,14 +282,14 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
           <div className="space-y-3 p-4 rounded-lg bg-surface border border-border/50">
             <Label className="text-sm font-semibold text-foreground">Requirements</Label>
             <div className="flex flex-wrap gap-2">
-              {COMMON_REQUIREMENTS.map(req => (
+              {COMMON_REQUIREMENTS.map((req) => (
                 <Badge
                   key={req}
-                  variant={formData.requirements.includes(req) ? "default" : "outline"}
+                  variant={formData.requirements.includes(req) ? 'default' : 'outline'}
                   className={`cursor-pointer touch-feedback transition-all ${
-                    formData.requirements.includes(req) 
-                      ? "bg-elec-yellow text-elec-dark shadow-sm" 
-                      : "bg-elec-gray hover:bg-secondary hover:border-elec-yellow/30"
+                    formData.requirements.includes(req)
+                      ? 'bg-elec-yellow text-elec-dark shadow-sm'
+                      : 'bg-elec-gray hover:bg-secondary hover:border-elec-yellow/30'
                   }`}
                   onClick={() => toggleItem('requirements', req)}
                 >
@@ -277,14 +303,14 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
           <div className="space-y-3 p-4 rounded-lg bg-surface border border-border/50">
             <Label className="text-sm font-semibold text-foreground">Benefits</Label>
             <div className="flex flex-wrap gap-2">
-              {COMMON_BENEFITS.map(ben => (
+              {COMMON_BENEFITS.map((ben) => (
                 <Badge
                   key={ben}
-                  variant={formData.benefits.includes(ben) ? "default" : "outline"}
+                  variant={formData.benefits.includes(ben) ? 'default' : 'outline'}
                   className={`cursor-pointer touch-feedback transition-all ${
-                    formData.benefits.includes(ben) 
-                      ? "bg-success/20 text-success border-success/30 shadow-sm" 
-                      : "bg-elec-gray hover:bg-secondary hover:border-success/30"
+                    formData.benefits.includes(ben)
+                      ? 'bg-success/20 text-success border-success/30 shadow-sm'
+                      : 'bg-elec-gray hover:bg-secondary hover:border-success/30'
                   }`}
                   onClick={() => toggleItem('benefits', ben)}
                 >
@@ -301,12 +327,17 @@ export function PostVacancyDialog({ trigger, open: controlledOpen, onOpenChange 
               id="closingDate"
               type="date"
               value={formData.closingDate}
-              onChange={(e) => setFormData(prev => ({ ...prev, closingDate: e.target.value }))}
+              onChange={(e) => setFormData((prev) => ({ ...prev, closingDate: e.target.value }))}
             />
           </div>
 
           <div className="flex gap-3 pt-6 border-t border-border/50">
-            <Button type="button" variant="outline" className="flex-1 h-11" onClick={() => setOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1 h-11"
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </Button>
             <Button type="submit" className="flex-1 h-11 font-semibold">

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -16,15 +15,15 @@ const KeyRegulationsGrid = () => {
       description: 'Everything you need for EICR, EIC, and testing procedures',
       sections: [
         '610 - Initial verification requirements',
-        '612 - Testing sequence and methods', 
+        '612 - Testing sequence and methods',
         '620 - Certification requirements',
-        '630 - Periodic inspection intervals'
+        '630 - Periodic inspection intervals',
       ],
       color: 'border-elec-yellow/30 bg-elec-yellow/5',
       priority: 'high',
       icon: Zap,
       usage: '95%',
-      route: '/regulation/part-6'
+      route: '/regulation/part-6',
     },
     {
       regulation: 'Part 4 - Protection for Safety',
@@ -34,13 +33,13 @@ const KeyRegulationsGrid = () => {
         '411 - Protective measure requirements',
         '415 - Additional protection (RCDs)',
         '433 - Overcurrent protection',
-        '434 - Fault current protection'
+        '434 - Fault current protection',
       ],
       color: 'border-red-500/30 bg-red-500/5',
       priority: 'high',
       icon: Shield,
       usage: '90%',
-      route: '/regulation/part-4'
+      route: '/regulation/part-4',
     },
     {
       regulation: 'Part 5 - Selection & Erection',
@@ -50,30 +49,30 @@ const KeyRegulationsGrid = () => {
         '522 - Cable installation methods',
         '526 - Electrical connections',
         '543 - Protective conductors',
-        '559 - Luminaires and lighting'
+        '559 - Luminaires and lighting',
       ],
       color: 'border-blue-500/30 bg-blue-500/5',
       priority: 'medium',
       icon: CheckCircle,
       usage: '75%',
-      route: '/regulation/part-5'
+      route: '/regulation/part-5',
     },
     {
       regulation: 'Part 7 - Special Locations',
-      title: 'When standard rules aren\'t enough',
+      title: "When standard rules aren't enough",
       description: 'Bathrooms, swimming pools, construction sites, and more',
       sections: [
         '701 - Locations with bath/shower',
         '702 - Swimming pools',
         '704 - Construction sites',
-        '717 - Mobile/transportable units'
+        '717 - Mobile/transportable units',
       ],
       color: 'border-purple-500/30 bg-purple-500/5',
       priority: 'medium',
       icon: AlertTriangle,
       usage: '60%',
-      route: '/regulation/part-7'
-    }
+      route: '/regulation/part-7',
+    },
   ];
 
   const handleCardClick = (route: string) => {
@@ -91,13 +90,13 @@ const KeyRegulationsGrid = () => {
         <FileText className="h-8 w-8 text-elec-yellow" />
         Essential Regulations for Electricians
       </h2>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {keyRegulations.map((reg, index) => {
           const IconComponent = reg.icon;
           return (
-            <Card 
-              key={index} 
+            <Card
+              key={index}
               className={`bg-card border-2 ${reg.color} hover:scale-105 transition-all duration-300 cursor-pointer group`}
               onClick={() => handleCardClick(reg.route)}
             >
@@ -116,9 +115,7 @@ const KeyRegulationsGrid = () => {
                   </div>
                   <div className="text-right">
                     {reg.priority === 'high' && (
-                      <Badge className="bg-elec-yellow text-black font-bold mb-2">
-                        PRIORITY
-                      </Badge>
+                      <Badge className="bg-elec-yellow text-black font-bold mb-2">PRIORITY</Badge>
                     )}
                     <div className="flex items-center gap-2 text-sm text-gray-400">
                       <TrendingUp className="h-4 w-4" />
@@ -139,8 +136,8 @@ const KeyRegulationsGrid = () => {
                     </div>
                   ))}
                 </div>
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
                   onClick={(e) => handleButtonClick(e, reg.route)}
                 >

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,17 +6,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 interface FeedbackModalProps {
   open: boolean;
@@ -26,22 +26,17 @@ interface FeedbackModalProps {
 }
 
 const ISSUE_TYPES = [
-  { value: "incorrect_regulation", label: "Incorrect regulation reference" },
-  { value: "wrong_calculation", label: "Wrong calculation" },
-  { value: "missing_info", label: "Missing important information" },
-  { value: "unclear", label: "Unclear explanation" },
-  { value: "outdated", label: "Outdated information" },
-  { value: "other", label: "Other" }
+  { value: 'incorrect_regulation', label: 'Incorrect regulation reference' },
+  { value: 'wrong_calculation', label: 'Wrong calculation' },
+  { value: 'missing_info', label: 'Missing important information' },
+  { value: 'unclear', label: 'Unclear explanation' },
+  { value: 'outdated', label: 'Outdated information' },
+  { value: 'other', label: 'Other' },
 ];
 
-export const FeedbackModal = ({
-  open,
-  onClose,
-  onSubmit,
-  agentName
-}: FeedbackModalProps) => {
-  const [issueType, setIssueType] = useState("");
-  const [correction, setCorrection] = useState("");
+export const FeedbackModal = ({ open, onClose, onSubmit, agentName }: FeedbackModalProps) => {
+  const [issueType, setIssueType] = useState('');
+  const [correction, setCorrection] = useState('');
 
   const handleSubmit = () => {
     if (!issueType || !correction.trim()) {
@@ -50,15 +45,15 @@ export const FeedbackModal = ({
 
     const formattedCorrection = `[${issueType}] ${correction}`;
     onSubmit(formattedCorrection);
-    
+
     // Reset form
-    setIssueType("");
-    setCorrection("");
+    setIssueType('');
+    setCorrection('');
   };
 
   const handleClose = () => {
-    setIssueType("");
-    setCorrection("");
+    setIssueType('');
+    setCorrection('');
     onClose();
   };
 
@@ -105,10 +100,7 @@ export const FeedbackModal = ({
           <Button variant="ghost" onClick={handleClose}>
             Cancel
           </Button>
-          <Button
-            onClick={handleSubmit}
-            disabled={!issueType || !correction.trim()}
-          >
+          <Button onClick={handleSubmit} disabled={!issueType || !correction.trim()}>
             Submit Feedback
           </Button>
         </DialogFooter>

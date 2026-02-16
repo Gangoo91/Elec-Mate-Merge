@@ -88,7 +88,8 @@ export const SensorInstallationBestPracticesSection = () => {
         <div className="bg-gradient-to-r from-yellow-900/20 to-orange-900/20 border border-yellow-600/50 rounded-lg p-4">
           <h4 className="font-semibold text-yellow-200 mb-2">Professional Tip</h4>
           <p className="text-yellow-100 text-sm">
-            Always perform a full system test with the end user present. Walk through different scenarios to ensure sensors trigger correctly and false alarms are minimised.
+            Always perform a full system test with the end user present. Walk through different
+            scenarios to ensure sensors trigger correctly and false alarms are minimised.
           </p>
         </div>
       </CardContent>

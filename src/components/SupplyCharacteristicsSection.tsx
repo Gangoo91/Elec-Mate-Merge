@@ -1,9 +1,14 @@
-
 import React, { useMemo, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AlertCircle, Info, Zap, Building2, Plug, Shield, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -47,13 +52,29 @@ interface SupplyCharacteristicsSectionProps {
 }
 
 // Section header - MUST be outside main component to prevent focus loss
-const SectionTitle = ({ icon: Icon, title, color = "purple", isMobile }: { icon: React.ElementType; title: string; color?: string; isMobile: boolean }) => (
-  <div className={cn(
-    "flex items-center gap-3 py-3",
-    isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
-  )}>
-    <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center", `bg-${color}-500/20`)}>
-      <Icon className={cn("h-4 w-4", `text-${color}-400`)} />
+const SectionTitle = ({
+  icon: Icon,
+  title,
+  color = 'purple',
+  isMobile,
+}: {
+  icon: React.ElementType;
+  title: string;
+  color?: string;
+  isMobile: boolean;
+}) => (
+  <div
+    className={cn(
+      'flex items-center gap-3 py-3',
+      isMobile
+        ? '-mx-4 px-4 bg-card/30 border-y border-border/20'
+        : 'pb-2 border-b border-border/30'
+    )}
+  >
+    <div
+      className={cn('h-8 w-8 rounded-lg flex items-center justify-center', `bg-${color}-500/20`)}
+    >
+      <Icon className={cn('h-4 w-4', `text-${color}-400`)} />
     </div>
     <h3 className="font-semibold text-foreground">{title}</h3>
   </div>
@@ -64,7 +85,7 @@ const FormField = ({
   label,
   required,
   hint,
-  children
+  children,
 }: {
   label: string;
   required?: boolean;
@@ -87,7 +108,10 @@ const FormField = ({
  *
  * Performance optimised with React.memo for selective re-rendering
  */
-const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharacteristicsSectionProps) => {
+const SupplyCharacteristicsSectionInner = ({
+  formData,
+  onUpdate,
+}: SupplyCharacteristicsSectionProps) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
 
@@ -113,13 +137,19 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
   React.useEffect(() => {
     if (formData.earthingArrangement === 'TN-C-S' && formData.supplyPME !== 'yes') {
       onUpdate('supplyPME', 'yes');
-    } else if (formData.earthingArrangement && formData.earthingArrangement !== 'TN-C-S' && formData.supplyPME === 'yes') {
+    } else if (
+      formData.earthingArrangement &&
+      formData.earthingArrangement !== 'TN-C-S' &&
+      formData.supplyPME === 'yes'
+    ) {
       onUpdate('supplyPME', 'no');
     }
 
     // Auto-set earth electrode type to N/A for TN systems
-    if ((formData.earthingArrangement === 'TN-S' || formData.earthingArrangement === 'TN-C-S') &&
-      formData.earthElectrodeType !== 'n/a') {
+    if (
+      (formData.earthingArrangement === 'TN-S' || formData.earthingArrangement === 'TN-C-S') &&
+      formData.earthElectrodeType !== 'n/a'
+    ) {
       onUpdate('earthElectrodeType', 'n/a');
     }
   }, [formData.earthingArrangement]);
@@ -161,8 +191,8 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
     const info: { [key: string]: string } = {
       'TN-S': 'Separate neutral and protective conductors',
       'TN-C-S': 'Combined neutral and protective conductor (PME)',
-      'TT': 'Installation earth electrode independent of supply',
-      'IT': 'Isolated or impedance earthed supply'
+      TT: 'Installation earth electrode independent of supply',
+      IT: 'Isolated or impedance earthed supply',
     };
     return info[arrangement] || '';
   };
@@ -187,7 +217,7 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
     { value: 'RCBO', label: 'RCBO', group: 'RCDs' },
   ];
 
-  const knownDeviceValues = mainProtectiveDeviceOptions.map(d => d.value);
+  const knownDeviceValues = mainProtectiveDeviceOptions.map((d) => d.value);
 
   // Smart rating options based on selected device type
   const deviceRatings: Record<string, string[]> = {
@@ -197,11 +227,29 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
     'MCB Type B': ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100'],
     'MCB Type C': ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100'],
     'MCB Type D': ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100'],
-    'MCCB': ['16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630'],
+    MCCB: [
+      '16',
+      '20',
+      '25',
+      '32',
+      '40',
+      '50',
+      '63',
+      '80',
+      '100',
+      '125',
+      '160',
+      '200',
+      '250',
+      '315',
+      '400',
+      '500',
+      '630',
+    ],
     'Switch Disconnector': ['32', '40', '63', '80', '100', '125', '160', '200'],
-    'Isolator': ['32', '40', '63', '80', '100', '125', '160'],
+    Isolator: ['32', '40', '63', '80', '100', '125', '160'],
     'RCD Main Switch': ['25', '40', '63', '80', '100'],
-    'RCBO': ['6', '10', '16', '20', '25', '32', '40', '50', '63'],
+    RCBO: ['6', '10', '16', '20', '25', '32', '40', '50', '63'],
   };
 
   // Smart breaking capacity options based on selected device type
@@ -212,18 +260,19 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
     'MCB Type B': ['6', '10', '15', '25'],
     'MCB Type C': ['6', '10', '15', '25'],
     'MCB Type D': ['6', '10', '15', '25'],
-    'MCCB': ['16', '25', '36', '50', '70'],
+    MCCB: ['16', '25', '36', '50', '70'],
     'Switch Disconnector': [],
-    'Isolator': [],
+    Isolator: [],
     'RCD Main Switch': [],
-    'RCBO': ['6', '10'],
+    RCBO: ['6', '10'],
   };
 
   const currentRatings = deviceRatings[formData.mainProtectiveDevice] || [];
   const currentBreakingCapacities = deviceBreakingCapacity[formData.mainProtectiveDevice] || [];
 
   // Check if custom input should be shown
-  const showCustomProtectiveDevice = formData.mainProtectiveDeviceCustom === 'true' ||
+  const showCustomProtectiveDevice =
+    formData.mainProtectiveDeviceCustom === 'true' ||
     (formData.mainProtectiveDevice && !knownDeviceValues.includes(formData.mainProtectiveDevice));
 
   // Common DNO options (including Northern Ireland)
@@ -247,20 +296,30 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
   ];
 
   return (
-    <div className={cn("space-y-6", isMobile && "-mx-4")}>
+    <div className={cn('space-y-6', isMobile && '-mx-4')}>
       {/* Supply Authority Section */}
       <div>
         <SectionTitle icon={Building2} title="Supply Authority" color="blue" isMobile={isMobile} />
-        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <FormField label="DNO (Distribution Network Operator)">
-            <Select value={formData.dnoName || ''} onValueChange={(value) => { haptics.tap(); onUpdate('dnoName', value === '__clear__' ? '' : value); }}>
+            <Select
+              value={formData.dnoName || ''}
+              onValueChange={(value) => {
+                haptics.tap();
+                onUpdate('dnoName', value === '__clear__' ? '' : value);
+              }}
+            >
               <SelectTrigger className="h-11 touch-manipulation">
                 <SelectValue placeholder="Select DNO" />
               </SelectTrigger>
               <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                <SelectItem value="__clear__">
+                  <span className="text-muted-foreground">Clear selection</span>
+                </SelectItem>
                 {dnoOptions.map((dno) => (
-                  <SelectItem key={dno} value={dno}>{dno}</SelectItem>
+                  <SelectItem key={dno} value={dno}>
+                    {dno}
+                  </SelectItem>
                 ))}
                 <SelectItem value="other">Other</SelectItem>
               </SelectContent>
@@ -297,13 +356,16 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                   type="button"
                   onClick={() => {
                     haptics.tap();
-                    onUpdate('serviceEntry', formData.serviceEntry === option.value ? '' : option.value);
+                    onUpdate(
+                      'serviceEntry',
+                      formData.serviceEntry === option.value ? '' : option.value
+                    );
                   }}
                   className={cn(
-                    "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                    'h-11 rounded-lg font-medium transition-all touch-manipulation',
                     formData.serviceEntry === option.value
-                      ? "bg-elec-yellow text-black"
-                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                   )}
                 >
                   {option.label}
@@ -317,7 +379,7 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
       {/* Supply Details Section */}
       <div>
         <SectionTitle icon={Plug} title="Supply Details" color="yellow" isMobile={isMobile} />
-        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <FormField label="Number of Phases" required>
             <div className="grid grid-cols-2 gap-2">
               {[
@@ -329,10 +391,10 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                   type="button"
                   onClick={() => handlePhasesChange(option.value)}
                   className={cn(
-                    "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                    'h-11 rounded-lg font-medium transition-all touch-manipulation',
                     formData.phases === option.value
-                      ? "bg-elec-yellow text-black"
-                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                   )}
                 >
                   {option.label}
@@ -353,13 +415,16 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                     type="button"
                     onClick={() => {
                       haptics.tap();
-                      onUpdate('supplyAcDc', formData.supplyAcDc === option.value ? '' : option.value);
+                      onUpdate(
+                        'supplyAcDc',
+                        formData.supplyAcDc === option.value ? '' : option.value
+                      );
                     }}
                     className={cn(
-                      "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                      'h-11 rounded-lg font-medium transition-all touch-manipulation',
                       (formData.supplyAcDc || 'ac') === option.value
-                        ? "bg-elec-yellow text-black"
-                        : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                     )}
                   >
                     {option.label}
@@ -370,13 +435,18 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
             <FormField label="Wire Count" hint="Conductor configuration">
               <Select
                 value={formData.conductorConfiguration || ''}
-                onValueChange={(value) => { haptics.tap(); onUpdate('conductorConfiguration', value === '__clear__' ? '' : value); }}
+                onValueChange={(value) => {
+                  haptics.tap();
+                  onUpdate('conductorConfiguration', value === '__clear__' ? '' : value);
+                }}
               >
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear</span></SelectItem>
+                  <SelectItem value="__clear__">
+                    <span className="text-muted-foreground">Clear</span>
+                  </SelectItem>
                   <SelectItem value="2-wire">2-wire</SelectItem>
                   <SelectItem value="3-wire">3-wire</SelectItem>
                   <SelectItem value="4-wire">4-wire</SelectItem>
@@ -398,13 +468,16 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                   onClick={() => {
                     haptics.tap();
                     // Toggle off if already selected
-                    onUpdate('supplyVoltage', formData.supplyVoltage === option.value ? '' : option.value);
+                    onUpdate(
+                      'supplyVoltage',
+                      formData.supplyVoltage === option.value ? '' : option.value
+                    );
                   }}
                   className={cn(
-                    "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                    'h-11 rounded-lg font-medium transition-all touch-manipulation',
                     formData.supplyVoltage === option.value
-                      ? "bg-elec-yellow text-black"
-                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                   )}
                 >
                   {option.label}
@@ -414,9 +487,11 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
             {formData.phases && (
               <p className="text-xs text-elec-yellow/70 flex items-center gap-1 mt-2">
                 <span className="w-1 h-1 rounded-full bg-elec-yellow"></span>
-                {formData.phases === '1' ? 'Typically 230V for single phase' :
-                  formData.phases === '3' ? 'Typically 400V for three phase' :
-                    'Select nominal voltage'}
+                {formData.phases === '1'
+                  ? 'Typically 230V for single phase'
+                  : formData.phases === '3'
+                    ? 'Typically 400V for three phase'
+                    : 'Select nominal voltage'}
               </p>
             )}
           </FormField>
@@ -441,10 +516,10 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                     type="button"
                     onClick={() => handleSupplyPMEChange(option.value)}
                     className={cn(
-                      "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                      'h-11 rounded-lg font-medium transition-all touch-manipulation',
                       formData.supplyPME === option.value
-                        ? "bg-elec-yellow text-black"
-                        : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                     )}
                   >
                     {option.label}
@@ -492,13 +567,16 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
             type="button"
             onClick={() => {
               haptics.tap();
-              onUpdate('supplyPolarityConfirmed', formData.supplyPolarityConfirmed === 'true' ? 'false' : 'true');
+              onUpdate(
+                'supplyPolarityConfirmed',
+                formData.supplyPolarityConfirmed === 'true' ? 'false' : 'true'
+              );
             }}
             className={cn(
-              "w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation",
+              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
               formData.supplyPolarityConfirmed === 'true'
-                ? "border-elec-yellow bg-elec-yellow/10"
-                : "border-border/30 bg-card/30"
+                ? 'border-elec-yellow bg-elec-yellow/10'
+                : 'border-border/30 bg-card/30'
             )}
           >
             <Checkbox
@@ -508,7 +586,10 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
             <span className="font-medium">Confirmation of supply polarity</span>
           </button>
 
-          <FormField label="Other Sources of Supply" hint="e.g., Solar PV, generator, battery storage">
+          <FormField
+            label="Other Sources of Supply"
+            hint="e.g., Solar PV, generator, battery storage"
+          >
             <Textarea
               value={formData.otherSourcesOfSupply || ''}
               onChange={(e) => onUpdate('otherSourcesOfSupply', e.target.value)}
@@ -521,18 +602,29 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
 
       {/* Main Protective Device Section */}
       <div>
-        <SectionTitle icon={Shield} title="Main Protective Device" color="orange" isMobile={isMobile} />
-        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
-          <FormField label="Main Protective Device" required hint="Select device type, enter rating below">
+        <SectionTitle
+          icon={Shield}
+          title="Main Protective Device"
+          color="orange"
+          isMobile={isMobile}
+        />
+        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+          <FormField
+            label="Main Protective Device"
+            required
+            hint="Select device type, enter rating below"
+          >
             <Select
-              value={showCustomProtectiveDevice ? 'other' : (formData.mainProtectiveDevice || '')}
+              value={showCustomProtectiveDevice ? 'other' : formData.mainProtectiveDevice || ''}
               onValueChange={handleMainProtectiveDeviceChange}
             >
               <SelectTrigger className="h-11 touch-manipulation">
                 <SelectValue placeholder="Select protective device" />
               </SelectTrigger>
               <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] max-h-[60vh]">
-                <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                <SelectItem value="__clear__">
+                  <span className="text-muted-foreground">Clear selection</span>
+                </SelectItem>
                 {(() => {
                   let lastGroup = '';
                   return mainProtectiveDeviceOptions.map((option) => {
@@ -574,15 +666,22 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
               {currentRatings.length > 0 ? (
                 <Select
                   value={formData.mainSwitchRating || ''}
-                  onValueChange={(value) => { haptics.tap(); onUpdate('mainSwitchRating', value === '__clear__' ? '' : value); }}
+                  onValueChange={(value) => {
+                    haptics.tap();
+                    onUpdate('mainSwitchRating', value === '__clear__' ? '' : value);
+                  }}
                 >
                   <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select rating" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="__clear__"><span className="text-muted-foreground">Clear</span></SelectItem>
+                    <SelectItem value="__clear__">
+                      <span className="text-muted-foreground">Clear</span>
+                    </SelectItem>
                     {currentRatings.map((r) => (
-                      <SelectItem key={r} value={r}>{r}A</SelectItem>
+                      <SelectItem key={r} value={r}>
+                        {r}A
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -601,15 +700,22 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
               {currentBreakingCapacities.length > 0 ? (
                 <Select
                   value={formData.breakingCapacity || ''}
-                  onValueChange={(value) => { haptics.tap(); onUpdate('breakingCapacity', value === '__clear__' ? '' : value); }}
+                  onValueChange={(value) => {
+                    haptics.tap();
+                    onUpdate('breakingCapacity', value === '__clear__' ? '' : value);
+                  }}
                 >
                   <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select kA" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="__clear__"><span className="text-muted-foreground">Clear</span></SelectItem>
+                    <SelectItem value="__clear__">
+                      <span className="text-muted-foreground">Clear</span>
+                    </SelectItem>
                     {currentBreakingCapacities.map((kA) => (
-                      <SelectItem key={kA} value={kA}>{kA} kA</SelectItem>
+                      <SelectItem key={kA} value={kA}>
+                        {kA} kA
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -617,7 +723,11 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                 <Input
                   value={formData.breakingCapacity || ''}
                   onChange={(e) => onUpdate('breakingCapacity', e.target.value)}
-                  placeholder={currentBreakingCapacities.length === 0 && formData.mainProtectiveDevice ? 'N/A' : 'e.g., 6'}
+                  placeholder={
+                    currentBreakingCapacities.length === 0 && formData.mainProtectiveDevice
+                      ? 'N/A'
+                      : 'e.g., 6'
+                  }
                   type="number"
                   min="0"
                   step="0.1"
@@ -631,13 +741,18 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
             <FormField label="Main Switch Poles">
               <Select
                 value={formData.mainSwitchPoles || ''}
-                onValueChange={(value) => { haptics.tap(); onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value); }}
+                onValueChange={(value) => {
+                  haptics.tap();
+                  onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value);
+                }}
               >
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear</span></SelectItem>
+                  <SelectItem value="__clear__">
+                    <span className="text-muted-foreground">Clear</span>
+                  </SelectItem>
                   <SelectItem value="1">1-pole</SelectItem>
                   <SelectItem value="2">2-pole</SelectItem>
                   <SelectItem value="3">3-pole</SelectItem>
@@ -672,7 +787,7 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
       {/* Earthing System Section */}
       <div>
         <SectionTitle icon={Globe} title="Earthing System" color="green" isMobile={isMobile} />
-        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <FormField label="Earthing Arrangement" required>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {earthingOptions.map((option) => (
@@ -682,13 +797,16 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                   onClick={() => {
                     haptics.tap();
                     // Toggle off if already selected
-                    onUpdate('earthingArrangement', formData.earthingArrangement === option.value ? '' : option.value);
+                    onUpdate(
+                      'earthingArrangement',
+                      formData.earthingArrangement === option.value ? '' : option.value
+                    );
                   }}
                   className={cn(
-                    "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
+                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
                     formData.earthingArrangement === option.value
-                      ? "bg-elec-yellow text-black"
-                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                   )}
                 >
                   {option.label}
@@ -703,12 +821,20 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
           </FormField>
 
           <FormField label="Earth Electrode Type">
-            <Select value={formData.earthElectrodeType || ''} onValueChange={(value) => { haptics.tap(); onUpdate('earthElectrodeType', value === '__clear__' ? '' : value); }}>
+            <Select
+              value={formData.earthElectrodeType || ''}
+              onValueChange={(value) => {
+                haptics.tap();
+                onUpdate('earthElectrodeType', value === '__clear__' ? '' : value);
+              }}
+            >
               <SelectTrigger className="h-11 touch-manipulation">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                <SelectItem value="__clear__">
+                  <span className="text-muted-foreground">Clear selection</span>
+                </SelectItem>
                 <SelectItem value="rod">Rod</SelectItem>
                 <SelectItem value="tape">Tape</SelectItem>
                 <SelectItem value="plate">Plate</SelectItem>
@@ -725,7 +851,7 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
       {/* RCD Protection Section */}
       <div>
         <SectionTitle icon={Shield} title="RCD Protection" color="purple" isMobile={isMobile} />
-        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <FormField label="RCD Main Switch">
             <div className="grid grid-cols-2 gap-2">
               {[
@@ -744,10 +870,10 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                     if (newValue !== 'yes') onUpdate('rcdRating', '');
                   }}
                   className={cn(
-                    "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                    'h-11 rounded-lg font-medium transition-all touch-manipulation',
                     formData.rcdMainSwitch === option.value
-                      ? "bg-elec-yellow text-black"
-                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                   )}
                 >
                   {option.label}
@@ -769,10 +895,10 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                       onUpdate('rcdRating', formData.rcdRating === rating ? '' : rating);
                     }}
                     className={cn(
-                      "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
+                      'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
                       formData.rcdRating === rating
-                        ? "bg-elec-yellow text-black"
-                        : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
                     )}
                   >
                     {rating}
@@ -787,13 +913,18 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
               <FormField label="RCD Time Delay (ms)">
                 <Select
                   value={formData.rcdTimeDelay || ''}
-                  onValueChange={(value) => { haptics.tap(); onUpdate('rcdTimeDelay', value === '__clear__' ? '' : value); }}
+                  onValueChange={(value) => {
+                    haptics.tap();
+                    onUpdate('rcdTimeDelay', value === '__clear__' ? '' : value);
+                  }}
                 >
                   <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select delay" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="__clear__"><span className="text-muted-foreground">Clear</span></SelectItem>
+                    <SelectItem value="__clear__">
+                      <span className="text-muted-foreground">Clear</span>
+                    </SelectItem>
                     <SelectItem value="0">0ms (Instantaneous)</SelectItem>
                     <SelectItem value="40">40ms</SelectItem>
                     <SelectItem value="150">150ms</SelectItem>
@@ -824,7 +955,8 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
                 <div>
                   <p className="text-sm text-amber-400 font-medium">No RCD Main Switch</p>
                   <p className="text-xs text-amber-400/70 mt-1">
-                    Consider if additional RCD protection is provided at circuit level for BS 7671 compliance
+                    Consider if additional RCD protection is provided at circuit level for BS 7671
+                    compliance
                   </p>
                 </div>
               </div>
@@ -837,15 +969,18 @@ const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharact
 };
 
 // Memoized component - only re-renders when SUPPLY_SECTION_FIELDS change
-const SupplyCharacteristicsSection = React.memo(SupplyCharacteristicsSectionInner, (prevProps, nextProps) => {
-  // Compare only the fields this section cares about
-  for (const field of SUPPLY_SECTION_FIELDS) {
-    if (prevProps.formData[field] !== nextProps.formData[field]) {
-      return false; // Re-render needed
+const SupplyCharacteristicsSection = React.memo(
+  SupplyCharacteristicsSectionInner,
+  (prevProps, nextProps) => {
+    // Compare only the fields this section cares about
+    for (const field of SUPPLY_SECTION_FIELDS) {
+      if (prevProps.formData[field] !== nextProps.formData[field]) {
+        return false; // Re-render needed
+      }
     }
+    return prevProps.onUpdate === nextProps.onUpdate;
   }
-  return prevProps.onUpdate === nextProps.onUpdate;
-});
+);
 
 SupplyCharacteristicsSection.displayName = 'SupplyCharacteristicsSection';
 

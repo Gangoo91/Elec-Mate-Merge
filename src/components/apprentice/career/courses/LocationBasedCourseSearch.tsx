@@ -1,13 +1,12 @@
-
-import React, { useState, useRef, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { MapPin, Search, Loader2, Compass } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
-import { useLocationCache } from "@/hooks/useLocationCache";
+import React, { useState, useRef, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { MapPin, Search, Loader2, Compass } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
+import { useLocationCache } from '@/hooks/useLocationCache';
 
 interface LocationBasedCourseSearchProps {
   onLocationSelect: (location: string, coordinates?: google.maps.LatLngLiteral) => void;
@@ -26,9 +25,9 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
   searchRadius,
   isAutoDetecting = false,
   onProviderSearch,
-  onUseCurrentLocation
+  onUseCurrentLocation,
 }) => {
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -41,7 +40,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
     // Initialise Google Places Autocomplete
     autocompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
       types: ['(cities)'],
-      componentRestrictions: { country: 'gb' }
+      componentRestrictions: { country: 'gb' },
     });
 
     autocompleteRef.current.addListener('place_changed', () => {
@@ -49,9 +48,9 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
       if (place && place.geometry?.location) {
         const coordinates = {
           lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng()
+          lng: place.geometry.location.lng(),
         };
-        const locationName = place.formatted_address || place.name || "";
+        const locationName = place.formatted_address || place.name || '';
         onLocationSelect(locationName, coordinates);
         setSearchInput(locationName);
 
@@ -80,7 +79,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
 
       const coordinates = {
         lat: result.coordinates.lat,
-        lng: result.coordinates.lng
+        lng: result.coordinates.lng,
       };
 
       onLocationSelect(result.formattedAddress, coordinates);
@@ -91,16 +90,15 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
       }
 
       toast({
-        title: "Location found",
+        title: 'Location found',
         description: `Found: ${result.formattedAddress}`,
       });
-
     } catch (error) {
       console.error('Manual search failed:', error);
       toast({
-        title: "Search failed",
-        description: "Unable to find the location. Please try again.",
-        variant: "destructive",
+        title: 'Search failed',
+        description: 'Unable to find the location. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsSearching(false);
@@ -124,14 +122,18 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
 
       <CardContent className="space-y-4 relative">
         <div className="space-y-2">
-          <Label htmlFor="location-search" className="text-white/80">Location</Label>
+          <Label htmlFor="location-search" className="text-white/80">
+            Location
+          </Label>
           <div className="flex gap-2">
             <div className="relative flex-1">
               <MapPin className="absolute left-3 top-3.5 h-4 w-4 text-white/40" />
               <Input
                 ref={inputRef}
                 id="location-search"
-                placeholder={isAutoDetecting ? "Detecting location..." : "Enter your city or postcode..."}
+                placeholder={
+                  isAutoDetecting ? 'Detecting location...' : 'Enter your city or postcode...'
+                }
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleManualSearch()}
@@ -179,7 +181,9 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
         {currentLocation && !isAutoDetecting && (
           <div className="flex items-center gap-2 text-sm text-white p-3 rounded-lg bg-white/5 border border-white/10">
             <MapPin className="h-4 w-4 text-elec-yellow" />
-            <span>Current location: <span className="text-elec-yellow">{currentLocation}</span></span>
+            <span>
+              Current location: <span className="text-elec-yellow">{currentLocation}</span>
+            </span>
           </div>
         )}
 
@@ -189,11 +193,11 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
             {radiusOptions.map((radius) => (
               <Badge
                 key={radius}
-                variant={searchRadius === radius ? "default" : "outline"}
+                variant={searchRadius === radius ? 'default' : 'outline'}
                 className={`cursor-pointer transition-all touch-manipulation active:scale-95 ${
                   searchRadius === radius
-                    ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                    : "border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+                    ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+                    : 'border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/50'
                 }`}
                 onClick={() => onRadiusChange(radius)}
               >
@@ -204,8 +208,8 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
         </div>
 
         <div className="text-xs text-white/60 p-3 rounded-lg bg-white/5 border border-white/10">
-          Use the search above to find training courses and colleges near your location.
-          Results will be filtered based on your selected radius.
+          Use the search above to find training courses and colleges near your location. Results
+          will be filtered based on your selected radius.
         </div>
       </CardContent>
     </Card>

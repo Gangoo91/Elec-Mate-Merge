@@ -10,7 +10,14 @@ export interface WorkerRates {
 
 export interface TestingInstrument {
   id: string;
-  instrument_type: 'multifunction' | 'insulation' | 'loop_impedance' | 'rcd' | 'pat' | 'clamp_meter' | 'other';
+  instrument_type:
+    | 'multifunction'
+    | 'insulation'
+    | 'loop_impedance'
+    | 'rcd'
+    | 'pat'
+    | 'clamp_meter'
+    | 'other';
   make: string;
   model: string;
   serial_number: string;
@@ -24,8 +31,8 @@ export interface CompanyProfile {
   company_name: string;
   company_address?: string;
   company_postcode?: string;
-  office_lat?: number | null;    // Office location latitude (from Google Places)
-  office_lng?: number | null;    // Office location longitude (from Google Places)
+  office_lat?: number | null; // Office location latitude (from Google Places)
+  office_lng?: number | null; // Office location longitude (from Google Places)
   company_phone?: string;
   company_email?: string;
   company_website?: string;

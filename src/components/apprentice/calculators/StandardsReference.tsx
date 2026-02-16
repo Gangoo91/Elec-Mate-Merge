@@ -1,15 +1,14 @@
-
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, CheckCircle, AlertTriangle, FileText, Settings, Zap } from "lucide-react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Book, CheckCircle, AlertTriangle, FileText, Settings, Zap } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
   MobileAccordion,
   MobileAccordionContent,
   MobileAccordionItem,
   MobileAccordionTrigger,
-} from "@/components/ui/mobile-accordion";
-import { ukElectricalStandards, voltageDropLimits } from "@/data/standards";
+} from '@/components/ui/mobile-accordion';
+import { ukElectricalStandards, voltageDropLimits } from '@/data/standards';
 
 const StandardsReference = () => {
   const getStandardIcon = (code: string) => {
@@ -33,11 +32,11 @@ const StandardsReference = () => {
           {/* Standards Accordion */}
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Key Standards Used in Calculations</h3>
-            
+
             <MobileAccordion type="multiple" className="w-full space-y-2">
               {ukElectricalStandards.map((standard, index) => (
                 <MobileAccordionItem key={index} value={`standard-${index}`}>
-                   <MobileAccordionTrigger 
+                  <MobileAccordionTrigger
                     icon={getStandardIcon(standard.code)}
                     className="text-left bg-white/5 hover:bg-white/5"
                   >
@@ -109,9 +108,15 @@ const StandardsReference = () => {
                     <span className="text-3xl font-bold text-primary">{item.limit}</span>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-white"><span className="font-semibold">Reference:</span> {item.reference}</p>
-                    <p className="text-white"><span className="font-semibold">Application:</span> {item.application}</p>
-                    <p className="text-white"><span className="font-semibold">Calculation:</span> {item.calculation}</p>
+                    <p className="text-white">
+                      <span className="font-semibold">Reference:</span> {item.reference}
+                    </p>
+                    <p className="text-white">
+                      <span className="font-semibold">Application:</span> {item.application}
+                    </p>
+                    <p className="text-white">
+                      <span className="font-semibold">Calculation:</span> {item.calculation}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -122,8 +127,10 @@ const StandardsReference = () => {
           <Alert className="border-destructive/20 bg-destructive/5">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription className="text-sm">
-              <strong>Important:</strong> These calculators are based on current UK electrical standards but should not replace professional electrical design. 
-              Always consult qualified personnel for critical installations and verify against the latest editions of relevant standards.
+              <strong>Important:</strong> These calculators are based on current UK electrical
+              standards but should not replace professional electrical design. Always consult
+              qualified personnel for critical installations and verify against the latest editions
+              of relevant standards.
             </AlertDescription>
           </Alert>
         </CardContent>

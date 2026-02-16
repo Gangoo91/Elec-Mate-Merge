@@ -12,15 +12,16 @@ export const EmergencyLightingCaseStudies2_3 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* Case Study 1: Manufacturing Plant */}
         <div className="bg-green-600/15 border border-green-400/30 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-4">
             <Factory className="h-4 w-4 text-green-400" />
             <Badge className="bg-green-600/40 text-green-300 text-xs">Case Study 1</Badge>
-            <span className="text-green-300 font-medium text-sm">Automotive Manufacturing Plant</span>
+            <span className="text-green-300 font-medium text-sm">
+              Automotive Manufacturing Plant
+            </span>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
@@ -33,9 +34,11 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• 24/7 operation with shift changes</li>
                 </ul>
               </div>
-              
+
               <div>
-                <p className="text-foreground font-medium text-sm mb-2">Risk Assessment Findings:</p>
+                <p className="text-foreground font-medium text-sm mb-2">
+                  Risk Assessment Findings:
+                </p>
                 <ul className="space-y-1 text-xs text-foreground">
                   <li>• Cutting tools continue spinning for 30-60 seconds</li>
                   <li>• Hydraulic systems need controlled pressure release</li>
@@ -44,7 +47,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Solution Implemented:</p>
@@ -56,7 +59,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• LED fittings with instant-on capability</li>
                 </ul>
               </div>
-              
+
               <div className="bg-green-600/20 rounded-lg p-3">
                 <p className="text-green-300 font-medium text-sm mb-1">Results:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -75,9 +78,11 @@ export const EmergencyLightingCaseStudies2_3 = () => {
           <div className="flex items-center gap-2 mb-4">
             <FlaskConical className="h-4 w-4 text-orange-400" />
             <Badge className="bg-orange-600/40 text-orange-300 text-xs">Case Study 2</Badge>
-            <span className="text-orange-300 font-medium text-sm">Pharmaceutical Research Laboratory</span>
+            <span className="text-orange-300 font-medium text-sm">
+              Pharmaceutical Research Laboratory
+            </span>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
@@ -90,7 +95,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• Clean room environment with strict protocols</li>
                 </ul>
               </div>
-              
+
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Critical Requirements:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -101,7 +106,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Solution Implemented:</p>
@@ -113,7 +118,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• Backup lighting for emergency equipment areas</li>
                 </ul>
               </div>
-              
+
               <div className="bg-orange-600/20 rounded-lg p-3">
                 <p className="text-orange-300 font-medium text-sm mb-1">Outcomes:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -134,7 +139,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
             <Badge className="bg-blue-600/40 text-blue-300 text-xs">Case Study 3</Badge>
             <span className="text-blue-300 font-medium text-sm">Combined Heat & Power Plant</span>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
@@ -147,7 +152,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• 24/7 staffed control room requirements</li>
                 </ul>
               </div>
-              
+
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Safety Considerations:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -158,7 +163,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Solution Implemented:</p>
@@ -170,7 +175,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• Diesel generator as tertiary backup</li>
                 </ul>
               </div>
-              
+
               <div className="bg-blue-600/20 rounded-lg p-3">
                 <p className="text-blue-300 font-medium text-sm mb-1">Performance:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -191,7 +196,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
             <Badge className="bg-purple-600/40 text-purple-300 text-xs">Case Study 4</Badge>
             <span className="text-purple-300 font-medium text-sm">Meat Processing Facility</span>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
@@ -204,7 +209,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• Multiple shift operations across 24 hours</li>
                 </ul>
               </div>
-              
+
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Environmental Factors:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -215,7 +220,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Specialised Solution:</p>
@@ -227,7 +232,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• Temperature-compensated battery systems</li>
                 </ul>
               </div>
-              
+
               <div className="bg-purple-600/20 rounded-lg p-3">
                 <p className="text-purple-300 font-medium text-sm mb-1">Benefits Achieved:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -245,11 +250,14 @@ export const EmergencyLightingCaseStudies2_3 = () => {
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-4">
             <CheckCircle className="h-4 w-4 text-elec-yellow" />
-            <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20">
+            <Badge
+              variant="outline"
+              className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20"
+            >
               Key Learning Points from Case Studies
             </Badge>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <div>
@@ -261,7 +269,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• Redundancy essential for critical processes</li>
                 </ul>
               </div>
-              
+
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Installation Factors:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -272,7 +280,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="space-y-3">
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Economic Benefits:</p>
@@ -283,7 +291,7 @@ export const EmergencyLightingCaseStudies2_3 = () => {
                   <li>• Enhance reputation for safety excellence</li>
                 </ul>
               </div>
-              
+
               <div>
                 <p className="text-foreground font-medium text-sm mb-2">Maintenance Insights:</p>
                 <ul className="space-y-1 text-xs text-foreground">
@@ -296,7 +304,6 @@ export const EmergencyLightingCaseStudies2_3 = () => {
             </div>
           </div>
         </div>
-        
       </CardContent>
     </Card>
   );

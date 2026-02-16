@@ -34,8 +34,12 @@ export const validateInvoiceNumberFormat = (invoiceNumber: string): boolean => {
   const timestampPattern = /^Invoice\/T\d{6}$/;
   // Also allow old format for backwards compatibility
   const oldPattern = /^INV-\d{4}-\d+$/;
-  
-  return sequentialPattern.test(invoiceNumber) || timestampPattern.test(invoiceNumber) || oldPattern.test(invoiceNumber);
+
+  return (
+    sequentialPattern.test(invoiceNumber) ||
+    timestampPattern.test(invoiceNumber) ||
+    oldPattern.test(invoiceNumber)
+  );
 };
 
 /**

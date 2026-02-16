@@ -40,51 +40,51 @@ const VoiceFormContext = createContext<VoiceFormContextType | null>(null);
 // Fuzzy match helper - finds best matching field
 function fuzzyMatchField(fields: FormField[], searchTerm: string): FormField | undefined {
   const search = searchTerm.toLowerCase().trim();
-  
+
   // First try exact match on name or label
   let match = fields.find(
     (f) => f.name.toLowerCase() === search || f.label.toLowerCase() === search
   );
   if (match) return match;
-  
+
   // Try partial match on label (most common case for voice)
   match = fields.find(
     (f) => f.label.toLowerCase().includes(search) || search.includes(f.label.toLowerCase())
   );
   if (match) return match;
-  
+
   // Try partial match on name
   match = fields.find(
     (f) => f.name.toLowerCase().includes(search) || search.includes(f.name.toLowerCase())
   );
   if (match) return match;
-  
+
   // Try word-by-word matching for multi-word searches
   const searchWords = search.split(/\s+/);
   if (searchWords.length > 1) {
     match = fields.find((f) => {
       const labelWords = f.label.toLowerCase().split(/\s+/);
-      return searchWords.some(sw => labelWords.some(lw => lw.includes(sw) || sw.includes(lw)));
+      return searchWords.some((sw) => labelWords.some((lw) => lw.includes(sw) || sw.includes(lw)));
     });
     if (match) return match;
   }
-  
+
   // Common voice recognition variations
   const variations: Record<string, string[]> = {
-    'client': ['customer', 'client name', 'company'],
-    'email': ['e-mail', 'mail', 'email address'],
-    'phone': ['telephone', 'phone number', 'mobile', 'contact number'],
-    'description': ['desc', 'details', 'notes', 'info'],
-    'amount': ['value', 'price', 'cost', 'total'],
-    'date': ['when', 'day'],
-    'name': ['full name', 'person'],
-    'title': ['heading', 'subject', 'job title'],
-    'location': ['place', 'address', 'site'],
-    'employee': ['worker', 'staff', 'team member'],
-    'hours': ['time', 'duration'],
-    'rate': ['hourly rate', 'pay rate'],
+    client: ['customer', 'client name', 'company'],
+    email: ['e-mail', 'mail', 'email address'],
+    phone: ['telephone', 'phone number', 'mobile', 'contact number'],
+    description: ['desc', 'details', 'notes', 'info'],
+    amount: ['value', 'price', 'cost', 'total'],
+    date: ['when', 'day'],
+    name: ['full name', 'person'],
+    title: ['heading', 'subject', 'job title'],
+    location: ['place', 'address', 'site'],
+    employee: ['worker', 'staff', 'team member'],
+    hours: ['time', 'duration'],
+    rate: ['hourly rate', 'pay rate'],
   };
-  
+
   for (const [canonical, alts] of Object.entries(variations)) {
     if (alts.includes(search) || search === canonical) {
       match = fields.find(
@@ -93,7 +93,7 @@ function fuzzyMatchField(fields: FormField[], searchTerm: string): FormField | u
       if (match) return match;
     }
   }
-  
+
   return undefined;
 }
 
@@ -101,7 +101,13 @@ export function VoiceFormProvider({ children }: { children: ReactNode }) {
   const [activeForm, setActiveForm] = useState<FormRegistration | null>(null);
 
   const registerForm = useCallback((form: FormRegistration) => {
-    console.log('[VoiceFormContext] Registering form:', form.formName, 'with', form.fields.length, 'fields');
+    console.log(
+      '[VoiceFormContext] Registering form:',
+      form.formName,
+      'with',
+      form.fields.length,
+      'fields'
+    );
     setActiveForm(form);
   }, []);
 
@@ -115,53 +121,69 @@ export function VoiceFormProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const fillField = useCallback((field: string, value: string): boolean => {
-    if (!activeForm) {
-      console.log('[VoiceFormContext] No active form to fill');
-      return false;
-    }
-    
-    // Use fuzzy matching to find the field
-    const matchingField = fuzzyMatchField(activeForm.fields, field);
-    
-    if (matchingField) {
-      console.log('[VoiceFormContext] Filling field:', matchingField.name, 'with:', value);
-      activeForm.onFillField(matchingField.name, value);
-      return true;
-    }
-    
-    console.log('[VoiceFormContext] Field not found:', field, 'Available fields:', activeForm.fields.map(f => f.label).join(', '));
-    return false;
-  }, [activeForm]);
+  const fillField = useCallback(
+    (field: string, value: string): boolean => {
+      if (!activeForm) {
+        console.log('[VoiceFormContext] No active form to fill');
+        return false;
+      }
 
-  const executeAction = useCallback((action: string, params: Record<string, unknown>): boolean => {
-    if (!activeForm?.onAction) {
-      console.log('[VoiceFormContext] No active form or action handler');
+      // Use fuzzy matching to find the field
+      const matchingField = fuzzyMatchField(activeForm.fields, field);
+
+      if (matchingField) {
+        console.log('[VoiceFormContext] Filling field:', matchingField.name, 'with:', value);
+        activeForm.onFillField(matchingField.name, value);
+        return true;
+      }
+
+      console.log(
+        '[VoiceFormContext] Field not found:',
+        field,
+        'Available fields:',
+        activeForm.fields.map((f) => f.label).join(', ')
+      );
       return false;
-    }
-    
-    // Check if action is supported (case-insensitive, underscore/dash tolerant)
-    const normalizedAction = action.toLowerCase().replace(/-/g, '_');
-    const availableAction = activeForm.actions?.find(
-      a => a.toLowerCase().replace(/-/g, '_') === normalizedAction
-    );
-    
-    if (!availableAction) {
-      console.log('[VoiceFormContext] Action not available:', action, 'Available:', activeForm.actions);
-      return false;
-    }
-    
-    console.log('[VoiceFormContext] Executing action:', availableAction, params);
-    activeForm.onAction(availableAction, params);
-    return true;
-  }, [activeForm]);
+    },
+    [activeForm]
+  );
+
+  const executeAction = useCallback(
+    (action: string, params: Record<string, unknown>): boolean => {
+      if (!activeForm?.onAction) {
+        console.log('[VoiceFormContext] No active form or action handler');
+        return false;
+      }
+
+      // Check if action is supported (case-insensitive, underscore/dash tolerant)
+      const normalizedAction = action.toLowerCase().replace(/-/g, '_');
+      const availableAction = activeForm.actions?.find(
+        (a) => a.toLowerCase().replace(/-/g, '_') === normalizedAction
+      );
+
+      if (!availableAction) {
+        console.log(
+          '[VoiceFormContext] Action not available:',
+          action,
+          'Available:',
+          activeForm.actions
+        );
+        return false;
+      }
+
+      console.log('[VoiceFormContext] Executing action:', availableAction, params);
+      activeForm.onAction(availableAction, params);
+      return true;
+    },
+    [activeForm]
+  );
 
   const submitForm = useCallback((): boolean => {
     if (!activeForm) {
       console.log('[VoiceFormContext] No active form to submit');
       return false;
     }
-    
+
     console.log('[VoiceFormContext] Submitting form:', activeForm.formName);
     activeForm.onSubmit();
     return true;
@@ -172,7 +194,7 @@ export function VoiceFormProvider({ children }: { children: ReactNode }) {
       console.log('[VoiceFormContext] No active form or clear handler');
       return false;
     }
-    
+
     console.log('[VoiceFormContext] Clearing form:', activeForm.formName);
     activeForm.onClear();
     return true;
@@ -183,7 +205,7 @@ export function VoiceFormProvider({ children }: { children: ReactNode }) {
       console.log('[VoiceFormContext] No active form or cancel handler');
       return false;
     }
-    
+
     console.log('[VoiceFormContext] Cancelling form:', activeForm.formName);
     activeForm.onCancel();
     return true;
@@ -194,7 +216,7 @@ export function VoiceFormProvider({ children }: { children: ReactNode }) {
       console.log('[VoiceFormContext] No active form or next step handler');
       return false;
     }
-    
+
     console.log('[VoiceFormContext] Moving to next step:', activeForm.formName);
     activeForm.onNextStep();
     return true;
@@ -204,7 +226,7 @@ export function VoiceFormProvider({ children }: { children: ReactNode }) {
     if (!activeForm) {
       return 'No form is currently open.';
     }
-    
+
     const fieldDescriptions = activeForm.fields.map((f) => {
       let desc = `${f.label} (${f.name})`;
       if (f.required) desc += ' [required]';
@@ -216,13 +238,13 @@ export function VoiceFormProvider({ children }: { children: ReactNode }) {
       }
       return desc;
     });
-    
+
     let context = `FORM OPEN: "${activeForm.formName}"\nFields:\n${fieldDescriptions.join('\n')}`;
-    
+
     if (activeForm.actions?.length) {
       context += `\nAvailable actions: ${activeForm.actions.join(', ')}`;
     }
-    
+
     return context;
   }, [activeForm]);
 

@@ -1,24 +1,30 @@
-import { Button } from "@/components/ui/button";
-import { Calculator, AlertCircle, CheckCircle2, Info, TrendingDown } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useState } from "react";
-import { cableSizes } from "@/components/apprentice/calculators/cable-sizing/cableSizeData"; 
+import { Button } from '@/components/ui/button';
+import { Calculator, AlertCircle, CheckCircle2, Info, TrendingDown } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useState } from 'react';
+import { cableSizes } from '@/components/apprentice/calculators/cable-sizing/cableSizeData';
 
 const VoltageDropCalculator = () => {
-  const [cableLength, setCableLength] = useState<string>("");
-  const [cableSize, setCableSize] = useState<string>("");
-  const [cableType, setCableType] = useState<string>("twin-and-earth");
-  const [cableMaterial, setCableMaterial] = useState<string>("copper");
-  const [insulationType, setInsulationType] = useState<string>("pvc");
-  const [loadCurrent, setLoadCurrent] = useState<string>("");
-  const [powerFactor, setPowerFactor] = useState<string>("1.0");
-  const [supplyVoltage, setSupplyVoltage] = useState<string>("230");
+  const [cableLength, setCableLength] = useState<string>('');
+  const [cableSize, setCableSize] = useState<string>('');
+  const [cableType, setCableType] = useState<string>('twin-and-earth');
+  const [cableMaterial, setCableMaterial] = useState<string>('copper');
+  const [insulationType, setInsulationType] = useState<string>('pvc');
+  const [loadCurrent, setLoadCurrent] = useState<string>('');
+  const [powerFactor, setPowerFactor] = useState<string>('1.0');
+  const [supplyVoltage, setSupplyVoltage] = useState<string>('230');
   const [result, setResult] = useState<{
     voltageDrop: number;
     voltageDropPercentage: number;
@@ -30,90 +36,98 @@ const VoltageDropCalculator = () => {
 
   const calculateVoltageDrop = () => {
     if (!cableLength || !cableSize || !loadCurrent) return;
-    
+
     const length = parseFloat(cableLength);
     const current = parseFloat(loadCurrent);
     const pf = parseFloat(powerFactor);
     const voltage = parseFloat(supplyVoltage);
-    
+
     if (isNaN(length) || isNaN(current) || isNaN(pf) || isNaN(voltage)) return;
-    
+
     // Find the selected cable in our data
-    const selectedCable = cableSizes.find(cable => cable.value === cableSize && cable.cableType === cableType);
-    
+    const selectedCable = cableSizes.find(
+      (cable) => cable.value === cableSize && cable.cableType === cableType
+    );
+
     if (!selectedCable) return;
-    
+
     // Enhanced voltage drop calculation including power factor
     let voltageDropFactor = selectedCable.voltageDropPerAmpereMeter;
-    
+
     // Adjust for power factor (reactance component)
     if (pf < 1.0) {
       const reactanceComponent = voltageDropFactor * 0.1; // Approximate reactance
-      voltageDropFactor = Math.sqrt(Math.pow(voltageDropFactor * pf, 2) + Math.pow(reactanceComponent * Math.sqrt(1 - pf * pf), 2));
+      voltageDropFactor = Math.sqrt(
+        Math.pow(voltageDropFactor * pf, 2) +
+          Math.pow(reactanceComponent * Math.sqrt(1 - pf * pf), 2)
+      );
     }
-    
+
     // Material adjustment (copper vs aluminium)
-    if (cableMaterial === "aluminium") {
+    if (cableMaterial === 'aluminium') {
       voltageDropFactor *= 1.64; // Aluminium has higher resistance
     }
-    
+
     const voltageDrop = voltageDropFactor * length * current;
     const voltageDropPercentage = (voltageDrop / voltage) * 100;
     const voltageAtLoad = voltage - voltageDrop;
-    
+
     // Calculate maximum permissible length for 3% and 5% limits
     const maxLength3Percent = (voltage * 0.03) / (voltageDropFactor * current);
     const maxLength5Percent = (voltage * 0.05) / (voltageDropFactor * current);
-    const maxPermissibleLength = cableType.includes('lighting') ? maxLength3Percent : maxLength5Percent;
-    
+    const maxPermissibleLength = cableType.includes('lighting')
+      ? maxLength3Percent
+      : maxLength5Percent;
+
     // Compliance check
     const voltageDropLimit = cableType.includes('lighting') ? 3.0 : 5.0;
     const compliant = voltageDropPercentage <= voltageDropLimit;
-    
+
     // Generate warnings
     const warnings: string[] = [];
     if (voltageDropPercentage > voltageDropLimit) {
       warnings.push(`Voltage drop exceeds ${voltageDropLimit}% limit for this circuit type`);
     }
     if (voltageDropPercentage > 2.5 && voltageDropPercentage <= voltageDropLimit) {
-      warnings.push("Voltage drop approaching limit - consider larger cable size");
+      warnings.push('Voltage drop approaching limit - consider larger cable size');
     }
     if (length > maxPermissibleLength) {
-      warnings.push("Cable length exceeds maximum recommended for this size");
+      warnings.push('Cable length exceeds maximum recommended for this size');
     }
-    if (voltageAtLoad < 216.2) { // 230V -6%
-      warnings.push("Terminal voltage may be too low for proper equipment operation");
+    if (voltageAtLoad < 216.2) {
+      // 230V -6%
+      warnings.push('Terminal voltage may be too low for proper equipment operation');
     }
-    
+
     setResult({
       voltageDrop: Math.round(voltageDrop * 100) / 100,
       voltageDropPercentage: Math.round(voltageDropPercentage * 100) / 100,
       voltageAtLoad: Math.round(voltageAtLoad * 100) / 100,
       maxPermissibleLength: Math.round(maxPermissibleLength * 10) / 10,
       compliant,
-      warnings
+      warnings,
     });
   };
 
   const resetCalculator = () => {
-    setCableLength("");
-    setCableSize("");
-    setCableType("twin-and-earth");
-    setCableMaterial("copper");
-    setInsulationType("pvc");
-    setLoadCurrent("");
-    setPowerFactor("1.0");
-    setSupplyVoltage("230");
+    setCableLength('');
+    setCableSize('');
+    setCableType('twin-and-earth');
+    setCableMaterial('copper');
+    setInsulationType('pvc');
+    setLoadCurrent('');
+    setPowerFactor('1.0');
+    setSupplyVoltage('230');
     setResult(null);
   };
 
   // Get cable options for the selected type
   const getCableOptionsForType = () => {
     return cableSizes
-      .filter(cable => cable.cableType === cableType)
-      .map(cable => ({
+      .filter((cable) => cable.cableType === cableType)
+      .map((cable) => ({
         value: cable.value,
-        label: cable.size
+        label: cable.size,
       }));
   };
 
@@ -154,10 +168,10 @@ const VoltageDropCalculator = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="cable-length">Cable Length (m)</Label>
-                <Input 
-                  id="cable-length" 
-                  type="number" 
-                  placeholder="Enter length" 
+                <Input
+                  id="cable-length"
+                  type="number"
+                  placeholder="Enter length"
                   className="bg-card border border-muted/40"
                   value={cableLength}
                   onChange={(e) => setCableLength(e.target.value)}
@@ -209,7 +223,7 @@ const VoltageDropCalculator = () => {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="cable-size">Cable Size</Label>
               <Select value={cableSize} onValueChange={setCableSize}>
@@ -229,10 +243,10 @@ const VoltageDropCalculator = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="load-current">Load Current (A)</Label>
-                <Input 
-                  id="load-current" 
-                  type="number" 
-                  placeholder="Enter current" 
+                <Input
+                  id="load-current"
+                  type="number"
+                  placeholder="Enter current"
                   className="bg-card border border-muted/40"
                   value={loadCurrent}
                   onChange={(e) => setLoadCurrent(e.target.value)}
@@ -253,7 +267,7 @@ const VoltageDropCalculator = () => {
                 </Select>
               </div>
             </div>
-            
+
             <div className="flex gap-2">
               <Button className="flex-1" onClick={calculateVoltageDrop}>
                 <Calculator className="h-4 w-4 mr-2" />
@@ -277,7 +291,7 @@ const VoltageDropCalculator = () => {
                       <AlertCircle className="h-5 w-5 text-red-500" />
                     )}
                     <h3 className="text-lg font-semibold">
-                      {result.compliant ? "Compliant" : "Non-Compliant"}
+                      {result.compliant ? 'Compliant' : 'Non-Compliant'}
                     </h3>
                   </div>
 
@@ -288,7 +302,9 @@ const VoltageDropCalculator = () => {
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Percentage</p>
-                      <p className="text-xl font-bold text-elec-yellow">{result.voltageDropPercentage}%</p>
+                      <p className="text-xl font-bold text-elec-yellow">
+                        {result.voltageDropPercentage}%
+                      </p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Voltage at Load</p>

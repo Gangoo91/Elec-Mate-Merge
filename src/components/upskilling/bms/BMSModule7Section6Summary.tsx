@@ -12,11 +12,11 @@ const BMSModule7Section6Summary = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          This section demonstrated that professional client handover and comprehensive documentation 
-          are essential final steps that protect both contractors and clients, ensuring successful 
-          long-term BMS operation.
+          This section demonstrated that professional client handover and comprehensive
+          documentation are essential final steps that protect both contractors and clients,
+          ensuring successful long-term BMS operation.
         </p>
-        
+
         <div className="grid md:grid-cols-2 gap-4">
           <div className="p-3 bg-[#1a1a1a] rounded-lg">
             <h4 className="font-semibold text-foreground mb-2">Handover Process</h4>
@@ -27,7 +27,7 @@ const BMSModule7Section6Summary = () => {
               <li>• Professional handover reduces costly call-backs</li>
             </ul>
           </div>
-          
+
           <div className="p-3 bg-[#1a1a1a] rounded-lg">
             <h4 className="font-semibold text-foreground mb-2">Documentation Requirements</h4>
             <ul className="text-sm space-y-1">
@@ -38,7 +38,7 @@ const BMSModule7Section6Summary = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="p-3 bg-[#1a1a1a] rounded-lg">
           <h4 className="font-semibold text-foreground mb-2">Electrician's Critical Role</h4>
           <ul className="text-sm space-y-1">
@@ -48,17 +48,17 @@ const BMSModule7Section6Summary = () => {
             <li>• Technical support during demonstrations builds client confidence</li>
           </ul>
         </div>
-        
+
         <p>
-          The real-world school example highlighted how incomplete handover documentation led to 
-          expensive emergency call-outs and damaged professional reputation. This reinforced the 
+          The real-world school example highlighted how incomplete handover documentation led to
+          expensive emergency call-outs and damaged professional reputation. This reinforced the
           importance of completing all documentation before project closure.
         </p>
 
         <p>
-          Professional electricians understand that the BMS installation is not complete until 
-          comprehensive handover documentation is provided and client training is successfully 
-          completed. This final investment protects everyone's interests and creates opportunities 
+          Professional electricians understand that the BMS installation is not complete until
+          comprehensive handover documentation is provided and client training is successfully
+          completed. This final investment protects everyone's interests and creates opportunities
           for ongoing professional relationships.
         </p>
       </CardContent>

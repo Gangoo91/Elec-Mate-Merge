@@ -3,7 +3,7 @@ import { emergencySystemTestingQuizData } from '@/data/upskilling/emergencySyste
 
 export const EmergencySystemTestingQuiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={emergencySystemTestingQuizData}
       title="Section 6 Quiz: System Testing and Record Keeping"
     />

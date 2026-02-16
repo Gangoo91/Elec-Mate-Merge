@@ -1,72 +1,97 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m5s5-check1",
-    question: "What is the primary challenge for EV charging in multi-unit developments?",
-    options: ["Finding suitable locations", "Limited electrical supply capacity", "Planning permission", "Cable costs"],
+    id: 'evcharging-m5s5-check1',
+    question: 'What is the primary challenge for EV charging in multi-unit developments?',
+    options: [
+      'Finding suitable locations',
+      'Limited electrical supply capacity',
+      'Planning permission',
+      'Cable costs',
+    ],
     correctIndex: 1,
-    explanation: "Multi-unit developments typically have limited electrical supply capacity shared across all units, requiring dynamic load management to enable charging without costly infrastructure upgrades."
+    explanation:
+      'Multi-unit developments typically have limited electrical supply capacity shared across all units, requiring dynamic load management to enable charging without costly infrastructure upgrades.',
   },
   {
-    id: "evcharging-m5s5-check2",
-    question: "Which load balancing strategy allows all vehicles to charge simultaneously?",
-    options: ["Sequential charging", "Parallel load sharing", "Priority-based allocation", "Manual scheduling"],
+    id: 'evcharging-m5s5-check2',
+    question: 'Which load balancing strategy allows all vehicles to charge simultaneously?',
+    options: [
+      'Sequential charging',
+      'Parallel load sharing',
+      'Priority-based allocation',
+      'Manual scheduling',
+    ],
     correctIndex: 1,
-    explanation: "Parallel load sharing divides available power equally among all connected vehicles, allowing simultaneous charging at reduced individual power levels. This provides higher user satisfaction than sequential methods."
+    explanation:
+      'Parallel load sharing divides available power equally among all connected vehicles, allowing simultaneous charging at reduced individual power levels. This provides higher user satisfaction than sequential methods.',
   },
   {
-    id: "evcharging-m5s5-check3",
-    question: "What billing model is most common for multi-tenancy EV charging?",
-    options: ["Free electricity included in rent", "Cost per kWh consumed", "Annual flat fee", "Pay-per-session only"],
+    id: 'evcharging-m5s5-check3',
+    question: 'What billing model is most common for multi-tenancy EV charging?',
+    options: [
+      'Free electricity included in rent',
+      'Cost per kWh consumed',
+      'Annual flat fee',
+      'Pay-per-session only',
+    ],
     correctIndex: 1,
-    explanation: "Cost per kWh consumed is the most common and fairest billing model, accurately reflecting actual usage whilst ensuring residents only pay for what they use."
-  }
+    explanation:
+      'Cost per kWh consumed is the most common and fairest billing model, accurately reflecting actual usage whilst ensuring residents only pay for what they use.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Who is responsible for maintaining shared charging infrastructure?",
-    answer: "Typically the building management company or residents' association. Maintenance contracts should cover electrical safety testing and software updates. Clear agreements should establish responsibility for repairs, upgrades, and electricity costs."
+    question: 'Who is responsible for maintaining shared charging infrastructure?',
+    answer:
+      "Typically the building management company or residents' association. Maintenance contracts should cover electrical safety testing and software updates. Clear agreements should establish responsibility for repairs, upgrades, and electricity costs.",
   },
   {
-    question: "How do we handle disputes over charging access and costs?",
-    answer: "Implement clear usage policies from the start, including booking systems, time limits, and fair billing practices. Consider a residents' committee to oversee charging policies and resolve disputes. Transparent usage reporting helps prevent conflicts."
+    question: 'How do we handle disputes over charging access and costs?',
+    answer:
+      "Implement clear usage policies from the start, including booking systems, time limits, and fair billing practices. Consider a residents' committee to oversee charging policies and resolve disputes. Transparent usage reporting helps prevent conflicts.",
   },
   {
-    question: "Can visitors use the charging facilities?",
-    answer: "This depends on building policies. Some developments offer visitor charging at higher rates or through temporary access codes. Consider separate visitor charging bays or time-limited access to prevent abuse of resident facilities."
+    question: 'Can visitors use the charging facilities?',
+    answer:
+      'This depends on building policies. Some developments offer visitor charging at higher rates or through temporary access codes. Consider separate visitor charging bays or time-limited access to prevent abuse of resident facilities.',
   },
   {
-    question: "How do we future-proof for increasing EV adoption?",
-    answer: "Install infrastructure capable of easy expansion - oversized cable routes, spare ways in distribution boards, and scalable management systems. Consider conduit and ducting for future charging points even if not installing chargers initially."
-  }
+    question: 'How do we future-proof for increasing EV adoption?',
+    answer:
+      'Install infrastructure capable of easy expansion - oversized cable routes, spare ways in distribution boards, and scalable management systems. Consider conduit and ducting for future charging points even if not installing chargers initially.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A 50-unit apartment block with 100A supply wants to install 10 × 7kW charging points. What load management approach is most appropriate?",
-  options: [
-    "No load management - install direct connections",
-    "Sequential charging - one vehicle at a time",
-    "Dynamic load management limiting total to 45kW",
-    "Install only 3 charge points to stay within capacity"
-  ],
-  correctAnswer: 2,
-  explanation: "Dynamic load management limiting total charging load to 45kW (65% of available capacity) allows all 10 charge points to operate simultaneously at an average of 4.5kW each, or full power when fewer vehicles are connected."
-  }
+    question:
+      'A 50-unit apartment block with 100A supply wants to install 10 × 7kW charging points. What load management approach is most appropriate?',
+    options: [
+      'No load management - install direct connections',
+      'Sequential charging - one vehicle at a time',
+      'Dynamic load management limiting total to 45kW',
+      'Install only 3 charge points to stay within capacity',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Dynamic load management limiting total charging load to 45kW (65% of available capacity) allows all 10 charge points to operate simultaneously at an average of 4.5kW each, or full power when fewer vehicles are connected.',
+  },
 ];
 
 const EVChargingModule5Section5 = () => {
   useSEO({
-    title: "Multiple Unit Coordination | EV Charging Module 5.5",
-    description: "Learn to manage EV charging infrastructure in multi-occupancy developments with intelligent coordination and fair allocation systems."
+    title: 'Multiple Unit Coordination | EV Charging Module 5.5',
+    description:
+      'Learn to manage EV charging infrastructure in multi-occupancy developments with intelligent coordination and fair allocation systems.',
   });
 
   return (
@@ -98,9 +123,7 @@ const EVChargingModule5Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Multiple Unit Coordination
           </h1>
-          <p className="text-white/80">
-            Managing EV charging in flats and shared sites
-          </p>
+          <p className="text-white/80">Managing EV charging in flats and shared sites</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +131,26 @@ const EVChargingModule5Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Challenge:</strong> Shared capacity across multiple users</li>
-              <li><strong>Solution:</strong> Dynamic load balancing and scheduling</li>
-              <li><strong>Billing:</strong> Per-kWh with RFID/app authentication</li>
+              <li>
+                <strong>Challenge:</strong> Shared capacity across multiple users
+              </li>
+              <li>
+                <strong>Solution:</strong> Dynamic load balancing and scheduling
+              </li>
+              <li>
+                <strong>Billing:</strong> Per-kWh with RFID/app authentication
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Centralised controller, shared charging bays</li>
-              <li><strong>Use:</strong> Booking systems, fair access policies</li>
+              <li>
+                <strong>Spot:</strong> Centralised controller, shared charging bays
+              </li>
+              <li>
+                <strong>Use:</strong> Booking systems, fair access policies
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +160,12 @@ const EVChargingModule5Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Design load management for multiple points",
-              "Implement fair allocation and billing",
-              "Configure queue management systems",
-              "Calculate multi-unit diversity factors",
-              "Apply accessible charging requirements",
-              "Plan capacity for future expansion"
+              'Design load management for multiple points',
+              'Implement fair allocation and billing',
+              'Configure queue management systems',
+              'Calculate multi-unit diversity factors',
+              'Apply accessible charging requirements',
+              'Plan capacity for future expansion',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -152,18 +185,28 @@ const EVChargingModule5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Multi-unit developments require intelligent load management to share limited electrical
-              capacity fairly among all users whilst preventing infrastructure overloads.
+              Multi-unit developments require intelligent load management to share limited
+              electrical capacity fairly among all users whilst preventing infrastructure overloads.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Power Sharing Algorithms</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Power Sharing Algorithms
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Equal distribution:</strong> Power split equally</li>
-                  <li><strong>First-come-first-served:</strong> Priority queuing</li>
-                  <li><strong>Time-remaining:</strong> Optimise completion times</li>
-                  <li><strong>Emergency override:</strong> Urgent need priority</li>
+                  <li>
+                    <strong>Equal distribution:</strong> Power split equally
+                  </li>
+                  <li>
+                    <strong>First-come-first-served:</strong> Priority queuing
+                  </li>
+                  <li>
+                    <strong>Time-remaining:</strong> Optimise completion times
+                  </li>
+                  <li>
+                    <strong>Emergency override:</strong> Urgent need priority
+                  </li>
                 </ul>
               </div>
               <div>
@@ -210,21 +253,39 @@ const EVChargingModule5Section5 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Authentication Methods</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Authentication Methods
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>RFID card/fob:</strong> Simple physical access</li>
-                  <li><strong>Mobile app:</strong> Smartphone authentication</li>
-                  <li><strong>PIN code:</strong> Numeric entry system</li>
-                  <li><strong>Plug & Charge:</strong> Vehicle-to-charger ID</li>
+                  <li>
+                    <strong>RFID card/fob:</strong> Simple physical access
+                  </li>
+                  <li>
+                    <strong>Mobile app:</strong> Smartphone authentication
+                  </li>
+                  <li>
+                    <strong>PIN code:</strong> Numeric entry system
+                  </li>
+                  <li>
+                    <strong>Plug & Charge:</strong> Vehicle-to-charger ID
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Billing Models</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Per kWh:</strong> Fairest usage-based model</li>
-                  <li><strong>Time-based:</strong> Per-hour charging fees</li>
-                  <li><strong>Subscription:</strong> Monthly unlimited charging</li>
-                  <li><strong>Overstay penalties:</strong> Discourage bay hogging</li>
+                  <li>
+                    <strong>Per kWh:</strong> Fairest usage-based model
+                  </li>
+                  <li>
+                    <strong>Time-based:</strong> Per-hour charging fees
+                  </li>
+                  <li>
+                    <strong>Subscription:</strong> Monthly unlimited charging
+                  </li>
+                  <li>
+                    <strong>Overstay penalties:</strong> Discourage bay hogging
+                  </li>
                 </ul>
               </div>
             </div>
@@ -232,10 +293,18 @@ const EVChargingModule5Section5 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Fair Usage Policies:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Time limits:</strong> Maximum 4-hour sessions for availability</li>
-                <li><strong>Booking windows:</strong> Advance booking up to 7 days</li>
-                <li><strong>Cancellation:</strong> 24-hour minimum notice required</li>
-                <li><strong>Peak restrictions:</strong> Priority for essential charging</li>
+                <li>
+                  <strong>Time limits:</strong> Maximum 4-hour sessions for availability
+                </li>
+                <li>
+                  <strong>Booking windows:</strong> Advance booking up to 7 days
+                </li>
+                <li>
+                  <strong>Cancellation:</strong> 24-hour minimum notice required
+                </li>
+                <li>
+                  <strong>Peak restrictions:</strong> Priority for essential charging
+                </li>
               </ul>
             </div>
           </div>
@@ -267,11 +336,19 @@ const EVChargingModule5Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Phased Implementation</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Phased Implementation
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Phase 1:</strong> 20% capacity (immediate demand)</li>
-                  <li><strong>Phase 2:</strong> 50% capacity (2-5 years)</li>
-                  <li><strong>Phase 3:</strong> 80%+ capacity (5+ years)</li>
+                  <li>
+                    <strong>Phase 1:</strong> 20% capacity (immediate demand)
+                  </li>
+                  <li>
+                    <strong>Phase 2:</strong> 50% capacity (2-5 years)
+                  </li>
+                  <li>
+                    <strong>Phase 3:</strong> 80%+ capacity (5+ years)
+                  </li>
                   <li>Plan cable routes for future expansion</li>
                 </ul>
               </div>
@@ -296,7 +373,9 @@ const EVChargingModule5Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Implementation Checklist</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Implementation Checklist
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Conduct resident EV ownership survey</li>
                 <li>Assess current electrical infrastructure</li>
@@ -307,12 +386,22 @@ const EVChargingModule5Section5 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Challenges to Address</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Challenges to Address
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Leaseholder consent:</strong> — complex approval processes</li>
-                <li><strong>Service charge disputes:</strong> — fair cost allocation</li>
-                <li><strong>Limited parking:</strong> — sharing vs dedicated bays</li>
-                <li><strong>Cable routing:</strong> — listed building restrictions</li>
+                <li>
+                  <strong>Leaseholder consent:</strong> — complex approval processes
+                </li>
+                <li>
+                  <strong>Service charge disputes:</strong> — fair cost allocation
+                </li>
+                <li>
+                  <strong>Limited parking:</strong> — sharing vs dedicated bays
+                </li>
+                <li>
+                  <strong>Cable routing:</strong> — listed building restrictions
+                </li>
               </ul>
             </div>
           </div>
@@ -356,10 +445,7 @@ const EVChargingModule5Section5 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

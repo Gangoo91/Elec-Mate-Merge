@@ -1,216 +1,259 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Procurement Routes - HNC Module 5 Section 2.1";
-const DESCRIPTION = "Understand procurement routes for building services projects: traditional lump sum, design and build, management contracting, construction management, and two-stage tendering approaches for MEP installations.";
+const TITLE = 'Procurement Routes - HNC Module 5 Section 2.1';
+const DESCRIPTION =
+  'Understand procurement routes for building services projects: traditional lump sum, design and build, management contracting, construction management, and two-stage tendering approaches for MEP installations.';
 
 const quickCheckQuestions = [
   {
-    id: "traditional-risk",
-    question: "In traditional procurement, who carries the majority of design risk?",
-    options: ["The main contractor", "The MEP subcontractor", "The client/employer", "The quantity surveyor"],
+    id: 'traditional-risk',
+    question: 'In traditional procurement, who carries the majority of design risk?',
+    options: [
+      'The main contractor',
+      'The MEP subcontractor',
+      'The client/employer',
+      'The quantity surveyor',
+    ],
     correctIndex: 2,
-    explanation: "In traditional procurement, the client engages designers directly and therefore carries the design risk. The contractor is only responsible for building to the provided design."
+    explanation:
+      'In traditional procurement, the client engages designers directly and therefore carries the design risk. The contractor is only responsible for building to the provided design.',
   },
   {
-    id: "design-build-advantage",
-    question: "What is a key advantage of design and build for the client?",
-    options: ["Lower quality standards", "Single point of responsibility", "Longer programme duration", "More design control"],
+    id: 'design-build-advantage',
+    question: 'What is a key advantage of design and build for the client?',
+    options: [
+      'Lower quality standards',
+      'Single point of responsibility',
+      'Longer programme duration',
+      'More design control',
+    ],
     correctIndex: 1,
-    explanation: "Design and build provides single point of responsibility - the contractor is accountable for both design and construction, simplifying the client's contractual relationships."
+    explanation:
+      "Design and build provides single point of responsibility - the contractor is accountable for both design and construction, simplifying the client's contractual relationships.",
   },
   {
-    id: "construction-management-fee",
-    question: "In construction management, how is the construction manager typically paid?",
-    options: ["Fixed lump sum", "Cost plus percentage", "Management fee only", "Per trade package"],
+    id: 'construction-management-fee',
+    question: 'In construction management, how is the construction manager typically paid?',
+    options: ['Fixed lump sum', 'Cost plus percentage', 'Management fee only', 'Per trade package'],
     correctIndex: 2,
-    explanation: "The construction manager is paid a management fee for coordinating trade packages. They do not take construction risk - each trade contractor contracts directly with the client."
+    explanation:
+      'The construction manager is paid a management fee for coordinating trade packages. They do not take construction risk - each trade contractor contracts directly with the client.',
   },
   {
-    id: "two-stage-purpose",
-    question: "What is the primary purpose of two-stage tendering?",
-    options: ["To reduce overall cost", "To enable early contractor involvement", "To eliminate design risk", "To simplify procurement"],
+    id: 'two-stage-purpose',
+    question: 'What is the primary purpose of two-stage tendering?',
+    options: [
+      'To reduce overall cost',
+      'To enable early contractor involvement',
+      'To eliminate design risk',
+      'To simplify procurement',
+    ],
     correctIndex: 1,
-    explanation: "Two-stage tendering allows the contractor to be appointed early based on preliminaries and overheads, then work with the design team to develop the scheme before fixing the construction price."
-  }
+    explanation:
+      'Two-stage tendering allows the contractor to be appointed early based on preliminaries and overheads, then work with the design team to develop the scheme before fixing the construction price.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which procurement route provides the client with the most control over design quality for MEP installations?",
+    question:
+      'Which procurement route provides the client with the most control over design quality for MEP installations?',
     options: [
       "Design and build with contractor's proposals",
-      "Traditional with full M&E specification",
-      "Construction management with novated design",
-      "Management contracting"
+      'Traditional with full M&E specification',
+      'Construction management with novated design',
+      'Management contracting',
     ],
     correctAnswer: 1,
-    explanation: "Traditional procurement with a full M&E specification gives the client maximum design control as they appoint and direct the M&E consultant throughout the project."
+    explanation:
+      'Traditional procurement with a full M&E specification gives the client maximum design control as they appoint and direct the M&E consultant throughout the project.',
   },
   {
     id: 2,
-    question: "A hospital requiring complex medical gas systems and specialist equipment would typically suit which procurement route?",
+    question:
+      'A hospital requiring complex medical gas systems and specialist equipment would typically suit which procurement route?',
     options: [
-      "Design and build",
-      "Traditional with specialist subcontracts",
-      "Pure construction management",
-      "Single-stage competitive tender"
+      'Design and build',
+      'Traditional with specialist subcontracts',
+      'Pure construction management',
+      'Single-stage competitive tender',
     ],
     correctAnswer: 1,
-    explanation: "Healthcare projects with complex M&E requirements typically use traditional procurement, allowing specialist consultants to develop detailed designs and coordination with medical planners."
+    explanation:
+      'Healthcare projects with complex M&E requirements typically use traditional procurement, allowing specialist consultants to develop detailed designs and coordination with medical planners.',
   },
   {
     id: 3,
-    question: "Under design and build, when can the client still influence MEP design decisions?",
+    question: 'Under design and build, when can the client still influence MEP design decisions?',
     options: [
       "Never - all design is the contractor's responsibility",
       "During the employer's requirements stage",
-      "Only after practical completion",
-      "Throughout construction without cost implications"
+      'Only after practical completion',
+      'Throughout construction without cost implications',
     ],
     correctAnswer: 1,
-    explanation: "The client specifies their requirements in the Employer's Requirements document. Changes after contract award typically attract additional costs as variations."
+    explanation:
+      "The client specifies their requirements in the Employer's Requirements document. Changes after contract award typically attract additional costs as variations.",
   },
   {
     id: 4,
-    question: "What is a significant disadvantage of traditional procurement for building services?",
+    question:
+      'What is a significant disadvantage of traditional procurement for building services?',
     options: [
-      "Poor quality control",
-      "No competitive tendering",
-      "Longer overall programme",
-      "Single point of responsibility"
+      'Poor quality control',
+      'No competitive tendering',
+      'Longer overall programme',
+      'Single point of responsibility',
     ],
     correctAnswer: 2,
-    explanation: "Traditional procurement requires complete design before tendering, leading to longer overall programmes. Design and construction cannot overlap significantly."
+    explanation:
+      'Traditional procurement requires complete design before tendering, leading to longer overall programmes. Design and construction cannot overlap significantly.',
   },
   {
     id: 5,
-    question: "In management contracting, who holds the subcontracts with MEP trade contractors?",
+    question: 'In management contracting, who holds the subcontracts with MEP trade contractors?',
     options: [
-      "The client directly",
-      "The management contractor",
-      "The lead designer",
-      "A novated consultant"
+      'The client directly',
+      'The management contractor',
+      'The lead designer',
+      'A novated consultant',
     ],
     correctAnswer: 1,
-    explanation: "In management contracting, the management contractor holds all trade subcontracts. This differs from construction management where trade contractors contract directly with the client."
+    explanation:
+      'In management contracting, the management contractor holds all trade subcontracts. This differs from construction management where trade contractors contract directly with the client.',
   },
   {
     id: 6,
-    question: "Construction management is most suitable when:",
+    question: 'Construction management is most suitable when:',
     options: [
-      "The client wants fixed price certainty from day one",
-      "The client is experienced and wants maximum control",
-      "The project is simple with standard M&E",
-      "The client wants to transfer all risk to contractors"
+      'The client wants fixed price certainty from day one',
+      'The client is experienced and wants maximum control',
+      'The project is simple with standard M&E',
+      'The client wants to transfer all risk to contractors',
     ],
     correctAnswer: 1,
-    explanation: "Construction management suits sophisticated clients who want direct control over trade contractors and are willing to accept cost and programme risk in exchange for flexibility."
+    explanation:
+      'Construction management suits sophisticated clients who want direct control over trade contractors and are willing to accept cost and programme risk in exchange for flexibility.',
   },
   {
     id: 7,
-    question: "Two-stage tendering is particularly valuable for MEP when:",
+    question: 'Two-stage tendering is particularly valuable for MEP when:',
     options: [
-      "The M&E design is fully complete",
-      "Buildability input and early coordination is needed",
-      "The client wants the lowest possible price",
-      "The project has a simple services strategy"
+      'The M&E design is fully complete',
+      'Buildability input and early coordination is needed',
+      'The client wants the lowest possible price',
+      'The project has a simple services strategy',
     ],
     correctAnswer: 1,
-    explanation: "Two-stage tendering allows MEP contractors to contribute buildability expertise during design development, improving coordination and reducing on-site problems."
+    explanation:
+      'Two-stage tendering allows MEP contractors to contribute buildability expertise during design development, improving coordination and reducing on-site problems.',
   },
   {
     id: 8,
-    question: "What is novation in the context of design and build procurement?",
+    question: 'What is novation in the context of design and build procurement?',
     options: [
-      "Appointing a new contractor mid-project",
+      'Appointing a new contractor mid-project',
       "Transferring the client's consultants to the contractor",
-      "Extending the contract period",
-      "Changing the project specification"
+      'Extending the contract period',
+      'Changing the project specification',
     ],
     correctAnswer: 1,
-    explanation: "Novation transfers the client's design consultants (including M&E designers) to the contractor post-contract, maintaining design continuity while giving the contractor design responsibility."
+    explanation:
+      "Novation transfers the client's design consultants (including M&E designers) to the contractor post-contract, maintaining design continuity while giving the contractor design responsibility.",
   },
   {
     id: 9,
-    question: "For a speculative office development requiring cost certainty, which route would typically be recommended?",
+    question:
+      'For a speculative office development requiring cost certainty, which route would typically be recommended?',
     options: [
-      "Construction management",
-      "Traditional with bills of quantities",
-      "Design and build with a guaranteed maximum price",
-      "Management contracting"
+      'Construction management',
+      'Traditional with bills of quantities',
+      'Design and build with a guaranteed maximum price',
+      'Management contracting',
     ],
     correctAnswer: 2,
-    explanation: "Design and build with a guaranteed maximum price (GMP) provides cost certainty whilst maintaining reasonable programme efficiency - ideal for speculative development."
+    explanation:
+      'Design and build with a guaranteed maximum price (GMP) provides cost certainty whilst maintaining reasonable programme efficiency - ideal for speculative development.',
   },
   {
     id: 10,
     question: "The term 'contractor's designed portion' (CDP) refers to:",
     options: [
-      "A pure design and build contract",
-      "Elements of traditional contracts designed by the contractor",
-      "Management contracting preliminaries",
-      "Two-stage tender requirements"
+      'A pure design and build contract',
+      'Elements of traditional contracts designed by the contractor',
+      'Management contracting preliminaries',
+      'Two-stage tender requirements',
     ],
     correctAnswer: 1,
-    explanation: "CDP is used within traditional contracts where specific elements (often MEP) are designed by the contractor to a performance specification, combining traditional and D&B approaches."
+    explanation:
+      'CDP is used within traditional contracts where specific elements (often MEP) are designed by the contractor to a performance specification, combining traditional and D&B approaches.',
   },
   {
     id: 11,
-    question: "Which procurement route typically results in the highest preliminaries costs?",
+    question: 'Which procurement route typically results in the highest preliminaries costs?',
     options: [
-      "Traditional lump sum",
-      "Design and build",
-      "Construction management",
-      "Single-stage competitive tender"
+      'Traditional lump sum',
+      'Design and build',
+      'Construction management',
+      'Single-stage competitive tender',
     ],
     correctAnswer: 2,
-    explanation: "Construction management typically has higher preliminaries because the construction manager's team is on site throughout, plus there are multiple trade contractor preliminaries rather than a single main contractor."
+    explanation:
+      "Construction management typically has higher preliminaries because the construction manager's team is on site throughout, plus there are multiple trade contractor preliminaries rather than a single main contractor.",
   },
   {
     id: 12,
-    question: "For a data centre with rapidly evolving technology requirements, which procurement approach allows the most flexibility?",
+    question:
+      'For a data centre with rapidly evolving technology requirements, which procurement approach allows the most flexibility?',
     options: [
-      "Fixed-price design and build",
-      "Traditional lump sum",
-      "Two-stage or construction management",
-      "Single-stage competitive tender"
+      'Fixed-price design and build',
+      'Traditional lump sum',
+      'Two-stage or construction management',
+      'Single-stage competitive tender',
     ],
     correctAnswer: 2,
-    explanation: "Two-stage or construction management allows design development to continue later into the programme, accommodating technology changes that are common in data centre projects."
-  }
+    explanation:
+      'Two-stage or construction management allows design development to continue later into the programme, accommodating technology changes that are common in data centre projects.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Which procurement route is best for MEP-intensive projects?",
-    answer: "There is no single 'best' route - it depends on client priorities. Traditional suits clients wanting design control and quality assurance (hospitals, laboratories). Design and build suits those prioritising cost certainty and programme (commercial offices, retail). Construction management suits sophisticated clients on complex projects where flexibility is valued over cost certainty (major headquarters buildings)."
+    question: 'Which procurement route is best for MEP-intensive projects?',
+    answer:
+      "There is no single 'best' route - it depends on client priorities. Traditional suits clients wanting design control and quality assurance (hospitals, laboratories). Design and build suits those prioritising cost certainty and programme (commercial offices, retail). Construction management suits sophisticated clients on complex projects where flexibility is valued over cost certainty (major headquarters buildings).",
   },
   {
-    question: "How does procurement route affect MEP coordination?",
-    answer: "Traditional procurement allows extended coordination time during design but may create coordination issues between separately-procured trades. Design and build places coordination responsibility with the contractor, incentivising early resolution. Construction management can suffer from coordination gaps between multiple direct trade contracts unless actively managed."
+    question: 'How does procurement route affect MEP coordination?',
+    answer:
+      'Traditional procurement allows extended coordination time during design but may create coordination issues between separately-procured trades. Design and build places coordination responsibility with the contractor, incentivising early resolution. Construction management can suffer from coordination gaps between multiple direct trade contracts unless actively managed.',
   },
   {
-    question: "What are the implications for MEP contractors in each route?",
-    answer: "Traditional: MEP contractors bid on complete designs with clear scope. Design and build: May require design responsibility and carry more risk. Management contracting: Similar to traditional but with management contractor oversight. Construction management: Direct relationship with client but fragmented coordination. Two-stage: Opportunity to influence design but open-book pricing scrutiny."
+    question: 'What are the implications for MEP contractors in each route?',
+    answer:
+      'Traditional: MEP contractors bid on complete designs with clear scope. Design and build: May require design responsibility and carry more risk. Management contracting: Similar to traditional but with management contractor oversight. Construction management: Direct relationship with client but fragmented coordination. Two-stage: Opportunity to influence design but open-book pricing scrutiny.',
   },
   {
-    question: "How does novation work for M&E consultants?",
-    answer: "The client initially appoints M&E consultants to develop the Employer's Requirements. Post-contract award, the consultant's appointment is novated (transferred) to the D&B contractor. The consultant then completes detailed design under the contractor's direction. This maintains design continuity whilst transferring design liability to the contractor."
+    question: 'How does novation work for M&E consultants?',
+    answer:
+      "The client initially appoints M&E consultants to develop the Employer's Requirements. Post-contract award, the consultant's appointment is novated (transferred) to the D&B contractor. The consultant then completes detailed design under the contractor's direction. This maintains design continuity whilst transferring design liability to the contractor.",
   },
   {
-    question: "What is a two-stage tender and when should it be used?",
-    answer: "Stage one selects a contractor based on preliminaries, overheads, and profit margin against an outline specification. Stage two develops detailed pricing as design progresses. It is ideal when early contractor involvement benefits buildability, the programme is tight, or the design cannot be completed before contractor appointment. Common for complex MEP projects."
+    question: 'What is a two-stage tender and when should it be used?',
+    answer:
+      'Stage one selects a contractor based on preliminaries, overheads, and profit margin against an outline specification. Stage two develops detailed pricing as design progresses. It is ideal when early contractor involvement benefits buildability, the programme is tight, or the design cannot be completed before contractor appointment. Common for complex MEP projects.',
   },
   {
-    question: "How do I choose between management contracting and construction management?",
-    answer: "Management contracting: Trade contractors contract with the management contractor, who takes some risk. Suitable when the client wants a buffer between themselves and trades. Construction management: Trade contractors contract directly with the client, who accepts more risk but has more control. Suitable for experienced clients with in-house project management capability."
-  }
+    question: 'How do I choose between management contracting and construction management?',
+    answer:
+      'Management contracting: Trade contractors contract with the management contractor, who takes some risk. Suitable when the client wants a buffer between themselves and trades. Construction management: Trade contractors contract directly with the client, who accepts more risk but has more control. Suitable for experienced clients with in-house project management capability.',
+  },
 ];
 
 const HNCModule5Section2_1 = () => {
@@ -221,7 +264,12 @@ const HNCModule5Section2_1 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module5-section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -232,7 +280,6 @@ const HNCModule5Section2_1 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centred Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -243,7 +290,8 @@ const HNCModule5Section2_1 = () => {
             Procurement Routes
           </h1>
           <p className="text-white/80">
-            Traditional, design and build, management contracting, construction management and two-stage tendering approaches for building services
+            Traditional, design and build, management contracting, construction management and
+            two-stage tendering approaches for building services
           </p>
         </header>
 
@@ -252,19 +300,35 @@ const HNCModule5Section2_1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>Traditional:</strong> Client leads design, contractor builds</li>
-              <li className="pl-1"><strong>Design & Build:</strong> Single point responsibility</li>
-              <li className="pl-1"><strong>Management routes:</strong> Fee-based coordination</li>
-              <li className="pl-1"><strong>Two-stage:</strong> Early contractor involvement</li>
+              <li className="pl-1">
+                <strong>Traditional:</strong> Client leads design, contractor builds
+              </li>
+              <li className="pl-1">
+                <strong>Design & Build:</strong> Single point responsibility
+              </li>
+              <li className="pl-1">
+                <strong>Management routes:</strong> Fee-based coordination
+              </li>
+              <li className="pl-1">
+                <strong>Two-stage:</strong> Early contractor involvement
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">MEP Implications</p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>Design control:</strong> Varies significantly by route</li>
-              <li className="pl-1"><strong>Coordination:</strong> Different responsibility split</li>
-              <li className="pl-1"><strong>Risk allocation:</strong> Impacts pricing approach</li>
-              <li className="pl-1"><strong>Programme:</strong> Overlap potential varies</li>
+              <li className="pl-1">
+                <strong>Design control:</strong> Varies significantly by route
+              </li>
+              <li className="pl-1">
+                <strong>Coordination:</strong> Different responsibility split
+              </li>
+              <li className="pl-1">
+                <strong>Risk allocation:</strong> Impacts pricing approach
+              </li>
+              <li className="pl-1">
+                <strong>Programme:</strong> Overlap potential varies
+              </li>
             </ul>
           </div>
         </div>
@@ -274,12 +338,12 @@ const HNCModule5Section2_1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Compare traditional, D&B, and management procurement routes",
-              "Understand risk allocation in each procurement method",
-              "Evaluate suitability for different MEP project types",
-              "Apply two-stage tendering principles",
-              "Analyse advantages and disadvantages for building services",
-              "Select appropriate procurement for project circumstances"
+              'Compare traditional, D&B, and management procurement routes',
+              'Understand risk allocation in each procurement method',
+              'Evaluate suitability for different MEP project types',
+              'Apply two-stage tendering principles',
+              'Analyse advantages and disadvantages for building services',
+              'Select appropriate procurement for project circumstances',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -300,24 +364,35 @@ const HNCModule5Section2_1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Traditional procurement separates design from construction. The client engages consultants
-              (architect, structural engineer, M&E consultant) to develop the design, then competitively
-              tenders the construction work to contractors who price and build to the provided drawings
-              and specification.
+              Traditional procurement separates design from construction. The client engages
+              consultants (architect, structural engineer, M&E consultant) to develop the design,
+              then competitively tenders the construction work to contractors who price and build to
+              the provided drawings and specification.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Key characteristics:</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Sequential process:</strong> Design complete before construction tender</li>
-                <li className="pl-1"><strong>Client-led design:</strong> Full control over specification and quality</li>
-                <li className="pl-1"><strong>Competitive tendering:</strong> Typically 4-6 contractors bid on same information</li>
-                <li className="pl-1"><strong>Fixed price:</strong> Contractor commits to lump sum for defined scope</li>
+                <li className="pl-1">
+                  <strong>Sequential process:</strong> Design complete before construction tender
+                </li>
+                <li className="pl-1">
+                  <strong>Client-led design:</strong> Full control over specification and quality
+                </li>
+                <li className="pl-1">
+                  <strong>Competitive tendering:</strong> Typically 4-6 contractors bid on same
+                  information
+                </li>
+                <li className="pl-1">
+                  <strong>Fixed price:</strong> Contractor commits to lump sum for defined scope
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Risk Allocation in Traditional Procurement</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Risk Allocation in Traditional Procurement
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
@@ -331,27 +406,39 @@ const HNCModule5Section2_1 = () => {
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Design adequacy</td>
                       <td className="border border-white/10 px-3 py-2">Client/consultant</td>
-                      <td className="border border-white/10 px-3 py-2">If HVAC undersized, client pays to rectify</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        If HVAC undersized, client pays to rectify
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Construction quality</td>
                       <td className="border border-white/10 px-3 py-2">Contractor</td>
-                      <td className="border border-white/10 px-3 py-2">Poor pipework installation at contractor's cost</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Poor pipework installation at contractor's cost
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost overrun (variations)</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Cost overrun (variations)
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Client</td>
-                      <td className="border border-white/10 px-3 py-2">Client changes to BMS specification</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Client changes to BMS specification
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Programme</td>
                       <td className="border border-white/10 px-3 py-2">Shared</td>
-                      <td className="border border-white/10 px-3 py-2">Design delays = client; construction delays = contractor</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Design delays = client; construction delays = contractor
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Coordination errors</td>
                       <td className="border border-white/10 px-3 py-2">Designer/contractor</td>
-                      <td className="border border-white/10 px-3 py-2">Clashes between services and structure</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Clashes between services and structure
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -380,7 +467,8 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Best suited for:</strong> Projects requiring high design quality and control - hospitals, laboratories, heritage buildings, and complex specialist installations.
+              <strong>Best suited for:</strong> Projects requiring high design quality and control -
+              hospitals, laboratories, heritage buildings, and complex specialist installations.
             </p>
           </div>
         </section>
@@ -402,18 +490,34 @@ const HNCModule5Section2_1 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Employer's Requirements for MEP</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Employer's Requirements for MEP
+              </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Performance specification:</strong> Required temperatures, air change rates, lux levels</li>
-                <li className="pl-1"><strong>Equipment standards:</strong> Minimum quality levels, approved manufacturers</li>
-                <li className="pl-1"><strong>Energy targets:</strong> EPC rating, BREEAM requirements</li>
-                <li className="pl-1"><strong>Design criteria:</strong> Room data sheets, load assumptions</li>
-                <li className="pl-1"><strong>Standards compliance:</strong> BS, CIBSE, HTM requirements</li>
+                <li className="pl-1">
+                  <strong>Performance specification:</strong> Required temperatures, air change
+                  rates, lux levels
+                </li>
+                <li className="pl-1">
+                  <strong>Equipment standards:</strong> Minimum quality levels, approved
+                  manufacturers
+                </li>
+                <li className="pl-1">
+                  <strong>Energy targets:</strong> EPC rating, BREEAM requirements
+                </li>
+                <li className="pl-1">
+                  <strong>Design criteria:</strong> Room data sheets, load assumptions
+                </li>
+                <li className="pl-1">
+                  <strong>Standards compliance:</strong> BS, CIBSE, HTM requirements
+                </li>
               </ul>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Novation of M&E Consultants</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Novation of M&E Consultants
+              </p>
               <p className="text-sm text-white mb-3">
                 A common hybrid approach where the client's M&E consultant develops initial design,
                 then is novated (transferred) to the D&B contractor post-contract:
@@ -428,36 +532,54 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Design and Build Variants</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Design and Build Variants
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
                     <tr className="bg-white/5">
                       <th className="border border-white/10 px-3 py-2 text-left">Variant</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Client Design Input</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">MEP Implications</th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Client Design Input
+                      </th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        MEP Implications
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Pure D&B</td>
                       <td className="border border-white/10 px-3 py-2">Output spec only</td>
-                      <td className="border border-white/10 px-3 py-2">Contractor designs all MEP from scratch</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Contractor designs all MEP from scratch
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Develop & construct</td>
                       <td className="border border-white/10 px-3 py-2">Concept design</td>
-                      <td className="border border-white/10 px-3 py-2">Contractor develops from Stage 2-3 design</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Contractor develops from Stage 2-3 design
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Enhanced D&B</td>
-                      <td className="border border-white/10 px-3 py-2">Detailed design + novation</td>
-                      <td className="border border-white/10 px-3 py-2">Near-complete design with novated team</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Detailed design + novation
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Near-complete design with novated team
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2">Contractor's Designed Portion</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Contractor's Designed Portion
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Most design by client</td>
-                      <td className="border border-white/10 px-3 py-2">Only specified elements (often MEP) by contractor</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Only specified elements (often MEP) by contractor
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -486,7 +608,9 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Best suited for:</strong> Commercial projects with standard MEP requirements where programme and cost certainty are priorities - offices, retail, warehousing, standard residential.
+              <strong>Best suited for:</strong> Commercial projects with standard MEP requirements
+              where programme and cost certainty are priorities - offices, retail, warehousing,
+              standard residential.
             </p>
           </div>
         </section>
@@ -508,7 +632,9 @@ const HNCModule5Section2_1 = () => {
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Management Contracting</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Management Contracting
+                </p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                   <li className="pl-1">MC holds subcontracts with trade contractors</li>
                   <li className="pl-1">MC takes some construction risk</li>
@@ -518,7 +644,9 @@ const HNCModule5Section2_1 = () => {
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Construction Management</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Construction Management
+                </p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                   <li className="pl-1">Client holds direct contracts with trades</li>
                   <li className="pl-1">CM takes no construction risk</li>
@@ -530,36 +658,54 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">MEP Trade Packages (Typical)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                MEP Trade Packages (Typical)
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
                     <tr className="bg-white/5">
                       <th className="border border-white/10 px-3 py-2 text-left">Package</th>
                       <th className="border border-white/10 px-3 py-2 text-left">Typical Scope</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Coordination Priority</th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Coordination Priority
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Mechanical Package</td>
-                      <td className="border border-white/10 px-3 py-2">HVAC, pipework, plant, insulation</td>
-                      <td className="border border-white/10 px-3 py-2">Critical - largest services</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        HVAC, pipework, plant, insulation
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Critical - largest services
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Electrical Package</td>
-                      <td className="border border-white/10 px-3 py-2">Power, lighting, containment</td>
-                      <td className="border border-white/10 px-3 py-2">High - interfaces with all trades</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Power, lighting, containment
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        High - interfaces with all trades
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Public Health</td>
                       <td className="border border-white/10 px-3 py-2">Drainage, water services</td>
-                      <td className="border border-white/10 px-3 py-2">High - gravity constraints</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        High - gravity constraints
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Fire Protection</td>
-                      <td className="border border-white/10 px-3 py-2">Sprinklers, detection, alarms</td>
-                      <td className="border border-white/10 px-3 py-2">Medium - ceiling coordination</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Sprinklers, detection, alarms
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Medium - ceiling coordination
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">BMS/Controls</td>
@@ -569,7 +715,9 @@ const HNCModule5Section2_1 = () => {
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Lifts</td>
                       <td className="border border-white/10 px-3 py-2">Lift installation</td>
-                      <td className="border border-white/10 px-3 py-2">Medium - shaft interfaces</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Medium - shaft interfaces
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -608,7 +756,8 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Best suited for:</strong> Large complex projects with experienced clients - major headquarters, complex refurbishments, projects where flexibility is essential.
+              <strong>Best suited for:</strong> Large complex projects with experienced clients -
+              major headquarters, complex refurbishments, projects where flexibility is essential.
             </p>
           </div>
         </section>
@@ -624,8 +773,8 @@ const HNCModule5Section2_1 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Two-stage tendering bridges the gap between competitive pricing and early contractor
-              involvement. The contractor is appointed based on overheads and preliminaries (Stage 1),
-              then works with the design team to develop and price the detailed works (Stage 2).
+              involvement. The contractor is appointed based on overheads and preliminaries (Stage
+              1), then works with the design team to develop and price the detailed works (Stage 2).
             </p>
 
             <div className="my-6">
@@ -655,7 +804,9 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">MEP Benefits of Two-Stage</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                MEP Benefits of Two-Stage
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
@@ -668,28 +819,44 @@ const HNCModule5Section2_1 = () => {
                   <tbody>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Buildability input</td>
-                      <td className="border border-white/10 px-3 py-2">Contractor reviews design</td>
-                      <td className="border border-white/10 px-3 py-2">Plantroom layout optimised for installation</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Contractor reviews design
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Plantroom layout optimised for installation
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Early coordination</td>
                       <td className="border border-white/10 px-3 py-2">3D model integration</td>
-                      <td className="border border-white/10 px-3 py-2">Clashes resolved before site work</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Clashes resolved before site work
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Programme certainty</td>
-                      <td className="border border-white/10 px-3 py-2">Contractor programmes early</td>
-                      <td className="border border-white/10 px-3 py-2">Long-lead MEP plant ordered in time</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Contractor programmes early
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Long-lead MEP plant ordered in time
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Market testing</td>
                       <td className="border border-white/10 px-3 py-2">Subcontract competition</td>
-                      <td className="border border-white/10 px-3 py-2">Best MEP subcontractor prices obtained</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Best MEP subcontractor prices obtained
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2">Value engineering</td>
-                      <td className="border border-white/10 px-3 py-2">Collaborative cost review</td>
-                      <td className="border border-white/10 px-3 py-2">Alternative systems evaluated with full team</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Collaborative cost review
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Alternative systems evaluated with full team
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -697,16 +864,33 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Real-World Example: Data Centre Two-Stage</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Real-World Example: Data Centre Two-Stage
+              </p>
               <p className="text-sm text-white mb-3">
                 A 10MW data centre project used two-stage tendering to manage technical complexity:
               </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Stage 1:</strong> Contractor selected on 15% complete design, pricing preliminaries and margins</li>
-                <li className="pl-1"><strong>Pre-construction:</strong> 6 months working with M&E consultant on cooling strategy, UPS specification</li>
-                <li className="pl-1"><strong>Early packages:</strong> Generators and transformers ordered during Stage 2 (26-week lead)</li>
-                <li className="pl-1"><strong>Stage 2 close:</strong> Contract sum fixed at 85% design, remaining works on schedule of rates</li>
-                <li className="pl-1"><strong>Outcome:</strong> MEP coordination issues reduced by 40% compared to similar single-stage projects</li>
+                <li className="pl-1">
+                  <strong>Stage 1:</strong> Contractor selected on 15% complete design, pricing
+                  preliminaries and margins
+                </li>
+                <li className="pl-1">
+                  <strong>Pre-construction:</strong> 6 months working with M&E consultant on cooling
+                  strategy, UPS specification
+                </li>
+                <li className="pl-1">
+                  <strong>Early packages:</strong> Generators and transformers ordered during Stage
+                  2 (26-week lead)
+                </li>
+                <li className="pl-1">
+                  <strong>Stage 2 close:</strong> Contract sum fixed at 85% design, remaining works
+                  on schedule of rates
+                </li>
+                <li className="pl-1">
+                  <strong>Outcome:</strong> MEP coordination issues reduced by 40% compared to
+                  similar single-stage projects
+                </li>
               </ul>
             </div>
 
@@ -732,7 +916,9 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Best suited for:</strong> Complex MEP projects where early coordination is critical - data centres, hospitals, research facilities, complex refurbishments with tight programmes.
+              <strong>Best suited for:</strong> Complex MEP projects where early coordination is
+              critical - data centres, hospitals, research facilities, complex refurbishments with
+              tight programmes.
             </p>
           </div>
         </section>
@@ -807,13 +993,19 @@ const HNCModule5Section2_1 = () => {
 
         {/* Practical Guidance */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Selection Guidance for MEP Projects</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">
+            Selection Guidance for MEP Projects
+          </h2>
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Choose Traditional When:</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Choose Traditional When:
+              </h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Complex specialist M&E requiring detailed coordination (hospitals, labs)</li>
+                <li className="pl-1">
+                  Complex specialist M&E requiring detailed coordination (hospitals, labs)
+                </li>
                 <li className="pl-1">Client has strong in-house or consultant M&E expertise</li>
                 <li className="pl-1">Quality and compliance are paramount over programme</li>
                 <li className="pl-1">Budget allows for complete design before tender</li>
@@ -821,7 +1013,9 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Choose Design and Build When:</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Choose Design and Build When:
+              </h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Standard MEP with well-defined performance requirements</li>
                 <li className="pl-1">Programme and cost certainty are priorities</li>
@@ -831,7 +1025,9 @@ const HNCModule5Section2_1 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Choose Two-Stage When:</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Choose Two-Stage When:
+              </h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Complex MEP requiring early contractor input</li>
                 <li className="pl-1">Long-lead plant items need early ordering</li>
@@ -843,10 +1039,19 @@ const HNCModule5Section2_1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Pitfalls</h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Incomplete Employer's Requirements:</strong> Leads to variations and disputes</li>
-                <li className="pl-1"><strong>Late design changes:</strong> Expensive regardless of procurement route</li>
-                <li className="pl-1"><strong>Poor coordination management:</strong> Critical in management routes</li>
-                <li className="pl-1"><strong>Ignoring market conditions:</strong> Limited competition affects pricing</li>
+                <li className="pl-1">
+                  <strong>Incomplete Employer's Requirements:</strong> Leads to variations and
+                  disputes
+                </li>
+                <li className="pl-1">
+                  <strong>Late design changes:</strong> Expensive regardless of procurement route
+                </li>
+                <li className="pl-1">
+                  <strong>Poor coordination management:</strong> Critical in management routes
+                </li>
+                <li className="pl-1">
+                  <strong>Ignoring market conditions:</strong> Limited competition affects pricing
+                </li>
               </ul>
             </div>
           </div>
@@ -897,28 +1102,33 @@ const HNCModule5Section2_1 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module5-section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module5-section2-2">
               Next: Contract Types
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

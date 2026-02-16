@@ -39,8 +39,8 @@ const TestResultsReviewDialog = ({
   );
 
   const toggleCircuit = (ref: string) => {
-    setSelectedCircuits(prev =>
-      prev.includes(ref) ? prev.filter(r => r !== ref) : [...prev, ref]
+    setSelectedCircuits((prev) =>
+      prev.includes(ref) ? prev.filter((r) => r !== ref) : [...prev, ref]
     );
   };
 
@@ -53,9 +53,9 @@ const TestResultsReviewDialog = ({
   };
 
   const handleAccept = () => {
-    const selected = extractedData?.circuits?.filter((c: any) =>
-      selectedCircuits.includes(c.circuit_reference)
-    ) || [];
+    const selected =
+      extractedData?.circuits?.filter((c: any) => selectedCircuits.includes(c.circuit_reference)) ||
+      [];
     onAccept(selected);
     onClose();
   };
@@ -101,7 +101,10 @@ const TestResultsReviewDialog = ({
                 </p>
                 <ul className="list-disc list-inside space-y-1.5">
                   {extractedData.warnings.map((warning: string, idx: number) => (
-                    <li key={idx} className="text-sm text-amber-900 dark:text-amber-100 leading-relaxed">
+                    <li
+                      key={idx}
+                      className="text-sm text-amber-900 dark:text-amber-100 leading-relaxed"
+                    >
                       {warning}
                     </li>
                   ))}
@@ -115,7 +118,8 @@ const TestResultsReviewDialog = ({
           <Alert>
             <Info className="h-4 w-4" />
             <AlertDescription>
-              No circuits were detected in the provided images. Please ensure the images contain clear test result data.
+              No circuits were detected in the provided images. Please ensure the images contain
+              clear test result data.
             </AlertDescription>
           </Alert>
         ) : (
@@ -124,10 +128,10 @@ const TestResultsReviewDialog = ({
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-12 text-xs sm:text-sm">
-                  <Checkbox
-                    checked={selectedCircuits.length === extractedData?.circuits?.length}
-                    onCheckedChange={toggleAll}
-                  />
+                    <Checkbox
+                      checked={selectedCircuits.length === extractedData?.circuits?.length}
+                      onCheckedChange={toggleAll}
+                    />
                   </TableHead>
                   <TableHead className="text-xs sm:text-sm">Circuit</TableHead>
                   <TableHead className="text-xs sm:text-sm">Description</TableHead>
@@ -137,55 +141,56 @@ const TestResultsReviewDialog = ({
                   <TableHead className="text-xs sm:text-sm">RCD</TableHead>
                   <TableHead className="text-xs sm:text-sm">Device</TableHead>
                   <TableHead className="text-center text-xs sm:text-sm">Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {extractedData?.circuits?.map((circuit: any, idx: number) => {
-                const isSelected = selectedCircuits.includes(circuit.circuit_reference);
-                const hasIssues = circuit.confidence === 'low';
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {extractedData?.circuits?.map((circuit: any, idx: number) => {
+                  const isSelected = selectedCircuits.includes(circuit.circuit_reference);
+                  const hasIssues = circuit.confidence === 'low';
 
-                return (
-                  <TableRow key={idx} className={isSelected ? 'bg-accent/50' : ''}>
-                    <TableCell>
-                      <Checkbox
-                        checked={isSelected}
-                        onCheckedChange={() => toggleCircuit(circuit.circuit_reference)}
-                      />
-                    </TableCell>
-                    <TableCell className="font-mono font-semibold">
-                      {circuit.circuit_reference}
-                    </TableCell>
-                    <TableCell className="text-sm">
-                      {circuit.circuit_description || '-'}
-                    </TableCell>
-                    <TableCell className="font-mono text-sm">
-                      {circuit.tests?.r1_r2?.value || '-'}
-                    </TableCell>
-                    <TableCell className="font-mono text-sm">
-                      {circuit.tests?.insulation_resistance?.value || '-'}
-                    </TableCell>
-                    <TableCell className="font-mono text-sm">
-                      {circuit.tests?.zs?.value || '-'}
-                    </TableCell>
-                    <TableCell className="font-mono text-sm">
-                      {circuit.tests?.rcd_trip_time?.value || '-'}
-                    </TableCell>
-                    <TableCell className="text-sm">
-                      {circuit.protective_device?.type || '-'}
-                      {circuit.protective_device?.rating && ` ${circuit.protective_device.rating}`}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {hasIssues ? (
-                        <AlertCircle className="h-4 w-4 text-destructive inline" />
-                      ) : (
-                        <CheckCircle2 className="h-4 w-4 text-green-600 inline" />
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                  return (
+                    <TableRow key={idx} className={isSelected ? 'bg-accent/50' : ''}>
+                      <TableCell>
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={() => toggleCircuit(circuit.circuit_reference)}
+                        />
+                      </TableCell>
+                      <TableCell className="font-mono font-semibold">
+                        {circuit.circuit_reference}
+                      </TableCell>
+                      <TableCell className="text-sm">
+                        {circuit.circuit_description || '-'}
+                      </TableCell>
+                      <TableCell className="font-mono text-sm">
+                        {circuit.tests?.r1_r2?.value || '-'}
+                      </TableCell>
+                      <TableCell className="font-mono text-sm">
+                        {circuit.tests?.insulation_resistance?.value || '-'}
+                      </TableCell>
+                      <TableCell className="font-mono text-sm">
+                        {circuit.tests?.zs?.value || '-'}
+                      </TableCell>
+                      <TableCell className="font-mono text-sm">
+                        {circuit.tests?.rcd_trip_time?.value || '-'}
+                      </TableCell>
+                      <TableCell className="text-sm">
+                        {circuit.protective_device?.type || '-'}
+                        {circuit.protective_device?.rating &&
+                          ` ${circuit.protective_device.rating}`}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {hasIssues ? (
+                          <AlertCircle className="h-4 w-4 text-destructive inline" />
+                        ) : (
+                          <CheckCircle2 className="h-4 w-4 text-green-600 inline" />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
           </div>
         )}
 
@@ -196,7 +201,9 @@ const TestResultsReviewDialog = ({
               <p className="font-semibold mb-1">Recommendations:</p>
               <ul className="list-disc list-inside space-y-1">
                 {extractedData.suggestions.map((suggestion: string, idx: number) => (
-                  <li key={idx} className="text-sm">{suggestion}</li>
+                  <li key={idx} className="text-sm">
+                    {suggestion}
+                  </li>
                 ))}
               </ul>
             </AlertDescription>
@@ -220,11 +227,9 @@ const TestResultsReviewDialog = ({
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button
-            onClick={handleAccept}
-            disabled={selectedCircuits.length === 0}
-          >
-            Add {selectedCircuits.length} Circuit{selectedCircuits.length !== 1 ? 's' : ''} to Schedule
+          <Button onClick={handleAccept} disabled={selectedCircuits.length === 0}>
+            Add {selectedCircuits.length} Circuit{selectedCircuits.length !== 1 ? 's' : ''} to
+            Schedule
           </Button>
         </DialogFooter>
       </DialogContent>

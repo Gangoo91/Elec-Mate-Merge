@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Target, Award, TrendingUp, Calendar } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Clock, Target, Award, TrendingUp, Calendar } from 'lucide-react';
 
 const CPDOverview = () => {
   // Mock data - in real implementation this would come from a state management solution
@@ -12,16 +11,21 @@ const CPDOverview = () => {
   const progressPercentage = Math.round((hoursCompleted / hoursTarget) * 100);
 
   const recentActivities = [
-    { date: "2024-01-15", activity: "BS 7671 Update Seminar", hours: 4, type: "Formal Learning" },
-    { date: "2024-01-10", activity: "Cable Sizing Workshop", hours: 3, type: "Technical Training" },
-    { date: "2024-01-05", activity: "Health & Safety Refresher", hours: 2, type: "Safety Training" }
+    { date: '2024-01-15', activity: 'BS 7671 Update Seminar', hours: 4, type: 'Formal Learning' },
+    { date: '2024-01-10', activity: 'Cable Sizing Workshop', hours: 3, type: 'Technical Training' },
+    {
+      date: '2024-01-05',
+      activity: 'Health & Safety Refresher',
+      hours: 2,
+      type: 'Safety Training',
+    },
   ];
 
   const categoryBreakdown = [
-    { category: "Technical Skills", hours: 12, color: "bg-blue-500" },
-    { category: "Regulations", hours: 8, color: "bg-green-500" },
-    { category: "Safety", hours: 5, color: "bg-amber-500" },
-    { category: "Management", hours: 3, color: "bg-purple-500" }
+    { category: 'Technical Skills', hours: 12, color: 'bg-blue-500' },
+    { category: 'Regulations', hours: 8, color: 'bg-green-500' },
+    { category: 'Safety', hours: 5, color: 'bg-amber-500' },
+    { category: 'Management', hours: 3, color: 'bg-purple-500' },
   ];
 
   return (
@@ -108,7 +112,9 @@ const CPDOverview = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-white">
               <span>Annual Progress</span>
-              <span>{hoursCompleted} / {hoursTarget} hours</span>
+              <span>
+                {hoursCompleted} / {hoursTarget} hours
+              </span>
             </div>
             <Progress value={progressPercentage} className="h-3" />
           </div>
@@ -153,14 +159,20 @@ const CPDOverview = () => {
         <CardContent className="relative">
           <div className="space-y-3">
             {recentActivities.map((activity, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-xl">
+              <div
+                key={index}
+                className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-xl"
+              >
                 <div className="space-y-1">
                   <div className="font-medium text-white">{activity.activity}</div>
                   <div className="text-sm text-white/60">{activity.date}</div>
                 </div>
                 <div className="text-right space-y-1">
                   <div className="font-medium text-elec-yellow">{activity.hours}h</div>
-                  <Badge variant="outline" className="text-xs bg-white/5 border-white/20 text-white/70">
+                  <Badge
+                    variant="outline"
+                    className="text-xs bg-white/5 border-white/20 text-white/70"
+                  >
                     {activity.type}
                   </Badge>
                 </div>

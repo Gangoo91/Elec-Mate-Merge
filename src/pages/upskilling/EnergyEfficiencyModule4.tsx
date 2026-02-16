@@ -7,34 +7,34 @@ const EnergyEfficiencyModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "LED and Lighting Control Upgrades",
+      title: 'LED and Lighting Control Upgrades',
       icon: Lightbulb,
-      description: "Upgrading to efficient lighting systems and controls"
+      description: 'Upgrading to efficient lighting systems and controls',
     },
     {
       id: 2,
-      title: "Motor Efficiency and VSD Retrofitting",
+      title: 'Motor Efficiency and VSD Retrofitting',
       icon: Settings,
-      description: "Improving motor efficiency and variable speed drive retrofits"
+      description: 'Improving motor efficiency and variable speed drive retrofits',
     },
     {
       id: 3,
-      title: "Energy-Efficient Controls (Timers, BMS)",
+      title: 'Energy-Efficient Controls (Timers, BMS)',
       icon: Settings,
-      description: "Implementing smart controls and building management systems"
+      description: 'Implementing smart controls and building management systems',
     },
     {
       id: 4,
-      title: "Behavioural Measures and Awareness",
+      title: 'Behavioural Measures and Awareness',
       icon: Users,
-      description: "Creating energy awareness and behavioural change programmes"
+      description: 'Creating energy awareness and behavioural change programmes',
     },
     {
       id: 5,
-      title: "ROI Calculators and Energy Saving Tools",
+      title: 'ROI Calculators and Energy Saving Tools',
       icon: Calculator,
-      description: "Tools for calculating return on investment and savings"
-    }
+      description: 'Tools for calculating return on investment and savings',
+    },
   ];
 
   return (

@@ -1,14 +1,13 @@
-
 import { Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const ContinuityLearningOutcomes = () => {
   const outcomes = [
-    "Understand the purpose of continuity testing under BS 7671",
-    "Identify which conductors require continuity verification", 
-    "Recognise when and where continuity testing is applied in the testing sequence",
-    "Appreciate the critical safety implications of proper continuity verification",
-    "Know the relationship between continuity and automatic disconnection of supply"
+    'Understand the purpose of continuity testing under BS 7671',
+    'Identify which conductors require continuity verification',
+    'Recognise when and where continuity testing is applied in the testing sequence',
+    'Appreciate the critical safety implications of proper continuity verification',
+    'Know the relationship between continuity and automatic disconnection of supply',
   ];
 
   return (

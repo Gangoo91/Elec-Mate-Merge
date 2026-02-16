@@ -1,27 +1,42 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Eye, AlertTriangle, Calculator, Target, CheckCircle, Settings, Lightbulb, MapPin, Clock, Zap, BookOpen, Wrench, Shield, Ruler } from 'lucide-react';
+import {
+  Eye,
+  AlertTriangle,
+  Calculator,
+  Target,
+  CheckCircle,
+  Settings,
+  Lightbulb,
+  MapPin,
+  Clock,
+  Zap,
+  BookOpen,
+  Wrench,
+  Shield,
+  Ruler,
+} from 'lucide-react';
 
 export const EmergencyLightingContent2_2_Enhanced = () => {
   const illuminanceLevels = [
-    { area: "Open Areas > 60m²", level: "0.5 lux average", uniformity: "40:1 max ratio" },
-    { area: "Circulation Areas", level: "1.0 lux on floor", uniformity: "Along escape route" },
-    { area: "High Risk Areas", level: "15 lux average", uniformity: "Based on task requirements" }
+    { area: 'Open Areas > 60m²', level: '0.5 lux average', uniformity: '40:1 max ratio' },
+    { area: 'Circulation Areas', level: '1.0 lux on floor', uniformity: 'Along escape route' },
+    { area: 'High Risk Areas', level: '15 lux average', uniformity: 'Based on task requirements' },
   ];
 
   const spacingCalculations = [
-    { mounting: "2.5m height", spacing: "7.5m maximum", coverage: "3:1 height ratio" },
-    { mounting: "3.0m height", spacing: "9.0m maximum", coverage: "Standard ceiling height" },
-    { mounting: "4.0m height", spacing: "12.0m maximum", coverage: "Industrial applications" }
+    { mounting: '2.5m height', spacing: '7.5m maximum', coverage: '3:1 height ratio' },
+    { mounting: '3.0m height', spacing: '9.0m maximum', coverage: 'Standard ceiling height' },
+    { mounting: '4.0m height', spacing: '12.0m maximum', coverage: 'Industrial applications' },
   ];
 
   const commonIssues = [
-    "Inadequate illuminance levels",
-    "Poor uniformity distribution",
-    "Insufficient battery duration",
-    "Incorrect luminaire positioning",
-    "Obstructed light distribution",
-    "Missing or damaged diffusers"
+    'Inadequate illuminance levels',
+    'Poor uniformity distribution',
+    'Insufficient battery duration',
+    'Incorrect luminaire positioning',
+    'Obstructed light distribution',
+    'Missing or damaged diffusers',
   ];
 
   return (
@@ -33,17 +48,19 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        
         {/* What is Anti-Panic Lighting */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">What is Open Area (Anti-Panic) Lighting?</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            What is Open Area (Anti-Panic) Lighting?
+          </h3>
           <div className="bg-[#323232] rounded-lg p-6 space-y-4">
             <p className="text-foreground leading-relaxed">
-              Open area (anti-panic) lighting is a category of emergency lighting designed to reduce panic and provide 
-              sufficient illumination for people to move safely towards escape routes when normal lighting fails. 
-              Unlike escape route lighting which guides along specific paths, anti-panic lighting covers large open spaces.
+              Open area (anti-panic) lighting is a category of emergency lighting designed to reduce
+              panic and provide sufficient illumination for people to move safely towards escape
+              routes when normal lighting fails. Unlike escape route lighting which guides along
+              specific paths, anti-panic lighting covers large open spaces.
             </p>
-            
+
             <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
               <h4 className="text-blue-400 font-medium mb-3 flex items-center gap-2">
                 <Shield className="h-4 w-4" />
@@ -60,12 +77,15 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
 
             <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-elec-yellow text-black">BS 5266-1 Definition</Badge>
+                <Badge variant="secondary" className="bg-elec-yellow text-black">
+                  BS 5266-1 Definition
+                </Badge>
               </div>
               <p className="text-foreground text-sm">
-                <strong>Anti-panic lighting:</strong> That part of emergency lighting provided to reduce the likelihood 
-                of panic and to enable safe movement of occupants towards escape routes by providing appropriate 
-                visual conditions and directional orientation.
+                <strong>Anti-panic lighting:</strong> That part of emergency lighting provided to
+                reduce the likelihood of panic and to enable safe movement of occupants towards
+                escape routes by providing appropriate visual conditions and directional
+                orientation.
               </p>
             </div>
           </div>
@@ -73,9 +93,10 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
 
         {/* Legal Requirements and Standards */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Legal Requirements and Standards</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Legal Requirements and Standards
+          </h3>
           <div className="bg-[#323232] rounded-lg p-6 space-y-4">
-            
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
                 <h4 className="text-green-400 font-medium mb-2">BS 5266-1 Requirements:</h4>
@@ -119,9 +140,10 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
 
         {/* Technical Specifications */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Technical Specifications and Design Parameters</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Technical Specifications and Design Parameters
+          </h3>
           <div className="bg-[#323232] rounded-lg p-6 space-y-4">
-            
             <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
               <h4 className="text-blue-400 font-medium mb-3 flex items-center gap-2">
                 <Calculator className="h-4 w-4" />
@@ -132,7 +154,8 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
                   <div key={index} className="bg-[#404040] rounded p-3">
                     <h5 className="text-foreground font-medium mb-1">{level.area}</h5>
                     <p className="text-foreground text-sm">
-                      <strong>Level:</strong> {level.level} | <strong>Uniformity:</strong> {level.uniformity}
+                      <strong>Level:</strong> {level.level} | <strong>Uniformity:</strong>{' '}
+                      {level.uniformity}
                     </p>
                   </div>
                 ))}
@@ -149,7 +172,8 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
                   <div key={index} className="bg-[#404040] rounded p-3">
                     <h5 className="text-foreground font-medium mb-1">{spacing.mounting}</h5>
                     <p className="text-foreground text-sm">
-                      <strong>Max Spacing:</strong> {spacing.spacing} | <strong>Application:</strong> {spacing.coverage}
+                      <strong>Max Spacing:</strong> {spacing.spacing} |{' '}
+                      <strong>Application:</strong> {spacing.coverage}
                     </p>
                   </div>
                 ))}
@@ -159,10 +183,19 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
             <div className="bg-yellow-600/10 border border-yellow-600/20 rounded-lg p-4">
               <h4 className="text-yellow-400 font-medium mb-2">Key Design Formulas:</h4>
               <div className="text-foreground text-sm space-y-2">
-                <p><strong>Spacing/Height Ratio:</strong> S/H ≤ 3:1 (where S = spacing, H = mounting height)</p>
-                <p><strong>Utilisation Factor:</strong> UF = (Useful lumens) / (Total lamp lumens)</p>
-                <p><strong>Room Index:</strong> RI = (L × W) / [H × (L + W)]</p>
-                <p><strong>Average Illuminance:</strong> E = (Φ × UF × MF) / A</p>
+                <p>
+                  <strong>Spacing/Height Ratio:</strong> S/H ≤ 3:1 (where S = spacing, H = mounting
+                  height)
+                </p>
+                <p>
+                  <strong>Utilisation Factor:</strong> UF = (Useful lumens) / (Total lamp lumens)
+                </p>
+                <p>
+                  <strong>Room Index:</strong> RI = (L × W) / [H × (L + W)]
+                </p>
+                <p>
+                  <strong>Average Illuminance:</strong> E = (Φ × UF × MF) / A
+                </p>
               </div>
             </div>
           </div>
@@ -170,9 +203,10 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
 
         {/* Design Considerations */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Design Considerations and Planning</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Design Considerations and Planning
+          </h3>
           <div className="bg-[#323232] rounded-lg p-6 space-y-4">
-            
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
                 <h4 className="text-green-400 font-medium mb-2">Spatial Analysis:</h4>
@@ -218,12 +252,15 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
 
         {/* Installation Procedures */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Installation Procedures and Best Practices</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Installation Procedures and Best Practices
+          </h3>
           <div className="bg-[#323232] rounded-lg p-6 space-y-4">
-            
             <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-4">
-                <Badge variant="secondary" className="bg-elec-yellow text-black">Step 1</Badge>
+                <Badge variant="secondary" className="bg-elec-yellow text-black">
+                  Step 1
+                </Badge>
                 <h4 className="text-blue-400 font-medium">Pre-Installation Planning</h4>
               </div>
               <div className="space-y-2">
@@ -240,7 +277,9 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
 
             <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-4">
-                <Badge variant="secondary" className="bg-elec-yellow text-black">Step 2</Badge>
+                <Badge variant="secondary" className="bg-elec-yellow text-black">
+                  Step 2
+                </Badge>
                 <h4 className="text-green-400 font-medium">Luminaire Installation</h4>
               </div>
               <div className="space-y-2">
@@ -257,7 +296,9 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
 
             <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-4">
-                <Badge variant="secondary" className="bg-elec-yellow text-black">Step 3</Badge>
+                <Badge variant="secondary" className="bg-elec-yellow text-black">
+                  Step 3
+                </Badge>
                 <h4 className="text-purple-400 font-medium">System Integration</h4>
               </div>
               <div className="space-y-2">
@@ -292,9 +333,10 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
 
         {/* Testing and Commissioning */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Testing and Commissioning Procedures</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Testing and Commissioning Procedures
+          </h3>
           <div className="bg-[#323232] rounded-lg p-6 space-y-4">
-            
             <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
               <h4 className="text-blue-400 font-medium mb-3 flex items-center gap-2">
                 <Wrench className="h-4 w-4" />
@@ -312,7 +354,9 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
                   </ul>
                 </div>
                 <div className="bg-[#404040] rounded p-3">
-                  <h5 className="text-foreground font-medium mb-2">Emergency Lighting Function Tests</h5>
+                  <h5 className="text-foreground font-medium mb-2">
+                    Emergency Lighting Function Tests
+                  </h5>
                   <ul className="text-foreground text-sm space-y-1">
                     <li>• All luminaires illuminate on mains failure</li>
                     <li>• Achieve specified duration (1 or 3 hours)</li>
@@ -330,12 +374,24 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
                 Illuminance Measurement Procedure
               </h4>
               <ol className="text-foreground text-sm space-y-2 list-decimal list-inside">
-                <li><strong>Equipment Setup:</strong> Calibrated lux meter, measurement grid plan</li>
-                <li><strong>Grid Pattern:</strong> Measure at 2m intervals across floor area</li>
-                <li><strong>Measurement Height:</strong> 0.85m above floor level (work plane height)</li>
-                <li><strong>Environmental Conditions:</strong> Record temperature and humidity</li>
-                <li><strong>Data Recording:</strong> Document all readings on site plan</li>
-                <li><strong>Calculation:</strong> Verify average levels and uniformity ratios</li>
+                <li>
+                  <strong>Equipment Setup:</strong> Calibrated lux meter, measurement grid plan
+                </li>
+                <li>
+                  <strong>Grid Pattern:</strong> Measure at 2m intervals across floor area
+                </li>
+                <li>
+                  <strong>Measurement Height:</strong> 0.85m above floor level (work plane height)
+                </li>
+                <li>
+                  <strong>Environmental Conditions:</strong> Record temperature and humidity
+                </li>
+                <li>
+                  <strong>Data Recording:</strong> Document all readings on site plan
+                </li>
+                <li>
+                  <strong>Calculation:</strong> Verify average levels and uniformity ratios
+                </li>
               </ol>
             </div>
 
@@ -364,9 +420,10 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
           <h3 className="text-xl font-semibold text-foreground">Troubleshooting Common Issues</h3>
           <div className="bg-[#323232] rounded-lg p-6 space-y-4">
             <p className="text-foreground">
-              Identify and resolve typical problems encountered in anti-panic lighting installations:
+              Identify and resolve typical problems encountered in anti-panic lighting
+              installations:
             </p>
-            
+
             <div className="space-y-3">
               {commonIssues.map((issue, index) => (
                 <div key={index} className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
@@ -375,40 +432,74 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
                     <div className="space-y-2">
                       <h4 className="text-red-400 font-medium">{issue}</h4>
                       <div className="text-foreground text-sm">
-                        {issue === "Inadequate illuminance levels" && (
+                        {issue === 'Inadequate illuminance levels' && (
                           <div>
-                            <p><strong>Causes:</strong> Insufficient luminaires, wrong lamp types, dirty optics</p>
-                            <p><strong>Solution:</strong> Add luminaires, upgrade lamps, clean regularly</p>
+                            <p>
+                              <strong>Causes:</strong> Insufficient luminaires, wrong lamp types,
+                              dirty optics
+                            </p>
+                            <p>
+                              <strong>Solution:</strong> Add luminaires, upgrade lamps, clean
+                              regularly
+                            </p>
                           </div>
                         )}
-                        {issue === "Poor uniformity distribution" && (
+                        {issue === 'Poor uniformity distribution' && (
                           <div>
-                            <p><strong>Causes:</strong> Uneven spacing, obstacles, reflectance variations</p>
-                            <p><strong>Solution:</strong> Redesign layout, relocate luminaires, improve optics</p>
+                            <p>
+                              <strong>Causes:</strong> Uneven spacing, obstacles, reflectance
+                              variations
+                            </p>
+                            <p>
+                              <strong>Solution:</strong> Redesign layout, relocate luminaires,
+                              improve optics
+                            </p>
                           </div>
                         )}
-                        {issue === "Insufficient battery duration" && (
+                        {issue === 'Insufficient battery duration' && (
                           <div>
-                            <p><strong>Causes:</strong> Aged batteries, high lamp loads, poor charging</p>
-                            <p><strong>Solution:</strong> Replace batteries, reduce loads, check charger circuits</p>
+                            <p>
+                              <strong>Causes:</strong> Aged batteries, high lamp loads, poor
+                              charging
+                            </p>
+                            <p>
+                              <strong>Solution:</strong> Replace batteries, reduce loads, check
+                              charger circuits
+                            </p>
                           </div>
                         )}
-                        {issue === "Incorrect luminaire positioning" && (
+                        {issue === 'Incorrect luminaire positioning' && (
                           <div>
-                            <p><strong>Causes:</strong> Poor planning, site constraints, installation errors</p>
-                            <p><strong>Solution:</strong> Survey and redesign, relocate if necessary</p>
+                            <p>
+                              <strong>Causes:</strong> Poor planning, site constraints, installation
+                              errors
+                            </p>
+                            <p>
+                              <strong>Solution:</strong> Survey and redesign, relocate if necessary
+                            </p>
                           </div>
                         )}
-                        {issue === "Obstructed light distribution" && (
+                        {issue === 'Obstructed light distribution' && (
                           <div>
-                            <p><strong>Causes:</strong> Structural elements, equipment, suspended items</p>
-                            <p><strong>Solution:</strong> Relocate luminaires, add supplementary lighting</p>
+                            <p>
+                              <strong>Causes:</strong> Structural elements, equipment, suspended
+                              items
+                            </p>
+                            <p>
+                              <strong>Solution:</strong> Relocate luminaires, add supplementary
+                              lighting
+                            </p>
                           </div>
                         )}
-                        {issue === "Missing or damaged diffusers" && (
+                        {issue === 'Missing or damaged diffusers' && (
                           <div>
-                            <p><strong>Causes:</strong> Impact damage, UV degradation, thermal stress</p>
-                            <p><strong>Solution:</strong> Replace with correct specification, improve protection</p>
+                            <p>
+                              <strong>Causes:</strong> Impact damage, UV degradation, thermal stress
+                            </p>
+                            <p>
+                              <strong>Solution:</strong> Replace with correct specification, improve
+                              protection
+                            </p>
                           </div>
                         )}
                       </div>
@@ -422,9 +513,10 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
 
         {/* Maintenance and Testing Schedule */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Maintenance and Testing Schedule</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Maintenance and Testing Schedule
+          </h3>
           <div className="bg-[#323232] rounded-lg p-6 space-y-4">
-            
             <div className="grid md:grid-cols-3 gap-4">
               <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
                 <h4 className="text-green-400 font-medium mb-2">Daily Checks:</h4>
@@ -467,7 +559,6 @@ export const EmergencyLightingContent2_2_Enhanced = () => {
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

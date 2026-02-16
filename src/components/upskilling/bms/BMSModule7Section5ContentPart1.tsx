@@ -3,30 +3,30 @@ import { AlertTriangle, CheckSquare, Zap, Settings } from 'lucide-react';
 
 export const BMSModule7Section5ContentPart1 = () => {
   const powerChecks = [
-    "24V AC/DC supplies: 22-26V under load",
-    "230V single phase: 207-253V (BS7671)",
-    "400V three phase: 360-440V line-to-line",
-    "Control signal voltages: 0-10V, 4-20mA ranges",
-    "Battery backup systems: Full charge capacity",
-    "UPS systems: Switchover time <10ms"
+    '24V AC/DC supplies: 22-26V under load',
+    '230V single phase: 207-253V (BS7671)',
+    '400V three phase: 360-440V line-to-line',
+    'Control signal voltages: 0-10V, 4-20mA ranges',
+    'Battery backup systems: Full charge capacity',
+    'UPS systems: Switchover time <10ms',
   ];
 
   const digitalIOTests = [
-    "Digital Inputs: Use jumper wire to simulate contact closure",
-    "Status feedback: Manually operate dampers/valves to verify position",
-    "Alarm inputs: Test with normally closed dry contacts",
-    "Digital Outputs: Command on/off, verify LED indicators respond",
-    "Relay outputs: Check with multimeter for contact closure",
-    "24V outputs: Measure voltage when active (22-26V expected)"
+    'Digital Inputs: Use jumper wire to simulate contact closure',
+    'Status feedback: Manually operate dampers/valves to verify position',
+    'Alarm inputs: Test with normally closed dry contacts',
+    'Digital Outputs: Command on/off, verify LED indicators respond',
+    'Relay outputs: Check with multimeter for contact closure',
+    '24V outputs: Measure voltage when active (22-26V expected)',
   ];
 
   const analogIOTests = [
-    "Temperature inputs: Use calibrated simulator (4-20mA or Pt100)",
-    "Pressure inputs: Apply known pressure, verify reading ±2%",
-    "Flow inputs: Simulate with current source (4mA = 0%, 20mA = 100%)",
-    "Analog outputs: Command 0-100%, measure with multimeter",
-    "Control signals: Verify 0-10V or 2-10V as per specification",
-    "Sensor calibration: Check against UKAS traceable instruments"
+    'Temperature inputs: Use calibrated simulator (4-20mA or Pt100)',
+    'Pressure inputs: Apply known pressure, verify reading ±2%',
+    'Flow inputs: Simulate with current source (4mA = 0%, 20mA = 100%)',
+    'Analog outputs: Command 0-100%, measure with multimeter',
+    'Control signals: Verify 0-10V or 2-10V as per specification',
+    'Sensor calibration: Check against UKAS traceable instruments',
   ];
 
   return (
@@ -39,8 +39,9 @@ export const BMSModule7Section5ContentPart1 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          Pre-functional commissioning systematically verifies all electrical infrastructure before testing 
-          operational sequences. This critical phase prevents equipment damage and ensures safe commissioning.
+          Pre-functional commissioning systematically verifies all electrical infrastructure before
+          testing operational sequences. This critical phase prevents equipment damage and ensures
+          safe commissioning.
         </p>
 
         <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-lg p-4">
@@ -62,7 +63,8 @@ export const BMSModule7Section5ContentPart1 = () => {
               <h4 className="text-foreground font-semibold">Power System Verification</h4>
             </div>
             <p className="text-sm text-foreground mb-3">
-              Systematic verification of all power supplies with specific voltage tolerances per BS7671:
+              Systematic verification of all power supplies with specific voltage tolerances per
+              BS7671:
             </p>
             <ul className="text-xs text-foreground space-y-1 ml-4">
               {powerChecks.map((check, index) => (
@@ -74,7 +76,8 @@ export const BMSModule7Section5ContentPart1 = () => {
             </ul>
             <div className="mt-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded">
               <p className="text-xs text-foreground">
-                <strong>Critical:</strong> Test at maximum load conditions. Record all readings in commissioning sheets.
+                <strong>Critical:</strong> Test at maximum load conditions. Record all readings in
+                commissioning sheets.
               </p>
             </div>
           </div>
@@ -125,16 +128,20 @@ export const BMSModule7Section5ContentPart1 = () => {
             </p>
             <div className="grid grid-cols-1 gap-2 text-xs">
               <div className="p-2 bg-red-900/30 rounded">
-                <strong className="text-red-300">Fire Alarm Interface:</strong> Test NC contacts, verify equipment shuts down within 5 seconds
+                <strong className="text-red-300">Fire Alarm Interface:</strong> Test NC contacts,
+                verify equipment shuts down within 5 seconds
               </div>
               <div className="p-2 bg-red-900/30 rounded">
-                <strong className="text-red-300">Emergency Stops:</strong> Test all E-stop buttons, verify immediate power isolation
+                <strong className="text-red-300">Emergency Stops:</strong> Test all E-stop buttons,
+                verify immediate power isolation
               </div>
               <div className="p-2 bg-red-900/30 rounded">
-                <strong className="text-red-300">High/Low Pressure Trips:</strong> Simulate using test points, verify safe shutdown sequences
+                <strong className="text-red-300">High/Low Pressure Trips:</strong> Simulate using
+                test points, verify safe shutdown sequences
               </div>
               <div className="p-2 bg-red-900/30 rounded">
-                <strong className="text-red-300">Temperature Limits:</strong> Test high temperature cutouts on boilers/chillers
+                <strong className="text-red-300">Temperature Limits:</strong> Test high temperature
+                cutouts on boilers/chillers
               </div>
             </div>
           </div>
@@ -143,9 +150,9 @@ export const BMSModule7Section5ContentPart1 = () => {
         <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Example</h4>
           <p className="text-sm text-foreground">
-            Before testing an AHU, the engineer checks that all sensors read sensible values (e.g., 21°C, not 0°C) 
-            and that actuators move when commanded. Digital inputs show correct states, and analog inputs provide 
-            realistic readings within expected ranges.
+            Before testing an AHU, the engineer checks that all sensors read sensible values (e.g.,
+            21°C, not 0°C) and that actuators move when commanded. Digital inputs show correct
+            states, and analog inputs provide realistic readings within expected ranges.
           </p>
         </div>
 
@@ -158,7 +165,8 @@ export const BMSModule7Section5ContentPart1 = () => {
                 👉 Why must pre-functional commissioning happen before full sequences are tested?
               </p>
               <p className="text-xs text-gray-300 mt-2">
-                Think: What could happen if you test complex sequences without verifying basic wiring first?
+                Think: What could happen if you test complex sequences without verifying basic
+                wiring first?
               </p>
             </div>
           </div>

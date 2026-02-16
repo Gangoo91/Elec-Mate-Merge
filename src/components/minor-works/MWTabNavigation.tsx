@@ -45,11 +45,13 @@ const MWTabNavigation: React.FC<MWTabNavigationProps> = ({
   const isLastTab = currentTabIndex === totalTabs - 1;
 
   return (
-    <div className={cn(
-      "fixed bottom-0 left-0 right-0 bg-[#1a1a1c]/95 backdrop-blur-sm border-t border-white/10 z-50",
-      isMobile ? "px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]" : "px-4 py-3"
-    )}>
-      <div className={cn(isMobile ? "" : "max-w-5xl mx-auto")}>
+    <div
+      className={cn(
+        'fixed bottom-0 left-0 right-0 bg-[#1a1a1c]/95 backdrop-blur-sm border-t border-white/10 z-50',
+        isMobile ? 'px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]' : 'px-4 py-3'
+      )}
+    >
+      <div className={cn(isMobile ? '' : 'max-w-5xl mx-auto')}>
         {/* Compact progress + navigation row */}
         <div className="flex items-center gap-3">
           {/* Back button */}
@@ -67,10 +69,10 @@ const MWTabNavigation: React.FC<MWTabNavigationProps> = ({
           {/* Center: Progress indicator */}
           <div className="flex-1 flex flex-col items-center gap-1">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <span>{currentTabIndex + 1}/{totalTabs}</span>
-              {isCurrentTabComplete && (
-                <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
-              )}
+              <span>
+                {currentTabIndex + 1}/{totalTabs}
+              </span>
+              {isCurrentTabComplete && <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />}
               <span className="text-foreground font-medium">{progress}%</span>
             </div>
             <div className="w-full max-w-[200px] h-1 bg-white/10 rounded-full overflow-hidden">

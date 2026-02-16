@@ -1,27 +1,27 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { DesignInputs, CircuitInput } from "@/types/installation-design";
-import { ProjectInfoStep } from "./ProjectInfoStep";
-import { SupplyDetailsStep } from "./SupplyDetailsStep";
-import { CircuitBuilderStep } from "./CircuitBuilderStep";
-import { InstallationDetailsStep } from "./InstallationDetailsStep";
-import { PreCalculationStep } from "./PreCalculationStep";
-import { ReviewStep } from "./ReviewStep";
-import { ArrowLeft, ArrowRight, Sparkles, Check } from "lucide-react";
-import { toast } from "sonner";
-import { clearDesignCache } from "@/utils/clearDesignCache";
-import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { DesignInputs, CircuitInput } from '@/types/installation-design';
+import { ProjectInfoStep } from './ProjectInfoStep';
+import { SupplyDetailsStep } from './SupplyDetailsStep';
+import { CircuitBuilderStep } from './CircuitBuilderStep';
+import { InstallationDetailsStep } from './InstallationDetailsStep';
+import { PreCalculationStep } from './PreCalculationStep';
+import { ReviewStep } from './ReviewStep';
+import { ArrowLeft, ArrowRight, Sparkles, Check } from 'lucide-react';
+import { toast } from 'sonner';
+import { clearDesignCache } from '@/utils/clearDesignCache';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import {
   calculateDesignCurrent,
   suggestMCBRating,
   calculateDiversityFactor,
   estimateCableSize,
-  validateCircuit
-} from "@/utils/circuit-calculations";
-import { cn } from "@/lib/utils";
+  validateCircuit,
+} from '@/utils/circuit-calculations';
+import { cn } from '@/lib/utils';
 
 interface StructuredDesignWizardProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
@@ -35,26 +35,30 @@ const STEPS = [
   { id: 'circuits', label: 'Circuits', description: 'Add your circuits' },
   { id: 'install', label: 'Install', description: 'Per-circuit setup' },
   { id: 'validate', label: 'Validate', description: 'Pre-flight check' },
-  { id: 'review', label: 'Review', description: 'Final check' }
+  { id: 'review', label: 'Review', description: 'Final check' },
 ] as const;
 
 // Animation variants for step transitions
 const stepVariants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 20 : -20,
-    opacity: 0
+    opacity: 0,
   }),
   center: {
     x: 0,
-    opacity: 1
+    opacity: 1,
   },
   exit: (direction: number) => ({
     x: direction < 0 ? 20 : -20,
-    opacity: 0
-  })
+    opacity: 0,
+  }),
 };
 
-export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }: StructuredDesignWizardProps) => {
+export const StructuredDesignWizard = ({
+  onGenerate,
+  isProcessing,
+  initialData,
+}: StructuredDesignWizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState(0);
   const [showClearCacheDialog, setShowClearCacheDialog] = useState(false);
@@ -65,7 +69,9 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
   const [location, setLocation] = useState('');
   const [clientName, setClientName] = useState('');
   const [electricianName, setElectricianName] = useState('');
-  const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
+  const [installationType, setInstallationType] = useState<
+    'domestic' | 'commercial' | 'industrial'
+  >('domestic');
 
   // Supply Details
   const [voltage, setVoltage] = useState(230);
@@ -77,7 +83,9 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
   const [installationMethod, setInstallationMethod] = useState('clipped-direct');
   const [groupingFactor, setGroupingFactor] = useState(1);
   const [mainSwitchRating, setMainSwitchRating] = useState<number | undefined>(undefined);
-  const [propertyAge, setPropertyAge] = useState<'new-build' | 'modern' | 'older' | 'very-old' | undefined>(undefined);
+  const [propertyAge, setPropertyAge] = useState<
+    'new-build' | 'modern' | 'older' | 'very-old' | undefined
+  >(undefined);
 
   // Circuits
   const [circuits, setCircuits] = useState<CircuitInput[]>([]);
@@ -124,7 +132,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
   // Auto-calculate circuit parameters when circuits change
   useEffect(() => {
     if (circuits.length > 0) {
-      const updated = circuits.map(circuit => {
+      const updated = circuits.map((circuit) => {
         if (!circuit.loadPower) return circuit;
 
         const Ib = calculateDesignCurrent(circuit.loadPower, voltage, circuit.phases);
@@ -149,19 +157,25 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
 
   const canProceed = () => {
     switch (currentStep) {
-      case 0: return projectName.trim() !== '' && location.trim() !== '';
-      case 1: return voltage > 0 && ze > 0;
-      case 2: return circuits.length > 0 && circuits.every(c => c.name && c.loadPower);
-      case 3: return true;
+      case 0:
+        return projectName.trim() !== '' && location.trim() !== '';
+      case 1:
+        return voltage > 0 && ze > 0;
+      case 2:
+        return circuits.length > 0 && circuits.every((c) => c.name && c.loadPower);
+      case 3:
+        return true;
       case 4: {
-        const hasErrors = circuits.some(c => {
+        const hasErrors = circuits.some((c) => {
           const validation = validateCircuit(c, voltage, earthingSystem);
           return !validation.isValid;
         });
         return !hasErrors;
       }
-      case 5: return true;
-      default: return false;
+      case 5:
+        return true;
+      default:
+        return false;
     }
   };
 
@@ -171,12 +185,12 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
       return;
     }
     setDirection(1);
-    setCurrentStep(prev => Math.min(prev + 1, STEPS.length - 1));
+    setCurrentStep((prev) => Math.min(prev + 1, STEPS.length - 1));
   };
 
   const handleBack = () => {
     setDirection(-1);
-    setCurrentStep(prev => Math.max(prev - 1, 0));
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
   const handleStepClick = (stepIndex: number) => {
@@ -193,14 +207,14 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
       const result = await clearDesignCache();
       if (result.success) {
         toast.success('Cache cleared successfully', {
-          description: `Cleared ${result.cleared} cache table${result.cleared !== 1 ? 's' : ''}`
+          description: `Cleared ${result.cleared} cache table${result.cleared !== 1 ? 's' : ''}`,
         });
       } else {
         toast.error('Failed to clear cache', { description: result.error });
       }
     } catch (error) {
       toast.error('Cache clear failed', {
-        description: error instanceof Error ? error.message : 'Unknown error'
+        description: error instanceof Error ? error.message : 'Unknown error',
       });
     } finally {
       setClearingCache(false);
@@ -231,7 +245,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
       groupingFactor,
       propertyAge,
       circuits,
-      additionalPrompt: `Structured input design with ${circuits.length} circuits`
+      additionalPrompt: `Structured input design with ${circuits.length} circuits`,
     };
 
     await onGenerate(inputs);
@@ -323,7 +337,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
               ambientTemp,
               installationMethod: installationMethod as any,
               groupingFactor,
-              circuits
+              circuits,
             }}
           />
         );
@@ -345,35 +359,29 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
             return (
               <div
                 key={step.id}
-                className={cn(
-                  "flex-1 flex flex-col items-center",
-                  isClickable && "cursor-pointer"
-                )}
+                className={cn('flex-1 flex flex-col items-center', isClickable && 'cursor-pointer')}
                 onClick={() => isClickable && handleStepClick(index)}
               >
                 {/* Step circle */}
                 <div
                   className={cn(
-                    "w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center",
-                    "text-xs sm:text-sm font-semibold",
-                    "transition-all duration-ios-normal ease-ios-ease",
-                    "border-2",
-                    isActive && "bg-elec-yellow text-black border-elec-yellow shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.2)]",
-                    isCompleted && "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40",
-                    !isActive && !isCompleted && "bg-white/[0.03] text-white/40 border-white/[0.08]"
+                    'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center',
+                    'text-xs sm:text-sm font-semibold',
+                    'transition-all duration-ios-normal ease-ios-ease',
+                    'border-2',
+                    isActive &&
+                      'bg-elec-yellow text-black border-elec-yellow shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.2)]',
+                    isCompleted && 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40',
+                    !isActive && !isCompleted && 'bg-white/[0.03] text-white/40 border-white/[0.08]'
                   )}
                 >
-                  {isCompleted ? (
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5" />
-                  ) : (
-                    index + 1
-                  )}
+                  {isCompleted ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : index + 1}
                 </div>
                 {/* Step label - show on larger screens */}
                 <span
                   className={cn(
-                    "hidden sm:block mt-2 text-xs font-medium text-center transition-colors duration-ios-fast",
-                    isActive ? "text-elec-yellow" : isCompleted ? "text-white/60" : "text-white/30"
+                    'hidden sm:block mt-2 text-xs font-medium text-center transition-colors duration-ios-fast',
+                    isActive ? 'text-elec-yellow' : isCompleted ? 'text-white/60' : 'text-white/30'
                   )}
                 >
                   {step.label}
@@ -389,7 +397,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
             className="h-full bg-gradient-to-r from-elec-yellow to-elec-yellow/80 rounded-full"
             initial={{ width: 0 }}
             animate={{ width: `${progressPercentage}%` }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
           />
         </div>
       </div>
@@ -406,8 +414,8 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
               animate="center"
               exit="exit"
               transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 }
+                x: { type: 'spring', stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
               }}
             >
               {renderStepContent()}
@@ -425,12 +433,12 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
               onClick={handleBack}
               disabled={currentStep === 0 || isProcessing}
               className={cn(
-                "gap-2 h-12 px-4 rounded-xl",
-                "bg-white/5 border border-white/[0.08]",
-                "hover:bg-white/10 hover:border-white/15",
-                "disabled:opacity-30",
-                "transition-all duration-ios-fast",
-                "touch-manipulation"
+                'gap-2 h-12 px-4 rounded-xl',
+                'bg-white/5 border border-white/[0.08]',
+                'hover:bg-white/10 hover:border-white/15',
+                'disabled:opacity-30',
+                'transition-all duration-ios-fast',
+                'touch-manipulation'
               )}
             >
               <ArrowLeft className="h-4 w-4" />
@@ -456,14 +464,14 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
                 onClick={handleNext}
                 disabled={!canProceed() || isProcessing}
                 className={cn(
-                  "gap-2 h-12 px-6 rounded-xl",
-                  "bg-elec-yellow text-black font-semibold",
-                  "hover:bg-elec-yellow/90",
-                  "disabled:opacity-30 disabled:bg-white/5 disabled:text-white/40",
-                  "shadow-[0_2px_8px_rgba(0,0,0,0.2)]",
-                  "active:scale-[0.98]",
-                  "transition-all duration-ios-fast",
-                  "touch-manipulation"
+                  'gap-2 h-12 px-6 rounded-xl',
+                  'bg-elec-yellow text-black font-semibold',
+                  'hover:bg-elec-yellow/90',
+                  'disabled:opacity-30 disabled:bg-white/5 disabled:text-white/40',
+                  'shadow-[0_2px_8px_rgba(0,0,0,0.2)]',
+                  'active:scale-[0.98]',
+                  'transition-all duration-ios-fast',
+                  'touch-manipulation'
                 )}
               >
                 <span>Next</span>
@@ -474,14 +482,14 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }
                 onClick={handleGenerate}
                 disabled={!canProceed() || isProcessing}
                 className={cn(
-                  "gap-2 h-12 px-6 rounded-xl",
-                  "bg-elec-yellow text-black font-semibold",
-                  "hover:bg-elec-yellow/90",
-                  "disabled:opacity-30 disabled:bg-white/5 disabled:text-white/40",
-                  "shadow-[0_4px_12px_rgba(0,0,0,0.3)]",
-                  "active:scale-[0.98]",
-                  "transition-all duration-ios-fast",
-                  "touch-manipulation"
+                  'gap-2 h-12 px-6 rounded-xl',
+                  'bg-elec-yellow text-black font-semibold',
+                  'hover:bg-elec-yellow/90',
+                  'disabled:opacity-30 disabled:bg-white/5 disabled:text-white/40',
+                  'shadow-[0_4px_12px_rgba(0,0,0,0.3)]',
+                  'active:scale-[0.98]',
+                  'transition-all duration-ios-fast',
+                  'touch-manipulation'
                 )}
               >
                 {isProcessing ? (

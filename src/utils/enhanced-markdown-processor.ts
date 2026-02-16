@@ -5,83 +5,109 @@ import { safeText } from './rams-pdf-helpers';
  * Converts markdown to well-structured HTML with electrical industry appropriate styling
  */
 export class EnhancedMarkdownProcessor {
-  
   static processMarkdownToHTML(content: string): string {
     if (!content) return '';
-    
+
     let html = safeText(content);
-    
+
     // Process safety classifications with colour coding
-    html = html.replace(/\*\*(C1|DANGER|IMMEDIATE)\*\*/gi, '<span class="safety-c1"><strong>$1</strong></span>');
-    html = html.replace(/\*\*(C2|URGENT|POTENTIALLY DANGEROUS)\*\*/gi, '<span class="safety-c2"><strong>$1</strong></span>');
-    html = html.replace(/\*\*(C3|IMPROVEMENT)\*\*/gi, '<span class="safety-c3"><strong>$1</strong></span>');
-    html = html.replace(/\*\*(PASS|SATISFACTORY)\*\*/gi, '<span class="result-pass"><strong>$1</strong></span>');
-    html = html.replace(/\*\*(FAIL|UNSATISFACTORY)\*\*/gi, '<span class="result-fail"><strong>$1</strong></span>');
-    
+    html = html.replace(
+      /\*\*(C1|DANGER|IMMEDIATE)\*\*/gi,
+      '<span class="safety-c1"><strong>$1</strong></span>'
+    );
+    html = html.replace(
+      /\*\*(C2|URGENT|POTENTIALLY DANGEROUS)\*\*/gi,
+      '<span class="safety-c2"><strong>$1</strong></span>'
+    );
+    html = html.replace(
+      /\*\*(C3|IMPROVEMENT)\*\*/gi,
+      '<span class="safety-c3"><strong>$1</strong></span>'
+    );
+    html = html.replace(
+      /\*\*(PASS|SATISFACTORY)\*\*/gi,
+      '<span class="result-pass"><strong>$1</strong></span>'
+    );
+    html = html.replace(
+      /\*\*(FAIL|UNSATISFACTORY)\*\*/gi,
+      '<span class="result-fail"><strong>$1</strong></span>'
+    );
+
     // Process regulation references
-    html = html.replace(/Regulation\s+(\d+\.\d+\.\d+)/gi, '<span class="regulation-ref">Regulation $1</span>');
-    html = html.replace(/BS\s+7671[:\s]*(\d{4})?/gi, '<span class="bs-ref">BS 7671:2018+A3:2024</span>');
-    
+    html = html.replace(
+      /Regulation\s+(\d+\.\d+\.\d+)/gi,
+      '<span class="regulation-ref">Regulation $1</span>'
+    );
+    html = html.replace(
+      /BS\s+7671[:\s]*(\d{4})?/gi,
+      '<span class="bs-ref">BS 7671:2018+A3:2024</span>'
+    );
+
     // Process headers with proper hierarchy
     html = html.replace(/^### (.*$)/gim, '<h3 class="report-h3">$1</h3>');
     html = html.replace(/^## (.*$)/gim, '<h2 class="report-h2">$1</h2>');
     html = html.replace(/^# (.*$)/gim, '<h1 class="report-h1">$1</h1>');
-    
+
     // Process bold and italic
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-    
+
     // Process blockquotes for safety notices
     html = html.replace(/^> (.*$)/gim, '<blockquote class="safety-notice">$1</blockquote>');
-    
+
     // Process code blocks for technical specifications
     html = html.replace(/```([\s\S]*?)```/g, '<pre class="technical-spec"><code>$1</code></pre>');
     html = html.replace(/`([^`]+)`/g, '<code class="inline-tech">$1</code>');
-    
+
     // Process tables with enhanced styling
     html = this.processTables(html);
-    
+
     // Process lists
     html = this.processLists(html);
-    
+
     // Convert line breaks
     html = html.replace(/\n\n/g, '</p><p>');
     html = html.replace(/\n/g, '<br>');
-    
+
     // Wrap in paragraphs
     html = `<p>${html}</p>`;
-    
+
     // Clean up empty paragraphs
     html = html.replace(/<p><\/p>/g, '');
     html = html.replace(/<p><br><\/p>/g, '');
-    
+
     return html;
   }
-  
+
   private static processTables(html: string): string {
     const tableRegex = /(\|.*\|\n)+/g;
-    
+
     return html.replace(tableRegex, (match) => {
       const rows = match.trim().split('\n');
       if (rows.length < 2) return match;
-      
+
       let tableHTML = '<table class="electrical-table">';
-      
+
       // Process header row
-      const headerCells = rows[0].split('|').map(cell => cell.trim()).filter(cell => cell);
+      const headerCells = rows[0]
+        .split('|')
+        .map((cell) => cell.trim())
+        .filter((cell) => cell);
       tableHTML += '<thead><tr>';
-      headerCells.forEach(cell => {
+      headerCells.forEach((cell) => {
         tableHTML += `<th>${cell}</th>`;
       });
       tableHTML += '</tr></thead>';
-      
+
       // Skip separator row (row 1) and process data rows
       tableHTML += '<tbody>';
       for (let i = 2; i < rows.length; i++) {
-        const cells = rows[i].split('|').map(cell => cell.trim()).filter(cell => cell);
+        const cells = rows[i]
+          .split('|')
+          .map((cell) => cell.trim())
+          .filter((cell) => cell);
         if (cells.length > 0) {
           tableHTML += '<tr>';
-          cells.forEach(cell => {
+          cells.forEach((cell) => {
             // Apply special styling to certain cell contents
             let cellContent = cell;
             if (cell.match(/^(PASS|SATISFACTORY)$/i)) {
@@ -97,23 +123,23 @@ export class EnhancedMarkdownProcessor {
         }
       }
       tableHTML += '</tbody></table>';
-      
+
       return tableHTML;
     });
   }
-  
+
   private static processLists(html: string): string {
     // Process unordered lists
     html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
-    
+
     // Wrap consecutive list items in ul tags
     html = html.replace(/(<li>.*<\/li>)/gs, (match) => {
       return `<ul class="electrical-list">${match}</ul>`;
     });
-    
+
     return html;
   }
-  
+
   static getReportCSS(): string {
     return `
       <style>

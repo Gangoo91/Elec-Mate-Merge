@@ -46,7 +46,8 @@ const sections = [
 export default function InspectionTestingModule3() {
   useSEO({
     title: 'Module 3: Continuity Testing | Inspection & Testing',
-    description: 'Learn continuity testing methods including R1+R2, ring final circuits, and bonding conductor verification.',
+    description:
+      'Learn continuity testing methods including R1+R2, ring final circuits, and bonding conductor verification.',
   });
 
   return (
@@ -76,11 +77,10 @@ export default function InspectionTestingModule3() {
             <span className="text-white/40 text-xs">•</span>
             <span className="text-white/60 text-xs">6 Sections</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Continuity Testing
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Continuity Testing</h1>
           <p className="text-white/80 text-sm sm:text-base">
-            Master the essential techniques for verifying electrical continuity in protective conductors, ring circuits, and bonding connections
+            Master the essential techniques for verifying electrical continuity in protective
+            conductors, ring circuits, and bonding connections
           </p>
         </div>
 

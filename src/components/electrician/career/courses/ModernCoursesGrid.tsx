@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import { BookOpen, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import PremiumCourseCard from "./PremiumCourseCard";
-import type { EnhancedCareerCourse } from "@/components/apprentice/career/courses/enhancedCoursesData";
+import { motion } from 'framer-motion';
+import { BookOpen, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import PremiumCourseCard from './PremiumCourseCard';
+import type { EnhancedCareerCourse } from '@/components/apprentice/career/courses/enhancedCoursesData';
 
 interface ModernCoursesGridProps {
   courses: EnhancedCareerCourse[];
@@ -21,10 +21,13 @@ const containerVariants = {
   },
 };
 
-const ModernCoursesGrid = ({ courses, excludeId, onCourseClick, isLoading }: ModernCoursesGridProps) => {
-  const filteredCourses = excludeId
-    ? courses.filter(course => course.id !== excludeId)
-    : courses;
+const ModernCoursesGrid = ({
+  courses,
+  excludeId,
+  onCourseClick,
+  isLoading,
+}: ModernCoursesGridProps) => {
+  const filteredCourses = excludeId ? courses.filter((course) => course.id !== excludeId) : courses;
 
   // Loading State
   if (isLoading) {
@@ -61,7 +64,8 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick, isLoading }: Mod
         </div>
         <h3 className="text-xl font-bold text-white mb-2">No courses found</h3>
         <p className="text-white mb-6 max-w-lg mx-auto">
-          Try adjusting your search criteria or explore different categories to find the right training for you.
+          Try adjusting your search criteria or explore different categories to find the right
+          training for you.
         </p>
         <Button
           variant="outline"

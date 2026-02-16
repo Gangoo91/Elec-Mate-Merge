@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Quote } from '@/types/quote';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -57,8 +63,11 @@ export const PartialPaymentDialog = ({
 
   // Calculate remaining balance with NaN protection
   const existingPayments = (invoice as any).partial_payments || [];
-  const totalPaid = (invoice as any).total_paid || existingPayments.reduce((sum: number, p: PartialPayment) => sum + (p.amount || 0), 0);
-  const invoiceTotal = typeof invoice.total === 'number' && !isNaN(invoice.total) ? invoice.total : 0;
+  const totalPaid =
+    (invoice as any).total_paid ||
+    existingPayments.reduce((sum: number, p: PartialPayment) => sum + (p.amount || 0), 0);
+  const invoiceTotal =
+    typeof invoice.total === 'number' && !isNaN(invoice.total) ? invoice.total : 0;
   const remainingBalance = invoiceTotal - totalPaid;
   const paidPercentage = invoiceTotal > 0 ? Math.min((totalPaid / invoiceTotal) * 100, 100) : 0;
 
@@ -66,19 +75,29 @@ export const PartialPaymentDialog = ({
     const paymentAmount = parseFloat(amount);
 
     if (isNaN(paymentAmount) || paymentAmount <= 0) {
-      toast({ title: 'Invalid amount', description: 'Please enter a valid payment amount', variant: 'destructive' });
+      toast({
+        title: 'Invalid amount',
+        description: 'Please enter a valid payment amount',
+        variant: 'destructive',
+      });
       return;
     }
 
     if (paymentAmount > remainingBalance) {
-      toast({ title: 'Amount exceeds balance', description: `Maximum payment is ${formatCurrency(remainingBalance)}`, variant: 'destructive' });
+      toast({
+        title: 'Amount exceeds balance',
+        description: `Maximum payment is ${formatCurrency(remainingBalance)}`,
+        variant: 'destructive',
+      });
       return;
     }
 
     try {
       setIsSubmitting(true);
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       // Create new payment record
@@ -111,17 +130,15 @@ export const PartialPaymentDialog = ({
       if (updateError) throw updateError;
 
       // Also record in invoice_payments table
-      const { error: paymentError } = await supabase
-        .from('invoice_payments')
-        .insert({
-          quote_id: invoice.id,
-          user_id: user.id,
-          amount: paymentAmount,
-          payment_date: paymentDate.toISOString(),
-          payment_method: paymentMethod,
-          payment_reference: paymentReference || null,
-          notes: notes || null,
-        });
+      const { error: paymentError } = await supabase.from('invoice_payments').insert({
+        quote_id: invoice.id,
+        user_id: user.id,
+        amount: paymentAmount,
+        payment_date: paymentDate.toISOString(),
+        payment_method: paymentMethod,
+        payment_reference: paymentReference || null,
+        notes: notes || null,
+      });
 
       if (paymentError) console.error('Error recording payment:', paymentError);
 
@@ -144,7 +161,11 @@ export const PartialPaymentDialog = ({
       setNotes('');
     } catch (error) {
       console.error('Error recording payment:', error);
-      toast({ title: 'Error', description: 'Failed to record payment. Please try again.', variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: 'Failed to record payment. Please try again.',
+        variant: 'destructive',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -177,7 +198,9 @@ export const PartialPaymentDialog = ({
               <div className="flex justify-between text-sm">
                 <div>
                   <span className="text-muted-foreground">Paid: </span>
-                  <span className="font-semibold text-emerald-400">{formatCurrency(totalPaid)}</span>
+                  <span className="font-semibold text-emerald-400">
+                    {formatCurrency(totalPaid)}
+                  </span>
                 </div>
                 <div>
                   <span className="text-muted-foreground">Remaining: </span>
@@ -196,7 +219,10 @@ export const PartialPaymentDialog = ({
                 <h4 className="text-sm font-medium text-muted-foreground">Payment History</h4>
                 <div className="space-y-2">
                   {existingPayments.map((payment: PartialPayment) => (
-                    <div key={payment.id} className="flex items-center justify-between p-3 bg-card rounded-lg border border-border/50">
+                    <div
+                      key={payment.id}
+                      className="flex items-center justify-between p-3 bg-card rounded-lg border border-border/50"
+                    >
                       <div className="flex items-center gap-3">
                         <div className="h-8 w-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
                           <CheckCircle className="h-4 w-4 text-emerald-500" />
@@ -204,7 +230,8 @@ export const PartialPaymentDialog = ({
                         <div>
                           <p className="font-medium text-sm">{formatCurrency(payment.amount)}</p>
                           <p className="text-xs text-muted-foreground">
-                            {format(new Date(payment.date), 'dd MMM yyyy')} - {payment.method.replace('_', ' ')}
+                            {format(new Date(payment.date), 'dd MMM yyyy')} -{' '}
+                            {payment.method.replace('_', ' ')}
                           </p>
                         </div>
                       </div>
@@ -225,7 +252,9 @@ export const PartialPaymentDialog = ({
               <div className="space-y-2">
                 <Label htmlFor="amount">Payment Amount</Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">£</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                    £
+                  </span>
                   <Input
                     id="amount"
                     type="number"
@@ -263,7 +292,10 @@ export const PartialPaymentDialog = ({
                 <Label>Payment Date</Label>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-full justify-start text-left font-normal h-11">
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start text-left font-normal h-11"
+                    >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {format(paymentDate, 'PPP')}
                     </Button>
@@ -331,7 +363,12 @@ export const PartialPaymentDialog = ({
           {/* Fixed Footer */}
           <div className="border-t border-border/50 p-4 bg-background">
             <div className="flex gap-3">
-              <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting} className="flex-1 h-12">
+              <Button
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                disabled={isSubmitting}
+                className="flex-1 h-12"
+              >
                 Cancel
               </Button>
               <Button

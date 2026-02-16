@@ -1,92 +1,99 @@
-import { ArrowLeft, ArrowRight, Zap, AlertTriangle, BookOpen, Lightbulb, Calculator } from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Zap,
+  AlertTriangle,
+  BookOpen,
+  Lightbulb,
+  Calculator,
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 const FunctionalSkillsModule4Section1 = () => {
   useSEO(
-    "Section 1: Electrical Calculations - Practical Mathematics Applications",
+    'Section 1: Electrical Calculations - Practical Mathematics Applications',
     "Master Ohm's law, the power triangle, voltage drop, diversity factors, maximum demand, earth fault loop impedance and prospective fault current for UK electrical installations."
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "A 230V circuit supplies a 2.3kW load. What current does it draw?",
-      options: ["5A", "10A", "23A", "100A"],
+      question: 'A 230V circuit supplies a 2.3kW load. What current does it draw?',
+      options: ['5A', '10A', '23A', '100A'],
       correctAnswer: 1,
       explanation:
-        "I = P / V = 2300 / 230 = 10A. This is a straightforward application of the power formula rearranged for current.",
+        'I = P / V = 2300 / 230 = 10A. This is a straightforward application of the power formula rearranged for current.',
     },
     {
       id: 2,
       question:
-        "A cable run is 25m using 2.5mm\u00B2 twin and earth (mV/A/m = 18). The load current is 20A. What is the voltage drop?",
-      options: ["4.5V", "9.0V", "18.0V", "45.0V"],
+        'A cable run is 25m using 2.5mm\u00B2 twin and earth (mV/A/m = 18). The load current is 20A. What is the voltage drop?',
+      options: ['4.5V', '9.0V', '18.0V', '45.0V'],
       correctAnswer: 1,
       explanation:
-        "Voltage drop = mV/A/m \u00D7 I \u00D7 L / 1000 = 18 \u00D7 20 \u00D7 25 / 1000 = 9.0V. This is within the 5% limit (11.5V) for a power circuit.",
+        'Voltage drop = mV/A/m \u00D7 I \u00D7 L / 1000 = 18 \u00D7 20 \u00D7 25 / 1000 = 9.0V. This is within the 5% limit (11.5V) for a power circuit.',
     },
     {
       id: 3,
-      question:
-        "Ze is measured as 0.35\u03A9 and R1+R2 for the circuit is 0.95\u03A9. What is Zs?",
-      options: ["0.60\u03A9", "0.95\u03A9", "1.30\u03A9", "1.65\u03A9"],
+      question: 'Ze is measured as 0.35\u03A9 and R1+R2 for the circuit is 0.95\u03A9. What is Zs?',
+      options: ['0.60\u03A9', '0.95\u03A9', '1.30\u03A9', '1.65\u03A9'],
       correctAnswer: 2,
       explanation:
-        "Zs = Ze + (R1+R2) = 0.35 + 0.95 = 1.30\u03A9. This must then be checked against the maximum Zs value for the protective device.",
+        'Zs = Ze + (R1+R2) = 0.35 + 0.95 = 1.30\u03A9. This must then be checked against the maximum Zs value for the protective device.',
     },
     {
       id: 4,
       question:
-        "A domestic lighting circuit has a total connected load of 1800W at 230V. Applying 66% diversity, what current should be allowed for in the maximum demand?",
-      options: ["7.83A", "5.17A", "11.88A", "3.42A"],
+        'A domestic lighting circuit has a total connected load of 1800W at 230V. Applying 66% diversity, what current should be allowed for in the maximum demand?',
+      options: ['7.83A', '5.17A', '11.88A', '3.42A'],
       correctAnswer: 1,
       explanation:
-        "Total current = 1800 / 230 = 7.83A. After 66% diversity = 7.83 \u00D7 0.66 = 5.17A. This is the figure used in the ADMD calculation.",
+        'Total current = 1800 / 230 = 7.83A. After 66% diversity = 7.83 \u00D7 0.66 = 5.17A. This is the figure used in the ADMD calculation.',
     },
     {
       id: 5,
       question:
-        "Three resistors of 10\u03A9, 15\u03A9 and 25\u03A9 are connected in series across a 230V supply. What is the current?",
-      options: ["23A", "9.2A", "4.6A", "2.3A"],
+        'Three resistors of 10\u03A9, 15\u03A9 and 25\u03A9 are connected in series across a 230V supply. What is the current?',
+      options: ['23A', '9.2A', '4.6A', '2.3A'],
       correctAnswer: 2,
       explanation:
-        "In a series circuit, total resistance = 10 + 15 + 25 = 50\u03A9. Current I = V / R = 230 / 50 = 4.6A.",
+        'In a series circuit, total resistance = 10 + 15 + 25 = 50\u03A9. Current I = V / R = 230 / 50 = 4.6A.',
     },
     {
       id: 6,
       question:
-        "A 3kW immersion heater is connected to a 230V supply. What is the resistance of the heating element?",
-      options: ["76.67\u03A9", "17.63\u03A9", "52.90\u03A9", "6.67\u03A9"],
+        'A 3kW immersion heater is connected to a 230V supply. What is the resistance of the heating element?',
+      options: ['76.67\u03A9', '17.63\u03A9', '52.90\u03A9', '6.67\u03A9'],
       correctAnswer: 1,
       explanation:
-        "R = V\u00B2 / P = 230\u00B2 / 3000 = 52900 / 3000 = 17.63\u03A9. You can verify: I = P/V = 3000/230 = 13.04A, then R = V/I = 230/13.04 = 17.64\u03A9 (slight rounding difference).",
+        'R = V\u00B2 / P = 230\u00B2 / 3000 = 52900 / 3000 = 17.63\u03A9. You can verify: I = P/V = 3000/230 = 13.04A, then R = V/I = 230/13.04 = 17.64\u03A9 (slight rounding difference).',
     },
     {
       id: 7,
       question:
-        "The measured Ze at the origin of a TN-C-S supply is 0.10\u03A9. What is the prospective fault current?",
-      options: ["230A", "2,300A", "23,000A", "1,150A"],
+        'The measured Ze at the origin of a TN-C-S supply is 0.10\u03A9. What is the prospective fault current?',
+      options: ['230A', '2,300A', '23,000A', '1,150A'],
       correctAnswer: 1,
       explanation:
-        "Ipf = Uoc / Zs = 230 / 0.10 = 2,300A = 2.3kA. This is well within the 6kA rating of a standard domestic MCB.",
+        'Ipf = Uoc / Zs = 230 / 0.10 = 2,300A = 2.3kA. This is well within the 6kA rating of a standard domestic MCB.',
     },
     {
       id: 8,
       question:
-        "A TN-S supply has Ze = 0.8\u03A9. A 20A Type B MCB protects a radial circuit with measured R1+R2 of 1.05\u03A9. Applying the 1.20 correction factor, what is the Zs and does it comply?",
+        'A TN-S supply has Ze = 0.8\u03A9. A 20A Type B MCB protects a radial circuit with measured R1+R2 of 1.05\u03A9. Applying the 1.20 correction factor, what is the Zs and does it comply?',
       options: [
-        "Zs = 1.85\u03A9 \u2014 does not comply",
-        "Zs = 2.06\u03A9 \u2014 complies (max 2.30\u03A9)",
-        "Zs = 1.26\u03A9 \u2014 complies easily",
-        "Zs = 2.46\u03A9 \u2014 does not comply",
+        'Zs = 1.85\u03A9 \u2014 does not comply',
+        'Zs = 2.06\u03A9 \u2014 complies (max 2.30\u03A9)',
+        'Zs = 1.26\u03A9 \u2014 complies easily',
+        'Zs = 2.46\u03A9 \u2014 does not comply',
       ],
       correctAnswer: 1,
       explanation:
-        "Zs = Ze + (R1+R2 \u00D7 1.20) = 0.8 + (1.05 \u00D7 1.20) = 0.8 + 1.26 = 2.06\u03A9. Maximum Zs for a 20A Type B MCB = 2.30\u03A9. Since 2.06 < 2.30, it complies.",
+        'Zs = Ze + (R1+R2 \u00D7 1.20) = 0.8 + (1.05 \u00D7 1.20) = 0.8 + 1.26 = 2.06\u03A9. Maximum Zs for a 20A Type B MCB = 2.30\u03A9. Since 2.06 < 2.30, it complies.',
     },
   ];
 
@@ -126,8 +133,8 @@ const FunctionalSkillsModule4Section1 = () => {
               Electrical Calculations
             </h2>
             <p className="text-sm text-white/50 max-w-lg mx-auto">
-              Master the core electrical calculations you will use every day &mdash; from Ohm&rsquo;s law to maximum
-              demand and earth fault loop impedance.
+              Master the core electrical calculations you will use every day &mdash; from
+              Ohm&rsquo;s law to maximum demand and earth fault loop impedance.
             </p>
           </motion.div>
         </div>
@@ -135,7 +142,6 @@ const FunctionalSkillsModule4Section1 = () => {
 
       {/* Content cards */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-6 mt-6">
-
         {/* ── 01 Ohm's Law in Practice ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -144,36 +150,44 @@ const FunctionalSkillsModule4Section1 = () => {
           className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">01</span>
+            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
+              01
+            </span>
             <h3 className="text-lg font-bold text-white">Ohm&rsquo;s Law in Practice</h3>
           </div>
           <div className="space-y-3 text-sm text-white/80 leading-relaxed">
             <p>
-              Ohm&rsquo;s Law is the single most important formula in electrical work. It describes the relationship
-              between voltage, current and resistance in any circuit. Every calculation you perform on site &mdash;
-              from cable sizing to fault current &mdash; ultimately traces back to this law.
+              Ohm&rsquo;s Law is the single most important formula in electrical work. It describes
+              the relationship between voltage, current and resistance in any circuit. Every
+              calculation you perform on site &mdash; from cable sizing to fault current &mdash;
+              ultimately traces back to this law.
             </p>
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
               <p className="text-green-400 font-mono text-lg mb-1">V = I &times; R</p>
-              <p className="text-sm text-white/70">Voltage (V) = Current (A) &times; Resistance (&Omega;)</p>
+              <p className="text-sm text-white/70">
+                Voltage (V) = Current (A) &times; Resistance (&Omega;)
+              </p>
             </div>
 
             <p>
-              By rearranging we also get <strong className="text-white">I = V / R</strong> and{" "}
-              <strong className="text-white">R = V / I</strong>. These three forms let you find any unknown
-              quantity when you know the other two.
+              By rearranging we also get <strong className="text-white">I = V / R</strong> and{' '}
+              <strong className="text-white">R = V / I</strong>. These three forms let you find any
+              unknown quantity when you know the other two.
             </p>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Series Circuit Example</h4>
               <p className="text-sm text-white/80 mb-2">
-                Three resistors of 10&Omega;, 15&Omega; and 25&Omega; are connected in series across a 230V supply.
+                Three resistors of 10&Omega;, 15&Omega; and 25&Omega; are connected in series across
+                a 230V supply.
               </p>
               <ul className="space-y-1 text-sm text-white/80">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Total resistance: R<sub>T</sub> = 10 + 15 + 25 = 50&Omega;</span>
+                  <span>
+                    Total resistance: R<sub>T</sub> = 10 + 15 + 25 = 50&Omega;
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
@@ -181,7 +195,9 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Voltage across 25&Omega; resistor: V = I &times; R = 4.6 &times; 25 = 115V</span>
+                  <span>
+                    Voltage across 25&Omega; resistor: V = I &times; R = 4.6 &times; 25 = 115V
+                  </span>
                 </li>
               </ul>
             </div>
@@ -189,16 +205,21 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Parallel Circuit Example</h4>
               <p className="text-sm text-white/80 mb-2">
-                Two resistors of 20&Omega; and 30&Omega; are connected in parallel across a 12V supply.
+                Two resistors of 20&Omega; and 30&Omega; are connected in parallel across a 12V
+                supply.
               </p>
               <ul className="space-y-1 text-sm text-white/80">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>1/R<sub>T</sub> = 1/20 + 1/30 = 3/60 + 2/60 = 5/60</span>
+                  <span>
+                    1/R<sub>T</sub> = 1/20 + 1/30 = 3/60 + 2/60 = 5/60
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>R<sub>T</sub> = 60/5 = 12&Omega;</span>
+                  <span>
+                    R<sub>T</sub> = 60/5 = 12&Omega;
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
@@ -206,7 +227,9 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Branch currents: I<sub>1</sub> = 12/20 = 0.6A, I<sub>2</sub> = 12/30 = 0.4A</span>
+                  <span>
+                    Branch currents: I<sub>1</sub> = 12/20 = 0.6A, I<sub>2</sub> = 12/30 = 0.4A
+                  </span>
                 </li>
               </ul>
             </div>
@@ -217,10 +240,12 @@ const FunctionalSkillsModule4Section1 = () => {
             </p>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-2">Practical Application &mdash; Testing a Ring Final</h4>
+              <h4 className="font-medium text-green-400 mb-2">
+                Practical Application &mdash; Testing a Ring Final
+              </h4>
               <p className="text-sm text-white/80 mb-2">
-                When you measure the end-to-end resistance of a ring final circuit&rsquo;s line conductors
-                and get 0.52&Omega;, what does this tell you?
+                When you measure the end-to-end resistance of a ring final circuit&rsquo;s line
+                conductors and get 0.52&Omega;, what does this tell you?
               </p>
               <ul className="space-y-1 text-sm text-white/80">
                 <li className="flex items-start gap-2">
@@ -229,7 +254,10 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Using the parallel formula: R<sub>total</sub> = 0.52 / 4 = 0.13&Omega; (since the cross-connected reading divides by 4)</span>
+                  <span>
+                    Using the parallel formula: R<sub>total</sub> = 0.52 / 4 = 0.13&Omega; (since
+                    the cross-connected reading divides by 4)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
@@ -248,13 +276,16 @@ const FunctionalSkillsModule4Section1 = () => {
           className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">02</span>
+            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
+              02
+            </span>
             <h3 className="text-lg font-bold text-white">The Power Triangle</h3>
           </div>
           <div className="space-y-3 text-sm text-white/80 leading-relaxed">
             <p>
-              Electrical power can be calculated using three interchangeable formulae. Choosing the right
-              one depends on which values you know. Together they form the &ldquo;power triangle.&rdquo;
+              Electrical power can be calculated using three interchangeable formulae. Choosing the
+              right one depends on which values you know. Together they form the &ldquo;power
+              triangle.&rdquo;
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -273,7 +304,9 @@ const FunctionalSkillsModule4Section1 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-2">Worked Example &mdash; Immersion Heater</h4>
+              <h4 className="font-medium text-green-400 mb-2">
+                Worked Example &mdash; Immersion Heater
+              </h4>
               <p className="text-sm text-white/80 mb-2">
                 A 3kW immersion heater is connected to a 230V supply. Find the current drawn and the
                 element resistance.
@@ -285,17 +318,23 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Resistance: R = V&sup2; / P = 230&sup2; / 3000 = 52900 / 3000 = 17.63&Omega;</span>
+                  <span>
+                    Resistance: R = V&sup2; / P = 230&sup2; / 3000 = 52900 / 3000 = 17.63&Omega;
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Check: P = I&sup2; &times; R = 13.04&sup2; &times; 17.63 = 2997W &asymp; 3kW</span>
+                  <span>
+                    Check: P = I&sup2; &times; R = 13.04&sup2; &times; 17.63 = 2997W &asymp; 3kW
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-2">Worked Example &mdash; Electric Shower</h4>
+              <h4 className="font-medium text-green-400 mb-2">
+                Worked Example &mdash; Electric Shower
+              </h4>
               <p className="text-sm text-white/80 mb-2">
                 A 9.5kW electric shower runs on a 230V supply. What current does it draw, and what
                 size MCB is needed?
@@ -311,7 +350,9 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>This shower will need a dedicated radial circuit with 10mm&sup2; cable</span>
+                  <span>
+                    This shower will need a dedicated radial circuit with 10mm&sup2; cable
+                  </span>
                 </li>
               </ul>
             </div>
@@ -319,9 +360,9 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
               <p className="text-sm text-white/80">
-                Always check your answer makes sense. A domestic immersion heater drawing 13A on a 230V supply
-                is realistic. If you calculated 130A, you have likely made a decimal error. Get into the
-                habit of sanity-checking every result.
+                Always check your answer makes sense. A domestic immersion heater drawing 13A on a
+                230V supply is realistic. If you calculated 130A, you have likely made a decimal
+                error. Get into the habit of sanity-checking every result.
               </p>
             </div>
           </div>
@@ -332,10 +373,10 @@ const FunctionalSkillsModule4Section1 = () => {
           id="calc-check-1"
           question="A 100W lamp operates on 230V. What is the current and resistance of the filament?"
           options={[
-            "0.43A and 529\u03A9",
-            "2.3A and 100\u03A9",
-            "0.43A and 230\u03A9",
-            "23A and 10\u03A9",
+            '0.43A and 529\u03A9',
+            '2.3A and 100\u03A9',
+            '0.43A and 230\u03A9',
+            '23A and 10\u03A9',
           ]}
           correctIndex={0}
           explanation="I = P/V = 100/230 = 0.43A. R = V/I = 230/0.43 = 529\u03A9 (or R = V\u00B2/P = 230\u00B2/100 = 529\u03A9). Both methods give the same answer."
@@ -349,14 +390,16 @@ const FunctionalSkillsModule4Section1 = () => {
           className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">03</span>
+            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
+              03
+            </span>
             <h3 className="text-lg font-bold text-white">Voltage Drop Calculations</h3>
           </div>
           <div className="space-y-3 text-sm text-white/80 leading-relaxed">
             <p>
               Every cable has resistance, so voltage is lost along the cable run. BS 7671 limits the
-              allowable voltage drop to ensure equipment operates correctly. If the drop is too great,
-              motors may stall, lighting may flicker, and equipment may malfunction.
+              allowable voltage drop to ensure equipment operates correctly. If the drop is too
+              great, motors may stall, lighting may flicker, and equipment may malfunction.
             </p>
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
@@ -364,7 +407,8 @@ const FunctionalSkillsModule4Section1 = () => {
                 Voltage Drop = mV/A/m &times; I<sub>b</sub> &times; L / 1000
               </p>
               <p className="text-sm text-white/70">
-                Where mV/A/m is from cable tables, I<sub>b</sub> = design current, L = cable length in metres
+                Where mV/A/m is from cable tables, I<sub>b</sub> = design current, L = cable length
+                in metres
               </p>
             </div>
 
@@ -374,11 +418,15 @@ const FunctionalSkillsModule4Section1 = () => {
                 <ul className="space-y-1 text-sm text-white/80">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">&bull;</span>
-                    <span>Lighting circuits: <strong className="text-white">3%</strong> of 230V = 6.9V</span>
+                    <span>
+                      Lighting circuits: <strong className="text-white">3%</strong> of 230V = 6.9V
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">&bull;</span>
-                    <span>Other circuits: <strong className="text-white">5%</strong> of 230V = 11.5V</span>
+                    <span>
+                      Other circuits: <strong className="text-white">5%</strong> of 230V = 11.5V
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">&bull;</span>
@@ -418,10 +466,12 @@ const FunctionalSkillsModule4Section1 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-2">Worked Example &mdash; Radial Circuit</h4>
+              <h4 className="font-medium text-green-400 mb-2">
+                Worked Example &mdash; Radial Circuit
+              </h4>
               <p className="text-sm text-white/80 mb-2">
-                A 20A radial circuit uses 2.5mm&sup2; twin and earth cable. The cable run is 20m to a
-                workshop heater drawing 17A.
+                A 20A radial circuit uses 2.5mm&sup2; twin and earth cable. The cable run is 20m to
+                a workshop heater drawing 17A.
               </p>
               <ul className="space-y-1 text-sm text-white/80">
                 <li className="flex items-start gap-2">
@@ -438,15 +488,20 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>6.12V &lt; 11.5V &mdash; <strong className="text-white">acceptable</strong></span>
+                  <span>
+                    6.12V &lt; 11.5V &mdash; <strong className="text-white">acceptable</strong>
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-2">Worked Example &mdash; Ring Final Circuit</h4>
+              <h4 className="font-medium text-green-400 mb-2">
+                Worked Example &mdash; Ring Final Circuit
+              </h4>
               <p className="text-sm text-white/80 mb-2">
-                A 32A ring final circuit uses 2.5mm&sup2; T&amp;E cable. The total ring length is 60m.
+                A 32A ring final circuit uses 2.5mm&sup2; T&amp;E cable. The total ring length is
+                60m.
               </p>
               <ul className="space-y-1 text-sm text-white/80">
                 <li className="flex items-start gap-2">
@@ -463,7 +518,9 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>8.64V &lt; 11.5V &mdash; <strong className="text-white">acceptable</strong></span>
+                  <span>
+                    8.64V &lt; 11.5V &mdash; <strong className="text-white">acceptable</strong>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -471,8 +528,9 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
               <p className="text-sm text-white/80">
-                If voltage drop fails, you have two options: increase the cable size (which reduces mV/A/m)
-                or shorten the cable run. In practice, increasing the cable CSA is usually the simplest solution.
+                If voltage drop fails, you have two options: increase the cable size (which reduces
+                mV/A/m) or shorten the cable run. In practice, increasing the cable CSA is usually
+                the simplest solution.
               </p>
             </div>
           </div>
@@ -486,19 +544,23 @@ const FunctionalSkillsModule4Section1 = () => {
           className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">04</span>
+            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
+              04
+            </span>
             <h3 className="text-lg font-bold text-white">Diversity Factors</h3>
           </div>
           <div className="space-y-3 text-sm text-white/80 leading-relaxed">
             <p>
-              In practice, not all loads in an installation run at full power simultaneously. A house will
-              never have every light, every socket, the shower, the cooker and the immersion heater all
-              running at peak load at the same time. Diversity allows us to reduce the assumed total load
-              when calculating supply capacity.
+              In practice, not all loads in an installation run at full power simultaneously. A
+              house will never have every light, every socket, the shower, the cooker and the
+              immersion heater all running at peak load at the same time. Diversity allows us to
+              reduce the assumed total load when calculating supply capacity.
             </p>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-3">BS 7671 Table 1A &mdash; Domestic Diversity</h4>
+              <h4 className="font-medium text-green-400 mb-3">
+                BS 7671 Table 1A &mdash; Domestic Diversity
+              </h4>
               <div className="space-y-2">
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
                   <span className="text-sm text-white/80">Lighting</span>
@@ -506,11 +568,15 @@ const FunctionalSkillsModule4Section1 = () => {
                 </div>
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
                   <span className="text-sm text-white/80">Cooker</span>
-                  <span className="text-sm text-white font-medium">10A + 30% of remainder + 5A socket</span>
+                  <span className="text-sm text-white font-medium">
+                    10A + 30% of remainder + 5A socket
+                  </span>
                 </div>
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
                   <span className="text-sm text-white/80">Socket outlets (ring/radial)</span>
-                  <span className="text-sm text-white font-medium">100% of largest + 40% of others</span>
+                  <span className="text-sm text-white font-medium">
+                    100% of largest + 40% of others
+                  </span>
                 </div>
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
                   <span className="text-sm text-white/80">Immersion heater</span>
@@ -528,7 +594,9 @@ const FunctionalSkillsModule4Section1 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-2">Worked Example &mdash; Cooker Diversity</h4>
+              <h4 className="font-medium text-green-400 mb-2">
+                Worked Example &mdash; Cooker Diversity
+              </h4>
               <p className="text-sm text-white/80 mb-2">
                 A cooker is rated at 12kW on a 230V supply. It has a socket outlet in the cooker
                 control unit. Calculate the diversified current.
@@ -544,7 +612,9 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Remainder (52.17 &minus; 10 = 42.17A) at 30%: 42.17 &times; 0.30 = 12.65A</span>
+                  <span>
+                    Remainder (52.17 &minus; 10 = 42.17A) at 30%: 42.17 &times; 0.30 = 12.65A
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
@@ -552,7 +622,10 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Total diversified demand: 10 + 12.65 + 5 = <strong className="text-white">27.65A</strong></span>
+                  <span>
+                    Total diversified demand: 10 + 12.65 + 5 ={' '}
+                    <strong className="text-white">27.65A</strong>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -560,10 +633,10 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
               <p className="text-sm text-white/80">
-                Diversity applies to the supply calculation (main switch, service cable) &mdash; not to
-                individual circuit protective devices. Each circuit must still be rated for its full load.
-                A 12kW cooker still needs a suitably rated circuit, even though its diversified demand is
-                lower in the overall ADMD.
+                Diversity applies to the supply calculation (main switch, service cable) &mdash; not
+                to individual circuit protective devices. Each circuit must still be rated for its
+                full load. A 12kW cooker still needs a suitably rated circuit, even though its
+                diversified demand is lower in the overall ADMD.
               </p>
             </div>
           </div>
@@ -574,10 +647,10 @@ const FunctionalSkillsModule4Section1 = () => {
           id="calc-check-2"
           question="A lighting circuit has a total connected load of 1800W at 230V. Applying 66% diversity, what current should be allowed for in the maximum demand calculation?"
           options={[
-            "7.83A \u2014 no diversity applied",
-            "5.17A \u2014 after 66% diversity",
-            "11.88A \u2014 with 66% added on top",
-            "Diversity cannot be applied to lighting",
+            '7.83A \u2014 no diversity applied',
+            '5.17A \u2014 after 66% diversity',
+            '11.88A \u2014 with 66% added on top',
+            'Diversity cannot be applied to lighting',
           ]}
           correctIndex={1}
           explanation="Total current = 1800/230 = 7.83A. After 66% diversity = 7.83 \u00D7 0.66 = 5.17A. Alternatively: 1800 \u00D7 0.66 = 1188W, then 1188/230 = 5.17A."
@@ -591,19 +664,23 @@ const FunctionalSkillsModule4Section1 = () => {
           className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">05</span>
+            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
+              05
+            </span>
             <h3 className="text-lg font-bold text-white">Maximum Demand</h3>
           </div>
           <div className="space-y-3 text-sm text-white/80 leading-relaxed">
             <p>
               Maximum demand is the total current an installation is expected to draw under normal
               conditions. The after diversity maximum demand (ADMD) accounts for the fact that not
-              all loads run simultaneously. This determines the main switch rating, the service fuse,
-              and the incoming cable size.
+              all loads run simultaneously. This determines the main switch rating, the service
+              fuse, and the incoming cable size.
             </p>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-3">Domestic ADMD &mdash; Full Worked Example</h4>
+              <h4 className="font-medium text-green-400 mb-3">
+                Domestic ADMD &mdash; Full Worked Example
+              </h4>
               <p className="text-sm text-white/80 mb-3">
                 Calculate the ADMD for a house with the following loads:
               </p>
@@ -638,34 +715,36 @@ const FunctionalSkillsModule4Section1 = () => {
                 </div>
               </div>
               <p className="text-sm text-white/60 mt-3">
-                This would require a minimum 100A main switch (but a 100A Type 2 cut-out is the standard
-                domestic supply). If the ADMD exceeds 100A, you may need to apply for a supply upgrade
-                from the DNO.
+                This would require a minimum 100A main switch (but a 100A Type 2 cut-out is the
+                standard domestic supply). If the ADMD exceeds 100A, you may need to apply for a
+                supply upgrade from the DNO.
               </p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Three-Phase Balanced Loads</h4>
               <p className="text-sm text-white/80 mb-2">
-                For three-phase installations, loads should be distributed as evenly as possible across
-                all three phases. The per-phase current is:
+                For three-phase installations, loads should be distributed as evenly as possible
+                across all three phases. The per-phase current is:
               </p>
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-3 text-center">
                 <p className="text-green-400 font-mono">
-                  I<sub>phase</sub> = P<sub>total</sub> / (&radic;3 &times; V<sub>L</sub>) = P<sub>total</sub> / (1.732 &times; 400)
+                  I<sub>phase</sub> = P<sub>total</sub> / (&radic;3 &times; V<sub>L</sub>) = P
+                  <sub>total</sub> / (1.732 &times; 400)
                 </p>
               </div>
               <p className="text-sm text-white/80 mt-2">
-                For example, a 30kW three-phase load: I = 30000 / (1.732 &times; 400) = 30000 / 692.8 = 43.3A per phase.
+                For example, a 30kW three-phase load: I = 30000 / (1.732 &times; 400) = 30000 /
+                692.8 = 43.3A per phase.
               </p>
             </div>
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
               <p className="text-sm text-white/80">
-                When calculating ADMD, always list every circuit systematically, apply the correct diversity
-                factor from the tables, and total everything up. Missing a circuit can lead to an undersized
-                supply &mdash; a costly mistake to correct after installation.
+                When calculating ADMD, always list every circuit systematically, apply the correct
+                diversity factor from the tables, and total everything up. Missing a circuit can
+                lead to an undersized supply &mdash; a costly mistake to correct after installation.
               </p>
             </div>
           </div>
@@ -679,7 +758,9 @@ const FunctionalSkillsModule4Section1 = () => {
           className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">06</span>
+            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
+              06
+            </span>
             <h3 className="text-lg font-bold text-white">Earth Fault Loop Impedance (Zs)</h3>
           </div>
           <div className="space-y-3 text-sm text-white/80 leading-relaxed">
@@ -709,13 +790,18 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>TT (earth electrode): 21&Omega; (varies greatly &mdash; RCD protection mandatory)</span>
+                  <span>
+                    TT (earth electrode): 21&Omega; (varies greatly &mdash; RCD protection
+                    mandatory)
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-2">Maximum Zs Values &mdash; Common Type B MCBs</h4>
+              <h4 className="font-medium text-green-400 mb-2">
+                Maximum Zs Values &mdash; Common Type B MCBs
+              </h4>
               <ul className="space-y-1 text-sm text-white/80">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
@@ -751,15 +837,17 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Temperature Correction Factor</h4>
               <p className="text-sm text-white/80 mb-2">
-                R1+R2 values from tables are given at 20&deg;C. Under fault conditions, the conductor heats
-                up. To account for this, we apply a correction factor:
+                R1+R2 values from tables are given at 20&deg;C. Under fault conditions, the
+                conductor heats up. To account for this, we apply a correction factor:
               </p>
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-3 text-center mb-2">
-                <p className="text-green-400 font-mono">Zs at operating temp = Ze + (R1+R2) &times; 1.20</p>
+                <p className="text-green-400 font-mono">
+                  Zs at operating temp = Ze + (R1+R2) &times; 1.20
+                </p>
               </div>
               <p className="text-sm text-white/60">
-                The factor of 1.20 accounts for the increase in conductor resistance as temperature rises
-                from 20&deg;C to approximately 70&deg;C under normal operating conditions.
+                The factor of 1.20 accounts for the increase in conductor resistance as temperature
+                rises from 20&deg;C to approximately 70&deg;C under normal operating conditions.
               </p>
             </div>
 
@@ -780,12 +868,15 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>1.334&Omega; &lt; 1.44&Omega; &mdash; <strong className="text-white">Compliant</strong></span>
+                  <span>
+                    1.334&Omega; &lt; 1.44&Omega; &mdash;{' '}
+                    <strong className="text-white">Compliant</strong>
+                  </span>
                 </li>
               </ul>
               <p className="text-sm text-white/60 mt-2">
-                Note how close this is to the limit. If the cable run were slightly longer, or the Ze
-                slightly higher, it could fail. Always check carefully.
+                Note how close this is to the limit. If the cable run were slightly longer, or the
+                Ze slightly higher, it could fail. Always check carefully.
               </p>
             </div>
           </div>
@@ -796,10 +887,10 @@ const FunctionalSkillsModule4Section1 = () => {
           id="calc-check-3"
           question="A TN-S supply has Ze = 0.8\u03A9. A 20A Type B MCB protects a radial circuit with measured R1+R2 of 1.05\u03A9. Applying the 1.20 correction factor, does the Zs comply?"
           options={[
-            "Zs = 1.85\u03A9 \u2014 does not comply",
-            "Zs = 2.06\u03A9 \u2014 complies with max 2.30\u03A9",
-            "Zs = 1.26\u03A9 \u2014 complies easily",
-            "Cannot be calculated without cable length",
+            'Zs = 1.85\u03A9 \u2014 does not comply',
+            'Zs = 2.06\u03A9 \u2014 complies with max 2.30\u03A9',
+            'Zs = 1.26\u03A9 \u2014 complies easily',
+            'Cannot be calculated without cable length',
           ]}
           correctIndex={1}
           explanation="Zs = Ze + (R1+R2 \u00D7 1.20) = 0.8 + (1.05 \u00D7 1.20) = 0.8 + 1.26 = 2.06\u03A9. Max Zs for 20A Type B = 2.30\u03A9. 2.06 < 2.30 so it complies."
@@ -813,7 +904,9 @@ const FunctionalSkillsModule4Section1 = () => {
           className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">07</span>
+            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
+              07
+            </span>
             <h3 className="text-lg font-bold text-white">Prospective Fault Current</h3>
           </div>
           <div className="space-y-3 text-sm text-white/80 leading-relaxed">
@@ -825,9 +918,12 @@ const FunctionalSkillsModule4Section1 = () => {
             </p>
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
-              <p className="text-green-400 font-mono text-lg mb-1">Ipf = U<sub>oc</sub> / Zs</p>
+              <p className="text-green-400 font-mono text-lg mb-1">
+                Ipf = U<sub>oc</sub> / Zs
+              </p>
               <p className="text-sm text-white/70">
-                Where U<sub>oc</sub> = open-circuit voltage (typically 230V), Zs = earth fault loop impedance
+                Where U<sub>oc</sub> = open-circuit voltage (typically 230V), Zs = earth fault loop
+                impedance
               </p>
             </div>
 
@@ -859,8 +955,8 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Worked Example &mdash; Domestic</h4>
               <p className="text-sm text-white/80 mb-2">
-                The measured Ze at the origin is 0.10&Omega;. What is the prospective fault current, and
-                is a 6kA MCB suitable?
+                The measured Ze at the origin is 0.10&Omega;. What is the prospective fault current,
+                and is a 6kA MCB suitable?
               </p>
               <ul className="space-y-1 text-sm text-white/80">
                 <li className="flex items-start gap-2">
@@ -869,15 +965,21 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>2.3kA &lt; 6kA breaking capacity &mdash; <strong className="text-white">MCB is suitable</strong></span>
+                  <span>
+                    2.3kA &lt; 6kA breaking capacity &mdash;{' '}
+                    <strong className="text-white">MCB is suitable</strong>
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="font-medium text-green-400 mb-2">Worked Example &mdash; High Fault Level</h4>
+              <h4 className="font-medium text-green-400 mb-2">
+                Worked Example &mdash; High Fault Level
+              </h4>
               <p className="text-sm text-white/80 mb-2">
-                A commercial installation close to a substation has Ze = 0.02&Omega;. What is the Ipf?
+                A commercial installation close to a substation has Ze = 0.02&Omega;. What is the
+                Ipf?
               </p>
               <ul className="space-y-1 text-sm text-white/80">
                 <li className="flex items-start gap-2">
@@ -890,7 +992,10 @@ const FunctionalSkillsModule4Section1 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>You would need MCBs rated at 15kA or higher, or use back-up protection (BS 88 fuses)</span>
+                  <span>
+                    You would need MCBs rated at 15kA or higher, or use back-up protection (BS 88
+                    fuses)
+                  </span>
                 </li>
               </ul>
             </div>
@@ -898,10 +1003,10 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
               <p className="text-sm text-white/80">
-                BS 7671 Regulation 434.5.1 requires that the prospective fault current be determined at
-                every relevant point of the installation. This is measured at the origin using a loop
-                impedance tester or PFC meter. Always record the Ipf on your electrical installation
-                certificate.
+                BS 7671 Regulation 434.5.1 requires that the prospective fault current be determined
+                at every relevant point of the installation. This is measured at the origin using a
+                loop impedance tester or PFC meter. Always record the Ipf on your electrical
+                installation certificate.
               </p>
             </div>
           </div>
@@ -915,7 +1020,9 @@ const FunctionalSkillsModule4Section1 = () => {
           className="bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">08</span>
+            <span className="text-xs font-bold text-green-400 bg-green-500/15 px-2.5 py-1 rounded-full">
+              08
+            </span>
             <h3 className="text-lg font-bold text-white">Bringing It All Together</h3>
           </div>
           <div className="space-y-3 text-sm text-white/80 leading-relaxed">
@@ -927,41 +1034,61 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-3">Complete Circuit Calculation</h4>
               <p className="text-sm text-white/80 mb-3">
-                <strong className="text-white">Scenario:</strong> Design check for a 20A radial circuit
-                supplying a 4kW workshop heater. TN-C-S supply, Ze = 0.35&Omega;. Cable is 4.0mm&sup2;
-                T&amp;E, 18m run.
+                <strong className="text-white">Scenario:</strong> Design check for a 20A radial
+                circuit supplying a 4kW workshop heater. TN-C-S supply, Ze = 0.35&Omega;. Cable is
+                4.0mm&sup2; T&amp;E, 18m run.
               </p>
 
               <div className="space-y-4">
                 <div>
-                  <p className="text-sm text-green-400 font-medium mb-1">Step 1 &mdash; Design Current (Ib)</p>
+                  <p className="text-sm text-green-400 font-medium mb-1">
+                    Step 1 &mdash; Design Current (Ib)
+                  </p>
                   <p className="text-sm text-white/80">Ib = P / V = 4000 / 230 = 17.39A</p>
                 </div>
                 <div>
-                  <p className="text-sm text-green-400 font-medium mb-1">Step 2 &mdash; Protective Device (In)</p>
-                  <p className="text-sm text-white/80">In = 20A MCB Type B (In &ge; Ib: 20 &ge; 17.39)</p>
-                </div>
-                <div>
-                  <p className="text-sm text-green-400 font-medium mb-1">Step 3 &mdash; Cable Current Rating (Iz)</p>
+                  <p className="text-sm text-green-400 font-medium mb-1">
+                    Step 2 &mdash; Protective Device (In)
+                  </p>
                   <p className="text-sm text-white/80">
-                    4.0mm&sup2; T&amp;E clipped direct (Method C): Iz = 36A. Since Iz &ge; In (36 &ge; 20), the cable is adequate.
+                    In = 20A MCB Type B (In &ge; Ib: 20 &ge; 17.39)
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-green-400 font-medium mb-1">Step 4 &mdash; Voltage Drop</p>
-                  <p className="text-sm text-white/80">VD = 11 &times; 17.39 &times; 18 / 1000 = 3.44V (limit 11.5V &mdash; pass)</p>
+                  <p className="text-sm text-green-400 font-medium mb-1">
+                    Step 3 &mdash; Cable Current Rating (Iz)
+                  </p>
+                  <p className="text-sm text-white/80">
+                    4.0mm&sup2; T&amp;E clipped direct (Method C): Iz = 36A. Since Iz &ge; In (36
+                    &ge; 20), the cable is adequate.
+                  </p>
                 </div>
                 <div>
-                  <p className="text-sm text-green-400 font-medium mb-1">Step 5 &mdash; Earth Fault Loop Impedance</p>
+                  <p className="text-sm text-green-400 font-medium mb-1">
+                    Step 4 &mdash; Voltage Drop
+                  </p>
                   <p className="text-sm text-white/80">
-                    R1+R2 per metre for 4.0/1.5mm&sup2; = 12.02 m&Omega;/m<br />
-                    R1+R2 = 12.02 &times; 18 / 1000 = 0.216&Omega;<br />
-                    Zs = 0.35 + (0.216 &times; 1.20) = 0.35 + 0.259 = 0.609&Omega;<br />
+                    VD = 11 &times; 17.39 &times; 18 / 1000 = 3.44V (limit 11.5V &mdash; pass)
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-green-400 font-medium mb-1">
+                    Step 5 &mdash; Earth Fault Loop Impedance
+                  </p>
+                  <p className="text-sm text-white/80">
+                    R1+R2 per metre for 4.0/1.5mm&sup2; = 12.02 m&Omega;/m
+                    <br />
+                    R1+R2 = 12.02 &times; 18 / 1000 = 0.216&Omega;
+                    <br />
+                    Zs = 0.35 + (0.216 &times; 1.20) = 0.35 + 0.259 = 0.609&Omega;
+                    <br />
                     Max Zs for 20A Type B = 2.30&Omega; &rarr; 0.609 &lt; 2.30 &mdash; pass
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-green-400 font-medium mb-1">Step 6 &mdash; Prospective Fault Current</p>
+                  <p className="text-sm text-green-400 font-medium mb-1">
+                    Step 6 &mdash; Prospective Fault Current
+                  </p>
                   <p className="text-sm text-white/80">
                     Ipf = 230 / 0.35 = 657A (at origin). Well within 6kA MCB rating &mdash; pass
                   </p>
@@ -977,27 +1104,43 @@ const FunctionalSkillsModule4Section1 = () => {
               <ul className="space-y-2 text-sm text-white/80">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Ohm&rsquo;s Law and the power formulae are the foundation of every calculation</span>
+                  <span>
+                    Ohm&rsquo;s Law and the power formulae are the foundation of every calculation
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Voltage drop must be checked against BS 7671 limits (3% lighting, 5% other circuits)</span>
+                  <span>
+                    Voltage drop must be checked against BS 7671 limits (3% lighting, 5% other
+                    circuits)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Diversity reduces maximum demand but does not affect individual circuit protection</span>
+                  <span>
+                    Diversity reduces maximum demand but does not affect individual circuit
+                    protection
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Zs must be checked with the temperature correction factor (1.20) applied</span>
+                  <span>
+                    Zs must be checked with the temperature correction factor (1.20) applied
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Prospective fault current must not exceed the breaking capacity of the protective device</span>
+                  <span>
+                    Prospective fault current must not exceed the breaking capacity of the
+                    protective device
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span>Always sense-check your answers &mdash; does the number feel realistic for the scenario?</span>
+                  <span>
+                    Always sense-check your answers &mdash; does the number feel realistic for the
+                    scenario?
+                  </span>
                 </li>
               </ul>
             </div>
@@ -1005,10 +1148,10 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
               <p className="text-sm text-white/80">
-                In the real world, you will perform these calculations during the design stage and then
-                verify them with measured values during testing and commissioning. If the measured Zs
-                exceeds your calculated value, investigate &mdash; there may be a poor connection, a
-                damaged conductor, or an incorrectly wired circuit.
+                In the real world, you will perform these calculations during the design stage and
+                then verify them with measured values during testing and commissioning. If the
+                measured Zs exceeds your calculated value, investigate &mdash; there may be a poor
+                connection, a damaged conductor, or an incorrectly wired circuit.
               </p>
             </div>
           </div>

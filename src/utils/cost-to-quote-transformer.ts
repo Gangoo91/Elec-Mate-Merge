@@ -34,9 +34,9 @@ export function transformCostOutputToQuoteItems(
   conversationId?: string
 ): QuoteItem[] {
   const quoteItems: QuoteItem[] = [];
-  
+
   // Add material items
-  costOutput.materials.forEach(material => {
+  costOutput.materials.forEach((material) => {
     quoteItems.push({
       id: uuidv4(),
       description: material.item,
@@ -50,7 +50,7 @@ export function transformCostOutputToQuoteItems(
       notes: `Supplier: ${material.supplier}`,
     });
   });
-  
+
   // Add labour item
   if (costOutput.labour.hours > 0) {
     quoteItems.push({
@@ -66,7 +66,7 @@ export function transformCostOutputToQuoteItems(
       hourlyRate: costOutput.labour.rate,
     });
   }
-  
+
   return quoteItems;
 }
 
@@ -81,9 +81,9 @@ export function createQuoteFromCostOutput(
   conversationId?: string
 ): Partial<Quote> {
   const items = transformCostOutputToQuoteItems(costOutput, conversationId);
-  
+
   const subtotal = items.reduce((sum, item) => sum + item.totalPrice, 0);
-  
+
   const defaultSettings: QuoteSettings = {
     labourRate: costOutput.labour.rate || 45,
     overheadPercentage: settings.overheadPercentage || 15,
@@ -91,15 +91,15 @@ export function createQuoteFromCostOutput(
     vatRate: settings.vatRate || 20,
     vatRegistered: settings.vatRegistered ?? true,
   };
-  
+
   const overhead = subtotal * (defaultSettings.overheadPercentage / 100);
   const profit = subtotal * (defaultSettings.profitMargin / 100);
   const subtotalWithMargins = subtotal + overhead + profit;
-  const vatAmount = defaultSettings.vatRegistered 
+  const vatAmount = defaultSettings.vatRegistered
     ? subtotalWithMargins * (defaultSettings.vatRate / 100)
     : 0;
   const total = subtotalWithMargins + vatAmount;
-  
+
   return {
     quoteNumber: generateQuoteNumber(),
     client,
@@ -121,32 +121,38 @@ export function createQuoteFromCostOutput(
 
 function determineUnit(itemName: string): string {
   const itemLower = itemName.toLowerCase();
-  
+
   if (itemLower.includes('cable') || itemLower.includes('wire')) return 'metres';
   if (itemLower.includes('conduit') || itemLower.includes('trunking')) return 'metres';
-  if (itemLower.includes('mcb') || itemLower.includes('rcbo') || itemLower.includes('switch')) return 'units';
+  if (itemLower.includes('mcb') || itemLower.includes('rcbo') || itemLower.includes('switch'))
+    return 'units';
   if (itemLower.includes('board') || itemLower.includes('panel')) return 'units';
   if (itemLower.includes('socket') || itemLower.includes('light')) return 'units';
   if (itemLower.includes('clip') || itemLower.includes('cleat')) return 'units';
-  
+
   return 'units';
 }
 
 function categorizeMaterial(itemName: string): string {
   const itemLower = itemName.toLowerCase();
-  
+
   if (itemLower.includes('cable') || itemLower.includes('wire')) return 'Cables & Conductors';
-  if (itemLower.includes('mcb') || itemLower.includes('rcbo') || itemLower.includes('rcd')) return 'Protection Devices';
-  if (itemLower.includes('board') || itemLower.includes('panel') || itemLower.includes('enclosure')) return 'Distribution Equipment';
+  if (itemLower.includes('mcb') || itemLower.includes('rcbo') || itemLower.includes('rcd'))
+    return 'Protection Devices';
+  if (itemLower.includes('board') || itemLower.includes('panel') || itemLower.includes('enclosure'))
+    return 'Distribution Equipment';
   if (itemLower.includes('socket') || itemLower.includes('switch')) return 'Accessories';
   if (itemLower.includes('conduit') || itemLower.includes('trunking')) return 'Cable Management';
-  if (itemLower.includes('clip') || itemLower.includes('cleat') || itemLower.includes('tie')) return 'Fixings & Supports';
-  
+  if (itemLower.includes('clip') || itemLower.includes('cleat') || itemLower.includes('tie'))
+    return 'Fixings & Supports';
+
   return 'General Materials';
 }
 
 function generateMaterialCode(itemName: string): string {
-  const category = categorizeMaterial(itemName).replace(/[^A-Z]/g, '').substring(0, 3);
+  const category = categorizeMaterial(itemName)
+    .replace(/[^A-Z]/g, '')
+    .substring(0, 3);
   const random = Math.random().toString(36).substring(2, 6).toUpperCase();
   return `${category}-${random}`;
 }

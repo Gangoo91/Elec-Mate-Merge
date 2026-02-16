@@ -1,16 +1,11 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { useState, useMemo } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Search,
   Zap,
@@ -27,8 +22,8 @@ import {
   FileText,
   Play,
   X,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   useToolboxTalkTemplates,
   useToolboxTalkCategories,
@@ -37,7 +32,7 @@ import {
   getRiskLevelColour,
   type ToolboxTalkTemplate,
   type ToolboxTalkCategory,
-} from "@/hooks/useToolboxTalkTemplates";
+} from '@/hooks/useToolboxTalkTemplates';
 
 interface ToolboxTalkLibraryProps {
   onSelectTemplate?: (template: ToolboxTalkTemplate) => void;
@@ -55,8 +50,8 @@ const CATEGORY_ICONS: Record<ToolboxTalkCategory, typeof Zap> = {
 };
 
 export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<ToolboxTalkCategory | "all">("all");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<ToolboxTalkCategory | 'all'>('all');
   const [previewTemplate, setPreviewTemplate] = useState<ToolboxTalkTemplate | null>(null);
 
   const { data: templates = [], isLoading: templatesLoading } = useToolboxTalkTemplates();
@@ -68,7 +63,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
   const filteredTemplates = useMemo(() => {
     return templates.filter((template) => {
       // Category filter
-      if (selectedCategory !== "all" && template.category !== selectedCategory) {
+      if (selectedCategory !== 'all' && template.category !== selectedCategory) {
         return false;
       }
 
@@ -86,7 +81,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
 
   // Group templates by category
   const groupedTemplates = useMemo(() => {
-    if (selectedCategory !== "all") {
+    if (selectedCategory !== 'all') {
       return { [selectedCategory]: filteredTemplates };
     }
 
@@ -134,7 +129,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
           placeholder="Search toolbox talks..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className={cn("h-11", !searchQuery && "pl-9")}
+          className={cn('h-11', !searchQuery && 'pl-9')}
         />
       </div>
 
@@ -142,12 +137,12 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
       <ScrollArea className="w-full">
         <div className="flex gap-2 pb-2">
           <Button
-            variant={selectedCategory === "all" ? "default" : "outline"}
+            variant={selectedCategory === 'all' ? 'default' : 'outline'}
             size="sm"
-            onClick={() => setSelectedCategory("all")}
+            onClick={() => setSelectedCategory('all')}
             className={cn(
-              "shrink-0",
-              selectedCategory === "all" && "bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              'shrink-0',
+              selectedCategory === 'all' && 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
             )}
           >
             All ({templates.length})
@@ -157,12 +152,13 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
             return (
               <Button
                 key={cat.category}
-                variant={selectedCategory === cat.category ? "default" : "outline"}
+                variant={selectedCategory === cat.category ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setSelectedCategory(cat.category)}
                 className={cn(
-                  "shrink-0 gap-1.5",
-                  selectedCategory === cat.category && "bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  'shrink-0 gap-1.5',
+                  selectedCategory === cat.category &&
+                    'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                 )}
               >
                 <Icon className="h-3.5 w-3.5" />
@@ -178,9 +174,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
         <Card className="border-dashed">
           <CardContent className="p-8 text-center">
             <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-medium text-foreground mb-2">
-              No templates found
-            </h3>
+            <h3 className="font-medium text-foreground mb-2">No templates found</h3>
             <p className="text-sm text-muted-foreground">
               Try adjusting your search or category filter
             </p>
@@ -192,10 +186,20 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
             const Icon = CATEGORY_ICONS[category as ToolboxTalkCategory];
             return (
               <div key={category}>
-                {selectedCategory === "all" && (
+                {selectedCategory === 'all' && (
                   <div className="flex items-center gap-2 mb-3">
-                    <div className={cn("p-1.5 rounded-lg", `bg-${category === "electrical_safety" ? "yellow" : "blue"}-500/10`)}>
-                      <Icon className={cn("h-4 w-4", getCategoryColour(category as ToolboxTalkCategory))} />
+                    <div
+                      className={cn(
+                        'p-1.5 rounded-lg',
+                        `bg-${category === 'electrical_safety' ? 'yellow' : 'blue'}-500/10`
+                      )}
+                    >
+                      <Icon
+                        className={cn(
+                          'h-4 w-4',
+                          getCategoryColour(category as ToolboxTalkCategory)
+                        )}
+                      />
                     </div>
                     <h3 className="font-medium text-foreground">
                       {getCategoryLabel(category as ToolboxTalkCategory)}
@@ -224,10 +228,14 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                             <div className="flex items-center gap-2 mt-2">
                               <Badge
                                 variant="outline"
-                                className={cn("text-xs", getRiskLevelColour(template.risk_level))}
+                                className={cn('text-xs', getRiskLevelColour(template.risk_level))}
                               >
-                                {template.risk_level === "high" && <AlertTriangle className="h-3 w-3 mr-1" />}
-                                {template.risk_level.charAt(0).toUpperCase() + template.risk_level.slice(1)} Risk
+                                {template.risk_level === 'high' && (
+                                  <AlertTriangle className="h-3 w-3 mr-1" />
+                                )}
+                                {template.risk_level.charAt(0).toUpperCase() +
+                                  template.risk_level.slice(1)}{' '}
+                                Risk
                               </Badge>
                               <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
@@ -256,15 +264,23 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
               <SheetHeader className="p-4 pb-3 border-b border-border shrink-0">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={cn(
-                      "p-2 rounded-lg",
-                      previewTemplate.risk_level === "high" ? "bg-red-500/10" :
-                      previewTemplate.risk_level === "medium" ? "bg-amber-500/10" :
-                      "bg-green-500/10"
-                    )}>
+                    <div
+                      className={cn(
+                        'p-2 rounded-lg',
+                        previewTemplate.risk_level === 'high'
+                          ? 'bg-red-500/10'
+                          : previewTemplate.risk_level === 'medium'
+                            ? 'bg-amber-500/10'
+                            : 'bg-green-500/10'
+                      )}
+                    >
                       {(() => {
                         const Icon = CATEGORY_ICONS[previewTemplate.category];
-                        return <Icon className={cn("h-5 w-5", getCategoryColour(previewTemplate.category))} />;
+                        return (
+                          <Icon
+                            className={cn('h-5 w-5', getCategoryColour(previewTemplate.category))}
+                          />
+                        );
                       })()}
                     </div>
                     <div>
@@ -275,9 +291,11 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                         </Badge>
                         <Badge
                           variant="outline"
-                          className={cn("text-xs", getRiskLevelColour(previewTemplate.risk_level))}
+                          className={cn('text-xs', getRiskLevelColour(previewTemplate.risk_level))}
                         >
-                          {previewTemplate.risk_level.charAt(0).toUpperCase() + previewTemplate.risk_level.slice(1)} Risk
+                          {previewTemplate.risk_level.charAt(0).toUpperCase() +
+                            previewTemplate.risk_level.slice(1)}{' '}
+                          Risk
                         </Badge>
                         <span className="text-xs text-muted-foreground flex items-center gap-1">
                           <Clock className="h-3 w-3" />
@@ -305,22 +323,26 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                 />
 
                 {/* Discussion Points */}
-                {previewTemplate.discussion_points && previewTemplate.discussion_points.length > 0 && (
-                  <div className="mt-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                    <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-blue-400" />
-                      Discussion Points
-                    </h4>
-                    <ul className="space-y-1.5">
-                      {previewTemplate.discussion_points.map((point, i) => (
-                        <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <span className="text-blue-400 shrink-0">•</span>
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {previewTemplate.discussion_points &&
+                  previewTemplate.discussion_points.length > 0 && (
+                    <div className="mt-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                      <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-blue-400" />
+                        Discussion Points
+                      </h4>
+                      <ul className="space-y-1.5">
+                        {previewTemplate.discussion_points.map((point, i) => (
+                          <li
+                            key={i}
+                            className="text-sm text-muted-foreground flex items-start gap-2"
+                          >
+                            <span className="text-blue-400 shrink-0">•</span>
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                 {/* Key Hazards */}
                 {previewTemplate.key_hazards && previewTemplate.key_hazards.length > 0 && (
@@ -340,16 +362,17 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                 )}
 
                 {/* Legal References */}
-                {previewTemplate.legal_references && previewTemplate.legal_references.length > 0 && (
-                  <div className="mt-4 p-4 rounded-lg bg-muted/50">
-                    <h4 className="font-medium text-foreground mb-2">Legal References</h4>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      {previewTemplate.legal_references.map((ref, i) => (
-                        <li key={i}>• {ref}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {previewTemplate.legal_references &&
+                  previewTemplate.legal_references.length > 0 && (
+                    <div className="mt-4 p-4 rounded-lg bg-muted/50">
+                      <h4 className="font-medium text-foreground mb-2">Legal References</h4>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        {previewTemplate.legal_references.map((ref, i) => (
+                          <li key={i}>• {ref}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
               </ScrollArea>
 
               {/* Footer */}

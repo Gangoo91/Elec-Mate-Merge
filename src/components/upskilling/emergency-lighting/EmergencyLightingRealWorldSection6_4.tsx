@@ -15,15 +15,17 @@ export const EmergencyLightingRealWorldSection6_4 = () => {
           <AlertTriangle className="h-6 w-6 text-red-400 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-foreground leading-relaxed mb-3">
-              During a fire safety audit of a hotel in Liverpool, the Fire Authority found that while all emergency lights were functional, 
-              the logbook had not been updated for nine months and several test certificates were missing.
+              During a fire safety audit of a hotel in Liverpool, the Fire Authority found that
+              while all emergency lights were functional, the logbook had not been updated for nine
+              months and several test certificates were missing.
             </p>
             <p className="text-foreground leading-relaxed mb-3">
-              The Responsible Person was issued with an enforcement notice and had to commission a full re-inspection.
+              The Responsible Person was issued with an enforcement notice and had to commission a
+              full re-inspection.
             </p>
             <p className="text-foreground leading-relaxed font-semibold">
-              The cost of the audit failure and re-certification exceeded £6,000 — highlighting that missing paperwork is treated 
-              the same as a failed system.
+              The cost of the audit failure and re-certification exceeded £6,000 — highlighting that
+              missing paperwork is treated the same as a failed system.
             </p>
           </div>
         </div>
@@ -31,8 +33,9 @@ export const EmergencyLightingRealWorldSection6_4 = () => {
         <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-2">Key Lesson</h4>
           <p className="text-foreground text-sm leading-relaxed">
-            Even a fully functional emergency lighting system can result in significant financial penalties and legal consequences 
-            if documentation is incomplete. The paper trail is just as important as the physical installation.
+            Even a fully functional emergency lighting system can result in significant financial
+            penalties and legal consequences if documentation is incomplete. The paper trail is just
+            as important as the physical installation.
           </p>
         </div>
       </CardContent>

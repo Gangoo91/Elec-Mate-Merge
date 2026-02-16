@@ -1,25 +1,21 @@
-import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { 
+import { useState, useMemo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { 
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { 
-  History, 
-  ChevronDown, 
-  ChevronUp, 
+} from '@/components/ui/select';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import {
+  History,
+  ChevronDown,
+  ChevronUp,
   Search,
   CheckCircle,
   XCircle,
@@ -30,17 +26,17 @@ import {
   Receipt,
   CheckCheck,
   User,
-  Calendar
-} from "lucide-react";
-import { Quote } from "@/types/quote";
-import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
-import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
-import { cn } from "@/lib/utils";
-import { InvoiceDecisionDialog } from "@/components/electrician/invoice-builder/InvoiceDecisionDialog";
-import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
-import { toast } from "sonner";
-import { generateSequentialInvoiceNumber } from "@/utils/invoice-number-generator";
+  Calendar,
+} from 'lucide-react';
+import { Quote } from '@/types/quote';
+import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { cn } from '@/lib/utils';
+import { InvoiceDecisionDialog } from '@/components/electrician/invoice-builder/InvoiceDecisionDialog';
+import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { toast } from 'sonner';
+import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 
 interface QuotesHistorySectionProps {
   quotes: Quote[];
@@ -48,8 +44,8 @@ interface QuotesHistorySectionProps {
 
 export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
   const [showWorkCompleteDialog, setShowWorkCompleteDialog] = useState(false);
   const [showInvoiceDecisionDialog, setShowInvoiceDecisionDialog] = useState(false);
@@ -59,24 +55,25 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
 
   const filteredQuotes = useMemo(() => {
     return quotes.filter((quote) => {
-      const matchesSearch = 
+      const matchesSearch =
         quote.client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         quote.quoteNumber.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesStatus = 
-        statusFilter === "all" || 
+
+      const matchesStatus =
+        statusFilter === 'all' ||
         quote.acceptance_status === statusFilter ||
-        (statusFilter === "pending" && (quote.acceptance_status === "pending" || !quote.acceptance_status));
-      
+        (statusFilter === 'pending' &&
+          (quote.acceptance_status === 'pending' || !quote.acceptance_status));
+
       return matchesSearch && matchesStatus;
     });
   }, [quotes, searchQuery, statusFilter]);
 
   const getUnifiedStatusBadge = (quote: Quote) => {
-    const acceptanceStatus = quote.acceptance_status || "pending";
+    const acceptanceStatus = quote.acceptance_status || 'pending';
     const isWorkDone = quote.tags?.includes('work_done');
     const hasInvoice = quote.invoice_raised === true;
-    
+
     // Priority hierarchy:
     // 1. Invoice raised
     if (hasInvoice) {
@@ -87,9 +84,9 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         </Badge>
       );
     }
-    
+
     // 2. Work done + accepted = ready to invoice
-    if (isWorkDone && acceptanceStatus === "accepted") {
+    if (isWorkDone && acceptanceStatus === 'accepted') {
       return (
         <Badge className="bg-green-500 text-foreground border-0 hover:bg-green-600 animate-pulse">
           <CheckCheck className="h-3 w-3 mr-1" />
@@ -97,9 +94,9 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         </Badge>
       );
     }
-    
+
     // 3. Accepted but work pending
-    if (acceptanceStatus === "accepted" && !isWorkDone) {
+    if (acceptanceStatus === 'accepted' && !isWorkDone) {
       return (
         <Badge className="bg-emerald-500 text-foreground border-0 hover:bg-emerald-600">
           <CheckCircle className="h-3 w-3 mr-1" />
@@ -107,9 +104,9 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         </Badge>
       );
     }
-    
+
     // 4. Rejected
-    if (acceptanceStatus === "rejected") {
+    if (acceptanceStatus === 'rejected') {
       return (
         <Badge className="bg-red-500 text-foreground border-0 hover:bg-red-600">
           <XCircle className="h-3 w-3 mr-1" />
@@ -117,9 +114,9 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         </Badge>
       );
     }
-    
+
     // 5. Sent but not yet accepted/rejected
-    if (quote.status === "sent") {
+    if (quote.status === 'sent') {
       return (
         <Badge className="bg-blue-500 text-foreground border-0 hover:bg-blue-600">
           <Send className="h-3 w-3 mr-1" />
@@ -127,9 +124,9 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         </Badge>
       );
     }
-    
+
     // 6. Draft
-    if (quote.status === "draft") {
+    if (quote.status === 'draft') {
       return (
         <Badge variant="outline" className="border-muted-foreground/30">
           <FileText className="h-3 w-3 mr-1" />
@@ -137,7 +134,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         </Badge>
       );
     }
-    
+
     // Default
     return (
       <Badge variant="outline" className="border-elec-yellow/50">
@@ -148,18 +145,20 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
     }).format(amount);
   };
 
   const getQuoteStats = () => {
     const total = quotes.length;
-    const accepted = quotes.filter(q => q.acceptance_status === "accepted").length;
-    const rejected = quotes.filter(q => q.acceptance_status === "rejected").length;
-    const pending = quotes.filter(q => !q.acceptance_status || q.acceptance_status === "pending").length;
-    
+    const accepted = quotes.filter((q) => q.acceptance_status === 'accepted').length;
+    const rejected = quotes.filter((q) => q.acceptance_status === 'rejected').length;
+    const pending = quotes.filter(
+      (q) => !q.acceptance_status || q.acceptance_status === 'pending'
+    ).length;
+
     return { total, accepted, rejected, pending };
   };
 
@@ -171,7 +170,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
     setLoading(true);
     try {
       const success = await markWorkComplete(selectedQuote.id);
-      
+
       if (success) {
         toast.success('Work marked as complete');
         setShowWorkCompleteDialog(false);
@@ -204,7 +203,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         invoice_status: 'draft' as const,
         additional_invoice_items: [],
         work_completion_date: new Date(),
-        items: selectedQuote.items.map(item => ({
+        items: selectedQuote.items.map((item) => ({
           ...item,
           completionStatus: 'completed' as const,
           actualQuantity: item.quantity,
@@ -217,7 +216,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
       };
 
       const success = await saveInvoice(invoiceData);
-      
+
       if (success) {
         toast.success('Invoice generated successfully');
         setShowInvoiceDecisionDialog(false);
@@ -236,7 +235,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
 
   const handleRaiseInvoiceWithChanges = () => {
     if (!selectedQuote) return;
-    
+
     setShowInvoiceDecisionDialog(false);
     navigate(`/electrician/invoice-quote-builder/${selectedQuote.id}`);
   };
@@ -259,11 +258,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                 <History className="h-5 w-5" />
                 Quotes History ({stats.total})
               </div>
-              {isOpen ? (
-                <ChevronUp className="h-4 w-4" />
-              ) : (
-                <ChevronDown className="h-4 w-4" />
-              )}
+              {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </CardTitle>
             {!isOpen && (
               <div className="flex gap-2 mt-2">
@@ -274,7 +269,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
             )}
           </CardHeader>
         </CollapsibleTrigger>
-        
+
         <CollapsibleContent>
           <CardContent className="space-y-4">
             {/* Stats Summary */}
@@ -307,7 +302,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                   placeholder="Search by client name or quote number..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className={cn(!searchQuery && "pl-10")}
+                  className={cn(!searchQuery && 'pl-10')}
                 />
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
@@ -327,7 +322,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
             <div className="space-y-2 sm:space-y-3">
               {filteredQuotes.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
-                  {quotes.length === 0 ? "No quotes found" : "No quotes match your search criteria"}
+                  {quotes.length === 0 ? 'No quotes found' : 'No quotes match your search criteria'}
                 </div>
               ) : (
                 filteredQuotes.map((quote) => (
@@ -357,17 +352,19 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                       <div className="flex flex-col gap-2 text-xs text-muted-foreground">
                         <div className="flex items-center gap-2">
                           <Calendar className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
-                          <span>Created {format(quote.createdAt, "dd MMM yyyy")}</span>
+                          <span>Created {format(quote.createdAt, 'dd MMM yyyy')}</span>
                         </div>
                         {quote.accepted_at && (
                           <div className="flex items-center gap-2">
-                            {quote.acceptance_status === "accepted" ? (
+                            {quote.acceptance_status === 'accepted' ? (
                               <CheckCircle className="h-3.5 w-3.5 text-green-500 shrink-0" />
                             ) : (
                               <XCircle className="h-3.5 w-3.5 text-red-500 shrink-0" />
                             )}
                             <span>
-                              {quote.acceptance_status === "accepted" ? "✍️ Signed" : "Rejected"} by {quote.accepted_by_name || 'client'} on {format(quote.accepted_at, "dd MMM yyyy")}
+                              {quote.acceptance_status === 'accepted' ? '✍️ Signed' : 'Rejected'} by{' '}
+                              {quote.accepted_by_name || 'client'} on{' '}
+                              {format(quote.accepted_at, 'dd MMM yyyy')}
                             </span>
                           </div>
                         )}
@@ -383,7 +380,9 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                     {/* Actions */}
                     <div className="p-3 sm:p-4 space-y-2">
                       {/* Primary action based on quote state */}
-                      {quote.acceptance_status === 'accepted' && isWorkComplete(quote) && !hasInvoiceRaised(quote) ? (
+                      {quote.acceptance_status === 'accepted' &&
+                      isWorkComplete(quote) &&
+                      !hasInvoiceRaised(quote) ? (
                         <MobileButton
                           variant="elec"
                           size="wide"
@@ -417,7 +416,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                           View Details
                         </MobileButton>
                       )}
-                      
+
                       {/* Secondary action - always show View Details if primary is different */}
                       {(quote.acceptance_status === 'accepted' || isWorkComplete(quote)) && (
                         <MobileButton
@@ -440,7 +439,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
               <div className="text-center pt-4">
                 <Button
                   variant="outline"
-                  onClick={() => navigate("/electrician/quotes")}
+                  onClick={() => navigate('/electrician/quotes')}
                   className="flex items-center gap-2"
                 >
                   <FileText className="h-4 w-4" />
@@ -460,7 +459,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         description={
           selectedQuote
             ? `Confirm that all work for quote #${selectedQuote.quoteNumber} has been completed. This will allow you to raise an invoice.`
-            : ""
+            : ''
         }
         confirmText="Mark Complete"
         onConfirm={handleMarkWorkComplete}

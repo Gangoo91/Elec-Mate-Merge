@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Zap } from "lucide-react";
-import { LoadBalancingResult } from "@/lib/calculators/engines/loadBalancingEngine";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Zap } from 'lucide-react';
+import { LoadBalancingResult } from '@/lib/calculators/engines/loadBalancingEngine';
 
 interface LoadBalancingViewProps {
   balancing: LoadBalancingResult;
@@ -19,7 +19,7 @@ export const LoadBalancingView = ({ balancing }: LoadBalancingViewProps) => {
             <Zap className="h-5 w-5" />
             Three-Phase Load Balancing
           </CardTitle>
-          <Badge variant={balancing.compliant ? "default" : "destructive"}>
+          <Badge variant={balancing.compliant ? 'default' : 'destructive'}>
             {balancing.imbalance.toFixed(1)}% Imbalance
           </Badge>
         </div>
@@ -69,11 +69,20 @@ export const LoadBalancingView = ({ balancing }: LoadBalancingViewProps) => {
           <p className="text-sm font-medium mb-3">Circuit Allocation</p>
           <div className="space-y-2">
             {balancing.circuitAllocation.map((alloc) => (
-              <div key={alloc.circuitNumber} className="flex items-center justify-between text-xs bg-muted/50 rounded p-2">
-                <span className="font-medium">C{alloc.circuitNumber}: {alloc.name}</span>
+              <div
+                key={alloc.circuitNumber}
+                className="flex items-center justify-between text-xs bg-muted/50 rounded p-2"
+              >
+                <span className="font-medium">
+                  C{alloc.circuitNumber}: {alloc.name}
+                </span>
                 <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-xs">{alloc.phase}</Badge>
-                  <span className="text-muted-foreground">{alloc.loadContribution.toFixed(1)}A</span>
+                  <Badge variant="outline" className="text-xs">
+                    {alloc.phase}
+                  </Badge>
+                  <span className="text-muted-foreground">
+                    {alloc.loadContribution.toFixed(1)}A
+                  </span>
                 </div>
               </div>
             ))}

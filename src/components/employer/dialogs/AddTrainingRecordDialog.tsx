@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,19 +6,19 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import {
   Command,
   CommandEmpty,
@@ -26,19 +26,15 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { 
-  GraduationCap, 
-  Building2, 
-  Calendar, 
-  FileText, 
-  PoundSterling, 
-  Bell, 
+  GraduationCap,
+  Building2,
+  Calendar,
+  FileText,
+  PoundSterling,
+  Bell,
   Upload,
   CheckCircle2,
   Sparkles,
@@ -55,86 +51,238 @@ import {
   Heart,
   X,
   Search,
-  PenLine
-} from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
-import { useAddElecIdTraining } from "@/hooks/useElecId";
+  PenLine,
+} from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+import { useAddElecIdTraining } from '@/hooks/useElecId';
 
 const EXPIRY_OPTIONS = [
-  { value: 1, label: "1 year" },
-  { value: 3, label: "3 years" },
-  { value: 5, label: "5 years" },
-  { value: null, label: "No expiry" },
+  { value: 1, label: '1 year' },
+  { value: 3, label: '3 years' },
+  { value: 5, label: '5 years' },
+  { value: null, label: 'No expiry' },
 ] as const;
 
 const COMMON_PROVIDERS = [
-  "CITB", "City & Guilds", "IOSH", "NEBOSH", "In-house", 
-  "St John Ambulance", "British Red Cross", "PASMA", "IPAF"
+  'CITB',
+  'City & Guilds',
+  'IOSH',
+  'NEBOSH',
+  'In-house',
+  'St John Ambulance',
+  'British Red Cross',
+  'PASMA',
+  'IPAF',
 ];
 
 // Training course data with categories, providers, and expiry periods
 const TRAINING_COURSES = {
-  "Health & Safety": [
-    { name: "First Aid at Work", providers: ["St John Ambulance", "British Red Cross", "CITB"], expiryYears: 3, mandatory: true },
-    { name: "Emergency First Aid", providers: ["St John Ambulance", "British Red Cross"], expiryYears: 3, mandatory: false },
-    { name: "Mental Health First Aider", providers: ["MHFA England", "Mental Health at Work"], expiryYears: 3, mandatory: false },
-    { name: "Fire Marshal / Warden", providers: ["CITB", "IOSH", "In-house"], expiryYears: 3, mandatory: true },
-    { name: "Manual Handling", providers: ["CITB", "IOSH", "In-house"], expiryYears: 3, mandatory: true },
-    { name: "COSHH Awareness", providers: ["CITB", "IOSH", "In-house"], expiryYears: 3, mandatory: false },
-    { name: "DSE Assessment", providers: ["IOSH", "In-house"], expiryYears: null, mandatory: false },
+  'Health & Safety': [
+    {
+      name: 'First Aid at Work',
+      providers: ['St John Ambulance', 'British Red Cross', 'CITB'],
+      expiryYears: 3,
+      mandatory: true,
+    },
+    {
+      name: 'Emergency First Aid',
+      providers: ['St John Ambulance', 'British Red Cross'],
+      expiryYears: 3,
+      mandatory: false,
+    },
+    {
+      name: 'Mental Health First Aider',
+      providers: ['MHFA England', 'Mental Health at Work'],
+      expiryYears: 3,
+      mandatory: false,
+    },
+    {
+      name: 'Fire Marshal / Warden',
+      providers: ['CITB', 'IOSH', 'In-house'],
+      expiryYears: 3,
+      mandatory: true,
+    },
+    {
+      name: 'Manual Handling',
+      providers: ['CITB', 'IOSH', 'In-house'],
+      expiryYears: 3,
+      mandatory: true,
+    },
+    {
+      name: 'COSHH Awareness',
+      providers: ['CITB', 'IOSH', 'In-house'],
+      expiryYears: 3,
+      mandatory: false,
+    },
+    {
+      name: 'DSE Assessment',
+      providers: ['IOSH', 'In-house'],
+      expiryYears: null,
+      mandatory: false,
+    },
   ],
-  "Working at Height": [
-    { name: "PASMA (Scaffold Towers)", providers: ["PASMA", "CITB"], expiryYears: 5, mandatory: true },
-    { name: "MEWP Operator", providers: ["IPAF", "CITB"], expiryYears: 5, mandatory: true },
-    { name: "Harness & Fall Arrest", providers: ["CITB", "Heightec", "Lyon Equipment"], expiryYears: 3, mandatory: true },
-    { name: "Roof Work Safety", providers: ["CITB", "IOSH"], expiryYears: 3, mandatory: false },
-    { name: "Working at Height General", providers: ["CITB", "IOSH", "In-house"], expiryYears: 3, mandatory: true },
-    { name: "Ladder Safety", providers: ["CITB", "In-house"], expiryYears: 3, mandatory: false },
+  'Working at Height': [
+    {
+      name: 'PASMA (Scaffold Towers)',
+      providers: ['PASMA', 'CITB'],
+      expiryYears: 5,
+      mandatory: true,
+    },
+    { name: 'MEWP Operator', providers: ['IPAF', 'CITB'], expiryYears: 5, mandatory: true },
+    {
+      name: 'Harness & Fall Arrest',
+      providers: ['CITB', 'Heightec', 'Lyon Equipment'],
+      expiryYears: 3,
+      mandatory: true,
+    },
+    { name: 'Roof Work Safety', providers: ['CITB', 'IOSH'], expiryYears: 3, mandatory: false },
+    {
+      name: 'Working at Height General',
+      providers: ['CITB', 'IOSH', 'In-house'],
+      expiryYears: 3,
+      mandatory: true,
+    },
+    { name: 'Ladder Safety', providers: ['CITB', 'In-house'], expiryYears: 3, mandatory: false },
   ],
-  "Hazardous Environments": [
-    { name: "Asbestos Awareness", providers: ["CITB", "UKATA", "IOSH"], expiryYears: 1, mandatory: true },
-    { name: "Confined Spaces", providers: ["CITB", "SafeContractor"], expiryYears: 3, mandatory: true },
-    { name: "Respirator Fit Test", providers: ["Fit2Fit", "HSL"], expiryYears: 1, mandatory: true },
-    { name: "Control of Substances Hazardous to Health", providers: ["CITB", "IOSH"], expiryYears: 3, mandatory: false },
-    { name: "Lead Awareness", providers: ["CITB", "IOSH"], expiryYears: 3, mandatory: false },
-    { name: "Legionella Awareness", providers: ["CITB", "Water Hygiene Centre"], expiryYears: 3, mandatory: false },
+  'Hazardous Environments': [
+    {
+      name: 'Asbestos Awareness',
+      providers: ['CITB', 'UKATA', 'IOSH'],
+      expiryYears: 1,
+      mandatory: true,
+    },
+    {
+      name: 'Confined Spaces',
+      providers: ['CITB', 'SafeContractor'],
+      expiryYears: 3,
+      mandatory: true,
+    },
+    { name: 'Respirator Fit Test', providers: ['Fit2Fit', 'HSL'], expiryYears: 1, mandatory: true },
+    {
+      name: 'Control of Substances Hazardous to Health',
+      providers: ['CITB', 'IOSH'],
+      expiryYears: 3,
+      mandatory: false,
+    },
+    { name: 'Lead Awareness', providers: ['CITB', 'IOSH'], expiryYears: 3, mandatory: false },
+    {
+      name: 'Legionella Awareness',
+      providers: ['CITB', 'Water Hygiene Centre'],
+      expiryYears: 3,
+      mandatory: false,
+    },
   ],
-  "Electrical": [
-    { name: "18th Edition Wiring Regulations", providers: ["City & Guilds", "NICEIC", "ECA"], expiryYears: null, mandatory: true },
-    { name: "PAT Testing", providers: ["City & Guilds", "ECA", "JIB"], expiryYears: 3, mandatory: false },
-    { name: "EV Charger Installation", providers: ["City & Guilds", "IMI", "ECA"], expiryYears: null, mandatory: false },
-    { name: "Solar PV Installation", providers: ["City & Guilds", "MCS", "ECA"], expiryYears: null, mandatory: false },
-    { name: "Inspection & Testing (2391)", providers: ["City & Guilds", "EAL", "NICEIC"], expiryYears: 5, mandatory: true },
-    { name: "Initial Verification (2392)", providers: ["City & Guilds", "EAL"], expiryYears: 5, mandatory: false },
-    { name: "Electrical Safety Awareness", providers: ["In-house", "ECA", "JIB"], expiryYears: 3, mandatory: false },
+  Electrical: [
+    {
+      name: '18th Edition Wiring Regulations',
+      providers: ['City & Guilds', 'NICEIC', 'ECA'],
+      expiryYears: null,
+      mandatory: true,
+    },
+    {
+      name: 'PAT Testing',
+      providers: ['City & Guilds', 'ECA', 'JIB'],
+      expiryYears: 3,
+      mandatory: false,
+    },
+    {
+      name: 'EV Charger Installation',
+      providers: ['City & Guilds', 'IMI', 'ECA'],
+      expiryYears: null,
+      mandatory: false,
+    },
+    {
+      name: 'Solar PV Installation',
+      providers: ['City & Guilds', 'MCS', 'ECA'],
+      expiryYears: null,
+      mandatory: false,
+    },
+    {
+      name: 'Inspection & Testing (2391)',
+      providers: ['City & Guilds', 'EAL', 'NICEIC'],
+      expiryYears: 5,
+      mandatory: true,
+    },
+    {
+      name: 'Initial Verification (2392)',
+      providers: ['City & Guilds', 'EAL'],
+      expiryYears: 5,
+      mandatory: false,
+    },
+    {
+      name: 'Electrical Safety Awareness',
+      providers: ['In-house', 'ECA', 'JIB'],
+      expiryYears: 3,
+      mandatory: false,
+    },
   ],
-  "Equipment & Plant": [
-    { name: "CSCS Card Renewal", providers: ["CSCS", "CITB"], expiryYears: 5, mandatory: true },
-    { name: "Forklift / Telehandler", providers: ["RTITB", "ITSSAR", "AITT"], expiryYears: 3, mandatory: true },
-    { name: "Abrasive Wheels", providers: ["CITB", "In-house"], expiryYears: 3, mandatory: true },
-    { name: "Excavator / Plant Operator", providers: ["CPCS", "CITB"], expiryYears: 5, mandatory: true },
-    { name: "Slinger / Signaller", providers: ["CPCS", "CITB"], expiryYears: 5, mandatory: false },
-    { name: "Crane Operator", providers: ["CPCS", "ALLMI"], expiryYears: 5, mandatory: true },
-    { name: "Powered Access (Boom)", providers: ["IPAF", "CITB"], expiryYears: 5, mandatory: false },
+  'Equipment & Plant': [
+    { name: 'CSCS Card Renewal', providers: ['CSCS', 'CITB'], expiryYears: 5, mandatory: true },
+    {
+      name: 'Forklift / Telehandler',
+      providers: ['RTITB', 'ITSSAR', 'AITT'],
+      expiryYears: 3,
+      mandatory: true,
+    },
+    { name: 'Abrasive Wheels', providers: ['CITB', 'In-house'], expiryYears: 3, mandatory: true },
+    {
+      name: 'Excavator / Plant Operator',
+      providers: ['CPCS', 'CITB'],
+      expiryYears: 5,
+      mandatory: true,
+    },
+    { name: 'Slinger / Signaller', providers: ['CPCS', 'CITB'], expiryYears: 5, mandatory: false },
+    { name: 'Crane Operator', providers: ['CPCS', 'ALLMI'], expiryYears: 5, mandatory: true },
+    {
+      name: 'Powered Access (Boom)',
+      providers: ['IPAF', 'CITB'],
+      expiryYears: 5,
+      mandatory: false,
+    },
   ],
-  "Construction & Trade": [
-    { name: "Site Management Safety Training Scheme (SMSTS)", providers: ["CITB"], expiryYears: 5, mandatory: true },
-    { name: "Site Supervisor Safety Training Scheme (SSSTS)", providers: ["CITB"], expiryYears: 5, mandatory: true },
-    { name: "Health & Safety Awareness", providers: ["CITB", "IOSH"], expiryYears: 5, mandatory: true },
-    { name: "IOSH Managing Safely", providers: ["IOSH"], expiryYears: 3, mandatory: false },
-    { name: "NEBOSH General Certificate", providers: ["NEBOSH"], expiryYears: null, mandatory: false },
-    { name: "Temporary Works Coordinator", providers: ["CITB", "TWforum"], expiryYears: 5, mandatory: false },
+  'Construction & Trade': [
+    {
+      name: 'Site Management Safety Training Scheme (SMSTS)',
+      providers: ['CITB'],
+      expiryYears: 5,
+      mandatory: true,
+    },
+    {
+      name: 'Site Supervisor Safety Training Scheme (SSSTS)',
+      providers: ['CITB'],
+      expiryYears: 5,
+      mandatory: true,
+    },
+    {
+      name: 'Health & Safety Awareness',
+      providers: ['CITB', 'IOSH'],
+      expiryYears: 5,
+      mandatory: true,
+    },
+    { name: 'IOSH Managing Safely', providers: ['IOSH'], expiryYears: 3, mandatory: false },
+    {
+      name: 'NEBOSH General Certificate',
+      providers: ['NEBOSH'],
+      expiryYears: null,
+      mandatory: false,
+    },
+    {
+      name: 'Temporary Works Coordinator',
+      providers: ['CITB', 'TWforum'],
+      expiryYears: 5,
+      mandatory: false,
+    },
   ],
 };
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
-  "Health & Safety": <Heart className="h-4 w-4" />,
-  "Working at Height": <HardHat className="h-4 w-4" />,
-  "Hazardous Environments": <AlertTriangle className="h-4 w-4" />,
-  "Electrical": <Zap className="h-4 w-4" />,
-  "Equipment & Plant": <Wrench className="h-4 w-4" />,
-  "Construction & Trade": <Shield className="h-4 w-4" />,
+  'Health & Safety': <Heart className="h-4 w-4" />,
+  'Working at Height': <HardHat className="h-4 w-4" />,
+  'Hazardous Environments': <AlertTriangle className="h-4 w-4" />,
+  Electrical: <Zap className="h-4 w-4" />,
+  'Equipment & Plant': <Wrench className="h-4 w-4" />,
+  'Construction & Trade': <Shield className="h-4 w-4" />,
 };
 
 interface AddTrainingRecordDialogProps {
@@ -156,16 +304,16 @@ export const AddTrainingRecordDialog = ({
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isManualMode, setIsManualMode] = useState(false);
   const [customExpiryYears, setCustomExpiryYears] = useState<number | null>(3);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [formData, setFormData] = useState({
-    courseName: "",
-    provider: "",
-    completionDate: "",
-    expiryDate: "",
-    certificateNumber: "",
-    fundingSource: "employer",
-    cost: "",
-    notes: "",
+    courseName: '',
+    provider: '',
+    completionDate: '',
+    expiryDate: '',
+    certificateNumber: '',
+    fundingSource: 'employer',
+    cost: '',
+    notes: '',
   });
   const [selectedCourse, setSelectedCourse] = useState<{
     name: string;
@@ -177,30 +325,32 @@ export const AddTrainingRecordDialog = ({
   // Get all courses flattened for searching
   const allCourses = useMemo(() => {
     return Object.entries(TRAINING_COURSES).flatMap(([category, courses]) =>
-      courses.map(course => ({ ...course, category }))
+      courses.map((course) => ({ ...course, category }))
     );
   }, []);
 
   // Get filtered courses based on selected category
   const filteredCourses = useMemo(() => {
     if (selectedCategory) {
-      return { [selectedCategory]: TRAINING_COURSES[selectedCategory as keyof typeof TRAINING_COURSES] };
+      return {
+        [selectedCategory]: TRAINING_COURSES[selectedCategory as keyof typeof TRAINING_COURSES],
+      };
     }
     return TRAINING_COURSES;
   }, [selectedCategory]);
 
   // Calculate expiry date based on completion date and course expiry years
   const calculateExpiryDate = (completionDate: string, expiryYears: number | null) => {
-    if (!completionDate || expiryYears === null) return "";
+    if (!completionDate || expiryYears === null) return '';
     const date = new Date(completionDate);
     date.setFullYear(date.getFullYear() + expiryYears);
     return date.toISOString().split('T')[0];
   };
 
   // Handle course selection
-  const handleCourseSelect = (course: typeof allCourses[0]) => {
+  const handleCourseSelect = (course: (typeof allCourses)[0]) => {
     setSelectedCourse(course);
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       courseName: course.name,
       provider: course.providers[0], // Auto-select first provider
@@ -212,7 +362,7 @@ export const AddTrainingRecordDialog = ({
   // Handle completion date change - recalculate expiry
   const handleCompletionDateChange = (date: string) => {
     const expiryYears = selectedCourse?.expiryYears ?? (isManualMode ? customExpiryYears : null);
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       completionDate: date,
       expiryDate: calculateExpiryDate(date, expiryYears),
@@ -223,7 +373,7 @@ export const AddTrainingRecordDialog = ({
   const handleCustomExpiryChange = (years: number | null) => {
     setCustomExpiryYears(years);
     if (formData.completionDate) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         expiryDate: calculateExpiryDate(prev.completionDate, years),
       }));
@@ -233,19 +383,19 @@ export const AddTrainingRecordDialog = ({
   // Handle adding custom course from search
   const handleAddCustomCourse = () => {
     if (searchQuery.trim()) {
-      setFormData(prev => ({ ...prev, courseName: searchQuery.trim() }));
+      setFormData((prev) => ({ ...prev, courseName: searchQuery.trim() }));
       setSelectedCourse(null);
       setCourseOpen(false);
-      setSearchQuery("");
+      setSearchQuery('');
     }
   };
 
   const handleSubmit = async () => {
     if (!formData.courseName || !formData.completionDate) {
       toast({
-        title: "Required fields missing",
-        description: "Please fill in the course name and completion date.",
-        variant: "destructive",
+        title: 'Required fields missing',
+        description: 'Please fill in the course name and completion date.',
+        variant: 'destructive',
       });
       return;
     }
@@ -263,25 +413,25 @@ export const AddTrainingRecordDialog = ({
           funded_by: formData.fundingSource || null,
           status: 'valid',
         });
-        
+
         toast({
-          title: "Training record added",
+          title: 'Training record added',
           description: `${formData.courseName} has been added to ${workerName}'s Elec-ID.`,
         });
         onOpenChange(false);
         resetForm();
       } catch (error) {
-        console.error("Error adding training:", error);
+        console.error('Error adding training:', error);
         toast({
-          title: "Error",
-          description: "Could not add training record. Please try again.",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Could not add training record. Please try again.',
+          variant: 'destructive',
         });
       }
     } else {
       // Fallback for when no profileId (mock behavior)
       toast({
-        title: "Training record added",
+        title: 'Training record added',
         description: `${formData.courseName} has been added to ${workerName}'s Elec-ID.`,
       });
       onOpenChange(false);
@@ -291,20 +441,20 @@ export const AddTrainingRecordDialog = ({
 
   const resetForm = () => {
     setFormData({
-      courseName: "",
-      provider: "",
-      completionDate: "",
-      expiryDate: "",
-      certificateNumber: "",
-      fundingSource: "employer",
-      cost: "",
-      notes: "",
+      courseName: '',
+      provider: '',
+      completionDate: '',
+      expiryDate: '',
+      certificateNumber: '',
+      fundingSource: 'employer',
+      cost: '',
+      notes: '',
     });
     setSelectedCourse(null);
     setSelectedCategory(null);
     setIsManualMode(false);
     setCustomExpiryYears(3);
-    setSearchQuery("");
+    setSearchQuery('');
   };
 
   const completedFields = [
@@ -315,10 +465,13 @@ export const AddTrainingRecordDialog = ({
   ].filter(Boolean).length;
 
   return (
-    <Dialog open={open} onOpenChange={(isOpen) => {
-      onOpenChange(isOpen);
-      if (!isOpen) resetForm();
-    }}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        onOpenChange(isOpen);
+        if (!isOpen) resetForm();
+      }}
+    >
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0">
         {/* Premium Header */}
         <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-b border-border p-6">
@@ -330,24 +483,27 @@ export const AddTrainingRecordDialog = ({
               <div>
                 <DialogTitle className="text-xl">Add Training Record</DialogTitle>
                 <DialogDescription className="text-muted-foreground">
-                  Adding to <span className="font-medium text-foreground">{workerName}</span>'s Elec-ID
+                  Adding to <span className="font-medium text-foreground">{workerName}</span>'s
+                  Elec-ID
                 </DialogDescription>
               </div>
             </div>
-            
+
             {/* Progress indicator */}
             <div className="flex items-center gap-2 pt-2">
               <div className="flex gap-1">
                 {[1, 2, 3, 4].map((step) => (
-                  <div 
-                    key={step} 
+                  <div
+                    key={step}
                     className={`h-1.5 w-8 rounded-full transition-colors ${
                       step <= completedFields ? 'bg-elec-yellow' : 'bg-muted'
-                    }`} 
+                    }`}
                   />
                 ))}
               </div>
-              <span className="text-xs text-muted-foreground">{completedFields}/4 fields completed</span>
+              <span className="text-xs text-muted-foreground">
+                {completedFields}/4 fields completed
+              </span>
             </div>
           </DialogHeader>
         </div>
@@ -357,7 +513,7 @@ export const AddTrainingRecordDialog = ({
           <div className="flex items-center gap-2 p-1 bg-muted/50 rounded-lg w-fit">
             <Button
               type="button"
-              variant={!isManualMode ? "default" : "ghost"}
+              variant={!isManualMode ? 'default' : 'ghost'}
               size="sm"
               onClick={() => setIsManualMode(false)}
               className="h-9 gap-2"
@@ -367,7 +523,7 @@ export const AddTrainingRecordDialog = ({
             </Button>
             <Button
               type="button"
-              variant={isManualMode ? "default" : "ghost"}
+              variant={isManualMode ? 'default' : 'ghost'}
               size="sm"
               onClick={() => setIsManualMode(true)}
               className="h-9 gap-2"
@@ -380,11 +536,13 @@ export const AddTrainingRecordDialog = ({
           {/* Category Quick Filter - only show in quick select mode */}
           {!isManualMode && (
             <div className="space-y-3">
-              <Label className="text-sm font-medium text-muted-foreground">Quick Filter by Category</Label>
+              <Label className="text-sm font-medium text-muted-foreground">
+                Quick Filter by Category
+              </Label>
               <div className="flex flex-wrap gap-2">
                 <Button
                   type="button"
-                  variant={selectedCategory === null ? "default" : "outline"}
+                  variant={selectedCategory === null ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(null)}
                   className="h-8"
@@ -395,7 +553,7 @@ export const AddTrainingRecordDialog = ({
                   <Button
                     key={category}
                     type="button"
-                    variant={selectedCategory === category ? "default" : "outline"}
+                    variant={selectedCategory === category ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setSelectedCategory(category)}
                     className="h-8 gap-1.5"
@@ -413,9 +571,11 @@ export const AddTrainingRecordDialog = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border/50">
               <Award className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">Course Details</h3>
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">
+                Course Details
+              </h3>
             </div>
-            
+
             <div className="grid gap-4">
               {/* Manual Mode - Simple Text Inputs */}
               {isManualMode ? (
@@ -450,7 +610,7 @@ export const AddTrainingRecordDialog = ({
                         list="common-providers"
                       />
                       <datalist id="common-providers">
-                        {COMMON_PROVIDERS.map(provider => (
+                        {COMMON_PROVIDERS.map((provider) => (
                           <option key={provider} value={provider} />
                         ))}
                       </datalist>
@@ -467,7 +627,7 @@ export const AddTrainingRecordDialog = ({
                         <Button
                           key={option.label}
                           type="button"
-                          variant={customExpiryYears === option.value ? "default" : "outline"}
+                          variant={customExpiryYears === option.value ? 'default' : 'outline'}
                           size="sm"
                           onClick={() => handleCustomExpiryChange(option.value)}
                           className="h-9"
@@ -499,10 +659,15 @@ export const AddTrainingRecordDialog = ({
                               <GraduationCap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                               <span className="truncate">{formData.courseName}</span>
                               {selectedCourse?.mandatory && (
-                                <Badge variant="destructive" className="text-[10px] px-1.5 py-0">Required</Badge>
+                                <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
+                                  Required
+                                </Badge>
                               )}
                               {selectedCourse?.expiryYears && (
-                                <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-warning text-warning">
+                                <Badge
+                                  variant="outline"
+                                  className="text-[10px] px-1.5 py-0 border-warning text-warning"
+                                >
                                   {selectedCourse.expiryYears}yr
                                 </Badge>
                               )}
@@ -516,18 +681,23 @@ export const AddTrainingRecordDialog = ({
                           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+                      <PopoverContent
+                        className="w-[var(--radix-popover-trigger-width)] p-0"
+                        align="start"
+                      >
                         <Command>
-                          <CommandInput 
-                            placeholder="Search courses..." 
-                            className="h-10" 
+                          <CommandInput
+                            placeholder="Search courses..."
+                            className="h-10"
                             value={searchQuery}
                             onValueChange={setSearchQuery}
                           />
                           <CommandList className="max-h-[300px]">
                             <CommandEmpty>
                               <div className="p-4 text-center">
-                                <p className="text-sm text-muted-foreground mb-2">No course found for "{searchQuery}"</p>
+                                <p className="text-sm text-muted-foreground mb-2">
+                                  No course found for "{searchQuery}"
+                                </p>
                                 <Button
                                   variant="outline"
                                   size="sm"
@@ -540,12 +710,15 @@ export const AddTrainingRecordDialog = ({
                               </div>
                             </CommandEmpty>
                             {Object.entries(filteredCourses).map(([category, courses]) => (
-                              <CommandGroup key={category} heading={
-                                <span className="flex items-center gap-2">
-                                  {CATEGORY_ICONS[category]}
-                                  {category}
-                                </span>
-                              }>
+                              <CommandGroup
+                                key={category}
+                                heading={
+                                  <span className="flex items-center gap-2">
+                                    {CATEGORY_ICONS[category]}
+                                    {category}
+                                  </span>
+                                }
+                              >
                                 {courses.map((course) => (
                                   <CommandItem
                                     key={course.name}
@@ -555,22 +728,37 @@ export const AddTrainingRecordDialog = ({
                                   >
                                     <Check
                                       className={cn(
-                                        "mr-2 h-4 w-4",
-                                        formData.courseName === course.name ? "opacity-100" : "opacity-0"
+                                        'mr-2 h-4 w-4',
+                                        formData.courseName === course.name
+                                          ? 'opacity-100'
+                                          : 'opacity-0'
                                       )}
                                     />
                                     <div className="flex-1 flex items-center justify-between gap-2">
                                       <span>{course.name}</span>
                                       <div className="flex items-center gap-1">
                                         {course.mandatory && (
-                                          <Badge variant="destructive" className="text-[10px] px-1 py-0">Required</Badge>
+                                          <Badge
+                                            variant="destructive"
+                                            className="text-[10px] px-1 py-0"
+                                          >
+                                            Required
+                                          </Badge>
                                         )}
                                         {course.expiryYears !== null ? (
-                                          <Badge variant="outline" className="text-[10px] px-1 py-0">
+                                          <Badge
+                                            variant="outline"
+                                            className="text-[10px] px-1 py-0"
+                                          >
                                             {course.expiryYears}yr
                                           </Badge>
                                         ) : (
-                                          <Badge variant="secondary" className="text-[10px] px-1 py-0">No expiry</Badge>
+                                          <Badge
+                                            variant="secondary"
+                                            className="text-[10px] px-1 py-0"
+                                          >
+                                            No expiry
+                                          </Badge>
                                         )}
                                       </div>
                                     </div>
@@ -582,33 +770,37 @@ export const AddTrainingRecordDialog = ({
                         </Command>
                       </PopoverContent>
                     </Popover>
-                    
+
                     {/* Custom course indicator with expiry selector */}
                     {formData.courseName && !selectedCourse && (
                       <div className="space-y-3 p-3 bg-muted/30 rounded-lg border border-border/50">
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <span>Custom course:</span>
-                          <Badge variant="outline" className="text-[10px]">{formData.courseName}</Badge>
+                          <Badge variant="outline" className="text-[10px]">
+                            {formData.courseName}
+                          </Badge>
                           <Button
                             type="button"
                             variant="ghost"
                             size="sm"
                             className="h-5 w-5 p-0 ml-auto"
-                            onClick={() => setFormData(prev => ({ ...prev, courseName: "" }))}
+                            onClick={() => setFormData((prev) => ({ ...prev, courseName: '' }))}
                           >
                             <X className="h-3 w-3" />
                           </Button>
                         </div>
-                        
+
                         {/* Expiry selector for custom courses */}
                         <div className="space-y-2">
-                          <Label className="text-xs font-medium text-muted-foreground">Expires after:</Label>
+                          <Label className="text-xs font-medium text-muted-foreground">
+                            Expires after:
+                          </Label>
                           <div className="flex flex-wrap gap-1.5">
                             {EXPIRY_OPTIONS.map((option) => (
                               <Button
                                 key={option.label}
                                 type="button"
-                                variant={customExpiryYears === option.value ? "default" : "outline"}
+                                variant={customExpiryYears === option.value ? 'default' : 'outline'}
                                 size="sm"
                                 onClick={() => handleCustomExpiryChange(option.value)}
                                 className="h-7 text-xs"
@@ -649,7 +841,10 @@ export const AddTrainingRecordDialog = ({
                             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+                        <PopoverContent
+                          className="w-[var(--radix-popover-trigger-width)] p-0"
+                          align="start"
+                        >
                           <Command>
                             <CommandInput placeholder="Search providers..." className="h-10" />
                             <CommandList>
@@ -660,15 +855,15 @@ export const AddTrainingRecordDialog = ({
                                     key={provider}
                                     value={provider}
                                     onSelect={() => {
-                                      setFormData(prev => ({ ...prev, provider }));
+                                      setFormData((prev) => ({ ...prev, provider }));
                                       setProviderOpen(false);
                                     }}
                                     className="cursor-pointer"
                                   >
                                     <Check
                                       className={cn(
-                                        "mr-2 h-4 w-4",
-                                        formData.provider === provider ? "opacity-100" : "opacity-0"
+                                        'mr-2 h-4 w-4',
+                                        formData.provider === provider ? 'opacity-100' : 'opacity-0'
                                       )}
                                     />
                                     {provider}
@@ -679,7 +874,7 @@ export const AddTrainingRecordDialog = ({
                                 <CommandItem
                                   value="Other"
                                   onSelect={() => {
-                                    setFormData(prev => ({ ...prev, provider: "" }));
+                                    setFormData((prev) => ({ ...prev, provider: '' }));
                                     setProviderOpen(false);
                                   }}
                                   className="cursor-pointer text-muted-foreground"
@@ -703,7 +898,7 @@ export const AddTrainingRecordDialog = ({
                           list="common-providers-quickselect"
                         />
                         <datalist id="common-providers-quickselect">
-                          {COMMON_PROVIDERS.map(provider => (
+                          {COMMON_PROVIDERS.map((provider) => (
                             <option key={provider} value={provider} />
                           ))}
                         </datalist>
@@ -719,12 +914,17 @@ export const AddTrainingRecordDialog = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border/50">
               <Clock className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">Dates & Certificate</h3>
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">
+                Dates & Certificate
+              </h3>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="completionDate" className="flex items-center gap-2 text-sm font-medium">
+                <Label
+                  htmlFor="completionDate"
+                  className="flex items-center gap-2 text-sm font-medium"
+                >
                   Completion Date
                   <span className="text-destructive">*</span>
                 </Label>
@@ -743,11 +943,19 @@ export const AddTrainingRecordDialog = ({
               <div className="space-y-2">
                 <Label htmlFor="expiryDate" className="flex items-center gap-2 text-sm font-medium">
                   Expiry Date
-                  {(selectedCourse?.expiryYears === null || (isManualMode && customExpiryYears === null) || (!selectedCourse && !isManualMode && customExpiryYears === null)) && (
-                    <Badge variant="secondary" className="text-[10px]">No expiry</Badge>
+                  {(selectedCourse?.expiryYears === null ||
+                    (isManualMode && customExpiryYears === null) ||
+                    (!selectedCourse && !isManualMode && customExpiryYears === null)) && (
+                    <Badge variant="secondary" className="text-[10px]">
+                      No expiry
+                    </Badge>
                   )}
-                  {(selectedCourse?.expiryYears || (isManualMode && customExpiryYears !== null) || (!selectedCourse && formData.courseName && customExpiryYears !== null)) && (
-                    <Badge variant="outline" className="text-[10px] border-success text-success">Auto-calculated</Badge>
+                  {(selectedCourse?.expiryYears ||
+                    (isManualMode && customExpiryYears !== null) ||
+                    (!selectedCourse && formData.courseName && customExpiryYears !== null)) && (
+                    <Badge variant="outline" className="text-[10px] border-success text-success">
+                      Auto-calculated
+                    </Badge>
                   )}
                 </Label>
                 <div className="relative">
@@ -758,14 +966,20 @@ export const AddTrainingRecordDialog = ({
                     value={formData.expiryDate}
                     onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
                     className="pl-10 h-11 bg-background border-border/50 focus:border-elec-yellow/50"
-                    disabled={(selectedCourse?.expiryYears === null) || (isManualMode && customExpiryYears === null) || (!selectedCourse && !isManualMode && customExpiryYears === null)}
+                    disabled={
+                      selectedCourse?.expiryYears === null ||
+                      (isManualMode && customExpiryYears === null) ||
+                      (!selectedCourse && !isManualMode && customExpiryYears === null)
+                    }
                   />
                 </div>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="certificateNumber" className="text-sm font-medium">Certificate Number</Label>
+              <Label htmlFor="certificateNumber" className="text-sm font-medium">
+                Certificate Number
+              </Label>
               <div className="relative">
                 <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -783,9 +997,11 @@ export const AddTrainingRecordDialog = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border/50">
               <FileCheck className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">Documentation</h3>
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">
+                Documentation
+              </h3>
             </div>
-            
+
             {/* Premium Upload Area */}
             <div className="group relative border-2 border-dashed border-border/50 hover:border-elec-yellow/50 rounded-xl p-8 text-center transition-all duration-300 hover:bg-elec-yellow/5 cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
@@ -804,10 +1020,14 @@ export const AddTrainingRecordDialog = ({
           <div className="bg-gradient-to-br from-muted/50 to-muted/20 rounded-xl p-5 border border-border/30">
             <div className="flex items-center gap-2 mb-4">
               <PoundSterling className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">Funding Information</h3>
-              <Badge variant="outline" className="ml-auto text-[10px]">Optional</Badge>
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">
+                Funding Information
+              </h3>
+              <Badge variant="outline" className="ml-auto text-[10px]">
+                Optional
+              </Badge>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Funding Source</Label>
@@ -828,7 +1048,9 @@ export const AddTrainingRecordDialog = ({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="cost" className="text-sm font-medium">Cost (£)</Label>
+                <Label htmlFor="cost" className="text-sm font-medium">
+                  Cost (£)
+                </Label>
                 <div className="relative">
                   <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -844,7 +1066,9 @@ export const AddTrainingRecordDialog = ({
             </div>
 
             <div className="space-y-2 mt-4">
-              <Label htmlFor="notes" className="text-sm font-medium">Notes</Label>
+              <Label htmlFor="notes" className="text-sm font-medium">
+                Notes
+              </Label>
               <Textarea
                 id="notes"
                 placeholder="Any additional notes about this training..."
@@ -859,9 +1083,11 @@ export const AddTrainingRecordDialog = ({
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Bell className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">Worker Notification Preview</h3>
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">
+                Worker Notification Preview
+              </h3>
             </div>
-            
+
             <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-4 shadow-xl">
               {/* Mock phone notification */}
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
@@ -875,7 +1101,7 @@ export const AddTrainingRecordDialog = ({
                       <span className="text-[10px] text-foreground/50">now</span>
                     </div>
                     <p className="text-foreground/80 text-sm mt-1">
-                      {formData.courseName || "New training"} has been added to your profile
+                      {formData.courseName || 'New training'} has been added to your profile
                     </p>
                     <div className="flex items-center gap-2 mt-3">
                       <Badge className="bg-success/20 text-success border-success/30 text-[10px]">
@@ -883,13 +1109,15 @@ export const AddTrainingRecordDialog = ({
                         Verified
                       </Badge>
                       {formData.provider && (
-                        <span className="text-[10px] text-foreground/50">via {formData.provider}</span>
+                        <span className="text-[10px] text-foreground/50">
+                          via {formData.provider}
+                        </span>
                       )}
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               {/* Home indicator */}
               <div className="w-24 h-1 bg-white/30 rounded-full mx-auto mt-4" />
             </div>
@@ -900,13 +1128,13 @@ export const AddTrainingRecordDialog = ({
           <Button variant="outline" onClick={() => onOpenChange(false)} className="h-11">
             Cancel
           </Button>
-          <Button 
-            onClick={handleSubmit} 
+          <Button
+            onClick={handleSubmit}
             disabled={addTraining.isPending}
             className="h-11 px-8 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg shadow-primary/20 gap-2"
           >
             <CheckCircle2 className="h-4 w-4" />
-            {addTraining.isPending ? "Adding..." : "Add Training Record"}
+            {addTraining.isPending ? 'Adding...' : 'Add Training Record'}
           </Button>
         </DialogFooter>
       </DialogContent>

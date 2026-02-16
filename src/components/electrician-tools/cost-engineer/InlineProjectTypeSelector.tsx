@@ -1,6 +1,6 @@
-import { Home, Building2, Factory } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { AGENT_CONFIG, type AgentType } from "@/components/agents/shared/AgentConfig";
+import { Home, Building2, Factory } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { AGENT_CONFIG, type AgentType } from '@/components/agents/shared/AgentConfig';
 
 interface InlineProjectTypeSelectorProps {
   selectedType: 'domestic' | 'commercial' | 'industrial';
@@ -11,19 +11,24 @@ interface InlineProjectTypeSelectorProps {
 const TYPE_CONFIG = {
   domestic: { label: 'Domestic', icon: Home },
   commercial: { label: 'Commercial', icon: Building2 },
-  industrial: { label: 'Industrial', icon: Factory }
+  industrial: { label: 'Industrial', icon: Factory },
 } as const;
 
 export const InlineProjectTypeSelector = ({
   selectedType,
   onTypeChange,
-  agentType = 'cost-engineer'
+  agentType = 'cost-engineer',
 }: InlineProjectTypeSelectorProps) => {
   const config = AGENT_CONFIG[agentType];
 
   return (
     <div className="grid grid-cols-3 gap-2 p-1 bg-white/5 rounded-xl border border-white/10">
-      {(Object.entries(TYPE_CONFIG) as [keyof typeof TYPE_CONFIG, typeof TYPE_CONFIG[keyof typeof TYPE_CONFIG]][]).map(([key, typeConfig]) => {
+      {(
+        Object.entries(TYPE_CONFIG) as [
+          keyof typeof TYPE_CONFIG,
+          (typeof TYPE_CONFIG)[keyof typeof TYPE_CONFIG],
+        ][]
+      ).map(([key, typeConfig]) => {
         const Icon = typeConfig.icon;
         const isSelected = selectedType === key;
 
@@ -32,10 +37,10 @@ export const InlineProjectTypeSelector = ({
             key={key}
             onClick={() => onTypeChange(key)}
             className={cn(
-              "flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl",
-              "transition-all duration-200 touch-manipulation active:scale-[0.98]",
-              "min-h-[56px] font-medium",
-              isSelected && "shadow-lg"
+              'flex flex-col items-center justify-center gap-1.5 py-3 px-2 rounded-xl',
+              'transition-all duration-200 touch-manipulation active:scale-[0.98]',
+              'min-h-[56px] font-medium',
+              isSelected && 'shadow-lg'
             )}
             style={
               isSelected
@@ -50,13 +55,10 @@ export const InlineProjectTypeSelector = ({
             }
           >
             <Icon
-              className={cn("h-5 w-5", !isSelected && "opacity-60")}
+              className={cn('h-5 w-5', !isSelected && 'opacity-60')}
               style={!isSelected ? { color: config.gradientFrom } : undefined}
             />
-            <span className={cn(
-              "text-xs font-semibold",
-              !isSelected && "text-white/80"
-            )}>
+            <span className={cn('text-xs font-semibold', !isSelected && 'text-white/80')}>
               {typeConfig.label}
             </span>
           </button>

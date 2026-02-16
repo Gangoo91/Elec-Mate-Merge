@@ -8,8 +8,8 @@ import {
   Lightbulb,
   Wrench,
   Briefcase,
-  LucideIcon
-} from "lucide-react";
+  LucideIcon,
+} from 'lucide-react';
 
 export type CalculatorCategory =
   | 'power'
@@ -35,7 +35,7 @@ export interface CalculatorCategoryConfig {
 }
 
 export const CALCULATOR_CONFIG: Record<CalculatorCategory, CalculatorCategoryConfig> = {
-  'power': {
+  power: {
     icon: Zap,
     gradient: 'from-amber-400 to-yellow-500',
     gradientFrom: '#fbbf24',
@@ -46,7 +46,7 @@ export const CALCULATOR_CONFIG: Record<CalculatorCategory, CalculatorCategoryCon
     bgClass: 'bg-amber-400',
     label: 'Power & Basic',
   },
-  'cable': {
+  cable: {
     icon: Cable,
     gradient: 'from-emerald-400 to-teal-500',
     gradientFrom: '#34d399',
@@ -57,7 +57,7 @@ export const CALCULATOR_CONFIG: Record<CalculatorCategory, CalculatorCategoryCon
     bgClass: 'bg-emerald-400',
     label: 'Cable & Wiring',
   },
-  'protection': {
+  protection: {
     icon: Shield,
     gradient: 'from-orange-400 to-red-500',
     gradientFrom: '#fb923c',
@@ -68,7 +68,7 @@ export const CALCULATOR_CONFIG: Record<CalculatorCategory, CalculatorCategoryCon
     bgClass: 'bg-orange-400',
     label: 'Protection & Safety',
   },
-  'renewable': {
+  renewable: {
     icon: Sun,
     gradient: 'from-green-400 to-emerald-500',
     gradientFrom: '#22c55e',
@@ -79,7 +79,7 @@ export const CALCULATOR_CONFIG: Record<CalculatorCategory, CalculatorCategoryCon
     bgClass: 'bg-green-400',
     label: 'Renewable Energy',
   },
-  'testing': {
+  testing: {
     icon: TestTube2,
     gradient: 'from-purple-400 to-indigo-500',
     gradientFrom: '#a78bfa',
@@ -101,7 +101,7 @@ export const CALCULATOR_CONFIG: Record<CalculatorCategory, CalculatorCategoryCon
     bgClass: 'bg-blue-400',
     label: 'EV & Storage',
   },
-  'lighting': {
+  lighting: {
     icon: Lightbulb,
     gradient: 'from-cyan-400 to-sky-500',
     gradientFrom: '#22d3ee',
@@ -112,7 +112,7 @@ export const CALCULATOR_CONFIG: Record<CalculatorCategory, CalculatorCategoryCon
     bgClass: 'bg-cyan-400',
     label: 'Lighting',
   },
-  'utilities': {
+  utilities: {
     icon: Wrench,
     gradient: 'from-slate-400 to-slate-500',
     gradientFrom: '#94a3b8',
@@ -123,7 +123,7 @@ export const CALCULATOR_CONFIG: Record<CalculatorCategory, CalculatorCategoryCon
     bgClass: 'bg-slate-400',
     label: 'Utilities',
   },
-  'business': {
+  business: {
     icon: Briefcase,
     gradient: 'from-blue-400 to-indigo-500',
     gradientFrom: '#60a5fa',

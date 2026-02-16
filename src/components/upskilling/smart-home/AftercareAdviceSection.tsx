@@ -12,7 +12,8 @@ const AftercareAdviceSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Proper aftercare guidance helps clients maintain their system and reduces unnecessary support calls while building long-term relationships.
+          Proper aftercare guidance helps clients maintain their system and reduces unnecessary
+          support calls while building long-term relationships.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -22,7 +23,9 @@ const AftercareAdviceSection = () => {
                 <RefreshCw className="h-4 w-4 text-blue-400" />
                 Firmware and App Updates
               </h4>
-              <p className="text-gray-300 text-sm mb-2">Show clients how to keep systems current:</p>
+              <p className="text-gray-300 text-sm mb-2">
+                Show clients how to keep systems current:
+              </p>
               <ul className="text-gray-300 text-sm space-y-1">
                 <li>• Enable automatic app updates on their devices</li>
                 <li>• Check for hub firmware updates monthly</li>
@@ -30,7 +33,7 @@ const AftercareAdviceSection = () => {
                 <li>• Backup system settings before major updates</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-[#1a1a1a] rounded-lg border-l-4 border-green-500">
               <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
                 <Battery className="h-4 w-4 text-green-400" />
@@ -57,7 +60,7 @@ const AftercareAdviceSection = () => {
                 <li>• Test emergency lighting and alarms</li>
               </ul>
             </div>
-            
+
             <div className="p-4 bg-amber-900/20 border border-amber-600/30 rounded-lg">
               <h4 className="font-medium text-amber-200 mb-2">Support Package Options</h4>
               <p className="text-amber-100 text-sm mb-2">Offer structured aftercare:</p>

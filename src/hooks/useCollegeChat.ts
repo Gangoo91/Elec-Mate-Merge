@@ -71,7 +71,7 @@ export function useCollegeConversations(enabled: boolean = true) {
 export function useStudentConversations(studentId: string | undefined) {
   return useQuery({
     queryKey: [...COLLEGE_CONVERSATIONS_KEY, 'student', studentId],
-    queryFn: () => studentId ? collegeConversationService.getStudentConversations(studentId) : [],
+    queryFn: () => (studentId ? collegeConversationService.getStudentConversations(studentId) : []),
     enabled: !!studentId,
   });
 }
@@ -93,12 +93,13 @@ export function useGetOrCreateStudentTutorConversation() {
       studentUserId: string;
       tutorUserId: string;
       studentId?: string;
-    }) => collegeConversationService.getOrCreateStudentTutorConversation(
-      institutionId,
-      studentUserId,
-      tutorUserId,
-      studentId
-    ),
+    }) =>
+      collegeConversationService.getOrCreateStudentTutorConversation(
+        institutionId,
+        studentUserId,
+        tutorUserId,
+        studentId
+      ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });
     },
@@ -122,12 +123,13 @@ export function useGetOrCreateCollegeEmployerConversation() {
       staffUserId: string;
       employerUserId: string;
       studentId?: string;
-    }) => collegeConversationService.getOrCreateCollegeEmployerConversation(
-      institutionId,
-      staffUserId,
-      employerUserId,
-      studentId
-    ),
+    }) =>
+      collegeConversationService.getOrCreateCollegeEmployerConversation(
+        institutionId,
+        staffUserId,
+        employerUserId,
+        studentId
+      ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });
     },
@@ -163,22 +165,19 @@ export function useCollegeMessages(conversationId: string | undefined) {
   useEffect(() => {
     if (!conversationId) return;
 
-    const unsubscribe = collegeMessageService.subscribeToMessages(
-      conversationId,
-      (newMessage) => {
-        setMessages((old) => {
-          if (old.some(m => m.id === newMessage.id)) return old;
-          return [...old, newMessage];
-        });
-      }
-    );
+    const unsubscribe = collegeMessageService.subscribeToMessages(conversationId, (newMessage) => {
+      setMessages((old) => {
+        if (old.some((m) => m.id === newMessage.id)) return old;
+        return [...old, newMessage];
+      });
+    });
 
     return unsubscribe;
   }, [conversationId]);
 
   const query = useQuery({
     queryKey: [...COLLEGE_MESSAGES_KEY, conversationId],
-    queryFn: () => conversationId ? collegeMessageService.getMessages(conversationId) : [],
+    queryFn: () => (conversationId ? collegeMessageService.getMessages(conversationId) : []),
     enabled: !!conversationId,
   });
 
@@ -232,7 +231,7 @@ export function useSendCollegeMessage() {
       if (context?.queryKey) {
         queryClient.setQueryData<CollegeMessage[]>(context.queryKey, (old) => {
           if (!old) return [data];
-          return old.map(m => m.id.startsWith('temp-') ? data : m);
+          return old.map((m) => (m.id.startsWith('temp-') ? data : m));
         });
       }
       queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });
@@ -274,7 +273,9 @@ export function useSendProgressUpdate() {
       };
     }) => collegeMessageService.sendProgressUpdate(conversationId, progressData),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: [...COLLEGE_MESSAGES_KEY, variables.conversationId] });
+      queryClient.invalidateQueries({
+        queryKey: [...COLLEGE_MESSAGES_KEY, variables.conversationId],
+      });
       queryClient.invalidateQueries({ queryKey: COLLEGE_CONVERSATIONS_KEY });
     },
   });
@@ -291,7 +292,9 @@ export function useCollegeUserType() {
   return useQuery({
     queryKey: ['college-user-type'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return null;
       return collegeChatHelpers.getUserType(user.id);
     },
@@ -301,10 +304,13 @@ export function useCollegeUserType() {
 /**
  * Hook to get participant details
  */
-export function useParticipantDetails(userId: string | undefined, type: 'student' | 'staff' | 'employer' | undefined) {
+export function useParticipantDetails(
+  userId: string | undefined,
+  type: 'student' | 'staff' | 'employer' | undefined
+) {
   return useQuery({
     queryKey: ['participant-details', userId, type],
-    queryFn: () => userId && type ? collegeChatHelpers.getParticipantDetails(userId, type) : null,
+    queryFn: () => (userId && type ? collegeChatHelpers.getParticipantDetails(userId, type) : null),
     enabled: !!userId && !!type,
   });
 }

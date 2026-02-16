@@ -19,8 +19,7 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'green-card-requirements',
-    question:
-      'What are the minimum requirements for a CSCS Green Labourer Card?',
+    question: 'What are the minimum requirements for a CSCS Green Labourer Card?',
     options: [
       'NVQ Level 2 in a construction trade + Operatives HS&E test',
       'Pass the Operatives HS&E test + have achieved, be registered for, or have applied for a Level 1 qualification',
@@ -47,8 +46,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'black-card-role',
-    question:
-      'Which HS&E test must a holder of the Black Manager Card have passed?',
+    question: 'Which HS&E test must a holder of the Black Manager Card have passed?',
     options: [
       'Operatives HS&E test',
       'Specialists HS&E test',
@@ -122,8 +120,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question:
-      'What qualification level is typically required for a Black Manager Card?',
+    question: 'What qualification level is typically required for a Black Manager Card?',
     options: [
       'NVQ Level 2 in construction',
       'NVQ Level 3 in a supervisory role',
@@ -213,15 +210,17 @@ export default function CscsCardModule1Section2() {
             <CreditCard className="h-7 w-7 text-green-400" />
           </div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 mb-3 mx-auto">
-            <span className="text-green-400 text-xs font-semibold">MODULE 1 &middot; SECTION 2</span>
+            <span className="text-green-400 text-xs font-semibold">
+              MODULE 1 &middot; SECTION 2
+            </span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Card Types &amp; Colour Codes
           </h1>
           <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
             How the CSCS colour-coded card system works, what each colour represents, the
-            qualifications and tests required for each card, and special card types for
-            provisional, experienced, and visiting workers
+            qualifications and tests required for each card, and special card types for provisional,
+            experienced, and visiting workers
           </p>
         </header>
 
@@ -238,7 +237,8 @@ export default function CscsCardModule1Section2() {
                 <strong>Gold:</strong> Advanced/Supervisor
               </li>
               <li>
-                <strong>Black:</strong> Manager &bull; <strong>White:</strong> Chartered Professional
+                <strong>Black:</strong> Manager &bull; <strong>White:</strong> Chartered
+                Professional
               </li>
             </ul>
           </div>
@@ -298,10 +298,10 @@ export default function CscsCardModule1Section2() {
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
                   <strong className="text-green-400">Why Colour Codes Matter:</strong> On a busy
-                  construction site with hundreds of workers, colour-coded cards allow instant visual
-                  identification. A site manager checking workers at the gate can immediately see
-                  whether someone holds a card appropriate to the work they have been engaged to do
-                  &mdash; without needing to read every detail on the card.
+                  construction site with hundreds of workers, colour-coded cards allow instant
+                  visual identification. A site manager checking workers at the gate can immediately
+                  see whether someone holds a card appropriate to the work they have been engaged to
+                  do &mdash; without needing to read every detail on the card.
                 </p>
               </div>
 
@@ -379,9 +379,7 @@ export default function CscsCardModule1Section2() {
                     <span className="text-[10px] font-bold text-white">RED</span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-white">
-                      Trainee/Apprentice Card
-                    </p>
+                    <p className="text-sm font-medium text-white">Trainee/Apprentice Card</p>
                     <p className="text-xs text-white/60">Working towards qualification</p>
                   </div>
                 </div>
@@ -396,7 +394,9 @@ export default function CscsCardModule1Section2() {
                   </div>
                   <div className="flex items-start gap-2 text-sm text-white/80">
                     <span className="text-white/50 text-xs font-medium min-w-[80px]">Validity</span>
-                    <span>5 years or until the qualification is achieved (whichever comes first)</span>
+                    <span>
+                      5 years or until the qualification is achieved (whichever comes first)
+                    </span>
                   </div>
                   <div className="flex items-start gap-2 text-sm text-white/80">
                     <span className="text-white/50 text-xs font-medium min-w-[80px]">
@@ -420,11 +420,11 @@ export default function CscsCardModule1Section2() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-green-400">Key Point:</strong> The red card is specifically
-                  for those in a structured training programme. A worker who is simply &ldquo;learning
-                  on the job&rdquo; without being registered on a formal apprenticeship or traineeship
-                  would not qualify for this card &mdash; they would need a Green Labourer Card
-                  instead.
+                  <strong className="text-green-400">Key Point:</strong> The red card is
+                  specifically for those in a structured training programme. A worker who is simply
+                  &ldquo;learning on the job&rdquo; without being registered on a formal
+                  apprenticeship or traineeship would not qualify for this card &mdash; they would
+                  need a Green Labourer Card instead.
                 </p>
               </div>
             </div>
@@ -475,8 +475,8 @@ export default function CscsCardModule1Section2() {
                   <div className="flex items-start gap-2 text-sm text-white/80">
                     <span className="text-white/50 text-xs font-medium min-w-[80px]">Role</span>
                     <span>
-                      General labouring duties on construction sites &mdash; this is the minimum card
-                      for most site access
+                      General labouring duties on construction sites &mdash; this is the minimum
+                      card for most site access
                     </span>
                   </div>
                   <div className="flex items-start gap-2 text-sm text-white/80">
@@ -557,7 +557,9 @@ export default function CscsCardModule1Section2() {
                     </span>
                   </div>
                   <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">HS&amp;E Test</span>
+                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                      HS&amp;E Test
+                    </span>
                     <span>
                       Operatives test for most trades; Specialists test for certain roles (e.g.,
                       demolition, highways maintenance)
@@ -672,9 +674,9 @@ export default function CscsCardModule1Section2() {
               <p>
                 The Gold Advanced Craft card recognises workers who have progressed beyond the
                 standard skilled worker level. They may be leading a team of tradespeople, mentoring
-                apprentices, or carrying out highly complex work in their trade. The Gold Supervisory
-                card specifically recognises the ability to supervise and manage other workers on
-                site, including responsibility for their health and safety.
+                apprentices, or carrying out highly complex work in their trade. The Gold
+                Supervisory card specifically recognises the ability to supervise and manage other
+                workers on site, including responsibility for their health and safety.
               </p>
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
@@ -701,8 +703,8 @@ export default function CscsCardModule1Section2() {
               <p>
                 The Black Manager Card is for construction managers and those in senior management
                 positions. It demonstrates the ability to manage construction projects and sites and
-                is required for principal contractor roles on many major projects. This is one of the
-                highest-level cards in the CSCS system.
+                is required for principal contractor roles on many major projects. This is one of
+                the highest-level cards in the CSCS system.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -712,7 +714,9 @@ export default function CscsCardModule1Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Manager Card</p>
-                    <p className="text-xs text-white/60">Senior management &amp; project leadership</p>
+                    <p className="text-xs text-white/60">
+                      Senior management &amp; project leadership
+                    </p>
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -721,8 +725,8 @@ export default function CscsCardModule1Section2() {
                       Requirements
                     </span>
                     <span>
-                      NVQ Level 6 or 7 in construction management (or equivalent degree/qualification)
-                      + Managers &amp; Professionals HS&amp;E test
+                      NVQ Level 6 or 7 in construction management (or equivalent
+                      degree/qualification) + Managers &amp; Professionals HS&amp;E test
                     </span>
                   </div>
                   <div className="flex items-start gap-2 text-sm text-white/80">
@@ -736,7 +740,9 @@ export default function CscsCardModule1Section2() {
                     </span>
                   </div>
                   <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">HS&amp;E Test</span>
+                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                      HS&amp;E Test
+                    </span>
                     <span>
                       Managers &amp; Professionals HS&amp;E test (more demanding than Operatives or
                       Supervisors tests)
@@ -759,8 +765,8 @@ export default function CscsCardModule1Section2() {
                   <strong className="text-green-400">CDM Relevance:</strong> Under the Construction
                   (Design and Management) Regulations 2015, principal contractors must ensure that
                   all workers on site are competent. The black card demonstrates that the holder has
-                  been assessed to the highest management level and is qualified to oversee large-scale
-                  construction operations.
+                  been assessed to the highest management level and is qualified to oversee
+                  large-scale construction operations.
                 </p>
               </div>
             </div>
@@ -781,8 +787,8 @@ export default function CscsCardModule1Section2() {
                 The White Professionally Qualified Person Card is for chartered professionals
                 &mdash; architects, engineers, surveyors, building control officers, and other
                 professionals who work in the built environment. It is not intended for hands-on
-                construction work but for those operating in professional or design roles who need to
-                access construction sites.
+                construction work but for those operating in professional or design roles who need
+                to access construction sites.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -882,10 +888,10 @@ export default function CscsCardModule1Section2() {
               <p>
                 The white card acknowledges that chartered professionals have achieved a high level
                 of education and professional competence in their field, even though their role on
-                site is not hands-on construction. They still need to understand site safety
-                &mdash; hence the requirement for the Managers &amp; Professionals HS&amp;E test
-                &mdash; but their primary function is design, specification, inspection, or
-                management rather than physical construction work.
+                site is not hands-on construction. They still need to understand site safety &mdash;
+                hence the requirement for the Managers &amp; Professionals HS&amp;E test &mdash; but
+                their primary function is design, specification, inspection, or management rather
+                than physical construction work.
               </p>
             </div>
           </div>
@@ -919,7 +925,9 @@ export default function CscsCardModule1Section2() {
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>Valid for <strong className="text-white">6 months only</strong></span>
+                      <span>
+                        Valid for <strong className="text-white">6 months only</strong>
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -931,8 +939,8 @@ export default function CscsCardModule1Section2() {
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
-                        Acts as a bridge between completing qualifications and receiving the permanent
-                        card
+                        Acts as a bridge between completing qualifications and receiving the
+                        permanent card
                       </span>
                     </li>
                   </ul>
@@ -1012,7 +1020,8 @@ export default function CscsCardModule1Section2() {
                   </div>
                   <p className="text-sm text-white/80 mb-2">
                     The Construction Plant Competence Scheme (CPCS) covers plant operators &mdash;
-                    those who operate excavators, cranes, telehandlers, dumpers, and other machinery.
+                    those who operate excavators, cranes, telehandlers, dumpers, and other
+                    machinery.
                   </p>
                   <ul className="text-sm text-white/80 space-y-1">
                     <li className="flex items-start gap-2">
@@ -1031,9 +1040,7 @@ export default function CscsCardModule1Section2() {
                     </li>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
-                      <span>
-                        Managed under the CITB umbrella alongside CSCS
-                      </span>
+                      <span>Managed under the CITB umbrella alongside CSCS</span>
                     </li>
                   </ul>
                 </div>
@@ -1070,7 +1077,8 @@ export default function CscsCardModule1Section2() {
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
-                        The ECS scheme uses its own colour system that maps to equivalent CSCS levels
+                        The ECS scheme uses its own colour system that maps to equivalent CSCS
+                        levels
                       </span>
                     </li>
                   </ul>
@@ -1186,9 +1194,7 @@ export default function CscsCardModule1Section2() {
               {/* Black - Manager */}
               <div className="w-full max-w-[220px] bg-gradient-to-r from-gray-700/30 to-gray-600/20 border border-gray-500/30 p-3 text-center">
                 <p className="text-xs font-bold text-white">BLACK</p>
-                <p className="text-[10px] text-white/60">
-                  Manager &bull; NVQ Level 6/7
-                </p>
+                <p className="text-[10px] text-white/60">Manager &bull; NVQ Level 6/7</p>
               </div>
               <div className="flex flex-col items-center py-0.5">
                 <div className="w-0.5 h-2 bg-white/20" />
@@ -1208,9 +1214,7 @@ export default function CscsCardModule1Section2() {
               {/* Blue - Skilled Worker */}
               <div className="w-full max-w-[360px] bg-gradient-to-r from-blue-500/20 to-blue-400/10 border border-blue-500/30 p-3 text-center">
                 <p className="text-xs font-bold text-blue-400">BLUE</p>
-                <p className="text-[10px] text-white/60">
-                  Skilled Worker &bull; NVQ Level 2+
-                </p>
+                <p className="text-[10px] text-white/60">Skilled Worker &bull; NVQ Level 2+</p>
               </div>
               <div className="flex flex-col items-center py-0.5">
                 <div className="w-0.5 h-2 bg-white/20" />
@@ -1226,8 +1230,8 @@ export default function CscsCardModule1Section2() {
             </div>
 
             <p className="text-xs text-white/40 text-center mt-4 italic">
-              Red (Trainee/Apprentice) cards sit alongside the pyramid &mdash; holders progress
-              into the appropriate level once their qualification is achieved.
+              Red (Trainee/Apprentice) cards sit alongside the pyramid &mdash; holders progress into
+              the appropriate level once their qualification is achieved.
             </p>
           </div>
         </section>

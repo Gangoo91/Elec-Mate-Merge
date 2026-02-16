@@ -1,81 +1,97 @@
-import { FileText, AlertTriangle, CheckSquare, Shield, Eye, Wrench, Scale, Layers } from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
-import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
-import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
-import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
-import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
-import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
-import useSEO from "@/hooks/useSEO";
+import {
+  FileText,
+  AlertTriangle,
+  CheckSquare,
+  Shield,
+  Eye,
+  Wrench,
+  Scale,
+  Layers,
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
+import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
+import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
+import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import useSEO from '@/hooks/useSEO';
 
 const AM2Module2Section2 = () => {
   useSEO(
-    "Risk Assessments and Method Statements (RAMS) - AM2 Module 2",
-    "Complete guide to RAMS for AM2 assessment - legal requirements, common mistakes, and proper documentation"
+    'Risk Assessments and Method Statements (RAMS) - AM2 Module 2',
+    'Complete guide to RAMS for AM2 assessment - legal requirements, common mistakes, and proper documentation'
   );
 
   const quickCheckQuestions = [
     {
-      id: "rams-difference",
+      id: 'rams-difference',
       question: "What's the difference between a risk assessment and a method statement?",
       options: [
-        "They are the same thing",
-        "Risk assessment identifies hazards/controls; method statement describes safe working procedure",
-        "Risk assessment is for electrical work; method statement is for general work",
-        "Method statement identifies hazards; risk assessment describes procedures"
+        'They are the same thing',
+        'Risk assessment identifies hazards/controls; method statement describes safe working procedure',
+        'Risk assessment is for electrical work; method statement is for general work',
+        'Method statement identifies hazards; risk assessment describes procedures',
       ],
       correctIndex: 1,
-      explanation: "Risk assessment identifies hazards and control measures, whilst method statement provides the step-by-step safe working procedure."
+      explanation:
+        'Risk assessment identifies hazards and control measures, whilst method statement provides the step-by-step safe working procedure.',
     },
     {
-      id: "ppe-specificity",
+      id: 'ppe-specificity',
       question: "If you write 'use PPE' in RAMS, is it enough?",
       options: [
-        "Yes, it shows safety awareness",
-        "No, you must specify type and purpose",
-        "Yes, if combined with other measures",
-        "Only if PPE is available on site"
+        'Yes, it shows safety awareness',
+        'No, you must specify type and purpose',
+        'Yes, if combined with other measures',
+        'Only if PPE is available on site',
       ],
       correctIndex: 1,
-      explanation: "'Use PPE' is too vague and scores no marks. You must specify type (safety glasses, insulated gloves) and purpose (protection from debris, electrical protection)."
+      explanation:
+        "'Use PPE' is too vague and scores no marks. You must specify type (safety glasses, insulated gloves) and purpose (protection from debris, electrical protection).",
     },
     {
-      id: "hazard-identification",
-      question: "Which of these is the most important hazard to identify in electrical installation work?",
+      id: 'hazard-identification',
+      question:
+        'Which of these is the most important hazard to identify in electrical installation work?',
       options: [
-        "Bad weather conditions",
-        "Electric shock and burns",
-        "Traffic noise",
-        "Tool availability"
+        'Bad weather conditions',
+        'Electric shock and burns',
+        'Traffic noise',
+        'Tool availability',
       ],
       correctIndex: 1,
-      explanation: "Electric shock and burns are the primary hazards in electrical work that can cause serious injury or death, making them the most critical to identify and control."
+      explanation:
+        'Electric shock and burns are the primary hazards in electrical work that can cause serious injury or death, making them the most critical to identify and control.',
     },
     {
-      id: "control-hierarchy",
-      question: "What is the correct hierarchy of control measures?",
+      id: 'control-hierarchy',
+      question: 'What is the correct hierarchy of control measures?',
       options: [
-        "PPE > Engineering > Administrative > Elimination",
-        "Elimination > Substitution > Engineering > Administrative > PPE",
-        "Administrative > PPE > Engineering > Elimination",
-        "Engineering > PPE > Administrative > Substitution"
+        'PPE > Engineering > Administrative > Elimination',
+        'Elimination > Substitution > Engineering > Administrative > PPE',
+        'Administrative > PPE > Engineering > Elimination',
+        'Engineering > PPE > Administrative > Substitution',
       ],
       correctIndex: 1,
-      explanation: "The hierarchy prioritises elimination (removing the hazard) first, followed by substitution, engineering controls, administrative controls, and PPE as the last resort."
+      explanation:
+        'The hierarchy prioritises elimination (removing the hazard) first, followed by substitution, engineering controls, administrative controls, and PPE as the last resort.',
     },
     {
-      id: "legal-requirements",
-      question: "Which regulations specifically require electrical work to be properly planned and assessed?",
+      id: 'legal-requirements',
+      question:
+        'Which regulations specifically require electrical work to be properly planned and assessed?',
       options: [
-        "Only Building Regulations",
-        "MHSWR 1999 and EAWR 1989",
-        "Only CDM Regulations",
-        "Only company policies"
+        'Only Building Regulations',
+        'MHSWR 1999 and EAWR 1989',
+        'Only CDM Regulations',
+        'Only company policies',
       ],
       correctIndex: 1,
-      explanation: "Both the Management of Health and Safety at Work Regulations 1999 and Electricity at Work Regulations 1989 legally require proper planning and risk assessment."
-    }
+      explanation:
+        'Both the Management of Health and Safety at Work Regulations 1999 and Electricity at Work Regulations 1989 legally require proper planning and risk assessment.',
+    },
   ];
 
   const quizQuestions = [
@@ -83,136 +99,146 @@ const AM2Module2Section2 = () => {
       id: 1,
       question: "What's the difference between a risk assessment and a method statement?",
       options: [
-        "They are the same thing",
-        "Risk assessment identifies hazards/controls; method statement describes safe working procedure",
-        "Risk assessment is for electrical work; method statement is for general work",
-        "Method statement identifies hazards; risk assessment describes procedures"
+        'They are the same thing',
+        'Risk assessment identifies hazards/controls; method statement describes safe working procedure',
+        'Risk assessment is for electrical work; method statement is for general work',
+        'Method statement identifies hazards; risk assessment describes procedures',
       ],
       correctAnswer: 1,
-      explanation: "Risk assessment identifies hazards and control measures, whilst method statement provides the step-by-step safe working procedure."
+      explanation:
+        'Risk assessment identifies hazards and control measures, whilst method statement provides the step-by-step safe working procedure.',
     },
     {
       id: 2,
-      question: "Which regulations require safe planning of electrical work in the UK?",
+      question: 'Which regulations require safe planning of electrical work in the UK?',
       options: [
-        "Only EAWR 1989",
-        "Only MHSWR 1999",
-        "Both MHSWR 1999 and EAWR 1989",
-        "Only BS7671"
+        'Only EAWR 1989',
+        'Only MHSWR 1999',
+        'Both MHSWR 1999 and EAWR 1989',
+        'Only BS7671',
       ],
       correctAnswer: 2,
-      explanation: "Both the Management of Health and Safety at Work Regulations 1999 and Electricity at Work Regulations 1989 require proper planning and risk assessment."
+      explanation:
+        'Both the Management of Health and Safety at Work Regulations 1999 and Electricity at Work Regulations 1989 require proper planning and risk assessment.',
     },
     {
       id: 3,
       question: "True or false: Vague answers like 'be careful' score marks in RAMS.",
       options: [
-        "True - any safety awareness gets marks",
-        "False - specific, detailed entries are required",
-        "True - if combined with other measures",
-        "False - only PPE entries get marks"
+        'True - any safety awareness gets marks',
+        'False - specific, detailed entries are required',
+        'True - if combined with other measures',
+        'False - only PPE entries get marks',
       ],
       correctAnswer: 1,
-      explanation: "Vague entries like 'be careful' score no marks. Assessors require specific, detailed control measures."
+      explanation:
+        "Vague entries like 'be careful' score no marks. Assessors require specific, detailed control measures.",
     },
     {
       id: 4,
-      question: "Name three typical hazards in an AM2 installation task:",
+      question: 'Name three typical hazards in an AM2 installation task:',
       options: [
-        "Rain, wind, cold",
-        "Electrical shock, manual handling, working at height",
-        "Time pressure, noise, lighting",
-        "Tools, materials, transport"
+        'Rain, wind, cold',
+        'Electrical shock, manual handling, working at height',
+        'Time pressure, noise, lighting',
+        'Tools, materials, transport',
       ],
       correctAnswer: 1,
-      explanation: "Common AM2 hazards include electrical shock/burns, manual handling of equipment, and working at height (even low level)."
+      explanation:
+        'Common AM2 hazards include electrical shock/burns, manual handling of equipment, and working at height (even low level).',
     },
     {
       id: 5,
-      question: "Why must PPE be written specifically in RAMS?",
+      question: 'Why must PPE be written specifically in RAMS?',
       options: [
-        "It looks more professional",
+        'It looks more professional',
         "Generic 'use PPE' entries score no marks - type and purpose must be stated",
-        "To meet word count requirements",
-        "Only expensive PPE needs to be listed"
+        'To meet word count requirements',
+        'Only expensive PPE needs to be listed',
       ],
       correctAnswer: 1,
-      explanation: "'Use PPE' is too vague. You must specify type (safety glasses, insulated gloves) and purpose (protection from debris, electrical protection)."
+      explanation:
+        "'Use PPE' is too vague. You must specify type (safety glasses, insulated gloves) and purpose (protection from debris, electrical protection).",
     },
     {
       id: 6,
       question: "Who should be considered under 'who may be harmed'?",
       options: [
-        "Only the electrician",
-        "Only building occupants",
-        "Self, colleagues, building occupants, public",
-        "Only people in the immediate work area"
+        'Only the electrician',
+        'Only building occupants',
+        'Self, colleagues, building occupants, public',
+        'Only people in the immediate work area',
       ],
       correctAnswer: 2,
-      explanation: "Consider all who might be affected: yourself, work colleagues, building occupants, members of the public, and anyone who might access the area."
+      explanation:
+        'Consider all who might be affected: yourself, work colleagues, building occupants, members of the public, and anyone who might access the area.',
     },
     {
       id: 7,
-      question: "Give one example of a control measure other than PPE:",
+      question: 'Give one example of a control measure other than PPE:',
       options: [
-        "Working faster to reduce exposure time",
-        "Isolation and lock-off procedures",
-        "Ignoring minor hazards",
-        "Working alone to reduce risk to others"
+        'Working faster to reduce exposure time',
+        'Isolation and lock-off procedures',
+        'Ignoring minor hazards',
+        'Working alone to reduce risk to others',
       ],
       correctAnswer: 1,
-      explanation: "Isolation and lock-off, warning signs, barriers, permits to work, supervision, and training are all control measures beyond PPE."
+      explanation:
+        'Isolation and lock-off, warning signs, barriers, permits to work, supervision, and training are all control measures beyond PPE.',
     },
     {
       id: 8,
       question: "What's the purpose of a method statement?",
       options: [
-        "To list all possible hazards",
-        "To provide step-by-step safe working procedure",
-        "To calculate project costs",
-        "To record accident details"
+        'To list all possible hazards',
+        'To provide step-by-step safe working procedure',
+        'To calculate project costs',
+        'To record accident details',
       ],
       correctAnswer: 1,
-      explanation: "Method statements describe the logical sequence of work activities and how they will be carried out safely."
+      explanation:
+        'Method statements describe the logical sequence of work activities and how they will be carried out safely.',
     },
     {
       id: 9,
-      question: "Why do generic/copy-paste RAMS answers fail?",
+      question: 'Why do generic/copy-paste RAMS answers fail?',
       options: [
         "They're too long",
-        "Assessors want task-specific detail relevant to the actual work",
-        "They use technical language",
-        "They mention too many hazards"
+        'Assessors want task-specific detail relevant to the actual work',
+        'They use technical language',
+        'They mention too many hazards',
       ],
       correctAnswer: 1,
-      explanation: "Assessors look for task-specific analysis. Generic answers show you haven't properly considered the actual work and site conditions."
+      explanation:
+        "Assessors look for task-specific analysis. Generic answers show you haven't properly considered the actual work and site conditions.",
     },
     {
       id: 10,
-      question: "What happens in AM2 if your RAMS is incomplete?",
+      question: 'What happens in AM2 if your RAMS is incomplete?',
       options: [
-        "You get a warning but can continue",
-        "You lose marks and may fail the assessment",
-        "You get extra time to complete it",
-        "Nothing - it's optional"
+        'You get a warning but can continue',
+        'You lose marks and may fail the assessment',
+        'You get extra time to complete it',
+        "Nothing - it's optional",
       ],
       correctAnswer: 1,
-      explanation: "Incomplete or poor RAMS documentation will result in lost marks and can contribute to overall assessment failure."
-    }
+      explanation:
+        'Incomplete or poor RAMS documentation will result in lost marks and can contribute to overall assessment failure.',
+    },
   ];
 
   const learningOutcomes = [
-    "Explain the purpose of risk assessments and method statements",
-    "Complete a RAMS form correctly for AM2 tasks",
-    "Identify hazards, risks, and suitable control measures",
-    "Demonstrate how RAMS links to electrical safety law",
-    "Avoid the vague or incomplete entries that cost marks"
+    'Explain the purpose of risk assessments and method statements',
+    'Complete a RAMS form correctly for AM2 tasks',
+    'Identify hazards, risks, and suitable control measures',
+    'Demonstrate how RAMS links to electrical safety law',
+    'Avoid the vague or incomplete entries that cost marks',
   ];
 
   return (
     <AM2SectionLayout
       backHref="/study-centre/apprentice/am2/module2"
-      breadcrumbs={["AM2", "Module 2", "Section 2"]}
+      breadcrumbs={['AM2', 'Module 2', 'Section 2']}
     >
       {/* Hero Section */}
       <AM2HeroSection
@@ -225,12 +251,15 @@ const AM2Module2Section2 = () => {
       {/* Critical Warning */}
       <AM2CriticalWarning title="RAMS Documentation Requirements">
         <p className="text-ios-callout text-white/90 mb-3">
-          Risk Assessments and Method Statements (RAMS) are about proving you can plan safe work before starting.
-          In the AM2, you will be expected to complete RAMS documentation for given tasks. This isn't just paperwork -
-          it's a legal requirement in industry under the Management of Health and Safety at Work Regulations 1999 and Electricity at Work Regulations 1989.
+          Risk Assessments and Method Statements (RAMS) are about proving you can plan safe work
+          before starting. In the AM2, you will be expected to complete RAMS documentation for given
+          tasks. This isn't just paperwork - it's a legal requirement in industry under the
+          Management of Health and Safety at Work Regulations 1999 and Electricity at Work
+          Regulations 1989.
         </p>
         <p className="text-ios-callout text-white/90 font-medium">
-          Many candidates lose marks by rushing RAMS or writing vague answers. This section ensures you know how to complete them properly, both for AM2 and real-world site practice.
+          Many candidates lose marks by rushing RAMS or writing vague answers. This section ensures
+          you know how to complete them properly, both for AM2 and real-world site practice.
         </p>
       </AM2CriticalWarning>
 
@@ -244,17 +273,29 @@ const AM2Module2Section2 = () => {
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-2">Risk Assessment:</h3>
             <p className="mb-2">Identify hazards, assess likelihood/severity, put in controls.</p>
-            <p className="text-white/70">A systematic examination of work activities to identify what could cause harm to people, property, or the environment. The assessment considers the likelihood of occurrence and potential severity of consequences.</p>
+            <p className="text-white/70">
+              A systematic examination of work activities to identify what could cause harm to
+              people, property, or the environment. The assessment considers the likelihood of
+              occurrence and potential severity of consequences.
+            </p>
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-2">Method Statement:</h3>
             <p className="mb-2">Step-by-step description of how the job will be done safely.</p>
-            <p className="text-white/70">A detailed, logical sequence describing how work activities will be carried out, including safety measures, equipment required, and personnel responsibilities.</p>
+            <p className="text-white/70">
+              A detailed, logical sequence describing how work activities will be carried out,
+              including safety measures, equipment required, and personnel responsibilities.
+            </p>
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-2">Used Together:</h3>
-            <p className="mb-2">RAMS shows you've thought through risks and how to mitigate them.</p>
-            <p className="text-white/70">The combination demonstrates competent planning, legal compliance, and professional approach to electrical installation work.</p>
+            <p className="mb-2">
+              RAMS shows you've thought through risks and how to mitigate them.
+            </p>
+            <p className="text-white/70">
+              The combination demonstrates competent planning, legal compliance, and professional
+              approach to electrical installation work.
+            </p>
           </div>
         </div>
 
@@ -294,7 +335,9 @@ const AM2Module2Section2 = () => {
         </h2>
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h3 className="text-ios-headline font-semibold text-white mb-3">Essential Documentation</h3>
+            <h3 className="text-ios-headline font-semibold text-white mb-3">
+              Essential Documentation
+            </h3>
             <ul className="space-y-2 text-ios-callout text-white/80">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
@@ -411,16 +454,24 @@ const AM2Module2Section2 = () => {
 
       {/* How RAMS appears in AM2 */}
       <AM2ContentCard accent>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">2. How RAMS Appears in AM2</h2>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
+          2. How RAMS Appears in AM2
+        </h2>
         <div className="space-y-6">
           <div>
-            <h3 className="text-ios-headline font-semibold text-white mb-3">NET Assessment Structure</h3>
+            <h3 className="text-ios-headline font-semibold text-white mb-3">
+              NET Assessment Structure
+            </h3>
             <p className="text-ios-callout text-white/80 mb-4">
-              RAMS documentation is a mandatory component of every AM2 practical assessment. Candidates receive a RAMS form at the start of their assessment task and must complete it before beginning practical work.
+              RAMS documentation is a mandatory component of every AM2 practical assessment.
+              Candidates receive a RAMS form at the start of their assessment task and must complete
+              it before beginning practical work.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-                <h4 className="text-ios-subheadline font-semibold text-elec-yellow mb-2">Time Allocation</h4>
+                <h4 className="text-ios-subheadline font-semibold text-elec-yellow mb-2">
+                  Time Allocation
+                </h4>
                 <ul className="space-y-1 text-ios-footnote text-white/70">
                   <li>• Allow 15-20 minutes for completion</li>
                   <li>• Complete before starting practical work</li>
@@ -429,7 +480,9 @@ const AM2Module2Section2 = () => {
                 </ul>
               </div>
               <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-                <h4 className="text-ios-subheadline font-semibold text-elec-yellow mb-2">Marking Weighting</h4>
+                <h4 className="text-ios-subheadline font-semibold text-elec-yellow mb-2">
+                  Marking Weighting
+                </h4>
                 <ul className="space-y-1 text-ios-footnote text-white/70">
                   <li>• Significant marks allocation in assessment</li>
                   <li>• Poor RAMS can cause overall failure</li>
@@ -477,11 +530,15 @@ const AM2Module2Section2 = () => {
 
       {/* Step-by-Step RAMS Completion */}
       <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">3. Step-by-Step RAMS Completion Guide</h2>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
+          3. Step-by-Step RAMS Completion Guide
+        </h2>
         <div className="space-y-6">
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3 flex items-center gap-2">
-              <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">1</div>
+              <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">
+                1
+              </div>
               Task Description
             </h3>
             <p className="text-ios-callout text-white/80 mb-2">
@@ -489,7 +546,8 @@ const AM2Module2Section2 = () => {
             </p>
             <div className="p-3 rounded-xl border border-green-500/30 bg-green-500/10 mb-2">
               <p className="text-ios-callout text-green-400">
-                Good: "Installation of new 13A twin socket outlet in domestic kitchen, including 2.5mm T&E cable run from consumer unit"
+                Good: "Installation of new 13A twin socket outlet in domestic kitchen, including
+                2.5mm T&E cable run from consumer unit"
               </p>
             </div>
             <div className="p-3 rounded-xl border border-red-500/30 bg-red-500/10">
@@ -501,7 +559,9 @@ const AM2Module2Section2 = () => {
 
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3 flex items-center gap-2">
-              <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">2</div>
+              <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">
+                2
+              </div>
               Hazard Identification
             </h3>
             <p className="text-ios-callout text-white/80 mb-3">
@@ -509,7 +569,9 @@ const AM2Module2Section2 = () => {
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-                <h4 className="text-ios-subheadline font-semibold text-white mb-2">Electrical Hazards</h4>
+                <h4 className="text-ios-subheadline font-semibold text-white mb-2">
+                  Electrical Hazards
+                </h4>
                 <ul className="space-y-1 text-ios-footnote text-white/70">
                   <li>• Electric shock from live conductors</li>
                   <li>• Burns from arcing/short circuits</li>
@@ -518,7 +580,9 @@ const AM2Module2Section2 = () => {
                 </ul>
               </div>
               <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-                <h4 className="text-ios-subheadline font-semibold text-white mb-2">Physical Hazards</h4>
+                <h4 className="text-ios-subheadline font-semibold text-white mb-2">
+                  Physical Hazards
+                </h4>
                 <ul className="space-y-1 text-ios-footnote text-white/70">
                   <li>• Cuts from sharp edges/tools</li>
                   <li>• Eye injury from debris</li>
@@ -527,7 +591,9 @@ const AM2Module2Section2 = () => {
                 </ul>
               </div>
               <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-                <h4 className="text-ios-subheadline font-semibold text-white mb-2">Environmental</h4>
+                <h4 className="text-ios-subheadline font-semibold text-white mb-2">
+                  Environmental
+                </h4>
                 <ul className="space-y-1 text-ios-footnote text-white/70">
                   <li>• Dust inhalation</li>
                   <li>• Confined spaces</li>
@@ -536,7 +602,9 @@ const AM2Module2Section2 = () => {
                 </ul>
               </div>
               <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-                <h4 className="text-ios-subheadline font-semibold text-white mb-2">Human Factors</h4>
+                <h4 className="text-ios-subheadline font-semibold text-white mb-2">
+                  Human Factors
+                </h4>
                 <ul className="space-y-1 text-ios-footnote text-white/70">
                   <li>• Unauthorised access to work area</li>
                   <li>• Interference by building users</li>
@@ -549,7 +617,9 @@ const AM2Module2Section2 = () => {
 
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3 flex items-center gap-2">
-              <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">3</div>
+              <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">
+                3
+              </div>
               Who May Be Harmed
             </h3>
             <p className="text-ios-callout text-white/80 mb-2">
@@ -585,7 +655,9 @@ const AM2Module2Section2 = () => {
 
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3 flex items-center gap-2">
-              <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">4</div>
+              <div className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-xs font-bold">
+                4
+              </div>
               Control Measures
             </h3>
             <p className="text-ios-callout text-white/80 mb-3">
@@ -593,20 +665,36 @@ const AM2Module2Section2 = () => {
             </p>
             <div className="space-y-3">
               <div className="border-l-4 border-green-500 pl-4 py-2 bg-white/5 rounded-r-xl">
-                <h4 className="text-ios-subheadline font-semibold text-green-400">Elimination/Substitution</h4>
-                <p className="text-ios-footnote text-white/70">Remove hazard completely or replace with safer alternative</p>
+                <h4 className="text-ios-subheadline font-semibold text-green-400">
+                  Elimination/Substitution
+                </h4>
+                <p className="text-ios-footnote text-white/70">
+                  Remove hazard completely or replace with safer alternative
+                </p>
               </div>
               <div className="border-l-4 border-blue-500 pl-4 py-2 bg-white/5 rounded-r-xl">
-                <h4 className="text-ios-subheadline font-semibold text-blue-400">Engineering Controls</h4>
-                <p className="text-ios-footnote text-white/70">Isolation procedures, earthing, RCD protection, barriers</p>
+                <h4 className="text-ios-subheadline font-semibold text-blue-400">
+                  Engineering Controls
+                </h4>
+                <p className="text-ios-footnote text-white/70">
+                  Isolation procedures, earthing, RCD protection, barriers
+                </p>
               </div>
               <div className="border-l-4 border-orange-500 pl-4 py-2 bg-white/5 rounded-r-xl">
-                <h4 className="text-ios-subheadline font-semibold text-orange-400">Administrative Controls</h4>
-                <p className="text-ios-footnote text-white/70">Permits to work, signage, training, supervision, procedures</p>
+                <h4 className="text-ios-subheadline font-semibold text-orange-400">
+                  Administrative Controls
+                </h4>
+                <p className="text-ios-footnote text-white/70">
+                  Permits to work, signage, training, supervision, procedures
+                </p>
               </div>
               <div className="border-l-4 border-red-500 pl-4 py-2 bg-white/5 rounded-r-xl">
-                <h4 className="text-ios-subheadline font-semibold text-red-400">Personal Protective Equipment</h4>
-                <p className="text-ios-footnote text-white/70">Last resort - specify exact type and purpose</p>
+                <h4 className="text-ios-subheadline font-semibold text-red-400">
+                  Personal Protective Equipment
+                </h4>
+                <p className="text-ios-footnote text-white/70">
+                  Last resort - specify exact type and purpose
+                </p>
               </div>
             </div>
           </div>
@@ -667,7 +755,9 @@ const AM2Module2Section2 = () => {
         </div>
 
         <div className="mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
-          <h4 className="text-ios-headline font-semibold text-red-400 mb-2">Examples of Inadequate Entries</h4>
+          <h4 className="text-ios-headline font-semibold text-red-400 mb-2">
+            Examples of Inadequate Entries
+          </h4>
           <div className="grid md:grid-cols-2 gap-4 text-ios-callout">
             <div>
               <p className="font-semibold text-red-400 mb-1">Wrong:</p>
@@ -707,13 +797,19 @@ const AM2Module2Section2 = () => {
             <thead>
               <tr className="bg-elec-yellow/20">
                 <th className="border border-white/20 p-3 text-left text-white">Hazard Category</th>
-                <th className="border border-white/20 p-3 text-left text-white">Specific Hazards</th>
-                <th className="border border-white/20 p-3 text-left text-white">Typical Control Measures</th>
+                <th className="border border-white/20 p-3 text-left text-white">
+                  Specific Hazards
+                </th>
+                <th className="border border-white/20 p-3 text-left text-white">
+                  Typical Control Measures
+                </th>
               </tr>
             </thead>
             <tbody className="text-white/80">
               <tr>
-                <td className="border border-white/20 p-3 font-semibold text-elec-yellow">Electrical</td>
+                <td className="border border-white/20 p-3 font-semibold text-elec-yellow">
+                  Electrical
+                </td>
                 <td className="border border-white/20 p-3">
                   <ul className="space-y-1">
                     <li>• Electric shock from live parts</li>
@@ -730,7 +826,9 @@ const AM2Module2Section2 = () => {
                 </td>
               </tr>
               <tr>
-                <td className="border border-white/20 p-3 font-semibold text-elec-yellow">Physical</td>
+                <td className="border border-white/20 p-3 font-semibold text-elec-yellow">
+                  Physical
+                </td>
                 <td className="border border-white/20 p-3">
                   <ul className="space-y-1">
                     <li>• Cuts from sharp tools/edges</li>
@@ -747,7 +845,9 @@ const AM2Module2Section2 = () => {
                 </td>
               </tr>
               <tr>
-                <td className="border border-white/20 p-3 font-semibold text-elec-yellow">Environmental</td>
+                <td className="border border-white/20 p-3 font-semibold text-elec-yellow">
+                  Environmental
+                </td>
                 <td className="border border-white/20 p-3">
                   <ul className="space-y-1">
                     <li>• Dust from drilling/cutting</li>
@@ -859,7 +959,9 @@ const AM2Module2Section2 = () => {
             </ul>
           </div>
           <div>
-            <h3 className="text-ios-headline font-semibold text-white mb-3">Emergency Procedures</h3>
+            <h3 className="text-ios-headline font-semibold text-white mb-3">
+              Emergency Procedures
+            </h3>
             <ul className="space-y-2 text-ios-callout text-white/80">
               <li className="flex items-start gap-2">
                 <Shield className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
@@ -955,7 +1057,9 @@ const AM2Module2Section2 = () => {
         </div>
 
         <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
-          <h4 className="text-ios-headline font-semibold text-elec-yellow mb-2">Time Management Tips</h4>
+          <h4 className="text-ios-headline font-semibold text-elec-yellow mb-2">
+            Time Management Tips
+          </h4>
           <ul className="space-y-1 text-ios-callout text-white/80">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow">•</span>
@@ -983,27 +1087,48 @@ const AM2Module2Section2 = () => {
 
       {/* FAQs */}
       <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Frequently Asked Questions</h2>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
+          Frequently Asked Questions
+        </h2>
         <div className="space-y-4">
           <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">Q1: Do I need to list every possible hazard?</h3>
-            <p className="text-ios-callout text-white/70">A: Only the relevant ones - but think broadly (environment, tools, access, people).</p>
+            <h3 className="text-ios-headline text-white font-semibold mb-1">
+              Q1: Do I need to list every possible hazard?
+            </h3>
+            <p className="text-ios-callout text-white/70">
+              A: Only the relevant ones - but think broadly (environment, tools, access, people).
+            </p>
           </div>
           <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">Q2: Can I copy generic RAMS wording from memory?</h3>
-            <p className="text-ios-callout text-white/70">A: No. Assessors want task-specific detail.</p>
+            <h3 className="text-ios-headline text-white font-semibold mb-1">
+              Q2: Can I copy generic RAMS wording from memory?
+            </h3>
+            <p className="text-ios-callout text-white/70">
+              A: No. Assessors want task-specific detail.
+            </p>
           </div>
           <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">Q3: How detailed should PPE entries be?</h3>
-            <p className="text-ios-callout text-white/70">A: State type and purpose: e.g., "insulated gloves for testing, safety glasses for drilling."</p>
+            <h3 className="text-ios-headline text-white font-semibold mb-1">
+              Q3: How detailed should PPE entries be?
+            </h3>
+            <p className="text-ios-callout text-white/70">
+              A: State type and purpose: e.g., "insulated gloves for testing, safety glasses for
+              drilling."
+            </p>
           </div>
           <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">Q4: What's the biggest reason people lose marks in RAMS?</h3>
+            <h3 className="text-ios-headline text-white font-semibold mb-1">
+              Q4: What's the biggest reason people lose marks in RAMS?
+            </h3>
             <p className="text-ios-callout text-white/70">A: Vague or incomplete entries.</p>
           </div>
           <div className="p-3 bg-white/5 rounded-xl border border-white/10">
-            <h3 className="text-ios-headline text-white font-semibold mb-1">Q5: Will assessors mark spelling/grammar?</h3>
-            <p className="text-ios-callout text-white/70">A: No, but clarity matters - write plainly and logically.</p>
+            <h3 className="text-ios-headline text-white font-semibold mb-1">
+              Q5: Will assessors mark spelling/grammar?
+            </h3>
+            <p className="text-ios-callout text-white/70">
+              A: No, but clarity matters - write plainly and logically.
+            </p>
           </div>
         </div>
       </AM2ContentCard>
@@ -1012,7 +1137,8 @@ const AM2Module2Section2 = () => {
       <AM2ContentCard accent>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Summary</h2>
         <p className="text-ios-body text-white/90 mb-4">
-          RAMS is about proving you can plan safe work. In AM2, weak RAMS entries = easy lost marks. Always:
+          RAMS is about proving you can plan safe work. In AM2, weak RAMS entries = easy lost marks.
+          Always:
         </p>
         <ul className="space-y-2 text-ios-callout text-white/90">
           <li className="flex items-start gap-2">
@@ -1038,10 +1164,7 @@ const AM2Module2Section2 = () => {
       </AM2ContentCard>
 
       {/* Quiz Section */}
-      <Quiz
-        questions={quizQuestions}
-        title="RAMS Quiz"
-      />
+      <Quiz questions={quizQuestions} title="RAMS Quiz" />
 
       {/* Navigation Footer */}
       <AM2NavigationFooter

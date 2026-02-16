@@ -1,36 +1,55 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Identifying and Rectifying Defects - Module 4.6.5 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn systematic approaches to identify and correct electrical installation defects. Master fault-finding techniques and safe rectification procedures for BS 7671 compliance.";
+const TITLE = 'Identifying and Rectifying Defects - Module 4.6.5 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn systematic approaches to identify and correct electrical installation defects. Master fault-finding techniques and safe rectification procedures for BS 7671 compliance.';
 
 // Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Name one type of mechanical defect and one wiring defect.",
-    options: ["Loose fixings and incorrect terminations", "Overloading and moisture", "Wrong cable size and polarity errors", "Poor containment and design errors"],
+    question: 'Name one type of mechanical defect and one wiring defect.',
+    options: [
+      'Loose fixings and incorrect terminations',
+      'Overloading and moisture',
+      'Wrong cable size and polarity errors',
+      'Poor containment and design errors',
+    ],
     correctIndex: 0,
-    explanation: "Mechanical defects include loose fixings, damaged accessories, and poor containment support. Wiring defects include incorrect terminations, polarity errors, and broken CPC connections."
+    explanation:
+      'Mechanical defects include loose fixings, damaged accessories, and poor containment support. Wiring defects include incorrect terminations, polarity errors, and broken CPC connections.',
   },
   {
     id: 2,
-    question: "Why must all rectification work be re-tested?",
-    options: ["To comply with regulations", "To confirm the defect has been properly corrected and safety restored", "To satisfy the client", "To complete documentation"],
+    question: 'Why must all rectification work be re-tested?',
+    options: [
+      'To comply with regulations',
+      'To confirm the defect has been properly corrected and safety restored',
+      'To satisfy the client',
+      'To complete documentation',
+    ],
     correctIndex: 1,
-    explanation: "Re-testing after rectification ensures that the defect has been properly corrected, safety has been restored, and the installation still complies with BS 7671 requirements."
+    explanation:
+      'Re-testing after rectification ensures that the defect has been properly corrected, safety has been restored, and the installation still complies with BS 7671 requirements.',
   },
   {
     id: 3,
-    question: "What regulation places a duty to maintain safe electrical systems?",
-    options: ["BS 7671", "Electricity at Work Regulations 1989", "Building Regulations", "Health and Safety at Work Act"],
+    question: 'What regulation places a duty to maintain safe electrical systems?',
+    options: [
+      'BS 7671',
+      'Electricity at Work Regulations 1989',
+      'Building Regulations',
+      'Health and Safety at Work Act',
+    ],
     correctIndex: 1,
-    explanation: "The Electricity at Work Regulations 1989 place a statutory duty to maintain electrical systems in a safe condition and prevent danger from electrical installations."
-  }
+    explanation:
+      'The Electricity at Work Regulations 1989 place a statutory duty to maintain electrical systems in a safe condition and prevent danger from electrical installations.',
+  },
 ];
 
 const Module4Section6_5 = () => {
@@ -39,139 +58,139 @@ const Module4Section6_5 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "Which of the following is a common insulation defect?",
-      options: [
-        "Loose fixing",
-        "Damaged sheathing",
-        "Wrong accessory type",
-        "Overloading"
-      ],
+      question: 'Which of the following is a common insulation defect?',
+      options: ['Loose fixing', 'Damaged sheathing', 'Wrong accessory type', 'Overloading'],
       correctAnswer: 1,
-      explanation: "Damaged sheathing is a common insulation defect that can expose conductors and create safety hazards including electric shock and short circuit risks."
+      explanation:
+        'Damaged sheathing is a common insulation defect that can expose conductors and create safety hazards including electric shock and short circuit risks.',
     },
     {
       id: 2,
       question: "True or False: Defects that don't affect safety can be left uncorrected.",
-      options: [
-        "True",
-        "False",
-        "Only minor defects",
-        "Only cosmetic issues"
-      ],
+      options: ['True', 'False', 'Only minor defects', 'Only cosmetic issues'],
       correctAnswer: 1,
-      explanation: "False - all defects must be rectified before energisation to ensure long-term safety, compliance, and professional standards, regardless of their immediate impact."
+      explanation:
+        'False - all defects must be rectified before energisation to ensure long-term safety, compliance, and professional standards, regardless of their immediate impact.',
     },
     {
       id: 3,
-      question: "What is the first step before rectifying a wiring defect?",
+      question: 'What is the first step before rectifying a wiring defect?',
       options: [
-        "Test the circuit",
-        "Isolate and lock off the circuit",
-        "Document the defect",
-        "Gather replacement parts"
+        'Test the circuit',
+        'Isolate and lock off the circuit',
+        'Document the defect',
+        'Gather replacement parts',
       ],
       correctAnswer: 1,
-      explanation: "The first step is always to isolate and lock off the circuit to ensure safe working conditions before beginning any rectification work."
+      explanation:
+        'The first step is always to isolate and lock off the circuit to ensure safe working conditions before beginning any rectification work.',
     },
     {
       id: 4,
-      question: "Name two tools that may assist in defect identification.",
+      question: 'Name two tools that may assist in defect identification.',
       options: [
-        "Hammer and chisel",
-        "Continuity tester and insulation resistance tester",
-        "Tape measure and pencil",
-        "Drill and screwdriver"
+        'Hammer and chisel',
+        'Continuity tester and insulation resistance tester',
+        'Tape measure and pencil',
+        'Drill and screwdriver',
       ],
       correctAnswer: 1,
-      explanation: "Continuity testers and insulation resistance testers are essential tools for identifying electrical defects through systematic testing of circuit integrity and insulation properties."
+      explanation:
+        'Continuity testers and insulation resistance testers are essential tools for identifying electrical defects through systematic testing of circuit integrity and insulation properties.',
     },
     {
       id: 5,
-      question: "Which regulation requires installations to be maintained in a safe condition?",
+      question: 'Which regulation requires installations to be maintained in a safe condition?',
       options: [
-        "BS 7671",
-        "Electricity at Work Regulations 1989",
-        "BS EN 61439",
-        "Building Regulations Part M"
+        'BS 7671',
+        'Electricity at Work Regulations 1989',
+        'BS EN 61439',
+        'Building Regulations Part M',
       ],
       correctAnswer: 1,
-      explanation: "The Electricity at Work Regulations 1989 place a statutory duty on employers and employees to maintain electrical systems in a safe condition."
+      explanation:
+        'The Electricity at Work Regulations 1989 place a statutory duty on employers and employees to maintain electrical systems in a safe condition.',
     },
     {
       id: 6,
-      question: "Why should replacement cables cover the full damaged section?",
+      question: 'Why should replacement cables cover the full damaged section?',
       options: [
-        "To save money",
-        "To ensure reliability and avoid unsafe splices",
-        "To improve appearance",
-        "To reduce installation time"
+        'To save money',
+        'To ensure reliability and avoid unsafe splices',
+        'To improve appearance',
+        'To reduce installation time',
       ],
       correctAnswer: 1,
-      explanation: "Replacing the full damaged section ensures reliability and avoids potentially unsafe splices that could create future failure points or safety hazards."
+      explanation:
+        'Replacing the full damaged section ensures reliability and avoids potentially unsafe splices that could create future failure points or safety hazards.',
     },
     {
       id: 7,
-      question: "What is one way to prevent recurrence of polarity defects?",
+      question: 'What is one way to prevent recurrence of polarity defects?',
       options: [
-        "Use different cable colours",
-        "Double-check conductor connections before final fix",
-        "Install additional protection",
-        "Use higher rated components"
+        'Use different cable colours',
+        'Double-check conductor connections before final fix',
+        'Install additional protection',
+        'Use higher rated components',
       ],
       correctAnswer: 1,
-      explanation: "Double-checking conductor connections before final fixing helps prevent polarity errors by ensuring line, neutral, and earth connections are correctly identified and terminated."
+      explanation:
+        'Double-checking conductor connections before final fixing helps prevent polarity errors by ensuring line, neutral, and earth connections are correctly identified and terminated.',
     },
     {
       id: 8,
-      question: "Why should you address only one fault at a time during rectification?",
+      question: 'Why should you address only one fault at a time during rectification?',
       options: [
-        "To save time",
-        "To confirm each fault is resolved before moving on",
-        "To reduce costs",
-        "To satisfy regulations"
+        'To save time',
+        'To confirm each fault is resolved before moving on',
+        'To reduce costs',
+        'To satisfy regulations',
       ],
       correctAnswer: 1,
-      explanation: "Addressing one fault at a time allows you to confirm each issue is properly resolved and re-tested before moving to the next, ensuring systematic and thorough fault correction."
+      explanation:
+        'Addressing one fault at a time allows you to confirm each issue is properly resolved and re-tested before moving to the next, ensuring systematic and thorough fault correction.',
     },
     {
       id: 9,
-      question: "Give one reason why photographs should be taken before and after defect correction.",
+      question:
+        'Give one reason why photographs should be taken before and after defect correction.',
       options: [
-        "For training purposes",
-        "To provide a clear record and proof of corrective action",
-        "For insurance claims",
-        "To show the client"
+        'For training purposes',
+        'To provide a clear record and proof of corrective action',
+        'For insurance claims',
+        'To show the client',
       ],
       correctAnswer: 1,
-      explanation: "Photographs provide clear documentation of the defect and its correction, creating a permanent record for certification purposes and demonstrating professional standards."
+      explanation:
+        'Photographs provide clear documentation of the defect and its correction, creating a permanent record for certification purposes and demonstrating professional standards.',
     },
     {
       id: 10,
-      question: "True or False: Minor cosmetic defects (like a crooked switch) never need rectification.",
-      options: [
-        "True",
-        "False",
-        "Only if the client complains",
-        "Only on commercial jobs"
-      ],
+      question:
+        'True or False: Minor cosmetic defects (like a crooked switch) never need rectification.',
+      options: ['True', 'False', 'Only if the client complains', 'Only on commercial jobs'],
       correctAnswer: 1,
-      explanation: "False - cosmetic defects still need rectification as they affect client satisfaction, indicate poor workmanship, and reflect on professional standards."
-    }
+      explanation:
+        'False - cosmetic defects still need rectification as they affect client satisfaction, indicate poor workmanship, and reflect on professional standards.',
+    },
   ];
 
   const faqs = [
     {
       question: "Can defects be ignored if they don't affect immediate circuit operation?",
-      answer: "No — all defects must be rectified before energisation to ensure long-term safety and compliance. Even minor defects can develop into serious problems over time."
+      answer:
+        'No — all defects must be rectified before energisation to ensure long-term safety and compliance. Even minor defects can develop into serious problems over time.',
     },
     {
-      question: "Do minor cosmetic issues count as defects?",
-      answer: "Yes, if they affect client satisfaction or indicate poor workmanship (e.g., crooked accessories). Professional standards require all aspects of the installation to be completed properly."
+      question: 'Do minor cosmetic issues count as defects?',
+      answer:
+        'Yes, if they affect client satisfaction or indicate poor workmanship (e.g., crooked accessories). Professional standards require all aspects of the installation to be completed properly.',
     },
     {
       question: "What should I do if I can't locate the cause of a fault?",
-      answer: "Escalate to a supervisor or use advanced test methods (e.g., insulation fault location). Don't guess or ignore difficult faults - they often indicate serious underlying problems."
-    }
+      answer:
+        "Escalate to a supervisor or use advanced test methods (e.g., insulation fault location). Don't guess or ignore difficult faults - they often indicate serious underlying problems.",
+    },
   ];
 
   return (
@@ -206,7 +225,8 @@ const Module4Section6_5 = () => {
               Identifying and Rectifying Defects
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Master systematic approaches to identify and correct electrical installation defects before energisation.
+              Master systematic approaches to identify and correct electrical installation defects
+              before energisation.
             </p>
           </header>
 
@@ -217,16 +237,31 @@ const Module4Section6_5 = () => {
                 <p className="font-medium text-elec-yellow text-sm mb-2">In 30 Seconds</p>
                 <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
                   <li>No electrical installation is perfect on the first attempt.</li>
-                  <li>Defects can appear during installation or be revealed during inspection and testing.</li>
-                  <li>Identifying and correcting defects is vital before energisation for BS 7671 compliance.</li>
+                  <li>
+                    Defects can appear during installation or be revealed during inspection and
+                    testing.
+                  </li>
+                  <li>
+                    Identifying and correcting defects is vital before energisation for BS 7671
+                    compliance.
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">Spot it / Use it</p>
                 <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
-                  <li><strong>Spot:</strong> Loose connections, damaged cables, incorrect terminations.</li>
-                  <li><strong>Use:</strong> Systematic checking, test instruments, safe correction methods.</li>
-                  <li><strong>Check:</strong> Visual inspection, functional tests, operational verification.</li>
+                  <li>
+                    <strong>Spot:</strong> Loose connections, damaged cables, incorrect
+                    terminations.
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Systematic checking, test instruments, safe correction
+                    methods.
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Visual inspection, functional tests, operational
+                    verification.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -254,7 +289,8 @@ const Module4Section6_5 = () => {
               Types of Defects
             </h2>
             <p className="text-white/80 mb-4">
-              Understanding common defect categories helps with systematic identification and correction:
+              Understanding common defect categories helps with systematic identification and
+              correction:
             </p>
 
             <div className="space-y-4">
@@ -352,7 +388,8 @@ const Module4Section6_5 = () => {
 
             <div className="mt-4 p-3 rounded bg-white/5 border border-white/10">
               <p className="text-sm text-white/70">
-                <strong className="text-white">Customer feedback:</strong> Clients may notice practical defects such as misaligned fittings or operational issues
+                <strong className="text-white">Customer feedback:</strong> Clients may notice
+                practical defects such as misaligned fittings or operational issues
               </p>
             </div>
           </section>
@@ -378,7 +415,9 @@ const Module4Section6_5 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 text-sm mb-2">Work Methodically</p>
-                <p className="text-sm text-white/80 mb-2">Start at the origin of supply and progress circuit by circuit:</p>
+                <p className="text-sm text-white/80 mb-2">
+                  Start at the origin of supply and progress circuit by circuit:
+                </p>
                 <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
                   <li>Begin at the consumer unit or distribution board</li>
                   <li>Follow each circuit from origin to final outlets</li>
@@ -430,7 +469,9 @@ const Module4Section6_5 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 text-sm mb-2">Safety First</p>
-                <p className="text-sm text-white/80 mb-2">Always isolate the affected circuit before beginning work:</p>
+                <p className="text-sm text-white/80 mb-2">
+                  Always isolate the affected circuit before beginning work:
+                </p>
                 <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
                   <li>Switch off and lock off the circuit at the consumer unit</li>
                   <li>Test the circuit is dead using approved voltage indicator</li>
@@ -443,7 +484,9 @@ const Module4Section6_5 = () => {
                 <p className="font-medium text-orange-400 text-sm mb-2">Correction Techniques</p>
                 <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
                   <li>Correct loose terminations by re-stripping and re-securing conductors</li>
-                  <li>Replace damaged cables or accessories rather than attempting unsafe repairs</li>
+                  <li>
+                    Replace damaged cables or accessories rather than attempting unsafe repairs
+                  </li>
                   <li>Apply correct protective measures (e.g., IP-rated glands in wet areas)</li>
                   <li>Ensure proper cable support and containment throughout the circuit</li>
                 </ul>
@@ -451,7 +494,9 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 text-sm mb-2">Verification</p>
-                <p className="text-sm text-white/80 mb-2">Re-test all corrected work to confirm compliance:</p>
+                <p className="text-sm text-white/80 mb-2">
+                  Re-test all corrected work to confirm compliance:
+                </p>
                 <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
                   <li>Repeat relevant tests after each correction</li>
                   <li>Verify continuity and insulation resistance meet requirements</li>
@@ -474,16 +519,26 @@ const Module4Section6_5 = () => {
                 <p className="font-medium text-white text-sm mb-2">Safety Procedures</p>
                 <ul className="text-sm text-white/70 space-y-1 list-disc pl-4">
                   <li>Always isolate and lock off circuits before rectifying defects</li>
-                  <li>Photograph defects before and after rectification to maintain a clear record</li>
-                  <li>Keep spare accessories and replacement cable lengths on hand to minimise delays</li>
-                  <li>When replacing damaged cable, always replace the full section — do not splice unless an appropriate enclosure and connectors are used</li>
+                  <li>
+                    Photograph defects before and after rectification to maintain a clear record
+                  </li>
+                  <li>
+                    Keep spare accessories and replacement cable lengths on hand to minimise delays
+                  </li>
+                  <li>
+                    When replacing damaged cable, always replace the full section — do not splice
+                    unless an appropriate enclosure and connectors are used
+                  </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white text-sm mb-2">Documentation</p>
                 <ul className="text-sm text-white/70 space-y-1 list-disc pl-4">
-                  <li>Document rectification on the Electrical Installation Certificate to demonstrate compliance</li>
+                  <li>
+                    Document rectification on the Electrical Installation Certificate to demonstrate
+                    compliance
+                  </li>
                   <li>Record the nature of each defect and the corrective action taken</li>
                   <li>Include test results before and after correction</li>
                   <li>Maintain photographic evidence for quality assurance</li>
@@ -501,11 +556,18 @@ const Module4Section6_5 = () => {
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="font-medium text-white mb-2">Commercial Fit-Out Defect</p>
               <p className="text-sm text-white/80 mb-3">
-                During a commercial fit-out, an insulation resistance test showed a low reading on a power circuit. Investigation revealed that a cable had been damaged by a sharp edge when pulled through trunking without a grommet. The damaged section was replaced, retested, and passed. The incident highlighted the importance of correct mechanical protection during installation.
+                During a commercial fit-out, an insulation resistance test showed a low reading on a
+                power circuit. Investigation revealed that a cable had been damaged by a sharp edge
+                when pulled through trunking without a grommet. The damaged section was replaced,
+                retested, and passed. The incident highlighted the importance of correct mechanical
+                protection during installation.
               </p>
               <div className="p-3 rounded bg-elec-yellow/10 border-l-2 border-elec-yellow/50">
                 <p className="text-sm text-white/80">
-                  <strong className="text-elec-yellow">Key Learning:</strong> This example demonstrates how a single oversight (missing grommet) can cause significant defects that require complete cable replacement. Prevention through proper installation techniques is always more cost-effective than rectification.
+                  <strong className="text-elec-yellow">Key Learning:</strong> This example
+                  demonstrates how a single oversight (missing grommet) can cause significant
+                  defects that require complete cable replacement. Prevention through proper
+                  installation techniques is always more cost-effective than rectification.
                 </p>
               </div>
             </div>
@@ -538,29 +600,41 @@ const Module4Section6_5 = () => {
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">Isolate and prove dead before fault-finding.</span>
+                    <span className="text-white/80">
+                      Isolate and prove dead before fault-finding.
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">Inspect for mechanical damage: cracked accessories, missing fixings.</span>
+                    <span className="text-white/80">
+                      Inspect for mechanical damage: cracked accessories, missing fixings.
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">Check wiring: correct terminations, no exposed copper, polarity correct.</span>
+                    <span className="text-white/80">
+                      Check wiring: correct terminations, no exposed copper, polarity correct.
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">Test continuity, insulation resistance, and polarity after corrections.</span>
+                    <span className="text-white/80">
+                      Test continuity, insulation resistance, and polarity after corrections.
+                    </span>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">Replace damaged cables/accessories — never "make do".</span>
+                    <span className="text-white/80">
+                      Replace damaged cables/accessories — never "make do".
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">Record defect and corrective action for certification.</span>
+                    <span className="text-white/80">
+                      Record defect and corrective action for certification.
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
@@ -568,7 +642,9 @@ const Module4Section6_5 = () => {
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">Prevent recurrence: double-check, use proper tools, and follow BS 7671.</span>
+                    <span className="text-white/80">
+                      Prevent recurrence: double-check, use proper tools, and follow BS 7671.
+                    </span>
                   </div>
                 </div>
               </div>
@@ -585,47 +661,72 @@ const Module4Section6_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center text-xs font-bold">
+                      1
+                    </span>
                     <div>
                       <p className="font-medium text-white text-sm">Defect Recognition</p>
-                      <p className="text-xs text-white/70">You can now identify common mechanical, wiring, insulation, and design defects.</p>
+                      <p className="text-xs text-white/70">
+                        You can now identify common mechanical, wiring, insulation, and design
+                        defects.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-elec-yellow/20 text-elec-yellow rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-elec-yellow/20 text-elec-yellow rounded-full flex items-center justify-center text-xs font-bold">
+                      2
+                    </span>
                     <div>
                       <p className="font-medium text-white text-sm">Identification Methods</p>
-                      <p className="text-xs text-white/70">You understand how to apply visual checks and tests to spot faults.</p>
+                      <p className="text-xs text-white/70">
+                        You understand how to apply visual checks and tests to spot faults.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center text-xs font-bold">
+                      3
+                    </span>
                     <div>
                       <p className="font-medium text-white text-sm">Fault-Finding Skills</p>
-                      <p className="text-xs text-white/70">You know how to systematically fault-find and rectify issues.</p>
+                      <p className="text-xs text-white/70">
+                        You know how to systematically fault-find and rectify issues.
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-orange-500/20 text-orange-400 rounded-full flex items-center justify-center text-xs font-bold">4</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-orange-500/20 text-orange-400 rounded-full flex items-center justify-center text-xs font-bold">
+                      4
+                    </span>
                     <div>
                       <p className="font-medium text-white text-sm">Safe Rectification</p>
-                      <p className="text-xs text-white/70">You can ensure corrective work is documented, retested, and compliant.</p>
+                      <p className="text-xs text-white/70">
+                        You can ensure corrective work is documented, retested, and compliant.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center text-xs font-bold">5</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center text-xs font-bold">
+                      5
+                    </span>
                     <div>
                       <p className="font-medium text-white text-sm">Prevention Strategies</p>
-                      <p className="text-xs text-white/70">You've learned preventative strategies to avoid repeat defects.</p>
+                      <p className="text-xs text-white/70">
+                        You've learned preventative strategies to avoid repeat defects.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="flex-shrink-0 w-6 h-6 bg-teal-500/20 text-teal-400 rounded-full flex items-center justify-center text-xs font-bold">6</span>
+                    <span className="flex-shrink-0 w-6 h-6 bg-teal-500/20 text-teal-400 rounded-full flex items-center justify-center text-xs font-bold">
+                      6
+                    </span>
                     <div>
                       <p className="font-medium text-white text-sm">Professional Standards</p>
-                      <p className="text-xs text-white/70">You ensure installations are safe, professional, and inspection-ready.</p>
+                      <p className="text-xs text-white/70">
+                        You ensure installations are safe, professional, and inspection-ready.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -633,7 +734,10 @@ const Module4Section6_5 = () => {
 
               <div className="mt-4 p-3 rounded bg-elec-yellow/10 border-l-2 border-elec-yellow/50">
                 <p className="text-sm text-white/80">
-                  <strong className="text-elec-yellow">Key Compliance Point:</strong> All defects must be identified and rectified before energisation. This ensures compliance with BS 7671, prevents safety hazards, and maintains professional installation standards.
+                  <strong className="text-elec-yellow">Key Compliance Point:</strong> All defects
+                  must be identified and rectified before energisation. This ensures compliance with
+                  BS 7671, prevents safety hazards, and maintains professional installation
+                  standards.
                 </p>
               </div>
             </div>

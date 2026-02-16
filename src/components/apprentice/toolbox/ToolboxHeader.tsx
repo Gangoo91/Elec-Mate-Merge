@@ -1,6 +1,5 @@
-
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 interface ToolboxHeaderProps {
   title: string;

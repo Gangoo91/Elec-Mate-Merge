@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -11,16 +11,16 @@ import {
   ResponsiveDialogHeader,
   ResponsiveDialogTitle,
   ResponsiveDialogBody,
-} from "@/components/ui/responsive-dialog";
+} from '@/components/ui/responsive-dialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useCollege } from "@/contexts/CollegeContext";
-import { GraduationCap, Loader2 } from "lucide-react";
+} from '@/components/ui/select';
+import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { GraduationCap, Loader2 } from 'lucide-react';
 
 interface AddStudentDialogProps {
   open: boolean;
@@ -28,69 +28,65 @@ interface AddStudentDialogProps {
 }
 
 export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) {
-  const { cohorts, courses, addStudent } = useCollege();
+  const { cohorts, addStudent } = useCollegeSupabase();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    studentNumber: "",
-    cohortId: "",
-    employerName: "",
-    fundingType: "Levy" as "Levy" | "Non-Levy" | "Self-Funded",
-    expectedCompletionDate: "",
-    notes: "",
+    name: '',
+    email: '',
+    phone: '',
+    uln: '',
+    cohort_id: '',
+    expected_end_date: '',
   });
 
-  const activeCohorts = cohorts.filter(c => c.status === 'Active');
+  const activeCohorts = cohorts.filter((c) => c.status === 'Active');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Generate avatar initials from name
-      const nameParts = formData.name.trim().split(' ');
-      const avatarInitials = nameParts.length >= 2
-        ? `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase()
-        : formData.name.substring(0, 2).toUpperCase();
-
-      addStudent({
-        ...formData,
-        avatarInitials,
+      await addStudent({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || null,
+        uln: formData.uln || null,
+        cohort_id: formData.cohort_id || null,
+        expected_end_date: formData.expected_end_date || null,
+        college_id: null,
+        user_id: null,
+        employer_id: null,
+        course_id: null,
+        start_date: new Date().toISOString().split('T')[0],
         status: 'Active',
-        enrollmentDate: new Date().toISOString().split('T')[0],
+        progress_percent: 0,
+        risk_level: 'Low',
+        photo_url: null,
       });
 
-      // Reset form and close dialog
       setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        studentNumber: "",
-        cohortId: "",
-        employerName: "",
-        fundingType: "Levy",
-        expectedCompletionDate: "",
-        notes: "",
+        name: '',
+        email: '',
+        phone: '',
+        uln: '',
+        cohort_id: '',
+        expected_end_date: '',
       });
       onOpenChange(false);
     } catch (error) {
-      console.error("Failed to add student:", error);
+      console.error('Failed to add student:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Generate student number suggestion
-  const generateStudentNumber = () => {
-    const year = new Date().getFullYear().toString().slice(-2);
-    const random = Math.floor(Math.random() * 9000) + 1000;
-    return `STU${year}${random}`;
+  const generateULN = () => {
+    const random = Math.floor(Math.random() * 9000000000) + 1000000000;
+    return String(random);
   };
 
   return (
@@ -107,144 +103,92 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
         </ResponsiveDialogHeader>
 
         <ResponsiveDialogBody>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Personal Information */}
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-3">
               <div className="col-span-2">
                 <Label htmlFor="name">Full Name *</Label>
                 <Input
                   id="name"
                   value={formData.name}
-                  onChange={(e) => handleChange("name", e.target.value)}
+                  onChange={(e) => handleChange('name', e.target.value)}
                   placeholder="John Smith"
                   required
                 />
               </div>
-              <div>
-                <Label htmlFor="studentNumber">Student Number *</Label>
-                <div className="flex gap-2">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label htmlFor="uln">ULN</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="uln"
+                      value={formData.uln}
+                      onChange={(e) => handleChange('uln', e.target.value)}
+                      placeholder="10 digit ULN"
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleChange('uln', generateULN())}
+                    >
+                      Generate
+                    </Button>
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="email">Email *</Label>
                   <Input
-                    id="studentNumber"
-                    value={formData.studentNumber}
-                    onChange={(e) => handleChange("studentNumber", e.target.value)}
-                    placeholder="STU24XXXX"
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    placeholder="john.smith@email.com"
                     required
-                    className="flex-1"
                   />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleChange("studentNumber", generateStudentNumber())}
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleChange('phone', e.target.value)}
+                    placeholder="07XXX XXXXXX"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="cohort_id">Cohort</Label>
+                  <Select
+                    value={formData.cohort_id}
+                    onValueChange={(value) => handleChange('cohort_id', value)}
                   >
-                    Generate
-                  </Button>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select cohort" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {activeCohorts.map((cohort) => (
+                        <SelectItem key={cohort.id} value={cohort.id}>
+                          {cohort.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
               <div>
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="expected_end_date">Expected Completion</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
-                  placeholder="john.smith@email.com"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="phone">Phone</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => handleChange("phone", e.target.value)}
-                  placeholder="07XXX XXXXXX"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Course & Cohort */}
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="cohortId">Cohort *</Label>
-                <Select
-                  value={formData.cohortId}
-                  onValueChange={(value) => handleChange("cohortId", value)}
-                  required
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select cohort" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {activeCohorts.map((cohort) => (
-                      <SelectItem key={cohort.id} value={cohort.id}>
-                        {cohort.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="fundingType">Funding Type *</Label>
-                <Select
-                  value={formData.fundingType}
-                  onValueChange={(value) => handleChange("fundingType", value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Levy">Levy</SelectItem>
-                    <SelectItem value="Non-Levy">Non-Levy</SelectItem>
-                    <SelectItem value="Self-Funded">Self-Funded</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-
-          {/* Employer */}
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="employerName">Employer Name</Label>
-                <Input
-                  id="employerName"
-                  value={formData.employerName}
-                  onChange={(e) => handleChange("employerName", e.target.value)}
-                  placeholder="Company Ltd"
-                />
-              </div>
-              <div>
-                <Label htmlFor="expectedCompletionDate">Expected Completion *</Label>
-                <Input
-                  id="expectedCompletionDate"
+                  id="expected_end_date"
                   type="date"
-                  value={formData.expectedCompletionDate}
-                  onChange={(e) => handleChange("expectedCompletionDate", e.target.value)}
-                  required
+                  value={formData.expected_end_date}
+                  onChange={(e) => handleChange('expected_end_date', e.target.value)}
                 />
               </div>
             </div>
-          </div>
-
-          {/* Notes */}
-          <div>
-            <Label htmlFor="notes">Notes</Label>
-            <Textarea
-              id="notes"
-              value={formData.notes}
-              onChange={(e) => handleChange("notes", e.target.value)}
-              placeholder="Any additional notes about this student..."
-              rows={2}
-              className="touch-manipulation"
-            />
-          </div>
-        </form>
+          </form>
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter>
@@ -269,7 +213,7 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
                 Enrolling...
               </>
             ) : (
-              "Enrol Student"
+              'Enrol Student'
             )}
           </Button>
         </ResponsiveDialogFooter>

@@ -1,45 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  User, 
-  MapPin, 
-  Phone, 
+import React, { useState, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import {
+  ChevronLeft,
+  ChevronRight,
+  User,
+  MapPin,
+  Phone,
   Calendar,
   CheckCircle2,
   AlertCircle,
   Lightbulb,
   Sparkles,
-  Wand2
-} from "lucide-react";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { ClientDetailsStepProps } from "../types";
-import { useToast } from "@/hooks/use-toast";
-import SmartInputAssistant from "../components/SmartInputAssistant";
-import FieldValidationHelper from "../components/FieldValidationHelper";
+  Wand2,
+} from 'lucide-react';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { ClientDetailsStepProps } from '../types';
+import { useToast } from '@/hooks/use-toast';
+import SmartInputAssistant from '../components/SmartInputAssistant';
+import FieldValidationHelper from '../components/FieldValidationHelper';
 
 // AI-powered suggestions for common values
 const getAISuggestions = (fieldId: string, currentValue: string) => {
   const suggestions: Record<string, string[]> = {
     installationDescription: [
-      "Domestic dwelling - 3 bedroom house",
-      "Commercial office building",
-      "Retail shop premises",
-      "Industrial workshop",
-      "Farm building",
-      "Flat/apartment",
+      'Domestic dwelling - 3 bedroom house',
+      'Commercial office building',
+      'Retail shop premises',
+      'Industrial workshop',
+      'Farm building',
+      'Flat/apartment',
     ],
-    earthingArrangements: ["TN-C-S (PME)", "TN-S", "TT", "IT"],
-    supplyCharacteristics: ["230V 50Hz Single Phase", "400V 50Hz Three Phase"],
-    mainSwitchRating: ["100A DP", "80A DP", "125A DP", "160A DP"],
-    estimatedAge: ["0-5 years", "5-10 years", "10-20 years", "20+ years"]
+    earthingArrangements: ['TN-C-S (PME)', 'TN-S', 'TT', 'IT'],
+    supplyCharacteristics: ['230V 50Hz Single Phase', '400V 50Hz Three Phase'],
+    mainSwitchRating: ['100A DP', '80A DP', '125A DP', '160A DP'],
+    estimatedAge: ['0-5 years', '5-10 years', '10-20 years', '20+ years'],
   };
-  
+
   return suggestions[fieldId] || [];
 };
 
@@ -48,7 +48,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
   template,
   onDataChange,
   onNext,
-  onBack
+  onBack,
 }) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState(data);
@@ -60,18 +60,18 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
   // Form validation
   const requiredFields = [
     'clientName',
-    'clientAddress', 
+    'clientAddress',
     'installationAddress',
-    'installationDescription'
+    'installationDescription',
   ];
 
   const fieldProgress = (completedFields.size / requiredFields.length) * 100;
-  const isFormValid = requiredFields.every(field => formData[field]?.trim());
+  const isFormValid = requiredFields.every((field) => formData[field]?.trim());
 
   useEffect(() => {
     // Update completed fields
     const completed = new Set<string>();
-    requiredFields.forEach(field => {
+    requiredFields.forEach((field) => {
       if (formData[field]?.trim()) {
         completed.add(field);
       }
@@ -83,14 +83,17 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
   }, [formData, onDataChange, requiredFields]);
 
   const updateField = (fieldId: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [fieldId]: value
+      [fieldId]: value,
     }));
-    
+
     // Auto-show validation for important fields
-    if (['clientName', 'installationAddress', 'installationDescription'].includes(fieldId) && value) {
-      setValidationFields(prev => [...new Set([...prev, fieldId])]);
+    if (
+      ['clientName', 'installationAddress', 'installationDescription'].includes(fieldId) &&
+      value
+    ) {
+      setValidationFields((prev) => [...new Set([...prev, fieldId])]);
     }
   };
 
@@ -98,7 +101,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
     updateField(fieldId, value);
     setShowSmartAssistant(null);
     toast({
-      title: "Suggestion applied",
+      title: 'Suggestion applied',
       description: `${fieldId} has been updated with suggested value.`,
     });
   };
@@ -107,53 +110,52 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
     updateField(fieldId, suggestion);
     setShowingSuggestions(null);
     toast({
-      title: "Suggestion applied",
-      description: "AI suggestion has been applied to the field.",
+      title: 'Suggestion applied',
+      description: 'AI suggestion has been applied to the field.',
     });
   };
 
-
   const propertyTypeOptions = [
-    { value: "domestic-house", label: "Domestic House" },
-    { value: "flat-apartment", label: "Flat/Apartment" },
-    { value: "commercial-office", label: "Commercial Office" },
-    { value: "retail-shop", label: "Retail Shop" },
-    { value: "industrial-unit", label: "Industrial Unit" },
-    { value: "farm-building", label: "Farm Building" },
-    { value: "other", label: "Other" }
+    { value: 'domestic-house', label: 'Domestic House' },
+    { value: 'flat-apartment', label: 'Flat/Apartment' },
+    { value: 'commercial-office', label: 'Commercial Office' },
+    { value: 'retail-shop', label: 'Retail Shop' },
+    { value: 'industrial-unit', label: 'Industrial Unit' },
+    { value: 'farm-building', label: 'Farm Building' },
+    { value: 'other', label: 'Other' },
   ];
 
   const ageOptions = [
-    { value: "0-5-years", label: "0-5 years (Recent)" },
-    { value: "5-10-years", label: "5-10 years" },
-    { value: "10-20-years", label: "10-20 years" },
-    { value: "20-30-years", label: "20-30 years" },
-    { value: "30-years-plus", label: "30+ years (Older installation)" },
-    { value: "unknown", label: "Unknown" }
+    { value: '0-5-years', label: '0-5 years (Recent)' },
+    { value: '5-10-years', label: '5-10 years' },
+    { value: '10-20-years', label: '10-20 years' },
+    { value: '20-30-years', label: '20-30 years' },
+    { value: '30-years-plus', label: '30+ years (Older installation)' },
+    { value: 'unknown', label: 'Unknown' },
   ];
 
   const earthingOptions = [
-    { value: "tn-c-s", label: "TN-C-S (PME)" },
-    { value: "tn-s", label: "TN-S (Separate Neutral & Earth)" },
-    { value: "tt", label: "TT (Earth Electrode)" },
-    { value: "it", label: "IT (Isolated Terra)" }
+    { value: 'tn-c-s', label: 'TN-C-S (PME)' },
+    { value: 'tn-s', label: 'TN-S (Separate Neutral & Earth)' },
+    { value: 'tt', label: 'TT (Earth Electrode)' },
+    { value: 'it', label: 'IT (Isolated Terra)' },
   ];
 
   const supplyOptions = [
-    { value: "230v-50hz-1ph", label: "230V 50Hz Single Phase" },
-    { value: "400v-50hz-3ph", label: "400V 50Hz Three Phase" },
-    { value: "110v-50hz-1ph", label: "110V 50Hz Single Phase (Site Supply)" },
-    { value: "other", label: "Other" }
+    { value: '230v-50hz-1ph', label: '230V 50Hz Single Phase' },
+    { value: '400v-50hz-3ph', label: '400V 50Hz Three Phase' },
+    { value: '110v-50hz-1ph', label: '110V 50Hz Single Phase (Site Supply)' },
+    { value: 'other', label: 'Other' },
   ];
 
   const mainSwitchOptions = [
-    { value: "60a-sp", label: "60A SP" },
-    { value: "80a-dp", label: "80A DP" },
-    { value: "100a-dp", label: "100A DP" },
-    { value: "125a-dp", label: "125A DP" },
-    { value: "160a-dp", label: "160A DP" },
-    { value: "200a-dp", label: "200A DP" },
-    { value: "other", label: "Other" }
+    { value: '60a-sp', label: '60A SP' },
+    { value: '80a-dp', label: '80A DP' },
+    { value: '100a-dp', label: '100A DP' },
+    { value: '125a-dp', label: '125A DP' },
+    { value: '160a-dp', label: '160A DP' },
+    { value: '200a-dp', label: '200A DP' },
+    { value: 'other', label: 'Other' },
   ];
 
   return (
@@ -162,12 +164,14 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
       <Card className="bg-elec-gray border-elec-yellow/30 p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">Client & Installation Details</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-2">
+              Client & Installation Details
+            </h2>
             <p className="text-muted-foreground">
               Provide the basic information for your {template?.name}
             </p>
           </div>
-          
+
           {/* Progress */}
           <div className="w-full sm:w-auto">
             <div className="flex items-center gap-2 mb-2">
@@ -179,7 +183,6 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
             <Progress value={fieldProgress} className="w-full sm:w-48" />
           </div>
         </div>
-
       </Card>
 
       {/* Form Sections */}
@@ -190,20 +193,20 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
             <User className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-lg font-medium text-foreground">Client Information</h3>
           </div>
-          
+
           <div className="space-y-4">
             <div className="space-y-2">
               <MobileInputWrapper
                 label="Client Name"
                 placeholder="Enter client name"
-                value={formData.clientName || ""}
+                value={formData.clientName || ''}
                 onChange={(value) => updateField('clientName', value)}
               />
               {showSmartAssistant === 'clientName' && (
                 <SmartInputAssistant
                   fieldId="clientName"
                   fieldLabel="Client Name"
-                  currentValue={formData.clientName || ""}
+                  currentValue={formData.clientName || ''}
                   onSuggestionApply={(value) => handleSmartSuggestion('clientName', value)}
                   onDismiss={() => setShowSmartAssistant(null)}
                 />
@@ -211,7 +214,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
               {validationFields.includes('clientName') && (
                 <FieldValidationHelper
                   fieldId="clientName"
-                  value={formData.clientName || ""}
+                  value={formData.clientName || ''}
                   showCompliance={false}
                 />
               )}
@@ -220,7 +223,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
             <MobileInputWrapper
               label="Client Address"
               placeholder="Enter client address"
-              value={formData.clientAddress || ""}
+              value={formData.clientAddress || ''}
               onChange={(value) => updateField('clientAddress', value)}
             />
 
@@ -228,7 +231,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
               label="Client Phone"
               placeholder="Enter client phone number"
               type="tel"
-              value={formData.clientPhone || ""}
+              value={formData.clientPhone || ''}
               onChange={(value) => updateField('clientPhone', value)}
             />
           </div>
@@ -240,20 +243,20 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
             <MapPin className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-lg font-medium text-foreground">Installation Details</h3>
           </div>
-          
+
           <div className="space-y-4">
             <div className="space-y-2">
               <MobileInputWrapper
                 label="Installation Address"
                 placeholder="Enter installation address"
-                value={formData.installationAddress || ""}
+                value={formData.installationAddress || ''}
                 onChange={(value) => updateField('installationAddress', value)}
               />
               {showSmartAssistant === 'installationAddress' && (
                 <SmartInputAssistant
                   fieldId="installationAddress"
                   fieldLabel="Installation Address"
-                  currentValue={formData.installationAddress || ""}
+                  currentValue={formData.installationAddress || ''}
                   onSuggestionApply={(value) => handleSmartSuggestion('installationAddress', value)}
                   onDismiss={() => setShowSmartAssistant(null)}
                 />
@@ -263,7 +266,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
             <MobileSelectWrapper
               label="Installation Description"
               placeholder="Select property type"
-              value={formData.installationDescription || ""}
+              value={formData.installationDescription || ''}
               onValueChange={(value) => updateField('installationDescription', value)}
               options={propertyTypeOptions}
             />
@@ -271,7 +274,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
             <MobileSelectWrapper
               label="Estimated Age"
               placeholder="Select installation age"
-              value={formData.estimatedAge || ""}
+              value={formData.estimatedAge || ''}
               onValueChange={(value) => updateField('estimatedAge', value)}
               options={ageOptions}
             />
@@ -286,12 +289,12 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
             <Lightbulb className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-lg font-medium text-foreground">Technical Specifications</h3>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <MobileSelectWrapper
               label="Earthing Arrangements"
               placeholder="Select earthing system"
-              value={formData.earthingArrangements || ""}
+              value={formData.earthingArrangements || ''}
               onValueChange={(value) => updateField('earthingArrangements', value)}
               options={earthingOptions}
             />
@@ -299,7 +302,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
             <MobileSelectWrapper
               label="Supply Characteristics"
               placeholder="Select supply type"
-              value={formData.supplyCharacteristics || ""}
+              value={formData.supplyCharacteristics || ''}
               onValueChange={(value) => updateField('supplyCharacteristics', value)}
               options={supplyOptions}
             />
@@ -307,7 +310,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
             <MobileSelectWrapper
               label="Main Switch Rating"
               placeholder="Select main switch rating"
-              value={formData.mainSwitchRating || ""}
+              value={formData.mainSwitchRating || ''}
               onValueChange={(value) => updateField('mainSwitchRating', value)}
               options={mainSwitchOptions}
             />
@@ -326,7 +329,7 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
                 Please complete all required fields before continuing to the next step.
               </p>
               <div className="mt-2 text-xs text-amber-500/70">
-                Missing: {requiredFields.filter(field => !formData[field]?.trim()).join(', ')}
+                Missing: {requiredFields.filter((field) => !formData[field]?.trim()).join(', ')}
               </div>
             </div>
           </div>

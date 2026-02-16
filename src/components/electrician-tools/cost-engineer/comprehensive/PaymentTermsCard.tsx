@@ -1,6 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { PoundSterling } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { PoundSterling } from 'lucide-react';
 
 interface PaymentTermsCardProps {
   paymentTerms: any;
@@ -20,7 +27,9 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
         {/* Deposit & Balance */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
-            <div className="text-base sm:text-sm text-foreground mb-1">Deposit ({paymentTerms.depositPercent}%)</div>
+            <div className="text-base sm:text-sm text-foreground mb-1">
+              Deposit ({paymentTerms.depositPercent}%)
+            </div>
             <div className="text-3xl sm:text-2xl font-bold text-elec-yellow">
               £{paymentTerms.depositAmount?.toFixed(2)}
             </div>
@@ -34,24 +43,25 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
             <div className="text-3xl sm:text-2xl font-bold text-foreground">
               £{paymentTerms.balanceAmount?.toFixed(2)}
             </div>
-            <div className="text-base sm:text-sm text-foreground/90 mt-1">
-              Due on completion
-            </div>
+            <div className="text-base sm:text-sm text-foreground/90 mt-1">Due on completion</div>
           </div>
         </div>
 
         {/* Payment Milestones */}
         {paymentTerms.paymentMilestones && paymentTerms.paymentMilestones.length > 0 && (
           <div>
-            <div className="text-base sm:text-sm font-medium text-foreground mb-2">Payment Milestones</div>
-            
+            <div className="text-base sm:text-sm font-medium text-foreground mb-2">
+              Payment Milestones
+            </div>
+
             {/* Mobile: Stacked Cards */}
             <div className="space-y-3 sm:hidden">
               {paymentTerms.paymentMilestones.map((milestone: any, idx: number) => (
-                <div key={idx} className="p-4 rounded-lg bg-background/50 border border-border/30 text-left space-y-2">
-                  <div className="font-medium text-foreground text-base">
-                    {milestone.stage}
-                  </div>
+                <div
+                  key={idx}
+                  className="p-4 rounded-lg bg-background/50 border border-border/30 text-left space-y-2"
+                >
+                  <div className="font-medium text-foreground text-base">{milestone.stage}</div>
                   <div className="flex items-start gap-2">
                     <span className="text-foreground/70 text-sm">Amount:</span>
                     <span className="font-mono text-foreground text-base font-medium">
@@ -60,9 +70,7 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-foreground/70 text-sm">Trigger:</span>
-                    <span className="text-foreground text-sm flex-1">
-                      {milestone.trigger}
-                    </span>
+                    <span className="text-foreground text-sm flex-1">{milestone.trigger}</span>
                   </div>
                 </div>
               ))}
@@ -81,7 +89,9 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
                 <TableBody>
                   {paymentTerms.paymentMilestones.map((milestone: any, idx: number) => (
                     <TableRow key={idx}>
-                      <TableCell className="font-medium text-foreground text-base sm:text-sm">{milestone.stage}</TableCell>
+                      <TableCell className="font-medium text-foreground text-base sm:text-sm">
+                        {milestone.stage}
+                      </TableCell>
                       <TableCell className="text-right font-mono text-foreground text-base sm:text-sm">
                         £{milestone.amount.toFixed(2)} ({milestone.percentage}%)
                       </TableCell>
@@ -99,7 +109,9 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
         {/* Terms */}
         {paymentTerms.terms && (
           <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
-            <div className="text-base sm:text-sm font-medium text-foreground mb-1">Payment Terms</div>
+            <div className="text-base sm:text-sm font-medium text-foreground mb-1">
+              Payment Terms
+            </div>
             <p className="text-base sm:text-sm text-foreground">{paymentTerms.terms}</p>
           </div>
         )}
@@ -107,7 +119,9 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
         {/* Late Fee Policy */}
         {paymentTerms.lateFeePolicy && (
           <div className="p-4 sm:p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-            <div className="text-base sm:text-sm font-medium mb-1 text-red-500">Late Payment Policy</div>
+            <div className="text-base sm:text-sm font-medium mb-1 text-red-500">
+              Late Payment Policy
+            </div>
             <p className="text-base sm:text-sm text-foreground">{paymentTerms.lateFeePolicy}</p>
           </div>
         )}

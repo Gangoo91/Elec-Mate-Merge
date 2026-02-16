@@ -18,10 +18,10 @@ interface CustomerImportDialogProps {
   onImportComplete: () => void;
 }
 
-export const CustomerImportDialog = ({ 
-  open, 
+export const CustomerImportDialog = ({
+  open,
   onOpenChange,
-  onImportComplete 
+  onImportComplete,
 }: CustomerImportDialogProps) => {
   const { importCustomers, isImporting, importProgress } = useCustomerImport();
   const [dragActive, setDragActive] = useState(false);
@@ -31,11 +31,23 @@ export const CustomerImportDialog = ({
   const downloadSampleCSV = () => {
     const sampleData = [
       ['Name', 'Email', 'Phone', 'Address', 'Notes'],
-      ['John Smith', 'john@example.com', '01234 567890', '123 Main St, London, SW1A 1AA', 'Preferred contact by email'],
-      ['Jane Doe', 'jane@example.com', '07700 900123', '456 Oak Ave, Manchester, M1 1AA', 'VIP customer'],
+      [
+        'John Smith',
+        'john@example.com',
+        '01234 567890',
+        '123 Main St, London, SW1A 1AA',
+        'Preferred contact by email',
+      ],
+      [
+        'Jane Doe',
+        'jane@example.com',
+        '07700 900123',
+        '456 Oak Ave, Manchester, M1 1AA',
+        'VIP customer',
+      ],
     ];
-    
-    const csvContent = sampleData.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+
+    const csvContent = sampleData.map((row) => row.map((cell) => `"${cell}"`).join(',')).join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -61,7 +73,7 @@ export const CustomerImportDialog = ({
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       setSelectedFile(e.dataTransfer.files[0]);
     }
@@ -179,7 +191,8 @@ export const CustomerImportDialog = ({
               <Alert className="bg-green-900/20 border-green-700">
                 <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
                 <AlertDescription className="text-xs sm:text-sm text-green-100 break-words">
-                  Successfully imported <strong>{importResult.successCount}</strong> customer{importResult.successCount !== 1 ? 's' : ''}
+                  Successfully imported <strong>{importResult.successCount}</strong> customer
+                  {importResult.successCount !== 1 ? 's' : ''}
                 </AlertDescription>
               </Alert>
 
@@ -187,7 +200,9 @@ export const CustomerImportDialog = ({
                 <Alert className="bg-red-900/20 border-red-700">
                   <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
                   <AlertDescription className="text-xs sm:text-sm text-red-100 break-words">
-                    <strong>{importResult.errorCount}</strong> row{importResult.errorCount !== 1 ? 's' : ''} had errors and {importResult.errorCount !== 1 ? 'were' : 'was'} skipped
+                    <strong>{importResult.errorCount}</strong> row
+                    {importResult.errorCount !== 1 ? 's' : ''} had errors and{' '}
+                    {importResult.errorCount !== 1 ? 'were' : 'was'} skipped
                   </AlertDescription>
                 </Alert>
               )}
@@ -200,12 +215,15 @@ export const CustomerImportDialog = ({
                   <div className="space-y-2 text-xs sm:text-sm text-neutral-300">
                     {importResult.errors.slice(0, 10).map((err, idx) => (
                       <div key={idx} className="break-words">
-                        <span className="text-red-400">•</span> <strong className="text-foreground">{err.row.name || 'Unknown'}:</strong> {err.error}
+                        <span className="text-red-400">•</span>{' '}
+                        <strong className="text-foreground">{err.row.name || 'Unknown'}:</strong>{' '}
+                        {err.error}
                       </div>
                     ))}
                     {importResult.errors.length > 10 && (
                       <p className="text-neutral-500 mt-2 text-xs">
-                        + {importResult.errors.length - 10} more error{importResult.errors.length - 10 !== 1 ? 's' : ''}
+                        + {importResult.errors.length - 10} more error
+                        {importResult.errors.length - 10 !== 1 ? 's' : ''}
                       </p>
                     )}
                   </div>

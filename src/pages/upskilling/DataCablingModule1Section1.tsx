@@ -1,79 +1,89 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "What is Structured Cabling? | Data Cabling Module 1.1";
-const DESCRIPTION = "Introduction to structured cabling systems, standards, and fundamental principles for data communications infrastructure.";
+const TITLE = 'What is Structured Cabling? | Data Cabling Module 1.1';
+const DESCRIPTION =
+  'Introduction to structured cabling systems, standards, and fundamental principles for data communications infrastructure.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m1s1-check1",
-    question: "What is the primary benefit of structured cabling over unstructured cabling?",
+    id: 'datacabling-m1s1-check1',
+    question: 'What is the primary benefit of structured cabling over unstructured cabling?',
     options: [
-      "Lower initial cost",
-      "Standardised design enabling easier management and expansion",
-      "Faster installation time",
-      "No need for documentation"
+      'Lower initial cost',
+      'Standardised design enabling easier management and expansion',
+      'Faster installation time',
+      'No need for documentation',
     ],
     correctIndex: 1,
-    explanation: "Structured cabling follows standardised design principles with organised cable runs, proper labelling, and standardised components, making it easier to manage, troubleshoot, and expand."
+    explanation:
+      'Structured cabling follows standardised design principles with organised cable runs, proper labelling, and standardised components, making it easier to manage, troubleshoot, and expand.',
   },
   {
-    id: "datacabling-m1s1-check2",
-    question: "What is the typical lifespan of a well-designed structured cabling system?",
-    options: ["5-10 years", "10-15 years", "15-20 years or more", "25-30 years"],
+    id: 'datacabling-m1s1-check2',
+    question: 'What is the typical lifespan of a well-designed structured cabling system?',
+    options: ['5-10 years', '10-15 years', '15-20 years or more', '25-30 years'],
     correctIndex: 2,
-    explanation: "A well-designed structured cabling system typically lasts 15-20 years or more, often outlasting multiple generations of active network equipment."
+    explanation:
+      'A well-designed structured cabling system typically lasts 15-20 years or more, often outlasting multiple generations of active network equipment.',
   },
   {
-    id: "datacabling-m1s1-check3",
-    question: "Which of the following is NOT a subsystem in a structured cabling system?",
+    id: 'datacabling-m1s1-check3',
+    question: 'Which of the following is NOT a subsystem in a structured cabling system?',
     options: [
-      "Horizontal cabling",
-      "Backbone cabling",
-      "Power distribution",
-      "Work area components"
+      'Horizontal cabling',
+      'Backbone cabling',
+      'Power distribution',
+      'Work area components',
     ],
     correctIndex: 2,
-    explanation: "Power distribution is not part of structured cabling. The six subsystems are: entrance facilities, equipment room, backbone cabling, telecommunications room, horizontal cabling, and work area."
-  }
+    explanation:
+      'Power distribution is not part of structured cabling. The six subsystems are: entrance facilities, equipment room, backbone cabling, telecommunications room, horizontal cabling, and work area.',
+  },
 ];
 
 const faqs = [
   {
     question: "What's the difference between structured and unstructured cabling?",
-    answer: "Structured cabling follows standardised design principles with organised cable runs, proper labelling, and standardised components. Unstructured cabling is typically point-to-point connections without standardisation, making it harder to manage and expand."
+    answer:
+      'Structured cabling follows standardised design principles with organised cable runs, proper labelling, and standardised components. Unstructured cabling is typically point-to-point connections without standardisation, making it harder to manage and expand.',
   },
   {
-    question: "How long does structured cabling typically last?",
-    answer: "A well-designed structured cabling system typically lasts 15-20 years or more. The infrastructure often outlasts multiple generations of active equipment, making it a cost-effective long-term investment."
+    question: 'How long does structured cabling typically last?',
+    answer:
+      'A well-designed structured cabling system typically lasts 15-20 years or more. The infrastructure often outlasts multiple generations of active equipment, making it a cost-effective long-term investment.',
   },
   {
-    question: "What are the main standards for structured cabling?",
-    answer: "The primary standards are TIA/EIA-568 (North America), ISO/IEC 11801 (International), and EN 50173 (Europe). These standards define cable types, performance requirements, installation practices, and testing procedures."
+    question: 'What are the main standards for structured cabling?',
+    answer:
+      'The primary standards are TIA/EIA-568 (North America), ISO/IEC 11801 (International), and EN 50173 (Europe). These standards define cable types, performance requirements, installation practices, and testing procedures.',
   },
   {
-    question: "Can structured cabling support different types of services?",
-    answer: "Yes, structured cabling is designed to be service-independent. The same infrastructure can support voice, data, video, building automation, security systems, and emerging technologies without requiring rewiring."
-  }
+    question: 'Can structured cabling support different types of services?',
+    answer:
+      'Yes, structured cabling is designed to be service-independent. The same infrastructure can support voice, data, video, building automation, security systems, and emerging technologies without requiring rewiring.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A client asks why they should invest in structured cabling instead of simple point-to-point connections. What is the best response?",
-  options: [
-    "Point-to-point is always cheaper",
-    "Structured cabling provides standardised infrastructure that's easier to manage, troubleshoot, and expand",
-    "There is no difference between the two approaches",
-    "Structured cabling only works for large buildings"
-  ],
-  correctAnswer: 1,
-  explanation: "Structured cabling provides a standardised infrastructure that offers better organisation, easier troubleshooting, simplified expansion, and service independence - making it more cost-effective over the system's 15-20 year lifespan."
-  }
+    question:
+      'A client asks why they should invest in structured cabling instead of simple point-to-point connections. What is the best response?',
+    options: [
+      'Point-to-point is always cheaper',
+      "Structured cabling provides standardised infrastructure that's easier to manage, troubleshoot, and expand",
+      'There is no difference between the two approaches',
+      'Structured cabling only works for large buildings',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Structured cabling provides a standardised infrastructure that offers better organisation, easier troubleshooting, simplified expansion, and service independence - making it more cost-effective over the system's 15-20 year lifespan.",
+  },
 ];
 
 const DataCablingModule1Section1 = () => {
@@ -118,16 +128,26 @@ const DataCablingModule1Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Definition:</strong> Standardised building-wide cabling system</li>
-              <li><strong>Purpose:</strong> Support multiple services on one infrastructure</li>
-              <li><strong>Lifespan:</strong> 15-20+ years when properly designed</li>
+              <li>
+                <strong>Definition:</strong> Standardised building-wide cabling system
+              </li>
+              <li>
+                <strong>Purpose:</strong> Support multiple services on one infrastructure
+              </li>
+              <li>
+                <strong>Lifespan:</strong> 15-20+ years when properly designed
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Organised patch panels, labelled cables, comms rooms</li>
-              <li><strong>Use:</strong> Commercial buildings, data centres, campuses</li>
+              <li>
+                <strong>Spot:</strong> Organised patch panels, labelled cables, comms rooms
+              </li>
+              <li>
+                <strong>Use:</strong> Commercial buildings, data centres, campuses
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +157,12 @@ const DataCablingModule1Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Define structured cabling and its purpose",
-              "Identify the six subsystems",
-              "Understand key industry standards",
-              "Recognise benefits over unstructured approaches",
-              "Apply structured cabling principles",
-              "Plan for future expansion"
+              'Define structured cabling and its purpose',
+              'Identify the six subsystems',
+              'Understand key industry standards',
+              'Recognise benefits over unstructured approaches',
+              'Apply structured cabling principles',
+              'Plan for future expansion',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -162,20 +182,28 @@ const DataCablingModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Structured cabling is a standardised approach to designing and installing a
-              building's telecommunications infrastructure. Unlike ad-hoc point-to-point
-              connections, structured cabling provides an organised, scalable foundation
-              that supports multiple services.
+              Structured cabling is a standardised approach to designing and installing a building's
+              telecommunications infrastructure. Unlike ad-hoc point-to-point connections,
+              structured cabling provides an organised, scalable foundation that supports multiple
+              services.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Characteristics</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Standardised:</strong> Follows industry standards</li>
-                  <li><strong>Organised:</strong> Logical layout and labelling</li>
-                  <li><strong>Flexible:</strong> Supports multiple services</li>
-                  <li><strong>Scalable:</strong> Easy to expand</li>
+                  <li>
+                    <strong>Standardised:</strong> Follows industry standards
+                  </li>
+                  <li>
+                    <strong>Organised:</strong> Logical layout and labelling
+                  </li>
+                  <li>
+                    <strong>Flexible:</strong> Supports multiple services
+                  </li>
+                  <li>
+                    <strong>Scalable:</strong> Easy to expand
+                  </li>
                 </ul>
               </div>
               <div>
@@ -216,28 +244,47 @@ const DataCablingModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A structured cabling system consists of six interconnected subsystems,
-              each serving a specific function in the overall infrastructure.
+              A structured cabling system consists of six interconnected subsystems, each serving a
+              specific function in the overall infrastructure.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Subsystem Overview:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1. Entrance Facilities:</strong> Where external services enter the building</li>
-                <li><strong>2. Equipment Room:</strong> Houses main distribution and active equipment</li>
-                <li><strong>3. Backbone Cabling:</strong> Connects equipment rooms to telecom rooms</li>
-                <li><strong>4. Telecommunications Room:</strong> Floor-level distribution points</li>
-                <li><strong>5. Horizontal Cabling:</strong> Connects telecom room to work areas</li>
-                <li><strong>6. Work Area:</strong> End-user connection points</li>
+                <li>
+                  <strong>1. Entrance Facilities:</strong> Where external services enter the
+                  building
+                </li>
+                <li>
+                  <strong>2. Equipment Room:</strong> Houses main distribution and active equipment
+                </li>
+                <li>
+                  <strong>3. Backbone Cabling:</strong> Connects equipment rooms to telecom rooms
+                </li>
+                <li>
+                  <strong>4. Telecommunications Room:</strong> Floor-level distribution points
+                </li>
+                <li>
+                  <strong>5. Horizontal Cabling:</strong> Connects telecom room to work areas
+                </li>
+                <li>
+                  <strong>6. Work Area:</strong> End-user connection points
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Distances:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Horizontal:</strong> Maximum 90m permanent link</li>
-                <li><strong>Work area + patch:</strong> 10m combined allowance</li>
-                <li><strong>Total channel:</strong> 100m maximum</li>
+                <li>
+                  <strong>Horizontal:</strong> Maximum 90m permanent link
+                </li>
+                <li>
+                  <strong>Work area + patch:</strong> 10m combined allowance
+                </li>
+                <li>
+                  <strong>Total channel:</strong> 100m maximum
+                </li>
               </ul>
             </div>
           </div>
@@ -253,22 +300,32 @@ const DataCablingModule1Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Structured cabling systems are governed by international standards that
-              ensure consistency, interoperability, and performance.
+              Structured cabling systems are governed by international standards that ensure
+              consistency, interoperability, and performance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Major Standards</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>TIA/EIA-568:</strong> North American standard</li>
-                  <li><strong>ISO/IEC 11801:</strong> International standard</li>
-                  <li><strong>EN 50173:</strong> European standard</li>
-                  <li><strong>BS 6701:</strong> UK-specific guidance</li>
+                  <li>
+                    <strong>TIA/EIA-568:</strong> North American standard
+                  </li>
+                  <li>
+                    <strong>ISO/IEC 11801:</strong> International standard
+                  </li>
+                  <li>
+                    <strong>EN 50173:</strong> European standard
+                  </li>
+                  <li>
+                    <strong>BS 6701:</strong> UK-specific guidance
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">What Standards Define</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  What Standards Define
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Cable categories and performance</li>
                   <li>Installation best practices</li>
@@ -279,8 +336,8 @@ const DataCablingModule1Section1 = () => {
             </div>
 
             <p>
-              Compliance with standards ensures the cabling system will support current
-              and future applications, and simplifies maintenance and troubleshooting.
+              Compliance with standards ensures the cabling system will support current and future
+              applications, and simplifies maintenance and troubleshooting.
             </p>
           </div>
         </section>
@@ -292,7 +349,9 @@ const DataCablingModule1Section1 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Planning Considerations</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Planning Considerations
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Survey existing infrastructure and services</li>
                 <li>Identify current and future bandwidth needs</li>
@@ -304,10 +363,18 @@ const DataCablingModule1Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Undersizing:</strong> — Not allowing for growth</li>
-                <li><strong>Poor labelling:</strong> — Creates management nightmares</li>
-                <li><strong>Mixing standards:</strong> — Inconsistent components</li>
-                <li><strong>Exceeding distances:</strong> — Performance degradation</li>
+                <li>
+                  <strong>Undersizing:</strong> — Not allowing for growth
+                </li>
+                <li>
+                  <strong>Poor labelling:</strong> — Creates management nightmares
+                </li>
+                <li>
+                  <strong>Mixing standards:</strong> — Inconsistent components
+                </li>
+                <li>
+                  <strong>Exceeding distances:</strong> — Performance degradation
+                </li>
               </ul>
             </div>
           </div>
@@ -351,10 +418,7 @@ const DataCablingModule1Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

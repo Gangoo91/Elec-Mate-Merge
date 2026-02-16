@@ -47,8 +47,9 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       certificate_number: get('certificateNumber'),
       installation_date: get('installationDate'),
       standard: 'BS 7671:2018+A3:2024',
-      code_of_practice: 'IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition)',
-      section_reference: 'Section 722'
+      code_of_practice:
+        'IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition)',
+      section_reference: 'Section 722',
     },
 
     // Client Details
@@ -56,23 +57,28 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       name: get('clientName'),
       address: get('clientAddress'),
       telephone: get('clientTelephone'),
-      email: get('clientEmail')
+      email: get('clientEmail'),
     },
 
     // Vehicle Details
     vehicle_details: {
       make: get('vehicleMake'),
       model: get('vehicleModel'),
-      registration: get('vehicleRegistration')
+      registration: get('vehicleRegistration'),
     },
 
     // Installation Details
     installation_details: {
       address: get('installationAddress'),
       type: get('installationType'),
-      type_display: get('installationType') === 'domestic' ? 'Domestic'
-                   : get('installationType') === 'commercial' ? 'Commercial'
-                   : get('installationType') === 'public' ? 'Public' : ''
+      type_display:
+        get('installationType') === 'domestic'
+          ? 'Domestic'
+          : get('installationType') === 'commercial'
+            ? 'Commercial'
+            : get('installationType') === 'public'
+              ? 'Public'
+              : '',
     },
 
     // Charger Details
@@ -82,11 +88,12 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       serial: get('chargerSerial'),
       mode: get('chargerType'),
       connection_type: get('chargerConnection'),
-      connection_display: get('chargerConnection') === 'tethered' ? 'Tethered Cable' : 'Socket Outlet',
+      connection_display:
+        get('chargerConnection') === 'tethered' ? 'Tethered Cable' : 'Socket Outlet',
       power_rating_kw: get('powerRating'),
       rated_current_a: get('ratedCurrent'),
       phases: get('phases'),
-      socket_type: get('socketType')
+      socket_type: get('socketType'),
     },
 
     // Supply Characteristics
@@ -97,7 +104,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       earthing_arrangement: get('earthingArrangement'),
       ze: get('ze'),
       pfc: get('prospectiveFaultCurrent'),
-      external_loop_impedance: get('externalLoopImpedance')
+      external_loop_impedance: get('externalLoopImpedance'),
     },
 
     // PME Considerations (722.411.4.1)
@@ -107,7 +114,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       earthing_measures: get('pmeEarthingMeasures'),
       earth_electrode_installed: getBool('earthElectrodeInstalled'),
       earth_electrode_installed_display: getBool('earthElectrodeInstalled') ? 'Yes' : 'No',
-      earth_electrode_resistance: get('earthElectrodeResistance')
+      earth_electrode_resistance: get('earthElectrodeResistance'),
     },
 
     // Circuit Details
@@ -116,7 +123,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       cable_type: get('cableType'),
       cable_size_mm2: get('cableSize'),
       cable_length_m: get('cableLength'),
-      installation_method: get('installationMethod')
+      installation_method: get('installationMethod'),
     },
 
     // Protection Details (722.531.2)
@@ -127,7 +134,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       rcd_type: get('rcdType'),
       rcd_rating_ma: get('rcdRating'),
       rcd_integral: getBool('rcdIntegral'),
-      rcd_integral_display: getBool('rcdIntegral') ? 'Integral to Charger' : 'Separate RCD'
+      rcd_integral_display: getBool('rcdIntegral') ? 'Integral to Charger' : 'Separate RCD',
     },
 
     // Test Results
@@ -140,20 +147,32 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       insulation_resistance: getTestResult('insulationResistance'),
       insulation_satisfactory: safeCompare(getTestResult('insulationResistance'), '1', 'gte'),
       polarity: getTestResult('polarity'),
-      polarity_display: getTestResult('polarity') === 'correct' ? 'Correct' :
-                        getTestResult('polarity') === 'incorrect' ? 'Incorrect' : '',
+      polarity_display:
+        getTestResult('polarity') === 'correct'
+          ? 'Correct'
+          : getTestResult('polarity') === 'incorrect'
+            ? 'Incorrect'
+            : '',
       rcd_trip_time: getTestResult('rcdTripTime'),
       rcd_trip_time_satisfactory: safeCompare(getTestResult('rcdTripTime'), '300', 'lte'),
       rcd_trip_time_x5: getTestResult('rcdTripTimeX5'),
       rcd_trip_time_x5_satisfactory: safeCompare(getTestResult('rcdTripTimeX5'), '40', 'lte'),
       earth_electrode_ra: getTestResult('earthElectrodeRa'),
       functional_test: getTestResult('functionalTest'),
-      functional_test_display: getTestResult('functionalTest') === 'pass' ? 'Pass' :
-                               getTestResult('functionalTest') === 'fail' ? 'Fail' : '',
+      functional_test_display:
+        getTestResult('functionalTest') === 'pass'
+          ? 'Pass'
+          : getTestResult('functionalTest') === 'fail'
+            ? 'Fail'
+            : '',
       load_test: getTestResult('loadTest'),
-      load_test_display: getTestResult('loadTest') === 'pass' ? 'Pass' :
-                         getTestResult('loadTest') === 'fail' ? 'Fail' : '',
-      load_test_current: getTestResult('loadTestCurrent')
+      load_test_display:
+        getTestResult('loadTest') === 'pass'
+          ? 'Pass'
+          : getTestResult('loadTest') === 'fail'
+            ? 'Fail'
+            : '',
+      load_test_current: getTestResult('loadTestCurrent'),
     },
 
     // DNO Notification
@@ -166,7 +185,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       g98_notification: getBool('g98Notification'),
       g98_display: getBool('g98Notification') ? 'Yes' : 'N/A',
       g99_application: getBool('g99Application'),
-      g99_display: getBool('g99Application') ? 'Yes' : 'N/A'
+      g99_display: getBool('g99Application') ? 'Yes' : 'N/A',
     },
 
     // OZEV Grant Details
@@ -174,10 +193,15 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       applicable: getBool('ozevGrantApplicable'),
       applicable_display: getBool('ozevGrantApplicable') ? 'Yes' : 'No',
       scheme: get('ozevScheme'),
-      scheme_display: get('ozevScheme') === 'EVHS' ? 'Electric Vehicle Homecharge Scheme'
-                     : get('ozevScheme') === 'WCS' ? 'Workplace Charging Scheme'
-                     : get('ozevScheme') === 'OZEV-flat' ? 'Flat Owner-Occupier Grant' : '',
-      reference: get('ozevGrantRef')
+      scheme_display:
+        get('ozevScheme') === 'EVHS'
+          ? 'Electric Vehicle Homecharge Scheme'
+          : get('ozevScheme') === 'WCS'
+            ? 'Workplace Charging Scheme'
+            : get('ozevScheme') === 'OZEV-flat'
+              ? 'Flat Owner-Occupier Grant'
+              : '',
+      reference: get('ozevGrantRef'),
     },
 
     // Smart Functionality
@@ -186,7 +210,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       smart_charging_display: getBool('smartChargingEnabled') ? 'Yes' : 'No',
       load_management: getBool('loadManagement'),
       load_management_display: getBool('loadManagement') ? 'Yes' : 'No',
-      load_management_type: get('loadManagementType')
+      load_management_type: get('loadManagementType'),
     },
 
     // Handover
@@ -195,7 +219,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       user_instructions_display: getBool('userInstructionsProvided') ? 'Yes' : 'No',
       operating_manual_provided: getBool('operatingManualProvided'),
       operating_manual_display: getBool('operatingManualProvided') ? 'Yes' : 'No',
-      special_conditions: get('specialConditions')
+      special_conditions: get('specialConditions'),
     },
 
     // Installer Declaration
@@ -206,7 +230,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       scheme: get('installerScheme'),
       scheme_number: get('installerSchemeNumber'),
       signature: get('installerSignature'),
-      date: get('installerDate')
+      date: get('installerDate'),
     },
 
     // Compliance
@@ -216,7 +240,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       iet_cop: getBool('ietCopCompliance'),
       iet_cop_display: getBool('ietCopCompliance') ? '✓' : '',
       building_regs: getBool('buildingRegsCompliance'),
-      building_regs_display: getBool('buildingRegsCompliance') ? '✓' : ''
+      building_regs_display: getBool('buildingRegsCompliance') ? '✓' : '',
     },
 
     // Additional Notes
@@ -224,7 +248,8 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
     special_conditions: get('specialConditions'),
 
     // Declaration Text (hardcoded for PDF)
-    declaration_text: 'I/We certify that this EV charging equipment has been designed, installed, inspected and tested in accordance with BS 7671:2018+A3:2024 and the IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition).',
+    declaration_text:
+      'I/We certify that this EV charging equipment has been designed, installed, inspected and tested in accordance with BS 7671:2018+A3:2024 and the IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition).',
 
     // ============================================
     // FLAT COPIES FOR DIRECT TEMPLATE ACCESS
@@ -338,7 +363,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
       company_accent_color: get('companyAccentColor') || '#22c55e',
       registration_scheme: get('registrationScheme'),
       registration_number: get('registrationNumber'),
-      registration_scheme_logo: get('registrationSchemeLogo')
+      registration_scheme_logo: get('registrationSchemeLogo'),
     },
 
     // Company (flat for template)
@@ -352,6 +377,6 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
     company_accent_color: get('companyAccentColor') || '#22c55e',
     registration_scheme: get('registrationScheme'),
     registration_number: get('registrationNumber'),
-    registration_scheme_logo: get('registrationSchemeLogo')
+    registration_scheme_logo: get('registrationSchemeLogo'),
   };
 };

@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { useToast } from "@/components/ui/use-toast";
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/components/ui/use-toast';
 
 export interface ModuleProgress {
   id: string;
@@ -90,40 +90,42 @@ export const useWorkplaceCultureProgress = (): UseWorkplaceCultureProgressReturn
   }, [fetchProgress]);
 
   // Get progress for a specific module
-  const getModuleProgress = useCallback((moduleId: string): ModuleProgress | undefined => {
-    return progress[moduleId];
-  }, [progress]);
+  const getModuleProgress = useCallback(
+    (moduleId: string): ModuleProgress | undefined => {
+      return progress[moduleId];
+    },
+    [progress]
+  );
 
   // Update module progress percentage
-  const updateModuleProgress = useCallback(async (
-    moduleId: string,
-    progressPercent: number
-  ): Promise<boolean> => {
-    if (!user?.id) return false;
+  const updateModuleProgress = useCallback(
+    async (moduleId: string, progressPercent: number): Promise<boolean> => {
+      if (!user?.id) return false;
 
-    const isComplete = progressPercent >= 100;
-    const existingProgress = progress[moduleId];
+      const isComplete = progressPercent >= 100;
+      const existingProgress = progress[moduleId];
 
-    try {
-      if (existingProgress) {
-        // Update existing
-        const { error } = await supabase
-          .from('workplace_culture_progress')
-          .update({
-            progress_percent: Math.min(progressPercent, 100),
-            completed: isComplete,
-            completed_at: isComplete && !existingProgress.completed ? new Date().toISOString() : existingProgress.completed_at,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', existingProgress.id)
-          .eq('user_id', user.id);
+      try {
+        if (existingProgress) {
+          // Update existing
+          const { error } = await supabase
+            .from('workplace_culture_progress')
+            .update({
+              progress_percent: Math.min(progressPercent, 100),
+              completed: isComplete,
+              completed_at:
+                isComplete && !existingProgress.completed
+                  ? new Date().toISOString()
+                  : existingProgress.completed_at,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', existingProgress.id)
+            .eq('user_id', user.id);
 
-        if (error) throw error;
-      } else {
-        // Create new
-        const { error } = await supabase
-          .from('workplace_culture_progress')
-          .insert({
+          if (error) throw error;
+        } else {
+          // Create new
+          const { error } = await supabase.from('workplace_culture_progress').insert({
             user_id: user.id,
             module_id: moduleId,
             progress_percent: Math.min(progressPercent, 100),
@@ -132,70 +134,70 @@ export const useWorkplaceCultureProgress = (): UseWorkplaceCultureProgressReturn
             sections_completed: [],
           });
 
-        if (error) throw error;
-      }
+          if (error) throw error;
+        }
 
-      // Refetch to get updated data
-      await fetchProgress();
+        // Refetch to get updated data
+        await fetchProgress();
 
-      if (isComplete && (!existingProgress || !existingProgress.completed)) {
+        if (isComplete && (!existingProgress || !existingProgress.completed)) {
+          toast({
+            title: 'Module completed!',
+            description: 'Great work on completing this module.',
+          });
+        }
+
+        return true;
+      } catch (err) {
+        console.error('Error updating module progress:', err);
         toast({
-          title: "Module completed!",
-          description: "Great work on completing this module.",
+          title: 'Error',
+          description: 'Failed to save progress',
+          variant: 'destructive',
         });
+        return false;
       }
-
-      return true;
-    } catch (err) {
-      console.error('Error updating module progress:', err);
-      toast({
-        title: "Error",
-        description: "Failed to save progress",
-        variant: "destructive",
-      });
-      return false;
-    }
-  }, [user?.id, progress, fetchProgress, toast]);
+    },
+    [user?.id, progress, fetchProgress, toast]
+  );
 
   // Complete a section within a module
-  const completeSection = useCallback(async (
-    moduleId: string,
-    sectionId: string,
-    totalSections: number
-  ): Promise<boolean> => {
-    if (!user?.id) return false;
+  const completeSection = useCallback(
+    async (moduleId: string, sectionId: string, totalSections: number): Promise<boolean> => {
+      if (!user?.id) return false;
 
-    const existingProgress = progress[moduleId];
-    const sectionsCompleted = existingProgress?.sections_completed || [];
+      const existingProgress = progress[moduleId];
+      const sectionsCompleted = existingProgress?.sections_completed || [];
 
-    // Don't add duplicate sections
-    if (sectionsCompleted.includes(sectionId)) {
-      return true;
-    }
+      // Don't add duplicate sections
+      if (sectionsCompleted.includes(sectionId)) {
+        return true;
+      }
 
-    const newSections = [...sectionsCompleted, sectionId];
-    const progressPercent = Math.round((newSections.length / totalSections) * 100);
-    const isComplete = progressPercent >= 100;
+      const newSections = [...sectionsCompleted, sectionId];
+      const progressPercent = Math.round((newSections.length / totalSections) * 100);
+      const isComplete = progressPercent >= 100;
 
-    try {
-      if (existingProgress) {
-        const { error } = await supabase
-          .from('workplace_culture_progress')
-          .update({
-            sections_completed: newSections,
-            progress_percent: progressPercent,
-            completed: isComplete,
-            completed_at: isComplete && !existingProgress.completed ? new Date().toISOString() : existingProgress.completed_at,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', existingProgress.id)
-          .eq('user_id', user.id);
+      try {
+        if (existingProgress) {
+          const { error } = await supabase
+            .from('workplace_culture_progress')
+            .update({
+              sections_completed: newSections,
+              progress_percent: progressPercent,
+              completed: isComplete,
+              completed_at:
+                isComplete && !existingProgress.completed
+                  ? new Date().toISOString()
+                  : existingProgress.completed_at,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', existingProgress.id)
+            .eq('user_id', user.id);
 
-        if (error) throw error;
-      } else {
-        const { error } = await supabase
-          .from('workplace_culture_progress')
-          .insert({
+          if (error) throw error;
+        } else {
+          const { error } = await supabase.from('workplace_culture_progress').insert({
             user_id: user.id,
             module_id: moduleId,
             sections_completed: newSections,
@@ -204,65 +206,74 @@ export const useWorkplaceCultureProgress = (): UseWorkplaceCultureProgressReturn
             completed_at: isComplete ? new Date().toISOString() : null,
           });
 
-        if (error) throw error;
+          if (error) throw error;
+        }
+
+        await fetchProgress();
+
+        if (isComplete && (!existingProgress || !existingProgress.completed)) {
+          toast({
+            title: 'Module completed!',
+            description: 'Great work on completing this module.',
+          });
+        }
+
+        return true;
+      } catch (err) {
+        console.error('Error completing section:', err);
+        return false;
       }
-
-      await fetchProgress();
-
-      if (isComplete && (!existingProgress || !existingProgress.completed)) {
-        toast({
-          title: "Module completed!",
-          description: "Great work on completing this module.",
-        });
-      }
-
-      return true;
-    } catch (err) {
-      console.error('Error completing section:', err);
-      return false;
-    }
-  }, [user?.id, progress, fetchProgress, toast]);
+    },
+    [user?.id, progress, fetchProgress, toast]
+  );
 
   // Mark entire module as complete
-  const completeModule = useCallback(async (moduleId: string): Promise<boolean> => {
-    return updateModuleProgress(moduleId, 100);
-  }, [updateModuleProgress]);
+  const completeModule = useCallback(
+    async (moduleId: string): Promise<boolean> => {
+      return updateModuleProgress(moduleId, 100);
+    },
+    [updateModuleProgress]
+  );
 
   // Reset module progress
-  const resetModule = useCallback(async (moduleId: string): Promise<boolean> => {
-    if (!user?.id) return false;
+  const resetModule = useCallback(
+    async (moduleId: string): Promise<boolean> => {
+      if (!user?.id) return false;
 
-    const existingProgress = progress[moduleId];
-    if (!existingProgress) return true;
+      const existingProgress = progress[moduleId];
+      if (!existingProgress) return true;
 
-    try {
-      const { error } = await supabase
-        .from('workplace_culture_progress')
-        .delete()
-        .eq('id', existingProgress.id)
-        .eq('user_id', user.id);
+      try {
+        const { error } = await supabase
+          .from('workplace_culture_progress')
+          .delete()
+          .eq('id', existingProgress.id)
+          .eq('user_id', user.id);
 
-      if (error) throw error;
+        if (error) throw error;
 
-      await fetchProgress();
-      return true;
-    } catch (err) {
-      console.error('Error resetting module:', err);
-      return false;
-    }
-  }, [user?.id, progress, fetchProgress]);
+        await fetchProgress();
+        return true;
+      } catch (err) {
+        console.error('Error resetting module:', err);
+        return false;
+      }
+    },
+    [user?.id, progress, fetchProgress]
+  );
 
   // Calculate stats
   const stats = {
     totalModules: WORKPLACE_CULTURE_MODULES.length,
-    completedModules: Object.values(progress).filter(p => p.completed).length,
-    overallProgress: WORKPLACE_CULTURE_MODULES.length > 0
-      ? Math.round(
-          WORKPLACE_CULTURE_MODULES.reduce((sum, moduleId) => {
-            return sum + (progress[moduleId]?.progress_percent || 0);
-          }, 0) / WORKPLACE_CULTURE_MODULES.length
-        )
-      : 0,
+    completedModules: Object.values(progress).filter((p) => p.completed).length,
+    overallProgress:
+      WORKPLACE_CULTURE_MODULES.length > 0
+        ? Math.round(
+            WORKPLACE_CULTURE_MODULES.reduce((sum, moduleId) => {
+              return sum + (progress[moduleId]?.progress_percent || 0);
+            }, 0) / WORKPLACE_CULTURE_MODULES.length
+          )
+        : 0,
   };
 
   return {

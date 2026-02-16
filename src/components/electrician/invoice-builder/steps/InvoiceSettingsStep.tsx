@@ -1,5 +1,15 @@
 import { InvoiceSettings } from '@/types/invoice';
-import { Calendar as CalendarIcon, CreditCard, FileText, Receipt, Building, Hash, SortAsc, LayoutList, LayoutGrid } from 'lucide-react';
+import {
+  Calendar as CalendarIcon,
+  CreditCard,
+  FileText,
+  Receipt,
+  Building,
+  Hash,
+  SortAsc,
+  LayoutList,
+  LayoutGrid,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -28,7 +38,8 @@ export const InvoiceSettingsStep = ({
   onUpdateNotes,
 }: InvoiceSettingsStepProps) => {
   // Clean inline input style for seamless look
-  const inputClassName = 'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
+  const inputClassName =
+    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
 
   return (
     <div className="space-y-5 text-left">
@@ -51,8 +62,8 @@ export const InvoiceSettingsStep = ({
               <p className="text-[14px] font-medium text-white">Summary View</p>
               <p className="text-[12px] text-white/50">
                 {settings?.showSummaryView
-                  ? "Shows Labour & Materials totals only"
-                  : "Shows itemised breakdown"}
+                  ? 'Shows Labour & Materials totals only'
+                  : 'Shows itemised breakdown'}
               </p>
             </div>
             <Switch
@@ -63,7 +74,8 @@ export const InvoiceSettingsStep = ({
           </div>
         </div>
         <p className="text-[11px] text-white/40 mt-2 px-1">
-          Summary view is cleaner for customers - full breakdown is still synced to your accounting software
+          Summary view is cleaner for customers - full breakdown is still synced to your accounting
+          software
         </p>
       </div>
 
@@ -194,10 +206,15 @@ export const InvoiceSettingsStep = ({
                       settings?.dueDate ? 'text-white' : 'text-white/50'
                     )}
                   >
-                    {settings?.dueDate ? format(new Date(settings.dueDate), 'PPP') : 'Select due date'}
+                    {settings?.dueDate
+                      ? format(new Date(settings.dueDate), 'PPP')
+                      : 'Select due date'}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 bg-elec-gray border-white/[0.1]" align="start">
+                <PopoverContent
+                  className="w-auto p-0 bg-elec-gray border-white/[0.1]"
+                  align="start"
+                >
                   <Calendar
                     mode="single"
                     selected={settings?.dueDate ? new Date(settings.dueDate) : undefined}
@@ -307,8 +324,10 @@ export const InvoiceSettingsStep = ({
                 onChange={(e) => {
                   let formattedValue = e.target.value.replace(/\D/g, '');
                   if (formattedValue.length > 6) formattedValue = formattedValue.slice(0, 6);
-                  if (formattedValue.length > 4) formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2, 4)}-${formattedValue.slice(4)}`;
-                  else if (formattedValue.length > 2) formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2)}`;
+                  if (formattedValue.length > 4)
+                    formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2, 4)}-${formattedValue.slice(4)}`;
+                  else if (formattedValue.length > 2)
+                    formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2)}`;
 
                   onUpdateSettings({
                     bankDetails: {

@@ -1,153 +1,166 @@
-import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Temporary Isolation or Making Safe - Level 2 Module 7 Section 6.3";
-const DESCRIPTION = "Safe temporary isolation procedures and emergency measures when faults cannot be immediately repaired";
+const TITLE = 'Temporary Isolation or Making Safe - Level 2 Module 7 Section 6.3';
+const DESCRIPTION =
+  'Safe temporary isolation procedures and emergency measures when faults cannot be immediately repaired';
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the purpose of temporary isolation?",
+    question: 'What is the purpose of temporary isolation?',
     options: [
-      "To save time during repairs",
-      "To prevent dangerous circuits from being energised until repairs are made",
-      "To reduce electricity bills",
-      "To test circuit performance"
+      'To save time during repairs',
+      'To prevent dangerous circuits from being energised until repairs are made',
+      'To reduce electricity bills',
+      'To test circuit performance',
     ],
     correctAnswer: 1,
-    explanation: "Temporary isolation ensures dangerous circuits cannot be energised until proper repairs are completed, preventing accidents and protecting people."
+    explanation:
+      'Temporary isolation ensures dangerous circuits cannot be energised until proper repairs are completed, preventing accidents and protecting people.',
   },
   {
     id: 2,
-    question: "Why must faulty circuits never remain live?",
+    question: 'Why must faulty circuits never remain live?',
     options: [
-      "It wastes electricity",
+      'It wastes electricity',
       "It's against company policy",
-      "Because faults can escalate into serious safety hazards, fires, or electrocution risks",
-      "It makes testing more difficult"
+      'Because faults can escalate into serious safety hazards, fires, or electrocution risks',
+      'It makes testing more difficult',
     ],
     correctAnswer: 2,
-    explanation: "Faulty circuits pose escalating safety risks that can lead to fires, electrocution, or other serious accidents if left energised."
+    explanation:
+      'Faulty circuits pose escalating safety risks that can lead to fires, electrocution, or other serious accidents if left energised.',
   },
   {
     id: 3,
-    question: "Give two methods of isolating a circuit.",
+    question: 'Give two methods of isolating a circuit.',
     options: [
-      "Switching off breakers and removing fuses",
-      "Turning off lights and unplugging equipment",
-      "Covering sockets and switching off the main switch",
-      "Using different test equipment"
+      'Switching off breakers and removing fuses',
+      'Turning off lights and unplugging equipment',
+      'Covering sockets and switching off the main switch',
+      'Using different test equipment',
     ],
     correctAnswer: 0,
-    explanation: "Circuit isolation is achieved through switching off protective devices (breakers), removing fuses, or using lockout kits."
+    explanation:
+      'Circuit isolation is achieved through switching off protective devices (breakers), removing fuses, or using lockout kits.',
   },
   {
     id: 4,
-    question: "What should be attached to a circuit breaker after isolation?",
+    question: 'What should be attached to a circuit breaker after isolation?',
     options: [
-      "A new fuse",
+      'A new fuse',
       "Clear warning notices such as 'Do Not Use – Faulty Circuit'",
-      "Test equipment",
-      "A replacement breaker"
+      'Test equipment',
+      'A replacement breaker',
     ],
     correctAnswer: 1,
-    explanation: "Clear warning labels must be attached to prevent accidental re-energisation and inform others of the fault status."
+    explanation:
+      'Clear warning labels must be attached to prevent accidental re-energisation and inform others of the fault status.',
   },
   {
     id: 5,
-    question: "Why are warning labels important during fault management?",
+    question: 'Why are warning labels important during fault management?',
     options: [
-      "They look professional",
+      'They look professional',
       "They're required by law",
-      "To ensure no one accidentally restores supply to a faulty circuit",
-      "They help with record keeping"
+      'To ensure no one accidentally restores supply to a faulty circuit',
+      'They help with record keeping',
     ],
     correctAnswer: 2,
-    explanation: "Warning labels prevent accidental re-energisation of faulty circuits, which could create immediate danger to people and property."
+    explanation:
+      'Warning labels prevent accidental re-energisation of faulty circuits, which could create immediate danger to people and property.',
   },
   {
     id: 6,
-    question: "Give one example of a temporary safety measure other than isolation.",
+    question: 'Give one example of a temporary safety measure other than isolation.',
     options: [
-      "Replacing the entire circuit",
-      "Physically removing or covering damaged accessories to prevent use",
-      "Installing new equipment",
-      "Increasing the fuse rating"
+      'Replacing the entire circuit',
+      'Physically removing or covering damaged accessories to prevent use',
+      'Installing new equipment',
+      'Increasing the fuse rating',
     ],
     correctAnswer: 1,
-    explanation: "Physical removal or covering of damaged accessories prevents anyone from attempting to use faulty equipment."
+    explanation:
+      'Physical removal or covering of damaged accessories prevents anyone from attempting to use faulty equipment.',
   },
   {
     id: 7,
-    question: "Who is responsible for permanent fault rectification?",
+    question: 'Who is responsible for permanent fault rectification?',
     options: [
-      "Any apprentice",
-      "The building owner",
-      "A competent person or supervisor with appropriate qualifications",
-      "The person who found the fault"
+      'Any apprentice',
+      'The building owner',
+      'A competent person or supervisor with appropriate qualifications',
+      'The person who found the fault',
     ],
     correctAnswer: 2,
-    explanation: "Only competent persons with appropriate qualifications and authority can certify permanent fault rectification."
+    explanation:
+      'Only competent persons with appropriate qualifications and authority can certify permanent fault rectification.',
   },
   {
     id: 8,
-    question: "True or False: Apprentices can certify isolated circuits as safe for re-energisation.",
+    question:
+      'True or False: Apprentices can certify isolated circuits as safe for re-energisation.',
     options: [
-      "True - after proper training",
-      "False - apprentices must hand over responsibility to competent persons",
-      "True - if supervised",
-      "True - for minor faults only"
+      'True - after proper training',
+      'False - apprentices must hand over responsibility to competent persons',
+      'True - if supervised',
+      'True - for minor faults only',
     ],
     correctAnswer: 1,
-    explanation: "Apprentices cannot certify circuits as safe for re-energisation; this responsibility must be handed over to competent persons."
+    explanation:
+      'Apprentices cannot certify circuits as safe for re-energisation; this responsibility must be handed over to competent persons.',
   },
   {
     id: 9,
-    question: "In the housing estate example, what measures made the socket safe until repair?",
+    question: 'In the housing estate example, what measures made the socket safe until repair?',
     options: [
-      "Just switching off the circuit",
-      "Circuit isolation, removing the faulty faceplate, and clear labelling",
-      "Only removing the socket",
-      "Covering the socket with tape"
+      'Just switching off the circuit',
+      'Circuit isolation, removing the faulty faceplate, and clear labelling',
+      'Only removing the socket',
+      'Covering the socket with tape',
     ],
     correctAnswer: 1,
-    explanation: "Multiple safety measures were used: isolation at the consumer unit, physical removal of the faulty faceplate, and clear warning labelling."
+    explanation:
+      'Multiple safety measures were used: isolation at the consumer unit, physical removal of the faulty faceplate, and clear warning labelling.',
   },
   {
     id: 10,
-    question: "What went wrong in the commercial building example when a lighting circuit was left energised?",
+    question:
+      'What went wrong in the commercial building example when a lighting circuit was left energised?',
     options: [
       "The lights didn't work properly",
-      "No isolation or warning was applied, leading to a fire from overheating",
-      "The circuit tripped too often",
-      "The repair was too expensive"
+      'No isolation or warning was applied, leading to a fire from overheating',
+      'The circuit tripped too often',
+      'The repair was too expensive',
     ],
     correctAnswer: 1,
-    explanation: "The faulty circuit was left energised without isolation or warnings, allowing continued overheating that eventually caused a fire."
-  }
+    explanation:
+      'The faulty circuit was left energised without isolation or warnings, allowing continued overheating that eventually caused a fire.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why is temporary isolation important?",
-    answer: "To prevent dangerous circuits from being energised until repairs are made."
+    question: 'Why is temporary isolation important?',
+    answer: 'To prevent dangerous circuits from being energised until repairs are made.',
   },
   {
-    question: "What methods can be used to isolate circuits?",
-    answer: "Switching off breakers, removing fuses, or using lockout kits."
+    question: 'What methods can be used to isolate circuits?',
+    answer: 'Switching off breakers, removing fuses, or using lockout kits.',
   },
   {
-    question: "Why must labels and warnings be used?",
-    answer: "To ensure no one accidentally restores supply to a faulty circuit."
+    question: 'Why must labels and warnings be used?',
+    answer: 'To ensure no one accidentally restores supply to a faulty circuit.',
   },
   {
-    question: "What should apprentices do after isolating a fault?",
-    answer: "Report it immediately and hand over responsibility to a competent person."
-  }
+    question: 'What should apprentices do after isolating a fault?',
+    answer: 'Report it immediately and hand over responsibility to a competent person.',
+  },
 ];
 
 export default function Module7Section6_3() {
@@ -184,7 +197,8 @@ export default function Module7Section6_3() {
             Temporary Isolation or Making Safe
           </h1>
           <p className="text-white/70 max-w-2xl mx-auto">
-            Safe temporary isolation procedures and emergency measures when faults cannot be immediately repaired
+            Safe temporary isolation procedures and emergency measures when faults cannot be
+            immediately repaired
           </p>
         </header>
 
@@ -206,9 +220,18 @@ export default function Module7Section6_3() {
             The Principle of Making Safe
           </h2>
           <div className="text-white/80 space-y-4 leading-relaxed">
-            <p>The priority when a dangerous fault is found is to prevent it from endangering people or property. If a circuit shows signs of overheating, arcing, or damaged insulation, it should not remain live. Temporary isolation means disconnecting the circuit at the distribution board, locking it off if possible, and clearly labelling it so no one restores it accidentally. This ensures the circuit cannot be energised until repairs are carried out.</p>
+            <p>
+              The priority when a dangerous fault is found is to prevent it from endangering people
+              or property. If a circuit shows signs of overheating, arcing, or damaged insulation,
+              it should not remain live. Temporary isolation means disconnecting the circuit at the
+              distribution board, locking it off if possible, and clearly labelling it so no one
+              restores it accidentally. This ensures the circuit cannot be energised until repairs
+              are carried out.
+            </p>
 
-            <p><strong>Signs of Immediate Danger:</strong></p>
+            <p>
+              <strong>Signs of Immediate Danger:</strong>
+            </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
               <li>Overheating components (hot to touch, discolouration)</li>
               <li>Arcing or sparking at connections</li>
@@ -218,7 +241,9 @@ export default function Module7Section6_3() {
               <li>Compromised enclosures or damaged accessories</li>
             </ul>
 
-            <p><strong>Immediate Actions:</strong></p>
+            <p>
+              <strong>Immediate Actions:</strong>
+            </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
               <li>Isolate at the distribution board immediately</li>
               <li>Prove dead if safe isolation procedures require</li>
@@ -227,11 +252,21 @@ export default function Module7Section6_3() {
               <li>Control access to prevent inadvertent contact</li>
             </ul>
 
-            <p><strong>Core Principles:</strong></p>
+            <p>
+              <strong>Core Principles:</strong>
+            </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
-              <li><strong>Prevent energisation:</strong> Ensure faulty circuits cannot be switched back on</li>
-              <li><strong>Prevent contact:</strong> Remove or cover exposed live parts</li>
-              <li><strong>Prevent escalation:</strong> Stop faults from developing into serious incidents</li>
+              <li>
+                <strong>Prevent energisation:</strong> Ensure faulty circuits cannot be switched
+                back on
+              </li>
+              <li>
+                <strong>Prevent contact:</strong> Remove or cover exposed live parts
+              </li>
+              <li>
+                <strong>Prevent escalation:</strong> Stop faults from developing into serious
+                incidents
+              </li>
             </ul>
           </div>
         </section>
@@ -239,7 +274,12 @@ export default function Module7Section6_3() {
         <InlineCheck
           id="why-must-not-energised"
           question="Why must a faulty circuit never be left energised while awaiting repair?"
-          options={["It's not cost-effective", "Because faults can escalate into serious safety hazards including fires and electrocution", "It makes testing more difficult", "It's against company policy"]}
+          options={[
+            "It's not cost-effective",
+            'Because faults can escalate into serious safety hazards including fires and electrocution',
+            'It makes testing more difficult',
+            "It's against company policy",
+          ]}
           correctIndex={1}
           explanation="Faulty circuits pose escalating safety risks that can lead to serious accidents if left energised."
         />
@@ -251,26 +291,59 @@ export default function Module7Section6_3() {
             Methods of Isolation and Labelling
           </h2>
           <div className="text-white/80 space-y-4 leading-relaxed">
-            <p>Isolation may involve switching off a protective device, removing a fuse, or locking off a breaker using a lockout kit. Whichever method is used, it must be obvious that the circuit is out of service. Clear warning notices such as "Do Not Use – Faulty Circuit" should be attached to the board or accessory. Where only part of an installation is faulty, electricians should isolate just the affected section, ensuring the rest of the installation remains usable and safe.</p>
+            <p>
+              Isolation may involve switching off a protective device, removing a fuse, or locking
+              off a breaker using a lockout kit. Whichever method is used, it must be obvious that
+              the circuit is out of service. Clear warning notices such as "Do Not Use – Faulty
+              Circuit" should be attached to the board or accessory. Where only part of an
+              installation is faulty, electricians should isolate just the affected section,
+              ensuring the rest of the installation remains usable and safe.
+            </p>
 
-            <p><strong>Isolation Methods:</strong></p>
+            <p>
+              <strong>Isolation Methods:</strong>
+            </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
-              <li><strong>MCB/RCBO OFF + lockout:</strong> Switch off and apply lockout device with personal tag</li>
-              <li><strong>Fuse removal:</strong> Withdraw fuses completely, store safely, label holder</li>
-              <li><strong>Main switch isolation:</strong> For total isolation when required (partial vs complete)</li>
-              <li><strong>Industrial isolators:</strong> Padlock in OFF position using LOTO kit</li>
-              <li><strong>Plug removal:</strong> Appropriate for portable equipment where applicable</li>
+              <li>
+                <strong>MCB/RCBO OFF + lockout:</strong> Switch off and apply lockout device with
+                personal tag
+              </li>
+              <li>
+                <strong>Fuse removal:</strong> Withdraw fuses completely, store safely, label holder
+              </li>
+              <li>
+                <strong>Main switch isolation:</strong> For total isolation when required (partial
+                vs complete)
+              </li>
+              <li>
+                <strong>Industrial isolators:</strong> Padlock in OFF position using LOTO kit
+              </li>
+              <li>
+                <strong>Plug removal:</strong> Appropriate for portable equipment where applicable
+              </li>
             </ul>
 
-            <p><strong>Labelling Standards:</strong></p>
+            <p>
+              <strong>Labelling Standards:</strong>
+            </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
-              <li><strong>Wording:</strong> Clear, specific - "DO NOT USE - FAULTY CIRCUIT"</li>
-              <li><strong>Placement:</strong> Visible at distribution board AND point of use</li>
-              <li><strong>Durability:</strong> Weather-resistant, tear-proof materials</li>
-              <li><strong>Information:</strong> Contact details, date/time, reason for isolation</li>
+              <li>
+                <strong>Wording:</strong> Clear, specific - "DO NOT USE - FAULTY CIRCUIT"
+              </li>
+              <li>
+                <strong>Placement:</strong> Visible at distribution board AND point of use
+              </li>
+              <li>
+                <strong>Durability:</strong> Weather-resistant, tear-proof materials
+              </li>
+              <li>
+                <strong>Information:</strong> Contact details, date/time, reason for isolation
+              </li>
             </ul>
 
-            <p><strong>Partial Isolation Considerations:</strong></p>
+            <p>
+              <strong>Partial Isolation Considerations:</strong>
+            </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
               <li>Clearly define boundaries of what remains live</li>
               <li>Prove dead beyond the point of isolation</li>
@@ -283,7 +356,12 @@ export default function Module7Section6_3() {
         <InlineCheck
           id="warning-labels"
           question="What should always be attached after isolating a circuit to prevent accidental use?"
-          options={["New test equipment", "Clear warning notices such as 'Do Not Use – Faulty Circuit'", "Replacement parts", "Additional protective devices"]}
+          options={[
+            'New test equipment',
+            "Clear warning notices such as 'Do Not Use – Faulty Circuit'",
+            'Replacement parts',
+            'Additional protective devices',
+          ]}
           correctIndex={1}
           explanation="Warning labels are essential to prevent accidental re-energisation of faulty circuits."
         />
@@ -295,9 +373,18 @@ export default function Module7Section6_3() {
             Emergency Measures Beyond Isolation
           </h2>
           <div className="text-white/80 space-y-4 leading-relaxed">
-            <p>Sometimes, faults require additional temporary precautions. For example, if a damaged socket is overheating, the accessory should be physically removed or covered to prevent anyone using it. In industrial settings, barriers or restricted access may be needed if exposed live parts are present. These steps do not replace proper repairs but reduce immediate risk until a competent person can carry out permanent rectification.</p>
+            <p>
+              Sometimes, faults require additional temporary precautions. For example, if a damaged
+              socket is overheating, the accessory should be physically removed or covered to
+              prevent anyone using it. In industrial settings, barriers or restricted access may be
+              needed if exposed live parts are present. These steps do not replace proper repairs
+              but reduce immediate risk until a competent person can carry out permanent
+              rectification.
+            </p>
 
-            <p><strong>Examples by Environment:</strong></p>
+            <p>
+              <strong>Examples by Environment:</strong>
+            </p>
 
             <p className="font-medium mt-4">Domestic:</p>
             <ul className="list-disc list-inside space-y-1 ml-2 text-sm">
@@ -348,7 +435,12 @@ export default function Module7Section6_3() {
         <InlineCheck
           id="temporary-measures"
           question="Give one example of a temporary measure, apart from isolation, that can make a faulty accessory safe."
-          options={["Replacing the entire installation", "Physically removing or covering the damaged accessory to prevent use", "Increasing the circuit protection", "Installing additional earthing"]}
+          options={[
+            'Replacing the entire installation',
+            'Physically removing or covering the damaged accessory to prevent use',
+            'Increasing the circuit protection',
+            'Installing additional earthing',
+          ]}
           correctIndex={1}
           explanation="Physical removal or covering prevents anyone from attempting to use damaged accessories."
         />
@@ -360,7 +452,14 @@ export default function Module7Section6_3() {
             Limits of Apprentice Responsibility
           </h2>
           <div className="text-white/80 space-y-4 leading-relaxed">
-            <p>Apprentices at Level 2 must understand their limits. You may be required to isolate a circuit under supervision and attach warning labels, but you cannot certify that a fault has been fully rectified. Making safe means preventing danger, not attempting unsupervised repairs beyond your competence. Once a fault is isolated or controlled, it must be reported and handed over to a supervisor or duty holder for permanent resolution.</p>
+            <p>
+              Apprentices at Level 2 must understand their limits. You may be required to isolate a
+              circuit under supervision and attach warning labels, but you cannot certify that a
+              fault has been fully rectified. Making safe means preventing danger, not attempting
+              unsupervised repairs beyond your competence. Once a fault is isolated or controlled,
+              it must be reported and handed over to a supervisor or duty holder for permanent
+              resolution.
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
@@ -385,12 +484,26 @@ export default function Module7Section6_3() {
               </div>
             </div>
 
-            <p className="mt-6"><strong>Handover Protocol:</strong></p>
+            <p className="mt-6">
+              <strong>Handover Protocol:</strong>
+            </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
-              <li><strong>Who to notify:</strong> Supervisor, duty holder, or designated competent person</li>
-              <li><strong>What to record:</strong> Nature of fault, measures taken, circuits isolated, labels applied</li>
-              <li><strong>What to leave in place:</strong> All isolation devices, warning labels, barriers</li>
-              <li><strong>When to follow up:</strong> Confirm receipt of handover, obtain acknowledgment</li>
+              <li>
+                <strong>Who to notify:</strong> Supervisor, duty holder, or designated competent
+                person
+              </li>
+              <li>
+                <strong>What to record:</strong> Nature of fault, measures taken, circuits isolated,
+                labels applied
+              </li>
+              <li>
+                <strong>What to leave in place:</strong> All isolation devices, warning labels,
+                barriers
+              </li>
+              <li>
+                <strong>When to follow up:</strong> Confirm receipt of handover, obtain
+                acknowledgment
+              </li>
             </ul>
           </div>
         </section>
@@ -398,7 +511,12 @@ export default function Module7Section6_3() {
         <InlineCheck
           id="apprentice-limits"
           question="Why is it important for apprentices to hand over responsibility after making safe?"
-          options={["To avoid doing too much work", "Because apprentices cannot certify permanent repairs or authorise re-energisation", "It's company procedure", "To share the workload"]}
+          options={[
+            'To avoid doing too much work',
+            'Because apprentices cannot certify permanent repairs or authorise re-energisation',
+            "It's company procedure",
+            'To share the workload',
+          ]}
           correctIndex={1}
           explanation="Apprentices must work within their competence limits and cannot certify permanent rectification."
         />
@@ -412,14 +530,27 @@ export default function Module7Section6_3() {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/80">
               <div className="space-y-2">
-                <p><strong>1. Identify:</strong> Accurately identify the circuit (labels, testing)</p>
-                <p><strong>2. Isolate:</strong> Switch off at correct protective device</p>
-                <p><strong>3. Lockout:</strong> Apply lockout device with personal tag</p>
+                <p>
+                  <strong>1. Identify:</strong> Accurately identify the circuit (labels, testing)
+                </p>
+                <p>
+                  <strong>2. Isolate:</strong> Switch off at correct protective device
+                </p>
+                <p>
+                  <strong>3. Lockout:</strong> Apply lockout device with personal tag
+                </p>
               </div>
               <div className="space-y-2">
-                <p><strong>4. Prove Dead:</strong> Test your tester, test circuit, re-test your tester</p>
-                <p><strong>5. Control:</strong> Apply barriers, covers, restrict access</p>
-                <p><strong>6. Report:</strong> Document and handover to competent person</p>
+                <p>
+                  <strong>4. Prove Dead:</strong> Test your tester, test circuit, re-test your
+                  tester
+                </p>
+                <p>
+                  <strong>5. Control:</strong> Apply barriers, covers, restrict access
+                </p>
+                <p>
+                  <strong>6. Report:</strong> Document and handover to competent person
+                </p>
               </div>
             </div>
           </div>
@@ -435,17 +566,33 @@ export default function Module7Section6_3() {
             <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
               <h4 className="font-semibold text-green-400 mb-3">Housing Estate Success</h4>
               <p className="text-white/80 text-sm mb-3">
-                On a housing estate, a loose connection in a kitchen socket was identified during testing. The socket showed signs of overheating, but the repair team could not attend immediately. The electrician isolated the circuit at the consumer unit, removed the faulty socket faceplate, and placed a clear label stating "Do Not Use." When the repair team returned the next day, they carried out the repair safely without risk to occupants.
+                On a housing estate, a loose connection in a kitchen socket was identified during
+                testing. The socket showed signs of overheating, but the repair team could not
+                attend immediately. The electrician isolated the circuit at the consumer unit,
+                removed the faulty socket faceplate, and placed a clear label stating "Do Not Use."
+                When the repair team returned the next day, they carried out the repair safely
+                without risk to occupants.
               </p>
-              <p className="text-white/60 text-xs"><strong>What went well:</strong> Immediate isolation prevented escalation, physical removal prevented accidental use, clear labelling informed all users, proper handover to repair team</p>
+              <p className="text-white/60 text-xs">
+                <strong>What went well:</strong> Immediate isolation prevented escalation, physical
+                removal prevented accidental use, clear labelling informed all users, proper
+                handover to repair team
+              </p>
             </div>
 
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
               <h4 className="font-semibold text-red-400 mb-3">Commercial Building Failure</h4>
               <p className="text-white/80 text-sm mb-3">
-                In a commercial building, a faulty lighting circuit was left energised despite repeated tripping. No isolation or warning was applied, and a fire later broke out due to overheating at a junction box. The incident report concluded that temporary isolation would have prevented the damage and associated costs.
+                In a commercial building, a faulty lighting circuit was left energised despite
+                repeated tripping. No isolation or warning was applied, and a fire later broke out
+                due to overheating at a junction box. The incident report concluded that temporary
+                isolation would have prevented the damage and associated costs.
               </p>
-              <p className="text-white/60 text-xs"><strong>What went wrong:</strong> Circuit left live despite obvious fault, no warning labels or barriers applied, fault allowed to escalate unchecked, fire damage and business interruption costs</p>
+              <p className="text-white/60 text-xs">
+                <strong>What went wrong:</strong> Circuit left live despite obvious fault, no
+                warning labels or barriers applied, fault allowed to escalate unchecked, fire damage
+                and business interruption costs
+              </p>
             </div>
           </div>
         </section>
@@ -471,9 +618,15 @@ export default function Module7Section6_3() {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h2 className="font-semibold text-white mb-3">If You Only Remember 3 Things</h2>
             <ul className="text-white/80 space-y-2 text-sm">
-              <li>• <strong>Make it safe</strong> - Isolate and secure immediately</li>
-              <li>• <strong>Label and communicate</strong> - Prevent accidental re-energisation</li>
-              <li>• <strong>Handover to competent person</strong> - Know your limits</li>
+              <li>
+                • <strong>Make it safe</strong> - Isolate and secure immediately
+              </li>
+              <li>
+                • <strong>Label and communicate</strong> - Prevent accidental re-energisation
+              </li>
+              <li>
+                • <strong>Handover to competent person</strong> - Know your limits
+              </li>
             </ul>
           </div>
         </section>

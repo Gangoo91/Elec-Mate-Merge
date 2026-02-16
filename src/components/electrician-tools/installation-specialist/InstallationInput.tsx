@@ -1,43 +1,50 @@
-import { useState, useEffect } from "react";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Wrench, FileText, Lightbulb, ChevronDown } from "lucide-react";
-import { InstallationProjectDetails as ProjectDetailsType } from "@/types/installation-method";
-import { InstallationProjectDetails } from "./InstallationProjectDetails";
-import { InstallationTemplate } from "@/lib/installation-templates";
-import { InstallationTemplateGrid } from "./InstallationTemplateGrid";
-import { InlineInstallationTypeSelector } from "./InlineInstallationTypeSelector";
-import { cn } from "@/lib/utils";
-import { StickySubmitButton } from "@/components/agents/shared/StickySubmitButton";
-import { AGENT_CONFIG } from "@/components/agents/shared/AgentConfig";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { useState, useEffect } from 'react';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Wrench, FileText, Lightbulb, ChevronDown } from 'lucide-react';
+import { InstallationProjectDetails as ProjectDetailsType } from '@/types/installation-method';
+import { InstallationProjectDetails } from './InstallationProjectDetails';
+import { InstallationTemplate } from '@/lib/installation-templates';
+import { InstallationTemplateGrid } from './InstallationTemplateGrid';
+import { InlineInstallationTypeSelector } from './InlineInstallationTypeSelector';
+import { cn } from '@/lib/utils';
+import { StickySubmitButton } from '@/components/agents/shared/StickySubmitButton';
+import { AGENT_CONFIG } from '@/components/agents/shared/AgentConfig';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface InstallationInputProps {
-  onGenerate: (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => void;
+  onGenerate: (
+    projectDetails: ProjectDetailsType,
+    description: string,
+    useFullMode: boolean
+  ) => void;
   isProcessing: boolean;
   initialPrompt?: string;
   initialProjectName?: string;
 }
 
-export const InstallationInput = ({ onGenerate, isProcessing, initialPrompt, initialProjectName }: InstallationInputProps) => {
-  const [description, setDescription] = useState(initialPrompt || "");
+export const InstallationInput = ({
+  onGenerate,
+  isProcessing,
+  initialPrompt,
+  initialProjectName,
+}: InstallationInputProps) => {
+  const [description, setDescription] = useState(initialPrompt || '');
   const [generateFullMethodStatement, setGenerateFullMethodStatement] = useState(true);
-  const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
+  const [installationType, setInstallationType] = useState<
+    'domestic' | 'commercial' | 'industrial'
+  >('domestic');
   const [projectDetails, setProjectDetails] = useState<ProjectDetailsType>({
     projectName: initialProjectName || '',
     location: '',
-    installationType: 'domestic'
+    installationType: 'domestic',
   });
   const [showTemplates, setShowTemplates] = useState(false);
   const [showProjectInfo, setShowProjectInfo] = useState(false);
   const config = AGENT_CONFIG['installation'];
 
   useEffect(() => {
-    setProjectDetails(prev => ({ ...prev, installationType }));
+    setProjectDetails((prev) => ({ ...prev, installationType }));
   }, [installationType]);
 
   // Update state when initial values change
@@ -47,7 +54,7 @@ export const InstallationInput = ({ onGenerate, isProcessing, initialPrompt, ini
 
   useEffect(() => {
     if (initialProjectName) {
-      setProjectDetails(prev => ({ ...prev, projectName: initialProjectName }));
+      setProjectDetails((prev) => ({ ...prev, projectName: initialProjectName }));
     }
   }, [initialProjectName]);
 
@@ -81,19 +88,18 @@ export const InstallationInput = ({ onGenerate, isProcessing, initialPrompt, ini
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <Label className="text-base sm:text-lg font-semibold flex items-center gap-2">
-              <div
-                className="p-1.5 rounded-lg"
-                style={{ background: `${config.gradientFrom}20` }}
-              >
+              <div className="p-1.5 rounded-lg" style={{ background: `${config.gradientFrom}20` }}>
                 <Wrench className="h-4 w-4" style={{ color: config.gradientFrom }} />
               </div>
               Installation Description
             </Label>
-            <span className={cn(
-              "text-xs font-medium px-2 py-1 rounded-lg transition-colors",
-              getCharCountClass(),
-              description.length >= 50 && "bg-white/5"
-            )}>
+            <span
+              className={cn(
+                'text-xs font-medium px-2 py-1 rounded-lg transition-colors',
+                getCharCountClass(),
+                description.length >= 50 && 'bg-white/5'
+              )}
+            >
               {description.length} {description.length >= 50 && '✓'}
             </span>
           </div>
@@ -128,7 +134,10 @@ export const InstallationInput = ({ onGenerate, isProcessing, initialPrompt, ini
 
       {/* Quick Start Templates */}
       <Collapsible open={showTemplates} onOpenChange={setShowTemplates}>
-        <div className="agent-card overflow-hidden" style={{ borderColor: `${config.gradientFrom}15` }}>
+        <div
+          className="agent-card overflow-hidden"
+          style={{ borderColor: `${config.gradientFrom}15` }}
+        >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <Lightbulb className="h-4 w-4 text-white/60" />
@@ -137,10 +146,12 @@ export const InstallationInput = ({ onGenerate, isProcessing, initialPrompt, ini
                 Templates
               </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
-              showTemplates && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/40 transition-transform duration-200',
+                showTemplates && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0">
@@ -154,28 +165,35 @@ export const InstallationInput = ({ onGenerate, isProcessing, initialPrompt, ini
 
       {/* Project Information */}
       <Collapsible open={showProjectInfo} onOpenChange={setShowProjectInfo}>
-        <div className="agent-card overflow-hidden" style={{ borderColor: `${config.gradientFrom}15` }}>
+        <div
+          className="agent-card overflow-hidden"
+          style={{ borderColor: `${config.gradientFrom}15` }}
+        >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
               <FileText className="h-4 w-4 text-white/60" />
               <span className="text-sm sm:text-base font-medium">Project Information</span>
-              <span className={cn(
-                "text-[10px] sm:text-xs px-2 py-0.5 rounded-full",
-                hasProjectDetails ? "bg-emerald-500/20 text-emerald-400" : "bg-white/10 text-white/50"
-              )}>
-                {hasProjectDetails ? "✓ Configured" : "Optional"}
+              <span
+                className={cn(
+                  'text-[10px] sm:text-xs px-2 py-0.5 rounded-full',
+                  hasProjectDetails
+                    ? 'bg-emerald-500/20 text-emerald-400'
+                    : 'bg-white/10 text-white/50'
+                )}
+              >
+                {hasProjectDetails ? '✓ Configured' : 'Optional'}
               </span>
             </div>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-white/40 transition-transform duration-200",
-              showProjectInfo && "rotate-180"
-            )} />
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-white/40 transition-transform duration-200',
+                showProjectInfo && 'rotate-180'
+              )}
+            />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0">
-            <p className="text-xs text-white/50 pb-2">
-              Add for comprehensive method statements
-            </p>
+            <p className="text-xs text-white/50 pb-2">Add for comprehensive method statements</p>
             <InstallationProjectDetails
               projectDetails={projectDetails}
               onChange={setProjectDetails}

@@ -1,109 +1,108 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Users, Phone, MessageCircle, ExternalLink, Heart } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Users, Phone, MessageCircle, ExternalLink, Heart } from 'lucide-react';
 
 const SupportSystemsTab = () => {
   const supportContacts = [
     {
-      title: "Your Training Provider",
-      description: "Assessors and tutors who understand your learning journey",
-      contact: "Available during office hours",
-      action: "Contact through college portal or phone",
+      title: 'Your Training Provider',
+      description: 'Assessors and tutors who understand your learning journey',
+      contact: 'Available during office hours',
+      action: 'Contact through college portal or phone',
       icon: Users,
-      color: "border-blue-500/20 bg-blue-500/10"
+      color: 'border-blue-500/20 bg-blue-500/10',
     },
     {
-      title: "Workplace Mentor",
-      description: "Experienced electrician assigned to guide your development",
-      contact: "Daily workplace support",
-      action: "Speak to them about any challenges",
+      title: 'Workplace Mentor',
+      description: 'Experienced electrician assigned to guide your development',
+      contact: 'Daily workplace support',
+      action: 'Speak to them about any challenges',
       icon: Users,
-      color: "border-green-500/20 bg-green-500/10"
+      color: 'border-green-500/20 bg-green-500/10',
     },
     {
-      title: "NICEIC/NAPIT Helplines",
-      description: "Technical guidance on electrical regulations and standards",
-      contact: "0333 015 6626 (NICEIC) / 0345 543 0330 (NAPIT)",
-      action: "Call for technical regulation queries",
+      title: 'NICEIC/NAPIT Helplines',
+      description: 'Technical guidance on electrical regulations and standards',
+      contact: '0333 015 6626 (NICEIC) / 0345 543 0330 (NAPIT)',
+      action: 'Call for technical regulation queries',
       icon: Phone,
-      color: "border-purple-500/20 bg-purple-500/10"
+      color: 'border-purple-500/20 bg-purple-500/10',
     },
     {
-      title: "Apprentice Support Networks",
-      description: "Connect with other apprentices facing similar challenges",
-      contact: "Online forums and local groups",
-      action: "Join ElectriciansForums.net apprentice section",
+      title: 'Apprentice Support Networks',
+      description: 'Connect with other apprentices facing similar challenges',
+      contact: 'Online forums and local groups',
+      action: 'Search "ElectriciansForums.net" — largest UK electrical apprentice community',
       icon: MessageCircle,
-      color: "border-yellow-500/20 bg-yellow-500/10"
-    }
+      color: 'border-yellow-500/20 bg-yellow-500/10',
+    },
   ];
 
   const mentalHealthResources = [
     {
-      service: "Samaritans",
-      description: "24/7 emotional support for anyone in distress",
-      contact: "116 123 (free from any phone)",
-      website: "samaritans.org"
+      service: 'Samaritans',
+      description: '24/7 emotional support for anyone in distress',
+      contact: '116 123 (free from any phone)',
+      website: 'samaritans.org',
     },
     {
-      service: "Construction Industry Helpline",
-      description: "Specialist support for construction workers",
-      contact: "0345 605 1956",
-      website: "constructionindustryhelpline.com"
+      service: 'Lighthouse Construction Industry Charity',
+      description: 'Free wellbeing, financial, and legal support for construction workers and families',
+      contact: '0345 605 1956',
+      website: 'lighthouseclub.org',
     },
     {
-      service: "Mind",
-      description: "Mental health information and local support services",
-      contact: "0300 123 3393",
-      website: "mind.org.uk"
+      service: 'Mind',
+      description: 'Mental health information and local support services',
+      contact: '0300 123 3393',
+      website: 'mind.org.uk',
     },
     {
-      service: "Apprentice Support",
-      description: "Government support for apprentice wellbeing",
-      contact: "0800 015 0400",
-      website: "gov.uk/apprenticeships-guide"
-    }
+      service: 'Apprentice Support',
+      description: 'Government support for apprentice wellbeing',
+      contact: '0800 015 0400',
+      website: 'gov.uk/apprenticeships-guide',
+    },
   ];
 
   const practicalSupport = [
     {
-      area: "Technical Questions",
+      area: 'Technical Questions',
       resources: [
-        "IET Wiring Regulations forum",
-        "Electrical Safety First guidance",
-        "Manufacturer technical support lines",
-        "YouTube channels like John Ward"
-      ]
+        'IET Wiring Regulations forum',
+        'Electrical Safety First guidance',
+        'Manufacturer technical support lines',
+        'eFIXX and John Ward Electrical on YouTube — UK regulation walkthroughs',
+      ],
     },
     {
-      area: "Career Guidance",
+      area: 'Career Guidance',
       resources: [
-        "JIB careers advice",
-        "CITB apprentice support",
-        "Local college career services",
-        "LinkedIn electrical industry groups"
-      ]
+        'JIB careers advice',
+        'CITB apprentice support',
+        'Local college career services',
+        'LinkedIn electrical industry groups',
+      ],
     },
     {
-      area: "Financial Support",
+      area: 'Financial Support',
       resources: [
-        "Government apprentice minimum wage info",
-        "Student loan eligibility",
-        "Local council support schemes",
-        "Union advice services"
-      ]
+        'Government apprentice minimum wage info',
+        'Student loan eligibility',
+        'Local council support schemes',
+        'Union advice services',
+      ],
     },
     {
-      area: "Rights & Workplace Issues",
+      area: 'Rights & Workplace Issues',
       resources: [
-        "ACAS employment advice",
-        "Unite the Union apprentice support",
-        "Citizens Advice employment guidance",
-        "Apprentice complaints procedure"
-      ]
-    }
+        'ACAS employment advice',
+        'Unite the Union apprentice support',
+        'Citizens Advice employment guidance',
+        'Apprentice complaints procedure',
+      ],
+    },
   ];
 
   return (
@@ -125,9 +124,9 @@ const SupportSystemsTab = () => {
                     <IconComponent className="h-6 w-6 text-white" />
                     <h3 className="text-lg font-semibold text-white">{contact.title}</h3>
                   </div>
-                  
+
                   <p className="text-sm text-white mb-3">{contact.description}</p>
-                  
+
                   <div className="space-y-2">
                     <div>
                       <span className="font-medium text-white">Contact: </span>
@@ -157,7 +156,7 @@ const SupportSystemsTab = () => {
               <div key={index} className="border border-red-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">{resource.service}</h4>
                 <p className="text-sm text-white mb-3">{resource.description}</p>
-                
+
                 <div className="space-y-2">
                   <div className="text-sm">
                     <span className="font-medium text-red-300">Phone: </span>
@@ -209,19 +208,24 @@ const SupportSystemsTab = () => {
         <CardContent>
           <div className="space-y-3 text-sm text-white">
             <p>
-              • <strong>Asking for help is a sign of professionalism</strong> - it shows you care about doing quality work
+              • <strong>Asking for help is a sign of professionalism</strong> - it shows you care
+              about doing quality work
             </p>
             <p>
-              • <strong>Your training provider wants you to succeed</strong> - they're invested in your development
+              • <strong>Your training provider wants you to succeed</strong> - they're invested in
+              your development
             </p>
             <p>
-              • <strong>Experienced electricians remember being apprentices</strong> - most are happy to share knowledge
+              • <strong>Experienced electricians remember being apprentices</strong> - most are
+              happy to share knowledge
             </p>
             <p>
-              • <strong>Early intervention prevents bigger problems</strong> - speak up about concerns quickly
+              • <strong>Early intervention prevents bigger problems</strong> - speak up about
+              concerns quickly
             </p>
             <p>
-              • <strong>You're not alone in this journey</strong> - thousands of apprentices face similar challenges
+              • <strong>You're not alone in this journey</strong> - thousands of apprentices face
+              similar challenges
             </p>
           </div>
         </CardContent>

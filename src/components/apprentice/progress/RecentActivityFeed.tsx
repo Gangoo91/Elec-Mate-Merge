@@ -7,8 +7,14 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import {
-  Activity, Layers, FileText, BookOpen, Video,
-  PenLine, ClipboardCheck, GraduationCap
+  Activity,
+  Layers,
+  FileText,
+  BookOpen,
+  Video,
+  PenLine,
+  ClipboardCheck,
+  GraduationCap,
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -104,8 +110,10 @@ export function RecentActivityFeed() {
         ) : activities.length === 0 ? (
           <div className="text-center py-6">
             <Activity className="h-8 w-8 text-white/20 mx-auto mb-2" />
-            <p className="text-sm text-white/70">No activity yet</p>
-            <p className="text-xs text-white/60 mt-1">Complete a quiz or study flashcards to get started</p>
+            <p className="text-sm text-white">No activity yet</p>
+            <p className="text-xs text-white mt-1">
+              Complete a quiz or study flashcards to get started
+            </p>
           </div>
         ) : (
           <div className="space-y-1">
@@ -119,15 +127,11 @@ export function RecentActivityFeed() {
                   className="flex items-center gap-3 px-2.5 py-3 min-h-[44px] rounded-lg hover:bg-white/[0.03] transition-colors touch-manipulation"
                 >
                   <div className="p-1.5 rounded-lg bg-white/[0.04] flex-shrink-0">
-                    <Icon className="h-4 w-4 text-white/70" />
+                    <Icon className="h-4 w-4 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white truncate">
-                      {activity.source_title ?? label}
-                    </p>
-                    <p className="text-xs text-white/70">
-                      {timeAgo(activity.created_at)}
-                    </p>
+                    <p className="text-sm text-white truncate">{activity.source_title ?? label}</p>
+                    <p className="text-xs text-white">{timeAgo(activity.created_at)}</p>
                   </div>
                   <span className="text-sm font-semibold text-elec-yellow flex-shrink-0">
                     +{activity.xp_earned} XP

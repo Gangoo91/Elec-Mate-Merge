@@ -1,12 +1,18 @@
 import React, { useState, useCallback } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
-import { Upload, FileSpreadsheet, Check, AlertCircle } from "lucide-react";
-import { useBulkImportPriceBook } from "@/hooks/useFinance";
-import { toast } from "sonner";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Progress } from '@/components/ui/progress';
+import { Upload, FileSpreadsheet, Check, AlertCircle } from 'lucide-react';
+import { useBulkImportPriceBook } from '@/hooks/useFinance';
+import { toast } from 'sonner';
 import Papa from 'papaparse';
 // XLSX is dynamically imported only when needed to reduce bundle size (~7.2MB)
 
@@ -88,11 +94,11 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
     if (rows.length === 0) return [];
 
     // Auto-detect columns from headers
-    const headers = Object.keys(rows[0]).map(h => h.toLowerCase().trim());
-    
+    const headers = Object.keys(rows[0]).map((h) => h.toLowerCase().trim());
+
     const findColumn = (patterns: string[]) => {
-      const header = headers.find(h => patterns.some(p => h.includes(p)));
-      return header ? Object.keys(rows[0]).find(k => k.toLowerCase().trim() === header) : null;
+      const header = headers.find((h) => patterns.some((p) => h.includes(p)));
+      return header ? Object.keys(rows[0]).find((k) => k.toLowerCase().trim() === header) : null;
     };
 
     const nameCol = findColumn(['name', 'description', 'product', 'item', 'material']);
@@ -105,7 +111,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
     }
 
     return rows
-      .map(row => {
+      .map((row) => {
         const name = row[nameCol]?.toString().trim();
         const priceStr = row[priceCol]?.toString().replace(/[£$,]/g, '').trim();
         const price = parseFloat(priceStr);
@@ -146,7 +152,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
     setProgress(0);
 
     try {
-      const items = parsedData.map(item => ({
+      const items = parsedData.map((item) => ({
         name: item.name,
         sku: item.sku || null,
         buy_price: item.buy_price,
@@ -160,7 +166,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
 
       // Simulate progress
       const progressInterval = setInterval(() => {
-        setProgress(p => Math.min(p + 10, 90));
+        setProgress((p) => Math.min(p + 10, 90));
       }, 200);
 
       await bulkImportMutation.mutateAsync(items);
@@ -169,7 +175,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
       setProgress(100);
 
       toast.success(`Successfully imported ${items.length} items`);
-      
+
       setTimeout(() => {
         onOpenChange(false);
         resetDialog();
@@ -181,10 +187,13 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
   };
 
   return (
-    <Sheet open={open} onOpenChange={(isOpen) => {
-      if (!isOpen) resetDialog();
-      onOpenChange(isOpen);
-    }}>
+    <Sheet
+      open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) resetDialog();
+        onOpenChange(isOpen);
+      }}
+    >
       <SheetContent side="bottom" className="h-[70dvh] p-0 flex flex-col">
         <div className="flex flex-col h-full">
           {/* Header */}
@@ -193,9 +202,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
               <FileSpreadsheet className="h-5 w-5 text-elec-yellow" />
               Import Price Book
             </SheetTitle>
-            <SheetDescription>
-              Upload a CSV or Excel file with your prices
-            </SheetDescription>
+            <SheetDescription>Upload a CSV or Excel file with your prices</SheetDescription>
           </SheetHeader>
 
           {/* Content */}
@@ -215,9 +222,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
                 className="hidden"
               />
               <Upload className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
-              <p className="text-sm font-medium">
-                {file ? file.name : 'Tap to select file'}
-              </p>
+              <p className="text-sm font-medium">{file ? file.name : 'Tap to select file'}</p>
               <p className="text-xs text-muted-foreground mt-1">
                 CSV or Excel with name & price columns
               </p>
@@ -265,10 +270,14 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
                   <Label>Preview (first 3 items)</Label>
                   <div className="space-y-2">
                     {parsedData.slice(0, 3).map((item, i) => (
-                      <div key={i} className="flex justify-between items-center p-2 bg-muted/50 rounded-lg text-sm">
+                      <div
+                        key={i}
+                        className="flex justify-between items-center p-2 bg-muted/50 rounded-lg text-sm"
+                      >
                         <span className="truncate flex-1 mr-2">{item.name}</span>
                         <span className="text-muted-foreground shrink-0">
-                          £{item.buy_price.toFixed(2)} → £{(item.buy_price * (1 + markup / 100)).toFixed(2)}
+                          £{item.buy_price.toFixed(2)} → £
+                          {(item.buy_price * (1 + markup / 100)).toFixed(2)}
                         </span>
                       </div>
                     ))}

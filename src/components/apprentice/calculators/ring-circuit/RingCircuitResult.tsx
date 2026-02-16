@@ -1,9 +1,9 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertTriangle, Eye, TrendingUp, BarChart3 } from "lucide-react";
-import WhyThisMatters from "@/components/common/WhyThisMatters";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, AlertTriangle, Eye, TrendingUp, BarChart3 } from 'lucide-react';
+import WhyThisMatters from '@/components/common/WhyThisMatters';
 
 interface RingCircuitResult {
   r1: number;
@@ -68,25 +68,25 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
   };
 
   const whyThisMattersPoints = [
-    "Ring circuit testing ensures electrical safety and BS 7671 compliance for socket outlet circuits",
-    "Proper continuity confirms the ring is intact and will operate correctly under fault conditions",
-    "Cross-connection testing verifies protective devices will operate when needed to clear faults",
-    "R1+R2 values are critical for earth fault loop impedance calculations and shock protection",
-    "Accurate testing prevents overloading and ensures proper load distribution around the ring"
+    'Ring circuit testing ensures electrical safety and BS 7671 compliance for socket outlet circuits',
+    'Proper continuity confirms the ring is intact and will operate correctly under fault conditions',
+    'Cross-connection testing verifies protective devices will operate when needed to clear faults',
+    'R1+R2 values are critical for earth fault loop impedance calculations and shock protection',
+    'Accurate testing prevents overloading and ensures proper load distribution around the ring',
   ];
 
   const practicalExamples = [
-    "A typical 32A ring circuit in a 3-bed house should have R1+R2 values around 0.7-1.2Ω",
-    "End-to-end readings for 2.5mm² cable in a 50m ring: Live ≈ 0.74Ω, CPC ≈ 1.21Ω",
-    "Cross-connection test at socket 6 from start should read approximately R1+R2 calculated value",
-    "Temperature correction: readings increase by ~0.4% per °C above 20°C"
+    'A typical 32A ring circuit in a 3-bed house should have R1+R2 values around 0.7-1.2Ω',
+    'End-to-end readings for 2.5mm² cable in a 50m ring: Live ≈ 0.74Ω, CPC ≈ 1.21Ω',
+    'Cross-connection test at socket 6 from start should read approximately R1+R2 calculated value',
+    'Temperature correction: readings increase by ~0.4% per °C above 20°C',
   ];
 
   const bs7671Regs = [
-    "Regulation 433.1.204: Ring circuits maximum 32A protection, 100m² floor area",
-    "Section 612.2.2: Continuity testing required for all protective conductors",
-    "Regulation 543.1.1: Minimum 1.5mm² CPC for circuits up to 16A, 2.5mm² for 32A rings",
-    "Table 54.7: Maximum earth fault loop impedance (Zs) values for shock protection"
+    'Regulation 433.1.204: Ring circuits maximum 32A protection, 100m² floor area',
+    'Section 612.2.2: Continuity testing required for all protective conductors',
+    'Regulation 543.1.1: Minimum 1.5mm² CPC for circuits up to 16A, 2.5mm² for 32A rings',
+    'Table 54.7: Maximum earth fault loop impedance (Zs) values for shock protection',
   ];
 
   return (
@@ -101,7 +101,9 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Status Alert */}
-          <Alert className={`border ${result.isValid ? 'border-green-500/50 bg-green-500/10' : 'border-red-500/50 bg-red-500/10'}`}>
+          <Alert
+            className={`border ${result.isValid ? 'border-green-500/50 bg-green-500/10' : 'border-red-500/50 bg-red-500/10'}`}
+          >
             {result.isValid ? (
               <CheckCircle className="h-4 w-4 text-green-400" />
             ) : (
@@ -123,7 +125,7 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
                 </div>
               )}
             </div>
-            
+
             <div className="p-4 rounded-lg bg-white/10 border border-elec-yellow/20">
               <div className="text-xs text-white mb-1">R2 (CPC)</div>
               <div className="text-lg font-bold text-elec-yellow">{result.r2.toFixed(3)} Ω</div>
@@ -133,15 +135,17 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
                 </div>
               )}
             </div>
-            
+
             <div className="p-4 rounded-lg bg-white/10 border border-elec-yellow/20">
               <div className="text-xs text-white mb-1">Rn (Neutral)</div>
               <div className="text-lg font-bold text-elec-yellow">{result.rn.toFixed(3)} Ω</div>
             </div>
-            
+
             <div className="p-4 rounded-lg bg-white/10 border border-elec-yellow/20">
               <div className="text-xs text-white mb-1">R1 + R2</div>
-              <div className="text-lg font-bold text-elec-yellow">{result.r1PlusR2.toFixed(3)} Ω</div>
+              <div className="text-lg font-bold text-elec-yellow">
+                {result.r1PlusR2.toFixed(3)} Ω
+              </div>
             </div>
           </div>
         </CardContent>
@@ -158,15 +162,18 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
         <CardContent className="space-y-4">
           {Object.entries(result.validationDetails).map(([category, checks]) => {
             if (checks.length === 0) return null;
-            
+
             return (
               <div key={category} className="bg-white/10 rounded-lg p-4">
                 <h5 className="font-medium text-elec-light mb-3 text-sm capitalize">
-                  {category.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                  {category.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}
                 </h5>
                 <div className="space-y-3">
                   {checks.map((check, index) => (
-                    <div key={index} className={`flex items-start gap-3 p-3 rounded border text-sm ${getStatusColor(check.status)}`}>
+                    <div
+                      key={index}
+                      className={`flex items-start gap-3 p-3 rounded border text-sm ${getStatusColor(check.status)}`}
+                    >
                       {getStatusIcon(check.status)}
                       <div className="flex-1 min-w-0">
                         <div className="font-medium text-elec-light">{check.description}</div>
@@ -200,7 +207,9 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
             <div className="font-medium text-yellow-400 mb-2">Warnings:</div>
             <ul className="space-y-1">
               {result.warnings.map((warning, index) => (
-                <li key={index} className="text-sm text-yellow-300">• {warning}</li>
+                <li key={index} className="text-sm text-yellow-300">
+                  • {warning}
+                </li>
               ))}
             </ul>
           </AlertDescription>
@@ -230,10 +239,7 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
       )}
 
       {/* Why This Matters */}
-      <WhyThisMatters 
-        title="Why Ring Circuit Testing Matters"
-        points={whyThisMattersPoints}
-      />
+      <WhyThisMatters title="Why Ring Circuit Testing Matters" points={whyThisMattersPoints} />
 
       {/* Worked Example */}
       <Card className="bg-elec-card border-elec-yellow/20">
@@ -250,7 +256,9 @@ const RingCircuitResult: React.FC<RingCircuitResultProps> = ({ result }) => {
               <div>End-to-End Live: 0.74Ω → R1 = 0.74 ÷ 4 = 0.185Ω</div>
               <div>End-to-End CPC: 1.21Ω → R2 = 1.21 ÷ 4 = 0.303Ω</div>
               <div>R1 + R2 = 0.185 + 0.303 = 0.488Ω</div>
-              <div className="text-elec-yellow mt-2">✓ Values within acceptable limits for 2.5mm² ring circuit</div>
+              <div className="text-elec-yellow mt-2">
+                ✓ Values within acceptable limits for 2.5mm² ring circuit
+              </div>
             </div>
           </div>
         </CardContent>

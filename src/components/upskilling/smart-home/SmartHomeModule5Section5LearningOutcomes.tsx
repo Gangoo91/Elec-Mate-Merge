@@ -5,9 +5,9 @@ import { Badge } from '@/components/ui/badge';
 export const SmartHomeModule5Section5LearningOutcomes = () => {
   const outcomes = [
     "Explain what 'lighting scenes' are and how they integrate with security systems",
-    "Understand how lighting can act as both a deterrent and a safety aid", 
-    "Describe how emergency scenarios are programmed into smart home systems",
-    "Identify the electrician's role in wiring, configuring, and testing these setups"
+    'Understand how lighting can act as both a deterrent and a safety aid',
+    'Describe how emergency scenarios are programmed into smart home systems',
+    "Identify the electrician's role in wiring, configuring, and testing these setups",
   ];
 
   return (
@@ -19,15 +19,13 @@ export const SmartHomeModule5Section5LearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground">
-          By the end of this section, you should be able to:
-        </p>
-        
+        <p className="text-foreground">By the end of this section, you should be able to:</p>
+
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">
-              <Badge 
-                variant="secondary" 
+              <Badge
+                variant="secondary"
                 className="bg-elec-yellow text-elec-dark hover:bg-yellow-500 font-bold text-xs px-2 py-1 mt-1 flex-shrink-0"
               >
                 {index + 1}

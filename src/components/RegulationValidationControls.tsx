@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Shield, AlertTriangle, XCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
@@ -15,21 +14,26 @@ interface RegulationValidationControlsProps {
 const RegulationValidationControls: React.FC<RegulationValidationControlsProps> = ({
   testResults,
   showRegulationStatus,
-  onToggleRegulationStatus
+  onToggleRegulationStatus,
 }) => {
   const [showBatchDialog, setShowBatchDialog] = useState(false);
   const [batchResults, setBatchResults] = useState<Map<string, RegulationCheckResult>>(new Map());
 
   // Stable hash for memoization
   const resultsHash = useMemo(
-    () => testResults.map(r => `${r.id}:${r.circuitDesignation}:${r.zs}:${r.maxZs}:${r.protectiveDeviceRating}`).join('|'),
+    () =>
+      testResults
+        .map(
+          (r) => `${r.id}:${r.circuitDesignation}:${r.zs}:${r.maxZs}:${r.protectiveDeviceRating}`
+        )
+        .join('|'),
     [testResults]
   );
 
   // Analyse all circuits for regulation compliance
   const analyseAllCircuits = () => {
     const results = new Map<string, RegulationCheckResult>();
-    testResults.forEach(result => {
+    testResults.forEach((result) => {
       results.set(result.id, checkRegulationCompliance(result));
     });
     setBatchResults(results);
@@ -43,13 +47,13 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
     let warningIssues = 0;
     let compliantCircuits = 0;
 
-    testResults.forEach(result => {
+    testResults.forEach((result) => {
       const check = checkRegulationCompliance(result);
       if (check.warnings.length === 0) {
         compliantCircuits++;
       } else {
         totalIssues += check.warnings.length;
-        check.warnings.forEach(warning => {
+        check.warnings.forEach((warning) => {
           if (warning.severity === 'critical') {
             criticalIssues++;
           } else {
@@ -64,26 +68,27 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
       compliantCircuits,
       totalIssues,
       criticalIssues,
-      warningIssues
+      warningIssues,
     };
   }, [resultsHash]);
 
   // Get all warnings for batch dialog
   const getAllWarnings = () => {
-    const allWarnings: Array<{ circuitId: string; circuitDescription: string; warnings: any[] }> = [];
-    
+    const allWarnings: Array<{ circuitId: string; circuitDescription: string; warnings: any[] }> =
+      [];
+
     batchResults.forEach((result, circuitId) => {
       if (result.warnings.length > 0) {
-        const circuit = testResults.find(r => r.id === circuitId);
+        const circuit = testResults.find((r) => r.id === circuitId);
         allWarnings.push({
           circuitId,
           circuitDescription: circuit?.circuitDescription || `Circuit ${circuit?.circuitNumber}`,
-          warnings: result.warnings
+          warnings: result.warnings,
         });
       }
     });
-    
-    return allWarnings.flatMap(item => item.warnings);
+
+    return allWarnings.flatMap((item) => item.warnings);
   };
 
   return (
@@ -107,7 +112,9 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
             <div className="regulation-stat regulation-stat-success">
               <CheckCircle className="h-6 w-6 text-emerald-400 flex-shrink-0" />
               <div>
-                <span className="regulation-stat-value">{stats.compliantCircuits}/{stats.totalCircuits}</span>
+                <span className="regulation-stat-value">
+                  {stats.compliantCircuits}/{stats.totalCircuits}
+                </span>
                 <span className="regulation-stat-label block">Compliant</span>
               </div>
             </div>
@@ -179,7 +186,8 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
               <div className="flex items-start gap-3">
                 <span className="text-elec-yellow text-lg">💡</span>
                 <p className="text-sm text-white/80 leading-relaxed">
-                  Regulation status indicators are now visible in the table. Click the shield icon on circuits with issues to review details.
+                  Regulation status indicators are now visible in the table. Click the shield icon
+                  on circuits with issues to review details.
                 </p>
               </div>
             </div>

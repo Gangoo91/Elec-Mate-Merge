@@ -1,72 +1,82 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m2s5-check1",
-    question: "What is the minimum viewing distance for a 100mm high exit sign?",
-    options: ["10 metres", "20 metres", "30 metres", "40 metres"],
+    id: 'emergencylighting-m2s5-check1',
+    question: 'What is the minimum viewing distance for a 100mm high exit sign?',
+    options: ['10 metres', '20 metres', '30 metres', '40 metres'],
     correctIndex: 2,
-    explanation: "The viewing distance formula is approximately 200× letter height. For 100mm (0.1m) × 200 = 20m. However, BS 5266-7 specifies 30m maximum for internally illuminated signs of this size due to practical visibility factors."
+    explanation:
+      'The viewing distance formula is approximately 200× letter height. For 100mm (0.1m) × 200 = 20m. However, BS 5266-7 specifies 30m maximum for internally illuminated signs of this size due to practical visibility factors.',
   },
   {
-    id: "emergencylighting-m2s5-check2",
+    id: 'emergencylighting-m2s5-check2',
     question: "Which standard defines the green 'running man' pictogram for exit signs?",
-    options: ["BS 5266-1", "BS 7671", "ISO 7010", "BS EN 1838"],
+    options: ['BS 5266-1', 'BS 7671', 'ISO 7010', 'BS EN 1838'],
     correctIndex: 2,
-    explanation: "ISO 7010 specifies safety sign graphical symbols including the green 'running man' pictogram used on emergency exit signs. BS 5266-7 references ISO 7010 for sign design requirements."
+    explanation:
+      "ISO 7010 specifies safety sign graphical symbols including the green 'running man' pictogram used on emergency exit signs. BS 5266-7 references ISO 7010 for sign design requirements.",
   },
   {
-    id: "emergencylighting-m2s5-check3",
-    question: "What is the minimum luminance for an internally illuminated exit sign?",
-    options: ["1 cd/m²", "2 cd/m²", "5 cd/m²", "10 cd/m²"],
+    id: 'emergencylighting-m2s5-check3',
+    question: 'What is the minimum luminance for an internally illuminated exit sign?',
+    options: ['1 cd/m²', '2 cd/m²', '5 cd/m²', '10 cd/m²'],
     correctIndex: 1,
-    explanation: "BS 5266-7 requires minimum 2 cd/m² luminance for the white or green portions of internally illuminated exit signs. This ensures visibility in smoky or partially lit conditions."
-  }
+    explanation:
+      'BS 5266-7 requires minimum 2 cd/m² luminance for the white or green portions of internally illuminated exit signs. This ensures visibility in smoky or partially lit conditions.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Should exit signs be internally or externally illuminated?",
-    answer: "Internally illuminated signs are preferred as they remain visible during power failure without needing a separate luminaire. Externally illuminated signs require a dedicated luminaire within 2m and are more prone to shadowing."
+    question: 'Should exit signs be internally or externally illuminated?',
+    answer:
+      'Internally illuminated signs are preferred as they remain visible during power failure without needing a separate luminaire. Externally illuminated signs require a dedicated luminaire within 2m and are more prone to shadowing.',
   },
   {
-    question: "When is a directional arrow required on exit signs?",
-    answer: "Directional arrows are required when the exit is not directly ahead or when clarification is needed. Arrow direction should indicate the actual direction of travel, not simply point at the exit door if that would be misleading."
+    question: 'When is a directional arrow required on exit signs?',
+    answer:
+      'Directional arrows are required when the exit is not directly ahead or when clarification is needed. Arrow direction should indicate the actual direction of travel, not simply point at the exit door if that would be misleading.',
   },
   {
-    question: "Can text-only exit signs still be used?",
-    answer: "While older text-only 'EXIT' signs may still exist in some buildings, BS 5266-7 now requires the ISO 7010 graphical 'running man' pictogram. Text can supplement but not replace the pictogram for new installations."
+    question: 'Can text-only exit signs still be used?',
+    answer:
+      "While older text-only 'EXIT' signs may still exist in some buildings, BS 5266-7 now requires the ISO 7010 graphical 'running man' pictogram. Text can supplement but not replace the pictogram for new installations.",
   },
   {
-    question: "How often should exit signs be checked?",
-    answer: "Daily visual checks should confirm all signs are lit and undamaged. Monthly functional tests verify operation on battery. Annual full-duration tests confirm 3-hour operation. All tests must be recorded in the log book."
-  }
+    question: 'How often should exit signs be checked?',
+    answer:
+      'Daily visual checks should confirm all signs are lit and undamaged. Monthly functional tests verify operation on battery. Annual full-duration tests confirm 3-hour operation. All tests must be recorded in the log book.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A corridor has exit doors at each end, 45m apart. What is the maximum height for exit signs to ensure they can be seen from the centre?",
-  options: [
-    "80mm height (16m viewing distance)",
-    "100mm height (20m viewing distance)",
-    "150mm height (30m viewing distance)",
-    "200mm height (40m viewing distance)"
-  ],
-  correctAnswer: 2,
-  explanation: "From the centre, each sign must be visible from approximately 22.5m. A 150mm sign provides a viewing distance of around 30m, which comfortably covers the required 22.5m with margin for practical factors."
-  }
+    question:
+      'A corridor has exit doors at each end, 45m apart. What is the maximum height for exit signs to ensure they can be seen from the centre?',
+    options: [
+      '80mm height (16m viewing distance)',
+      '100mm height (20m viewing distance)',
+      '150mm height (30m viewing distance)',
+      '200mm height (40m viewing distance)',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'From the centre, each sign must be visible from approximately 22.5m. A 150mm sign provides a viewing distance of around 30m, which comfortably covers the required 22.5m with margin for practical factors.',
+  },
 ];
 
 const EmergencyLightingModule2Section5 = () => {
   useSEO({
-    title: "Emergency Exit Signs | Emergency Lighting Module 2.5",
-    description: "Design and install emergency exit signs to BS 5266-7 and ISO 7010 including sign sizing, viewing distances, illumination requirements, and placement guidance."
+    title: 'Emergency Exit Signs | Emergency Lighting Module 2.5',
+    description:
+      'Design and install emergency exit signs to BS 5266-7 and ISO 7010 including sign sizing, viewing distances, illumination requirements, and placement guidance.',
   });
 
   return (
@@ -108,17 +118,29 @@ const EmergencyLightingModule2Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Standard:</strong> ISO 7010 'running man'</li>
-              <li><strong>Viewing:</strong> ~200× letter height</li>
-              <li><strong>Luminance:</strong> 2 cd/m² minimum</li>
+              <li>
+                <strong>Standard:</strong> ISO 7010 'running man'
+              </li>
+              <li>
+                <strong>Viewing:</strong> ~200× letter height
+              </li>
+              <li>
+                <strong>Luminance:</strong> 2 cd/m² minimum
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Types</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Internal:</strong> Self-illuminated (preferred)</li>
-              <li><strong>External:</strong> Requires luminaire within 2m</li>
-              <li><strong>Direction:</strong> Arrows where needed</li>
+              <li>
+                <strong>Internal:</strong> Self-illuminated (preferred)
+              </li>
+              <li>
+                <strong>External:</strong> Requires luminaire within 2m
+              </li>
+              <li>
+                <strong>Direction:</strong> Arrows where needed
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +150,12 @@ const EmergencyLightingModule2Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Select appropriate exit sign sizes",
-              "Calculate viewing distances",
-              "Understand illumination requirements",
-              "Position signs for maximum visibility",
-              "Apply ISO 7010 graphical standards",
-              "Integrate signs with escape lighting"
+              'Select appropriate exit sign sizes',
+              'Calculate viewing distances',
+              'Understand illumination requirements',
+              'Position signs for maximum visibility',
+              'Apply ISO 7010 graphical standards',
+              'Integrate signs with escape lighting',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,19 +175,28 @@ const EmergencyLightingModule2Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Emergency exit signs must comply with ISO 7010 which standardises the green
-              'running man' pictogram. This ensures universal recognition regardless of
-              language or literacy.
+              Emergency exit signs must comply with ISO 7010 which standardises the green 'running
+              man' pictogram. This ensures universal recognition regardless of language or literacy.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">ISO 7010 Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  ISO 7010 Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Pictogram:</strong> Running man toward exit</li>
-                  <li><strong>Colours:</strong> Green background, white figure</li>
-                  <li><strong>Direction:</strong> Arrow if not directly ahead</li>
-                  <li><strong>Contrast:</strong> High contrast for visibility</li>
+                  <li>
+                    <strong>Pictogram:</strong> Running man toward exit
+                  </li>
+                  <li>
+                    <strong>Colours:</strong> Green background, white figure
+                  </li>
+                  <li>
+                    <strong>Direction:</strong> Arrow if not directly ahead
+                  </li>
+                  <li>
+                    <strong>Contrast:</strong> High contrast for visibility
+                  </li>
                 </ul>
               </div>
               <div>
@@ -191,26 +222,38 @@ const EmergencyLightingModule2Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Sign size must match the required viewing distance. The relationship between
-              sign height and viewing distance ensures occupants can read signs from any
-              point on the escape route.
+              Sign size must match the required viewing distance. The relationship between sign
+              height and viewing distance ensures occupants can read signs from any point on the
+              escape route.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Size Guidelines</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>80mm:</strong> Up to 16m viewing</li>
-                  <li><strong>100mm:</strong> Up to 20m viewing</li>
-                  <li><strong>150mm:</strong> Up to 30m viewing</li>
-                  <li><strong>200mm:</strong> Up to 40m viewing</li>
+                  <li>
+                    <strong>80mm:</strong> Up to 16m viewing
+                  </li>
+                  <li>
+                    <strong>100mm:</strong> Up to 20m viewing
+                  </li>
+                  <li>
+                    <strong>150mm:</strong> Up to 30m viewing
+                  </li>
+                  <li>
+                    <strong>200mm:</strong> Up to 40m viewing
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Formula</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>External lit:</strong> d = h × 100</li>
-                  <li><strong>Internal lit:</strong> d = h × 200</li>
+                  <li>
+                    <strong>External lit:</strong> d = h × 100
+                  </li>
+                  <li>
+                    <strong>Internal lit:</strong> d = h × 200
+                  </li>
                   <li>d = viewing distance (m)</li>
                   <li>h = sign height (m)</li>
                 </ul>
@@ -244,24 +287,36 @@ const EmergencyLightingModule2Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Exit signs must be illuminated during both normal operation and emergency
-              conditions. BS 5266-7 specifies luminance and uniformity requirements.
+              Exit signs must be illuminated during both normal operation and emergency conditions.
+              BS 5266-7 specifies luminance and uniformity requirements.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Illumination Standards:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Minimum luminance:</strong> 2 cd/m² (white/green areas)</li>
-                <li><strong>Contrast ratio:</strong> At least 5:1 (symbol to background)</li>
-                <li><strong>Uniformity:</strong> No visible dark spots or hot spots</li>
-                <li><strong>Duration:</strong> 3 hours minimum on battery</li>
-                <li><strong>Response:</strong> Immediate on mains failure</li>
+                <li>
+                  <strong>Minimum luminance:</strong> 2 cd/m² (white/green areas)
+                </li>
+                <li>
+                  <strong>Contrast ratio:</strong> At least 5:1 (symbol to background)
+                </li>
+                <li>
+                  <strong>Uniformity:</strong> No visible dark spots or hot spots
+                </li>
+                <li>
+                  <strong>Duration:</strong> 3 hours minimum on battery
+                </li>
+                <li>
+                  <strong>Response:</strong> Immediate on mains failure
+                </li>
               </ul>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Internal Illumination</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Internal Illumination
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Self-contained light source</li>
                   <li>Preferred for new installations</li>
@@ -270,7 +325,9 @@ const EmergencyLightingModule2Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">External Illumination</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  External Illumination
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Separate luminaire required</li>
                   <li>Luminaire within 2m of sign</li>
@@ -301,10 +358,18 @@ const EmergencyLightingModule2Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Sign Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong arrow direction:</strong> — Arrow must show travel direction</li>
-                <li><strong>Sign too small:</strong> — Calculate viewing distance requirements</li>
-                <li><strong>Obscured by fixtures:</strong> — Clear sightlines from all points</li>
-                <li><strong>No luminaire for external:</strong> — Must be within 2m</li>
+                <li>
+                  <strong>Wrong arrow direction:</strong> — Arrow must show travel direction
+                </li>
+                <li>
+                  <strong>Sign too small:</strong> — Calculate viewing distance requirements
+                </li>
+                <li>
+                  <strong>Obscured by fixtures:</strong> — Clear sightlines from all points
+                </li>
+                <li>
+                  <strong>No luminaire for external:</strong> — Must be within 2m
+                </li>
               </ul>
             </div>
           </div>
@@ -350,10 +415,7 @@ const EmergencyLightingModule2Section5 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

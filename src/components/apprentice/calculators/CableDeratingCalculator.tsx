@@ -1,12 +1,16 @@
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Cable, Info, Calculator, AlertTriangle, CheckCircle2, BookOpen, ChevronDown } from "lucide-react";
+import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+  Cable,
+  Info,
+  Calculator,
+  AlertTriangle,
+  CheckCircle2,
+  BookOpen,
+  ChevronDown,
+} from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -17,22 +21,22 @@ import {
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
-} from "@/components/calculators/shared";
+} from '@/components/calculators/shared';
 
 const CableDeratingCalculator = () => {
   const config = CALCULATOR_CONFIG['cable'];
 
-  const [baseRating, setBaseRating] = useState("");
-  const [cableType, setCableType] = useState("pvc-70");
-  const [installationMethod, setInstallationMethod] = useState("method-c");
-  const [ambientTemp, setAmbientTemp] = useState("30");
-  const [numberOfCables, setNumberOfCables] = useState("1");
-  const [thermalInsulation, setThermalInsulation] = useState("none");
-  const [soilThermalResistivity, setSoilThermalResistivity] = useState("2.5");
+  const [baseRating, setBaseRating] = useState('');
+  const [cableType, setCableType] = useState('pvc-70');
+  const [installationMethod, setInstallationMethod] = useState('method-c');
+  const [ambientTemp, setAmbientTemp] = useState('30');
+  const [numberOfCables, setNumberOfCables] = useState('1');
+  const [thermalInsulation, setThermalInsulation] = useState('none');
+  const [soilThermalResistivity, setSoilThermalResistivity] = useState('2.5');
 
   // Enhanced inputs for protective device compliance
-  const [designCurrent, setDesignCurrent] = useState<string>("");
-  const [deviceRating, setDeviceRating] = useState<string>("32");
+  const [designCurrent, setDesignCurrent] = useState<string>('');
+  const [deviceRating, setDeviceRating] = useState<string>('32');
 
   // Collapsible states
   const [showGuidance, setShowGuidance] = useState(false);
@@ -61,78 +65,90 @@ const CableDeratingCalculator = () => {
 
   // Cable types with reference temperatures
   const cableTypes = [
-    { value: "pvc-70", label: "PVC Insulated 70°C", refTemp: 70 },
-    { value: "xlpe-90", label: "XLPE Insulated 90°C", refTemp: 90 },
-    { value: "lsf-70", label: "LSF Insulated 70°C", refTemp: 70 },
-    { value: "mineral-70", label: "Mineral Insulated 70°C", refTemp: 70 },
-    { value: "mineral-105", label: "Mineral Insulated 105°C", refTemp: 105 },
-    { value: "silicone-180", label: "Silicone Insulated 180°C", refTemp: 180 }
+    { value: 'pvc-70', label: 'PVC Insulated 70°C', refTemp: 70 },
+    { value: 'xlpe-90', label: 'XLPE Insulated 90°C', refTemp: 90 },
+    { value: 'lsf-70', label: 'LSF Insulated 70°C', refTemp: 70 },
+    { value: 'mineral-70', label: 'Mineral Insulated 70°C', refTemp: 70 },
+    { value: 'mineral-105', label: 'Mineral Insulated 105°C', refTemp: 105 },
+    { value: 'silicone-180', label: 'Silicone Insulated 180°C', refTemp: 180 },
   ];
 
   // BS 7671 Reference Installation Methods
   const installationMethods = [
-    { value: "method-a1", label: "Method A1 - Enclosed in conduit on wall" },
-    { value: "method-a2", label: "Method A2 - Enclosed in trunking on wall" },
-    { value: "method-b1", label: "Method B1 - Enclosed in conduit in masonry" },
-    { value: "method-b2", label: "Method B2 - Enclosed in trunking in masonry" },
-    { value: "method-c", label: "Method C - Clipped direct to surface" },
-    { value: "method-d1", label: "Method D1 - Direct in ground or duct" },
-    { value: "method-d2", label: "Method D2 - In ducts in ground" },
-    { value: "method-e", label: "Method E - In free air" },
-    { value: "method-f", label: "Method F - On cable tray (perforated)" },
-    { value: "method-g", label: "Method G - On cable tray (unperforated)" }
+    { value: 'method-a1', label: 'Method A1 - Enclosed in conduit on wall' },
+    { value: 'method-a2', label: 'Method A2 - Enclosed in trunking on wall' },
+    { value: 'method-b1', label: 'Method B1 - Enclosed in conduit in masonry' },
+    { value: 'method-b2', label: 'Method B2 - Enclosed in trunking in masonry' },
+    { value: 'method-c', label: 'Method C - Clipped direct to surface' },
+    { value: 'method-d1', label: 'Method D1 - Direct in ground or duct' },
+    { value: 'method-d2', label: 'Method D2 - In ducts in ground' },
+    { value: 'method-e', label: 'Method E - In free air' },
+    { value: 'method-f', label: 'Method F - On cable tray (perforated)' },
+    { value: 'method-g', label: 'Method G - On cable tray (unperforated)' },
   ];
 
   // Ambient temperatures
   const ambientTemperatures = [
-    "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70"
+    '10',
+    '15',
+    '20',
+    '25',
+    '30',
+    '35',
+    '40',
+    '45',
+    '50',
+    '55',
+    '60',
+    '65',
+    '70',
   ];
 
   // Number of cables for grouping
   const cableQuantities = [
-    { value: "1", label: "1 (Single cable)" },
-    { value: "2", label: "2 cables" },
-    { value: "3", label: "3 cables" },
-    { value: "4", label: "4-5 cables" },
-    { value: "6", label: "6-8 cables" },
-    { value: "9", label: "9-11 cables" },
-    { value: "12", label: "12-15 cables" },
-    { value: "16", label: "16-19 cables" },
-    { value: "20", label: "20+ cables" }
+    { value: '1', label: '1 (Single cable)' },
+    { value: '2', label: '2 cables' },
+    { value: '3', label: '3 cables' },
+    { value: '4', label: '4-5 cables' },
+    { value: '6', label: '6-8 cables' },
+    { value: '9', label: '9-11 cables' },
+    { value: '12', label: '12-15 cables' },
+    { value: '16', label: '16-19 cables' },
+    { value: '20', label: '20+ cables' },
   ];
 
   // Thermal insulation conditions
   const thermalInsulationTypes = [
-    { value: "none", label: "No thermal insulation" },
-    { value: "touching-one", label: "Touching thermal insulation (one side)" },
-    { value: "touching-narrow", label: "Touching narrow strip (<225mm)" },
-    { value: "touching-wide", label: "Touching wide area (>225mm)" },
-    { value: "surrounded-50", label: "Surrounded by insulation ≤50mm" },
-    { value: "surrounded-100", label: "Surrounded by insulation 50-100mm" },
-    { value: "surrounded-200", label: "Surrounded by insulation 100-200mm" },
-    { value: "surrounded-400", label: "Surrounded by insulation 200-400mm" },
-    { value: "surrounded-over", label: "Surrounded by insulation >400mm" }
+    { value: 'none', label: 'No thermal insulation' },
+    { value: 'touching-one', label: 'Touching thermal insulation (one side)' },
+    { value: 'touching-narrow', label: 'Touching narrow strip (<225mm)' },
+    { value: 'touching-wide', label: 'Touching wide area (>225mm)' },
+    { value: 'surrounded-50', label: 'Surrounded by insulation ≤50mm' },
+    { value: 'surrounded-100', label: 'Surrounded by insulation 50-100mm' },
+    { value: 'surrounded-200', label: 'Surrounded by insulation 100-200mm' },
+    { value: 'surrounded-400', label: 'Surrounded by insulation 200-400mm' },
+    { value: 'surrounded-over', label: 'Surrounded by insulation >400mm' },
   ];
 
   const deviceRatingOptions = [
-    { value: "6", label: "6A" },
-    { value: "10", label: "10A" },
-    { value: "16", label: "16A" },
-    { value: "20", label: "20A" },
-    { value: "25", label: "25A" },
-    { value: "32", label: "32A" },
-    { value: "40", label: "40A" },
-    { value: "50", label: "50A" },
-    { value: "63", label: "63A" },
+    { value: '6', label: '6A' },
+    { value: '10', label: '10A' },
+    { value: '16', label: '16A' },
+    { value: '20', label: '20A' },
+    { value: '25', label: '25A' },
+    { value: '32', label: '32A' },
+    { value: '40', label: '40A' },
+    { value: '50', label: '50A' },
+    { value: '63', label: '63A' },
   ];
 
   // Calculate temperature correction factor based on BS 7671
   const calculateTemperatureFactor = (ambient: number, cableTypeValue: string): number => {
-    const cable = cableTypes.find(c => c.value === cableTypeValue);
+    const cable = cableTypes.find((c) => c.value === cableTypeValue);
     const refTemp = cable?.refTemp || 70;
     const refAmbient = installationMethod.includes('d') ? 20 : 30; // 20°C for buried, 30°C for air
 
-    if (ambient === refAmbient) return 1.00;
+    if (ambient === refAmbient) return 1.0;
 
     // BS 7671 temperature correction formula
     const factor = Math.sqrt((refTemp - ambient) / (refTemp - refAmbient));
@@ -144,40 +160,84 @@ const CableDeratingCalculator = () => {
     const num = parseInt(numCables);
 
     // Different factors for different installation methods
-    if (method.includes('a') || method.includes('b')) { // Enclosed methods
-      const factors = { 1: 1.00, 2: 0.80, 3: 0.70, 4: 0.65, 6: 0.60, 9: 0.55, 12: 0.50, 16: 0.45, 20: 0.40 };
+    if (method.includes('a') || method.includes('b')) {
+      // Enclosed methods
+      const factors = {
+        1: 1.0,
+        2: 0.8,
+        3: 0.7,
+        4: 0.65,
+        6: 0.6,
+        9: 0.55,
+        12: 0.5,
+        16: 0.45,
+        20: 0.4,
+      };
       return factors[num as keyof typeof factors] || 0.35;
-    } else if (method === 'method-c') { // Clipped direct
-      const factors = { 1: 1.00, 2: 0.85, 3: 0.79, 4: 0.75, 6: 0.73, 9: 0.72, 12: 0.72, 16: 0.72, 20: 0.72 };
-      return factors[num as keyof typeof factors] || 0.70;
-    } else if (method.includes('d')) { // Buried
-      const factors = { 1: 1.00, 2: 0.90, 3: 0.85, 4: 0.82, 6: 0.80, 9: 0.78, 12: 0.76, 16: 0.74, 20: 0.72 };
-      return factors[num as keyof typeof factors] || 0.70;
-    } else { // Cable tray and free air
-      const factors = { 1: 1.00, 2: 0.88, 3: 0.82, 4: 0.77, 6: 0.75, 9: 0.73, 12: 0.72, 16: 0.72, 20: 0.72 };
-      return factors[num as keyof typeof factors] || 0.70;
+    } else if (method === 'method-c') {
+      // Clipped direct
+      const factors = {
+        1: 1.0,
+        2: 0.85,
+        3: 0.79,
+        4: 0.75,
+        6: 0.73,
+        9: 0.72,
+        12: 0.72,
+        16: 0.72,
+        20: 0.72,
+      };
+      return factors[num as keyof typeof factors] || 0.7;
+    } else if (method.includes('d')) {
+      // Buried
+      const factors = {
+        1: 1.0,
+        2: 0.9,
+        3: 0.85,
+        4: 0.82,
+        6: 0.8,
+        9: 0.78,
+        12: 0.76,
+        16: 0.74,
+        20: 0.72,
+      };
+      return factors[num as keyof typeof factors] || 0.7;
+    } else {
+      // Cable tray and free air
+      const factors = {
+        1: 1.0,
+        2: 0.88,
+        3: 0.82,
+        4: 0.77,
+        6: 0.75,
+        9: 0.73,
+        12: 0.72,
+        16: 0.72,
+        20: 0.72,
+      };
+      return factors[num as keyof typeof factors] || 0.7;
     }
   };
 
   // BS 7671 Thermal insulation factors (Table 4C4)
   const getThermalInsulationFactor = (insulation: string): number => {
     const factors = {
-      "none": 1.00,
-      "touching-one": 0.89,
-      "touching-narrow": 0.81,
-      "touching-wide": 0.68,
-      "surrounded-50": 0.63,
-      "surrounded-100": 0.51,
-      "surrounded-200": 0.46,
-      "surrounded-400": 0.42,
-      "surrounded-over": 0.36
+      none: 1.0,
+      'touching-one': 0.89,
+      'touching-narrow': 0.81,
+      'touching-wide': 0.68,
+      'surrounded-50': 0.63,
+      'surrounded-100': 0.51,
+      'surrounded-200': 0.46,
+      'surrounded-400': 0.42,
+      'surrounded-over': 0.36,
     };
-    return factors[insulation as keyof typeof factors] || 1.00;
+    return factors[insulation as keyof typeof factors] || 1.0;
   };
 
   // Soil thermal resistivity correction factor
   const getSoilCorrectionFactor = (resistivity: number, method: string): number => {
-    if (!method.includes('d')) return 1.00; // Only applies to buried cables
+    if (!method.includes('d')) return 1.0; // Only applies to buried cables
 
     // Standard soil thermal resistivity is 2.5 K⋅m/W
     const standardResistivity = 2.5;
@@ -216,7 +276,7 @@ const CableDeratingCalculator = () => {
       const ibInCompliant = Ib <= In;
       const inIzCompliant = In <= Iz;
       const overallCompliant = ibInCompliant && inIzCompliant;
-      const safetyMargin = Iz > 0 ? ((Iz - In) / Iz * 100) : 0;
+      const safetyMargin = Iz > 0 ? ((Iz - In) / Iz) * 100 : 0;
 
       compliance = { Ib, In, Iz, ibInCompliant, inIzCompliant, overallCompliant, safetyMargin };
     }
@@ -225,23 +285,23 @@ const CableDeratingCalculator = () => {
     const warnings: string[] = [];
 
     if (totalDerating < 0.5) {
-      warnings.push("Severe derating detected - consider larger cable or alternative installation");
+      warnings.push('Severe derating detected - consider larger cable or alternative installation');
     }
     if (tempFactor < 0.8) {
-      warnings.push("High ambient temperature significantly reducing capacity");
+      warnings.push('High ambient temperature significantly reducing capacity');
     }
     if (groupFactor < 0.7) {
-      warnings.push("Cable grouping causing significant derating");
+      warnings.push('Cable grouping causing significant derating');
     }
     if (thermalFactor < 0.7) {
-      warnings.push("Thermal insulation causing significant derating");
+      warnings.push('Thermal insulation causing significant derating');
     }
     if (soilFactor < 0.9 && soilFactor !== 1.0) {
-      warnings.push("Poor soil thermal conditions reducing capacity");
+      warnings.push('Poor soil thermal conditions reducing capacity');
     }
     if (compliance && !compliance.overallCompliant) {
-      if (!compliance.ibInCompliant) warnings.push("Design current exceeds device rating");
-      if (!compliance.inIzCompliant) warnings.push("Device rating exceeds derated cable capacity");
+      if (!compliance.ibInCompliant) warnings.push('Design current exceeds device rating');
+      if (!compliance.inIzCompliant) warnings.push('Device rating exceeds derated cable capacity');
     }
 
     setResult({
@@ -253,20 +313,20 @@ const CableDeratingCalculator = () => {
       finalRating: finalRating,
       deratingPercentage: deratingPercentage,
       warnings: warnings,
-      compliance
+      compliance,
     });
   };
 
   const reset = () => {
-    setBaseRating("");
-    setCableType("pvc-70");
-    setInstallationMethod("method-c");
-    setAmbientTemp("30");
-    setNumberOfCables("1");
-    setThermalInsulation("none");
-    setSoilThermalResistivity("2.5");
-    setDesignCurrent("");
-    setDeviceRating("32");
+    setBaseRating('');
+    setCableType('pvc-70');
+    setInstallationMethod('method-c');
+    setAmbientTemp('30');
+    setNumberOfCables('1');
+    setThermalInsulation('none');
+    setSoilThermalResistivity('2.5');
+    setDesignCurrent('');
+    setDeviceRating('32');
     setResult(null);
   };
 
@@ -320,14 +380,14 @@ const CableDeratingCalculator = () => {
           label="Cable Type"
           value={cableType}
           onChange={setCableType}
-          options={cableTypes.map(t => ({ value: t.value, label: t.label }))}
+          options={cableTypes.map((t) => ({ value: t.value, label: t.label }))}
         />
 
         <CalculatorSelect
           label="Installation Method"
           value={installationMethod}
           onChange={setInstallationMethod}
-          options={installationMethods.map(m => ({ value: m.value, label: m.label }))}
+          options={installationMethods.map((m) => ({ value: m.value, label: m.label }))}
         />
 
         <CalculatorInputGrid columns={2}>
@@ -335,16 +395,16 @@ const CableDeratingCalculator = () => {
             label="Ambient Temperature"
             value={ambientTemp}
             onChange={setAmbientTemp}
-            options={ambientTemperatures.map(t => ({
+            options={ambientTemperatures.map((t) => ({
               value: t,
-              label: `${t}°C${t === "30" ? " (Reference)" : ""}`
+              label: `${t}°C${t === '30' ? ' (Reference)' : ''}`,
             }))}
           />
           <CalculatorSelect
             label="Number of Cables"
             value={numberOfCables}
             onChange={setNumberOfCables}
-            options={cableQuantities.map(q => ({ value: q.value, label: q.label }))}
+            options={cableQuantities.map((q) => ({ value: q.value, label: q.label }))}
           />
         </CalculatorInputGrid>
 
@@ -352,7 +412,7 @@ const CableDeratingCalculator = () => {
           label="Thermal Insulation"
           value={thermalInsulation}
           onChange={setThermalInsulation}
-          options={thermalInsulationTypes.map(t => ({ value: t.value, label: t.label }))}
+          options={thermalInsulationTypes.map((t) => ({ value: t.value, label: t.label }))}
         />
 
         {installationMethod.includes('d') && (
@@ -384,7 +444,9 @@ const CableDeratingCalculator = () => {
               <p className="text-sm text-white/60 mb-1">Derated Cable Capacity</p>
               <div
                 className="text-4xl font-bold bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
               >
                 {result.finalRating.toFixed(1)} A
               </div>
@@ -404,14 +466,16 @@ const CableDeratingCalculator = () => {
               <div className="space-y-1">
                 <div className="flex justify-between text-sm">
                   <span className="text-white/60">Temperature (Ca)</span>
-                  <span className="font-mono text-emerald-400">{result.temperatureFactor.toFixed(3)}</span>
+                  <span className="font-mono text-emerald-400">
+                    {result.temperatureFactor.toFixed(3)}
+                  </span>
                 </div>
                 <div className="w-full bg-white/10 rounded-full h-1.5">
                   <div
                     className="h-1.5 rounded-full transition-all"
                     style={{
                       width: `${Math.max(result.temperatureFactor * 100, 5)}%`,
-                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`
+                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
                     }}
                   />
                 </div>
@@ -421,14 +485,16 @@ const CableDeratingCalculator = () => {
               <div className="space-y-1">
                 <div className="flex justify-between text-sm">
                   <span className="text-white/60">Grouping (Cg)</span>
-                  <span className="font-mono text-emerald-400">{result.groupingFactor.toFixed(3)}</span>
+                  <span className="font-mono text-emerald-400">
+                    {result.groupingFactor.toFixed(3)}
+                  </span>
                 </div>
                 <div className="w-full bg-white/10 rounded-full h-1.5">
                   <div
                     className="h-1.5 rounded-full transition-all"
                     style={{
                       width: `${Math.max(result.groupingFactor * 100, 5)}%`,
-                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`
+                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
                     }}
                   />
                 </div>
@@ -438,14 +504,16 @@ const CableDeratingCalculator = () => {
               <div className="space-y-1">
                 <div className="flex justify-between text-sm">
                   <span className="text-white/60">Thermal Insulation (Ci)</span>
-                  <span className="font-mono text-emerald-400">{result.thermalInsulationFactor.toFixed(3)}</span>
+                  <span className="font-mono text-emerald-400">
+                    {result.thermalInsulationFactor.toFixed(3)}
+                  </span>
                 </div>
                 <div className="w-full bg-white/10 rounded-full h-1.5">
                   <div
                     className="h-1.5 rounded-full transition-all"
                     style={{
                       width: `${Math.max(result.thermalInsulationFactor * 100, 5)}%`,
-                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`
+                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
                     }}
                   />
                 </div>
@@ -462,7 +530,7 @@ const CableDeratingCalculator = () => {
                     className="h-1.5 rounded-full transition-all"
                     style={{
                       width: `${Math.max(result.soilFactor * 100, 5)}%`,
-                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`
+                      background: `linear-gradient(90deg, ${config.gradientFrom}, ${config.gradientTo})`,
                     }}
                   />
                 </div>
@@ -471,23 +539,28 @@ const CableDeratingCalculator = () => {
 
             {/* Compliance Check */}
             {result.compliance && (
-              <div className={cn(
-                "mt-4 p-3 rounded-xl border",
-                result.compliance.overallCompliant
-                  ? "bg-green-500/10 border-green-500/30"
-                  : "bg-red-500/10 border-red-500/30"
-              )}>
+              <div
+                className={cn(
+                  'mt-4 p-3 rounded-xl border',
+                  result.compliance.overallCompliant
+                    ? 'bg-green-500/10 border-green-500/30'
+                    : 'bg-red-500/10 border-red-500/30'
+                )}
+              >
                 <div className="flex items-center gap-2 mb-2">
                   {result.compliance.overallCompliant ? (
                     <CheckCircle2 className="h-4 w-4 text-green-400" />
                   ) : (
                     <AlertTriangle className="h-4 w-4 text-red-400" />
                   )}
-                  <span className={cn(
-                    "font-medium",
-                    result.compliance.overallCompliant ? "text-green-300" : "text-red-300"
-                  )}>
-                    Ib ≤ In ≤ Iz: {result.compliance.overallCompliant ? "COMPLIANT" : "NON-COMPLIANT"}
+                  <span
+                    className={cn(
+                      'font-medium',
+                      result.compliance.overallCompliant ? 'text-green-300' : 'text-red-300'
+                    )}
+                  >
+                    Ib ≤ In ≤ Iz:{' '}
+                    {result.compliance.overallCompliant ? 'COMPLIANT' : 'NON-COMPLIANT'}
                   </span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-sm">
@@ -531,12 +604,16 @@ const CableDeratingCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Calculator className="h-4 w-4 text-purple-400" />
-                  <span className="text-sm sm:text-base font-medium text-purple-300">How It Worked Out</span>
+                  <span className="text-sm sm:text-base font-medium text-purple-300">
+                    How It Worked Out
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showFormula && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showFormula && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
@@ -544,7 +621,9 @@ const CableDeratingCalculator = () => {
                   <div className="text-xs text-purple-400">Derated capacity formula:</div>
                   <div>Iz = It × Ca × Cg × Ci × Cs</div>
                   <div className="pt-2 border-t border-purple-500/20">
-                    Iz = {baseRating} × {result.temperatureFactor.toFixed(3)} × {result.groupingFactor.toFixed(3)} × {result.thermalInsulationFactor.toFixed(3)} × {result.soilFactor.toFixed(3)}
+                    Iz = {baseRating} × {result.temperatureFactor.toFixed(3)} ×{' '}
+                    {result.groupingFactor.toFixed(3)} × {result.thermalInsulationFactor.toFixed(3)}{' '}
+                    × {result.soilFactor.toFixed(3)}
                   </div>
                   <div className="text-purple-200 font-bold">
                     Iz = {result.finalRating.toFixed(1)}A
@@ -560,26 +639,34 @@ const CableDeratingCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <Info className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm sm:text-base font-medium text-blue-300">What This Means</span>
+                  <span className="text-sm sm:text-base font-medium text-blue-300">
+                    What This Means
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showGuidance && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showGuidance && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0 space-y-2">
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Derating factors</strong> reduce cable capacity based on installation conditions.
+                  <strong className="text-blue-300">Derating factors</strong> reduce cable capacity
+                  based on installation conditions.
                 </p>
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Multiple factors</strong> combine to determine safe operating current.
+                  <strong className="text-blue-300">Multiple factors</strong> combine to determine
+                  safe operating current.
                 </p>
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Ib ≤ In ≤ Iz</strong> ensures proper circuit protection per BS 7671.
+                  <strong className="text-blue-300">Ib ≤ In ≤ Iz</strong> ensures proper circuit
+                  protection per BS 7671.
                 </p>
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">Safety margin</strong> should be positive for compliant design.
+                  <strong className="text-blue-300">Safety margin</strong> should be positive for
+                  compliant design.
                 </p>
               </CollapsibleContent>
             </div>
@@ -591,20 +678,36 @@ const CableDeratingCalculator = () => {
               <CollapsibleTrigger className="agent-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
                   <BookOpen className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm sm:text-base font-medium text-amber-300">BS 7671 Reference</span>
+                  <span className="text-sm sm:text-base font-medium text-amber-300">
+                    BS 7671 Reference
+                  </span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-white/70 transition-transform duration-200",
-                  showRegs && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    showRegs && 'rotate-180'
+                  )}
+                />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
                 <div className="space-y-2 text-sm text-amber-200/80">
-                  <p><strong className="text-amber-300">Table 4C1:</strong> Grouping factors for cables</p>
-                  <p><strong className="text-amber-300">Table 4C4:</strong> Thermal insulation derating factors</p>
-                  <p><strong className="text-amber-300">Appendix 4:</strong> Temperature correction factors</p>
-                  <p><strong className="text-amber-300">Regulation 433:</strong> Protection against overload</p>
+                  <p>
+                    <strong className="text-amber-300">Table 4C1:</strong> Grouping factors for
+                    cables
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Table 4C4:</strong> Thermal insulation
+                    derating factors
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Appendix 4:</strong> Temperature correction
+                    factors
+                  </p>
+                  <p>
+                    <strong className="text-amber-300">Regulation 433:</strong> Protection against
+                    overload
+                  </p>
                 </div>
               </CollapsibleContent>
             </div>
@@ -617,7 +720,8 @@ const CableDeratingCalculator = () => {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
           <p className="text-sm text-emerald-200">
-            <strong>Iz = It × Ca × Cg × Ci × Cs</strong> where It is tabulated current, and C factors are derating corrections.
+            <strong>Iz = It × Ca × Cg × Ci × Cs</strong> where It is tabulated current, and C
+            factors are derating corrections.
           </p>
         </div>
       </div>

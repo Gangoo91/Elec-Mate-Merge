@@ -1,69 +1,79 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Link Testing vs Channel Testing | Data Cabling Module 5.2";
-const DESCRIPTION = "Understanding the differences between permanent link and channel testing methodologies for structured cabling certification.";
+const TITLE = 'Link Testing vs Channel Testing | Data Cabling Module 5.2';
+const DESCRIPTION =
+  'Understanding the differences between permanent link and channel testing methodologies for structured cabling certification.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m5s2-check1",
-    question: "What is the maximum permanent link length for Link testing according to TIA-568?",
-    options: ["80 metres", "90 metres", "100 metres", "110 metres"],
+    id: 'datacabling-m5s2-check1',
+    question: 'What is the maximum permanent link length for Link testing according to TIA-568?',
+    options: ['80 metres', '90 metres', '100 metres', '110 metres'],
     correctIndex: 1,
-    explanation: "TIA-568 specifies a maximum permanent link length of 90 metres for Link testing. This excludes patch cords and equipment cords that make up the additional 10 metres in Channel testing."
+    explanation:
+      'TIA-568 specifies a maximum permanent link length of 90 metres for Link testing. This excludes patch cords and equipment cords that make up the additional 10 metres in Channel testing.',
   },
   {
-    id: "datacabling-m5s2-check2",
-    question: "Which testing method is most commonly used for certifying new cable installations?",
-    options: ["Channel testing", "Link testing", "Both equally", "Neither"],
+    id: 'datacabling-m5s2-check2',
+    question: 'Which testing method is most commonly used for certifying new cable installations?',
+    options: ['Channel testing', 'Link testing', 'Both equally', 'Neither'],
     correctIndex: 1,
-    explanation: "Link testing is most commonly used for field certification because it tests only the installed permanent cabling infrastructure, excluding variables introduced by patch cords."
+    explanation:
+      'Link testing is most commonly used for field certification because it tests only the installed permanent cabling infrastructure, excluding variables introduced by patch cords.',
   },
   {
-    id: "datacabling-m5s2-check3",
-    question: "What is the total maximum channel length including patch cords?",
-    options: ["90 metres", "95 metres", "100 metres", "105 metres"],
+    id: 'datacabling-m5s2-check3',
+    question: 'What is the total maximum channel length including patch cords?',
+    options: ['90 metres', '95 metres', '100 metres', '105 metres'],
     correctIndex: 2,
-    explanation: "The total channel length is 100 metres maximum, consisting of 90 metres permanent link plus up to 10 metres total for patch cords (5m at each end)."
-  }
+    explanation:
+      'The total channel length is 100 metres maximum, consisting of 90 metres permanent link plus up to 10 metres total for patch cords (5m at each end).',
+  },
 ];
 
 const faqs = [
   {
-    question: "When should I use Link testing vs Channel testing?",
-    answer: "Use Link testing for installation acceptance, warranty validation, and contractor sign-off - it tests just the permanent infrastructure you installed. Use Channel testing when troubleshooting end-user issues or validating application performance, as it tests the complete path including patch cords."
+    question: 'When should I use Link testing vs Channel testing?',
+    answer:
+      'Use Link testing for installation acceptance, warranty validation, and contractor sign-off - it tests just the permanent infrastructure you installed. Use Channel testing when troubleshooting end-user issues or validating application performance, as it tests the complete path including patch cords.',
   },
   {
-    question: "Why do Channel test results often look worse than Link test results?",
-    answer: "Channel testing includes additional connectors from patch cords, which introduce more insertion loss, return loss, and potential crosstalk. The standards account for this with relaxed limits for Channel testing compared to Link testing."
+    question: 'Why do Channel test results often look worse than Link test results?',
+    answer:
+      'Channel testing includes additional connectors from patch cords, which introduce more insertion loss, return loss, and potential crosstalk. The standards account for this with relaxed limits for Channel testing compared to Link testing.',
   },
   {
-    question: "Can I fail Link testing but pass Channel testing?",
-    answer: "This is rare but theoretically possible if your permanent link is marginal and high-quality patch cords happen to compensate. However, this scenario usually indicates an underlying problem that should be investigated."
+    question: 'Can I fail Link testing but pass Channel testing?',
+    answer:
+      'This is rare but theoretically possible if your permanent link is marginal and high-quality patch cords happen to compensate. However, this scenario usually indicates an underlying problem that should be investigated.',
   },
   {
-    question: "How do I set up my tester for each test type?",
-    answer: "Most cable certifiers have preset configurations for Link and Channel testing. For Link testing, use permanent link adapters. For Channel testing, use channel adapters or direct RJ45 connections. Always verify your test setup matches the certification requirement."
-  }
+    question: 'How do I set up my tester for each test type?',
+    answer:
+      'Most cable certifiers have preset configurations for Link and Channel testing. For Link testing, use permanent link adapters. For Channel testing, use channel adapters or direct RJ45 connections. Always verify your test setup matches the certification requirement.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A contractor has installed horizontal cabling and wants warranty certification. Which test configuration should be used?",
-  options: [
-    "Channel testing with patch cords installed",
-    "Link testing of the permanent link only",
-    "Either method provides equivalent certification",
-    "Visual inspection is sufficient for warranty"
-  ],
-  correctAnswer: 1,
-  explanation: "Link testing is the standard for installation acceptance and warranty certification because it tests only the permanent installed infrastructure. This isolates the contractor's work from variables like patch cord quality that they don't control."
-  }
+    question:
+      'A contractor has installed horizontal cabling and wants warranty certification. Which test configuration should be used?',
+    options: [
+      'Channel testing with patch cords installed',
+      'Link testing of the permanent link only',
+      'Either method provides equivalent certification',
+      'Visual inspection is sufficient for warranty',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Link testing is the standard for installation acceptance and warranty certification because it tests only the permanent installed infrastructure. This isolates the contractor's work from variables like patch cord quality that they don't control.",
+  },
 ];
 
 const DataCablingModule5Section2 = () => {
@@ -98,9 +108,7 @@ const DataCablingModule5Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Link Testing vs Channel Testing
           </h1>
-          <p className="text-white/80">
-            Different testing methodologies and their applications
-          </p>
+          <p className="text-white/80">Different testing methodologies and their applications</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +116,26 @@ const DataCablingModule5Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Link testing:</strong> 90m permanent cabling only</li>
-              <li><strong>Channel testing:</strong> 100m total including patch cords</li>
-              <li><strong>Use Link:</strong> Installation certification and warranty</li>
+              <li>
+                <strong>Link testing:</strong> 90m permanent cabling only
+              </li>
+              <li>
+                <strong>Channel testing:</strong> 100m total including patch cords
+              </li>
+              <li>
+                <strong>Use Link:</strong> Installation certification and warranty
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Test adapter type determines test method</li>
-              <li><strong>Use:</strong> Link for sign-off, Channel for troubleshooting</li>
+              <li>
+                <strong>Spot:</strong> Test adapter type determines test method
+              </li>
+              <li>
+                <strong>Use:</strong> Link for sign-off, Channel for troubleshooting
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +145,12 @@ const DataCablingModule5Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Distinguish Link from Channel testing",
-              "Understand length limits for each method",
-              "Select appropriate test method for purpose",
-              "Interpret test results correctly",
-              "Configure test equipment properly",
-              "Meet certification requirements"
+              'Distinguish Link from Channel testing',
+              'Understand length limits for each method',
+              'Select appropriate test method for purpose',
+              'Interpret test results correctly',
+              'Configure test equipment properly',
+              'Meet certification requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -152,29 +170,54 @@ const DataCablingModule5Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Link testing and Channel testing evaluate different portions of the cabling infrastructure.
-              Understanding when to use each method is essential for proper certification and troubleshooting.
+              Link testing and Channel testing evaluate different portions of the cabling
+              infrastructure. Understanding when to use each method is essential for proper
+              certification and troubleshooting.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Link Testing (Permanent Link)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Link Testing (Permanent Link)
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Scope:</strong> Permanent installed cabling only</li>
-                  <li><strong>Excludes:</strong> Patch cords and equipment cords</li>
-                  <li><strong>Max length:</strong> 90 metres</li>
-                  <li><strong>Use case:</strong> Installation acceptance, warranty</li>
-                  <li><strong>Repeatability:</strong> High - fixed components only</li>
+                  <li>
+                    <strong>Scope:</strong> Permanent installed cabling only
+                  </li>
+                  <li>
+                    <strong>Excludes:</strong> Patch cords and equipment cords
+                  </li>
+                  <li>
+                    <strong>Max length:</strong> 90 metres
+                  </li>
+                  <li>
+                    <strong>Use case:</strong> Installation acceptance, warranty
+                  </li>
+                  <li>
+                    <strong>Repeatability:</strong> High - fixed components only
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Channel Testing (End-to-End)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Channel Testing (End-to-End)
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Scope:</strong> Complete transmission path</li>
-                  <li><strong>Includes:</strong> All cables, connectors, patch cords</li>
-                  <li><strong>Max length:</strong> 100 metres total</li>
-                  <li><strong>Use case:</strong> Application performance validation</li>
-                  <li><strong>Variability:</strong> Depends on patch cord quality</li>
+                  <li>
+                    <strong>Scope:</strong> Complete transmission path
+                  </li>
+                  <li>
+                    <strong>Includes:</strong> All cables, connectors, patch cords
+                  </li>
+                  <li>
+                    <strong>Max length:</strong> 100 metres total
+                  </li>
+                  <li>
+                    <strong>Use case:</strong> Application performance validation
+                  </li>
+                  <li>
+                    <strong>Variability:</strong> Depends on patch cord quality
+                  </li>
                 </ul>
               </div>
             </div>
@@ -232,22 +275,42 @@ const DataCablingModule5Section2 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Channel Configuration Limits</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Channel Configuration Limits
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Total length:</strong> 100 metres maximum</li>
-                  <li><strong>Patch cords:</strong> 10m total (5m each end)</li>
-                  <li><strong>Connectors:</strong> 4 pairs maximum</li>
-                  <li><strong>Consolidation points:</strong> 1 maximum</li>
-                  <li><strong>Cross-connects:</strong> 1 maximum</li>
+                  <li>
+                    <strong>Total length:</strong> 100 metres maximum
+                  </li>
+                  <li>
+                    <strong>Patch cords:</strong> 10m total (5m each end)
+                  </li>
+                  <li>
+                    <strong>Connectors:</strong> 4 pairs maximum
+                  </li>
+                  <li>
+                    <strong>Consolidation points:</strong> 1 maximum
+                  </li>
+                  <li>
+                    <strong>Cross-connects:</strong> 1 maximum
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Performance Impact</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>More connectors:</strong> Higher insertion loss</li>
-                  <li><strong>Patch cord quality:</strong> Affects Channel results</li>
-                  <li><strong>Additional mating:</strong> Return loss impact</li>
-                  <li><strong>Test repeatability:</strong> Lower for Channel</li>
+                  <li>
+                    <strong>More connectors:</strong> Higher insertion loss
+                  </li>
+                  <li>
+                    <strong>Patch cord quality:</strong> Affects Channel results
+                  </li>
+                  <li>
+                    <strong>Additional mating:</strong> Return loss impact
+                  </li>
+                  <li>
+                    <strong>Test repeatability:</strong> Lower for Channel
+                  </li>
                 </ul>
               </div>
             </div>
@@ -264,12 +327,14 @@ const DataCablingModule5Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Standards specify different performance limits for Link and Channel testing
-              to account for the additional components in Channel configurations.
+              Standards specify different performance limits for Link and Channel testing to account
+              for the additional components in Channel configurations.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cat 6 @ 250MHz Comparison:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Cat 6 @ 250MHz Comparison:
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Link Testing Limits</p>
@@ -293,9 +358,15 @@ const DataCablingModule5Section2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Key differences explained:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Insertion Loss:</strong> ~2.3dB allowance for patch cord losses</li>
-                <li><strong>Return Loss:</strong> 2dB reduction accounts for additional connectors</li>
-                <li><strong>NEXT:</strong> 3dB reduction for patch cord crosstalk contribution</li>
+                <li>
+                  <strong>Insertion Loss:</strong> ~2.3dB allowance for patch cord losses
+                </li>
+                <li>
+                  <strong>Return Loss:</strong> 2dB reduction accounts for additional connectors
+                </li>
+                <li>
+                  <strong>NEXT:</strong> 3dB reduction for patch cord crosstalk contribution
+                </li>
               </ul>
             </div>
           </div>
@@ -308,21 +379,42 @@ const DataCablingModule5Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use Each Method</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                When to Use Each Method
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Link testing:</strong> New installations, contractor certification, warranty claims</li>
-                <li><strong>Channel testing:</strong> Troubleshooting, application validation, performance monitoring</li>
-                <li><strong>Both methods:</strong> Comprehensive qualification of new data centre links</li>
-                <li><strong>Document clearly:</strong> Always record which test method was used</li>
+                <li>
+                  <strong>Link testing:</strong> New installations, contractor certification,
+                  warranty claims
+                </li>
+                <li>
+                  <strong>Channel testing:</strong> Troubleshooting, application validation,
+                  performance monitoring
+                </li>
+                <li>
+                  <strong>Both methods:</strong> Comprehensive qualification of new data centre
+                  links
+                </li>
+                <li>
+                  <strong>Document clearly:</strong> Always record which test method was used
+                </li>
               </ul>
             </div>
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wrong adapters:</strong> — Using Channel adapters for Link testing</li>
-                <li><strong>Mixed results:</strong> — Comparing Link and Channel results directly</li>
-                <li><strong>Poor patch cords:</strong> — Using substandard cords affects Channel tests</li>
-                <li><strong>Skipping calibration:</strong> — Test adapters need regular calibration</li>
+                <li>
+                  <strong>Wrong adapters:</strong> — Using Channel adapters for Link testing
+                </li>
+                <li>
+                  <strong>Mixed results:</strong> — Comparing Link and Channel results directly
+                </li>
+                <li>
+                  <strong>Poor patch cords:</strong> — Using substandard cords affects Channel tests
+                </li>
+                <li>
+                  <strong>Skipping calibration:</strong> — Test adapters need regular calibration
+                </li>
               </ul>
             </div>
           </div>
@@ -368,10 +460,7 @@ const DataCablingModule5Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

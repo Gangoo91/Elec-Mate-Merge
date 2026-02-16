@@ -1,12 +1,12 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import type { Section } from "@/pages/employer/EmployerDashboard";
-import { useJobs } from "@/hooks/useJobs";
-import { useJobPacks } from "@/hooks/useJobPacks";
-import { useJobIssueStats } from "@/hooks/useJobIssues";
-import { useJobTestStats } from "@/hooks/useJobTests";
-import { useFleetStats } from "@/hooks/useFleet";
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import type { Section } from '@/pages/employer/EmployerDashboard';
+import { useJobs } from '@/hooks/useJobs';
+import { useJobPacks } from '@/hooks/useJobPacks';
+import { useJobIssueStats } from '@/hooks/useJobIssues';
+import { useJobTestStats } from '@/hooks/useJobTests';
+import { useFleetStats } from '@/hooks/useFleet';
 import {
   Briefcase,
   Package,
@@ -23,7 +23,7 @@ import {
   ChevronRight,
   Zap,
   LayoutGrid,
-} from "lucide-react";
+} from 'lucide-react';
 
 interface JobsHubProps {
   onNavigate: (section: Section) => void;
@@ -37,8 +37,8 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
   const { data: fleetStats, isLoading: isLoadingFleet } = useFleetStats();
 
   // Calculate real stats from Supabase data
-  const activeJobs = jobs.filter(j => j.status === "Active").length;
-  const activeJobPacks = jobPacks.filter(jp => jp.status === "In Progress").length;
+  const activeJobs = jobs.filter((j) => j.status === 'Active').length;
+  const activeJobPacks = jobPacks.filter((jp) => jp.status === 'In Progress').length;
 
   // Real stats from hooks
   const openIssues = issueStats?.open ?? 0;
@@ -50,42 +50,45 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
     {
       icon: Briefcase,
       value: activeJobs,
-      label: "Active Jobs",
-      bgClass: "from-elec-yellow/20 to-elec-yellow/5",
-      borderClass: "border-elec-yellow/30 hover:border-elec-yellow/60",
-      textClass: "text-elec-yellow",
-      section: "jobs" as Section,
+      label: 'Active Jobs',
+      bgClass: 'from-elec-yellow/20 to-elec-yellow/5',
+      borderClass: 'border-elec-yellow/30 hover:border-elec-yellow/60',
+      textClass: 'text-elec-yellow',
+      section: 'jobs' as Section,
       isLoading: isLoadingJobs,
     },
     {
       icon: Package,
       value: activeJobPacks,
-      label: "Job Packs",
-      bgClass: "from-success/20 to-success/5",
-      borderClass: "border-success/30 hover:border-success/60",
-      textClass: "text-success",
-      section: "jobpacks" as Section,
+      label: 'Job Packs',
+      bgClass: 'from-success/20 to-success/5',
+      borderClass: 'border-success/30 hover:border-success/60',
+      textClass: 'text-success',
+      section: 'jobpacks' as Section,
       isLoading: isLoadingJobPacks,
     },
     {
       icon: AlertTriangle,
       value: openIssues,
-      label: "Issues",
-      bgClass: openIssues > 0 ? "from-warning/20 to-warning/5" : "from-muted/20 to-muted/5",
-      borderClass: openIssues > 0 ? "border-warning/50 hover:border-warning/80" : "border-muted/30 hover:border-muted/50",
-      textClass: openIssues > 0 ? "text-warning" : "text-muted-foreground",
-      section: "issues" as Section,
+      label: 'Issues',
+      bgClass: openIssues > 0 ? 'from-warning/20 to-warning/5' : 'from-muted/20 to-muted/5',
+      borderClass:
+        openIssues > 0
+          ? 'border-warning/50 hover:border-warning/80'
+          : 'border-muted/30 hover:border-muted/50',
+      textClass: openIssues > 0 ? 'text-warning' : 'text-muted-foreground',
+      section: 'issues' as Section,
       pulse: openIssues > 0,
       isLoading: isLoadingIssues,
     },
     {
       icon: CheckCircle,
       value: testingInProgress,
-      label: "Testing",
-      bgClass: "from-info/20 to-info/5",
-      borderClass: "border-info/30 hover:border-info/60",
-      textClass: "text-info",
-      section: "testing" as Section,
+      label: 'Testing',
+      bgClass: 'from-info/20 to-info/5',
+      borderClass: 'border-info/30 hover:border-info/60',
+      textClass: 'text-info',
+      section: 'testing' as Section,
       isLoading: isLoadingTests,
     },
   ];
@@ -150,7 +153,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
         <div className="grid grid-cols-2 gap-3">
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-success/50 bg-gradient-to-br from-elec-gray/50 via-background to-success/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-success/5"
-            onClick={() => onNavigate("jobpacks")}
+            onClick={() => onNavigate('jobpacks')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-success/0 to-success/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -161,9 +164,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
                 <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-success group-hover:translate-x-0.5 transition-all duration-300" />
               </div>
               <h3 className="font-semibold text-foreground mb-1">Job Packs</h3>
-              <p className="text-xs text-muted-foreground">
-                Create jobs & RAMS
-              </p>
+              <p className="text-xs text-muted-foreground">Create jobs & RAMS</p>
               {isLoadingJobPacks ? (
                 <Skeleton className="mt-2.5 h-5 w-16" />
               ) : activeJobPacks > 0 ? (
@@ -176,7 +177,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
 
           <Card
             className="group relative overflow-hidden border-2 border-purple-500/30 hover:border-purple-500/60 bg-gradient-to-br from-elec-gray/50 via-background to-purple-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/5"
-            onClick={() => onNavigate("smartdocs")}
+            onClick={() => onNavigate('smartdocs')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -190,15 +191,13 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
                 Smart Docs
                 <Badge className="bg-purple-500/90 text-white text-xs font-semibold">AI</Badge>
               </h3>
-              <p className="text-xs text-muted-foreground">
-                AI-powered docs
-              </p>
+              <p className="text-xs text-muted-foreground">AI-powered docs</p>
             </CardContent>
           </Card>
 
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-elec-yellow/50 bg-gradient-to-br from-elec-gray/50 via-background to-elec-yellow/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/5 col-span-2"
-            onClick={() => onNavigate("jobs")}
+            onClick={() => onNavigate('jobs')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/0 to-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4 flex items-center justify-between">
@@ -208,9 +207,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">All Jobs</h3>
-                  <p className="text-xs text-muted-foreground">
-                    View and manage all projects
-                  </p>
+                  <p className="text-xs text-muted-foreground">View and manage all projects</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -239,19 +236,69 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
         </div>
         <div className="grid grid-cols-2 gap-3">
           {[
-            { icon: LayoutGrid, title: "Job Board", desc: "Kanban view", section: "jobboard" as Section, color: "info" },
-            { icon: Calendar, title: "Timeline", desc: "Gantt & scheduling", section: "timeline" as Section, color: "purple" },
-            { icon: Users, title: "Tracking", desc: "Worker locations", section: "tracking" as Section, color: "cyan" },
-            { icon: FileText, title: "Progress", desc: "Daily diary", section: "progresslogs" as Section, color: "orange" },
-            { icon: Camera, title: "Photos", desc: "Job gallery", section: "photogallery" as Section, color: "pink" },
+            {
+              icon: LayoutGrid,
+              title: 'Job Board',
+              desc: 'Kanban view',
+              section: 'jobboard' as Section,
+              color: 'info',
+            },
+            {
+              icon: Calendar,
+              title: 'Timeline',
+              desc: 'Gantt & scheduling',
+              section: 'timeline' as Section,
+              color: 'purple',
+            },
+            {
+              icon: Users,
+              title: 'Tracking',
+              desc: 'Worker locations',
+              section: 'tracking' as Section,
+              color: 'cyan',
+            },
+            {
+              icon: FileText,
+              title: 'Progress',
+              desc: 'Daily diary',
+              section: 'progresslogs' as Section,
+              color: 'orange',
+            },
+            {
+              icon: Camera,
+              title: 'Photos',
+              desc: 'Job gallery',
+              section: 'photogallery' as Section,
+              color: 'pink',
+            },
           ].map((item) => {
             const Icon = item.icon;
-            const colorClasses: Record<string, { bg: string, hover: string, text: string }> = {
-              info: { bg: "to-info/5", hover: "hover:border-info/50 hover:shadow-info/5", text: "text-info group-hover:text-info" },
-              purple: { bg: "to-purple-500/5", hover: "hover:border-purple-500/50 hover:shadow-purple-500/5", text: "text-purple-500 group-hover:text-purple-500" },
-              cyan: { bg: "to-cyan-500/5", hover: "hover:border-cyan-500/50 hover:shadow-cyan-500/5", text: "text-cyan-500 group-hover:text-cyan-500" },
-              orange: { bg: "to-orange-500/5", hover: "hover:border-orange-500/50 hover:shadow-orange-500/5", text: "text-orange-500 group-hover:text-orange-500" },
-              pink: { bg: "to-pink-500/5", hover: "hover:border-pink-500/50 hover:shadow-pink-500/5", text: "text-pink-500 group-hover:text-pink-500" },
+            const colorClasses: Record<string, { bg: string; hover: string; text: string }> = {
+              info: {
+                bg: 'to-info/5',
+                hover: 'hover:border-info/50 hover:shadow-info/5',
+                text: 'text-info group-hover:text-info',
+              },
+              purple: {
+                bg: 'to-purple-500/5',
+                hover: 'hover:border-purple-500/50 hover:shadow-purple-500/5',
+                text: 'text-purple-500 group-hover:text-purple-500',
+              },
+              cyan: {
+                bg: 'to-cyan-500/5',
+                hover: 'hover:border-cyan-500/50 hover:shadow-cyan-500/5',
+                text: 'text-cyan-500 group-hover:text-cyan-500',
+              },
+              orange: {
+                bg: 'to-orange-500/5',
+                hover: 'hover:border-orange-500/50 hover:shadow-orange-500/5',
+                text: 'text-orange-500 group-hover:text-orange-500',
+              },
+              pink: {
+                bg: 'to-pink-500/5',
+                hover: 'hover:border-pink-500/50 hover:shadow-pink-500/5',
+                text: 'text-pink-500 group-hover:text-pink-500',
+              },
             };
             const colors = colorClasses[item.color];
             return (
@@ -262,15 +309,21 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
               >
                 <CardContent className="relative p-4">
                   <div className="flex items-center justify-between mb-3">
-                    <div className={`p-2.5 rounded-xl bg-${item.color === 'info' ? 'info' : item.color + '-500'}/10`}>
+                    <div
+                      className={`p-2.5 rounded-xl bg-${item.color === 'info' ? 'info' : item.color + '-500'}/10`}
+                    >
                       <Icon className={`h-5 w-5 ${colors.text.split(' ')[0]}`} />
                     </div>
-                    <ChevronRight className={`h-4 w-4 text-muted-foreground ${colors.text.split(' ')[1]} group-hover:translate-x-0.5 transition-all duration-300`} />
+                    <ChevronRight
+                      className={`h-4 w-4 text-muted-foreground ${colors.text.split(' ')[1]} group-hover:translate-x-0.5 transition-all duration-300`}
+                    />
                   </div>
                   <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
                   <p className="text-xs text-muted-foreground">{item.desc}</p>
                   {item.badge && (
-                    <Badge className={`mt-2 bg-${item.color === 'info' ? 'info' : item.color + '-500'}/20 ${colors.text.split(' ')[0]} text-xs font-medium`}>
+                    <Badge
+                      className={`mt-2 bg-${item.color === 'info' ? 'info' : item.color + '-500'}/20 ${colors.text.split(' ')[0]} text-xs font-medium`}
+                    >
                       {item.badge}
                     </Badge>
                   )}
@@ -293,7 +346,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
         <div className="grid grid-cols-2 gap-3">
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-warning/50 bg-gradient-to-br from-elec-gray/50 via-background to-warning/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-warning/5"
-            onClick={() => onNavigate("issues")}
+            onClick={() => onNavigate('issues')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-warning/0 to-warning/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -315,7 +368,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
 
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-success/50 bg-gradient-to-br from-elec-gray/50 via-background to-success/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-success/5"
-            onClick={() => onNavigate("testing")}
+            onClick={() => onNavigate('testing')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-success/0 to-success/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -332,7 +385,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
 
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-cyan-500/50 bg-gradient-to-br from-elec-gray/50 via-background to-cyan-500/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/5"
-            onClick={() => onNavigate("fleet")}
+            onClick={() => onNavigate('fleet')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">
@@ -354,7 +407,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
 
           <Card
             className="group relative overflow-hidden border-2 border-border/50 hover:border-info/50 bg-gradient-to-br from-elec-gray/50 via-background to-info/5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-info/5"
-            onClick={() => onNavigate("quality")}
+            onClick={() => onNavigate('quality')}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-info/0 to-info/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <CardContent className="relative p-4">

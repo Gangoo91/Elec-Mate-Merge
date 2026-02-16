@@ -47,16 +47,17 @@ export const DataExportButton: React.FC<DataExportButtonProps> = ({
 
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && (
-          key.startsWith('elecmate_') ||
-          key.startsWith('eicr_') ||
-          key.startsWith('eic_') ||
-          key.startsWith('minor_works_') ||
-          key.startsWith('fire_alarm_') ||
-          key.startsWith('emergency_lighting_') ||
-          key.includes('draft') ||
-          key.includes('auto-save')
-        )) {
+        if (
+          key &&
+          (key.startsWith('elecmate_') ||
+            key.startsWith('eicr_') ||
+            key.startsWith('eic_') ||
+            key.startsWith('minor_works_') ||
+            key.startsWith('fire_alarm_') ||
+            key.startsWith('emergency_lighting_') ||
+            key.includes('draft') ||
+            key.includes('auto-save'))
+        ) {
           try {
             const value = localStorage.getItem(key);
             exportData.rawData[key] = value ? JSON.parse(value) : value;

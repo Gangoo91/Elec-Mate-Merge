@@ -1,7 +1,7 @@
-import { ArrowLeft, Cpu } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import CircuitDesigner from "@/components/electrician-tools/ai-tools/CircuitDesigner";
+import { ArrowLeft, Cpu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import CircuitDesigner from '@/components/electrician-tools/ai-tools/CircuitDesigner';
 
 const CircuitDesignerPage = () => {
   return (

@@ -1,7 +1,6 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle } from 'lucide-react';
 
 interface CompletionButtonProps {
   isCompleted: boolean;

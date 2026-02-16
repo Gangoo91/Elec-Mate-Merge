@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, AlertTriangle, CheckCircle2 } from 'lucide-react';
@@ -11,8 +10,8 @@ const GS38InfoCard = () => {
         'Finger guards or barriers to prevent accidental contact',
         'Probe tips with maximum 4mm exposed length',
         'Shrouded or retractable probe tips',
-        'Insulated probe bodies with minimum 1000V rating'
-      ]
+        'Insulated probe bodies with minimum 1000V rating',
+      ],
     },
     {
       category: 'Test Lead Requirements',
@@ -20,8 +19,8 @@ const GS38InfoCard = () => {
         'Flexible, insulated leads rated for the voltage being tested',
         'Minimum cross-sectional area of 0.75mm²',
         'Double insulation or equivalent protection',
-        'Leads should be in good condition with no damage'
-      ]
+        'Leads should be in good condition with no damage',
+      ],
     },
     {
       category: 'Voltage Indicator Requirements',
@@ -29,9 +28,9 @@ const GS38InfoCard = () => {
         'Suitable for the voltage and frequency being tested',
         'Must be proven before and after use',
         'Should indicate voltage presence clearly (visual/audible)',
-        'Calibrated and within service date'
-      ]
-    }
+        'Calibrated and within service date',
+      ],
+    },
   ];
 
   const safetyChecks = [
@@ -40,7 +39,7 @@ const GS38InfoCard = () => {
     'Test on known live source before isolation testing',
     'Use lowest appropriate voltage range',
     'Maintain safe working distance',
-    'Never bypass safety features'
+    'Never bypass safety features',
   ];
 
   return (
@@ -72,7 +71,7 @@ const GS38InfoCard = () => {
               </ul>
             </div>
           ))}
-          
+
           <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
               <AlertTriangle className="h-4 w-4 text-orange-400" />

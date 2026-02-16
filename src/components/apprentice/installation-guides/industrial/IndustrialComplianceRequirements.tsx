@@ -1,29 +1,28 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileCheck, Shield } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileCheck, Shield } from 'lucide-react';
 
 const IndustrialComplianceRequirements = () => {
   const complianceRequirements = [
     {
-      standard: "ATEX Directive 2014/34/EU",
-      description: "Equipment for explosive atmospheres",
-      application: "All equipment in classified zones"
+      standard: 'ATEX Directive 2014/34/EU',
+      description: 'Equipment for explosive atmospheres',
+      application: 'All equipment in classified zones',
     },
     {
-      standard: "DSEAR Regulations 2002",
-      description: "Dangerous substances and explosive atmospheres",
-      application: "Risk assessment and control measures"
+      standard: 'DSEAR Regulations 2002',
+      description: 'Dangerous substances and explosive atmospheres',
+      application: 'Risk assessment and control measures',
     },
     {
-      standard: "BS EN 60079 Series",
-      description: "Explosive atmospheres protection",
-      application: "Equipment selection and installation"
+      standard: 'BS EN 60079 Series',
+      description: 'Explosive atmospheres protection',
+      application: 'Equipment selection and installation',
     },
     {
-      standard: "BS EN 60204-1",
-      description: "Safety of machinery - Electrical equipment",
-      application: "Machine control systems"
-    }
+      standard: 'BS EN 60204-1',
+      description: 'Safety of machinery - Electrical equipment',
+      application: 'Machine control systems',
+    },
   ];
 
   return (

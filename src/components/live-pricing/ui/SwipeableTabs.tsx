@@ -1,6 +1,6 @@
-import { useState, useRef, ReactNode } from "react";
-import { RefreshCw } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState, useRef, ReactNode } from 'react';
+import { RefreshCw } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface Tab {
   id: string;
@@ -27,7 +27,7 @@ const SwipeableTabs = ({
   children,
   className,
   onRefresh,
-  isRefreshing = false
+  isRefreshing = false,
 }: SwipeableTabsProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
@@ -36,7 +36,7 @@ const SwipeableTabs = ({
   const [isPulling, setIsPulling] = useState(false);
 
   const minSwipeDistance = 50;
-  const foundIndex = tabs.findIndex(tab => tab.id === activeTab);
+  const foundIndex = tabs.findIndex((tab) => tab.id === activeTab);
   // Guard against invalid index - default to 0 if not found
   const activeIndex = foundIndex >= 0 && foundIndex < children.length ? foundIndex : 0;
 
@@ -44,7 +44,7 @@ const SwipeableTabs = ({
     setTouchEnd(null);
     setTouchStart({
       x: e.targetTouches[0].clientX,
-      y: e.targetTouches[0].clientY
+      y: e.targetTouches[0].clientY,
     });
 
     // Check if at top for pull-to-refresh
@@ -104,7 +104,7 @@ const SwipeableTabs = ({
   const shouldTrigger = pullDistance >= PULL_THRESHOLD;
 
   return (
-    <div className={cn("flex flex-col", className)}>
+    <div className={cn('flex flex-col', className)}>
       {/* Pull-to-refresh indicator */}
       {onRefresh && (pullDistance > 0 || isRefreshing) && (
         <div
@@ -115,19 +115,19 @@ const SwipeableTabs = ({
         >
           <div
             className={cn(
-              "flex items-center justify-center w-10 h-10 rounded-full",
-              "bg-yellow-400/20 border border-yellow-400/30",
-              "transition-all duration-200",
-              shouldTrigger && "bg-yellow-400/30 scale-110"
+              'flex items-center justify-center w-10 h-10 rounded-full',
+              'bg-yellow-400/20 border border-yellow-400/30',
+              'transition-all duration-200',
+              shouldTrigger && 'bg-yellow-400/30 scale-110'
             )}
           >
             <RefreshCw
               className={cn(
-                "h-5 w-5 text-yellow-400 transition-transform",
-                isRefreshing && "animate-spin"
+                'h-5 w-5 text-yellow-400 transition-transform',
+                isRefreshing && 'animate-spin'
               )}
               style={{
-                transform: !isRefreshing ? `rotate(${pullProgress * 360}deg)` : undefined
+                transform: !isRefreshing ? `rotate(${pullProgress * 360}deg)` : undefined,
               }}
             />
           </div>
@@ -157,24 +157,23 @@ const SwipeableTabs = ({
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
                 className={cn(
-                  "relative flex flex-col items-center justify-center flex-1 h-full px-2 py-1",
-                  "touch-manipulation transition-colors duration-200",
-                  "focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/50",
+                  'relative flex flex-col items-center justify-center flex-1 h-full px-2 py-1',
+                  'touch-manipulation transition-colors duration-200',
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/50',
                   isActive
-                    ? "text-yellow-400"
-                    : "text-white/50 hover:text-white/70 active:text-white/80"
+                    ? 'text-yellow-400'
+                    : 'text-white/50 hover:text-white/70 active:text-white/80'
                 )}
               >
-                <div className={cn(
-                  "transition-transform duration-200",
-                  isActive && "scale-110"
-                )}>
+                <div className={cn('transition-transform duration-200', isActive && 'scale-110')}>
                   {tab.icon}
                 </div>
-                <span className={cn(
-                  "text-xs mt-1 font-medium truncate max-w-full",
-                  isActive ? "text-yellow-400" : "text-white/50"
-                )}>
+                <span
+                  className={cn(
+                    'text-xs mt-1 font-medium truncate max-w-full',
+                    isActive ? 'text-yellow-400' : 'text-white/50'
+                  )}
+                >
                   {tab.label}
                 </span>
                 {isActive && (

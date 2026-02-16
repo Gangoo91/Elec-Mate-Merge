@@ -121,15 +121,13 @@ export const savePushSubscription = async (
       return !error;
     } else {
       // Insert new
-      const { error } = await supabase
-        .from('push_subscriptions')
-        .insert({
-          user_id: userId,
-          endpoint: subscriptionData.endpoint,
-          keys: subscriptionData.keys,
-          device_type: getDeviceType(),
-          browser: getBrowserName(),
-        });
+      const { error } = await supabase.from('push_subscriptions').insert({
+        user_id: userId,
+        endpoint: subscriptionData.endpoint,
+        keys: subscriptionData.keys,
+        device_type: getDeviceType(),
+        browser: getBrowserName(),
+      });
 
       return !error;
     }
@@ -142,9 +140,7 @@ export const savePushSubscription = async (
 /**
  * Unsubscribe from push notifications
  */
-export const unsubscribeFromPush = async (
-  userId: string
-): Promise<boolean> => {
+export const unsubscribeFromPush = async (userId: string): Promise<boolean> => {
   try {
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.getSubscription();
@@ -213,10 +209,8 @@ export const showMessageNotification = async (
 
 // Helper functions
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
-  const padding = '='.repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding)
-    .replace(/-/g, '+')
-    .replace(/_/g, '/');
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
 
   const rawData = window.atob(base64);
   const outputArray = new Uint8Array(rawData.length);

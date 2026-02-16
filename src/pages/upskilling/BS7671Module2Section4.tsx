@@ -1,93 +1,88 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "amendment-3-date",
-    question: "When did Amendment 3 to BS 7671 become mandatory?",
-    options: [
-      "1st January 2024",
-      "31st July 2024",
-      "1st September 2024",
-      "31st December 2024"
-    ],
+    id: 'amendment-3-date',
+    question: 'When did Amendment 3 to BS 7671 become mandatory?',
+    options: ['1st January 2024', '31st July 2024', '1st September 2024', '31st December 2024'],
     correctIndex: 1,
-    explanation: "Amendment 3 to BS 7671 became mandatory on 31st July 2024. All new installations from this date must comply with Amendment 3 requirements."
+    explanation:
+      'Amendment 3 to BS 7671 became mandatory on 31st July 2024. All new installations from this date must comply with Amendment 3 requirements.',
   },
   {
-    id: "bidirectional-scenario",
-    question: "Which scenario REQUIRES bidirectional protection devices?",
+    id: 'bidirectional-scenario',
+    question: 'Which scenario REQUIRES bidirectional protection devices?',
     options: [
-      "Standard domestic lighting circuits",
-      "Solar PV system with battery storage",
-      "Electric shower installation",
-      "Garage socket outlets"
+      'Standard domestic lighting circuits',
+      'Solar PV system with battery storage',
+      'Electric shower installation',
+      'Garage socket outlets',
     ],
     correctIndex: 1,
-    explanation: "Solar PV systems with battery storage require bidirectional protection because energy can flow in both directions - from the grid and back to the grid during generation."
+    explanation:
+      'Solar PV systems with battery storage require bidirectional protection because energy can flow in both directions - from the grid and back to the grid during generation.',
   },
   {
-    id: "anti-islanding-time",
-    question: "What is the maximum time for anti-islanding protection to disconnect after grid loss?",
-    options: [
-      "1 second",
-      "3 seconds",
-      "5 seconds",
-      "10 seconds"
-    ],
+    id: 'anti-islanding-time',
+    question:
+      'What is the maximum time for anti-islanding protection to disconnect after grid loss?',
+    options: ['1 second', '3 seconds', '5 seconds', '10 seconds'],
     correctIndex: 2,
-    explanation: "Anti-islanding protection must disconnect within 5 seconds of grid loss detection to prevent dangerous islanding conditions."
-  }
+    explanation:
+      'Anti-islanding protection must disconnect within 5 seconds of grid loss detection to prevent dangerous islanding conditions.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Do existing installations need to comply immediately?",
-    answer: "No immediate requirement to upgrade existing compliant installations. However, major alterations or addition of renewable energy triggers upgrade requirements."
+    question: 'Do existing installations need to comply immediately?',
+    answer:
+      'No immediate requirement to upgrade existing compliant installations. However, major alterations or addition of renewable energy triggers upgrade requirements.',
   },
   {
-    question: "What happens if standard MCBs are used instead of bidirectional devices?",
-    answer: "Standard MCBs may not provide adequate reverse current protection, potentially leading to dangerous conditions, equipment damage, and non-compliance."
+    question: 'What happens if standard MCBs are used instead of bidirectional devices?',
+    answer:
+      'Standard MCBs may not provide adequate reverse current protection, potentially leading to dangerous conditions, equipment damage, and non-compliance.',
   },
   {
-    question: "Which grid codes apply to renewable energy installations?",
-    answer: "G98 applies to small-scale domestic systems (up to 16A per phase), while G99 applies to larger commercial systems. Both have protection requirements."
+    question: 'Which grid codes apply to renewable energy installations?',
+    answer:
+      'G98 applies to small-scale domestic systems (up to 16A per phase), while G99 applies to larger commercial systems. Both have protection requirements.',
   },
   {
-    question: "How does Amendment 3 affect EICR assessments?",
-    answer: "EICR assessments should now reference Amendment 3 compliance for installations with renewable energy sources or bidirectional current flows."
-  }
+    question: 'How does Amendment 3 affect EICR assessments?',
+    answer:
+      'EICR assessments should now reference Amendment 3 compliance for installations with renewable energy sources or bidirectional current flows.',
+  },
 ];
 
 const quizQuestion = {
-  question: "Which consumer unit component must remain effective under reverse current conditions?",
-  options: [
-    "Main switch only",
-    "MCBs only",
-    "RCD protection",
-    "Meter tails"
-  ],
+  question: 'Which consumer unit component must remain effective under reverse current conditions?',
+  options: ['Main switch only', 'MCBs only', 'RCD protection', 'Meter tails'],
   correctAnswer: 2,
-  explanation: "RCD protection must remain effective under reverse current conditions. Standard RCDs may not operate correctly when current flows in reverse, requiring bidirectional RCD protection."
+  explanation:
+    'RCD protection must remain effective under reverse current conditions. Standard RCDs may not operate correctly when current flows in reverse, requiring bidirectional RCD protection.',
 };
 
 const BS7671Module2Section4 = () => {
   useSEO({
-    title: "Amendment 3 Highlights & Current Requirements | BS 7671 Module 2.4",
-    description: "Comprehensive guide to BS 7671 Amendment 3 requirements including bidirectional protection, consumer unit upgrades, and grid interaction safety for renewable energy installations."
+    title: 'Amendment 3 Highlights & Current Requirements | BS 7671 Module 2.4',
+    description:
+      'Comprehensive guide to BS 7671 Amendment 3 requirements including bidirectional protection, consumer unit upgrades, and grid interaction safety for renewable energy installations.',
   });
 
   const outcomes = [
-    "Identify when bidirectional protection devices are required",
-    "Understand enhanced consumer unit requirements for renewables",
-    "Apply grid interaction safety and anti-islanding protection",
-    "Specify testing procedures for bidirectional systems",
-    "Assess compliance requirements from 31st July 2024",
-    "Evaluate cost implications and safety benefits"
+    'Identify when bidirectional protection devices are required',
+    'Understand enhanced consumer unit requirements for renewables',
+    'Apply grid interaction safety and anti-islanding protection',
+    'Specify testing procedures for bidirectional systems',
+    'Assess compliance requirements from 31st July 2024',
+    'Evaluate cost implications and safety benefits',
   ];
 
   return (
@@ -95,7 +90,12 @@ const BS7671Module2Section4 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/bs7671-module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -124,17 +124,29 @@ const BS7671Module2Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>When:</strong> Mandatory from 31st July 2024</li>
-              <li><strong>What:</strong> Bidirectional protection for prosumer installations</li>
-              <li><strong>Why:</strong> Reverse current flows from renewables</li>
+              <li>
+                <strong>When:</strong> Mandatory from 31st July 2024
+              </li>
+              <li>
+                <strong>What:</strong> Bidirectional protection for prosumer installations
+              </li>
+              <li>
+                <strong>Why:</strong> Reverse current flows from renewables
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Requirements</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Protection:</strong> Bidirectional MCBs/RCDs</li>
-              <li><strong>Safety:</strong> Anti-islanding within 5 seconds</li>
-              <li><strong>Compliance:</strong> G98/G99 grid codes</li>
+              <li>
+                <strong>Protection:</strong> Bidirectional MCBs/RCDs
+              </li>
+              <li>
+                <strong>Safety:</strong> Anti-islanding within 5 seconds
+              </li>
+              <li>
+                <strong>Compliance:</strong> G98/G99 grid codes
+              </li>
             </ul>
           </div>
         </div>
@@ -162,28 +174,46 @@ const BS7671Module2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Amendment 3 to BS 7671, effective from 31st July 2024, introduces critical requirements for bidirectional protection in electrical installations, particularly focusing on renewable energy systems and grid interaction safety.
+              Amendment 3 to BS 7671, effective from 31st July 2024, introduces critical
+              requirements for bidirectional protection in electrical installations, particularly
+              focusing on renewable energy systems and grid interaction safety.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-elec-yellow/30">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Implementation Timeline</p>
-                <p className="text-xs text-white">Amendment 3 became mandatory on 31st July 2024. All new installations must comply with these requirements, while existing installations may require upgrades during major alterations or replacements.</p>
+                <p className="text-xs text-white">
+                  Amendment 3 became mandatory on 31st July 2024. All new installations must comply
+                  with these requirements, while existing installations may require upgrades during
+                  major alterations or replacements.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white mb-3">Key Focus Areas</p>
                 <ul className="text-xs space-y-1">
-                  <li>• <strong>Bidirectional Protection:</strong> Devices to isolate reverse current</li>
-                  <li>• <strong>Consumer Unit Enhancements:</strong> Renewable energy integration</li>
-                  <li>• <strong>Grid Interaction Safety:</strong> Back-feed and islanding protection</li>
-                  <li>• <strong>Testing Procedures:</strong> Updated commissioning methods</li>
+                  <li>
+                    • <strong>Bidirectional Protection:</strong> Devices to isolate reverse current
+                  </li>
+                  <li>
+                    • <strong>Consumer Unit Enhancements:</strong> Renewable energy integration
+                  </li>
+                  <li>
+                    • <strong>Grid Interaction Safety:</strong> Back-feed and islanding protection
+                  </li>
+                  <li>
+                    • <strong>Testing Procedures:</strong> Updated commissioning methods
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-transparent border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">Critical Compliance Note</p>
-              <p className="text-xs text-white">Non-compliance with Amendment 3 requirements can result in dangerous operating conditions, insurance voidance, and regulatory enforcement action. Understanding these requirements is essential for current electrical practice.</p>
+              <p className="text-xs text-white">
+                Non-compliance with Amendment 3 requirements can result in dangerous operating
+                conditions, insurance voidance, and regulatory enforcement action. Understanding
+                these requirements is essential for current electrical practice.
+              </p>
             </div>
           </div>
         </section>
@@ -198,12 +228,16 @@ const BS7671Module2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Amendment 3 mandates bidirectional protection where electrical installations can generate power that flows back into the supply system. This applies to prosumer installations with renewable energy sources.
+              Amendment 3 mandates bidirectional protection where electrical installations can
+              generate power that flows back into the supply system. This applies to prosumer
+              installations with renewable energy sources.
             </p>
 
             <div className="space-y-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Solar PV Systems with Battery Storage</p>
+                <p className="text-sm font-medium text-elec-yellow mb-2">
+                  Solar PV Systems with Battery Storage
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white mb-1">Requirement:</p>
@@ -211,14 +245,21 @@ const BS7671Module2Section4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Reason:</p>
-                    <p className="text-white/80">Energy flows in both directions depending on generation and consumption</p>
+                    <p className="text-white/80">
+                      Energy flows in both directions depending on generation and consumption
+                    </p>
                   </div>
                 </div>
-                <p className="text-xs mt-2"><span className="text-elec-yellow">Solution:</span> MCCBs or MCBs with bidirectional capability</p>
+                <p className="text-xs mt-2">
+                  <span className="text-elec-yellow">Solution:</span> MCCBs or MCBs with
+                  bidirectional capability
+                </p>
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-green-400 mb-2">Electric Vehicle Charging with V2G</p>
+                <p className="text-sm font-medium text-green-400 mb-2">
+                  Electric Vehicle Charging with V2G
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white mb-1">Requirement:</p>
@@ -226,14 +267,21 @@ const BS7671Module2Section4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Reason:</p>
-                    <p className="text-white/80">Vehicle-to-grid technology creates reverse current flows</p>
+                    <p className="text-white/80">
+                      Vehicle-to-grid technology creates reverse current flows
+                    </p>
                   </div>
                 </div>
-                <p className="text-xs mt-2"><span className="text-elec-yellow">Solution:</span> Specialist EV protective devices with anti-islanding</p>
+                <p className="text-xs mt-2">
+                  <span className="text-elec-yellow">Solution:</span> Specialist EV protective
+                  devices with anti-islanding
+                </p>
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-orange-400 mb-2">Domestic Solar Installations</p>
+                <p className="text-sm font-medium text-orange-400 mb-2">
+                  Domestic Solar Installations
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white mb-1">Requirement:</p>
@@ -241,10 +289,15 @@ const BS7671Module2Section4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Reason:</p>
-                    <p className="text-white/80">Standard MCBs may not provide adequate reverse current protection</p>
+                    <p className="text-white/80">
+                      Standard MCBs may not provide adequate reverse current protection
+                    </p>
                   </div>
                 </div>
-                <p className="text-xs mt-2"><span className="text-elec-yellow">Solution:</span> Type 2 coordination with bidirectional devices</p>
+                <p className="text-xs mt-2">
+                  <span className="text-elec-yellow">Solution:</span> Type 2 coordination with
+                  bidirectional devices
+                </p>
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
@@ -256,10 +309,15 @@ const BS7671Module2Section4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Reason:</p>
-                    <p className="text-white/80">Large-scale generation affects local grid stability</p>
+                    <p className="text-white/80">
+                      Large-scale generation affects local grid stability
+                    </p>
                   </div>
                 </div>
-                <p className="text-xs mt-2"><span className="text-elec-yellow">Solution:</span> G98/G99 compliant protection schemes</p>
+                <p className="text-xs mt-2">
+                  <span className="text-elec-yellow">Solution:</span> G98/G99 compliant protection
+                  schemes
+                </p>
               </div>
             </div>
           </div>
@@ -275,7 +333,8 @@ const BS7671Module2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Consumer units in installations with renewable energy sources must meet enhanced requirements to ensure safety under bidirectional current conditions.
+              Consumer units in installations with renewable energy sources must meet enhanced
+              requirements to ensure safety under bidirectional current conditions.
             </p>
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10 my-6">
@@ -307,7 +366,9 @@ const BS7671Module2Section4 = () => {
             <div className="grid grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white text-sm mb-1">Standard MCB</p>
-                <p className="text-xs text-white/70">Designed for unidirectional current flow only</p>
+                <p className="text-xs text-white/70">
+                  Designed for unidirectional current flow only
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-green-500/30">
                 <p className="font-medium text-green-400 text-sm mb-1">Bidirectional MCB</p>
@@ -325,12 +386,15 @@ const BS7671Module2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Amendment 3 introduces specific testing requirements to verify bidirectional protection effectiveness and grid interaction safety.
+              Amendment 3 introduces specific testing requirements to verify bidirectional
+              protection effectiveness and grid interaction safety.
             </p>
 
             <div className="space-y-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Bidirectional Continuity Test</p>
+                <p className="text-sm font-medium text-elec-yellow mb-2">
+                  Bidirectional Continuity Test
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white/80">Method:</p>
@@ -344,7 +408,9 @@ const BS7671Module2Section4 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-orange-400 mb-2">Anti-Islanding Function Test</p>
+                <p className="text-sm font-medium text-orange-400 mb-2">
+                  Anti-Islanding Function Test
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white/80">Method:</p>
@@ -358,7 +424,9 @@ const BS7671Module2Section4 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-green-400 mb-2">RCD Operation Under Reverse Current</p>
+                <p className="text-sm font-medium text-green-400 mb-2">
+                  RCD Operation Under Reverse Current
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white/80">Method:</p>
@@ -366,13 +434,18 @@ const BS7671Module2Section4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white/80">Acceptance:</p>
-                    <p>Trip time and sensitivity within BS 7671 limits regardless of current direction</p>
+                    <p>
+                      Trip time and sensitivity within BS 7671 limits regardless of current
+                      direction
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-sm font-medium text-white mb-2">Grid Interaction Compliance Test</p>
+                <p className="text-sm font-medium text-white mb-2">
+                  Grid Interaction Compliance Test
+                </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white/80">Method:</p>
@@ -420,7 +493,11 @@ const BS7671Module2Section4 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">Non-Compliance Risks</p>
-              <p className="text-xs text-white">Failure to implement Amendment 3 requirements can result in dangerous back-feed conditions, equipment damage, fire risks, and potential liability issues. Insurance coverage may be affected for non-compliant installations.</p>
+              <p className="text-xs text-white">
+                Failure to implement Amendment 3 requirements can result in dangerous back-feed
+                conditions, equipment damage, fire risks, and potential liability issues. Insurance
+                coverage may be affected for non-compliant installations.
+              </p>
             </div>
           </div>
         </section>
@@ -433,9 +510,15 @@ const BS7671Module2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded-lg bg-transparent border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-3">Domestic Solar PV Installation (Post July 2024)</p>
+              <p className="text-sm font-medium text-orange-400 mb-3">
+                Domestic Solar PV Installation (Post July 2024)
+              </p>
               <div className="text-sm space-y-3">
-                <p><strong>Project:</strong> A homeowner wants to install a 4kW solar PV system with 10kWh battery storage and grid export capability. The existing consumer unit has standard MCBs and a Type A RCD.</p>
+                <p>
+                  <strong>Project:</strong> A homeowner wants to install a 4kW solar PV system with
+                  10kWh battery storage and grid export capability. The existing consumer unit has
+                  standard MCBs and a Type A RCD.
+                </p>
 
                 <div>
                   <p className="font-medium mb-1">Amendment 3 Requirements:</p>
@@ -523,13 +606,22 @@ const BS7671Module2Section4 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bs7671-module-2-section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/bs7671-module-3">
               Next: Module 3
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

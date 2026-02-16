@@ -201,7 +201,8 @@ export const certificateTypes: CertificateType[] = [
       'IET (theiet.org) — Part of the model forms in Appendix 6',
       'Included with most digital certification platforms',
     ],
-    regulationReference: 'BS 7671:2018+A3:2024 Appendix 6 (Model Form 2 — Schedule of Test Results)',
+    regulationReference:
+      'BS 7671:2018+A3:2024 Appendix 6 (Model Form 2 — Schedule of Test Results)',
   },
 ];
 

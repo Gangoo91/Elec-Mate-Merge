@@ -1,8 +1,7 @@
-
-import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { Play } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface CourseCardProps {
   id: number;
@@ -14,7 +13,15 @@ interface CourseCardProps {
   onClick?: () => void;
 }
 
-const CourseCard = ({ id, title, progress, students, category, image, onClick }: CourseCardProps) => {
+const CourseCard = ({
+  id,
+  title,
+  progress,
+  students,
+  category,
+  image,
+  onClick,
+}: CourseCardProps) => {
   return (
     <motion.div
       key={id}
@@ -24,11 +31,11 @@ const CourseCard = ({ id, title, progress, students, category, image, onClick }:
     >
       <div
         className={cn(
-          "overflow-hidden rounded-xl sm:rounded-2xl",
-          "bg-white/[0.03] border border-white/10",
-          "hover:bg-white/[0.06] hover:border-elec-yellow/30",
-          "transition-all duration-200",
-          onClick && "cursor-pointer"
+          'overflow-hidden rounded-xl sm:rounded-2xl',
+          'bg-white/[0.03] border border-white/10',
+          'hover:bg-white/[0.06] hover:border-elec-yellow/30',
+          'transition-all duration-200',
+          onClick && 'cursor-pointer'
         )}
         onClick={onClick}
       >
@@ -40,13 +47,15 @@ const CourseCard = ({ id, title, progress, students, category, image, onClick }:
             className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
           />
           {/* Category badge */}
-          <div className={cn(
-            "absolute top-1.5 right-1.5 sm:top-2 sm:right-2",
-            "bg-elec-dark/80 backdrop-blur-sm",
-            "text-[10px] sm:text-xs px-2 py-1 rounded-lg",
-            "border border-white/10",
-            "text-white/80"
-          )}>
+          <div
+            className={cn(
+              'absolute top-1.5 right-1.5 sm:top-2 sm:right-2',
+              'bg-elec-dark/80 backdrop-blur-sm',
+              'text-[10px] sm:text-xs px-2 py-1 rounded-lg',
+              'border border-white/10',
+              'text-white/80'
+            )}
+          >
             {category}
           </div>
           {/* Progress bar */}
@@ -55,7 +64,7 @@ const CourseCard = ({ id, title, progress, students, category, image, onClick }:
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
                 className="h-full bg-elec-yellow"
               />
             </div>
@@ -79,10 +88,10 @@ const CourseCard = ({ id, title, progress, students, category, image, onClick }:
               size="sm"
               variant="ghost"
               className={cn(
-                "gap-1.5 h-8 sm:h-9",
-                "bg-elec-yellow/10 hover:bg-elec-yellow/20",
-                "text-elec-yellow border border-elec-yellow/20",
-                "text-xs sm:text-sm rounded-lg"
+                'gap-1.5 h-8 sm:h-9',
+                'bg-elec-yellow/10 hover:bg-elec-yellow/20',
+                'text-elec-yellow border border-elec-yellow/20',
+                'text-xs sm:text-sm rounded-lg'
               )}
             >
               <Play className="h-3 w-3 sm:h-3.5 sm:w-3.5" />

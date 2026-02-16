@@ -8,31 +8,36 @@ const sections = [
   {
     id: 1,
     title: 'RCD Types and Applications',
-    description: 'Understanding different RCD types (AC, A, F, B) and their appropriate applications in electrical installations',
+    description:
+      'Understanding different RCD types (AC, A, F, B) and their appropriate applications in electrical installations',
     icon: FileCheck,
   },
   {
     id: 2,
     title: 'Trip Time Testing (x1, x5, x0.5)',
-    description: 'Testing RCD trip times at different multiples of rated residual current to verify correct operation',
+    description:
+      'Testing RCD trip times at different multiples of rated residual current to verify correct operation',
     icon: Clock,
   },
   {
     id: 3,
     title: 'Ramp Testing',
-    description: 'Using ramp testing to determine the actual trip current of an RCD and verify sensitivity',
+    description:
+      'Using ramp testing to determine the actual trip current of an RCD and verify sensitivity',
     icon: TrendingUp,
   },
   {
     id: 4,
     title: 'RCD Test Button vs Instrument Testing',
-    description: 'Understanding the difference between user test buttons and proper instrument testing requirements',
+    description:
+      'Understanding the difference between user test buttons and proper instrument testing requirements',
     icon: ToggleLeft,
   },
   {
     id: 5,
     title: 'Discriminating and Selective RCDs',
-    description: 'Time-delayed and selective RCDs for discrimination in installations with multiple RCD protection levels',
+    description:
+      'Time-delayed and selective RCDs for discrimination in installations with multiple RCD protection levels',
     icon: Layers,
   },
 ];
@@ -40,7 +45,8 @@ const sections = [
 export default function InspectionTestingModule6() {
   useSEO({
     title: 'Module 6: RCD Testing | Inspection & Testing',
-    description: 'Learn RCD testing including trip time testing, ramp testing, and understanding discriminating RCDs for BS 7671 compliance.',
+    description:
+      'Learn RCD testing including trip time testing, ramp testing, and understanding discriminating RCDs for BS 7671 compliance.',
   });
 
   return (
@@ -70,11 +76,10 @@ export default function InspectionTestingModule6() {
             <span className="text-white/40 text-xs">•</span>
             <span className="text-white/60 text-xs">5 Sections</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            RCD Testing
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">RCD Testing</h1>
           <p className="text-white/80 text-sm sm:text-base">
-            Master comprehensive RCD testing procedures including trip time verification, ramp testing, and understanding selective protection coordination
+            Master comprehensive RCD testing procedures including trip time verification, ramp
+            testing, and understanding selective protection coordination
           </p>
         </div>
 

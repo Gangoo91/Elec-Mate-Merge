@@ -3,7 +3,7 @@ import { escapeRouteCoverageQuizData } from '@/data/upskilling/escapeRouteCovera
 
 export const EscapeRouteCoverageQuiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={escapeRouteCoverageQuizData}
       title="Section 2 Quiz: Escape Route and Coverage Rules"
     />

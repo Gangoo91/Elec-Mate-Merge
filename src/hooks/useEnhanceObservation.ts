@@ -26,7 +26,9 @@ export interface EnhanceRequest {
 export function useEnhanceObservation() {
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [suggestions, setSuggestions] = useState<ObservationSuggestions | null>(null);
-  const [progressStep, setProgressStep] = useState<'idle' | 'searching' | 'analysing' | 'done'>('idle');
+  const [progressStep, setProgressStep] = useState<'idle' | 'searching' | 'analysing' | 'done'>(
+    'idle'
+  );
   const { toast } = useToast();
   const lastRequestRef = useRef<EnhanceRequest | null>(null);
 
@@ -46,22 +48,21 @@ export function useEnhanceObservation() {
     setProgressStep('searching');
 
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated');
 
       setProgressStep('analysing');
 
-      const { data, error } = await supabase.functions.invoke(
-        'enhance-eicr-observation',
-        {
-          body: {
-            description: request.description,
-            location: request.location,
-            currentCode: request.currentCode,
-          },
-          headers: { Authorization: `Bearer ${session.access_token}` },
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('enhance-eicr-observation', {
+        body: {
+          description: request.description,
+          location: request.location,
+          currentCode: request.currentCode,
+        },
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
 
       if (error || !data?.success) {
         throw new Error(data?.error || 'Enhancement failed');
@@ -98,5 +99,3 @@ export function useEnhanceObservation() {
 
   return { enhance, retry, isEnhancing, suggestions, progressStep, reset };
 }
-
-

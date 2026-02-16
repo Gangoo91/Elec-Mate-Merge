@@ -8,7 +8,7 @@
  * - Work history
  */
 
-import { ElecIdSkill, ElecIdQualification, ElecIdWorkHistory } from "@/services/elecIdService";
+import { ElecIdSkill, ElecIdQualification, ElecIdWorkHistory } from '@/services/elecIdService';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // Type Definitions
@@ -19,7 +19,17 @@ export interface CareerRecommendation {
   title: string;
   description: string;
   reason: string;
-  icon: 'zap' | 'sun' | 'flame' | 'cpu' | 'award' | 'trending-up' | 'shield' | 'book' | 'battery' | 'home';
+  icon:
+    | 'zap'
+    | 'sun'
+    | 'flame'
+    | 'cpu'
+    | 'award'
+    | 'trending-up'
+    | 'shield'
+    | 'book'
+    | 'battery'
+    | 'home';
   priority: 'high' | 'medium' | 'low';
   searchQuery: string; // For "Find Courses" button
   category: 'career_progression' | 'certification' | 'specialist' | 'trending';
@@ -58,11 +68,13 @@ export interface TrendingSkill {
 // ═══════════════════════════════════════════════════════════════════════════
 
 const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
-  yellow: [ // Apprentice
+  yellow: [
+    // Apprentice
     {
       id: 'yellow-nvq3',
       title: 'Complete NVQ Level 3',
-      description: 'The foundation qualification for becoming a qualified electrician. Required for most ECS card upgrades.',
+      description:
+        'The foundation qualification for becoming a qualified electrician. Required for most ECS card upgrades.',
       reason: 'Essential for career progression from apprentice level',
       icon: 'award',
       priority: 'high',
@@ -72,7 +84,8 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
     {
       id: 'yellow-am2',
       title: 'Book AM2 Assessment',
-      description: 'Pass the AM2 practical assessment to prove your installation competence and unlock your Gold Card.',
+      description:
+        'Pass the AM2 practical assessment to prove your installation competence and unlock your Gold Card.',
       reason: 'Final step to becoming an approved electrician',
       icon: 'award',
       priority: 'high',
@@ -82,7 +95,8 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
     {
       id: 'yellow-18th',
       title: '18th Edition Wiring Regulations',
-      description: 'BS 7671:2018+A2:2022 - the essential regulations qualification every electrician needs.',
+      description:
+        'BS 7671:2018+A2:2022 - the essential regulations qualification every electrician needs.',
       reason: 'Required for all qualified electricians',
       icon: 'book',
       priority: 'high',
@@ -90,7 +104,8 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
       category: 'certification',
     },
   ],
-  green: [ // Electrician's Mate
+  green: [
+    // Electrician's Mate
     {
       id: 'green-nvq2',
       title: 'Start NVQ Level 2',
@@ -104,7 +119,8 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
     {
       id: 'green-apprenticeship',
       title: 'Consider Apprenticeship Route',
-      description: 'A structured apprenticeship provides on-the-job training with college qualifications.',
+      description:
+        'A structured apprenticeship provides on-the-job training with college qualifications.',
       reason: 'Most comprehensive route to qualification',
       icon: 'trending-up',
       priority: 'high',
@@ -122,7 +138,8 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
       category: 'certification',
     },
   ],
-  blue: [ // Qualified Electrician
+  blue: [
+    // Qualified Electrician
     {
       id: 'blue-2391',
       title: 'Get 2391-52 Testing Qualification',
@@ -136,7 +153,8 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
     {
       id: 'blue-am2',
       title: 'Complete AM2 for Gold Card',
-      description: 'The AM2 assessment demonstrates your practical competence at approved electrician level.',
+      description:
+        'The AM2 assessment demonstrates your practical competence at approved electrician level.',
       reason: 'Upgrade to Gold Card status',
       icon: 'award',
       priority: 'high',
@@ -146,7 +164,8 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
     {
       id: 'blue-ev',
       title: 'EV Charging Installation',
-      description: 'With your Blue Card, adding EV certification opens up a rapidly growing market.',
+      description:
+        'With your Blue Card, adding EV certification opens up a rapidly growing market.',
       reason: 'EV installations are in high demand',
       icon: 'zap',
       priority: 'medium',
@@ -154,11 +173,13 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
       category: 'specialist',
     },
   ],
-  gold: [ // Approved Electrician
+  gold: [
+    // Approved Electrician
     {
       id: 'gold-2391',
       title: '2391-52 Inspection & Testing',
-      description: 'If you haven\'t already, add testing to your skillset for complete installation work.',
+      description:
+        "If you haven't already, add testing to your skillset for complete installation work.",
       reason: 'Essential for signing off your own work',
       icon: 'award',
       priority: 'high',
@@ -206,11 +227,13 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
       category: 'specialist',
     },
   ],
-  black: [ // Manager/Supervisor
+  black: [
+    // Manager/Supervisor
     {
       id: 'black-smsts',
       title: 'SMSTS/SSSTS if not held',
-      description: 'Site Management Safety Training Scheme - required for most site supervisor roles.',
+      description:
+        'Site Management Safety Training Scheme - required for most site supervisor roles.',
       reason: 'Industry standard for site management',
       icon: 'shield',
       priority: 'high',
@@ -238,11 +261,13 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
       category: 'certification',
     },
   ],
-  red: [ // Experienced Worker
+  red: [
+    // Experienced Worker
     {
       id: 'red-nvq3',
       title: 'Get Formally Qualified - NVQ Level 3',
-      description: 'Your experience is valuable. Formalise it with an NVQ based on your existing skills.',
+      description:
+        'Your experience is valuable. Formalise it with an NVQ based on your existing skills.',
       reason: 'Many providers offer fast-track NVQs for experienced workers',
       icon: 'award',
       priority: 'high',
@@ -260,10 +285,11 @@ const CAREER_PROGRESSION_MAP: Record<string, CareerRecommendation[]> = {
       category: 'certification',
     },
   ],
-  white: [ // Electrical Labourer
+  white: [
+    // Electrical Labourer
     {
       id: 'white-mate',
-      title: 'Progress to Electrician\'s Mate',
+      title: "Progress to Electrician's Mate",
       description: 'Build on your site experience and work towards a more technical role.',
       reason: 'First step on the electrical career ladder',
       icon: 'trending-up',
@@ -317,31 +343,33 @@ export function getCareerProgressionRecommendations(
   skills: ElecIdSkill[]
 ): CareerRecommendation[] {
   const normalizedCardType = ecsCardType?.toLowerCase() || '';
-  const qualNames = qualifications.map(q => q.qualification_name.toLowerCase());
-  const skillNames = skills.map(s => s.skill_name.toLowerCase());
+  const qualNames = qualifications.map((q) => q.qualification_name.toLowerCase());
+  const skillNames = skills.map((s) => s.skill_name.toLowerCase());
 
   // Get base recommendations for card type
   let recommendations = CAREER_PROGRESSION_MAP[normalizedCardType] || DEFAULT_RECOMMENDATIONS;
 
   // Filter out recommendations for qualifications they already have
-  recommendations = recommendations.filter(rec => {
+  recommendations = recommendations.filter((rec) => {
     // Check if user already has this qualification
-    const hasQual = qualNames.some(q =>
-      q.includes('2391') && rec.id.includes('2391') ||
-      q.includes('am2') && rec.id.includes('am2') ||
-      q.includes('18th') && rec.id.includes('18th') ||
-      q.includes('nvq') && q.includes('level 3') && rec.id.includes('nvq3') ||
-      q.includes('nvq') && q.includes('level 2') && rec.id.includes('nvq2') ||
-      q.includes('ev') && rec.id.includes('ev') ||
-      q.includes('solar') && rec.id.includes('solar') ||
-      q.includes('smsts') && rec.id.includes('smsts') ||
-      q.includes('fire alarm') && rec.id.includes('fire')
+    const hasQual = qualNames.some(
+      (q) =>
+        (q.includes('2391') && rec.id.includes('2391')) ||
+        (q.includes('am2') && rec.id.includes('am2')) ||
+        (q.includes('18th') && rec.id.includes('18th')) ||
+        (q.includes('nvq') && q.includes('level 3') && rec.id.includes('nvq3')) ||
+        (q.includes('nvq') && q.includes('level 2') && rec.id.includes('nvq2')) ||
+        (q.includes('ev') && rec.id.includes('ev')) ||
+        (q.includes('solar') && rec.id.includes('solar')) ||
+        (q.includes('smsts') && rec.id.includes('smsts')) ||
+        (q.includes('fire alarm') && rec.id.includes('fire'))
     );
 
     // Check if user already has this skill
-    const hasSkill = skillNames.some(s =>
-      s.includes('ev') && rec.id.includes('ev') ||
-      s.includes('solar') && rec.id.includes('solar')
+    const hasSkill = skillNames.some(
+      (s) =>
+        (s.includes('ev') && rec.id.includes('ev')) ||
+        (s.includes('solar') && rec.id.includes('solar'))
     );
 
     return !hasQual && !hasSkill;
@@ -363,14 +391,17 @@ const SKILL_GAP_RULES: SkillGapRule[] = [
   // Gold Card without Testing
   {
     condition: (quals, skills) => {
-      const hasGoldOrBlue = quals.some(q => q.includes('gold') || q.includes('approved'));
-      const has2391 = quals.some(q => q.includes('2391') || q.includes('2394') || q.includes('2395'));
+      const hasGoldOrBlue = quals.some((q) => q.includes('gold') || q.includes('approved'));
+      const has2391 = quals.some(
+        (q) => q.includes('2391') || q.includes('2394') || q.includes('2395')
+      );
       return hasGoldOrBlue && !has2391;
     },
     gap: {
       id: 'gap-testing',
       skillName: '2391-52 Testing Qualification',
-      reason: 'Testing qualification unlocks EICR work and lets you sign off your own installations.',
+      reason:
+        'Testing qualification unlocks EICR work and lets you sign off your own installations.',
       icon: 'shield',
       importance: 'essential',
       searchQuery: '2391-52 initial periodic inspection testing course UK',
@@ -379,11 +410,13 @@ const SKILL_GAP_RULES: SkillGapRule[] = [
   // Commercial experience without Fire Alarm
   {
     condition: (quals, skills, workHistory) => {
-      const hasCommercialExp = workHistory.some(w =>
-        w.job_title?.toLowerCase().includes('commercial') ||
-        w.description?.toLowerCase().includes('commercial')
-      ) || skills.some(s => s.includes('commercial'));
-      const hasFireAlarm = quals.some(q => q.includes('fire alarm') || q.includes('bs 5839'));
+      const hasCommercialExp =
+        workHistory.some(
+          (w) =>
+            w.job_title?.toLowerCase().includes('commercial') ||
+            w.description?.toLowerCase().includes('commercial')
+        ) || skills.some((s) => s.includes('commercial'));
+      const hasFireAlarm = quals.some((q) => q.includes('fire alarm') || q.includes('bs 5839'));
       return hasCommercialExp && !hasFireAlarm;
     },
     gap: {
@@ -398,14 +431,16 @@ const SKILL_GAP_RULES: SkillGapRule[] = [
   // Any electrician without EV
   {
     condition: (quals, skills) => {
-      const hasEV = quals.some(q => q.includes('ev') || q.includes('electric vehicle')) ||
-                    skills.some(s => s.includes('ev') || s.includes('electric vehicle'));
+      const hasEV =
+        quals.some((q) => q.includes('ev') || q.includes('electric vehicle')) ||
+        skills.some((s) => s.includes('ev') || s.includes('electric vehicle'));
       return !hasEV;
     },
     gap: {
       id: 'gap-ev',
       skillName: 'EV Charging Installation',
-      reason: 'The EV market is growing rapidly. OZEV scheme is driving massive demand for installers.',
+      reason:
+        'The EV market is growing rapidly. OZEV scheme is driving massive demand for installers.',
       icon: 'zap',
       importance: 'recommended',
       searchQuery: 'EV charging installation course City Guilds 2919 UK',
@@ -414,8 +449,9 @@ const SKILL_GAP_RULES: SkillGapRule[] = [
   // Without Solar PV
   {
     condition: (quals, skills) => {
-      const hasSolar = quals.some(q => q.includes('solar') || q.includes('pv')) ||
-                       skills.some(s => s.includes('solar') || s.includes('pv'));
+      const hasSolar =
+        quals.some((q) => q.includes('solar') || q.includes('pv')) ||
+        skills.some((s) => s.includes('solar') || s.includes('pv'));
       return !hasSolar;
     },
     gap: {
@@ -430,13 +466,14 @@ const SKILL_GAP_RULES: SkillGapRule[] = [
   // Site work without access equipment certs
   {
     condition: (quals, skills, workHistory) => {
-      const doesSiteWork = workHistory.some(w =>
-        w.job_title?.toLowerCase().includes('site') ||
-        w.description?.toLowerCase().includes('site') ||
-        w.description?.toLowerCase().includes('construction')
+      const doesSiteWork = workHistory.some(
+        (w) =>
+          w.job_title?.toLowerCase().includes('site') ||
+          w.description?.toLowerCase().includes('site') ||
+          w.description?.toLowerCase().includes('construction')
       );
-      const hasAccessCerts = quals.some(q =>
-        q.includes('ipaf') || q.includes('pasma') || q.includes('working at height')
+      const hasAccessCerts = quals.some(
+        (q) => q.includes('ipaf') || q.includes('pasma') || q.includes('working at height')
       );
       return doesSiteWork && !hasAccessCerts;
     },
@@ -452,13 +489,14 @@ const SKILL_GAP_RULES: SkillGapRule[] = [
   // Industrial skills without PLC
   {
     condition: (quals, skills, workHistory) => {
-      const hasIndustrial = workHistory.some(w =>
-        w.job_title?.toLowerCase().includes('industrial') ||
-        w.description?.toLowerCase().includes('industrial') ||
-        w.description?.toLowerCase().includes('factory')
-      ) || skills.some(s => s.includes('industrial'));
-      const hasPLC = quals.some(q => q.includes('plc')) ||
-                     skills.some(s => s.includes('plc'));
+      const hasIndustrial =
+        workHistory.some(
+          (w) =>
+            w.job_title?.toLowerCase().includes('industrial') ||
+            w.description?.toLowerCase().includes('industrial') ||
+            w.description?.toLowerCase().includes('factory')
+        ) || skills.some((s) => s.includes('industrial'));
+      const hasPLC = quals.some((q) => q.includes('plc')) || skills.some((s) => s.includes('plc'));
       return hasIndustrial && !hasPLC;
     },
     gap: {
@@ -473,8 +511,9 @@ const SKILL_GAP_RULES: SkillGapRule[] = [
   // Without Battery Storage
   {
     condition: (quals, skills) => {
-      const hasBattery = quals.some(q => q.includes('battery') || q.includes('bess')) ||
-                         skills.some(s => s.includes('battery') || s.includes('storage'));
+      const hasBattery =
+        quals.some((q) => q.includes('battery') || q.includes('bess')) ||
+        skills.some((s) => s.includes('battery') || s.includes('storage'));
       return !hasBattery;
     },
     gap: {
@@ -497,8 +536,8 @@ export function getSkillsGapRecommendations(
   skills: ElecIdSkill[],
   workHistory: ElecIdWorkHistory[]
 ): SkillGap[] {
-  const qualNames = qualifications.map(q => q.qualification_name.toLowerCase());
-  const skillNames = skills.map(s => s.skill_name.toLowerCase());
+  const qualNames = qualifications.map((q) => q.qualification_name.toLowerCase());
+  const skillNames = skills.map((s) => s.skill_name.toLowerCase());
 
   const gaps: SkillGap[] = [];
 
@@ -587,7 +626,11 @@ export function getBrushUpSuggestions(
 
     // Any core qualification more than 5 years old
     if (years > 5 && !qualLower.includes('nvq') && !qualLower.includes('am2')) {
-      if (qualLower.includes('testing') || qualLower.includes('2391') || qualLower.includes('inspection')) {
+      if (
+        qualLower.includes('testing') ||
+        qualLower.includes('2391') ||
+        qualLower.includes('inspection')
+      ) {
         suggestions.push({
           id: `brushup-refresh-${qual.id}`,
           skillName: qual.qualification_name,
@@ -654,12 +697,12 @@ export function getTrendingSkillsRecommendations(
   qualifications: ElecIdQualification[],
   skills: ElecIdSkill[]
 ): TrendingSkill[] {
-  const qualNames = qualifications.map(q => q.qualification_name.toLowerCase());
-  const skillNames = skills.map(s => s.skill_name.toLowerCase());
+  const qualNames = qualifications.map((q) => q.qualification_name.toLowerCase());
+  const skillNames = skills.map((s) => s.skill_name.toLowerCase());
 
   const allUserSkills = [...qualNames, ...skillNames].join(' ');
 
-  return TRENDING_SKILLS.map(trend => ({
+  return TRENDING_SKILLS.map((trend) => ({
     ...trend,
     userHasSkill: checkUserHasSkill(trend.id, allUserSkills),
   }));
@@ -668,15 +711,31 @@ export function getTrendingSkillsRecommendations(
 function checkUserHasSkill(trendId: string, allSkills: string): boolean {
   switch (trendId) {
     case 'trend-ev':
-      return allSkills.includes('ev') || allSkills.includes('electric vehicle') || allSkills.includes('charging');
+      return (
+        allSkills.includes('ev') ||
+        allSkills.includes('electric vehicle') ||
+        allSkills.includes('charging')
+      );
     case 'trend-solar':
-      return allSkills.includes('solar') || allSkills.includes('pv') || allSkills.includes('photovoltaic');
+      return (
+        allSkills.includes('solar') ||
+        allSkills.includes('pv') ||
+        allSkills.includes('photovoltaic')
+      );
     case 'trend-battery':
-      return allSkills.includes('battery') || allSkills.includes('bess') || allSkills.includes('storage');
+      return (
+        allSkills.includes('battery') || allSkills.includes('bess') || allSkills.includes('storage')
+      );
     case 'trend-heat-pumps':
-      return allSkills.includes('heat pump') || allSkills.includes('ashp') || allSkills.includes('gshp');
+      return (
+        allSkills.includes('heat pump') || allSkills.includes('ashp') || allSkills.includes('gshp')
+      );
     case 'trend-smart-home':
-      return allSkills.includes('smart home') || allSkills.includes('knx') || allSkills.includes('automation');
+      return (
+        allSkills.includes('smart home') ||
+        allSkills.includes('knx') ||
+        allSkills.includes('automation')
+      );
     default:
       return false;
   }
@@ -693,19 +752,19 @@ const CAREER_HUB_EDUCATION = '/electrician/career-progression?section=education'
 const INTERNAL_COURSE_ROUTES: Record<string, string> = {
   // 18th Edition / BS7671 - Study Centre has dedicated course
   '18th': '/study-centre/upskilling/bs7671-course',
-  'bs7671': '/study-centre/upskilling/bs7671-course',
+  bs7671: '/study-centre/upskilling/bs7671-course',
   'wiring regulations': '/study-centre/upskilling/bs7671-course',
 
   // Testing & Inspection - Study Centre has dedicated course
   '2391': '/study-centre/upskilling/inspection-testing',
   '2394': '/study-centre/upskilling/inspection-testing',
   '2395': '/study-centre/upskilling/inspection-testing',
-  'testing': '/study-centre/upskilling/inspection-testing',
-  'inspection': '/study-centre/upskilling/inspection-testing',
-  'eicr': '/study-centre/upskilling/inspection-testing',
+  testing: '/study-centre/upskilling/inspection-testing',
+  inspection: '/study-centre/upskilling/inspection-testing',
+  eicr: '/study-centre/upskilling/inspection-testing',
 
   // PAT Testing - Study Centre has dedicated course
-  'pat': '/study-centre/upskilling/pat-testing-course',
+  pat: '/study-centre/upskilling/pat-testing-course',
 
   // Fire Alarm - Study Centre has dedicated course
   'fire alarm': '/study-centre/upskilling/fire-alarm-course',
@@ -717,83 +776,83 @@ const INTERNAL_COURSE_ROUTES: Record<string, string> = {
   'bs 5266': '/study-centre/upskilling/emergency-lighting-course',
 
   // EV Charging - Study Centre has dedicated course
-  'ev': '/study-centre/upskilling/ev-charging-course',
+  ev: '/study-centre/upskilling/ev-charging-course',
   'electric vehicle': '/study-centre/upskilling/ev-charging-course',
   'ev charging': '/study-centre/upskilling/ev-charging-course',
-  'ozev': '/study-centre/upskilling/ev-charging-course',
+  ozev: '/study-centre/upskilling/ev-charging-course',
   '2919': '/study-centre/upskilling/ev-charging-course',
 
   // Solar / Renewable - Study Centre has dedicated course
-  'solar': '/study-centre/upskilling/renewable-energy-course',
-  'pv': '/study-centre/upskilling/renewable-energy-course',
-  'renewable': '/study-centre/upskilling/renewable-energy-course',
+  solar: '/study-centre/upskilling/renewable-energy-course',
+  pv: '/study-centre/upskilling/renewable-energy-course',
+  renewable: '/study-centre/upskilling/renewable-energy-course',
   'battery storage': '/study-centre/upskilling/renewable-energy-course',
-  'bess': '/study-centre/upskilling/renewable-energy-course',
+  bess: '/study-centre/upskilling/renewable-energy-course',
 
   // Smart Home - Study Centre has dedicated course
   'smart home': '/study-centre/upskilling/smart-home-course',
   'home automation': '/study-centre/upskilling/smart-home-course',
-  'knx': '/study-centre/upskilling/smart-home-course',
+  knx: '/study-centre/upskilling/smart-home-course',
 
   // Heat Pumps - route to career hub course finder (more options)
   'heat pump': CAREER_HUB_COURSES,
-  'ashp': CAREER_HUB_COURSES,
-  'gshp': CAREER_HUB_COURSES,
+  ashp: CAREER_HUB_COURSES,
+  gshp: CAREER_HUB_COURSES,
 
   // Industrial / BMS - Study Centre has dedicated courses
-  'bms': '/study-centre/upskilling/bms-course',
+  bms: '/study-centre/upskilling/bms-course',
   'building management': '/study-centre/upskilling/bms-course',
-  'plc': '/study-centre/upskilling/industrial-electrical-course',
-  'industrial': '/study-centre/upskilling/industrial-electrical-course',
+  plc: '/study-centre/upskilling/industrial-electrical-course',
+  industrial: '/study-centre/upskilling/industrial-electrical-course',
   'motor control': '/study-centre/upskilling/industrial-electrical-course',
 
   // Data & Comms - Study Centre has dedicated courses
   'data cabling': '/study-centre/upskilling/data-cabling-course',
-  'fibre': '/study-centre/upskilling/fiber-optics-course',
-  'fiber': '/study-centre/upskilling/fiber-optics-course',
-  'network': '/study-centre/upskilling/data-cabling-course',
+  fibre: '/study-centre/upskilling/fiber-optics-course',
+  fiber: '/study-centre/upskilling/fiber-optics-course',
+  network: '/study-centre/upskilling/data-cabling-course',
 
   // Apprentice routes - Study Centre apprentice section
-  'nvq': '/study-centre/apprentice',
-  'am2': '/study-centre/apprentice',
-  'apprentice': '/study-centre/apprentice',
+  nvq: '/study-centre/apprentice',
+  am2: '/study-centre/apprentice',
+  apprentice: '/study-centre/apprentice',
   'level 2': '/study-centre/apprentice',
   'level 3': '/study-centre/apprentice',
 
   // Safety & site courses - Career Hub course finder (external providers)
-  'smsts': CAREER_HUB_COURSES,
-  'sssts': CAREER_HUB_COURSES,
-  'ipaf': CAREER_HUB_COURSES,
-  'pasma': CAREER_HUB_COURSES,
+  smsts: CAREER_HUB_COURSES,
+  sssts: CAREER_HUB_COURSES,
+  ipaf: CAREER_HUB_COURSES,
+  pasma: CAREER_HUB_COURSES,
   'working at height': CAREER_HUB_COURSES,
   'first aid': CAREER_HUB_COURSES,
   'confined space': CAREER_HUB_COURSES,
-  'asbestos': CAREER_HUB_COURSES,
+  asbestos: CAREER_HUB_COURSES,
 
   // Design & advanced qualifications - Career Hub for external courses
   '2396': CAREER_HUB_COURSES,
-  'design': CAREER_HUB_COURSES,
+  design: CAREER_HUB_COURSES,
 
   // Further education / degrees - Career Hub education section
-  'degree': CAREER_HUB_EDUCATION,
-  'hnd': CAREER_HUB_EDUCATION,
-  'hnc': CAREER_HUB_EDUCATION,
-  'university': CAREER_HUB_EDUCATION,
-  'btec': CAREER_HUB_EDUCATION,
+  degree: CAREER_HUB_EDUCATION,
+  hnd: CAREER_HUB_EDUCATION,
+  hnc: CAREER_HUB_EDUCATION,
+  university: CAREER_HUB_EDUCATION,
+  btec: CAREER_HUB_EDUCATION,
   'further education': CAREER_HUB_EDUCATION,
 
   // Management & contracts - Career Hub course finder
   'contracts management': CAREER_HUB_COURSES,
   'project management': CAREER_HUB_COURSES,
-  'cdm': CAREER_HUB_COURSES,
+  cdm: CAREER_HUB_COURSES,
 
   // Specialist certifications - Career Hub course finder
-  'compex': CAREER_HUB_COURSES,
+  compex: CAREER_HUB_COURSES,
   'high voltage': CAREER_HUB_COURSES,
-  'hv': CAREER_HUB_COURSES,
+  hv: CAREER_HUB_COURSES,
 
   // Default fallback - Career Hub has comprehensive course search
-  'default': CAREER_HUB_COURSES,
+  default: CAREER_HUB_COURSES,
 };
 
 /**
@@ -839,7 +898,11 @@ export function getAllRecommendations(
   skills: ElecIdSkill[],
   workHistory: ElecIdWorkHistory[]
 ): AllRecommendations {
-  const careerProgression = getCareerProgressionRecommendations(ecsCardType, qualifications, skills);
+  const careerProgression = getCareerProgressionRecommendations(
+    ecsCardType,
+    qualifications,
+    skills
+  );
   const skillsGaps = getSkillsGapRecommendations(ecsCardType, qualifications, skills, workHistory);
   const brushUp = getBrushUpSuggestions(skills, qualifications);
   const trending = getTrendingSkillsRecommendations(qualifications, skills);
@@ -848,7 +911,7 @@ export function getAllRecommendations(
     careerProgression.length > 0 ||
     skillsGaps.length > 0 ||
     brushUp.length > 0 ||
-    trending.some(t => !t.userHasSkill);
+    trending.some((t) => !t.userHasSkill);
 
   return {
     careerProgression,

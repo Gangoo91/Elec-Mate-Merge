@@ -1,26 +1,38 @@
-import { useState } from "react";
-import { FileText, Send, Plus, Search, Eye, Check, TrendingUp, AlertTriangle, Receipt, PoundSterling, Mic } from "lucide-react";
-import { useInlineVoice } from "@/hooks/useInlineVoice";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DataTable } from "@/components/employer/DataTable";
-import { StatusBadge } from "@/components/employer/StatusBadge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { QuoteCard } from "@/components/employer/QuoteCard";
-import { InvoiceCard } from "@/components/employer/InvoiceCard";
-import { useQuotes, useInvoices, useSendQuote, useMarkInvoicePaid } from "@/hooks/useFinance";
-import { CreateQuoteDialog } from "@/components/employer/dialogs/CreateQuoteDialog";
-import { CreateInvoiceDialog } from "@/components/employer/dialogs/CreateInvoiceDialog";
-import { ViewQuoteSheet } from "@/components/employer/sheets/ViewQuoteSheet";
-import { ViewInvoiceSheet } from "@/components/employer/sheets/ViewInvoiceSheet";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useQueryClient } from "@tanstack/react-query";
-import { cn } from "@/lib/utils";
-import { sortQuotes, sortInvoices } from "@/utils/financeSorting";
-import type { Quote, Invoice } from "@/services/financeService";
+import { useState } from 'react';
+import {
+  FileText,
+  Send,
+  Plus,
+  Search,
+  Eye,
+  Check,
+  TrendingUp,
+  AlertTriangle,
+  Receipt,
+  PoundSterling,
+  Mic,
+} from 'lucide-react';
+import { useInlineVoice } from '@/hooks/useInlineVoice';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DataTable } from '@/components/employer/DataTable';
+import { StatusBadge } from '@/components/employer/StatusBadge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import { QuoteCard } from '@/components/employer/QuoteCard';
+import { InvoiceCard } from '@/components/employer/InvoiceCard';
+import { useQuotes, useInvoices, useSendQuote, useMarkInvoicePaid } from '@/hooks/useFinance';
+import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
+import { CreateInvoiceDialog } from '@/components/employer/dialogs/CreateInvoiceDialog';
+import { ViewQuoteSheet } from '@/components/employer/sheets/ViewQuoteSheet';
+import { ViewInvoiceSheet } from '@/components/employer/sheets/ViewInvoiceSheet';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useQueryClient } from '@tanstack/react-query';
+import { cn } from '@/lib/utils';
+import { sortQuotes, sortInvoices } from '@/utils/financeSorting';
+import type { Quote, Invoice } from '@/services/financeService';
 
 export function QuotesInvoicesSection() {
   const [showCreateQuote, setShowCreateQuote] = useState(false);
@@ -28,54 +40,72 @@ export function QuotesInvoicesSection() {
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [convertQuote, setConvertQuote] = useState<Quote | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("quotes");
-  
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('quotes');
+
   const { data: quotes = [], isLoading: quotesLoading, refetch: refetchQuotes } = useQuotes();
-  const { data: invoices = [], isLoading: invoicesLoading, refetch: refetchInvoices } = useInvoices();
+  const {
+    data: invoices = [],
+    isLoading: invoicesLoading,
+    refetch: refetchInvoices,
+  } = useInvoices();
   const sendQuoteMutation = useSendQuote();
   const markPaidMutation = useMarkInvoicePaid();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
 
   // Voice assistant for quotes/invoices - uses employer agent
-  const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice } = useInlineVoice({
-    agentId: 'agent_7301kdxbnshce7vv8mtah970y3g1' // Employer agent
+  const {
+    isConnecting: voiceConnecting,
+    isActive: voiceActive,
+    toggleVoice,
+  } = useInlineVoice({
+    agentId: 'agent_7301kdxbnshce7vv8mtah970y3g1', // Employer agent
   });
 
   const handleRefresh = async () => {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: ['quotes'] }),
-      queryClient.invalidateQueries({ queryKey: ['invoices'] })
+      queryClient.invalidateQueries({ queryKey: ['invoices'] }),
     ]);
   };
 
   // Filter and sort quotes by business priority
   const filteredQuotes = sortQuotes(
-    quotes.filter(q =>
-      (q.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-      (q.description?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-      (q.quote_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+    quotes.filter(
+      (q) =>
+        (q.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (q.description?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (q.quote_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
     )
   );
 
   // Filter and sort invoices by business priority
   const filteredInvoices = sortInvoices(
-    invoices.filter(inv =>
-      (inv.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-      (inv.project?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-      (inv.invoice_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+    invoices.filter(
+      (inv) =>
+        (inv.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (inv.project?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (inv.invoice_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
     )
   );
 
   // Stats calculations
-  const totalQuoteValue = quotes.filter(q => q.status !== "Rejected").reduce((acc, q) => acc + Number(q.value), 0);
-  const approvedQuoteValue = quotes.filter(q => q.status === "Approved").reduce((acc, q) => acc + Number(q.value), 0);
-  const approvedCount = quotes.filter(q => q.status === "Approved").length;
+  const totalQuoteValue = quotes
+    .filter((q) => q.status !== 'Rejected')
+    .reduce((acc, q) => acc + Number(q.value), 0);
+  const approvedQuoteValue = quotes
+    .filter((q) => q.status === 'Approved')
+    .reduce((acc, q) => acc + Number(q.value), 0);
+  const approvedCount = quotes.filter((q) => q.status === 'Approved').length;
   const totalInvoiced = invoices.reduce((acc, inv) => acc + Number(inv.amount), 0);
-  const paidAmount = invoices.filter(inv => inv.status === "Paid").reduce((acc, inv) => acc + Number(inv.amount), 0);
-  const overdueAmount = invoices.filter(inv => inv.status === "Overdue").reduce((acc, inv) => acc + Number(inv.amount), 0);
-  const overdueCount = invoices.filter(inv => inv.status === "Overdue").length;
+  const paidAmount = invoices
+    .filter((inv) => inv.status === 'Paid')
+    .reduce((acc, inv) => acc + Number(inv.amount), 0);
+  const overdueAmount = invoices
+    .filter((inv) => inv.status === 'Overdue')
+    .reduce((acc, inv) => acc + Number(inv.amount), 0);
+  const overdueCount = invoices.filter((inv) => inv.status === 'Overdue').length;
   const paidPercentage = totalInvoiced > 0 ? Math.round((paidAmount / totalInvoiced) * 100) : 0;
 
   const isLoading = quotesLoading || invoicesLoading;
@@ -87,11 +117,11 @@ export function QuotesInvoicesSection() {
 
   // Desktop table columns
   const quoteColumns = [
-    { key: "quote_number", label: "Quote #" },
-    { key: "client", label: "Client" },
-    { 
-      key: "description", 
-      label: "Description",
+    { key: 'quote_number', label: 'Quote #' },
+    { key: 'client', label: 'Client' },
+    {
+      key: 'description',
+      label: 'Description',
       render: (item: Quote) => {
         const lineItems = Array.isArray(item.line_items) ? item.line_items : [];
         const itemCount = lineItems.length;
@@ -99,29 +129,33 @@ export function QuotesInvoicesSection() {
           <div className="min-w-0">
             <p className="truncate max-w-[200px]">{item.description || '-'}</p>
             {itemCount > 0 && (
-              <p className="text-xs text-muted-foreground">{itemCount} line item{itemCount > 1 ? 's' : ''}</p>
+              <p className="text-xs text-muted-foreground">
+                {itemCount} line item{itemCount > 1 ? 's' : ''}
+              </p>
             )}
           </div>
         );
-      }
+      },
     },
-    { 
-      key: "value", 
-      label: "Value",
+    {
+      key: 'value',
+      label: 'Value',
       render: (item: Quote) => (
-        <span className="font-semibold text-elec-yellow">£{Number(item.value).toLocaleString()}</span>
-      )
+        <span className="font-semibold text-elec-yellow">
+          £{Number(item.value).toLocaleString()}
+        </span>
+      ),
     },
-    { 
-      key: "sent_date", 
-      label: "Sent",
+    {
+      key: 'sent_date',
+      label: 'Sent',
       render: (item: Quote) => (
-        <span>{item.sent_date ? new Date(item.sent_date).toLocaleDateString("en-GB") : "-"}</span>
-      )
+        <span>{item.sent_date ? new Date(item.sent_date).toLocaleDateString('en-GB') : '-'}</span>
+      ),
     },
-    { 
-      key: "valid_until", 
-      label: "Expires",
+    {
+      key: 'valid_until',
+      label: 'Expires',
       render: (item: Quote) => {
         if (!item.valid_until) return <span>-</span>;
         const validDate = new Date(item.valid_until);
@@ -129,38 +163,47 @@ export function QuotesInvoicesSection() {
         const daysLeft = Math.ceil((validDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
         const isExpired = daysLeft < 0;
         const isExpiringSoon = daysLeft >= 0 && daysLeft <= 7;
-        
+
         return (
           <div>
-            <span>{validDate.toLocaleDateString("en-GB")}</span>
+            <span>{validDate.toLocaleDateString('en-GB')}</span>
             {isExpired && <p className="text-xs text-destructive">Expired</p>}
             {isExpiringSoon && <p className="text-xs text-warning">{daysLeft} days left</p>}
           </div>
         );
-      }
-    },
-    { 
-      key: "status", 
-      label: "Status",
-      render: (item: Quote) => {
-        const statusMap: Record<string, string> = {
-          "Draft": "pending",
-          "Sent": "warning",
-          "Approved": "approved",
-          "Rejected": "rejected"
-        };
-        return <StatusBadge status={statusMap[item.status] || item.status} />;
-      }
+      },
     },
     {
-      key: "actions",
-      label: "",
+      key: 'status',
+      label: 'Status',
+      render: (item: Quote) => {
+        const statusMap: Record<string, string> = {
+          Draft: 'pending',
+          Sent: 'warning',
+          Approved: 'approved',
+          Rejected: 'rejected',
+        };
+        return <StatusBadge status={statusMap[item.status] || item.status} />;
+      },
+    },
+    {
+      key: 'actions',
+      label: '',
       render: (item: Quote) => (
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); setSelectedQuote(item); }}><Eye className="h-4 w-4" /></Button>
-          {item.status === "Draft" && (
-            <Button 
-              variant="ghost" 
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedQuote(item);
+            }}
+          >
+            <Eye className="h-4 w-4" />
+          </Button>
+          {item.status === 'Draft' && (
+            <Button
+              variant="ghost"
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
@@ -172,56 +215,65 @@ export function QuotesInvoicesSection() {
             </Button>
           )}
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const invoiceColumns = [
-    { key: "invoice_number", label: "Invoice #" },
-    { key: "client", label: "Client" },
-    { key: "project", label: "Project" },
-    { 
-      key: "amount", 
-      label: "Amount",
+    { key: 'invoice_number', label: 'Invoice #' },
+    { key: 'client', label: 'Client' },
+    { key: 'project', label: 'Project' },
+    {
+      key: 'amount',
+      label: 'Amount',
       render: (item: Invoice) => (
         <span className="font-semibold">£{Number(item.amount).toLocaleString()}</span>
-      )
-    },
-    { 
-      key: "due_date", 
-      label: "Due Date",
-      render: (item: Invoice) => (
-        <span>{item.due_date ? new Date(item.due_date).toLocaleDateString("en-GB") : "-"}</span>
-      )
-    },
-    { 
-      key: "paid_date", 
-      label: "Paid Date",
-      render: (item: Invoice) => (
-        <span>{item.paid_date ? new Date(item.paid_date).toLocaleDateString("en-GB") : "-"}</span>
-      )
-    },
-    { 
-      key: "status", 
-      label: "Status",
-      render: (item: Invoice) => {
-        const statusMap: Record<string, string> = {
-          "Paid": "completed",
-          "Pending": "pending",
-          "Overdue": "expired"
-        };
-        return <StatusBadge status={statusMap[item.status] || item.status} />;
-      }
+      ),
     },
     {
-      key: "actions",
-      label: "",
+      key: 'due_date',
+      label: 'Due Date',
+      render: (item: Invoice) => (
+        <span>{item.due_date ? new Date(item.due_date).toLocaleDateString('en-GB') : '-'}</span>
+      ),
+    },
+    {
+      key: 'paid_date',
+      label: 'Paid Date',
+      render: (item: Invoice) => (
+        <span>{item.paid_date ? new Date(item.paid_date).toLocaleDateString('en-GB') : '-'}</span>
+      ),
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      render: (item: Invoice) => {
+        const statusMap: Record<string, string> = {
+          Paid: 'completed',
+          Pending: 'pending',
+          Overdue: 'expired',
+        };
+        return <StatusBadge status={statusMap[item.status] || item.status} />;
+      },
+    },
+    {
+      key: 'actions',
+      label: '',
       render: (item: Invoice) => (
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); setSelectedInvoice(item); }}><Eye className="h-4 w-4" /></Button>
-          {item.status === "Pending" && (
-            <Button 
-              variant="ghost" 
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedInvoice(item);
+            }}
+          >
+            <Eye className="h-4 w-4" />
+          </Button>
+          {item.status === 'Pending' && (
+            <Button
+              variant="ghost"
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
@@ -233,8 +285,8 @@ export function QuotesInvoicesSection() {
             </Button>
           )}
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   if (isLoading) {
@@ -274,7 +326,7 @@ export function QuotesInvoicesSection() {
             placeholder="Search quotes & invoices..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("h-11 bg-elec-gray border-border", !searchQuery && "pl-10")}
+            className={cn('h-11 bg-elec-gray border-border', !searchQuery && 'pl-10')}
           />
         </div>
       </div>
@@ -299,18 +351,24 @@ export function QuotesInvoicesSection() {
         <Button
           variant="outline"
           className={cn(
-            "h-12 w-12 p-0 shrink-0 active:scale-[0.98] transition-all",
-            voiceActive && "bg-green-500/20 border-green-500 ring-2 ring-green-500/30",
-            voiceConnecting && "bg-yellow-500/20 border-yellow-500 animate-pulse"
+            'h-12 w-12 p-0 shrink-0 active:scale-[0.98] transition-all',
+            voiceActive && 'bg-green-500/20 border-green-500 ring-2 ring-green-500/30',
+            voiceConnecting && 'bg-yellow-500/20 border-yellow-500 animate-pulse'
           )}
           onClick={toggleVoice}
           disabled={voiceConnecting}
           title={voiceActive ? 'Voice active - click to stop' : 'Create quote/invoice by voice'}
         >
-          <Mic className={cn(
-            "h-5 w-5",
-            voiceActive ? "text-green-500 animate-pulse" : voiceConnecting ? "text-yellow-500" : "text-primary"
-          )} />
+          <Mic
+            className={cn(
+              'h-5 w-5',
+              voiceActive
+                ? 'text-green-500 animate-pulse'
+                : voiceConnecting
+                  ? 'text-yellow-500'
+                  : 'text-primary'
+            )}
+          />
         </Button>
       </div>
 
@@ -320,8 +378,12 @@ export function QuotesInvoicesSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Total Quoted</p>
-                <p className="text-2xl font-bold text-elec-yellow">£{(totalQuoteValue / 1000).toFixed(0)}k</p>
+                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                  Total Quoted
+                </p>
+                <p className="text-2xl font-bold text-elec-yellow">
+                  £{(totalQuoteValue / 1000).toFixed(0)}k
+                </p>
                 <p className="text-xs text-success font-medium">{approvedCount} approved</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
@@ -335,8 +397,12 @@ export function QuotesInvoicesSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Total Invoiced</p>
-                <p className="text-2xl font-bold text-foreground">£{(totalInvoiced / 1000).toFixed(0)}k</p>
+                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                  Total Invoiced
+                </p>
+                <p className="text-2xl font-bold text-foreground">
+                  £{(totalInvoiced / 1000).toFixed(0)}k
+                </p>
                 <p className="text-xs text-muted-foreground">{invoices.length} invoices</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
@@ -350,8 +416,12 @@ export function QuotesInvoicesSection() {
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Paid</p>
-                <p className="text-2xl font-bold text-success">£{(paidAmount / 1000).toFixed(0)}k</p>
+                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                  Paid
+                </p>
+                <p className="text-2xl font-bold text-success">
+                  £{(paidAmount / 1000).toFixed(0)}k
+                </p>
                 <p className="text-xs text-success font-medium">{paidPercentage}% collected</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-success/10 flex items-center justify-center">
@@ -361,32 +431,42 @@ export function QuotesInvoicesSection() {
           </CardContent>
         </Card>
 
-        <Card className={cn(
-          "overflow-hidden transition-all",
-          overdueAmount > 0 && "border-destructive/50 bg-destructive/5"
-        )}>
+        <Card
+          className={cn(
+            'overflow-hidden transition-all',
+            overdueAmount > 0 && 'border-destructive/50 bg-destructive/5'
+          )}
+        >
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Overdue</p>
-                <p className={cn(
-                  "text-2xl font-bold",
-                  overdueAmount > 0 ? "text-destructive" : "text-muted-foreground"
-                )}>
+                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                  Overdue
+                </p>
+                <p
+                  className={cn(
+                    'text-2xl font-bold',
+                    overdueAmount > 0 ? 'text-destructive' : 'text-muted-foreground'
+                  )}
+                >
                   £{(overdueAmount / 1000).toFixed(0)}k
                 </p>
                 {overdueCount > 0 && (
                   <p className="text-xs text-destructive font-medium">{overdueCount} overdue</p>
                 )}
               </div>
-              <div className={cn(
-                "h-10 w-10 rounded-full flex items-center justify-center",
-                overdueAmount > 0 ? "bg-destructive/10" : "bg-muted"
-              )}>
-                <AlertTriangle className={cn(
-                  "h-5 w-5",
-                  overdueAmount > 0 ? "text-destructive" : "text-muted-foreground"
-                )} />
+              <div
+                className={cn(
+                  'h-10 w-10 rounded-full flex items-center justify-center',
+                  overdueAmount > 0 ? 'bg-destructive/10' : 'bg-muted'
+                )}
+              >
+                <AlertTriangle
+                  className={cn(
+                    'h-5 w-5',
+                    overdueAmount > 0 ? 'text-destructive' : 'text-muted-foreground'
+                  )}
+                />
               </div>
             </div>
           </CardContent>
@@ -396,11 +476,17 @@ export function QuotesInvoicesSection() {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-3">
         <TabsList className="w-full h-12 p-1 bg-muted/50">
-          <TabsTrigger value="quotes" className="flex-1 h-full gap-2 data-[state=active]:bg-background">
+          <TabsTrigger
+            value="quotes"
+            className="flex-1 h-full gap-2 data-[state=active]:bg-background"
+          >
             <FileText className="h-4 w-4" />
             Quotes ({quotes.length})
           </TabsTrigger>
-          <TabsTrigger value="invoices" className="flex-1 h-full gap-2 data-[state=active]:bg-background">
+          <TabsTrigger
+            value="invoices"
+            className="flex-1 h-full gap-2 data-[state=active]:bg-background"
+          >
             <Receipt className="h-4 w-4" />
             Invoices ({invoices.length})
           </TabsTrigger>
@@ -424,7 +510,9 @@ export function QuotesInvoicesSection() {
               <Card className="p-8 text-center">
                 <FileText className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
                 <p className="text-muted-foreground font-medium">No quotes found</p>
-                <p className="text-sm text-muted-foreground mt-1">Create your first quote to get started</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Create your first quote to get started
+                </p>
                 <Button className="mt-4 h-12 px-6" onClick={() => setShowCreateQuote(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   New Quote
@@ -432,11 +520,7 @@ export function QuotesInvoicesSection() {
               </Card>
             )
           ) : (
-            <DataTable
-              title="All Quotes"
-              data={filteredQuotes}
-              columns={quoteColumns}
-            />
+            <DataTable title="All Quotes" data={filteredQuotes} columns={quoteColumns} />
           )}
         </TabsContent>
 
@@ -458,7 +542,9 @@ export function QuotesInvoicesSection() {
               <Card className="p-8 text-center">
                 <Receipt className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
                 <p className="text-muted-foreground font-medium">No invoices found</p>
-                <p className="text-sm text-muted-foreground mt-1">Create your first invoice to get started</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Create your first invoice to get started
+                </p>
                 <Button className="mt-4 h-12 px-6" onClick={() => setShowCreateInvoice(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   Create Invoice
@@ -466,19 +552,28 @@ export function QuotesInvoicesSection() {
               </Card>
             )
           ) : (
-            <DataTable
-              title="All Invoices"
-              data={filteredInvoices}
-              columns={invoiceColumns}
-            />
+            <DataTable title="All Invoices" data={filteredInvoices} columns={invoiceColumns} />
           )}
         </TabsContent>
       </Tabs>
 
       <CreateQuoteDialog open={showCreateQuote} onOpenChange={setShowCreateQuote} />
-      <CreateInvoiceDialog open={showCreateInvoice} onOpenChange={setShowCreateInvoice} fromQuote={convertQuote || undefined} />
-      <ViewQuoteSheet open={!!selectedQuote} onOpenChange={(open) => !open && setSelectedQuote(null)} quote={selectedQuote} onConvertToInvoice={handleConvertToInvoice} />
-      <ViewInvoiceSheet open={!!selectedInvoice} onOpenChange={(open) => !open && setSelectedInvoice(null)} invoice={selectedInvoice} />
+      <CreateInvoiceDialog
+        open={showCreateInvoice}
+        onOpenChange={setShowCreateInvoice}
+        fromQuote={convertQuote || undefined}
+      />
+      <ViewQuoteSheet
+        open={!!selectedQuote}
+        onOpenChange={(open) => !open && setSelectedQuote(null)}
+        quote={selectedQuote}
+        onConvertToInvoice={handleConvertToInvoice}
+      />
+      <ViewInvoiceSheet
+        open={!!selectedInvoice}
+        onOpenChange={(open) => !open && setSelectedInvoice(null)}
+        invoice={selectedInvoice}
+      />
     </div>
   );
 

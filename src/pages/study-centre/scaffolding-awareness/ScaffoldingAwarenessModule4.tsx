@@ -1,45 +1,45 @@
-import { ArrowLeft, ClipboardCheck, Search, Tag, Calendar } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ClipboardCheck, Search, Tag, Calendar } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "When to Inspect",
+    title: 'When to Inspect',
     icon: ClipboardCheck,
     description:
-      "Before first use, every 7 days, after weather events, after alteration, after any event affecting stability, and who must inspect",
+      'Before first use, every 7 days, after weather events, after alteration, after any event affecting stability, and who must inspect',
   },
   {
     id: 2,
-    title: "The Inspection Process",
+    title: 'The Inspection Process',
     icon: Search,
     description:
-      "Systematic inspection method, what to check (foundations, standards, ledgers, bracing, ties, platforms, guardrails), defect identification",
+      'Systematic inspection method, what to check (foundations, standards, ledgers, bracing, ties, platforms, guardrails), defect identification',
   },
   {
     id: 3,
-    title: "Scaffold Tags & Status",
+    title: 'Scaffold Tags & Status',
     icon: Tag,
     description:
-      "Green tag (safe to use), yellow tag (restrictions), red tag (do not use), tag information, advanced scaffolding inspection scheme",
+      'Green tag (safe to use), yellow tag (restrictions), red tag (do not use), tag information, advanced scaffolding inspection scheme',
   },
   {
     id: 4,
-    title: "Inspection Records & Reporting",
+    title: 'Inspection Records & Reporting',
     icon: Calendar,
     description:
-      "Written inspection reports, record retention, who sees the reports, reporting defects, and enforcement",
+      'Written inspection reports, record retention, who sees the reports, reporting defects, and enforcement',
   },
 ];
 
 export default function ScaffoldingAwarenessModule4() {
   useSEO({
-    title: "Module 4: Scaffold Inspection & Tagging | Scaffolding Awareness",
+    title: 'Module 4: Scaffold Inspection & Tagging | Scaffolding Awareness',
     description:
-      "Learn when and how to inspect scaffolds, the scaffold tag system, inspection records, and reporting requirements.",
+      'Learn when and how to inspect scaffolds, the scaffold tag system, inspection records, and reporting requirements.',
   });
 
   return (

@@ -3,11 +3,11 @@
  * Multi-select toggles with count badges and clear functionality
  */
 
-import { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   Briefcase,
   Banknote,
@@ -18,8 +18,8 @@ import {
   ChevronRight,
   SlidersHorizontal,
   Check,
-} from "lucide-react";
-import { pillVariants } from "./animations/variants";
+} from 'lucide-react';
+import { pillVariants } from './animations/variants';
 
 export interface JobFilters {
   jobTypes: string[];
@@ -37,26 +37,26 @@ interface JobFilterPillsProps {
 
 // Filter configurations
 const JOB_TYPES = [
-  { id: "permanent", label: "Permanent" },
-  { id: "contract", label: "Contract" },
-  { id: "temporary", label: "Temporary" },
-  { id: "apprenticeship", label: "Apprenticeship" },
+  { id: 'permanent', label: 'Permanent' },
+  { id: 'contract', label: 'Contract' },
+  { id: 'temporary', label: 'Temporary' },
+  { id: 'apprenticeship', label: 'Apprenticeship' },
 ];
 
 const SALARY_RANGES = [
-  { id: "20-30", label: "£20k-£30k" },
-  { id: "30-40", label: "£30k-£40k" },
-  { id: "40-50", label: "£40k-£50k" },
-  { id: "50+", label: "£50k+" },
+  { id: '20-30', label: '£20k-£30k' },
+  { id: '30-40', label: '£30k-£40k' },
+  { id: '40-50', label: '£40k-£50k' },
+  { id: '50+', label: '£50k+' },
 ];
 
 const EXPERIENCE_LEVELS = [
-  { id: "entry", label: "Entry Level" },
-  { id: "mid", label: "Mid Level" },
-  { id: "senior", label: "Senior" },
+  { id: 'entry', label: 'Entry Level' },
+  { id: 'mid', label: 'Mid Level' },
+  { id: 'senior', label: 'Senior' },
 ];
 
-const DEFAULT_SOURCES = ["Reed", "Indeed", "TotalJobs", "CV Library", "Jobs.co.uk"];
+const DEFAULT_SOURCES = ['Reed', 'Indeed', 'TotalJobs', 'CV Library', 'Jobs.co.uk'];
 
 // Filter category component
 const FilterCategory = ({
@@ -77,7 +77,7 @@ const FilterCategory = ({
   <div className="flex-shrink-0 flex items-center gap-2">
     {/* Category Label */}
     <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-white/5">
-      <Icon className={cn("h-3.5 w-3.5", iconColor)} />
+      <Icon className={cn('h-3.5 w-3.5', iconColor)} />
       <span className="text-xs font-medium text-white/60">{label}</span>
     </div>
 
@@ -94,11 +94,11 @@ const FilterCategory = ({
           custom={index}
           onClick={() => onToggle(option.id)}
           className={cn(
-            "flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium",
-            "border transition-all duration-200",
+            'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium',
+            'border transition-all duration-200',
             isSelected
-              ? "bg-amber-500/30 border-amber-500/50 text-amber-300"
-              : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:text-white/80"
+              ? 'bg-amber-500/30 border-amber-500/50 text-amber-300'
+              : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:text-white/80'
           )}
         >
           {isSelected && <Check className="h-3 w-3 mr-1 inline" />}
@@ -137,9 +137,9 @@ const JobFilterPills = ({
   useEffect(() => {
     const ref = scrollRef.current;
     if (ref) {
-      ref.addEventListener("scroll", handleScroll);
+      ref.addEventListener('scroll', handleScroll);
       handleScroll();
-      return () => ref.removeEventListener("scroll", handleScroll);
+      return () => ref.removeEventListener('scroll', handleScroll);
     }
   }, []);
 
@@ -183,18 +183,18 @@ const JobFilterPills = ({
 
   // Scroll helpers
   const scrollLeft = () => {
-    scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
+    scrollRef.current?.scrollBy({ left: -200, behavior: 'smooth' });
   };
 
   const scrollRight = () => {
-    scrollRef.current?.scrollBy({ left: 200, behavior: "smooth" });
+    scrollRef.current?.scrollBy({ left: 200, behavior: 'smooth' });
   };
 
   // Source options from available sources
   const sourceOptions = availableSources.map((s) => ({ id: s, label: s }));
 
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn('space-y-3', className)}>
       {/* Header Row */}
       <div className="flex items-center justify-between px-1">
         <div className="flex items-center gap-2">
@@ -278,7 +278,7 @@ const JobFilterPills = ({
         <div
           ref={scrollRef}
           className="flex gap-6 overflow-x-auto scrollbar-hide py-2 px-1"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {/* Job Type Filters */}
           <FilterCategory
@@ -327,7 +327,7 @@ const JobFilterPills = ({
         {activeCount > 0 && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
+            animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className="overflow-hidden"
           >

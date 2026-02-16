@@ -1,14 +1,13 @@
-
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Zap, Shield, AlertOctagon } from "lucide-react";
-import { SubsectionProps } from "./subsection1_1/types";
-import CourseContentSection from "../CourseContentSection";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, Zap, Shield, AlertOctagon } from 'lucide-react';
+import { SubsectionProps } from './subsection1_1/types';
+import CourseContentSection from '../CourseContentSection';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   const isMobile = useIsMobile();
-  
+
   return (
     <div className="space-y-6">
       <CourseContentSection
@@ -18,7 +17,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         icon="shield-alert"
         subsectionId={subsectionId}
       />
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Electrical Hazards Card */}
         <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
@@ -26,16 +25,29 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <Zap className="h-5 w-5 mr-2" />
             Electrical Hazards
           </h3>
-          
+
           {!isMobile ? (
             <div className="bg-white/10 border border-elec-yellow/30 rounded p-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Current Effects:</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
-                <li><span className="font-medium text-white">1-5mA</span> - Slight tingling</li>
-                <li><span className="font-medium text-white">5-30mA</span> - Painful shock, cannot let go</li>
-                <li><span className="font-medium text-white">30-50mA</span> - Respiratory difficulty</li>
-                <li><span className="font-medium text-white">50-100mA</span> - Ventricular fibrillation</li>
-                <li><span className="font-medium text-white">100+ mA</span> - Severe burns, cardiac arrest</li>
+                <li>
+                  <span className="font-medium text-white">1-5mA</span> - Slight tingling
+                </li>
+                <li>
+                  <span className="font-medium text-white">5-30mA</span> - Painful shock, cannot let
+                  go
+                </li>
+                <li>
+                  <span className="font-medium text-white">30-50mA</span> - Respiratory difficulty
+                </li>
+                <li>
+                  <span className="font-medium text-white">50-100mA</span> - Ventricular
+                  fibrillation
+                </li>
+                <li>
+                  <span className="font-medium text-white">100+ mA</span> - Severe burns, cardiac
+                  arrest
+                </li>
               </ul>
             </div>
           ) : (
@@ -50,7 +62,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </ul>
             </div>
           )}
-          
+
           <h4 className="font-semibold text-sm mt-2">Electrical Fire Risks:</h4>
           <ul className="list-disc pl-5 space-y-1 text-xs">
             <li>Thermal burns from heated equipment</li>
@@ -58,25 +70,35 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <li>Fires from overheating cables</li>
           </ul>
         </div>
-        
+
         {/* Safe Isolation Card */}
         <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
           <h3 className="text-lg font-bold text-elec-yellow flex items-center">
             <Shield className="h-5 w-5 mr-2" />
             Safe Isolation
           </h3>
-          
+
           <div className="bg-white/10 border border-elec-yellow/30 rounded p-3">
             <h4 className="font-semibold text-elec-yellow mb-1 text-sm">Safe Isolation Steps:</h4>
             <ol className="list-decimal pl-4 space-y-1 text-xs">
-              <li><span className="font-medium">Identify</span> the circuit</li>
-              <li><span className="font-medium">Isolate</span> and lock off</li>
-              <li><span className="font-medium">Prove</span> the voltage tester</li>
-              <li><span className="font-medium">Test</span> the circuit is dead</li>
-              <li><span className="font-medium">Reprove</span> the tester</li>
+              <li>
+                <span className="font-medium">Identify</span> the circuit
+              </li>
+              <li>
+                <span className="font-medium">Isolate</span> and lock off
+              </li>
+              <li>
+                <span className="font-medium">Prove</span> the voltage tester
+              </li>
+              <li>
+                <span className="font-medium">Test</span> the circuit is dead
+              </li>
+              <li>
+                <span className="font-medium">Reprove</span> the tester
+              </li>
             </ol>
           </div>
-          
+
           <div className="bg-white/10 border border-elec-yellow/30 rounded p-3 text-xs">
             <p className="font-medium text-elec-yellow">When live work is permitted:</p>
             <ul className="list-disc pl-4 mt-1 space-y-0.5">
@@ -86,7 +108,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Legislation Card */}
         <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
@@ -94,7 +116,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <AlertOctagon className="h-5 w-5 mr-2" />
             Key Legislation
           </h3>
-          
+
           <ul className="list-disc pl-5 space-y-2 text-xs">
             <li>
               <span className="font-medium">Health and Safety at Work Act 1974</span>
@@ -110,14 +132,14 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </li>
           </ul>
         </div>
-        
+
         {/* First Aid Card */}
         <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
           <h3 className="text-lg font-bold text-elec-yellow flex items-center">
             <Shield className="h-5 w-5 mr-2" />
             First Aid
           </h3>
-          
+
           <div className="bg-white/10 border border-elec-yellow/30 rounded p-3">
             <h4 className="font-semibold text-elec-yellow mb-1 text-sm">Emergency Steps:</h4>
             <ol className="list-decimal pl-4 space-y-1 text-xs">
@@ -127,14 +149,14 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <li>Start CPR if needed</li>
             </ol>
           </div>
-          
+
           <ul className="list-disc pl-4 text-xs space-y-1">
             <li>Even minor shocks need medical attention</li>
             <li>Report all electrical incidents</li>
           </ul>
         </div>
       </div>
-      
+
       <div className="flex justify-center pt-4 border-t border-elec-yellow/20">
         <Button
           variant="study"

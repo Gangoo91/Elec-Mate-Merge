@@ -1,5 +1,5 @@
-import { ExternalLink, Check, X } from "lucide-react";
-import type { Supplier } from "@/data/professional-tools/types";
+import { ExternalLink, Check, X } from 'lucide-react';
+import type { Supplier } from '@/data/professional-tools/types';
 
 interface SupplierCardProps {
   supplier: Supplier;
@@ -20,16 +20,13 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
           <ExternalLink className="h-3 w-3" />
         </a>
       </div>
-      <p className="text-xs text-white leading-relaxed">
-        {supplier.description}
-      </p>
+      <p className="text-xs text-white leading-relaxed">{supplier.description}</p>
       <div className="space-y-1.5 text-xs text-white">
         <div>
           <span className="font-medium">Best for:</span> {supplier.bestFor}
         </div>
         <div>
-          <span className="font-medium">Delivery:</span>{" "}
-          {supplier.deliveryInfo}
+          <span className="font-medium">Delivery:</span> {supplier.deliveryInfo}
         </div>
         <div className="flex items-center gap-1">
           <span className="font-medium">Trade account:</span>

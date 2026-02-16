@@ -3,13 +3,13 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule5Section1LearningOutcomes = () => {
   const outcomes = [
-    "Explain what smart locks and keypads are and how they differ from traditional locks",
-    "Identify different types of smart locks and their features",
-    "Describe how keypads and digital codes enhance security", 
-    "Recognise the benefits and risks of smart access systems",
-    "Configure basic smart lock and keypad setups for different property types",
-    "Understand connectivity options like Bluetooth, Wi-Fi, Zigbee, and Z-Wave",
-    "Apply best practices for secure installation and code management"
+    'Explain what smart locks and keypads are and how they differ from traditional locks',
+    'Identify different types of smart locks and their features',
+    'Describe how keypads and digital codes enhance security',
+    'Recognise the benefits and risks of smart access systems',
+    'Configure basic smart lock and keypad setups for different property types',
+    'Understand connectivity options like Bluetooth, Wi-Fi, Zigbee, and Z-Wave',
+    'Apply best practices for secure installation and code management',
   ];
 
   return (

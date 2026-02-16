@@ -17,7 +17,7 @@ import {
   CalendarClock,
   CheckCircle2,
   Mail,
-  Loader2
+  Loader2,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -34,7 +34,11 @@ import { StatusBadge } from './StatusBadge';
 import { BuildingControlFinder } from './BuildingControlFinder';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { Notification } from '@/hooks/useNotifications';
-import { formatDeadlineStatus, getDeadlineUrgency, getDaysUntilDeadline } from '@/utils/notificationHelper';
+import {
+  formatDeadlineStatus,
+  getDeadlineUrgency,
+  getDaysUntilDeadline,
+} from '@/utils/notificationHelper';
 import { PORTAL_LINKS } from '@/utils/portalLinks';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -57,7 +61,7 @@ const formatWorkType = (workType: string): string => {
     .replace(/-/g, ' ')
     .replace(/_/g, ' ')
     .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 };
 
@@ -65,13 +69,37 @@ const formatWorkType = (workType: string): string => {
 const getReportTypeBadge = (reportType?: string) => {
   switch (reportType) {
     case 'minor-works':
-      return { label: 'Minor Works', short: 'MW', color: 'bg-purple-500', textColor: 'text-purple-400', borderColor: 'border-purple-500/30' };
+      return {
+        label: 'Minor Works',
+        short: 'MW',
+        color: 'bg-purple-500',
+        textColor: 'text-purple-400',
+        borderColor: 'border-purple-500/30',
+      };
     case 'eic':
-      return { label: 'EIC', short: 'EIC', color: 'bg-blue-500', textColor: 'text-blue-400', borderColor: 'border-blue-500/30' };
+      return {
+        label: 'EIC',
+        short: 'EIC',
+        color: 'bg-blue-500',
+        textColor: 'text-blue-400',
+        borderColor: 'border-blue-500/30',
+      };
     case 'eicr':
-      return { label: 'EICR', short: 'EICR', color: 'bg-green-500', textColor: 'text-green-400', borderColor: 'border-green-500/30' };
+      return {
+        label: 'EICR',
+        short: 'EICR',
+        color: 'bg-green-500',
+        textColor: 'text-green-400',
+        borderColor: 'border-green-500/30',
+      };
     default:
-      return { label: 'Certificate', short: 'CERT', color: 'bg-gray-500', textColor: 'text-gray-400', borderColor: 'border-gray-500/30' };
+      return {
+        label: 'Certificate',
+        short: 'CERT',
+        color: 'bg-gray-500',
+        textColor: 'text-gray-400',
+        borderColor: 'border-gray-500/30',
+      };
   }
 };
 
@@ -88,8 +116,12 @@ export const NotificationCard = ({
   const [showPdfViewer, setShowPdfViewer] = useState(false);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const { toast } = useToast();
-  const urgency = notification.submission_deadline ? getDeadlineUrgency(notification.submission_deadline) : 'safe';
-  const daysRemaining = notification.submission_deadline ? getDaysUntilDeadline(notification.submission_deadline) : null;
+  const urgency = notification.submission_deadline
+    ? getDeadlineUrgency(notification.submission_deadline)
+    : 'safe';
+  const daysRemaining = notification.submission_deadline
+    ? getDaysUntilDeadline(notification.submission_deadline)
+    : null;
 
   const reportBadge = getReportTypeBadge(notification.reports?.report_type);
   const clientName = notification.reports?.client_name;
@@ -130,7 +162,7 @@ export const NotificationCard = ({
         body: {
           reportId: notification.reports.id,
           recipientEmail: clientEmail,
-        }
+        },
       });
 
       if (error) throw error;
@@ -147,7 +179,10 @@ export const NotificationCard = ({
       console.error('Error sending certificate email:', error);
       toast({
         title: 'Email Failed',
-        description: error instanceof Error ? error.message : 'Failed to send certificate email. Please try again.',
+        description:
+          error instanceof Error
+            ? error.message
+            : 'Failed to send certificate email. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -159,7 +194,7 @@ export const NotificationCard = ({
   const submissionCount = [
     showNiceic && notification.niceic_submitted,
     showNapit && notification.napit_submitted,
-    notification.local_authority_submitted
+    notification.local_authority_submitted,
   ].filter(Boolean).length;
   const totalSubmissions = [showNiceic, showNapit, true].filter(Boolean).length;
   const isFullySubmitted = submissionCount === totalSubmissions;
@@ -172,7 +207,7 @@ export const NotificationCard = ({
       badge: 'bg-green-500/20 text-green-400 border-green-500/30',
       deadline: 'bg-green-500/20 text-green-400',
       icon: 'text-green-500',
-      glow: 'shadow-green-500/5'
+      glow: 'shadow-green-500/5',
     },
     warning: {
       card: 'border-amber-500/30 bg-gradient-to-br from-card to-amber-500/5',
@@ -180,7 +215,7 @@ export const NotificationCard = ({
       badge: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
       deadline: 'bg-amber-500/20 text-amber-400',
       icon: 'text-amber-500',
-      glow: 'shadow-amber-500/5'
+      glow: 'shadow-amber-500/5',
     },
     urgent: {
       card: 'border-orange-500/40 bg-gradient-to-br from-card to-orange-500/10',
@@ -188,7 +223,7 @@ export const NotificationCard = ({
       badge: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
       deadline: 'bg-orange-500/20 text-orange-400',
       icon: 'text-orange-500',
-      glow: 'shadow-orange-500/10'
+      glow: 'shadow-orange-500/10',
     },
     overdue: {
       card: 'border-red-500/50 bg-gradient-to-br from-card to-red-500/15',
@@ -196,23 +231,21 @@ export const NotificationCard = ({
       badge: 'bg-red-500/20 text-red-400 border-red-500/30',
       deadline: 'bg-red-500/30 text-red-400',
       icon: 'text-red-500',
-      glow: 'shadow-red-500/15'
-    }
+      glow: 'shadow-red-500/15',
+    },
   };
 
   const styles = urgencyStyles[urgency];
 
   return (
     <>
-      <Card className={cn(
-        'overflow-hidden shadow-lg transition-all',
-        styles.card,
-        styles.glow
-      )}>
+      <Card className={cn('overflow-hidden shadow-lg transition-all', styles.card, styles.glow)}>
         {/* Urgency Banner */}
         {(urgency === 'overdue' || urgency === 'urgent') && (
           <div className={cn('px-4 py-2.5 flex items-center gap-2', styles.header)}>
-            <AlertTriangle className={cn('w-4 h-4', styles.icon, urgency === 'overdue' && 'animate-pulse')} />
+            <AlertTriangle
+              className={cn('w-4 h-4', styles.icon, urgency === 'overdue' && 'animate-pulse')}
+            />
             <span className={cn('text-xs font-bold uppercase tracking-wide', styles.icon)}>
               {urgency === 'overdue' ? 'Overdue - Action Required' : 'Urgent - Deadline Soon'}
             </span>
@@ -224,10 +257,12 @@ export const NotificationCard = ({
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-start gap-3 flex-1 min-w-0">
               {/* Report Type Badge */}
-              <div className={cn(
-                'w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0',
-                reportBadge.color
-              )}>
+              <div
+                className={cn(
+                  'w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0',
+                  reportBadge.color
+                )}
+              >
                 <FileText className="w-6 h-6 text-white" />
               </div>
 
@@ -244,19 +279,23 @@ export const NotificationCard = ({
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-10 w-10 flex-shrink-0 touch-manipulation rounded-xl">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 flex-shrink-0 touch-manipulation rounded-xl"
+                >
                   <MoreVertical className="w-5 h-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-52">
-                <DropdownMenuItem onClick={() => onViewDetails(notification)} className="h-12 gap-3">
+                <DropdownMenuItem
+                  onClick={() => onViewDetails(notification)}
+                  className="h-12 gap-3"
+                >
                   <Eye className="w-4 h-4" />
                   View Full Details
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => setShowPdfViewer(true)}
-                  className="h-12 gap-3"
-                >
+                <DropdownMenuItem onClick={() => setShowPdfViewer(true)} className="h-12 gap-3">
                   <FileText className="w-4 h-4" />
                   Open Certificate
                 </DropdownMenuItem>
@@ -273,7 +312,10 @@ export const NotificationCard = ({
                   Email to Client
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => onDelete(notification.id)} className="h-12 gap-3 text-red-400 focus:text-red-400">
+                <DropdownMenuItem
+                  onClick={() => onDelete(notification.id)}
+                  className="h-12 gap-3 text-red-400 focus:text-red-400"
+                >
                   <Trash2 className="w-4 h-4" />
                   Delete Notification
                 </DropdownMenuItem>
@@ -308,23 +350,35 @@ export const NotificationCard = ({
 
           {/* Deadline Countdown - Prominent */}
           {daysRemaining !== null && (
-            <div className={cn('p-4 rounded-2xl flex items-center justify-between', styles.deadline)}>
+            <div
+              className={cn('p-4 rounded-2xl flex items-center justify-between', styles.deadline)}
+            >
               <div className="flex items-center gap-3">
                 {urgency === 'overdue' || urgency === 'urgent' ? (
-                  <AlertTriangle className={cn('w-6 h-6', styles.icon, urgency === 'overdue' && 'animate-pulse')} />
+                  <AlertTriangle
+                    className={cn('w-6 h-6', styles.icon, urgency === 'overdue' && 'animate-pulse')}
+                  />
                 ) : (
                   <CalendarClock className={cn('w-6 h-6', styles.icon)} />
                 )}
                 <div>
                   <p className="text-xs font-medium opacity-80">Submission Deadline</p>
                   <p className="font-semibold">
-                    {daysRemaining < 0 ? 'Overdue' : daysRemaining === 0 ? 'Due Today!' : `${daysRemaining} Days Left`}
+                    {daysRemaining < 0
+                      ? 'Overdue'
+                      : daysRemaining === 0
+                        ? 'Due Today!'
+                        : `${daysRemaining} Days Left`}
                   </p>
                 </div>
               </div>
               <div className="text-right">
-                <span className={cn('text-3xl font-bold', styles.icon)}>{Math.abs(daysRemaining)}</span>
-                <span className="text-xs block opacity-70">{daysRemaining < 0 ? 'days late' : 'days'}</span>
+                <span className={cn('text-3xl font-bold', styles.icon)}>
+                  {Math.abs(daysRemaining)}
+                </span>
+                <span className="text-xs block opacity-70">
+                  {daysRemaining < 0 ? 'days late' : 'days'}
+                </span>
               </div>
             </div>
           )}
@@ -332,7 +386,9 @@ export const NotificationCard = ({
           {/* Submission Tracking */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Submission Tracking</h4>
+              <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                Submission Tracking
+              </h4>
               {isFullySubmitted && (
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30 gap-1">
                   <CheckCircle2 className="w-3 h-3" />
@@ -344,16 +400,20 @@ export const NotificationCard = ({
             <div className="grid gap-2">
               {/* NICEIC */}
               {showNiceic && (
-                <div className={cn(
-                  'flex items-center justify-between p-3.5 rounded-xl border-2 transition-all touch-manipulation',
-                  notification.niceic_submitted
-                    ? 'bg-gradient-to-r from-yellow-500/15 to-yellow-500/5 border-yellow-500/40'
-                    : 'bg-card/30 border-border/30 hover:border-yellow-500/30'
-                )}>
+                <div
+                  className={cn(
+                    'flex items-center justify-between p-3.5 rounded-xl border-2 transition-all touch-manipulation',
+                    notification.niceic_submitted
+                      ? 'bg-gradient-to-r from-yellow-500/15 to-yellow-500/5 border-yellow-500/40'
+                      : 'bg-card/30 border-border/30 hover:border-yellow-500/30'
+                  )}
+                >
                   <label className="flex items-center gap-3 flex-1 cursor-pointer">
                     <Checkbox
                       checked={notification.niceic_submitted}
-                      onCheckedChange={(checked) => onUpdate(notification.id, { niceic_submitted: checked })}
+                      onCheckedChange={(checked) =>
+                        onUpdate(notification.id, { niceic_submitted: checked })
+                      }
                       className="h-6 w-6 rounded-lg border-2 border-yellow-500/50 data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500 data-[state=checked]:text-black"
                     />
                     <div className="flex items-center gap-2">
@@ -362,7 +422,9 @@ export const NotificationCard = ({
                       </div>
                       <div>
                         <span className="font-semibold text-sm block">NICEIC</span>
-                        <span className="text-[10px] text-muted-foreground">Certification Portal</span>
+                        <span className="text-[10px] text-muted-foreground">
+                          Certification Portal
+                        </span>
                       </div>
                     </div>
                   </label>
@@ -379,16 +441,20 @@ export const NotificationCard = ({
 
               {/* NAPIT */}
               {showNapit && (
-                <div className={cn(
-                  'flex items-center justify-between p-3.5 rounded-xl border-2 transition-all touch-manipulation',
-                  notification.napit_submitted
-                    ? 'bg-gradient-to-r from-blue-500/15 to-blue-500/5 border-blue-500/40'
-                    : 'bg-card/30 border-border/30 hover:border-blue-500/30'
-                )}>
+                <div
+                  className={cn(
+                    'flex items-center justify-between p-3.5 rounded-xl border-2 transition-all touch-manipulation',
+                    notification.napit_submitted
+                      ? 'bg-gradient-to-r from-blue-500/15 to-blue-500/5 border-blue-500/40'
+                      : 'bg-card/30 border-border/30 hover:border-blue-500/30'
+                  )}
+                >
                   <label className="flex items-center gap-3 flex-1 cursor-pointer">
                     <Checkbox
                       checked={notification.napit_submitted}
-                      onCheckedChange={(checked) => onUpdate(notification.id, { napit_submitted: checked })}
+                      onCheckedChange={(checked) =>
+                        onUpdate(notification.id, { napit_submitted: checked })
+                      }
                       className="h-6 w-6 rounded-lg border-2 border-blue-500/50 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
                     />
                     <div className="flex items-center gap-2">
@@ -413,16 +479,20 @@ export const NotificationCard = ({
               )}
 
               {/* Local Authority */}
-              <div className={cn(
-                'flex items-center justify-between p-3.5 rounded-xl border-2 transition-all touch-manipulation',
-                notification.local_authority_submitted
-                  ? 'bg-gradient-to-r from-green-500/15 to-green-500/5 border-green-500/40'
-                  : 'bg-card/30 border-border/30 hover:border-green-500/30'
-              )}>
+              <div
+                className={cn(
+                  'flex items-center justify-between p-3.5 rounded-xl border-2 transition-all touch-manipulation',
+                  notification.local_authority_submitted
+                    ? 'bg-gradient-to-r from-green-500/15 to-green-500/5 border-green-500/40'
+                    : 'bg-card/30 border-border/30 hover:border-green-500/30'
+                )}
+              >
                 <label className="flex items-center gap-3 flex-1 cursor-pointer">
                   <Checkbox
                     checked={notification.local_authority_submitted}
-                    onCheckedChange={(checked) => onUpdate(notification.id, { local_authority_submitted: checked })}
+                    onCheckedChange={(checked) =>
+                      onUpdate(notification.id, { local_authority_submitted: checked })
+                    }
                     className="h-6 w-6 rounded-lg border-2 border-green-500/50 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-black"
                   />
                   <div className="flex items-center gap-2">

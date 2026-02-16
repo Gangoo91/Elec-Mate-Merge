@@ -40,32 +40,15 @@ export const circuitDescriptions: CircuitDescriptionCategory[] = [
   },
   {
     category: 'Ring Circuits',
-    items: [
-      'Ring - Ground Floor',
-      'Ring - First Floor',
-      'Ring - Kitchen',
-      'Ring - Living Areas',
-    ],
+    items: ['Ring - Ground Floor', 'Ring - First Floor', 'Ring - Kitchen', 'Ring - Living Areas'],
   },
   {
     category: 'Cooking Appliances',
-    items: [
-      'Cooker',
-      'Oven',
-      'Hob',
-      'Cooker/Oven',
-      'Built-in Oven',
-      'Built-in Hob',
-    ],
+    items: ['Cooker', 'Oven', 'Hob', 'Cooker/Oven', 'Built-in Oven', 'Built-in Hob'],
   },
   {
     category: 'Water Heating',
-    items: [
-      'Electric Shower',
-      'Immersion Heater',
-      'Water Heater',
-      'Instant Water Heater',
-    ],
+    items: ['Electric Shower', 'Immersion Heater', 'Water Heater', 'Instant Water Heater'],
   },
   {
     category: 'Heating & Ventilation',

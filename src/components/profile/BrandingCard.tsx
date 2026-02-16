@@ -1,5 +1,15 @@
 import React, { useState, useRef } from 'react';
-import { Palette, Image, PenTool, Upload, Loader2, RotateCcw, Building2, ChevronRight, Check } from 'lucide-react';
+import {
+  Palette,
+  Image,
+  PenTool,
+  Upload,
+  Loader2,
+  RotateCcw,
+  Building2,
+  ChevronRight,
+  Check,
+} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
@@ -38,7 +48,9 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
   // Signature canvas
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [signatureData, setSignatureData] = useState<string | null>(inspectorProfile?.signatureData || null);
+  const [signatureData, setSignatureData] = useState<string | null>(
+    inspectorProfile?.signatureData || null
+  );
   const [hasDrawn, setHasDrawn] = useState(false);
 
   const handleOpen = () => {
@@ -127,7 +139,9 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
   };
 
   // Canvas drawing functions
-  const getCoordinates = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const getCoordinates = (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ) => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
 
@@ -148,7 +162,9 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
     };
   };
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const startDrawing = (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ) => {
     e.preventDefault();
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -237,7 +253,9 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
               <Image className="h-4 w-4 text-pink-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Company Logo</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Company Logo
+              </p>
               {companyProfile?.logo_url ? (
                 <div className="mt-1.5 w-12 h-12 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center overflow-hidden">
                   <img
@@ -258,7 +276,9 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
               <Palette className="h-4 w-4 text-violet-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Brand Colours</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Brand Colours
+              </p>
               <div className="flex items-center gap-3 mt-1.5">
                 <div className="flex items-center gap-2">
                   <div
@@ -284,7 +304,9 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
               <PenTool className="h-4 w-4 text-teal-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Signature</p>
+              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                Signature
+              </p>
               {inspectorProfile?.signatureData ? (
                 <div className="mt-1.5 w-24 h-12 rounded-lg bg-white border border-white/20 overflow-hidden">
                   <img
@@ -303,7 +325,10 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
 
       {/* Edit Sheet */}
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -324,7 +349,11 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
               {isSaving ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : showSuccess ? (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500 }}
+                >
                   <Check className="h-5 w-5 text-green-400" />
                 </motion.div>
               ) : (
@@ -364,7 +393,9 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                       className="hidden"
                     />
                   </label>
-                  <p className="text-[13px] text-white/40 mt-2 px-1">PNG or JPG, square format recommended</p>
+                  <p className="text-[13px] text-white/40 mt-2 px-1">
+                    PNG or JPG, square format recommended
+                  </p>
                 </div>
               </div>
             </div>
@@ -397,12 +428,16 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                     <input
                       type="color"
                       value={formData.secondary_color}
-                      onChange={(e) => setFormData({ ...formData, secondary_color: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, secondary_color: e.target.value })
+                      }
                       className="w-12 h-12 rounded-lg cursor-pointer bg-transparent border border-white/[0.08]"
                     />
                     <Input
                       value={formData.secondary_color}
-                      onChange={(e) => setFormData({ ...formData, secondary_color: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, secondary_color: e.target.value })
+                      }
                       className="flex-1 h-12 font-mono text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl px-3 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
                     />
                   </div>

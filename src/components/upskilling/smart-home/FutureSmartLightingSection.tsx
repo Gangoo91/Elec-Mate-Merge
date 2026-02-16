@@ -12,9 +12,10 @@ export const FutureSmartLightingSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Smart lighting continues to evolve with new standards, health-focused features, and deeper integration capabilities.
+          Smart lighting continues to evolve with new standards, health-focused features, and deeper
+          integration capabilities.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-3 bg-purple-600/10 border border-purple-600/20 rounded-lg">
             <h5 className="font-semibold text-purple-200 mb-2">Matter Standard Convergence</h5>
@@ -39,7 +40,9 @@ export const FutureSmartLightingSection = () => {
           <div className="p-3 bg-green-600/10 border border-green-600/20 rounded-lg">
             <h5 className="font-semibold text-green-200 mb-2">Wellness Integration</h5>
             <ul className="text-sm text-green-100 space-y-1">
-              <li>• <strong>Circadian rhythm lighting</strong> - supporting natural sleep patterns</li>
+              <li>
+                • <strong>Circadian rhythm lighting</strong> - supporting natural sleep patterns
+              </li>
               <li>• Integration with wearable health devices</li>
               <li>• Mood-responsive lighting based on biometric data</li>
               <li>• Therapeutic light therapy features</li>
@@ -49,7 +52,9 @@ export const FutureSmartLightingSection = () => {
           <div className="p-3 bg-orange-600/10 border border-orange-600/20 rounded-lg">
             <h5 className="font-semibold text-orange-200 mb-2">Installation Implications</h5>
             <p className="text-sm text-orange-100">
-              Future-proofing installations means planning for Matter compatibility, ensuring adequate bandwidth for adaptive features, and considering health-focused control strategies from the design stage.
+              Future-proofing installations means planning for Matter compatibility, ensuring
+              adequate bandwidth for adaptive features, and considering health-focused control
+              strategies from the design stage.
             </p>
           </div>
         </div>

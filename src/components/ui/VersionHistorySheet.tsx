@@ -6,13 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { Clock, CheckCircle2, FileText, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { getVersionHistory } from '@/utils/reportVersioning';
 import { cn } from '@/lib/utils';
 
@@ -42,7 +36,7 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
   useEffect(() => {
     if (isOpen && reportId) {
       setIsLoading(true);
-      getVersionHistory(reportId).then(result => {
+      getVersionHistory(reportId).then((result) => {
         setVersions(result);
         setIsLoading(false);
       });
@@ -90,7 +84,9 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
               </div>
             ) : versions.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground text-sm">
-                {reportId ? 'No version history available' : 'Save your report first to see version history'}
+                {reportId
+                  ? 'No version history available'
+                  : 'Save your report first to see version history'}
               </div>
             ) : (
               <div className="space-y-1">
@@ -101,21 +97,24 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
                       'relative flex items-start gap-3 p-3 rounded-xl transition-colors',
                       version.is_latest_version
                         ? 'bg-elec-yellow/10 border border-elec-yellow/20'
-                        : 'bg-card/30',
+                        : 'bg-card/30'
                     )}
                   >
                     {/* Timeline dot */}
                     <div className="flex flex-col items-center flex-shrink-0 pt-0.5">
-                      <div className={cn(
-                        'h-7 w-7 rounded-full flex items-center justify-center',
-                        version.is_latest_version
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/10 text-white/50',
-                      )}>
-                        {version.is_latest_version
-                          ? <CheckCircle2 className="h-4 w-4" />
-                          : <FileText className="h-3.5 w-3.5" />
-                        }
+                      <div
+                        className={cn(
+                          'h-7 w-7 rounded-full flex items-center justify-center',
+                          version.is_latest_version
+                            ? 'bg-elec-yellow text-black'
+                            : 'bg-white/10 text-white/50'
+                        )}
+                      >
+                        {version.is_latest_version ? (
+                          <CheckCircle2 className="h-4 w-4" />
+                        ) : (
+                          <FileText className="h-3.5 w-3.5" />
+                        )}
                       </div>
                       {index < versions.length - 1 && (
                         <div className="w-px h-4 bg-border/30 mt-1" />

@@ -3,11 +3,11 @@
  * Premium glass morphism styling with spring-based counter animations
  */
 
-import { useEffect, useState } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from 'react';
+import { motion, useSpring, useTransform } from 'framer-motion';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   GraduationCap,
   Users,
@@ -17,9 +17,9 @@ import {
   ChevronDown,
   RefreshCw,
   Sparkles,
-} from "lucide-react";
-import { pageVariants, counterSpringConfig } from "./animations/variants";
-import type { LiveEducationAnalytics } from "@/hooks/useLiveEducationData";
+} from 'lucide-react';
+import { pageVariants, counterSpringConfig } from './animations/variants';
+import type { LiveEducationAnalytics } from '@/hooks/useLiveEducationData';
 
 interface EducationHeroCardProps {
   analytics: LiveEducationAnalytics | null;
@@ -35,7 +35,7 @@ interface EducationHeroCardProps {
 // Animated counter component with spring physics
 const AnimatedCounter = ({
   value,
-  suffix = "",
+  suffix = '',
   decimals = 0,
 }: {
   value: number;
@@ -46,14 +46,14 @@ const AnimatedCounter = ({
   const display = useTransform(spring, (latest) =>
     decimals > 0 ? latest.toFixed(decimals) : Math.round(latest).toLocaleString()
   );
-  const [displayValue, setDisplayValue] = useState("0");
+  const [displayValue, setDisplayValue] = useState('0');
 
   useEffect(() => {
     spring.set(value);
   }, [value, spring]);
 
   useEffect(() => {
-    const unsubscribe = display.on("change", (v) => setDisplayValue(v));
+    const unsubscribe = display.on('change', (v) => setDisplayValue(v));
     return unsubscribe;
   }, [display]);
 
@@ -70,9 +70,9 @@ const StatPill = ({
   icon: Icon,
   value,
   label,
-  suffix = "",
+  suffix = '',
   decimals = 0,
-  iconColor = "text-purple-400",
+  iconColor = 'text-purple-400',
 }: {
   icon: typeof GraduationCap;
   value: number;
@@ -84,11 +84,11 @@ const StatPill = ({
   <motion.div
     initial={{ opacity: 0, scale: 0.95 }}
     animate={{ opacity: 1, scale: 1 }}
-    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+    transition={{ type: 'spring', stiffness: 300, damping: 25 }}
     className="flex-shrink-0 flex items-center gap-2 bg-white/5 hover:bg-white/10 rounded-full px-3 py-2 border border-white/10 transition-colors"
   >
     <div className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center">
-      <Icon className={cn("h-4 w-4", iconColor)} />
+      <Icon className={cn('h-4 w-4', iconColor)} />
     </div>
     <div className="text-sm font-semibold text-white whitespace-nowrap">
       <AnimatedCounter value={value} suffix={suffix} decimals={decimals} />
@@ -112,7 +112,7 @@ const EducationHeroCard = ({
       variants={pageVariants}
       initial="initial"
       animate="animate"
-      className={cn("space-y-4", className)}
+      className={cn('space-y-4', className)}
     >
       {/* Main Hero Card - Premium Design */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple-900/40 via-background to-background border border-purple-500/20">
@@ -136,8 +136,7 @@ const EducationHeroCard = ({
               {/* Title */}
               <div>
                 <h1 className="text-lg sm:text-2xl font-semibold text-white">
-                  Further{" "}
-                  <span className="text-purple-400">Education</span>
+                  Further <span className="text-purple-400">Education</span>
                 </h1>
                 <p className="text-xs sm:text-sm text-white/60 hidden sm:block">
                   HNC, HND, degrees & apprenticeships
@@ -154,9 +153,7 @@ const EducationHeroCard = ({
                 variant="ghost"
                 className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10 rounded-lg"
               >
-                <RefreshCw
-                  className={cn("h-4 w-4", isRefreshing && "animate-spin")}
-                />
+                <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
               </Button>
             )}
           </div>
@@ -170,10 +167,10 @@ const EducationHeroCard = ({
             >
               <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
               <span className="text-xs font-medium text-emerald-300">
-                Live data • Updated{" "}
-                {new Date(lastUpdated).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "short",
+                Live data • Updated{' '}
+                {new Date(lastUpdated).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
                 })}
               </span>
             </motion.div>
@@ -260,8 +257,7 @@ const EducationHeroCard = ({
                   variant="secondary"
                   className="bg-white/10 text-white border-white/10 hover:bg-purple-500/20 hover:text-purple-300 hover:border-purple-500/30 transition-colors cursor-pointer"
                 >
-                  {category.name}{" "}
-                  <span className="text-white/50 ml-1">({category.count})</span>
+                  {category.name} <span className="text-white/50 ml-1">({category.count})</span>
                 </Badge>
               </motion.div>
             ))}

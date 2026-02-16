@@ -1,14 +1,22 @@
-import { Clock, ChevronDown, Briefcase, FileText, Calendar, MapPin, AlertTriangle } from "lucide-react";
-import { JobDetails } from "@/types/quote";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
+import {
+  Clock,
+  ChevronDown,
+  Briefcase,
+  FileText,
+  Calendar,
+  MapPin,
+  AlertTriangle,
+} from 'lucide-react';
+import { JobDetails } from '@/types/quote';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 interface JobDetailsStepProps {
   jobDetails?: JobDetails;
@@ -16,15 +24,15 @@ interface JobDetailsStepProps {
 }
 
 const durationOptions = [
-  { value: "Half day", label: "Half day" },
-  { value: "1 day", label: "1 day" },
-  { value: "2 days", label: "2 days" },
-  { value: "3 days", label: "3 days" },
-  { value: "1 week", label: "1 week" },
-  { value: "2 weeks", label: "2 weeks" },
-  { value: "3 weeks", label: "3 weeks" },
-  { value: "1 month", label: "1 month" },
-  { value: "Other", label: "Other..." },
+  { value: 'Half day', label: 'Half day' },
+  { value: '1 day', label: '1 day' },
+  { value: '2 days', label: '2 days' },
+  { value: '3 days', label: '3 days' },
+  { value: '1 week', label: '1 week' },
+  { value: '2 weeks', label: '2 weeks' },
+  { value: '3 weeks', label: '3 weeks' },
+  { value: '1 month', label: '1 month' },
+  { value: 'Other', label: 'Other...' },
 ];
 
 export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
@@ -38,8 +46,10 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
   };
 
   // Clean input styles
-  const inputClassName = "w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow";
-  const textareaClassName = "w-full bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow resize-none";
+  const inputClassName =
+    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
+  const textareaClassName =
+    'w-full bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow resize-none';
 
   return (
     <div className="space-y-4 text-left">
@@ -58,8 +68,8 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white/70 block mb-0.5">Job Title *</label>
               <input
-                value={jobDetails?.title || ""}
-                onChange={(e) => handleChange("title", e.target.value)}
+                value={jobDetails?.title || ''}
+                onChange={(e) => handleChange('title', e.target.value)}
                 placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
                 className={inputClassName}
               />
@@ -75,8 +85,8 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <div className="flex-1 min-w-0 text-left">
                 <label className="text-[12px] text-white/70 block mb-1">Job Description *</label>
                 <textarea
-                  value={jobDetails?.description || ""}
-                  onChange={(e) => handleChange("description", e.target.value)}
+                  value={jobDetails?.description || ''}
+                  onChange={(e) => handleChange('description', e.target.value)}
                   placeholder="Describe the scope of work..."
                   rows={4}
                   className={textareaClassName}
@@ -95,7 +105,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
           {/* Duration */}
-          {jobDetails?.estimatedDuration === "Other" ? (
+          {jobDetails?.estimatedDuration === 'Other' ? (
             <div className="flex items-center gap-3 p-4">
               <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
                 <Clock className="h-5 w-5 text-black" />
@@ -104,14 +114,14 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
                 <label className="text-[12px] text-white/70 block mb-0.5">Custom Duration</label>
                 <div className="flex items-center gap-2">
                   <input
-                    value={jobDetails?.customDuration || ""}
-                    onChange={(e) => handleChange("customDuration", e.target.value)}
+                    value={jobDetails?.customDuration || ''}
+                    onChange={(e) => handleChange('customDuration', e.target.value)}
                     placeholder="Enter duration"
                     className={inputClassName}
                   />
                   <button
                     type="button"
-                    onClick={() => handleChange("estimatedDuration", "")}
+                    onClick={() => handleChange('estimatedDuration', '')}
                     className="text-[14px] text-elec-yellow font-medium shrink-0 touch-manipulation"
                   >
                     Reset
@@ -127,8 +137,8 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <div className="flex-1 min-w-0 text-left">
                 <label className="text-[12px] text-white/70 block mb-0.5">Estimated Duration</label>
                 <Select
-                  value={jobDetails?.estimatedDuration || ""}
-                  onValueChange={(value) => handleChange("estimatedDuration", value)}
+                  value={jobDetails?.estimatedDuration || ''}
+                  onValueChange={(value) => handleChange('estimatedDuration', value)}
                 >
                   <SelectTrigger className="w-full h-8 bg-transparent border-0 text-[16px] font-medium text-white focus:ring-0 focus:ring-offset-0 px-0 touch-manipulation [&>svg]:text-white/30">
                     <SelectValue placeholder="Select duration" />
@@ -158,9 +168,9 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <label className="text-[12px] text-white/70 block mb-0.5">Proposed Start Date</label>
               <input
                 type="date"
-                value={jobDetails?.workStartDate || ""}
-                onChange={(e) => handleChange("workStartDate", e.target.value)}
-                className={cn(inputClassName, "[color-scheme:dark]")}
+                value={jobDetails?.workStartDate || ''}
+                onChange={(e) => handleChange('workStartDate', e.target.value)}
+                className={cn(inputClassName, '[color-scheme:dark]')}
               />
             </div>
           </div>
@@ -172,16 +182,15 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
         type="button"
         onClick={() => setShowOptional(!showOptional)}
         className={cn(
-          "w-full flex items-center justify-between px-4 py-4 rounded-2xl transition-all touch-manipulation active:scale-[0.99]",
-          "bg-white/[0.03] border border-white/[0.06]",
-          showOptional && "bg-white/[0.05] border-white/[0.1]"
+          'w-full flex items-center justify-between px-4 py-4 rounded-2xl transition-all touch-manipulation active:scale-[0.99]',
+          'bg-white/[0.03] border border-white/[0.06]',
+          showOptional && 'bg-white/[0.05] border-white/[0.1]'
         )}
       >
         <span className="text-[14px] font-medium text-white/60">Additional Details (optional)</span>
-        <ChevronDown className={cn(
-          "h-4 w-4 text-white/30 transition-transform",
-          showOptional && "rotate-180"
-        )} />
+        <ChevronDown
+          className={cn('h-4 w-4 text-white/30 transition-transform', showOptional && 'rotate-180')}
+        />
       </button>
 
       {/* Optional Fields */}
@@ -195,8 +204,8 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white/70 block mb-0.5">Work Location</label>
               <input
-                value={jobDetails?.location || ""}
-                onChange={(e) => handleChange("location", e.target.value)}
+                value={jobDetails?.location || ''}
+                onChange={(e) => handleChange('location', e.target.value)}
                 placeholder="If different from client address"
                 className={inputClassName}
               />
@@ -212,8 +221,8 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <div className="flex-1 min-w-0 text-left">
                 <label className="text-[12px] text-white/70 block mb-1">Special Requirements</label>
                 <textarea
-                  value={jobDetails?.specialRequirements || ""}
-                  onChange={(e) => handleChange("specialRequirements", e.target.value)}
+                  value={jobDetails?.specialRequirements || ''}
+                  onChange={(e) => handleChange('specialRequirements', e.target.value)}
                   placeholder="Access restrictions, working hours, safety considerations..."
                   rows={3}
                   className={textareaClassName}

@@ -33,7 +33,10 @@ export const QuoteSendDropdown = ({
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
-  const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
+  const pollPdfDownloadUrl = async (
+    documentId: string,
+    accessToken: string
+  ): Promise<string | null> => {
     for (let i = 0; i < 45; i++) {
       const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: { documentId, mode: 'status' },
@@ -57,7 +60,9 @@ export const QuoteSendDropdown = ({
     companyProfileData: any
   ): Promise<{ downloadUrl: string | null; documentId: string | null }> => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (!session) {
         console.error('[PDF] No active session');
         return { downloadUrl: null, documentId: null };
@@ -66,16 +71,19 @@ export const QuoteSendDropdown = ({
       console.log('[PDF] Generating fresh PDF for quote:', quoteData.id);
 
       // Call PDF Monkey edge function to generate PDF
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: {
-          quote: quoteData,
-          companyProfile: companyProfileData,
-          force_regenerate: true
-        },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
+        'generate-pdf-monkey',
+        {
+          body: {
+            quote: quoteData,
+            companyProfile: companyProfileData,
+            force_regenerate: true,
+          },
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
         }
-      });
+      );
 
       if (pdfError) {
         console.error('[PDF] Generation error:', pdfError);
@@ -121,20 +129,18 @@ export const QuoteSendDropdown = ({
 
       // Generate new token (full UUID format for consistency)
       const newToken = crypto.randomUUID();
-      
+
       // Validate UUID format
       if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(newToken)) {
         throw new Error('Invalid token format generated');
       }
-      
-      const { error } = await supabase
-        .from('quote_views')
-        .insert({
-          quote_id: quote.id,
-          public_token: newToken,
-          is_active: true,
-          view_count: 0
-        });
+
+      const { error } = await supabase.from('quote_views').insert({
+        quote_id: quote.id,
+        public_token: newToken,
+        is_active: true,
+        view_count: 0,
+      });
 
       if (error) {
         console.error('Error creating public token:', error);
@@ -156,16 +162,20 @@ export const QuoteSendDropdown = ({
       const cleanTo = quote.client?.email?.trim();
       if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
         toast({
-          title: "Invalid Client Email",
-          description: "Client email address is invalid. Please correct it in the quote and try again.",
-          variant: "destructive",
+          title: 'Invalid Client Email',
+          description:
+            'Client email address is invalid. Please correct it in the quote and try again.',
+          variant: 'destructive',
         });
         setIsSendingEmail(false);
         return;
       }
 
       // Get current session
-      let { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      let {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
 
       if (sessionError || !session) {
         const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
@@ -181,8 +191,8 @@ export const QuoteSendDropdown = ({
       const { data, error } = await supabase.functions.invoke('send-quote-resend', {
         body: { quoteId: quote.id },
         headers: {
-          Authorization: `Bearer ${session.access_token}`
-        }
+          Authorization: `Bearer ${session.access_token}`,
+        },
       });
 
       console.log('📧 Response:', { data, error });
@@ -231,10 +241,7 @@ export const QuoteSendDropdown = ({
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Update status to sent
-      await supabase
-        .from('quotes')
-        .update({ status: 'sent' })
-        .eq('id', quote.id);
+      await supabase.from('quotes').update({ status: 'sent' }).eq('id', quote.id);
 
       onSuccess?.();
     } catch (error: any) {
@@ -255,10 +262,12 @@ export const QuoteSendDropdown = ({
   const handleShareWhatsApp = async () => {
     try {
       setIsSharingWhatsApp(true);
-      
+
       console.log('🔄 Starting WhatsApp share process...');
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('User not authenticated');
       }
@@ -275,7 +284,7 @@ export const QuoteSendDropdown = ({
         console.error('❌ Failed to fetch quote:', fetchError);
         throw new Error('Failed to fetch latest quote data');
       }
-      
+
       console.log('✅ Quote data fetched:', freshQuote.quote_number);
 
       const { data: companyData, error: companyError } = await supabase
@@ -289,9 +298,10 @@ export const QuoteSendDropdown = ({
       }
 
       // Step 2: Check if PDF is current
-      const pdfIsCurrent = freshQuote?.pdf_url && 
-                           freshQuote?.pdf_generated_at && 
-                           new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
+      const pdfIsCurrent =
+        freshQuote?.pdf_url &&
+        freshQuote?.pdf_generated_at &&
+        new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
 
       let pdfUrl = freshQuote.pdf_url;
       let documentId = freshQuote.pdf_document_id;
@@ -299,23 +309,23 @@ export const QuoteSendDropdown = ({
       // Try to refresh URL if not current
       if (!pdfIsCurrent && freshQuote.pdf_document_id) {
         console.log('[WHATSAPP] Attempting to refresh PDF URL...');
-        
+
         const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
-          body: { mode: 'status', documentId: freshQuote.pdf_document_id }
+          body: { mode: 'status', documentId: freshQuote.pdf_document_id },
         });
 
         if (statusData?.downloadUrl) {
           pdfUrl = statusData.downloadUrl;
           documentId = freshQuote.pdf_document_id;
-          
+
           await supabase
             .from('quotes')
             .update({
               pdf_url: pdfUrl,
-              pdf_generated_at: new Date().toISOString()
+              pdf_generated_at: new Date().toISOString(),
             })
             .eq('id', quote.id);
-          
+
           console.log('[WHATSAPP] ✅ PDF URL refreshed');
         }
       }
@@ -323,9 +333,9 @@ export const QuoteSendDropdown = ({
       // If still no URL, regenerate PDF
       if (!pdfUrl) {
         console.log('[WHATSAPP] Generating fresh PDF...');
-        
+
         const result = await generateFreshPDF(freshQuote as any, companyData);
-        
+
         if (!result.downloadUrl) {
           throw new Error('Failed to generate professional PDF');
         }
@@ -339,7 +349,7 @@ export const QuoteSendDropdown = ({
             pdf_document_id: documentId,
             pdf_url: pdfUrl,
             pdf_generated_at: new Date().toISOString(),
-            pdf_version: (freshQuote.pdf_version || 0) + 1
+            pdf_version: (freshQuote.pdf_version || 0) + 1,
           })
           .eq('id', quote.id);
 
@@ -349,27 +359,29 @@ export const QuoteSendDropdown = ({
       const pdfDownloadUrl = pdfUrl;
 
       // Step 5: Create professional WhatsApp message with PDF URL
-      const clientData = typeof freshQuote.client_data === 'string' 
-        ? JSON.parse(freshQuote.client_data) 
-        : freshQuote.client_data;
+      const clientData =
+        typeof freshQuote.client_data === 'string'
+          ? JSON.parse(freshQuote.client_data)
+          : freshQuote.client_data;
       const clientName = clientData?.name || 'Valued Client';
       const companyName = companyData?.company_name || 'Your Company';
       const totalAmount = freshQuote.total || 0;
-      const validityDate = freshQuote.expiry_date 
+      const validityDate = freshQuote.expiry_date
         ? format(new Date(freshQuote.expiry_date), 'dd MMMM yyyy')
         : format(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'dd MMMM yyyy');
-      
-      const jobDetails = typeof freshQuote.job_details === 'string' 
-        ? JSON.parse(freshQuote.job_details) 
-        : freshQuote.job_details;
+
+      const jobDetails =
+        typeof freshQuote.job_details === 'string'
+          ? JSON.parse(freshQuote.job_details)
+          : freshQuote.job_details;
       const jobTitle = jobDetails?.title || 'Electrical Work';
-      
+
       // Get or create public token for acceptance link
       const publicToken = await getOrCreatePublicToken();
-      const acceptanceLink = publicToken 
+      const acceptanceLink = publicToken
         ? `${window.location.origin}/public-quote/${publicToken}`
         : null;
-      
+
       const message = `📋 *Quote ${freshQuote.quote_number}*
 
 Dear ${clientName},
@@ -389,7 +401,7 @@ ${companyName}`;
 
       // Step 6: Build WhatsApp URL
       const clientPhone = clientData?.phone;
-      
+
       let whatsappUrl: string;
       if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
         // UK number - direct to client
@@ -399,14 +411,21 @@ ${companyName}`;
         // No number or international - share URL only
         whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
       }
-      
-      console.log('📱 Opening WhatsApp with URL (first 100 chars):', whatsappUrl.substring(0, 100) + '...');
+
+      console.log(
+        '📱 Opening WhatsApp with URL (first 100 chars):',
+        whatsappUrl.substring(0, 100) + '...'
+      );
 
       // Step 7: Open WhatsApp (NOT the PDF directly)
       try {
         const whatsappWindow = window.open(whatsappUrl, '_blank');
-        
-        if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+
+        if (
+          !whatsappWindow ||
+          whatsappWindow.closed ||
+          typeof whatsappWindow.closed === 'undefined'
+        ) {
           // Popup was blocked
           console.warn('⚠️ Popup blocked, trying location.href...');
           window.location.href = whatsappUrl;
@@ -447,14 +466,14 @@ ${companyName}`;
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant={isResendVariant ? "default" : "outline"}
+          variant={isResendVariant ? 'default' : 'outline'}
           size="sm"
           disabled={disabled || isLoading}
           className={cn(
-            "flex-1 text-xs touch-manipulation",
+            'flex-1 text-xs touch-manipulation',
             isResendVariant
-              ? "h-10 bg-amber-500 hover:bg-amber-600 text-black font-semibold gap-1.5"
-              : "border border-elec-yellow/20 hover:bg-elec-yellow/10"
+              ? 'h-10 bg-amber-500 hover:bg-amber-600 text-black font-semibold gap-1.5'
+              : 'border border-elec-yellow/20 hover:bg-elec-yellow/10'
           )}
         >
           {isLoading ? (

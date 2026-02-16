@@ -1,4 +1,3 @@
-
 import jsPDF from 'jspdf';
 
 interface AssessmentCriteria {
@@ -6,7 +5,7 @@ interface AssessmentCriteria {
   category: string;
   criteria: string;
   weight: number;
-  status: "excellent" | "good" | "needs-improvement" | "missing";
+  status: 'excellent' | 'good' | 'needs-improvement' | 'missing';
   feedback: string;
 }
 
@@ -18,8 +17,8 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
 
   // Header
   pdf.setFontSize(18);
-  pdf.setFont("helvetica", "bold");
-  pdf.text("Portfolio Quality Assessment Report", margin, yPosition);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Portfolio Quality Assessment Report', margin, yPosition);
   yPosition += 15;
 
   // Overall Score
@@ -29,20 +28,20 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
 
   // Score interpretation
   pdf.setFontSize(10);
-  pdf.setFont("helvetica", "normal");
-  let interpretation = "";
-  if (overallScore >= 80) interpretation = "Excellent - Ready for assessment";
-  else if (overallScore >= 70) interpretation = "Good - Minor improvements needed";
-  else if (overallScore >= 60) interpretation = "Satisfactory - Some work required";
-  else interpretation = "Needs significant improvement";
-  
+  pdf.setFont('helvetica', 'normal');
+  let interpretation = '';
+  if (overallScore >= 80) interpretation = 'Excellent - Ready for assessment';
+  else if (overallScore >= 70) interpretation = 'Good - Minor improvements needed';
+  else if (overallScore >= 60) interpretation = 'Satisfactory - Some work required';
+  else interpretation = 'Needs significant improvement';
+
   pdf.text(`Assessment: ${interpretation}`, margin, yPosition);
   yPosition += 20;
 
   // Detailed breakdown
   pdf.setFontSize(12);
-  pdf.setFont("helvetica", "bold");
-  pdf.text("Detailed Assessment Breakdown:", margin, yPosition);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Detailed Assessment Breakdown:', margin, yPosition);
   yPosition += 15;
 
   criteria.forEach((item, index) => {
@@ -53,20 +52,23 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
     }
 
     pdf.setFontSize(11);
-    pdf.setFont("helvetica", "bold");
+    pdf.setFont('helvetica', 'bold');
     pdf.text(`${index + 1}. ${item.category}`, margin, yPosition);
     yPosition += 8;
 
     pdf.setFontSize(10);
-    pdf.setFont("helvetica", "normal");
+    pdf.setFont('helvetica', 'normal');
     pdf.text(`Criteria: ${item.criteria}`, margin + 5, yPosition);
     yPosition += 6;
     pdf.text(`Weight: ${item.weight}%`, margin + 5, yPosition);
     yPosition += 6;
-    pdf.text(`Status: ${item.status.replace("-", " ").toUpperCase()}`, margin + 5, yPosition);
+    pdf.text(`Status: ${item.status.replace('-', ' ').toUpperCase()}`, margin + 5, yPosition);
     yPosition += 6;
-    
-    const feedbackLines = pdf.splitTextToSize(`Feedback: ${item.feedback}`, pageWidth - 2 * margin - 5);
+
+    const feedbackLines = pdf.splitTextToSize(
+      `Feedback: ${item.feedback}`,
+      pageWidth - 2 * margin - 5
+    );
     pdf.text(feedbackLines, margin + 5, yPosition);
     yPosition += feedbackLines.length * 5 + 10;
   });
@@ -78,18 +80,18 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
   }
 
   pdf.setFontSize(12);
-  pdf.setFont("helvetica", "bold");
-  pdf.text("Recommendations for Improvement:", margin, yPosition);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Recommendations for Improvement:', margin, yPosition);
   yPosition += 15;
 
   pdf.setFontSize(10);
-  pdf.setFont("helvetica", "normal");
+  pdf.setFont('helvetica', 'normal');
   const recommendations = [
-    "Focus on areas with lower scores first",
-    "Seek feedback from mentors and assessors",
-    "Document improvements to show progression",
-    "Regular self-assessment helps identify gaps early",
-    "Use the interactive learning modules to improve skills"
+    'Focus on areas with lower scores first',
+    'Seek feedback from mentors and assessors',
+    'Document improvements to show progression',
+    'Regular self-assessment helps identify gaps early',
+    'Use the interactive learning modules to improve skills',
   ];
 
   recommendations.forEach((rec, index) => {
@@ -99,8 +101,12 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
 
   // Footer
   pdf.setFontSize(8);
-  pdf.setFont("helvetica", "italic");
-  pdf.text(`Report generated on ${new Date().toLocaleDateString()}`, margin, pdf.internal.pageSize.height - 10);
+  pdf.setFont('helvetica', 'italic');
+  pdf.text(
+    `Report generated on ${new Date().toLocaleDateString()}`,
+    margin,
+    pdf.internal.pageSize.height - 10
+  );
 
   return pdf;
 };

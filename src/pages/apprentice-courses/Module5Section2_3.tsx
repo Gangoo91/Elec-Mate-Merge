@@ -1,37 +1,45 @@
-import { ArrowLeft, ArrowRight, Shield, Building2, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
-import { useState } from "react";
+import { ArrowLeft, ArrowRight, Shield, Building2, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
+import { useState } from 'react';
 
-const TITLE = "Selecting Suitable Protective Devices (MCBs, RCDs - Intro Only) - Module 5.2.3 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn the basics of selecting Miniature Circuit Breakers (MCBs) and Residual Current Devices (RCDs) for electrical installations, covering types, ratings, and BS 7671 compliance.";
+const TITLE =
+  'Selecting Suitable Protective Devices (MCBs, RCDs - Intro Only) - Module 5.2.3 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn the basics of selecting Miniature Circuit Breakers (MCBs) and Residual Current Devices (RCDs) for electrical installations, covering types, ratings, and BS 7671 compliance.';
 
 // Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What do MCBs protect against?",
-    options: ["Only overload", "Only short circuits", "Overload and short-circuit faults", "Electric shock"],
+    question: 'What do MCBs protect against?',
+    options: [
+      'Only overload',
+      'Only short circuits',
+      'Overload and short-circuit faults',
+      'Electric shock',
+    ],
     correctIndex: 2,
-    explanation: "MCBs protect against both overload and short-circuit faults."
+    explanation: 'MCBs protect against both overload and short-circuit faults.',
   },
   {
     id: 2,
-    question: "What is the typical RCD sensitivity for domestic installations?",
-    options: ["10 mA", "30 mA", "100 mA", "300 mA"],
+    question: 'What is the typical RCD sensitivity for domestic installations?',
+    options: ['10 mA', '30 mA', '100 mA', '300 mA'],
     correctIndex: 1,
-    explanation: "30 mA is the typical trip sensitivity for domestic RCD installations."
+    explanation: '30 mA is the typical trip sensitivity for domestic RCD installations.',
   },
   {
     id: 3,
-    question: "Which MCB type is most commonly used in domestic circuits?",
-    options: ["Type A", "Type B", "Type C", "Type D"],
+    question: 'Which MCB type is most commonly used in domestic circuits?',
+    options: ['Type A', 'Type B', 'Type C', 'Type D'],
     correctIndex: 1,
-    explanation: "Type B MCBs are most commonly used in domestic circuits as they trip at 3-5 times rated current."
-  }
+    explanation:
+      'Type B MCBs are most commonly used in domestic circuits as they trip at 3-5 times rated current.',
+  },
 ];
 
 const Module5Section2_3 = () => {
@@ -41,93 +49,118 @@ const Module5Section2_3 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What do MCBs protect against?",
-      options: ["Only overload", "Only short circuits", "Overload and short-circuit faults", "Electric shock"],
+      question: 'What do MCBs protect against?',
+      options: [
+        'Only overload',
+        'Only short circuits',
+        'Overload and short-circuit faults',
+        'Electric shock',
+      ],
       correctAnswer: 2,
-      explanation: "MCBs protect against both overload and short-circuit faults."
+      explanation: 'MCBs protect against both overload and short-circuit faults.',
     },
     {
       id: 2,
-      question: "What do RCDs protect against?",
-      options: ["Overload", "Short circuits", "Earth leakage currents and electric shock", "Voltage fluctuations"],
+      question: 'What do RCDs protect against?',
+      options: [
+        'Overload',
+        'Short circuits',
+        'Earth leakage currents and electric shock',
+        'Voltage fluctuations',
+      ],
       correctAnswer: 2,
-      explanation: "RCDs protect against earth leakage currents and reduce the risk of electric shock."
+      explanation:
+        'RCDs protect against earth leakage currents and reduce the risk of electric shock.',
     },
     {
       id: 3,
-      question: "What is the typical RCD sensitivity for domestic installations?",
-      options: ["10 mA", "30 mA", "100 mA", "300 mA"],
+      question: 'What is the typical RCD sensitivity for domestic installations?',
+      options: ['10 mA', '30 mA', '100 mA', '300 mA'],
       correctAnswer: 1,
-      explanation: "30 mA is the typical trip sensitivity for domestic RCD installations."
+      explanation: '30 mA is the typical trip sensitivity for domestic RCD installations.',
     },
     {
       id: 4,
-      question: "Which MCB type is most common in domestic circuits?",
-      options: ["Type A", "Type B", "Type C", "Type D"],
+      question: 'Which MCB type is most common in domestic circuits?',
+      options: ['Type A', 'Type B', 'Type C', 'Type D'],
       correctAnswer: 1,
-      explanation: "Type B MCBs are most commonly used in domestic circuits."
+      explanation: 'Type B MCBs are most commonly used in domestic circuits.',
     },
     {
       id: 5,
-      question: "True or False: An MCB can provide protection against electric shock.",
-      options: ["True", "False"],
+      question: 'True or False: An MCB can provide protection against electric shock.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False - MCBs protect against overload and short circuits. RCDs provide shock protection."
+      explanation:
+        'False - MCBs protect against overload and short circuits. RCDs provide shock protection.',
     },
     {
       id: 6,
-      question: "What BS 7671 regulation requires RCD protection for sockets ≤32 A?",
-      options: ["Regulation 411.3.3", "Regulation 433.1", "Regulation 434.1", "Regulation 525.1"],
+      question: 'What BS 7671 regulation requires RCD protection for sockets ≤32 A?',
+      options: ['Regulation 411.3.3', 'Regulation 433.1', 'Regulation 434.1', 'Regulation 525.1'],
       correctAnswer: 0,
-      explanation: "Regulation 411.3.3 requires RCD protection for sockets ≤32 A in domestic installations."
+      explanation:
+        'Regulation 411.3.3 requires RCD protection for sockets ≤32 A in domestic installations.',
     },
     {
       id: 7,
-      question: "A lighting circuit uses 1.5 mm² cable. What MCB rating would typically be used?",
-      options: ["3 A", "6 A", "10 A", "16 A"],
+      question: 'A lighting circuit uses 1.5 mm² cable. What MCB rating would typically be used?',
+      options: ['3 A', '6 A', '10 A', '16 A'],
       correctAnswer: 1,
-      explanation: "6 A MCB is typically used for lighting circuits with 1.5 mm² cable."
+      explanation: '6 A MCB is typically used for lighting circuits with 1.5 mm² cable.',
     },
     {
       id: 8,
-      question: "Which MCB type would you likely use for industrial machinery?",
-      options: ["Type A", "Type B", "Type C", "Type D"],
+      question: 'Which MCB type would you likely use for industrial machinery?',
+      options: ['Type A', 'Type B', 'Type C', 'Type D'],
       correctAnswer: 3,
-      explanation: "Type D MCBs are typically used for industrial applications with heavy machinery."
+      explanation:
+        'Type D MCBs are typically used for industrial applications with heavy machinery.',
     },
     {
       id: 9,
-      question: "How often should RCDs be tested with the built-in test button?",
-      options: ["Monthly", "Every 3 months", "Every 6 months", "Annually"],
+      question: 'How often should RCDs be tested with the built-in test button?',
+      options: ['Monthly', 'Every 3 months', 'Every 6 months', 'Annually'],
       correctAnswer: 2,
-      explanation: "RCDs should be tested every 6 months using the test button (or as per manufacturer guidance)."
+      explanation:
+        'RCDs should be tested every 6 months using the test button (or as per manufacturer guidance).',
     },
     {
       id: 10,
-      question: "Why is it important to coordinate MCB and RCD selection?",
-      options: ["To reduce costs", "To ensure protection against both overloads and electric shock without nuisance tripping", "To make installation easier", "To comply with aesthetics"],
+      question: 'Why is it important to coordinate MCB and RCD selection?',
+      options: [
+        'To reduce costs',
+        'To ensure protection against both overloads and electric shock without nuisance tripping',
+        'To make installation easier',
+        'To comply with aesthetics',
+      ],
       correctAnswer: 1,
-      explanation: "Coordination ensures protection against both overloads and electric shock while preventing nuisance tripping."
-    }
+      explanation:
+        'Coordination ensures protection against both overloads and electric shock while preventing nuisance tripping.',
+    },
   ];
 
   const faqs = [
     {
       question: "What's the difference between MCBs and RCDs?",
-      answer: "MCBs protect against overload and short-circuit faults by monitoring current flow. RCDs protect against earth leakage and electric shock by monitoring the balance between live and neutral currents."
+      answer:
+        'MCBs protect against overload and short-circuit faults by monitoring current flow. RCDs protect against earth leakage and electric shock by monitoring the balance between live and neutral currents.',
     },
     {
-      question: "Can I use a Type C MCB on domestic lighting circuits?",
-      answer: "It's not recommended. Type C MCBs require higher fault currents to trip (5-10x rated current) which may not operate quickly enough with domestic fault levels. Type B is appropriate for domestic lighting."
+      question: 'Can I use a Type C MCB on domestic lighting circuits?',
+      answer:
+        "It's not recommended. Type C MCBs require higher fault currents to trip (5-10x rated current) which may not operate quickly enough with domestic fault levels. Type B is appropriate for domestic lighting.",
     },
     {
-      question: "Do I need RCD protection for all circuits?",
-      answer: "BS 7671 requires RCD protection for socket outlets ≤32A in domestic installations, outdoor equipment, and circuits in bathrooms. Other circuits may also require RCD protection depending on the installation."
+      question: 'Do I need RCD protection for all circuits?',
+      answer:
+        'BS 7671 requires RCD protection for socket outlets ≤32A in domestic installations, outdoor equipment, and circuits in bathrooms. Other circuits may also require RCD protection depending on the installation.',
     },
     {
-      question: "How do I know if my MCB rating is correct?",
-      answer: "The MCB rating must not exceed the cable's current-carrying capacity and must be able to carry the expected load. Check cable tables in BS 7671 and consider installation method and ambient temperature."
-    }
+      question: 'How do I know if my MCB rating is correct?',
+      answer:
+        "The MCB rating must not exceed the cable's current-carrying capacity and must be able to carry the expected load. Check cable tables in BS 7671 and consider installation method and ambient temperature.",
+    },
   ];
 
   return (
@@ -161,7 +194,8 @@ const Module5Section2_3 = () => {
               Selecting Suitable Protective Devices (MCBs, RCDs – Intro Only)
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Learn the basics of selecting Miniature Circuit Breakers (MCBs) and Residual Current Devices (RCDs) for safe electrical installations.
+              Learn the basics of selecting Miniature Circuit Breakers (MCBs) and Residual Current
+              Devices (RCDs) for safe electrical installations.
             </p>
           </header>
 
@@ -180,9 +214,15 @@ const Module5Section2_3 = () => {
               <div>
                 <p className="font-medium text-white mb-1">Spot it / Use it:</p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Spot:</strong> 30mA RCD for domestic sockets ≤32A</li>
-                  <li><strong>Use:</strong> BS 7671 Reg 411.3.3 and 433.1</li>
-                  <li><strong>Check:</strong> MCB rating matches cable capacity</li>
+                  <li>
+                    <strong>Spot:</strong> 30mA RCD for domestic sockets ≤32A
+                  </li>
+                  <li>
+                    <strong>Use:</strong> BS 7671 Reg 411.3.3 and 433.1
+                  </li>
+                  <li>
+                    <strong>Check:</strong> MCB rating matches cable capacity
+                  </li>
                 </ul>
               </div>
             </div>
@@ -195,7 +235,11 @@ const Module5Section2_3 = () => {
               Introduction
             </h2>
             <p className="text-white/80 leading-relaxed">
-              Protective devices are essential for safeguarding people, equipment, and cables from overloads, short circuits, and earth faults. Choosing the correct protective device ensures that circuits operate safely and comply with BS 7671 Wiring Regulations. This subsection introduces the basics of selecting Miniature Circuit Breakers (MCBs) and Residual Current Devices (RCDs).
+              Protective devices are essential for safeguarding people, equipment, and cables from
+              overloads, short circuits, and earth faults. Choosing the correct protective device
+              ensures that circuits operate safely and comply with BS 7671 Wiring Regulations. This
+              subsection introduces the basics of selecting Miniature Circuit Breakers (MCBs) and
+              Residual Current Devices (RCDs).
             </p>
           </section>
 
@@ -221,7 +265,9 @@ const Module5Section2_3 = () => {
               Purpose of Protective Devices
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>Protective devices serve multiple critical functions in electrical installations:</p>
+              <p>
+                Protective devices serve multiple critical functions in electrical installations:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Essential Functions</p>
@@ -256,7 +302,8 @@ const Module5Section2_3 = () => {
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-medium text-green-400 mb-2">Key Principle</p>
                 <p className="text-sm">
-                  Protective devices must operate fast enough to prevent dangerous conditions but not so sensitive as to cause nuisance tripping during normal operation.
+                  Protective devices must operate fast enough to prevent dangerous conditions but
+                  not so sensitive as to cause nuisance tripping during normal operation.
                 </p>
               </div>
             </div>
@@ -277,15 +324,30 @@ const Module5Section2_3 = () => {
               Miniature Circuit Breakers (MCBs)
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>MCBs are the most common protective device for protecting against overload and short-circuit faults:</p>
+              <p>
+                MCBs are the most common protective device for protecting against overload and
+                short-circuit faults:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">MCB Operating Principles</p>
                 <ul className="text-sm list-disc ml-4 space-y-1">
-                  <li><strong>Thermal protection:</strong> Bi-metallic strip responds to overload currents</li>
-                  <li><strong>Magnetic protection:</strong> Electromagnetic coil responds to short-circuit currents</li>
-                  <li><strong>Arc extinction:</strong> SF6 gas or vacuum chamber extinguishes the arc safely</li>
-                  <li><strong>Mechanical indication:</strong> Clear ON/OFF position and trip indication</li>
+                  <li>
+                    <strong>Thermal protection:</strong> Bi-metallic strip responds to overload
+                    currents
+                  </li>
+                  <li>
+                    <strong>Magnetic protection:</strong> Electromagnetic coil responds to
+                    short-circuit currents
+                  </li>
+                  <li>
+                    <strong>Arc extinction:</strong> SF6 gas or vacuum chamber extinguishes the arc
+                    safely
+                  </li>
+                  <li>
+                    <strong>Mechanical indication:</strong> Clear ON/OFF position and trip
+                    indication
+                  </li>
                 </ul>
               </div>
 
@@ -295,21 +357,41 @@ const Module5Section2_3 = () => {
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Common Domestic Ratings:</p>
                     <ul className="space-y-1">
-                      <li><strong>6 A:</strong> Lighting circuits (max 8 points)</li>
-                      <li><strong>16 A:</strong> Immersion heaters, small appliances</li>
-                      <li><strong>20 A:</strong> Radial socket circuits (max 20m²)</li>
-                      <li><strong>32 A:</strong> Ring final circuits, small cookers</li>
-                      <li><strong>40 A:</strong> Electric cookers up to 11kW</li>
-                      <li><strong>45 A:</strong> Electric showers up to 10.5kW</li>
+                      <li>
+                        <strong>6 A:</strong> Lighting circuits (max 8 points)
+                      </li>
+                      <li>
+                        <strong>16 A:</strong> Immersion heaters, small appliances
+                      </li>
+                      <li>
+                        <strong>20 A:</strong> Radial socket circuits (max 20m²)
+                      </li>
+                      <li>
+                        <strong>32 A:</strong> Ring final circuits, small cookers
+                      </li>
+                      <li>
+                        <strong>40 A:</strong> Electric cookers up to 11kW
+                      </li>
+                      <li>
+                        <strong>45 A:</strong> Electric showers up to 10.5kW
+                      </li>
                     </ul>
                   </div>
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Commercial/Industrial:</p>
                     <ul className="space-y-1">
-                      <li><strong>50 A:</strong> Large single-phase loads</li>
-                      <li><strong>63 A:</strong> Maximum single-phase MCB rating</li>
-                      <li><strong>80-125 A:</strong> Three-phase distribution</li>
-                      <li><strong>Breaking capacity:</strong> 6kA, 10kA, or 25kA</li>
+                      <li>
+                        <strong>50 A:</strong> Large single-phase loads
+                      </li>
+                      <li>
+                        <strong>63 A:</strong> Maximum single-phase MCB rating
+                      </li>
+                      <li>
+                        <strong>80-125 A:</strong> Three-phase distribution
+                      </li>
+                      <li>
+                        <strong>Breaking capacity:</strong> 6kA, 10kA, or 25kA
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -319,12 +401,20 @@ const Module5Section2_3 = () => {
                 <p className="font-medium text-white">MCB Types (Trip Characteristics):</p>
 
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <p className="font-medium text-elec-yellow mb-2">Type B - Domestic Applications</p>
+                  <p className="font-medium text-elec-yellow mb-2">
+                    Type B - Domestic Applications
+                  </p>
                   <div className="text-sm grid sm:grid-cols-2 gap-3">
                     <ul className="list-disc ml-4 space-y-1">
-                      <li><strong>Trip range:</strong> 3-5x rated current</li>
-                      <li><strong>Magnetic trip:</strong> 3-5 × In (instantaneous)</li>
-                      <li><strong>Applications:</strong> Resistive loads, domestic circuits</li>
+                      <li>
+                        <strong>Trip range:</strong> 3-5x rated current
+                      </li>
+                      <li>
+                        <strong>Magnetic trip:</strong> 3-5 × In (instantaneous)
+                      </li>
+                      <li>
+                        <strong>Applications:</strong> Resistive loads, domestic circuits
+                      </li>
                     </ul>
                     <ul className="list-disc ml-4 space-y-1">
                       <li>Lighting circuits (incandescent, LED)</li>
@@ -338,9 +428,15 @@ const Module5Section2_3 = () => {
                   <p className="font-medium text-elec-yellow mb-2">Type C - Light Commercial</p>
                   <div className="text-sm grid sm:grid-cols-2 gap-3">
                     <ul className="list-disc ml-4 space-y-1">
-                      <li><strong>Trip range:</strong> 5-10x rated current</li>
-                      <li><strong>Higher immunity:</strong> To inrush currents</li>
-                      <li><strong>Applications:</strong> Inductive loads, small motors</li>
+                      <li>
+                        <strong>Trip range:</strong> 5-10x rated current
+                      </li>
+                      <li>
+                        <strong>Higher immunity:</strong> To inrush currents
+                      </li>
+                      <li>
+                        <strong>Applications:</strong> Inductive loads, small motors
+                      </li>
                     </ul>
                     <ul className="list-disc ml-4 space-y-1">
                       <li>Fluorescent lighting with ballasts</li>
@@ -351,12 +447,20 @@ const Module5Section2_3 = () => {
                 </div>
 
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <p className="font-medium text-elec-yellow mb-2">Type D - Industrial Applications</p>
+                  <p className="font-medium text-elec-yellow mb-2">
+                    Type D - Industrial Applications
+                  </p>
                   <div className="text-sm grid sm:grid-cols-2 gap-3">
                     <ul className="list-disc ml-4 space-y-1">
-                      <li><strong>Trip range:</strong> 10-20x rated current</li>
-                      <li><strong>High inrush tolerance:</strong> For motor starting</li>
-                      <li><strong>Applications:</strong> Large motors, welding</li>
+                      <li>
+                        <strong>Trip range:</strong> 10-20x rated current
+                      </li>
+                      <li>
+                        <strong>High inrush tolerance:</strong> For motor starting
+                      </li>
+                      <li>
+                        <strong>Applications:</strong> Large motors, welding
+                      </li>
                     </ul>
                     <ul className="list-disc ml-4 space-y-1">
                       <li>Large three-phase motors</li>
@@ -370,13 +474,25 @@ const Module5Section2_3 = () => {
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-medium text-green-400 mb-2">Practical Calculation Example</p>
                 <div className="text-sm space-y-2">
-                  <p><strong>Scenario:</strong> Selecting MCB for 2.5mm² cable feeding socket outlets</p>
+                  <p>
+                    <strong>Scenario:</strong> Selecting MCB for 2.5mm² cable feeding socket outlets
+                  </p>
                   <div className="bg-black/20 p-2 rounded">
-                    <p><strong>Step 1:</strong> Cable capacity = 27A (Method C, 70°C cable)</p>
-                    <p><strong>Step 2:</strong> Grouping factor = 0.8 (4 cables together)</p>
-                    <p><strong>Step 3:</strong> Derated capacity = 27A × 0.8 = 21.6A</p>
-                    <p><strong>Step 4:</strong> MCB selection = 20A (next size down)</p>
-                    <p><strong>Result:</strong> 20A Type B MCB for radial socket circuit</p>
+                    <p>
+                      <strong>Step 1:</strong> Cable capacity = 27A (Method C, 70°C cable)
+                    </p>
+                    <p>
+                      <strong>Step 2:</strong> Grouping factor = 0.8 (4 cables together)
+                    </p>
+                    <p>
+                      <strong>Step 3:</strong> Derated capacity = 27A × 0.8 = 21.6A
+                    </p>
+                    <p>
+                      <strong>Step 4:</strong> MCB selection = 20A (next size down)
+                    </p>
+                    <p>
+                      <strong>Result:</strong> 20A Type B MCB for radial socket circuit
+                    </p>
                   </div>
                 </div>
               </div>
@@ -403,10 +519,22 @@ const Module5Section2_3 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">How RCDs Work</p>
                 <ul className="text-sm list-disc ml-4 space-y-1">
-                  <li><strong>Core balance principle:</strong> Live and neutral conductors pass through a toroidal core</li>
-                  <li><strong>Normal operation:</strong> Live and neutral currents are equal and opposite</li>
-                  <li><strong>Earth fault detection:</strong> Imbalance creates a secondary current in the detection circuit</li>
-                  <li><strong>Trip mechanism:</strong> Detection circuit energises the trip coil to open contacts</li>
+                  <li>
+                    <strong>Core balance principle:</strong> Live and neutral conductors pass
+                    through a toroidal core
+                  </li>
+                  <li>
+                    <strong>Normal operation:</strong> Live and neutral currents are equal and
+                    opposite
+                  </li>
+                  <li>
+                    <strong>Earth fault detection:</strong> Imbalance creates a secondary current in
+                    the detection circuit
+                  </li>
+                  <li>
+                    <strong>Trip mechanism:</strong> Detection circuit energises the trip coil to
+                    open contacts
+                  </li>
                 </ul>
               </div>
 
@@ -416,20 +544,38 @@ const Module5Section2_3 = () => {
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Sensitivity Ratings:</p>
                     <ul className="space-y-1">
-                      <li><strong>10 mA:</strong> Special locations (medical, wet areas)</li>
-                      <li><strong>30 mA:</strong> Personal protection (domestic standard)</li>
-                      <li><strong>100 mA:</strong> Fire protection in TT earthing systems</li>
-                      <li><strong>300 mA:</strong> Fire protection in larger installations</li>
-                      <li><strong>500 mA:</strong> Equipment protection only (not personal)</li>
+                      <li>
+                        <strong>10 mA:</strong> Special locations (medical, wet areas)
+                      </li>
+                      <li>
+                        <strong>30 mA:</strong> Personal protection (domestic standard)
+                      </li>
+                      <li>
+                        <strong>100 mA:</strong> Fire protection in TT earthing systems
+                      </li>
+                      <li>
+                        <strong>300 mA:</strong> Fire protection in larger installations
+                      </li>
+                      <li>
+                        <strong>500 mA:</strong> Equipment protection only (not personal)
+                      </li>
                     </ul>
                   </div>
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">RCD Types by Waveform:</p>
                     <ul className="space-y-1">
-                      <li><strong>AC Type:</strong> Responds to AC residual currents only</li>
-                      <li><strong>A Type:</strong> AC + pulsating DC residual currents</li>
-                      <li><strong>B Type:</strong> AC + DC + high-frequency currents</li>
-                      <li><strong>F Type:</strong> Mixed frequency applications</li>
+                      <li>
+                        <strong>AC Type:</strong> Responds to AC residual currents only
+                      </li>
+                      <li>
+                        <strong>A Type:</strong> AC + pulsating DC residual currents
+                      </li>
+                      <li>
+                        <strong>B Type:</strong> AC + DC + high-frequency currents
+                      </li>
+                      <li>
+                        <strong>F Type:</strong> Mixed frequency applications
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -441,24 +587,38 @@ const Module5Section2_3 = () => {
                   <div className="p-3 rounded bg-green-500/10 border border-green-500/30">
                     <p className="font-medium text-green-400 mb-1">RCBOs (Combined Protection)</p>
                     <ul className="list-disc ml-4 space-y-1">
-                      <li><strong>Advantages:</strong> Single device, space-saving</li>
-                      <li><strong>Selectivity:</strong> Fault affects only the faulty circuit</li>
-                      <li><strong>Applications:</strong> Critical circuits, commercial</li>
+                      <li>
+                        <strong>Advantages:</strong> Single device, space-saving
+                      </li>
+                      <li>
+                        <strong>Selectivity:</strong> Fault affects only the faulty circuit
+                      </li>
+                      <li>
+                        <strong>Applications:</strong> Critical circuits, commercial
+                      </li>
                     </ul>
                   </div>
                   <div className="p-3 rounded bg-blue-500/10 border border-blue-500/30">
                     <p className="font-medium text-blue-400 mb-1">RCD + MCB (Split Protection)</p>
                     <ul className="list-disc ml-4 space-y-1">
-                      <li><strong>Advantages:</strong> Lower unit costs</li>
-                      <li><strong>Disadvantage:</strong> Single RCD fault affects multiple circuits</li>
-                      <li><strong>Typical use:</strong> Domestic installations</li>
+                      <li>
+                        <strong>Advantages:</strong> Lower unit costs
+                      </li>
+                      <li>
+                        <strong>Disadvantage:</strong> Single RCD fault affects multiple circuits
+                      </li>
+                      <li>
+                        <strong>Typical use:</strong> Domestic installations
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
 
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-                <p className="font-medium text-orange-400 mb-2">Nuisance Tripping - Causes and Solutions</p>
+                <p className="font-medium text-orange-400 mb-2">
+                  Nuisance Tripping - Causes and Solutions
+                </p>
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Common Causes:</p>
@@ -484,10 +644,19 @@ const Module5Section2_3 = () => {
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-red-400 mb-2">Critical Safety Points</p>
                 <ul className="text-sm ml-4 list-disc space-y-1">
-                  <li><strong>Not a substitute:</strong> RCDs do not protect against overload or short circuits</li>
-                  <li><strong>Test regularly:</strong> Monthly testing ensures continued protection</li>
-                  <li><strong>Professional testing:</strong> Annual calibration testing required</li>
-                  <li><strong>Correct type:</strong> Ensure RCD type matches the connected equipment</li>
+                  <li>
+                    <strong>Not a substitute:</strong> RCDs do not protect against overload or short
+                    circuits
+                  </li>
+                  <li>
+                    <strong>Test regularly:</strong> Monthly testing ensures continued protection
+                  </li>
+                  <li>
+                    <strong>Professional testing:</strong> Annual calibration testing required
+                  </li>
+                  <li>
+                    <strong>Correct type:</strong> Ensure RCD type matches the connected equipment
+                  </li>
                 </ul>
               </div>
             </div>
@@ -508,21 +677,35 @@ const Module5Section2_3 = () => {
               Coordinating MCBs and RCDs
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>MCBs and RCDs are often used together in consumer units to provide comprehensive protection:</p>
+              <p>
+                MCBs and RCDs are often used together in consumer units to provide comprehensive
+                protection:
+              </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Typical Coordination Examples:</p>
                 <ul className="text-sm space-y-2">
-                  <li><strong>Socket circuit:</strong> 32A MCB + 30mA RCD (overload + shock protection)</li>
-                  <li><strong>Immersion heater:</strong> 16A MCB + 30mA RCD (fixed appliance protection)</li>
-                  <li><strong>Lighting circuit:</strong> 6A MCB (RCD optional but recommended)</li>
-                  <li><strong>Outdoor supplies:</strong> Appropriate MCB + 30mA RCD (mandatory)</li>
+                  <li>
+                    <strong>Socket circuit:</strong> 32A MCB + 30mA RCD (overload + shock
+                    protection)
+                  </li>
+                  <li>
+                    <strong>Immersion heater:</strong> 16A MCB + 30mA RCD (fixed appliance
+                    protection)
+                  </li>
+                  <li>
+                    <strong>Lighting circuit:</strong> 6A MCB (RCD optional but recommended)
+                  </li>
+                  <li>
+                    <strong>Outdoor supplies:</strong> Appropriate MCB + 30mA RCD (mandatory)
+                  </li>
                 </ul>
 
                 <div className="p-3 rounded bg-blue-500/10 border border-blue-500/30 mt-4">
                   <p className="font-medium text-blue-400 mb-1">Design Principle</p>
                   <p className="text-sm">
-                    Each protection type addresses different risks: MCBs for overload/short circuit, RCDs for earth leakage/shock.
+                    Each protection type addresses different risks: MCBs for overload/short circuit,
+                    RCDs for earth leakage/shock.
                   </p>
                 </div>
               </div>
@@ -541,31 +724,60 @@ const Module5Section2_3 = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Core Protection Requirements:</p>
                     <ul className="space-y-1">
-                      <li><strong>Regulation 411.3.3:</strong> RCD protection required for sockets ≤32 A (domestic)</li>
-                      <li><strong>Regulation 433.1:</strong> MCBs must protect against overloads</li>
-                      <li><strong>Regulation 434.1:</strong> Protection against fault currents</li>
-                      <li><strong>Regulation 531.2:</strong> Devices must have adequate breaking capacity</li>
+                      <li>
+                        <strong>Regulation 411.3.3:</strong> RCD protection required for sockets ≤32
+                        A (domestic)
+                      </li>
+                      <li>
+                        <strong>Regulation 433.1:</strong> MCBs must protect against overloads
+                      </li>
+                      <li>
+                        <strong>Regulation 434.1:</strong> Protection against fault currents
+                      </li>
+                      <li>
+                        <strong>Regulation 531.2:</strong> Devices must have adequate breaking
+                        capacity
+                      </li>
                     </ul>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-2">Selection and Installation:</p>
                     <ul className="space-y-1">
-                      <li><strong>Load compatibility:</strong> Based on load type, environment, and regulations</li>
-                      <li><strong>Coordination:</strong> Devices must work together without conflicts</li>
-                      <li><strong>Discrimination:</strong> Upstream devices should be selective</li>
-                      <li><strong>Future expansion:</strong> Allow for load growth and additions</li>
+                      <li>
+                        <strong>Load compatibility:</strong> Based on load type, environment, and
+                        regulations
+                      </li>
+                      <li>
+                        <strong>Coordination:</strong> Devices must work together without conflicts
+                      </li>
+                      <li>
+                        <strong>Discrimination:</strong> Upstream devices should be selective
+                      </li>
+                      <li>
+                        <strong>Future expansion:</strong> Allow for load growth and additions
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
 
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                <p className="font-medium text-blue-400 mb-2">Key BS 7671 Tables for Device Selection:</p>
+                <p className="font-medium text-blue-400 mb-2">
+                  Key BS 7671 Tables for Device Selection:
+                </p>
                 <ul className="text-sm space-y-1">
-                  <li><strong>Table 41.5:</strong> Maximum disconnection times for shock protection</li>
-                  <li><strong>Appendix 3:</strong> Current-carrying capacity of cables</li>
-                  <li><strong>Appendix 4:</strong> Voltage drop calculations</li>
-                  <li><strong>Section 536:</strong> Co-ordination of protective devices</li>
+                  <li>
+                    <strong>Table 41.5:</strong> Maximum disconnection times for shock protection
+                  </li>
+                  <li>
+                    <strong>Appendix 3:</strong> Current-carrying capacity of cables
+                  </li>
+                  <li>
+                    <strong>Appendix 4:</strong> Voltage drop calculations
+                  </li>
+                  <li>
+                    <strong>Section 536:</strong> Co-ordination of protective devices
+                  </li>
                 </ul>
               </div>
             </div>
@@ -580,16 +792,27 @@ const Module5Section2_3 = () => {
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="font-semibold text-orange-400 mb-2">The Wrong MCB Type Mistake</p>
               <p className="text-white/80 text-sm mb-3">
-                <strong>The Scenario:</strong> In a small office installation, an electrician used a Type C MCB on a domestic lighting circuit. This caused nuisance tripping because Type C devices require higher fault currents to operate. The correct choice should have been a Type B MCB suitable for low domestic fault currents.
+                <strong>The Scenario:</strong> In a small office installation, an electrician used a
+                Type C MCB on a domestic lighting circuit. This caused nuisance tripping because
+                Type C devices require higher fault currents to operate. The correct choice should
+                have been a Type B MCB suitable for low domestic fault currents.
               </p>
 
               <div className="space-y-3">
                 <div className="p-3 rounded bg-black/20">
                   <p className="font-medium text-white mb-2 text-sm">The Problem:</p>
                   <ul className="text-xs list-disc ml-4 space-y-1 text-white/70">
-                    <li><strong>Wrong selection:</strong> 6A Type C MCB used for lighting circuit</li>
-                    <li><strong>Load characteristics:</strong> Simple resistive loads (LED and fluorescent)</li>
-                    <li><strong>Trip characteristic:</strong> Type C needs 5-10x rated current (30-60A) to trip</li>
+                    <li>
+                      <strong>Wrong selection:</strong> 6A Type C MCB used for lighting circuit
+                    </li>
+                    <li>
+                      <strong>Load characteristics:</strong> Simple resistive loads (LED and
+                      fluorescent)
+                    </li>
+                    <li>
+                      <strong>Trip characteristic:</strong> Type C needs 5-10x rated current
+                      (30-60A) to trip
+                    </li>
                   </ul>
                 </div>
 
@@ -615,7 +838,9 @@ const Module5Section2_3 = () => {
 
               <div className="p-3 rounded bg-elec-yellow/10 border border-elec-yellow/30 mt-3">
                 <p className="text-xs text-white/80">
-                  <strong>Key lesson:</strong> MCB type selection must match the installation type and expected fault levels. Type B for domestic, Type C for light commercial, Type D for heavy industrial.
+                  <strong>Key lesson:</strong> MCB type selection must match the installation type
+                  and expected fault levels. Type B for domestic, Type C for light commercial, Type
+                  D for heavy industrial.
                 </p>
               </div>
             </div>
@@ -652,7 +877,9 @@ const Module5Section2_3 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
-                <p className="font-semibold text-purple-400 mb-2 text-sm">BS 7671 Key Regulations</p>
+                <p className="font-semibold text-purple-400 mb-2 text-sm">
+                  BS 7671 Key Regulations
+                </p>
                 <ul className="text-xs text-white/80 space-y-1">
                   <li>📋 Reg 411.3.3 - RCD protection for sockets ≤32A</li>
                   <li>⚡ Reg 433.1 - Overload protection</li>
@@ -688,7 +915,11 @@ const Module5Section2_3 = () => {
               Recap
             </h2>
             <p className="text-white/80 leading-relaxed">
-              In this subsection, you learned about the role of protective devices in electrical installations. You explored the different types of MCBs and their trip characteristics, the importance of RCDs for shock protection, and the relevant BS 7671 regulations. You also saw practical examples of how to select the right device for the right environment.
+              In this subsection, you learned about the role of protective devices in electrical
+              installations. You explored the different types of MCBs and their trip
+              characteristics, the importance of RCDs for shock protection, and the relevant BS 7671
+              regulations. You also saw practical examples of how to select the right device for the
+              right environment.
             </p>
           </section>
 
@@ -699,13 +930,18 @@ const Module5Section2_3 = () => {
               className="w-full flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors min-h-[48px] touch-manipulation"
             >
               <span className="font-semibold text-white">Frequently Asked Questions</span>
-              <ChevronDown className={`w-5 h-5 text-white/60 transition-transform ${showFaqs ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`w-5 h-5 text-white/60 transition-transform ${showFaqs ? 'rotate-180' : ''}`}
+              />
             </button>
 
             {showFaqs && (
               <div className="mt-4 space-y-4">
                 {faqs.map((faq, index) => (
-                  <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <div
+                    key={index}
+                    className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
+                  >
                     <p className="font-medium text-white mb-2">Q: {faq.question}</p>
                     <p className="text-sm text-white/70">A: {faq.answer}</p>
                   </div>

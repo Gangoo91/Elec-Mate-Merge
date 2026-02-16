@@ -1,23 +1,23 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useElecIdProfile } from "@/hooks/useElecIdProfile";
-import { Drawer } from "vaul";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
+import { Drawer } from 'vaul';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   Download,
   Link2,
@@ -36,10 +36,10 @@ import {
   X,
   QrCode,
   Shield,
-} from "lucide-react";
-import { useNotifications } from "@/components/notifications/NotificationProvider";
-import { QRCodeSVG } from "qrcode.react";
-import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
+} from 'lucide-react';
+import { useNotifications } from '@/components/notifications/NotificationProvider';
+import { QRCodeSVG } from 'qrcode.react';
+import ConfirmDeleteDialog from './ConfirmDeleteDialog';
 
 interface ShareLink {
   id: string;
@@ -74,11 +74,11 @@ const ElecIdShare = () => {
   const { profile } = useElecIdProfile();
   const isMobile = useIsMobile();
   const [isCreateLinkOpen, setIsCreateLinkOpen] = useState(false);
-  const [selectedExpiry, setSelectedExpiry] = useState("7d");
+  const [selectedExpiry, setSelectedExpiry] = useState('7d');
   const [selectedSections, setSelectedSections] = useState<string[]>([
-    "basics",
-    "qualifications",
-    "experience",
+    'basics',
+    'qualifications',
+    'experience',
   ]);
   const [isDownloadingQr, setIsDownloadingQr] = useState(false);
   const [isCreatingLink, setIsCreatingLink] = useState(false);
@@ -92,17 +92,20 @@ const ElecIdShare = () => {
   const qrRef = useRef<HTMLDivElement>(null);
 
   // Get actual Elec-ID number from profile
-  const elecIdNumber = profile?.elec_id_number || "EM-XXXXXX";
+  const elecIdNumber = profile?.elec_id_number || 'EM-XXXXXX';
   const shareUrl = `https://elec-mate.com/verify/${elecIdNumber}`;
 
   // Get user data from profile
   const userData = {
-    name: profile?.full_name || "Your Name",
-    jobTitle: profile?.bio || "Electrician",
-    ecsCard: profile?.ecs_card_type ? `ECS ${profile.ecs_card_type}` : "ECS Card",
+    name: profile?.full_name || 'Your Name',
+    jobTitle: profile?.bio || 'Electrician',
+    ecsCard: profile?.ecs_card_type ? `ECS ${profile.ecs_card_type}` : 'ECS Card',
     ecsExpiry: profile?.ecs_expiry_date
-      ? new Date(profile.ecs_expiry_date).toLocaleDateString("en-GB", { month: "short", year: "numeric" })
-      : "N/A",
+      ? new Date(profile.ecs_expiry_date).toLocaleDateString('en-GB', {
+          month: 'short',
+          year: 'numeric',
+        })
+      : 'N/A',
   };
 
   // Fetch share links from database
@@ -145,34 +148,34 @@ const ElecIdShare = () => {
   }, [fetchShareLinks]);
 
   const sectionOptions = [
-    { id: "basics", label: "Basic Info", icon: User },
-    { id: "qualifications", label: "Qualifications", icon: GraduationCap },
-    { id: "experience", label: "Experience", icon: Briefcase },
-    { id: "skills", label: "Skills", icon: Wrench },
+    { id: 'basics', label: 'Basic Info', icon: User },
+    { id: 'qualifications', label: 'Qualifications', icon: GraduationCap },
+    { id: 'experience', label: 'Experience', icon: Briefcase },
+    { id: 'skills', label: 'Skills', icon: Wrench },
   ];
 
   const expiryOptions = [
-    { value: "24h", label: "24 hours" },
-    { value: "7d", label: "7 days" },
-    { value: "30d", label: "30 days" },
-    { value: "never", label: "Never expires" },
+    { value: '24h', label: '24 hours' },
+    { value: '7d', label: '7 days' },
+    { value: '30d', label: '30 days' },
+    { value: 'never', label: 'Never expires' },
   ];
 
   const handleCopyLink = (url: string) => {
     navigator.clipboard.writeText(url);
     addNotification({
-      title: "Link Copied",
-      message: "Share link copied to clipboard",
-      type: "success",
+      title: 'Link Copied',
+      message: 'Share link copied to clipboard',
+      type: 'success',
     });
   };
 
   const handleCreateLink = async () => {
     if (!profile?.id) {
       addNotification({
-        title: "Error",
-        message: "Profile not found. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Profile not found. Please try again.',
+        type: 'error',
       });
       return;
     }
@@ -227,20 +230,20 @@ const ElecIdShare = () => {
         shareToken: data.share_token,
       };
 
-      setShareLinks(prev => [newLink, ...prev]);
+      setShareLinks((prev) => [newLink, ...prev]);
 
       addNotification({
-        title: "Link Created",
-        message: "Your shareable link has been created",
-        type: "success",
+        title: 'Link Created',
+        message: 'Your shareable link has been created',
+        type: 'success',
       });
       setIsCreateLinkOpen(false);
     } catch (error: any) {
       console.error('Error creating share link:', error);
       addNotification({
-        title: "Error",
-        message: error.message || "Failed to create link. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: error.message || 'Failed to create link. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsCreatingLink(false);
@@ -250,56 +253,56 @@ const ElecIdShare = () => {
   const handleDownloadQr = async () => {
     setIsDownloadingQr(true);
     try {
-      const svg = qrRef.current?.querySelector("svg");
-      if (!svg) throw new Error("QR code not found");
+      const svg = qrRef.current?.querySelector('svg');
+      if (!svg) throw new Error('QR code not found');
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (!ctx) throw new Error("Could not create canvas context");
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Could not create canvas context');
 
       const padding = 40;
       const size = 400;
       canvas.width = size + padding * 2;
       canvas.height = size + padding * 2;
 
-      ctx.fillStyle = "white";
+      ctx.fillStyle = 'white';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const svgData = new XMLSerializer().serializeToString(svg);
-      const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
       const svgUrl = URL.createObjectURL(svgBlob);
 
       const img = new Image();
       img.onload = () => {
         ctx.drawImage(img, padding, padding, size, size);
-        ctx.fillStyle = "#1a1a2e";
-        ctx.font = "bold 20px Arial";
-        ctx.textAlign = "center";
+        ctx.fillStyle = '#1a1a2e';
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
         ctx.fillText(`ELEC-iD: ${elecIdNumber}`, canvas.width / 2, canvas.height - 60);
-        ctx.font = "14px Arial";
-        ctx.fillStyle = "#666";
-        ctx.fillText("Scan to verify credentials", canvas.width / 2, canvas.height - 35);
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#666';
+        ctx.fillText('Scan to verify credentials', canvas.width / 2, canvas.height - 35);
 
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         link.download = `elec-id-${elecIdNumber}.png`;
-        link.href = canvas.toDataURL("image/png");
+        link.href = canvas.toDataURL('image/png');
         link.click();
 
         URL.revokeObjectURL(svgUrl);
         setIsDownloadingQr(false);
         addNotification({
-          title: "QR Downloaded",
-          message: "Your QR code has been downloaded",
-          type: "success",
+          title: 'QR Downloaded',
+          message: 'Your QR code has been downloaded',
+          type: 'success',
         });
       };
       img.src = svgUrl;
     } catch (error) {
       setIsDownloadingQr(false);
       addNotification({
-        title: "Download Failed",
-        message: "Could not download QR code",
-        type: "info",
+        title: 'Download Failed',
+        message: 'Could not download QR code',
+        type: 'info',
       });
     }
   };
@@ -309,7 +312,7 @@ const ElecIdShare = () => {
       try {
         await navigator.share({
           title: `ELEC-iD: ${elecIdNumber}`,
-          text: "Verify my electrical credentials",
+          text: 'Verify my electrical credentials',
           url: shareUrl,
         });
       } catch (error) {
@@ -333,19 +336,19 @@ const ElecIdShare = () => {
       if (error) throw error;
 
       // Remove from local state
-      setShareLinks(prev => prev.filter(link => link.id !== deleteConfirm.id));
+      setShareLinks((prev) => prev.filter((link) => link.id !== deleteConfirm.id));
 
       addNotification({
-        title: "Link Deleted",
-        message: "Share link has been removed",
-        type: "info",
+        title: 'Link Deleted',
+        message: 'Share link has been removed',
+        type: 'info',
       });
     } catch (error: any) {
       console.error('Error deleting share link:', error);
       addNotification({
-        title: "Error",
-        message: error.message || "Failed to delete link. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: error.message || 'Failed to delete link. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsDeletingLink(false);
@@ -355,9 +358,7 @@ const ElecIdShare = () => {
 
   const toggleSection = (sectionId: string) => {
     setSelectedSections((prev) =>
-      prev.includes(sectionId)
-        ? prev.filter((s) => s !== sectionId)
-        : [...prev, sectionId]
+      prev.includes(sectionId) ? prev.filter((s) => s !== sectionId) : [...prev, sectionId]
     );
   };
 
@@ -377,7 +378,11 @@ const ElecIdShare = () => {
           </SelectTrigger>
           <SelectContent className="bg-background border-white/[0.1] z-[200]">
             {expiryOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="py-3 touch-manipulation">
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="py-3 touch-manipulation"
+              >
                 {option.label}
               </SelectItem>
             ))}
@@ -398,14 +403,24 @@ const ElecIdShare = () => {
                 type="button"
                 onClick={() => toggleSection(section.id)}
                 className={cn(
-                  "p-3 rounded-xl border-2 text-left transition-all touch-manipulation active:scale-[0.98]",
+                  'p-3 rounded-xl border-2 text-left transition-all touch-manipulation active:scale-[0.98]',
                   isSelected
-                    ? "bg-elec-yellow/10 border-elec-yellow"
-                    : "bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]"
+                    ? 'bg-elec-yellow/10 border-elec-yellow'
+                    : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]'
                 )}
               >
-                <Icon className={cn("h-5 w-5 mb-1", isSelected ? "text-elec-yellow" : "text-foreground/70")} />
-                <div className={cn("text-sm font-medium", isSelected ? "text-foreground" : "text-foreground/70")}>
+                <Icon
+                  className={cn(
+                    'h-5 w-5 mb-1',
+                    isSelected ? 'text-elec-yellow' : 'text-foreground/70'
+                  )}
+                />
+                <div
+                  className={cn(
+                    'text-sm font-medium',
+                    isSelected ? 'text-foreground' : 'text-foreground/70'
+                  )}
+                >
                   {section.label}
                 </div>
               </button>
@@ -459,7 +474,7 @@ const ElecIdShare = () => {
                   Creating...
                 </>
               ) : (
-                "Create Link"
+                'Create Link'
               )}
             </Button>
           </div>
@@ -496,7 +511,7 @@ const ElecIdShare = () => {
                 Creating...
               </>
             ) : (
-              "Create Link"
+              'Create Link'
             )}
           </Button>
         </div>
@@ -618,11 +633,7 @@ const ElecIdShare = () => {
       </div>
 
       {/* Shareable Links */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="space-y-3"
-      >
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
         <div className="flex items-center justify-between px-1">
           <div className="flex items-center gap-2">
             <Link2 className="h-4 w-4 text-elec-yellow" />
@@ -668,7 +679,7 @@ const ElecIdShare = () => {
                       <Copy className="h-4 w-4 text-foreground/70" />
                     </button>
                     <button
-                      onClick={() => window.open(link.url, "_blank")}
+                      onClick={() => window.open(link.url, '_blank')}
                       className="p-2 rounded-lg hover:bg-white/[0.08] touch-manipulation active:scale-[0.95]"
                     >
                       <ExternalLink className="h-4 w-4 text-foreground/70" />
@@ -685,8 +696,8 @@ const ElecIdShare = () => {
                   <span className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />
                     {link.expiresAt
-                      ? new Date(link.expiresAt).toLocaleDateString("en-GB")
-                      : "No expiry"}
+                      ? new Date(link.expiresAt).toLocaleDateString('en-GB')
+                      : 'No expiry'}
                   </span>
                   <span className="flex items-center gap-1">
                     <Eye className="h-3 w-3" />

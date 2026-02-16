@@ -3,31 +3,31 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const MitigationStrategiesSection = () => {
   const channelStrategies = [
-    "Use Wi-Fi analyser apps to identify least congested channels",
-    "Separate Wi-Fi and Zigbee by at least 5 channels",
-    "Prefer 5 GHz Wi-Fi for high-bandwidth devices",
-    "Configure Zigbee networks on channels 15, 20, or 25"
+    'Use Wi-Fi analyser apps to identify least congested channels',
+    'Separate Wi-Fi and Zigbee by at least 5 channels',
+    'Prefer 5 GHz Wi-Fi for high-bandwidth devices',
+    'Configure Zigbee networks on channels 15, 20, or 25',
   ];
 
   const placementStrategies = [
-    "Keep hubs at least 1 metre apart from each other",
-    "Place devices away from metal objects and appliances",
-    "Use central locations for mesh network coordinators",
-    "Avoid kitchen areas for 2.4 GHz sensitive devices"
+    'Keep hubs at least 1 metre apart from each other',
+    'Place devices away from metal objects and appliances',
+    'Use central locations for mesh network coordinators',
+    'Avoid kitchen areas for 2.4 GHz sensitive devices',
   ];
 
   const networkStrategies = [
-    "Use wired backhaul for mesh systems where possible",
-    "Implement network segmentation for large installations",
-    "Consider multiple smaller networks vs one large network",
-    "Use repeaters strategically to extend range"
+    'Use wired backhaul for mesh systems where possible',
+    'Implement network segmentation for large installations',
+    'Consider multiple smaller networks vs one large network',
+    'Use repeaters strategically to extend range',
   ];
 
   const advancedTechniques = [
-    "Power level adjustment to reduce interference footprint",
-    "Scheduled operations during low-traffic periods",
-    "VLAN separation for different device categories",
-    "Professional site surveys for complex installations"
+    'Power level adjustment to reduce interference footprint',
+    'Scheduled operations during low-traffic periods',
+    'VLAN separation for different device categories',
+    'Professional site surveys for complex installations',
   ];
 
   return (
@@ -40,7 +40,9 @@ export const MitigationStrategiesSection = () => {
       </CardHeader>
       <CardContent className="space-y-6 text-foreground">
         <p className="text-foreground">
-          Effective interference mitigation requires a combination of proper channel planning, strategic device placement, and network architecture decisions. Here are proven strategies for building robust smart home networks.
+          Effective interference mitigation requires a combination of proper channel planning,
+          strategic device placement, and network architecture decisions. Here are proven strategies
+          for building robust smart home networks.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -120,7 +122,9 @@ export const MitigationStrategiesSection = () => {
 
         <div className="bg-elec-dark border border-gray-600 rounded-lg p-4">
           <h4 className="text-foreground font-semibold mb-2">Quick Check:</h4>
-          <p className="text-sm text-foreground">What's the minimum recommended distance between a Wi-Fi router and a Zigbee hub?</p>
+          <p className="text-sm text-foreground">
+            What's the minimum recommended distance between a Wi-Fi router and a Zigbee hub?
+          </p>
         </div>
       </CardContent>
     </Card>

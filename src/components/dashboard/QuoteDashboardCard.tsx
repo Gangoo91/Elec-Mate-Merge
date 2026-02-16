@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle, Clock, FileText } from "lucide-react";
-import { Quote } from "@/types/quote";
-import { useQuoteStorage } from "@/hooks/useQuoteStorage";
-import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
-import { toast } from "sonner";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, XCircle, Clock, FileText } from 'lucide-react';
+import { Quote } from '@/types/quote';
+import { useQuoteStorage } from '@/hooks/useQuoteStorage';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { toast } from 'sonner';
 
 interface QuoteDashboardCardProps {
   quotes: Quote[];
@@ -16,17 +16,17 @@ interface QuoteDashboardCardProps {
 export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
   const { updateQuoteStatus } = useQuoteStorage();
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
-  const [action, setAction] = useState<"accept" | "reject" | null>(null);
+  const [action, setAction] = useState<'accept' | 'reject' | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Filter for active quotes that can be accepted/rejected
   const activeQuotes = quotes.filter(
-    (quote) => 
-      (quote.status === "sent" || quote.status === "pending") &&
-      quote.acceptance_status === "pending"
+    (quote) =>
+      (quote.status === 'sent' || quote.status === 'pending') &&
+      quote.acceptance_status === 'pending'
   );
 
-  const handleActionClick = (quote: Quote, actionType: "accept" | "reject") => {
+  const handleActionClick = (quote: Quote, actionType: 'accept' | 'reject') => {
     setSelectedQuote(quote);
     setAction(actionType);
   };
@@ -36,9 +36,9 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
 
     setLoading(true);
     try {
-      const newStatus = action === "accept" ? "approved" : "rejected";
-      const newAcceptanceStatus = action === "accept" ? "accepted" : "rejected";
-      
+      const newStatus = action === 'accept' ? 'approved' : 'rejected';
+      const newAcceptanceStatus = action === 'accept' ? 'accepted' : 'rejected';
+
       const success = await updateQuoteStatus(
         selectedQuote.id,
         newStatus,
@@ -47,9 +47,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
       );
 
       if (success) {
-        toast.success(
-          `Quote ${action === "accept" ? "accepted" : "rejected"} successfully`
-        );
+        toast.success(`Quote ${action === 'accept' ? 'accepted' : 'rejected'} successfully`);
       } else {
         toast.error(`Failed to ${action} quote`);
       }
@@ -64,31 +62,40 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
     }).format(amount);
   };
 
   const getStatusBadge = (quote: Quote) => {
-    if (quote.acceptance_status === "accepted") {
+    if (quote.acceptance_status === 'accepted') {
       return (
-        <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800">
+        <Badge
+          variant="secondary"
+          className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800"
+        >
           <CheckCircle className="h-3 w-3 mr-1" />
           Accepted
         </Badge>
       );
     }
-    if (quote.acceptance_status === "rejected") {
+    if (quote.acceptance_status === 'rejected') {
       return (
-        <Badge variant="destructive" className="bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800">
+        <Badge
+          variant="destructive"
+          className="bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800"
+        >
           <XCircle className="h-3 w-3 mr-1" />
           Rejected
         </Badge>
       );
     }
     return (
-      <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800">
+      <Badge
+        variant="outline"
+        className="bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800"
+      >
         <Clock className="h-3 w-3 mr-1" />
         Pending
       </Badge>
@@ -105,9 +112,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-center py-4">
-            No active quotes require action
-          </p>
+          <p className="text-muted-foreground text-center py-4">No active quotes require action</p>
         </CardContent>
       </Card>
     );
@@ -136,9 +141,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                     <h4 className="mobile-heading text-lg font-semibold truncate min-w-0 flex-1">
                       Quote #{quote.quoteNumber}
                     </h4>
-                    <div className="flex-shrink-0">
-                      {getStatusBadge(quote)}
-                    </div>
+                    <div className="flex-shrink-0">{getStatusBadge(quote)}</div>
                   </div>
                   <p className="mobile-text text-muted-foreground truncate min-w-0">
                     Client: {quote.client.name}
@@ -159,7 +162,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                     <MobileButton
                       size="default"
                       variant="elec"
-                      onClick={() => handleActionClick(quote, "accept")}
+                      onClick={() => handleActionClick(quote, 'accept')}
                       icon={<CheckCircle className="h-4 w-4" />}
                       className="w-full touch-target bg-green-600 hover:bg-green-700 text-foreground border-green-600 font-medium min-w-0"
                       aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
@@ -169,7 +172,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                     <MobileButton
                       size="default"
                       variant="elec-outline"
-                      onClick={() => handleActionClick(quote, "reject")}
+                      onClick={() => handleActionClick(quote, 'reject')}
                       icon={<XCircle className="h-4 w-4" />}
                       className="w-full touch-target border-red-500 text-red-600 hover:bg-red-500 hover:text-foreground font-medium min-w-0"
                       aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
@@ -183,7 +186,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                     <MobileButton
                       size="sm"
                       variant="elec"
-                      onClick={() => handleActionClick(quote, "accept")}
+                      onClick={() => handleActionClick(quote, 'accept')}
                       icon={<CheckCircle className="h-4 w-4" />}
                       className="bg-green-600 hover:bg-green-700 text-foreground border-green-600 font-medium px-3 py-2 flex-shrink-0"
                       aria-label={`Accept quote ${quote.quoteNumber} from ${quote.client.name}`}
@@ -193,7 +196,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                     <MobileButton
                       size="sm"
                       variant="elec-outline"
-                      onClick={() => handleActionClick(quote, "reject")}
+                      onClick={() => handleActionClick(quote, 'reject')}
                       icon={<XCircle className="h-4 w-4" />}
                       className="border-red-500 text-red-600 hover:bg-red-500 hover:text-foreground font-medium px-3 py-2 flex-shrink-0"
                       aria-label={`Reject quote ${quote.quoteNumber} from ${quote.client.name}`}
@@ -216,14 +219,14 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
             setAction(null);
           }
         }}
-        title={`${action === "accept" ? "Accept" : "Reject"} Quote`}
+        title={`${action === 'accept' ? 'Accept' : 'Reject'} Quote`}
         description={
           selectedQuote
             ? `Are you sure you want to ${action} quote #${selectedQuote.quoteNumber} for ${selectedQuote.client.name}?`
-            : ""
+            : ''
         }
-        confirmText={action === "accept" ? "Accept Quote" : "Reject Quote"}
-        variant={action === "reject" ? "destructive" : "default"}
+        confirmText={action === 'accept' ? 'Accept Quote' : 'Reject Quote'}
+        variant={action === 'reject' ? 'destructive' : 'default'}
         onConfirm={handleConfirmAction}
         loading={loading}
       />

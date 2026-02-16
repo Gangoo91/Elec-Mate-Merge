@@ -5,16 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import {
-  MessageSquare,
-  Send,
-  Loader2,
-  AlertCircle,
-  CheckCircle2,
-  X,
-} from 'lucide-react';
+import { MessageSquare, Send, Loader2, AlertCircle, CheckCircle2, X } from 'lucide-react';
 import { CommentThread } from './CommentThread';
-import { usePortfolioComments, type CommentThread as CommentThreadType } from '@/hooks/portfolio/usePortfolioComments';
+import {
+  usePortfolioComments,
+  type CommentThread as CommentThreadType,
+} from '@/hooks/portfolio/usePortfolioComments';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface EvidenceCommentsProps {
@@ -37,22 +33,18 @@ export function EvidenceComments({
   inline = false,
 }: EvidenceCommentsProps) {
   const { user } = useAuth();
-  const {
-    getCommentsForEvidence,
-    addReply,
-    resolveComment,
-    isLoading,
-    error,
-  } = usePortfolioComments();
+  const { getCommentsForEvidence, addReply, resolveComment, isLoading, error } =
+    usePortfolioComments();
 
   const [newMessage, setNewMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
 
   const threads = getCommentsForEvidence(evidenceId);
   const actionRequiredCount = threads.filter(
-    t => t.rootComment.requiresAction &&
-        !t.rootComment.isResolved &&
-        t.rootComment.actionOwner === user?.id
+    (t) =>
+      t.rootComment.requiresAction &&
+      !t.rootComment.isResolved &&
+      t.rootComment.actionOwner === user?.id
   ).length;
 
   const handleSendMessage = async () => {
@@ -89,16 +81,11 @@ export function EvidenceComments({
             <MessageSquare className="h-5 w-5 text-elec-yellow" />
             Tutor Feedback
           </h3>
-          <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
-            {evidenceTitle}
-          </p>
+          <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{evidenceTitle}</p>
         </div>
         <div className="flex items-center gap-2">
           {actionRequiredCount > 0 && (
-            <Badge
-              variant="outline"
-              className="bg-amber-500/10 text-amber-500 border-amber-500/20"
-            >
+            <Badge variant="outline" className="bg-amber-500/10 text-amber-500 border-amber-500/20">
               <AlertCircle className="h-3 w-3 mr-1" />
               {actionRequiredCount} action{actionRequiredCount > 1 ? 's' : ''} needed
             </Badge>
@@ -131,7 +118,7 @@ export function EvidenceComments({
           </p>
         </div>
       ) : (
-        <ScrollArea className={inline ? "max-h-[400px]" : "h-[calc(100vh-250px)]"}>
+        <ScrollArea className={inline ? 'max-h-[400px]' : 'h-[calc(100vh-250px)]'}>
           <div className="space-y-4 pr-4">
             {threads.map((thread) => (
               <CommentThread
@@ -180,9 +167,10 @@ export function EvidenceCommentsIndicator({
   const totalComments = threads.reduce((sum, t) => sum + 1 + t.replies.length, 0);
   const unreadCount = getUnreadForEvidence(evidenceId);
   const actionRequired = threads.some(
-    t => t.rootComment.requiresAction &&
-        !t.rootComment.isResolved &&
-        t.rootComment.actionOwner === user?.id
+    (t) =>
+      t.rootComment.requiresAction &&
+      !t.rootComment.isResolved &&
+      t.rootComment.actionOwner === user?.id
   );
 
   if (totalComments === 0) return null;
@@ -191,12 +179,12 @@ export function EvidenceCommentsIndicator({
     <button
       onClick={onClick}
       className={cn(
-        "flex items-center gap-1.5 px-2 py-1 rounded-full text-xs transition-colors",
+        'flex items-center gap-1.5 px-2 py-1 rounded-full text-xs transition-colors',
         actionRequired
-          ? "bg-amber-500/20 text-amber-500 hover:bg-amber-500/30"
+          ? 'bg-amber-500/20 text-amber-500 hover:bg-amber-500/30'
           : unreadCount > 0
-          ? "bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30"
-          : "bg-muted text-muted-foreground hover:bg-muted/80",
+            ? 'bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30'
+            : 'bg-muted text-muted-foreground hover:bg-muted/80',
         className
       )}
     >
@@ -207,9 +195,7 @@ export function EvidenceCommentsIndicator({
           {unreadCount}
         </span>
       )}
-      {actionRequired && (
-        <AlertCircle className="h-3 w-3" />
-      )}
+      {actionRequired && <AlertCircle className="h-3 w-3" />}
     </button>
   );
 }
@@ -225,9 +211,9 @@ export function CommentsSummary({ onViewAll }: CommentsSummaryProps) {
   const { threads, unreadCount, actionRequiredCount, isLoading } = usePortfolioComments();
 
   const recentThreads = threads
-    .sort((a, b) =>
-      new Date(b.rootComment.createdAt).getTime() -
-      new Date(a.rootComment.createdAt).getTime()
+    .sort(
+      (a, b) =>
+        new Date(b.rootComment.createdAt).getTime() - new Date(a.rootComment.createdAt).getTime()
     )
     .slice(0, 3);
 
@@ -242,10 +228,10 @@ export function CommentsSummary({ onViewAll }: CommentsSummaryProps) {
               <Badge
                 variant="outline"
                 className={cn(
-                  "text-[10px]",
+                  'text-[10px]',
                   actionRequiredCount > 0
-                    ? "bg-amber-500/10 text-amber-500 border-amber-500/20"
-                    : "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20"
+                    ? 'bg-amber-500/10 text-amber-500 border-amber-500/20'
+                    : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20'
                 )}
               >
                 {actionRequiredCount > 0
@@ -280,10 +266,8 @@ export function CommentsSummary({ onViewAll }: CommentsSummaryProps) {
               <div
                 key={rootComment.id}
                 className={cn(
-                  "p-3 rounded-lg border transition-colors cursor-pointer hover:border-elec-yellow/30",
-                  needsAction
-                    ? "border-amber-500/20 bg-amber-500/5"
-                    : "border-border bg-card"
+                  'p-3 rounded-lg border transition-colors cursor-pointer hover:border-elec-yellow/30',
+                  needsAction ? 'border-amber-500/20 bg-amber-500/5' : 'border-border bg-card'
                 )}
               >
                 <div className="flex items-start justify-between gap-2 mb-1">
@@ -294,9 +278,7 @@ export function CommentsSummary({ onViewAll }: CommentsSummaryProps) {
                     {formatTimeAgo(new Date(rootComment.createdAt))}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground line-clamp-2">
-                  {rootComment.content}
-                </p>
+                <p className="text-xs text-muted-foreground line-clamp-2">{rootComment.content}</p>
                 {needsAction && (
                   <Badge
                     variant="outline"

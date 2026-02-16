@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { TimeEntry } from '@/types/time-tracking';
 import { Card, CardContent } from '@/components/ui/card';
@@ -20,23 +19,15 @@ interface TimeEntryCardProps {
 const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
   const [showPortfolioDialog, setShowPortfolioDialog] = useState(false);
   const [showVerificationSheet, setShowVerificationSheet] = useState(false);
-  const {
-    convertTimeEntryToPortfolio,
-    quickConvertTimeEntry,
-    isConverting,
-    categories,
-  } = useTimeToPortfolio();
+  const { convertTimeEntryToPortfolio, quickConvertTimeEntry, isConverting, categories } =
+    useTimeToPortfolio();
   const { convertTimeEntryToUniversal } = useUniversalPortfolio();
-  const {
-    createVerification,
-    getVerificationUrl,
-    getVerificationForTimeEntry,
-  } = useTimeEntryVerification();
+  const { createVerification, getVerificationUrl, getVerificationForTimeEntry } =
+    useTimeEntryVerification();
   const { profile } = useAuth();
 
   const existingVerification = getVerificationForTimeEntry(entry.id);
-  const isVerified =
-    entry.is_supervisor_verified || !!existingVerification?.verified_at;
+  const isVerified = entry.is_supervisor_verified || !!existingVerification?.verified_at;
 
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -53,29 +44,22 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
     if (entry.isQuiz) {
       return {
         label: 'Quiz',
-        color:
-          'bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 hover:text-blue-400',
+        color: 'bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 hover:text-blue-400',
       };
     } else if (entry.isAutomatic) {
       return {
         label: 'Automatic',
-        color:
-          'bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30 hover:text-elec-yellow',
+        color: 'bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30 hover:text-elec-yellow',
       };
-    } else if (
-      entry.notes &&
-      entry.notes.includes('activity verification')
-    ) {
+    } else if (entry.notes && entry.notes.includes('activity verification')) {
       return {
         label: 'Verified',
-        color:
-          'bg-green-500/20 text-green-400 hover:bg-green-500/30 hover:text-green-400',
+        color: 'bg-green-500/20 text-green-400 hover:bg-green-500/30 hover:text-green-400',
       };
     } else {
       return {
         label: 'Manual',
-        color:
-          'bg-slate-500/20 text-slate-400 hover:bg-slate-500/30 hover:text-slate-400',
+        color: 'bg-slate-500/20 text-slate-400 hover:bg-slate-500/30 hover:text-slate-400',
       };
     }
   };
@@ -103,8 +87,7 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
       return;
     }
 
-    const apprenticeName =
-      profile?.full_name || profile?.username || 'Apprentice';
+    const apprenticeName = profile?.full_name || profile?.username || 'Apprentice';
     const verification = await createVerification({
       timeEntry: entry,
       apprenticeName,
@@ -147,9 +130,7 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
                 )}
               </div>
 
-              <p className="text-sm text-white mt-1 line-clamp-2">
-                {entry.notes}
-              </p>
+              <p className="text-sm text-white mt-1 line-clamp-2">{entry.notes}</p>
             </div>
 
             <div className="text-right">
@@ -157,28 +138,23 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
                 {hours > 0 ? `${hours}h ` : ''}
                 {minutes}m
               </div>
-              <div className="text-xs text-white">
-                {formatDate(entry.date)}
-              </div>
+              <div className="text-xs text-white">{formatDate(entry.date)}</div>
             </div>
           </div>
 
-          {entry.notes &&
-            entry.notes.includes('activity verification') && (
-              <div className="mt-2 flex items-center text-xs text-green-400">
-                <Activity className="h-3 w-3 mr-1" />
-                Activity verified
-              </div>
-            )}
+          {entry.notes && entry.notes.includes('activity verification') && (
+            <div className="mt-2 flex items-center text-xs text-green-400">
+              <Activity className="h-3 w-3 mr-1" />
+              Activity verified
+            </div>
+          )}
 
-          {entry.isQuiz &&
-            entry.score !== undefined &&
-            entry.totalQuestions !== undefined && (
-              <div className="mt-2 text-xs text-blue-400">
-                Score: {entry.score}/{entry.totalQuestions} (
-                {Math.round((entry.score / entry.totalQuestions) * 100)}%)
-              </div>
-            )}
+          {entry.isQuiz && entry.score !== undefined && entry.totalQuestions !== undefined && (
+            <div className="mt-2 text-xs text-blue-400">
+              Score: {entry.score}/{entry.totalQuestions} (
+              {Math.round((entry.score / entry.totalQuestions) * 100)}%)
+            </div>
+          )}
 
           {/* Portfolio + Verification Buttons */}
           <div className="mt-3 flex justify-between gap-2">
@@ -239,9 +215,7 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
           open={showVerificationSheet}
           onOpenChange={setShowVerificationSheet}
           verification={existingVerification}
-          verificationUrl={getVerificationUrl(
-            existingVerification.verification_token
-          )}
+          verificationUrl={getVerificationUrl(existingVerification.verification_token)}
           activityTitle={entry.activity}
         />
       )}

@@ -1,5 +1,8 @@
 // Shared utility functions for electrical calculators
-import { zsValues, get80PercentZs } from '@/components/apprentice/calculators/zs-values/ZsValuesData';
+import {
+  zsValues,
+  get80PercentZs,
+} from '@/components/apprentice/calculators/zs-values/ZsValuesData';
 
 export const parseNumber = (value: string | number): number => {
   if (typeof value === 'number') return value;
@@ -26,16 +29,17 @@ export const withUnits = (value: number, unit: string, decimals: number = 1): st
 
 // Standard protective device ratings in accordance with BS EN 60898 (legacy export)
 export const legacyStandardDeviceRatings = [
-  1, 2, 3, 4, 6, 8, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600
+  1, 2, 3, 4, 6, 8, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500,
+  630, 800, 1000, 1250, 1600,
 ];
 
 export const getNextStandardRating = (current: number): number | null => {
-  return legacyStandardDeviceRatings.find(rating => rating >= current) || null;
+  return legacyStandardDeviceRatings.find((rating) => rating >= current) || null;
 };
 
 export const getPreviousStandardRating = (current: number): number | null => {
   const ratings = [...legacyStandardDeviceRatings].reverse();
-  return ratings.find(rating => rating <= current) || null;
+  return ratings.find((rating) => rating <= current) || null;
 };
 
 // Voltage levels commonly used in UK electrical installations
@@ -44,7 +48,7 @@ export const standardVoltages = {
   threePhase: [400, 415],
   lv: [230, 400, 415],
   mv: [3300, 6600, 11000, 33000],
-  hv: [66000, 132000, 275000, 400000]
+  hv: [66000, 132000, 275000, 400000],
 };
 
 // Common power factor values for different load types
@@ -57,20 +61,21 @@ export const typicalPowerFactors = {
   welding: 0.7,
   domestic: 0.95,
   commercial: 0.9,
-  industrial: 0.85
+  industrial: 0.85,
 };
 
 // Cable size validation
 export const isValidCableSize = (size: number): boolean => {
   const standardSizes = [
-    0.5, 0.75, 1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500, 630, 800, 1000
+    0.5, 0.75, 1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500,
+    630, 800, 1000,
   ];
   return standardSizes.includes(size);
 };
 
 // Temperature range validation
 export const getTemperatureRange = (installationMethod: 'air' | 'soil') => {
-  return installationMethod === 'air' 
+  return installationMethod === 'air'
     ? { min: -10, max: 80, standard: 30 }
     : { min: 5, max: 65, standard: 20 };
 };
@@ -83,13 +88,16 @@ export const convertUnits = {
   ftToM: (ft: number) => ft / 3.28084,
   kwToHp: (kw: number) => kw * 1.34102,
   hpToKw: (hp: number) => hp / 1.34102,
-  celsiusToFahrenheit: (c: number) => (c * 9/5) + 32,
-  fahrenheitToCelsius: (f: number) => (f - 32) * 5/9
+  celsiusToFahrenheit: (c: number) => (c * 9) / 5 + 32,
+  fahrenheitToCelsius: (f: number) => ((f - 32) * 5) / 9,
 };
 
 // Error handling for calculations
 export class CalculationError extends Error {
-  constructor(message: string, public code: string) {
+  constructor(
+    message: string,
+    public code: string
+  ) {
     super(message);
     this.name = 'CalculationError';
   }
@@ -113,36 +121,70 @@ export const bs7671 = {
     waterHeating: 1.0,
     spaceHeating: 0.75,
     motors: 0.8,
-    domestic: 0.6
+    domestic: 0.6,
   },
-  
+
   // Maximum Zs values for different protective devices - BS 7671:2018+A3:2024 Table 41.3 (0.4s)
   maxZsValues: {
     // Type B MCBs (3-5 × In) - Table 41.3
-    'B3': 14.57, 'B6': 7.28, 'B10': 4.37, 'B16': 2.73, 'B20': 2.19, 'B25': 1.75,
-    'B32': 1.37, 'B40': 1.09, 'B50': 0.87, 'B63': 0.69, 'B80': 0.55, 'B100': 0.44, 'B125': 0.35,
+    B3: 14.57,
+    B6: 7.28,
+    B10: 4.37,
+    B16: 2.73,
+    B20: 2.19,
+    B25: 1.75,
+    B32: 1.37,
+    B40: 1.09,
+    B50: 0.87,
+    B63: 0.69,
+    B80: 0.55,
+    B100: 0.44,
+    B125: 0.35,
     // Type C MCBs (5-10 × In) - Table 41.3
-    'C6': 3.64, 'C10': 2.19, 'C16': 1.37, 'C20': 1.09, 'C25': 0.87,
-    'C32': 0.68, 'C40': 0.55, 'C50': 0.44, 'C63': 0.35, 'C80': 0.27, 'C100': 0.22, 'C125': 0.17,
+    C6: 3.64,
+    C10: 2.19,
+    C16: 1.37,
+    C20: 1.09,
+    C25: 0.87,
+    C32: 0.68,
+    C40: 0.55,
+    C50: 0.44,
+    C63: 0.35,
+    C80: 0.27,
+    C100: 0.22,
+    C125: 0.17,
     // Type D MCBs (10-20 × In) - Table 41.3
-    'D6': 1.82, 'D10': 1.09, 'D16': 0.68, 'D20': 0.55, 'D25': 0.44,
-    'D32': 0.34, 'D40': 0.27, 'D50': 0.22, 'D63': 0.17, 'D80': 0.14, 'D100': 0.11, 'D125': 0.09,
+    D6: 1.82,
+    D10: 1.09,
+    D16: 0.68,
+    D20: 0.55,
+    D25: 0.44,
+    D32: 0.34,
+    D40: 0.27,
+    D50: 0.22,
+    D63: 0.17,
+    D80: 0.14,
+    D100: 0.11,
+    D125: 0.09,
     // RCDs - Table 41.5
-    'RCD30': 1667, 'RCD100': 500, 'RCD300': 167, 'RCD500': 100
+    RCD30: 1667,
+    RCD100: 500,
+    RCD300: 167,
+    RCD500: 100,
   },
-  
+
   // Get 80% test value for Zs
   getTestZs: (deviceKey: string): number | null => {
     const maxZs = bs7671.maxZsValues[deviceKey as keyof typeof bs7671.maxZsValues];
     if (!maxZs) return null;
     return get80PercentZs(maxZs);
   },
-  
+
   // Ring circuit requirements
   ringCircuit: {
     maxFloorArea: 100, // m²
     maxCableLength: 106, // m
     standardCableSize: 2.5, // mm²
-    standardProtection: 32 // A
-  }
+    standardProtection: 32, // A
+  },
 };

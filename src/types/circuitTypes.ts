@@ -1,4 +1,3 @@
-
 export const circuitTypes = [
   'Lighting',
   'Ring',
@@ -8,5 +7,5 @@ export const circuitTypes = [
   'EV charging',
   'Central Heating',
   'Fire Alarm',
-  'Other'
+  'Other',
 ];

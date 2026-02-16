@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   IdCard,
   CheckCircle2,
@@ -28,9 +28,9 @@ import {
   GraduationCap,
   Loader2,
   AlertTriangle,
-} from "lucide-react";
-import { ECS_CARD_TYPES, UK_JOB_TITLES } from "@/data/uk-electrician-constants";
-import { supabase } from "@/integrations/supabase/client";
+} from 'lucide-react';
+import { ECS_CARD_TYPES, UK_JOB_TITLES } from '@/data/uk-electrician-constants';
+import { supabase } from '@/integrations/supabase/client';
 
 // Exported form data type for parent component
 export interface OnboardingFormData {
@@ -52,74 +52,74 @@ interface ElecIdOnboardingProps {
 
 const STEPS = [
   {
-    id: "welcome",
-    title: "Welcome to Elec-ID",
-    subtitle: "Your portable professional identity",
+    id: 'welcome',
+    title: 'Welcome to Elec-ID',
+    subtitle: 'Your portable professional identity',
   },
   {
-    id: "basics",
-    title: "Basic Information",
-    subtitle: "Tell us about yourself",
+    id: 'basics',
+    title: 'Basic Information',
+    subtitle: 'Tell us about yourself',
   },
   {
-    id: "ecs",
-    title: "ECS Card Details",
-    subtitle: "Your industry credentials",
+    id: 'ecs',
+    title: 'ECS Card Details',
+    subtitle: 'Your industry credentials',
   },
   {
-    id: "verify",
-    title: "Verify Your Credentials",
-    subtitle: "Upload documents to unlock benefits",
+    id: 'verify',
+    title: 'Verify Your Credentials',
+    subtitle: 'Upload documents to unlock benefits',
   },
   {
-    id: "complete",
+    id: 'complete',
     title: "You're All Set!",
-    subtitle: "Your Elec-ID is ready",
+    subtitle: 'Your Elec-ID is ready',
   },
 ];
 
 const BENEFITS = [
   {
     icon: Shield,
-    title: "Verified Credentials",
-    description: "AI-powered verification of your qualifications",
+    title: 'Verified Credentials',
+    description: 'AI-powered verification of your qualifications',
   },
   {
     icon: Users,
-    title: "Talent Pool Access",
-    description: "Get discovered by top employers",
+    title: 'Talent Pool Access',
+    description: 'Get discovered by top employers',
   },
   {
     icon: Zap,
-    title: "Portable Identity",
-    description: "Your credentials follow you, not your employer",
+    title: 'Portable Identity',
+    description: 'Your credentials follow you, not your employer',
   },
 ];
 
 const TIER_BENEFITS = [
   {
-    tier: "basic",
+    tier: 'basic',
     icon: Shield,
-    label: "Basic",
-    color: "text-foreground/70",
-    bg: "bg-white/10",
-    benefits: ["Profile creation", "Basic visibility"],
+    label: 'Basic',
+    color: 'text-foreground/70',
+    bg: 'bg-white/10',
+    benefits: ['Profile creation', 'Basic visibility'],
   },
   {
-    tier: "verified",
+    tier: 'verified',
     icon: CheckCircle2,
-    label: "Verified",
-    color: "text-blue-400",
-    bg: "bg-blue-500/20",
-    benefits: ["Verified badge", "Priority in search", "Employer notifications"],
+    label: 'Verified',
+    color: 'text-blue-400',
+    bg: 'bg-blue-500/20',
+    benefits: ['Verified badge', 'Priority in search', 'Employer notifications'],
   },
   {
-    tier: "premium",
+    tier: 'premium',
     icon: Crown,
-    label: "Premium",
-    color: "text-elec-yellow",
-    bg: "bg-elec-yellow/20",
-    benefits: ["Premium badge", "Top listing", "Direct employer access", "QR verification"],
+    label: 'Premium',
+    color: 'text-elec-yellow',
+    bg: 'bg-elec-yellow/20',
+    benefits: ['Premium badge', 'Top listing', 'Direct employer access', 'QR verification'],
   },
 ];
 
@@ -130,14 +130,14 @@ const ElecIdOnboarding = ({
   needsRecovery = false,
   userId,
   ecsCardType: initialEcsCardType,
-  onRecoveryComplete
+  onRecoveryComplete,
 }: ElecIdOnboardingProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
-    jobTitle: "",
-    ecsCardType: "",
-    ecsCardExpiry: "",
-    ecsCardNumber: "",
+    jobTitle: '',
+    ecsCardType: '',
+    ecsCardExpiry: '',
+    ecsCardNumber: '',
   });
 
   // Recovery state
@@ -163,8 +163,8 @@ const ElecIdOnboarding = ({
       const { data, error } = await supabase.functions.invoke('generate-elec-id', {
         body: {
           user_id: userId,
-          ecs_card_type: initialEcsCardType || null
-        }
+          ecs_card_type: initialEcsCardType || null,
+        },
       });
 
       if (error) {
@@ -200,8 +200,8 @@ const ElecIdOnboarding = ({
         const { data, error } = await supabase.functions.invoke('generate-elec-id', {
           body: {
             user_id: userId,
-            ecs_card_type: formData.ecsCardType || initialEcsCardType || null
-          }
+            ecs_card_type: formData.ecsCardType || initialEcsCardType || null,
+          },
         });
 
         if (error) {
@@ -244,25 +244,28 @@ const ElecIdOnboarding = ({
 
   const canProceed = () => {
     switch (step.id) {
-      case "basics":
-        return formData.jobTitle !== "";
-      case "ecs":
-        return formData.ecsCardType !== "" && formData.ecsCardExpiry !== "";
+      case 'basics':
+        return formData.jobTitle !== '';
+      case 'ecs':
+        return formData.ecsCardType !== '' && formData.ecsCardExpiry !== '';
       default:
         return true;
     }
   };
 
   // Group job titles by category
-  const jobTitlesByCategory = UK_JOB_TITLES.reduce((acc, title) => {
-    if (!acc[title.category]) acc[title.category] = [];
-    acc[title.category].push(title);
-    return acc;
-  }, {} as Record<string, typeof UK_JOB_TITLES>);
+  const jobTitlesByCategory = UK_JOB_TITLES.reduce(
+    (acc, title) => {
+      if (!acc[title.category]) acc[title.category] = [];
+      acc[title.category].push(title);
+      return acc;
+    },
+    {} as Record<string, typeof UK_JOB_TITLES>
+  );
 
   const renderStep = () => {
     switch (step.id) {
-      case "welcome":
+      case 'welcome':
         return (
           <div className="text-center space-y-4 sm:space-y-6">
             {/* Hero Icon */}
@@ -275,7 +278,8 @@ const ElecIdOnboarding = ({
                 Your Digital Professional Identity
               </h2>
               <p className="text-sm sm:text-base text-foreground/70 max-w-md mx-auto px-2">
-                Own and control your professional credentials. Share verified qualifications with employers instantly.
+                Own and control your professional credentials. Share verified qualifications with
+                employers instantly.
               </p>
             </div>
 
@@ -303,7 +307,7 @@ const ElecIdOnboarding = ({
           </div>
         );
 
-      case "basics":
+      case 'basics':
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -317,28 +321,24 @@ const ElecIdOnboarding = ({
                 <Label className="text-foreground">Job Title</Label>
                 <Select
                   value={formData.jobTitle}
-                  onValueChange={(value) =>
-                    setFormData({ ...formData, jobTitle: value })
-                  }
+                  onValueChange={(value) => setFormData({ ...formData, jobTitle: value })}
                 >
                   <SelectTrigger className="bg-white/5 border-white/20 h-12">
                     <SelectValue placeholder="Select your job title" />
                   </SelectTrigger>
                   <SelectContent className="bg-elec-gray border-white/20 max-h-60">
-                    {Object.entries(jobTitlesByCategory).map(
-                      ([category, titles]) => (
-                        <React.Fragment key={category}>
-                          <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow">
-                            {category}
-                          </div>
-                          {titles.map((title) => (
-                            <SelectItem key={title.value} value={title.value}>
-                              {title.label}
-                            </SelectItem>
-                          ))}
-                        </React.Fragment>
-                      )
-                    )}
+                    {Object.entries(jobTitlesByCategory).map(([category, titles]) => (
+                      <React.Fragment key={category}>
+                        <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow">
+                          {category}
+                        </div>
+                        {titles.map((title) => (
+                          <SelectItem key={title.value} value={title.value}>
+                            {title.label}
+                          </SelectItem>
+                        ))}
+                      </React.Fragment>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -346,7 +346,7 @@ const ElecIdOnboarding = ({
           </div>
         );
 
-      case "ecs":
+      case 'ecs':
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
@@ -360,9 +360,7 @@ const ElecIdOnboarding = ({
                 <Label className="text-foreground">ECS Card Type</Label>
                 <Select
                   value={formData.ecsCardType}
-                  onValueChange={(value) =>
-                    setFormData({ ...formData, ecsCardType: value })
-                  }
+                  onValueChange={(value) => setFormData({ ...formData, ecsCardType: value })}
                 >
                   <SelectTrigger className="bg-white/5 border-white/20 h-12">
                     <SelectValue placeholder="Select card type" />
@@ -388,9 +386,7 @@ const ElecIdOnboarding = ({
                 <Input
                   type="date"
                   value={formData.ecsCardExpiry}
-                  onChange={(e) =>
-                    setFormData({ ...formData, ecsCardExpiry: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, ecsCardExpiry: e.target.value })}
                   className="bg-white/5 border-white/20 h-12"
                 />
               </div>
@@ -401,9 +397,7 @@ const ElecIdOnboarding = ({
                 </Label>
                 <Input
                   value={formData.ecsCardNumber}
-                  onChange={(e) =>
-                    setFormData({ ...formData, ecsCardNumber: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, ecsCardNumber: e.target.value })}
                   placeholder="Enter card number"
                   className="bg-white/5 border-white/20 h-12"
                 />
@@ -412,7 +406,7 @@ const ElecIdOnboarding = ({
           </div>
         );
 
-      case "verify":
+      case 'verify':
         return (
           <div className="space-y-4 sm:space-y-6">
             <div className="text-center mb-4 sm:mb-6">
@@ -455,7 +449,7 @@ const ElecIdOnboarding = ({
           </div>
         );
 
-      case "complete":
+      case 'complete':
         // Use local ID first, then prop, then placeholder
         const displayElecId = localElecId || elecIdNumber || 'EM-XXXXXX';
         return (
@@ -487,7 +481,9 @@ const ElecIdOnboarding = ({
 
             {/* Next steps */}
             <div className="grid grid-cols-1 gap-1.5 sm:gap-2 max-w-xs mx-auto text-left px-2">
-              <p className="text-xs sm:text-sm font-medium text-foreground mb-0.5 sm:mb-1">Next steps:</p>
+              <p className="text-xs sm:text-sm font-medium text-foreground mb-0.5 sm:mb-1">
+                Next steps:
+              </p>
               <div className="flex items-center gap-2 text-xs sm:text-sm text-foreground/70">
                 <FileCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-elec-yellow flex-shrink-0" />
                 <span>Upload your ECS card for verification</span>
@@ -521,8 +517,8 @@ const ElecIdOnboarding = ({
           Your Elec-ID Wasn't Created
         </h2>
         <p className="text-sm sm:text-base text-foreground/70 max-w-sm mx-auto mb-6">
-          It looks like you opted for an Elec-ID during signup but it wasn't generated.
-          This can happen if you confirmed your email on a different device.
+          It looks like you opted for an Elec-ID during signup but it wasn't generated. This can
+          happen if you confirmed your email on a different device.
         </p>
 
         {recoveryError && (

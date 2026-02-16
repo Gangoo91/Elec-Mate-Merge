@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   AlertTriangle,
   Clock,
@@ -17,13 +17,13 @@ import {
   GraduationCap,
   Shield,
   Car,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { format, differenceInDays, addDays, isPast } from "date-fns";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { format, differenceInDays, addDays, isPast } from 'date-fns';
 
 interface ExpiringDocument {
   id: string;
-  type: "ecs_card" | "qualification" | "training" | "cscs" | "driving_licence" | "insurance";
+  type: 'ecs_card' | 'qualification' | 'training' | 'cscs' | 'driving_licence' | 'insurance';
   name: string;
   expiryDate: Date;
   renewalUrl?: string;
@@ -47,16 +47,16 @@ const DOCUMENT_ICONS: Record<string, typeof FileText> = {
 };
 
 const DOCUMENT_LABELS: Record<string, string> = {
-  ecs_card: "ECS Card",
-  qualification: "Qualification",
-  training: "Training Certificate",
-  cscs: "CSCS Card",
-  driving_licence: "Driving Licence",
-  insurance: "Insurance",
+  ecs_card: 'ECS Card',
+  qualification: 'Qualification',
+  training: 'Training Certificate',
+  cscs: 'CSCS Card',
+  driving_licence: 'Driving Licence',
+  insurance: 'Insurance',
 };
 
 function getExpiryStatus(expiryDate: Date): {
-  status: "expired" | "critical" | "warning" | "ok";
+  status: 'expired' | 'critical' | 'warning' | 'ok';
   label: string;
   color: string;
   bgColor: string;
@@ -66,40 +66,40 @@ function getExpiryStatus(expiryDate: Date): {
 
   if (isPast(expiryDate)) {
     return {
-      status: "expired",
-      label: "Expired",
-      color: "text-red-500",
-      bgColor: "bg-red-500/20",
-      borderColor: "border-red-500/30",
+      status: 'expired',
+      label: 'Expired',
+      color: 'text-red-500',
+      bgColor: 'bg-red-500/20',
+      borderColor: 'border-red-500/30',
     };
   }
 
   if (daysUntil <= 30) {
     return {
-      status: "critical",
+      status: 'critical',
       label: `${daysUntil} days`,
-      color: "text-red-400",
-      bgColor: "bg-red-500/10",
-      borderColor: "border-red-500/20",
+      color: 'text-red-400',
+      bgColor: 'bg-red-500/10',
+      borderColor: 'border-red-500/20',
     };
   }
 
   if (daysUntil <= 90) {
     return {
-      status: "warning",
+      status: 'warning',
       label: `${daysUntil} days`,
-      color: "text-amber-400",
-      bgColor: "bg-amber-500/10",
-      borderColor: "border-amber-500/20",
+      color: 'text-amber-400',
+      bgColor: 'bg-amber-500/10',
+      borderColor: 'border-amber-500/20',
     };
   }
 
   return {
-    status: "ok",
+    status: 'ok',
     label: `${daysUntil} days`,
-    color: "text-green-400",
-    bgColor: "bg-green-500/10",
-    borderColor: "border-green-500/20",
+    color: 'text-green-400',
+    bgColor: 'bg-green-500/10',
+    borderColor: 'border-green-500/20',
   };
 }
 
@@ -122,9 +122,7 @@ export function ExpiryAlerts({
     return daysUntil <= 180 || isPast(doc.expiryDate);
   });
 
-  const expiredCount = alertDocuments.filter((doc) =>
-    isPast(doc.expiryDate)
-  ).length;
+  const expiredCount = alertDocuments.filter((doc) => isPast(doc.expiryDate)).length;
   const criticalCount = alertDocuments.filter((doc) => {
     const days = differenceInDays(doc.expiryDate, new Date());
     return days > 0 && days <= 30;
@@ -135,18 +133,18 @@ export function ExpiryAlerts({
   }
 
   return (
-    <Card className={cn("border-border", className)}>
+    <Card className={cn('border-border', className)}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div
               className={cn(
-                "p-2 rounded-lg",
+                'p-2 rounded-lg',
                 expiredCount > 0
-                  ? "bg-red-500/20"
+                  ? 'bg-red-500/20'
                   : criticalCount > 0
-                  ? "bg-amber-500/20"
-                  : "bg-green-500/20"
+                    ? 'bg-amber-500/20'
+                    : 'bg-green-500/20'
               )}
             >
               {expiredCount > 0 ? (
@@ -161,10 +159,10 @@ export function ExpiryAlerts({
               <CardTitle className="text-lg">Document Renewals</CardTitle>
               <p className="text-xs text-foreground/70">
                 {expiredCount > 0
-                  ? `${expiredCount} expired document${expiredCount > 1 ? "s" : ""}`
+                  ? `${expiredCount} expired document${expiredCount > 1 ? 's' : ''}`
                   : criticalCount > 0
-                  ? `${criticalCount} document${criticalCount > 1 ? "s" : ""} expiring soon`
-                  : "All documents valid"}
+                    ? `${criticalCount} document${criticalCount > 1 ? 's' : ''} expiring soon`
+                    : 'All documents valid'}
               </p>
             </div>
           </div>
@@ -172,10 +170,8 @@ export function ExpiryAlerts({
             <Badge
               variant="outline"
               className={cn(
-                "border-0",
-                expiredCount > 0
-                  ? "bg-red-500/20 text-red-400"
-                  : "bg-amber-500/20 text-amber-400"
+                'border-0',
+                expiredCount > 0 ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'
               )}
             >
               Action Required
@@ -194,7 +190,7 @@ export function ExpiryAlerts({
             <div
               key={doc.id}
               className={cn(
-                "rounded-xl border transition-all duration-200",
+                'rounded-xl border transition-all duration-200',
                 expiry.bgColor,
                 expiry.borderColor
               )}
@@ -204,38 +200,34 @@ export function ExpiryAlerts({
                 className="flex items-center gap-3 p-3 cursor-pointer"
                 onClick={() => setExpandedId(isExpanded ? null : doc.id)}
               >
-                <div className={cn("p-2 rounded-lg bg-white/10")}>
-                  <DocIcon className={cn("h-4 w-4", expiry.color)} />
+                <div className={cn('p-2 rounded-lg bg-white/10')}>
+                  <DocIcon className={cn('h-4 w-4', expiry.color)} />
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-sm truncate">{doc.name}</p>
-                  <p className="text-xs text-foreground/70">
-                    {DOCUMENT_LABELS[doc.type]}
-                  </p>
+                  <p className="text-xs text-foreground/70">{DOCUMENT_LABELS[doc.type]}</p>
                 </div>
 
                 {/* Countdown */}
                 <div className="text-right">
                   <div className="flex items-center gap-1.5">
-                    {expiry.status === "expired" ? (
-                      <XCircle className={cn("h-4 w-4", expiry.color)} />
+                    {expiry.status === 'expired' ? (
+                      <XCircle className={cn('h-4 w-4', expiry.color)} />
                     ) : (
-                      <Clock className={cn("h-4 w-4", expiry.color)} />
+                      <Clock className={cn('h-4 w-4', expiry.color)} />
                     )}
-                    <span className={cn("font-bold text-sm", expiry.color)}>
-                      {expiry.label}
-                    </span>
+                    <span className={cn('font-bold text-sm', expiry.color)}>{expiry.label}</span>
                   </div>
                   <p className="text-xs text-foreground/70">
-                    {format(doc.expiryDate, "dd MMM yyyy")}
+                    {format(doc.expiryDate, 'dd MMM yyyy')}
                   </p>
                 </div>
 
                 <ChevronRight
                   className={cn(
-                    "h-4 w-4 text-foreground/70 transition-transform",
-                    isExpanded && "rotate-90"
+                    'h-4 w-4 text-foreground/70 transition-transform',
+                    isExpanded && 'rotate-90'
                   )}
                 />
               </div>
@@ -252,10 +244,8 @@ export function ExpiryAlerts({
                       variant="ghost"
                       size="sm"
                       className={cn(
-                        "h-11 px-3 touch-manipulation active:scale-[0.98]",
-                        doc.notificationsEnabled
-                          ? "text-green-500"
-                          : "text-foreground/70"
+                        'h-11 px-3 touch-manipulation active:scale-[0.98]',
+                        doc.notificationsEnabled ? 'text-green-500' : 'text-foreground/70'
                       )}
                       onClick={(e) => {
                         e.stopPropagation();
@@ -295,7 +285,7 @@ export function ExpiryAlerts({
                         className="flex-1 h-10 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.open(doc.renewalUrl, "_blank");
+                          window.open(doc.renewalUrl, '_blank');
                         }}
                       >
                         <Calendar className="h-4 w-4 mr-2" />
@@ -313,7 +303,7 @@ export function ExpiryAlerts({
         <div className="flex items-center justify-between pt-2 text-xs text-foreground/70">
           <span>
             {documents.length - alertDocuments.length} document
-            {documents.length - alertDocuments.length !== 1 ? "s" : ""} up to date
+            {documents.length - alertDocuments.length !== 1 ? 's' : ''} up to date
           </span>
           <button className="text-elec-yellow hover:text-elec-yellow/80 flex items-center gap-1">
             View all <ChevronRight className="h-3 w-3" />

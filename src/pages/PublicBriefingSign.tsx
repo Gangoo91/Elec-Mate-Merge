@@ -313,8 +313,8 @@ const PublicBriefingSign = () => {
           </motion.div>
           <h1 className="text-2xl font-bold text-white mb-2">Signed Successfully</h1>
           <p className="text-white/50 text-sm mb-6">
-            Thank you, {signerName}. Your signature for &quot;{briefing.briefing_name}&quot; has been
-            recorded.
+            Thank you, {signerName}. Your signature for &quot;{briefing.briefing_name}&quot; has
+            been recorded.
           </p>
           <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white/40">
             You can close this page now.
@@ -357,7 +357,7 @@ const PublicBriefingSign = () => {
                 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border',
                 riskStyle.bg,
                 riskStyle.text,
-                riskStyle.border,
+                riskStyle.border
               )}
             >
               <AlertTriangle className="h-3 w-3" />
@@ -431,7 +431,7 @@ const PublicBriefingSign = () => {
                     key={h}
                     className={cn(
                       'px-2.5 py-1 rounded-full text-xs font-medium',
-                      HAZARD_COLOURS[h] || 'bg-gray-500/15 text-gray-300',
+                      HAZARD_COLOURS[h] || 'bg-gray-500/15 text-gray-300'
                     )}
                   >
                     {HAZARD_LABELS[h] || h.replace(/^custom-/, '').replace(/-/g, ' ')}
@@ -472,7 +472,7 @@ const PublicBriefingSign = () => {
                   transition={{ delay: 0.3, duration: 0.6 }}
                   className={cn(
                     'h-full rounded-full',
-                    signedCount === totalExpected ? 'bg-emerald-400' : 'bg-amber-400',
+                    signedCount === totalExpected ? 'bg-emerald-400' : 'bg-amber-400'
                   )}
                 />
               </div>
@@ -483,9 +483,7 @@ const PublicBriefingSign = () => {
                   const name = attendee.name || '';
                   const isSigned = signedNames.has(name.toLowerCase());
                   const sig = isSigned
-                    ? signatures.find(
-                        (s: any) => s.name?.toLowerCase() === name.toLowerCase(),
-                      )
+                    ? signatures.find((s: any) => s.name?.toLowerCase() === name.toLowerCase())
                     : null;
 
                   return (
@@ -495,7 +493,7 @@ const PublicBriefingSign = () => {
                         'flex items-center justify-between gap-2 p-3 rounded-xl border transition-all',
                         isSigned
                           ? 'bg-emerald-500/5 border-emerald-500/15'
-                          : 'bg-white/[0.03] border-white/10',
+                          : 'bg-white/[0.03] border-white/10'
                       )}
                     >
                       <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -511,7 +509,7 @@ const PublicBriefingSign = () => {
                           <span
                             className={cn(
                               'text-sm truncate block',
-                              isSigned ? 'text-white/80' : 'text-white/70',
+                              isSigned ? 'text-white/80' : 'text-white/70'
                             )}
                           >
                             {name}
@@ -561,10 +559,7 @@ const PublicBriefingSign = () => {
             >
               <span>Not on the list? Sign as a guest</span>
               <ChevronDown
-                className={cn(
-                  'h-4 w-4 transition-transform',
-                  showWalkInForm && 'rotate-180',
-                )}
+                className={cn('h-4 w-4 transition-transform', showWalkInForm && 'rotate-180')}
               />
             </button>
           )}
@@ -609,7 +604,7 @@ const PublicBriefingSign = () => {
                         'bg-white/[0.06] border border-white/10 text-white',
                         'placeholder:text-white/30',
                         'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
-                        'touch-manipulation',
+                        'touch-manipulation'
                       )}
                     />
                   </div>
@@ -630,7 +625,7 @@ const PublicBriefingSign = () => {
                         'bg-white/[0.06] border border-white/10 text-white',
                         'placeholder:text-white/30',
                         'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
-                        'touch-manipulation',
+                        'touch-manipulation'
                       )}
                     />
                   </div>
@@ -690,7 +685,7 @@ const PublicBriefingSign = () => {
                     'text-base font-semibold transition-all touch-manipulation',
                     submitting || !signerName.trim() || !hasDrawn
                       ? 'bg-white/10 text-white/30 cursor-not-allowed'
-                      : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-[0.98] shadow-lg shadow-emerald-500/20',
+                      : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-[0.98] shadow-lg shadow-emerald-500/20'
                   )}
                 >
                   {submitting ? (

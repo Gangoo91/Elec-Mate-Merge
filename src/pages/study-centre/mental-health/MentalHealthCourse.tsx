@@ -1,65 +1,83 @@
-import { ArrowLeft, Brain, CloudRain, ShieldAlert, Puzzle, Building2, GraduationCap, BookOpen, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Brain,
+  CloudRain,
+  ShieldAlert,
+  Puzzle,
+  Building2,
+  GraduationCap,
+  BookOpen,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Understanding Mental Health & the MHFA Role",
-    description: "Mental health awareness, the MHFA role, workplace framework, communication skills and active listening",
+    title: 'Understanding Mental Health & the MHFA Role',
+    description:
+      'Mental health awareness, the MHFA role, workplace framework, communication skills and active listening',
     icon: Brain,
-    duration: "40 mins",
-    link: "../mental-health-module-1",
+    duration: '40 mins',
+    link: '../mental-health-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Depression, Anxiety & Stress",
-    description: "Recognising depression, anxiety disorders, workplace stress, burnout and supporting colleagues",
+    title: 'Depression, Anxiety & Stress',
+    description:
+      'Recognising depression, anxiety disorders, workplace stress, burnout and supporting colleagues',
     icon: CloudRain,
-    duration: "45 mins",
-    link: "../mental-health-module-2",
+    duration: '45 mins',
+    link: '../mental-health-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Substance Misuse, Self-Harm & Suicide",
-    description: "Substance misuse and addiction, self-harm awareness, suicide prevention and crisis response",
+    title: 'Substance Misuse, Self-Harm & Suicide',
+    description:
+      'Substance misuse and addiction, self-harm awareness, suicide prevention and crisis response',
     icon: ShieldAlert,
-    duration: "40 mins",
-    link: "../mental-health-module-3",
+    duration: '40 mins',
+    link: '../mental-health-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Psychosis, Eating Disorders & Complex Needs",
-    description: "Psychosis and schizophrenia, eating disorders, personality disorders, trauma and PTSD",
+    title: 'Psychosis, Eating Disorders & Complex Needs',
+    description:
+      'Psychosis and schizophrenia, eating disorders, personality disorders, trauma and PTSD',
     icon: Puzzle,
-    duration: "40 mins",
-    link: "../mental-health-module-4",
+    duration: '40 mins',
+    link: '../mental-health-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Workplace Implementation & Wellbeing",
-    description: "Implementing MHFA programmes, signposting services, building healthy workplaces and self-care",
+    title: 'Workplace Implementation & Wellbeing',
+    description:
+      'Implementing MHFA programmes, signposting services, building healthy workplaces and self-care',
     icon: Building2,
-    duration: "40 mins",
-    link: "../mental-health-module-5",
+    duration: '40 mins',
+    link: '../mental-health-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../mental-health-module-6",
+    duration: '30 mins',
+    link: '../mental-health-module-6',
     isExam: true,
   },
 ];
 
 export default function MentalHealthCourse() {
   useSEO({
-    title: "Mental Health First Aid | General Upskilling",
-    description: "Complete Mental Health First Aid training covering recognition, support strategies, crisis response, workplace protocols and mock exam preparation.",
+    title: 'Mental Health First Aid | General Upskilling',
+    description:
+      'Complete Mental Health First Aid training covering recognition, support strategies, crisis response, workplace protocols and mock exam preparation.',
   });
 
   return (
@@ -96,7 +114,8 @@ export default function MentalHealthCourse() {
                 Mental Health First Aid
               </h1>
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-1 max-w-2xl">
-                Recognise, support and respond to mental health conditions and crises in the workplace
+                Recognise, support and respond to mental health conditions and crises in the
+                workplace
               </p>
             </div>
           </div>

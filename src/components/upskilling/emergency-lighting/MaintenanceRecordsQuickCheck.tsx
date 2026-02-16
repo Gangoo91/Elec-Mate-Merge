@@ -12,7 +12,10 @@ export const MaintenanceRecordsQuickCheck = () => {
               Quick Check: What must always be recorded after a failed luminaire test?
             </p>
             <p className="text-foreground text-sm sm:text-base">
-              The specific fault found, the luminaire reference number, the date of failure, the remedial action taken (e.g., battery replacement, luminaire repair), who carried out the work, and the re-test result confirming the fault has been rectified. This creates a complete audit trail for compliance.
+              The specific fault found, the luminaire reference number, the date of failure, the
+              remedial action taken (e.g., battery replacement, luminaire repair), who carried out
+              the work, and the re-test result confirming the fault has been rectified. This creates
+              a complete audit trail for compliance.
             </p>
           </div>
         </div>

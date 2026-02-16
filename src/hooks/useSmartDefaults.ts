@@ -26,7 +26,7 @@ export const useSmartDefaults = (userId?: string) => {
         console.error('Failed to load smart defaults:', e);
       }
     };
-    
+
     loadDefaults();
   }, [userId]);
 
@@ -39,7 +39,7 @@ export const useSmartDefaults = (userId?: string) => {
       earthingArrangement: formData.earthingArrangement,
       testInstrument: formData.testInstrument,
     };
-    
+
     await offlineStorage.setPreference('minorWorks_smartDefaults', newDefaults);
     setDefaults(newDefaults);
     setHasDefaults(true);

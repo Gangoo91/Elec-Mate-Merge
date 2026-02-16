@@ -10,14 +10,15 @@ export const BMSModule5Section4Intro = () => {
             <Network className="h-8 w-8 text-elec-yellow mt-1 flex-shrink-0" />
             <div className="space-y-3">
               <p className="text-lg">
-                KNX is an international standard (ISO/IEC 14543) for home and building automation, widely used across 
-                Europe and increasingly worldwide. Unlike BACnet and Modbus, which originated in industrial systems, 
-                KNX was designed from the start for building functions such as lighting, blinds, HVAC room control, and sensors.
+                KNX is an international standard (ISO/IEC 14543) for home and building automation,
+                widely used across Europe and increasingly worldwide. Unlike BACnet and Modbus,
+                which originated in industrial systems, KNX was designed from the start for building
+                functions such as lighting, blinds, HVAC room control, and sensors.
               </p>
               <p>
-                For electricians, KNX means understanding the bus topology, device addressing, and power requirements. 
-                Even though programming is done by specialists, correct wiring and device installation are essential for 
-                a stable KNX network.
+                For electricians, KNX means understanding the bus topology, device addressing, and
+                power requirements. Even though programming is done by specialists, correct wiring
+                and device installation are essential for a stable KNX network.
               </p>
             </div>
           </div>
@@ -29,7 +30,8 @@ export const BMSModule5Section4Intro = () => {
                 <h4 className="text-foreground font-semibold">International Standard</h4>
               </div>
               <p className="text-foreground text-sm">
-                ISO/IEC 14543 standard ensures global compatibility and interoperability between different manufacturers' devices.
+                ISO/IEC 14543 standard ensures global compatibility and interoperability between
+                different manufacturers' devices.
               </p>
             </div>
 
@@ -39,7 +41,8 @@ export const BMSModule5Section4Intro = () => {
                 <h4 className="text-foreground font-semibold">Building-Focused Design</h4>
               </div>
               <p className="text-foreground text-sm">
-                Purpose-built for building automation functions rather than adapted from industrial protocols.
+                Purpose-built for building automation functions rather than adapted from industrial
+                protocols.
               </p>
             </div>
           </div>

@@ -60,7 +60,9 @@ export const generateATSPDF = async (cvData: CVData): Promise<void> => {
     y += 5;
   }
   if (cvData.personalInfo.address || cvData.personalInfo.postcode) {
-    const address = [cvData.personalInfo.address, cvData.personalInfo.postcode].filter(Boolean).join(', ');
+    const address = [cvData.personalInfo.address, cvData.personalInfo.postcode]
+      .filter(Boolean)
+      .join(', ');
     pdf.text(`Address: ${address}`, margin, y);
     y += 5;
   }
@@ -105,9 +107,10 @@ export const generateATSPDF = async (cvData: CVData): Promise<void> => {
   // PROFESSIONAL CARDS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const hasCards = cvData.professionalCards.ecsCardType ||
-                   cvData.professionalCards.cscsCardType ||
-                   cvData.professionalCards.drivingLicence.length > 0;
+  const hasCards =
+    cvData.professionalCards.ecsCardType ||
+    cvData.professionalCards.cscsCardType ||
+    cvData.professionalCards.drivingLicence.length > 0;
 
   if (hasCards) {
     addSectionHeader('Professional Cards & Licences');
@@ -123,7 +126,11 @@ export const generateATSPDF = async (cvData: CVData): Promise<void> => {
       y += 5;
     }
     if (cvData.professionalCards.drivingLicence.length > 0) {
-      pdf.text(`Driving Licences: ${cvData.professionalCards.drivingLicence.join(', ')}`, margin, y);
+      pdf.text(
+        `Driving Licences: ${cvData.professionalCards.drivingLicence.join(', ')}`,
+        margin,
+        y
+      );
       y += 5;
     }
 
@@ -219,7 +226,9 @@ export const generateATSPDF = async (cvData: CVData): Promise<void> => {
       pdf.text(dateRange, margin + contentWidth, y, { align: 'right' });
       y += 5;
 
-      const institutionLine = edu.location ? `${edu.institution}, ${edu.location}` : edu.institution;
+      const institutionLine = edu.location
+        ? `${edu.institution}, ${edu.location}`
+        : edu.institution;
       pdf.text(institutionLine, margin, y);
       y += 4;
 

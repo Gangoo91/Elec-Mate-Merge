@@ -1,24 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Target, 
-  ZoomIn, 
-  ZoomOut, 
+import React, { useState, useRef, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Target,
+  ZoomIn,
+  ZoomOut,
   RotateCcw,
   Eye,
   EyeOff,
   Download,
   Share,
-  Info
-} from "lucide-react";
-import { 
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Info,
+} from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface BoundingBox {
   x: number;
@@ -49,7 +44,7 @@ const EvidenceViewer: React.FC<EvidenceViewerProps> = ({
   boundingBoxes = [],
   findings = [],
   onBoundingBoxClick,
-  showOverlays = true
+  showOverlays = true,
 }) => {
   const [zoom, setZoom] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -62,16 +57,21 @@ const EvidenceViewer: React.FC<EvidenceViewerProps> = ({
 
   const getEicrCodeColor = (code: string) => {
     switch (code) {
-      case 'C1': return 'border-red-500 bg-red-500/20 text-red-400';
-      case 'C2': return 'border-amber-500 bg-amber-500/20 text-amber-400';
-      case 'C3': return 'border-blue-500 bg-blue-500/20 text-blue-400';
-      case 'FI': return 'border-slate-500 bg-slate-500/20 text-slate-400';
-      default: return 'border-primary bg-primary/20 text-primary';
+      case 'C1':
+        return 'border-red-500 bg-red-500/20 text-red-400';
+      case 'C2':
+        return 'border-amber-500 bg-amber-500/20 text-amber-400';
+      case 'C3':
+        return 'border-blue-500 bg-blue-500/20 text-blue-400';
+      case 'FI':
+        return 'border-slate-500 bg-slate-500/20 text-slate-400';
+      default:
+        return 'border-primary bg-primary/20 text-primary';
     }
   };
 
-  const handleZoomIn = () => setZoom(prev => Math.min(prev * 1.2, 3));
-  const handleZoomOut = () => setZoom(prev => Math.max(prev / 1.2, 0.5));
+  const handleZoomIn = () => setZoom((prev) => Math.min(prev * 1.2, 3));
+  const handleZoomOut = () => setZoom((prev) => Math.max(prev / 1.2, 0.5));
   const handleReset = () => {
     setZoom(1);
     setPosition({ x: 0, y: 0 });
@@ -89,7 +89,7 @@ const EvidenceViewer: React.FC<EvidenceViewerProps> = ({
     if (isDragging) {
       setPosition({
         x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y
+        y: e.clientY - dragStart.y,
       });
     }
   };
@@ -117,12 +117,12 @@ const EvidenceViewer: React.FC<EvidenceViewerProps> = ({
   const allBoxes = [
     ...boundingBoxes,
     ...findings
-      .filter(f => f.bounding_box)
-      .map(f => ({
+      .filter((f) => f.bounding_box)
+      .map((f) => ({
         ...f.bounding_box!,
         eicr_code: f.eicr_code,
-        description: f.description
-      }))
+        description: f.description,
+      })),
   ];
 
   return (
@@ -196,61 +196,58 @@ const EvidenceViewer: React.FC<EvidenceViewerProps> = ({
               className="absolute inset-0 w-full h-full object-contain transition-transform duration-200"
               style={{
                 transform: `translate(${position.x}px, ${position.y}px) scale(${zoom})`,
-                transformOrigin: 'center center'
+                transformOrigin: 'center center',
               }}
               draggable={false}
             />
-            
+
             {/* Bounding boxes overlay */}
-            {showBoxes && allBoxes.map((box, index) => (
-              <Tooltip key={`${box.label}-${index}`}>
-                <TooltipTrigger asChild>
-                  <div
-                    className={`absolute border-2 cursor-pointer transition-all hover:scale-105 ${
-                      getEicrCodeColor(box.eicr_code || 'FI')
-                    } ${selectedBox?.label === box.label ? 'ring-2 ring-primary' : ''}`}
-                    style={{
-                      left: `${box.x * 100}%`,
-                      top: `${box.y * 100}%`,
-                      width: `${box.width * 100}%`,
-                      height: `${box.height * 100}%`,
-                      transform: `translate(${position.x}px, ${position.y}px) scale(${zoom})`,
-                    }}
-                    onClick={(e) => handleBoundingBoxClick(box, e)}
-                  >
-                    {/* EICR Code badge */}
-                    <div className="absolute -top-2 -left-2">
-                      <Badge 
-                        className={`text-xs ${getEicrCodeColor(box.eicr_code || 'FI')}`}
-                      >
-                        {box.eicr_code || 'FI'}
-                      </Badge>
+            {showBoxes &&
+              allBoxes.map((box, index) => (
+                <Tooltip key={`${box.label}-${index}`}>
+                  <TooltipTrigger asChild>
+                    <div
+                      className={`absolute border-2 cursor-pointer transition-all hover:scale-105 ${getEicrCodeColor(
+                        box.eicr_code || 'FI'
+                      )} ${selectedBox?.label === box.label ? 'ring-2 ring-primary' : ''}`}
+                      style={{
+                        left: `${box.x * 100}%`,
+                        top: `${box.y * 100}%`,
+                        width: `${box.width * 100}%`,
+                        height: `${box.height * 100}%`,
+                        transform: `translate(${position.x}px, ${position.y}px) scale(${zoom})`,
+                      }}
+                      onClick={(e) => handleBoundingBoxClick(box, e)}
+                    >
+                      {/* EICR Code badge */}
+                      <div className="absolute -top-2 -left-2">
+                        <Badge className={`text-xs ${getEicrCodeColor(box.eicr_code || 'FI')}`}>
+                          {box.eicr_code || 'FI'}
+                        </Badge>
+                      </div>
+
+                      {/* Confidence indicator */}
+                      <div className="absolute -bottom-2 -right-2">
+                        <Badge variant="secondary" className="text-xs bg-background/80">
+                          {Math.round(box.confidence * 100)}%
+                        </Badge>
+                      </div>
                     </div>
-                    
-                    {/* Confidence indicator */}
-                    <div className="absolute -bottom-2 -right-2">
-                      <Badge 
-                        variant="secondary" 
-                        className="text-xs bg-background/80"
-                      >
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-xs">
+                    <div className="space-y-1">
+                      <p className="font-medium">{box.label}</p>
+                      {box.description && (
+                        <p className="text-sm text-muted-foreground">{box.description}</p>
+                      )}
+                      <p className="text-xs">
+                        Code: {box.eicr_code || 'FI'} | Confidence:{' '}
                         {Math.round(box.confidence * 100)}%
-                      </Badge>
+                      </p>
                     </div>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="top" className="max-w-xs">
-                  <div className="space-y-1">
-                    <p className="font-medium">{box.label}</p>
-                    {box.description && (
-                      <p className="text-sm text-muted-foreground">{box.description}</p>
-                    )}
-                    <p className="text-xs">
-                      Code: {box.eicr_code || 'FI'} | Confidence: {Math.round(box.confidence * 100)}%
-                    </p>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            ))}
+                  </TooltipContent>
+                </Tooltip>
+              ))}
           </div>
         </CardContent>
 
@@ -264,7 +261,9 @@ const EvidenceViewer: React.FC<EvidenceViewerProps> = ({
                     <div className="flex items-center gap-2 mb-1">
                       <Target className="h-4 w-4 text-primary" />
                       <span className="font-medium text-sm">{selectedBox.label}</span>
-                      <Badge className={`text-xs ${getEicrCodeColor(selectedBox.eicr_code || 'FI')}`}>
+                      <Badge
+                        className={`text-xs ${getEicrCodeColor(selectedBox.eicr_code || 'FI')}`}
+                      >
                         {selectedBox.eicr_code || 'FI'}
                       </Badge>
                     </div>
@@ -275,11 +274,7 @@ const EvidenceViewer: React.FC<EvidenceViewerProps> = ({
                       Confidence: {Math.round(selectedBox.confidence * 100)}%
                     </p>
                   </div>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => setSelectedBox(null)}
-                  >
+                  <Button size="sm" variant="ghost" onClick={() => setSelectedBox(null)}>
                     ×
                   </Button>
                 </div>

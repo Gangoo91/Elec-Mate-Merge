@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -25,7 +24,10 @@ const RegulationSearchBar = ({ searchTerm, onSearchChange }: RegulationSearchBar
               placeholder="Search regulations, test values, or requirements..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className={cn("bg-muted border-border text-foreground placeholder-gray-400 h-14 text-lg", !searchTerm && "pl-12")}
+              className={cn(
+                'bg-muted border-border text-foreground placeholder-gray-400 h-14 text-lg',
+                !searchTerm && 'pl-12'
+              )}
             />
           </div>
           <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-14 px-8 text-lg font-semibold">

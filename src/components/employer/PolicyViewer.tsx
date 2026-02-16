@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   ResponsiveFormModal,
   ResponsiveFormModalContent,
@@ -6,30 +6,21 @@ import {
   ResponsiveFormModalTitle,
   ResponsiveFormModalBody,
   ResponsiveFormModalFooter,
-} from "@/components/ui/responsive-form-modal";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import {
-  FileText,
-  Download,
-  Check,
-  Building2,
-  Calendar,
-  X,
-  Loader2,
-  Edit3,
-} from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
-import type { PolicyTemplate, UserPolicy } from "@/hooks/usePolicies";
-import { useAdoptPolicy } from "@/hooks/usePolicies";
-import { downloadPolicyPDF } from "@/utils/policy-pdf";
-import { useToast } from "@/hooks/use-toast";
-import { PolicyEditor } from "@/components/employer/PolicyEditor";
-import { sanitizeHtmlSafe } from "@/utils/inputSanitization";
+} from '@/components/ui/responsive-form-modal';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { FileText, Download, Check, Building2, Calendar, X, Loader2, Edit3 } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
+import type { PolicyTemplate, UserPolicy } from '@/hooks/usePolicies';
+import { useAdoptPolicy } from '@/hooks/usePolicies';
+import { downloadPolicyPDF } from '@/utils/policy-pdf';
+import { useToast } from '@/hooks/use-toast';
+import { PolicyEditor } from '@/components/employer/PolicyEditor';
+import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
 
 interface PolicyViewerProps {
   open: boolean;
@@ -50,8 +41,8 @@ export function PolicyViewer({
   const { toast } = useToast();
   const [showAdoptForm, setShowAdoptForm] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
-  const [companyName, setCompanyName] = useState("");
-  const [reviewDate, setReviewDate] = useState("");
+  const [companyName, setCompanyName] = useState('');
+  const [reviewDate, setReviewDate] = useState('');
   const [isExporting, setIsExporting] = useState(false);
 
   const adoptPolicy = useAdoptPolicy();
@@ -61,14 +52,14 @@ export function PolicyViewer({
     try {
       await downloadPolicyPDF({ template, userPolicy });
       toast({
-        title: "PDF Downloaded",
-        description: "Your policy document has been exported.",
+        title: 'PDF Downloaded',
+        description: 'Your policy document has been exported.',
       });
     } catch (error) {
       toast({
-        title: "Export Failed",
-        description: "Could not generate the PDF. Please try again.",
-        variant: "destructive",
+        title: 'Export Failed',
+        description: 'Could not generate the PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsExporting(false);
@@ -92,8 +83,8 @@ export function PolicyViewer({
         review_date: reviewDate || undefined,
       });
       setShowAdoptForm(false);
-      setCompanyName("");
-      setReviewDate("");
+      setCompanyName('');
+      setReviewDate('');
       onOpenChange(false);
     } catch (error) {
       // Error handled by mutation
@@ -102,20 +93,20 @@ export function PolicyViewer({
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Safety":
-        return "bg-success/10 text-success";
-      case "HR":
-        return "bg-elec-yellow/10 text-elec-yellow";
-      case "Legal":
-        return "bg-info/10 text-info";
+      case 'Safety':
+        return 'bg-success/10 text-success';
+      case 'HR':
+        return 'bg-elec-yellow/10 text-elec-yellow';
+      case 'Legal':
+        return 'bg-info/10 text-info';
       default:
-        return "bg-muted text-muted-foreground";
+        return 'bg-muted text-muted-foreground';
     }
   };
 
   return (
     <ResponsiveFormModal open={open} onOpenChange={onOpenChange}>
-      <ResponsiveFormModalContent className={cn(isMobile ? "" : "max-w-3xl")}>
+      <ResponsiveFormModalContent className={cn(isMobile ? '' : 'max-w-3xl')}>
         {/* Header */}
         <ResponsiveFormModalHeader className="border-b border-border/50">
           <div className="flex items-center justify-between">
@@ -125,31 +116,32 @@ export function PolicyViewer({
                   <FileText className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <span className="text-lg font-semibold line-clamp-1">
-                    {policy.name}
-                  </span>
+                  <span className="text-lg font-semibold line-clamp-1">{policy.name}</span>
                   <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="secondary" className={getCategoryColor(
-                      'category' in policy ? policy.category :
-                      userPolicy?.template?.category || 'Other'
-                    )}>
-                      {'category' in policy ? policy.category :
-                       userPolicy?.template?.category || 'Policy'}
+                    <Badge
+                      variant="secondary"
+                      className={getCategoryColor(
+                        'category' in policy
+                          ? policy.category
+                          : userPolicy?.template?.category || 'Other'
+                      )}
+                    >
+                      {'category' in policy
+                        ? policy.category
+                        : userPolicy?.template?.category || 'Policy'}
                     </Badge>
                     {'version' in policy && (
-                      <span className="text-xs text-muted-foreground">
-                        v{policy.version}
-                      </span>
+                      <span className="text-xs text-muted-foreground">v{policy.version}</span>
                     )}
                     {userPolicy && (
                       <Badge
                         variant="secondary"
                         className={
-                          userPolicy.status === "Active"
-                            ? "bg-success/10 text-success"
-                            : userPolicy.status === "Review Due"
-                            ? "bg-warning/10 text-warning"
-                            : "bg-muted"
+                          userPolicy.status === 'Active'
+                            ? 'bg-success/10 text-success'
+                            : userPolicy.status === 'Review Due'
+                              ? 'bg-warning/10 text-warning'
+                              : 'bg-muted'
                         }
                       >
                         {userPolicy.status}
@@ -160,11 +152,7 @@ export function PolicyViewer({
               </div>
             </ResponsiveFormModalTitle>
             {!isMobile && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onOpenChange(false)}
-              >
+              <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)}>
                 <X className="h-4 w-4" />
               </Button>
             )}
@@ -176,12 +164,10 @@ export function PolicyViewer({
           {showAdoptForm ? (
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-info/10 border border-info/20">
-                <h3 className="font-medium text-foreground mb-2">
-                  Adopt Policy
-                </h3>
+                <h3 className="font-medium text-foreground mb-2">Adopt Policy</h3>
                 <p className="text-sm text-muted-foreground">
-                  Add this policy to your company documents. Optionally enter your
-                  company name to personalise the document.
+                  Add this policy to your company documents. Optionally enter your company name to
+                  personalise the document.
                 </p>
               </div>
 
@@ -226,9 +212,7 @@ export function PolicyViewer({
               {/* Summary if available */}
               {'summary' in policy && policy.summary && (
                 <div className="p-4 rounded-lg bg-muted/50 border">
-                  <p className="text-sm text-muted-foreground">
-                    {policy.summary}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{policy.summary}</p>
                 </div>
               )}
 
@@ -253,7 +237,7 @@ export function PolicyViewer({
                       <div>
                         <span className="text-muted-foreground">Adopted:</span>
                         <p className="font-medium">
-                          {new Date(userPolicy.adopted_at).toLocaleDateString("en-GB")}
+                          {new Date(userPolicy.adopted_at).toLocaleDateString('en-GB')}
                         </p>
                       </div>
                     )}
@@ -261,7 +245,7 @@ export function PolicyViewer({
                       <div>
                         <span className="text-muted-foreground">Review Due:</span>
                         <p className="font-medium">
-                          {new Date(userPolicy.review_date).toLocaleDateString("en-GB")}
+                          {new Date(userPolicy.review_date).toLocaleDateString('en-GB')}
                         </p>
                       </div>
                     )}

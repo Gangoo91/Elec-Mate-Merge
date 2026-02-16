@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   BarChart3,
   TrendingUp,
@@ -18,12 +18,12 @@ import {
   Package,
   Truck,
   Wrench,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { SectionHeader } from "@/components/employer/SectionHeader";
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { SectionHeader } from '@/components/employer/SectionHeader';
 import {
   useBusinessMetrics,
   useMonthlyRevenue,
@@ -31,7 +31,7 @@ import {
   useComplianceData,
   useTopPerformers,
   usePaymentSummary,
-} from "@/hooks/useBusinessMetrics";
+} from '@/hooks/useBusinessMetrics';
 import {
   useProfitabilitySummary,
   useCashFlowSummary,
@@ -39,7 +39,7 @@ import {
   useJobProfitability,
   useMonthlyFinancials,
   useFinanceQuickStats,
-} from "@/hooks/useFinanceReports";
+} from '@/hooks/useFinanceReports';
 import {
   BarChart,
   Bar,
@@ -55,8 +55,8 @@ import {
   Legend,
   AreaChart,
   Area,
-} from "recharts";
-import { cn } from "@/lib/utils";
+} from 'recharts';
+import { cn } from '@/lib/utils';
 
 const categoryIcons: Record<string, any> = {
   labour: Wrench,
@@ -68,16 +68,16 @@ const categoryIcons: Record<string, any> = {
 };
 
 const categoryColors: Record<string, string> = {
-  labour: "#3b82f6",
-  materials: "#22c55e",
-  equipment: "#a855f7",
-  overheads: "#f97316",
-  travel: "#06b6d4",
-  other: "#6b7280",
+  labour: '#3b82f6',
+  materials: '#22c55e',
+  equipment: '#a855f7',
+  overheads: '#f97316',
+  travel: '#06b6d4',
+  other: '#6b7280',
 };
 
 export function ReportsSection() {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState('overview');
 
   // Business metrics hooks
   const { data: metrics, isLoading: metricsLoading } = useBusinessMetrics();
@@ -120,9 +120,9 @@ export function ReportsSection() {
     : 0;
 
   const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(amount);
@@ -141,7 +141,7 @@ export function ReportsSection() {
     percentage: cat.percentage,
   }));
 
-  if (isLoading && activeTab === "overview") {
+  if (isLoading && activeTab === 'overview') {
     return (
       <div className="space-y-6 animate-fade-in">
         <SectionHeader title="Reports & Analytics" />
@@ -213,9 +213,9 @@ export function ReportsSection() {
                       <TrendingDown className="h-3 w-3 text-destructive" />
                     )}
                     <span
-                      className={`text-xs ${revenueGrowth >= 0 ? "text-success" : "text-destructive"}`}
+                      className={`text-xs ${revenueGrowth >= 0 ? 'text-success' : 'text-destructive'}`}
                     >
-                      {revenueGrowth >= 0 ? "+" : ""}
+                      {revenueGrowth >= 0 ? '+' : ''}
                       {revenueGrowth.toFixed(0)}%
                     </span>
                   </div>
@@ -240,9 +240,9 @@ export function ReportsSection() {
                       <TrendingDown className="h-3 w-3 text-destructive" />
                     )}
                     <span
-                      className={`text-xs ${profitGrowth >= 0 ? "text-success" : "text-destructive"}`}
+                      className={`text-xs ${profitGrowth >= 0 ? 'text-success' : 'text-destructive'}`}
                     >
-                      {profitGrowth >= 0 ? "+" : ""}
+                      {profitGrowth >= 0 ? '+' : ''}
                       {profitGrowth.toFixed(0)}%
                     </span>
                   </div>
@@ -297,22 +297,22 @@ export function ReportsSection() {
                     >
                       <XAxis
                         dataKey="month"
-                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                        axisLine={{ stroke: "hsl(var(--border))" }}
+                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                        axisLine={{ stroke: 'hsl(var(--border))' }}
                       />
                       <YAxis
-                        tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                        axisLine={{ stroke: "hsl(var(--border))" }}
+                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                        axisLine={{ stroke: 'hsl(var(--border))' }}
                         tickFormatter={(value) => `£${value}k`}
                       />
                       <Tooltip
                         contentStyle={{
-                          backgroundColor: "hsl(var(--card))",
-                          border: "1px solid hsl(var(--border))",
-                          borderRadius: "8px",
-                          color: "hsl(var(--foreground))",
+                          backgroundColor: 'hsl(var(--card))',
+                          border: '1px solid hsl(var(--border))',
+                          borderRadius: '8px',
+                          color: 'hsl(var(--foreground))',
                         }}
-                        formatter={(value) => [`£${value}k`, ""]}
+                        formatter={(value) => [`£${value}k`, '']}
                       />
                       <Legend />
                       <Bar
@@ -357,19 +357,19 @@ export function ReportsSection() {
                       >
                         <XAxis
                           dataKey="month"
-                          tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                          axisLine={{ stroke: "hsl(var(--border))" }}
+                          tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                          axisLine={{ stroke: 'hsl(var(--border))' }}
                         />
                         <YAxis
-                          tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                          axisLine={{ stroke: "hsl(var(--border))" }}
+                          tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                          axisLine={{ stroke: 'hsl(var(--border))' }}
                         />
                         <Tooltip
                           contentStyle={{
-                            backgroundColor: "hsl(var(--card))",
-                            border: "1px solid hsl(var(--border))",
-                            borderRadius: "8px",
-                            color: "hsl(var(--foreground))",
+                            backgroundColor: 'hsl(var(--card))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: '8px',
+                            color: 'hsl(var(--foreground))',
                           }}
                         />
                         <Line
@@ -377,7 +377,7 @@ export function ReportsSection() {
                           dataKey="revenue"
                           stroke="hsl(var(--primary))"
                           strokeWidth={2}
-                          dot={{ fill: "hsl(var(--primary))", strokeWidth: 2 }}
+                          dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2 }}
                         />
                       </LineChart>
                     </ResponsiveContainer>
@@ -418,12 +418,12 @@ export function ReportsSection() {
                         </Pie>
                         <Tooltip
                           contentStyle={{
-                            backgroundColor: "hsl(var(--card))",
-                            border: "1px solid hsl(var(--border))",
-                            borderRadius: "8px",
-                            color: "hsl(var(--foreground))",
+                            backgroundColor: 'hsl(var(--card))',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: '8px',
+                            color: 'hsl(var(--foreground))',
                           }}
-                          formatter={(value) => [`${value}%`, ""]}
+                          formatter={(value) => [`${value}%`, '']}
                         />
                       </PieChart>
                     </ResponsiveContainer>
@@ -600,8 +600,8 @@ export function ReportsSection() {
                       <p className="text-xs text-muted-foreground">Net Profit</p>
                       <p
                         className={cn(
-                          "text-xl font-bold",
-                          (profitability?.netProfit || 0) >= 0 ? "text-green-500" : "text-red-500"
+                          'text-xl font-bold',
+                          (profitability?.netProfit || 0) >= 0 ? 'text-green-500' : 'text-red-500'
                         )}
                       >
                         {formatCompactCurrency(profitability?.netProfit || 0)}
@@ -616,8 +616,10 @@ export function ReportsSection() {
                       <p className="text-xs text-muted-foreground">Profit Margin</p>
                       <p
                         className={cn(
-                          "text-xl font-bold flex items-center gap-1",
-                          (profitability?.profitMargin || 0) >= 0 ? "text-green-500" : "text-red-500"
+                          'text-xl font-bold flex items-center gap-1',
+                          (profitability?.profitMargin || 0) >= 0
+                            ? 'text-green-500'
+                            : 'text-red-500'
                         )}
                       >
                         {(profitability?.profitMargin || 0).toFixed(1)}%
@@ -650,22 +652,22 @@ export function ReportsSection() {
                         >
                           <XAxis
                             dataKey="month"
-                            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                            axisLine={{ stroke: "hsl(var(--border))" }}
+                            tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                            axisLine={{ stroke: 'hsl(var(--border))' }}
                           />
                           <YAxis
-                            tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
-                            axisLine={{ stroke: "hsl(var(--border))" }}
+                            tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                            axisLine={{ stroke: 'hsl(var(--border))' }}
                             tickFormatter={(value) => `£${(value / 1000).toFixed(0)}k`}
                           />
                           <Tooltip
                             contentStyle={{
-                              backgroundColor: "hsl(var(--card))",
-                              border: "1px solid hsl(var(--border))",
-                              borderRadius: "8px",
-                              color: "hsl(var(--foreground))",
+                              backgroundColor: 'hsl(var(--card))',
+                              border: '1px solid hsl(var(--border))',
+                              borderRadius: '8px',
+                              color: 'hsl(var(--foreground))',
                             }}
-                            formatter={(value: number) => [formatCurrency(value), ""]}
+                            formatter={(value: number) => [formatCurrency(value), '']}
                           />
                           <Legend />
                           <Area
@@ -722,10 +724,10 @@ export function ReportsSection() {
                           <div className="flex items-center gap-3 flex-1 min-w-0">
                             <span
                               className={cn(
-                                "w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium shrink-0",
+                                'w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium shrink-0',
                                 idx < 3
-                                  ? "bg-elec-yellow/20 text-elec-yellow"
-                                  : "bg-muted text-muted-foreground"
+                                  ? 'bg-elec-yellow/20 text-elec-yellow'
+                                  : 'bg-muted text-muted-foreground'
                               )}
                             >
                               {idx + 1}
@@ -740,8 +742,8 @@ export function ReportsSection() {
                           <div className="text-right shrink-0 ml-2">
                             <p
                               className={cn(
-                                "font-semibold text-sm",
-                                job.profit >= 0 ? "text-green-500" : "text-red-500"
+                                'font-semibold text-sm',
+                                job.profit >= 0 ? 'text-green-500' : 'text-red-500'
                               )}
                             >
                               {formatCurrency(job.profit)}
@@ -749,12 +751,12 @@ export function ReportsSection() {
                             <Badge
                               variant="outline"
                               className={cn(
-                                "text-xs",
+                                'text-xs',
                                 job.margin >= 20
-                                  ? "border-green-500/30 text-green-500"
+                                  ? 'border-green-500/30 text-green-500'
                                   : job.margin >= 10
-                                    ? "border-amber-500/30 text-amber-500"
-                                    : "border-red-500/30 text-red-500"
+                                    ? 'border-amber-500/30 text-amber-500'
+                                    : 'border-red-500/30 text-red-500'
                               )}
                             >
                               {job.margin.toFixed(1)}%
@@ -856,7 +858,7 @@ export function ReportsSection() {
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Invoice Collection</span>
                         <span className="font-medium">
-                          {formatCurrency(cashFlow?.totalPaid || 0)} /{" "}
+                          {formatCurrency(cashFlow?.totalPaid || 0)} /{' '}
                           {formatCurrency(
                             (cashFlow?.totalPaid || 0) + (cashFlow?.totalOutstanding || 0)
                           )}
@@ -919,11 +921,12 @@ export function ReportsSection() {
                         <span className="text-sm text-muted-foreground">Net</span>
                         <span
                           className={cn(
-                            "font-bold",
-                            (quickStats?.monthlyInvoiced || 0) - (quickStats?.monthlyExpenses || 0) >=
+                            'font-bold',
+                            (quickStats?.monthlyInvoiced || 0) -
+                              (quickStats?.monthlyExpenses || 0) >=
                               0
-                              ? "text-green-500"
-                              : "text-red-500"
+                              ? 'text-green-500'
+                              : 'text-red-500'
                           )}
                         >
                           {formatCurrency(
@@ -1051,12 +1054,12 @@ export function ReportsSection() {
                             </Pie>
                             <Tooltip
                               contentStyle={{
-                                backgroundColor: "hsl(var(--card))",
-                                border: "1px solid hsl(var(--border))",
-                                borderRadius: "8px",
-                                color: "hsl(var(--foreground))",
+                                backgroundColor: 'hsl(var(--card))',
+                                border: '1px solid hsl(var(--border))',
+                                borderRadius: '8px',
+                                color: 'hsl(var(--foreground))',
                               }}
-                              formatter={(value: number) => [formatCurrency(value), ""]}
+                              formatter={(value: number) => [formatCurrency(value), '']}
                             />
                           </PieChart>
                         </ResponsiveContainer>
@@ -1093,8 +1096,7 @@ export function ReportsSection() {
                     <div className="space-y-3">
                       {expensesByCategory.length > 0 ? (
                         expensesByCategory.map((category, idx) => {
-                          const Icon =
-                            categoryIcons[category.category.toLowerCase()] || Receipt;
+                          const Icon = categoryIcons[category.category.toLowerCase()] || Receipt;
                           const color =
                             categoryColors[category.category.toLowerCase()] || categoryColors.other;
                           return (
@@ -1114,7 +1116,7 @@ export function ReportsSection() {
                                     {category.category}
                                   </p>
                                   <p className="text-xs text-muted-foreground">
-                                    {category.count} expense{category.count !== 1 ? "s" : ""}
+                                    {category.count} expense{category.count !== 1 ? 's' : ''}
                                   </p>
                                 </div>
                               </div>

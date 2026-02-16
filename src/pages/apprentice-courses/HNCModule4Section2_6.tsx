@@ -1,192 +1,225 @@
-import { ArrowLeft, Wrench, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Wrench, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Cable Installation Methods - HNC Module 4 Section 2.6";
-const DESCRIPTION = "Master cable containment systems including tray, trunking and conduit, along with supports, bending radii, segregation and labelling requirements.";
+const TITLE = 'Cable Installation Methods - HNC Module 4 Section 2.6';
+const DESCRIPTION =
+  'Master cable containment systems including tray, trunking and conduit, along with supports, bending radii, segregation and labelling requirements.';
 
 const quickCheckQuestions = [
   {
-    id: "tray-advantage",
-    question: "What is the main advantage of perforated cable tray for power cables?",
-    options: ["Lower cost", "Better air circulation for heat dissipation", "Easier cable pulling", "More waterproof"],
+    id: 'tray-advantage',
+    question: 'What is the main advantage of perforated cable tray for power cables?',
+    options: [
+      'Lower cost',
+      'Better air circulation for heat dissipation',
+      'Easier cable pulling',
+      'More waterproof',
+    ],
     correctIndex: 1,
-    explanation: "Perforated cable tray allows air to circulate around cables, improving heat dissipation. This gives better current-carrying capacity (Reference Method E) compared to enclosed containment."
+    explanation:
+      'Perforated cable tray allows air to circulate around cables, improving heat dissipation. This gives better current-carrying capacity (Reference Method E) compared to enclosed containment.',
   },
   {
-    id: "bend-radius",
-    question: "What is the typical minimum bending radius for multicore power cables during installation?",
-    options: ["2× cable diameter", "4× cable diameter", "6× cable diameter", "10× cable diameter"],
+    id: 'bend-radius',
+    question:
+      'What is the typical minimum bending radius for multicore power cables during installation?',
+    options: ['2× cable diameter', '4× cable diameter', '6× cable diameter', '10× cable diameter'],
     correctIndex: 2,
-    explanation: "For multicore power cables, the minimum bending radius during installation is typically 6× the overall cable diameter. Single-core cables may require 8× or more depending on conductor size."
+    explanation:
+      'For multicore power cables, the minimum bending radius during installation is typically 6× the overall cable diameter. Single-core cables may require 8× or more depending on conductor size.',
   },
   {
-    id: "segregation-reason",
-    question: "Why must data/telecom cables be segregated from power cables?",
-    options: ["Different colours", "Electromagnetic interference from power can corrupt data signals", "They have different temperatures", "Building regulations require it"],
+    id: 'segregation-reason',
+    question: 'Why must data/telecom cables be segregated from power cables?',
+    options: [
+      'Different colours',
+      'Electromagnetic interference from power can corrupt data signals',
+      'They have different temperatures',
+      'Building regulations require it',
+    ],
     correctIndex: 1,
-    explanation: "Power cables generate electromagnetic fields that can induce noise in data cables, causing signal corruption. BS 7671 Chapter 52 and BS 6701 require segregation or screening."
+    explanation:
+      'Power cables generate electromagnetic fields that can induce noise in data cables, causing signal corruption. BS 7671 Chapter 52 and BS 6701 require segregation or screening.',
   },
   {
-    id: "support-spacing",
-    question: "What determines the spacing of cable supports?",
-    options: ["Just aesthetic preference", "Cable type, size and weight to prevent sagging", "Always 1 metre", "Only manufacturer preference"],
+    id: 'support-spacing',
+    question: 'What determines the spacing of cable supports?',
+    options: [
+      'Just aesthetic preference',
+      'Cable type, size and weight to prevent sagging',
+      'Always 1 metre',
+      'Only manufacturer preference',
+    ],
     correctIndex: 1,
-    explanation: "Support spacing depends on cable construction, weight, and the containment type. Tables in BS 7671 provide maximum spacing to prevent excessive sagging and mechanical stress."
-  }
+    explanation:
+      'Support spacing depends on cable construction, weight, and the containment type. Tables in BS 7671 provide maximum spacing to prevent excessive sagging and mechanical stress.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which containment system provides the best current-carrying capacity for multicore cables?",
+    question:
+      'Which containment system provides the best current-carrying capacity for multicore cables?',
     options: [
-      "Conduit in thermal insulation",
-      "Enclosed trunking",
-      "Perforated cable tray",
-      "Surface-mounted conduit"
+      'Conduit in thermal insulation',
+      'Enclosed trunking',
+      'Perforated cable tray',
+      'Surface-mounted conduit',
     ],
     correctAnswer: 2,
-    explanation: "Perforated cable tray (Reference Method E) provides the best air circulation around cables, resulting in the highest current-carrying capacity of common containment methods."
+    explanation:
+      'Perforated cable tray (Reference Method E) provides the best air circulation around cables, resulting in the highest current-carrying capacity of common containment methods.',
   },
   {
     id: 2,
-    question: "What is the maximum fill ratio for trunking according to BS 7671?",
-    options: [
-      "35%",
-      "45%",
-      "55%",
-      "65%"
-    ],
+    question: 'What is the maximum fill ratio for trunking according to BS 7671?',
+    options: ['35%', '45%', '55%', '65%'],
     correctAnswer: 1,
-    explanation: "BS 7671 recommends a maximum 45% fill ratio for trunking. This allows space for heat dissipation and makes cable installation and maintenance practical."
+    explanation:
+      'BS 7671 recommends a maximum 45% fill ratio for trunking. This allows space for heat dissipation and makes cable installation and maintenance practical.',
   },
   {
     id: 3,
-    question: "Metal conduit can be used as the CPC provided:",
+    question: 'Metal conduit can be used as the CPC provided:',
     options: [
-      "It is painted",
-      "Joints maintain electrical continuity and have adequate cross-sectional area",
-      "It is less than 10m long",
-      "Only in domestic installations"
+      'It is painted',
+      'Joints maintain electrical continuity and have adequate cross-sectional area',
+      'It is less than 10m long',
+      'Only in domestic installations',
     ],
     correctAnswer: 1,
-    explanation: "Metal conduit can serve as CPC when all joints maintain electrical continuity (proper couplers, not just threaded connections) and the conduit CSA is adequate for fault current."
+    explanation:
+      'Metal conduit can serve as CPC when all joints maintain electrical continuity (proper couplers, not just threaded connections) and the conduit CSA is adequate for fault current.',
   },
   {
     id: 4,
-    question: "When cables cross a building movement joint, what should be provided?",
+    question: 'When cables cross a building movement joint, what should be provided?',
     options: [
-      "Rigid fixings on both sides",
-      "Flexible section or loop to accommodate movement",
-      "No special provision needed",
-      "Concrete filling"
+      'Rigid fixings on both sides',
+      'Flexible section or loop to accommodate movement',
+      'No special provision needed',
+      'Concrete filling',
     ],
     correctAnswer: 1,
-    explanation: "Movement joints allow building sections to expand, contract, or move independently. Cables crossing them must have slack or flexible sections to prevent damage from movement."
+    explanation:
+      'Movement joints allow building sections to expand, contract, or move independently. Cables crossing them must have slack or flexible sections to prevent damage from movement.',
   },
   {
     id: 5,
-    question: "What is the minimum separation between power and data cables in the same trunking?",
+    question: 'What is the minimum separation between power and data cables in the same trunking?',
     options: [
-      "Not permitted - must be in separate trunking",
-      "50mm",
-      "300mm or metal divider",
-      "No separation required"
+      'Not permitted - must be in separate trunking',
+      '50mm',
+      '300mm or metal divider',
+      'No separation required',
     ],
     correctAnswer: 2,
-    explanation: "BS 7671 permits power and data cables in the same trunking if separated by 300mm or a metal divider. Many specifiers require complete segregation for cleaner installations."
+    explanation:
+      'BS 7671 permits power and data cables in the same trunking if separated by 300mm or a metal divider. Many specifiers require complete segregation for cleaner installations.',
   },
   {
     id: 6,
-    question: "Why must SWA cable glands be correctly tightened?",
+    question: 'Why must SWA cable glands be correctly tightened?',
     options: [
-      "Just for appearance",
-      "To grip armour wires for electrical continuity and mechanical retention",
-      "To prevent water entry only",
-      "To make termination easier"
+      'Just for appearance',
+      'To grip armour wires for electrical continuity and mechanical retention',
+      'To prevent water entry only',
+      'To make termination easier',
     ],
     correctAnswer: 1,
-    explanation: "Glands must grip the armour wires to provide electrical continuity (for CPC function) and mechanical retention (preventing cable pullout). Both cone and nut must be properly tightened."
+    explanation:
+      'Glands must grip the armour wires to provide electrical continuity (for CPC function) and mechanical retention (preventing cable pullout). Both cone and nut must be properly tightened.',
   },
   {
     id: 7,
-    question: "What is the primary purpose of cable labelling?",
+    question: 'What is the primary purpose of cable labelling?',
     options: [
-      "To look professional",
-      "For identification during maintenance, fault finding and future modifications",
-      "To meet insurance requirements only",
-      "To track cable costs"
+      'To look professional',
+      'For identification during maintenance, fault finding and future modifications',
+      'To meet insurance requirements only',
+      'To track cable costs',
     ],
     correctAnswer: 1,
-    explanation: "Clear labelling enables safe isolation, efficient fault finding, and accurate identification during modifications. BS 7671 requires cables to be identifiable at termination points."
+    explanation:
+      'Clear labelling enables safe isolation, efficient fault finding, and accurate identification during modifications. BS 7671 requires cables to be identifiable at termination points.',
   },
   {
     id: 8,
-    question: "For vertical cable runs, what is the maximum spacing for supports?",
+    question: 'For vertical cable runs, what is the maximum spacing for supports?',
     options: [
-      "3m for all cables",
-      "Depends on cable type and size",
-      "5m for all cables",
-      "No supports needed vertically"
+      '3m for all cables',
+      'Depends on cable type and size',
+      '5m for all cables',
+      'No supports needed vertically',
     ],
     correctAnswer: 1,
-    explanation: "Vertical support spacing varies by cable type. Heavy SWA cables may need supports every 1-2m, while lighter cables can span further. Tables in BS 7671 provide guidance."
+    explanation:
+      'Vertical support spacing varies by cable type. Heavy SWA cables may need supports every 1-2m, while lighter cables can span further. Tables in BS 7671 provide guidance.',
   },
   {
     id: 9,
-    question: "What is the purpose of fire-stopping where cables pass through compartment walls?",
+    question: 'What is the purpose of fire-stopping where cables pass through compartment walls?',
     options: [
-      "To support the cables",
-      "To maintain fire compartmentation and prevent fire/smoke spread",
-      "To improve aesthetics",
-      "To reduce noise transmission"
+      'To support the cables',
+      'To maintain fire compartmentation and prevent fire/smoke spread',
+      'To improve aesthetics',
+      'To reduce noise transmission',
     ],
     correctAnswer: 1,
-    explanation: "Fire-stopping maintains the fire resistance of compartment walls and floors. Without it, fire and smoke could spread rapidly through cable penetrations, undermining the fire strategy."
+    explanation:
+      'Fire-stopping maintains the fire resistance of compartment walls and floors. Without it, fire and smoke could spread rapidly through cable penetrations, undermining the fire strategy.',
   },
   {
     id: 10,
-    question: "When should draw wires be left in conduit installations?",
+    question: 'When should draw wires be left in conduit installations?',
     options: [
-      "Never - they are removed after installation",
-      "Always, for future cable additions or replacements",
-      "Only in external conduit",
-      "Only when specified by the client"
+      'Never - they are removed after installation',
+      'Always, for future cable additions or replacements',
+      'Only in external conduit',
+      'Only when specified by the client',
     ],
     correctAnswer: 1,
-    explanation: "Good practice is to leave draw wires in conduit for future maintenance. This makes adding or replacing cables much easier than feeding new draw wires through long or complex runs."
-  }
+    explanation:
+      'Good practice is to leave draw wires in conduit for future maintenance. This makes adding or replacing cables much easier than feeding new draw wires through long or complex runs.',
+  },
 ];
 
 const faqs = [
   {
-    question: "How do I choose between cable tray, trunking and conduit?",
-    answer: "Cable tray suits large cable quantities (risers, plantrooms) and offers best current capacity. Trunking is ideal for accessible routes needing neat appearance (offices, corridors) and allows easy modification. Conduit protects individual circuits and suits surface/concealed runs. Consider cable quantity, accessibility needs, aesthetics, future modifications and cost."
+    question: 'How do I choose between cable tray, trunking and conduit?',
+    answer:
+      'Cable tray suits large cable quantities (risers, plantrooms) and offers best current capacity. Trunking is ideal for accessible routes needing neat appearance (offices, corridors) and allows easy modification. Conduit protects individual circuits and suits surface/concealed runs. Consider cable quantity, accessibility needs, aesthetics, future modifications and cost.',
   },
   {
-    question: "What fire-stopping products should I use?",
-    answer: "Use fire-stopping products tested and certified for the specific penetration type (cables through walls/floors). Options include intumescent collars, fire-rated pillows, ablative coatings and fire-resistant compound. The product must match the fire rating required (30, 60, 90, 120 minutes) and be installed per manufacturer's instructions."
+    question: 'What fire-stopping products should I use?',
+    answer:
+      "Use fire-stopping products tested and certified for the specific penetration type (cables through walls/floors). Options include intumescent collars, fire-rated pillows, ablative coatings and fire-resistant compound. The product must match the fire rating required (30, 60, 90, 120 minutes) and be installed per manufacturer's instructions.",
   },
   {
-    question: "Can I run cables through structural members like steelwork?",
-    answer: "Generally avoid penetrating structural members. If essential, obtain structural engineer approval first. Holes must be sleeved, sized appropriately, and positioned to minimise structural impact. Fire protection may need reinstating. Consider alternative routes before penetrating structure."
+    question: 'Can I run cables through structural members like steelwork?',
+    answer:
+      'Generally avoid penetrating structural members. If essential, obtain structural engineer approval first. Holes must be sleeved, sized appropriately, and positioned to minimise structural impact. Fire protection may need reinstating. Consider alternative routes before penetrating structure.',
   },
   {
-    question: "What spacing is required between cable supports?",
-    answer: "BS 7671 Table 4A provides guidance. Typically: for unarmoured horizontal cables in trunking, 450mm max; clipped direct on surface, 250-400mm depending on cable size; vertical runs may need closer spacing for heavy cables. SWA cables can span further due to their self-supporting nature."
+    question: 'What spacing is required between cable supports?',
+    answer:
+      'BS 7671 Table 4A provides guidance. Typically: for unarmoured horizontal cables in trunking, 450mm max; clipped direct on surface, 250-400mm depending on cable size; vertical runs may need closer spacing for heavy cables. SWA cables can span further due to their self-supporting nature.',
   },
   {
-    question: "How should cables be labelled?",
-    answer: "Labels should be durable (engraved or printed, not handwritten), located at both ends and at intermediate access points, include circuit reference matching distribution board schedule, and use consistent format throughout the installation. Consider cable ties with labels, wraparound labels, or engraved ferrules."
+    question: 'How should cables be labelled?',
+    answer:
+      'Labels should be durable (engraved or printed, not handwritten), located at both ends and at intermediate access points, include circuit reference matching distribution board schedule, and use consistent format throughout the installation. Consider cable ties with labels, wraparound labels, or engraved ferrules.',
   },
   {
-    question: "What are the requirements for cables in ceiling voids?",
-    answer: "Cables in accessible ceiling voids should be supported (not laid on ceiling tiles), adequately protected from mechanical damage, not in contact with thermal insulation (or derated appropriately), and accessible for inspection. Fire barriers may be needed at compartment boundaries."
-  }
+    question: 'What are the requirements for cables in ceiling voids?',
+    answer:
+      'Cables in accessible ceiling voids should be supported (not laid on ceiling tiles), adequately protected from mechanical damage, not in contact with thermal insulation (or derated appropriately), and accessible for inspection. Fire barriers may be needed at compartment boundaries.',
+  },
 ];
 
 const HNCModule4Section2_6 = () => {
@@ -197,7 +230,12 @@ const HNCModule4Section2_6 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module4-section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -208,7 +246,6 @@ const HNCModule4Section2_6 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -219,7 +256,8 @@ const HNCModule4Section2_6 = () => {
             Cable Installation Methods
           </h1>
           <p className="text-white/80">
-            Containment systems, supports, bending radii, segregation and labelling for professional installations
+            Containment systems, supports, bending radii, segregation and labelling for professional
+            installations
           </p>
         </header>
 
@@ -228,19 +266,37 @@ const HNCModule4Section2_6 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>Tray:</strong> Best capacity, plantrooms/risers</li>
-              <li className="pl-1"><strong>Trunking:</strong> Accessible, office environments</li>
-              <li className="pl-1"><strong>Conduit:</strong> Protection for individual circuits</li>
-              <li className="pl-1"><strong>Bending:</strong> Min 6× cable diameter typically</li>
+              <li className="pl-1">
+                <strong>Tray:</strong> Best capacity, plantrooms/risers
+              </li>
+              <li className="pl-1">
+                <strong>Trunking:</strong> Accessible, office environments
+              </li>
+              <li className="pl-1">
+                <strong>Conduit:</strong> Protection for individual circuits
+              </li>
+              <li className="pl-1">
+                <strong>Bending:</strong> Min 6× cable diameter typically
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Building Services Context</p>
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">
+              Building Services Context
+            </p>
             <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1"><strong>Risers:</strong> Ladder rack for major cables</li>
-              <li className="pl-1"><strong>Offices:</strong> Floor/dado trunking common</li>
-              <li className="pl-1"><strong>Plant:</strong> Cable tray and basket</li>
-              <li className="pl-1"><strong>Data:</strong> Segregated containment required</li>
+              <li className="pl-1">
+                <strong>Risers:</strong> Ladder rack for major cables
+              </li>
+              <li className="pl-1">
+                <strong>Offices:</strong> Floor/dado trunking common
+              </li>
+              <li className="pl-1">
+                <strong>Plant:</strong> Cable tray and basket
+              </li>
+              <li className="pl-1">
+                <strong>Data:</strong> Segregated containment required
+              </li>
             </ul>
           </div>
         </div>
@@ -250,12 +306,12 @@ const HNCModule4Section2_6 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Select appropriate containment systems for different applications",
-              "Understand cable tray, trunking and conduit characteristics",
-              "Apply minimum bending radius requirements",
-              "Design cable support systems correctly",
-              "Implement segregation between power and data cables",
-              "Apply labelling and identification requirements"
+              'Select appropriate containment systems for different applications',
+              'Understand cable tray, trunking and conduit characteristics',
+              'Apply minimum bending radius requirements',
+              'Design cable support systems correctly',
+              'Implement segregation between power and data cables',
+              'Apply labelling and identification requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -276,28 +332,39 @@ const HNCModule4Section2_6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Cable containment protects cables from damage, provides support, and organises cable routes.
-              The choice of containment affects current-carrying capacity, installation cost and aesthetics.
+              Cable containment protects cables from damage, provides support, and organises cable
+              routes. The choice of containment affects current-carrying capacity, installation cost
+              and aesthetics.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Containment Types Comparison</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Containment Types Comparison
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
                     <tr className="bg-white/5">
                       <th className="border border-white/10 px-3 py-2 text-left">Type</th>
                       <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reference Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristics</th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Reference Method
+                      </th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Characteristics
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Cable Tray (perforated)</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Cable Tray (perforated)
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Plantrooms, risers</td>
                       <td className="border border-white/10 px-3 py-2 text-green-400">E (best)</td>
-                      <td className="border border-white/10 px-3 py-2">Best heat dissipation, easy access</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Best heat dissipation, easy access
+                      </td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2 font-medium">Cable Ladder</td>
@@ -309,25 +376,41 @@ const HNCModule4Section2_6 = () => {
                       <td className="border border-white/10 px-3 py-2 font-medium">Cable Basket</td>
                       <td className="border border-white/10 px-3 py-2">Data cables, offices</td>
                       <td className="border border-white/10 px-3 py-2 text-green-400">E</td>
-                      <td className="border border-white/10 px-3 py-2">Lightweight, flexible routing</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Lightweight, flexible routing
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Trunking (metal)</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Trunking (metal)
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Offices, corridors</td>
                       <td className="border border-white/10 px-3 py-2">B</td>
-                      <td className="border border-white/10 px-3 py-2">Neat, accessible, can be decorative</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Neat, accessible, can be decorative
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Conduit (surface)</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Conduit (surface)
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Single circuits</td>
                       <td className="border border-white/10 px-3 py-2">B</td>
-                      <td className="border border-white/10 px-3 py-2">Good protection, concealed or exposed</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Good protection, concealed or exposed
+                      </td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Conduit (insulated wall)</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Conduit (insulated wall)
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Concealed runs</td>
-                      <td className="border border-white/10 px-3 py-2 text-orange-400">A (poorest)</td>
-                      <td className="border border-white/10 px-3 py-2">Hidden, but poor heat dissipation</td>
+                      <td className="border border-white/10 px-3 py-2 text-orange-400">
+                        A (poorest)
+                      </td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Hidden, but poor heat dissipation
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -356,7 +439,8 @@ const HNCModule4Section2_6 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Capacity note:</strong> Reference Method E (cable tray) can give 20-40% higher current ratings than Method B (trunking) for the same cable size.
+              <strong>Capacity note:</strong> Reference Method E (cable tray) can give 20-40% higher
+              current ratings than Method B (trunking) for the same cable size.
             </p>
           </div>
         </section>
@@ -371,12 +455,14 @@ const HNCModule4Section2_6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Proper cable support prevents sagging, mechanical stress and damage. Bending radii must
-              be respected to avoid damaging cable insulation and conductors.
+              Proper cable support prevents sagging, mechanical stress and damage. Bending radii
+              must be respected to avoid damaging cable insulation and conductors.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Support Spacing (Horizontal)</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Cable Support Spacing (Horizontal)
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
@@ -388,7 +474,9 @@ const HNCModule4Section2_6 = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2">Small flat cables (&lt;10mm)</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Small flat cables (&lt;10mm)
+                      </td>
                       <td className="border border-white/10 px-3 py-2">250mm</td>
                       <td className="border border-white/10 px-3 py-2">N/A (in trunking)</td>
                     </tr>
@@ -415,7 +503,9 @@ const HNCModule4Section2_6 = () => {
                     <tr>
                       <td className="border border-white/10 px-3 py-2">SWA cables</td>
                       <td className="border border-white/10 px-3 py-2">450-600mm</td>
-                      <td className="border border-white/10 px-3 py-2">Self-supporting over long spans</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Self-supporting over long spans
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -428,17 +518,29 @@ const HNCModule4Section2_6 = () => {
                 <div>
                   <p className="text-white/70 mb-1">Multicore Cables:</p>
                   <ul className="text-white space-y-0.5">
-                    <li>• Fixed installation: <strong>6× OD</strong></li>
-                    <li>• During installation: <strong>6× OD</strong></li>
-                    <li>• XLPE insulation: <strong>8× OD</strong> preferred</li>
+                    <li>
+                      • Fixed installation: <strong>6× OD</strong>
+                    </li>
+                    <li>
+                      • During installation: <strong>6× OD</strong>
+                    </li>
+                    <li>
+                      • XLPE insulation: <strong>8× OD</strong> preferred
+                    </li>
                   </ul>
                 </div>
                 <div>
                   <p className="text-white/70 mb-1">Single-Core Cables:</p>
                   <ul className="text-white space-y-0.5">
-                    <li>• 25mm² and below: <strong>6× OD</strong></li>
-                    <li>• 35-120mm²: <strong>8× OD</strong></li>
-                    <li>• 150mm² and above: <strong>10× OD</strong></li>
+                    <li>
+                      • 25mm² and below: <strong>6× OD</strong>
+                    </li>
+                    <li>
+                      • 35-120mm²: <strong>8× OD</strong>
+                    </li>
+                    <li>
+                      • 150mm² and above: <strong>10× OD</strong>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -446,7 +548,9 @@ const HNCModule4Section2_6 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Vertical Support Requirements</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Vertical Support Requirements
+              </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Prevent cable weight causing damage at fixings</li>
                 <li className="pl-1">Heavy SWA may need supports every 1-2m vertically</li>
@@ -456,7 +560,8 @@ const HNCModule4Section2_6 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Quality check:</strong> Inspect bends during installation - kinked or flattened cables indicate the bend was too tight.
+              <strong>Quality check:</strong> Inspect bends during installation - kinked or
+              flattened cables indicate the bend was too tight.
             </p>
           </div>
         </section>
@@ -471,30 +576,39 @@ const HNCModule4Section2_6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different cable types must often be segregated to prevent electromagnetic interference,
-              fire spread, and to maintain system integrity. BS 7671 Chapter 52 and BS 6701 provide guidance.
+              Different cable types must often be segregated to prevent electromagnetic
+              interference, fire spread, and to maintain system integrity. BS 7671 Chapter 52 and BS
+              6701 provide guidance.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Categories for Segregation</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Cable Categories for Segregation
+              </p>
               <div className="overflow-x-auto">
                 <table className="text-sm text-white w-full border-collapse">
                   <thead>
                     <tr className="bg-white/5">
                       <th className="border border-white/10 px-3 py-2 text-left">Category</th>
                       <th className="border border-white/10 px-3 py-2 text-left">Examples</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Segregation Required From</th>
+                      <th className="border border-white/10 px-3 py-2 text-left">
+                        Segregation Required From
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="border border-white/10 px-3 py-2 font-medium">Band I</td>
-                      <td className="border border-white/10 px-3 py-2">Fire alarm, emergency comms, SELV</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Fire alarm, emergency comms, SELV
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Band II unless screened</td>
                     </tr>
                     <tr>
                       <td className="border border-white/10 px-3 py-2 font-medium">Band II</td>
-                      <td className="border border-white/10 px-3 py-2">Power circuits (230V/400V)</td>
+                      <td className="border border-white/10 px-3 py-2">
+                        Power circuits (230V/400V)
+                      </td>
                       <td className="border border-white/10 px-3 py-2">Band I; data/telecom</td>
                     </tr>
                     <tr>
@@ -503,7 +617,9 @@ const HNCModule4Section2_6 = () => {
                       <td className="border border-white/10 px-3 py-2">Power cables</td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Fire-resistant</td>
+                      <td className="border border-white/10 px-3 py-2 font-medium">
+                        Fire-resistant
+                      </td>
                       <td className="border border-white/10 px-3 py-2">FP cables</td>
                       <td className="border border-white/10 px-3 py-2">Standard cables in fire</td>
                     </tr>
@@ -537,7 +653,9 @@ const HNCModule4Section2_6 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Crossing Points</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Where cables must cross, do so at <strong>90°</strong> to minimise coupling</li>
+                <li className="pl-1">
+                  Where cables must cross, do so at <strong>90°</strong> to minimise coupling
+                </li>
                 <li className="pl-1">Maintain maximum practical spacing at crossing</li>
                 <li className="pl-1">Consider screened cables for sensitive circuits</li>
                 <li className="pl-1">Document crossing points for future reference</li>
@@ -545,7 +663,8 @@ const HNCModule4Section2_6 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Data centre tip:</strong> Complete physical separation is preferred - use separate tray systems at different levels for power and data.
+              <strong>Data centre tip:</strong> Complete physical separation is preferred - use
+              separate tray systems at different levels for power and data.
             </p>
           </div>
         </section>
@@ -560,18 +679,27 @@ const HNCModule4Section2_6 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Proper labelling is essential for safe operation, maintenance and future modifications.
-              BS 7671 requires cables to be identifiable, and good practice extends this to
-              comprehensive cable management documentation.
+              Proper labelling is essential for safe operation, maintenance and future
+              modifications. BS 7671 requires cables to be identifiable, and good practice extends
+              this to comprehensive cable management documentation.
             </p>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Label Requirements</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Both ends:</strong> Label at origin (DB) and destination (equipment)</li>
-                <li className="pl-1"><strong>Intermediate points:</strong> At junction boxes, through walls, at tray junctions</li>
-                <li className="pl-1"><strong>Content:</strong> Circuit reference, voltage, source DB, destination</li>
-                <li className="pl-1"><strong>Durability:</strong> Engraved, printed or UV-resistant - not handwritten</li>
+                <li className="pl-1">
+                  <strong>Both ends:</strong> Label at origin (DB) and destination (equipment)
+                </li>
+                <li className="pl-1">
+                  <strong>Intermediate points:</strong> At junction boxes, through walls, at tray
+                  junctions
+                </li>
+                <li className="pl-1">
+                  <strong>Content:</strong> Circuit reference, voltage, source DB, destination
+                </li>
+                <li className="pl-1">
+                  <strong>Durability:</strong> Engraved, printed or UV-resistant - not handwritten
+                </li>
               </ul>
             </div>
 
@@ -613,13 +741,27 @@ const HNCModule4Section2_6 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Documentation to Provide</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Documentation to Provide
+              </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>As-built drawings:</strong> Showing actual cable routes, not just design intent</li>
-                <li className="pl-1"><strong>Cable schedules:</strong> Type, size, length, circuit reference for each cable</li>
-                <li className="pl-1"><strong>Test results:</strong> Insulation resistance, continuity, polarity</li>
-                <li className="pl-1"><strong>Distribution board schedules:</strong> Matching label references</li>
-                <li className="pl-1"><strong>Fire stopping:</strong> Record of products used and locations</li>
+                <li className="pl-1">
+                  <strong>As-built drawings:</strong> Showing actual cable routes, not just design
+                  intent
+                </li>
+                <li className="pl-1">
+                  <strong>Cable schedules:</strong> Type, size, length, circuit reference for each
+                  cable
+                </li>
+                <li className="pl-1">
+                  <strong>Test results:</strong> Insulation resistance, continuity, polarity
+                </li>
+                <li className="pl-1">
+                  <strong>Distribution board schedules:</strong> Matching label references
+                </li>
+                <li className="pl-1">
+                  <strong>Fire stopping:</strong> Record of products used and locations
+                </li>
               </ul>
             </div>
 
@@ -629,7 +771,9 @@ const HNCModule4Section2_6 = () => {
                 Where cables pass through fire compartment walls or floors:
               </p>
               <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">Install proprietary fire-stopping to match wall/floor fire rating</li>
+                <li className="pl-1">
+                  Install proprietary fire-stopping to match wall/floor fire rating
+                </li>
                 <li className="pl-1">Allow for future cable additions where practical</li>
                 <li className="pl-1">Label fire-stop locations for inspection access</li>
                 <li className="pl-1">Record fire-stop product details in O&M manual</li>
@@ -637,7 +781,8 @@ const HNCModule4Section2_6 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Best practice:</strong> Photograph cable routes before walls are closed - invaluable for future maintenance and modifications.
+              <strong>Best practice:</strong> Photograph cable routes before walls are closed -
+              invaluable for future maintenance and modifications.
             </p>
           </div>
         </section>
@@ -653,9 +798,12 @@ const HNCModule4Section2_6 = () => {
 
           <div className="space-y-6">
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 1: Office Floor Distribution</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 1: Office Floor Distribution
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Requirement:</strong> Power and data distribution for open-plan office, 500m² floor plate
+                <strong>Requirement:</strong> Power and data distribution for open-plan office,
+                500m² floor plate
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p className="text-white/70">Containment selection:</p>
@@ -667,14 +815,19 @@ const HNCModule4Section2_6 = () => {
                 <p>- Maintain 45% max fill in trunking</p>
                 <p>- Label all outlets to match floor plan references</p>
                 <p>- Fire-stop all penetrations to riser</p>
-                <p className="mt-2 text-green-400">→ Trunking allows easy modifications as office layout changes</p>
+                <p className="mt-2 text-green-400">
+                  → Trunking allows easy modifications as office layout changes
+                </p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 2: Main Riser Installation</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 2: Main Riser Installation
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Requirement:</strong> 10-storey commercial building electrical riser, sub-mains and small power
+                <strong>Requirement:</strong> 10-storey commercial building electrical riser,
+                sub-mains and small power
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p className="text-white/70">Containment selection:</p>
@@ -686,14 +839,19 @@ const HNCModule4Section2_6 = () => {
                 <p>- Minimum bend radius 6× OD at floor entries</p>
                 <p>- Fire barriers at each floor with fire-stop</p>
                 <p>- Label all cables at each floor level</p>
-                <p className="mt-2 text-green-400">→ Ladder rack supports heavy sub-mains over long vertical spans</p>
+                <p className="mt-2 text-green-400">
+                  → Ladder rack supports heavy sub-mains over long vertical spans
+                </p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Example 3: Plant Room Cable Management</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Example 3: Plant Room Cable Management
+              </h3>
               <p className="text-sm text-white mb-2">
-                <strong>Requirement:</strong> Basement plant room with multiple AHUs, pumps and chillers
+                <strong>Requirement:</strong> Basement plant room with multiple AHUs, pumps and
+                chillers
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
                 <p className="text-white/70">Containment selection:</p>
@@ -705,7 +863,9 @@ const HNCModule4Section2_6 = () => {
                 <p>- Maintain 300mm clearance from hot surfaces</p>
                 <p>- IP-rated glands for damp environment</p>
                 <p>- Clear labelling of motor circuits matching MCC</p>
-                <p className="mt-2 text-green-400">→ Combination of containment suits varied equipment</p>
+                <p className="mt-2 text-green-400">
+                  → Combination of containment suits varied equipment
+                </p>
               </div>
             </div>
           </div>
@@ -720,7 +880,9 @@ const HNCModule4Section2_6 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Quality Checklist</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Quality Checklist
+              </h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">No kinks or tight bends - minimum 6× cable OD</li>
                 <li className="pl-1">Supports correctly spaced - no excessive sagging</li>
@@ -744,10 +906,18 @@ const HNCModule4Section2_6 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1"><strong>Overloading containment:</strong> Respect 45% fill limit</li>
-                <li className="pl-1"><strong>Missing fire-stops:</strong> Every compartment penetration needs stopping</li>
-                <li className="pl-1"><strong>Poor gland selection:</strong> Match gland IP rating to environment</li>
-                <li className="pl-1"><strong>Inadequate segregation:</strong> Power/data too close causes interference</li>
+                <li className="pl-1">
+                  <strong>Overloading containment:</strong> Respect 45% fill limit
+                </li>
+                <li className="pl-1">
+                  <strong>Missing fire-stops:</strong> Every compartment penetration needs stopping
+                </li>
+                <li className="pl-1">
+                  <strong>Poor gland selection:</strong> Match gland IP rating to environment
+                </li>
+                <li className="pl-1">
+                  <strong>Inadequate segregation:</strong> Power/data too close causes interference
+                </li>
               </ul>
             </div>
           </div>
@@ -798,28 +968,33 @@ const HNCModule4Section2_6 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module4-section2-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Prev: Cable Types and Selection
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../h-n-c-module4-section3">
               Next: Section 3
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

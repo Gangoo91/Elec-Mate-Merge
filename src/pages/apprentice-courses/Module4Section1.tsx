@@ -1,44 +1,44 @@
-import { ArrowLeft, HardHat, FileText, Wrench, Package, CheckCircle } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, HardHat, FileText, Wrench, Package, CheckCircle } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Reading Installation Drawings and Specifications",
-    description: "Understanding technical drawings and installation specifications",
+    number: 'Subsection 1',
+    title: 'Reading Installation Drawings and Specifications',
+    description: 'Understanding technical drawings and installation specifications',
     icon: HardHat,
-    href: "1-1"
+    href: '1-1',
   },
   {
-    number: "Subsection 2",
-    title: "Identifying Cable Routes and Fixing Points",
-    description: "Planning cable routing and identifying fixing positions",
+    number: 'Subsection 2',
+    title: 'Identifying Cable Routes and Fixing Points',
+    description: 'Planning cable routing and identifying fixing positions',
     icon: FileText,
-    href: "1-2"
+    href: '1-2',
   },
   {
-    number: "Subsection 3",
-    title: "Selecting Materials, Tools, and PPE",
-    description: "Choosing appropriate materials, tools and personal protective equipment",
+    number: 'Subsection 3',
+    title: 'Selecting Materials, Tools, and PPE',
+    description: 'Choosing appropriate materials, tools and personal protective equipment',
     icon: Wrench,
-    href: "1-3"
+    href: '1-3',
   },
   {
-    number: "Subsection 4",
-    title: "Planning Workflow and Sequencing Tasks",
-    description: "Organising work sequence for efficient installation",
+    number: 'Subsection 4',
+    title: 'Planning Workflow and Sequencing Tasks',
+    description: 'Organising work sequence for efficient installation',
     icon: Package,
-    href: "1-4"
+    href: '1-4',
   },
   {
-    number: "Subsection 5",
-    title: "Preparing the Work Area (Access, Safety, Lighting)",
-    description: "Setting up safe and accessible working conditions",
+    number: 'Subsection 5',
+    title: 'Preparing the Work Area (Access, Safety, Lighting)',
+    description: 'Setting up safe and accessible working conditions',
     icon: CheckCircle,
-    href: "1-5"
-  }
+    href: '1-5',
+  },
 ];
 
 const Section1 = () => {

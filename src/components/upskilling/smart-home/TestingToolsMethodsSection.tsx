@@ -14,7 +14,8 @@ const TestingToolsMethodsSection = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-gray-300">
-            Professional signal testing requires the right tools and understanding of signal strength measurements.
+            Professional signal testing requires the right tools and understanding of signal
+            strength measurements.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -53,12 +54,13 @@ const TestingToolsMethodsSection = () => {
 
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Understanding Signal Strength (dBm)</h4>
-            
+
             <div className="bg-blue-600/10 border border-blue-600/30 rounded-lg p-4">
               <p className="text-blue-100 text-sm mb-3">
-                dBm (decibel-milliwatts) measures Wi-Fi signal strength. Values are always negative — higher numbers (closer to 0) indicate stronger signals.
+                dBm (decibel-milliwatts) measures Wi-Fi signal strength. Values are always negative
+                — higher numbers (closer to 0) indicate stronger signals.
               </p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                 <div className="p-3 bg-green-900/30 border border-green-600 rounded text-center">
                   <div className="font-bold text-green-200">-30 to -50 dBm</div>
@@ -82,7 +84,7 @@ const TestingToolsMethodsSection = () => {
 
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground">Testing Methodology</h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-[#1a1a1a] rounded-lg">
                 <h5 className="font-medium text-foreground mb-2">Initial Survey</h5>
@@ -107,7 +109,9 @@ const TestingToolsMethodsSection = () => {
           </div>
 
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-            <h4 className="font-semibold text-elec-yellow mb-2">Recommended Minimum Signal Levels</h4>
+            <h4 className="font-semibold text-elec-yellow mb-2">
+              Recommended Minimum Signal Levels
+            </h4>
             <ul className="space-y-2 text-gray-300 text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>

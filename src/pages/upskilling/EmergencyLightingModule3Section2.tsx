@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m3s2-check1",
+    id: 'emergencylighting-m3s2-check1',
     question: "What is the 'central band' for escape route illumination measurement?",
-    options: ["The entire route width", "25% of route width", "50% of route width", "75% of route width"],
+    options: [
+      'The entire route width',
+      '25% of route width',
+      '50% of route width',
+      '75% of route width',
+    ],
     correctIndex: 2,
-    explanation: "The central band is 50% of the route width, centred on the route. This is where the 1 lux minimum must be achieved. Areas outside this band need adequate illumination but are not the primary measurement zone."
+    explanation:
+      'The central band is 50% of the route width, centred on the route. This is where the 1 lux minimum must be achieved. Areas outside this band need adequate illumination but are not the primary measurement zone.',
   },
   {
-    id: "emergencylighting-m3s2-check2",
-    question: "At what angle of direction change must a luminaire be positioned?",
-    options: ["Any turn", "Greater than 30°", "Greater than 45°", "Greater than 90° only"],
+    id: 'emergencylighting-m3s2-check2',
+    question: 'At what angle of direction change must a luminaire be positioned?',
+    options: ['Any turn', 'Greater than 30°', 'Greater than 45°', 'Greater than 90° only'],
     correctIndex: 2,
-    explanation: "BS 5266-1 requires a luminaire at direction changes greater than 45°. This ensures the change in direction is clearly visible and occupants don't miss a turn during evacuation."
+    explanation:
+      "BS 5266-1 requires a luminaire at direction changes greater than 45°. This ensures the change in direction is clearly visible and occupants don't miss a turn during evacuation.",
   },
   {
-    id: "emergencylighting-m3s2-check3",
-    question: "What is the coverage rule for escape route width and luminaire rows?",
-    options: ["1 row per metre", "1 row per 2 metres", "1 row per 3 metres", "1 row per 4 metres"],
+    id: 'emergencylighting-m3s2-check3',
+    question: 'What is the coverage rule for escape route width and luminaire rows?',
+    options: ['1 row per metre', '1 row per 2 metres', '1 row per 3 metres', '1 row per 4 metres'],
     correctIndex: 1,
-    explanation: "One row of centrally mounted luminaires can cover routes up to 2m wide. Routes wider than 2m require additional rows to maintain illumination across the full central band width."
-  }
+    explanation:
+      'One row of centrally mounted luminaires can cover routes up to 2m wide. Routes wider than 2m require additional rows to maintain illumination across the full central band width.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What happens if an escape route is exactly 2m wide?",
-    answer: "A single central row of luminaires is sufficient for routes up to and including 2m wide, provided the photometric data confirms adequate coverage across the 1m central band (50% of 2m)."
+    question: 'What happens if an escape route is exactly 2m wide?',
+    answer:
+      'A single central row of luminaires is sufficient for routes up to and including 2m wide, provided the photometric data confirms adequate coverage across the 1m central band (50% of 2m).',
   },
   {
-    question: "Do corridors with rooms off them need luminaires at each door?",
-    answer: "Not necessarily at every door. Luminaires are required where rooms discharge onto escape routes (i.e., where the escape route starts for that room's occupants). Regular room doors along a corridor don't each need a luminaire."
+    question: 'Do corridors with rooms off them need luminaires at each door?',
+    answer:
+      "Not necessarily at every door. Luminaires are required where rooms discharge onto escape routes (i.e., where the escape route starts for that room's occupants). Regular room doors along a corridor don't each need a luminaire.",
   },
   {
-    question: "How do I handle T-junctions and crossroads?",
-    answer: "These are direction changes greater than 45° and require luminaires. Position a luminaire to illuminate the junction clearly, showing all possible directions. Exit signs should indicate the correct evacuation direction."
+    question: 'How do I handle T-junctions and crossroads?',
+    answer:
+      'These are direction changes greater than 45° and require luminaires. Position a luminaire to illuminate the junction clearly, showing all possible directions. Exit signs should indicate the correct evacuation direction.',
   },
   {
-    question: "What about curved corridors?",
-    answer: "Treat gradual curves as straight routes for spacing purposes. Sharp curves (equivalent to >45° direction change over a short distance) need additional luminaires at the curve to maintain visibility."
-  }
+    question: 'What about curved corridors?',
+    answer:
+      'Treat gradual curves as straight routes for spacing purposes. Sharp curves (equivalent to >45° direction change over a short distance) need additional luminaires at the curve to maintain visibility.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An escape route is 2.5m wide and 40m long with two 90° turns. How many luminaire rows are required along the straight sections?",
-  options: [
-    "1 row (central mounting)",
-    "2 rows (edge or staggered)",
-    "3 rows (both edges plus centre)",
-    "Depends on ceiling height only"
-  ],
-  correctAnswer: 1,
-  explanation: "At 2.5m wide, the route exceeds the 2m maximum for single-row coverage. Two rows are required - typically mounted along each edge or staggered - to cover the 1.25m central band adequately."
-  }
+    question:
+      'An escape route is 2.5m wide and 40m long with two 90° turns. How many luminaire rows are required along the straight sections?',
+    options: [
+      '1 row (central mounting)',
+      '2 rows (edge or staggered)',
+      '3 rows (both edges plus centre)',
+      'Depends on ceiling height only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'At 2.5m wide, the route exceeds the 2m maximum for single-row coverage. Two rows are required - typically mounted along each edge or staggered - to cover the 1.25m central band adequately.',
+  },
 ];
 
 const EmergencyLightingModule3Section2 = () => {
   useSEO({
-    title: "Escape Route Coverage Rules | Emergency Lighting Module 3.2",
-    description: "Coverage principles, placement rules, and integration requirements for compliant escape route lighting systems to BS 5266-1."
+    title: 'Escape Route Coverage Rules | Emergency Lighting Module 3.2',
+    description:
+      'Coverage principles, placement rules, and integration requirements for compliant escape route lighting systems to BS 5266-1.',
   });
 
   return (
@@ -108,17 +123,29 @@ const EmergencyLightingModule3Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Central band:</strong> 50% of route width</li>
-              <li><strong>Row coverage:</strong> 2m max per row</li>
-              <li><strong>Direction change:</strong> &gt;45° needs luminaire</li>
+              <li>
+                <strong>Central band:</strong> 50% of route width
+              </li>
+              <li>
+                <strong>Row coverage:</strong> 2m max per row
+              </li>
+              <li>
+                <strong>Direction change:</strong> &gt;45° needs luminaire
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Positions</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Exits:</strong> Within 2m</li>
-              <li><strong>Exit signs:</strong> Within 2m</li>
-              <li><strong>Stairs:</strong> Every flight</li>
+              <li>
+                <strong>Exits:</strong> Within 2m
+              </li>
+              <li>
+                <strong>Exit signs:</strong> Within 2m
+              </li>
+              <li>
+                <strong>Stairs:</strong> Every flight
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +155,12 @@ const EmergencyLightingModule3Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Apply the central band rule",
-              "Calculate row requirements for wide routes",
-              "Position luminaires at direction changes",
-              "Identify mandatory luminaire positions",
-              "Plan coverage for complex routes",
-              "Integrate with exit signage"
+              'Apply the central band rule',
+              'Calculate row requirements for wide routes',
+              'Position luminaires at direction changes',
+              'Identify mandatory luminaire positions',
+              'Plan coverage for complex routes',
+              'Integrate with exit signage',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,27 +180,47 @@ const EmergencyLightingModule3Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The central band is the primary measurement zone for escape route illumination.
-              It represents the typical walking path and must achieve minimum 1 lux.
+              The central band is the primary measurement zone for escape route illumination. It
+              represents the typical walking path and must achieve minimum 1 lux.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Central Band Definition</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Central Band Definition
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Width:</strong> 50% of route width</li>
-                  <li><strong>Position:</strong> Centred on route</li>
-                  <li><strong>Example:</strong> 2m route = 1m band</li>
-                  <li><strong>Measurement:</strong> At floor level</li>
+                  <li>
+                    <strong>Width:</strong> 50% of route width
+                  </li>
+                  <li>
+                    <strong>Position:</strong> Centred on route
+                  </li>
+                  <li>
+                    <strong>Example:</strong> 2m route = 1m band
+                  </li>
+                  <li>
+                    <strong>Measurement:</strong> At floor level
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Coverage Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Coverage Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>1 row:</strong> Routes up to 2m wide</li>
-                  <li><strong>2 rows:</strong> Routes 2-4m wide</li>
-                  <li><strong>Additional:</strong> Each 2m band</li>
-                  <li><strong>Uniformity:</strong> 40:1 maximum</li>
+                  <li>
+                    <strong>1 row:</strong> Routes up to 2m wide
+                  </li>
+                  <li>
+                    <strong>2 rows:</strong> Routes 2-4m wide
+                  </li>
+                  <li>
+                    <strong>Additional:</strong> Each 2m band
+                  </li>
+                  <li>
+                    <strong>Uniformity:</strong> 40:1 maximum
+                  </li>
                 </ul>
               </div>
             </div>
@@ -191,17 +238,27 @@ const EmergencyLightingModule3Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Changes in direction are critical points where visibility must be maintained.
-              Luminaires are required at significant turns to prevent occupants missing the
-              correct evacuation route.
+              Luminaires are required at significant turns to prevent occupants missing the correct
+              evacuation route.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Mandatory Positions at Route Changes:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Mandatory Positions at Route Changes:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>&gt;45° direction change:</strong> Luminaire required at turn</li>
-                <li><strong>T-junctions:</strong> Luminaire to illuminate all directions</li>
-                <li><strong>Crossroads:</strong> Luminaire at intersection point</li>
-                <li><strong>Sharp curves:</strong> Treat as direction changes</li>
+                <li>
+                  <strong>&gt;45° direction change:</strong> Luminaire required at turn
+                </li>
+                <li>
+                  <strong>T-junctions:</strong> Luminaire to illuminate all directions
+                </li>
+                <li>
+                  <strong>Crossroads:</strong> Luminaire at intersection point
+                </li>
+                <li>
+                  <strong>Sharp curves:</strong> Treat as direction changes
+                </li>
               </ul>
             </div>
 
@@ -232,8 +289,8 @@ const EmergencyLightingModule3Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 5266-1 specifies locations where luminaires must be positioned regardless
-              of spacing calculations. These ensure critical points are always illuminated.
+              BS 5266-1 specifies locations where luminaires must be positioned regardless of
+              spacing calculations. These ensure critical points are always illuminated.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -281,10 +338,18 @@ const EmergencyLightingModule3Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Coverage Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Wide routes single row:</strong> — Routes &gt;2m need multiple rows</li>
-                <li><strong>Missing exit signs:</strong> — Every sign needs luminaire within 2m</li>
-                <li><strong>Ignoring corners:</strong> — All &gt;45° turns need coverage</li>
-                <li><strong>Forgetting stairs:</strong> — Every flight needs illumination</li>
+                <li>
+                  <strong>Wide routes single row:</strong> — Routes &gt;2m need multiple rows
+                </li>
+                <li>
+                  <strong>Missing exit signs:</strong> — Every sign needs luminaire within 2m
+                </li>
+                <li>
+                  <strong>Ignoring corners:</strong> — All &gt;45° turns need coverage
+                </li>
+                <li>
+                  <strong>Forgetting stairs:</strong> — Every flight needs illumination
+                </li>
               </ul>
             </div>
           </div>
@@ -330,10 +395,7 @@ const EmergencyLightingModule3Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

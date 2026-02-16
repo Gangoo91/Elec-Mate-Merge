@@ -18,7 +18,9 @@ export const SmartHomeModule2Section2Summary = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                  <span>Z-Wave has superior range and wall penetration due to sub-1GHz frequency</span>
+                  <span>
+                    Z-Wave has superior range and wall penetration due to sub-1GHz frequency
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
@@ -31,7 +33,7 @@ export const SmartHomeModule2Section2Summary = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div>
               <h4 className="font-semibold text-foreground mb-3">Selection Guidance</h4>
@@ -56,11 +58,14 @@ export const SmartHomeModule2Section2Summary = () => {
         <div className="p-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-600 rounded-lg">
           <div className="flex items-center gap-3 mb-2">
             <ArrowRight className="h-5 w-5 text-elec-yellow" />
-            <h4 className="font-semibold text-foreground">Next: Wi-Fi, Bluetooth, Thread, and Matter</h4>
+            <h4 className="font-semibold text-foreground">
+              Next: Wi-Fi, Bluetooth, Thread, and Matter
+            </h4>
           </div>
           <p className="text-sm text-gray-300">
-            In the next section, we'll explore additional protocols including Wi-Fi for high-bandwidth devices, 
-            Bluetooth for personal integration, and the emerging Thread and Matter standards.
+            In the next section, we'll explore additional protocols including Wi-Fi for
+            high-bandwidth devices, Bluetooth for personal integration, and the emerging Thread and
+            Matter standards.
           </p>
         </div>
       </CardContent>

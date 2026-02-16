@@ -19,7 +19,7 @@ export const BOARD_MANUFACTURERS = [
   'Eaton',
   'ABB',
   'Legrand',
-  'Other'
+  'Other',
 ] as const;
 
 // Board type display names
@@ -27,7 +27,7 @@ export const BOARD_TYPES: { value: BoardType; label: string }[] = [
   { value: 'metal-clad', label: 'Metal Clad' },
   { value: 'plastic', label: 'Plastic' },
   { value: 'flush-mount', label: 'Flush Mount' },
-  { value: 'surface-mount', label: 'Surface Mount' }
+  { value: 'surface-mount', label: 'Surface Mount' },
 ];
 
 // Common board locations
@@ -41,7 +41,7 @@ export const BOARD_LOCATIONS = [
   'Loft',
   'Plant Room',
   'External',
-  'Other'
+  'Other',
 ] as const;
 
 // Board size options (number of ways)
@@ -49,35 +49,35 @@ export const BOARD_SIZES = [4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24] as const;
 
 export interface DistributionBoard {
   id: string;
-  name: string;                      // "Main CU", "Sub-DB1", "Sub-DB2"
-  reference: string;                 // User-editable reference
-  location?: string;                 // Physical location description
-  order: number;                     // Display order (0 = main, 1+ = sub-boards)
+  name: string; // "Main CU", "Sub-DB1", "Sub-DB2"
+  reference: string; // User-editable reference
+  location?: string; // Physical location description
+  order: number; // Display order (0 = main, 1+ = sub-boards)
 
   // Verification Data (per board)
-  zdb: string;                       // Earth fault loop impedance at board (Ω)
-  ipf: string;                       // Prospective fault current (kA)
+  zdb: string; // Earth fault loop impedance at board (Ω)
+  ipf: string; // Prospective fault current (kA)
   confirmedCorrectPolarity: boolean;
   confirmedPhaseSequence: boolean;
   spdOperationalStatus: boolean;
   spdNA: boolean;
 
   // SPD Type Details (IET Form - tick boxes for T1, T2, T3)
-  spdT1: boolean;                    // Type 1 SPD installed
-  spdT2: boolean;                    // Type 2 SPD installed
-  spdT3: boolean;                    // Type 3 SPD installed
+  spdT1: boolean; // Type 1 SPD installed
+  spdT2: boolean; // Type 2 SPD installed
+  spdT3: boolean; // Type 3 SPD installed
 
   // Board details (for wizard collection)
-  make?: string;                     // Manufacturer (from BOARD_MANUFACTURERS)
-  model?: string;                    // Model number/name
-  type?: BoardType;                  // Board enclosure type
-  totalWays?: number;                // Board size (from BOARD_SIZES)
+  make?: string; // Manufacturer (from BOARD_MANUFACTURERS)
+  model?: string; // Model number/name
+  type?: BoardType; // Board enclosure type
+  totalWays?: number; // Board size (from BOARD_SIZES)
 
   // Schedule page headers (BS 7671 model form)
-  suppliedFrom?: string;             // "Main DB", "Sub-DB1" - which board feeds this one
-  incomingDeviceBsEn?: string;       // BS EN standard of incoming protective device
-  incomingDeviceType?: string;       // Type of incoming protective device (MCB, MCCB, etc.)
-  incomingDeviceRating?: string;     // Rating (A) of incoming protective device
+  suppliedFrom?: string; // "Main DB", "Sub-DB1" - which board feeds this one
+  incomingDeviceBsEn?: string; // BS EN standard of incoming protective device
+  incomingDeviceType?: string; // Type of incoming protective device (MCB, MCCB, etc.)
+  incomingDeviceRating?: string; // Rating (A) of incoming protective device
 
   // Timestamps
   createdAt?: Date;
@@ -122,7 +122,7 @@ export const createMainBoard = (): DistributionBoard =>
  * Generate next sub-board name based on existing boards
  */
 export const getNextSubBoardName = (boards: DistributionBoard[]): string => {
-  const subBoards = boards.filter(b => b.name.startsWith('Sub-DB'));
+  const subBoards = boards.filter((b) => b.name.startsWith('Sub-DB'));
   const nextNumber = subBoards.length + 1;
   return `Sub-DB${nextNumber}`;
 };

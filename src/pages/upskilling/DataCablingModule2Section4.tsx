@@ -1,79 +1,89 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Connectors and Patch Panels | Data Cabling Module 2.4";
-const DESCRIPTION = "Learn RJ45 connector types, patch panel selection, and professional termination techniques for structured cabling installations.";
+const TITLE = 'Connectors and Patch Panels | Data Cabling Module 2.4';
+const DESCRIPTION =
+  'Learn RJ45 connector types, patch panel selection, and professional termination techniques for structured cabling installations.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m2s4-check1",
-    question: "What is the correct wire sequence for T568B termination?",
+    id: 'datacabling-m2s4-check1',
+    question: 'What is the correct wire sequence for T568B termination?',
     options: [
-      "White/Orange, Orange, White/Green, Blue, White/Blue, Green, White/Brown, Brown",
-      "White/Green, Green, White/Orange, Blue, White/Blue, Orange, White/Brown, Brown",
-      "Orange, White/Orange, Green, White/Green, Blue, White/Blue, Brown, White/Brown",
-      "White/Orange, Orange, White/Green, Green, White/Blue, Blue, White/Brown, Brown"
+      'White/Orange, Orange, White/Green, Blue, White/Blue, Green, White/Brown, Brown',
+      'White/Green, Green, White/Orange, Blue, White/Blue, Orange, White/Brown, Brown',
+      'Orange, White/Orange, Green, White/Green, Blue, White/Blue, Brown, White/Brown',
+      'White/Orange, Orange, White/Green, Green, White/Blue, Blue, White/Brown, Brown',
     ],
     correctIndex: 0,
-    explanation: "T568B standard uses: White/Orange, Orange, White/Green, Blue, White/Blue, Green, White/Brown, Brown sequence. This is the most common standard in commercial installations."
+    explanation:
+      'T568B standard uses: White/Orange, Orange, White/Green, Blue, White/Blue, Green, White/Brown, Brown sequence. This is the most common standard in commercial installations.',
   },
   {
-    id: "datacabling-m2s4-check2",
-    question: "What is the maximum untwisted cable length for Category 6 termination?",
-    options: ["6mm", "13mm", "19mm", "25mm"],
+    id: 'datacabling-m2s4-check2',
+    question: 'What is the maximum untwisted cable length for Category 6 termination?',
+    options: ['6mm', '13mm', '19mm', '25mm'],
     correctIndex: 1,
-    explanation: "Category 6 cable should have no more than 13mm (0.5 inches) of untwisted pairs at termination to maintain performance specifications."
+    explanation:
+      'Category 6 cable should have no more than 13mm (0.5 inches) of untwisted pairs at termination to maintain performance specifications.',
   },
   {
-    id: "datacabling-m2s4-check3",
-    question: "What is the purpose of a load bar in RJ45 connectors?",
+    id: 'datacabling-m2s4-check3',
+    question: 'What is the purpose of a load bar in RJ45 connectors?',
     options: [
-      "To improve cable strain relief",
-      "To maintain proper pair separation",
-      "To reduce insertion loss",
-      "To prevent water ingress"
+      'To improve cable strain relief',
+      'To maintain proper pair separation',
+      'To reduce insertion loss',
+      'To prevent water ingress',
     ],
     correctIndex: 1,
-    explanation: "The load bar maintains proper pair separation and reduces crosstalk by keeping wire pairs in the correct positions throughout the connector."
-  }
+    explanation:
+      'The load bar maintains proper pair separation and reduces crosstalk by keeping wire pairs in the correct positions throughout the connector.',
+  },
 ];
 
 const faqs = [
   {
-    question: "When should I use T568A vs T568B wiring standard?",
-    answer: "T568B is more common in commercial installations and matches older AT&T standards. T568A is the preferred standard for new installations per TIA/EIA. The critical rule is consistency - use the same standard throughout the entire installation."
+    question: 'When should I use T568A vs T568B wiring standard?',
+    answer:
+      'T568B is more common in commercial installations and matches older AT&T standards. T568A is the preferred standard for new installations per TIA/EIA. The critical rule is consistency - use the same standard throughout the entire installation.',
   },
   {
     question: "What's the difference between 110 and Krone IDC termination?",
-    answer: "Both are insulation displacement connection (IDC) systems but use different blade designs. 110 is the US/TIA standard while Krone is European. They're not interchangeable - you must use the correct punch-down tool for each type."
+    answer:
+      "Both are insulation displacement connection (IDC) systems but use different blade designs. 110 is the US/TIA standard while Krone is European. They're not interchangeable - you must use the correct punch-down tool for each type.",
   },
   {
-    question: "Can I reuse RJ45 connectors if I make a termination mistake?",
-    answer: "No, RJ45 connectors are single-use. Once crimped, the contacts are permanently deformed. Attempting to reuse them will result in intermittent connections or complete failures. Always use a new connector."
+    question: 'Can I reuse RJ45 connectors if I make a termination mistake?',
+    answer:
+      'No, RJ45 connectors are single-use. Once crimped, the contacts are permanently deformed. Attempting to reuse them will result in intermittent connections or complete failures. Always use a new connector.',
   },
   {
-    question: "Why do modular jack patch panels perform better than 110 blocks?",
-    answer: "Modular jack panels use keystone jacks that maintain better pair geometry and shorter untwisted lengths. They're easier to test and replace individually. For Cat6 and Cat6A, this improved geometry is essential for meeting performance specifications."
-  }
+    question: 'Why do modular jack patch panels perform better than 110 blocks?',
+    answer:
+      "Modular jack panels use keystone jacks that maintain better pair geometry and shorter untwisted lengths. They're easier to test and replace individually. For Cat6 and Cat6A, this improved geometry is essential for meeting performance specifications.",
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "During termination inspection, you notice 20mm of untwisted cable at a Cat6A keystone jack. What action should you take?",
-  options: [
-    "Accept it - Cat6A has more tolerance",
-    "Re-terminate with maximum 13mm untwist",
-    "Add extra cable ties to secure it",
-    "Test it first before deciding"
-  ],
-  correctAnswer: 1,
-  explanation: "Cat6A actually requires stricter termination than Cat6, not more tolerance. Maximum untwist should be around 13mm or less. Re-termination is required to meet performance specifications."
-  }
+    question:
+      'During termination inspection, you notice 20mm of untwisted cable at a Cat6A keystone jack. What action should you take?',
+    options: [
+      'Accept it - Cat6A has more tolerance',
+      'Re-terminate with maximum 13mm untwist',
+      'Add extra cable ties to secure it',
+      'Test it first before deciding',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Cat6A actually requires stricter termination than Cat6, not more tolerance. Maximum untwist should be around 13mm or less. Re-termination is required to meet performance specifications.',
+  },
 ];
 
 const DataCablingModule2Section4 = () => {
@@ -108,9 +118,7 @@ const DataCablingModule2Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Connectors and Patch Panels
           </h1>
-          <p className="text-white/80">
-            Professional termination techniques and hardware
-          </p>
+          <p className="text-white/80">Professional termination techniques and hardware</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -118,16 +126,26 @@ const DataCablingModule2Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>RJ45:</strong> 8P8C modular connector for Ethernet</li>
-              <li><strong>T568A/B:</strong> Wiring standards - be consistent</li>
-              <li><strong>Untwist:</strong> Maximum 13mm for Cat6/6A</li>
+              <li>
+                <strong>RJ45:</strong> 8P8C modular connector for Ethernet
+              </li>
+              <li>
+                <strong>T568A/B:</strong> Wiring standards - be consistent
+              </li>
+              <li>
+                <strong>Untwist:</strong> Maximum 13mm for Cat6/6A
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Category marking on connectors and panels</li>
-              <li><strong>Use:</strong> Match connector category to cable category</li>
+              <li>
+                <strong>Spot:</strong> Category marking on connectors and panels
+              </li>
+              <li>
+                <strong>Use:</strong> Match connector category to cable category
+              </li>
             </ul>
           </div>
         </div>
@@ -137,12 +155,12 @@ const DataCablingModule2Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify RJ45 connector types and categories",
-              "Understand T568A and T568B wiring standards",
-              "Select appropriate patch panel types",
-              "Apply proper termination techniques",
-              "Implement cable management strategies",
-              "Troubleshoot termination issues"
+              'Identify RJ45 connector types and categories',
+              'Understand T568A and T568B wiring standards',
+              'Select appropriate patch panel types',
+              'Apply proper termination techniques',
+              'Implement cable management strategies',
+              'Troubleshoot termination issues',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -163,26 +181,43 @@ const DataCablingModule2Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               RJ45 connectors (technically 8P8C modular plugs) are the standard interface for
-              Ethernet networks. Connector quality and proper termination directly impact performance.
+              Ethernet networks. Connector quality and proper termination directly impact
+              performance.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Connector Categories</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Cat5e:</strong> Standard 8P8C, 100MHz</li>
-                  <li><strong>Cat6:</strong> Enhanced design with load bar</li>
-                  <li><strong>Cat6A:</strong> Larger body, 500MHz rated</li>
-                  <li><strong>Shielded:</strong> Metal housing for STP/FTP</li>
+                  <li>
+                    <strong>Cat5e:</strong> Standard 8P8C, 100MHz
+                  </li>
+                  <li>
+                    <strong>Cat6:</strong> Enhanced design with load bar
+                  </li>
+                  <li>
+                    <strong>Cat6A:</strong> Larger body, 500MHz rated
+                  </li>
+                  <li>
+                    <strong>Shielded:</strong> Metal housing for STP/FTP
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wiring Standards</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>T568A:</strong> Preferred for new installations</li>
-                  <li><strong>T568B:</strong> More common, AT&T compatible</li>
-                  <li><strong>Crossover:</strong> T568A one end, T568B other</li>
-                  <li><strong>Consistency:</strong> Use same standard throughout</li>
+                  <li>
+                    <strong>T568A:</strong> Preferred for new installations
+                  </li>
+                  <li>
+                    <strong>T568B:</strong> More common, AT&T compatible
+                  </li>
+                  <li>
+                    <strong>Crossover:</strong> T568A one end, T568B other
+                  </li>
+                  <li>
+                    <strong>Consistency:</strong> Use same standard throughout
+                  </li>
                 </ul>
               </div>
             </div>
@@ -221,10 +256,18 @@ const DataCablingModule2Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Patch Panel Types:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>110 IDC:</strong> Insulation displacement, high density, tool-dependent</li>
-                <li><strong>Krone IDC:</strong> European standard, similar to 110</li>
-                <li><strong>Modular Jack:</strong> Keystone compatible, best for Cat6/6A</li>
-                <li><strong>Angled:</strong> Better cable management, reduced strain</li>
+                <li>
+                  <strong>110 IDC:</strong> Insulation displacement, high density, tool-dependent
+                </li>
+                <li>
+                  <strong>Krone IDC:</strong> European standard, similar to 110
+                </li>
+                <li>
+                  <strong>Modular Jack:</strong> Keystone compatible, best for Cat6/6A
+                </li>
+                <li>
+                  <strong>Angled:</strong> Better cable management, reduced strain
+                </li>
               </ul>
             </div>
 
@@ -261,29 +304,51 @@ const DataCablingModule2Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Proper termination technique directly impacts network performance. Following established
-              procedures ensures consistent, reliable connections.
+              Proper termination technique directly impacts network performance. Following
+              established procedures ensures consistent, reliable connections.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">RJ45 Termination Steps:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                RJ45 Termination Steps:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1. Strip jacket:</strong> Remove correct length (typically 25-30mm)</li>
-                <li><strong>2. Arrange pairs:</strong> Follow T568A or T568B sequence</li>
-                <li><strong>3. Minimise untwist:</strong> Maximum 13mm for Cat6</li>
-                <li><strong>4. Trim conductors:</strong> Cut to equal length</li>
-                <li><strong>5. Insert fully:</strong> Conductors must reach connector end</li>
-                <li><strong>6. Crimp properly:</strong> Use quality ratchet crimping tool</li>
+                <li>
+                  <strong>1. Strip jacket:</strong> Remove correct length (typically 25-30mm)
+                </li>
+                <li>
+                  <strong>2. Arrange pairs:</strong> Follow T568A or T568B sequence
+                </li>
+                <li>
+                  <strong>3. Minimise untwist:</strong> Maximum 13mm for Cat6
+                </li>
+                <li>
+                  <strong>4. Trim conductors:</strong> Cut to equal length
+                </li>
+                <li>
+                  <strong>5. Insert fully:</strong> Conductors must reach connector end
+                </li>
+                <li>
+                  <strong>6. Crimp properly:</strong> Use quality ratchet crimping tool
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Control:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Visual check:</strong> Verify wire sequence through connector</li>
-                <li><strong>Strain relief:</strong> Jacket must enter connector body</li>
-                <li><strong>Wire map test:</strong> Verify continuity and correct pairing</li>
-                <li><strong>Performance test:</strong> Certify to category standard</li>
+                <li>
+                  <strong>Visual check:</strong> Verify wire sequence through connector
+                </li>
+                <li>
+                  <strong>Strain relief:</strong> Jacket must enter connector body
+                </li>
+                <li>
+                  <strong>Wire map test:</strong> Verify continuity and correct pairing
+                </li>
+                <li>
+                  <strong>Performance test:</strong> Certify to category standard
+                </li>
               </ul>
             </div>
           </div>
@@ -296,7 +361,9 @@ const DataCablingModule2Section4 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Professional Standards</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Professional Standards
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Use category-matched connectors for all terminations</li>
                 <li>Maintain consistent wiring standard throughout installation</li>
@@ -308,10 +375,18 @@ const DataCablingModule2Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Excessive untwisting:</strong> — Degrades crosstalk performance</li>
-                <li><strong>Wrong connector category:</strong> — Cat5e connector on Cat6 cable</li>
-                <li><strong>Inconsistent standards:</strong> — Mixed T568A and T568B</li>
-                <li><strong>Poor crimping:</strong> — Intermittent or failed connections</li>
+                <li>
+                  <strong>Excessive untwisting:</strong> — Degrades crosstalk performance
+                </li>
+                <li>
+                  <strong>Wrong connector category:</strong> — Cat5e connector on Cat6 cable
+                </li>
+                <li>
+                  <strong>Inconsistent standards:</strong> — Mixed T568A and T568B
+                </li>
+                <li>
+                  <strong>Poor crimping:</strong> — Intermittent or failed connections
+                </li>
               </ul>
             </div>
           </div>
@@ -356,10 +431,7 @@ const DataCablingModule2Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

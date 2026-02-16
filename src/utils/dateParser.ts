@@ -3,9 +3,29 @@
  */
 
 const MONTHS: Record<string, number> = {
-  january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
-  july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
-  jan: 0, feb: 1, mar: 2, apr: 3, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
+  january: 0,
+  february: 1,
+  march: 2,
+  april: 3,
+  may: 4,
+  june: 5,
+  july: 6,
+  august: 7,
+  september: 8,
+  october: 9,
+  november: 10,
+  december: 11,
+  jan: 0,
+  feb: 1,
+  mar: 2,
+  apr: 3,
+  jun: 5,
+  jul: 6,
+  aug: 7,
+  sep: 8,
+  oct: 9,
+  nov: 10,
+  dec: 11,
 };
 
 /**
@@ -40,7 +60,7 @@ export function parseNaturalDate(input: string): string {
     const day = parseInt(ukMatch[1]);
     const month = parseInt(ukMatch[2]) - 1; // JS months are 0-indexed
     let year = parseInt(ukMatch[3]);
-    
+
     // Handle 2-digit years
     if (year < 100) {
       year += year < 50 ? 2000 : 1900;

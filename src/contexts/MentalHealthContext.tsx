@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useMoodData } from '@/hooks/useMentalHealthSync';
 
@@ -91,7 +90,10 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
-    localStorage.setItem('elec-mate-daily-checkin', JSON.stringify({ date: today, checked: dailyCheckIn }));
+    localStorage.setItem(
+      'elec-mate-daily-checkin',
+      JSON.stringify({ date: today, checked: dailyCheckIn })
+    );
   }, [dailyCheckIn]);
 
   useEffect(() => {
@@ -103,10 +105,8 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
   }, [favoriteResources]);
 
   const toggleFavoriteResource = (resourceId: string) => {
-    setFavoriteResources(prev =>
-      prev.includes(resourceId)
-        ? prev.filter(id => id !== resourceId)
-        : [...prev, resourceId]
+    setFavoriteResources((prev) =>
+      prev.includes(resourceId) ? prev.filter((id) => id !== resourceId) : [...prev, resourceId]
     );
   };
 
@@ -124,9 +124,5 @@ export const MentalHealthProvider: React.FC<MentalHealthProviderProps> = ({ chil
     toggleFavoriteResource,
   };
 
-  return (
-    <MentalHealthContext.Provider value={value}>
-      {children}
-    </MentalHealthContext.Provider>
-  );
+  return <MentalHealthContext.Provider value={value}>{children}</MentalHealthContext.Provider>;
 };

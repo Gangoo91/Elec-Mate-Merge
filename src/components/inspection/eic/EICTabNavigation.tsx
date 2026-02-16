@@ -64,7 +64,7 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
       installation: 'Installation Details',
       inspections: 'Schedule of Inspections',
       testing: 'Schedule of Testing',
-      declarations: 'Declarations'
+      declarations: 'Declarations',
     };
     return names[tab];
   };
@@ -76,11 +76,9 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
           <Badge variant="outline" className="text-sm">
             Step {currentTabIndex + 1} of {totalTabs}
           </Badge>
-          <h3 className="font-medium text-elec-yellow">
-            {getTabDisplayName(currentTab)}
-          </h3>
+          <h3 className="font-medium text-elec-yellow">{getTabDisplayName(currentTab)}</h3>
         </div>
-        
+
         <div className="flex items-center">
           <Button
             variant="ghost"
@@ -93,9 +91,7 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
             ) : (
               <Circle className="h-4 w-4" />
             )}
-            <span className="text-xs">
-              {isCurrentTabComplete ? 'Complete' : 'Mark Complete'}
-            </span>
+            <span className="text-xs">{isCurrentTabComplete ? 'Complete' : 'Mark Complete'}</span>
           </Button>
         </div>
       </div>
@@ -126,7 +122,10 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
             </Badge>
           )}
           {isCurrentTabComplete && (
-            <Badge variant="default" className="text-xs bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/30">
+            <Badge
+              variant="default"
+              className="text-xs bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/30"
+            >
               Section complete
             </Badge>
           )}

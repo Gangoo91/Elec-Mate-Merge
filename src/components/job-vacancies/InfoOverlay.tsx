@@ -1,7 +1,6 @@
-
-import React from "react";
-import { MapPin, Clock } from "lucide-react";
-import TravelTimeEstimate from "./TravelTimeEstimate";
+import React from 'react';
+import { MapPin, Clock } from 'lucide-react';
+import TravelTimeEstimate from './TravelTimeEstimate';
 
 interface InfoOverlayProps {
   userLocation: string | null;
@@ -9,10 +8,10 @@ interface InfoOverlayProps {
   selectedMarkerPosition?: google.maps.LatLngLiteral;
 }
 
-const InfoOverlay: React.FC<InfoOverlayProps> = ({ 
-  userLocation, 
-  selectedJob, 
-  selectedMarkerPosition 
+const InfoOverlay: React.FC<InfoOverlayProps> = ({
+  userLocation,
+  selectedJob,
+  selectedMarkerPosition,
 }) => {
   if (!userLocation || !selectedJob) {
     return null;
@@ -26,10 +25,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({
       </div>
       <div className="flex items-center text-xs text-muted-foreground">
         <Clock className="h-3.5 w-3.5 mr-1.5 text-elec-yellow" />
-        <TravelTimeEstimate 
-          origin={userLocation} 
-          destination={selectedMarkerPosition} 
-        />
+        <TravelTimeEstimate origin={userLocation} destination={selectedMarkerPosition} />
       </div>
     </div>
   );

@@ -16,16 +16,20 @@ import {
   Wrench,
   ArrowLeft,
   ArrowRight,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react';
-import { realWorldFaultCategories, RealWorldFaultCategory, RealWorldExample } from '../data/faultFindingData';
+import {
+  realWorldFaultCategories,
+  RealWorldFaultCategory,
+  RealWorldExample,
+} from '../data/faultFindingData';
 
 interface CaseStudyDetailProps {
   categoryId: string;
   onSelectCase?: (caseIndex: number) => void;
 }
 
-const getCategoryIcon = (category: string, className: string = "h-6 w-6") => {
+const getCategoryIcon = (category: string, className: string = 'h-6 w-6') => {
   switch (category) {
     case 'overcurrent':
       return <Zap className={className} />;
@@ -46,38 +50,38 @@ const getCategoryColor = (category: string) => {
       return {
         text: 'text-red-400',
         bg: 'bg-red-500/10',
-        border: 'border-red-500/30'
+        border: 'border-red-500/30',
       };
     case 'earthing':
       return {
         text: 'text-green-400',
         bg: 'bg-green-500/10',
-        border: 'border-green-500/30'
+        border: 'border-green-500/30',
       };
     case 'insulation':
       return {
         text: 'text-purple-400',
         bg: 'bg-purple-500/10',
-        border: 'border-purple-500/30'
+        border: 'border-purple-500/30',
       };
     case 'supply_issues':
       return {
         text: 'text-cyan-400',
         bg: 'bg-cyan-500/10',
-        border: 'border-cyan-500/30'
+        border: 'border-cyan-500/30',
       };
     default:
       return {
         text: 'text-blue-400',
         bg: 'bg-blue-500/10',
-        border: 'border-blue-500/30'
+        border: 'border-blue-500/30',
       };
   }
 };
 
 const CaseStudyDetail = ({ categoryId }: CaseStudyDetailProps) => {
   const [selectedCaseIndex, setSelectedCaseIndex] = useState<number | null>(null);
-  const category = realWorldFaultCategories.find(c => c.id === categoryId);
+  const category = realWorldFaultCategories.find((c) => c.id === categoryId);
 
   if (!category) {
     return (
@@ -117,9 +121,7 @@ const CaseStudyDetail = ({ categoryId }: CaseStudyDetailProps) => {
                 {example.timeToResolve}
               </Badge>
             </div>
-            <CardTitle className={`text-lg ${colors.text}`}>
-              {example.scenario}
-            </CardTitle>
+            <CardTitle className={`text-lg ${colors.text}`}>{example.scenario}</CardTitle>
             <div className="flex items-center gap-1 text-xs text-muted-foreground mt-2">
               <MapPin className="h-3 w-3" />
               {example.location}
@@ -168,17 +170,20 @@ const CaseStudyDetail = ({ categoryId }: CaseStudyDetailProps) => {
               Rectification Steps
             </h3>
             <div className="space-y-2">
-              {example.rectification.split(/\d+\.\s/).filter(Boolean).map((step, index) => (
-                <div key={index} className="flex items-start gap-2">
-                  <Badge
-                    variant="outline"
-                    className="text-xs min-w-[24px] h-5 flex items-center justify-center shrink-0 border-emerald-500/30 text-emerald-400"
-                  >
-                    {index + 1}
-                  </Badge>
-                  <span className="text-sm text-foreground">{step.trim()}</span>
-                </div>
-              ))}
+              {example.rectification
+                .split(/\d+\.\s/)
+                .filter(Boolean)
+                .map((step, index) => (
+                  <div key={index} className="flex items-start gap-2">
+                    <Badge
+                      variant="outline"
+                      className="text-xs min-w-[24px] h-5 flex items-center justify-center shrink-0 border-emerald-500/30 text-emerald-400"
+                    >
+                      {index + 1}
+                    </Badge>
+                    <span className="text-sm text-foreground">{step.trim()}</span>
+                  </div>
+                ))}
             </div>
           </CardContent>
         </Card>
@@ -226,16 +231,12 @@ const CaseStudyDetail = ({ categoryId }: CaseStudyDetailProps) => {
       <Card className={`${colors.border} border-l-4 ${colors.bg}`}>
         <CardHeader className="pb-3">
           <div className="flex items-center gap-3">
-            <div className={colors.text}>
-              {getCategoryIcon(category.category, "h-8 w-8")}
-            </div>
+            <div className={colors.text}>{getCategoryIcon(category.category, 'h-8 w-8')}</div>
             <div>
               <CardTitle className={`text-lg sm:text-xl ${colors.text}`}>
                 {category.title}
               </CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
-                {category.description}
-              </p>
+              <p className="text-sm text-muted-foreground mt-1">{category.description}</p>
             </div>
           </div>
         </CardHeader>
@@ -261,12 +262,8 @@ const CaseStudyDetail = ({ categoryId }: CaseStudyDetailProps) => {
                       {example.timeToResolve}
                     </Badge>
                   </div>
-                  <h4 className="font-medium text-sm text-foreground mb-1">
-                    {example.scenario}
-                  </h4>
-                  <p className="text-xs text-muted-foreground line-clamp-1">
-                    {example.symptoms}
-                  </p>
+                  <h4 className="font-medium text-sm text-foreground mb-1">{example.scenario}</h4>
+                  <p className="text-xs text-muted-foreground line-clamp-1">{example.symptoms}</p>
                 </div>
                 <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
               </div>

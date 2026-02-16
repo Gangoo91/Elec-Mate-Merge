@@ -6,57 +6,57 @@ import {
   ArrowDown,
   Shield,
   Info,
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 /* ───────────────────────── Quick-check questions ───────────────────────── */
 
 const quickCheckQuestions = [
   {
-    id: "designers-core-duty",
+    id: 'designers-core-duty',
     question:
       "Under Regulation 9 of CDM 2015, what is the first step in a designer's risk management hierarchy?",
     options: [
-      "Eliminate foreseeable risks so far as is reasonably practicable",
-      "Reduce risks by specifying safer materials",
-      "Inform other duty holders about all risks on the project",
-      "Transfer all risk to the principal contractor",
+      'Eliminate foreseeable risks so far as is reasonably practicable',
+      'Reduce risks by specifying safer materials',
+      'Inform other duty holders about all risks on the project',
+      'Transfer all risk to the principal contractor',
     ],
     correctIndex: 0,
     explanation:
-      "Regulation 9 requires designers to follow a clear hierarchy: first eliminate foreseeable risks so far as is reasonably practicable, then reduce risks that cannot be eliminated, and finally provide information about any remaining (residual) risks. Elimination is always the preferred first step because it removes the hazard entirely rather than relying on controls or information.",
+      'Regulation 9 requires designers to follow a clear hierarchy: first eliminate foreseeable risks so far as is reasonably practicable, then reduce risks that cannot be eliminated, and finally provide information about any remaining (residual) risks. Elimination is always the preferred first step because it removes the hazard entirely rather than relying on controls or information.',
   },
   {
-    id: "general-principles-priority",
+    id: 'general-principles-priority',
     question:
-      "Under the General Principles of Prevention (Schedule 1), which type of protective measure takes priority?",
+      'Under the General Principles of Prevention (Schedule 1), which type of protective measure takes priority?',
     options: [
-      "Collective measures over individual measures",
-      "Individual PPE over collective measures",
-      "Administrative controls over engineering controls",
-      "Warning signs over physical barriers",
+      'Collective measures over individual measures',
+      'Individual PPE over collective measures',
+      'Administrative controls over engineering controls',
+      'Warning signs over physical barriers',
     ],
     correctIndex: 0,
     explanation:
-      "Schedule 1 of CDM 2015 (mirroring the Management of Health and Safety at Work Regulations) requires that collective protective measures are given priority over individual protective measures. For example, a permanent guardrail system (collective) is preferred over requiring individual workers to wear fall-arrest harnesses (individual). Collective measures protect everyone without relying on individual compliance.",
+      'Schedule 1 of CDM 2015 (mirroring the Management of Health and Safety at Work Regulations) requires that collective protective measures are given priority over individual protective measures. For example, a permanent guardrail system (collective) is preferred over requiring individual workers to wear fall-arrest harnesses (individual). Collective measures protect everyone without relying on individual compliance.',
   },
   {
-    id: "residual-risk-communication",
+    id: 'residual-risk-communication',
     question:
-      "How should a designer communicate significant residual risks that cannot be eliminated or reduced?",
+      'How should a designer communicate significant residual risks that cannot be eliminated or reduced?',
     options: [
-      "Through design risk registers and information on drawings, highlighting unusual or non-obvious risks",
-      "Verbally at the project handover meeting only",
-      "By including a general disclaimer in the contract documents",
-      "Residual risks do not need to be communicated if they are common in the industry",
+      'Through design risk registers and information on drawings, highlighting unusual or non-obvious risks',
+      'Verbally at the project handover meeting only',
+      'By including a general disclaimer in the contract documents',
+      'Residual risks do not need to be communicated if they are common in the industry',
     ],
     correctIndex: 0,
     explanation:
-      "Designers must communicate significant residual risks through design risk registers and by providing information on drawings. Unusual or non-obvious risks must be specifically highlighted so that contractors and others can plan appropriate control measures. Verbal communication alone is insufficient, and general disclaimers do not satisfy the legal duty. Even common industry risks should be recorded if they are significant.",
+      'Designers must communicate significant residual risks through design risk registers and by providing information on drawings. Unusual or non-obvious risks must be specifically highlighted so that contractors and others can plan appropriate control measures. Verbal communication alone is insufficient, and general disclaimers do not satisfy the legal duty. Even common industry risks should be recorded if they are significant.',
   },
 ];
 
@@ -64,28 +64,25 @@ const quickCheckQuestions = [
 
 const faqs = [
   {
-    question:
-      "Does a designer have to eliminate every possible risk from the design?",
+    question: 'Does a designer have to eliminate every possible risk from the design?',
     answer:
       "No. The duty is to eliminate risks 'so far as is reasonably practicable' (SFAIRP). This means balancing the level of risk against the cost, time, and effort of eliminating it. Designers must use professional judgement and consider whether the risk reduction is proportionate. It would be unreasonable to expect a designer to eliminate every conceivable risk, but they must demonstrate that they have applied the hierarchy (eliminate, reduce, inform) and made proportionate design decisions. The key test is whether a reasonable designer in the same position would have done the same.",
   },
   {
-    question:
-      "What is the difference between a design risk register and a health and safety file?",
+    question: 'What is the difference between a design risk register and a health and safety file?',
     answer:
-      "A design risk register is a document maintained during the design process that records the significant risks identified, what has been done to eliminate or reduce them, and what residual risks remain. It is a working document used to communicate between designers, the principal designer, and contractors. The health and safety file, by contrast, is a document compiled by the principal designer that contains information needed for future construction, maintenance, refurbishment, or demolition of the structure. The design risk register feeds into the health and safety file, but they serve different purposes and audiences.",
+      'A design risk register is a document maintained during the design process that records the significant risks identified, what has been done to eliminate or reduce them, and what residual risks remain. It is a working document used to communicate between designers, the principal designer, and contractors. The health and safety file, by contrast, is a document compiled by the principal designer that contains information needed for future construction, maintenance, refurbishment, or demolition of the structure. The design risk register feeds into the health and safety file, but they serve different purposes and audiences.',
   },
   {
-    question:
-      "Can an electrician be considered a 'designer' under CDM 2015?",
+    question: "Can an electrician be considered a 'designer' under CDM 2015?",
     answer:
-      "Yes. Under CDM 2015, a designer is anyone who prepares or modifies a design for a building, product, or system related to construction work. An electrician who designs the layout of a distribution board, specifies cable routes, or plans the positioning of isolation points is acting as a designer and has CDM designer duties. This includes preparing drawings, specifying products, or making design decisions on site. Many electrical contractors are unaware they have designer duties, but the CDM definition is deliberately broad to capture everyone who influences the design.",
+      'Yes. Under CDM 2015, a designer is anyone who prepares or modifies a design for a building, product, or system related to construction work. An electrician who designs the layout of a distribution board, specifies cable routes, or plans the positioning of isolation points is acting as a designer and has CDM designer duties. This includes preparing drawings, specifying products, or making design decisions on site. Many electrical contractors are unaware they have designer duties, but the CDM definition is deliberately broad to capture everyone who influences the design.',
   },
   {
     question:
       "What should I do if I identify a design risk that another designer's work has created?",
     answer:
-      "You have a duty to cooperate and coordinate with other designers and the principal designer. You should raise the risk with the principal designer or directly with the other designer as soon as possible. The principal designer is responsible for ensuring that design risks are managed across all disciplines and that no gaps exist. You should document the risk you have identified and confirm in writing that it has been communicated. Do not assume that someone else will notice the risk or that it is not your responsibility because it originated from another discipline.",
+      'You have a duty to cooperate and coordinate with other designers and the principal designer. You should raise the risk with the principal designer or directly with the other designer as soon as possible. The principal designer is responsible for ensuring that design risks are managed across all disciplines and that no gaps exist. You should document the risk you have identified and confirm in writing that it has been communicated. Do not assume that someone else will notice the risk or that it is not your responsibility because it originated from another discipline.',
   },
 ];
 
@@ -94,41 +91,39 @@ const faqs = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      "Under Regulation 9 of CDM 2015, when must a designer consider health and safety?",
+    question: 'Under Regulation 9 of CDM 2015, when must a designer consider health and safety?',
     options: [
-      "Only when the client specifically requests it",
-      "When preparing or modifying a design for a building, product, or system relating to construction work",
-      "Only during the detailed design stage, not the concept stage",
-      "Only when the project is notifiable to the HSE",
+      'Only when the client specifically requests it',
+      'When preparing or modifying a design for a building, product, or system relating to construction work',
+      'Only during the detailed design stage, not the concept stage',
+      'Only when the project is notifiable to the HSE',
     ],
     correctAnswer: 1,
     explanation:
-      "Regulation 9 applies whenever a designer prepares or modifies a design for a building, product, or system relating to construction work. This applies at every stage of design, from initial concept through to detailed specification, and regardless of whether the project is notifiable. The duty is not dependent on the client requesting it — it is a legal obligation that applies automatically.",
+      'Regulation 9 applies whenever a designer prepares or modifies a design for a building, product, or system relating to construction work. This applies at every stage of design, from initial concept through to detailed specification, and regardless of whether the project is notifiable. The duty is not dependent on the client requesting it — it is a legal obligation that applies automatically.',
   },
   {
     id: 2,
-    question:
-      "Which of the following is an example of eliminating risk through design?",
+    question: 'Which of the following is an example of eliminating risk through design?',
     options: [
-      "Specifying lighter materials to reduce manual handling injuries",
-      "Designing permanent edge protection into a flat roof so temporary barriers are not needed",
-      "Providing information about buried services on the drawings",
-      "Requiring workers to wear fall-arrest harnesses when working at height",
+      'Specifying lighter materials to reduce manual handling injuries',
+      'Designing permanent edge protection into a flat roof so temporary barriers are not needed',
+      'Providing information about buried services on the drawings',
+      'Requiring workers to wear fall-arrest harnesses when working at height',
     ],
     correctAnswer: 1,
     explanation:
-      "Designing permanent edge protection into a flat roof eliminates the risk of falls during both construction and future maintenance because the hazard is permanently removed by the design. Specifying lighter materials reduces risk but does not eliminate it. Providing information is the third tier of the hierarchy (inform). Requiring harnesses is an individual protective measure, not a design elimination.",
+      'Designing permanent edge protection into a flat roof eliminates the risk of falls during both construction and future maintenance because the hazard is permanently removed by the design. Specifying lighter materials reduces risk but does not eliminate it. Providing information is the third tier of the hierarchy (inform). Requiring harnesses is an individual protective measure, not a design elimination.',
   },
   {
     id: 3,
     question:
       "What does 'combating risks at source' mean under the General Principles of Prevention?",
     options: [
-      "Addressing the root cause of the hazard rather than mitigating its effects",
-      "Providing PPE to protect workers from the hazard",
-      "Writing a risk assessment for every task",
-      "Ensuring the principal contractor manages all on-site risks",
+      'Addressing the root cause of the hazard rather than mitigating its effects',
+      'Providing PPE to protect workers from the hazard',
+      'Writing a risk assessment for every task',
+      'Ensuring the principal contractor manages all on-site risks',
     ],
     correctAnswer: 0,
     explanation:
@@ -137,12 +132,12 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      "An electrical designer specifies cable routes that pass through an area that will later become a confined space. What CDM duty have they potentially failed to fulfil?",
+      'An electrical designer specifies cable routes that pass through an area that will later become a confined space. What CDM duty have they potentially failed to fulfil?',
     options: [
-      "The duty to eliminate foreseeable risks so far as is reasonably practicable",
-      "The duty to notify the HSE of the design",
-      "The duty to appoint a principal contractor",
-      "The duty to provide welfare facilities",
+      'The duty to eliminate foreseeable risks so far as is reasonably practicable',
+      'The duty to notify the HSE of the design',
+      'The duty to appoint a principal contractor',
+      'The duty to provide welfare facilities',
     ],
     correctAnswer: 0,
     explanation:
@@ -151,40 +146,38 @@ const quizQuestions = [
   {
     id: 5,
     question:
-      "A designer identifies a residual risk that is unusual and not obvious to contractors. What must they do?",
+      'A designer identifies a residual risk that is unusual and not obvious to contractors. What must they do?',
     options: [
-      "Assume that competent contractors will identify it themselves",
-      "Specifically highlight the risk and provide information through the design risk register and on drawings",
-      "Only mention it if asked about it during a design review meeting",
-      "Transfer responsibility by adding a general caveat to the specification",
+      'Assume that competent contractors will identify it themselves',
+      'Specifically highlight the risk and provide information through the design risk register and on drawings',
+      'Only mention it if asked about it during a design review meeting',
+      'Transfer responsibility by adding a general caveat to the specification',
     ],
     correctAnswer: 1,
     explanation:
-      "Designers must specifically highlight unusual or non-obvious residual risks and provide clear information through the design risk register and on drawings. The duty to inform is the third tier of the risk management hierarchy and applies when risks cannot be fully eliminated or reduced. Assuming that contractors will identify risks themselves, or relying on general caveats, does not satisfy the legal requirement.",
+      'Designers must specifically highlight unusual or non-obvious residual risks and provide clear information through the design risk register and on drawings. The duty to inform is the third tier of the risk management hierarchy and applies when risks cannot be fully eliminated or reduced. Assuming that contractors will identify risks themselves, or relying on general caveats, does not satisfy the legal requirement.',
   },
   {
     id: 6,
-    question:
-      "Under CDM 2015, what determines whether a designer has adequate competence?",
+    question: 'Under CDM 2015, what determines whether a designer has adequate competence?',
     options: [
-      "Holding a specific CDM qualification or licence",
-      "Having adequate skills, knowledge, experience, and organisational capability for the work",
-      "Being registered with the HSE as an approved designer",
-      "Having completed at least 10 years of professional practice",
+      'Holding a specific CDM qualification or licence',
+      'Having adequate skills, knowledge, experience, and organisational capability for the work',
+      'Being registered with the HSE as an approved designer',
+      'Having completed at least 10 years of professional practice',
     ],
     correctAnswer: 1,
     explanation:
-      "CDM 2015 does not require a specific qualification or licence. Competence is assessed by whether the designer has adequate skills, knowledge, experience, and (where relevant) organisational capability for the type of work involved. This is a proportionate test — a designer working on a simple domestic extension needs different competence from one designing a major infrastructure project. Professional judgement and CDM awareness are expected of all designers.",
+      'CDM 2015 does not require a specific qualification or licence. Competence is assessed by whether the designer has adequate skills, knowledge, experience, and (where relevant) organisational capability for the type of work involved. This is a proportionate test — a designer working on a simple domestic extension needs different competence from one designing a major infrastructure project. Professional judgement and CDM awareness are expected of all designers.',
   },
   {
     id: 7,
-    question:
-      "Why is cooperation between designers important under CDM 2015?",
+    question: 'Why is cooperation between designers important under CDM 2015?',
     options: [
-      "It is a contractual requirement but not a legal one",
-      "It ensures that risks identified by one designer do not create gaps in risk management across the project",
-      "It is only required when the project has more than five designers",
-      "It allows designers to share the cost of professional indemnity insurance",
+      'It is a contractual requirement but not a legal one',
+      'It ensures that risks identified by one designer do not create gaps in risk management across the project',
+      'It is only required when the project has more than five designers',
+      'It allows designers to share the cost of professional indemnity insurance',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,12 +186,12 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      "When designing the location of electrical distribution boards, which CDM principle should the designer primarily consider?",
+      'When designing the location of electrical distribution boards, which CDM principle should the designer primarily consider?',
     options: [
-      "Minimising the cost of the electrical installation",
-      "Ensuring safe access for maintenance without the need for work at height or confined space entry",
-      "Positioning boards as close to the main intake as possible regardless of access",
-      "Using the smallest distribution boards available to save space",
+      'Minimising the cost of the electrical installation',
+      'Ensuring safe access for maintenance without the need for work at height or confined space entry',
+      'Positioning boards as close to the main intake as possible regardless of access',
+      'Using the smallest distribution boards available to save space',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,8 +203,7 @@ const quizQuestions = [
 
 const CdmRegulationsModule4Section1 = () => {
   useSEO({
-    title:
-      "Designers' Duties | CDM Regulations Module 4 Section 1",
+    title: "Designers' Duties | CDM Regulations Module 4 Section 1",
     description:
       "Learn about designers' duties under CDM 2015 Regulation 9, including the risk management hierarchy of eliminate, reduce, and inform, the General Principles of Prevention, electrical design considerations, and cooperation and coordination duties.",
   });
@@ -247,8 +239,8 @@ const CdmRegulationsModule4Section1 = () => {
           </h1>
           <p className="text-white/80 max-w-xl mx-auto">
             Understanding the designer&rsquo;s legal duties under CDM 2015 &mdash; the hierarchy of
-            eliminate, reduce, and inform, the General Principles of Prevention, and how these duties
-            apply to electrical design
+            eliminate, reduce, and inform, the General Principles of Prevention, and how these
+            duties apply to electrical design
           </p>
         </div>
 
@@ -268,7 +260,9 @@ const CdmRegulationsModule4Section1 = () => {
 
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="rounded-lg p-3 sm:p-4 bg-blue-500/10 border-l-2 border-l-blue-500/50 border border-blue-500/30">
-                <p className="font-semibold text-base text-blue-400 mb-2">The Three-Step Hierarchy</p>
+                <p className="font-semibold text-base text-blue-400 mb-2">
+                  The Three-Step Hierarchy
+                </p>
                 <ul className="text-base text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
@@ -297,8 +291,8 @@ const CdmRegulationsModule4Section1 = () => {
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      The duty applies at <strong>every stage of design</strong> &mdash; from concept
-                      through to detailed specification
+                      The duty applies at <strong>every stage of design</strong> &mdash; from
+                      concept through to detailed specification
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -326,12 +320,12 @@ const CdmRegulationsModule4Section1 = () => {
               </div>
               <p className="text-white/80 text-sm">
                 Under CDM 2015, a <strong className="text-white">designer</strong> is anyone who
-                prepares or modifies a design, including drawings, design details, specifications, and
-                bills of quantities relating to a structure. This is much broader than many people
-                realise &mdash; it includes architects, engineers, surveyors, technicians, and{" "}
-                <strong className="text-white">any tradesperson</strong> who makes design decisions.
-                An electrician who specifies a cable route, designs a distribution board layout, or
-                selects equipment is acting as a designer under CDM.
+                prepares or modifies a design, including drawings, design details, specifications,
+                and bills of quantities relating to a structure. This is much broader than many
+                people realise &mdash; it includes architects, engineers, surveyors, technicians,
+                and <strong className="text-white">any tradesperson</strong> who makes design
+                decisions. An electrician who specifies a cable route, designs a distribution board
+                layout, or selects equipment is acting as a designer under CDM.
               </p>
             </div>
           </div>
@@ -346,17 +340,15 @@ const CdmRegulationsModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Schedule 1 of CDM 2015 sets out the <strong>General Principles of Prevention</strong>,
-                which mirror those in the Management of Health and Safety at Work Regulations 1999.
-                These nine principles form the foundation of all health and safety decision-making,
-                including design. Designers must take them into account when preparing or modifying any
-                design.
+                Schedule 1 of CDM 2015 sets out the{' '}
+                <strong>General Principles of Prevention</strong>, which mirror those in the
+                Management of Health and Safety at Work Regulations 1999. These nine principles form
+                the foundation of all health and safety decision-making, including design. Designers
+                must take them into account when preparing or modifying any design.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-blue-400 font-medium mb-3">
-                  The Nine Principles (Schedule 1)
-                </h3>
+                <h3 className="text-blue-400 font-medium mb-3">The Nine Principles (Schedule 1)</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
                     <div className="bg-blue-500/20 text-blue-400 text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -372,8 +364,8 @@ const CdmRegulationsModule4Section1 = () => {
                       2
                     </div>
                     <div>
-                      <strong>Evaluating the risks which cannot be avoided</strong> &mdash; assessing
-                      remaining risks to determine their severity and likelihood
+                      <strong>Evaluating the risks which cannot be avoided</strong> &mdash;
+                      assessing remaining risks to determine their severity and likelihood
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -381,8 +373,8 @@ const CdmRegulationsModule4Section1 = () => {
                       3
                     </div>
                     <div>
-                      <strong>Combating the risks at source</strong> &mdash; addressing the root cause
-                      of hazards rather than mitigating their effects
+                      <strong>Combating the risks at source</strong> &mdash; addressing the root
+                      cause of hazards rather than mitigating their effects
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -400,8 +392,9 @@ const CdmRegulationsModule4Section1 = () => {
                       5
                     </div>
                     <div>
-                      <strong>Adapting to technical progress</strong> &mdash; using modern materials,
-                      methods, and technologies that offer improved safety over traditional approaches
+                      <strong>Adapting to technical progress</strong> &mdash; using modern
+                      materials, methods, and technologies that offer improved safety over
+                      traditional approaches
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -409,9 +402,11 @@ const CdmRegulationsModule4Section1 = () => {
                       6
                     </div>
                     <div>
-                      <strong>Replacing the dangerous with the non-dangerous or the less
-                      dangerous</strong> &mdash; substituting hazardous materials, processes, or
-                      systems with safer alternatives
+                      <strong>
+                        Replacing the dangerous with the non-dangerous or the less dangerous
+                      </strong>{' '}
+                      &mdash; substituting hazardous materials, processes, or systems with safer
+                      alternatives
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -440,7 +435,8 @@ const CdmRegulationsModule4Section1 = () => {
                     </div>
                     <div>
                       <strong>Giving appropriate instructions to workers</strong> &mdash; ensuring
-                      those who will carry out the work have the information they need to do so safely
+                      those who will carry out the work have the information they need to do so
+                      safely
                     </div>
                   </div>
                 </div>
@@ -449,15 +445,17 @@ const CdmRegulationsModule4Section1 = () => {
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <Info className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-blue-300">Practical Application for Designers</h3>
+                  <h3 className="font-semibold text-blue-300">
+                    Practical Application for Designers
+                  </h3>
                 </div>
                 <p className="text-white/80 text-sm">
                   The General Principles of Prevention are not abstract concepts &mdash; they must
                   inform <strong className="text-white">every design decision</strong>. When a
-                  designer chooses a material, specifies a construction method, determines a layout, or
-                  selects a system, they should ask: &ldquo;Have I applied these principles? Could this
-                  design be safer?&rdquo; The principles provide a structured framework for
-                  proportionate risk management at the design stage.
+                  designer chooses a material, specifies a construction method, determines a layout,
+                  or selects a system, they should ask: &ldquo;Have I applied these principles?
+                  Could this design be safer?&rdquo; The principles provide a structured framework
+                  for proportionate risk management at the design stage.
                 </p>
               </div>
             </div>
@@ -475,10 +473,11 @@ const CdmRegulationsModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                The most effective way to protect workers is to <strong>eliminate hazards entirely
-                through design</strong>. When a risk is designed out, there is no residual hazard to
-                manage, no control measures to maintain, and no reliance on human behaviour. This is
-                the first and most important step in the designer&rsquo;s hierarchy.
+                The most effective way to protect workers is to{' '}
+                <strong>eliminate hazards entirely through design</strong>. When a risk is designed
+                out, there is no residual hazard to manage, no control measures to maintain, and no
+                reliance on human behaviour. This is the first and most important step in the
+                designer&rsquo;s hierarchy.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -489,10 +488,10 @@ const CdmRegulationsModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Pre-fabrication at ground level</strong> &mdash; designing elements to be
-                      assembled on the ground and then lifted into position eliminates work at height
-                      during assembly. Roof trusses, steelwork, and modular building services can all
-                      be pre-fabricated to reduce time spent working at height.
+                      <strong>Pre-fabrication at ground level</strong> &mdash; designing elements to
+                      be assembled on the ground and then lifted into position eliminates work at
+                      height during assembly. Roof trusses, steelwork, and modular building services
+                      can all be pre-fabricated to reduce time spent working at height.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -510,14 +509,15 @@ const CdmRegulationsModule4Section1 = () => {
                     <div>
                       <strong>Roof access systems</strong> &mdash; designing permanent access
                       platforms, walkways, and anchor points into the roof structure eliminates the
-                      need to erect scaffolding or use mobile access equipment for routine maintenance
-                      such as cleaning gutters, servicing plant, or replacing roof lights.
+                      need to erect scaffolding or use mobile access equipment for routine
+                      maintenance such as cleaning gutters, servicing plant, or replacing roof
+                      lights.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Maintainable building services without confined space entry</strong>{" "}
+                      <strong>Maintainable building services without confined space entry</strong>{' '}
                       &mdash; routing ducts, pipes, and cables so that all maintenance points are
                       accessible from open areas eliminates the need for anyone to enter a confined
                       space. This is particularly relevant for electrical installations where cables
@@ -533,11 +533,11 @@ const CdmRegulationsModule4Section1 = () => {
                   <h3 className="font-semibold text-green-300">Elimination Is Always Preferred</h3>
                 </div>
                 <p className="text-white/80 text-sm">
-                  Elimination removes the hazard <strong className="text-white">permanently</strong>.
-                  Unlike control measures (which can fail, be removed, or be bypassed), a design that
-                  eliminates a hazard provides protection that does not depend on anyone&rsquo;s
-                  behaviour, training, or compliance. This is why elimination sits at the top of the
-                  hierarchy and must always be the first option considered.
+                  Elimination removes the hazard <strong className="text-white">permanently</strong>
+                  . Unlike control measures (which can fail, be removed, or be bypassed), a design
+                  that eliminates a hazard provides protection that does not depend on
+                  anyone&rsquo;s behaviour, training, or compliance. This is why elimination sits at
+                  the top of the hierarchy and must always be the first option considered.
                 </p>
               </div>
             </div>
@@ -553,10 +553,10 @@ const CdmRegulationsModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Where a risk cannot be eliminated entirely, the designer&rsquo;s next duty is to{" "}
+                Where a risk cannot be eliminated entirely, the designer&rsquo;s next duty is to{' '}
                 <strong>reduce the risk so far as is reasonably practicable</strong>. This means
-                making design choices that lower the severity, likelihood, or duration of exposure to
-                the hazard.
+                making design choices that lower the severity, likelihood, or duration of exposure
+                to the hazard.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -567,11 +567,12 @@ const CdmRegulationsModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Specifying lighter materials</strong> &mdash; where heavy structural or
-                      finishing materials must be used, the designer can specify lighter alternatives
-                      (e.g. lightweight blocks instead of dense concrete blocks) to reduce the risk of
-                      musculoskeletal injuries from manual handling. Even small reductions in unit
-                      weight can significantly reduce cumulative injury risk over a full working day.
+                      <strong>Specifying lighter materials</strong> &mdash; where heavy structural
+                      or finishing materials must be used, the designer can specify lighter
+                      alternatives (e.g. lightweight blocks instead of dense concrete blocks) to
+                      reduce the risk of musculoskeletal injuries from manual handling. Even small
+                      reductions in unit weight can significantly reduce cumulative injury risk over
+                      a full working day.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -595,11 +596,11 @@ const CdmRegulationsModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Cable routing to avoid buried services</strong> &mdash; designing cable
-                      routes that avoid areas known to contain gas mains, water pipes, or other buried
-                      services reduces the risk of striking a service during installation or future
-                      maintenance. Clear separation and defined routes reduce the likelihood of
-                      accidental damage.
+                      <strong>Cable routing to avoid buried services</strong> &mdash; designing
+                      cable routes that avoid areas known to contain gas mains, water pipes, or
+                      other buried services reduces the risk of striking a service during
+                      installation or future maintenance. Clear separation and defined routes reduce
+                      the likelihood of accidental damage.
                     </div>
                   </div>
                 </div>
@@ -608,14 +609,17 @@ const CdmRegulationsModule4Section1 = () => {
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-amber-300">Reduction Is Not Enough on Its Own</h3>
+                  <h3 className="font-semibold text-amber-300">
+                    Reduction Is Not Enough on Its Own
+                  </h3>
                 </div>
                 <p className="text-white/80 text-sm">
-                  Reducing a risk is valuable, but it <strong className="text-white">does not remove
-                  the duty to inform</strong>. Wherever a risk has been reduced but not eliminated,
-                  the designer must still communicate the remaining residual risk to those who need to
-                  know. A reduced risk is still a risk, and those managing and carrying out the work
-                  need to be aware of it.
+                  Reducing a risk is valuable, but it{' '}
+                  <strong className="text-white">does not remove the duty to inform</strong>.
+                  Wherever a risk has been reduced but not eliminated, the designer must still
+                  communicate the remaining residual risk to those who need to know. A reduced risk
+                  is still a risk, and those managing and carrying out the work need to be aware of
+                  it.
                 </p>
               </div>
             </div>
@@ -633,11 +637,11 @@ const CdmRegulationsModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                The third tier of the hierarchy requires designers to{" "}
-                <strong>provide information about significant residual risks</strong> that remain after
-                elimination and reduction have been applied. This ensures that those who will build,
-                maintain, or use the structure are aware of the hazards and can plan appropriate
-                control measures.
+                The third tier of the hierarchy requires designers to{' '}
+                <strong>provide information about significant residual risks</strong> that remain
+                after elimination and reduction have been applied. This ensures that those who will
+                build, maintain, or use the structure are aware of the hazards and can plan
+                appropriate control measures.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -648,20 +652,20 @@ const CdmRegulationsModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Design risk register</strong> &mdash; a structured document that records
-                      each significant risk identified, what actions were taken to eliminate or reduce
-                      it, and what residual risk remains. This is shared with the principal designer,
-                      principal contractor, and other designers as appropriate.
+                      <strong>Design risk register</strong> &mdash; a structured document that
+                      records each significant risk identified, what actions were taken to eliminate
+                      or reduce it, and what residual risk remains. This is shared with the
+                      principal designer, principal contractor, and other designers as appropriate.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Information on drawings</strong> &mdash; annotating drawings with safety
-                      information, such as locations of buried services, areas requiring temporary
-                      support during construction, or points where hazardous materials are present.
-                      This puts the information directly where it will be seen by those carrying out
-                      the work.
+                      <strong>Information on drawings</strong> &mdash; annotating drawings with
+                      safety information, such as locations of buried services, areas requiring
+                      temporary support during construction, or points where hazardous materials are
+                      present. This puts the information directly where it will be seen by those
+                      carrying out the work.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -670,16 +674,17 @@ const CdmRegulationsModule4Section1 = () => {
                       <strong>Highlighting unusual or non-obvious risks</strong> &mdash; risks that
                       would not be apparent to a competent contractor must be specifically flagged.
                       For example, a non-standard structural system that requires a specific
-                      demolition sequence, or unusual ground conditions that affect excavation safety.
+                      demolition sequence, or unusual ground conditions that affect excavation
+                      safety.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Health and safety file contributions</strong> &mdash; information about
-                      residual risks that affect future maintenance, refurbishment, or demolition must
-                      be provided for inclusion in the health and safety file maintained by the
-                      principal designer.
+                      <strong>Health and safety file contributions</strong> &mdash; information
+                      about residual risks that affect future maintenance, refurbishment, or
+                      demolition must be provided for inclusion in the health and safety file
+                      maintained by the principal designer.
                     </div>
                   </div>
                 </div>
@@ -694,23 +699,25 @@ const CdmRegulationsModule4Section1 = () => {
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
-                      Do not list <strong className="text-white">every conceivable risk</strong>{" "}
-                      &mdash; focus on significant risks that are not obvious to a competent contractor
+                      Do not list <strong className="text-white">every conceivable risk</strong>{' '}
+                      &mdash; focus on significant risks that are not obvious to a competent
+                      contractor
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
-                      Do not use <strong className="text-white">generic risk assessments</strong>{" "}
-                      copied from other projects &mdash; the information must be specific to the design
+                      Do not use <strong className="text-white">generic risk assessments</strong>{' '}
+                      copied from other projects &mdash; the information must be specific to the
+                      design
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
-                      Do not use the &ldquo;inform&rdquo; step as an <strong className="text-white">
-                      alternative to designing out risks</strong> &mdash; it is the last resort, not
-                      the first response
+                      Do not use the &ldquo;inform&rdquo; step as an{' '}
+                      <strong className="text-white">alternative to designing out risks</strong>{' '}
+                      &mdash; it is the last resort, not the first response
                     </span>
                   </li>
                 </ul>
@@ -785,8 +792,8 @@ const CdmRegulationsModule4Section1 = () => {
               <div className="p-4 text-sm text-white/80">
                 <p>
                   Communicate remaining significant risks to those who need to know &mdash; through
-                  design risk registers, drawing annotations, and the health and safety file. Focus on
-                  unusual, non-obvious, or significant risks.
+                  design risk registers, drawing annotations, and the health and safety file. Focus
+                  on unusual, non-obvious, or significant risks.
                 </p>
               </div>
             </div>
@@ -807,11 +814,11 @@ const CdmRegulationsModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Electrical designers have specific considerations under CDM 2015. Every design decision
-                &mdash; from cable routing to switchroom layout &mdash; can affect the safety of
-                construction workers, maintenance electricians, and building users for decades to come.
-                The designer&rsquo;s hierarchy of eliminate, reduce, and inform applies directly to
-                electrical design.
+                Electrical designers have specific considerations under CDM 2015. Every design
+                decision &mdash; from cable routing to switchroom layout &mdash; can affect the
+                safety of construction workers, maintenance electricians, and building users for
+                decades to come. The designer&rsquo;s hierarchy of eliminate, reduce, and inform
+                applies directly to electrical design.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -822,22 +829,23 @@ const CdmRegulationsModule4Section1 = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Cable routing to avoid future disturbance</strong> &mdash; route cables
-                      so they do not pass through areas likely to be renovated, extended, or subject
-                      to structural alterations. Cables in predictable routes (safe zones, defined
-                      containment) are less likely to be struck during future building work. Avoid
-                      routes through areas where other trades will need to break through floors or
-                      walls.
+                      <strong>Cable routing to avoid future disturbance</strong> &mdash; route
+                      cables so they do not pass through areas likely to be renovated, extended, or
+                      subject to structural alterations. Cables in predictable routes (safe zones,
+                      defined containment) are less likely to be struck during future building work.
+                      Avoid routes through areas where other trades will need to break through
+                      floors or walls.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Isolation points accessibility</strong> &mdash; design isolation points
-                      (main switches, isolators, RCDs) so they are readily accessible without the
-                      need for work at height, confined space entry, or removal of other equipment.
-                      Consider emergency situations where rapid isolation may be needed &mdash; an
-                      isolator behind a locked cupboard at high level is a design failure.
+                      <strong>Isolation points accessibility</strong> &mdash; design isolation
+                      points (main switches, isolators, RCDs) so they are readily accessible without
+                      the need for work at height, confined space entry, or removal of other
+                      equipment. Consider emergency situations where rapid isolation may be needed
+                      &mdash; an isolator behind a locked cupboard at high level is a design
+                      failure.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -845,19 +853,20 @@ const CdmRegulationsModule4Section1 = () => {
                     <div>
                       <strong>Emergency lighting design</strong> &mdash; the design of emergency
                       lighting must consider how luminaires will be tested and maintained throughout
-                      the building&rsquo;s life. Luminaires in double-height spaces, above staircases,
-                      or in difficult-to-reach locations create ongoing work-at-height risks for
-                      maintenance teams. Design for accessible testing and lamp replacement.
+                      the building&rsquo;s life. Luminaires in double-height spaces, above
+                      staircases, or in difficult-to-reach locations create ongoing work-at-height
+                      risks for maintenance teams. Design for accessible testing and lamp
+                      replacement.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Maintenance access for distribution boards</strong> &mdash; distribution
-                      boards must have adequate space for safe working, including space to open doors
-                      fully, stand at a safe distance, and use test instruments. The designer should
-                      consider BS 7671 requirements for accessibility and the practical needs of
-                      electricians who will test and maintain the installation.
+                      <strong>Maintenance access for distribution boards</strong> &mdash;
+                      distribution boards must have adequate space for safe working, including space
+                      to open doors fully, stand at a safe distance, and use test instruments. The
+                      designer should consider BS 7671 requirements for accessibility and the
+                      practical needs of electricians who will test and maintain the installation.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -865,8 +874,8 @@ const CdmRegulationsModule4Section1 = () => {
                     <div>
                       <strong>Switchroom design</strong> &mdash; switchrooms must provide adequate
                       space, ventilation, emergency egress, and fire protection. The layout should
-                      allow safe access to all equipment without requiring personnel to reach over or
-                      behind live equipment. Arc flash risk must be considered in the design of
+                      allow safe access to all equipment without requiring personnel to reach over
+                      or behind live equipment. Arc flash risk must be considered in the design of
                       HV and LV switchgear rooms.
                     </div>
                   </div>
@@ -945,12 +954,12 @@ const CdmRegulationsModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                CDM 2015 places a specific duty on designers to{" "}
-                <strong>cooperate with the principal designer and other designers</strong>. No design
-                exists in isolation &mdash; structural, mechanical, electrical, and architectural
-                designs interact, and a risk eliminated in one discipline can be inadvertently created
-                in another. Effective cooperation ensures that design risks are managed across the
-                whole project.
+                CDM 2015 places a specific duty on designers to{' '}
+                <strong>cooperate with the principal designer and other designers</strong>. No
+                design exists in isolation &mdash; structural, mechanical, electrical, and
+                architectural designs interact, and a risk eliminated in one discipline can be
+                inadvertently created in another. Effective cooperation ensures that design risks
+                are managed across the whole project.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -960,9 +969,9 @@ const CdmRegulationsModule4Section1 = () => {
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <strong>Cooperate with the principal designer (PD)</strong> &mdash; the PD is
-                      responsible for planning, managing, and coordinating the pre-construction phase,
-                      including design. Designers must provide information to the PD and follow their
-                      coordination arrangements.
+                      responsible for planning, managing, and coordinating the pre-construction
+                      phase, including design. Designers must provide information to the PD and
+                      follow their coordination arrangements.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -970,17 +979,17 @@ const CdmRegulationsModule4Section1 = () => {
                     <div>
                       <strong>Cooperate with other designers</strong> &mdash; when your design
                       interfaces with or affects another designer&rsquo;s work, you must share
-                      information about risks and work together to ensure no hazards fall between the
-                      gaps. For example, an electrical designer must coordinate with the structural
-                      engineer about cable penetrations and the mechanical engineer about services
-                      routing.
+                      information about risks and work together to ensure no hazards fall between
+                      the gaps. For example, an electrical designer must coordinate with the
+                      structural engineer about cable penetrations and the mechanical engineer about
+                      services routing.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Share information about risks</strong> &mdash; if your design creates or
-                      identifies a risk that affects another discipline, you must communicate it
+                      <strong>Share information about risks</strong> &mdash; if your design creates
+                      or identifies a risk that affects another discipline, you must communicate it
                       promptly. This includes sharing design risk information, highlighting
                       constraints, and flagging interface issues.
                     </div>
@@ -989,9 +998,9 @@ const CdmRegulationsModule4Section1 = () => {
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <strong>Attend design coordination meetings</strong> &mdash; regular design
-                      coordination meetings (facilitated by the PD) are essential for identifying and
-                      managing cross-discipline risks. Designers must participate actively and raise
-                      safety concerns.
+                      coordination meetings (facilitated by the PD) are essential for identifying
+                      and managing cross-discipline risks. Designers must participate actively and
+                      raise safety concerns.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1014,14 +1023,14 @@ const CdmRegulationsModule4Section1 = () => {
                   </h3>
                 </div>
                 <p className="text-white/80 text-sm">
-                  Electrical installations interact with virtually every other building system. Cable
-                  routes pass through structural elements, electrical plant shares space with
+                  Electrical installations interact with virtually every other building system.
+                  Cable routes pass through structural elements, electrical plant shares space with
                   mechanical equipment, fire alarm designs interface with architectural layouts, and
                   lightning protection systems depend on the structural frame. Without effective
                   coordination, electrical design decisions can create risks for other trades (e.g.
-                  cable penetrations weakening structural members) and other designers&rsquo; decisions
-                  can create risks for electricians (e.g. insufficient space for safe access to
-                  switchgear).
+                  cable penetrations weakening structural members) and other designers&rsquo;
+                  decisions can create risks for electricians (e.g. insufficient space for safe
+                  access to switchgear).
                 </p>
               </div>
             </div>
@@ -1037,7 +1046,7 @@ const CdmRegulationsModule4Section1 = () => {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                CDM 2015 requires that designers must have{" "}
+                CDM 2015 requires that designers must have{' '}
                 <strong>adequate skills, knowledge, and experience</strong> for the work they are
                 undertaking. This is not about holding a specific CDM qualification &mdash; it is
                 about being competent to identify and manage the health and safety risks that arise
@@ -1046,13 +1055,15 @@ const CdmRegulationsModule4Section1 = () => {
 
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="rounded-lg p-3 sm:p-4 bg-blue-500/10 border-l-2 border-l-blue-500/50 border border-blue-500/30">
-                  <p className="font-semibold text-base text-blue-400 mb-2">Competence Requirements</p>
+                  <p className="font-semibold text-base text-blue-400 mb-2">
+                    Competence Requirements
+                  </p>
                   <ul className="text-base text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
-                        <strong>Skills</strong> &mdash; the practical ability to identify hazards and
-                        apply the risk management hierarchy in design
+                        <strong>Skills</strong> &mdash; the practical ability to identify hazards
+                        and apply the risk management hierarchy in design
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -1086,8 +1097,8 @@ const CdmRegulationsModule4Section1 = () => {
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
-                        The aim is <strong>not to eliminate all risk</strong> &mdash; this is neither
-                        possible nor required by law
+                        The aim is <strong>not to eliminate all risk</strong> &mdash; this is
+                        neither possible nor required by law
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
@@ -1118,18 +1129,16 @@ const CdmRegulationsModule4Section1 = () => {
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <Info className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-blue-300">
-                    Professional Judgement Is Key
-                  </h3>
+                  <h3 className="font-semibold text-blue-300">Professional Judgement Is Key</h3>
                 </div>
                 <p className="text-white/80 text-sm">
-                  CDM 2015 deliberately avoids prescriptive requirements for designer competence. The
-                  test is whether the designer has <strong className="text-white">adequate</strong>{" "}
-                  skills, knowledge, and experience for the specific work being done. A designer
-                  working on a minor domestic rewire needs different competence from one designing the
-                  electrical systems for a hospital. The key is that the designer can demonstrate they
-                  have considered health and safety in their design decisions and applied the hierarchy
-                  proportionately.
+                  CDM 2015 deliberately avoids prescriptive requirements for designer competence.
+                  The test is whether the designer has{' '}
+                  <strong className="text-white">adequate</strong> skills, knowledge, and experience
+                  for the specific work being done. A designer working on a minor domestic rewire
+                  needs different competence from one designing the electrical systems for a
+                  hospital. The key is that the designer can demonstrate they have considered health
+                  and safety in their design decisions and applied the hierarchy proportionately.
                 </p>
               </div>
 
@@ -1144,25 +1153,26 @@ const CdmRegulationsModule4Section1 = () => {
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
-                      &ldquo;Proportionate&rdquo; does <strong className="text-white">not</strong>{" "}
-                      mean &ldquo;do nothing&rdquo; &mdash; even small projects have foreseeable risks
-                      that designers must address
+                      &ldquo;Proportionate&rdquo; does <strong className="text-white">not</strong>{' '}
+                      mean &ldquo;do nothing&rdquo; &mdash; even small projects have foreseeable
+                      risks that designers must address
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
-                      &ldquo;Reasonably practicable&rdquo; is <strong className="text-white">not</strong>{" "}
-                      the same as &ldquo;affordable&rdquo; &mdash; cost is one factor, but it must be
-                      grossly disproportionate to the risk before a safety measure can be rejected
+                      &ldquo;Reasonably practicable&rdquo; is{' '}
+                      <strong className="text-white">not</strong> the same as
+                      &ldquo;affordable&rdquo; &mdash; cost is one factor, but it must be grossly
+                      disproportionate to the risk before a safety measure can be rejected
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
                       Competence is <strong className="text-white">not</strong> just about holding
-                      qualifications &mdash; practical experience and awareness of CDM principles are
-                      equally important
+                      qualifications &mdash; practical experience and awareness of CDM principles
+                      are equally important
                     </span>
                   </li>
                 </ul>
@@ -1182,7 +1192,7 @@ const CdmRegulationsModule4Section1 = () => {
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <span>
-                  Regulation 9 requires designers to follow the hierarchy:{" "}
+                  Regulation 9 requires designers to follow the hierarchy:{' '}
                   <strong>eliminate &rarr; reduce &rarr; inform</strong>, taking into account the
                   General Principles of Prevention.
                 </span>
@@ -1198,32 +1208,33 @@ const CdmRegulationsModule4Section1 = () => {
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong>Elimination through design</strong> is the most effective protection because
-                  it permanently removes the hazard rather than relying on controls or information.
+                  <strong>Elimination through design</strong> is the most effective protection
+                  because it permanently removes the hazard rather than relying on controls or
+                  information.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <span>
                   <strong>Electrical designers</strong> have specific CDM considerations including
-                  cable routing, isolation accessibility, emergency lighting maintenance, distribution
-                  board access, and switchroom design.
+                  cable routing, isolation accessibility, emergency lighting maintenance,
+                  distribution board access, and switchroom design.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <span>
-                  Designers must <strong>cooperate with the PD and other designers</strong> to ensure
-                  no gaps exist in risk management across the whole project.
+                  Designers must <strong>cooperate with the PD and other designers</strong> to
+                  ensure no gaps exist in risk management across the whole project.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <span>
-                  Competence is about having adequate <strong>skills, knowledge, and experience</strong>{" "}
-                  &mdash; not holding a specific qualification. Risk management must be{" "}
-                  <strong>proportionate</strong> to the level of risk, exercising professional
-                  judgement.
+                  Competence is about having adequate{' '}
+                  <strong>skills, knowledge, and experience</strong> &mdash; not holding a specific
+                  qualification. Risk management must be <strong>proportionate</strong> to the level
+                  of risk, exercising professional judgement.
                 </span>
               </li>
             </ul>
@@ -1238,10 +1249,7 @@ const CdmRegulationsModule4Section1 = () => {
           </h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0"
-              >
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
                 <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
               </div>
@@ -1251,10 +1259,7 @@ const CdmRegulationsModule4Section1 = () => {
 
         {/* ─── Quiz ─── */}
         <div className="mt-12">
-          <Quiz
-            title="Designers' Duties Quiz"
-            questions={quizQuestions}
-          />
+          <Quiz title="Designers' Duties Quiz" questions={quizQuestions} />
         </div>
 
         {/* ─── Bottom Navigation ─── */}

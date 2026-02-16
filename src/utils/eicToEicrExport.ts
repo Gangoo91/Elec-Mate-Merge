@@ -206,9 +206,10 @@ export function validateEICForExport(eicData: EICFormData): ExportValidation {
   }
 
   // Check for incomplete circuit data
-  const incompleteCircuits = eicData.scheduleOfTests?.filter(circuit =>
-    !circuit.circuitDescription || !circuit.protectiveDeviceRating
-  ) || [];
+  const incompleteCircuits =
+    eicData.scheduleOfTests?.filter(
+      (circuit) => !circuit.circuitDescription || !circuit.protectiveDeviceRating
+    ) || [];
 
   if (incompleteCircuits.length > 0) {
     warnings.push(`${incompleteCircuits.length} circuit(s) have incomplete data`);
@@ -328,7 +329,8 @@ export function transformEICToEICR(eicData: EICFormData): EICRFormData {
     mainBondingSizeCustom: eicData.mainBondingSizeCustom || '',
     mainBondingLocations: '', // EIC doesn't have this
     bondingCompliance: eicData.bondingCompliance || '',
-    supplementaryBondingSize: eicData.supplementaryBondingSize || eicData.supplementaryBonding || '',
+    supplementaryBondingSize:
+      eicData.supplementaryBondingSize || eicData.supplementaryBonding || '',
     supplementaryBondingSizeCustom: eicData.supplementaryBondingSizeCustom || '',
     equipotentialBonding: eicData.equipotentialBonding || '',
 
@@ -388,9 +390,11 @@ export function getExportToEICRSummary(eicData: EICFormData): {
   if (eicData.installationAddress) transferredFields.push('Installation address');
   if (eicData.supplyVoltage) transferredFields.push('Supply voltage');
   if (eicData.phases) transferredFields.push('Number of phases');
-  if (eicData.earthingArrangement || eicData.supplyType) transferredFields.push('Earthing arrangement');
+  if (eicData.earthingArrangement || eicData.supplyType)
+    transferredFields.push('Earthing arrangement');
   if (eicData.mainProtectiveDevice) transferredFields.push('Main protective device');
-  if (eicData.mainBondingSize || eicData.mainBondingConductor) transferredFields.push('Main bonding');
+  if (eicData.mainBondingSize || eicData.mainBondingConductor)
+    transferredFields.push('Main bonding');
   if (eicData.inspectorName) transferredFields.push('Inspector details');
   if (eicData.scheduleOfTests?.length) transferredFields.push('Circuit test data');
 

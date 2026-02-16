@@ -52,10 +52,7 @@ interface ScheduleOfTestsProps {
 /**
  * Main Schedule of Tests component - clean orchestrator
  */
-export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({
-  formData,
-  onUpdate,
-}) => {
+export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({ formData, onUpdate }) => {
   const orientation = useOrientation();
   const useMobileView = orientation.isMobile && !orientation.isLandscape;
 
@@ -69,9 +66,12 @@ export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({
   }, []);
 
   // Save handler
-  const handleSave = useCallback((results: TestResult[]) => {
-    onUpdate('scheduleOfTests', results);
-  }, [onUpdate]);
+  const handleSave = useCallback(
+    (results: TestResult[]) => {
+      onUpdate('scheduleOfTests', results);
+    },
+    [onUpdate]
+  );
 
   // Circuit state management
   const circuitState = useCircuitState({
@@ -129,9 +129,7 @@ export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({
       {/* Progress Dashboard - Mobile Only */}
       {useMobileView && circuitState.testResults.length > 0 && (
         <div className="px-3 pt-3">
-          <ProgressDashboard
-            circuits={circuitState.testResults}
-          />
+          <ProgressDashboard circuits={circuitState.testResults} />
         </div>
       )}
 

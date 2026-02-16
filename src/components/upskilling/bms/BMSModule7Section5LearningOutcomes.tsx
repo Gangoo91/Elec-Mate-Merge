@@ -3,10 +3,10 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule7Section5LearningOutcomes = () => {
   const outcomes = [
-    "Distinguish between pre-functional and functional commissioning",
-    "Explain the types of checks performed at each stage",
+    'Distinguish between pre-functional and functional commissioning',
+    'Explain the types of checks performed at each stage',
     "Recognise the electrician's role in supporting commissioning engineers",
-    "Apply best practices for verifying signals, safety interlocks, and system operation"
+    'Apply best practices for verifying signals, safety interlocks, and system operation',
   ];
 
   return (

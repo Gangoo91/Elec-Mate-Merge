@@ -10,11 +10,14 @@ export const ZoneClassificationSection = () => {
           <MapPin className="h-5 w-5 text-elec-yellow" />
           Zone Classification System
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-elec-yellow text-elec-dark">BS 7671 Section 701</Badge>
+        <Badge variant="secondary" className="w-fit bg-elec-yellow text-elec-dark">
+          BS 7671 Section 701
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          The zone system provides a systematic approach to electrical safety in wet locations by defining areas based on the likelihood of water contact and the associated risk levels.
+          The zone system provides a systematic approach to electrical safety in wet locations by
+          defining areas based on the likelihood of water contact and the associated risk levels.
         </p>
 
         <div className="grid gap-4">
@@ -26,7 +29,10 @@ export const ZoneClassificationSection = () => {
             <div className="space-y-3">
               <div>
                 <h5 className="font-medium text-foreground mb-2">Location:</h5>
-                <p className="text-red-100 text-sm">Interior of bath tub or shower tray. Any area where water accumulates and people may be in direct contact with water.</p>
+                <p className="text-red-100 text-sm">
+                  Interior of bath tub or shower tray. Any area where water accumulates and people
+                  may be in direct contact with water.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Restrictions:</h5>
@@ -48,7 +54,10 @@ export const ZoneClassificationSection = () => {
             <div className="space-y-3">
               <div>
                 <h5 className="font-medium text-foreground mb-2">Location:</h5>
-                <p className="text-orange-100 text-sm">Above Zone 0, up to 2.25m height. Limited by vertical surfaces of bath/shower enclosure or 0.6m from bath/shower edge if no enclosure.</p>
+                <p className="text-orange-100 text-sm">
+                  Above Zone 0, up to 2.25m height. Limited by vertical surfaces of bath/shower
+                  enclosure or 0.6m from bath/shower edge if no enclosure.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Permitted Equipment:</h5>
@@ -70,7 +79,10 @@ export const ZoneClassificationSection = () => {
             <div className="space-y-3">
               <div>
                 <h5 className="font-medium text-foreground mb-2">Location:</h5>
-                <p className="text-yellow-100 text-sm">0.6m horizontal distance from Zone 1 boundary, up to 2.25m height. Areas likely to be wet during normal use.</p>
+                <p className="text-yellow-100 text-sm">
+                  0.6m horizontal distance from Zone 1 boundary, up to 2.25m height. Areas likely to
+                  be wet during normal use.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Permitted Equipment:</h5>
@@ -92,7 +104,10 @@ export const ZoneClassificationSection = () => {
             <div className="space-y-3">
               <div>
                 <h5 className="font-medium text-foreground mb-2">Location:</h5>
-                <p className="text-green-100 text-sm">Beyond Zone 2 boundaries or above 2.25m height. Areas not expected to be subject to water splashing during normal use.</p>
+                <p className="text-green-100 text-sm">
+                  Beyond Zone 2 boundaries or above 2.25m height. Areas not expected to be subject
+                  to water splashing during normal use.
+                </p>
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Requirements:</h5>
@@ -109,7 +124,9 @@ export const ZoneClassificationSection = () => {
 
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
           <h5 className="text-blue-200 font-semibold mb-2">Zone Measurement Guidelines</h5>
-          <p className="text-blue-100 text-sm mb-3">Accurate measurement is critical for compliance. Key principles:</p>
+          <p className="text-blue-100 text-sm mb-3">
+            Accurate measurement is critical for compliance. Key principles:
+          </p>
           <ul className="text-blue-100 text-sm space-y-1">
             <li>• Measure from finished floor level, not structural floor</li>
             <li>• Use the rim of bath/shower as horizontal reference point</li>

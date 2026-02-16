@@ -1,4 +1,4 @@
-import PublicSignatureView from "@/components/signature/PublicSignatureView";
+import PublicSignatureView from '@/components/signature/PublicSignatureView';
 
 const PublicSignature = () => {
   return <PublicSignatureView />;

@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 // Types
 export interface CompanyTool {
@@ -46,8 +46,10 @@ export function useCompanyTools() {
   return useQuery({
     queryKey: ['company-tools'],
     queryFn: async (): Promise<CompanyTool[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
         .from('employer_company_tools')
@@ -134,15 +136,15 @@ export function useCreateTool() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['company-tools'] });
       toast({
-        title: "Tool Added",
-        description: "The equipment has been added to the inventory.",
+        title: 'Tool Added',
+        description: 'The equipment has been added to the inventory.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -154,7 +156,13 @@ export function useUpdateTool() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: UpdateToolData }): Promise<CompanyTool> => {
+    mutationFn: async ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: UpdateToolData;
+    }): Promise<CompanyTool> => {
       const { data: result, error } = await supabase
         .from('employer_company_tools')
         .update(data)
@@ -169,15 +177,15 @@ export function useUpdateTool() {
       queryClient.invalidateQueries({ queryKey: ['company-tools'] });
       queryClient.invalidateQueries({ queryKey: ['company-tools', id] });
       toast({
-        title: "Tool Updated",
-        description: "The equipment details have been updated.",
+        title: 'Tool Updated',
+        description: 'The equipment details have been updated.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -190,25 +198,22 @@ export function useDeleteTool() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from('employer_company_tools')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('employer_company_tools').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['company-tools'] });
       toast({
-        title: "Tool Removed",
-        description: "The equipment has been removed from the inventory.",
+        title: 'Tool Removed',
+        description: 'The equipment has been removed from the inventory.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -220,7 +225,12 @@ export function useUpdateToolStatus() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, status, assignedTo, assignedToEmployeeId }: {
+    mutationFn: async ({
+      id,
+      status,
+      assignedTo,
+      assignedToEmployeeId,
+    }: {
       id: string;
       status: string;
       assignedTo?: string;
@@ -228,7 +238,8 @@ export function useUpdateToolStatus() {
     }): Promise<CompanyTool> => {
       const updates: any = { status };
       if (assignedTo !== undefined) updates.assigned_to = assignedTo;
-      if (assignedToEmployeeId !== undefined) updates.assigned_to_employee_id = assignedToEmployeeId;
+      if (assignedToEmployeeId !== undefined)
+        updates.assigned_to_employee_id = assignedToEmployeeId;
 
       const { data, error } = await supabase
         .from('employer_company_tools')
@@ -243,15 +254,15 @@ export function useUpdateToolStatus() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['company-tools'] });
       toast({
-        title: "Status Updated",
-        description: "Tool status has been updated.",
+        title: 'Status Updated',
+        description: 'Tool status has been updated.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -263,7 +274,12 @@ export function useLogService() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, serviceType, date, nextDue }: {
+    mutationFn: async ({
+      id,
+      serviceType,
+      date,
+      nextDue,
+    }: {
       id: string;
       serviceType: 'calibration' | 'pat';
       date: string;
@@ -292,15 +308,15 @@ export function useLogService() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['company-tools'] });
       toast({
-        title: "Service Logged",
-        description: "Service record has been updated.",
+        title: 'Service Logged',
+        description: 'Service record has been updated.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -314,19 +330,19 @@ export function useToolStats() {
   const thirtyDaysFromNow = new Date();
   thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
 
-  const toolsDuePAT = tools.filter(t => {
+  const toolsDuePAT = tools.filter((t) => {
     if (!t.pat_due) return false;
     const dueDate = new Date(t.pat_due);
     return dueDate > now && dueDate <= thirtyDaysFromNow;
   }).length;
 
-  const toolsDueCalibration = tools.filter(t => {
+  const toolsDueCalibration = tools.filter((t) => {
     if (!t.next_calibration) return false;
     const dueDate = new Date(t.next_calibration);
     return dueDate > now && dueDate <= thirtyDaysFromNow;
   }).length;
 
-  const toolsOverdue = tools.filter(t => {
+  const toolsOverdue = tools.filter((t) => {
     const patOverdue = t.pat_due && new Date(t.pat_due) < now;
     const calOverdue = t.next_calibration && new Date(t.next_calibration) < now;
     return patOverdue || calOverdue;
@@ -334,10 +350,10 @@ export function useToolStats() {
 
   return {
     total: tools.length,
-    available: tools.filter(t => t.status === 'Available').length,
-    inUse: tools.filter(t => t.status === 'In Use').length,
-    onHire: tools.filter(t => t.status === 'On Hire').length,
-    underRepair: tools.filter(t => t.status === 'Under Repair').length,
+    available: tools.filter((t) => t.status === 'Available').length,
+    inUse: tools.filter((t) => t.status === 'In Use').length,
+    onHire: tools.filter((t) => t.status === 'On Hire').length,
+    underRepair: tools.filter((t) => t.status === 'Under Repair').length,
     toolsDuePAT,
     toolsDueCalibration,
     toolsDue: toolsDuePAT + toolsDueCalibration,
@@ -350,6 +366,6 @@ export function useToolStats() {
 export function useToolCategories() {
   const { data: tools = [] } = useCompanyTools();
 
-  const categories = [...new Set(tools.map(t => t.category))].sort();
+  const categories = [...new Set(tools.map((t) => t.category))].sort();
   return categories;
 }

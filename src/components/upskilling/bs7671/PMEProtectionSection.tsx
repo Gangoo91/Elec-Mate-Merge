@@ -10,17 +10,21 @@ export const PMEProtectionSection = () => {
           <Shield className="h-5 w-5 text-elec-yellow" />
           PME and PEN Conductor Protection
         </CardTitle>
-        <Badge variant="secondary" className="w-fit bg-red-600 text-foreground">Regulation 722.411.4.1</Badge>
+        <Badge variant="secondary" className="w-fit bg-red-600 text-foreground">
+          Regulation 722.411.4.1
+        </Badge>
       </CardHeader>
       <CardContent className="text-foreground space-y-6">
         <p>
-          Protective Multiple Earthing (PME) systems present unique challenges for EV charging installations due to the risk of PEN conductor failure and the potential for exported voltages to vehicle chassis and connected metalwork.
+          Protective Multiple Earthing (PME) systems present unique challenges for EV charging
+          installations due to the risk of PEN conductor failure and the potential for exported
+          voltages to vehicle chassis and connected metalwork.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <h4 className="font-semibold text-elec-yellow">PEN Conductor Risks</h4>
-            
+
             <div className="bg-elec-dark p-4 rounded border border-red-600">
               <h5 className="font-medium text-red-300 mb-3">Failure Scenarios</h5>
               <ul className="text-red-100 text-sm space-y-1">
@@ -47,7 +51,7 @@ export const PMEProtectionSection = () => {
 
           <div className="space-y-4">
             <h4 className="font-semibold text-elec-yellow">Protection Methods</h4>
-            
+
             <div className="bg-elec-dark p-4 rounded border border-green-600">
               <h5 className="font-medium text-green-300 mb-3">Additional Earth Electrode</h5>
               <ul className="text-green-100 text-sm space-y-1">
@@ -75,7 +79,8 @@ export const PMEProtectionSection = () => {
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
           <h5 className="text-blue-200 font-semibold mb-3">Enhanced Protective Bonding</h5>
           <p className="text-blue-100 text-sm mb-3">
-            EV charging installations may require enhanced main protective bonding to reduce touch voltages during PEN faults:
+            EV charging installations may require enhanced main protective bonding to reduce touch
+            voltages during PEN faults:
           </p>
           <div className="grid md:grid-cols-2 gap-4">
             <div>

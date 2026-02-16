@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,12 +8,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { ShieldAlert, Loader2 } from "lucide-react";
-import { peerBlockService } from "@/services/peerSupportService";
-import { toast } from "@/hooks/use-toast";
+} from '@/components/ui/alert-dialog';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { ShieldAlert, Loader2 } from 'lucide-react';
+import { peerBlockService } from '@/services/peerSupportService';
+import { toast } from '@/hooks/use-toast';
 
 interface BlockUserDialogProps {
   open: boolean;
@@ -29,7 +29,7 @@ export function BlockUserDialog({
   open,
   onOpenChange,
   userId,
-  userName = "this user",
+  userName = 'this user',
   onBlocked,
   onAlsoReport,
 }: BlockUserDialogProps) {
@@ -41,7 +41,7 @@ export function BlockUserDialog({
     try {
       await peerBlockService.blockUser(userId);
       toast({
-        title: "User blocked",
+        title: 'User blocked',
         description: `${userName} has been blocked. You won't see messages from them anymore.`,
       });
       onOpenChange(false);
@@ -52,11 +52,11 @@ export function BlockUserDialog({
         setTimeout(() => onAlsoReport(), 200);
       }
     } catch (error) {
-      console.error("Error blocking user:", error);
+      console.error('Error blocking user:', error);
       toast({
-        title: "Failed to block user",
-        description: "Please try again later",
-        variant: "destructive",
+        title: 'Failed to block user',
+        description: 'Please try again later',
+        variant: 'destructive',
       });
     } finally {
       setIsBlocking(false);
@@ -70,9 +70,7 @@ export function BlockUserDialog({
           <div className="mx-auto mb-2 p-3 rounded-full bg-red-500/10">
             <ShieldAlert className="h-6 w-6 text-red-500" />
           </div>
-          <AlertDialogTitle className="text-center">
-            Block {userName}?
-          </AlertDialogTitle>
+          <AlertDialogTitle className="text-center">Block {userName}?</AlertDialogTitle>
           <AlertDialogDescription className="text-center">
             Blocking will:
             <ul className="mt-2 text-left space-y-1 text-sm">
@@ -89,18 +87,13 @@ export function BlockUserDialog({
             checked={alsoReport}
             onCheckedChange={(checked) => setAlsoReport(checked === true)}
           />
-          <Label
-            htmlFor="also-report"
-            className="text-sm text-muted-foreground cursor-pointer"
-          >
+          <Label htmlFor="also-report" className="text-sm text-muted-foreground cursor-pointer">
             Also report this user to admins
           </Label>
         </div>
 
         <AlertDialogFooter className="flex-col sm:flex-row gap-2">
-          <AlertDialogCancel className="w-full sm:w-auto">
-            Cancel
-          </AlertDialogCancel>
+          <AlertDialogCancel className="w-full sm:w-auto">Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleBlock}
             disabled={isBlocking}
@@ -112,7 +105,7 @@ export function BlockUserDialog({
                 Blocking...
               </>
             ) : (
-              "Block User"
+              'Block User'
             )}
           </AlertDialogAction>
         </AlertDialogFooter>

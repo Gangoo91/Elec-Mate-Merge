@@ -3,7 +3,7 @@ import { bmsModule5Section5QuizData } from '@/data/upskilling/bmsModule5Section5
 
 export const BMSModule5Section5Quiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={bmsModule5Section5QuizData}
       title="Section 5 Quiz: Gateways and Interoperability Between Protocols"
     />

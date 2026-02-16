@@ -74,43 +74,82 @@ export function ProgressDashboard() {
           <div className="grid grid-cols-4 gap-2">
             <div className="text-center p-2 rounded-lg bg-white/[0.03]">
               <div className="text-sm font-bold text-elec-yellow">{quizStats.totalQuizzes}</div>
-              <div className="text-[10px] text-white/90">Quizzes</div>
+              <div className="text-[10px] text-white">Quizzes</div>
             </div>
             <div className="text-center p-2 rounded-lg bg-white/[0.03]">
               <div className="text-sm font-bold text-blue-400">{totalMasteredCards}</div>
-              <div className="text-[10px] text-white/90">Cards</div>
+              <div className="text-[10px] text-white">Cards</div>
             </div>
             <div className="text-center p-2 rounded-lg bg-white/[0.03]">
               <div className="text-sm font-bold text-green-400">{ojtHours.logged}h</div>
-              <div className="text-[10px] text-white/90">OJT</div>
+              <div className="text-[10px] text-white">OJT</div>
             </div>
             <div className="text-center p-2 rounded-lg bg-white/[0.03]">
               <div className="text-sm font-bold text-orange-400">{streak.currentStreak}</div>
-              <div className="text-[10px] text-white/90">Streak</div>
+              <div className="text-[10px] text-white">Streak</div>
             </div>
           </div>
 
           {/* Progress Breakdown */}
           <div className="space-y-2 mt-4 pt-3 border-t border-white/[0.06]">
             {[
-              { label: 'Quizzes', value: Math.round(componentScores.quizScore), weight: '25%', colour: 'bg-elec-yellow' },
-              { label: 'Flashcards', value: Math.round(componentScores.flashcardScore), weight: '15%', colour: 'bg-blue-400' },
-              { label: 'OJT Hours', value: Math.round(componentScores.ojtScore), weight: '15%', colour: 'bg-cyan-400' },
-              { label: 'Portfolio ACs', value: Math.round(componentScores.portfolioScore), weight: '15%', colour: 'bg-green-400' },
-              { label: 'KSBs', value: Math.round(componentScores.ksbScore), weight: '10%', colour: 'bg-purple-400' },
-              { label: 'Study Streak', value: Math.round(componentScores.streakScore), weight: '10%', colour: 'bg-orange-400' },
-              { label: 'EPA Readiness', value: Math.round(componentScores.epaScore), weight: '10%', colour: 'bg-pink-400' },
+              {
+                label: 'Quizzes',
+                value: Math.round(componentScores.quizScore),
+                weight: '25%',
+                colour: 'bg-elec-yellow',
+              },
+              {
+                label: 'Flashcards',
+                value: Math.round(componentScores.flashcardScore),
+                weight: '15%',
+                colour: 'bg-blue-400',
+              },
+              {
+                label: 'OJT Hours',
+                value: Math.round(componentScores.ojtScore),
+                weight: '15%',
+                colour: 'bg-cyan-400',
+              },
+              {
+                label: 'Portfolio ACs',
+                value: Math.round(componentScores.portfolioScore),
+                weight: '15%',
+                colour: 'bg-green-400',
+              },
+              {
+                label: 'KSBs',
+                value: Math.round(componentScores.ksbScore),
+                weight: '10%',
+                colour: 'bg-purple-400',
+              },
+              {
+                label: 'Study Streak',
+                value: Math.round(componentScores.streakScore),
+                weight: '10%',
+                colour: 'bg-orange-400',
+              },
+              {
+                label: 'EPA Readiness',
+                value: Math.round(componentScores.epaScore),
+                weight: '10%',
+                colour: 'bg-pink-400',
+              },
             ].map((item) => (
               <div key={item.label} className="flex items-center gap-2">
-                <span className="text-[11px] text-white/70 w-24 shrink-0 truncate">{item.label}</span>
+                <span className="text-[11px] text-white w-24 shrink-0 truncate">
+                  {item.label}
+                </span>
                 <div className="flex-1 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                   <div
                     className={`h-full ${item.colour} rounded-full transition-all duration-500`}
                     style={{ width: `${item.value}%` }}
                   />
                 </div>
-                <span className="text-[11px] text-white/90 w-8 text-right tabular-nums">{item.value}%</span>
-                <span className="text-[10px] text-white/60 w-7 text-right">{item.weight}</span>
+                <span className="text-[11px] text-white w-8 text-right tabular-nums">
+                  {item.value}%
+                </span>
+                <span className="text-[10px] text-white w-7 text-right">{item.weight}</span>
               </div>
             ))}
           </div>
@@ -142,11 +181,13 @@ export function ProgressDashboard() {
             <div className="flex items-end gap-4">
               <div className="flex-1">
                 <div className="text-3xl font-bold text-white">{ojtHours.logged}</div>
-                <div className="text-sm text-white/90">of {ojtHours.target.toLocaleString()} hours</div>
+                <div className="text-sm text-white">
+                  of {ojtHours.target.toLocaleString()} hours
+                </div>
               </div>
               <div className="text-right">
                 <div className="text-2xl font-bold text-cyan-400">{ojtHours.percentComplete}%</div>
-                <div className="text-xs text-white/70">complete</div>
+                <div className="text-xs text-white">complete</div>
               </div>
             </div>
 
@@ -177,7 +218,7 @@ export function ProgressDashboard() {
                 style={{ width: `${(getUnlockedCount() / getTotalCount()) * 100}%` }}
               />
             </div>
-            <p className="text-xs text-white/70 mt-2">
+            <p className="text-xs text-white mt-2">
               {getUnlockedCount() === 0
                 ? 'Start learning to unlock achievements'
                 : `${getTotalCount() - getUnlockedCount()} achievements remaining`}

@@ -107,7 +107,7 @@ export const triggerConfetti = (): void => {
   // Simple confetti effect using CSS animations
   const colors = ['#f97316', '#fb923c', '#fdba74'];
   const particleCount = 50;
-  
+
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
     particle.style.position = 'fixed';
@@ -120,27 +120,30 @@ export const triggerConfetti = (): void => {
     particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
     particle.style.zIndex = '9999';
     particle.style.pointerEvents = 'none';
-    
+
     document.body.appendChild(particle);
-    
+
     const duration = 2000 + Math.random() * 1000;
     const rotation = Math.random() * 360;
     const xMovement = (Math.random() - 0.5) * 200;
-    
-    particle.animate([
-      { 
-        transform: `translateY(0) translateX(0) rotate(0deg)`,
-        opacity: 1 
-      },
-      { 
-        transform: `translateY(${window.innerHeight}px) translateX(${xMovement}px) rotate(${rotation}deg)`,
-        opacity: 0 
+
+    particle.animate(
+      [
+        {
+          transform: `translateY(0) translateX(0) rotate(0deg)`,
+          opacity: 1,
+        },
+        {
+          transform: `translateY(${window.innerHeight}px) translateX(${xMovement}px) rotate(${rotation}deg)`,
+          opacity: 0,
+        },
+      ],
+      {
+        duration,
+        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
       }
-    ], {
-      duration,
-      easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-    });
-    
+    );
+
     setTimeout(() => {
       particle.remove();
     }, duration);

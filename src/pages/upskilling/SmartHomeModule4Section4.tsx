@@ -1,80 +1,128 @@
-import { ArrowLeft, ArrowRight, Calendar, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Calendar, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Schedule vs AI Learning Control";
-const DESCRIPTION = "Compare traditional scheduled heating control with modern AI-based learning systems, understanding when each approach offers the best results for different households.";
+const TITLE = 'Schedule vs AI Learning Control';
+const DESCRIPTION =
+  'Compare traditional scheduled heating control with modern AI-based learning systems, understanding when each approach offers the best results for different households.';
 
 const quickCheckQuestions = [
   {
-    question: "What is the main limitation of schedule-based heating control?",
-    options: ["It uses more electricity", "It cannot adapt to changing routines", "It requires Wi-Fi connection", "It only works with gas boilers"],
+    question: 'What is the main limitation of schedule-based heating control?',
+    options: [
+      'It uses more electricity',
+      'It cannot adapt to changing routines',
+      'It requires Wi-Fi connection',
+      'It only works with gas boilers',
+    ],
     correctAnswer: 1,
-    explanation: "Schedule-based control follows fixed time programmes and cannot automatically adapt when occupancy patterns change. Manual reprogramming is required for any routine changes."
+    explanation:
+      'Schedule-based control follows fixed time programmes and cannot automatically adapt when occupancy patterns change. Manual reprogramming is required for any routine changes.',
   },
   {
-    question: "How does AI learning control detect occupancy patterns?",
-    options: ["Through manual input only", "By analysing historical usage and sensor data", "By reading calendar appointments only", "It cannot detect patterns"],
+    question: 'How does AI learning control detect occupancy patterns?',
+    options: [
+      'Through manual input only',
+      'By analysing historical usage and sensor data',
+      'By reading calendar appointments only',
+      'It cannot detect patterns',
+    ],
     correctAnswer: 1,
-    explanation: "AI learning systems analyse patterns in thermostat adjustments, sensor data, and sometimes smartphone location to understand when the home is typically occupied and adjust heating accordingly."
+    explanation:
+      'AI learning systems analyse patterns in thermostat adjustments, sensor data, and sometimes smartphone location to understand when the home is typically occupied and adjust heating accordingly.',
   },
   {
-    question: "Which household would benefit most from schedule-based control?",
-    options: ["Shift workers with irregular hours", "Retired couple with predictable routine", "Family with unpredictable activities", "Student with variable timetable"],
+    question: 'Which household would benefit most from schedule-based control?',
+    options: [
+      'Shift workers with irregular hours',
+      'Retired couple with predictable routine',
+      'Family with unpredictable activities',
+      'Student with variable timetable',
+    ],
     correctAnswer: 1,
-    explanation: "Households with highly predictable routines, such as retired couples who are home at the same times each day, can achieve excellent results with simple scheduled control."
-  }
+    explanation:
+      'Households with highly predictable routines, such as retired couples who are home at the same times each day, can achieve excellent results with simple scheduled control.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "What feature allows AI thermostats to heat the home before you arrive?",
-    options: ["Weather forecasting", "Geofencing combined with learning", "Timer boost", "Manual pre-heat"],
+    question: 'What feature allows AI thermostats to heat the home before you arrive?',
+    options: [
+      'Weather forecasting',
+      'Geofencing combined with learning',
+      'Timer boost',
+      'Manual pre-heat',
+    ],
     correctAnswer: 1,
-    explanation: "AI thermostats combine geofencing (smartphone location tracking) with learned heating times to begin heating when you are heading home, so the property reaches temperature as you arrive."
+    explanation:
+      'AI thermostats combine geofencing (smartphone location tracking) with learned heating times to begin heating when you are heading home, so the property reaches temperature as you arrive.',
   },
   {
     question: "What is 'optimum start' in smart heating systems?",
-    options: ["Starting heating at the cheapest electricity time", "Calculating when to start heating to reach temperature at the desired time", "Running heating at maximum for faster warmup", "Starting all zones simultaneously"],
+    options: [
+      'Starting heating at the cheapest electricity time',
+      'Calculating when to start heating to reach temperature at the desired time',
+      'Running heating at maximum for faster warmup',
+      'Starting all zones simultaneously',
+    ],
     correctAnswer: 1,
-    explanation: "Optimum start calculates how long the property takes to heat up based on indoor/outdoor temperatures and starts heating early enough to reach the target temperature at the scheduled time."
+    explanation:
+      'Optimum start calculates how long the property takes to heat up based on indoor/outdoor temperatures and starts heating early enough to reach the target temperature at the scheduled time.',
   },
   {
-    question: "What might cause an AI learning thermostat to heat an empty home?",
-    options: ["Sensor malfunction", "Still learning during the training period", "Power outage", "Low battery"],
+    question: 'What might cause an AI learning thermostat to heat an empty home?',
+    options: [
+      'Sensor malfunction',
+      'Still learning during the training period',
+      'Power outage',
+      'Low battery',
+    ],
     correctAnswer: 1,
-    explanation: "AI thermostats need time to learn patterns (typically 1-2 weeks). During this period, they may heat unnecessarily until they have enough data to predict occupancy accurately."
+    explanation:
+      'AI thermostats need time to learn patterns (typically 1-2 weeks). During this period, they may heat unnecessarily until they have enough data to predict occupancy accurately.',
   },
   {
-    question: "For a household with highly irregular routines, which approach is most energy efficient?",
-    options: ["Fixed daily schedule", "AI learning with geofencing", "Manual control only", "Continuous heating at low temperature"],
+    question:
+      'For a household with highly irregular routines, which approach is most energy efficient?',
+    options: [
+      'Fixed daily schedule',
+      'AI learning with geofencing',
+      'Manual control only',
+      'Continuous heating at low temperature',
+    ],
     correctAnswer: 1,
-    explanation: "Irregular routines benefit most from AI learning combined with geofencing, which responds to actual occupancy rather than trying to predict unpredictable schedules."
+    explanation:
+      'Irregular routines benefit most from AI learning combined with geofencing, which responds to actual occupancy rather than trying to predict unpredictable schedules.',
   },
   {
-    question: "What is the typical learning period for AI-based thermostats?",
-    options: ["1-2 hours", "1-2 weeks", "6-12 months", "They learn instantly"],
+    question: 'What is the typical learning period for AI-based thermostats?',
+    options: ['1-2 hours', '1-2 weeks', '6-12 months', 'They learn instantly'],
     correctAnswer: 1,
-    explanation: "Most AI thermostats need 1-2 weeks to observe patterns and optimise heating schedules. During this period, they may behave less efficiently until learning is complete."
-  }
+    explanation:
+      'Most AI thermostats need 1-2 weeks to observe patterns and optimise heating schedules. During this period, they may behave less efficiently until learning is complete.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I override AI learning when needed?",
-    answer: "Yes. All AI thermostats allow manual overrides. You can boost heating, adjust temperatures, or switch to away mode at any time. The AI learns from these adjustments, so consistent overrides will be incorporated into future predictions."
+    question: 'Can I override AI learning when needed?',
+    answer:
+      'Yes. All AI thermostats allow manual overrides. You can boost heating, adjust temperatures, or switch to away mode at any time. The AI learns from these adjustments, so consistent overrides will be incorporated into future predictions.',
   },
   {
-    question: "Does AI learning work with multiple occupants?",
-    answer: "Most systems can track multiple smartphones for geofencing, switching to away mode only when all registered devices have left. Some advanced systems learn individual preferences and adjust heating based on which occupants are home."
+    question: 'Does AI learning work with multiple occupants?',
+    answer:
+      'Most systems can track multiple smartphones for geofencing, switching to away mode only when all registered devices have left. Some advanced systems learn individual preferences and adjust heating based on which occupants are home.',
   },
   {
-    question: "What happens if the internet goes down?",
-    answer: "AI thermostats store learned schedules locally, so basic heating control continues without internet. However, geofencing, remote access, and real-time learning features require connectivity. Most systems fall back to the last learned schedule."
-  }
+    question: 'What happens if the internet goes down?',
+    answer:
+      'AI thermostats store learned schedules locally, so basic heating control continues without internet. However, geofencing, remote access, and real-time learning features require connectivity. Most systems fall back to the last learned schedule.',
+  },
 ];
 
 const SmartHomeModule4Section4 = () => {
@@ -117,7 +165,9 @@ const SmartHomeModule4Section4 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-sm font-medium text-elec-yellow mb-1">Key Focus</p>
-            <p className="text-white text-sm">Comparing control strategies for different lifestyles</p>
+            <p className="text-white text-sm">
+              Comparing control strategies for different lifestyles
+            </p>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-sm font-medium text-elec-yellow mb-1">Practical Skill</p>
@@ -133,11 +183,11 @@ const SmartHomeModule4Section4 = () => {
           </h2>
           <ul className="space-y-3">
             {[
-              "Explain the operation of schedule-based and AI learning control",
-              "Compare energy efficiency of different control approaches",
-              "Match control strategies to household types and lifestyles",
-              "Configure and optimise both scheduled and learning systems",
-              "Advise customers on realistic expectations for each approach"
+              'Explain the operation of schedule-based and AI learning control',
+              'Compare energy efficiency of different control approaches',
+              'Match control strategies to household types and lifestyles',
+              'Configure and optimise both scheduled and learning systems',
+              'Advise customers on realistic expectations for each approach',
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3 text-white">
                 <CheckCircle className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
@@ -154,17 +204,16 @@ const SmartHomeModule4Section4 = () => {
             Schedule-Based Control
           </h2>
           <p className="text-white mb-4">
-            Traditional programmable thermostats and many smart thermostats offer
-            schedule-based control, where heating times and temperatures are set
-            manually for each day of the week.
+            Traditional programmable thermostats and many smart thermostats offer schedule-based
+            control, where heating times and temperatures are set manually for each day of the week.
           </p>
           <div className="space-y-3 mb-4">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">How It Works</h4>
               <p className="text-white text-sm">
-                Users programme specific on/off times and target temperatures for
-                each day. The thermostat follows this schedule regardless of actual
-                occupancy, switching heating on and off at the programmed times.
+                Users programme specific on/off times and target temperatures for each day. The
+                thermostat follows this schedule regardless of actual occupancy, switching heating
+                on and off at the programmed times.
               </p>
             </div>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -198,9 +247,8 @@ const SmartHomeModule4Section4 = () => {
             AI Learning Control
           </h2>
           <p className="text-white mb-4">
-            Modern smart thermostats use machine learning algorithms to automatically
-            create and adjust heating schedules based on observed behaviour and
-            additional data sources.
+            Modern smart thermostats use machine learning algorithms to automatically create and
+            adjust heating schedules based on observed behaviour and additional data sources.
           </p>
           <div className="space-y-4 mb-4">
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -217,20 +265,20 @@ const SmartHomeModule4Section4 = () => {
               <h4 className="font-medium text-elec-yellow mb-2">Key Features</h4>
               <ul className="text-white text-sm space-y-2">
                 <li>
-                  <span className="font-medium">Auto-scheduling:</span> Creates heating
-                  schedule based on observed patterns
+                  <span className="font-medium">Auto-scheduling:</span> Creates heating schedule
+                  based on observed patterns
                 </li>
                 <li>
                   <span className="font-medium">Geofencing:</span> Detects when occupants
                   leave/return and adjusts accordingly
                 </li>
                 <li>
-                  <span className="font-medium">Optimum start:</span> Calculates when to
-                  start heating to reach temperature at the right time
+                  <span className="font-medium">Optimum start:</span> Calculates when to start
+                  heating to reach temperature at the right time
                 </li>
                 <li>
-                  <span className="font-medium">Weather adaptation:</span> Adjusts for
-                  outdoor conditions and forecasts
+                  <span className="font-medium">Weather adaptation:</span> Adjusts for outdoor
+                  conditions and forecasts
                 </li>
               </ul>
             </div>
@@ -294,15 +342,15 @@ const SmartHomeModule4Section4 = () => {
             Matching to Household Types
           </h2>
           <p className="text-white mb-4">
-            The best control approach depends on household occupancy patterns and
-            user preferences. Here is guidance for common scenarios.
+            The best control approach depends on household occupancy patterns and user preferences.
+            Here is guidance for common scenarios.
           </p>
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">Regular 9-5 Workers</h4>
               <p className="text-white text-sm">
-                <span className="font-medium">Best fit:</span> Either approach works well.
-                Schedule is simple and effective. AI adds optimum start and holiday detection.
+                <span className="font-medium">Best fit:</span> Either approach works well. Schedule
+                is simple and effective. AI adds optimum start and holiday detection.
               </p>
             </div>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -316,25 +364,25 @@ const SmartHomeModule4Section4 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">Work from Home</h4>
               <p className="text-white text-sm">
-                <span className="font-medium">Best fit:</span> Schedule with daytime heating,
-                or AI with presence detection. Key is ensuring daytime comfort without
-                overheating during breaks away from desk.
+                <span className="font-medium">Best fit:</span> Schedule with daytime heating, or AI
+                with presence detection. Key is ensuring daytime comfort without overheating during
+                breaks away from desk.
               </p>
             </div>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">Retired / Home Most of Day</h4>
               <p className="text-white text-sm">
                 <span className="font-medium">Best fit:</span> Simple schedule often sufficient.
-                Consistent routines mean AI learning offers minimal advantage. Focus on
-                zoning to heat occupied rooms only.
+                Consistent routines mean AI learning offers minimal advantage. Focus on zoning to
+                heat occupied rooms only.
               </p>
             </div>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h4 className="font-medium text-elec-yellow mb-2">Second Home / Holiday Let</h4>
               <p className="text-white text-sm">
-                <span className="font-medium">Best fit:</span> Remote access essential.
-                AI learning not useful due to irregular occupancy. Remote scheduling
-                and manual control before visits works best.
+                <span className="font-medium">Best fit:</span> Remote access essential. AI learning
+                not useful due to irregular occupancy. Remote scheduling and manual control before
+                visits works best.
               </p>
             </div>
           </div>
@@ -347,27 +395,27 @@ const SmartHomeModule4Section4 = () => {
             Energy Efficiency Comparison
           </h2>
           <p className="text-white mb-4">
-            Energy savings depend more on how well the control matches actual
-            occupancy than on the technology itself.
+            Energy savings depend more on how well the control matches actual occupancy than on the
+            technology itself.
           </p>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 mb-4">
             <h4 className="font-medium text-elec-yellow mb-2">Typical Savings Claims</h4>
             <p className="text-white text-sm mb-2">
-              Manufacturers often claim 10-30% savings from smart thermostats. However,
-              these figures compare against no controls or poorly programmed schedules.
-              A well-programmed schedule can be equally efficient for predictable households.
+              Manufacturers often claim 10-30% savings from smart thermostats. However, these
+              figures compare against no controls or poorly programmed schedules. A well-programmed
+              schedule can be equally efficient for predictable households.
             </p>
             <p className="text-white text-sm">
-              The real benefit of AI learning is convenience and adaptation - maintaining
-              efficiency without manual intervention when routines change.
+              The real benefit of AI learning is convenience and adaptation - maintaining efficiency
+              without manual intervention when routines change.
             </p>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-white text-sm">
-              <span className="text-elec-yellow font-medium">Installer advice:</span> Set
-              realistic expectations. Smart thermostats optimise heating, but actual
-              savings depend on building efficiency, occupancy patterns, and previous
-              heating behaviour. The biggest savings come from not heating empty homes.
+              <span className="text-elec-yellow font-medium">Installer advice:</span> Set realistic
+              expectations. Smart thermostats optimise heating, but actual savings depend on
+              building efficiency, occupancy patterns, and previous heating behaviour. The biggest
+              savings come from not heating empty homes.
             </p>
           </div>
         </section>
@@ -390,11 +438,7 @@ const SmartHomeModule4Section4 = () => {
 
         {/* Section Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Section 4 Knowledge Check"
-            questions={quizQuestions}
-            passingScore={80}
-          />
+          <Quiz title="Section 4 Knowledge Check" questions={quizQuestions} passingScore={80} />
         </section>
 
         {/* Navigation */}

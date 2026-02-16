@@ -1,6 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, Receipt, ClipboardCheck, IdCard, ChevronRight, CheckCircle, AlertCircle } from 'lucide-react';
+import {
+  FileText,
+  Receipt,
+  ClipboardCheck,
+  IdCard,
+  ChevronRight,
+  CheckCircle,
+  AlertCircle,
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface ProfileFooterProps {
@@ -81,7 +89,9 @@ const ProfileFooter: React.FC<ProfileFooterProps> = ({
               whileTap={{ scale: 0.98 }}
               className={`w-full flex items-center gap-3 px-4 py-3 active:bg-white/[0.04] transition-colors touch-manipulation text-left ${!isLast ? 'border-b border-white/[0.04]' : ''}`}
             >
-              <div className={`w-8 h-8 rounded-lg ${item.iconBg} flex items-center justify-center flex-shrink-0`}>
+              <div
+                className={`w-8 h-8 rounded-lg ${item.iconBg} flex items-center justify-center flex-shrink-0`}
+              >
                 <Icon className={`h-4 w-4 ${item.iconColor}`} />
               </div>
 

@@ -1,7 +1,7 @@
-import { Menu, ArrowLeft, Briefcase, Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { NotificationBell } from "./NotificationBell";
-import { cn } from "@/lib/utils";
+import { Menu, ArrowLeft, Briefcase, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { NotificationBell } from './NotificationBell';
+import { cn } from '@/lib/utils';
 
 interface AppHeaderProps {
   showBack?: boolean;
@@ -20,15 +20,17 @@ export function AppHeader({
   title,
   subtitle,
   onSearch,
-  className
+  className,
 }: AppHeaderProps) {
   return (
-    <header className={cn(
-      "sticky top-0 z-50 border-b border-elec-yellow/20",
-      "bg-elec-gray/95 backdrop-blur-lg supports-[backdrop-filter]:bg-elec-gray/80",
-      "pt-safe",
-      className
-    )}>
+    <header
+      className={cn(
+        'sticky top-0 z-50 border-b border-elec-yellow/20',
+        'bg-elec-gray/95 backdrop-blur-lg supports-[backdrop-filter]:bg-elec-gray/80',
+        'pt-safe',
+        className
+      )}
+    >
       <div className="flex h-14 sm:h-16 items-center justify-between px-3 sm:px-4">
         {/* Left side */}
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -56,9 +58,7 @@ export function AppHeader({
           {title ? (
             <div className="min-w-0">
               <h1 className="text-base sm:text-lg font-bold text-foreground truncate">{title}</h1>
-              {subtitle && (
-                <p className="text-xs text-muted-foreground truncate">{subtitle}</p>
-              )}
+              {subtitle && <p className="text-xs text-muted-foreground truncate">{subtitle}</p>}
             </div>
           ) : (
             <div className="flex items-center gap-2">

@@ -1,10 +1,15 @@
-
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Upload } from "lucide-react";
-import CertificatesList from "./certificates/CertificatesList";
-import CertificateForm from "./certificates/CertificateForm";
-import useCertificates from "@/hooks/certificates/useCertificates";
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Upload } from 'lucide-react';
+import CertificatesList from './certificates/CertificatesList';
+import CertificateForm from './certificates/CertificateForm';
+import useCertificates from '@/hooks/certificates/useCertificates';
 
 const CertificatesManager = () => {
   const { certificates, addCertificate, deleteCertificate, isUploading } = useCertificates();
@@ -29,16 +34,13 @@ const CertificatesManager = () => {
             <DialogHeader>
               <DialogTitle>Upload Certificate</DialogTitle>
             </DialogHeader>
-            <CertificateForm 
-              onSubmit={addCertificate} 
-              isUploading={isUploading} 
-            />
+            <CertificateForm onSubmit={addCertificate} isUploading={isUploading} />
           </DialogContent>
         </Dialog>
       </div>
 
-      <CertificatesList 
-        certificates={certificates} 
+      <CertificatesList
+        certificates={certificates}
         onDelete={deleteCertificate}
         onAddCertificate={addCertificate}
         isUploading={isUploading}

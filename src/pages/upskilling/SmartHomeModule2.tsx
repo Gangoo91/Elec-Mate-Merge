@@ -7,40 +7,40 @@ const SmartHomeModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Wireless Protocol Overview",
+      title: 'Wireless Protocol Overview',
       icon: Radio,
-      description: "Understanding different wireless communication protocols"
+      description: 'Understanding different wireless communication protocols',
     },
     {
       id: 2,
-      title: "Zigbee vs Z-Wave: Range, Mesh, Power Use",
+      title: 'Zigbee vs Z-Wave: Range, Mesh, Power Use',
       icon: Network,
-      description: "Comparing the two major mesh protocols"
+      description: 'Comparing the two major mesh protocols',
     },
     {
       id: 3,
-      title: "Wi-Fi, Bluetooth, Thread, and Matter",
+      title: 'Wi-Fi, Bluetooth, Thread, and Matter',
       icon: Wifi,
-      description: "Modern protocols including the new Matter standard"
+      description: 'Modern protocols including the new Matter standard',
     },
     {
       id: 4,
-      title: "Interference, Channels, and Bandwidth",
+      title: 'Interference, Channels, and Bandwidth',
       icon: Bluetooth,
-      description: "Managing signal interference and channel allocation"
+      description: 'Managing signal interference and channel allocation',
     },
     {
       id: 5,
-      title: "Hub vs Hubless Ecosystems",
+      title: 'Hub vs Hubless Ecosystems',
       icon: CircleDot,
-      description: "Understanding centralised vs distributed architectures"
+      description: 'Understanding centralised vs distributed architectures',
     },
     {
       id: 6,
-      title: "Compatibility Mapping and Bridge Use",
+      title: 'Compatibility Mapping and Bridge Use',
       icon: GitBranch,
-      description: "Connecting different protocols and legacy systems"
-    }
+      description: 'Connecting different protocols and legacy systems',
+    },
   ];
 
   return (

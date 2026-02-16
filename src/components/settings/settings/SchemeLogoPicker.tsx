@@ -41,21 +41,24 @@ export function SchemeLogoPicker({
 }: SchemeLogoPickerProps) {
   const showFields = scheme && scheme !== 'none';
 
-  const handleSelect = useCallback(async (value: string) => {
-    onSchemeChange(value);
+  const handleSelect = useCallback(
+    async (value: string) => {
+      onSchemeChange(value);
 
-    if (onLogoDataUrlChange) {
-      if (value === 'none' || value === 'other') {
-        onLogoDataUrlChange(null);
-      } else {
-        const info = getSchemeInfo(value);
-        if (info) {
-          const dataUrl = await fetchLogoAsDataUrl(info.logoPath);
-          onLogoDataUrlChange(dataUrl);
+      if (onLogoDataUrlChange) {
+        if (value === 'none' || value === 'other') {
+          onLogoDataUrlChange(null);
+        } else {
+          const info = getSchemeInfo(value);
+          if (info) {
+            const dataUrl = await fetchLogoAsDataUrl(info.logoPath);
+            onLogoDataUrlChange(dataUrl);
+          }
         }
       }
-    }
-  }, [onSchemeChange, onLogoDataUrlChange]);
+    },
+    [onSchemeChange, onLogoDataUrlChange]
+  );
 
   return (
     <div className="space-y-4">
@@ -92,9 +95,7 @@ export function SchemeLogoPicker({
               onClick={() => handleSelect(s.value)}
               className={cn(
                 'relative flex items-center justify-center rounded-xl border-2 p-2 h-16 transition-all touch-manipulation',
-                isSelected
-                  ? 'bg-white/10'
-                  : 'border-white/10 bg-white/[0.04] hover:bg-white/[0.06]'
+                isSelected ? 'bg-white/10' : 'border-white/10 bg-white/[0.04] hover:bg-white/[0.06]'
               )}
               style={isSelected ? { borderColor: s.brandColor } : undefined}
             >
@@ -153,7 +154,10 @@ export function SchemeLogoPicker({
           </div>
 
           <div>
-            <Label htmlFor="schemeExpiry" className="text-foreground font-semibold flex items-center gap-2">
+            <Label
+              htmlFor="schemeExpiry"
+              className="text-foreground font-semibold flex items-center gap-2"
+            >
               <Calendar className="h-4 w-4 text-elec-yellow" />
               Expiry Date
             </Label>

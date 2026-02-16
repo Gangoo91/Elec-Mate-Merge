@@ -2,7 +2,11 @@
 // Addresses critical issues: correct cable sizing, standard MCB ratings, proper voltage drop
 
 import { getCableCapacity } from '../bs7671-data/cableCapacities';
-import { standardDeviceRatings, getSuitableDevices, getRecommendedDeviceType } from '../bs7671-data/protectiveDevices';
+import {
+  standardDeviceRatings,
+  getSuitableDevices,
+  getRecommendedDeviceType,
+} from '../bs7671-data/protectiveDevices';
 import { getReferenceMethod } from '../bs7671-data/installationMethodFactors';
 
 export interface MotorStartingInputs {
@@ -27,7 +31,7 @@ export interface MotorStartingResult {
   startingCurrent: number;
   startingMultiplier: number;
   startingKva: number;
-  
+
   // Cable analysis
   minimumCableSize: number;
   recommendedCableSize: number;
@@ -37,22 +41,22 @@ export interface MotorStartingResult {
     suitable: boolean;
     derating: number;
   };
-  
+
   // Voltage drop analysis
   voltageDropRunning: number;
   voltageDropStarting: number;
   voltageDropCompliant: boolean;
-  
+
   // Protection
   recommendedMcbRating: number;
   protectionSuitable: boolean;
   protectionType: string;
-  
+
   // Compliance
   bs7671Compliant: boolean;
   zsCompliant: boolean;
   thermalStress: number;
-  
+
   // Recommendations
   recommendations: string[];
   warnings: string[];
@@ -61,18 +65,18 @@ export interface MotorStartingResult {
 
 // Correct starting current multipliers based on BS 7671 and practical experience
 const startingMultipliers = {
-  direct: 5.5,      // Reduced from 6.5 - more realistic for modern motors
+  direct: 5.5, // Reduced from 6.5 - more realistic for modern motors
   'star-delta': 1.8, // Reduced from 2.1 - more accurate
   'soft-starter': 2.5, // Reduced from 3.2
-  'vfd': 1.2,       // Reduced from 1.5 - VFDs typically limit to 120% FLC
-  'autotransformer': 3.5 // Reduced from 4.0
+  vfd: 1.2, // Reduced from 1.5 - VFDs typically limit to 120% FLC
+  autotransformer: 3.5, // Reduced from 4.0
 };
 
 const loadTypeFactors = {
   standard: 1.0,
-  'high-torque': 1.15,   // Reduced from 1.2
+  'high-torque': 1.15, // Reduced from 1.2
   'low-torque': 0.9,
-  centrifugal: 0.85
+  centrifugal: 0.85,
 };
 
 export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStartingResult => {
@@ -82,34 +86,38 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
     fullLoadCurrent = inputs.ratedCurrent;
   } else {
     if (inputs.phases === 3) {
-      fullLoadCurrent = (inputs.powerKw * 1000) / (Math.sqrt(3) * inputs.voltage * inputs.efficiency * inputs.powerFactor);
+      fullLoadCurrent =
+        (inputs.powerKw * 1000) /
+        (Math.sqrt(3) * inputs.voltage * inputs.efficiency * inputs.powerFactor);
     } else {
-      fullLoadCurrent = (inputs.powerKw * 1000) / (inputs.voltage * inputs.efficiency * inputs.powerFactor);
+      fullLoadCurrent =
+        (inputs.powerKw * 1000) / (inputs.voltage * inputs.efficiency * inputs.powerFactor);
     }
   }
 
   // Calculate starting current with corrected multipliers
   const baseMultiplier = startingMultipliers[inputs.startingMethod] || startingMultipliers.direct;
   const loadFactor = loadTypeFactors[inputs.loadType] || 1.0;
-  
+
   // Temperature effect is minimal on starting current
   const tempFactor = inputs.ambientTemp > 40 ? 1 + (inputs.ambientTemp - 40) * 0.002 : 1;
-  
+
   const startingMultiplier = baseMultiplier * loadFactor * tempFactor;
   const startingCurrent = fullLoadCurrent * startingMultiplier;
 
   // Calculate starting kVA
-  const startingKva = inputs.phases === 3 
-    ? (Math.sqrt(3) * inputs.voltage * startingCurrent) / 1000
-    : (inputs.voltage * startingCurrent) / 1000;
+  const startingKva =
+    inputs.phases === 3
+      ? (Math.sqrt(3) * inputs.voltage * startingCurrent) / 1000
+      : (inputs.voltage * startingCurrent) / 1000;
 
   // Thermal stress (I²t)
   const thermalStress = Math.pow(startingCurrent, 2) * inputs.startingTime;
 
   // Cable sizing - Check current carrying capacity first (BS 7671 approach)
   const designCurrent = fullLoadCurrent * 1.25; // Motor design current per BS 7671
-  
-  // Get derating factors  
+
+  // Get derating factors
   const temperatureFactor = inputs.ambientTemp > 30 ? 0.94 : 1.0; // Simplified derating
   const groupingFactor = inputs.groupingFactor || 1.0;
   const totalDerating = temperatureFactor * groupingFactor;
@@ -117,19 +125,23 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
   // Find minimum cable size for current carrying capacity
   let minimumCableSize = 1.5;
   let foundSuitable = false;
-  
-  const standardCableSizes = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500];
-  
+
+  const standardCableSizes = [
+    1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500,
+  ];
+
   // Get reference method for installation
   const referenceMethod = getReferenceMethod(inputs.installationMethod || 'clipped-direct');
-  
+
   for (const size of standardCableSizes) {
     const capacityData = getCableCapacity('pvc-single', size);
     if (!capacityData) continue;
-    
-    const capacity = capacityData.capacities[referenceMethod] || Math.min(...Object.values(capacityData.capacities));
+
+    const capacity =
+      capacityData.capacities[referenceMethod] ||
+      Math.min(...Object.values(capacityData.capacities));
     const deratedCapacity = capacity * totalDerating;
-    
+
     if (deratedCapacity >= designCurrent) {
       minimumCableSize = size;
       foundSuitable = true;
@@ -143,16 +155,25 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
   }
 
   // Simple voltage drop calculation (mV/A/m method)
-  const rPerKm = minimumCableSize >= 16 ? 1.83 : minimumCableSize >= 10 ? 2.5 : minimumCableSize >= 6 ? 3.08 : 7.41;
+  const rPerKm =
+    minimumCableSize >= 16
+      ? 1.83
+      : minimumCableSize >= 10
+        ? 2.5
+        : minimumCableSize >= 6
+          ? 3.08
+          : 7.41;
   const resistance = (rPerKm * inputs.cableLength) / 1000;
-  
-  const voltageDropRunning = inputs.phases === 3 
-    ? (Math.sqrt(3) * fullLoadCurrent * resistance * 100) / inputs.voltage
-    : (fullLoadCurrent * resistance * 100) / inputs.voltage;
-    
-  const voltageDropStarting = inputs.phases === 3 
-    ? (Math.sqrt(3) * startingCurrent * resistance * 100) / inputs.voltage
-    : (startingCurrent * resistance * 100) / inputs.voltage;
+
+  const voltageDropRunning =
+    inputs.phases === 3
+      ? (Math.sqrt(3) * fullLoadCurrent * resistance * 100) / inputs.voltage
+      : (fullLoadCurrent * resistance * 100) / inputs.voltage;
+
+  const voltageDropStarting =
+    inputs.phases === 3
+      ? (Math.sqrt(3) * startingCurrent * resistance * 100) / inputs.voltage
+      : (startingCurrent * resistance * 100) / inputs.voltage;
 
   // Check if voltage drop is compliant (3% running, 10% starting per BS 7671)
   let recommendedCableSize = minimumCableSize;
@@ -162,17 +183,19 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
   if (!voltageDropCompliant) {
     for (const size of standardCableSizes) {
       if (size <= minimumCableSize) continue;
-      
+
       const rPerKmTest = size >= 16 ? 1.83 : size >= 10 ? 2.5 : size >= 6 ? 3.08 : 7.41;
       const resistanceTest = (rPerKmTest * inputs.cableLength) / 1000;
-      
-      const vdRunning = inputs.phases === 3 
-        ? (Math.sqrt(3) * fullLoadCurrent * resistanceTest * 100) / inputs.voltage
-        : (fullLoadCurrent * resistanceTest * 100) / inputs.voltage;
-        
-      const vdStarting = inputs.phases === 3 
-        ? (Math.sqrt(3) * startingCurrent * resistanceTest * 100) / inputs.voltage
-        : (startingCurrent * resistanceTest * 100) / inputs.voltage;
+
+      const vdRunning =
+        inputs.phases === 3
+          ? (Math.sqrt(3) * fullLoadCurrent * resistanceTest * 100) / inputs.voltage
+          : (fullLoadCurrent * resistanceTest * 100) / inputs.voltage;
+
+      const vdStarting =
+        inputs.phases === 3
+          ? (Math.sqrt(3) * startingCurrent * resistanceTest * 100) / inputs.voltage
+          : (startingCurrent * resistanceTest * 100) / inputs.voltage;
 
       if (vdRunning <= 3 && vdStarting <= 10) {
         recommendedCableSize = size;
@@ -184,21 +207,22 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
   // Protection device selection with standard ratings
   const deviceType = getRecommendedDeviceType(designCurrent, 'motor', inputs.voltage);
   let recommendedMcbRating = designCurrent;
-  
+
   // Round up to next standard MCB rating
   const mcbRatings = standardDeviceRatings.mcb;
-  const suitableRating = mcbRatings.find(rating => rating >= designCurrent);
-  
+  const suitableRating = mcbRatings.find((rating) => rating >= designCurrent);
+
   if (suitableRating) {
     recommendedMcbRating = suitableRating;
   } else {
     // Use BS88 fuse for high currents
     const bs88Ratings = standardDeviceRatings.bs88;
-    recommendedMcbRating = bs88Ratings.find(rating => rating >= designCurrent) || designCurrent;
+    recommendedMcbRating = bs88Ratings.find((rating) => rating >= designCurrent) || designCurrent;
   }
 
   // Check if protection is suitable for motor
-  const protectionSuitable = recommendedMcbRating >= designCurrent && recommendedMcbRating <= designCurrent * 1.6;
+  const protectionSuitable =
+    recommendedMcbRating >= designCurrent && recommendedMcbRating <= designCurrent * 1.6;
 
   // Generate recommendations
   const recommendations: string[] = [];
@@ -206,11 +230,15 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
   const notes: string[] = [];
 
   if (recommendedCableSize > minimumCableSize) {
-    recommendations.push(`Upgrade cable to ${recommendedCableSize}mm² to meet voltage drop requirements`);
+    recommendations.push(
+      `Upgrade cable to ${recommendedCableSize}mm² to meet voltage drop requirements`
+    );
   }
 
   if (inputs.startingMethod === 'direct' && inputs.powerKw > 11) {
-    recommendations.push('Consider soft starter or star-delta for motors >11kW (BS 7671 recommends reduced starting)');
+    recommendations.push(
+      'Consider soft starter or star-delta for motors >11kW (BS 7671 recommends reduced starting)'
+    );
   }
 
   if (startingCurrent > 200) {
@@ -229,9 +257,11 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
 
   // Overall compliance
   const capacityData = getCableCapacity('pvc-single', recommendedCableSize);
-  const finalCapacity = capacityData?.capacities[referenceMethod] || (capacityData ? Math.min(...Object.values(capacityData.capacities)) : 0);
+  const finalCapacity =
+    capacityData?.capacities[referenceMethod] ||
+    (capacityData ? Math.min(...Object.values(capacityData.capacities)) : 0);
   const currentCapacity = finalCapacity * totalDerating;
-  const bs7671Compliant = 
+  const bs7671Compliant =
     currentCapacity >= designCurrent &&
     voltageDropRunning <= 3 &&
     voltageDropStarting <= 10 &&
@@ -242,30 +272,30 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
     startingCurrent,
     startingMultiplier,
     startingKva,
-    
+
     minimumCableSize,
     recommendedCableSize,
     currentCarryingCheck: {
       required: designCurrent,
       capacity: currentCapacity,
       suitable: currentCapacity >= designCurrent,
-      derating: totalDerating
+      derating: totalDerating,
     },
-    
+
     voltageDropRunning,
     voltageDropStarting,
     voltageDropCompliant: voltageDropRunning <= 3 && voltageDropStarting <= 10,
-    
+
     recommendedMcbRating,
     protectionSuitable,
     protectionType: deviceType,
-    
+
     bs7671Compliant,
     zsCompliant: true, // Would need Zs calculation for full check
     thermalStress,
-    
+
     recommendations,
     warnings,
-    notes
+    notes,
   };
 };

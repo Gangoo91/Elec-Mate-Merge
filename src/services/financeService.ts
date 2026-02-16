@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 // Helper to send push notification (fire and forget)
 const sendPushNotification = async (
@@ -137,12 +137,10 @@ export async function getQuotes(): Promise<Quote[]> {
   return data || [];
 }
 
-export async function createQuote(quote: Omit<Quote, 'id' | 'created_at' | 'updated_at'>): Promise<Quote> {
-  const { data, error } = await supabase
-    .from('employer_quotes')
-    .insert(quote)
-    .select()
-    .single();
+export async function createQuote(
+  quote: Omit<Quote, 'id' | 'created_at' | 'updated_at'>
+): Promise<Quote> {
+  const { data, error } = await supabase.from('employer_quotes').insert(quote).select().single();
   if (error) throw error;
   return data;
 }
@@ -202,7 +200,9 @@ export async function getInvoices(): Promise<Invoice[]> {
   return data || [];
 }
 
-export async function createInvoice(invoice: Omit<Invoice, 'id' | 'created_at' | 'updated_at'>): Promise<Invoice> {
+export async function createInvoice(
+  invoice: Omit<Invoice, 'id' | 'created_at' | 'updated_at'>
+): Promise<Invoice> {
   const { data, error } = await supabase
     .from('employer_invoices')
     .insert(invoice)
@@ -231,7 +231,10 @@ export async function markInvoicePaid(id: string): Promise<Invoice> {
     .eq('id', id)
     .single();
 
-  const result = await updateInvoice(id, { status: 'Paid', paid_date: new Date().toISOString().split('T')[0] });
+  const result = await updateInvoice(id, {
+    status: 'Paid',
+    paid_date: new Date().toISOString().split('T')[0],
+  });
 
   // Send push notification
   if (invoice?.created_by) {
@@ -264,16 +267,16 @@ export async function sendInvoice(id: string): Promise<{ portalUrl: string; acce
     .select('*')
     .eq('id', id)
     .single();
-    
+
   if (invoiceError) throw invoiceError;
-  
+
   // Generate the invoice link
   const { data, error } = await supabase.functions.invoke('generate-invoice-link', {
-    body: { invoiceId: id }
+    body: { invoiceId: id },
   });
-  
+
   if (error) throw error;
-  
+
   // Now send the email with the Pay Now link included
   const { error: sendError } = await supabase.functions.invoke('send-finance-document', {
     body: {
@@ -281,26 +284,26 @@ export async function sendInvoice(id: string): Promise<{ portalUrl: string; acce
       documentId: id,
       recipientEmail: invoice.client, // This would ideally be a client email field
       recipientName: invoice.client,
-      invoicePortalLink: data.portalUrl
-    }
+      invoicePortalLink: data.portalUrl,
+    },
   });
-  
+
   if (sendError) {
     console.error('Failed to send invoice email:', sendError);
     // Don't throw - the link was still generated successfully
   }
-  
+
   // Update invoice status to Sent/Pending
   await updateInvoice(id, { status: 'Pending' });
-  
+
   return data;
 }
 
 export async function generateInvoicePdf(id: string): Promise<{ html: string }> {
   const { data, error } = await supabase.functions.invoke('generate-invoice-pdf', {
-    body: { invoiceId: id }
+    body: { invoiceId: id },
   });
-  
+
   if (error) throw error;
   return data;
 }
@@ -315,7 +318,9 @@ export async function getExpenseClaims(): Promise<ExpenseClaim[]> {
   return data || [];
 }
 
-export async function createExpenseClaim(claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>): Promise<ExpenseClaim> {
+export async function createExpenseClaim(
+  claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>
+): Promise<ExpenseClaim> {
   const { data, error } = await supabase
     .from('employer_expense_claims')
     .insert(claim)
@@ -328,10 +333,10 @@ export async function createExpenseClaim(claim: Omit<ExpenseClaim, 'id' | 'creat
 export async function approveExpense(id: string, approvedBy: string): Promise<ExpenseClaim> {
   const { data, error } = await supabase
     .from('employer_expense_claims')
-    .update({ 
-      status: 'Approved', 
-      approved_by: approvedBy, 
-      approved_date: new Date().toISOString() 
+    .update({
+      status: 'Approved',
+      approved_by: approvedBy,
+      approved_date: new Date().toISOString(),
     })
     .eq('id', id)
     .select('*, employee:employer_employees(name, avatar_initials)')
@@ -340,14 +345,18 @@ export async function approveExpense(id: string, approvedBy: string): Promise<Ex
   return data;
 }
 
-export async function rejectExpense(id: string, approvedBy: string, reason: string): Promise<ExpenseClaim> {
+export async function rejectExpense(
+  id: string,
+  approvedBy: string,
+  reason: string
+): Promise<ExpenseClaim> {
   const { data, error } = await supabase
     .from('employer_expense_claims')
-    .update({ 
-      status: 'Rejected', 
-      approved_by: approvedBy, 
+    .update({
+      status: 'Rejected',
+      approved_by: approvedBy,
       approved_date: new Date().toISOString(),
-      rejection_reason: reason
+      rejection_reason: reason,
     })
     .eq('id', id)
     .select('*, employee:employer_employees(name, avatar_initials)')
@@ -377,7 +386,9 @@ export async function getSuppliers(): Promise<Supplier[]> {
   return data || [];
 }
 
-export async function createSupplier(supplier: Omit<Supplier, 'id' | 'created_at' | 'updated_at'>): Promise<Supplier> {
+export async function createSupplier(
+  supplier: Omit<Supplier, 'id' | 'created_at' | 'updated_at'>
+): Promise<Supplier> {
   const { data, error } = await supabase
     .from('employer_suppliers')
     .insert(supplier)
@@ -408,7 +419,9 @@ export async function getMaterialOrders(): Promise<MaterialOrder[]> {
   return data || [];
 }
 
-export async function createMaterialOrder(order: Omit<MaterialOrder, 'id' | 'created_at' | 'updated_at' | 'suppliers'>): Promise<MaterialOrder> {
+export async function createMaterialOrder(
+  order: Omit<MaterialOrder, 'id' | 'created_at' | 'updated_at' | 'suppliers'>
+): Promise<MaterialOrder> {
   const { data, error } = await supabase
     .from('employer_material_orders')
     .insert(order)
@@ -418,10 +431,14 @@ export async function createMaterialOrder(order: Omit<MaterialOrder, 'id' | 'cre
   return data;
 }
 
-export async function updateOrderStatus(id: string, status: string, deliveryDate?: string): Promise<MaterialOrder> {
+export async function updateOrderStatus(
+  id: string,
+  status: string,
+  deliveryDate?: string
+): Promise<MaterialOrder> {
   const updates: any = { status };
   if (deliveryDate) updates.delivery_date = deliveryDate;
-  
+
   const { data, error } = await supabase
     .from('employer_material_orders')
     .update(updates)
@@ -442,7 +459,9 @@ export async function getPriceBook(): Promise<PriceBookItem[]> {
   return data || [];
 }
 
-export async function createPriceBookItem(item: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>): Promise<PriceBookItem> {
+export async function createPriceBookItem(
+  item: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>
+): Promise<PriceBookItem> {
   const { data, error } = await supabase
     .from('employer_price_book')
     .insert(item)
@@ -452,7 +471,10 @@ export async function createPriceBookItem(item: Omit<PriceBookItem, 'id' | 'crea
   return data;
 }
 
-export async function updatePriceBookItem(id: string, updates: Partial<PriceBookItem>): Promise<PriceBookItem> {
+export async function updatePriceBookItem(
+  id: string,
+  updates: Partial<PriceBookItem>
+): Promise<PriceBookItem> {
   const { data, error } = await supabase
     .from('employer_price_book')
     .update(updates)
@@ -464,10 +486,7 @@ export async function updatePriceBookItem(id: string, updates: Partial<PriceBook
 }
 
 export async function deletePriceBookItem(id: string): Promise<void> {
-  const { error } = await supabase
-    .from('employer_price_book')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('employer_price_book').delete().eq('id', id);
   if (error) throw error;
 }
 
@@ -477,7 +496,7 @@ export async function getLowStockItems(): Promise<PriceBookItem[]> {
     .select('*, supplier:employer_suppliers(name)')
     .order('stock_level', { ascending: true });
   if (error) throw error;
-  return (data || []).filter(item => item.stock_level <= item.reorder_level);
+  return (data || []).filter((item) => item.stock_level <= item.reorder_level);
 }
 
 // Bulk import price book items (for CSV import)
@@ -491,12 +510,9 @@ export async function bulkCreatePriceBookItems(
   const BATCH_SIZE = 100;
   for (let i = 0; i < items.length; i += BATCH_SIZE) {
     const batch = items.slice(i, i + BATCH_SIZE);
-    
-    const { data, error } = await supabase
-      .from('employer_price_book')
-      .insert(batch)
-      .select();
-    
+
+    const { data, error } = await supabase.from('employer_price_book').insert(batch).select();
+
     if (error) {
       console.error('Batch insert error:', error);
       errors += batch.length;
@@ -527,9 +543,7 @@ export async function searchPriceBook(
     q = q.eq('category', category);
   }
 
-  const { data, count, error } = await q
-    .range(page * limit, (page + 1) * limit - 1)
-    .order('name');
+  const { data, count, error } = await q.range(page * limit, (page + 1) * limit - 1).order('name');
 
   if (error) throw error;
 
@@ -554,12 +568,12 @@ export async function getPriceBookStats(): Promise<{
 
   const items = data || [];
   const totalItems = count || 0;
-  
+
   let totalMarkup = 0;
   let lowStock = 0;
   let stockValue = 0;
 
-  items.forEach(item => {
+  items.forEach((item) => {
     if (item.buy_price > 0) {
       totalMarkup += ((item.sell_price - item.buy_price) / item.buy_price) * 100;
     }
@@ -586,7 +600,7 @@ export async function getNextQuoteNumber(): Promise<string> {
     .like('quote_number', `QU-${year}-%`)
     .order('quote_number', { ascending: false })
     .limit(1);
-  
+
   if (data && data.length > 0) {
     const match = data[0].quote_number.match(/QU-\d{4}-(\d+)/);
     if (match) {
@@ -605,7 +619,7 @@ export async function getNextInvoiceNumber(): Promise<string> {
     .like('invoice_number', `INV-${year}-%`)
     .order('invoice_number', { ascending: false })
     .limit(1);
-  
+
   if (data && data.length > 0) {
     const lastNum = parseInt(data[0].invoice_number.split('-')[2]) || 0;
     return `INV-${year}-${String(lastNum + 1).padStart(3, '0')}`;
@@ -621,7 +635,7 @@ export async function getNextOrderNumber(): Promise<string> {
     .like('order_number', `ORD-${year}-%`)
     .order('order_number', { ascending: false })
     .limit(1);
-  
+
   if (data && data.length > 0) {
     const lastNum = parseInt(data[0].order_number.split('-')[2]) || 0;
     return `ORD-${year}-${String(lastNum + 1).padStart(3, '0')}`;
@@ -650,12 +664,12 @@ export interface StripeConnectStatus {
 
 export async function getStripeConnectStatus(): Promise<StripeConnectStatus> {
   const { data, error } = await supabase.functions.invoke('get-stripe-connect-status');
-  
+
   if (error) {
     console.error('Error fetching Stripe Connect status:', error);
     return { connected: false, stripeConfigured: false, message: error.message };
   }
-  
+
   return data;
 }
 
@@ -664,16 +678,16 @@ export async function createStripeConnectAccount(
   email: string | null
 ): Promise<{ onboardingUrl: string; accountId: string; isExisting: boolean }> {
   const currentUrl = window.location.origin;
-  
+
   const { data, error } = await supabase.functions.invoke('create-stripe-connect-account', {
     body: {
       businessName,
       email,
       returnUrl: `${currentUrl}/employer?tab=settings&stripe=success`,
       refreshUrl: `${currentUrl}/employer?tab=settings&stripe=refresh`,
-    }
+    },
   });
-  
+
   if (error) throw error;
   return data;
 }
@@ -682,22 +696,22 @@ export async function getStripeOnboardingLink(
   type: 'onboarding' | 'dashboard' = 'onboarding'
 ): Promise<{ url: string }> {
   const currentUrl = window.location.origin;
-  
+
   const { data, error } = await supabase.functions.invoke('create-stripe-connect-onboarding-link', {
     body: {
       type,
       returnUrl: `${currentUrl}/employer?tab=settings&stripe=success`,
       refreshUrl: `${currentUrl}/employer?tab=settings&stripe=refresh`,
-    }
+    },
   });
-  
+
   if (error) throw error;
   return data;
 }
 
 export async function disconnectStripeConnect(): Promise<{ success: boolean }> {
   const { data, error } = await supabase.functions.invoke('disconnect-stripe-connect');
-  
+
   if (error) throw error;
   return data;
 }

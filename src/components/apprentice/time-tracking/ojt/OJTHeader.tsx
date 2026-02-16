@@ -1,12 +1,11 @@
-
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
-import { useAuth } from "@/contexts/AuthContext";
-import { generateTrainingReport } from "@/utils/report-generator";
-import { useToast } from "@/components/ui/use-toast";
+import { Button } from '@/components/ui/button';
+import { Download } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
+import { useAuth } from '@/contexts/AuthContext';
+import { generateTrainingReport } from '@/utils/report-generator';
+import { useToast } from '@/components/ui/use-toast';
 
 interface OJTHeaderProps {
   handleDownloadReport: () => void;
@@ -17,7 +16,7 @@ const OJTHeader = ({ handleDownloadReport }: OJTHeaderProps) => {
   const { entries, totalTime } = useTimeEntries();
   const { user, profile } = useAuth();
   const { toast } = useToast();
-  
+
   const generateReport = () => {
     try {
       // Call the report generator with the current entries
@@ -27,28 +26,28 @@ const OJTHeader = ({ handleDownloadReport }: OJTHeaderProps) => {
         totalHours: totalTime,
         entries: entries, // These are the current entries after any deletions
         targetHours: 40,
-        weeklyHours: 8
+        weeklyHours: 8,
       });
-      
+
       toast({
-        title: "Report Generated",
-        description: "Your training report has been downloaded successfully."
+        title: 'Report Generated',
+        description: 'Your training report has been downloaded successfully.',
       });
     } catch (error) {
-      console.error("Error generating report:", error);
+      console.error('Error generating report:', error);
       toast({
-        title: "Report Generation Failed",
-        description: "There was an error generating your report. Please try again.",
-        variant: "destructive"
+        title: 'Report Generation Failed',
+        description: 'There was an error generating your report. Please try again.',
+        variant: 'destructive',
       });
     }
   };
-  
+
   // For mobile, we'll completely hide the header as per the screenshot
   if (isMobile) {
     return null;
   }
-  
+
   // Desktop header remains the same
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -59,11 +58,7 @@ const OJTHeader = ({ handleDownloadReport }: OJTHeaderProps) => {
         </p>
       </div>
       <div className="flex gap-2">
-        <Button 
-          variant="outline" 
-          onClick={generateReport} 
-          className="flex items-center gap-2"
-        >
+        <Button variant="outline" onClick={generateReport} className="flex items-center gap-2">
           <Download className="h-4 w-4" />
           Export Report
         </Button>

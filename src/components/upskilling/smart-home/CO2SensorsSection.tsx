@@ -12,9 +12,11 @@ export const CO2SensorsSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          CO₂ sensors measure carbon dioxide levels in parts per million (ppm), providing an excellent indicator of indoor air quality and ventilation effectiveness in occupied spaces.
+          CO₂ sensors measure carbon dioxide levels in parts per million (ppm), providing an
+          excellent indicator of indoor air quality and ventilation effectiveness in occupied
+          spaces.
         </p>
-        
+
         <div className="bg-elec-gray border border-gray-600 rounded-lg p-4">
           <h4 className="font-semibold text-foreground mb-3">CO₂ Level Guidelines</h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -44,7 +46,7 @@ export const CO2SensorsSection = () => {
               <li>• Poor decision-making ability</li>
             </ul>
           </div>
-          
+
           <div className="bg-elec-gray border border-blue-600 rounded-lg p-4">
             <h4 className="font-semibold text-blue-200 mb-3">Automatic Response</h4>
             <ul className="space-y-2 text-sm text-blue-100">
@@ -86,15 +88,23 @@ export const CO2SensorsSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
             <div>
               <h5 className="font-medium text-blue-200 mb-2">Demand-Controlled Ventilation</h5>
-              <p className="text-gray-300">Automatically adjusts ventilation rates based on actual occupancy rather than fixed schedules.</p>
+              <p className="text-gray-300">
+                Automatically adjusts ventilation rates based on actual occupancy rather than fixed
+                schedules.
+              </p>
             </div>
             <div>
               <h5 className="font-medium text-green-200 mb-2">Energy Savings</h5>
-              <p className="text-gray-300">Reduces over-ventilation during low occupancy periods, saving heating and cooling energy.</p>
+              <p className="text-gray-300">
+                Reduces over-ventilation during low occupancy periods, saving heating and cooling
+                energy.
+              </p>
             </div>
             <div>
               <h5 className="font-medium text-purple-200 mb-2">Occupant Wellbeing</h5>
-              <p className="text-gray-300">Maintains optimal air quality for cognitive performance and general health.</p>
+              <p className="text-gray-300">
+                Maintains optimal air quality for cognitive performance and general health.
+              </p>
             </div>
           </div>
         </div>

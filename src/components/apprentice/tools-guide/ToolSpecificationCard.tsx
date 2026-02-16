@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Check, X, AlertCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Check, X, AlertCircle } from 'lucide-react';
 
 interface ToolSpec {
   name: string;
@@ -14,7 +13,7 @@ interface ToolSpec {
     certification?: string;
   };
   priceRange: string;
-  priority: "essential" | "recommended" | "optional";
+  priority: 'essential' | 'recommended' | 'optional';
   pros: string[];
   cons: string[];
   buyingTips: string[];
@@ -28,10 +27,14 @@ interface ToolSpecificationCardProps {
 const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "essential": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "recommended": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "optional": return "bg-green-500/20 text-green-400 border-green-500/30";
-      default: return "bg-white/10 text-white border-white/20";
+      case 'essential':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'recommended':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'optional':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/20';
     }
   };
 
@@ -48,20 +51,21 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
           </Badge>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         {/* Specifications */}
         <div>
           <h4 className="font-medium text-white mb-2">Specifications</h4>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            {Object.entries(tool.specifications).map(([key, value]) => (
-              value && (
-                <div key={key} className="flex justify-between">
-                  <span className="text-white capitalize">{key}:</span>
-                  <span className="text-white">{value}</span>
-                </div>
-              )
-            ))}
+            {Object.entries(tool.specifications).map(
+              ([key, value]) =>
+                value && (
+                  <div key={key} className="flex justify-between">
+                    <span className="text-white capitalize">{key}:</span>
+                    <span className="text-white">{value}</span>
+                  </div>
+                )
+            )}
             <div className="flex justify-between col-span-2 pt-2 border-t border-elec-yellow/20">
               <span className="text-white">Price Range:</span>
               <span className="text-elec-yellow font-medium">{tool.priceRange}</span>
@@ -85,7 +89,7 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
               ))}
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-medium text-red-300 mb-2 flex items-center gap-2">
               <X className="h-4 w-4" />

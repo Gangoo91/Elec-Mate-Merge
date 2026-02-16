@@ -4,67 +4,75 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 const CertificationPurposePractical = () => {
   const certificateSelection = [
     {
-      scenario: "Complete house rewire",
-      certificate: "Electrical Installation Certificate (EIC)",
-      reason: "New installation covering entire property",
-      additionalRequirements: ["Building Regulations notification", "Part P compliance", "Schedule of test results"],
-      color: "green"
+      scenario: 'Complete house rewire',
+      certificate: 'Electrical Installation Certificate (EIC)',
+      reason: 'New installation covering entire property',
+      additionalRequirements: [
+        'Building Regulations notification',
+        'Part P compliance',
+        'Schedule of test results',
+      ],
+      color: 'green',
     },
     {
-      scenario: "Adding two socket outlets to existing circuit",
-      certificate: "Minor Electrical Installation Works Certificate",
-      reason: "Minor addition not requiring new circuit",
-      additionalRequirements: ["Circuit testing", "RCD verification", "Polarity check"],
-      color: "blue"
+      scenario: 'Adding two socket outlets to existing circuit',
+      certificate: 'Minor Electrical Installation Works Certificate',
+      reason: 'Minor addition not requiring new circuit',
+      additionalRequirements: ['Circuit testing', 'RCD verification', 'Polarity check'],
+      color: 'blue',
     },
     {
-      scenario: "Five-year rental property inspection",
-      certificate: "Electrical Installation Condition Report (EICR)",
-      reason: "Statutory requirement for private rental sector",
-      additionalRequirements: ["C1, C2, C3 coding", "Remedial recommendations", "Next inspection date"],
-      color: "orange"
-    }
+      scenario: 'Five-year rental property inspection',
+      certificate: 'Electrical Installation Condition Report (EICR)',
+      reason: 'Statutory requirement for private rental sector',
+      additionalRequirements: [
+        'C1, C2, C3 coding',
+        'Remedial recommendations',
+        'Next inspection date',
+      ],
+      color: 'orange',
+    },
   ];
 
   const competencyChecklist = [
-    "Current City & Guilds 2391 or equivalent qualification",
-    "Up-to-date knowledge of BS 7671 (18th Edition)",
-    "Practical experience in electrical installation work",
-    "Understanding of inspection and testing procedures",
-    "Knowledge of relevant health and safety legislation",
-    "Professional indemnity insurance coverage",
-    "Calibrated test equipment within certification dates",
-    "Membership of appropriate competent person scheme"
+    'Current City & Guilds 2391 or equivalent qualification',
+    'Up-to-date knowledge of BS 7671 (18th Edition)',
+    'Practical experience in electrical installation work',
+    'Understanding of inspection and testing procedures',
+    'Knowledge of relevant health and safety legislation',
+    'Professional indemnity insurance coverage',
+    'Calibrated test equipment within certification dates',
+    'Membership of appropriate competent person scheme',
   ];
 
   const documentationRequirements = [
     {
-      stage: "Pre-Work Documentation",
+      stage: 'Pre-Work Documentation',
       items: [
-        "Risk assessment and method statements",
-        "Design calculations and cable selection",
-        "Equipment specifications and compliance",
-        "Building Regulations notification (if required)"
-      ]
+        'Risk assessment and method statements',
+        'Design calculations and cable selection',
+        'Equipment specifications and compliance',
+        'Building Regulations notification (if required)',
+      ],
     },
     {
-      stage: "During Work Documentation",
+      stage: 'During Work Documentation',
       items: [
-        "Progress records and material lists",
-        "Any design changes or variations",
-        "Health and safety incident records",
-        "Quality control checkpoints"
-      ]
+        'Progress records and material lists',
+        'Any design changes or variations',
+        'Health and safety incident records',
+        'Quality control checkpoints',
+      ],
     },
     {
-      stage: "Post-Work Documentation",
+      stage: 'Post-Work Documentation',
       items: [
-        "Completed test results and certificates",
-        "Operating instructions and manuals",
-        "Warranty information and guarantees",
-        "Maintenance recommendations"
-      ]
-    }
+        'Completed test results and certificates',
+        'Operating instructions and manuals',
+        'Warranty information and guarantees',
+        'Maintenance recommendations',
+      ],
+    },
   ];
 
   return (
@@ -76,13 +84,15 @@ const CertificationPurposePractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-
         {/* Certificate Selection Guide */}
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">Certificate Selection Guide</h3>
           <div className="space-y-4">
             {certificateSelection.map((item, index) => (
-              <div key={index} className={`bg-${item.color}-600/10 border border-${item.color}-600/20 rounded-lg p-4`}>
+              <div
+                key={index}
+                className={`bg-${item.color}-600/10 border border-${item.color}-600/20 rounded-lg p-4`}
+              >
                 <h4 className={`text-${item.color}-200 font-medium mb-3 flex items-center gap-2`}>
                   <FileText className={`h-5 w-5 text-${item.color}-400`} />
                   Scenario: {item.scenario}
@@ -110,11 +120,16 @@ const CertificationPurposePractical = () => {
 
         {/* Competency Verification Checklist */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Competency Verification Checklist</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Competency Verification Checklist
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4">
             <div className="space-y-3">
               {competencyChecklist.map((item, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 bg-gray-600/10 border border-gray-600/20 rounded">
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-3 bg-gray-600/10 border border-gray-600/20 rounded"
+                >
                   <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span className="text-foreground text-sm">{item}</span>
                 </div>
@@ -122,8 +137,9 @@ const CertificationPurposePractical = () => {
             </div>
             <div className="mt-4 bg-yellow-600/10 border border-yellow-600/20 rounded p-3">
               <p className="text-foreground text-sm">
-                <strong>Important:</strong> All competency requirements must be current and verifiable. 
-                Outdated qualifications or expired insurance may invalidate certificates.
+                <strong>Important:</strong> All competency requirements must be current and
+                verifiable. Outdated qualifications or expired insurance may invalidate
+                certificates.
               </p>
             </div>
           </div>
@@ -131,7 +147,9 @@ const CertificationPurposePractical = () => {
 
         {/* Documentation Timeline */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Documentation Timeline and Requirements</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Documentation Timeline and Requirements
+          </h3>
           <div className="bg-[#323232] rounded-lg p-4 space-y-4">
             {documentationRequirements.map((stage, index) => (
               <div key={index} className="bg-blue-600/10 border border-blue-600/20 rounded p-4">
@@ -198,7 +216,9 @@ const CertificationPurposePractical = () => {
 
         {/* Common Mistakes and How to Avoid Them */}
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-foreground">Common Mistakes and How to Avoid Them</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            Common Mistakes and How to Avoid Them
+          </h3>
           <div className="space-y-3">
             <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
               <div className="flex items-start gap-3">
@@ -209,8 +229,8 @@ const CertificationPurposePractical = () => {
                     <strong>Problem:</strong> Leaving sections blank or using "N/A" inappropriately.
                   </p>
                   <p className="text-foreground text-sm">
-                    <strong>Solution:</strong> Complete all applicable sections with accurate information. 
-                    Use proper codes and clear explanations for any limitations.
+                    <strong>Solution:</strong> Complete all applicable sections with accurate
+                    information. Use proper codes and clear explanations for any limitations.
                   </p>
                 </div>
               </div>
@@ -224,7 +244,7 @@ const CertificationPurposePractical = () => {
                     <strong>Problem:</strong> Using MEIWC for work requiring EIC or vice versa.
                   </p>
                   <p className="text-foreground text-sm">
-                    <strong>Solution:</strong> Carefully assess scope of work and refer to guidance 
+                    <strong>Solution:</strong> Carefully assess scope of work and refer to guidance
                     notes to select appropriate certificate type.
                   </p>
                 </div>
@@ -236,11 +256,12 @@ const CertificationPurposePractical = () => {
                 <div>
                   <h4 className="text-yellow-200 font-medium mb-2">Inadequate Testing</h4>
                   <p className="text-foreground text-sm mb-2">
-                    <strong>Problem:</strong> Not performing all required tests or using incorrect procedures.
+                    <strong>Problem:</strong> Not performing all required tests or using incorrect
+                    procedures.
                   </p>
                   <p className="text-foreground text-sm">
-                    <strong>Solution:</strong> Follow BS 7671 Part 6 testing sequence exactly. 
-                    Use calibrated equipment and document all results.
+                    <strong>Solution:</strong> Follow BS 7671 Part 6 testing sequence exactly. Use
+                    calibrated equipment and document all results.
                   </p>
                 </div>
               </div>
@@ -274,7 +295,6 @@ const CertificationPurposePractical = () => {
             </div>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

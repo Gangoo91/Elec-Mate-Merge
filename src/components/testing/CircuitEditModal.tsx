@@ -16,7 +16,13 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Save, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -69,7 +75,9 @@ async function saveTrainingCorrection(
 
   try {
     // Get current user
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     const trainingData = {
       image_url: imageUrl || null,
@@ -89,19 +97,21 @@ async function saveTrainingCorrection(
       user_id: user?.id || null,
     };
 
-    const { error } = await supabase
-      .from('board_scanner_training')
-      .insert(trainingData);
+    const { error } = await supabase.from('board_scanner_training').insert(trainingData);
 
     if (error) {
       console.error('Failed to save training correction:', error);
     } else {
       console.log('Training correction saved:', {
         position: originalCircuit.position,
-        deviceChange: originalCircuit.device !== correctedCircuit.device
-          ? `${originalCircuit.device} → ${correctedCircuit.device}` : null,
-        ratingChange: originalCircuit.rating !== correctedCircuit.rating
-          ? `${originalCircuit.rating}A → ${correctedCircuit.rating}A` : null,
+        deviceChange:
+          originalCircuit.device !== correctedCircuit.device
+            ? `${originalCircuit.device} → ${correctedCircuit.device}`
+            : null,
+        ratingChange:
+          originalCircuit.rating !== correctedCircuit.rating
+            ? `${originalCircuit.rating}A → ${correctedCircuit.rating}A`
+            : null,
       });
     }
   } catch (error) {
@@ -157,19 +167,16 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
   const [isSaving, setIsSaving] = useState(false);
 
   const handleChange = useCallback((field: keyof DetectedCircuit, value: any) => {
-    setEditedCircuit(prev => ({ ...prev, [field]: value }));
+    setEditedCircuit((prev) => ({ ...prev, [field]: value }));
   }, []);
 
   const handleSave = useCallback(async () => {
     setIsSaving(true);
 
     // Save training correction in background (non-blocking)
-    saveTrainingCorrection(
-      originalCircuit,
-      editedCircuit,
-      boardBrand,
-      imageUrls?.[0]
-    ).catch(err => console.error('Training save error:', err));
+    saveTrainingCorrection(originalCircuit, editedCircuit, boardBrand, imageUrls?.[0]).catch(
+      (err) => console.error('Training save error:', err)
+    );
 
     // Call parent save immediately
     onSave(editedCircuit);
@@ -188,8 +195,11 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
             <div>
               <DialogTitle className="text-base">Edit Circuit</DialogTitle>
               <p className="text-xs text-muted-foreground mt-0.5">
-                {circuit.confidence === 'low' ? '⚠️ Low confidence - needs verification' :
-                 circuit.confidence === 'medium' ? '⚠️ Medium confidence' : '✓ High confidence'}
+                {circuit.confidence === 'low'
+                  ? '⚠️ Low confidence - needs verification'
+                  : circuit.confidence === 'medium'
+                    ? '⚠️ Medium confidence'
+                    : '✓ High confidence'}
               </p>
             </div>
           </div>
@@ -198,7 +208,9 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
         <div className="px-4 py-4 space-y-4 max-h-[60vh] overflow-y-auto">
           {/* Circuit Label */}
           <div className="space-y-2">
-            <Label htmlFor="label" className="text-sm font-medium">Circuit Label</Label>
+            <Label htmlFor="label" className="text-sm font-medium">
+              Circuit Label
+            </Label>
             <Input
               id="label"
               value={editedCircuit.label}
@@ -210,7 +222,9 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
 
           {/* Device Type - Enhanced with descriptions */}
           <div className="space-y-2">
-            <Label htmlFor="device" className="text-sm font-medium">Device Type</Label>
+            <Label htmlFor="device" className="text-sm font-medium">
+              Device Type
+            </Label>
             <Select
               value={editedCircuit.device}
               onValueChange={(value) => handleChange('device', value)}
@@ -238,7 +252,9 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
           {/* Rating and Curve - Side by side */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label htmlFor="rating" className="text-sm font-medium">Rating (A)</Label>
+              <Label htmlFor="rating" className="text-sm font-medium">
+                Rating (A)
+              </Label>
               <Select
                 value={editedCircuit.rating?.toString() || ''}
                 onValueChange={(value) => handleChange('rating', parseInt(value))}
@@ -257,7 +273,9 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="curve" className="text-sm font-medium">Curve Type</Label>
+              <Label htmlFor="curve" className="text-sm font-medium">
+                Curve Type
+              </Label>
               <Select
                 value={editedCircuit.curve || ''}
                 onValueChange={(value) => handleChange('curve', value)}
@@ -312,7 +330,9 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
 
           {/* Notes */}
           <div className="space-y-2">
-            <Label htmlFor="notes" className="text-sm font-medium">Notes (optional)</Label>
+            <Label htmlFor="notes" className="text-sm font-medium">
+              Notes (optional)
+            </Label>
             <Textarea
               id="notes"
               value={editedCircuit.notes || ''}
@@ -325,10 +345,10 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
           {/* AI Evidence (read-only) */}
           {circuit.evidence && (
             <div className="space-y-2 bg-muted/30 rounded-lg p-3 border border-border/30">
-              <Label className="text-xs text-muted-foreground uppercase tracking-wide">AI Detection Evidence</Label>
-              <p className="text-sm text-foreground">
-                {circuit.evidence}
-              </p>
+              <Label className="text-xs text-muted-foreground uppercase tracking-wide">
+                AI Detection Evidence
+              </Label>
+              <p className="text-sm text-foreground">{circuit.evidence}</p>
             </div>
           )}
         </div>

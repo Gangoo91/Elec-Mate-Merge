@@ -3,10 +3,10 @@ import { Badge } from '@/components/ui/badge';
 
 const SmartHomeModule6Section4LearningOutcomes = () => {
   const outcomes = [
-    "Explain what is meant by \"bridging\" legacy devices",
-    "Identify common legacy systems that homeowners may want to integrate", 
-    "Understand the tools and hardware used to bridge old and new systems",
-    "Recognise limitations and when replacement is a better option than integration"
+    'Explain what is meant by "bridging" legacy devices',
+    'Identify common legacy systems that homeowners may want to integrate',
+    'Understand the tools and hardware used to bridge old and new systems',
+    'Recognise limitations and when replacement is a better option than integration',
   ];
 
   return (
@@ -17,7 +17,10 @@ const SmartHomeModule6Section4LearningOutcomes = () => {
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">
-              <Badge variant="secondary" className="bg-elec-yellow text-elec-dark font-bold min-w-[24px] h-6 flex items-center justify-center text-sm">
+              <Badge
+                variant="secondary"
+                className="bg-elec-yellow text-elec-dark font-bold min-w-[24px] h-6 flex items-center justify-center text-sm"
+              >
                 {index + 1}
               </Badge>
               <p className="text-foreground flex-1 leading-relaxed">{outcome}</p>

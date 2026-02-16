@@ -14,7 +14,12 @@
 import { useMemo } from 'react';
 import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
 import { useQuizResults } from '@/hooks/useQuizResults';
-import { curatedVideos, categoryLabels, type VideoCategory, type CuratedVideo } from '@/data/apprentice/curatedVideos';
+import {
+  curatedVideos,
+  categoryLabels,
+  type VideoCategory,
+  type CuratedVideo,
+} from '@/data/apprentice/curatedVideos';
 
 export interface VideoRecommendation {
   id: string;
@@ -27,11 +32,11 @@ export interface VideoRecommendation {
 
 // Map quiz categories to video categories for cross-referencing
 const quizToVideoCategory: Record<string, VideoCategory[]> = {
-  'Regulations': ['bs7671'],
-  'Safety': ['safety'],
-  'Testing': ['testing-inspection'],
-  'Design': ['wiring', 'domestic', 'commercial'],
-  'Science': ['electrical-theory'],
+  Regulations: ['bs7671'],
+  Safety: ['safety'],
+  Testing: ['testing-inspection'],
+  Design: ['wiring', 'domestic', 'commercial'],
+  Science: ['electrical-theory'],
 };
 
 // Parse duration string "MM:SS" to minutes
@@ -63,7 +68,7 @@ export function useVideoInsights() {
   // Estimated total watch time invested (minutes)
   const watchTimeMinutes = useMemo(() => {
     let total = 0;
-    curatedVideos.forEach(v => {
+    curatedVideos.forEach((v) => {
       if (watchedIds.includes(v.id)) {
         total += parseDurationMinutes(v.duration);
       }
@@ -74,7 +79,7 @@ export function useVideoInsights() {
   // Remaining watch time
   const remainingTimeMinutes = useMemo(() => {
     let total = 0;
-    curatedVideos.forEach(v => {
+    curatedVideos.forEach((v) => {
       if (!watchedIds.includes(v.id)) {
         total += parseDurationMinutes(v.duration);
       }
@@ -85,7 +90,7 @@ export function useVideoInsights() {
   // Level distribution of watched videos
   const levelDistribution = useMemo(() => {
     const counts = { beginner: 0, intermediate: 0, advanced: 0 };
-    curatedVideos.forEach(v => {
+    curatedVideos.forEach((v) => {
       if (watchedIds.includes(v.id)) {
         counts[v.level]++;
       }
@@ -96,7 +101,7 @@ export function useVideoInsights() {
   // Category breakdown of watched videos
   const categoryBreakdown = useMemo(() => {
     const counts: Partial<Record<VideoCategory, number>> = {};
-    curatedVideos.forEach(v => {
+    curatedVideos.forEach((v) => {
       if (watchedIds.includes(v.id)) {
         counts[v.category] = (counts[v.category] || 0) + 1;
       }
@@ -112,36 +117,36 @@ export function useVideoInsights() {
 
   // Total categories available vs explored
   const categoriesExplored = useMemo(() => categoryBreakdown.length, [categoryBreakdown]);
-  const categoriesTotal = useMemo(() => new Set(curatedVideos.map(v => v.category)).size, []);
+  const categoriesTotal = useMemo(() => new Set(curatedVideos.map((v) => v.category)).size, []);
 
   // Unwatched bookmarks
   const unwatchedBookmarks = useMemo(() => {
-    return bookmarks.filter(b => !watchedIds.includes(b.videoId));
+    return bookmarks.filter((b) => !watchedIds.includes(b.videoId));
   }, [bookmarks, watchedIds]);
 
   // Unexplored categories
   const unexploredCategories = useMemo(() => {
-    const watchedCats = new Set(categoryBreakdown.map(c => c.category));
-    const allCats = new Set(curatedVideos.map(v => v.category));
-    return Array.from(allCats).filter(c => !watchedCats.has(c));
+    const watchedCats = new Set(categoryBreakdown.map((c) => c.category));
+    const allCats = new Set(curatedVideos.map((v) => v.category));
+    return Array.from(allCats).filter((c) => !watchedCats.has(c));
   }, [categoryBreakdown]);
 
   // Next recommended video (first unwatched in weakest quiz category, or first unwatched overall)
   const nextRecommendedVideo = useMemo((): CuratedVideo | null => {
     const categories = getPerformanceByCategory();
-    const attempted = categories.filter(c => c.score > 0);
+    const attempted = categories.filter((c) => c.score > 0);
 
     if (attempted.length > 0) {
       const weakest = [...attempted].sort((a, b) => a.score - b.score)[0];
       const relatedCats = quizToVideoCategory[weakest.subject] || [];
       const recommended = curatedVideos.find(
-        v => relatedCats.includes(v.category) && !watchedIds.includes(v.id)
+        (v) => relatedCats.includes(v.category) && !watchedIds.includes(v.id)
       );
       if (recommended) return recommended;
     }
 
     // Fallback: first unwatched
-    return curatedVideos.find(v => !watchedIds.includes(v.id)) || null;
+    return curatedVideos.find((v) => !watchedIds.includes(v.id)) || null;
   }, [watchedIds, getPerformanceByCategory]);
 
   // Personalised insight
@@ -155,20 +160,39 @@ export function useVideoInsights() {
       insights.push(`You've invested ${timeStr} in video learning.`);
     }
     if (completionPercent >= 50) {
-      insights.push(`You've watched ${completionPercent}% of all available videos -- impressive commitment.`);
+      insights.push(
+        `You've watched ${completionPercent}% of all available videos -- impressive commitment.`
+      );
     }
     if (categoriesExplored >= 5) {
-      insights.push(`You've explored ${categoriesExplored} of ${categoriesTotal} video categories.`);
+      insights.push(
+        `You've explored ${categoriesExplored} of ${categoriesTotal} video categories.`
+      );
     }
-    if (levelDistribution.intermediate + levelDistribution.advanced > levelDistribution.beginner && watchedCount > 3) {
-      insights.push('Most of your watched videos are intermediate+ level -- you\'re progressing well.');
+    if (
+      levelDistribution.intermediate + levelDistribution.advanced > levelDistribution.beginner &&
+      watchedCount > 3
+    ) {
+      insights.push(
+        "Most of your watched videos are intermediate+ level -- you're progressing well."
+      );
     }
     if (unwatchedBookmarks.length > 0) {
-      insights.push(`You have ${unwatchedBookmarks.length} bookmarked video${unwatchedBookmarks.length !== 1 ? 's' : ''} waiting to watch.`);
+      insights.push(
+        `You have ${unwatchedBookmarks.length} bookmarked video${unwatchedBookmarks.length !== 1 ? 's' : ''} waiting to watch.`
+      );
     }
 
     return insights[0] || null;
-  }, [watchTimeMinutes, completionPercent, categoriesExplored, categoriesTotal, levelDistribution, watchedCount, unwatchedBookmarks]);
+  }, [
+    watchTimeMinutes,
+    completionPercent,
+    categoriesExplored,
+    categoriesTotal,
+    levelDistribution,
+    watchedCount,
+    unwatchedBookmarks,
+  ]);
 
   // Recommendations
   const recommendations = useMemo((): VideoRecommendation[] => {
@@ -189,10 +213,9 @@ export function useVideoInsights() {
     // 2. Specific recommended video
     if (nextRecommendedVideo) {
       const categories = getPerformanceByCategory();
-      const attempted = categories.filter(c => c.score > 0);
-      const weakest = attempted.length > 0
-        ? [...attempted].sort((a, b) => a.score - b.score)[0]
-        : null;
+      const attempted = categories.filter((c) => c.score > 0);
+      const weakest =
+        attempted.length > 0 ? [...attempted].sort((a, b) => a.score - b.score)[0] : null;
 
       if (weakest && weakest.score < 70) {
         recs.push({
@@ -223,16 +246,25 @@ export function useVideoInsights() {
     recs.push({
       id: 'daily-video',
       title: 'Watch 1 video today',
-      description: remainingTimeMinutes > 0
-        ? `${remainingTimeMinutes} minutes of content remaining. One video at a time.`
-        : 'Short training videos build knowledge fast.',
+      description:
+        remainingTimeMinutes > 0
+          ? `${remainingTimeMinutes} minutes of content remaining. One video at a time.`
+          : 'Short training videos build knowledge fast.',
       actionLabel: 'Browse videos',
       actionPath: '/apprentice/learning-videos',
       priority: 4,
     });
 
     return recs.sort((a, b) => a.priority - b.priority);
-  }, [unwatchedBookmarks, nextRecommendedVideo, getPerformanceByCategory, unexploredCategories, categoriesExplored, categoriesTotal, remainingTimeMinutes]);
+  }, [
+    unwatchedBookmarks,
+    nextRecommendedVideo,
+    getPerformanceByCategory,
+    unexploredCategories,
+    categoriesExplored,
+    categoriesTotal,
+    remainingTimeMinutes,
+  ]);
 
   return {
     watchedCount,

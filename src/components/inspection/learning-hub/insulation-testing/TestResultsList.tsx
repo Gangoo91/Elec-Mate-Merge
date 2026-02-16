@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Zap } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -28,9 +27,13 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                 <div className="flex items-center gap-4">
                   <div className="font-medium text-foreground">{test.circuitRef}</div>
                   <div className="text-sm text-gray-400">({test.testVoltage}V DC)</div>
-                  <Badge 
+                  <Badge
                     variant={test.result === 'pass' ? 'default' : 'destructive'}
-                    className={test.result === 'pass' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}
+                    className={
+                      test.result === 'pass'
+                        ? 'bg-green-500/20 text-green-400'
+                        : 'bg-red-500/20 text-red-400'
+                    }
                   >
                     {test.result.toUpperCase()}
                   </Badge>
@@ -63,7 +66,9 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                   <span className="text-gray-400">N-E:</span>
                   <span className="text-foreground ml-1">{test.neutralEarth || 'N/T'} MΩ</span>
                   {test.correctedValues.neutralEarth && (
-                    <span className="text-blue-400 ml-1">({test.correctedValues.neutralEarth})</span>
+                    <span className="text-blue-400 ml-1">
+                      ({test.correctedValues.neutralEarth})
+                    </span>
                   )}
                 </div>
               </div>
@@ -72,11 +77,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                   Temperature corrected from {test.temperature}°C to 20°C
                 </div>
               )}
-              {test.notes && (
-                <div className="mt-2 text-sm text-gray-400">
-                  Notes: {test.notes}
-                </div>
-              )}
+              {test.notes && <div className="mt-2 text-sm text-gray-400">Notes: {test.notes}</div>}
             </CardContent>
           </Card>
         ))}

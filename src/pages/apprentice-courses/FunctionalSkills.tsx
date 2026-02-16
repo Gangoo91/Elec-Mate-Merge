@@ -1,59 +1,73 @@
-import { BookOpen, Calculator, FileText, Laptop, Wrench, Target, Award, ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { motion } from "framer-motion";
-import useSEO from "@/hooks/useSEO";
+import {
+  BookOpen,
+  Calculator,
+  FileText,
+  Laptop,
+  Wrench,
+  Target,
+  Award,
+  ChevronLeft,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 
 const FunctionalSkills = () => {
   useSEO(
-    "Functional Skills for Electricians",
-    "Comprehensive functional skills training in maths, English and IT designed specifically for electrical apprentices"
+    'Functional Skills for Electricians',
+    'Comprehensive functional skills training in maths, English and IT designed specifically for electrical apprentices'
   );
 
   const modules = [
     {
-      number: "Module 1",
-      title: "Mathematics for Electricians",
-      description: "Number systems, units, algebra, data handling and practical calculations for electrical work",
+      number: 'Module 1',
+      title: 'Mathematics for Electricians',
+      description:
+        'Number systems, units, algebra, data handling and practical calculations for electrical work',
       icon: Calculator,
-      href: "/study-centre/apprentice/functional-skills/module1"
+      href: '/study-centre/apprentice/functional-skills/module1',
     },
     {
-      number: "Module 2",
-      title: "English for Electricians",
-      description: "Technical reading, writing, communication skills and professional documentation",
+      number: 'Module 2',
+      title: 'English for Electricians',
+      description:
+        'Technical reading, writing, communication skills and professional documentation',
       icon: FileText,
-      href: "/study-centre/apprentice/functional-skills/module2"
+      href: '/study-centre/apprentice/functional-skills/module2',
     },
     {
-      number: "Module 3",
-      title: "Digital Skills for Electricians",
-      description: "Computer basics, spreadsheets, digital documentation and online safety",
+      number: 'Module 3',
+      title: 'Digital Skills for Electricians',
+      description: 'Computer basics, spreadsheets, digital documentation and online safety',
       icon: Laptop,
-      href: "/study-centre/apprentice/functional-skills/module3"
+      href: '/study-centre/apprentice/functional-skills/module3',
     },
     {
-      number: "Module 4",
-      title: "Practical Mathematics Applications",
-      description: "Electrical calculations, cable sizing, costing, quoting and geometry for installation work",
+      number: 'Module 4',
+      title: 'Practical Mathematics Applications',
+      description:
+        'Electrical calculations, cable sizing, costing, quoting and geometry for installation work',
       icon: Wrench,
-      href: "/study-centre/apprentice/functional-skills/module4"
+      href: '/study-centre/apprentice/functional-skills/module4',
     },
     {
-      number: "Module 5",
-      title: "Assessment Preparation",
-      description: "Level 1 and Level 2 practice, study techniques, exam skills and portfolio building",
+      number: 'Module 5',
+      title: 'Assessment Preparation',
+      description:
+        'Level 1 and Level 2 practice, study techniques, exam skills and portfolio building',
       icon: Target,
-      href: "/study-centre/apprentice/functional-skills/module5"
+      href: '/study-centre/apprentice/functional-skills/module5',
     },
     {
-      number: "Module 6",
-      title: "Mock Examination",
-      description: "200-question bank covering all modules with timed practice exams and instant results",
+      number: 'Module 6',
+      title: 'Mock Examination',
+      description:
+        '200-question bank covering all modules with timed practice exams and instant results',
       icon: Award,
-      href: "/study-centre/apprentice/functional-skills/module6"
-    }
+      href: '/study-centre/apprentice/functional-skills/module6',
+    },
   ];
 
   return (
@@ -78,10 +92,7 @@ const FunctionalSkills = () => {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-6">
           {/* Back Button */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <Button
               variant="ghost"
               size="sm"
@@ -114,7 +125,8 @@ const FunctionalSkills = () => {
               </span>
             </h1>
             <p className="text-sm text-white/50 max-w-lg mx-auto">
-              Comprehensive functional skills training in maths, English and IT designed specifically for electrical apprentices
+              Comprehensive functional skills training in maths, English and IT designed
+              specifically for electrical apprentices
             </p>
           </motion.div>
         </div>

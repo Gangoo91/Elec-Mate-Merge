@@ -1,8 +1,8 @@
-import { Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import { Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 
 interface PropertiesPanelProps {
   selectedObject: any;
@@ -56,7 +56,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate }: PropertiesPanelPro
         </div>
 
         {/* Size (for rectangles) */}
-        {selectedObject.type === "rectangle" && (
+        {selectedObject.type === 'rectangle' && (
           <div className="space-y-2">
             <Label className="text-elec-light text-xs">Size</Label>
             <div className="grid grid-cols-2 gap-2">
@@ -109,14 +109,14 @@ export const PropertiesPanel = ({ selectedObject, onUpdate }: PropertiesPanelPro
         </div>
 
         {/* Text content */}
-        {selectedObject.type === "text" && (
+        {selectedObject.type === 'text' && (
           <>
             <Separator className="bg-elec-yellow/20" />
             <div className="space-y-2">
               <Label className="text-elec-light text-xs">Text Content</Label>
               <Input
                 type="text"
-                value={selectedObject.text || ""}
+                value={selectedObject.text || ''}
                 onChange={(e) => onUpdate({ text: e.target.value })}
                 className="bg-elec-dark border-elec-yellow/20 text-elec-light"
                 autoFocus
@@ -132,8 +132,8 @@ export const PropertiesPanel = ({ selectedObject, onUpdate }: PropertiesPanelPro
                     size="sm"
                     onClick={() => onUpdate({ fontSize: size })}
                     className={`flex-1 h-8 text-xs border-elec-yellow/30 ${
-                      selectedObject.fontSize === size 
-                        ? 'bg-elec-yellow/20 text-elec-yellow' 
+                      selectedObject.fontSize === size
+                        ? 'bg-elec-yellow/20 text-elec-yellow'
                         : 'text-elec-yellow hover:bg-elec-yellow/10'
                     }`}
                   >
@@ -146,7 +146,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate }: PropertiesPanelPro
         )}
 
         {/* Symbol info */}
-        {selectedObject.type === "symbol" && selectedObject.symbolId && (
+        {selectedObject.type === 'symbol' && selectedObject.symbolId && (
           <>
             <Separator className="bg-elec-yellow/20" />
             <div className="space-y-2">

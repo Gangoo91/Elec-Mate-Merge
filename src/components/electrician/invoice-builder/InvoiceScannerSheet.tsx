@@ -17,7 +17,7 @@ import {
   SwitchCamera,
   FileImage,
   AlertCircle,
-  Scan
+  Scan,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -36,7 +36,7 @@ export function InvoiceScannerSheet({
   onCapture,
   onUpload,
   isProcessing = false,
-  progress = ''
+  progress = '',
 }: InvoiceScannerSheetProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -89,7 +89,9 @@ export function InvoiceScannerSheet({
         setIsStreaming(true);
 
         const track = stream.getVideoTracks()[0];
-        const capabilities = track.getCapabilities?.() as MediaTrackCapabilities & { torch?: boolean };
+        const capabilities = track.getCapabilities?.() as MediaTrackCapabilities & {
+          torch?: boolean;
+        };
         setHasTorch(!!capabilities?.torch);
       }
     } catch (err: any) {
@@ -185,29 +187,32 @@ export function InvoiceScannerSheet({
   }, [capturedImage, onCapture]);
 
   // Handle file selection (supports multiple files)
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length === 0) return;
+  const handleFileSelect = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = Array.from(e.target.files || []);
+      if (files.length === 0) return;
 
-    // Validate all files
-    for (const file of files) {
-      if (!file.type.startsWith('image/')) {
-        setError(`${file.name} is not an image file`);
-        return;
+      // Validate all files
+      for (const file of files) {
+        if (!file.type.startsWith('image/')) {
+          setError(`${file.name} is not an image file`);
+          return;
+        }
+        if (file.size > 20 * 1024 * 1024) {
+          setError(`${file.name} exceeds 20MB limit`);
+          return;
+        }
       }
-      if (file.size > 20 * 1024 * 1024) {
-        setError(`${file.name} exceeds 20MB limit`);
-        return;
+
+      onUpload(files);
+
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
       }
-    }
-
-    onUpload(files);
-
-    // Reset file input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  }, [onUpload]);
+    },
+    [onUpload]
+  );
 
   // Handle sheet close/open
   useEffect(() => {
@@ -271,7 +276,8 @@ export function InvoiceScannerSheet({
                   <div>
                     <p className="text-[14px] font-medium text-white">AI-Powered Scanning</p>
                     <p className="text-[12px] text-white/60">
-                      Take a photo or upload an invoice image. AI will extract all line items automatically.
+                      Take a photo or upload an invoice image. AI will extract all line items
+                      automatically.
                     </p>
                   </div>
                 </div>
@@ -327,7 +333,9 @@ export function InvoiceScannerSheet({
 
               {/* Tips */}
               <div className="mt-auto pt-6">
-                <p className="text-[12px] text-white/40 uppercase tracking-wide mb-3">Tips for best results</p>
+                <p className="text-[12px] text-white/40 uppercase tracking-wide mb-3">
+                  Tips for best results
+                </p>
                 <ul className="space-y-2 text-[13px] text-white/60">
                   <li className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
@@ -412,7 +420,10 @@ export function InvoiceScannerSheet({
                       variant="ghost"
                       size="icon"
                       className="h-12 w-12 rounded-full bg-white/20 text-white"
-                      onClick={() => { stopCamera(); setMode('select'); }}
+                      onClick={() => {
+                        stopCamera();
+                        setMode('select');
+                      }}
                     >
                       <X className="h-5 w-5" />
                     </Button>

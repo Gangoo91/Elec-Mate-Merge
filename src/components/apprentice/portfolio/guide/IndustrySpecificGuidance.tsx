@@ -1,123 +1,122 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Zap, Building, Home, Factory, Wrench, Shield } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Zap, Building, Home, Factory, Wrench, Shield } from 'lucide-react';
 
 const IndustrySpecificGuidance = () => {
   const sectors = [
     {
-      name: "Domestic Electrical",
+      name: 'Domestic Electrical',
       icon: Home,
-      description: "Residential electrical installations and maintenance",
+      description: 'Residential electrical installations and maintenance',
       keyAreas: [
-        "Consumer unit installations and upgrades",
-        "Domestic wiring systems (ring finals, radials)",
-        "Kitchen and bathroom electrical work",
-        "Garden and outdoor electrical installations",
-        "Electric vehicle charging point installations"
+        'Consumer unit installations and upgrades',
+        'Domestic wiring systems (ring finals, radials)',
+        'Kitchen and bathroom electrical work',
+        'Garden and outdoor electrical installations',
+        'Electric vehicle charging point installations',
       ],
       evidenceTypes: [
-        "EICR certificates and reports",
-        "Minor works certificates",
-        "Installation certificates",
-        "Customer testimonials",
-        "Before/after installation photos"
+        'EICR certificates and reports',
+        'Minor works certificates',
+        'Installation certificates',
+        'Customer testimonials',
+        'Before/after installation photos',
       ],
       regulations: [
-        "BS 7671 Wiring Regulations",
-        "Part P Building Regulations",
-        "NICEIC/NAPIT scheme requirements",
-        "IET guidance notes",
-        "Local authority building control"
-      ]
+        'BS 7671 Wiring Regulations',
+        'Part P Building Regulations',
+        'NICEIC/NAPIT scheme requirements',
+        'IET guidance notes',
+        'Local authority building control',
+      ],
     },
     {
-      name: "Commercial Electrical",
+      name: 'Commercial Electrical',
       icon: Building,
-      description: "Office buildings, shops, and commercial installations",
+      description: 'Office buildings, shops, and commercial installations',
       keyAreas: [
-        "Three-phase distribution systems",
-        "Emergency lighting systems",
-        "Fire alarm installations",
-        "Data and communications cabling",
-        "Commercial lighting and controls"
+        'Three-phase distribution systems',
+        'Emergency lighting systems',
+        'Fire alarm installations',
+        'Data and communications cabling',
+        'Commercial lighting and controls',
       ],
       evidenceTypes: [
-        "Periodic inspection reports",
-        "Commissioning test results",
-        "Emergency lighting certificates",
-        "Fire alarm commissioning records",
-        "Cable schedule documentation"
+        'Periodic inspection reports',
+        'Commissioning test results',
+        'Emergency lighting certificates',
+        'Fire alarm commissioning records',
+        'Cable schedule documentation',
       ],
       regulations: [
-        "BS 7671 Wiring Regulations",
-        "BS 5266 Emergency lighting",
-        "BS 5839 Fire detection systems",
-        "CDM Regulations 2015",
-        "Workplace Regulations"
-      ]
+        'BS 7671 Wiring Regulations',
+        'BS 5266 Emergency lighting',
+        'BS 5839 Fire detection systems',
+        'CDM Regulations 2015',
+        'Workplace Regulations',
+      ],
     },
     {
-      name: "Industrial Electrical",
+      name: 'Industrial Electrical',
       icon: Factory,
-      description: "Manufacturing plants and heavy industrial installations",
+      description: 'Manufacturing plants and heavy industrial installations',
       keyAreas: [
-        "Motor control and automation",
-        "High voltage switching and protection",
-        "Industrial process control systems",
-        "Hazardous area installations",
-        "Power factor correction systems"
+        'Motor control and automation',
+        'High voltage switching and protection',
+        'Industrial process control systems',
+        'Hazardous area installations',
+        'Power factor correction systems',
       ],
       evidenceTypes: [
-        "Commissioning reports",
-        "FAT/SAT documentation",
-        "Loop testing certificates",
-        "Motor testing results",
-        "Safety system validation"
+        'Commissioning reports',
+        'FAT/SAT documentation',
+        'Loop testing certificates',
+        'Motor testing results',
+        'Safety system validation',
       ],
       regulations: [
-        "BS 7671 Wiring Regulations",
-        "BS EN 60079 Explosive atmospheres",
-        "DSEAR Regulations",
-        "PUWER Regulations",
-        "Machinery Directive"
-      ]
-    }
+        'BS 7671 Wiring Regulations',
+        'BS EN 60079 Explosive atmospheres',
+        'DSEAR Regulations',
+        'PUWER Regulations',
+        'Machinery Directive',
+      ],
+    },
   ];
 
   const universalRequirements = [
     {
-      category: "Health & Safety",
+      category: 'Health & Safety',
       icon: Shield,
       requirements: [
-        "Risk assessment completion",
-        "Method statement preparation",
-        "PPE usage documentation",
-        "Accident/incident reporting",
-        "Safety training records"
-      ]
+        'Risk assessment completion',
+        'Method statement preparation',
+        'PPE usage documentation',
+        'Accident/incident reporting',
+        'Safety training records',
+      ],
     },
     {
-      category: "Testing & Inspection",
+      category: 'Testing & Inspection',
       icon: Wrench,
       requirements: [
-        "Initial verification testing",
-        "Periodic inspection and testing",
-        "Portable appliance testing",
-        "Emergency lighting testing",
-        "Fire alarm system testing"
-      ]
+        'Initial verification testing',
+        'Periodic inspection and testing',
+        'Portable appliance testing',
+        'Emergency lighting testing',
+        'Fire alarm system testing',
+      ],
     },
     {
-      category: "Regulations & Standards",
+      category: 'Regulations & Standards',
       icon: Zap,
       requirements: [
-        "BS 7671 18th Edition knowledge",
-        "IET Guidance Note understanding",
-        "Building Regulations compliance",
-        "CDM Regulations awareness",
-        "Environmental regulations"
-      ]
-    }
+        'BS 7671 18th Edition knowledge',
+        'IET Guidance Note understanding',
+        'Building Regulations compliance',
+        'CDM Regulations awareness',
+        'Environmental regulations',
+      ],
+    },
   ];
 
   return (
@@ -128,9 +127,9 @@ const IndustrySpecificGuidance = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            Tailored guidance for building portfolios specific to different electrical industry sectors. 
-            Each sector has unique requirements, regulations, and evidence types that must be 
-            demonstrated for competency assessment.
+            Tailored guidance for building portfolios specific to different electrical industry
+            sectors. Each sector has unique requirements, regulations, and evidence types that must
+            be demonstrated for competency assessment.
           </p>
         </CardContent>
       </Card>

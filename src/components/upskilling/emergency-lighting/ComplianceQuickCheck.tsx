@@ -12,7 +12,11 @@ export const ComplianceQuickCheck = () => {
               Quick Check: What is the legal consequence of failing to carry out regular testing?
             </p>
             <p className="text-foreground text-sm sm:text-base">
-              Failure to carry out regular testing can result in invalid insurance coverage, enforcement notices from the Fire and Rescue Authority, unlimited fines, and criminal prosecution of the Responsible Person. In severe cases causing death or serious injury, imprisonment is possible. Additionally, the Responsible Person may face civil liability claims if system failure causes harm during an emergency.
+              Failure to carry out regular testing can result in invalid insurance coverage,
+              enforcement notices from the Fire and Rescue Authority, unlimited fines, and criminal
+              prosecution of the Responsible Person. In severe cases causing death or serious
+              injury, imprisonment is possible. Additionally, the Responsible Person may face civil
+              liability claims if system failure causes harm during an emergency.
             </p>
           </div>
         </div>

@@ -5,20 +5,12 @@ import {
   ResponsiveDialogTitle,
   ResponsiveDialogBody,
   ResponsiveDialogFooter,
-} from "@/components/ui/responsive-dialog";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Edit,
-  Calendar,
-  Clock,
-  Star,
-  FileText,
-  Download,
-  Tag
-} from "lucide-react";
-import { PortfolioEntry } from "@/types/portfolio";
+} from '@/components/ui/responsive-dialog';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Edit, Calendar, Clock, Star, FileText, Download, Tag } from 'lucide-react';
+import { PortfolioEntry } from '@/types/portfolio';
 
 interface PortfolioEntryViewDialogProps {
   entry: PortfolioEntry;
@@ -32,17 +24,22 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
       weekday: 'long',
       day: '2-digit',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'success';
-      case 'in-progress': return 'yellow';
-      case 'reviewed': return 'gold';
-      case 'draft': return 'outline';
-      default: return 'outline';
+      case 'completed':
+        return 'success';
+      case 'in-progress':
+        return 'yellow';
+      case 'reviewed':
+        return 'gold';
+      case 'draft':
+        return 'outline';
+      default:
+        return 'outline';
     }
   };
 
@@ -69,9 +66,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant={getStatusColor(entry.status)}>
-                {entry.status}
-              </Badge>
+              <Badge variant={getStatusColor(entry.status)}>{entry.status}</Badge>
               <Badge variant="outline" style={{ backgroundColor: `${entry.category.color}20` }}>
                 {entry.category.name}
               </Badge>
@@ -99,7 +94,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
-                    {entry.skills.map(skill => (
+                    {entry.skills.map((skill) => (
                       <Badge key={skill} variant="secondary">
                         {skill}
                       </Badge>
@@ -119,7 +114,7 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
-                    {entry.tags.map(tag => (
+                    {entry.tags.map((tag) => (
                       <Badge key={tag} variant="outline">
                         #{tag}
                       </Badge>
@@ -191,14 +186,18 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  {entry.evidenceFiles.map(file => (
-                    <div key={file.id} className="flex items-center justify-between p-3 border rounded-lg">
+                  {entry.evidenceFiles.map((file) => (
+                    <div
+                      key={file.id}
+                      className="flex items-center justify-between p-3 border rounded-lg"
+                    >
                       <div className="flex items-center gap-3">
                         <FileText className="h-5 w-5 text-elec-yellow" />
                         <div>
                           <p className="font-medium">{file.name}</p>
                           <p className="text-xs text-white">
-                            {(file.size / 1024).toFixed(1)} KB • {new Date(file.uploadDate).toLocaleDateString()}
+                            {(file.size / 1024).toFixed(1)} KB •{' '}
+                            {new Date(file.uploadDate).toLocaleDateString()}
                           </p>
                         </div>
                       </div>

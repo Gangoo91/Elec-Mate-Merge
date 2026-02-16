@@ -7,34 +7,34 @@ const EVChargingModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Earthing System Selection: TT, TN-S, TN-C-S",
+      title: 'Earthing System Selection: TT, TN-S, TN-C-S',
       icon: Anchor,
-      description: "Understanding and selecting appropriate earthing systems"
+      description: 'Understanding and selecting appropriate earthing systems',
     },
     {
       id: 2,
-      title: "Open PEN Fault Protection Methods",
+      title: 'Open PEN Fault Protection Methods',
       icon: AlertTriangle,
-      description: "Protecting against open PEN conductor faults"
+      description: 'Protecting against open PEN conductor faults',
     },
     {
       id: 3,
-      title: "Use of Monitoring Devices and Relays",
+      title: 'Use of Monitoring Devices and Relays',
       icon: Eye,
-      description: "Installing monitoring equipment for enhanced protection"
+      description: 'Installing monitoring equipment for enhanced protection',
     },
     {
       id: 4,
-      title: "Earth Rod Installation and Testing",
+      title: 'Earth Rod Installation and Testing',
       icon: Pickaxe,
-      description: "Proper earth electrode installation and verification"
+      description: 'Proper earth electrode installation and verification',
     },
     {
       id: 5,
-      title: "Surge and Lightning Protection (SPD)",
+      title: 'Surge and Lightning Protection (SPD)',
       icon: Zap,
-      description: "Protecting EV charging systems from electrical surges"
-    }
+      description: 'Protecting EV charging systems from electrical surges',
+    },
   ];
 
   return (

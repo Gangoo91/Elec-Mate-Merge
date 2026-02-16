@@ -1,123 +1,131 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, AlertTriangle, Clock, FileText, Award, Shield, Calendar, Download } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  CheckCircle,
+  AlertTriangle,
+  Clock,
+  FileText,
+  Award,
+  Shield,
+  Calendar,
+  Download,
+} from 'lucide-react';
 
 const ComplianceTrackingTab = () => {
   const complianceItems = [
     {
-      category: "Off-the-Job Training",
-      requirement: "20% minimum",
-      current: "22.3%",
-      status: "compliant",
+      category: 'Off-the-Job Training',
+      requirement: '20% minimum',
+      current: '22.3%',
+      status: 'compliant',
       hoursRequired: 312,
       hoursCompleted: 347,
-      deadline: "Ongoing",
-      aiStatus: "Exceeding requirements"
+      deadline: 'Ongoing',
+      aiStatus: 'Exceeding requirements',
     },
     {
-      category: "Portfolio Evidence",
-      requirement: "All KSBs covered",
-      current: "85% complete",
-      status: "on-track",
+      category: 'Portfolio Evidence',
+      requirement: 'All KSBs covered',
+      current: '85% complete',
+      status: 'on-track',
       hoursRequired: 0,
       hoursCompleted: 0,
-      deadline: "3 months",
-      aiStatus: "Good progress, focus on commercial evidence"
+      deadline: '3 months',
+      aiStatus: 'Good progress, focus on commercial evidence',
     },
     {
-      category: "EPA Readiness",
-      requirement: "Gateway criteria",
-      current: "73% ready",
-      status: "attention-needed",
+      category: 'EPA Readiness',
+      requirement: 'Gateway criteria',
+      current: '73% ready',
+      status: 'attention-needed',
       hoursRequired: 0,
       hoursCompleted: 0,
-      deadline: "6 months",
-      aiStatus: "Needs focused preparation"
+      deadline: '6 months',
+      aiStatus: 'Needs focused preparation',
     },
     {
-      category: "CPD Documentation",
-      requirement: "Monthly updates",
-      current: "Up to date",
-      status: "compliant",
+      category: 'CPD Documentation',
+      requirement: 'Monthly updates',
+      current: 'Up to date',
+      status: 'compliant',
       hoursRequired: 0,
       hoursCompleted: 0,
-      deadline: "Monthly",
-      aiStatus: "Excellent record keeping"
-    }
+      deadline: 'Monthly',
+      aiStatus: 'Excellent record keeping',
+    },
   ];
 
   const auditTrail = [
     {
-      date: "2024-01-15",
-      action: "Portfolio review completed",
-      type: "review",
-      outcome: "All sections approved",
-      assessor: "J. Smith"
+      date: '2024-01-15',
+      action: 'Portfolio review completed',
+      type: 'review',
+      outcome: 'All sections approved',
+      assessor: 'J. Smith',
     },
     {
-      date: "2024-01-10", 
-      action: "OJT hours validated",
-      type: "validation",
-      outcome: "347 hours confirmed",
-      assessor: "System"
+      date: '2024-01-10',
+      action: 'OJT hours validated',
+      type: 'validation',
+      outcome: '347 hours confirmed',
+      assessor: 'System',
     },
     {
-      date: "2024-01-05",
-      action: "EPA gateway criteria check",
-      type: "assessment",
-      outcome: "73% readiness achieved",
-      assessor: "AI System"
+      date: '2024-01-05',
+      action: 'EPA gateway criteria check',
+      type: 'assessment',
+      outcome: '73% readiness achieved',
+      assessor: 'AI System',
     },
     {
-      date: "2024-01-01",
-      action: "Monthly compliance check",
-      type: "automated",
-      outcome: "All targets on track",
-      assessor: "System"
-    }
+      date: '2024-01-01',
+      action: 'Monthly compliance check',
+      type: 'automated',
+      outcome: 'All targets on track',
+      assessor: 'System',
+    },
   ];
 
   const documents = [
     {
-      name: "Learning Agreement",
-      type: "contract",
-      status: "signed",
-      lastUpdated: "2023-09-01",
-      required: true
+      name: 'Learning Agreement',
+      type: 'contract',
+      status: 'signed',
+      lastUpdated: '2023-09-01',
+      required: true,
     },
     {
-      name: "Skills Scan Results", 
-      type: "assessment",
-      status: "current",
-      lastUpdated: "2024-01-15",
-      required: true
+      name: 'Skills Scan Results',
+      type: 'assessment',
+      status: 'current',
+      lastUpdated: '2024-01-15',
+      required: true,
     },
     {
-      name: "EPA Gateway Evidence",
-      type: "portfolio",
-      status: "in-progress",
-      lastUpdated: "2024-01-10",
-      required: true
+      name: 'EPA Gateway Evidence',
+      type: 'portfolio',
+      status: 'in-progress',
+      lastUpdated: '2024-01-10',
+      required: true,
     },
     {
-      name: "Professional Discussion Plan",
-      type: "preparation",
-      status: "pending",
-      lastUpdated: "N/A",
-      required: true
-    }
+      name: 'Professional Discussion Plan',
+      type: 'preparation',
+      status: 'pending',
+      lastUpdated: 'N/A',
+      required: true,
+    },
   ];
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case "compliant":
+      case 'compliant':
         return <Badge className="bg-green-600 text-white">Compliant</Badge>;
-      case "on-track":
+      case 'on-track':
         return <Badge className="bg-blue-600 text-white">On Track</Badge>;
-      case "attention-needed":
+      case 'attention-needed':
         return <Badge className="bg-orange-600 text-white">Needs Attention</Badge>;
       default:
         return <Badge>Unknown</Badge>;
@@ -126,11 +134,11 @@ const ComplianceTrackingTab = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "compliant":
+      case 'compliant':
         return <CheckCircle className="h-4 w-4 text-green-500" />;
-      case "on-track":
+      case 'on-track':
         return <Clock className="h-4 w-4 text-blue-500" />;
-      case "attention-needed":
+      case 'attention-needed':
         return <AlertTriangle className="h-4 w-4 text-orange-500" />;
       default:
         return <FileText className="h-4 w-4 text-white" />;
@@ -139,12 +147,12 @@ const ComplianceTrackingTab = () => {
 
   const getDocumentStatusBadge = (status: string) => {
     switch (status) {
-      case "signed":
-      case "current":
+      case 'signed':
+      case 'current':
         return <Badge className="bg-green-600 text-white">Complete</Badge>;
-      case "in-progress":
+      case 'in-progress':
         return <Badge className="bg-blue-600 text-white">In Progress</Badge>;
-      case "pending":
+      case 'pending':
         return <Badge className="bg-orange-600 text-white">Pending</Badge>;
       default:
         return <Badge>Unknown</Badge>;
@@ -161,9 +169,7 @@ const ComplianceTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-500">92%</div>
-            <p className="text-xs text-white">
-              Overall compliance
-            </p>
+            <p className="text-xs text-white">Overall compliance</p>
           </CardContent>
         </Card>
 
@@ -174,9 +180,7 @@ const ComplianceTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-500">22.3%</div>
-            <p className="text-xs text-white">
-              Above 20% requirement
-            </p>
+            <p className="text-xs text-white">Above 20% requirement</p>
           </CardContent>
         </Card>
 
@@ -187,9 +191,7 @@ const ComplianceTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-500">73%</div>
-            <p className="text-xs text-white">
-              Gateway preparation
-            </p>
+            <p className="text-xs text-white">Gateway preparation</p>
           </CardContent>
         </Card>
 
@@ -200,9 +202,7 @@ const ComplianceTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-purple-500">14d</div>
-            <p className="text-xs text-white">
-              Days remaining
-            </p>
+            <p className="text-xs text-white">Days remaining</p>
           </CardContent>
         </Card>
       </div>
@@ -226,18 +226,18 @@ const ComplianceTrackingTab = () => {
                     </div>
                     {getStatusBadge(item.status)}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>Requirement: {item.requirement}</span>
                       <span>Current: {item.current}</span>
                     </div>
-                    
+
                     {item.hoursRequired > 0 && (
                       <>
-                        <Progress 
-                          value={(item.hoursCompleted / item.hoursRequired) * 100} 
-                          className="h-2" 
+                        <Progress
+                          value={(item.hoursCompleted / item.hoursRequired) * 100}
+                          className="h-2"
                         />
                         <div className="flex justify-between text-xs text-white">
                           <span>{item.hoursCompleted}h completed</span>
@@ -245,7 +245,7 @@ const ComplianceTrackingTab = () => {
                         </div>
                       </>
                     )}
-                    
+
                     <div className="flex justify-between text-xs">
                       <span className="text-white">Deadline: {item.deadline}</span>
                       <span className="italic text-purple-500">AI: {item.aiStatus}</span>
@@ -267,7 +267,10 @@ const ComplianceTrackingTab = () => {
           <CardContent>
             <div className="space-y-4">
               {documents.map((doc, index) => (
-                <div key={index} className="flex items-center justify-between border rounded-lg p-3">
+                <div
+                  key={index}
+                  className="flex items-center justify-between border rounded-lg p-3"
+                >
                   <div className="flex items-center gap-3">
                     <FileText className="h-4 w-4 text-white" />
                     <div>
@@ -300,7 +303,10 @@ const ComplianceTrackingTab = () => {
         <CardContent>
           <div className="space-y-3">
             {auditTrail.map((entry, index) => (
-              <div key={index} className="flex items-center justify-between border-l-2 border-blue-500 pl-4 py-2">
+              <div
+                key={index}
+                className="flex items-center justify-between border-l-2 border-blue-500 pl-4 py-2"
+              >
                 <div>
                   <p className="font-medium text-sm">{entry.action}</p>
                   <p className="text-xs text-white">
@@ -341,9 +347,9 @@ const ComplianceTrackingTab = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            Your intelligent compliance system continuously monitors all apprenticeship requirements, 
-            tracks deadlines, validates evidence, and maintains detailed audit trails. Stay confident 
-            knowing you're always meeting standards and ready for assessments.
+            Your intelligent compliance system continuously monitors all apprenticeship
+            requirements, tracks deadlines, validates evidence, and maintains detailed audit trails.
+            Stay confident knowing you're always meeting standards and ready for assessments.
           </p>
         </CardContent>
       </Card>

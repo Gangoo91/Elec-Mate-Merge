@@ -17,8 +17,7 @@ import useSEO from '@/hooks/useSEO';
 const quickCheckQuestions = [
   {
     id: 'kinetic-lift-start',
-    question:
-      'What is the very first step you should take before physically lifting any load?',
+    question: 'What is the very first step you should take before physically lifting any load?',
     options: [
       'Bend your knees and grip the load',
       'Plan the lift &mdash; assess the load, route, and destination',
@@ -31,8 +30,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'centre-of-gravity',
-    question:
-      'Why should you keep the load as close to your body as possible during a lift?',
+    question: 'Why should you keep the load as close to your body as possible during a lift?',
     options: [
       'It makes the load lighter',
       'It keeps the load&rsquo;s centre of gravity within your base of support, reducing spinal stress',
@@ -45,8 +43,7 @@ const quickCheckQuestions = [
   },
   {
     id: 'twisting-during-lift',
-    question:
-      'What should you do if you need to change direction while carrying a load?',
+    question: 'What should you do if you need to change direction while carrying a load?',
     options: [
       'Twist your upper body while keeping your feet planted',
       'Lean to one side and pivot on one foot',
@@ -224,8 +221,8 @@ export default function ManualHandlingModule2Section1() {
             The Kinetic Lifting Technique
           </h1>
           <p className="text-white/80 max-w-xl mx-auto leading-relaxed">
-            The eight-step safe lift, base of support, centre of gravity, the power zone, and
-            common lifting errors &mdash; the foundation of every safe manual handling operation
+            The eight-step safe lift, base of support, centre of gravity, the power zone, and common
+            lifting errors &mdash; the foundation of every safe manual handling operation
           </p>
         </div>
 
@@ -282,15 +279,15 @@ export default function ManualHandlingModule2Section1() {
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
-                    <strong>Power zone:</strong> Lift, carry, and set down between knee and
-                    shoulder height.
+                    <strong>Power zone:</strong> Lift, carry, and set down between knee and shoulder
+                    height.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
-                    <strong>Firm grip:</strong> Use the full hand, not just fingertips &mdash;
-                    test the grip before committing.
+                    <strong>Firm grip:</strong> Use the full hand, not just fingertips &mdash; test
+                    the grip before committing.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -338,8 +335,7 @@ export default function ManualHandlingModule2Section1() {
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
               <span className="leading-relaxed">
-                Identify the power zone and explain why handling loads within it reduces injury
-                risk
+                Identify the power zone and explain why handling loads within it reduces injury risk
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -379,26 +375,24 @@ export default function ManualHandlingModule2Section1() {
               </p>
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-emerald-400">
-                  Definition: Kinetic Lifting
-                </h3>
+                <h3 className="font-semibold mb-2 text-emerald-400">Definition: Kinetic Lifting</h3>
                 <p className="text-white/80 text-sm leading-relaxed">
                   <strong className="text-white">Kinetic lifting</strong> (sometimes called the
                   &ldquo;kinetic method&rdquo; or &ldquo;correct manual handling technique&rdquo;)
                   is a systematic approach to lifting that uses the body&rsquo;s natural mechanics
-                  to minimise stress on the spine. It relies on the powerful muscles of the legs
-                  and buttocks to generate the lifting force, while keeping the spine in a neutral,
-                  upright position throughout the movement. The word &ldquo;kinetic&rdquo; refers
-                  to the smooth, continuous motion that characterises a safe lift.
+                  to minimise stress on the spine. It relies on the powerful muscles of the legs and
+                  buttocks to generate the lifting force, while keeping the spine in a neutral,
+                  upright position throughout the movement. The word &ldquo;kinetic&rdquo; refers to
+                  the smooth, continuous motion that characterises a safe lift.
                 </p>
               </div>
 
               <p className="leading-relaxed">
                 The kinetic lifting technique is not just theory &mdash; it is the practical
-                foundation of every safe manual handling operation you will perform on site.
-                Whether you are lifting a consumer unit off a pallet, picking up a toolbox, or
-                lowering cable drums into position, the same eight steps apply. Mastering this
-                technique protects your back for the duration of your career.
+                foundation of every safe manual handling operation you will perform on site. Whether
+                you are lifting a consumer unit off a pallet, picking up a toolbox, or lowering
+                cable drums into position, the same eight steps apply. Mastering this technique
+                protects your back for the duration of your career.
               </p>
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
@@ -410,10 +404,10 @@ export default function ManualHandlingModule2Section1() {
                   According to the HSE, musculoskeletal disorders (MSDs) account for approximately
                   6.6 million working days lost per year in the UK. Back injuries alone cost the
                   construction industry hundreds of millions of pounds annually in lost
-                  productivity, compensation claims, and healthcare costs. For individual workers,
-                  a chronic back injury can mean reduced earning capacity, chronic pain, and
-                  inability to continue in the trade. The kinetic lifting technique is your primary
-                  defence against these outcomes.
+                  productivity, compensation claims, and healthcare costs. For individual workers, a
+                  chronic back injury can mean reduced earning capacity, chronic pain, and inability
+                  to continue in the trade. The kinetic lifting technique is your primary defence
+                  against these outcomes.
                 </p>
               </div>
             </div>
@@ -454,11 +448,10 @@ export default function ManualHandlingModule2Section1() {
                         <p className="text-white/80 text-sm leading-relaxed">
                           Before touching the load, assess its{' '}
                           <strong className="text-white">weight, shape, and stability</strong>.
-                          Check for sharp edges, hot surfaces, or shifting contents. Plan your
-                          route &mdash; look for obstacles, uneven surfaces, closed doors, and
-                          stairs. Identify where you will set the load down. Decide whether you
-                          need help or a mechanical aid. If the load has no handles, plan how you
-                          will grip it.
+                          Check for sharp edges, hot surfaces, or shifting contents. Plan your route
+                          &mdash; look for obstacles, uneven surfaces, closed doors, and stairs.
+                          Identify where you will set the load down. Decide whether you need help or
+                          a mechanical aid. If the load has no handles, plan how you will grip it.
                         </p>
                       </div>
                     </div>
@@ -479,8 +472,8 @@ export default function ManualHandlingModule2Section1() {
                           <strong className="text-white">shoulder-width apart</strong>, with one
                           foot slightly forward of the other (a split stance). This creates a wide,
                           stable base of support. Point your leading foot in the direction you
-                          intend to move. Position yourself as close to the load as possible
-                          &mdash; directly in front of it, not to the side.
+                          intend to move. Position yourself as close to the load as possible &mdash;
+                          directly in front of it, not to the side.
                         </p>
                       </div>
                     </div>
@@ -494,9 +487,9 @@ export default function ManualHandlingModule2Section1() {
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Bend Your Knees</h4>
                         <p className="text-white/80 text-sm leading-relaxed">
-                          Bend at the <strong className="text-white">knees and hips</strong>, not
-                          at the waist. Lower yourself by squatting down, keeping your back
-                          straight and your head up. Your back should remain in a{' '}
+                          Bend at the <strong className="text-white">knees and hips</strong>, not at
+                          the waist. Lower yourself by squatting down, keeping your back straight
+                          and your head up. Your back should remain in a{' '}
                           <strong className="text-white">neutral, upright position</strong>{' '}
                           throughout. A slight forward lean is acceptable, but you should never
                           round or hunch your back. Think of it as sitting down into a chair rather
@@ -523,8 +516,8 @@ export default function ManualHandlingModule2Section1() {
                           grip opposite corners or the bottom edge diagonally. Test the grip before
                           committing to the lift &mdash; try a small tilt or &ldquo;corner
                           lift&rdquo; to check the weight and ensure your grip is secure. If the
-                          load is slippery or difficult to hold, consider gloves or alternative
-                          grip points.
+                          load is slippery or difficult to hold, consider gloves or alternative grip
+                          points.
                         </p>
                       </div>
                     </div>
@@ -536,20 +529,16 @@ export default function ManualHandlingModule2Section1() {
                         <span className="text-emerald-300 font-bold text-sm">5</span>
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-emerald-300 font-medium mb-1">
-                          Keep the Load Close
-                        </h4>
+                        <h4 className="text-emerald-300 font-medium mb-1">Keep the Load Close</h4>
                         <p className="text-white/80 text-sm leading-relaxed">
                           Before you lift, pull the load{' '}
-                          <strong className="text-white">
-                            as close to your body as possible
-                          </strong>
-                          . The load should be in contact with your body or as near to it as the
-                          shape allows. The closer the load is to your spine, the less leverage
-                          force it exerts on your lower back. At arm&rsquo;s length, the effective
-                          strain on your lumbar spine can be up to{' '}
-                          <strong className="text-white">10 times</strong> the actual weight of
-                          the load.
+                          <strong className="text-white">as close to your body as possible</strong>.
+                          The load should be in contact with your body or as near to it as the shape
+                          allows. The closer the load is to your spine, the less leverage force it
+                          exerts on your lower back. At arm&rsquo;s length, the effective strain on
+                          your lumbar spine can be up to{' '}
+                          <strong className="text-white">10 times</strong> the actual weight of the
+                          load.
                         </p>
                       </div>
                     </div>
@@ -640,15 +629,13 @@ export default function ManualHandlingModule2Section1() {
             <div className="space-y-4 text-white">
               <p className="leading-relaxed">
                 Two biomechanical concepts underpin the kinetic lifting technique:{' '}
-                <strong>base of support</strong> and{' '}
-                <strong>centre of gravity</strong>. Understanding these concepts explains{' '}
-                <em>why</em> the technique works, not just <em>how</em> to perform it.
+                <strong>base of support</strong> and <strong>centre of gravity</strong>.
+                Understanding these concepts explains <em>why</em> the technique works, not just{' '}
+                <em>how</em> to perform it.
               </p>
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-emerald-400">
-                  Definition: Base of Support
-                </h3>
+                <h3 className="font-semibold mb-2 text-emerald-400">Definition: Base of Support</h3>
                 <p className="text-white/80 text-sm leading-relaxed">
                   Your <strong className="text-white">base of support</strong> is the area on the
                   ground enclosed by your feet and the space between them. Think of it as the
@@ -663,20 +650,18 @@ export default function ManualHandlingModule2Section1() {
                   Definition: Centre of Gravity
                 </h3>
                 <p className="text-white/80 text-sm leading-relaxed">
-                  Your <strong className="text-white">centre of gravity</strong> is the single
-                  point at which your entire body weight (plus any load you are carrying) is
-                  concentrated. When standing upright without a load, your centre of gravity is
-                  roughly at navel height. When you pick up a load, the combined centre of gravity
-                  shifts towards the load. For a stable lift, this combined centre of gravity must
-                  remain <strong className="text-white">within your base of support</strong>. If
-                  it moves outside this base, you will lose balance.
+                  Your <strong className="text-white">centre of gravity</strong> is the single point
+                  at which your entire body weight (plus any load you are carrying) is concentrated.
+                  When standing upright without a load, your centre of gravity is roughly at navel
+                  height. When you pick up a load, the combined centre of gravity shifts towards the
+                  load. For a stable lift, this combined centre of gravity must remain{' '}
+                  <strong className="text-white">within your base of support</strong>. If it moves
+                  outside this base, you will lose balance.
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-emerald-400 font-medium mb-2">
-                  How They Work Together
-                </h3>
+                <h3 className="text-emerald-400 font-medium mb-2">How They Work Together</h3>
                 <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
@@ -688,15 +673,15 @@ export default function ManualHandlingModule2Section1() {
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Load close to body</strong> = centre of gravity stays near your
-                      spine = less spinal stress and better balance
+                      <strong>Load close to body</strong> = centre of gravity stays near your spine
+                      = less spinal stress and better balance
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Load at arm&rsquo;s length</strong> = centre of gravity moves
-                      forward = more spinal stress, less stability, higher injury risk
+                      <strong>Load at arm&rsquo;s length</strong> = centre of gravity moves forward
+                      = more spinal stress, less stability, higher injury risk
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -712,9 +697,9 @@ export default function ManualHandlingModule2Section1() {
               <p className="leading-relaxed">
                 On a construction site, surfaces are often uneven, cluttered, or slippery. This
                 makes a stable base of support even more critical. Before every lift, check the
-                ground beneath your feet. Clear any debris, avoid standing on cables or offcuts,
-                and ensure you have firm, level footing. If the surface is wet or icy, take extra
-                care to widen your stance and slow your movements.
+                ground beneath your feet. Clear any debris, avoid standing on cables or offcuts, and
+                ensure you have firm, level footing. If the surface is wet or icy, take extra care
+                to widen your stance and slow your movements.
               </p>
             </div>
           </div>
@@ -770,9 +755,7 @@ export default function ManualHandlingModule2Section1() {
                     {/* Knee label */}
                     <div className="absolute -right-2 sm:right-0 bottom-[26%] flex items-center gap-1">
                       <div className="w-4 h-0.5 bg-emerald-400/40" />
-                      <span className="text-emerald-400/80 text-[9px] sm:text-[10px]">
-                        Knees
-                      </span>
+                      <span className="text-emerald-400/80 text-[9px] sm:text-[10px]">Knees</span>
                     </div>
                     {/* Danger zones */}
                     <div className="absolute left-0 right-0 top-[5%] h-[15%] border border-red-400/30 bg-red-500/10 rounded-t-lg flex items-center justify-center">
@@ -825,8 +808,8 @@ export default function ManualHandlingModule2Section1() {
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div className="leading-relaxed">
-                      <strong>Carry loads at waist height</strong> &mdash; avoid carrying above
-                      your chest or below your knees for any distance
+                      <strong>Carry loads at waist height</strong> &mdash; avoid carrying above your
+                      chest or below your knees for any distance
                     </div>
                   </li>
                 </ul>
@@ -844,9 +827,9 @@ export default function ManualHandlingModule2Section1() {
             </h2>
             <div className="space-y-4 text-white">
               <p className="leading-relaxed">
-                Even people who know the correct technique can fall into bad habits, especially
-                when tired, rushed, or working in awkward conditions. Being aware of the most
-                common errors helps you recognise and correct them before they cause injury.
+                Even people who know the correct technique can fall into bad habits, especially when
+                tired, rushed, or working in awkward conditions. Being aware of the most common
+                errors helps you recognise and correct them before they cause injury.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -862,8 +845,8 @@ export default function ManualHandlingModule2Section1() {
                     <p className="text-white/80 text-sm leading-relaxed">
                       This forces the small muscles of the lower back to do the work of the large
                       leg muscles. Compressive forces on the L4/L5 and L5/S1 discs increase
-                      dramatically. This is the single most common cause of acute back injury
-                      during lifting.
+                      dramatically. This is the single most common cause of acute back injury during
+                      lifting.
                     </p>
                   </div>
                   <div className="bg-red-500/5 border border-red-400/20 p-3 rounded-lg">
@@ -872,9 +855,9 @@ export default function ManualHandlingModule2Section1() {
                     </h4>
                     <p className="text-white/80 text-sm leading-relaxed">
                       The intervertebral discs are weakest when subjected to combined compression
-                      and rotation. Twisting under load can cause disc herniation (a
-                      &ldquo;slipped disc&rdquo;), which may require surgery and months of
-                      recovery. Always move your feet to turn.
+                      and rotation. Twisting under load can cause disc herniation (a &ldquo;slipped
+                      disc&rdquo;), which may require surgery and months of recovery. Always move
+                      your feet to turn.
                     </p>
                   </div>
                   <div className="bg-red-500/5 border border-red-400/20 p-3 rounded-lg">
@@ -903,8 +886,8 @@ export default function ManualHandlingModule2Section1() {
                     </h4>
                     <p className="text-white/80 text-sm leading-relaxed">
                       Attempting a full lift without first testing the weight can result in sudden
-                      overloading. Always tilt or &ldquo;corner lift&rdquo; the load first to
-                      gauge its weight before committing to a full lift.
+                      overloading. Always tilt or &ldquo;corner lift&rdquo; the load first to gauge
+                      its weight before committing to a full lift.
                     </p>
                   </div>
                   <div className="bg-red-500/5 border border-red-400/20 p-3 rounded-lg">
@@ -923,9 +906,7 @@ export default function ManualHandlingModule2Section1() {
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2 mb-2">
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <h3 className="font-semibold text-red-300">
-                    Fatigue Degrades Technique
-                  </h3>
+                  <h3 className="font-semibold text-red-300">Fatigue Degrades Technique</h3>
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed">
                   Research shows that lifting technique deteriorates significantly as fatigue
@@ -933,8 +914,7 @@ export default function ManualHandlingModule2Section1() {
                   holding loads further from the body, and moving faster. This is why the HSE
                   emphasises reducing the frequency and duration of manual handling tasks, not just
                   the weight. If you are performing repetitive lifting, take regular breaks and
-                  rotate tasks where possible. If you notice your technique slipping, stop and
-                  rest.
+                  rotate tasks where possible. If you notice your technique slipping, stop and rest.
                 </p>
               </div>
             </div>
@@ -958,7 +938,9 @@ export default function ManualHandlingModule2Section1() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-emerald-400 font-medium mb-3">Common Electrical Lifting Tasks</h3>
+                <h3 className="text-emerald-400 font-medium mb-3">
+                  Common Electrical Lifting Tasks
+                </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Distribution Boards</h4>
@@ -1058,9 +1040,7 @@ export default function ManualHandlingModule2Section1() {
               </div>
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2 text-emerald-400">
-                  Key Numbers to Remember
-                </h3>
+                <h3 className="font-semibold mb-2 text-emerald-400">Key Numbers to Remember</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">8</p>
@@ -1108,10 +1088,7 @@ export default function ManualHandlingModule2Section1() {
           </h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0"
-              >
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
                 <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
               </div>

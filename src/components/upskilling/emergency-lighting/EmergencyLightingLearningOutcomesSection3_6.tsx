@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection3_6 = () => {
   const outcomes = [
-    "Recognise the role of software tools in emergency lighting design",
-    "Identify common design programs used in the industry",
-    "Use software outputs (lux plots, polar diagrams, spacing tables) to verify compliance",
-    "Explain how software supports documentation and client handover",
-    "Understand the limitations of software and the need for on-site verification"
+    'Recognise the role of software tools in emergency lighting design',
+    'Identify common design programs used in the industry',
+    'Use software outputs (lux plots, polar diagrams, spacing tables) to verify compliance',
+    'Explain how software supports documentation and client handover',
+    'Understand the limitations of software and the need for on-site verification',
   ];
 
   return (
@@ -19,9 +19,7 @@ export const EmergencyLightingLearningOutcomesSection3_6 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By completing this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By completing this section, you will be able to:</p>
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">

@@ -1,4 +1,3 @@
-
 import { Wrench, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -15,7 +14,9 @@ export const AccessibilityScenario = () => {
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
           <p className="text-blue-200 font-medium mb-2">Scenario:</p>
           <p className="text-foreground leading-relaxed text-base sm:text-lg">
-            You open a distribution board and find the MCBs aren't labelled. You spend 45 minutes identifying circuits manually—and still aren't confident. The client wants you to "just guess" for the certificate.
+            You open a distribution board and find the MCBs aren't labelled. You spend 45 minutes
+            identifying circuits manually—and still aren't confident. The client wants you to "just
+            guess" for the certificate.
           </p>
         </div>
         <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
@@ -24,7 +25,9 @@ export const AccessibilityScenario = () => {
             Correct Approach:
           </p>
           <p className="text-foreground leading-relaxed text-base sm:text-lg">
-            <strong className="text-foreground">You can't.</strong> Clearly state it as a limitation and do not issue a certificate with assumptions. Proper labelling is a compliance requirement, not a convenience.
+            <strong className="text-foreground">You can't.</strong> Clearly state it as a limitation
+            and do not issue a certificate with assumptions. Proper labelling is a compliance
+            requirement, not a convenience.
           </p>
         </div>
       </CardContent>

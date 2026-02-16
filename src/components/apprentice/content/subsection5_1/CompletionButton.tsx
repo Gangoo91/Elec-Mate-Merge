@@ -1,6 +1,5 @@
-
-import React from "react";
-import CompletionButton from "../../shared/CompletionButton";
+import React from 'react';
+import CompletionButton from '../../shared/CompletionButton';
 
 interface CompletionButtonProps {
   isCompleted: boolean;

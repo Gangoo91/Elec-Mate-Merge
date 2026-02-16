@@ -5,7 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -59,7 +65,11 @@ export function ExpenseFilterSheet({
   ].filter(Boolean).length;
 
   const handleStatusToggle = (status: ExpenseStatus) => {
-    const current = Array.isArray(localFilters.status) ? localFilters.status : localFilters.status ? [localFilters.status] : [];
+    const current = Array.isArray(localFilters.status)
+      ? localFilters.status
+      : localFilters.status
+        ? [localFilters.status]
+        : [];
     const newStatus = current.includes(status)
       ? current.filter((s) => s !== status)
       : [...current, status];
@@ -70,7 +80,11 @@ export function ExpenseFilterSheet({
   };
 
   const handleCategoryToggle = (category: ExpenseCategory) => {
-    const current = Array.isArray(localFilters.category) ? localFilters.category : localFilters.category ? [localFilters.category] : [];
+    const current = Array.isArray(localFilters.category)
+      ? localFilters.category
+      : localFilters.category
+        ? [localFilters.category]
+        : [];
     const newCategory = current.includes(category)
       ? current.filter((c) => c !== category)
       : [...current, category];
@@ -135,10 +149,7 @@ export function ExpenseFilterSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn(
-          "flex flex-col",
-          isMobile ? "h-[85vh] rounded-t-2xl" : "w-[400px]"
-        )}
+        className={cn('flex flex-col', isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[400px]')}
       >
         <SheetHeader className="pb-4 border-b border-border">
           <div className="flex items-center justify-between">
@@ -146,9 +157,7 @@ export function ExpenseFilterSheet({
               <Filter className="h-5 w-5 text-elec-yellow" />
               Filters
               {activeFilterCount > 0 && (
-                <Badge className="bg-elec-yellow text-black">
-                  {activeFilterCount}
-                </Badge>
+                <Badge className="bg-elec-yellow text-black">{activeFilterCount}</Badge>
               )}
             </SheetTitle>
             <Button
@@ -173,10 +182,10 @@ export function ExpenseFilterSheet({
                   key={value}
                   variant="outline"
                   className={cn(
-                    "cursor-pointer transition-all px-3 py-1.5",
+                    'cursor-pointer transition-all px-3 py-1.5',
                     isStatusSelected(value)
-                      ? "bg-elec-yellow/20 border-elec-yellow text-elec-yellow"
-                      : "hover:bg-muted"
+                      ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
+                      : 'hover:bg-muted'
                   )}
                   onClick={() => handleStatusToggle(value)}
                 >
@@ -196,10 +205,10 @@ export function ExpenseFilterSheet({
                   key={id}
                   variant="outline"
                   className={cn(
-                    "cursor-pointer transition-all px-3 py-1.5",
+                    'cursor-pointer transition-all px-3 py-1.5',
                     isCategorySelected(id)
-                      ? "bg-elec-yellow/20 border-elec-yellow text-elec-yellow"
-                      : "hover:bg-muted"
+                      ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
+                      : 'hover:bg-muted'
                   )}
                   onClick={() => handleCategoryToggle(id)}
                 >
@@ -257,9 +266,7 @@ export function ExpenseFilterSheet({
 
           {/* Receipt Filter */}
           <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
-            <Label className="text-sm font-medium cursor-pointer">
-              Has receipt attached
-            </Label>
+            <Label className="text-sm font-medium cursor-pointer">Has receipt attached</Label>
             <Switch
               checked={localFilters.hasReceipt === true}
               onCheckedChange={(checked) =>
@@ -274,11 +281,7 @@ export function ExpenseFilterSheet({
 
         <SheetFooter className="pt-4 border-t border-border pb-safe">
           <div className="flex gap-3 w-full">
-            <Button
-              variant="outline"
-              className="flex-1"
-              onClick={() => onOpenChange(false)}
-            >
+            <Button variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
             <Button

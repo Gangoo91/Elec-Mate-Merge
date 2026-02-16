@@ -3,12 +3,12 @@ import { Target, CheckCircle } from 'lucide-react';
 
 const SmartHomeModule7Section2LearningOutcomes = () => {
   const outcomes = [
-    "Explain what commissioning means in smart home installations",
-    "Describe the steps involved in pairing devices to hubs and apps", 
-    "Test and verify device operation after setup",
-    "Recognise common pairing issues and how to resolve them",
-    "Document installation details for client handover",
-    "Train clients on basic system operation and troubleshooting"
+    'Explain what commissioning means in smart home installations',
+    'Describe the steps involved in pairing devices to hubs and apps',
+    'Test and verify device operation after setup',
+    'Recognise common pairing issues and how to resolve them',
+    'Document installation details for client handover',
+    'Train clients on basic system operation and troubleshooting',
   ];
 
   return (

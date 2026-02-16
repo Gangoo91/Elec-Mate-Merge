@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
-import { useForm, FormProvider } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Briefcase, X, Sparkles, Save, FileText, Cloud, CloudOff, Check } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useState, useEffect, useCallback } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Briefcase, X, Sparkles, Save, FileText, Cloud, CloudOff, Check } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   ResponsiveFormModal,
   ResponsiveFormModalContent,
@@ -12,25 +12,25 @@ import {
   ResponsiveFormModalTitle,
   ResponsiveFormModalBody,
   ResponsiveFormModalFooter,
-} from "@/components/ui/responsive-form-modal";
-import { IOSStepIndicator } from "@/components/ui/ios-step-indicator";
+} from '@/components/ui/responsive-form-modal';
+import { IOSStepIndicator } from '@/components/ui/ios-step-indicator';
 import {
   vacancySchema,
   vacancyFormSteps,
   defaultVacancyValues,
   type VacancyFormData,
-} from "./schema";
-import { JobBasicsStep } from "./steps/JobBasicsStep";
-import { CompensationStep } from "./steps/CompensationStep";
-import { RequirementsStep } from "./steps/RequirementsStep";
-import { ReviewStep } from "./steps/ReviewStep";
-import { TemplateSelector } from "./TemplateSelector";
-import { useCreateVacancy, useUpdateVacancy } from "@/hooks/useVacancies";
-import { saveVacancyAsTemplate } from "@/services/vacancyService";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+} from './schema';
+import { JobBasicsStep } from './steps/JobBasicsStep';
+import { CompensationStep } from './steps/CompensationStep';
+import { RequirementsStep } from './steps/RequirementsStep';
+import { ReviewStep } from './steps/ReviewStep';
+import { TemplateSelector } from './TemplateSelector';
+import { useCreateVacancy, useUpdateVacancy } from '@/hooks/useVacancies';
+import { saveVacancyAsTemplate } from '@/services/vacancyService';
+import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
-const DRAFT_STORAGE_KEY = "vacancy-form-draft";
+const DRAFT_STORAGE_KEY = 'vacancy-form-draft';
 
 interface VacancyFormWizardProps {
   open: boolean;
@@ -66,7 +66,7 @@ export function VacancyFormWizard({
       ...defaultVacancyValues,
       ...(editData || duplicateData || {}),
     },
-    mode: "onChange",
+    mode: 'onChange',
   });
 
   const { handleSubmit, trigger, reset, watch, setValue, formState } = methods;
@@ -80,7 +80,7 @@ export function VacancyFormWizard({
           const draft = JSON.parse(savedDraft);
           reset({ ...defaultVacancyValues, ...draft });
         } catch (e) {
-          console.error("Failed to parse draft:", e);
+          console.error('Failed to parse draft:', e);
         }
       }
     }
@@ -105,7 +105,7 @@ export function VacancyFormWizard({
   const [, forceUpdate] = useState(0);
   useEffect(() => {
     if (lastSaved) {
-      const interval = setInterval(() => forceUpdate(n => n + 1), 60000);
+      const interval = setInterval(() => forceUpdate((n) => n + 1), 60000);
       return () => clearInterval(interval);
     }
   }, [lastSaved]);
@@ -118,7 +118,9 @@ export function VacancyFormWizard({
   // Handle step navigation
   const handleNext = async () => {
     const currentStepSchema = vacancyFormSteps[currentStep];
-    const fieldsToValidate = Object.keys(currentStepSchema.schema.shape) as (keyof VacancyFormData)[];
+    const fieldsToValidate = Object.keys(
+      currentStepSchema.schema.shape
+    ) as (keyof VacancyFormData)[];
 
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
@@ -151,10 +153,10 @@ export function VacancyFormWizard({
     try {
       if (isEditing && editData?.id) {
         await updateVacancy.mutateAsync({ id: editData.id, updates: data });
-        toast({ title: "Vacancy updated", description: "Your job vacancy has been updated." });
+        toast({ title: 'Vacancy updated', description: 'Your job vacancy has been updated.' });
       } else {
         await createVacancy.mutateAsync(data as any);
-        toast({ title: "Vacancy published", description: "Your job vacancy is now live!" });
+        toast({ title: 'Vacancy published', description: 'Your job vacancy is now live!' });
         clearDraft();
       }
       onOpenChange(false);
@@ -163,9 +165,9 @@ export function VacancyFormWizard({
       setCurrentStep(0);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to save vacancy. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to save vacancy. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -177,14 +179,14 @@ export function VacancyFormWizard({
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(values));
     setLastSaved(new Date());
     setTimeout(() => setIsSavingDraft(false), 500);
-    toast({ title: "Draft saved", description: "Your vacancy has been saved as a draft." });
+    toast({ title: 'Draft saved', description: 'Your vacancy has been saved as a draft.' });
   };
 
   // Handle template selection
   const handleTemplateSelect = (templateData: Partial<VacancyFormData>) => {
     reset({ ...defaultVacancyValues, ...templateData });
     setShowTemplates(false);
-    toast({ title: "Template loaded", description: "Template has been applied to the form." });
+    toast({ title: 'Template loaded', description: 'Template has been applied to the form.' });
   };
 
   // Handle close
@@ -212,7 +214,8 @@ export function VacancyFormWizard({
             onSaveDraft={handleSaveDraft}
             onSaveAsTemplate={async () => {
               const values = methods.getValues();
-              const templateName = values.title || `Template ${new Date().toLocaleDateString('en-GB')}`;
+              const templateName =
+                values.title || `Template ${new Date().toLocaleDateString('en-GB')}`;
               setIsSavingTemplate(true);
               try {
                 // Convert camelCase form data to snake_case for service
@@ -232,12 +235,19 @@ export function VacancyFormWizard({
                   schedule: values.schedule,
                 });
                 if (result) {
-                  toast({ title: "Template saved", description: `"${templateName}" has been saved as a template.` });
+                  toast({
+                    title: 'Template saved',
+                    description: `"${templateName}" has been saved as a template.`,
+                  });
                 } else {
                   throw new Error('Failed to save');
                 }
               } catch (error) {
-                toast({ title: "Error", description: "Failed to save template", variant: "destructive" });
+                toast({
+                  title: 'Error',
+                  description: 'Failed to save template',
+                  variant: 'destructive',
+                });
               } finally {
                 setIsSavingTemplate(false);
               }
@@ -255,7 +265,7 @@ export function VacancyFormWizard({
 
   return (
     <ResponsiveFormModal open={open} onOpenChange={handleClose}>
-      <ResponsiveFormModalContent className={cn(isMobile ? "" : "max-w-2xl")}>
+      <ResponsiveFormModalContent className={cn(isMobile ? '' : 'max-w-2xl')}>
         <FormProvider {...methods}>
           {/* Header */}
           <ResponsiveFormModalHeader className="border-b border-border/50">
@@ -267,7 +277,7 @@ export function VacancyFormWizard({
                   </div>
                   <div>
                     <span className="text-lg font-semibold">
-                      {isEditing ? "Edit Vacancy" : "Post Job Vacancy"}
+                      {isEditing ? 'Edit Vacancy' : 'Post Job Vacancy'}
                     </span>
                     <div className="flex items-center gap-2">
                       <p className="text-xs text-muted-foreground font-normal">
@@ -275,14 +285,16 @@ export function VacancyFormWizard({
                       </p>
                       {/* Draft save indicator */}
                       {!isEditing && (
-                        <span className={cn(
-                          "flex items-center gap-1 text-xs transition-all duration-300",
-                          isSavingDraft
-                            ? "text-elec-yellow animate-pulse"
-                            : lastSaved
-                              ? "text-muted-foreground"
-                              : "text-transparent"
-                        )}>
+                        <span
+                          className={cn(
+                            'flex items-center gap-1 text-xs transition-all duration-300',
+                            isSavingDraft
+                              ? 'text-elec-yellow animate-pulse'
+                              : lastSaved
+                                ? 'text-muted-foreground'
+                                : 'text-transparent'
+                          )}
+                        >
                           {isSavingDraft ? (
                             <>
                               <Cloud className="h-3 w-3" />
@@ -291,7 +303,9 @@ export function VacancyFormWizard({
                           ) : lastSaved ? (
                             <>
                               <Check className="h-3 w-3 text-success" />
-                              <span>Saved {formatDistanceToNow(lastSaved, { addSuffix: true })}</span>
+                              <span>
+                                Saved {formatDistanceToNow(lastSaved, { addSuffix: true })}
+                              </span>
                             </>
                           ) : null}
                         </span>
@@ -321,10 +335,7 @@ export function VacancyFormWizard({
 
             {/* Step indicator */}
             <div className="mt-4">
-              <IOSStepIndicator
-                steps={vacancyFormSteps.length}
-                currentStep={currentStep}
-              />
+              <IOSStepIndicator steps={vacancyFormSteps.length} currentStep={currentStep} />
             </div>
 
             {/* Step labels - desktop only */}
@@ -335,12 +346,12 @@ export function VacancyFormWizard({
                     key={step.id}
                     onClick={() => handleStepClick(index)}
                     className={cn(
-                      "text-xs transition-colors",
+                      'text-xs transition-colors',
                       index === currentStep
-                        ? "text-elec-yellow font-medium"
+                        ? 'text-elec-yellow font-medium'
                         : index < currentStep
-                        ? "text-elec-yellow/60 hover:text-elec-yellow/80"
-                        : "text-muted-foreground"
+                          ? 'text-elec-yellow/60 hover:text-elec-yellow/80'
+                          : 'text-muted-foreground'
                     )}
                   >
                     {step.title}
@@ -356,11 +367,7 @@ export function VacancyFormWizard({
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold">Load Template</h3>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setShowTemplates(false)}
-                  >
+                  <Button variant="ghost" size="icon" onClick={() => setShowTemplates(false)}>
                     <X className="h-4 w-4" />
                   </Button>
                 </div>

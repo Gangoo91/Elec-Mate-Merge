@@ -1,19 +1,37 @@
-import { useState, useRef } from "react";
-import { FileSearch, Send, Clock, Trophy, Plus, Eye, Download, Brain, Sparkles, Trash2, TrendingUp, Upload, X, FileIcon, Loader2, Search, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
-import { StatusBadge } from "@/components/employer/StatusBadge";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { CreateTenderDialog } from "@/components/employer/dialogs/CreateTenderDialog";
-import { ViewTenderSheet } from "@/components/employer/sheets/ViewTenderSheet";
-import { ConvertTenderToJobDialog } from "@/components/employer/dialogs/ConvertTenderToJobDialog";
-import { TenderOpportunitiesSection } from "@/components/employer/sections/TenderOpportunitiesSection";
-import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
-import { type TenderOpportunity } from "@/hooks/useOpportunities";
+import { useState, useRef } from 'react';
+import {
+  FileSearch,
+  Send,
+  Clock,
+  Trophy,
+  Plus,
+  Eye,
+  Download,
+  Brain,
+  Sparkles,
+  Trash2,
+  TrendingUp,
+  Upload,
+  X,
+  FileIcon,
+  Loader2,
+  Search,
+  MapPin,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Skeleton } from '@/components/ui/skeleton';
+import { StatusBadge } from '@/components/employer/StatusBadge';
+import { SectionHeader } from '@/components/employer/SectionHeader';
+import { CreateTenderDialog } from '@/components/employer/dialogs/CreateTenderDialog';
+import { ViewTenderSheet } from '@/components/employer/sheets/ViewTenderSheet';
+import { ConvertTenderToJobDialog } from '@/components/employer/dialogs/ConvertTenderToJobDialog';
+import { TenderOpportunitiesSection } from '@/components/employer/sections/TenderOpportunitiesSection';
+import { QuickStats, QuickStat } from '@/components/employer/QuickStats';
+import { type TenderOpportunity } from '@/hooks/useOpportunities';
 import {
   useTenders,
   useAllTenderEstimates,
@@ -24,12 +42,12 @@ import {
   useGenerateTenderEstimate,
   useCreateTenderEstimate,
   type Tender,
-  type TenderDocument
-} from "@/hooks/useTenders";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { supabase } from "@/integrations/supabase/client";
+  type TenderDocument,
+} from '@/hooks/useTenders';
+import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { supabase } from '@/integrations/supabase/client';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,7 +57,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 export function TenderSection() {
   const [showAIEstimator, setShowAIEstimator] = useState(false);
@@ -68,23 +86,23 @@ export function TenderSection() {
 
   const isLoading = tendersLoading || estimatesLoading;
 
-  const openTenders = tenders.filter(t => t.status === "Open");
-  const submittedTenders = tenders.filter(t => t.status === "Submitted");
-  const wonTenders = tenders.filter(t => t.status === "Won");
-  const lostTenders = tenders.filter(t => t.status === "Lost");
+  const openTenders = tenders.filter((t) => t.status === 'Open');
+  const submittedTenders = tenders.filter((t) => t.status === 'Submitted');
+  const wonTenders = tenders.filter((t) => t.status === 'Won');
+  const lostTenders = tenders.filter((t) => t.status === 'Lost');
 
   const getStatusBadge = (status: string) => {
     const statusMap: Record<string, string> = {
-      "Open": "active",
-      "Submitted": "pending",
-      "Won": "completed",
-      "Lost": "rejected"
+      Open: 'active',
+      Submitted: 'pending',
+      Won: 'completed',
+      Lost: 'rejected',
     };
     return statusMap[status] || status;
   };
 
   const handleSubmitTender = (tender: Tender) => {
-    updateStatusMutation.mutate({ id: tender.id, status: "Submitted" });
+    updateStatusMutation.mutate({ id: tender.id, status: 'Submitted' });
   };
 
   const handleDeleteTender = () => {
@@ -108,14 +126,14 @@ export function TenderSection() {
   const handleEstimatorFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files) return;
-    setEstimatorFiles(prev => [...prev, ...Array.from(files)]);
+    setEstimatorFiles((prev) => [...prev, ...Array.from(files)]);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
 
   const handleRemoveEstimatorFile = (index: number) => {
-    setEstimatorFiles(prev => prev.filter((_, i) => i !== index));
+    setEstimatorFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleGenerateEstimate = async () => {
@@ -130,7 +148,7 @@ export function TenderSection() {
       for (const file of estimatorFiles) {
         const result = await uploadDocMutation.mutateAsync({
           tenderId: estimatorTender.id,
-          file
+          file,
         });
         documentUrls.push(result.url);
       }
@@ -140,12 +158,12 @@ export function TenderSection() {
       const estimate = await generateEstimateMutation.mutateAsync({
         tenderId: estimatorTender.id,
         documentUrls,
-        description: estimatorTender.description || undefined
+        description: estimatorTender.description || undefined,
       });
 
       toast({
-        title: "AI Estimate Generated",
-        description: "Your estimate package is ready for review.",
+        title: 'AI Estimate Generated',
+        description: 'Your estimate package is ready for review.',
       });
       setShowAIEstimator(false);
       setEstimatorFiles([]);
@@ -155,8 +173,8 @@ export function TenderSection() {
       // If AI fails, still show that documents were uploaded
       if (estimatorFiles.length > 0) {
         toast({
-          title: "Documents Uploaded",
-          description: "Files saved. AI estimation will be available soon.",
+          title: 'Documents Uploaded',
+          description: 'Files saved. AI estimation will be available soon.',
         });
       }
     } finally {
@@ -173,12 +191,12 @@ export function TenderSection() {
   const handleStartTenderFromOpportunity = (opportunity: TenderOpportunity) => {
     // Map opportunity data to tender create data
     const sectorToCategory: Record<string, string> = {
-      'public': 'Public Sector',
-      'housing': 'Residential',
-      'healthcare': 'Healthcare',
-      'education': 'Education',
-      'commercial': 'Commercial',
-      'industrial': 'Industrial',
+      public: 'Public Sector',
+      housing: 'Residential',
+      healthcare: 'Healthcare',
+      education: 'Education',
+      commercial: 'Commercial',
+      industrial: 'Industrial',
     };
 
     const initialData = {
@@ -213,7 +231,8 @@ export function TenderSection() {
       )}
 
       <p className="text-sm text-muted-foreground">
-        Upload your tender documents and our AI will generate a comprehensive estimate package including:
+        Upload your tender documents and our AI will generate a comprehensive estimate package
+        including:
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="p-3 bg-muted/50 rounded-lg">
@@ -250,7 +269,14 @@ export function TenderSection() {
         <Brain className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-3" />
         <p className="font-medium">Upload Tender Documents</p>
         <p className="text-sm text-muted-foreground">Drawings, specs, BOQs, job descriptions</p>
-        <Button variant="outline" className="mt-4" onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}>
+        <Button
+          variant="outline"
+          className="mt-4"
+          onClick={(e) => {
+            e.stopPropagation();
+            fileInputRef.current?.click();
+          }}
+        >
           <Upload className="h-4 w-4 mr-2" />
           Select Files
         </Button>
@@ -262,7 +288,10 @@ export function TenderSection() {
           <p className="text-sm font-medium">Selected Files ({estimatorFiles.length})</p>
           <div className="space-y-1">
             {estimatorFiles.map((file, index) => (
-              <div key={index} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg">
+              <div
+                key={index}
+                className="flex items-center justify-between p-2 bg-muted/50 rounded-lg"
+              >
                 <div className="flex items-center gap-2 min-w-0">
                   <FileIcon className="h-4 w-4 text-muted-foreground shrink-0" />
                   <span className="text-sm truncate">{file.name}</span>
@@ -350,22 +379,25 @@ export function TenderSection() {
             {/* Discover Tenders Button */}
             <Button
               variant="outline"
-              size={isMobile ? "icon" : "default"}
+              size={isMobile ? 'icon' : 'default'}
               className="gap-2 border-elec-yellow/50 hover:bg-elec-yellow/10"
               onClick={() => setShowDiscoverSheet(true)}
             >
               <Search className="h-4 w-4 text-elec-yellow" />
-              {!isMobile && "Discover"}
+              {!isMobile && 'Discover'}
             </Button>
 
             <Sheet open={showAIEstimator} onOpenChange={setShowAIEstimator}>
               <SheetTrigger asChild>
-                <Button variant="outline" size={isMobile ? "icon" : "default"} className="gap-2">
+                <Button variant="outline" size={isMobile ? 'icon' : 'default'} className="gap-2">
                   <Brain className="h-4 w-4" />
-                  {!isMobile && "AI Estimator"}
+                  {!isMobile && 'AI Estimator'}
                 </Button>
               </SheetTrigger>
-              <SheetContent side={isMobile ? "bottom" : "right"} className={isMobile ? "h-[85vh]" : ""}>
+              <SheetContent
+                side={isMobile ? 'bottom' : 'right'}
+                className={isMobile ? 'h-[85vh]' : ''}
+              >
                 <SheetHeader>
                   <SheetTitle className="flex items-center gap-2">
                     <Sparkles className="h-5 w-5 text-elec-yellow" />
@@ -375,12 +407,16 @@ export function TenderSection() {
                 <AIEstimatorContent />
               </SheetContent>
             </Sheet>
-            <Button size={isMobile ? "icon" : "sm"} className="gap-2" onClick={() => {
-              setCreateTenderInitialData(null);
-              setShowCreateDialog(true);
-            }}>
+            <Button
+              size={isMobile ? 'icon' : 'sm'}
+              className="gap-2"
+              onClick={() => {
+                setCreateTenderInitialData(null);
+                setShowCreateDialog(true);
+              }}
+            >
               <Plus className="h-4 w-4" />
-              {!isMobile && "Track Tender"}
+              {!isMobile && 'Track Tender'}
             </Button>
           </div>
         }
@@ -392,35 +428,39 @@ export function TenderSection() {
           {
             icon: FileSearch,
             value: stats.open,
-            label: "Open",
-            color: "yellow",
+            label: 'Open',
+            color: 'yellow',
             pulse: stats.open > 0,
           },
           {
             icon: Send,
             value: stats.submitted,
-            label: "Submitted",
-            color: "orange",
+            label: 'Submitted',
+            color: 'orange',
           },
           {
             icon: Trophy,
             value: stats.won,
-            label: "Won",
-            color: "green",
+            label: 'Won',
+            color: 'green',
           },
           {
             icon: Trophy,
             value: `£${(stats.wonValue / 1000).toFixed(0)}k`,
-            label: "Won Value",
-            color: "green",
+            label: 'Won Value',
+            color: 'green',
           },
-          ...(stats.winRate > 0 ? [{
-            icon: TrendingUp,
-            value: stats.winRate.toFixed(0),
-            label: "Win Rate",
-            color: "blue" as const,
-            suffix: "%",
-          }] : []),
+          ...(stats.winRate > 0
+            ? [
+                {
+                  icon: TrendingUp,
+                  value: stats.winRate.toFixed(0),
+                  label: 'Win Rate',
+                  color: 'blue' as const,
+                  suffix: '%',
+                },
+              ]
+            : []),
         ]}
       />
 
@@ -445,19 +485,22 @@ export function TenderSection() {
                       <div className="bg-muted/50 p-2 rounded md:bg-transparent md:p-0">
                         <p className="text-muted-foreground text-[10px] md:hidden">Labour</p>
                         <p className="font-medium text-foreground md:text-muted-foreground">
-                          <span className="hidden md:inline">Labour: </span>£{Number(estimate.labour_cost).toLocaleString()}
+                          <span className="hidden md:inline">Labour: </span>£
+                          {Number(estimate.labour_cost).toLocaleString()}
                         </p>
                       </div>
                       <div className="bg-muted/50 p-2 rounded md:bg-transparent md:p-0">
                         <p className="text-muted-foreground text-[10px] md:hidden">Materials</p>
                         <p className="font-medium text-foreground md:text-muted-foreground">
-                          <span className="hidden md:inline">Materials: </span>£{Number(estimate.materials_cost).toLocaleString()}
+                          <span className="hidden md:inline">Materials: </span>£
+                          {Number(estimate.materials_cost).toLocaleString()}
                         </p>
                       </div>
                       <div className="bg-muted/50 p-2 rounded md:bg-transparent md:p-0">
                         <p className="text-muted-foreground text-[10px] md:hidden">Programme</p>
                         <p className="font-medium text-foreground md:text-muted-foreground">
-                          <span className="hidden md:inline">Programme: </span>{estimate.programme || 'TBD'}
+                          <span className="hidden md:inline">Programme: </span>
+                          {estimate.programme || 'TBD'}
                         </p>
                       </div>
                     </div>
@@ -466,7 +509,15 @@ export function TenderSection() {
                     <p className="text-lg font-bold text-elec-yellow">
                       £{Number(estimate.total_estimate).toLocaleString()}
                     </p>
-                    <Badge className={estimate.confidence === "High" ? "bg-success/20 text-success border-0" : estimate.confidence === "Medium" ? "bg-warning/20 text-warning border-0" : "bg-muted text-muted-foreground border-0"}>
+                    <Badge
+                      className={
+                        estimate.confidence === 'High'
+                          ? 'bg-success/20 text-success border-0'
+                          : estimate.confidence === 'Medium'
+                            ? 'bg-warning/20 text-warning border-0'
+                            : 'bg-muted text-muted-foreground border-0'
+                      }
+                    >
                       {estimate.confidence}
                     </Badge>
                   </div>
@@ -486,10 +537,13 @@ export function TenderSection() {
             <p className="text-sm text-muted-foreground mb-4">
               Start tracking your tender opportunities to manage bids and win more work.
             </p>
-            <Button onClick={() => {
-              setCreateTenderInitialData(null);
-              setShowCreateDialog(true);
-            }} className="gap-2">
+            <Button
+              onClick={() => {
+                setCreateTenderInitialData(null);
+                setShowCreateDialog(true);
+              }}
+              className="gap-2"
+            >
               <Plus className="h-4 w-4" />
               Track Your First Tender
             </Button>
@@ -502,15 +556,23 @@ export function TenderSection() {
         <Tabs defaultValue="open" className="space-y-4">
           <div className="overflow-x-auto hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
             <TabsList className="w-max md:w-auto">
-              <TabsTrigger value="open" className="text-xs md:text-sm">Open ({openTenders.length})</TabsTrigger>
-              <TabsTrigger value="submitted" className="text-xs md:text-sm">Submitted ({submittedTenders.length})</TabsTrigger>
-              <TabsTrigger value="won" className="text-xs md:text-sm">Won ({wonTenders.length})</TabsTrigger>
-              <TabsTrigger value="lost" className="text-xs md:text-sm">Lost ({lostTenders.length})</TabsTrigger>
+              <TabsTrigger value="open" className="text-xs md:text-sm">
+                Open ({openTenders.length})
+              </TabsTrigger>
+              <TabsTrigger value="submitted" className="text-xs md:text-sm">
+                Submitted ({submittedTenders.length})
+              </TabsTrigger>
+              <TabsTrigger value="won" className="text-xs md:text-sm">
+                Won ({wonTenders.length})
+              </TabsTrigger>
+              <TabsTrigger value="lost" className="text-xs md:text-sm">
+                Lost ({lostTenders.length})
+              </TabsTrigger>
             </TabsList>
           </div>
 
-          {(["open", "submitted", "won", "lost"] as const).map(tab => {
-            const filteredTenders = tenders.filter(t => t.status.toLowerCase() === tab);
+          {(['open', 'submitted', 'won', 'lost'] as const).map((tab) => {
+            const filteredTenders = tenders.filter((t) => t.status.toLowerCase() === tab);
 
             return (
               <TabsContent key={tab} value={tab}>
@@ -518,25 +580,29 @@ export function TenderSection() {
                   {filteredTenders.length === 0 ? (
                     <Card className="bg-elec-gray border-border">
                       <CardContent className="p-6 text-center">
-                        <p className="text-sm text-muted-foreground">
-                          No {tab} tenders
-                        </p>
+                        <p className="text-sm text-muted-foreground">No {tab} tenders</p>
                       </CardContent>
                     </Card>
                   ) : (
-                    filteredTenders.map(tender => (
+                    filteredTenders.map((tender) => (
                       <Card key={tender.id} className="bg-elec-gray border-border overflow-hidden">
                         <CardContent className="p-4">
                           <div className="flex flex-col gap-3">
                             <div className="flex items-start justify-between gap-2">
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 flex-wrap">
-                                  <h3 className="font-semibold text-sm md:text-base">{tender.title}</h3>
+                                  <h3 className="font-semibold text-sm md:text-base">
+                                    {tender.title}
+                                  </h3>
                                   <StatusBadge status={getStatusBadge(tender.status)} />
                                 </div>
-                                <p className="text-sm text-muted-foreground mt-1">{tender.client}</p>
+                                <p className="text-sm text-muted-foreground mt-1">
+                                  {tender.client}
+                                </p>
                                 {tender.tender_number && (
-                                  <p className="text-xs text-muted-foreground">{tender.tender_number}</p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {tender.tender_number}
+                                  </p>
                                 )}
                               </div>
                               <p className="font-bold text-elec-yellow shrink-0">
@@ -545,13 +611,21 @@ export function TenderSection() {
                             </div>
 
                             <div className="flex flex-wrap gap-2 text-xs md:text-sm">
-                              {tender.category && <Badge variant="outline">{tender.category}</Badge>}
+                              {tender.category && (
+                                <Badge variant="outline">{tender.category}</Badge>
+                              )}
                               {tender.deadline && (
-                                <span className={cn(
-                                  "text-muted-foreground",
-                                  new Date(tender.deadline) < new Date() && "text-destructive"
-                                )}>
-                                  Due: {new Date(tender.deadline).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+                                <span
+                                  className={cn(
+                                    'text-muted-foreground',
+                                    new Date(tender.deadline) < new Date() && 'text-destructive'
+                                  )}
+                                >
+                                  Due:{' '}
+                                  {new Date(tender.deadline).toLocaleDateString('en-GB', {
+                                    day: 'numeric',
+                                    month: 'short',
+                                  })}
                                 </span>
                               )}
                             </div>
@@ -567,7 +641,7 @@ export function TenderSection() {
                                 <Eye className="h-4 w-4 mr-1 md:mr-2" />
                                 View
                               </Button>
-                              {tender.status === "Open" && (
+                              {tender.status === 'Open' && (
                                 <>
                                   <Button
                                     variant="outline"
@@ -589,7 +663,7 @@ export function TenderSection() {
                                   </Button>
                                 </>
                               )}
-                              {tender.status === "Submitted" && (
+                              {tender.status === 'Submitted' && (
                                 <Button
                                   variant="outline"
                                   size="sm"
@@ -600,7 +674,7 @@ export function TenderSection() {
                                   Docs
                                 </Button>
                               )}
-                              {tender.status === "Won" && (
+                              {tender.status === 'Won' && (
                                 <Button
                                   size="sm"
                                   className="flex-1 md:flex-none bg-success hover:bg-success/90"
@@ -638,7 +712,9 @@ export function TenderSection() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
               <div>
                 <h3 className="font-semibold text-base md:text-lg">Total Open Tender Value</h3>
-                <p className="text-xs md:text-sm text-muted-foreground">Combined value of all open opportunities</p>
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Combined value of all open opportunities
+                </p>
               </div>
               <p className="text-3xl md:text-4xl font-bold text-elec-yellow">
                 £{(stats.openValue / 1000).toFixed(0)}k
@@ -664,7 +740,8 @@ export function TenderSection() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Tender</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete "{tenderToDelete?.title}"? This action cannot be undone.
+              Are you sure you want to delete "{tenderToDelete?.title}"? This action cannot be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

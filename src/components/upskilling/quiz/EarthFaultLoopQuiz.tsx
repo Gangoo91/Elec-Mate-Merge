@@ -7,7 +7,9 @@ import { earthFaultLoopQuizQuestions } from '@/data/upskilling/earthFaultLoopQui
 
 export function EarthFaultLoopQuiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(earthFaultLoopQuizQuestions.length).fill(-1));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
+    new Array(earthFaultLoopQuizQuestions.length).fill(-1)
+  );
   const [showResults, setShowResults] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
@@ -62,7 +64,7 @@ export function EarthFaultLoopQuiz() {
   if (showResults) {
     const score = calculateScore();
     const badge = getScoreBadge(score);
-    
+
     return (
       <Card className="bg-elec-gray border-transparent">
         <CardHeader>
@@ -77,14 +79,15 @@ export function EarthFaultLoopQuiz() {
               <h3 className={`text-3xl font-bold ${getScoreColor(score)}`}>
                 {score}/{earthFaultLoopQuizQuestions.length}
               </h3>
-              <Badge className={`${badge.color} text-foreground`}>
-                {badge.text}
-              </Badge>
+              <Badge className={`${badge.color} text-foreground`}>{badge.text}</Badge>
             </div>
-            
+
             <div className="space-y-4">
               {earthFaultLoopQuizQuestions.map((question, index) => (
-                <div key={question.id} className="bg-elec-dark p-4 rounded-lg border border-gray-600">
+                <div
+                  key={question.id}
+                  className="bg-elec-dark p-4 rounded-lg border border-gray-600"
+                >
                   <div className="flex items-start gap-3">
                     {selectedAnswers[index] === question.correctAnswer ? (
                       <CheckCircle className="h-5 w-5 text-green-400 mt-1 flex-shrink-0" />
@@ -92,13 +95,15 @@ export function EarthFaultLoopQuiz() {
                       <XCircle className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
                     )}
                     <div className="space-y-2">
-                       <p className="text-foreground font-medium">{question.question}</p>
+                      <p className="text-foreground font-medium">{question.question}</p>
                       <p className="text-xs sm:text-sm text-foreground">
-                        <span className="font-medium">Correct answer:</span> {question.options[question.correctAnswer]}
+                        <span className="font-medium">Correct answer:</span>{' '}
+                        {question.options[question.correctAnswer]}
                       </p>
                       {selectedAnswers[index] !== question.correctAnswer && (
                         <p className="text-xs sm:text-sm text-red-300">
-                          <span className="font-medium">Your answer:</span> {question.options[selectedAnswers[index]]}
+                          <span className="font-medium">Your answer:</span>{' '}
+                          {question.options[selectedAnswers[index]]}
                         </p>
                       )}
                       <p className="text-xs sm:text-sm text-foreground">{question.explanation}</p>
@@ -108,9 +113,9 @@ export function EarthFaultLoopQuiz() {
               ))}
             </div>
           </div>
-          
+
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={handleRestart}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
             >
@@ -138,39 +143,37 @@ export function EarthFaultLoopQuiz() {
             Question {currentQuestion + 1} of {earthFaultLoopQuizQuestions.length}
           </Badge>
         </div>
-        
+
         <div className="w-full bg-elec-dark rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-6">
         <div className="space-y-4">
           <h3 className="text-xl font-semibold text-foreground">{question.question}</h3>
-          
+
           <div className="space-y-3">
             {question.options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswerSelect(index)}
-            className={`w-full p-3 sm:p-4 text-left rounded-lg border-2 transition-all duration-200 text-sm sm:text-base ${
-              selectedAnswers[currentQuestion] === index
-                ? 'border-elec-yellow bg-elec-yellow/10 text-foreground'
-                : 'border-gray-600 bg-elec-dark text-foreground hover:border-gray-500'
-            }`}
-          >
-            <span className="font-medium mr-2 sm:mr-3">
-              {String.fromCharCode(65 + index)}.
-            </span>
+                className={`w-full p-3 sm:p-4 text-left rounded-lg border-2 transition-all duration-200 text-sm sm:text-base ${
+                  selectedAnswers[currentQuestion] === index
+                    ? 'border-elec-yellow bg-elec-yellow/10 text-foreground'
+                    : 'border-gray-600 bg-elec-dark text-foreground hover:border-gray-500'
+                }`}
+              >
+                <span className="font-medium mr-2 sm:mr-3">{String.fromCharCode(65 + index)}.</span>
                 {option}
               </button>
             ))}
           </div>
         </div>
-        
+
         <div className="flex justify-between items-center">
           <Button
             variant="outline"
@@ -181,7 +184,7 @@ export function EarthFaultLoopQuiz() {
             <ArrowLeft className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === -1}

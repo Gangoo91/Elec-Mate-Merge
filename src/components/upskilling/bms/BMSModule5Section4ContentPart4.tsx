@@ -12,10 +12,11 @@ export const BMSModule5Section4ContentPart4 = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          While electricians don't typically program KNX systems, understanding addressing, performance characteristics, 
-          and system limitations is crucial for proper installation and troubleshooting.
+          While electricians don't typically program KNX systems, understanding addressing,
+          performance characteristics, and system limitations is crucial for proper installation and
+          troubleshooting.
         </p>
-        
+
         <div className="space-y-3">
           <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold flex items-center gap-2 mb-2">
@@ -50,10 +51,12 @@ export const BMSModule5Section4ContentPart4 = () => {
               <p className="text-foreground">• Bus speed: 9600 bits per second</p>
               <p className="text-foreground">• Telegram transmission: ~20-50ms typical</p>
               <p className="text-foreground">• Collision detection and retry mechanisms</p>
-              
+
               <p className="text-foreground font-medium mt-2">System Capacity:</p>
               <p className="text-foreground">• Maximum 57,600 devices per complete system</p>
-              <p className="text-foreground">• Practical installations typically 100-1000 devices</p>
+              <p className="text-foreground">
+                • Practical installations typically 100-1000 devices
+              </p>
               <p className="text-foreground">• Performance degrades with very large systems</p>
             </div>
           </div>
@@ -64,10 +67,18 @@ export const BMSModule5Section4ContentPart4 = () => {
               System Security & Access
             </h4>
             <div className="space-y-2 text-sm">
-              <p className="text-foreground">• ETS software controls all programming and commissioning</p>
-              <p className="text-foreground">• Device access protection prevents unauthorised changes</p>
-              <p className="text-foreground">• Individual device passwords for sensitive functions</p>
-              <p className="text-foreground">• System-level access control for different user roles</p>
+              <p className="text-foreground">
+                • ETS software controls all programming and commissioning
+              </p>
+              <p className="text-foreground">
+                • Device access protection prevents unauthorised changes
+              </p>
+              <p className="text-foreground">
+                • Individual device passwords for sensitive functions
+              </p>
+              <p className="text-foreground">
+                • System-level access control for different user roles
+              </p>
               <p className="text-foreground">• Encrypted communication available with KNX Secure</p>
             </div>
           </div>
@@ -77,7 +88,9 @@ export const BMSModule5Section4ContentPart4 = () => {
           <h4 className="text-foreground font-semibold mb-2">Installation Quality Impact</h4>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <div>
-              <p className="text-foreground font-medium text-green-400">Good Installation Results In:</p>
+              <p className="text-foreground font-medium text-green-400">
+                Good Installation Results In:
+              </p>
               <p className="text-foreground">• Reliable communication</p>
               <p className="text-foreground">• Fast response times</p>
               <p className="text-foreground">• Easy troubleshooting and maintenance</p>

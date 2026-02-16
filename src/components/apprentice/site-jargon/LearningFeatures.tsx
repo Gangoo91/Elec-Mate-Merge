@@ -1,126 +1,160 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  BookOpen, 
-  Trophy, 
-  Target, 
-  Clock, 
-  Shuffle, 
-  CheckCircle,
-  Star,
-  TrendingUp
-} from "lucide-react";
-import { JargonTerm } from "@/data/apprentice/siteJargonData";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { BookOpen, Shuffle, GraduationCap } from 'lucide-react';
+import { JargonTerm } from '@/data/apprentice/siteJargonData';
 
 interface LearningFeaturesProps {
   terms: JargonTerm[];
 }
 
 const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
-  const [studyMode, setStudyMode] = useState<'flashcards' | 'quiz' | 'practice' | null>(null);
+  const [isStudying, setIsStudying] = useState(false);
   const [currentTermIndex, setCurrentTermIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [quizScore, setQuizScore] = useState(0);
-  const [studyProgress, setStudyProgress] = useState(0);
+  const [studiedCount, setStudiedCount] = useState(0);
+  const [shuffledTerms, setShuffledTerms] = useState<JargonTerm[]>([]);
 
   const startFlashcards = () => {
-    setStudyMode('flashcards');
+    const shuffled = [...terms].sort(() => Math.random() - 0.5);
+    setShuffledTerms(shuffled);
     setCurrentTermIndex(0);
     setShowAnswer(false);
+    setStudiedCount(0);
+    setIsStudying(true);
   };
 
   const nextCard = () => {
-    if (currentTermIndex < terms.length - 1) {
+    const newCount = studiedCount + 1;
+    setStudiedCount(newCount);
+    if (currentTermIndex < shuffledTerms.length - 1) {
       setCurrentTermIndex(currentTermIndex + 1);
       setShowAnswer(false);
-      setStudyProgress(((currentTermIndex + 1) / terms.length) * 100);
     } else {
-      setStudyMode(null);
-      setStudyProgress(100);
+      setIsStudying(false);
     }
   };
 
-  const shuffleTerms = () => {
-    // Simple shuffle implementation
-    const shuffled = [...terms].sort(() => Math.random() - 0.5);
+  const reshuffleCards = () => {
+    const shuffled = [...shuffledTerms].sort(() => Math.random() - 0.5);
+    setShuffledTerms(shuffled);
     setCurrentTermIndex(0);
     setShowAnswer(false);
   };
 
-  const currentTerm = terms[currentTermIndex];
+  const currentTerm = shuffledTerms[currentTermIndex];
+  const progress = shuffledTerms.length > 0
+    ? ((currentTermIndex + (showAnswer ? 1 : 0)) / shuffledTerms.length) * 100
+    : 0;
 
-  if (studyMode === 'flashcards' && currentTerm) {
+  if (isStudying && currentTerm) {
     return (
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-elec-yellow">Flashcard Study Mode</CardTitle>
-            <Badge variant="outline">
-              {currentTermIndex + 1} of {terms.length}
-            </Badge>
-          </div>
-          <Progress value={studyProgress} className="w-full" />
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="text-center space-y-4">
-            <div className="p-6 border border-elec-yellow/30 rounded-lg bg-white/10">
-              <h3 className="text-2xl font-bold text-elec-yellow mb-4">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <Badge variant="outline" className="text-white border-white/20">
+            {currentTermIndex + 1} of {shuffledTerms.length}
+          </Badge>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsStudying(false)}
+            className="text-white touch-manipulation"
+          >
+            Exit
+          </Button>
+        </div>
+
+        <Progress value={progress} className="w-full" />
+
+        <Card className="border-elec-yellow/20 bg-white/5">
+          <CardContent className="p-6 space-y-4">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-elec-yellow mb-2">
                 {currentTerm.term}
               </h3>
-              
-              {showAnswer && (
-                <div className="space-y-3 animate-fade-in">
-                  <p className="text-elec-light text-lg">{currentTerm.definition}</p>
-                  
-                  {currentTerm.commonUsage && (
-                    <div className="p-3 bg-green-500/10 rounded border border-green-500/20">
-                      <p className="text-sm text-green-400 font-medium mb-1">Common Usage:</p>
-                      <p className="text-sm italic">"{currentTerm.commonUsage}"</p>
-                    </div>
-                  )}
-                  
-                  {currentTerm.context && (
-                    <div className="p-3 bg-blue-500/10 rounded border border-blue-500/20">
-                      <p className="text-sm text-blue-400 font-medium mb-1">Context:</p>
-                      <p className="text-sm">{currentTerm.context}</p>
-                    </div>
-                  )}
-                </div>
+              {currentTerm.difficulty && (
+                <Badge
+                  className={
+                    currentTerm.difficulty === 'basic'
+                      ? 'bg-green-500/20 text-green-400'
+                      : currentTerm.difficulty === 'intermediate'
+                        ? 'bg-yellow-500/20 text-yellow-400'
+                        : 'bg-red-500/20 text-red-400'
+                  }
+                >
+                  {currentTerm.difficulty}
+                </Badge>
               )}
             </div>
-            
-            <div className="flex gap-3 justify-center">
+
+            {showAnswer && (
+              <div className="space-y-3 animate-fade-in">
+                <p className="text-white text-base text-center">
+                  {currentTerm.definition}
+                </p>
+
+                {currentTerm.commonUsage && (
+                  <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                    <p className="text-sm text-green-400 font-medium mb-1">Common Usage:</p>
+                    <p className="text-sm text-white italic">"{currentTerm.commonUsage}"</p>
+                  </div>
+                )}
+
+                {currentTerm.context && (
+                  <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                    <p className="text-sm text-blue-400 font-medium mb-1">Context:</p>
+                    <p className="text-sm text-white">{currentTerm.context}</p>
+                  </div>
+                )}
+
+                {currentTerm.relatedTerms && currentTerm.relatedTerms.length > 0 && (
+                  <div className="flex flex-wrap gap-1 justify-center mt-2">
+                    {currentTerm.relatedTerms.map((related, i) => (
+                      <Badge key={i} variant="outline" className="text-xs text-white border-white/20">
+                        {related}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="flex gap-3 justify-center pt-2">
               {!showAnswer ? (
-                <Button onClick={() => setShowAnswer(true)} className="px-8">
+                <Button
+                  onClick={() => setShowAnswer(true)}
+                  className="h-11 px-8 touch-manipulation"
+                >
                   Show Answer
                 </Button>
               ) : (
                 <>
-                  <Button onClick={nextCard} className="px-8">
-                    {currentTermIndex < terms.length - 1 ? 'Next Card' : 'Complete'}
+                  <Button
+                    onClick={nextCard}
+                    className="h-11 px-8 touch-manipulation"
+                  >
+                    {currentTermIndex < shuffledTerms.length - 1 ? 'Next Card' : 'Finish'}
                   </Button>
-                  <Button variant="outline" onClick={shuffleTerms}>
+                  <Button
+                    variant="outline"
+                    onClick={reshuffleCards}
+                    className="h-11 touch-manipulation"
+                  >
                     <Shuffle className="h-4 w-4 mr-2" />
                     Shuffle
                   </Button>
                 </>
               )}
             </div>
-          </div>
-          
-          <div className="flex justify-between text-sm text-white">
-            <Button variant="ghost" size="sm" onClick={() => setStudyMode(null)}>
-              Exit Study Mode
-            </Button>
-            <span>Difficulty: {currentTerm.difficulty || 'Basic'}</span>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+
+        <p className="text-white text-xs text-center">
+          {studiedCount} term{studiedCount !== 1 ? 's' : ''} studied this session
+        </p>
+      </div>
     );
   }
 
@@ -128,155 +162,51 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
     <Card className="border-elec-yellow/20 bg-white/5">
       <CardHeader>
         <CardTitle className="text-elec-yellow flex items-center gap-2">
-          <BookOpen className="h-5 w-5" />
-          Learning Features
+          <GraduationCap className="h-5 w-5" />
+          Study Mode
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="study-modes" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="study-modes">Study Modes</TabsTrigger>
-            <TabsTrigger value="progress">Progress</TabsTrigger>
-            <TabsTrigger value="achievements">Achievements</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="study-modes" className="space-y-4 mt-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Card className="border-blue-500/20 bg-blue-500/5">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-2">
-                    <BookOpen className="h-5 w-5 text-blue-400" />
-                    <h3 className="font-semibold">Flashcards</h3>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-white mb-4">
-                    Study terms with interactive flashcards. Perfect for memorisation.
-                  </p>
-                  <Button onClick={startFlashcards} className="w-full">
-                    Start Flashcards
-                  </Button>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-green-500/20 bg-green-500/5">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-2">
-                    <Target className="h-5 w-5 text-green-400" />
-                    <h3 className="font-semibold">Quick Quiz</h3>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-white mb-4">
-                    Test your knowledge with randomised quiz questions.
-                  </p>
-                  <Button className="w-full" disabled>
-                    Coming Soon
-                  </Button>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-purple-500/20 bg-purple-500/5">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-purple-400" />
-                    <h3 className="font-semibold">Daily Challenge</h3>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-white mb-4">
-                    Learn 5 new terms every day with spaced repetition.
-                  </p>
-                  <Button className="w-full" disabled>
-                    Coming Soon
-                  </Button>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-orange-500/20 bg-orange-500/5">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-2">
-                    <Shuffle className="h-5 w-5 text-orange-400" />
-                    <h3 className="font-semibold">Random Practice</h3>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-white mb-4">
-                    Practice with randomly selected terms from all categories.
-                  </p>
-                  <Button className="w-full" disabled>
-                    Coming Soon
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="progress" className="space-y-4 mt-4">
-            <div className="grid gap-4">
-              <div className="flex items-center justify-between p-4 border border-elec-yellow/20 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <TrendingUp className="h-5 w-5 text-elec-yellow" />
-                  <div>
-                    <h4 className="font-medium">Terms Studied</h4>
-                    <p className="text-sm text-white">Track your learning progress</p>
-                  </div>
-                </div>
-                <Badge variant="outline">0 / {terms.length}</Badge>
-              </div>
-              
-              <div className="flex items-center justify-between p-4 border border-green-500/20 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-400" />
-                  <div>
-                    <h4 className="font-medium">Mastered Terms</h4>
-                    <p className="text-sm text-white">Terms you know well</p>
-                  </div>
-                </div>
-                <Badge variant="outline">0</Badge>
-              </div>
-              
-              <div className="flex items-center justify-between p-4 border border-blue-500/20 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <Clock className="h-5 w-5 text-blue-400" />
-                  <div>
-                    <h4 className="font-medium">Study Streak</h4>
-                    <p className="text-sm text-white">Consecutive days studied</p>
-                  </div>
-                </div>
-                <Badge variant="outline">0 days</Badge>
-              </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="achievements" className="space-y-4 mt-4">
-            <div className="grid gap-3">
-              <div className="flex items-center gap-3 p-3 border border-elec-yellow/20 rounded-lg opacity-50">
-                <Trophy className="h-6 w-6 text-yellow-400" />
-                <div>
-                  <h4 className="font-medium">First Steps</h4>
-                  <p className="text-xs text-white">Study your first 10 terms</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3 p-3 border border-elec-yellow/20 rounded-lg opacity-50">
-                <Star className="h-6 w-6 text-purple-400" />
-                <div>
-                  <h4 className="font-medium">Category Expert</h4>
-                  <p className="text-xs text-white">Master all terms in a category</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3 p-3 border border-elec-yellow/20 rounded-lg opacity-50">
-                <Target className="h-6 w-6 text-green-400" />
-                <div>
-                  <h4 className="font-medium">Perfect Score</h4>
-                  <p className="text-xs text-white">Get 100% on a practice quiz</p>
-                </div>
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
+      <CardContent className="space-y-4">
+        <p className="text-white text-sm">
+          Test your knowledge with interactive flashcards. Cards are shuffled randomly
+          and show the term first — tap to reveal the definition, context, and usage examples.
+        </p>
+
+        <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+          <div className="flex items-center gap-3 mb-3">
+            <BookOpen className="h-5 w-5 text-blue-400" />
+            <h3 className="font-semibold text-white">Flashcards</h3>
+          </div>
+          <p className="text-sm text-white mb-4">
+            {terms.length} terms available based on your current filters.
+            Cards are shuffled each time you start.
+          </p>
+          <Button
+            onClick={startFlashcards}
+            className="w-full h-11 touch-manipulation"
+            disabled={terms.length === 0}
+          >
+            <BookOpen className="h-4 w-4 mr-2" />
+            Start Flashcards ({terms.length} terms)
+          </Button>
+        </div>
+
+        {studiedCount > 0 && (
+          <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+            <p className="text-sm text-white">
+              You studied <strong className="text-green-400">{studiedCount} terms</strong> in
+              your last session. Keep it up!
+            </p>
+          </div>
+        )}
+
+        <div className="p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg">
+          <p className="text-xs text-white">
+            <strong className="text-elec-yellow">Tip:</strong> Use the search and category
+            filters on the Browse tab first, then study only the filtered terms. This lets you
+            focus on specific categories like safety terms or testing terminology.
+          </p>
+        </div>
       </CardContent>
     </Card>
   );

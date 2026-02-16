@@ -77,7 +77,11 @@ export interface ValidationResult {
 /**
  * Validates and resolves a field name for voice tool calls
  */
-export function validateField(spokenField: string): { valid: boolean; resolvedField: string | null; error: string | null } {
+export function validateField(spokenField: string): {
+  valid: boolean;
+  resolvedField: string | null;
+  error: string | null;
+} {
   // First try to resolve using aliases
   const resolved = resolveFieldName(spokenField);
 
@@ -87,7 +91,7 @@ export function validateField(spokenField: string): { valid: boolean; resolvedFi
 
   // Check if the spoken field is already a valid field name (case-insensitive)
   const directMatch = VALID_TEST_RESULT_FIELDS.find(
-    f => f.toLowerCase() === spokenField.toLowerCase()
+    (f) => f.toLowerCase() === spokenField.toLowerCase()
   );
 
   if (directMatch) {
@@ -96,16 +100,14 @@ export function validateField(spokenField: string): { valid: boolean; resolvedFi
 
   // Field not found - provide helpful error message
   const suggestions = findSimilarFields(spokenField);
-  const suggestionText = suggestions.length > 0
-    ? ` Did you mean: ${suggestions.join(', ')}?`
-    : '';
+  const suggestionText = suggestions.length > 0 ? ` Did you mean: ${suggestions.join(', ')}?` : '';
 
   console.warn(`[Voice Validation] Unknown field: "${spokenField}"${suggestionText}`);
 
   return {
     valid: false,
     resolvedField: null,
-    error: `Unknown field "${spokenField}".${suggestionText}`
+    error: `Unknown field "${spokenField}".${suggestionText}`,
   };
 }
 
@@ -146,7 +148,10 @@ export function validateFieldUpdate(
     }
   }
 
-  if ((resolvedField === 'insulationLiveEarth' || resolvedField === 'insulationLiveNeutral') && resolvedValue) {
+  if (
+    (resolvedField === 'insulationLiveEarth' || resolvedField === 'insulationLiveNeutral') &&
+    resolvedValue
+  ) {
     const irValue = parseFloat(resolvedValue.replace('>', '').replace('<', ''));
     if (!isNaN(irValue) && irValue < 1) {
       warning = `Insulation resistance ${irValue}MΩ is below minimum 1MΩ - FAIL!`;
@@ -188,16 +193,17 @@ function findSimilarFields(input: string): string[] {
 
   for (const fieldName of allAliases) {
     // Check if input is contained in field name or vice versa
-    if (fieldName.toLowerCase().includes(normalised) ||
-        normalised.includes(fieldName.toLowerCase())) {
+    if (
+      fieldName.toLowerCase().includes(normalised) ||
+      normalised.includes(fieldName.toLowerCase())
+    ) {
       suggestions.push(fieldName);
     }
   }
 
   // Also check valid TestResult fields directly
   for (const field of VALID_TEST_RESULT_FIELDS) {
-    if (field.toLowerCase().includes(normalised) ||
-        normalised.includes(field.toLowerCase())) {
+    if (field.toLowerCase().includes(normalised) || normalised.includes(field.toLowerCase())) {
       if (!suggestions.includes(field)) {
         suggestions.push(field);
       }

@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { format as formatDate } from "date-fns";
+import { format as formatDate } from 'date-fns';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -26,7 +26,7 @@ export const generateProfessionalElectricalPDF = async (
 ): Promise<void> => {
   try {
     console.log('Starting PDF generation...');
-    
+
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
@@ -50,7 +50,9 @@ export const generateProfessionalElectricalPDF = async (
     // Date
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(10);
-    pdf.text(`Generated: ${formatDate(new Date(), "dd/MM/yyyy")}`, pageWidth / 2, yPosition, { align: 'center' });
+    pdf.text(`Generated: ${formatDate(new Date(), 'dd/MM/yyyy')}`, pageWidth / 2, yPosition, {
+      align: 'center',
+    });
     yPosition += 20;
 
     // Watermark
@@ -86,8 +88,8 @@ export const generateProfessionalElectricalPDF = async (
         } else {
           // Regular text - handle line wrapping
           const cleanLine = line.replace(/\*\*(.*?)\*\*/g, '$1'); // Remove markdown bold
-          const textLines = pdf.splitTextToSize(cleanLine, pageWidth - (2 * margin));
-          
+          const textLines = pdf.splitTextToSize(cleanLine, pageWidth - 2 * margin);
+
           for (const textLine of textLines) {
             if (yPosition > pageHeight - margin) {
               pdf.addPage();
@@ -118,7 +120,7 @@ export const generateProfessionalElectricalPDF = async (
 
       pdf.setFont('helvetica', 'normal');
       pdf.setFontSize(10);
-      
+
       // Inspector signature
       pdf.text('Inspector:', margin, yPosition);
       pdf.line(margin + 30, yPosition, margin + 100, yPosition);
@@ -134,14 +136,17 @@ export const generateProfessionalElectricalPDF = async (
     }
 
     // Generate filename
-    const finalFilename = filename || `${reportType.toLowerCase().replace(/\s+/g, '-')}-${formatDate(new Date(), 'ddMMyyyy')}.pdf`;
-    
+    const finalFilename =
+      filename ||
+      `${reportType.toLowerCase().replace(/\s+/g, '-')}-${formatDate(new Date(), 'ddMMyyyy')}.pdf`;
+
     // Save the PDF
     pdf.save(finalFilename);
     console.log('PDF generated successfully');
-    
   } catch (error) {
     console.error('PDF generation failed:', error);
-    throw new Error(`PDF generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `PDF generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
 };

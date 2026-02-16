@@ -1,15 +1,34 @@
-import { ArrowLeft, Cog, CheckCircle, HelpCircle, Gauge, Thermometer, Zap, ShieldCheck, ClipboardList, AlertTriangle, Settings } from 'lucide-react';
+import {
+  ArrowLeft,
+  Cog,
+  CheckCircle,
+  HelpCircle,
+  Gauge,
+  Thermometer,
+  Zap,
+  ShieldCheck,
+  ClipboardList,
+  AlertTriangle,
+  Settings,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule6Section3 = () => {
   useSEO({
-    title: "Step-by-Step Calibration Procedures | Instrumentation Module 6",
-    description: "Learn step-by-step calibration procedures for pressure, temperature, and electrical devices including safety requirements and best practices.",
-    keywords: ["calibration procedures", "pressure calibration", "temperature calibration", "electrical calibration", "calibration safety"]
+    title: 'Step-by-Step Calibration Procedures | Instrumentation Module 6',
+    description:
+      'Learn step-by-step calibration procedures for pressure, temperature, and electrical devices including safety requirements and best practices.',
+    keywords: [
+      'calibration procedures',
+      'pressure calibration',
+      'temperature calibration',
+      'electrical calibration',
+      'calibration safety',
+    ],
   });
 
   return (
@@ -17,7 +36,10 @@ const InstrumentationModule6Section3 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-6" className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-6"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
+          >
             <ArrowLeft className="h-5 w-5 mr-2" />
             <span className="font-medium">Back to Module 6</span>
           </Link>
@@ -33,9 +55,7 @@ const InstrumentationModule6Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Step-by-Step Calibration Procedures
           </h1>
-          <p className="text-white">
-            Module 6 · Section 3 · 20 min read
-          </p>
+          <p className="text-white">Module 6 · Section 3 · 20 min read</p>
         </div>
 
         {/* Quick Summary Box */}
@@ -67,13 +87,17 @@ const InstrumentationModule6Section3 = () => {
         {/* Section 01 - Safety and Pre-Calibration Checks */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Safety and Pre-Calibration Checks</h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Every calibration starts with safety. Before touching any equipment, you must complete essential isolation and verification steps. These protect both you and the equipment from damage.
+              Every calibration starts with safety. Before touching any equipment, you must complete
+              essential isolation and verification steps. These protect both you and the equipment
+              from damage.
             </p>
 
             {/* Critical Safety Box */}
@@ -149,13 +173,17 @@ const InstrumentationModule6Section3 = () => {
         {/* Section 02 - Pressure Device Calibration */}
         <section className="mb-10 mt-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Pressure Device Calibration</h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Pressure calibration compares the device under test (DUT) against a known reference pressure. The procedure involves zero adjustment, span adjustment, and multi-point verification to confirm linearity across the range.
+              Pressure calibration compares the device under test (DUT) against a known reference
+              pressure. The procedure involves zero adjustment, span adjustment, and multi-point
+              verification to confirm linearity across the range.
             </p>
 
             {/* Step 1 */}
@@ -271,13 +299,17 @@ const InstrumentationModule6Section3 = () => {
         {/* Section 03 - Temperature Device Calibration */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Temperature Device Calibration</h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Temperature calibration requires careful attention to thermal equilibrium. The dry block calibrator method is widely used for its portability and consistency. Allow adequate stabilisation time at each test point.
+              Temperature calibration requires careful attention to thermal equilibrium. The dry
+              block calibrator method is widely used for its portability and consistency. Allow
+              adequate stabilisation time at each test point.
             </p>
 
             {/* Equipment Setup */}
@@ -365,7 +397,10 @@ const InstrumentationModule6Section3 = () => {
                 Stabilisation Time is Critical
               </h3>
               <p className="text-white text-sm leading-relaxed">
-                Temperature calibration errors often occur due to insufficient stabilisation time. Even if readings appear stable, thermal gradients within the probe and dry block can cause errors. Always wait the full recommended time (10-15 minutes) between temperature changes.
+                Temperature calibration errors often occur due to insufficient stabilisation time.
+                Even if readings appear stable, thermal gradients within the probe and dry block can
+                cause errors. Always wait the full recommended time (10-15 minutes) between
+                temperature changes.
               </p>
             </div>
           </div>
@@ -379,13 +414,17 @@ const InstrumentationModule6Section3 = () => {
         {/* Section 04 - Electrical Device Calibration */}
         <section className="mb-10 mt-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
             <h2 className="text-xl font-semibold text-white">Electrical Device Calibration</h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Electrical calibration involves comparing the device under test against precision voltage, current, or resistance sources. Each measurement function requires specific test procedures and connection methods.
+              Electrical calibration involves comparing the device under test against precision
+              voltage, current, or resistance sources. Each measurement function requires specific
+              test procedures and connection methods.
             </p>
 
             {/* DC Voltage */}
@@ -482,7 +521,10 @@ const InstrumentationModule6Section3 = () => {
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h3 className="font-semibold text-blue-400 mb-2">Why Use 4-Wire Connections?</h3>
               <p className="text-white text-sm leading-relaxed">
-                4-wire (Kelvin) connections eliminate the effect of test lead resistance. Two wires carry the measurement current, while two separate wires sense the voltage drop across the resistor only. This is essential for accurate low-resistance measurements where lead resistance could be a significant source of error.
+                4-wire (Kelvin) connections eliminate the effect of test lead resistance. Two wires
+                carry the measurement current, while two separate wires sense the voltage drop
+                across the resistor only. This is essential for accurate low-resistance measurements
+                where lead resistance could be a significant source of error.
               </p>
             </div>
           </div>
@@ -491,13 +533,18 @@ const InstrumentationModule6Section3 = () => {
         {/* Section 05 - Data Recording and Verification */}
         <section className="mb-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
-            <h2 className="text-xl font-semibold text-white">Data Recording and Post-Calibration Verification</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              05
+            </span>
+            <h2 className="text-xl font-semibold text-white">
+              Data Recording and Post-Calibration Verification
+            </h2>
           </div>
 
           <div className="space-y-6">
             <p className="text-white leading-relaxed">
-              Comprehensive documentation is essential for traceability and audit compliance. Record all data in real-time during calibration, not from memory afterwards.
+              Comprehensive documentation is essential for traceability and audit compliance. Record
+              all data in real-time during calibration, not from memory afterwards.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -582,7 +629,9 @@ const InstrumentationModule6Section3 = () => {
             Real World Scenario: Hospital Vaccine Storage Calibration
           </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
-            A hospital biomedical engineer calibrates temperature sensors in vaccine storage units to ensure pharmaceutical storage compliance. The stakes are high - incorrect temperatures can destroy thousands of pounds worth of vaccines.
+            A hospital biomedical engineer calibrates temperature sensors in vaccine storage units
+            to ensure pharmaceutical storage compliance. The stakes are high - incorrect
+            temperatures can destroy thousands of pounds worth of vaccines.
           </p>
           <div className="bg-card/50 rounded-lg p-3 border border-border mb-3">
             <h4 className="font-medium text-elec-yellow text-sm mb-2">Procedure Followed:</h4>
@@ -614,7 +663,8 @@ const InstrumentationModule6Section3 = () => {
             </ul>
           </div>
           <p className="text-green-400 text-sm italic">
-            Result: All sensors calibrated within specification, maintaining pharmaceutical compliance and preventing costly vaccine loss due to temperature excursions.
+            Result: All sensors calibrated within specification, maintaining pharmaceutical
+            compliance and preventing costly vaccine loss due to temperature excursions.
           </p>
         </div>
 
@@ -627,30 +677,50 @@ const InstrumentationModule6Section3 = () => {
 
           <div className="space-y-4">
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">How do I know if my calibration is accurate enough?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                How do I know if my calibration is accurate enough?
+              </h3>
               <p className="text-white text-sm">
-                Your reference standard should be at least 4 times more accurate than the device under test (4:1 ratio). Check the uncertainty values on your reference standard's calibration certificate against the required accuracy of the instrument being calibrated.
+                Your reference standard should be at least 4 times more accurate than the device
+                under test (4:1 ratio). Check the uncertainty values on your reference standard's
+                calibration certificate against the required accuracy of the instrument being
+                calibrated.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">What should I do if the device fails calibration?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                What should I do if the device fails calibration?
+              </h3>
               <p className="text-white text-sm">
-                Document the as-found readings, attempt adjustment if possible, then re-test. If still out of specification, quarantine the device with a "DO NOT USE" label, inform the responsible person, and arrange repair or replacement. Never return a failed device to service.
+                Document the as-found readings, attempt adjustment if possible, then re-test. If
+                still out of specification, quarantine the device with a "DO NOT USE" label, inform
+                the responsible person, and arrange repair or replacement. Never return a failed
+                device to service.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">Can I calibrate live equipment without isolation?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                Can I calibrate live equipment without isolation?
+              </h3>
               <p className="text-white text-sm">
-                In some cases, live calibration may be necessary for critical systems that cannot be taken offline. This requires a specific risk assessment, use of appropriate live working procedures, and often a second competent person present. Never attempt live calibration without proper authorisation and procedures.
+                In some cases, live calibration may be necessary for critical systems that cannot be
+                taken offline. This requires a specific risk assessment, use of appropriate live
+                working procedures, and often a second competent person present. Never attempt live
+                calibration without proper authorisation and procedures.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4 border border-border">
-              <h3 className="font-semibold text-white mb-2">Why do I need ascending AND descending readings?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                Why do I need ascending AND descending readings?
+              </h3>
               <p className="text-white text-sm">
-                Taking both ascending and descending readings reveals hysteresis - the difference in readings depending on the direction of approach. Hysteresis indicates mechanical friction, backlash, or electronic lag in the device and is an important quality indicator.
+                Taking both ascending and descending readings reveals hysteresis - the difference in
+                readings depending on the direction of approach. Hysteresis indicates mechanical
+                friction, backlash, or electronic lag in the device and is an important quality
+                indicator.
               </p>
             </div>
           </div>
@@ -661,10 +731,10 @@ const InstrumentationModule6Section3 = () => {
           <SingleQuestionQuiz
             question="For pressure device calibration, what points should be tested at minimum for multi-point verification?"
             options={[
-              "Just 0% and 100% of range",
-              "0%, 25%, 50%, 75%, and 100% of range with ascending and descending readings",
-              "Only the mid-point (50%)",
-              "Whatever points are convenient"
+              'Just 0% and 100% of range',
+              '0%, 25%, 50%, 75%, and 100% of range with ascending and descending readings',
+              'Only the mid-point (50%)',
+              'Whatever points are convenient',
             ]}
             correctAnswer={1}
             explanation="Multi-point verification should test at 0%, 25%, 50%, 75%, and 100% of range, performing both ascending and descending readings. This allows calculation of hysteresis (difference between up/down readings) and linearity errors across the full range."
@@ -673,13 +743,22 @@ const InstrumentationModule6Section3 = () => {
 
         {/* Bottom Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-border">
-          <Link to="/electrician/upskilling/instrumentation-module-6-section-2" className="w-full sm:w-auto">
-            <Button variant="outline" className="w-full h-11 touch-manipulation border-border hover:bg-card">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-6-section-2"
+            className="w-full sm:w-auto"
+          >
+            <Button
+              variant="outline"
+              className="w-full h-11 touch-manipulation border-border hover:bg-card"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
           </Link>
-          <Link to="/electrician/upskilling/instrumentation-module-6-section-4" className="w-full sm:w-auto">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-6-section-4"
+            className="w-full sm:w-auto"
+          >
             <Button className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
             </Button>

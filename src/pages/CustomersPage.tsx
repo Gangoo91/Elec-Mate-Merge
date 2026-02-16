@@ -10,16 +10,7 @@ import { QuickNoteDialog } from '@/components/customers/QuickNoteDialog';
 import { StartCertificateDialog } from '@/components/customers/StartCertificateDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Search,
-  Plus,
-  Upload,
-  Download,
-  Users,
-  ArrowLeft,
-  Loader2,
-  X,
-} from 'lucide-react';
+import { Search, Plus, Upload, Download, Users, ArrowLeft, Loader2, X } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -44,8 +35,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.04 }
-  }
+    transition: { staggerChildren: 0.04 },
+  },
 };
 
 const cardVariants = {
@@ -53,8 +44,8 @@ const cardVariants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { type: 'spring', stiffness: 300, damping: 24 }
-  }
+    transition: { type: 'spring', stiffness: 300, damping: 24 },
+  },
 };
 
 export default function CustomersPage() {
@@ -62,14 +53,8 @@ export default function CustomersPage() {
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 
-  const {
-    customers,
-    isLoading,
-    saveCustomer,
-    updateCustomer,
-    deleteCustomer,
-    exportCustomers,
-  } = useCustomers({ sortField, sortDirection });
+  const { customers, isLoading, saveCustomer, updateCustomer, deleteCustomer, exportCustomers } =
+    useCustomers({ sortField, sortDirection });
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearch, setShowSearch] = useState(false);
@@ -84,11 +69,12 @@ export default function CustomersPage() {
   const filteredCustomers = useMemo(() => {
     if (!searchTerm.trim()) return customers;
     const term = searchTerm.toLowerCase();
-    return customers.filter(c =>
-      c.name.toLowerCase().includes(term) ||
-      c.email?.toLowerCase().includes(term) ||
-      c.phone?.includes(term) ||
-      c.address?.toLowerCase().includes(term)
+    return customers.filter(
+      (c) =>
+        c.name.toLowerCase().includes(term) ||
+        c.email?.toLowerCase().includes(term) ||
+        c.phone?.includes(term) ||
+        c.address?.toLowerCase().includes(term)
     );
   }, [customers, searchTerm]);
 
@@ -116,7 +102,7 @@ export default function CustomersPage() {
 
   const handleSortChange = (field: SortField) => {
     if (field === sortField) {
-      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
     } else {
       setSortField(field);
       setSortDirection('asc');
@@ -131,14 +117,16 @@ export default function CustomersPage() {
           /* Search mode */
           <div className="flex items-center h-14 px-4 gap-2">
             <div className="relative flex-1">
-              {!searchTerm && <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />}
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+              )}
               <Input
                 placeholder="Search customers..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={cn(
-                  "h-11 pr-9 text-base touch-manipulation rounded-xl bg-white/[0.05] border-white/[0.06] focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20",
-                  !searchTerm && "pl-9"
+                  'h-11 pr-9 text-base touch-manipulation rounded-xl bg-white/[0.05] border-white/[0.06] focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20',
+                  !searchTerm && 'pl-9'
                 )}
                 autoFocus
               />
@@ -152,7 +140,10 @@ export default function CustomersPage() {
               )}
             </div>
             <button
-              onClick={() => { setShowSearch(false); setSearchTerm(''); }}
+              onClick={() => {
+                setShowSearch(false);
+                setSearchTerm('');
+              }}
               className="text-sm text-blue-400 font-medium px-2 touch-manipulation"
             >
               Cancel
@@ -179,7 +170,10 @@ export default function CustomersPage() {
                 <Search className="h-5 w-5 text-white/80" />
               </button>
               <button
-                onClick={() => { setEditingCustomer(null); setShowAddDialog(true); }}
+                onClick={() => {
+                  setEditingCustomer(null);
+                  setShowAddDialog(true);
+                }}
                 className="h-10 w-10 rounded-xl bg-blue-500 flex items-center justify-center active:scale-[0.98] touch-manipulation shadow-lg shadow-blue-500/25"
               >
                 <Plus className="h-5 w-5 text-white" />
@@ -215,10 +209,10 @@ export default function CustomersPage() {
                 key={tab.value}
                 onClick={() => handleSortChange(tab.value)}
                 className={cn(
-                  "shrink-0 h-8 px-3.5 rounded-full text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]",
+                  'shrink-0 h-8 px-3.5 rounded-full text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                   sortField === tab.value
-                    ? "bg-blue-500 text-white"
-                    : "bg-white/[0.06] text-white/70"
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white/[0.06] text-white/70'
                 )}
               >
                 {tab.label}
@@ -317,10 +311,7 @@ export default function CustomersPage() {
       />
 
       {/* Import Dialog */}
-      <CustomerImportDialog
-        open={showImportDialog}
-        onOpenChange={setShowImportDialog}
-      />
+      <CustomerImportDialog open={showImportDialog} onOpenChange={setShowImportDialog} />
 
       {/* Quick Note Dialog */}
       {quickNoteCustomer && (
@@ -346,12 +337,14 @@ export default function CustomersPage() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Customer?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently remove this customer and cannot be undone.
-              Their certificates will remain but won't be linked to this customer.
+              This will permanently remove this customer and cannot be undone. Their certificates
+              will remain but won't be linked to this customer.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               className="bg-red-600 hover:bg-red-700 min-h-[44px] rounded-xl"

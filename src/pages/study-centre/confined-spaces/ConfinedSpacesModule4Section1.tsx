@@ -9,52 +9,52 @@ import {
   Radio,
   Shield,
   Users,
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 /* ───────────────────────── Quick-check questions ───────────────────────── */
 
 const quickCheckQuestions = [
   {
-    id: "isolation-types",
+    id: 'isolation-types',
     question:
-      "What are the three main types of isolation that must be completed before entering a confined space?",
+      'What are the three main types of isolation that must be completed before entering a confined space?',
     options: [
-      "Mechanical isolation, electrical isolation, and piping isolation",
-      "Electrical isolation, chemical isolation, and physical barriers",
-      "Lockout, tagout, and signage only",
-      "Ventilation, purging, and atmospheric testing only",
+      'Mechanical isolation, electrical isolation, and piping isolation',
+      'Electrical isolation, chemical isolation, and physical barriers',
+      'Lockout, tagout, and signage only',
+      'Ventilation, purging, and atmospheric testing only',
     ],
     correctIndex: 0,
     explanation:
-      "All three types of isolation must be verified before entry: mechanical isolation (blanking, disconnecting, locking valves), electrical isolation (lockout/tagout per BS 7671, proving dead, personal lock-off), and piping isolation (double block and bleed, slip plates or spectacle blinds). Each addresses a different energy source that could endanger the entrant. Omitting any one type leaves a potentially fatal hazard uncontrolled.",
+      'All three types of isolation must be verified before entry: mechanical isolation (blanking, disconnecting, locking valves), electrical isolation (lockout/tagout per BS 7671, proving dead, personal lock-off), and piping isolation (double block and bleed, slip plates or spectacle blinds). Each addresses a different energy source that could endanger the entrant. Omitting any one type leaves a potentially fatal hazard uncontrolled.',
   },
   {
-    id: "atmos-test-sequence",
+    id: 'atmos-test-sequence',
     question:
-      "In what order should atmospheric testing be carried out before confined space entry?",
+      'In what order should atmospheric testing be carried out before confined space entry?',
     options: [
-      "Test from outside with sample draw, test at multiple levels, confirm O\u2082 19.5\u201323.5%, confirm flammables <10% LEL, confirm toxics below WEL",
-      "Enter the space first, then test at the bottom level only",
-      "Test for flammables first, then oxygen, then toxics",
-      "A single test at the entry point is sufficient if the reading is normal",
+      'Test from outside with sample draw, test at multiple levels, confirm O\u2082 19.5\u201323.5%, confirm flammables <10% LEL, confirm toxics below WEL',
+      'Enter the space first, then test at the bottom level only',
+      'Test for flammables first, then oxygen, then toxics',
+      'A single test at the entry point is sufficient if the reading is normal',
     ],
     correctIndex: 0,
     explanation:
-      "The correct sequence is critical: (1) test from outside the space using a sample draw tube \u2014 never enter to take the first reading; (2) test at multiple levels (top, middle, bottom) because gases stratify by density; (3) confirm oxygen is within 19.5\u201323.5%; (4) confirm flammable gases are below 10% of the lower explosive limit (LEL); (5) confirm toxic substances are below their workplace exposure limits (WEL). All readings must be recorded on the permit-to-work.",
+      'The correct sequence is critical: (1) test from outside the space using a sample draw tube \u2014 never enter to take the first reading; (2) test at multiple levels (top, middle, bottom) because gases stratify by density; (3) confirm oxygen is within 19.5\u201323.5%; (4) confirm flammable gases are below 10% of the lower explosive limit (LEL); (5) confirm toxic substances are below their workplace exposure limits (WEL). All readings must be recorded on the permit-to-work.',
   },
   {
-    id: "rescue-equipment",
+    id: 'rescue-equipment',
     question:
-      "What rescue equipment must be in position at the entry point before anyone enters a confined space?",
+      'What rescue equipment must be in position at the entry point before anyone enters a confined space?',
     options: [
-      "A tripod or davit with winch, a confirmed rescue plan, and a rescue team on standby",
-      "A first-aid kit inside the space is sufficient",
-      "Rescue equipment is only needed for spaces deeper than 3 metres",
+      'A tripod or davit with winch, a confirmed rescue plan, and a rescue team on standby',
+      'A first-aid kit inside the space is sufficient',
+      'Rescue equipment is only needed for spaces deeper than 3 metres',
       "The entrant's mobile phone is an acceptable substitute for rescue provisions",
     ],
     correctIndex: 0,
@@ -68,27 +68,26 @@ const quickCheckQuestions = [
 const faqs = [
   {
     question:
-      "Can atmospheric testing be carried out once and then entry permitted for the rest of the day?",
+      'Can atmospheric testing be carried out once and then entry permitted for the rest of the day?',
     answer:
-      "No. Atmospheric conditions inside a confined space can change rapidly due to chemical reactions, work processes, temperature fluctuations, or disturbance of residues. Initial pre-entry testing establishes safe conditions at that moment, but continuous monitoring must be maintained throughout the entry. If monitoring is interrupted for any reason \u2014 equipment failure, break periods, or a change in work activity \u2014 the space must be re-tested before re-entry. The permit-to-work should specify testing intervals and the conditions under which re-testing is mandatory.",
+      'No. Atmospheric conditions inside a confined space can change rapidly due to chemical reactions, work processes, temperature fluctuations, or disturbance of residues. Initial pre-entry testing establishes safe conditions at that moment, but continuous monitoring must be maintained throughout the entry. If monitoring is interrupted for any reason \u2014 equipment failure, break periods, or a change in work activity \u2014 the space must be re-tested before re-entry. The permit-to-work should specify testing intervals and the conditions under which re-testing is mandatory.',
+  },
+  {
+    question: 'Who is responsible for signing the permit-to-work before a confined space entry?',
+    answer:
+      'The permit-to-work must be signed by an authorised person (the permit issuer) who has the competence and authority to verify that all precautions are in place. This is typically a senior supervisor or manager who has been specifically trained and appointed as a permit issuer. The entrant and the top person (safety attendant) must also sign the permit to confirm they have read it, understand the hazards, and agree to follow the stated procedures. The permit must never be signed in advance \u2014 it is only valid from the moment all preconditions have been physically verified.',
   },
   {
     question:
-      "Who is responsible for signing the permit-to-work before a confined space entry?",
+      'What should happen if the atmospheric test shows oxygen at 18% \u2014 slightly below the safe range?',
     answer:
-      "The permit-to-work must be signed by an authorised person (the permit issuer) who has the competence and authority to verify that all precautions are in place. This is typically a senior supervisor or manager who has been specifically trained and appointed as a permit issuer. The entrant and the top person (safety attendant) must also sign the permit to confirm they have read it, understand the hazards, and agree to follow the stated procedures. The permit must never be signed in advance \u2014 it is only valid from the moment all preconditions have been physically verified.",
+      'Entry must not proceed. An oxygen reading of 18% is below the minimum safe level of 19.5% and indicates that either oxygen is being consumed by a chemical process or displaced by another gas. The space must be ventilated further and re-tested. If oxygen cannot be brought within the 19.5\u201323.5% range through ventilation, entry may only proceed with self-contained breathing apparatus (SCBA) and under a revised risk assessment that accounts for the oxygen-deficient atmosphere. The reduced oxygen level must be recorded on the permit and all entrants briefed on the specific hazard.',
   },
   {
     question:
-      "What should happen if the atmospheric test shows oxygen at 18% \u2014 slightly below the safe range?",
+      'Is it acceptable for the top person (safety attendant) to briefly enter the space to assist the entrant?',
     answer:
-      "Entry must not proceed. An oxygen reading of 18% is below the minimum safe level of 19.5% and indicates that either oxygen is being consumed by a chemical process or displaced by another gas. The space must be ventilated further and re-tested. If oxygen cannot be brought within the 19.5\u201323.5% range through ventilation, entry may only proceed with self-contained breathing apparatus (SCBA) and under a revised risk assessment that accounts for the oxygen-deficient atmosphere. The reduced oxygen level must be recorded on the permit and all entrants briefed on the specific hazard.",
-  },
-  {
-    question:
-      "Is it acceptable for the top person (safety attendant) to briefly enter the space to assist the entrant?",
-    answer:
-      "No. The top person must never enter the confined space under any circumstances. Their role is to remain at the entry point, maintain communication with the entrant, monitor atmospheric conditions, control access, and initiate emergency rescue if needed. If the top person enters the space, there is no one remaining to raise the alarm, operate rescue equipment, or prevent others from entering. A significant proportion of confined space fatalities involve would-be rescuers entering without proper equipment \u2014 often the top person acting on instinct rather than following the rescue plan.",
+      'No. The top person must never enter the confined space under any circumstances. Their role is to remain at the entry point, maintain communication with the entrant, monitor atmospheric conditions, control access, and initiate emergency rescue if needed. If the top person enters the space, there is no one remaining to raise the alarm, operate rescue equipment, or prevent others from entering. A significant proportion of confined space fatalities involve would-be rescuers entering without proper equipment \u2014 often the top person acting on instinct rather than following the rescue plan.',
   },
 ];
 
@@ -97,115 +96,112 @@ const faqs = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      "What is the primary purpose of a permit-to-work system for confined space entry?",
+    question: 'What is the primary purpose of a permit-to-work system for confined space entry?',
     options: [
-      "To ensure a written record exists of work completed for invoicing purposes",
-      "To provide a formal, systematic check that all safety precautions have been taken before entry is authorised",
-      "To satisfy insurance requirements for documentation",
-      "To assign blame if an incident occurs",
+      'To ensure a written record exists of work completed for invoicing purposes',
+      'To provide a formal, systematic check that all safety precautions have been taken before entry is authorised',
+      'To satisfy insurance requirements for documentation',
+      'To assign blame if an incident occurs',
     ],
     correctAnswer: 1,
     explanation:
-      "The permit-to-work is a formal, documented system that ensures every required safety precaution has been verified before entry is authorised. It acts as a final checkpoint \u2014 covering isolation, atmospheric testing, ventilation, PPE, rescue provisions, and briefing. It is not merely administrative paperwork; it is a life-critical control measure that prevents entry until all conditions are confirmed safe.",
+      'The permit-to-work is a formal, documented system that ensures every required safety precaution has been verified before entry is authorised. It acts as a final checkpoint \u2014 covering isolation, atmospheric testing, ventilation, PPE, rescue provisions, and briefing. It is not merely administrative paperwork; it is a life-critical control measure that prevents entry until all conditions are confirmed safe.',
   },
   {
     id: 2,
     question:
       "Which of the following correctly describes 'double block and bleed' piping isolation?",
     options: [
-      "Closing a single valve and fitting a blank flange downstream",
-      "Closing two valves in series and opening a vent or drain between them to confirm isolation",
-      "Disconnecting the pipe entirely and capping both ends",
-      "Wrapping the pipe with insulation to prevent leaks",
+      'Closing a single valve and fitting a blank flange downstream',
+      'Closing two valves in series and opening a vent or drain between them to confirm isolation',
+      'Disconnecting the pipe entirely and capping both ends',
+      'Wrapping the pipe with insulation to prevent leaks',
     ],
     correctAnswer: 1,
     explanation:
-      "Double block and bleed involves closing two valves in series on a pipeline and opening a vent or drain valve between them. If either block valve leaks, the substance drains harmlessly through the bleed valve rather than reaching the confined space. The bleed valve also provides visible confirmation that the isolation is holding. This method is essential where complete disconnection of pipework is not practicable.",
+      'Double block and bleed involves closing two valves in series on a pipeline and opening a vent or drain valve between them. If either block valve leaks, the substance drains harmlessly through the bleed valve rather than reaching the confined space. The bleed valve also provides visible confirmation that the isolation is holding. This method is essential where complete disconnection of pipework is not practicable.',
   },
   {
     id: 3,
     question:
-      "During electrical isolation for confined space entry, what must be done after the supply is switched off?",
+      'During electrical isolation for confined space entry, what must be done after the supply is switched off?',
     options: [
-      "A warning sign is placed on the isolator and no further action is needed",
-      "The circuit must be proved dead using an approved voltage indicator, then locked off with a personal lock",
+      'A warning sign is placed on the isolator and no further action is needed',
+      'The circuit must be proved dead using an approved voltage indicator, then locked off with a personal lock',
       "The fuse is removed and placed in the supervisor's pocket",
-      "The circuit breaker is taped in the off position",
+      'The circuit breaker is taped in the off position',
     ],
     correctAnswer: 1,
     explanation:
-      "After switching off, the circuit must be proved dead at the point of work using an approved voltage indicator (GS38 compliant) that has been tested immediately before and after use on a known live source (proving unit). A personal padlock with a unique key must then be applied to the isolator to prevent re-energisation. This follows BS 7671 safe isolation procedures. Warning signs, tape, and removing fuses alone are not adequate \u2014 they can be bypassed or overridden by others.",
+      'After switching off, the circuit must be proved dead at the point of work using an approved voltage indicator (GS38 compliant) that has been tested immediately before and after use on a known live source (proving unit). A personal padlock with a unique key must then be applied to the isolator to prevent re-energisation. This follows BS 7671 safe isolation procedures. Warning signs, tape, and removing fuses alone are not adequate \u2014 they can be bypassed or overridden by others.',
   },
   {
     id: 4,
     question:
-      "Why must atmospheric testing be carried out at multiple levels inside a confined space?",
+      'Why must atmospheric testing be carried out at multiple levels inside a confined space?',
     options: [
-      "To calibrate the gas detector at different temperatures",
-      "Because gases stratify by density \u2014 heavier gases sink to the bottom and lighter gases rise to the top",
-      "Regulations require at least three readings for statistical accuracy",
-      "To check whether the ventilation fan is working at all heights",
+      'To calibrate the gas detector at different temperatures',
+      'Because gases stratify by density \u2014 heavier gases sink to the bottom and lighter gases rise to the top',
+      'Regulations require at least three readings for statistical accuracy',
+      'To check whether the ventilation fan is working at all heights',
     ],
     correctAnswer: 1,
     explanation:
-      "Gases stratify by density within a confined space. Heavier-than-air gases (such as carbon dioxide, hydrogen sulphide, and many solvent vapours) sink to the bottom, whilst lighter-than-air gases (such as methane and hydrogen) rise to the top. Oxygen depletion may occur at one level but not another. Testing at top, middle, and bottom ensures hazards are detected regardless of where they accumulate. A single reading at the entry point could miss a lethal concentration at the bottom of the space.",
+      'Gases stratify by density within a confined space. Heavier-than-air gases (such as carbon dioxide, hydrogen sulphide, and many solvent vapours) sink to the bottom, whilst lighter-than-air gases (such as methane and hydrogen) rise to the top. Oxygen depletion may occur at one level but not another. Testing at top, middle, and bottom ensures hazards are detected regardless of where they accumulate. A single reading at the entry point could miss a lethal concentration at the bottom of the space.',
   },
   {
     id: 5,
     question:
-      "What is the acceptable oxygen range for entry into a confined space without breathing apparatus?",
+      'What is the acceptable oxygen range for entry into a confined space without breathing apparatus?',
     options: [
-      "20.9% exactly \u2014 any deviation requires breathing apparatus",
-      "19.5% to 23.5%",
-      "16% to 25%",
-      "18% to 21%",
+      '20.9% exactly \u2014 any deviation requires breathing apparatus',
+      '19.5% to 23.5%',
+      '16% to 25%',
+      '18% to 21%',
     ],
     correctAnswer: 1,
     explanation:
-      "The acceptable oxygen range is 19.5% to 23.5%. Normal atmospheric oxygen is 20.9%. Below 19.5% indicates oxygen depletion (a gas may be displacing oxygen or a chemical reaction consuming it) and presents a risk of impaired judgement, unconsciousness, and death. Above 23.5% indicates oxygen enrichment, which creates a severe fire and explosion risk \u2014 materials that would not normally burn can ignite spontaneously in an oxygen-enriched atmosphere.",
+      'The acceptable oxygen range is 19.5% to 23.5%. Normal atmospheric oxygen is 20.9%. Below 19.5% indicates oxygen depletion (a gas may be displacing oxygen or a chemical reaction consuming it) and presents a risk of impaired judgement, unconsciousness, and death. Above 23.5% indicates oxygen enrichment, which creates a severe fire and explosion risk \u2014 materials that would not normally burn can ignite spontaneously in an oxygen-enriched atmosphere.',
   },
   {
     id: 6,
-    question:
-      "What should the pre-entry briefing cover?",
+    question: 'What should the pre-entry briefing cover?',
     options: [
-      "Only the names of the people entering the space",
-      "The hazards identified, safe working procedures, emergency actions, and communication signals",
-      "A brief reminder to wear hard hats",
-      "The estimated duration of the job and lunch break times",
+      'Only the names of the people entering the space',
+      'The hazards identified, safe working procedures, emergency actions, and communication signals',
+      'A brief reminder to wear hard hats',
+      'The estimated duration of the job and lunch break times',
     ],
     correctAnswer: 1,
     explanation:
-      "The pre-entry briefing must cover all identified hazards specific to the space, the safe working procedures to be followed, the emergency actions and rescue plan, communication signals between entrant and top person, time limits for the entry, PPE requirements, and what to do if conditions change. Every person involved \u2014 entrants, top person, and standby rescue team \u2014 must attend. The briefing must be specific to this entry, not a generic toolbox talk.",
+      'The pre-entry briefing must cover all identified hazards specific to the space, the safe working procedures to be followed, the emergency actions and rescue plan, communication signals between entrant and top person, time limits for the entry, PPE requirements, and what to do if conditions change. Every person involved \u2014 entrants, top person, and standby rescue team \u2014 must attend. The briefing must be specific to this entry, not a generic toolbox talk.',
   },
   {
     id: 7,
     question:
-      "After purging a confined space with inert gas, what critical step must be completed before entry?",
+      'After purging a confined space with inert gas, what critical step must be completed before entry?',
     options: [
-      "Entry can proceed immediately because the inert gas has removed all hazards",
-      "The space must be ventilated with fresh air to restore a breathable atmosphere before entry",
-      "The inert gas concentration must be increased to 100%",
-      "Workers should wear standard dust masks to filter the inert gas",
+      'Entry can proceed immediately because the inert gas has removed all hazards',
+      'The space must be ventilated with fresh air to restore a breathable atmosphere before entry',
+      'The inert gas concentration must be increased to 100%',
+      'Workers should wear standard dust masks to filter the inert gas',
     ],
     correctAnswer: 1,
     explanation:
-      "Inert gas purging (typically using nitrogen) displaces flammable or toxic gases, but it also displaces oxygen. An atmosphere of nitrogen is immediately fatal \u2014 a person will lose consciousness within seconds and die within minutes. After purging, the space must be thoroughly ventilated with fresh air until atmospheric testing confirms oxygen is within 19.5\u201323.5% and all other readings are safe. Never enter a space that has been inert-gas purged without completing this ventilation step.",
+      'Inert gas purging (typically using nitrogen) displaces flammable or toxic gases, but it also displaces oxygen. An atmosphere of nitrogen is immediately fatal \u2014 a person will lose consciousness within seconds and die within minutes. After purging, the space must be thoroughly ventilated with fresh air until atmospheric testing confirms oxygen is within 19.5\u201323.5% and all other readings are safe. Never enter a space that has been inert-gas purged without completing this ventilation step.',
   },
   {
     id: 8,
-    question:
-      "Which of the following is NOT a required pre-entry check for access and egress?",
+    question: 'Which of the following is NOT a required pre-entry check for access and egress?',
     options: [
-      "Confirming that ladders are secured and platforms are stable",
-      "Assessing whether the entry point is large enough for rescue with a stretcher",
-      "Painting the entry point a bright colour for visibility",
-      "Ensuring the entry and exit routes are clear and unobstructed",
+      'Confirming that ladders are secured and platforms are stable',
+      'Assessing whether the entry point is large enough for rescue with a stretcher',
+      'Painting the entry point a bright colour for visibility',
+      'Ensuring the entry and exit routes are clear and unobstructed',
     ],
     correctAnswer: 2,
     explanation:
-      "Pre-entry access and egress checks include confirming that entry and exit routes are clear and unobstructed, ladders are secured, platforms are stable, and the entry point size has been assessed for both normal access and emergency rescue (including stretcher extraction if needed). Painting the entry point a bright colour is not a regulatory requirement. The focus is on physical safety and the ability to enter, work, and be rescued through the available openings.",
+      'Pre-entry access and egress checks include confirming that entry and exit routes are clear and unobstructed, ladders are secured, platforms are stable, and the entry point size has been assessed for both normal access and emergency rescue (including stretcher extraction if needed). Painting the entry point a bright colour is not a regulatory requirement. The focus is on physical safety and the ability to enter, work, and be rescued through the available openings.',
   },
 ];
 
@@ -213,10 +209,9 @@ const quizQuestions = [
 
 export default function ConfinedSpacesModule4Section1() {
   useSEO({
-    title:
-      "Pre-Entry Procedures | Confined Spaces Module 4 Section 1",
+    title: 'Pre-Entry Procedures | Confined Spaces Module 4 Section 1',
     description:
-      "Learn the systematic pre-entry procedures for confined spaces including isolation, atmospheric testing, ventilation, PPE checks, rescue equipment positioning, and the pre-entry briefing.",
+      'Learn the systematic pre-entry procedures for confined spaces including isolation, atmospheric testing, ventilation, PPE checks, rescue equipment positioning, and the pre-entry briefing.',
   });
 
   return (
@@ -245,13 +240,11 @@ export default function ConfinedSpacesModule4Section1() {
           <span className="inline-block bg-cyan-500 text-white px-3 py-1 rounded-full text-sm font-semibold mb-4">
             MODULE 4 &middot; SECTION 1
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-            Pre-Entry Procedures
-          </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Pre-Entry Procedures</h1>
           <p className="text-white/80 max-w-xl mx-auto">
-            A systematic walkthrough of every step that must be completed before anyone
-            enters a confined space &mdash; from issuing the permit-to-work through
-            isolation, atmospheric testing, and rescue readiness
+            A systematic walkthrough of every step that must be completed before anyone enters a
+            confined space &mdash; from issuing the permit-to-work through isolation, atmospheric
+            testing, and rescue readiness
           </p>
         </div>
 
@@ -272,23 +265,36 @@ export default function ConfinedSpacesModule4Section1() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
-                <span>Explain mechanical, electrical, and piping isolation techniques and how to verify each</span>
+                <span>
+                  Explain mechanical, electrical, and piping isolation techniques and how to verify
+                  each
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
-                <span>Outline the cleaning, purging, and ventilation sequence for a contaminated space</span>
+                <span>
+                  Outline the cleaning, purging, and ventilation sequence for a contaminated space
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
-                <span>State the correct atmospheric testing sequence and acceptable limits for O&#8322;, flammables, and toxics</span>
+                <span>
+                  State the correct atmospheric testing sequence and acceptable limits for O&#8322;,
+                  flammables, and toxics
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
-                <span>Identify the access, egress, communication, PPE, and rescue checks required before entry</span>
+                <span>
+                  Identify the access, egress, communication, PPE, and rescue checks required before
+                  entry
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
-                <span>Explain the role and responsibilities of the top person (safety attendant)</span>
+                <span>
+                  Explain the role and responsibilities of the top person (safety attendant)
+                </span>
               </li>
             </ul>
           </div>
@@ -302,15 +308,17 @@ export default function ConfinedSpacesModule4Section1() {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              No one may enter a confined space until a <strong>permit-to-work</strong> has
-              been formally issued and signed. The permit is not merely paperwork &mdash; it
-              is a structured, life-critical checklist that ensures every precaution has been
-              physically verified before entry is authorised.
+              No one may enter a confined space until a <strong>permit-to-work</strong> has been
+              formally issued and signed. The permit is not merely paperwork &mdash; it is a
+              structured, life-critical checklist that ensures every precaution has been physically
+              verified before entry is authorised.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="rounded-lg p-3 sm:p-4 bg-cyan-500/10 border-l-2 border-l-cyan-500/50 border border-cyan-500/30">
-                <p className="font-semibold text-base text-cyan-400 mb-2">What the Permit Contains</p>
+                <p className="font-semibold text-base text-cyan-400 mb-2">
+                  What the Permit Contains
+                </p>
                 <ul className="text-base text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
@@ -348,8 +356,8 @@ export default function ConfinedSpacesModule4Section1() {
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
-                      The permit is issued by an <strong>authorised, competent person</strong> &mdash;
-                      never by the entrant themselves
+                      The permit is issued by an <strong>authorised, competent person</strong>{' '}
+                      &mdash; never by the entrant themselves
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
@@ -390,11 +398,12 @@ export default function ConfinedSpacesModule4Section1() {
                 <h3 className="font-semibold text-red-300">Never Enter Without a Valid Permit</h3>
               </div>
               <p className="text-white/80 text-sm">
-                Entry without a valid, signed permit-to-work is <strong className="text-white">prohibited</strong>.
-                Even &ldquo;just having a quick look&rdquo; or &ldquo;popping in for a second&rdquo; constitutes
-                an entry. If the permit has expired, been suspended, or has not yet been issued,
-                no one may cross the entry point regardless of perceived urgency. Many confined-space
-                fatalities occur during unauthorised or informal entries.
+                Entry without a valid, signed permit-to-work is{' '}
+                <strong className="text-white">prohibited</strong>. Even &ldquo;just having a quick
+                look&rdquo; or &ldquo;popping in for a second&rdquo; constitutes an entry. If the
+                permit has expired, been suspended, or has not yet been issued, no one may cross the
+                entry point regardless of perceived urgency. Many confined-space fatalities occur
+                during unauthorised or informal entries.
               </p>
             </div>
           </div>
@@ -412,19 +421,17 @@ export default function ConfinedSpacesModule4Section1() {
               <p>
                 Isolation prevents the uncontrolled introduction of energy, substances, or
                 atmosphere into the confined space whilst people are inside. Three types of
-                isolation must be addressed: <strong>mechanical</strong>,{" "}
-                <strong>electrical</strong>, and <strong>piping</strong>. Each must be
-                independently verified.
+                isolation must be addressed: <strong>mechanical</strong>,{' '}
+                <strong>electrical</strong>, and <strong>piping</strong>. Each must be independently
+                verified.
               </p>
 
               {/* Mechanical Isolation */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-cyan-400 font-medium mb-3">
-                  Mechanical Isolation
-                </h3>
+                <h3 className="text-cyan-400 font-medium mb-3">Mechanical Isolation</h3>
                 <p className="text-sm text-white/80 mb-3">
-                  Mechanical isolation prevents moving parts (agitators, mixers, conveyors,
-                  augers) from operating whilst personnel are inside.
+                  Mechanical isolation prevents moving parts (agitators, mixers, conveyors, augers)
+                  from operating whilst personnel are inside.
                 </p>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
@@ -467,8 +474,8 @@ export default function ConfinedSpacesModule4Section1() {
                   Electrical Isolation (BS 7671 Safe Isolation)
                 </h3>
                 <p className="text-sm text-white/80 mb-3">
-                  Electrical isolation follows the safe isolation procedure defined in
-                  BS 7671 and HSE Guidance Note GS38. Every step must be completed in order.
+                  Electrical isolation follows the safe isolation procedure defined in BS 7671 and
+                  HSE Guidance Note GS38. Every step must be completed in order.
                 </p>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
@@ -522,20 +529,18 @@ export default function ConfinedSpacesModule4Section1() {
                   <p className="text-xs text-white/70">
                     <strong className="text-cyan-400">Key principle:</strong> The person at risk
                     holds the lock and key. No one else may remove another person&rsquo;s lock.
-                    Locks are only removed by their owner when they have personally confirmed it
-                    is safe to do so.
+                    Locks are only removed by their owner when they have personally confirmed it is
+                    safe to do so.
                   </p>
                 </div>
               </div>
 
               {/* Piping Isolation */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <h3 className="text-cyan-400 font-medium mb-3">
-                  Piping Isolation
-                </h3>
+                <h3 className="text-cyan-400 font-medium mb-3">Piping Isolation</h3>
                 <p className="text-sm text-white/80 mb-3">
-                  Piping isolation prevents the ingress of liquids, gases, steam, or other
-                  process substances through connected pipework.
+                  Piping isolation prevents the ingress of liquids, gases, steam, or other process
+                  substances through connected pipework.
                 </p>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
@@ -558,10 +563,10 @@ export default function ConfinedSpacesModule4Section1() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Spectacle blinds:</strong> A figure-of-eight plate that can be
-                      rotated between &ldquo;open&rdquo; (ring) and &ldquo;closed&rdquo; (solid
-                      disc) positions. The closed position provides a positive seal visible from
-                      outside the pipework
+                      <strong>Spectacle blinds:</strong> A figure-of-eight plate that can be rotated
+                      between &ldquo;open&rdquo; (ring) and &ldquo;closed&rdquo; (solid disc)
+                      positions. The closed position provides a positive seal visible from outside
+                      the pipework
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -576,16 +581,15 @@ export default function ConfinedSpacesModule4Section1() {
 
               {/* Process Isolation Verification */}
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
-                <h3 className="text-cyan-400 font-semibold mb-2">
-                  Process Isolation Verification
-                </h3>
+                <h3 className="text-cyan-400 font-semibold mb-2">Process Isolation Verification</h3>
                 <p className="text-white/80 text-sm">
-                  After all isolation is in place, a <strong className="text-white">try-to-operate
-                  test</strong> must be performed. Attempt to start motors, open valves, and
-                  operate controls to confirm that the isolation is effective. If anything
-                  responds, the isolation has failed and must be investigated before proceeding.
-                  This step catches errors such as wrong circuits isolated, valves not fully
-                  closed, or locks not properly engaged. Record the verification on the permit.
+                  After all isolation is in place, a{' '}
+                  <strong className="text-white">try-to-operate test</strong> must be performed.
+                  Attempt to start motors, open valves, and operate controls to confirm that the
+                  isolation is effective. If anything responds, the isolation has failed and must be
+                  investigated before proceeding. This step catches errors such as wrong circuits
+                  isolated, valves not fully closed, or locks not properly engaged. Record the
+                  verification on the permit.
                 </p>
               </div>
             </div>
@@ -599,8 +603,8 @@ export default function ConfinedSpacesModule4Section1() {
             Isolation Sequence Overview
           </h2>
           <p className="text-white/80 mb-6 text-sm">
-            The diagram below shows the required isolation sequence. All three branches
-            must be completed and verified before proceeding to cleaning and purging.
+            The diagram below shows the required isolation sequence. All three branches must be
+            completed and verified before proceeding to cleaning and purging.
           </p>
 
           <div className="grid md:grid-cols-3 gap-4 sm:gap-5">
@@ -738,10 +742,9 @@ export default function ConfinedSpacesModule4Section1() {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Once all energy sources are isolated, the interior of the confined space must
-                be cleaned and purged to remove hazardous residues and establish a safe
-                atmosphere. This is a multi-step process that must be completed in the correct
-                order.
+                Once all energy sources are isolated, the interior of the confined space must be
+                cleaned and purged to remove hazardous residues and establish a safe atmosphere.
+                This is a multi-step process that must be completed in the correct order.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -752,9 +755,9 @@ export default function ConfinedSpacesModule4Section1() {
                       1
                     </div>
                     <div>
-                      <strong>Remove residues:</strong> Drain liquids, shovel out solids, and
-                      remove sludge or scale from walls, floors, and internal structures. Residues
-                      can continue to emit toxic or flammable gases long after a vessel is emptied
+                      <strong>Remove residues:</strong> Drain liquids, shovel out solids, and remove
+                      sludge or scale from walls, floors, and internal structures. Residues can
+                      continue to emit toxic or flammable gases long after a vessel is emptied
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -775,7 +778,7 @@ export default function ConfinedSpacesModule4Section1() {
                       <strong>Purge with inert gas:</strong> If the space contained flammable
                       substances, it may be purged with nitrogen or another inert gas to displace
                       the flammable atmosphere below the lower explosive limit (LEL). This step
-                      creates an atmosphere that is <strong>immediately dangerous to life</strong>{" "}
+                      creates an atmosphere that is <strong>immediately dangerous to life</strong>{' '}
                       &mdash; no one may enter during inert gas purging
                     </div>
                   </div>
@@ -784,10 +787,10 @@ export default function ConfinedSpacesModule4Section1() {
                       4
                     </div>
                     <div>
-                      <strong>Ventilate to breathable atmosphere:</strong> After purging, the
-                      inert gas must be displaced with fresh air using mechanical ventilation.
-                      Continue ventilating until atmospheric testing confirms safe levels of
-                      oxygen, flammables, and toxics at all levels within the space
+                      <strong>Ventilate to breathable atmosphere:</strong> After purging, the inert
+                      gas must be displaced with fresh air using mechanical ventilation. Continue
+                      ventilating until atmospheric testing confirms safe levels of oxygen,
+                      flammables, and toxics at all levels within the space
                     </div>
                   </div>
                 </div>
@@ -800,12 +803,14 @@ export default function ConfinedSpacesModule4Section1() {
                 </div>
                 <p className="text-white/80 text-sm">
                   Nitrogen is colourless, odourless, and tasteless. A single breath of a
-                  nitrogen-rich atmosphere can cause immediate unconsciousness. Death follows
-                  within minutes. There have been multiple fatalities in the UK where workers
-                  entered spaces that had been purged with nitrogen but not subsequently
-                  ventilated with fresh air. <strong className="text-white">Never enter a space
-                  during or immediately after inert-gas purging without first restoring a
-                  breathable atmosphere and confirming it by testing.</strong>
+                  nitrogen-rich atmosphere can cause immediate unconsciousness. Death follows within
+                  minutes. There have been multiple fatalities in the UK where workers entered
+                  spaces that had been purged with nitrogen but not subsequently ventilated with
+                  fresh air.{' '}
+                  <strong className="text-white">
+                    Never enter a space during or immediately after inert-gas purging without first
+                    restoring a breathable atmosphere and confirming it by testing.
+                  </strong>
                 </p>
               </div>
             </div>
@@ -821,9 +826,9 @@ export default function ConfinedSpacesModule4Section1() {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Atmospheric testing is the single most critical pre-entry check. It must be
-                carried out in a specific sequence using calibrated instruments, and the results
-                must be recorded on the permit before entry is authorised.
+                Atmospheric testing is the single most critical pre-entry check. It must be carried
+                out in a specific sequence using calibrated instruments, and the results must be
+                recorded on the permit before entry is authorised.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -848,9 +853,9 @@ export default function ConfinedSpacesModule4Section1() {
                     <div>
                       <strong>Test at multiple levels:</strong> top, middle, and bottom of the
                       space. Gases stratify by density &mdash; heavier-than-air gases (CO&#8322;,
-                      H&#8322;S, solvent vapours) sink to the bottom, whilst lighter gases
-                      (methane, hydrogen) rise to the top. A reading at one level tells you nothing
-                      about conditions at another
+                      H&#8322;S, solvent vapours) sink to the bottom, whilst lighter gases (methane,
+                      hydrogen) rise to the top. A reading at one level tells you nothing about
+                      conditions at another
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -860,8 +865,8 @@ export default function ConfinedSpacesModule4Section1() {
                     <div>
                       <strong>Confirm oxygen 19.5&ndash;23.5%.</strong> Below 19.5% =
                       oxygen-deficient (risk of impaired judgement, unconsciousness, death). Above
-                      23.5% = oxygen-enriched (severe fire/explosion risk &mdash; materials
-                      ignite more easily). Normal air is 20.9% O&#8322;
+                      23.5% = oxygen-enriched (severe fire/explosion risk &mdash; materials ignite
+                      more easily). Normal air is 20.9% O&#8322;
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -871,9 +876,9 @@ export default function ConfinedSpacesModule4Section1() {
                     <div>
                       <strong>Confirm flammable gases &lt;10% LEL.</strong> The lower explosive
                       limit (LEL) is the minimum concentration at which a gas can ignite. Readings
-                      must be well below the LEL &mdash; the 10% threshold provides a safety
-                      margin. If readings approach or exceed 10% LEL, entry is prohibited until
-                      further ventilation and re-testing achieve a safe level
+                      must be well below the LEL &mdash; the 10% threshold provides a safety margin.
+                      If readings approach or exceed 10% LEL, entry is prohibited until further
+                      ventilation and re-testing achieve a safe level
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -881,11 +886,13 @@ export default function ConfinedSpacesModule4Section1() {
                       5
                     </div>
                     <div>
-                      <strong>Confirm toxic substances below their workplace exposure limit
-                      (WEL).</strong> Test for all toxic substances identified in the risk
-                      assessment (e.g. carbon monoxide, hydrogen sulphide, ammonia, solvent
-                      vapours). Each substance has a specific WEL published in HSE document
-                      EH40. Readings must be below these limits at every test point
+                      <strong>
+                        Confirm toxic substances below their workplace exposure limit (WEL).
+                      </strong>{' '}
+                      Test for all toxic substances identified in the risk assessment (e.g. carbon
+                      monoxide, hydrogen sulphide, ammonia, solvent vapours). Each substance has a
+                      specific WEL published in HSE document EH40. Readings must be below these
+                      limits at every test point
                     </div>
                   </div>
                 </div>
@@ -897,15 +904,15 @@ export default function ConfinedSpacesModule4Section1() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>All readings</strong> must be recorded on the permit-to-work with
-                      the time, date, test location (top/middle/bottom), instrument serial number,
-                      and the name of the person who took the reading
+                      <strong>All readings</strong> must be recorded on the permit-to-work with the
+                      time, date, test location (top/middle/bottom), instrument serial number, and
+                      the name of the person who took the reading
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      The gas detector must be <strong>in current calibration</strong> and{" "}
+                      The gas detector must be <strong>in current calibration</strong> and{' '}
                       <strong>bump-tested</strong> before use on the day of the entry
                     </div>
                   </div>
@@ -913,8 +920,8 @@ export default function ConfinedSpacesModule4Section1() {
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
                       If <strong>any reading is outside acceptable limits</strong>, entry is
-                      prohibited. The space must be further ventilated and re-tested. Do not
-                      average readings or ignore a single high result
+                      prohibited. The space must be further ventilated and re-tested. Do not average
+                      readings or ignore a single high result
                     </div>
                   </div>
                 </div>
@@ -960,10 +967,10 @@ export default function ConfinedSpacesModule4Section1() {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Mechanical ventilation is essential to maintain a safe atmosphere during the
-                entry. Natural ventilation alone is almost never sufficient for confined
-                spaces. The ventilation system must be set up, tested, and confirmed effective
-                before entry and maintained continuously throughout.
+                Mechanical ventilation is essential to maintain a safe atmosphere during the entry.
+                Natural ventilation alone is almost never sufficient for confined spaces. The
+                ventilation system must be set up, tested, and confirmed effective before entry and
+                maintained continuously throughout.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -1007,8 +1014,8 @@ export default function ConfinedSpacesModule4Section1() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Continuous operation:</strong> Ventilation must run continuously during
-                      the entry. If the ventilation system fails, all personnel must evacuate
+                      <strong>Continuous operation:</strong> Ventilation must run continuously
+                      during the entry. If the ventilation system fails, all personnel must evacuate
                       immediately and the space must be re-tested before re-entry
                     </div>
                   </div>
@@ -1074,10 +1081,10 @@ export default function ConfinedSpacesModule4Section1() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      A reliable communication system must be established between the{" "}
-                      <strong>entrant</strong> and the <strong>top person</strong> (safety attendant)
-                      before entry. This may be voice, radio, hard-wired intercom, or a signal
-                      system using a tug rope
+                      A reliable communication system must be established between the{' '}
+                      <strong>entrant</strong> and the <strong>top person</strong> (safety
+                      attendant) before entry. This may be voice, radio, hard-wired intercom, or a
+                      signal system using a tug rope
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1085,8 +1092,8 @@ export default function ConfinedSpacesModule4Section1() {
                     <div>
                       <strong>Test the system before entry:</strong> Confirm that both parties can
                       communicate clearly. If using radios, check for signal dead spots within the
-                      space. If using a tug-line, agree the signal code (e.g. one tug = OK, two
-                      tugs = pull me out, continuous tugs = emergency)
+                      space. If using a tug-line, agree the signal code (e.g. one tug = OK, two tugs
+                      = pull me out, continuous tugs = emergency)
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1162,21 +1169,20 @@ export default function ConfinedSpacesModule4Section1() {
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
                       <strong>Tripod, davit arm, or winch at the entry point:</strong> The
-                      mechanical retrieval device must be set up over or adjacent to the entry
-                      point before anyone enters. It must be rated for the load (entrant weight
-                      plus equipment) and have been inspected within its statutory examination
-                      period
+                      mechanical retrieval device must be set up over or adjacent to the entry point
+                      before anyone enters. It must be rated for the load (entrant weight plus
+                      equipment) and have been inspected within its statutory examination period
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
                       <strong>Rescue plan confirmed:</strong> The written rescue plan must be
-                      reviewed and confirmed for this specific entry. It must detail how a
-                      casualty will be retrieved, what equipment will be used, who will perform the
-                      rescue, and the route to medical assistance. Generic rescue plans are
-                      unacceptable &mdash; the plan must reflect the actual space geometry, entry
-                      size, depth, and hazards
+                      reviewed and confirmed for this specific entry. It must detail how a casualty
+                      will be retrieved, what equipment will be used, who will perform the rescue,
+                      and the route to medical assistance. Generic rescue plans are unacceptable
+                      &mdash; the plan must reflect the actual space geometry, entry size, depth,
+                      and hazards
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1209,11 +1215,11 @@ export default function ConfinedSpacesModule4Section1() {
                 </div>
                 <p className="text-white/80 text-sm">
                   Rescue equipment that is &ldquo;in the van&rdquo; or &ldquo;available if
-                  needed&rdquo; is <strong className="text-white">not acceptable</strong>.
-                  Equipment must be physically erected, connected, and tested at the entry point
-                  before any person enters the space. In an emergency, there is no time to
-                  assemble and rig a tripod. Confined space incidents escalate from consciousness
-                  to death in minutes. The rescue system must be ready to operate immediately.
+                  needed&rdquo; is <strong className="text-white">not acceptable</strong>. Equipment
+                  must be physically erected, connected, and tested at the entry point before any
+                  person enters the space. In an emergency, there is no time to assemble and rig a
+                  tripod. Confined space incidents escalate from consciousness to death in minutes.
+                  The rescue system must be ready to operate immediately.
                 </p>
               </div>
             </div>
@@ -1229,8 +1235,8 @@ export default function ConfinedSpacesModule4Section1() {
             Pre-Entry Checklist at a Glance
           </h2>
           <p className="text-white/80 mb-6 text-sm">
-            Every item on this checklist must be confirmed before the permit is signed and
-            entry is authorised. A single outstanding item means entry is prohibited.
+            Every item on this checklist must be confirmed before the permit is signed and entry is
+            authorised. A single outstanding item means entry is prohibited.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1378,10 +1384,10 @@ export default function ConfinedSpacesModule4Section1() {
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                The final step before authorising entry is the pre-entry briefing. This
-                ensures every person involved understands exactly what they are doing, what
-                hazards exist, and what to do if something goes wrong. It is not a
-                formality &mdash; it is a safety-critical event.
+                The final step before authorising entry is the pre-entry briefing. This ensures
+                every person involved understands exactly what they are doing, what hazards exist,
+                and what to do if something goes wrong. It is not a formality &mdash; it is a
+                safety-critical event.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -1407,9 +1413,9 @@ export default function ConfinedSpacesModule4Section1() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Emergency actions:</strong> What to do if the gas alarm sounds, if
-                      the ventilation fails, if the entrant becomes unwell, or if any other
-                      unexpected event occurs. The evacuation route and assembly point
+                      <strong>Emergency actions:</strong> What to do if the gas alarm sounds, if the
+                      ventilation fails, if the entrant becomes unwell, or if any other unexpected
+                      event occurs. The evacuation route and assembly point
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1432,8 +1438,8 @@ export default function ConfinedSpacesModule4Section1() {
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
                       <strong>All personnel attend:</strong> Entrants, top person, rescue team
-                      members, and anyone else involved. No one may enter the space unless they
-                      have attended the briefing for this specific entry
+                      members, and anyone else involved. No one may enter the space unless they have
+                      attended the briefing for this specific entry
                     </div>
                   </div>
                 </div>
@@ -1444,9 +1450,9 @@ export default function ConfinedSpacesModule4Section1() {
                   Top Person (Safety Attendant) &mdash; Role &amp; Responsibilities
                 </h3>
                 <p className="text-sm text-white/80 mb-3">
-                  The top person is positioned at the entry point for the entire duration of
-                  the entry. Their role is non-negotiable and they must not be assigned any
-                  other task that could distract them.
+                  The top person is positioned at the entry point for the entire duration of the
+                  entry. Their role is non-negotiable and they must not be assigned any other task
+                  that could distract them.
                 </p>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
@@ -1466,16 +1472,16 @@ export default function ConfinedSpacesModule4Section1() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Monitors atmospheric readings</strong> from the continuous gas
-                      monitor (if displayed at the entry point) and watches for changes in the
+                      <strong>Monitors atmospheric readings</strong> from the continuous gas monitor
+                      (if displayed at the entry point) and watches for changes in the
                       entrant&rsquo;s behaviour or speech patterns that could indicate impairment
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Controls access</strong> to the confined space &mdash; no
-                      unauthorised person may approach or enter
+                      <strong>Controls access</strong> to the confined space &mdash; no unauthorised
+                      person may approach or enter
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1489,8 +1495,8 @@ export default function ConfinedSpacesModule4Section1() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
-                      <strong>Keeps a log</strong> of entry and exit times, communication
-                      check-ins, and any incidents or observations
+                      <strong>Keeps a log</strong> of entry and exit times, communication check-ins,
+                      and any incidents or observations
                     </div>
                   </div>
                 </div>
@@ -1504,13 +1510,13 @@ export default function ConfinedSpacesModule4Section1() {
                   </h3>
                 </div>
                 <p className="text-white/80 text-sm">
-                  Under <strong className="text-white">no circumstances</strong> should the
-                  top person enter the confined space. If the entrant is in distress, the top
-                  person must activate the rescue plan and use the mechanical retrieval system
-                  from outside. Entering the space to &ldquo;help&rdquo; turns one casualty
-                  into two. A disproportionate number of confined-space fatalities are
-                  would-be rescuers who entered without breathing apparatus. The top
-                  person&rsquo;s value is in staying outside and coordinating the rescue.
+                  Under <strong className="text-white">no circumstances</strong> should the top
+                  person enter the confined space. If the entrant is in distress, the top person
+                  must activate the rescue plan and use the mechanical retrieval system from
+                  outside. Entering the space to &ldquo;help&rdquo; turns one casualty into two. A
+                  disproportionate number of confined-space fatalities are would-be rescuers who
+                  entered without breathing apparatus. The top person&rsquo;s value is in staying
+                  outside and coordinating the rescue.
                 </p>
               </div>
             </div>
@@ -1529,8 +1535,8 @@ export default function ConfinedSpacesModule4Section1() {
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-cyan-500 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong>No entry without a valid, signed permit-to-work</strong> that has
-                      been issued by a competent, authorised person after all preconditions are
+                      <strong>No entry without a valid, signed permit-to-work</strong> that has been
+                      issued by a competent, authorised person after all preconditions are
                       physically verified.
                     </span>
                   </li>
@@ -1563,8 +1569,7 @@ export default function ConfinedSpacesModule4Section1() {
                     <span>
                       <strong>Atmospheric testing</strong> follows a strict sequence: test from
                       outside, test at multiple levels, confirm O&#8322; 19.5&ndash;23.5%,
-                      flammables &lt;10% LEL, and toxics below WEL. Record everything on the
-                      permit.
+                      flammables &lt;10% LEL, and toxics below WEL. Record everything on the permit.
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -1609,10 +1614,7 @@ export default function ConfinedSpacesModule4Section1() {
           </h2>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0"
-              >
+              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
                 <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
               </div>
@@ -1622,10 +1624,7 @@ export default function ConfinedSpacesModule4Section1() {
 
         {/* ─── Quiz ─── */}
         <div className="mt-12">
-          <Quiz
-            title="Pre-Entry Procedures Quiz"
-            questions={quizQuestions}
-          />
+          <Quiz title="Pre-Entry Procedures Quiz" questions={quizQuestions} />
         </div>
 
         {/* ─── Bottom Navigation ─── */}

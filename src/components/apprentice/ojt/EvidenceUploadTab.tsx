@@ -1,27 +1,26 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Textarea } from "@/components/ui/textarea";
-import { Upload, FileText, Image, Video, Calendar, Clock, User, Tag } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { Label } from "@/components/ui/label";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { Textarea } from '@/components/ui/textarea';
+import { Upload, FileText, Image, Video, Calendar, Clock, User, Tag } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { Label } from '@/components/ui/label';
 
 const EvidenceUploadTab = () => {
   const { toast } = useToast();
-  
+
   const [evidenceFile, setEvidenceFile] = useState({
-    title: "",
-    description: "",
-    type: "",
-    file: null as File | null
+    title: '',
+    description: '',
+    type: '',
+    file: null as File | null,
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setEvidenceFile(prev => ({ ...prev, file: e.target.files![0] }));
+      setEvidenceFile((prev) => ({ ...prev, file: e.target.files![0] }));
     }
   };
 
@@ -29,33 +28,33 @@ const EvidenceUploadTab = () => {
     e.preventDefault();
     if (!evidenceFile.title || !evidenceFile.type) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in title and evidence type.",
-        variant: "destructive"
+        title: 'Missing Information',
+        description: 'Please fill in title and evidence type.',
+        variant: 'destructive',
       });
       return;
     }
-    
+
     // For now, just show a toast - this would upload to storage in full implementation
     toast({
-      title: "Evidence Uploaded",
-      description: "Your evidence has been uploaded successfully."
+      title: 'Evidence Uploaded',
+      description: 'Your evidence has been uploaded successfully.',
     });
-    
+
     setEvidenceFile({
-      title: "",
-      description: "",
-      type: "",
-      file: null
+      title: '',
+      description: '',
+      type: '',
+      file: null,
     });
   };
 
   const evidenceTypeOptions = [
-    { value: "photo", label: "Photo" },
-    { value: "video", label: "Video" },
-    { value: "document", label: "Document" },
-    { value: "certificate", label: "Certificate" },
-    { value: "assessment", label: "Assessment" }
+    { value: 'photo', label: 'Photo' },
+    { value: 'video', label: 'Video' },
+    { value: 'document', label: 'Document' },
+    { value: 'certificate', label: 'Certificate' },
+    { value: 'assessment', label: 'Assessment' },
   ];
 
   return (
@@ -127,18 +126,18 @@ const EvidenceUploadTab = () => {
               label="Evidence Title"
               placeholder="e.g. Socket Installation Photo"
               value={evidenceFile.title}
-              onChange={(value) => setEvidenceFile(prev => ({ ...prev, title: value }))}
+              onChange={(value) => setEvidenceFile((prev) => ({ ...prev, title: value }))}
               icon={<FileText className="h-5 w-5" />}
             />
-            
+
             <MobileSelectWrapper
               label="Evidence Type"
               placeholder="Select evidence type"
               value={evidenceFile.type}
-              onValueChange={(value) => setEvidenceFile(prev => ({ ...prev, type: value }))}
+              onValueChange={(value) => setEvidenceFile((prev) => ({ ...prev, type: value }))}
               options={evidenceTypeOptions}
             />
-            
+
             {/* File Upload */}
             <div className="space-y-3">
               <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
@@ -155,7 +154,7 @@ const EvidenceUploadTab = () => {
                 <div className="h-14 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 transition-all duration-200 group-hover:shadow-lg group-hover:shadow-elec-yellow/10 flex items-center px-4">
                   <Upload className="h-5 w-5 text-elec-yellow/70 mr-3" />
                   <span className="text-sm text-elec-light/60">
-                    {evidenceFile.file ? evidenceFile.file.name : "Choose file - No file chosen"}
+                    {evidenceFile.file ? evidenceFile.file.name : 'Choose file - No file chosen'}
                   </span>
                 </div>
               </div>
@@ -170,13 +169,15 @@ const EvidenceUploadTab = () => {
               <Textarea
                 placeholder="Provide details about what was learned or achieved"
                 value={evidenceFile.description}
-                onChange={(e) => setEvidenceFile(prev => ({ ...prev, description: e.target.value }))}
+                onChange={(e) =>
+                  setEvidenceFile((prev) => ({ ...prev, description: e.target.value }))
+                }
                 className="min-h-[100px] bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 resize-none"
               />
             </div>
-            
-            <Button 
-              type="submit" 
+
+            <Button
+              type="submit"
               className="w-full h-14 bg-gradient-to-r from-elec-yellow to-elec-yellow/80 hover:from-elec-yellow/90 hover:to-elec-yellow/70 text-elec-dark font-semibold rounded-xl transition-all duration-200"
             >
               <Upload className="h-5 w-5 mr-2" />

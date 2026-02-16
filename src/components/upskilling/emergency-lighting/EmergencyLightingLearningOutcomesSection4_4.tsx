@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection4_4 = () => {
   const outcomes = [
-    "Explain the importance of segregation in emergency lighting circuits",
-    "Identify fire-resistant cable and containment requirements",
-    "Apply BS 7671 regulations on cable support and protection",
-    "Design circuits that maintain integrity for the full emergency duration",
-    "Recognise common installation mistakes that compromise safety"
+    'Explain the importance of segregation in emergency lighting circuits',
+    'Identify fire-resistant cable and containment requirements',
+    'Apply BS 7671 regulations on cable support and protection',
+    'Design circuits that maintain integrity for the full emergency duration',
+    'Recognise common installation mistakes that compromise safety',
   ];
 
   return (

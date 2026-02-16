@@ -1,14 +1,20 @@
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Calendar, Loader2, Sparkles, FileText } from "lucide-react";
-import { MaintenanceInput as MaintenanceInputType } from "./useMaintenanceAdvisor";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { cn } from "@/lib/utils";
-import { FormSection } from "./FormSection";
-import { CollapsibleFormSection } from "./CollapsibleFormSection";
-import { QuickFillExamplesGrid } from "./QuickFillExamplesGrid";
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Calendar, Loader2, Sparkles, FileText } from 'lucide-react';
+import { MaintenanceInput as MaintenanceInputType } from './useMaintenanceAdvisor';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { cn } from '@/lib/utils';
+import { FormSection } from './FormSection';
+import { CollapsibleFormSection } from './CollapsibleFormSection';
+import { QuickFillExamplesGrid } from './QuickFillExamplesGrid';
 
 interface MaintenanceInputProps {
   input: MaintenanceInputType;
@@ -26,50 +32,53 @@ const EQUIPMENT_TYPES = [
   { value: 'fire-alarm', label: 'Fire Alarm System' },
   { value: 'ev-charger', label: 'EV Charger' },
   { value: 'solar-pv', label: 'Solar PV System' },
-  { value: 'other', label: 'Other' }
+  { value: 'other', label: 'Other' },
 ];
 
 const QUICK_FILL_DATA = {
   domestic: {
     equipmentType: 'consumer-unit',
-    equipmentDescription: '18th Edition RCBO consumer unit with 10 circuits, metal enclosure, dual RCD protection',
+    equipmentDescription:
+      '18th Edition RCBO consumer unit with 10 circuits, metal enclosure, dual RCD protection',
     location: 'Main entrance hallway',
     ageYears: 5,
     buildingType: 'domestic' as const,
     environment: 'indoor' as const,
     criticality: 'standard' as const,
     manufacturer: 'Hager',
-    modelNumber: 'VML910CU'
+    modelNumber: 'VML910CU',
   },
   commercial: {
     equipmentType: 'distribution-board',
-    equipmentDescription: '3-phase distribution board, 125A TPN incomer, MCCB protection, 16 outgoing ways',
+    equipmentDescription:
+      '3-phase distribution board, 125A TPN incomer, MCCB protection, 16 outgoing ways',
     location: 'Main electrical room, ground floor',
     ageYears: 8,
     buildingType: 'commercial' as const,
     environment: 'indoor' as const,
     criticality: 'critical' as const,
     manufacturer: 'Schneider Electric',
-    modelNumber: 'KQ125A'
+    modelNumber: 'KQ125A',
   },
   industrial: {
     equipmentType: 'distribution-board',
-    equipmentDescription: 'Industrial distribution board with motor protection, 400V 3-phase supply, IP65 rated enclosure',
+    equipmentDescription:
+      'Industrial distribution board with motor protection, 400V 3-phase supply, IP65 rated enclosure',
     location: 'Factory floor, Zone 2',
     ageYears: 12,
     buildingType: 'industrial' as const,
     environment: 'outdoor' as const,
     criticality: 'life-safety' as const,
     manufacturer: 'ABB',
-    modelNumber: 'MNS-iS'
-  }
+    modelNumber: 'MNS-iS',
+  },
 };
 
 export const MaintenanceInput = ({
   input,
   onInputChange,
   onGenerate,
-  isProcessing
+  isProcessing,
 }: MaintenanceInputProps) => {
   const handleQuickFill = (type: 'domestic' | 'commercial' | 'industrial') => {
     onInputChange(QUICK_FILL_DATA[type]);
@@ -91,24 +100,33 @@ export const MaintenanceInput = ({
             Equipment Information
             <span className="text-muted-foreground ml-1">(required fields marked *)</span>
           </Label>
-          
+
           {/* Equipment Type */}
           <div className="space-y-2">
             <Label htmlFor="equipment-type" className="text-sm font-medium">
               Equipment Type <span className="text-red-400">*</span>
             </Label>
-            <Select value={input.equipmentType} onValueChange={(val) => onInputChange({ equipmentType: val })}>
-              <SelectTrigger id="equipment-type" className="h-14 text-base" style={{ fontSize: '16px' }}>
+            <Select
+              value={input.equipmentType}
+              onValueChange={(val) => onInputChange({ equipmentType: val })}
+            >
+              <SelectTrigger
+                id="equipment-type"
+                className="h-14 text-base"
+                style={{ fontSize: '16px' }}
+              >
                 <SelectValue placeholder="Select equipment type" />
               </SelectTrigger>
               <SelectContent>
-                {EQUIPMENT_TYPES.map(type => (
-                  <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                {EQUIPMENT_TYPES.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>
+                    {type.label}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-          
+
           {/* Equipment Description */}
           <div className="space-y-2">
             <Label htmlFor="description" className="text-sm font-medium">
@@ -124,20 +142,20 @@ export const MaintenanceInput = ({
               maxLength={1000}
             />
             <div className="flex justify-between items-center text-xs">
-              <p className="text-muted-foreground">
-                Include make, model, key specifications
-              </p>
-              <p className={cn(
-                "font-medium",
-                input.equipmentDescription.length > 100 
-                  ? "text-yellow-400" 
-                  : "text-muted-foreground"
-              )}>
+              <p className="text-muted-foreground">Include make, model, key specifications</p>
+              <p
+                className={cn(
+                  'font-medium',
+                  input.equipmentDescription.length > 100
+                    ? 'text-yellow-400'
+                    : 'text-muted-foreground'
+                )}
+              >
                 {input.equipmentDescription.length} chars
               </p>
             </div>
           </div>
-          
+
           {/* Location & Age */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-2">
@@ -161,13 +179,22 @@ export const MaintenanceInput = ({
               onChange={(e) => onInputChange({ ageYears: parseInt(e.target.value) || 0 })}
             />
           </div>
-          
+
           {/* Building Context - 3 columns on desktop, stacked on mobile */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-2">
-              <Label htmlFor="building-type" className="text-sm font-medium">Building Type</Label>
-              <Select value={input.buildingType} onValueChange={(val: any) => onInputChange({ buildingType: val })}>
-                <SelectTrigger id="building-type" className="h-14 text-base" style={{ fontSize: '16px' }}>
+              <Label htmlFor="building-type" className="text-sm font-medium">
+                Building Type
+              </Label>
+              <Select
+                value={input.buildingType}
+                onValueChange={(val: any) => onInputChange({ buildingType: val })}
+              >
+                <SelectTrigger
+                  id="building-type"
+                  className="h-14 text-base"
+                  style={{ fontSize: '16px' }}
+                >
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -177,11 +204,20 @@ export const MaintenanceInput = ({
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="environment" className="text-sm font-medium">Environment</Label>
-              <Select value={input.environment} onValueChange={(val: any) => onInputChange({ environment: val })}>
-                <SelectTrigger id="environment" className="h-14 text-base" style={{ fontSize: '16px' }}>
+              <Label htmlFor="environment" className="text-sm font-medium">
+                Environment
+              </Label>
+              <Select
+                value={input.environment}
+                onValueChange={(val: any) => onInputChange({ environment: val })}
+              >
+                <SelectTrigger
+                  id="environment"
+                  className="h-14 text-base"
+                  style={{ fontSize: '16px' }}
+                >
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -192,11 +228,20 @@ export const MaintenanceInput = ({
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="criticality" className="text-sm font-medium">Criticality</Label>
-              <Select value={input.criticality} onValueChange={(val: any) => onInputChange({ criticality: val })}>
-                <SelectTrigger id="criticality" className="h-14 text-base" style={{ fontSize: '16px' }}>
+              <Label htmlFor="criticality" className="text-sm font-medium">
+                Criticality
+              </Label>
+              <Select
+                value={input.criticality}
+                onValueChange={(val: any) => onInputChange({ criticality: val })}
+              >
+                <SelectTrigger
+                  id="criticality"
+                  className="h-14 text-base"
+                  style={{ fontSize: '16px' }}
+                >
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -209,23 +254,21 @@ export const MaintenanceInput = ({
           </div>
         </div>
       </FormSection>
-      
+
       {/* Quick Fill Examples - Collapsed */}
-      <CollapsibleFormSection 
-        title="Quick Fill Examples" 
+      <CollapsibleFormSection
+        title="Quick Fill Examples"
         subtitle="Load sample data for common scenarios"
         badge="optional"
         icon={<Sparkles className="h-5 w-5" />}
         defaultOpen={false}
       >
-        <QuickFillExamplesGrid 
-          onSelect={handleQuickFill}
-        />
+        <QuickFillExamplesGrid onSelect={handleQuickFill} />
       </CollapsibleFormSection>
-      
+
       {/* Additional Details - Collapsed */}
-      <CollapsibleFormSection 
-        title="Additional Details" 
+      <CollapsibleFormSection
+        title="Additional Details"
         subtitle="Manufacturer, model, inspection history"
         badge="optional"
         icon={<FileText className="h-5 w-5" />}
@@ -246,16 +289,18 @@ export const MaintenanceInput = ({
               onChange={(e) => onInputChange({ modelNumber: e.target.value })}
             />
           </div>
-          
+
           <MobileInput
             label="Last Inspection Date"
             type="date"
             value={input.lastInspectionDate || ''}
             onChange={(e) => onInputChange({ lastInspectionDate: e.target.value })}
           />
-          
+
           <div className="space-y-2">
-            <Label htmlFor="issues" className="text-sm font-medium">Known Issues</Label>
+            <Label htmlFor="issues" className="text-sm font-medium">
+              Known Issues
+            </Label>
             <Textarea
               id="issues"
               placeholder="Any known problems or concerns..."
@@ -265,7 +310,7 @@ export const MaintenanceInput = ({
               style={{ fontSize: '16px' }}
             />
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <MobileInput
               label="Client Name"
@@ -280,7 +325,7 @@ export const MaintenanceInput = ({
               onChange={(e) => onInputChange({ assessorName: e.target.value })}
             />
           </div>
-          
+
           <MobileInput
             label="Site Address"
             placeholder="Full site address"
@@ -289,10 +334,10 @@ export const MaintenanceInput = ({
           />
         </div>
       </CollapsibleFormSection>
-      
+
       {/* Generate Button - Inline */}
       <FormSection>
-        <Button 
+        <Button
           type="submit"
           size="lg"
           disabled={!isFormValid || isProcessing}

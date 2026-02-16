@@ -1,20 +1,19 @@
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { 
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue, 
-} from "@/components/ui/select";
-import { DatePicker } from "./DatePicker";
-import { Project } from "@/types/project";
-import { toast } from "@/hooks/use-toast";
-import { Checkbox } from "@/components/ui/checkbox";
+  SelectValue,
+} from '@/components/ui/select';
+import { DatePicker } from './DatePicker';
+import { Project } from '@/types/project';
+import { toast } from '@/hooks/use-toast';
+import { Checkbox } from '@/components/ui/checkbox';
 
 type ProjectFormProps = {
   initialData?: Partial<Project>;
@@ -46,26 +45,26 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: parseFloat(value) || 0 }));
+    setFormData((prev) => ({ ...prev, [name]: parseFloat(value) || 0 }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.clientName || !formData.startDate) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
+        title: 'Missing Information',
+        description: 'Please fill in all required fields.',
+        variant: 'destructive',
       });
       return;
     }
-    
+
     onSubmit(formData as Omit<Project, 'id' | 'createdAt' | 'updatedAt'>);
   };
 
@@ -83,7 +82,7 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
             required
           />
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="clientName">Client Name *</Label>
           <Input
@@ -95,7 +94,7 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
             required
           />
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="clientContact">Client Contact</Label>
           <Input
@@ -106,7 +105,7 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
             placeholder="07700 900000"
           />
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="location">Location</Label>
           <Input
@@ -117,7 +116,7 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
             placeholder="123 High Street, London"
           />
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="budget">Budget (£)</Label>
           <Input
@@ -129,15 +128,15 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
             placeholder="1000"
           />
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="priority">Priority</Label>
-          <Select 
-            value={formData.priority} 
-            onValueChange={(value) => 
-              setFormData(prev => ({ 
-                ...prev, 
-                priority: value as Project['priority']
+          <Select
+            value={formData.priority}
+            onValueChange={(value) =>
+              setFormData((prev) => ({
+                ...prev,
+                priority: value as Project['priority'],
               }))
             }
           >
@@ -152,41 +151,41 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
             </SelectContent>
           </Select>
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="startDate">Start Date *</Label>
           <DatePicker
             date={formData.startDate ? new Date(formData.startDate) : undefined}
-            onSelect={(date) => 
-              setFormData(prev => ({ 
-                ...prev, 
-                startDate: date ? date.toISOString().split('T')[0] : '' 
+            onSelect={(date) =>
+              setFormData((prev) => ({
+                ...prev,
+                startDate: date ? date.toISOString().split('T')[0] : '',
               }))
             }
           />
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="dueDate">Due Date</Label>
           <DatePicker
             date={formData.dueDate ? new Date(formData.dueDate) : undefined}
-            onSelect={(date) => 
-              setFormData(prev => ({ 
-                ...prev, 
-                dueDate: date ? date.toISOString().split('T')[0] : '' 
+            onSelect={(date) =>
+              setFormData((prev) => ({
+                ...prev,
+                dueDate: date ? date.toISOString().split('T')[0] : '',
               }))
             }
           />
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="status">Status</Label>
-          <Select 
-            value={formData.status} 
-            onValueChange={(value) => 
-              setFormData(prev => ({ 
-                ...prev, 
-                status: value as Project['status']
+          <Select
+            value={formData.status}
+            onValueChange={(value) =>
+              setFormData((prev) => ({
+                ...prev,
+                status: value as Project['status'],
               }))
             }
           >
@@ -201,15 +200,15 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
             </SelectContent>
           </Select>
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="certificateType">Certificate Type</Label>
-          <Select 
-            value={formData.certificateType} 
-            onValueChange={(value) => 
-              setFormData(prev => ({ 
-                ...prev, 
-                certificateType: value as Project['certificateType']
+          <Select
+            value={formData.certificateType}
+            onValueChange={(value) =>
+              setFormData((prev) => ({
+                ...prev,
+                certificateType: value as Project['certificateType'],
               }))
             }
           >
@@ -225,36 +224,36 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
           </Select>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex items-center space-x-2">
-          <Checkbox 
+          <Checkbox
             id="certificateIssued"
             checked={formData.certificateIssued}
-            onCheckedChange={(checked) => 
-              setFormData(prev => ({ 
-                ...prev, 
-                certificateIssued: !!checked
+            onCheckedChange={(checked) =>
+              setFormData((prev) => ({
+                ...prev,
+                certificateIssued: !!checked,
               }))
             }
           />
           <Label htmlFor="certificateIssued">Certificate Issued</Label>
         </div>
-        
+
         <div className="flex items-center space-x-2">
-          <Checkbox 
+          <Checkbox
             id="invoiceIssued"
             checked={formData.invoiceIssued}
-            onCheckedChange={(checked) => 
-              setFormData(prev => ({ 
-                ...prev, 
-                invoiceIssued: !!checked
+            onCheckedChange={(checked) =>
+              setFormData((prev) => ({
+                ...prev,
+                invoiceIssued: !!checked,
               }))
             }
           />
           <Label htmlFor="invoiceIssued">Invoice Issued</Label>
         </div>
-        
+
         {formData.invoiceIssued && (
           <>
             <div className="space-y-2">
@@ -268,15 +267,15 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
                 placeholder="1200"
               />
             </div>
-            
+
             <div className="flex items-center space-x-2">
-              <Checkbox 
+              <Checkbox
                 id="invoicePaid"
                 checked={formData.invoicePaid}
-                onCheckedChange={(checked) => 
-                  setFormData(prev => ({ 
-                    ...prev, 
-                    invoicePaid: !!checked
+                onCheckedChange={(checked) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    invoicePaid: !!checked,
                   }))
                 }
               />
@@ -285,7 +284,7 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
           </>
         )}
       </div>
-      
+
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
         <Textarea
@@ -297,7 +296,7 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
           rows={3}
         />
       </div>
-      
+
       <div className="space-y-2">
         <Label htmlFor="notes">Notes</Label>
         <Textarea
@@ -309,14 +308,12 @@ export const ProjectForm = ({ initialData, onSubmit, onCancel }: ProjectFormProp
           rows={3}
         />
       </div>
-      
+
       <div className="flex justify-end gap-2 pt-4">
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit">
-          {initialData?.id ? 'Update Project' : 'Create Project'}
-        </Button>
+        <Button type="submit">{initialData?.id ? 'Update Project' : 'Create Project'}</Button>
       </div>
     </form>
   );

@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  AlertTriangle, 
-  Settings, 
-  Wrench, 
-  CheckSquare, 
+import {
+  AlertTriangle,
+  Settings,
+  Wrench,
+  CheckSquare,
   Zap,
   Eye,
   Calculator,
@@ -13,13 +13,12 @@ import {
   Target,
   Factory,
   FlaskConical,
-  Gauge
+  Gauge,
 } from 'lucide-react';
 
 export const EmergencyLightingContent2_3_Enhanced = () => {
   return (
     <div className="space-y-8">
-      
       {/* Section 1: Purpose and Regulatory Requirements */}
       <Card className="bg-[#323232] border-elec-yellow/30">
         <CardHeader>
@@ -29,7 +28,6 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          
           {/* Key Distinction */}
           <div className="bg-blue-600/15 border border-blue-400/30 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
@@ -39,7 +37,9 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               </Badge>
             </div>
             <p className="text-foreground text-sm">
-              Unlike escape or anti-panic lighting, high-risk task area lighting supports <strong>task completion</strong> in dangerous environments rather than evacuation guidance.
+              Unlike escape or anti-panic lighting, high-risk task area lighting supports{' '}
+              <strong>task completion</strong> in dangerous environments rather than evacuation
+              guidance.
             </p>
           </div>
 
@@ -49,7 +49,7 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               <Shield className="h-4 w-4 text-elec-yellow" />
               BS 5266 Illumination Standards
             </h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-green-600/15 border border-green-400/30 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
@@ -57,9 +57,11 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
                   <span className="text-green-300 font-medium text-sm">Minimum Lux Level</span>
                 </div>
                 <p className="text-foreground text-lg font-bold">15 lux maintained</p>
-                <p className="text-foreground text-xs">Significantly higher than 0.5 lux for escape routes</p>
+                <p className="text-foreground text-xs">
+                  Significantly higher than 0.5 lux for escape routes
+                </p>
               </div>
-              
+
               <div className="bg-yellow-600/15 border border-yellow-400/30 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Calculator className="h-4 w-4 text-yellow-400" />
@@ -77,24 +79,30 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               <Zap className="h-4 w-4 text-elec-yellow" />
               Activation and Duration Requirements
             </h4>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
               <div className="bg-elec-gray/40 rounded-lg p-3 border border-gray-600/30">
                 <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">1</Badge>
                 <p className="text-foreground text-sm font-medium mb-1">Automatic Activation</p>
-                <p className="text-foreground text-xs">Must activate immediately upon mains failure</p>
+                <p className="text-foreground text-xs">
+                  Must activate immediately upon mains failure
+                </p>
               </div>
-              
+
               <div className="bg-elec-gray/40 rounded-lg p-3 border border-gray-600/30">
                 <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">2</Badge>
                 <p className="text-foreground text-sm font-medium mb-1">Stable Operation</p>
-                <p className="text-foreground text-xs">Remain operational until tasks are made safe</p>
+                <p className="text-foreground text-xs">
+                  Remain operational until tasks are made safe
+                </p>
               </div>
-              
+
               <div className="bg-elec-gray/40 rounded-lg p-3 border border-gray-600/30">
                 <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">3</Badge>
                 <p className="text-foreground text-sm font-medium mb-1">Risk Assessment</p>
-                <p className="text-foreground text-xs">Areas determined by formal risk evaluation</p>
+                <p className="text-foreground text-xs">
+                  Areas determined by formal risk evaluation
+                </p>
               </div>
             </div>
           </div>
@@ -103,7 +111,10 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
               <Calculator className="h-4 w-4 text-elec-yellow" />
-              <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20">
+              <Badge
+                variant="outline"
+                className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20"
+              >
                 Calculation Example
               </Badge>
             </div>
@@ -113,10 +124,11 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
             <div className="space-y-1 text-sm">
               <p className="text-foreground">• 10% of 200 lux = 20 lux</p>
               <p className="text-foreground">• BS 5266 minimum = 15 lux</p>
-              <p className="text-elec-yellow font-medium">• Required emergency level = 20 lux (higher value)</p>
+              <p className="text-elec-yellow font-medium">
+                • Required emergency level = 20 lux (higher value)
+              </p>
             </div>
           </div>
-          
         </CardContent>
       </Card>
 
@@ -129,10 +141,10 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          
           <p className="text-foreground">
-            High-risk task lighting is required wherever dangerous processes or equipment are in use. 
-            These environments demand stable, bright lighting to avoid accidents during shutdown.
+            High-risk task lighting is required wherever dangerous processes or equipment are in
+            use. These environments demand stable, bright lighting to avoid accidents during
+            shutdown.
           </p>
 
           {/* High-Risk Environment Categories */}
@@ -141,9 +153,8 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               <AlertTriangle className="h-4 w-4 text-red-400" />
               High-Risk Environment Categories
             </h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              
               {/* Manufacturing & Machinery */}
               <div className="bg-red-600/15 border border-red-400/30 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-3">
@@ -247,7 +258,6 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
                   </li>
                 </ul>
               </div>
-              
             </div>
           </div>
 
@@ -255,18 +265,25 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
               <CheckSquare className="h-4 w-4 text-elec-yellow" />
-              <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20">
+              <Badge
+                variant="outline"
+                className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20"
+              >
                 Risk Assessment Criteria
               </Badge>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
               <div>
                 <p className="text-foreground font-medium mb-1">Process Analysis</p>
-                <p className="text-foreground">Identify dangerous operations and shutdown requirements</p>
+                <p className="text-foreground">
+                  Identify dangerous operations and shutdown requirements
+                </p>
               </div>
               <div>
                 <p className="text-foreground font-medium mb-1">Consequence Assessment</p>
-                <p className="text-foreground">Evaluate potential injury severity if lighting fails</p>
+                <p className="text-foreground">
+                  Evaluate potential injury severity if lighting fails
+                </p>
               </div>
               <div>
                 <p className="text-foreground font-medium mb-1">Duration Requirements</p>
@@ -274,7 +291,6 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               </div>
             </div>
           </div>
-          
         </CardContent>
       </Card>
 
@@ -283,14 +299,13 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
         <CardHeader>
           <CardTitle className="text-foreground flex items-center gap-2">
             <Wrench className="h-5 w-5 text-green-400" />
-            Installation and Design Principles  
+            Installation and Design Principles
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          
           <p className="text-foreground">
-            Designing for high-risk areas involves stricter criteria than standard emergency lighting. 
-            Electricians must ensure precise coverage and reliable performance.
+            Designing for high-risk areas involves stricter criteria than standard emergency
+            lighting. Electricians must ensure precise coverage and reliable performance.
           </p>
 
           {/* Design Requirements */}
@@ -299,9 +314,8 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               <Target className="h-4 w-4 text-elec-yellow" />
               Critical Design Requirements
             </h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              
               <div className="bg-green-600/15 border border-green-400/30 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Gauge className="h-4 w-4 text-green-400" />
@@ -379,7 +393,6 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
                   <li className="text-foreground">• Environmental protection</li>
                 </ul>
               </div>
-              
             </div>
           </div>
 
@@ -389,49 +402,69 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               <Wrench className="h-4 w-4 text-elec-yellow" />
               Installation Best Practices
             </h4>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              
               <div className="space-y-3">
                 <div className="bg-elec-gray/40 rounded-lg p-3 border border-gray-600/30">
                   <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">1</Badge>
-                  <p className="text-foreground text-sm font-medium mb-1">Pre-Installation Survey</p>
-                  <p className="text-foreground text-xs">Map dangerous equipment, identify shutdown procedures, assess viewing angles and potential shadows</p>
+                  <p className="text-foreground text-sm font-medium mb-1">
+                    Pre-Installation Survey
+                  </p>
+                  <p className="text-foreground text-xs">
+                    Map dangerous equipment, identify shutdown procedures, assess viewing angles and
+                    potential shadows
+                  </p>
                 </div>
-                
+
                 <div className="bg-elec-gray/40 rounded-lg p-3 border border-gray-600/30">
                   <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">2</Badge>
                   <p className="text-foreground text-sm font-medium mb-1">Luminaire Selection</p>
-                  <p className="text-foreground text-xs">Choose fittings with appropriate beam patterns, anti-glare features, and environmental protection ratings</p>
+                  <p className="text-foreground text-xs">
+                    Choose fittings with appropriate beam patterns, anti-glare features, and
+                    environmental protection ratings
+                  </p>
                 </div>
-                
+
                 <div className="bg-elec-gray/40 rounded-lg p-3 border border-gray-600/30">
                   <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">3</Badge>
                   <p className="text-foreground text-sm font-medium mb-1">Circuit Design</p>
-                  <p className="text-foreground text-xs">Separate circuits for high-risk lighting, clear labelling at distribution board, consider sub-circuit monitoring</p>
+                  <p className="text-foreground text-xs">
+                    Separate circuits for high-risk lighting, clear labelling at distribution board,
+                    consider sub-circuit monitoring
+                  </p>
                 </div>
               </div>
-              
+
               <div className="space-y-3">
                 <div className="bg-elec-gray/40 rounded-lg p-3 border border-gray-600/30">
                   <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">4</Badge>
                   <p className="text-foreground text-sm font-medium mb-1">Mounting & Positioning</p>
-                  <p className="text-foreground text-xs">Mount at appropriate height for task illumination, avoid interference with equipment operation or maintenance</p>
+                  <p className="text-foreground text-xs">
+                    Mount at appropriate height for task illumination, avoid interference with
+                    equipment operation or maintenance
+                  </p>
                 </div>
-                
+
                 <div className="bg-elec-gray/40 rounded-lg p-3 border border-gray-600/30">
                   <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">5</Badge>
-                  <p className="text-foreground text-sm font-medium mb-1">Testing & Commissioning</p>
-                  <p className="text-foreground text-xs">Measure lux levels at task planes, test activation under load conditions, verify duration performance</p>
+                  <p className="text-foreground text-sm font-medium mb-1">
+                    Testing & Commissioning
+                  </p>
+                  <p className="text-foreground text-xs">
+                    Measure lux levels at task planes, test activation under load conditions, verify
+                    duration performance
+                  </p>
                 </div>
-                
+
                 <div className="bg-elec-gray/40 rounded-lg p-3 border border-gray-600/30">
                   <Badge className="bg-blue-600/40 text-blue-300 text-xs mb-2">6</Badge>
                   <p className="text-foreground text-sm font-medium mb-1">Documentation</p>
-                  <p className="text-foreground text-xs">Create detailed as-built drawings, record test results, provide user instructions for shutdown procedures</p>
+                  <p className="text-foreground text-xs">
+                    Create detailed as-built drawings, record test results, provide user
+                    instructions for shutdown procedures
+                  </p>
                 </div>
               </div>
-              
             </div>
           </div>
 
@@ -439,7 +472,10 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
               <Calculator className="h-4 w-4 text-elec-yellow" />
-              <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20">
+              <Badge
+                variant="outline"
+                className="border-elec-yellow/50 text-elec-yellow bg-elec-yellow/20"
+              >
                 Luminaire Spacing Calculation
               </Badge>
             </div>
@@ -459,12 +495,13 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
                   <p>Area = 10 × 8 = 80 m²</p>
                   <p>Total lumens required = 80 × 20 = 1600 lm</p>
                   <p>Effective lumens per fitting = 150 × 0.4 = 60 lm</p>
-                  <p className="text-elec-yellow font-medium">Number of fittings = 1600 ÷ 60 = 27 fittings</p>
+                  <p className="text-elec-yellow font-medium">
+                    Number of fittings = 1600 ÷ 60 = 27 fittings
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-          
         </CardContent>
       </Card>
 
@@ -477,10 +514,10 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          
           <p className="text-foreground">
-            As with all emergency lighting, high-risk task area lighting must be tested and recorded. 
-            However, the critical nature of these systems demands enhanced testing procedures.
+            As with all emergency lighting, high-risk task area lighting must be tested and
+            recorded. However, the critical nature of these systems demands enhanced testing
+            procedures.
           </p>
 
           {/* Testing Schedule */}
@@ -489,9 +526,8 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               <Clock className="h-4 w-4 text-elec-yellow" />
               Enhanced Testing Schedule
             </h4>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              
               <div className="bg-blue-600/15 border border-blue-400/30 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Badge className="bg-blue-600/40 text-blue-300 text-xs">Monthly</Badge>
@@ -530,7 +566,6 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
                   <li className="text-foreground">• Document any deterioration</li>
                 </ul>
               </div>
-              
             </div>
           </div>
 
@@ -540,14 +575,15 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               <Wrench className="h-4 w-4 text-elec-yellow" />
               Critical Maintenance Requirements
             </h4>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              
               <div className="space-y-3">
                 <div className="bg-red-600/15 border border-red-400/30 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <AlertTriangle className="h-4 w-4 text-red-400" />
-                    <span className="text-red-300 font-medium text-sm">Immediate Fault Rectification</span>
+                    <span className="text-red-300 font-medium text-sm">
+                      Immediate Fault Rectification
+                    </span>
                   </div>
                   <ul className="space-y-1 text-xs">
                     <li className="text-foreground">• Any failure must be fixed immediately</li>
@@ -556,11 +592,13 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
                     <li className="text-foreground">• Document all emergency repairs</li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-green-600/15 border border-green-400/30 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <CheckSquare className="h-4 w-4 text-green-400" />
-                    <span className="text-green-300 font-medium text-sm">Preventive Maintenance</span>
+                    <span className="text-green-300 font-medium text-sm">
+                      Preventive Maintenance
+                    </span>
                   </div>
                   <ul className="space-y-1 text-xs">
                     <li className="text-foreground">• Regular battery performance checks</li>
@@ -570,12 +608,14 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="space-y-3">
                 <div className="bg-blue-600/15 border border-blue-400/30 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Gauge className="h-4 w-4 text-blue-400" />
-                    <span className="text-blue-300 font-medium text-sm">Performance Monitoring</span>
+                    <span className="text-blue-300 font-medium text-sm">
+                      Performance Monitoring
+                    </span>
                   </div>
                   <ul className="space-y-1 text-xs">
                     <li className="text-foreground">• Track illuminance degradation over time</li>
@@ -584,7 +624,7 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
                     <li className="text-foreground">• Plan proactive replacements</li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-purple-600/15 border border-purple-400/30 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Settings className="h-4 w-4 text-purple-400" />
@@ -598,7 +638,6 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
                   </ul>
                 </div>
               </div>
-              
             </div>
           </div>
 
@@ -631,10 +670,8 @@ export const EmergencyLightingContent2_3_Enhanced = () => {
               </div>
             </div>
           </div>
-          
         </CardContent>
       </Card>
-      
     </div>
   );
 };

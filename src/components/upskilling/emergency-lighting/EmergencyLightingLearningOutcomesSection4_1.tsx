@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection4_1 = () => {
   const outcomes = [
-    "Identify suitable cable types for emergency lighting systems",
-    "Explain the fire-resistance and performance requirements of emergency cables",
-    "Apply best practices in installation to maintain integrity during fire conditions",
-    "Recognise the differences between self-contained luminaire wiring and central battery system cabling",
-    "Ensure compliance with BS 5266, BS 7671, and fire safety legislation"
+    'Identify suitable cable types for emergency lighting systems',
+    'Explain the fire-resistance and performance requirements of emergency cables',
+    'Apply best practices in installation to maintain integrity during fire conditions',
+    'Recognise the differences between self-contained luminaire wiring and central battery system cabling',
+    'Ensure compliance with BS 5266, BS 7671, and fire safety legislation',
   ];
 
   return (
@@ -19,9 +19,7 @@ export const EmergencyLightingLearningOutcomesSection4_1 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By completing this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By completing this section, you will be able to:</p>
         <div className="space-y-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">

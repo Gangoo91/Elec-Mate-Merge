@@ -21,7 +21,7 @@ import {
   Fan,
   DoorOpen,
   Route,
-  Cpu
+  Cpu,
 } from 'lucide-react';
 
 const IndustrialElectricalModule3Section1: React.FC = () => {
@@ -29,7 +29,8 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
 
   useSEO({
     title: 'Layout Planning for MCC and Control Panels | Industrial Electrical Module 3',
-    description: 'Learn comprehensive layout planning for Motor Control Centres and control panels including BS EN 61439 requirements, thermal calculations, component spacing, and CAD software tools for UK panel building.',
+    description:
+      'Learn comprehensive layout planning for Motor Control Centres and control panels including BS EN 61439 requirements, thermal calculations, component spacing, and CAD software tools for UK panel building.',
     keywords: [
       'MCC layout planning',
       'control panel design',
@@ -39,47 +40,38 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
       'AutoCAD Electrical',
       'UK panel building standards',
       'enclosure selection',
-      'component spacing'
-    ]
+      'component spacing',
+    ],
   });
 
   const quickCheckQuestions = [
     {
       id: 'qc1-panel-standard',
-      question: 'Which British Standard governs the design and verification of low-voltage switchgear and controlgear assemblies?',
-      options: [
-        'BS 7671',
-        'BS EN 61439',
-        'BS EN 60204',
-        'BS EN 61000'
-      ],
+      question:
+        'Which British Standard governs the design and verification of low-voltage switchgear and controlgear assemblies?',
+      options: ['BS 7671', 'BS EN 61439', 'BS EN 60204', 'BS EN 61000'],
       correctIndex: 1,
-      explanation: 'BS EN 61439 is the harmonised European standard that specifies requirements for low-voltage switchgear and controlgear assemblies, including MCCs and control panels. It replaced the older BS EN 60439 standard and covers design verification, routine verification, and type testing requirements.'
+      explanation:
+        'BS EN 61439 is the harmonised European standard that specifies requirements for low-voltage switchgear and controlgear assemblies, including MCCs and control panels. It replaced the older BS EN 60439 standard and covers design verification, routine verification, and type testing requirements.',
     },
     {
       id: 'qc2-thermal-derating',
-      question: 'At what typical ambient temperature are most panel components rated, above which derating must be applied?',
-      options: [
-        '25 degrees C',
-        '30 degrees C',
-        '35 degrees C',
-        '40 degrees C'
-      ],
+      question:
+        'At what typical ambient temperature are most panel components rated, above which derating must be applied?',
+      options: ['25 degrees C', '30 degrees C', '35 degrees C', '40 degrees C'],
       correctIndex: 3,
-      explanation: 'Most electrical components within panels are rated at a 40 degrees C ambient temperature. When the internal panel temperature exceeds this, components must be derated according to manufacturer specifications to prevent overheating and premature failure.'
+      explanation:
+        'Most electrical components within panels are rated at a 40 degrees C ambient temperature. When the internal panel temperature exceeds this, components must be derated according to manufacturer specifications to prevent overheating and premature failure.',
     },
     {
       id: 'qc3-segregation',
-      question: 'According to good practice, what is the minimum separation distance between power and control wiring in panel trunking?',
-      options: [
-        '10mm',
-        '25mm',
-        '50mm or physical barrier',
-        '100mm'
-      ],
+      question:
+        'According to good practice, what is the minimum separation distance between power and control wiring in panel trunking?',
+      options: ['10mm', '25mm', '50mm or physical barrier', '100mm'],
       correctIndex: 2,
-      explanation: 'A minimum of 50mm separation or a physical metallic barrier is recommended between power and control/signal wiring to prevent electromagnetic interference (EMI). This is particularly important for sensitive analogue signals and communication cables.'
-    }
+      explanation:
+        'A minimum of 50mm separation or a physical metallic barrier is recommended between power and control/signal wiring to prevent electromagnetic interference (EMI). This is particularly important for sensitive analogue signals and communication cables.',
+    },
   ];
 
   const quizQuestions = [
@@ -89,29 +81,31 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
         'Protected against dust ingress and low-pressure water jets',
         'Protected against solid objects greater than 1mm and dripping water',
         'Totally dust-tight and protected against powerful water jets',
-        'Protected against dust and temporary immersion'
+        'Protected against dust and temporary immersion',
       ],
-      correctAnswer: 'Totally dust-tight and protected against powerful water jets'
+      correctAnswer: 'Totally dust-tight and protected against powerful water jets',
     },
     {
-      question: 'When calculating heat dissipation in a control panel, which factor is NOT typically included?',
+      question:
+        'When calculating heat dissipation in a control panel, which factor is NOT typically included?',
       options: [
         'Power losses from contactors and relays',
         'Heat generated by variable speed drives',
         'External solar radiation on outdoor panels',
-        'The colour of internal wiring insulation'
+        'The colour of internal wiring insulation',
       ],
-      correctAnswer: 'The colour of internal wiring insulation'
+      correctAnswer: 'The colour of internal wiring insulation',
     },
     {
-      question: 'What is the recommended minimum clearance around a variable speed drive for adequate ventilation?',
+      question:
+        'What is the recommended minimum clearance around a variable speed drive for adequate ventilation?',
       options: [
         '25mm on all sides',
         '50mm above and below, 25mm sides',
         '100mm above and below, 50mm sides',
-        '150mm on all sides'
+        '150mm on all sides',
       ],
-      correctAnswer: '100mm above and below, 50mm sides'
+      correctAnswer: '100mm above and below, 50mm sides',
     },
     {
       question: 'According to BS EN 61439, what is a "design verification"?',
@@ -119,97 +113,89 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
         'A visual inspection performed on site',
         'Verification by testing, calculation, or design rules',
         'A customer acceptance test',
-        'An annual maintenance check'
+        'An annual maintenance check',
       ],
-      correctAnswer: 'Verification by testing, calculation, or design rules'
+      correctAnswer: 'Verification by testing, calculation, or design rules',
     },
     {
-      question: 'What is the primary purpose of internal Form separation (Forms 1-4) in switchgear assemblies?',
+      question:
+        'What is the primary purpose of internal Form separation (Forms 1-4) in switchgear assemblies?',
       options: [
         'To improve aesthetics',
         'To reduce manufacturing costs',
         'To provide degrees of separation between functional units',
-        'To increase the IP rating'
+        'To increase the IP rating',
       ],
-      correctAnswer: 'To provide degrees of separation between functional units'
+      correctAnswer: 'To provide degrees of separation between functional units',
     },
     {
-      question: 'Which software is specifically designed for electrical panel layout and wiring documentation?',
-      options: [
-        'Microsoft Visio',
-        'EPLAN Electric P8',
-        'Adobe Illustrator',
-        'SketchUp'
-      ],
-      correctAnswer: 'EPLAN Electric P8'
+      question:
+        'Which software is specifically designed for electrical panel layout and wiring documentation?',
+      options: ['Microsoft Visio', 'EPLAN Electric P8', 'Adobe Illustrator', 'SketchUp'],
+      correctAnswer: 'EPLAN Electric P8',
     },
     {
-      question: 'What is the typical power loss (heat) percentage for a modern variable speed drive at full load?',
-      options: [
-        '1-2%',
-        '2-4%',
-        '5-8%',
-        '10-15%'
-      ],
-      correctAnswer: '2-4%'
+      question:
+        'What is the typical power loss (heat) percentage for a modern variable speed drive at full load?',
+      options: ['1-2%', '2-4%', '5-8%', '10-15%'],
+      correctAnswer: '2-4%',
     },
     {
-      question: 'When sizing a panel enclosure, what is the recommended spare capacity for future expansion?',
-      options: [
-        '5-10%',
-        '10-15%',
-        '20-30%',
-        '40-50%'
-      ],
-      correctAnswer: '20-30%'
+      question:
+        'When sizing a panel enclosure, what is the recommended spare capacity for future expansion?',
+      options: ['5-10%', '10-15%', '20-30%', '40-50%'],
+      correctAnswer: '20-30%',
     },
     {
-      question: 'What type of enclosure construction is most suitable for harsh industrial environments with corrosive atmospheres?',
-      options: [
-        'Painted mild steel',
-        'Galvanised steel',
-        'Stainless steel 316',
-        'Aluminium'
-      ],
-      correctAnswer: 'Stainless steel 316'
+      question:
+        'What type of enclosure construction is most suitable for harsh industrial environments with corrosive atmospheres?',
+      options: ['Painted mild steel', 'Galvanised steel', 'Stainless steel 316', 'Aluminium'],
+      correctAnswer: 'Stainless steel 316',
     },
     {
-      question: 'In a control panel, where should PLCs and sensitive electronics ideally be positioned?',
+      question:
+        'In a control panel, where should PLCs and sensitive electronics ideally be positioned?',
       options: [
         'At the bottom of the panel',
         'In the middle, near heat-generating components',
         'At the top of the panel, away from heat sources',
-        'Position does not matter with adequate ventilation'
+        'Position does not matter with adequate ventilation',
       ],
-      correctAnswer: 'At the top of the panel, away from heat sources'
-    }
+      correctAnswer: 'At the top of the panel, away from heat sources',
+    },
   ];
 
   const faqItems = [
     {
       question: 'What is the difference between BS EN 61439-1 and BS EN 61439-2?',
-      answer: 'BS EN 61439-1 provides the general rules and common requirements for all low-voltage switchgear and controlgear assemblies. BS EN 61439-2 specifically covers power switchgear and controlgear assemblies (PSC-assemblies), which includes most industrial control panels and MCCs. Part 1 must always be used in conjunction with the relevant product-specific part. Other parts cover different assembly types: Part 3 for distribution boards, Part 4 for construction site assemblies, Part 5 for cable distribution cabinets, and Part 6 for busbar trunking systems.'
+      answer:
+        'BS EN 61439-1 provides the general rules and common requirements for all low-voltage switchgear and controlgear assemblies. BS EN 61439-2 specifically covers power switchgear and controlgear assemblies (PSC-assemblies), which includes most industrial control panels and MCCs. Part 1 must always be used in conjunction with the relevant product-specific part. Other parts cover different assembly types: Part 3 for distribution boards, Part 4 for construction site assemblies, Part 5 for cable distribution cabinets, and Part 6 for busbar trunking systems.',
     },
     {
       question: 'How do I calculate the required enclosure size for my panel components?',
-      answer: 'Start by creating a detailed component list with dimensions from manufacturer datasheets. Add required clearances around each component (typically 25-100mm depending on the device). Include space for wiring ducts (usually 40-80mm wide), DIN rails, and termination areas. Apply a 20-30% factor for future expansion and cable management. Consider the total depth required including cable glands, door-mounted components, and clearance for opening covers. Use manufacturer sizing software like Rittal Therm or EPLAN Pro Panel for accurate calculations and thermal verification.'
+      answer:
+        'Start by creating a detailed component list with dimensions from manufacturer datasheets. Add required clearances around each component (typically 25-100mm depending on the device). Include space for wiring ducts (usually 40-80mm wide), DIN rails, and termination areas. Apply a 20-30% factor for future expansion and cable management. Consider the total depth required including cable glands, door-mounted components, and clearance for opening covers. Use manufacturer sizing software like Rittal Therm or EPLAN Pro Panel for accurate calculations and thermal verification.',
     },
     {
       question: 'What Forms of internal separation are available and when should each be used?',
-      answer: 'Form 1 has no internal separation. Form 2 separates busbars from functional units (2a includes terminals, 2b separates terminals from busbars). Form 3 adds separation between all functional units (3a includes terminals within unit space, 3b separates terminals). Form 4 provides maximum separation with terminals in separate compartments (4a has terminals in same compartment, 4b in separate enclosed spaces). Higher Forms are specified when live work may be required on one section while others remain energised, or in critical applications where fault containment is essential.'
+      answer:
+        'Form 1 has no internal separation. Form 2 separates busbars from functional units (2a includes terminals, 2b separates terminals from busbars). Form 3 adds separation between all functional units (3a includes terminals within unit space, 3b separates terminals). Form 4 provides maximum separation with terminals in separate compartments (4a has terminals in same compartment, 4b in separate enclosed spaces). Higher Forms are specified when live work may be required on one section while others remain energised, or in critical applications where fault containment is essential.',
     },
     {
       question: 'What thermal management options are available for control panels?',
-      answer: 'Options range from natural convection (louvred vents) for low heat loads, through forced ventilation with filtered fans for moderate loads, to active cooling systems for high heat density. Active options include air-to-air heat exchangers (no external air ingress), panel air conditioning units (precise temperature control), and water/glycol cooling systems for extreme applications. Selection depends on heat load calculations, ambient conditions, IP rating requirements, and environmental factors like dust or humidity. The choice affects both initial cost and ongoing energy consumption.'
+      answer:
+        'Options range from natural convection (louvred vents) for low heat loads, through forced ventilation with filtered fans for moderate loads, to active cooling systems for high heat density. Active options include air-to-air heat exchangers (no external air ingress), panel air conditioning units (precise temperature control), and water/glycol cooling systems for extreme applications. Selection depends on heat load calculations, ambient conditions, IP rating requirements, and environmental factors like dust or humidity. The choice affects both initial cost and ongoing energy consumption.',
     },
     {
       question: 'How do I ensure EMC compliance in panel layout design?',
-      answer: 'Key practices include: maintaining 50mm minimum or metal barrier separation between power and signal cables; using shielded cables for sensitive signals with 360 degree shield termination; creating dedicated earth/ground rails with short, direct connections; positioning VFDs away from PLCs and instrumentation; using EMC cable glands for screened cables; routing signal cables away from contactors and other switching devices; installing EMC filters on VFD inputs where required. Group cables by type in separate trunking channels and consider ferrite cores on susceptible cables. Document EMC provisions in the design for verification purposes.'
+      answer:
+        'Key practices include: maintaining 50mm minimum or metal barrier separation between power and signal cables; using shielded cables for sensitive signals with 360 degree shield termination; creating dedicated earth/ground rails with short, direct connections; positioning VFDs away from PLCs and instrumentation; using EMC cable glands for screened cables; routing signal cables away from contactors and other switching devices; installing EMC filters on VFD inputs where required. Group cables by type in separate trunking channels and consider ferrite cores on susceptible cables. Document EMC provisions in the design for verification purposes.',
     },
     {
       question: 'What are the key documentation requirements for a panel built to BS EN 61439?',
-      answer: 'Required documentation includes: circuit diagrams showing all electrical connections; layout drawings showing component positions; a nameplate with manufacturer details, ratings, and standard reference; operating instructions and safety warnings; routine verification test certificates; design verification evidence (test reports, calculations, or design rule confirmations); a technical data file listing rated values and characteristics. Additionally, provide cable schedules, terminal allocation lists, and a bill of materials. For assemblies using design rules, document which rules apply to each verification characteristic.'
-    }
+      answer:
+        'Required documentation includes: circuit diagrams showing all electrical connections; layout drawings showing component positions; a nameplate with manufacturer details, ratings, and standard reference; operating instructions and safety warnings; routine verification test certificates; design verification evidence (test reports, calculations, or design rule confirmations); a technical data file listing rated values and characteristics. Additionally, provide cable schedules, terminal allocation lists, and a bill of materials. For assemblies using design rules, document which rules apply to each verification characteristic.',
+    },
   ];
 
   return (
@@ -217,7 +203,12 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
       {/* Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground hover:text-foreground"
+            asChild
+          >
             <Link to="/electrician/upskilling/industrial-electrical-module-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -233,9 +224,12 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10">
             <Layout className="w-8 h-8 text-elec-yellow" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground">Layout Planning for MCC and Control Panels</h1>
+          <h1 className="text-2xl font-bold text-foreground">
+            Layout Planning for MCC and Control Panels
+          </h1>
           <p className="text-muted-foreground">
-            Master the principles of designing and laying out Motor Control Centres and industrial control panels to BS EN 61439 standards
+            Master the principles of designing and laying out Motor Control Centres and industrial
+            control panels to BS EN 61439 standards
           </p>
         </div>
 
@@ -248,11 +242,15 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Select appropriate enclosure sizes and types for specific applications</span>
+                  <span>
+                    Select appropriate enclosure sizes and types for specific applications
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Apply component layout principles for optimal access and thermal performance</span>
+                  <span>
+                    Apply component layout principles for optimal access and thermal performance
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
@@ -280,7 +278,9 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Selecting the correct enclosure is fundamental to a successful panel build. The enclosure must accommodate all components with appropriate clearances, provide adequate protection for the installation environment, and allow for future expansion.
+              Selecting the correct enclosure is fundamental to a successful panel build. The
+              enclosure must accommodate all components with appropriate clearances, provide
+              adequate protection for the installation environment, and allow for future expansion.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -289,21 +289,47 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Enclosure Types and IP Ratings</h3>
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">IP Rating Selection:</strong></p>
+                <p>
+                  <strong className="text-foreground">IP Rating Selection:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
-                  <li>- <strong>IP20/IP30:</strong> Indoor, clean environments (control rooms)</li>
-                  <li>- <strong>IP41/IP42:</strong> Indoor, light industrial (workshops)</li>
-                  <li>- <strong>IP54/IP55:</strong> Indoor/outdoor, dusty or wet spray environments</li>
-                  <li>- <strong>IP65/IP66:</strong> Outdoor or wash-down areas (food, pharmaceutical)</li>
-                  <li>- <strong>IP67/IP68:</strong> Temporary or continuous immersion (rare for panels)</li>
+                  <li>
+                    - <strong>IP20/IP30:</strong> Indoor, clean environments (control rooms)
+                  </li>
+                  <li>
+                    - <strong>IP41/IP42:</strong> Indoor, light industrial (workshops)
+                  </li>
+                  <li>
+                    - <strong>IP54/IP55:</strong> Indoor/outdoor, dusty or wet spray environments
+                  </li>
+                  <li>
+                    - <strong>IP65/IP66:</strong> Outdoor or wash-down areas (food, pharmaceutical)
+                  </li>
+                  <li>
+                    - <strong>IP67/IP68:</strong> Temporary or continuous immersion (rare for
+                    panels)
+                  </li>
                 </ul>
-                <p className="mt-3"><strong className="text-foreground">Construction Materials:</strong></p>
+                <p className="mt-3">
+                  <strong className="text-foreground">Construction Materials:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
-                  <li>- <strong>Mild steel (powder coated):</strong> Standard indoor applications</li>
-                  <li>- <strong>Stainless steel 304:</strong> Corrosive atmospheres, food industry</li>
-                  <li>- <strong>Stainless steel 316:</strong> Marine, chemical, severe corrosion</li>
-                  <li>- <strong>GRP (fibreglass):</strong> Chemical resistance, non-metallic requirements</li>
-                  <li>- <strong>Aluminium:</strong> Lightweight, good EMC shielding</li>
+                  <li>
+                    - <strong>Mild steel (powder coated):</strong> Standard indoor applications
+                  </li>
+                  <li>
+                    - <strong>Stainless steel 304:</strong> Corrosive atmospheres, food industry
+                  </li>
+                  <li>
+                    - <strong>Stainless steel 316:</strong> Marine, chemical, severe corrosion
+                  </li>
+                  <li>
+                    - <strong>GRP (fibreglass):</strong> Chemical resistance, non-metallic
+                    requirements
+                  </li>
+                  <li>
+                    - <strong>Aluminium:</strong> Lightweight, good EMC shielding
+                  </li>
                 </ul>
               </div>
             </div>
@@ -314,8 +340,14 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Sizing Methodology</h3>
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Step 1 - Component List:</strong> Create detailed inventory with dimensions from datasheets. Include mounting depths and door-mounted items.</p>
-                <p><strong className="text-foreground">Step 2 - Clearance Addition:</strong></p>
+                <p>
+                  <strong className="text-foreground">Step 1 - Component List:</strong> Create
+                  detailed inventory with dimensions from datasheets. Include mounting depths and
+                  door-mounted items.
+                </p>
+                <p>
+                  <strong className="text-foreground">Step 2 - Clearance Addition:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Circuit breakers/MCCBs: 25-50mm around operating mechanism</li>
                   <li>- Contactors: 25mm minimum between adjacent units</li>
@@ -323,8 +355,14 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                   <li>- PLCs and I/O: 25mm around for cable access</li>
                   <li>- Terminals: Allow for wire bend radius and ferrule size</li>
                 </ul>
-                <p><strong className="text-foreground">Step 3 - Infrastructure Space:</strong> DIN rails, wiring ducts (40-80mm wide typical), gland plates, and mounting rails.</p>
-                <p><strong className="text-foreground">Step 4 - Expansion Factor:</strong> Add 20-30% for future modifications and easier installation.</p>
+                <p>
+                  <strong className="text-foreground">Step 3 - Infrastructure Space:</strong> DIN
+                  rails, wiring ducts (40-80mm wide typical), gland plates, and mounting rails.
+                </p>
+                <p>
+                  <strong className="text-foreground">Step 4 - Expansion Factor:</strong> Add 20-30%
+                  for future modifications and easier installation.
+                </p>
               </div>
             </div>
 
@@ -354,7 +392,9 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Professional panel layout follows established principles that optimise thermal performance, maintenance access, and logical signal flow. Components should be arranged to minimise cable runs while maintaining proper segregation.
+              Professional panel layout follows established principles that optimise thermal
+              performance, maintenance access, and logical signal flow. Components should be
+              arranged to minimise cable runs while maintaining proper segregation.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -363,21 +403,27 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Vertical Zoning Strategy</h3>
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Top Zone (Coolest):</strong></p>
+                <p>
+                  <strong className="text-foreground">Top Zone (Coolest):</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- PLCs and CPU modules</li>
                   <li>- Analogue I/O and communication modules</li>
                   <li>- Power supplies (often generate moderate heat)</li>
                   <li>- Network switches and HMI controllers</li>
                 </ul>
-                <p><strong className="text-foreground">Middle Zone:</strong></p>
+                <p>
+                  <strong className="text-foreground">Middle Zone:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Motor starters and contactors</li>
                   <li>- Overload relays</li>
                   <li>- Control relays and timers</li>
                   <li>- Pilot devices and indicators</li>
                 </ul>
-                <p><strong className="text-foreground">Bottom Zone (Hottest Air Rises Away):</strong></p>
+                <p>
+                  <strong className="text-foreground">Bottom Zone (Hottest Air Rises Away):</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Variable Speed Drives (primary heat generators)</li>
                   <li>- Soft starters</li>
@@ -393,10 +439,23 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Horizontal Organisation</h3>
               </div>
               <div className="space-y-2 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Left to Right Flow:</strong> Arrange circuits in logical sequence matching process flow or motor numbering.</p>
-                <p><strong className="text-foreground">Grouping by Function:</strong> Keep related circuits together (e.g., all pumps, all conveyors).</p>
-                <p><strong className="text-foreground">Mimic Panel Considerations:</strong> Where a mimic diagram is used, layout may need to reflect physical plant arrangement.</p>
-                <p><strong className="text-foreground">Accessibility Priority:</strong> Frequently adjusted components (potentiometers, selectors) at accessible heights (1000-1600mm from floor).</p>
+                <p>
+                  <strong className="text-foreground">Left to Right Flow:</strong> Arrange circuits
+                  in logical sequence matching process flow or motor numbering.
+                </p>
+                <p>
+                  <strong className="text-foreground">Grouping by Function:</strong> Keep related
+                  circuits together (e.g., all pumps, all conveyors).
+                </p>
+                <p>
+                  <strong className="text-foreground">Mimic Panel Considerations:</strong> Where a
+                  mimic diagram is used, layout may need to reflect physical plant arrangement.
+                </p>
+                <p>
+                  <strong className="text-foreground">Accessibility Priority:</strong> Frequently
+                  adjusted components (potentiometers, selectors) at accessible heights (1000-1600mm
+                  from floor).
+                </p>
               </div>
             </div>
 
@@ -406,7 +465,11 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-blue-300">BS EN 61439 Form Separation</h4>
                   <p className="text-sm text-muted-foreground mt-2">
-                    Internal Forms (1 to 4b) define the degree of separation between busbars, functional units, and terminals. Higher Form numbers provide greater isolation, allowing work on one section while others remain live. Form 4b provides the maximum separation with each functional unit in its own compartment with separately enclosed terminals.
+                    Internal Forms (1 to 4b) define the degree of separation between busbars,
+                    functional units, and terminals. Higher Form numbers provide greater isolation,
+                    allowing work on one section while others remain live. Form 4b provides the
+                    maximum separation with each functional unit in its own compartment with
+                    separately enclosed terminals.
                   </p>
                 </div>
               </div>
@@ -432,7 +495,9 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Thermal management is critical for panel reliability. Components rated at 40 degrees C ambient will suffer reduced life and potential failure if internal temperatures exceed this. BS EN 61439 requires temperature rise verification for all assemblies.
+              Thermal management is critical for panel reliability. Components rated at 40 degrees C
+              ambient will suffer reduced life and potential failure if internal temperatures exceed
+              this. BS EN 61439 requires temperature rise verification for all assemblies.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -440,7 +505,9 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <Thermometer className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-medium text-foreground">Calculating Power Loss (Heat)</h3>
               </div>
-              <p className="text-sm text-muted-foreground mb-3"><strong className="text-foreground">Common Component Power Losses:</strong></p>
+              <p className="text-sm text-muted-foreground mb-3">
+                <strong className="text-foreground">Common Component Power Losses:</strong>
+              </p>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
@@ -489,10 +556,26 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Cooling Solutions</h3>
               </div>
               <div className="space-y-2 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Natural Convection:</strong> Suitable for low heat loads (&lt;50W/m squared of panel surface). Requires adequate ventilation openings maintaining IP rating.</p>
-                <p><strong className="text-foreground">Forced Ventilation (Fans):</strong> Filter fans rated to provide air changes based on heat load. Typical: 100-500 m cubed/h airflow. Maintains IP rating with appropriate filter mats.</p>
-                <p><strong className="text-foreground">Air-to-Air Heat Exchangers:</strong> No air exchange with environment - maintains high IP rating. Efficiency depends on ambient vs internal temperature differential.</p>
-                <p><strong className="text-foreground">Panel Air Conditioning:</strong> Active cooling for high heat density or high ambient temperatures. Can maintain internal temperature below ambient. Higher cost and energy consumption.</p>
+                <p>
+                  <strong className="text-foreground">Natural Convection:</strong> Suitable for low
+                  heat loads (&lt;50W/m squared of panel surface). Requires adequate ventilation
+                  openings maintaining IP rating.
+                </p>
+                <p>
+                  <strong className="text-foreground">Forced Ventilation (Fans):</strong> Filter
+                  fans rated to provide air changes based on heat load. Typical: 100-500 m cubed/h
+                  airflow. Maintains IP rating with appropriate filter mats.
+                </p>
+                <p>
+                  <strong className="text-foreground">Air-to-Air Heat Exchangers:</strong> No air
+                  exchange with environment - maintains high IP rating. Efficiency depends on
+                  ambient vs internal temperature differential.
+                </p>
+                <p>
+                  <strong className="text-foreground">Panel Air Conditioning:</strong> Active
+                  cooling for high heat density or high ambient temperatures. Can maintain internal
+                  temperature below ambient. Higher cost and energy consumption.
+                </p>
                 <div className="bg-elec-yellow/10 p-3 rounded mt-3 font-mono text-xs">
                   <p className="text-elec-yellow mb-2">// Simplified cooling calculation</p>
                   <p>Required cooling capacity (W) = Total heat load (W)</p>
@@ -508,7 +591,11 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-green-300">Thermal Calculation Tools</h4>
                   <p className="text-sm text-muted-foreground mt-2">
-                    Major enclosure manufacturers provide free thermal calculation software. <strong>Rittal Therm</strong> is widely used for Rittal enclosures, while <strong>Schneider ProClima</strong> handles Schneider systems. These tools account for enclosure surface area, material, colour, ambient conditions, and component heat loads to recommend appropriate cooling solutions.
+                    Major enclosure manufacturers provide free thermal calculation software.{' '}
+                    <strong>Rittal Therm</strong> is widely used for Rittal enclosures, while{' '}
+                    <strong>Schneider ProClima</strong> handles Schneider systems. These tools
+                    account for enclosure surface area, material, colour, ambient conditions, and
+                    component heat loads to recommend appropriate cooling solutions.
                   </p>
                 </div>
               </div>
@@ -525,7 +612,9 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              A well-designed panel facilitates safe maintenance and fault-finding. Components requiring regular attention should be easily accessible, while appropriate isolation facilities protect personnel during work.
+              A well-designed panel facilitates safe maintenance and fault-finding. Components
+              requiring regular attention should be easily accessible, while appropriate isolation
+              facilities protect personnel during work.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -534,14 +623,26 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Accessibility Requirements</h3>
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Optimal Working Heights:</strong></p>
+                <p>
+                  <strong className="text-foreground">Optimal Working Heights:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
-                  <li>- <strong>Viewing zone:</strong> 1200-1800mm (indicators, displays, meters)</li>
-                  <li>- <strong>Operating zone:</strong> 800-1600mm (switches, buttons, adjustments)</li>
-                  <li>- <strong>Heavy items:</strong> Below 1000mm (drives, transformers)</li>
-                  <li>- <strong>Avoid:</strong> Critical items above 2000mm or below 400mm</li>
+                  <li>
+                    - <strong>Viewing zone:</strong> 1200-1800mm (indicators, displays, meters)
+                  </li>
+                  <li>
+                    - <strong>Operating zone:</strong> 800-1600mm (switches, buttons, adjustments)
+                  </li>
+                  <li>
+                    - <strong>Heavy items:</strong> Below 1000mm (drives, transformers)
+                  </li>
+                  <li>
+                    - <strong>Avoid:</strong> Critical items above 2000mm or below 400mm
+                  </li>
                 </ul>
-                <p className="mt-3"><strong className="text-foreground">Door Clearance:</strong></p>
+                <p className="mt-3">
+                  <strong className="text-foreground">Door Clearance:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Front door: Full 180 degree opening preferred, minimum 90 degrees</li>
                   <li>- Allow 600mm clear working space in front of panel</li>
@@ -556,21 +657,27 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Maintenance-Friendly Design</h3>
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Component Replacement:</strong></p>
+                <p>
+                  <strong className="text-foreground">Component Replacement:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Plug-in relays and overloads for quick swap-out</li>
                   <li>- Withdrawable circuit breaker units where appropriate</li>
                   <li>- Spring-cage terminals for tool-free reconnection</li>
                   <li>- Modular fuse holders with clear indication</li>
                 </ul>
-                <p className="mt-3"><strong className="text-foreground">Diagnostic Aids:</strong></p>
+                <p className="mt-3">
+                  <strong className="text-foreground">Diagnostic Aids:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Clear, durable labels on all components and cables</li>
                   <li>- LED status indicators on relays and contactors</li>
                   <li>- Test points accessible without removing covers</li>
                   <li>- Document pocket inside door with current drawings</li>
                 </ul>
-                <p className="mt-3"><strong className="text-foreground">Isolation Provisions:</strong></p>
+                <p className="mt-3">
+                  <strong className="text-foreground">Isolation Provisions:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Main isolator with lockable handle (LOTO capable)</li>
                   <li>- Section isolators for Form 3/4 panels</li>
@@ -586,7 +693,10 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-orange-300">Safe Access Design</h4>
                   <p className="text-sm text-muted-foreground mt-2">
-                    Design should prevent accidental contact with live parts. Use finger-safe terminals (IP2X minimum), shrouded busbars, and clear danger labels. Consider which components may remain live after main isolation - capacitors in VSDs retain dangerous voltages. Provide discharge time warnings where applicable.
+                    Design should prevent accidental contact with live parts. Use finger-safe
+                    terminals (IP2X minimum), shrouded busbars, and clear danger labels. Consider
+                    which components may remain live after main isolation - capacitors in VSDs
+                    retain dangerous voltages. Provide discharge time warnings where applicable.
                   </p>
                 </div>
               </div>
@@ -612,7 +722,9 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Proper wire segregation prevents electromagnetic interference and ensures safe, maintainable installations. UK practice follows established colour codes and separation requirements to protect signal integrity.
+              Proper wire segregation prevents electromagnetic interference and ensures safe,
+              maintainable installations. UK practice follows established colour codes and
+              separation requirements to protect signal integrity.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -621,20 +733,26 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Wiring Categories and Separation</h3>
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Category 1 - Power Circuits:</strong></p>
+                <p>
+                  <strong className="text-foreground">Category 1 - Power Circuits:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Mains supply, motor power cables</li>
                   <li>- VSD output cables (high EMI source)</li>
                   <li>- Typical colours: Black, grey, or orange trunking</li>
                 </ul>
-                <p className="mt-3"><strong className="text-foreground">Category 2 - Control Circuits:</strong></p>
+                <p className="mt-3">
+                  <strong className="text-foreground">Category 2 - Control Circuits:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- AC/DC control signals</li>
                   <li>- Relay and contactor coils</li>
                   <li>- Digital I/O (24V DC typical)</li>
                   <li>- Typical colours: Blue trunking</li>
                 </ul>
-                <p className="mt-3"><strong className="text-foreground">Category 3 - Sensitive Signals:</strong></p>
+                <p className="mt-3">
+                  <strong className="text-foreground">Category 3 - Sensitive Signals:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Analogue signals (4-20mA, 0-10V)</li>
                   <li>- Communication cables (Profibus, Ethernet)</li>
@@ -678,11 +796,15 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 </table>
               </div>
               <div className="text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Crossing Rules:</strong></p>
+                <p>
+                  <strong className="text-foreground">Crossing Rules:</strong>
+                </p>
                 <ul className="space-y-1 ml-4 mt-2">
                   <li>- Different categories should cross at 90 degree angles</li>
                   <li>- Minimise parallel runs between categories</li>
-                  <li>- Use shielded cables with proper 360 degree termination for sensitive signals</li>
+                  <li>
+                    - Use shielded cables with proper 360 degree termination for sensitive signals
+                  </li>
                   <li>- Ground shields at one end only for analogue signals to prevent loops</li>
                 </ul>
               </div>
@@ -694,14 +816,18 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Trunking and Wire Management</h3>
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Trunking Sizing:</strong></p>
+                <p>
+                  <strong className="text-foreground">Trunking Sizing:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Fill ratio: Maximum 60% for easy installation and heat dissipation</li>
                   <li>- Standard widths: 25, 40, 60, 80, 100mm</li>
                   <li>- Slotted trunking allows cable exit at any point</li>
                   <li>- Solid trunking provides better EMI screening</li>
                 </ul>
-                <p className="mt-3"><strong className="text-foreground">Best Practices:</strong></p>
+                <p className="mt-3">
+                  <strong className="text-foreground">Best Practices:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Vertical runs for power, horizontal for control signals</li>
                   <li>- Number each wire at both ends (matching drawings)</li>
@@ -722,7 +848,9 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
 
           <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
             <p className="text-sm text-muted-foreground">
-              Modern panel design relies on specialised CAD software that integrates schematic capture, panel layout, and documentation generation. These tools ensure consistency, reduce errors, and streamline the design-to-manufacture process.
+              Modern panel design relies on specialised CAD software that integrates schematic
+              capture, panel layout, and documentation generation. These tools ensure consistency,
+              reduce errors, and streamline the design-to-manufacture process.
             </p>
 
             <div className="bg-background/50 rounded-lg p-4">
@@ -733,7 +861,12 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
               <div className="space-y-4 text-sm text-muted-foreground">
                 <div>
                   <p className="font-medium text-foreground">EPLAN Electric P8</p>
-                  <p className="mt-1">The industry-leading electrical CAD system in the UK and Europe. Features include schematic-driven design, automatic cross-referencing, PLC I/O management, and comprehensive parts database. EPLAN Pro Panel extends functionality to 3D panel layout with routing optimisation.</p>
+                  <p className="mt-1">
+                    The industry-leading electrical CAD system in the UK and Europe. Features
+                    include schematic-driven design, automatic cross-referencing, PLC I/O
+                    management, and comprehensive parts database. EPLAN Pro Panel extends
+                    functionality to 3D panel layout with routing optimisation.
+                  </p>
                   <ul className="space-y-1 ml-4 mt-2">
                     <li>- Automatic wire numbering and terminal allocation</li>
                     <li>- Bill of materials generation</li>
@@ -743,7 +876,11 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">AutoCAD Electrical</p>
-                  <p className="mt-1">Autodesk's electrical design software built on the AutoCAD platform. Good interoperability with other AutoCAD products and widely used in North America and increasingly in UK.</p>
+                  <p className="mt-1">
+                    Autodesk's electrical design software built on the AutoCAD platform. Good
+                    interoperability with other AutoCAD products and widely used in North America
+                    and increasingly in UK.
+                  </p>
                   <ul className="space-y-1 ml-4 mt-2">
                     <li>- Familiar AutoCAD interface for existing users</li>
                     <li>- Circuit builder and PLC I/O tools</li>
@@ -753,7 +890,10 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-medium text-foreground">SEE Electrical</p>
-                  <p className="mt-1">Cost-effective alternative popular with smaller panel builders. Available in multiple tiers from basic to advanced functionality.</p>
+                  <p className="mt-1">
+                    Cost-effective alternative popular with smaller panel builders. Available in
+                    multiple tiers from basic to advanced functionality.
+                  </p>
                 </div>
               </div>
             </div>
@@ -764,18 +904,42 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Panel Layout Software</h3>
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">3D Layout Tools:</strong></p>
+                <p>
+                  <strong className="text-foreground">3D Layout Tools:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
-                  <li>- <strong>EPLAN Pro Panel:</strong> Full 3D design with wire routing, thermal analysis integration</li>
-                  <li>- <strong>Rittal ePOCKET:</strong> Free access to Rittal product data for 3D layout</li>
-                  <li>- <strong>Schneider EcoStruxure Panel Server:</strong> Schneider component integration</li>
-                  <li>- <strong>SolidWorks Electrical:</strong> Combined mechanical-electrical 3D design</li>
+                  <li>
+                    - <strong>EPLAN Pro Panel:</strong> Full 3D design with wire routing, thermal
+                    analysis integration
+                  </li>
+                  <li>
+                    - <strong>Rittal ePOCKET:</strong> Free access to Rittal product data for 3D
+                    layout
+                  </li>
+                  <li>
+                    - <strong>Schneider EcoStruxure Panel Server:</strong> Schneider component
+                    integration
+                  </li>
+                  <li>
+                    - <strong>SolidWorks Electrical:</strong> Combined mechanical-electrical 3D
+                    design
+                  </li>
                 </ul>
-                <p className="mt-3"><strong className="text-foreground">Enclosure Configuration:</strong></p>
+                <p className="mt-3">
+                  <strong className="text-foreground">Enclosure Configuration:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
-                  <li>- <strong>Rittal Configuration System (RiCS):</strong> Configure Rittal enclosures and accessories</li>
-                  <li>- <strong>Schneider Spacial Configurator:</strong> Online enclosure configuration tool</li>
-                  <li>- <strong>ABB Panel Builder:</strong> Layout tool for ABB components</li>
+                  <li>
+                    - <strong>Rittal Configuration System (RiCS):</strong> Configure Rittal
+                    enclosures and accessories
+                  </li>
+                  <li>
+                    - <strong>Schneider Spacial Configurator:</strong> Online enclosure
+                    configuration tool
+                  </li>
+                  <li>
+                    - <strong>ABB Panel Builder:</strong> Layout tool for ABB components
+                  </li>
                 </ul>
               </div>
             </div>
@@ -786,7 +950,9 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <h3 className="font-medium text-foreground">Documentation Outputs</h3>
               </div>
               <div className="space-y-3 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Essential Design Documents:</strong></p>
+                <p>
+                  <strong className="text-foreground">Essential Design Documents:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- Circuit diagrams (schematics) with automatic cross-references</li>
                   <li>- Panel layout drawings (front view, internal views)</li>
@@ -796,7 +962,9 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                   <li>- Wire lists for pre-fabrication</li>
                   <li>- Door layout for labels and cut-outs</li>
                 </ul>
-                <p className="mt-3"><strong className="text-foreground">Manufacturing Data:</strong></p>
+                <p className="mt-3">
+                  <strong className="text-foreground">Manufacturing Data:</strong>
+                </p>
                 <ul className="space-y-1 ml-4">
                   <li>- DXF files for CNC panel drilling/routing</li>
                   <li>- Wire harness data for automated wire processing</li>
@@ -812,7 +980,11 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-green-300">Learning Resources</h4>
                   <p className="text-sm text-muted-foreground mt-2">
-                    Most software vendors offer free trials and extensive training materials. EPLAN provides eLearning modules and certification programmes. AutoCAD Electrical training is available through Autodesk Learning Partners. Starting with manufacturer-specific tools (Rittal, Schneider) is often free and provides practical experience before investing in full CAD systems.
+                    Most software vendors offer free trials and extensive training materials. EPLAN
+                    provides eLearning modules and certification programmes. AutoCAD Electrical
+                    training is available through Autodesk Learning Partners. Starting with
+                    manufacturer-specific tools (Rittal, Schneider) is often free and provides
+                    practical experience before investing in full CAD systems.
                   </p>
                 </div>
               </div>
@@ -841,68 +1013,120 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
               <div>
                 <h3 className="font-medium text-foreground text-sm mb-2">IP Rating Quick Guide</h3>
                 <ul className="text-xs text-muted-foreground space-y-1">
-                  <li><strong>IP20:</strong> Indoor clean - fingers only</li>
-                  <li><strong>IP54:</strong> Limited dust + splash water</li>
-                  <li><strong>IP55:</strong> Dust protected + water jets</li>
-                  <li><strong>IP65:</strong> Dust tight + water jets</li>
-                  <li><strong>IP66:</strong> Dust tight + powerful jets</li>
+                  <li>
+                    <strong>IP20:</strong> Indoor clean - fingers only
+                  </li>
+                  <li>
+                    <strong>IP54:</strong> Limited dust + splash water
+                  </li>
+                  <li>
+                    <strong>IP55:</strong> Dust protected + water jets
+                  </li>
+                  <li>
+                    <strong>IP65:</strong> Dust tight + water jets
+                  </li>
+                  <li>
+                    <strong>IP66:</strong> Dust tight + powerful jets
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-medium text-foreground text-sm mb-2">Component Clearances</h3>
                 <ul className="text-xs text-muted-foreground space-y-1">
-                  <li><strong>VSD:</strong> 100mm top/bottom, 50mm sides</li>
-                  <li><strong>MCCB:</strong> 25-50mm around mechanism</li>
-                  <li><strong>Contactor:</strong> 25mm between units</li>
-                  <li><strong>PLC:</strong> 25mm for cable access</li>
+                  <li>
+                    <strong>VSD:</strong> 100mm top/bottom, 50mm sides
+                  </li>
+                  <li>
+                    <strong>MCCB:</strong> 25-50mm around mechanism
+                  </li>
+                  <li>
+                    <strong>Contactor:</strong> 25mm between units
+                  </li>
+                  <li>
+                    <strong>PLC:</strong> 25mm for cable access
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-medium text-foreground text-sm mb-2">Wire Segregation</h3>
                 <ul className="text-xs text-muted-foreground space-y-1">
-                  <li><strong>Power to Control:</strong> 50mm / barrier</li>
-                  <li><strong>Power to Signal:</strong> 100mm / barrier</li>
-                  <li><strong>VSD output:</strong> 200mm / shielded</li>
-                  <li><strong>Crossings:</strong> At 90 degree angles</li>
+                  <li>
+                    <strong>Power to Control:</strong> 50mm / barrier
+                  </li>
+                  <li>
+                    <strong>Power to Signal:</strong> 100mm / barrier
+                  </li>
+                  <li>
+                    <strong>VSD output:</strong> 200mm / shielded
+                  </li>
+                  <li>
+                    <strong>Crossings:</strong> At 90 degree angles
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-medium text-foreground text-sm mb-2">Typical Power Losses</h3>
                 <ul className="text-xs text-muted-foreground space-y-1">
-                  <li><strong>VSD:</strong> 2-4% of kW rating</li>
-                  <li><strong>Soft starter:</strong> 0.5-1% when running</li>
-                  <li><strong>Contactor:</strong> 2-8W per pole</li>
-                  <li><strong>24V PSU:</strong> 10-20% losses</li>
+                  <li>
+                    <strong>VSD:</strong> 2-4% of kW rating
+                  </li>
+                  <li>
+                    <strong>Soft starter:</strong> 0.5-1% when running
+                  </li>
+                  <li>
+                    <strong>Contactor:</strong> 2-8W per pole
+                  </li>
+                  <li>
+                    <strong>24V PSU:</strong> 10-20% losses
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-medium text-foreground text-sm mb-2">BS EN 61439 Forms</h3>
                 <ul className="text-xs text-muted-foreground space-y-1">
-                  <li><strong>Form 1:</strong> No internal separation</li>
-                  <li><strong>Form 2:</strong> Busbars separated</li>
-                  <li><strong>Form 3:</strong> All units separated</li>
-                  <li><strong>Form 4:</strong> Terminals separated</li>
+                  <li>
+                    <strong>Form 1:</strong> No internal separation
+                  </li>
+                  <li>
+                    <strong>Form 2:</strong> Busbars separated
+                  </li>
+                  <li>
+                    <strong>Form 3:</strong> All units separated
+                  </li>
+                  <li>
+                    <strong>Form 4:</strong> Terminals separated
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="font-medium text-foreground text-sm mb-2">Design Software</h3>
                 <ul className="text-xs text-muted-foreground space-y-1">
-                  <li><strong>EPLAN P8:</strong> Industry standard</li>
-                  <li><strong>AutoCAD Elec:</strong> Autodesk platform</li>
-                  <li><strong>EPLAN Pro Panel:</strong> 3D layout</li>
-                  <li><strong>Rittal Therm:</strong> Thermal calcs</li>
+                  <li>
+                    <strong>EPLAN P8:</strong> Industry standard
+                  </li>
+                  <li>
+                    <strong>AutoCAD Elec:</strong> Autodesk platform
+                  </li>
+                  <li>
+                    <strong>EPLAN Pro Panel:</strong> 3D layout
+                  </li>
+                  <li>
+                    <strong>Rittal Therm:</strong> Thermal calcs
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="mt-4 pt-4 border-t border-white/10">
               <p className="text-xs text-muted-foreground">
-                <strong className="text-elec-yellow">Remember:</strong> Always verify thermal calculations with manufacturer software. Panel sizing should include 20-30% spare capacity. Document all design decisions for BS EN 61439 compliance evidence.
+                <strong className="text-elec-yellow">Remember:</strong> Always verify thermal
+                calculations with manufacturer software. Panel sizing should include 20-30% spare
+                capacity. Document all design decisions for BS EN 61439 compliance evidence.
               </p>
             </div>
           </div>
@@ -913,7 +1137,10 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
           <h2 className="text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
           <div className="space-y-3">
             {faqItems.map((faq, index) => (
-              <div key={index} className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+              <div
+                key={index}
+                className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4"
+              >
                 <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
                 <p className="text-sm text-muted-foreground">{faq.answer}</p>
               </div>
@@ -941,7 +1168,12 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="text-muted-foreground hover:text-foreground" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="text-muted-foreground hover:text-foreground"
+            asChild
+          >
             <Link to="/study-centre/upskilling/industrial-electrical/module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Module 2

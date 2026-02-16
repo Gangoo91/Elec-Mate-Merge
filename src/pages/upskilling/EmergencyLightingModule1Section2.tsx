@@ -1,72 +1,88 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m1s2-check1",
-    question: "Which location always requires emergency lighting under BS 5266-1?",
-    options: ["Private offices", "Exit routes and doors", "Storage cupboards", "Car parks"],
+    id: 'emergencylighting-m1s2-check1',
+    question: 'Which location always requires emergency lighting under BS 5266-1?',
+    options: ['Private offices', 'Exit routes and doors', 'Storage cupboards', 'Car parks'],
     correctIndex: 1,
-    explanation: "Exit routes and final exit doors always require emergency lighting to ensure safe evacuation. Other areas depend on the fire risk assessment and building use."
+    explanation:
+      'Exit routes and final exit doors always require emergency lighting to ensure safe evacuation. Other areas depend on the fire risk assessment and building use.',
   },
   {
-    id: "emergencylighting-m1s2-check2",
-    question: "Emergency lighting must be provided at changes of direction exceeding what angle?",
-    options: ["30 degrees", "45 degrees", "60 degrees", "90 degrees"],
+    id: 'emergencylighting-m1s2-check2',
+    question: 'Emergency lighting must be provided at changes of direction exceeding what angle?',
+    options: ['30 degrees', '45 degrees', '60 degrees', '90 degrees'],
     correctIndex: 1,
-    explanation: "BS 5266-1 requires emergency lighting at all changes of direction exceeding 45 degrees along escape routes. This ensures occupants can clearly see the route ahead."
+    explanation:
+      'BS 5266-1 requires emergency lighting at all changes of direction exceeding 45 degrees along escape routes. This ensures occupants can clearly see the route ahead.',
   },
   {
-    id: "emergencylighting-m1s2-check3",
-    question: "At what maximum spacing should emergency luminaires be placed on escape routes up to 2m wide?",
-    options: ["Manufacturer specification only", "Based on 1 lux calculation", "Every 15 metres", "Every 5 metres"],
+    id: 'emergencylighting-m1s2-check3',
+    question:
+      'At what maximum spacing should emergency luminaires be placed on escape routes up to 2m wide?',
+    options: [
+      'Manufacturer specification only',
+      'Based on 1 lux calculation',
+      'Every 15 metres',
+      'Every 5 metres',
+    ],
     correctIndex: 1,
-    explanation: "Luminaire spacing is determined by photometric calculations to achieve minimum 1 lux at floor level. Manufacturer data provides mounting height and spacing to achieve required illumination."
-  }
+    explanation:
+      'Luminaire spacing is determined by photometric calculations to achieve minimum 1 lux at floor level. Manufacturer data provides mounting height and spacing to achieve required illumination.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Do toilets always need emergency lighting?",
-    answer: "Toilets exceeding 8m² floor area require emergency lighting under BS 5266-1. Smaller toilets may still need lighting if identified by the fire risk assessment or if they're used by disabled persons."
+    question: 'Do toilets always need emergency lighting?',
+    answer:
+      "Toilets exceeding 8m² floor area require emergency lighting under BS 5266-1. Smaller toilets may still need lighting if identified by the fire risk assessment or if they're used by disabled persons.",
   },
   {
-    question: "Is emergency lighting required outside buildings?",
-    answer: "External emergency lighting is required immediately outside final exits to illuminate the area to a place of safety. This typically means lighting the immediate exit area and any external escape routes."
+    question: 'Is emergency lighting required outside buildings?',
+    answer:
+      'External emergency lighting is required immediately outside final exits to illuminate the area to a place of safety. This typically means lighting the immediate exit area and any external escape routes.',
   },
   {
-    question: "What about lift cars - do they need emergency lighting?",
-    answer: "Yes, lift cars require emergency lighting to allow occupants to safely exit if the lift stops between floors. This is a BS 5266-1 requirement for all passenger lifts."
+    question: 'What about lift cars - do they need emergency lighting?',
+    answer:
+      'Yes, lift cars require emergency lighting to allow occupants to safely exit if the lift stops between floors. This is a BS 5266-1 requirement for all passenger lifts.',
   },
   {
-    question: "How do I determine locations for high-risk task lighting?",
-    answer: "High-risk task areas are identified by the fire risk assessment - locations where sudden loss of lighting could cause danger. Examples include operating machinery, chemical handling, or working at height."
-  }
+    question: 'How do I determine locations for high-risk task lighting?',
+    answer:
+      'High-risk task areas are identified by the fire risk assessment - locations where sudden loss of lighting could cause danger. Examples include operating machinery, chemical handling, or working at height.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A warehouse has a staircase width of 1.5m with a 90-degree turn. How many emergency luminaires are needed at the turn?",
-  options: [
-    "None - stairs don't need emergency lighting",
-    "One luminaire positioned to illuminate the turn",
-    "Two luminaires minimum for uniformity",
-    "Based only on lux calculation"
-  ],
-  correctAnswer: 1,
-  explanation: "Changes of direction exceeding 45 degrees require emergency lighting. A single well-positioned luminaire can illuminate a 90-degree turn on a 1.5m wide staircase, subject to achieving the required 1 lux minimum."
-  }
+    question:
+      'A warehouse has a staircase width of 1.5m with a 90-degree turn. How many emergency luminaires are needed at the turn?',
+    options: [
+      "None - stairs don't need emergency lighting",
+      'One luminaire positioned to illuminate the turn',
+      'Two luminaires minimum for uniformity',
+      'Based only on lux calculation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Changes of direction exceeding 45 degrees require emergency lighting. A single well-positioned luminaire can illuminate a 90-degree turn on a 1.5m wide staircase, subject to achieving the required 1 lux minimum.',
+  },
 ];
 
 const EmergencyLightingModule1Section2 = () => {
   useSEO({
-    title: "Locations Where Emergency Lights are Required | Emergency Lighting Module 1.2",
-    description: "Learn about mandatory locations for emergency lighting installation, BS 5266 requirements, escape routes, and specific area classifications."
+    title: 'Locations Where Emergency Lights are Required | Emergency Lighting Module 1.2',
+    description:
+      'Learn about mandatory locations for emergency lighting installation, BS 5266 requirements, escape routes, and specific area classifications.',
   });
 
   return (
@@ -108,17 +124,29 @@ const EmergencyLightingModule1Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Exit routes:</strong> Always required</li>
-              <li><strong>Direction change:</strong> &gt;45° needs lighting</li>
-              <li><strong>Large toilets:</strong> &gt;8m² floor area</li>
+              <li>
+                <strong>Exit routes:</strong> Always required
+              </li>
+              <li>
+                <strong>Direction change:</strong> &gt;45° needs lighting
+              </li>
+              <li>
+                <strong>Large toilets:</strong> &gt;8m² floor area
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Locations</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Stairs:</strong> Each flight illuminated</li>
-              <li><strong>Lift cars:</strong> All passenger lifts</li>
-              <li><strong>External:</strong> Immediately outside exits</li>
+              <li>
+                <strong>Stairs:</strong> Each flight illuminated
+              </li>
+              <li>
+                <strong>Lift cars:</strong> All passenger lifts
+              </li>
+              <li>
+                <strong>External:</strong> Immediately outside exits
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +156,12 @@ const EmergencyLightingModule1Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify mandatory emergency lighting locations",
-              "Apply BS 5266-1 location requirements",
-              "Understand escape route lighting rules",
-              "Recognise special area requirements",
-              "Determine external lighting needs",
-              "Position luminaires at direction changes"
+              'Identify mandatory emergency lighting locations',
+              'Apply BS 5266-1 location requirements',
+              'Understand escape route lighting rules',
+              'Recognise special area requirements',
+              'Determine external lighting needs',
+              'Position luminaires at direction changes',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -154,8 +182,8 @@ const EmergencyLightingModule1Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Escape routes form the backbone of emergency lighting design. BS 5266-1 specifies
-              precise requirements for illuminating the path from any point in the building to
-              a place of ultimate safety.
+              precise requirements for illuminating the path from any point in the building to a
+              place of ultimate safety.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -202,19 +230,35 @@ const EmergencyLightingModule1Section2 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Direction Changes</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>&gt;45° change:</strong> Luminaire required</li>
-                  <li><strong>T-junctions:</strong> Illuminate all routes</li>
-                  <li><strong>Corridors:</strong> At each turn</li>
-                  <li><strong>Open plan:</strong> Define escape path</li>
+                  <li>
+                    <strong>&gt;45° change:</strong> Luminaire required
+                  </li>
+                  <li>
+                    <strong>T-junctions:</strong> Illuminate all routes
+                  </li>
+                  <li>
+                    <strong>Corridors:</strong> At each turn
+                  </li>
+                  <li>
+                    <strong>Open plan:</strong> Define escape path
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Level Changes</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Stairs:</strong> Each flight separately</li>
-                  <li><strong>Ramps:</strong> Full length illuminated</li>
-                  <li><strong>Steps:</strong> Single steps highlighted</li>
-                  <li><strong>Landings:</strong> All intermediate landings</li>
+                  <li>
+                    <strong>Stairs:</strong> Each flight separately
+                  </li>
+                  <li>
+                    <strong>Ramps:</strong> Full length illuminated
+                  </li>
+                  <li>
+                    <strong>Steps:</strong> Single steps highlighted
+                  </li>
+                  <li>
+                    <strong>Landings:</strong> All intermediate landings
+                  </li>
                 </ul>
               </div>
             </div>
@@ -246,20 +290,36 @@ const EmergencyLightingModule1Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Certain areas have specific requirements beyond standard escape route lighting.
-              These include sanitary facilities, plant rooms, and areas with special risks.
+              Certain areas have specific requirements beyond standard escape route lighting. These
+              include sanitary facilities, plant rooms, and areas with special risks.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Areas Requiring Emergency Lighting:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Areas Requiring Emergency Lighting:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Toilets &gt;8m²:</strong> Or windowless toilets</li>
-                <li><strong>Lift cars:</strong> All passenger lifts</li>
-                <li><strong>Moving walkways:</strong> Where installed</li>
-                <li><strong>Covered car parks:</strong> Escape routes within</li>
-                <li><strong>First aid rooms:</strong> All designated rooms</li>
-                <li><strong>Motor generator rooms:</strong> And switchgear rooms</li>
-                <li><strong>Control rooms:</strong> Building management/fire control</li>
+                <li>
+                  <strong>Toilets &gt;8m²:</strong> Or windowless toilets
+                </li>
+                <li>
+                  <strong>Lift cars:</strong> All passenger lifts
+                </li>
+                <li>
+                  <strong>Moving walkways:</strong> Where installed
+                </li>
+                <li>
+                  <strong>Covered car parks:</strong> Escape routes within
+                </li>
+                <li>
+                  <strong>First aid rooms:</strong> All designated rooms
+                </li>
+                <li>
+                  <strong>Motor generator rooms:</strong> And switchgear rooms
+                </li>
+                <li>
+                  <strong>Control rooms:</strong> Building management/fire control
+                </li>
               </ul>
             </div>
           </div>
@@ -284,10 +344,19 @@ const EmergencyLightingModule1Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Survey Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Missing direction changes:</strong> — Check all corridors systematically</li>
-                <li><strong>Forgetting externals:</strong> — Always include area outside final exits</li>
-                <li><strong>Lift cars omitted:</strong> — All passenger lifts need lighting</li>
-                <li><strong>Toilet areas estimated:</strong> — Measure accurately against 8m² threshold</li>
+                <li>
+                  <strong>Missing direction changes:</strong> — Check all corridors systematically
+                </li>
+                <li>
+                  <strong>Forgetting externals:</strong> — Always include area outside final exits
+                </li>
+                <li>
+                  <strong>Lift cars omitted:</strong> — All passenger lifts need lighting
+                </li>
+                <li>
+                  <strong>Toilet areas estimated:</strong> — Measure accurately against 8m²
+                  threshold
+                </li>
               </ul>
             </div>
           </div>
@@ -333,10 +402,7 @@ const EmergencyLightingModule1Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { TrainingEvidenceItem } from "@/types/time-tracking";
-import { PortfolioEntry, PortfolioCategory, PortfolioFile } from "@/types/portfolio";
-import { usePortfolioData } from "@/hooks/portfolio/usePortfolioData";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from 'react';
+import { TrainingEvidenceItem } from '@/types/time-tracking';
+import { PortfolioEntry, PortfolioCategory, PortfolioFile } from '@/types/portfolio';
+import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { useToast } from '@/hooks/use-toast';
 
 // Map evidence types to portfolio categories
 const TYPE_TO_CATEGORY_MAP: Record<string, string> = {
   'Practical Work': 'practical-skills',
-  'Assessment': 'testing-inspection',
+  Assessment: 'testing-inspection',
   'Safety Training': 'health-safety',
   'Theory Work': 'professional-development',
   'Customer Work': 'customer-service',
   'College Work': 'professional-development',
-  'Certification': 'regulatory-compliance',
+  Certification: 'regulatory-compliance',
   'Photo Evidence': 'practical-skills',
   'Video Evidence': 'practical-skills',
-  'Document': 'professional-development'
+  Document: 'professional-development',
 };
 
 export const useEvidenceToPortfolio = () => {
@@ -31,7 +31,7 @@ export const useEvidenceToPortfolio = () => {
     try {
       // Find the appropriate category based on evidence type
       const categoryId = TYPE_TO_CATEGORY_MAP[evidence.type] || 'practical-skills';
-      const category = categories.find(c => c.id === categoryId) || categories[0];
+      const category = categories.find((c) => c.id === categoryId) || categories[0];
 
       if (!category) {
         throw new Error('No portfolio categories available');
@@ -43,7 +43,7 @@ export const useEvidenceToPortfolio = () => {
         name: fileName,
         type: getFileType(fileName),
         size: 0, // We don't have size info from the old format
-        uploadDate: evidence.date
+        uploadDate: evidence.date,
       }));
 
       // Create the portfolio entry data
@@ -60,7 +60,7 @@ export const useEvidenceToPortfolio = () => {
         selfAssessment: 3,
         status: 'draft',
         timeSpent: 0,
-        awardingBodyStandards: []
+        awardingBodyStandards: [],
       };
 
       // Add to portfolio
@@ -68,7 +68,7 @@ export const useEvidenceToPortfolio = () => {
 
       if (result) {
         toast({
-          title: "Evidence converted",
+          title: 'Evidence converted',
           description: `"${evidence.title}" has been added to your portfolio as a draft entry.`,
         });
         return true;
@@ -78,9 +78,9 @@ export const useEvidenceToPortfolio = () => {
     } catch (error) {
       console.error('Error converting evidence:', error);
       toast({
-        title: "Conversion failed",
-        description: "Failed to convert evidence to portfolio entry. Please try again.",
-        variant: "destructive"
+        title: 'Conversion failed',
+        description: 'Failed to convert evidence to portfolio entry. Please try again.',
+        variant: 'destructive',
       });
       return false;
     } finally {
@@ -92,7 +92,7 @@ export const useEvidenceToPortfolio = () => {
   return {
     convertEvidenceToPortfolio,
     isConverting,
-    convertingId
+    convertingId,
   };
 };
 
@@ -100,14 +100,14 @@ export const useEvidenceToPortfolio = () => {
 const getFileType = (fileName: string): string => {
   const ext = fileName.split('.').pop()?.toLowerCase() || '';
   const mimeTypes: Record<string, string> = {
-    'jpg': 'image/jpeg',
-    'jpeg': 'image/jpeg',
-    'png': 'image/png',
-    'gif': 'image/gif',
-    'pdf': 'application/pdf',
-    'doc': 'application/msword',
-    'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'mp4': 'video/mp4'
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    gif: 'image/gif',
+    pdf: 'application/pdf',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    mp4: 'video/mp4',
   };
   return mimeTypes[ext] || 'application/octet-stream';
 };
@@ -115,15 +115,15 @@ const getFileType = (fileName: string): string => {
 const inferSkillsFromType = (type: string): string[] => {
   const skillsMap: Record<string, string[]> = {
     'Practical Work': ['wiring-installation', 'cable-management'],
-    'Assessment': ['electrical-testing', 'fault-finding'],
+    Assessment: ['electrical-testing', 'fault-finding'],
     'Safety Training': ['health-safety'],
     'Theory Work': ['circuit-analysis'],
     'Customer Work': [],
     'College Work': ['circuit-analysis'],
-    'Certification': [],
+    Certification: [],
     'Photo Evidence': [],
     'Video Evidence': [],
-    'Document': []
+    Document: [],
   };
   return skillsMap[type] || [];
 };
@@ -131,15 +131,15 @@ const inferSkillsFromType = (type: string): string[] => {
 const inferLearningOutcomesFromType = (type: string): string[] => {
   const outcomesMap: Record<string, string[]> = {
     'Practical Work': ['lo2'],
-    'Assessment': ['lo3'],
+    Assessment: ['lo3'],
     'Safety Training': ['lo1'],
     'Theory Work': ['lo1', 'lo5'],
     'Customer Work': ['lo7'],
     'College Work': ['lo1', 'lo2'],
-    'Certification': ['lo5'],
+    Certification: ['lo5'],
     'Photo Evidence': ['lo2'],
     'Video Evidence': ['lo2'],
-    'Document': ['lo7']
+    Document: ['lo7'],
   };
   return outcomesMap[type] || [];
 };

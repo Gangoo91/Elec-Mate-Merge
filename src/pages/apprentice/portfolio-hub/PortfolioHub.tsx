@@ -40,22 +40,11 @@ export default function PortfolioHub() {
   const [isQuickCaptureOpen, setIsQuickCaptureOpen] = useState(false);
 
   // Data hooks
-  const {
-    entries,
-    categories,
-    analytics,
-    isLoading: portfolioLoading,
-  } = useUltraFastPortfolio();
+  const { entries, categories, analytics, isLoading: portfolioLoading } = useUltraFastPortfolio();
 
-  const {
-    otjGoal,
-    isLoading: complianceLoading,
-  } = useComplianceTracking();
+  const { otjGoal, isLoading: complianceLoading } = useComplianceTracking();
 
-  const {
-    qualificationName,
-    qualificationCode,
-  } = useStudentQualification();
+  const { qualificationName, qualificationCode } = useStudentQualification();
 
   const { tree } = useQualificationACs(qualificationCode);
 
@@ -84,7 +73,10 @@ export default function PortfolioHub() {
 
   // Sync active section with URL on mount
   useEffect(() => {
-    if (sectionParam && ['home', 'evidence', 'progress', 'tutor', 'export'].includes(sectionParam)) {
+    if (
+      sectionParam &&
+      ['home', 'evidence', 'progress', 'tutor', 'export'].includes(sectionParam)
+    ) {
       setActiveSection(sectionParam);
     }
   }, []);
@@ -100,7 +92,8 @@ export default function PortfolioHub() {
   // Calculate progress data — AC-based when qualification data is available
   const portfolioProgress = {
     current: evidencedACSet.size,
-    target: tree.totalACs || categories.reduce((sum, cat) => sum + (cat.requiredEntries || 0), 0) || 20,
+    target:
+      tree.totalACs || categories.reduce((sum, cat) => sum + (cat.requiredEntries || 0), 0) || 20,
   };
 
   const otjProgress = {
@@ -109,7 +102,7 @@ export default function PortfolioHub() {
   };
 
   // Calculate pending reviews from actual entry data
-  const pendingReviews = entries.filter(e => e.status === 'pending_review').length;
+  const pendingReviews = entries.filter((e) => e.status === 'pending_review').length;
 
   // Mock recent activity (will be replaced with real data)
   const recentActivity = entries.slice(0, 5).map((entry) => ({
@@ -177,7 +170,14 @@ function getNextAction(
   portfolio: { current: number; target: number },
   otj: { current: number; target: number },
   totalEntries: number
-): { type: 'capture' | 'review' | 'hours' | 'ksb'; title: string; description: string; priority: 'high' | 'medium' | 'low' } | undefined {
+):
+  | {
+      type: 'capture' | 'review' | 'hours' | 'ksb';
+      title: string;
+      description: string;
+      priority: 'high' | 'medium' | 'low';
+    }
+  | undefined {
   const portfolioPercent = portfolio.target > 0 ? (portfolio.current / portfolio.target) * 100 : 0;
   const otjPercent = otj.target > 0 ? (otj.current / otj.target) * 100 : 0;
 

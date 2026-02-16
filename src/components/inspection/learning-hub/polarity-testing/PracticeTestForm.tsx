@@ -1,9 +1,14 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Calculator } from 'lucide-react';
 import { PolarityTestResult, testMethods } from './types';
 
@@ -14,16 +19,17 @@ interface PracticeTestFormProps {
 }
 
 const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTestFormProps) => {
-  const canAddTest = currentTest.circuitRef && 
-    (currentTest.socketOutlets !== 'pending' || 
-     currentTest.lightingPoints !== 'pending' || 
-     currentTest.isolatorSwitches !== 'pending');
+  const canAddTest =
+    currentTest.circuitRef &&
+    (currentTest.socketOutlets !== 'pending' ||
+      currentTest.lightingPoints !== 'pending' ||
+      currentTest.isolatorSwitches !== 'pending');
 
   return (
     <div className="space-y-6">
       <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-6">
         <h4 className="font-medium text-foreground mb-4">Practice Polarity Testing</h4>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div className="space-y-2">
             <Label htmlFor="circuitRef">Circuit Reference</Label>
@@ -34,10 +40,13 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
               onChange={(e) => onUpdateTest('circuitRef', e.target.value)}
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="testMethod">Test Method</Label>
-            <Select value={currentTest.testMethod} onValueChange={(value) => onUpdateTest('testMethod', value)}>
+            <Select
+              value={currentTest.testMethod}
+              onValueChange={(value) => onUpdateTest('testMethod', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select test method" />
               </SelectTrigger>
@@ -55,7 +64,10 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="space-y-2">
             <Label htmlFor="socketOutlets">Socket Outlets</Label>
-            <Select value={currentTest.socketOutlets} onValueChange={(value) => onUpdateTest('socketOutlets', value)}>
+            <Select
+              value={currentTest.socketOutlets}
+              onValueChange={(value) => onUpdateTest('socketOutlets', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Test result" />
               </SelectTrigger>
@@ -66,10 +78,13 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="lightingPoints">Lighting Points</Label>
-            <Select value={currentTest.lightingPoints} onValueChange={(value) => onUpdateTest('lightingPoints', value)}>
+            <Select
+              value={currentTest.lightingPoints}
+              onValueChange={(value) => onUpdateTest('lightingPoints', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Test result" />
               </SelectTrigger>
@@ -80,10 +95,13 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="isolatorSwitches">Isolator Switches</Label>
-            <Select value={currentTest.isolatorSwitches} onValueChange={(value) => onUpdateTest('isolatorSwitches', value)}>
+            <Select
+              value={currentTest.isolatorSwitches}
+              onValueChange={(value) => onUpdateTest('isolatorSwitches', value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Test result" />
               </SelectTrigger>
@@ -106,7 +124,7 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
           />
         </div>
 
-        <Button 
+        <Button
           onClick={onAddTest}
           className="w-full bg-purple-500/20 text-foreground border border-purple-500/30 hover:bg-purple-500/30"
           disabled={!canAddTest}

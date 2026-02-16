@@ -1,32 +1,40 @@
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Upload, X, ChevronDown } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
-import EvidenceForm from "./evidence/EvidenceForm";
-import EvidenceEmptyState from "./evidence/EvidenceEmptyState";
-import EvidenceList from "./evidence/EvidenceList";
-import { useTrainingEvidence } from "@/hooks/time-tracking/useTrainingEvidence";
-import { TrainingEvidenceItem } from "@/types/time-tracking";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import TrainingEvidenceDialog from "./evidence/TrainingEvidenceDialog";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Upload, X, ChevronDown } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from '@/components/ui/dialog';
+import EvidenceForm from './evidence/EvidenceForm';
+import EvidenceEmptyState from './evidence/EvidenceEmptyState';
+import EvidenceList from './evidence/EvidenceList';
+import { useTrainingEvidence } from '@/hooks/time-tracking/useTrainingEvidence';
+import { TrainingEvidenceItem } from '@/types/time-tracking';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import TrainingEvidenceDialog from './evidence/TrainingEvidenceDialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 const TrainingEvidence = () => {
-  const { evidenceItems, addEvidence, deleteEvidence, isUploading, setIsUploading } = useTrainingEvidence();
-  const [activeTab, setActiveTab] = useState("all");
+  const { evidenceItems, addEvidence, deleteEvidence, isUploading, setIsUploading } =
+    useTrainingEvidence();
+  const [activeTab, setActiveTab] = useState('all');
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const filteredEvidence = activeTab === "all" 
-    ? evidenceItems 
-    : evidenceItems.filter(item => item.type.toLowerCase() === activeTab);
+  const filteredEvidence =
+    activeTab === 'all'
+      ? evidenceItems
+      : evidenceItems.filter((item) => item.type.toLowerCase() === activeTab);
 
   const handleAddEvidence = (evidence: Omit<TrainingEvidenceItem, 'id'>, files: File[]) => {
     addEvidence(evidence, files);
@@ -43,7 +51,7 @@ const TrainingEvidence = () => {
             Upload and manage evidence of your off-the-job training activities
           </p>
         </div>
-        <TrainingEvidenceDialog 
+        <TrainingEvidenceDialog
           trigger={
             <Button className="gap-2">
               <Upload className="h-4 w-4" />
@@ -72,7 +80,7 @@ const TrainingEvidence = () => {
             </SelectContent>
           </Select>
         </div>
-        
+
         <EvidenceList items={filteredEvidence} onDelete={deleteEvidence} />
       </div>
     </div>

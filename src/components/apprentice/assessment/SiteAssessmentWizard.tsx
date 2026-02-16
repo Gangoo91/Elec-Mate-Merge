@@ -1,24 +1,32 @@
-import { siteAssessmentChecklist, sectionLabels, getCategoriesBySection } from "./data/siteAssessmentChecklist";
-import SiteAssessmentCategory from "./SiteAssessmentCategory";
-import SiteAssessmentSummary from "./SiteAssessmentSummary";
-import type { useAssessmentProgress } from "./hooks/useAssessmentProgress";
+import {
+  siteAssessmentChecklist,
+  sectionLabels,
+  getCategoriesBySection,
+} from './data/siteAssessmentChecklist';
+import SiteAssessmentCategory from './SiteAssessmentCategory';
+import SiteAssessmentSummary from './SiteAssessmentSummary';
+import type { useAssessmentProgress } from './hooks/useAssessmentProgress';
 
 interface SiteAssessmentWizardProps {
   progress: ReturnType<typeof useAssessmentProgress>;
 }
 
 const SiteAssessmentWizard = ({ progress }: SiteAssessmentWizardProps) => {
-  const sections: ('pre-job' | 'site-condition' | 'electrical')[] = ['pre-job', 'site-condition', 'electrical'];
+  const sections: ('pre-job' | 'site-condition' | 'electrical')[] = [
+    'pre-job',
+    'site-condition',
+    'electrical',
+  ];
 
   const sectionColors: Record<string, string> = {
     'pre-job': 'bg-green-400',
     'site-condition': 'bg-blue-400',
-    'electrical': 'bg-elec-yellow',
+    electrical: 'bg-elec-yellow',
   };
 
   return (
     <div className="space-y-6">
-      {sections.map(section => {
+      {sections.map((section) => {
         const categories = getCategoriesBySection(section);
         const sectionConfig = sectionLabels[section];
 
@@ -29,8 +37,8 @@ const SiteAssessmentWizard = ({ progress }: SiteAssessmentWizardProps) => {
               {sectionConfig.label}
             </h3>
 
-            {categories.map(category => {
-              const itemIds = category.items.map(i => i.id);
+            {categories.map((category) => {
+              const itemIds = category.items.map((i) => i.id);
               const categoryProgress = progress.getCategoryProgress(itemIds);
 
               return (

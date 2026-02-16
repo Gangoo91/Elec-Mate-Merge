@@ -13,8 +13,8 @@
  * - Result persistence via useQuizCompletion
  */
 
-import { useState, useEffect, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
   ArrowRight,
@@ -25,23 +25,23 @@ import {
   Flag,
   RotateCcw,
   FileText,
-  Target
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { ExamDesktopSidebar } from "@/components/apprentice-courses/ExamDesktopSidebar";
-import { ExamMobileLayout } from "@/components/apprentice-courses/ExamMobileLayout";
-import { toast } from "sonner";
-import { useQuizCompletion } from "@/hooks/useQuizCompletion";
+  Target,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
+import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
+import { toast } from 'sonner';
+import { useQuizCompletion } from '@/hooks/useQuizCompletion';
 import {
   StandardMockQuestion,
   MockExamConfig,
   CategoryBreakdown,
   ReviewFilter,
-  QuestionStatus
-} from "@/types/standardMockExam";
+  QuestionStatus,
+} from '@/types/standardMockExam';
 
 interface StandardMockExamProps {
   config: MockExamConfig;
@@ -52,7 +52,7 @@ interface StandardMockExamProps {
 export const StandardMockExam = ({
   config,
   questionBank,
-  getRandomQuestions
+  getRandomQuestions,
 }: StandardMockExamProps) => {
   const navigate = useNavigate();
   const { completeQuiz } = useQuizCompletion();
@@ -88,10 +88,10 @@ export const StandardMockExam = ({
   useEffect(() => {
     if (examStarted && !showResults && timeRemaining > 0) {
       const timer = setInterval(() => {
-        setTimeRemaining(prev => {
+        setTimeRemaining((prev) => {
           // 5-minute warning
           if (prev === 301 && !hasShownWarning) {
-            toast.warning("5 minutes remaining!", { duration: 5000 });
+            toast.warning('5 minutes remaining!', { duration: 5000 });
             setHasShownWarning(true);
           }
           if (prev <= 1) {
@@ -150,16 +150,16 @@ export const StandardMockExam = ({
           timeSpent,
           correctAnswers: score,
           incorrectAnswers: examQuestions.length - score,
-          categoryBreakdown: getCategoryBreakdownRecord()
+          categoryBreakdown: getCategoryBreakdownRecord(),
         },
         assessmentId: config.examId,
-        sessionId: `${config.examId}-${Date.now()}`
+        sessionId: `${config.examId}-${Date.now()}`,
       });
     } catch (error) {
       console.error('Failed to save quiz result:', error);
     }
 
-    toast.success("Exam submitted successfully!");
+    toast.success('Exam submitted successfully!');
   };
 
   // Flag functionality
@@ -221,7 +221,7 @@ export const StandardMockExam = ({
       .map(([category, stats]) => ({
         category,
         ...stats,
-        percent: Math.round((stats.correct / stats.total) * 100)
+        percent: Math.round((stats.correct / stats.total) * 100),
       }));
   };
 
@@ -233,23 +233,30 @@ export const StandardMockExam = ({
 
   // Review functionality
   const getFilteredQuestions = () => {
-    return examQuestions.map((q, index) => ({ question: q, index })).filter(({ index }) => {
-      const status = getQuestionStatus(index);
-      const isFlagged = flaggedQuestions.has(index);
+    return examQuestions
+      .map((q, index) => ({ question: q, index }))
+      .filter(({ index }) => {
+        const status = getQuestionStatus(index);
+        const isFlagged = flaggedQuestions.has(index);
 
-      switch (reviewFilter) {
-        case 'correct': return status === 'correct';
-        case 'incorrect': return status === 'incorrect';
-        case 'unanswered': return status === 'unanswered';
-        case 'flagged': return isFlagged;
-        default: return true;
-      }
-    });
+        switch (reviewFilter) {
+          case 'correct':
+            return status === 'correct';
+          case 'incorrect':
+            return status === 'incorrect';
+          case 'unanswered':
+            return status === 'unanswered';
+          case 'flagged':
+            return isFlagged;
+          default:
+            return true;
+        }
+      });
   };
 
   // Statistics
   const getSummaryStats = () => {
-    const answered = selectedAnswers.filter(a => a !== -1).length;
+    const answered = selectedAnswers.filter((a) => a !== -1).length;
     const unanswered = examQuestions.length - answered;
     const flagged = flaggedQuestions.size;
     const correct = showResults ? calculateScore() : 0;
@@ -260,7 +267,8 @@ export const StandardMockExam = ({
 
   const stats = getSummaryStats();
   const score = calculateScore();
-  const percentage = examQuestions.length > 0 ? Math.round((score / examQuestions.length) * 100) : 0;
+  const percentage =
+    examQuestions.length > 0 ? Math.round((score / examQuestions.length) * 100) : 0;
   const passed = percentage >= config.passThreshold;
 
   // Reset exam
@@ -297,8 +305,12 @@ export const StandardMockExam = ({
               <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-elec-yellow/10">
                 <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
               </div>
-              <CardTitle className="text-lg sm:text-xl md:text-2xl text-white mb-1">{config.examTitle}</CardTitle>
-              <h2 className="text-xs sm:text-sm md:text-lg text-elec-yellow">Comprehensive Assessment Practice</h2>
+              <CardTitle className="text-lg sm:text-xl md:text-2xl text-white mb-1">
+                {config.examTitle}
+              </CardTitle>
+              <h2 className="text-xs sm:text-sm md:text-lg text-elec-yellow">
+                Comprehensive Assessment Practice
+              </h2>
             </CardHeader>
 
             <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-6">
@@ -312,15 +324,23 @@ export const StandardMockExam = ({
                 <div className="space-y-2.5 pl-1">
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">{config.totalQuestions} questions from {questionBank.length} question bank</p>
+                    <p className="text-sm text-white/90">
+                      {config.totalQuestions} questions from {questionBank.length} question bank
+                    </p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">{Math.floor(config.timeLimit / 60)} minutes</p>
+                    <p className="text-sm text-white/90">
+                      {Math.floor(config.timeLimit / 60)} minutes
+                    </p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">Pass mark: {config.passThreshold}% ({Math.ceil(config.totalQuestions * config.passThreshold / 100)}/{config.totalQuestions})</p>
+                    <p className="text-sm text-white/90">
+                      Pass mark: {config.passThreshold}% (
+                      {Math.ceil((config.totalQuestions * config.passThreshold) / 100)}/
+                      {config.totalQuestions})
+                    </p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
@@ -354,16 +374,18 @@ export const StandardMockExam = ({
   // Results screen
   if (showResults && !showReview) {
     const categoryBreakdown = getCategoryBreakdown();
-    const weakCategories = categoryBreakdown.filter(c => c.percent < config.passThreshold);
+    const weakCategories = categoryBreakdown.filter((c) => c.percent < config.passThreshold);
 
     return (
       <div className="bg-[#1a1a1a] p-2 sm:p-4">
         <div>
           <Card className="border-elec-yellow/30">
             <CardHeader className="text-center pb-4 px-4 sm:px-6">
-              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-lg font-semibold mb-4 ${
-                passed ? 'bg-elec-yellow/20 text-elec-yellow' : 'bg-red-500/20 text-elec-yellow'
-              }`}>
+              <div
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-lg font-semibold mb-4 ${
+                  passed ? 'bg-elec-yellow/20 text-elec-yellow' : 'bg-red-500/20 text-elec-yellow'
+                }`}
+              >
                 {passed ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
                 {passed ? 'PASSED' : 'FAILED'}
               </div>
@@ -404,10 +426,17 @@ export const StandardMockExam = ({
                 </h3>
                 <div className="space-y-2">
                   {categoryBreakdown.map(({ category, total, correct, percent }) => (
-                    <div key={category} className="bg-white/[0.03] rounded-lg p-3 border border-white/10">
+                    <div
+                      key={category}
+                      className="bg-white/[0.03] rounded-lg p-3 border border-white/10"
+                    >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-white truncate pr-2">{category}</span>
-                        <span className={`text-sm font-bold ${percent >= config.passThreshold ? 'text-green-400' : 'text-red-400'}`}>
+                        <span className="text-sm font-medium text-white truncate pr-2">
+                          {category}
+                        </span>
+                        <span
+                          className={`text-sm font-bold ${percent >= config.passThreshold ? 'text-green-400' : 'text-red-400'}`}
+                        >
                           {correct}/{total} ({percent}%)
                         </span>
                       </div>
@@ -424,7 +453,7 @@ export const StandardMockExam = ({
                   <div className="mt-3 p-3 rounded-lg border border-orange-500/30 bg-orange-500/10">
                     <p className="text-xs text-orange-300">
                       <AlertTriangle className="h-3 w-3 inline mr-1" />
-                      Focus on: {weakCategories.map(c => c.category).join(', ')}
+                      Focus on: {weakCategories.map((c) => c.category).join(', ')}
                     </p>
                   </div>
                 )}
@@ -477,7 +506,9 @@ export const StandardMockExam = ({
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h1 className="text-lg sm:text-xl font-semibold text-white">Review Answers</h1>
-                <p className="text-sm text-white">Score: {percentage}% ({score}/{examQuestions.length})</p>
+                <p className="text-sm text-white">
+                  Score: {percentage}% ({score}/{examQuestions.length})
+                </p>
               </div>
               <Button
                 onClick={() => setShowReview(false)}
@@ -494,7 +525,7 @@ export const StandardMockExam = ({
             <div className="grid grid-cols-5 gap-2 mb-4">
               <Card
                 className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === "all" ? "ring-2 ring-elec-yellow/50" : ""
+                  reviewFilter === 'all' ? 'ring-2 ring-elec-yellow/50' : ''
                 }`}
                 onClick={() => setReviewFilter('all')}
               >
@@ -505,9 +536,9 @@ export const StandardMockExam = ({
               </Card>
               <Card
                 className={`bg-transparent border-green-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === "correct" ? "ring-2 ring-green-500/50" : ""
+                  reviewFilter === 'correct' ? 'ring-2 ring-green-500/50' : ''
                 }`}
-                onClick={() => setReviewFilter(reviewFilter === "correct" ? "all" : "correct")}
+                onClick={() => setReviewFilter(reviewFilter === 'correct' ? 'all' : 'correct')}
               >
                 <CardContent className="p-2 text-center">
                   <div className="text-sm font-bold text-green-500">{stats.correct}</div>
@@ -516,9 +547,9 @@ export const StandardMockExam = ({
               </Card>
               <Card
                 className={`bg-transparent border-red-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === "incorrect" ? "ring-2 ring-red-500/50" : ""
+                  reviewFilter === 'incorrect' ? 'ring-2 ring-red-500/50' : ''
                 }`}
-                onClick={() => setReviewFilter(reviewFilter === "incorrect" ? "all" : "incorrect")}
+                onClick={() => setReviewFilter(reviewFilter === 'incorrect' ? 'all' : 'incorrect')}
               >
                 <CardContent className="p-2 text-center">
                   <div className="text-sm font-bold text-elec-yellow">{stats.incorrect}</div>
@@ -527,9 +558,11 @@ export const StandardMockExam = ({
               </Card>
               <Card
                 className={`bg-transparent border-muted/20 cursor-pointer hover:bg-muted/10 active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === "unanswered" ? "ring-2 ring-muted/50" : ""
+                  reviewFilter === 'unanswered' ? 'ring-2 ring-muted/50' : ''
                 }`}
-                onClick={() => setReviewFilter(reviewFilter === "unanswered" ? "all" : "unanswered")}
+                onClick={() =>
+                  setReviewFilter(reviewFilter === 'unanswered' ? 'all' : 'unanswered')
+                }
               >
                 <CardContent className="p-2 text-center">
                   <div className="text-sm font-bold text-white">{stats.unanswered}</div>
@@ -538,9 +571,9 @@ export const StandardMockExam = ({
               </Card>
               <Card
                 className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${
-                  reviewFilter === "flagged" ? "ring-2 ring-elec-yellow/50" : ""
+                  reviewFilter === 'flagged' ? 'ring-2 ring-elec-yellow/50' : ''
                 }`}
-                onClick={() => setReviewFilter(reviewFilter === "flagged" ? "all" : "flagged")}
+                onClick={() => setReviewFilter(reviewFilter === 'flagged' ? 'all' : 'flagged')}
               >
                 <CardContent className="p-2 text-center">
                   <div className="text-sm font-bold text-elec-yellow">{stats.flagged}</div>
@@ -562,27 +595,32 @@ export const StandardMockExam = ({
                 <Card key={index} className="bg-transparent border-elec-yellow/30">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-base text-white">
-                        Question {index + 1}
-                      </CardTitle>
+                      <CardTitle className="text-base text-white">Question {index + 1}</CardTitle>
                       <div className="flex items-center gap-2">
                         {isFlagged && (
-                          <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40">
+                          <Badge
+                            variant="outline"
+                            className="text-elec-yellow border-elec-yellow/40"
+                          >
                             <Flag className="h-3 w-3 mr-1 fill-current" />
                             Flagged
                           </Badge>
                         )}
                         <Badge
-                          variant={status === "correct" ? "default" : "destructive"}
+                          variant={status === 'correct' ? 'default' : 'destructive'}
                           className={
-                            status === "correct"
-                              ? "bg-green-500/20 text-green-500 border-green-500/40"
-                              : status === "incorrect"
-                              ? "bg-red-500/20 text-elec-yellow border-red-500/40"
-                              : "bg-muted/20 text-white border-muted/40"
+                            status === 'correct'
+                              ? 'bg-green-500/20 text-green-500 border-green-500/40'
+                              : status === 'incorrect'
+                                ? 'bg-red-500/20 text-elec-yellow border-red-500/40'
+                                : 'bg-muted/20 text-white border-muted/40'
                           }
                         >
-                          {status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Unanswered"}
+                          {status === 'correct'
+                            ? 'Correct'
+                            : status === 'incorrect'
+                              ? 'Incorrect'
+                              : 'Unanswered'}
                         </Badge>
                       </div>
                     </div>
@@ -600,20 +638,22 @@ export const StandardMockExam = ({
                             key={optionIndex}
                             className={`p-3 rounded-lg border-2 text-sm ${
                               isCorrectAnswer
-                                ? "border-green-500 text-green-500"
+                                ? 'border-green-500 text-green-500'
                                 : isUserAnswer && !isCorrectAnswer
-                                ? "border-red-500 text-elec-yellow"
-                                : "border-muted/40 bg-muted/5"
+                                  ? 'border-red-500 text-elec-yellow'
+                                  : 'border-muted/40 bg-muted/5'
                             }`}
                           >
                             <div className="flex items-start gap-3">
-                              <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                                isCorrectAnswer
-                                  ? "border-green-500 bg-green-500"
-                                  : isUserAnswer && !isCorrectAnswer
-                                  ? "border-red-500 bg-red-500"
-                                  : "border-muted-foreground"
-                              }`}>
+                              <div
+                                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                                  isCorrectAnswer
+                                    ? 'border-green-500 bg-green-500'
+                                    : isUserAnswer && !isCorrectAnswer
+                                      ? 'border-red-500 bg-red-500'
+                                      : 'border-muted-foreground'
+                                }`}
+                              >
                                 {(isUserAnswer || isCorrectAnswer) && (
                                   <div className="w-1.5 h-1.5 bg-white rounded-full" />
                                 )}
@@ -639,7 +679,9 @@ export const StandardMockExam = ({
                           </div>
                           <div>
                             <h4 className="text-sm font-semibold text-white mb-1">Explanation</h4>
-                            <p className="text-sm text-white leading-relaxed">{question.explanation}</p>
+                            <p className="text-sm text-white leading-relaxed">
+                              {question.explanation}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -655,7 +697,7 @@ export const StandardMockExam = ({
   }
 
   // Active exam interface
-  const answeredCount = selectedAnswers.filter(a => a !== -1).length;
+  const answeredCount = selectedAnswers.filter((a) => a !== -1).length;
   const progressPercentage = (answeredCount / examQuestions.length) * 100;
 
   const goToNextFlagged = () => {
@@ -679,7 +721,9 @@ export const StandardMockExam = ({
           </div>
           <div className="text-center">
             <div className="text-sm text-white">{config.examTitle}</div>
-            <div className={`font-mono text-lg font-bold ${timeRemaining < 300 ? 'text-red-400 animate-pulse' : 'text-elec-yellow'}`}>
+            <div
+              className={`font-mono text-lg font-bold ${timeRemaining < 300 ? 'text-red-400 animate-pulse' : 'text-elec-yellow'}`}
+            >
               {formatTime(timeRemaining)}
             </div>
           </div>
@@ -735,14 +779,14 @@ export const StandardMockExam = ({
                         : 'bg-white/[0.02] border-white/15 hover:border-white/25'
                     }`}
                   >
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                      selectedAnswers[currentQuestion] === index
-                        ? 'bg-elec-yellow text-black'
-                        : 'bg-white/10 text-white/60'
-                    }`}>
-                      <span className="text-xs font-bold">
-                        {String.fromCharCode(65 + index)}
-                      </span>
+                    <div
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                        selectedAnswers[currentQuestion] === index
+                          ? 'bg-elec-yellow text-black'
+                          : 'bg-white/10 text-white/60'
+                      }`}
+                    >
+                      <span className="text-xs font-bold">{String.fromCharCode(65 + index)}</span>
                     </div>
                     <span className="text-sm text-white leading-snug text-left">{option}</span>
                   </button>
@@ -765,9 +809,7 @@ export const StandardMockExam = ({
                     <h2 className="text-lg font-semibold text-white">
                       Question {currentQuestion + 1} of {examQuestions.length}
                     </h2>
-                    <div className="text-sm text-white mt-1">
-                      {config.examTitle}
-                    </div>
+                    <div className="text-sm text-white mt-1">{config.examTitle}</div>
                   </div>
                   <Button
                     onClick={toggleFlag}
@@ -808,11 +850,13 @@ export const StandardMockExam = ({
                         }`}
                       >
                         <div className="flex items-start gap-3">
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                            selectedAnswers[currentQuestion] === index
-                              ? 'bg-elec-yellow text-black font-bold'
-                              : 'bg-white/10 text-white/70'
-                          }`}>
+                          <div
+                            className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                              selectedAnswers[currentQuestion] === index
+                                ? 'bg-elec-yellow text-black font-bold'
+                                : 'bg-white/10 text-white/70'
+                            }`}
+                          >
                             <span className="text-sm font-bold">
                               {String.fromCharCode(65 + index)}
                             </span>
@@ -873,7 +917,9 @@ export const StandardMockExam = ({
                         <Clock className="h-5 w-5 text-elec-yellow" />
                         <span className="text-sm font-medium text-white">Time Remaining</span>
                       </div>
-                      <div className={`font-mono text-2xl font-bold ${timeRemaining < 300 ? 'text-red-400 animate-pulse' : 'text-elec-yellow'}`}>
+                      <div
+                        className={`font-mono text-2xl font-bold ${timeRemaining < 300 ? 'text-red-400 animate-pulse' : 'text-elec-yellow'}`}
+                      >
                         {formatTime(timeRemaining)}
                       </div>
                       <div className="text-xs text-white mt-1">
@@ -887,7 +933,9 @@ export const StandardMockExam = ({
                     <div className="bg-[#1a1a1a]/50 p-4 rounded-lg border border-elec-yellow/30">
                       <div className="flex justify-between items-center mb-3">
                         <span className="text-sm font-medium text-white">Progress</span>
-                        <span className="text-lg font-bold text-elec-yellow">{answeredCount}/{examQuestions.length}</span>
+                        <span className="text-lg font-bold text-elec-yellow">
+                          {answeredCount}/{examQuestions.length}
+                        </span>
                       </div>
                       <Progress value={progressPercentage} className="h-3 mb-3" />
                       <div className="text-xs text-center text-white">
@@ -917,7 +965,9 @@ export const StandardMockExam = ({
                           <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                           <span className="text-sm text-elec-yellow">Remaining</span>
                         </div>
-                        <span className="font-bold text-elec-yellow">{examQuestions.length - answeredCount}</span>
+                        <span className="font-bold text-elec-yellow">
+                          {examQuestions.length - answeredCount}
+                        </span>
                       </div>
 
                       <div className="flex items-center justify-between p-3 rounded-lg border border-elec-yellow/20">
@@ -945,11 +995,12 @@ export const StandardMockExam = ({
                             onClick={() => setCurrentQuestion(index)}
                             className={`
                               relative w-10 h-10 text-xs font-bold rounded-lg transition-all duration-200 border-2
-                              ${isCurrent
-                                ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110'
-                                : isAnswered
-                                  ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40'
-                                  : 'bg-[#1a1a1a]/30 text-white border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
+                              ${
+                                isCurrent
+                                  ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110'
+                                  : isAnswered
+                                    ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40'
+                                    : 'bg-[#1a1a1a]/30 text-white border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
                               }
                             `}
                           >

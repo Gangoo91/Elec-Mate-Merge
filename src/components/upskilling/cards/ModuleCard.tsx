@@ -87,9 +87,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
 
             {/* Description (if provided) */}
             {description && (
-              <p className="text-xs text-white/50 line-clamp-2 mb-auto">
-                {description}
-              </p>
+              <p className="text-xs text-white/50 line-clamp-2 mb-auto">{description}</p>
             )}
 
             {/* Bottom row: Duration + Arrow */}

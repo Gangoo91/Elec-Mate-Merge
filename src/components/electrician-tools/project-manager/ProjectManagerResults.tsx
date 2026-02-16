@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Copy, Download, Calendar as CalendarIcon, RotateCcw, Edit3, Eye } from "lucide-react";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
-import CriticalActionsCard from "./CriticalActionsCard";
-import { MobilePhaseResults } from "./MobilePhaseResults";
-import ProjectResultsTabs from "./ProjectResultsTabs";
-import { useProjectPlanState } from "@/hooks/useProjectPlanState";
-import { EditableProjectPlan } from "@/types/projectPlan";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Copy, Download, Calendar as CalendarIcon, RotateCcw, Edit3, Eye } from 'lucide-react';
+import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { SendToAgentDropdown } from '@/components/install-planner-v2/SendToAgentDropdown';
+import CriticalActionsCard from './CriticalActionsCard';
+import { MobilePhaseResults } from './MobilePhaseResults';
+import ProjectResultsTabs from './ProjectResultsTabs';
+import { useProjectPlanState } from '@/hooks/useProjectPlanState';
+import { EditableProjectPlan } from '@/types/projectPlan';
 import { v4 as uuidv4 } from 'uuid';
 
 interface ProjectManagerResultsProps {
@@ -27,7 +27,7 @@ const ProjectManagerResults = ({
   selectedType,
   projectName,
   startDate,
-  onStartOver
+  onStartOver,
 }: ProjectManagerResultsProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -44,7 +44,7 @@ const ProjectManagerResults = ({
         id: uuidv4(),
         text: typeof task === 'string' ? task : task.text || task.task || '',
         completed: false,
-        notes: task.notes || ''
+        notes: task.notes || '',
       })),
       materials: (phase.materials || []).map((material: any) => ({
         id: uuidv4(),
@@ -54,7 +54,7 @@ const ProjectManagerResults = ({
         orderBy: material.orderBy || '',
         ordered: false,
         supplier: material.supplier || '',
-        unitCost: material.unitCost || 0
+        unitCost: material.unitCost || 0,
       })),
       holdPoints: phase.holdPoints || [],
       tradeCoordination: (phase.tradeCoordination || []).map((coord: any) => ({
@@ -62,9 +62,9 @@ const ProjectManagerResults = ({
         trade: coord.trade || '',
         day: coord.day || 1,
         note: coord.note || '',
-        contacted: false
+        contacted: false,
       })),
-      completed: false
+      completed: false,
     }));
 
     const risks = (aiResults?.projectPlan?.risks || []).map((risk: any) => ({
@@ -72,7 +72,7 @@ const ProjectManagerResults = ({
       description: risk.description || risk.risk || '',
       mitigation: risk.mitigation || risk.control || '',
       status: 'open' as const,
-      severity: (risk.severity || 'medium') as 'low' | 'medium' | 'high'
+      severity: (risk.severity || 'medium') as 'low' | 'medium' | 'high',
     }));
 
     const milestones = (aiResults?.projectPlan?.milestones || []).map((milestone: any) => ({
@@ -80,7 +80,7 @@ const ProjectManagerResults = ({
       name: milestone.name || milestone.milestone || '',
       date: milestone.date || '',
       completed: false,
-      description: milestone.description || ''
+      description: milestone.description || '',
     }));
 
     return {
@@ -95,13 +95,13 @@ const ProjectManagerResults = ({
       metadata: {
         estimatedDuration: phases.length * 3,
         totalBudget: aiResults?.projectPlan?.resources?.totalCost || 0,
-        projectType: selectedType || 'domestic'
-      }
+        projectType: selectedType || 'domestic',
+      },
     };
   };
 
   const editablePlan = convertToEditablePlan(results);
-  
+
   const {
     plan,
     updatePhase,
@@ -116,7 +116,7 @@ const ProjectManagerResults = ({
     addRisk,
     updateRisk,
     deleteRisk,
-    exportState
+    exportState,
   } = useProjectPlanState({ initialPlan: editablePlan });
 
   useEffect(() => {
@@ -129,14 +129,14 @@ const ProjectManagerResults = ({
   const handleCopy = () => {
     const exportData = exportState();
     navigator.clipboard.writeText(exportData);
-    toast.success("Copied to clipboard", {
-      description: "Editable project plan copied as JSON"
+    toast.success('Copied to clipboard', {
+      description: 'Editable project plan copied as JSON',
     });
   };
 
   const buildPdfPayload = () => {
     const baseDate = plan.startDate ? new Date(plan.startDate) : new Date();
-    
+
     return {
       projectName: plan.projectName || 'Untitled Project',
       location: plan.location || '',
@@ -145,68 +145,76 @@ const ProjectManagerResults = ({
       totalDuration: `${plan.phases.length * 3} days`,
       projectType: selectedType || 'domestic',
       generatedDate: new Date().toLocaleDateString('en-GB'),
-      
+
       phases: plan.phases.map((phase) => ({
         phaseName: phase.phaseName,
         dayStart: phase.dayStart,
         dayEnd: phase.dayEnd,
         duration: `${phase.dayEnd - phase.dayStart + 1} days`,
-        tasks: phase.tasks.map(t => t.text),
+        tasks: phase.tasks.map((t) => t.text),
         dependencies: phase.holdPoints || [],
         milestones: [],
         criticalPath: false,
-        practicalNotes: phase.tasks.map(t => t.notes).filter(Boolean).join('. ')
+        practicalNotes: phase.tasks
+          .map((t) => t.notes)
+          .filter(Boolean)
+          .join('. '),
       })),
-      
+
       materialProcurement: results.materialProcurement || { orderNow: [], orderWeek1: [] },
       tradeCoordination: results.tradeCoordination || [],
       clientImpact: results.clientImpact || [],
-      complianceTimeline: results.complianceTimeline || { beforeWork: [], duringWork: [], afterWork: [] },
-      contingencies: results.contingencies || [],
-      
-      resources: {
-        team: results.projectPlan?.resources?.labour?.map((l: any) => ({
-          role: l.role,
-          quantity: 1,
-          duration: `${l.hours}h`
-        })) || [],
-        equipment: results.projectPlan?.resources?.materials?.map((m: any) => m.item) || []
+      complianceTimeline: results.complianceTimeline || {
+        beforeWork: [],
+        duringWork: [],
+        afterWork: [],
       },
-      
-      risks: plan.risks.map(r => ({
+      contingencies: results.contingencies || [],
+
+      resources: {
+        team:
+          results.projectPlan?.resources?.labour?.map((l: any) => ({
+            role: l.role,
+            quantity: 1,
+            duration: `${l.hours}h`,
+          })) || [],
+        equipment: results.projectPlan?.resources?.materials?.map((m: any) => m.item) || [],
+      },
+
+      risks: plan.risks.map((r) => ({
         risk: r.description,
         mitigation: r.mitigation,
-        severity: r.severity
+        severity: r.severity,
       })),
-      
+
       recommendations: results.recommendations || [],
-      summaryText: results.response || ''
+      summaryText: results.response || '',
     };
   };
 
   const handleExportPDF = async () => {
     try {
       setIsExporting(true);
-      
+
       const pdfPayload = buildPdfPayload();
       console.log('📤 Sending PDF payload:', pdfPayload);
-      
+
       const { data, error } = await supabase.functions.invoke('generate-project-management-pdf', {
-        body: { projectData: pdfPayload }
+        body: { projectData: pdfPayload },
       });
 
       if (error) throw error;
 
       if (data?.success && data.downloadUrl) {
         window.open(data.downloadUrl, '_blank');
-        toast.success("PDF generated", { description: "Project Execution Plan ready" });
+        toast.success('PDF generated', { description: 'Project Execution Plan ready' });
       } else {
         throw new Error('PDF generation failed');
       }
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error("Export failed", { 
-        description: error instanceof Error ? error.message : "Could not generate PDF" 
+      toast.error('Export failed', {
+        description: error instanceof Error ? error.message : 'Could not generate PDF',
       });
     } finally {
       setIsExporting(false);
@@ -215,47 +223,47 @@ const ProjectManagerResults = ({
 
   const handleExportCalendar = () => {
     if (!plan.phases || plan.phases.length === 0) return;
-    
+
     try {
       const baseDate = plan.startDate ? new Date(plan.startDate) : new Date();
       let icsContent = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//AI Project Manager//EN\n';
-      
+
       plan.phases.forEach((phase, idx) => {
         const phaseName = phase.phaseName;
-        
+
         const phaseStart = new Date(baseDate);
         phaseStart.setDate(phaseStart.getDate() + (phase.dayStart - 1));
-        
+
         const phaseEnd = new Date(baseDate);
         phaseEnd.setDate(phaseEnd.getDate() + phase.dayEnd);
-        
+
         icsContent += `BEGIN:VEVENT\n`;
         icsContent += `SUMMARY:${phaseName}\n`;
         icsContent += `DTSTART:${phaseStart.toISOString().replace(/[-:]/g, '').split('.')[0]}Z\n`;
         icsContent += `DTEND:${phaseEnd.toISOString().replace(/[-:]/g, '').split('.')[0]}Z\n`;
         icsContent += `END:VEVENT\n`;
       });
-      
+
       icsContent += 'END:VCALENDAR';
-      
+
       const blob = new Blob([icsContent], { type: 'text/calendar' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `${plan.projectName}-timeline.ics`;
       a.click();
-      
-      toast.success("Calendar exported", { description: "Import to Google Calendar or Outlook" });
+
+      toast.success('Calendar exported', { description: 'Import to Google Calendar or Outlook' });
     } catch (error) {
       console.error('Calendar export error:', error);
-      toast.error("Export failed", { description: "Could not generate calendar file" });
+      toast.error('Export failed', { description: 'Could not generate calendar file' });
     }
   };
 
   const calculateProgress = () => {
     const totalPhases = plan.phases.length;
     if (totalPhases === 0) return 0;
-    const completedPhases = plan.phases.filter(p => p.completed).length;
+    const completedPhases = plan.phases.filter((p) => p.completed).length;
     return Math.round((completedPhases / totalPhases) * 100);
   };
 
@@ -287,7 +295,7 @@ const ProjectManagerResults = ({
             <div className="flex items-center justify-between mb-3">
               <h4 className="font-semibold text-lg text-foreground">Project Plan Results</h4>
               <Button
-                variant={editMode ? "default" : "outline"}
+                variant={editMode ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setEditMode(!editMode)}
                 className="gap-2"
@@ -305,29 +313,25 @@ const ProjectManagerResults = ({
                 )}
               </Button>
             </div>
-            
+
             {/* Progress Bar */}
             <div className="mb-4 pb-4 border-b border-border/30">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-foreground/80">
-                  Overall Progress
-                </span>
-                <span className="text-base font-bold text-pink-400">
-                  {calculateProgress()}%
-                </span>
+                <span className="text-sm font-medium text-foreground/80">Overall Progress</span>
+                <span className="text-base font-bold text-pink-400">{calculateProgress()}%</span>
               </div>
               <div className="w-full bg-muted rounded-full h-3">
-                <div 
+                <div
                   className="bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 h-3 rounded-full transition-all duration-500 shadow-lg"
                   style={{ width: `${calculateProgress()}%` }}
                 />
               </div>
             </div>
-            
+
             {/* Action Buttons - Primary & Secondary */}
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
-                <Button 
+                <Button
                   type="button"
                   onClick={handleExportPDF}
                   disabled={isExporting}
@@ -336,7 +340,7 @@ const ProjectManagerResults = ({
                   <Download className="h-4 w-4 mr-2" />
                   {isExporting ? 'Generating...' : 'Export PDF'}
                 </Button>
-                <Button 
+                <Button
                   type="button"
                   variant="outline"
                   onClick={handleExportCalendar}
@@ -346,11 +350,11 @@ const ProjectManagerResults = ({
                   Export Calendar
                 </Button>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-3">
-                <Button 
+                <Button
                   type="button"
-                  size="sm" 
+                  size="sm"
                   variant="ghost"
                   onClick={handleCopy}
                   className="text-xs text-foreground/70"
@@ -358,16 +362,16 @@ const ProjectManagerResults = ({
                   <Copy className="h-3.5 w-3.5 mr-1.5" />
                   Copy Data
                 </Button>
-                
+
                 <div>
-                  <SendToAgentDropdown 
-                    currentAgent="project-manager" 
-                    currentOutput={{ 
-                      prompt, 
-                      selectedType, 
-                      projectName: plan.projectName, 
-                      plan: JSON.parse(exportState())
-                    }} 
+                  <SendToAgentDropdown
+                    currentAgent="project-manager"
+                    currentOutput={{
+                      prompt,
+                      selectedType,
+                      projectName: plan.projectName,
+                      plan: JSON.parse(exportState()),
+                    }}
                   />
                 </div>
               </div>
@@ -375,7 +379,7 @@ const ProjectManagerResults = ({
           </Card>
 
           {/* Critical Actions Dashboard */}
-          <CriticalActionsCard 
+          <CriticalActionsCard
             materialProcurement={results.materialProcurement}
             complianceTimeline={results.complianceTimeline}
             clientImpact={results.clientImpact}
@@ -399,7 +403,7 @@ const ProjectManagerResults = ({
           />
 
           {/* Start Over Button */}
-          <Button 
+          <Button
             type="button"
             variant="outline"
             onClick={onStartOver}

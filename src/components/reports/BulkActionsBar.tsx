@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Trash2, FileText, X, Loader2 } from "lucide-react";
+} from '@/components/ui/dropdown-menu';
+import { Trash2, FileText, X, Loader2 } from 'lucide-react';
 
 interface BulkActionsBarProps {
   selectedCount: number;
@@ -26,9 +26,7 @@ const BulkActionsBar = ({
 }: BulkActionsBarProps) => {
   return (
     <div className="bg-accent/50 backdrop-blur-sm border border-border rounded-lg p-4 mb-4 flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3">
-      <span className="text-sm font-medium">
-        {selectedCount} selected
-      </span>
+      <span className="text-sm font-medium">{selectedCount} selected</span>
 
       <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
         <Button
@@ -48,9 +46,7 @@ const BulkActionsBar = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => onBulkStatusChange('draft')}>
-              Draft
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onBulkStatusChange('draft')}>Draft</DropdownMenuItem>
             <DropdownMenuItem onClick={() => onBulkStatusChange('in-progress')}>
               In Progress
             </DropdownMenuItem>

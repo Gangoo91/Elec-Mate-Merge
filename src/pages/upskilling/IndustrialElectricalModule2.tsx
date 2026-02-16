@@ -1,4 +1,12 @@
-import { ArrowLeft, Cog, CircuitBoard, Zap, AlertTriangle, RotateCcw, TestTube } from 'lucide-react';
+import {
+  ArrowLeft,
+  Cog,
+  CircuitBoard,
+  Zap,
+  AlertTriangle,
+  RotateCcw,
+  TestTube,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
@@ -7,40 +15,40 @@ const IndustrialElectricalModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Motor Types (DOL, Star-Delta, Soft Start, VSD)",
+      title: 'Motor Types (DOL, Star-Delta, Soft Start, VSD)',
       icon: Cog,
-      description: "Different motor starting methods and variable speed drives"
+      description: 'Different motor starting methods and variable speed drives',
     },
     {
       id: 2,
-      title: "Control Circuit Diagrams and Contactors",
+      title: 'Control Circuit Diagrams and Contactors',
       icon: CircuitBoard,
-      description: "Control circuit design and contactor operation"
+      description: 'Control circuit design and contactor operation',
     },
     {
       id: 3,
-      title: "Thermal Overloads and Fuses",
+      title: 'Thermal Overloads and Fuses',
       icon: Zap,
-      description: "Motor protection devices and sizing"
+      description: 'Motor protection devices and sizing',
     },
     {
       id: 4,
-      title: "Emergency Stop and Interlock Logic",
+      title: 'Emergency Stop and Interlock Logic',
       icon: AlertTriangle,
-      description: "Safety systems and interlock circuits"
+      description: 'Safety systems and interlock circuits',
     },
     {
       id: 5,
-      title: "Forward/Reverse Control Wiring",
+      title: 'Forward/Reverse Control Wiring',
       icon: RotateCcw,
-      description: "Bidirectional motor control circuits"
+      description: 'Bidirectional motor control circuits',
     },
     {
       id: 6,
-      title: "Motor Commissioning and Load Testing",
+      title: 'Motor Commissioning and Load Testing',
       icon: TestTube,
-      description: "Testing and commissioning procedures"
-    }
+      description: 'Testing and commissioning procedures',
+    },
   ];
 
   return (

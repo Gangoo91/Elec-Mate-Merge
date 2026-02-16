@@ -1,23 +1,11 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Collapsible, 
-  CollapsibleContent, 
-  CollapsibleTrigger 
-} from "@/components/ui/collapsible";
-import { useRealtimeTracking } from "@/hooks/time-tracking/useRealtimeTracking";
-import { 
-  ChevronDown, 
-  ChevronUp, 
-  Clock, 
-  MapPin, 
-  Calendar,
-  FileText,
-  Plus
-} from "lucide-react";
-import { format } from "date-fns";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useRealtimeTracking } from '@/hooks/time-tracking/useRealtimeTracking';
+import { ChevronDown, ChevronUp, Clock, MapPin, Calendar, FileText, Plus } from 'lucide-react';
+import { format } from 'date-fns';
 
 interface CollapsibleRecentSessionsProps {
   onAddToPortfolio?: (sessionId: string) => void;
@@ -29,7 +17,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
 
   // Filter to completed sessions only and limit to last 10
   const completedSessions = sessions
-    .filter(session => !session.is_active && session.duration)
+    .filter((session) => !session.is_active && session.duration)
     .slice(0, 10);
 
   const formatDuration = (minutes: number) => {
@@ -83,7 +71,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
             </CardTitle>
           </CardHeader>
         </CollapsibleTrigger>
-        
+
         <CollapsibleContent>
           <CardContent className="pt-0">
             {completedSessions.length === 0 ? (
@@ -107,24 +95,27 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                           <h4 className="font-medium text-elec-light text-sm truncate">
                             {session.activity_type}
                           </h4>
-                          <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
+                          <Badge
+                            variant="outline"
+                            className="border-elec-yellow/30 text-elec-yellow text-xs"
+                          >
                             {formatDuration(session.duration || 0)}
                           </Badge>
                         </div>
-                        
+
                         <div className="space-y-1 text-xs text-elec-light/60">
                           <div className="flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
                             {formatSessionDate(session.start_time)}
                           </div>
-                          
+
                           {session.location && (
                             <div className="flex items-center gap-1">
                               <MapPin className="h-3 w-3" />
                               {session.location}
                             </div>
                           )}
-                          
+
                           {session.course_slug && (
                             <div className="flex items-center gap-1">
                               <FileText className="h-3 w-3" />
@@ -132,14 +123,14 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                             </div>
                           )}
                         </div>
-                        
+
                         {session.notes && (
                           <p className="text-xs text-elec-light/70 mt-2 bg-white/10 rounded p-2">
                             {session.notes}
                           </p>
                         )}
                       </div>
-                      
+
                       {onAddToPortfolio && (
                         <Button
                           variant="outline"
@@ -153,7 +144,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                     </div>
                   </div>
                 ))}
-                
+
                 {completedSessions.length >= 10 && (
                   <div className="text-center">
                     <Button

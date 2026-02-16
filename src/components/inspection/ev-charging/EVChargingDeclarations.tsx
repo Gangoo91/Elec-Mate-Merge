@@ -27,17 +27,17 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { LoadInstallerButton } from './LoadInstallerButton';
-import { useEVChargingSmartForm, InstallerDetails } from '@/hooks/inspection/useEVChargingSmartForm';
+import {
+  useEVChargingSmartForm,
+  InstallerDetails,
+} from '@/hooks/inspection/useEVChargingSmartForm';
 
 interface EVChargingDeclarationsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
 }
 
-const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
-  formData,
-  onUpdate,
-}) => {
+const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formData, onUpdate }) => {
   const isMobile = useIsMobile();
   const { hasSavedInstallerDetails } = useEVChargingSmartForm();
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
@@ -66,12 +66,13 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
     setDetailsLoaded(true);
   };
 
-  const isComplete = formData.installerName && formData.installerSignature && formData.installerScheme;
+  const isComplete =
+    formData.installerName && formData.installerSignature && formData.installerScheme;
 
   return (
-    <div className={cn(isMobile ? "space-y-0" : "space-y-6")}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
       {/* OZEV Grant Section */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.ozev} onOpenChange={() => toggleSection('ozev')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -83,10 +84,12 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   <h3 className="font-semibold text-foreground">OZEV Grant Details</h3>
                   <span className="text-xs text-muted-foreground">EVHS, WCS schemes</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.ozev && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.ozev && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -96,15 +99,17 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   </div>
                   <span className="text-white font-semibold">OZEV Grant Details</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.ozev && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.ozev && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
                 <Checkbox
                   id="ozevGrantApplicable"
@@ -116,7 +121,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   <Label htmlFor="ozevGrantApplicable" className="cursor-pointer text-base">
                     OZEV Grant Applicable
                   </Label>
-                  <p className="text-xs text-muted-foreground">Electric Vehicle Homecharge Scheme (EVHS) or Workplace Charging Scheme (WCS)</p>
+                  <p className="text-xs text-muted-foreground">
+                    Electric Vehicle Homecharge Scheme (EVHS) or Workplace Charging Scheme (WCS)
+                  </p>
                 </div>
               </div>
 
@@ -132,7 +139,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                         <SelectValue placeholder="Select scheme" />
                       </SelectTrigger>
                       <SelectContent className="z-[100] bg-background border-border text-foreground">
-                        <SelectItem value="EVHS">EVHS - Electric Vehicle Homecharge Scheme</SelectItem>
+                        <SelectItem value="EVHS">
+                          EVHS - Electric Vehicle Homecharge Scheme
+                        </SelectItem>
                         <SelectItem value="WCS">WCS - Workplace Charging Scheme</SelectItem>
                         <SelectItem value="OZEV-flat">OZEV - Flat Owner-Occupier Grant</SelectItem>
                       </SelectContent>
@@ -156,7 +165,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
       </div>
 
       {/* Handover */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.handover} onOpenChange={() => toggleSection('handover')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -168,10 +177,12 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   <h3 className="font-semibold text-foreground">Handover & Documentation</h3>
                   <span className="text-xs text-muted-foreground">Instructions, manuals</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.handover && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.handover && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -181,15 +192,17 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   </div>
                   <span className="text-white font-semibold">Handover & Documentation</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.handover && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.handover && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
                   <Checkbox
@@ -231,7 +244,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
       </div>
 
       {/* Installer Declaration */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.installer} onOpenChange={() => toggleSection('installer')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -243,10 +256,12 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   <h3 className="font-semibold text-foreground">Installer Declaration</h3>
                   <span className="text-xs text-muted-foreground">Name, signature, scheme</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.installer && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.installer && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -256,15 +271,17 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   </div>
                   <span className="text-white font-semibold">Installer Declaration</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.installer && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.installer && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* Smart Auto-fill from Business Settings */}
               {hasSavedInstallerDetails && (
                 <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-600/10 border border-elec-yellow/30 rounded-lg p-3">
@@ -272,8 +289,12 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                     <div className="flex items-center gap-2 min-w-0">
                       <Sparkles className="h-4 w-4 text-elec-yellow shrink-0" />
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-foreground">Auto-fill from Business Settings</p>
-                        <p className="text-[11px] text-muted-foreground">Load your saved installer profile</p>
+                        <p className="text-sm font-medium text-foreground">
+                          Auto-fill from Business Settings
+                        </p>
+                        <p className="text-[11px] text-muted-foreground">
+                          Load your saved installer profile
+                        </p>
                       </div>
                     </div>
                     <LoadInstallerButton
@@ -287,9 +308,10 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
               <Alert className="border-amber-500/30 bg-amber-500/10">
                 <Shield className="h-4 w-4 text-amber-400" />
                 <AlertDescription className="text-amber-200 text-sm">
-                  <strong>Declaration:</strong> I certify that the EV charging installation has been designed,
-                  constructed, inspected and tested in accordance with BS 7671:2018+A3:2024, IET Code of Practice for
-                  Electric Vehicle Charging Equipment Installation (5th Edition), and relevant Building Regulations.
+                  <strong>Declaration:</strong> I certify that the EV charging installation has been
+                  designed, constructed, inspected and tested in accordance with BS
+                  7671:2018+A3:2024, IET Code of Practice for Electric Vehicle Charging Equipment
+                  Installation (5th Edition), and relevant Building Regulations.
                 </AlertDescription>
               </Alert>
 
@@ -306,7 +328,10 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   <div className="flex items-center gap-2">
                     <Label htmlFor="installerName">Installer Name *</Label>
                     {detailsLoaded && formData.installerName && (
-                      <Badge variant="outline" className="text-[9px] px-1 py-0 border-green-500/50 text-green-400">
+                      <Badge
+                        variant="outline"
+                        className="text-[9px] px-1 py-0 border-green-500/50 text-green-400"
+                      >
                         Auto-filled
                       </Badge>
                     )}
@@ -323,7 +348,10 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   <div className="flex items-center gap-2">
                     <Label htmlFor="installerCompany">Company</Label>
                     {detailsLoaded && formData.installerCompany && (
-                      <Badge variant="outline" className="text-[9px] px-1 py-0 border-green-500/50 text-green-400">
+                      <Badge
+                        variant="outline"
+                        className="text-[9px] px-1 py-0 border-green-500/50 text-green-400"
+                      >
                         Auto-filled
                       </Badge>
                     )}
@@ -406,8 +434,11 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
       </div>
 
       {/* Compliance */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
-        <Collapsible open={openSections.compliance} onOpenChange={() => toggleSection('compliance')}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible
+          open={openSections.compliance}
+          onOpenChange={() => toggleSection('compliance')}
+        >
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
               <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
@@ -418,10 +449,12 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   <h3 className="font-semibold text-foreground">Compliance & Standards</h3>
                   <span className="text-xs text-muted-foreground">BS 7671, IET, Part P</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.compliance && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.compliance && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -431,15 +464,17 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                   </div>
                   <span className="text-white font-semibold">Compliance & Standards</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.compliance && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.compliance && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
                   <Checkbox
@@ -448,7 +483,10 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                     onCheckedChange={(checked) => onUpdate('bs7671Compliance', checked)}
                     className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                   />
-                  <Label htmlFor="bs7671Compliance" className="cursor-pointer text-base leading-relaxed">
+                  <Label
+                    htmlFor="bs7671Compliance"
+                    className="cursor-pointer text-base leading-relaxed"
+                  >
                     Installation complies with BS 7671:2018+A3:2024 (18th Edition)
                   </Label>
                 </div>
@@ -459,8 +497,12 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                     onCheckedChange={(checked) => onUpdate('ietCopCompliance', checked)}
                     className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                   />
-                  <Label htmlFor="ietCopCompliance" className="cursor-pointer text-base leading-relaxed">
-                    Installation complies with IET Code of Practice for EV Charging Equipment (5th Edition)
+                  <Label
+                    htmlFor="ietCopCompliance"
+                    className="cursor-pointer text-base leading-relaxed"
+                  >
+                    Installation complies with IET Code of Practice for EV Charging Equipment (5th
+                    Edition)
                   </Label>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
@@ -470,7 +512,10 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
                     onCheckedChange={(checked) => onUpdate('buildingRegsCompliance', checked)}
                     className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                   />
-                  <Label htmlFor="buildingRegsCompliance" className="cursor-pointer text-base leading-relaxed">
+                  <Label
+                    htmlFor="buildingRegsCompliance"
+                    className="cursor-pointer text-base leading-relaxed"
+                  >
                     Installation complies with Building Regulations Part P
                   </Label>
                 </div>
@@ -492,20 +537,21 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({
       </div>
 
       {/* Final Status */}
-      <div className={cn(isMobile ? "px-4 pb-4" : "")}>
+      <div className={cn(isMobile ? 'px-4 pb-4' : '')}>
         {isComplete ? (
           <Alert className="border-green-500/30 bg-green-500/10">
             <CheckCircle2 className="h-4 w-4 text-green-400" />
             <AlertDescription className="text-green-200 text-xs sm:text-sm">
-              <strong>Certificate ready for generation.</strong> All required fields have been completed.
+              <strong>Certificate ready for generation.</strong> All required fields have been
+              completed.
             </AlertDescription>
           </Alert>
         ) : (
           <Alert className="border-amber-500/30 bg-amber-500/10">
             <AlertTriangle className="h-4 w-4 text-amber-400" />
             <AlertDescription className="text-amber-200 text-xs sm:text-sm">
-              <strong>Incomplete declaration.</strong> Installer name, signature, and scheme registration
-              are required before the certificate can be generated.
+              <strong>Incomplete declaration.</strong> Installer name, signature, and scheme
+              registration are required before the certificate can be generated.
             </AlertDescription>
           </Alert>
         )}

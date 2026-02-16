@@ -1,34 +1,32 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { 
-  Clipboard, 
-  FileText,
-  Lightbulb
-} from "lucide-react";
-import { toast } from "sonner";
-import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
-import { useSimpleAgent } from "@/hooks/useSimpleAgent";
-import ProjectManagerProcessingView from "./ProjectManagerProcessingView";
-import ProjectManagerResults from "./ProjectManagerResults";
-import { FormSection } from "./FormSection";
-import { InlineProjectTypeSelector } from "./InlineProjectTypeSelector";
-import { CollapsibleFormSection } from "./CollapsibleFormSection";
-import { ProjectTemplateGrid } from "./ProjectTemplateGrid";
-import { ProjectTemplate } from "@/lib/project-templates";
-import { ProjectConstraints } from "./input/ConstraintsSection";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Clipboard, FileText, Lightbulb } from 'lucide-react';
+import { toast } from 'sonner';
+import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
+import { useSimpleAgent } from '@/hooks/useSimpleAgent';
+import ProjectManagerProcessingView from './ProjectManagerProcessingView';
+import ProjectManagerResults from './ProjectManagerResults';
+import { FormSection } from './FormSection';
+import { InlineProjectTypeSelector } from './InlineProjectTypeSelector';
+import { CollapsibleFormSection } from './CollapsibleFormSection';
+import { ProjectTemplateGrid } from './ProjectTemplateGrid';
+import { ProjectTemplate } from '@/lib/project-templates';
+import { ProjectConstraints } from './input/ConstraintsSection';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const ProjectManagerInterface = () => {
-  const [prompt, setPrompt] = useState("");
-  const [selectedType, setSelectedType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
-  const [projectName, setProjectName] = useState("");
-  const [location, setLocation] = useState("");
-  const [clientName, setClientName] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [duration, setDuration] = useState("");
+  const [prompt, setPrompt] = useState('');
+  const [selectedType, setSelectedType] = useState<'domestic' | 'commercial' | 'industrial'>(
+    'domestic'
+  );
+  const [projectName, setProjectName] = useState('');
+  const [location, setLocation] = useState('');
+  const [clientName, setClientName] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [duration, setDuration] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<any>(null);
   const [generationStartTime, setGenerationStartTime] = useState<number>(0);
@@ -39,9 +37,9 @@ const ProjectManagerInterface = () => {
     medicalEquipment: false,
     budgetLimit: undefined,
     otherTrades: '',
-    specialRequirements: ''
+    specialRequirements: '',
   });
-  
+
   const { callAgent, isLoading, progress } = useSimpleAgent();
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
@@ -51,18 +49,18 @@ const ProjectManagerInterface = () => {
         const hasDesign = contextData.circuits && contextData.circuits.length > 0;
         const hasCost = contextData.totalCost !== undefined;
         const hasSafety = contextData.hazards !== undefined;
-        
+
         const summary = [];
         if (hasDesign) summary.push(`${contextData.circuits.length} circuits designed`);
         if (hasCost) summary.push(`£${contextData.totalCost} estimated`);
         if (hasSafety) summary.push(`${contextData.hazards?.length || 0} hazards identified`);
-        
+
         setPrompt(instruction || `Create project execution plan: ${summary.join(', ')}`);
-        
+
         if (contextData.projectName) setProjectName(contextData.projectName);
         if (contextData.location) setLocation(contextData.location);
         if (contextData.clientName) setClientName(contextData.clientName);
-        
+
         toast.success('Context loaded', { description: 'All agent outputs aggregated' });
       } catch (error) {
         setPrompt(instruction || 'Project planning for forwarded work');
@@ -74,9 +72,9 @@ const ProjectManagerInterface = () => {
   const handleTemplateSelect = (template: ProjectTemplate) => {
     setPrompt(template.promptTemplate);
     setDuration(template.estimatedDuration);
-    
-    toast.success("Template Applied", {
-      description: "Template loaded. You can now edit and generate your plan."
+
+    toast.success('Template Applied', {
+      description: 'Template loaded. You can now edit and generate your plan.',
     });
   };
 
@@ -84,15 +82,15 @@ const ProjectManagerInterface = () => {
     setShowResults(true);
     setResults(null);
     setGenerationStartTime(Date.now());
-    
+
     // Build enhanced request with constraints
     const constraintsText = Object.entries(constraints)
       .filter(([_, value]) => value)
       .map(([key, value]) => `${key}: ${value}`)
       .join(', ');
-    
+
     const enhancedQuery = `${prompt}${constraintsText ? `\n\nConstraints: ${constraintsText}` : ''}`;
-    
+
     const request = {
       query: enhancedQuery,
       projectType: selectedType,
@@ -101,15 +99,15 @@ const ProjectManagerInterface = () => {
       projectName: projectName || undefined,
       location: location || undefined,
       clientName: clientName || undefined,
-      startDate: startDate || undefined
+      startDate: startDate || undefined,
     };
-    
+
     const response = await callAgent('project-manager', request);
-    
+
     if (response?.success && response.data) {
       setResults(response.data);
-      toast.success("Project Plan Generated", {
-        description: "Your comprehensive project plan is ready"
+      toast.success('Project Plan Generated', {
+        description: 'Your comprehensive project plan is ready',
       });
     }
   };
@@ -138,10 +136,16 @@ const ProjectManagerInterface = () => {
 
   // Show input form by default
   return (
-    <form className="space-y-0" onSubmit={(e) => { e.preventDefault(); handleGenerate(); }}>
+    <form
+      className="space-y-0"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleGenerate();
+      }}
+    >
       {/* Agent Inbox */}
       <AgentInbox currentAgent="project-manager" onTaskAccept={handleTaskAccept} />
-      
+
       {/* Hero Textarea - FIRST */}
       <FormSection>
         <div className="space-y-3">
@@ -149,7 +153,7 @@ const ProjectManagerInterface = () => {
             What project needs planning and coordination?
             <span className="text-red-400 ml-1">*</span>
           </Label>
-          <Textarea 
+          <Textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="e.g., Create a project plan for a commercial office fit-out with 40 LED panels, new distribution board, data cabling, and emergency lighting - 5 day installation window"
@@ -162,18 +166,15 @@ const ProjectManagerInterface = () => {
           </p>
         </div>
       </FormSection>
-      
+
       {/* Project Type - Inline Selector */}
       <FormSection>
-        <InlineProjectTypeSelector 
-          selectedType={selectedType}
-          onChange={setSelectedType}
-        />
+        <InlineProjectTypeSelector selectedType={selectedType} onChange={setSelectedType} />
       </FormSection>
-      
+
       {/* Quick Start - Collapsed */}
-      <CollapsibleFormSection 
-        title="Quick Start" 
+      <CollapsibleFormSection
+        title="Quick Start"
         subtitle="Start from a template"
         badge="optional"
         icon={<Lightbulb className="h-5 w-5" />}
@@ -186,8 +187,8 @@ const ProjectManagerInterface = () => {
       </CollapsibleFormSection>
 
       {/* Project Details - Collapsed (Simplified) */}
-      <CollapsibleFormSection 
-        title="Project Details" 
+      <CollapsibleFormSection
+        title="Project Details"
         subtitle="Add project information for comprehensive planning"
         badge="optional"
         icon={<FileText className="h-5 w-5" />}
@@ -195,7 +196,9 @@ const ProjectManagerInterface = () => {
       >
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="projectName" className="text-sm font-medium text-left">Project Name</Label>
+            <Label htmlFor="projectName" className="text-sm font-medium text-left">
+              Project Name
+            </Label>
             <Input
               id="projectName"
               value={projectName}
@@ -206,7 +209,9 @@ const ProjectManagerInterface = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="location" className="text-sm font-medium text-left">Location/Address</Label>
+            <Label htmlFor="location" className="text-sm font-medium text-left">
+              Location/Address
+            </Label>
             <Input
               id="location"
               value={location}
@@ -217,7 +222,9 @@ const ProjectManagerInterface = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="clientName" className="text-sm font-medium text-left">Client Name</Label>
+            <Label htmlFor="clientName" className="text-sm font-medium text-left">
+              Client Name
+            </Label>
             <Input
               id="clientName"
               value={clientName}
@@ -229,7 +236,9 @@ const ProjectManagerInterface = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="startDate" className="text-sm font-medium text-left">Start Date (Optional)</Label>
+              <Label htmlFor="startDate" className="text-sm font-medium text-left">
+                Start Date (Optional)
+              </Label>
               <Input
                 id="startDate"
                 type="date"
@@ -240,7 +249,9 @@ const ProjectManagerInterface = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="duration" className="text-sm font-medium text-left">Duration (Optional)</Label>
+              <Label htmlFor="duration" className="text-sm font-medium text-left">
+                Duration (Optional)
+              </Label>
               <Input
                 id="duration"
                 value={duration}
@@ -258,8 +269,8 @@ const ProjectManagerInterface = () => {
                 <Checkbox
                   id="occupiedProperty"
                   checked={constraints.occupiedProperty}
-                  onCheckedChange={(checked) => 
-                    setConstraints(prev => ({ ...prev, occupiedProperty: checked as boolean }))
+                  onCheckedChange={(checked) =>
+                    setConstraints((prev) => ({ ...prev, occupiedProperty: checked as boolean }))
                   }
                 />
                 <label
@@ -274,8 +285,8 @@ const ProjectManagerInterface = () => {
                 <Checkbox
                   id="medicalEquipment"
                   checked={constraints.medicalEquipment}
-                  onCheckedChange={(checked) => 
-                    setConstraints(prev => ({ ...prev, medicalEquipment: checked as boolean }))
+                  onCheckedChange={(checked) =>
+                    setConstraints((prev) => ({ ...prev, medicalEquipment: checked as boolean }))
                   }
                 />
                 <label
@@ -289,10 +300,10 @@ const ProjectManagerInterface = () => {
           </div>
         </div>
       </CollapsibleFormSection>
-      
+
       {/* Generate Button */}
       <FormSection>
-        <Button 
+        <Button
           type="submit"
           size="lg"
           disabled={!prompt.trim() || isLoading}

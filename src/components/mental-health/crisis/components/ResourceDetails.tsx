@@ -1,8 +1,7 @@
-
-import { ChevronLeft, MapPin, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { LocalResource } from "../models/resource-types";
-import { toast } from "sonner";
+import { ChevronLeft, MapPin, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { LocalResource } from '../models/resource-types';
+import { toast } from 'sonner';
 
 interface ResourceDetailsProps {
   resource: LocalResource;
@@ -12,28 +11,23 @@ interface ResourceDetailsProps {
 const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
   const handleCopyContact = (contact: string) => {
     navigator.clipboard.writeText(contact);
-    toast.success("Contact information copied to clipboard");
+    toast.success('Contact information copied to clipboard');
   };
 
   const handleGetDirections = (address: string) => {
     // Open in Google Maps
     const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-    window.open(mapsUrl, "_blank");
-    toast.success("Directions opened in Google Maps");
+    window.open(mapsUrl, '_blank');
+    toast.success('Directions opened in Google Maps');
   };
-  
+
   return (
     <div className="mt-4 space-y-4">
-      <Button 
-        variant="outline" 
-        size="sm" 
-        onClick={onBack}
-        className="flex items-center gap-1"
-      >
+      <Button variant="outline" size="sm" onClick={onBack} className="flex items-center gap-1">
         <ChevronLeft className="h-4 w-4" />
         Back to results
       </Button>
-      
+
       <div className="p-4 bg-background rounded-md border border-red-500/30">
         <div className="flex items-start justify-between flex-wrap gap-2">
           <h3 className="font-medium flex items-center gap-2 flex-wrap">
@@ -42,16 +36,20 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
               {resource.type}
             </span>
           </h3>
-          
+
           {resource.open_now !== undefined && (
-            <span className={`text-xs px-2 py-1 rounded ${
-              resource.open_now ? "bg-green-500/10 text-green-500" : "bg-yellow-500/10 text-yellow-500"
-            }`}>
-              {resource.open_now ? "Open Now" : "Currently Closed"}
+            <span
+              className={`text-xs px-2 py-1 rounded ${
+                resource.open_now
+                  ? 'bg-green-500/10 text-green-500'
+                  : 'bg-yellow-500/10 text-yellow-500'
+              }`}
+            >
+              {resource.open_now ? 'Open Now' : 'Currently Closed'}
             </span>
           )}
         </div>
-        
+
         <div className="mt-3 space-y-2 text-sm">
           <div className="flex items-start gap-2">
             <MapPin className="h-4 w-4 text-red-500 mt-1 flex-shrink-0" />
@@ -60,7 +58,7 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
               <p>{resource.distance}</p>
             </div>
           </div>
-          
+
           {resource.address && (
             <div className="flex items-start gap-2">
               <MapPin className="h-4 w-4 text-red-500 mt-1 flex-shrink-0" />
@@ -70,7 +68,7 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
               </div>
             </div>
           )}
-          
+
           {resource.contact && (
             <div className="flex items-start gap-2">
               <Phone className="h-4 w-4 text-red-500 mt-1 flex-shrink-0" />
@@ -84,7 +82,7 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
 
         <div className="mt-4 flex flex-col gap-2">
           {resource.contact && (
-            <Button 
+            <Button
               size="sm"
               className="bg-red-500 hover:bg-red-600 text-foreground flex items-center justify-center gap-2 w-full"
               onClick={() => handleCopyContact(resource.contact || '')}
@@ -92,8 +90,8 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
               <Phone className="h-4 w-4" /> Copy Contact
             </Button>
           )}
-          
-          <Button 
+
+          <Button
             variant="outline"
             size="sm"
             className="flex items-center justify-center gap-2 w-full"

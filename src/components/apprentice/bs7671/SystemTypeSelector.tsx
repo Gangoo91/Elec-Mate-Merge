@@ -1,26 +1,55 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Zap, Building, Home, Factory, CheckCircle } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Zap, Building, Home, Factory, CheckCircle } from 'lucide-react';
 
 interface SystemTypeSelectorProps {
   onSelectionChange: (systemType: string, installationType: string) => void;
 }
 
 const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
-  const [selectedSystem, setSelectedSystem] = useState<string>("");
-  const [selectedInstallation, setSelectedInstallation] = useState<string>("");
+  const [selectedSystem, setSelectedSystem] = useState<string>('');
+  const [selectedInstallation, setSelectedInstallation] = useState<string>('');
 
   const systemTypes = [
-    { id: "single-phase", name: "Single Phase", description: "230V, typical domestic supply", icon: Home, color: "blue" },
-    { id: "three-phase", name: "Three Phase", description: "400V/230V, commercial/industrial", icon: Building, color: "purple" }
+    {
+      id: 'single-phase',
+      name: 'Single Phase',
+      description: '230V, typical domestic supply',
+      icon: Home,
+      color: 'blue',
+    },
+    {
+      id: 'three-phase',
+      name: 'Three Phase',
+      description: '400V/230V, commercial/industrial',
+      icon: Building,
+      color: 'purple',
+    },
   ];
 
   const installationTypes = [
-    { id: "domestic", name: "Domestic", description: "Houses, flats, small properties", icon: Home, color: "green" },
-    { id: "commercial", name: "Commercial", description: "Offices, shops, small businesses", icon: Building, color: "cyan" },
-    { id: "industrial", name: "Industrial", description: "Factories, large facilities", icon: Factory, color: "orange" }
+    {
+      id: 'domestic',
+      name: 'Domestic',
+      description: 'Houses, flats, small properties',
+      icon: Home,
+      color: 'green',
+    },
+    {
+      id: 'commercial',
+      name: 'Commercial',
+      description: 'Offices, shops, small businesses',
+      icon: Building,
+      color: 'cyan',
+    },
+    {
+      id: 'industrial',
+      name: 'Industrial',
+      description: 'Factories, large facilities',
+      icon: Factory,
+      color: 'orange',
+    },
   ];
 
   const handleSystemSelect = (systemId: string) => {
@@ -71,10 +100,18 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                     </div>
                   )}
                   <div className="flex items-center gap-3 mb-2">
-                    <div className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/5'}`}>
-                      <Icon className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white/60'}`} />
+                    <div
+                      className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/5'}`}
+                    >
+                      <Icon
+                        className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white/60'}`}
+                      />
                     </div>
-                    <span className={`font-medium ${isSelected ? 'text-elec-yellow' : 'text-white'}`}>{system.name}</span>
+                    <span
+                      className={`font-medium ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
+                    >
+                      {system.name}
+                    </span>
                   </div>
                   <span className="text-xs text-white/60">{system.description}</span>
                 </button>
@@ -105,10 +142,18 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                     </div>
                   )}
                   <div className="flex items-center gap-3 mb-2">
-                    <div className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/5'}`}>
-                      <Icon className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white/60'}`} />
+                    <div
+                      className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/5'}`}
+                    >
+                      <Icon
+                        className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white/60'}`}
+                      />
                     </div>
-                    <span className={`font-medium ${isSelected ? 'text-elec-yellow' : 'text-white'}`}>{installation.name}</span>
+                    <span
+                      className={`font-medium ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
+                    >
+                      {installation.name}
+                    </span>
                   </div>
                   <span className="text-xs text-white/60">{installation.description}</span>
                 </button>
@@ -121,10 +166,10 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
           <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
             <span className="text-sm text-white/60">Selected:</span>
             <Badge className="bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30">
-              {systemTypes.find(s => s.id === selectedSystem)?.name}
+              {systemTypes.find((s) => s.id === selectedSystem)?.name}
             </Badge>
             <Badge className="bg-green-500/10 text-green-400 border border-green-500/30">
-              {installationTypes.find(i => i.id === selectedInstallation)?.name}
+              {installationTypes.find((i) => i.id === selectedInstallation)?.name}
             </Badge>
           </div>
         )}

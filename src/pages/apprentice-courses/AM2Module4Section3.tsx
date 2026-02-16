@@ -1,26 +1,38 @@
-import { FileText, CheckCircle, AlertTriangle, Target, BookOpen, Timer, PenTool, Calculator, TrendingUp, Award, ClipboardList } from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
-import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
-import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
-import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
-import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
-import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
-import useSEO from "@/hooks/useSEO";
+import {
+  FileText,
+  CheckCircle,
+  AlertTriangle,
+  Target,
+  BookOpen,
+  Timer,
+  PenTool,
+  Calculator,
+  TrendingUp,
+  Award,
+  ClipboardList,
+} from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
+import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
+import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
+import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { AM2LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+import useSEO from '@/hooks/useSEO';
 
 const AM2Module4Section3 = () => {
   useSEO(
-    "Recording Test Results on Certification | AM2 Module 4 Section 3",
-    "Master professional certification completion and test result recording for AM2 electrical assessment"
+    'Recording Test Results on Certification | AM2 Module 4 Section 3',
+    'Master professional certification completion and test result recording for AM2 electrical assessment'
   );
 
   const learningOutcomes = [
-    "Correctly complete test certificates used in AM2",
-    "Record results in the correct units (Ω, MΩ, V, A)",
-    "Avoid \"book answers\" and instead write realistic, measured values",
-    "Understand what assessors are looking for when they inspect your paperwork",
-    "Apply practical strategies to complete paperwork neatly under time pressure"
+    'Correctly complete test certificates used in AM2',
+    'Record results in the correct units (Ω, MΩ, V, A)',
+    'Avoid "book answers" and instead write realistic, measured values',
+    'Understand what assessors are looking for when they inspect your paperwork',
+    'Apply practical strategies to complete paperwork neatly under time pressure',
   ];
 
   const quickCheckQuestions: Array<{
@@ -31,165 +43,174 @@ const AM2Module4Section3 = () => {
     explanation: string;
   }> = [
     {
-      id: "certificate-type",
-      question: "Which certificate is used to hand over completed installation results in AM2?",
+      id: 'certificate-type',
+      question: 'Which certificate is used to hand over completed installation results in AM2?',
       options: [
-        "Minor Works Certificate",
-        "Electrical Installation Certificate (EIC)",
-        "Periodic Inspection Report",
-        "Test Schedule Only"
+        'Minor Works Certificate',
+        'Electrical Installation Certificate (EIC)',
+        'Periodic Inspection Report',
+        'Test Schedule Only',
       ],
       correctIndex: 1,
-      explanation: "The Electrical Installation Certificate (EIC) is the primary document used to hand over completed installation results and demonstrate compliance with BS 7671."
+      explanation:
+        'The Electrical Installation Certificate (EIC) is the primary document used to hand over completed installation results and demonstrate compliance with BS 7671.',
     },
     {
-      id: "realistic-values",
+      id: 'realistic-values',
       question: "Why is writing '0.00 Ω' for Zs wrong?",
       options: [
-        "Wrong units used",
-        "Should be in MΩ",
+        'Wrong units used',
+        'Should be in MΩ',
         "Unrealistic reading - assessor knows it's a 'book answer'",
-        "Should be left blank"
+        'Should be left blank',
       ],
       correctIndex: 2,
-      explanation: "0.00 Ω for earth fault loop impedance is unrealistic. All circuits have some impedance, and assessors recognise this as a copied 'book answer' rather than a genuine measurement."
+      explanation:
+        "0.00 Ω for earth fault loop impedance is unrealistic. All circuits have some impedance, and assessors recognise this as a copied 'book answer' rather than a genuine measurement.",
     },
     {
-      id: "recording-timing",
-      question: "When should you record test results in AM2?",
+      id: 'recording-timing',
+      question: 'When should you record test results in AM2?',
       options: [
-        "At the end of all testing",
-        "Immediately as you test, not afterwards",
-        "During the break",
-        "When the assessor asks for them"
+        'At the end of all testing',
+        'Immediately as you test, not afterwards',
+        'During the break',
+        'When the assessor asks for them',
       ],
       correctIndex: 1,
-      explanation: "Results should be recorded immediately as you test to ensure accuracy and prevent rushed completion at the end which leads to errors and illegible writing."
-    }
+      explanation:
+        'Results should be recorded immediately as you test to ensure accuracy and prevent rushed completion at the end which leads to errors and illegible writing.',
+    },
   ];
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What certificate must you complete for AM2 test results?",
+      question: 'What certificate must you complete for AM2 test results?',
       options: [
-        "Minor Works Certificate",
-        "Electrical Installation Certificate (EIC)",
-        "Periodic Inspection Report",
-        "EICR only"
+        'Minor Works Certificate',
+        'Electrical Installation Certificate (EIC)',
+        'Periodic Inspection Report',
+        'EICR only',
       ],
       correctAnswer: 1,
-      explanation: "The Electrical Installation Certificate (EIC) is the primary certificate required for AM2 new installation work, accompanied by test schedules."
+      explanation:
+        'The Electrical Installation Certificate (EIC) is the primary certificate required for AM2 new installation work, accompanied by test schedules.',
     },
     {
       id: 2,
-      question: "Why must you avoid leaving blanks on paperwork?",
+      question: 'Why must you avoid leaving blanks on paperwork?',
       options: [
-        "It looks untidy",
-        "You lose marks and paperwork is incomplete",
+        'It looks untidy',
+        'You lose marks and paperwork is incomplete',
         "Assessor won't notice",
-        "Only critical sections matter"
+        'Only critical sections matter',
       ],
       correctAnswer: 1,
-      explanation: "Leaving blanks results in lost marks as the paperwork is considered incomplete. All applicable sections must be filled in."
+      explanation:
+        'Leaving blanks results in lost marks as the paperwork is considered incomplete. All applicable sections must be filled in.',
     },
     {
       id: 3,
       question: "What's wrong with writing '∞' for insulation resistance?",
       options: [
-        "Wrong symbol",
-        "Should record meter limit (e.g. >200 MΩ) not infinity",
-        "Should be in Ω",
-        "Nothing wrong with it"
+        'Wrong symbol',
+        'Should record meter limit (e.g. >200 MΩ) not infinity',
+        'Should be in Ω',
+        'Nothing wrong with it',
       ],
       correctAnswer: 1,
-      explanation: "Instead of infinity symbols, record the actual meter limit reading such as '>200 MΩ' to show the measured value."
+      explanation:
+        "Instead of infinity symbols, record the actual meter limit reading such as '>200 MΩ' to show the measured value.",
     },
     {
       id: 4,
-      question: "Which unit is used for earth fault loop impedance?",
-      options: ["MΩ", "Ω (ohms)", "V", "A"],
+      question: 'Which unit is used for earth fault loop impedance?',
+      options: ['MΩ', 'Ω (ohms)', 'V', 'A'],
       correctAnswer: 1,
-      explanation: "Earth fault loop impedance (Zs) is measured and recorded in ohms (Ω), typically as decimal values."
+      explanation:
+        'Earth fault loop impedance (Zs) is measured and recorded in ohms (Ω), typically as decimal values.',
     },
     {
       id: 5,
-      question: "What result would you expect for continuity of CPCs?",
+      question: 'What result would you expect for continuity of CPCs?',
       options: [
-        "Very high values (MΩ)",
-        "Small values (fractions of an ohm)",
-        "Always exactly 1.00 Ω",
-        "Negative values"
+        'Very high values (MΩ)',
+        'Small values (fractions of an ohm)',
+        'Always exactly 1.00 Ω',
+        'Negative values',
       ],
       correctAnswer: 1,
-      explanation: "Continuity of Circuit Protective Conductors should show small values, typically fractions of an ohm, indicating good continuity."
+      explanation:
+        'Continuity of Circuit Protective Conductors should show small values, typically fractions of an ohm, indicating good continuity.',
     },
     {
       id: 6,
-      question: "What's the correct way to record an insulation resistance result above the meter limit?",
-      options: [
-        "Write '∞'",
-        "Write '>200 MΩ' or meter limit",
-        "Write 'High'",
-        "Leave blank"
-      ],
+      question:
+        "What's the correct way to record an insulation resistance result above the meter limit?",
+      options: ["Write '∞'", "Write '>200 MΩ' or meter limit", "Write 'High'", 'Leave blank'],
       correctAnswer: 1,
-      explanation: "Record the actual meter limit reading (e.g. '>200 MΩ') rather than infinity symbols or vague descriptions."
+      explanation:
+        "Record the actual meter limit reading (e.g. '>200 MΩ') rather than infinity symbols or vague descriptions.",
     },
     {
       id: 7,
-      question: "When should you record test results — during testing or at the end?",
+      question: 'When should you record test results — during testing or at the end?',
       options: [
-        "At the end of all testing",
-        "During testing as you go",
-        "During breaks only",
-        "When assessor asks"
+        'At the end of all testing',
+        'During testing as you go',
+        'During breaks only',
+        'When assessor asks',
       ],
       correctAnswer: 1,
-      explanation: "Record results immediately as you test to ensure accuracy and prevent errors from trying to remember multiple readings."
+      explanation:
+        'Record results immediately as you test to ensure accuracy and prevent errors from trying to remember multiple readings.',
     },
     {
       id: 8,
       question: "Why is '0.00 Ω' as a Zs result marked wrong?",
       options: [
-        "Wrong units",
-        "Should be in MΩ",
-        "Unrealistic - all circuits have some impedance",
-        "Too precise"
+        'Wrong units',
+        'Should be in MΩ',
+        'Unrealistic - all circuits have some impedance',
+        'Too precise',
       ],
       correctAnswer: 2,
-      explanation: "0.00 Ω is unrealistic as all electrical circuits have some impedance. This is recognised as a 'book answer' rather than a genuine measurement."
+      explanation:
+        "0.00 Ω is unrealistic as all electrical circuits have some impedance. This is recognised as a 'book answer' rather than a genuine measurement.",
     },
     {
       id: 9,
-      question: "What happens if paperwork is illegible?",
+      question: 'What happens if paperwork is illegible?',
       options: [
-        "Assessor will ask you to explain",
-        "You lose marks",
-        "Nothing happens",
-        "You can rewrite it later"
+        'Assessor will ask you to explain',
+        'You lose marks',
+        'Nothing happens',
+        'You can rewrite it later',
       ],
       correctAnswer: 1,
-      explanation: "Illegible handwriting results in lost marks as the assessor cannot verify the recorded values are correct."
+      explanation:
+        'Illegible handwriting results in lost marks as the assessor cannot verify the recorded values are correct.',
     },
     {
       id: 10,
-      question: "Give one strategy to ensure paperwork is completed correctly in AM2.",
+      question: 'Give one strategy to ensure paperwork is completed correctly in AM2.',
       options: [
-        "Rush at the end to save time",
-        "Record results as you test and write clearly",
-        "Copy from reference books",
-        "Leave difficult sections blank"
+        'Rush at the end to save time',
+        'Record results as you test and write clearly',
+        'Copy from reference books',
+        'Leave difficult sections blank',
       ],
       correctAnswer: 1,
-      explanation: "Recording results immediately as you test and maintaining clear handwriting ensures accuracy and completeness under time pressure."
-    }
+      explanation:
+        'Recording results immediately as you test and maintaining clear handwriting ensures accuracy and completeness under time pressure.',
+    },
   ];
 
   return (
     <AM2SectionLayout
       backHref="/study-centre/apprentice/am2/module4"
-      breadcrumbs={["AM2", "Module 4", "Section 3"]}
+      breadcrumbs={['AM2', 'Module 4', 'Section 3']}
     >
       {/* Hero Section */}
       <AM2HeroSection
@@ -202,10 +223,12 @@ const AM2Module4Section3 = () => {
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Poor Documentation = AM2 Failure">
         <p className="text-ios-callout text-white/80 mb-2">
-          Poor, incomplete, or fake entries are one of the most common reasons candidates fail the testing stage. Professional paperwork completion is essential for AM2 success.
+          Poor, incomplete, or fake entries are one of the most common reasons candidates fail the
+          testing stage. Professional paperwork completion is essential for AM2 success.
         </p>
         <p className="text-ios-callout text-white/90 font-medium">
-          Many candidates fail this section not from lack of testing skill, but from poor recording habits and rushed paperwork completion.
+          Many candidates fail this section not from lack of testing skill, but from poor recording
+          habits and rushed paperwork completion.
         </p>
       </AM2CriticalWarning>
 
@@ -223,7 +246,9 @@ const AM2Module4Section3 = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-3">Primary Certificates:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-3">
+              Primary Certificates:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -241,7 +266,9 @@ const AM2Module4Section3 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-3">Test Results Required:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-3">
+              Test Results Required:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -332,7 +359,9 @@ const AM2Module4Section3 = () => {
       <AM2CriticalWarning title="3. Common Mistakes Candidates Make (NET Guidance)">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
           <div>
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Documentation Errors:</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Documentation Errors:
+            </h4>
             <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
@@ -401,7 +430,9 @@ const AM2Module4Section3 = () => {
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-ios-callout text-elec-yellow font-semibold mb-2">Electrical Installation Certificate (EIC):</p>
+                <p className="text-ios-callout text-elec-yellow font-semibold mb-2">
+                  Electrical Installation Certificate (EIC):
+                </p>
                 <ul className="text-ios-callout text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -422,7 +453,9 @@ const AM2Module4Section3 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-ios-callout text-elec-yellow font-semibold mb-2">Schedule of Test Results:</p>
+                <p className="text-ios-callout text-elec-yellow font-semibold mb-2">
+                  Schedule of Test Results:
+                </p>
                 <ul className="text-ios-callout text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -453,7 +486,9 @@ const AM2Module4Section3 = () => {
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <p className="text-ios-callout text-emerald-400 font-semibold mb-2">Handwriting Quality:</p>
+                <p className="text-ios-callout text-emerald-400 font-semibold mb-2">
+                  Handwriting Quality:
+                </p>
                 <ul className="text-ios-callout text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -470,7 +505,9 @@ const AM2Module4Section3 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-ios-callout text-emerald-400 font-semibold mb-2">Error Correction:</p>
+                <p className="text-ios-callout text-emerald-400 font-semibold mb-2">
+                  Error Correction:
+                </p>
                 <ul className="text-ios-callout text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -487,7 +524,9 @@ const AM2Module4Section3 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-ios-callout text-emerald-400 font-semibold mb-2">Data Integrity:</p>
+                <p className="text-ios-callout text-emerald-400 font-semibold mb-2">
+                  Data Integrity:
+                </p>
                 <ul className="text-ios-callout text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
@@ -522,33 +561,52 @@ const AM2Module4Section3 = () => {
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Continuity of CPC:</strong> Expect small values (fractions of an ohm)</span>
+                  <span>
+                    <strong className="text-white">Continuity of CPC:</strong> Expect small values
+                    (fractions of an ohm)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Ring circuit continuity:</strong> Typically 0.05-0.5 Ω</span>
+                  <span>
+                    <strong className="text-white">Ring circuit continuity:</strong> Typically
+                    0.05-0.5 Ω
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Units:</strong> Always in Ω (ohms)</span>
+                  <span>
+                    <strong className="text-white">Units:</strong> Always in Ω (ohms)
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Insulation Resistance:</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Insulation Resistance:
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Typical readings:</strong> Should be very high (often &gt;200 MΩ)</span>
+                  <span>
+                    <strong className="text-white">Typical readings:</strong> Should be very high
+                    (often &gt;200 MΩ)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Record meter limit:</strong> Write "&gt;200 MΩ" not "∞"</span>
+                  <span>
+                    <strong className="text-white">Record meter limit:</strong> Write "&gt;200 MΩ"
+                    not "∞"
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Minimum acceptable:</strong> 1 MΩ for most circuits</span>
+                  <span>
+                    <strong className="text-white">Minimum acceptable:</strong> 1 MΩ for most
+                    circuits
+                  </span>
                 </li>
               </ul>
             </div>
@@ -556,19 +614,29 @@ const AM2Module4Section3 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Earth Fault Loop Impedance (Zs):</h4>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Earth Fault Loop Impedance (Zs):
+              </h4>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Realistic range:</strong> Typically 0.2-2.0 Ω for most circuits</span>
+                  <span>
+                    <strong className="text-white">Realistic range:</strong> Typically 0.2-2.0 Ω for
+                    most circuits
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Must align:</strong> With max permitted for protective device</span>
+                  <span>
+                    <strong className="text-white">Must align:</strong> With max permitted for
+                    protective device
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Check BS 7671:</strong> Tables for maximum values</span>
+                  <span>
+                    <strong className="text-white">Check BS 7671:</strong> Tables for maximum values
+                  </span>
                 </li>
               </ul>
             </div>
@@ -578,15 +646,24 @@ const AM2Module4Section3 = () => {
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Trip times:</strong> Record at 1x and 5x IΔn in milliseconds (ms)</span>
+                  <span>
+                    <strong className="text-white">Trip times:</strong> Record at 1x and 5x IΔn in
+                    milliseconds (ms)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Standard RCD:</strong> &lt;300ms at 1xIΔn, &lt;40ms at 5xIΔn</span>
+                  <span>
+                    <strong className="text-white">Standard RCD:</strong> &lt;300ms at 1xIΔn,
+                    &lt;40ms at 5xIΔn
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span><strong className="text-white">Polarity:</strong> Tick "satisfactory" at each accessory</span>
+                  <span>
+                    <strong className="text-white">Polarity:</strong> Tick "satisfactory" at each
+                    accessory
+                  </span>
                 </li>
               </ul>
             </div>
@@ -594,10 +671,13 @@ const AM2Module4Section3 = () => {
         </div>
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4 mt-4">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">PSC/PSCC (Short Circuit Current):</h4>
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+            PSC/PSCC (Short Circuit Current):
+          </h4>
           <p className="text-ios-callout text-white/80">
-            Record measured value in kA or A. Typical domestic installations: 1-6 kA. Commercial installations may be higher.
-            Always record the actual measured value, not estimated or calculated figures.
+            Record measured value in kA or A. Typical domestic installations: 1-6 kA. Commercial
+            installations may be higher. Always record the actual measured value, not estimated or
+            calculated figures.
           </p>
         </div>
       </AM2ContentCard>
@@ -648,7 +728,9 @@ const AM2Module4Section3 = () => {
         </div>
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">Professional Tips:</h4>
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">
+            Professional Tips:
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-ios-callout text-white font-semibold mb-1">Time Management:</p>
@@ -705,19 +787,26 @@ const AM2Module4Section3 = () => {
 
         <div className="space-y-3">
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 1: Infinity Symbol Error</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Example 1: Infinity Symbol Error
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate recorded all insulation resistance results as "∞." Assessor marked incorrect - <strong className="text-red-400">failed paperwork section</strong>
+              Candidate recorded all insulation resistance results as "∞." Assessor marked incorrect
+              - <strong className="text-red-400">failed paperwork section</strong>
             </p>
             <p className="text-ios-footnote text-elec-yellow">
-              Lesson: Always record meter limit readings like "&gt;200 MΩ" instead of infinity symbols.
+              Lesson: Always record meter limit readings like "&gt;200 MΩ" instead of infinity
+              symbols.
             </p>
           </div>
 
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 2: Incomplete Documentation</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Example 2: Incomplete Documentation
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate left several boxes blank, assuming assessor wouldn't check. <strong className="text-red-400">Lost easy marks</strong>
+              Candidate left several boxes blank, assuming assessor wouldn't check.{' '}
+              <strong className="text-red-400">Lost easy marks</strong>
             </p>
             <p className="text-ios-footnote text-elec-yellow">
               Lesson: Every applicable section must be completed. Blanks = lost marks.
@@ -725,12 +814,16 @@ const AM2Module4Section3 = () => {
           </div>
 
           <div className="border-l-4 border-l-emerald-500 bg-emerald-500/10 rounded-r-xl p-4">
-            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 3: Professional Excellence</h4>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">
+              Example 3: Professional Excellence
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
-              Candidate completed paperwork neatly, with realistic results matching the installation. <strong className="text-emerald-400">Passed smoothly</strong>
+              Candidate completed paperwork neatly, with realistic results matching the
+              installation. <strong className="text-emerald-400">Passed smoothly</strong>
             </p>
             <p className="text-ios-footnote text-emerald-400">
-              Lesson: Professional presentation and realistic values demonstrate competence and earn full marks.
+              Lesson: Professional presentation and realistic values demonstrate competence and earn
+              full marks.
             </p>
           </div>
         </div>
@@ -752,7 +845,9 @@ const AM2Module4Section3 = () => {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Complete all sections of EIC and test schedules with realistic, measured results</span>
+              <span>
+                Complete all sections of EIC and test schedules with realistic, measured results
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
@@ -764,7 +859,9 @@ const AM2Module4Section3 = () => {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-              <span>Many candidates fail from poor recording habits, not lack of testing skill</span>
+              <span>
+                Many candidates fail from poor recording habits, not lack of testing skill
+              </span>
             </li>
           </ul>
         </div>
@@ -772,7 +869,8 @@ const AM2Module4Section3 = () => {
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Next Steps:</h4>
           <p className="text-ios-callout text-white/80">
-            You're now ready to move on to Section 4, where we'll cover functional and operational testing procedures.
+            You're now ready to move on to Section 4, where we'll cover functional and operational
+            testing procedures.
           </p>
         </div>
       </AM2ContentCard>

@@ -1,45 +1,45 @@
-import { ArrowLeft, Construction, DoorOpen, Flame, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Construction, DoorOpen, Flame, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Excavations & Underground Services",
+    title: 'Excavations & Underground Services',
     icon: Construction,
     description:
-      "Excavation hazards, shoring and battering, service detection (CAT and Genny), and safe digging practices",
+      'Excavation hazards, shoring and battering, service detection (CAT and Genny), and safe digging practices',
   },
   {
     id: 2,
-    title: "Confined Spaces & Fire Safety",
+    title: 'Confined Spaces & Fire Safety',
     icon: DoorOpen,
     description:
-      "Confined space identification, safe entry procedures, fire prevention, evacuation routes, and fire extinguisher types",
+      'Confined space identification, safe entry procedures, fire prevention, evacuation routes, and fire extinguisher types',
   },
   {
     id: 3,
-    title: "Electrical Safety on Site",
+    title: 'Electrical Safety on Site',
     icon: Zap,
     description:
-      "Electrical hazards, 110V reduced voltage, PAT testing, overhead power lines, and underground cables",
+      'Electrical hazards, 110V reduced voltage, PAT testing, overhead power lines, and underground cables',
   },
   {
     id: 4,
-    title: "Demolition & Emergency Procedures",
+    title: 'Demolition & Emergency Procedures',
     icon: Flame,
     description:
-      "Demolition risks, exclusion zones, first aid arrangements, emergency procedures, and site evacuation",
+      'Demolition risks, exclusion zones, first aid arrangements, emergency procedures, and site evacuation',
   },
 ];
 
 export default function CscsCardModule5() {
   useSEO({
-    title: "Module 5: Specialist Knowledge & Site Safety | CSCS Card Preparation",
+    title: 'Module 5: Specialist Knowledge & Site Safety | CSCS Card Preparation',
     description:
-      "Learn about excavations, confined spaces, fire safety, electrical safety, demolition, and emergency procedures for the CSCS HS&E test.",
+      'Learn about excavations, confined spaces, fire safety, electrical safety, demolition, and emergency procedures for the CSCS HS&E test.',
   });
 
   return (

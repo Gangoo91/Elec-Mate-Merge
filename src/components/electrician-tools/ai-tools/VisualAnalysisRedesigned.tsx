@@ -1,10 +1,10 @@
-import React, { useState, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { 
-  Camera, 
-  Upload, 
-  X, 
-  Loader, 
+import React, { useState, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Camera,
+  Upload,
+  X,
+  Loader,
   RefreshCw,
   Sparkles,
   ArrowLeft,
@@ -18,20 +18,20 @@ import {
   BookOpen,
   Scale,
   Search,
-  Check
-} from "lucide-react";
-import VisualAnalysisResults from "./VisualAnalysisResults";
-import InstallationVerificationResults from "./InstallationVerificationResults";
-import ComponentIdentificationResults from "./ComponentIdentificationResults";
-import WiringGuidanceDisplay from "./WiringGuidanceDisplay";
-import ModeGuidanceSection from "./ModeGuidanceSection";
-import ModeSelector, { AnalysisMode } from "./ModeSelector";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { InspectorChatModal } from "./InspectorChatModal";
+  Check,
+} from 'lucide-react';
+import VisualAnalysisResults from './VisualAnalysisResults';
+import InstallationVerificationResults from './InstallationVerificationResults';
+import ComponentIdentificationResults from './ComponentIdentificationResults';
+import WiringGuidanceDisplay from './WiringGuidanceDisplay';
+import ModeGuidanceSection from './ModeGuidanceSection';
+import ModeSelector, { AnalysisMode } from './ModeSelector';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { InspectorChatModal } from './InspectorChatModal';
 
 interface AnalysisResult {
   findings?: Array<{
@@ -139,8 +139,8 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [fastMode, setFastMode] = useState(true); // Default Quick mode
   const [inspectorModalOpen, setInspectorModalOpen] = useState(false);
-  const [userContext, setUserContext] = useState("");
-  const [additionalNotes, setAdditionalNotes] = useState("");
+  const [userContext, setUserContext] = useState('');
+  const [additionalNotes, setAdditionalNotes] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showContextField, setShowContextField] = useState(false);
   const [retryAttempts, setRetryAttempts] = useState(0);
@@ -148,11 +148,16 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
   const [analysisTimestamp, setAnalysisTimestamp] = useState<string | null>(null);
   const [ragSources, setRagSources] = useState<{
     maintenanceKnowledge?: Array<{ topic: string; content: string; source: string; score: number }>;
-    bs7671Regulations?: Array<{ regulation: string; section: string; content: string; score: number }>;
+    bs7671Regulations?: Array<{
+      regulation: string;
+      section: string;
+      content: string;
+      score: number;
+    }>;
   } | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -163,77 +168,80 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
-      
+
       // More aggressive compression on mobile
       const isMobile = window.innerWidth < 768;
       const finalMaxWidth = isMobile ? 1280 : maxWidth;
       const finalQuality = isMobile ? 0.75 : quality;
-      
+
       img.onload = () => {
         const ratio = Math.min(finalMaxWidth / img.width, finalMaxWidth / img.height);
         canvas.width = img.width * ratio;
         canvas.height = img.height * ratio;
-        
+
         if (ctx) {
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          canvas.toBlob((blob) => {
-            if (blob) {
-              const compressedFile = new File([blob], file.name, {
-                type: 'image/jpeg',
-                lastModified: Date.now(),
-              });
-              resolve(compressedFile);
-            } else {
-              resolve(file);
-            }
-          }, 'image/jpeg', finalQuality);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const compressedFile = new File([blob], file.name, {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
+              } else {
+                resolve(file);
+              }
+            },
+            'image/jpeg',
+            finalQuality
+          );
         } else {
           resolve(file);
         }
       };
-      
+
       img.src = URL.createObjectURL(file);
     });
   };
 
   const handleFileSelect = useCallback(async (files: FileList | null) => {
     if (!files) return;
-    
-    const imageFiles = Array.from(files).filter(file => 
-      file.type.startsWith('image/')
-    );
-    
+
+    const imageFiles = Array.from(files).filter((file) => file.type.startsWith('image/'));
+
     if (imageFiles.length === 0) {
       toast({
-        title: "Invalid file type",
-        description: "Please select image files only.",
-        variant: "destructive",
+        title: 'Invalid file type',
+        description: 'Please select image files only.',
+        variant: 'destructive',
       });
       return;
     }
 
-    const compressedImages = await Promise.all(
-      imageFiles.map(file => compressImage(file))
-    );
+    const compressedImages = await Promise.all(imageFiles.map((file) => compressImage(file)));
 
-    setImages(prev => [...prev, ...compressedImages]);
-    
+    setImages((prev) => [...prev, ...compressedImages]);
+
     toast({
-      title: "Images added",
+      title: 'Images added',
       description: `${compressedImages.length} image(s) ready for analysis`,
-      variant: "success"
+      variant: 'success',
     });
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    handleFileSelect(e.dataTransfer.files);
-  }, [handleFileSelect]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      handleFileSelect(e.dataTransfer.files);
+    },
+    [handleFileSelect]
+  );
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } } 
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } },
       });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -241,9 +249,9 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       }
     } catch (error) {
       toast({
-        title: "Camera access denied",
-        description: "Please allow camera access to capture images.",
-        variant: "destructive",
+        title: 'Camera access denied',
+        description: 'Please allow camera access to capture images.',
+        variant: 'destructive',
       });
     }
   };
@@ -251,7 +259,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
   const stopCamera = () => {
     if (videoRef.current?.srcObject) {
       const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach(track => track.stop());
+      tracks.forEach((track) => track.stop());
       videoRef.current.srcObject = null;
     }
     setIsCameraActive(false);
@@ -259,42 +267,45 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
 
   const captureImage = async () => {
     if (!videoRef.current || !canvasRef.current) return;
-    
+
     const canvas = canvasRef.current;
     const video = videoRef.current;
     const context = canvas.getContext('2d');
-    
+
     if (!context) return;
-    
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0);
-    
+
     canvas.toBlob(async (blob) => {
       if (blob) {
         const file = new File([blob], `capture-${Date.now()}.jpg`, { type: 'image/jpeg' });
         const compressedFile = await compressImage(file);
-        setImages(prev => [...prev, compressedFile]);
-        
+        setImages((prev) => [...prev, compressedFile]);
+
         toast({
-          title: "Photo captured",
-          description: "Image added to gallery",
-          variant: "success"
+          title: 'Photo captured',
+          description: 'Image added to gallery',
+          variant: 'success',
         });
       }
     });
   };
 
   const removeImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setImages((prev) => prev.filter((_, i) => i !== index));
     if (primaryImageIndex >= index && primaryImageIndex > 0) {
-      setPrimaryImageIndex(prev => prev - 1);
+      setPrimaryImageIndex((prev) => prev - 1);
     }
   };
 
   const uploadImageToSupabase = async (file: File): Promise<string> => {
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
     if (authError || !user) {
       throw new Error('You must be logged in to upload images');
     }
@@ -311,9 +322,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       throw new Error(`Upload failed: ${uploadError.message}`);
     }
 
-    const { data: urlData } = supabase.storage
-      .from('visual-uploads')
-      .getPublicUrl(filePath);
+    const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(filePath);
 
     return urlData.publicUrl;
   };
@@ -330,18 +339,18 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
     setIsAnalyzing(false);
     setAnalysisProgress(0);
     toast({
-      title: "Cancelled",
-      description: "Analysis stopped",
-      duration: 2000
+      title: 'Cancelled',
+      description: 'Analysis stopped',
+      duration: 2000,
     });
   };
 
   const handleAnalysis = async () => {
     if (images.length === 0) {
       toast({
-        title: "No images selected",
-        description: "Please upload or capture at least one image.",
-        variant: "destructive",
+        title: 'No images selected',
+        description: 'Please upload or capture at least one image.',
+        variant: 'destructive',
       });
       return;
     }
@@ -355,7 +364,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
     const targetProgress = fastMode ? 70 : 60;
     const step = fastMode ? 8 : 5;
     progressIntervalRef.current = setInterval(() => {
-      setAnalysisProgress(prev => {
+      setAnalysisProgress((prev) => {
         if (prev >= targetProgress) {
           if (progressIntervalRef.current) {
             clearInterval(progressIntervalRef.current);
@@ -369,20 +378,27 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
 
     try {
       const primaryImageUrl = await uploadImageToSupabase(images[primaryImageIndex]);
-      
+
       // Limit images in fast mode on mobile
       const isMobile = window.innerWidth < 768;
       const imageLimit = fastMode && isMobile ? 3 : images.length;
-      const imagesToUpload = images.filter((_, index) => index !== primaryImageIndex).slice(0, imageLimit - 1);
-      
+      const imagesToUpload = images
+        .filter((_, index) => index !== primaryImageIndex)
+        .slice(0, imageLimit - 1);
+
       const additionalImageUrls = await Promise.all(
-        imagesToUpload.map(image => uploadImageToSupabase(image))
+        imagesToUpload.map((image) => uploadImageToSupabase(image))
       );
 
       const getFocusAreasForMode = (mode: AnalysisMode): string[] => {
         switch (mode) {
           case 'component_identify':
-            return ['component identification', 'specifications', 'ratings', 'manufacturer details'];
+            return [
+              'component identification',
+              'specifications',
+              'ratings',
+              'manufacturer details',
+            ];
           case 'wiring_instruction':
             return ['terminals', 'wire routing', 'connection points', 'cable types'];
           case 'installation_verify':
@@ -396,26 +412,27 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       if (abortControllerRef.current?.signal.aborted) {
         throw new Error('Analysis cancelled');
       }
-      
+
       let data, error;
-      
+
       // Route to proper backend based on mode
       // Use RAG-enhanced function for fault diagnosis, component ID, and installation verification with user context
-      const useRagEnhanced = (
-        (selectedMode === 'fault_diagnosis' || 
-         selectedMode === 'component_identify' || 
-         selectedMode === 'installation_verify') && 
-        userContext.trim().length > 10
-      );
-      
+      const useRagEnhanced =
+        (selectedMode === 'fault_diagnosis' ||
+          selectedMode === 'component_identify' ||
+          selectedMode === 'installation_verify') &&
+        userContext.trim().length > 10;
+
       if (useRagEnhanced) {
         const modeLabels = {
           fault_diagnosis: 'fault diagnosis',
           component_identify: 'component identification',
-          installation_verify: 'installation verification'
+          installation_verify: 'installation verification',
         };
-        console.log(`🔍 Using RAG-enhanced ${modeLabels[selectedMode]} with maintenance knowledge + BS 7671`);
-        
+        console.log(
+          `🔍 Using RAG-enhanced ${modeLabels[selectedMode]} with maintenance knowledge + BS 7671`
+        );
+
         // Convert image to base64
         const reader = new FileReader();
         const base64Promise = new Promise<string>((resolve) => {
@@ -425,48 +442,50 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
           };
           reader.readAsDataURL(images[primaryImageIndex]);
         });
-        
+
         const base64Image = await base64Promise;
-        
+
         const analyzeWithAbort = new Promise<any>((resolve, reject) => {
           if (abortControllerRef.current) {
             abortControllerRef.current.signal.addEventListener('abort', () => {
               reject(new Error('Analysis cancelled'));
             });
           }
-          
-          supabase.functions.invoke('visual-analysis-rag-enhanced', {
-            body: {
-              imageBase64: base64Image,
-              userContext: userContext.trim(),
-              mode: selectedMode
-            }
-          }).then(resolve).catch(reject);
+
+          supabase.functions
+            .invoke('visual-analysis-rag-enhanced', {
+              body: {
+                imageBase64: base64Image,
+                userContext: userContext.trim(),
+                mode: selectedMode,
+              },
+            })
+            .then(resolve)
+            .catch(reject);
         });
-        
+
         const result = await analyzeWithAbort;
-        
+
         // Store RAG sources if available
         if (result.data?.ragSources) {
           setRagSources(result.data.ragSources);
           console.log('📚 RAG Sources:', {
             maintenance: result.data.ragSources.maintenanceKnowledge?.length || 0,
-            regulations: result.data.ragSources.bs7671Regulations?.length || 0
+            regulations: result.data.ragSources.bs7671Regulations?.length || 0,
           });
         }
-        
+
         // Transform RAG-enhanced response to match expected format
         data = {
           analysis: {
             summary: result.data?.analysis || '',
             rag_verified: result.data?.verified,
-            verification_note: result.data?.verified 
-              ? 'Analysis verified against BS 7671 Guidance Note 3 and BS 7671:2018+A3:2024' 
-              : undefined
-          }
+            verification_note: result.data?.verified
+              ? 'Analysis verified against BS 7671 Guidance Note 3 and BS 7671:2018+A3:2024'
+              : undefined,
+          },
         };
         error = result.error;
-        
       } else if (selectedMode === 'wiring_instruction') {
         // Use wiring-diagram-generator-rag for comprehensive BS 7671 schematics
         const analyzeWithAbort = new Promise<any>((resolve, reject) => {
@@ -475,34 +494,39 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
               reject(new Error('Analysis cancelled'));
             });
           }
-          
-          supabase.functions.invoke('wiring-diagram-generator-rag', {
-            body: {
-              component_type: userContext.trim() || 'electrical component',
-              circuit_params: {
-                cableSize: 2.5,
-                cableType: '6242Y Twin & Earth',
-                protectionDevice: '32A MCB Type B',
-                rcdRequired: true,
-                loadPower: 3000,
-                voltage: 230
+
+          supabase.functions
+            .invoke('wiring-diagram-generator-rag', {
+              body: {
+                component_type: userContext.trim() || 'electrical component',
+                circuit_params: {
+                  cableSize: 2.5,
+                  cableType: '6242Y Twin & Earth',
+                  protectionDevice: '32A MCB Type B',
+                  rcdRequired: true,
+                  loadPower: 3000,
+                  voltage: 230,
+                },
+                installation_context:
+                  userContext.trim() ||
+                  'Standard UK domestic installation. Analyse the uploaded image to determine specific component requirements and generate appropriate wiring schematic.',
+                component_image_url: primaryImageUrl,
               },
-              installation_context: userContext.trim() || 'Standard UK domestic installation. Analyse the uploaded image to determine specific component requirements and generate appropriate wiring schematic.',
-              component_image_url: primaryImageUrl
-            }
-          }).then(resolve).catch(reject);
+            })
+            .then(resolve)
+            .catch(reject);
         });
-        
+
         const result = await analyzeWithAbort;
         data = result.data;
         error = result.error;
-        
+
         // Transform response to expected format
         if (!error && data) {
           data = {
             analysis: {
-              wiring_schematic: data
-            }
+              wiring_schematic: data,
+            },
           };
         }
       } else {
@@ -513,25 +537,28 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
               reject(new Error('Analysis cancelled'));
             });
           }
-          
-          supabase.functions.invoke('visual-analysis', {
-            body: { 
-              primary_image: primaryImageUrl,
-              additional_images: additionalImageUrls,
-              user_context: userContext.trim() || undefined,
-              analysis_settings: {
-                mode: selectedMode || 'fault_diagnosis',
-                confidence_threshold: 0.75,
-                enable_bounding_boxes: true,
-                focus_areas: getFocusAreasForMode(selectedMode || 'fault_diagnosis'),
-                remove_background: false,
-                bs7671_compliance: true,
-                fast_mode: fastMode
-              }
-            }
-          }).then(resolve).catch(reject);
+
+          supabase.functions
+            .invoke('visual-analysis', {
+              body: {
+                primary_image: primaryImageUrl,
+                additional_images: additionalImageUrls,
+                user_context: userContext.trim() || undefined,
+                analysis_settings: {
+                  mode: selectedMode || 'fault_diagnosis',
+                  confidence_threshold: 0.75,
+                  enable_bounding_boxes: true,
+                  focus_areas: getFocusAreasForMode(selectedMode || 'fault_diagnosis'),
+                  remove_background: false,
+                  bs7671_compliance: true,
+                  fast_mode: fastMode,
+                },
+              },
+            })
+            .then(resolve)
+            .catch(reject);
         });
-        
+
         const result = await analyzeWithAbort;
         data = result.data;
         error = result.error;
@@ -541,7 +568,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         clearInterval(progressIntervalRef.current);
         progressIntervalRef.current = null;
       }
-      
+
       if (abortControllerRef.current?.signal.aborted) {
         return;
       }
@@ -571,61 +598,67 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         console.error('Invalid data structure:', data);
         throw new Error('Empty analysis - try again');
       }
-      
+
       setAnalysisProgress(90);
       const result: AnalysisResult = data.analysis;
-      
+
       // Debug log for component_identify mode
       if (selectedMode === 'component_identify') {
         console.log('📋 Component identify response keys:', Object.keys(data.analysis || {}));
         console.log('📋 Has component?', !!data.analysis?.component);
       }
-      
+
       // Check if this is a parse error and should trigger auto-retry
       const isParseError = result.findings?.some(
-        (f: any) => f.description?.toLowerCase().includes('unable to complete') ||
-                    f.description?.toLowerCase().includes('format was invalid')
+        (f: any) =>
+          f.description?.toLowerCase().includes('unable to complete') ||
+          f.description?.toLowerCase().includes('format was invalid')
       );
-      
+
       if (isParseError && retryAttempts === 0 && !fastMode) {
         console.log('🔄 Parse error detected, auto-retrying with Quick mode...');
         setRetryAttempts(1);
         setFastMode(true);
-        
+
         toast({
-          title: "Retrying with Quick mode",
-          description: "Automatically retrying with faster settings...",
-          duration: 3000
+          title: 'Retrying with Quick mode',
+          description: 'Automatically retrying with faster settings...',
+          duration: 3000,
         });
-        
-      // Retry immediately with fast mode
+
+        // Retry immediately with fast mode
         setTimeout(() => handleAnalysis(), 1000);
         return;
       }
-      
+
       // Store image and timestamp for results display
       if (uploadedImageUrls.length > 0) {
         setAnalyzedImageUrl(uploadedImageUrls[primaryImageIndex]);
         setAnalysisTimestamp(new Date().toISOString());
       }
-      
+
       // Phase 4: Filter low-confidence findings
-      const filterLowConfidenceFindings = (result: AnalysisResult, threshold = 0.75): AnalysisResult => {
+      const filterLowConfidenceFindings = (
+        result: AnalysisResult,
+        threshold = 0.75
+      ): AnalysisResult => {
         if (!result.findings) return result;
-        
-        const filteredFindings = result.findings.filter(f => {
+
+        const filteredFindings = result.findings.filter((f) => {
           if (!f.confidence || f.confidence >= threshold) return true;
-          
-          console.log(`🚫 Filtered low-confidence finding: ${f.description} (confidence: ${f.confidence})`);
+
+          console.log(
+            `🚫 Filtered low-confidence finding: ${f.description} (confidence: ${f.confidence})`
+          );
           return false;
         });
-        
+
         return {
           ...result,
-          findings: filteredFindings
+          findings: filteredFindings,
         };
       };
-      
+
       // Phase 1: Validate and correct compliance_summary counts
       const validateComplianceCounts = (result: AnalysisResult): AnalysisResult => {
         if (!result.findings || result.findings.length === 0) {
@@ -638,17 +671,17 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
               c2_count: 0,
               c3_count: 0,
               fi_count: 0,
-              safety_rating: 10
-            }
+              safety_rating: 10,
+            },
           };
         }
 
         // Count actual findings
         const actualCounts = {
-          c1_count: result.findings.filter(f => f.eicr_code === 'C1').length,
-          c2_count: result.findings.filter(f => f.eicr_code === 'C2').length,
-          c3_count: result.findings.filter(f => f.eicr_code === 'C3').length,
-          fi_count: result.findings.filter(f => f.eicr_code === 'FI').length
+          c1_count: result.findings.filter((f) => f.eicr_code === 'C1').length,
+          c2_count: result.findings.filter((f) => f.eicr_code === 'C2').length,
+          c3_count: result.findings.filter((f) => f.eicr_code === 'C3').length,
+          fi_count: result.findings.filter((f) => f.eicr_code === 'FI').length,
         };
 
         const totalFaults = actualCounts.c1_count + actualCounts.c2_count + actualCounts.c3_count;
@@ -656,13 +689,15 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         // Log discrepancy if AI counts don't match
         if (result.compliance_summary) {
           const aiCounts = result.compliance_summary;
-          if (aiCounts.c1_count !== actualCounts.c1_count ||
-              aiCounts.c2_count !== actualCounts.c2_count ||
-              aiCounts.c3_count !== actualCounts.c3_count ||
-              aiCounts.fi_count !== actualCounts.fi_count) {
+          if (
+            aiCounts.c1_count !== actualCounts.c1_count ||
+            aiCounts.c2_count !== actualCounts.c2_count ||
+            aiCounts.c3_count !== actualCounts.c3_count ||
+            aiCounts.fi_count !== actualCounts.fi_count
+          ) {
             console.warn('⚠️ AI count mismatch detected!', {
               ai: aiCounts,
-              actual: actualCounts
+              actual: actualCounts,
             });
           }
         }
@@ -672,11 +707,20 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
           compliance_summary: {
             overall_assessment: totalFaults > 0 ? 'unsatisfactory' : 'satisfactory',
             ...actualCounts,
-            safety_rating: totalFaults === 0 ? 10 : Math.max(1, 10 - (actualCounts.c1_count * 3 + actualCounts.c2_count * 2 + actualCounts.c3_count))
-          }
+            safety_rating:
+              totalFaults === 0
+                ? 10
+                : Math.max(
+                    1,
+                    10 -
+                      (actualCounts.c1_count * 3 +
+                        actualCounts.c2_count * 2 +
+                        actualCounts.c3_count)
+                  ),
+          },
         };
       };
-      
+
       // Normalise installation_verify analysis shape for UI stability
       let normalised: AnalysisResult = result;
       if (selectedMode === 'installation_verify') {
@@ -689,37 +733,49 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
           details: c?.details ?? c?.detail ?? c?.summary ?? c?.description ?? 'No detail provided',
           bs7671_references: Array.isArray(c?.bs7671_references)
             ? c.bs7671_references
-            : (c?.bs7671_reference ? [c.bs7671_reference] : []),
-          confidence: typeof c?.confidence === 'number'
-            ? c.confidence
-            : (typeof c?.confidence_score === 'number' ? c.confidence_score : 0.7),
+            : c?.bs7671_reference
+              ? [c.bs7671_reference]
+              : [],
+          confidence:
+            typeof c?.confidence === 'number'
+              ? c.confidence
+              : typeof c?.confidence_score === 'number'
+                ? c.confidence_score
+                : 0.7,
         }));
         normalised = {
           ...result,
           verification_checks: checks,
           improvement_recommendations: Array.isArray((result as any)?.improvement_recommendations)
             ? (result as any).improvement_recommendations
-            : (Array.isArray((result as any)?.recommendations) ? (result as any).recommendations : []),
-          overall_result: (result as any)?.overall_result ?? (result as any)?.assessment ?? (result as any)?.overall ?? 'requires_testing',
+            : Array.isArray((result as any)?.recommendations)
+              ? (result as any).recommendations
+              : [],
+          overall_result:
+            (result as any)?.overall_result ??
+            (result as any)?.assessment ??
+            (result as any)?.overall ??
+            'requires_testing',
           confidence_score: (result as any)?.confidence_score ?? (result as any)?.confidence ?? 0.7,
-          processing_time: (result as any)?.processing_time ?? (result as any)?.processing_time_ms ?? 0,
+          processing_time:
+            (result as any)?.processing_time ?? (result as any)?.processing_time_ms ?? 0,
         } as any;
       }
-      
+
       // Apply Phase 4 & Phase 1 validations
       const confidentResult = filterLowConfidenceFindings(normalised, 0.75);
       const validatedResult = validateComplianceCounts(confidentResult);
-      
+
       setAnalysisResult(validatedResult);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
       setAnalysisProgress(100);
       setRetryAttempts(0); // Reset on success
-      
+
       toast({
-        title: "Analysis Complete",
+        title: 'Analysis Complete',
         description: `${fastMode ? 'Quick' : 'Full'} analysis of ${1 + additionalImageUrls.length} image${additionalImageUrls.length > 0 ? 's' : ''}`,
-        variant: "success",
-        duration: 3000
+        variant: 'success',
+        duration: 3000,
       });
     } catch (error: any) {
       if (progressIntervalRef.current) {
@@ -727,34 +783,40 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         progressIntervalRef.current = null;
       }
 
-      if (error.message === 'Analysis cancelled' || error.name === 'AbortError' || abortControllerRef.current?.signal.aborted) {
+      if (
+        error.message === 'Analysis cancelled' ||
+        error.name === 'AbortError' ||
+        abortControllerRef.current?.signal.aborted
+      ) {
         console.log('Analysis cancelled by user');
         return;
       }
-      
+
       console.error('Visual Analysis Error:', error);
-      
-      let errorTitle = "Analysis failed";
-      let errorDescription = "Please try again";
-      
+
+      let errorTitle = 'Analysis failed';
+      let errorDescription = 'Please try again';
+
       if (error.message === 'RATE_LIMIT') {
-        errorTitle = "Rate limit exceeded";
-        errorDescription = "Too many requests. Wait a moment and try again.";
+        errorTitle = 'Rate limit exceeded';
+        errorDescription = 'Too many requests. Wait a moment and try again.';
       } else if (error.message === 'PAYMENT_REQUIRED') {
-        errorTitle = "Credits depleted";
-        errorDescription = "Please top up your Lovable AI workspace credits.";
+        errorTitle = 'Credits depleted';
+        errorDescription = 'Please top up your Lovable AI workspace credits.';
       } else if (error.message?.includes('timeout') || error.message?.includes('TIMEOUT')) {
-        errorTitle = "Timeout";
-        errorDescription = fastMode ? "Try with fewer images" : "Enable Quick mode or use fewer images";
+        errorTitle = 'Timeout';
+        errorDescription = fastMode
+          ? 'Try with fewer images'
+          : 'Enable Quick mode or use fewer images';
       } else if (error.message) {
         errorDescription = error.message;
       }
-      
+
       toast({
         title: errorTitle,
         description: errorDescription,
-        variant: "destructive",
-        duration: 5000
+        variant: 'destructive',
+        duration: 5000,
       });
     } finally {
       setIsAnalyzing(false);
@@ -772,20 +834,20 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
   };
 
   const handleContextTagClick = (tag: string) => {
-    setSelectedTags(prev => {
+    setSelectedTags((prev) => {
       if (prev.includes(tag)) {
         // Remove tag if already selected
-        return prev.filter(t => t !== tag);
+        return prev.filter((t) => t !== tag);
       } else {
         // Add tag if not selected
         return [...prev, tag];
       }
     });
-    
+
     // Sync with userContext string
-    setUserContext(prev => {
+    setUserContext((prev) => {
       if (prev.includes(tag)) {
-        const tags = prev.split(', ').filter(t => t !== tag);
+        const tags = prev.split(', ').filter((t) => t !== tag);
         return tags.join(', ');
       }
       return prev ? `${prev}, ${tag}` : tag;
@@ -800,21 +862,21 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
     setSelectedMode(null);
     setRetryAttempts(0);
   };
-  
+
   const handleRetryFromError = () => {
-    setRetryAttempts(prev => prev + 1);
+    setRetryAttempts((prev) => prev + 1);
     setFastMode(true); // Always use fast mode on manual retry
     setAnalysisResult(null);
-    
+
     if (retryAttempts >= 2) {
       toast({
-        title: "Need help?",
-        description: "If issues persist, contact support@example.com",
-        variant: "default",
-        duration: 5000
+        title: 'Need help?',
+        description: 'If issues persist, contact support@example.com',
+        variant: 'default',
+        duration: 5000,
       });
     }
-    
+
     handleAnalysis();
   };
 
@@ -837,91 +899,123 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
 
   const getModeTitle = () => {
     switch (selectedMode) {
-      case 'component_identify': return 'Component Identification';
-      case 'wiring_instruction': return 'Wiring Instructions';
-      case 'installation_verify': return 'Installation Verification';
+      case 'component_identify':
+        return 'Component Identification';
+      case 'wiring_instruction':
+        return 'Wiring Instructions';
+      case 'installation_verify':
+        return 'Installation Verification';
       case 'fault_diagnosis':
-      default: return 'Fault Diagnosis';
+      default:
+        return 'Fault Diagnosis';
     }
   };
 
   const getModeDescription = () => {
     switch (selectedMode) {
-      case 'component_identify': 
+      case 'component_identify':
         return 'Identify electrical components with specifications';
-      case 'wiring_instruction': 
+      case 'wiring_instruction':
         return 'Step-by-step UK wiring guidance';
-      case 'installation_verify': 
+      case 'installation_verify':
         return 'BS 7671 compliance verification';
       case 'fault_diagnosis':
-      default: 
+      default:
         return 'AI-powered fault detection and analysis';
     }
   };
 
   const getSeverityIcon = (code: string) => {
     switch (code) {
-      case 'C1': return <ShieldAlert className="h-4 w-4" />;
-      case 'C2': return <AlertTriangle className="h-4 w-4" />;
-      case 'C3': return <AlertCircle className="h-4 w-4" />;
-      default: return <CheckCircle2 className="h-4 w-4" />;
+      case 'C1':
+        return <ShieldAlert className="h-4 w-4" />;
+      case 'C2':
+        return <AlertTriangle className="h-4 w-4" />;
+      case 'C3':
+        return <AlertCircle className="h-4 w-4" />;
+      default:
+        return <CheckCircle2 className="h-4 w-4" />;
     }
   };
 
   const getSeverityColor = (code: string) => {
     switch (code) {
-      case 'C1': return 'bg-red-500/10 border-red-500/20 text-red-700 dark:text-red-400';
-      case 'C2': return 'bg-orange-500/10 border-orange-500/20 text-orange-700 dark:text-orange-400';
-      case 'C3': return 'bg-yellow-500/10 border-yellow-500/20 text-yellow-700 dark:text-yellow-400';
-      default: return 'bg-green-500/10 border-green-500/20 text-green-700 dark:text-green-400';
+      case 'C1':
+        return 'bg-red-500/10 border-red-500/20 text-red-700 dark:text-red-400';
+      case 'C2':
+        return 'bg-orange-500/10 border-orange-500/20 text-orange-700 dark:text-orange-400';
+      case 'C3':
+        return 'bg-yellow-500/10 border-yellow-500/20 text-yellow-700 dark:text-yellow-400';
+      default:
+        return 'bg-green-500/10 border-green-500/20 text-green-700 dark:text-green-400';
     }
   };
 
   const getSeverityBorderColor = (code: string) => {
     switch (code) {
-      case 'C1': return 'border-red-500';
-      case 'C2': return 'border-orange-500';
-      case 'C3': return 'border-yellow-500';
-      default: return 'border-green-500';
+      case 'C1':
+        return 'border-red-500';
+      case 'C2':
+        return 'border-orange-500';
+      case 'C3':
+        return 'border-yellow-500';
+      default:
+        return 'border-green-500';
     }
   };
 
   const getSeverityBgColor = (code: string) => {
     switch (code) {
-      case 'C1': return 'bg-red-500/20';
-      case 'C2': return 'bg-orange-500/20';
-      case 'C3': return 'bg-yellow-500/20';
-      default: return 'bg-green-500/20';
+      case 'C1':
+        return 'bg-red-500/20';
+      case 'C2':
+        return 'bg-orange-500/20';
+      case 'C3':
+        return 'bg-yellow-500/20';
+      default:
+        return 'bg-green-500/20';
     }
   };
 
   const getModeIcon = () => {
     switch (selectedMode) {
-      case 'component_identify': return Search;
-      case 'wiring_instruction': return Sparkles;
-      case 'installation_verify': return CheckCircle2;
+      case 'component_identify':
+        return Search;
+      case 'wiring_instruction':
+        return Sparkles;
+      case 'installation_verify':
+        return CheckCircle2;
       case 'fault_diagnosis':
-      default: return AlertTriangle;
+      default:
+        return AlertTriangle;
     }
   };
 
   const getModeAccentColour = () => {
     switch (selectedMode) {
-      case 'component_identify': return 'bg-blue-500/10 border-blue-500/20';
-      case 'wiring_instruction': return 'bg-elec-yellow/10 border-elec-yellow/20';
-      case 'installation_verify': return 'bg-green-500/10 border-green-500/20';
+      case 'component_identify':
+        return 'bg-blue-500/10 border-blue-500/20';
+      case 'wiring_instruction':
+        return 'bg-elec-yellow/10 border-elec-yellow/20';
+      case 'installation_verify':
+        return 'bg-green-500/10 border-green-500/20';
       case 'fault_diagnosis':
-      default: return 'bg-orange-500/10 border-orange-500/20';
+      default:
+        return 'bg-orange-500/10 border-orange-500/20';
     }
   };
 
   const getModeIconColour = () => {
     switch (selectedMode) {
-      case 'component_identify': return 'text-blue-500';
-      case 'wiring_instruction': return 'text-elec-yellow';
-      case 'installation_verify': return 'text-green-500';
+      case 'component_identify':
+        return 'text-blue-500';
+      case 'wiring_instruction':
+        return 'text-elec-yellow';
+      case 'installation_verify':
+        return 'text-green-500';
       case 'fault_diagnosis':
-      default: return 'text-orange-500';
+      default:
+        return 'text-orange-500';
     }
   };
 
@@ -930,22 +1024,40 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       case 'component_identify':
         return ['Consumer Unit', 'MCB', 'RCD', 'Socket', 'Switch', 'Isolator'];
       case 'wiring_instruction':
-        return ['Consumer Unit', 'Cooker Circuit', 'EV Charger', 'Shower Circuit', 'Outdoor Socket', 'Immersion Heater'];
+        return [
+          'Consumer Unit',
+          'Cooker Circuit',
+          'EV Charger',
+          'Shower Circuit',
+          'Outdoor Socket',
+          'Immersion Heater',
+        ];
       case 'installation_verify':
         return ['New Installation', 'Alterations', 'Periodic Inspection', 'Minor Works'];
       case 'fault_diagnosis':
       default:
-        return ['EICR', 'Burning/Scorch', 'Exposed Cables', 'Missing Cover', 'Water Damage', 'Overloaded'];
+        return [
+          'EICR',
+          'Burning/Scorch',
+          'Exposed Cables',
+          'Missing Cover',
+          'Water Damage',
+          'Overloaded',
+        ];
     }
   };
 
   const getUploadPlaceholder = () => {
     switch (selectedMode) {
-      case 'component_identify': return 'Upload a photo of the component';
-      case 'wiring_instruction': return 'Upload component photos for wiring guide';
-      case 'installation_verify': return 'Upload installation photos';
+      case 'component_identify':
+        return 'Upload a photo of the component';
+      case 'wiring_instruction':
+        return 'Upload component photos for wiring guide';
+      case 'installation_verify':
+        return 'Upload installation photos';
       case 'fault_diagnosis':
-      default: return 'Upload photos of the defect';
+      default:
+        return 'Upload photos of the defect';
     }
   };
 
@@ -964,9 +1076,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
               <CardTitle className="text-base sm:text-lg text-foreground leading-tight mb-0.5">
                 {getModeTitle()}
               </CardTitle>
-              <p className="text-xs sm:text-sm text-foreground/80">
-                {getModeDescription()}
-              </p>
+              <p className="text-xs sm:text-sm text-foreground/80">{getModeDescription()}</p>
             </div>
           </div>
         </CardHeader>
@@ -977,14 +1087,16 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         <Card className="bg-card border-border animate-fade-in">
           <CardContent className="p-4 sm:p-6">
             <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Loader className="h-5 w-5 animate-spin text-elec-yellow" />
-                    <div>
-                      <h3 className="font-semibold text-sm sm:text-base text-foreground">Analysing Installation</h3>
-                      <p className="text-xs text-foreground/70">Verifying against BS 7671...</p>
-                    </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Loader className="h-5 w-5 animate-spin text-elec-yellow" />
+                  <div>
+                    <h3 className="font-semibold text-sm sm:text-base text-foreground">
+                      Analysing Installation
+                    </h3>
+                    <p className="text-xs text-foreground/70">Verifying against BS 7671...</p>
                   </div>
+                </div>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -996,15 +1108,15 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
               </div>
               <div className="space-y-2">
                 <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div 
+                  <div
                     className="h-full bg-elec-yellow transition-all duration-500 ease-out"
                     style={{ width: `${analysisProgress}%` }}
                   />
                 </div>
                 <p className="text-xs text-foreground/70 text-center">
-                  {analysisProgress < 30 && "Uploading images..."}
-                  {analysisProgress >= 30 && analysisProgress < 70 && "Scanning components..."}
-                  {analysisProgress >= 70 && "Generating report..."}
+                  {analysisProgress < 30 && 'Uploading images...'}
+                  {analysisProgress >= 30 && analysisProgress < 70 && 'Scanning components...'}
+                  {analysisProgress >= 70 && 'Generating report...'}
                 </p>
               </div>
             </div>
@@ -1024,15 +1136,15 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
               <Camera className="h-5 w-5 mr-2" />
               {isCameraActive ? 'Close Camera' : '📸 Use Camera'}
             </Button>
-            
+
             {/* Camera View */}
             {isCameraActive && (
               <div className="space-y-3 animate-fade-in">
                 <div className="relative aspect-video bg-muted rounded-lg overflow-hidden border border-border">
-                  <video 
+                  <video
                     ref={videoRef}
-                    autoPlay 
-                    playsInline 
+                    autoPlay
+                    playsInline
                     muted
                     className="w-full h-full object-cover"
                   />
@@ -1046,7 +1158,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                   </div>
                   <canvas ref={canvasRef} className="hidden" />
                 </div>
-                <Button 
+                <Button
                   onClick={captureImage}
                   className="w-full h-11 bg-green-600 text-foreground hover:bg-green-700 font-semibold"
                 >
@@ -1054,9 +1166,9 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 </Button>
               </div>
             )}
-            
+
             {/* Upload Zone */}
-            <div 
+            <div
               className="border-2 border-dashed border-border rounded-lg p-4 text-center hover:border-elec-yellow/60 transition-colors cursor-pointer group"
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
@@ -1071,14 +1183,10 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 className="hidden"
               />
               <Upload className="h-8 w-8 mx-auto mb-2 text-foreground/60 group-hover:text-elec-yellow transition-colors" />
-              <p className="text-sm font-medium text-foreground mb-1">
-                {getUploadPlaceholder()}
-              </p>
-              <p className="text-xs text-foreground/60">
-                Tap to browse or drag files here
-              </p>
+              <p className="text-sm font-medium text-foreground mb-1">{getUploadPlaceholder()}</p>
+              <p className="text-xs text-foreground/60">Tap to browse or drag files here</p>
             </div>
-            
+
             {/* Quick Context - ALWAYS VISIBLE */}
             <div className="space-y-3 pt-1">
               <div className="flex items-center justify-between">
@@ -1089,7 +1197,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                   </Badge>
                 )}
               </div>
-              
+
               <div className="flex flex-wrap gap-2">
                 {getModeQuickTags().map((tag) => (
                   <button
@@ -1097,7 +1205,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                     onClick={() => handleContextTagClick(tag)}
                     className={`px-3 py-2.5 text-xs sm:text-sm font-medium rounded-xl border-2 transition-all flex items-center gap-1.5 min-h-[44px] ${
                       selectedTags.includes(tag)
-                        ? "bg-elec-yellow text-black border-elec-yellow shadow-lg shadow-elec-yellow/20"
+                        ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg shadow-elec-yellow/20'
                         : `${getModeAccentColour()} ${getModeIconColour()} border-border hover:scale-105 active:scale-95`
                     }`}
                   >
@@ -1106,7 +1214,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                   </button>
                 ))}
               </div>
-              
+
               {/* Additional Notes Input - Always Visible */}
               <div className="pt-1">
                 <input
@@ -1118,7 +1226,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 />
               </div>
             </div>
-            
+
             {/* Image Gallery */}
             {images.length > 0 && (
               <div className="space-y-2 animate-fade-in pt-2">
@@ -1138,11 +1246,11 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                   {images.map((image, index) => (
-                    <div 
-                      key={index} 
+                    <div
+                      key={index}
                       className={`relative group cursor-pointer rounded-xl overflow-hidden border-2 transition-all ${
-                        index === primaryImageIndex 
-                          ? 'border-elec-yellow shadow-lg shadow-elec-yellow/20' 
+                        index === primaryImageIndex
+                          ? 'border-elec-yellow shadow-lg shadow-elec-yellow/20'
                           : 'border-border hover:border-elec-yellow/50'
                       }`}
                       onClick={() => setPrimaryImageIndex(index)}
@@ -1177,7 +1285,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 </div>
               </div>
             )}
-            
+
             {/* Collapsible Guidance Section - Inside Card */}
             <div className="pt-2">
               <ModeGuidanceSection mode={selectedMode} />
@@ -1194,8 +1302,8 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             <button
               onClick={() => setFastMode(true)}
               className={`flex-1 px-3 py-1.5 rounded text-xs sm:text-sm font-medium transition-all ${
-                fastMode 
-                  ? 'bg-elec-yellow text-black shadow-sm' 
+                fastMode
+                  ? 'bg-elec-yellow text-black shadow-sm'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -1204,16 +1312,16 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             <button
               onClick={() => setFastMode(false)}
               className={`flex-1 px-3 py-1.5 rounded text-xs sm:text-sm font-medium transition-all ${
-                !fastMode 
-                  ? 'bg-elec-yellow text-black shadow-sm' 
+                !fastMode
+                  ? 'bg-elec-yellow text-black shadow-sm'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               🔍 Full (15-20s)
             </button>
           </div>
-          
-          <Button 
+
+          <Button
             onClick={handleAnalysis}
             size="lg"
             className="w-full h-12 sm:h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold shadow-lg"
@@ -1228,19 +1336,22 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       {analysisResult && (
         <div className="space-y-3 sm:space-y-4">
           {/* RAG Verification Badge */}
-          {ragSources && (ragSources.maintenanceKnowledge?.length > 0 || ragSources.bs7671Regulations?.length > 0) && (
-            <div className="flex items-center gap-2 bg-green-500/10 border border-green-500/30 rounded-lg px-4 py-3">
-              <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
-              <div className="flex-1">
-                <span className="text-sm font-semibold text-green-700 dark:text-green-400">
-                  ✓ Verified: GN3 + BS 7671
-                </span>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {ragSources.maintenanceKnowledge?.length || 0} maintenance references, {ragSources.bs7671Regulations?.length || 0} regulations
-                </p>
+          {ragSources &&
+            (ragSources.maintenanceKnowledge?.length > 0 ||
+              ragSources.bs7671Regulations?.length > 0) && (
+              <div className="flex items-center gap-2 bg-green-500/10 border border-green-500/30 rounded-lg px-4 py-3">
+                <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
+                <div className="flex-1">
+                  <span className="text-sm font-semibold text-green-700 dark:text-green-400">
+                    ✓ Verified: GN3 + BS 7671
+                  </span>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {ragSources.maintenanceKnowledge?.length || 0} maintenance references,{' '}
+                    {ragSources.bs7671Regulations?.length || 0} regulations
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Fault Diagnosis Results - Use redesigned component */}
           {selectedMode === 'fault_diagnosis' && analysisResult.compliance_summary && (
@@ -1249,12 +1360,12 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 findings: analysisResult.findings,
                 recommendations: analysisResult.recommendations || [],
                 compliance_summary: analysisResult.compliance_summary,
-                summary: analysisResult.summary || ''
+                summary: analysisResult.summary || '',
               }}
               onExportReport={() => {
                 toast({
-                  title: "Export coming soon",
-                  description: "PDF export functionality will be available shortly"
+                  title: 'Export coming soon',
+                  description: 'PDF export functionality will be available shortly',
                 });
               }}
               onRetry={handleRetryFromError}
@@ -1269,22 +1380,24 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
 
           {/* Wiring Guidance */}
           {selectedMode === 'wiring_instruction' && analysisResult.wiring_schematic && (
-            <WiringGuidanceDisplay 
+            <WiringGuidanceDisplay
               componentName={analysisResult.wiring_schematic.component_name}
               componentDetails={analysisResult.wiring_schematic.component_details}
-              wiringScenarios={analysisResult.wiring_schematic.wiring_scenarios || [
-                {
-                  scenario_id: 'default',
-                  scenario_name: 'Standard Installation',
-                  use_case: 'Standard BS 7671 compliant installation',
-                  complexity: 'simple',
-                  recommended: true,
-                  wiring_steps: analysisResult.wiring_schematic.wiring_steps,
-                  terminal_connections: analysisResult.wiring_schematic.terminal_connections,
-                  safety_warnings: analysisResult.wiring_schematic.safety_warnings,
-                  required_tests: analysisResult.wiring_schematic.required_tests
-                }
-              ]}
+              wiringScenarios={
+                analysisResult.wiring_schematic.wiring_scenarios || [
+                  {
+                    scenario_id: 'default',
+                    scenario_name: 'Standard Installation',
+                    use_case: 'Standard BS 7671 compliant installation',
+                    complexity: 'simple',
+                    recommended: true,
+                    wiring_steps: analysisResult.wiring_schematic.wiring_steps,
+                    terminal_connections: analysisResult.wiring_schematic.terminal_connections,
+                    safety_warnings: analysisResult.wiring_schematic.safety_warnings,
+                    required_tests: analysisResult.wiring_schematic.required_tests,
+                  },
+                ]
+              }
               comparison={analysisResult.wiring_schematic.comparison}
               ragSourcesCount={analysisResult.wiring_schematic.rag_sources}
               preInstallationTasks={analysisResult.wiring_schematic.pre_installation_tasks}
@@ -1297,15 +1410,15 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
 
           {/* Installation Verification */}
           {selectedMode === 'installation_verify' && analysisResult.verification_checks && (
-            <InstallationVerificationResults 
+            <InstallationVerificationResults
               analysisResult={analysisResult}
               imageUrl={analyzedImageUrl || undefined}
               timestamp={analysisTimestamp || undefined}
               onStartChat={() => setInspectorModalOpen(true)}
               onExportReport={() => {
                 toast({
-                  title: "Export coming soon",
-                  description: "PDF export functionality will be available shortly"
+                  title: 'Export coming soon',
+                  description: 'PDF export functionality will be available shortly',
                 });
               }}
             />
@@ -1313,12 +1426,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
 
           {/* Action Button */}
           <div className="pt-2">
-            <Button 
-              variant="outline" 
-              size="lg"
-              onClick={resetAnalysis}
-              className="h-12 w-full"
-            >
+            <Button variant="outline" size="lg" onClick={resetAnalysis} className="h-12 w-full">
               <RefreshCw className="h-4 w-4 mr-2" />
               New Analysis
             </Button>

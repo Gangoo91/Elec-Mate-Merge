@@ -1,11 +1,17 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
-  TrendingUp, Users, Award, PoundSterling,
-  BookOpen, Target, Star, Building, Sparkles
-} from "lucide-react";
-import { courseAnalytics } from "./enhancedCoursesData";
+  TrendingUp,
+  Users,
+  Award,
+  PoundSterling,
+  BookOpen,
+  Target,
+  Star,
+  Building,
+  Sparkles,
+} from 'lucide-react';
+import { courseAnalytics } from './enhancedCoursesData';
 
 const CourseAnalyticsDashboard = () => {
   return (
@@ -25,11 +31,15 @@ const CourseAnalyticsDashboard = () => {
         {/* Key Statistics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-            <div className="text-2xl font-bold text-elec-yellow">{courseAnalytics.totalCourses}</div>
+            <div className="text-2xl font-bold text-elec-yellow">
+              {courseAnalytics.totalCourses}
+            </div>
             <div className="text-xs text-white/70 mt-1">Available Courses</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-            <div className="text-2xl font-bold text-elec-yellow">{courseAnalytics.totalProviders}</div>
+            <div className="text-2xl font-bold text-elec-yellow">
+              {courseAnalytics.totalProviders}
+            </div>
             <div className="text-xs text-white/70 mt-1">Training Providers</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
@@ -40,7 +50,9 @@ const CourseAnalyticsDashboard = () => {
             <div className="text-xs text-white/70 mt-1">Average Rating</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
-            <div className="text-2xl font-bold text-green-400">{courseAnalytics.highDemandCourses}</div>
+            <div className="text-2xl font-bold text-green-400">
+              {courseAnalytics.highDemandCourses}
+            </div>
             <div className="text-xs text-white/70 mt-1">High Demand</div>
           </div>
         </div>
@@ -56,11 +68,11 @@ const CourseAnalyticsDashboard = () => {
                 </div>
                 <span className="text-sm font-medium text-green-400">High Demand Skills</span>
               </div>
-              <div className="text-2xl font-bold text-white mb-1">{courseAnalytics.highDemandCourses}</div>
-              <div className="text-xs text-white/70">courses in high demand</div>
-              <div className="mt-2 text-xs text-green-400">
-                Essential for career progression
+              <div className="text-2xl font-bold text-white mb-1">
+                {courseAnalytics.highDemandCourses}
               </div>
+              <div className="text-xs text-white/70">courses in high demand</div>
+              <div className="mt-2 text-xs text-green-400">Essential for career progression</div>
             </CardContent>
           </Card>
 
@@ -73,11 +85,11 @@ const CourseAnalyticsDashboard = () => {
                 </div>
                 <span className="text-sm font-medium text-blue-400">Emerging Tech</span>
               </div>
-              <div className="text-2xl font-bold text-white mb-1">{courseAnalytics.emergingTechCourses}</div>
-              <div className="text-xs text-white/70">future-ready courses</div>
-              <div className="mt-2 text-xs text-blue-400">
-                High salary impact potential
+              <div className="text-2xl font-bold text-white mb-1">
+                {courseAnalytics.emergingTechCourses}
               </div>
+              <div className="text-xs text-white/70">future-ready courses</div>
+              <div className="mt-2 text-xs text-blue-400">High salary impact potential</div>
             </CardContent>
           </Card>
 
@@ -90,11 +102,11 @@ const CourseAnalyticsDashboard = () => {
                 </div>
                 <span className="text-sm font-medium text-amber-400">Salary Impact</span>
               </div>
-              <div className="text-lg font-bold text-white mb-1">{courseAnalytics.averageSalaryImpact}</div>
-              <div className="text-xs text-white/70">average annual increase</div>
-              <div className="mt-2 text-xs text-amber-400">
-                Based on industry data
+              <div className="text-lg font-bold text-white mb-1">
+                {courseAnalytics.averageSalaryImpact}
               </div>
+              <div className="text-xs text-white/70">average annual increase</div>
+              <div className="mt-2 text-xs text-amber-400">Based on industry data</div>
             </CardContent>
           </Card>
         </div>
@@ -109,12 +121,18 @@ const CourseAnalyticsDashboard = () => {
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {courseAnalytics.topCategories.map((category, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10 hover:border-elec-yellow/30 transition-all">
+              <div
+                key={idx}
+                className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10 hover:border-elec-yellow/30 transition-all"
+              >
                 <div className="flex items-center gap-2">
                   <Building className="h-3.5 w-3.5 text-elec-yellow" />
                   <span className="text-sm text-white">{category.name}</span>
                 </div>
-                <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                <Badge
+                  variant="outline"
+                  className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+                >
                   {category.count}
                 </Badge>
               </div>

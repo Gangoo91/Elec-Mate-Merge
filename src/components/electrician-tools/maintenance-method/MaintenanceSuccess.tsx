@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { CheckCircle2, Wrench, Clock, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import confetti from "canvas-confetti";
+import { useEffect } from 'react';
+import { CheckCircle2, Wrench, Clock, FileText } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import confetti from 'canvas-confetti';
 
 interface MaintenanceSuccessProps {
   stepCount: number;
@@ -15,7 +15,7 @@ export const MaintenanceSuccess = ({
   stepCount,
   equipmentType,
   generationTimeMs,
-  onViewResults
+  onViewResults,
 }: MaintenanceSuccessProps) => {
   useEffect(() => {
     // Trigger confetti celebration
@@ -28,14 +28,14 @@ export const MaintenanceSuccess = ({
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ["#3b82f6", "#60a5fa", "#93c5fd"],
+        colors: ['#3b82f6', '#60a5fa', '#93c5fd'],
       });
       confetti({
         particleCount: 2,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ["#3b82f6", "#60a5fa", "#93c5fd"],
+        colors: ['#3b82f6', '#60a5fa', '#93c5fd'],
       });
 
       if (Date.now() < end) {
@@ -61,9 +61,7 @@ export const MaintenanceSuccess = ({
 
           {/* Success Message */}
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold">
-              Maintenance Instructions Generated!
-            </h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">Maintenance Instructions Generated!</h2>
             <p className="text-foreground">
               Your comprehensive maintenance method statement is ready
             </p>
@@ -78,7 +76,9 @@ export const MaintenanceSuccess = ({
             </div>
             <div className="space-y-1">
               <Clock className="h-6 w-6 text-amber-400 mx-auto" />
-              <p className="text-2xl sm:text-3xl font-bold text-foreground">{generationTimeSeconds}s</p>
+              <p className="text-2xl sm:text-3xl font-bold text-foreground">
+                {generationTimeSeconds}s
+              </p>
               <p className="text-xs text-foreground">Generation Time</p>
             </div>
             <div className="space-y-1">

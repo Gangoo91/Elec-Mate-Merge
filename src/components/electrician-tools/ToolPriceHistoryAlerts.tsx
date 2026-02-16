@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { TrendingUp, TrendingDown, Bell, Plus, X, AlertTriangle } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
+import { TrendingUp, TrendingDown, Bell, Plus, X, AlertTriangle } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface PriceAlert {
   id: string;
@@ -22,57 +22,55 @@ interface ToolPriceHistoryAlertsProps {
   categoryName: string;
 }
 
-const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
-  categoryName
-}) => {
+const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({ categoryName }) => {
   const [alerts, setAlerts] = useState<PriceAlert[]>([]);
 
-  const [newAlertTool, setNewAlertTool] = useState("");
-  const [newAlertPrice, setNewAlertPrice] = useState("");
+  const [newAlertTool, setNewAlertTool] = useState('');
+  const [newAlertPrice, setNewAlertPrice] = useState('');
   const isMobile = useIsMobile();
 
   const toggleAlert = (id: string) => {
-    setAlerts(prev => prev.map(alert => 
-      alert.id === id ? { ...alert, isActive: !alert.isActive } : alert
-    ));
+    setAlerts((prev) =>
+      prev.map((alert) => (alert.id === id ? { ...alert, isActive: !alert.isActive } : alert))
+    );
   };
 
   const removeAlert = (id: string) => {
-    setAlerts(prev => prev.filter(alert => alert.id !== id));
+    setAlerts((prev) => prev.filter((alert) => alert.id !== id));
   };
 
   const addAlert = () => {
     if (!newAlertTool || !newAlertPrice) return;
-    
+
     const newAlert: PriceAlert = {
       id: Date.now().toString(),
       toolName: newAlertTool,
-      supplier: "Various",
+      supplier: 'Various',
       currentPrice: 0,
       targetPrice: parseFloat(newAlertPrice),
       isActive: true,
       createdAt: new Date(),
-      priceHistory: []
+      priceHistory: [],
     };
-    
-    setAlerts(prev => [...prev, newAlert]);
-    setNewAlertTool("");
-    setNewAlertPrice("");
+
+    setAlerts((prev) => [...prev, newAlert]);
+    setNewAlertTool('');
+    setNewAlertPrice('');
   };
 
   const getPriceChange = (alert: PriceAlert) => {
     if (alert.priceHistory.length < 2) return { change: 0, percentage: 0 };
-    
+
     const latest = alert.priceHistory[alert.priceHistory.length - 1];
     const previous = alert.priceHistory[alert.priceHistory.length - 2];
     const change = latest.price - previous.price;
     const percentage = (change / previous.price) * 100;
-    
+
     return { change, percentage };
   };
 
-  const activeAlerts = alerts.filter(alert => alert.isActive);
-  const recentDrops = alerts.filter(alert => {
+  const activeAlerts = alerts.filter((alert) => alert.isActive);
+  const recentDrops = alerts.filter((alert) => {
     const priceChange = getPriceChange(alert);
     return priceChange.change < 0;
   });
@@ -86,7 +84,8 @@ const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
           Price Alerts & History
         </h2>
         <p className="text-muted-foreground">
-          Track price changes and get notified when {categoryName.toLowerCase()} drop to your target price
+          Track price changes and get notified when {categoryName.toLowerCase()} drop to your target
+          price
         </p>
       </div>
 
@@ -98,14 +97,14 @@ const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
             <div className="text-sm text-muted-foreground">Active Alerts</div>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-green-400">{recentDrops.length}</div>
             <div className="text-sm text-muted-foreground">Recent Price Drops</div>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-muted-foreground">-</div>
@@ -174,10 +173,10 @@ const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
               </p>
             </div>
           ) : (
-            alerts.map(alert => {
+            alerts.map((alert) => {
               const priceChange = getPriceChange(alert);
               const isNearTarget = alert.currentPrice <= alert.targetPrice * 1.1;
-              
+
               return (
                 <div key={alert.id} className="p-4 border border-elec-yellow/20 rounded-lg">
                   <div className="flex justify-between items-start mb-3">
@@ -200,7 +199,7 @@ const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
                       </Button>
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div>
                       <div className="text-muted-foreground">Current Price</div>
@@ -216,21 +215,28 @@ const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
                     </div>
                     <div>
                       <div className="text-muted-foreground">Recent Change</div>
-                      <div className={`font-semibold flex items-center gap-1 ${
-                        priceChange.change > 0 ? 'text-red-400' : 
-                        priceChange.change < 0 ? 'text-green-400' : 'text-muted-foreground'
-                      }`}>
-                        {priceChange.change !== 0 && (
-                          priceChange.change > 0 ? 
-                            <TrendingUp className="h-3 w-3" /> : 
+                      <div
+                        className={`font-semibold flex items-center gap-1 ${
+                          priceChange.change > 0
+                            ? 'text-red-400'
+                            : priceChange.change < 0
+                              ? 'text-green-400'
+                              : 'text-muted-foreground'
+                        }`}
+                      >
+                        {priceChange.change !== 0 &&
+                          (priceChange.change > 0 ? (
+                            <TrendingUp className="h-3 w-3" />
+                          ) : (
                             <TrendingDown className="h-3 w-3" />
-                        )}
-                        {priceChange.change === 0 ? 'No change' : 
-                         `${priceChange.change > 0 ? '+' : ''}£${Math.abs(priceChange.change).toFixed(2)}`}
+                          ))}
+                        {priceChange.change === 0
+                          ? 'No change'
+                          : `${priceChange.change > 0 ? '+' : ''}£${Math.abs(priceChange.change).toFixed(2)}`}
                       </div>
                     </div>
                   </div>
-                  
+
                   {isNearTarget && alert.currentPrice > 0 && (
                     <div className="mt-3 p-2 bg-elec-yellow/10 rounded border border-elec-yellow/30">
                       <div className="flex items-center gap-2 text-sm text-elec-yellow">
@@ -239,10 +245,10 @@ const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
                       </div>
                     </div>
                   )}
-                  
+
                   <div className="mt-3 flex gap-2">
-                    <Badge variant={alert.isActive ? "success" : "secondary"} className="text-xs">
-                      {alert.isActive ? "Active" : "Paused"}
+                    <Badge variant={alert.isActive ? 'success' : 'secondary'} className="text-xs">
+                      {alert.isActive ? 'Active' : 'Paused'}
                     </Badge>
                     <Badge variant="outline" className="text-xs">
                       Created {alert.createdAt.toLocaleDateString()}
@@ -273,10 +279,13 @@ const ToolPriceHistoryAlerts: React.FC<ToolPriceHistoryAlertsProps> = ({
             </div>
           ) : (
             <div className="space-y-3">
-              {recentDrops.map(alert => {
+              {recentDrops.map((alert) => {
                 const priceChange = getPriceChange(alert);
                 return (
-                  <div key={alert.id} className="p-3 border border-green-400/20 bg-green-400/5 rounded-lg">
+                  <div
+                    key={alert.id}
+                    className="p-3 border border-green-400/20 bg-green-400/5 rounded-lg"
+                  >
                     <div className="flex justify-between items-center">
                       <div>
                         <div className="font-medium">{alert.toolName}</div>

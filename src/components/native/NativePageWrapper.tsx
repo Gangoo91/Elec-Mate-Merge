@@ -98,19 +98,13 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
                   </div>
                 )}
                 <div>
-                  <span className="text-base font-semibold text-foreground">
-                    {title}
-                  </span>
-                  {subtitle && (
-                    <p className="text-xs text-muted-foreground">{subtitle}</p>
-                  )}
+                  <span className="text-base font-semibold text-foreground">{title}</span>
+                  {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
                 </div>
               </div>
             </div>
 
-            {headerActions && (
-              <div className="flex items-center gap-2">{headerActions}</div>
-            )}
+            {headerActions && <div className="flex items-center gap-2">{headerActions}</div>}
           </div>
         </div>
       </header>

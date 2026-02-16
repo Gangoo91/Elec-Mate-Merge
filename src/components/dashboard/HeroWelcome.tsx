@@ -1,20 +1,20 @@
-import { useState, useRef } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { Card } from "@/components/ui/card";
-import { Sparkles, Camera, User } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useState, useRef } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { Card } from '@/components/ui/card';
+import { Sparkles, Camera, User } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 const getGreeting = () => {
   const hour = new Date().getHours();
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
-  return "Good evening";
+  if (hour < 12) return 'Good morning';
+  if (hour < 18) return 'Good afternoon';
+  return 'Good evening';
 };
 
 const getFirstName = (fullName: string | null | undefined) => {
-  if (!fullName) return "there";
-  return fullName.split(" ")[0];
+  if (!fullName) return 'there';
+  return fullName.split(' ')[0];
 };
 
 export function HeroWelcome() {
@@ -31,44 +31,52 @@ export function HeroWelcome() {
     const file = event.target.files?.[0];
     if (!file || !user) return;
 
-    if (!file.type.startsWith("image/")) {
-      toast({ title: "Invalid file", description: "Please select an image file", variant: "destructive" });
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: 'Invalid file',
+        description: 'Please select an image file',
+        variant: 'destructive',
+      });
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      toast({ title: "File too large", description: "Please select an image under 2MB", variant: "destructive" });
+      toast({
+        title: 'File too large',
+        description: 'Please select an image under 2MB',
+        variant: 'destructive',
+      });
       return;
     }
 
     setUploading(true);
     try {
-      const fileExt = file.name.split(".").pop();
+      const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}-${Date.now()}.${fileExt}`;
       const filePath = `avatars/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from("avatars")
+        .from('avatars')
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from("avatars")
-        .getPublicUrl(filePath);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from('avatars').getPublicUrl(filePath);
 
       const { error: updateError } = await supabase
-        .from("profiles")
+        .from('profiles')
         .update({ avatar_url: publicUrl })
-        .eq("id", user.id);
+        .eq('id', user.id);
 
       if (updateError) throw updateError;
 
       setAvatarUrl(publicUrl);
-      toast({ title: "Photo updated", description: "Your profile photo has been updated" });
+      toast({ title: 'Photo updated', description: 'Your profile photo has been updated' });
     } catch (error: any) {
-      console.error("Upload error:", error);
-      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+      console.error('Upload error:', error);
+      toast({ title: 'Upload failed', description: error.message, variant: 'destructive' });
     } finally {
       setUploading(false);
     }
@@ -96,31 +104,31 @@ export function HeroWelcome() {
               disabled={uploading}
               className="group relative touch-manipulation"
             >
-              <div className={`
+              <div
+                className={`
                 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl overflow-hidden
                 bg-white/[0.05] border border-elec-yellow/30
                 flex items-center justify-center
                 transition-all duration-200
                 group-hover:border-elec-yellow/50
-                ${uploading ? "animate-pulse" : ""}
-              `}>
+                ${uploading ? 'animate-pulse' : ''}
+              `}
+              >
                 {avatarUrl ? (
-                  <img
-                    src={avatarUrl}
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={avatarUrl} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
                   <User className="w-6 h-6 sm:w-7 sm:h-7 text-white/40" />
                 )}
               </div>
               {/* Camera overlay */}
-              <div className="
+              <div
+                className="
                 absolute inset-0 rounded-xl
                 bg-black/60 opacity-0 group-hover:opacity-100
                 flex items-center justify-center
                 transition-opacity duration-200
-              ">
+              "
+              >
                 <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
             </button>

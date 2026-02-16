@@ -12,8 +12,9 @@ export const MotionLogicSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Motion-based automation uses sensors to detect movement and trigger lighting responses. From basic 
-          on/off control to sophisticated adaptive systems, motion logic enhances convenience and energy efficiency.
+          Motion-based automation uses sensors to detect movement and trigger lighting responses.
+          From basic on/off control to sophisticated adaptive systems, motion logic enhances
+          convenience and energy efficiency.
         </p>
 
         <div className="grid gap-4">
@@ -36,7 +37,9 @@ export const MotionLogicSection = () => {
               <Clock className="h-5 w-5 text-elec-yellow" />
               <h4 className="text-foreground font-semibold">Conditional Motion Logic</h4>
             </div>
-            <p className="text-gray-300 text-sm mb-2">Motion response based on specific conditions</p>
+            <p className="text-gray-300 text-sm mb-2">
+              Motion response based on specific conditions
+            </p>
             <ul className="text-gray-300 text-sm space-y-1">
               <li>• Only activate after dark (light level sensing)</li>
               <li>• Only in certain modes (night light, security)</li>
@@ -50,7 +53,9 @@ export const MotionLogicSection = () => {
               <Settings className="h-5 w-5 text-elec-yellow" />
               <h4 className="text-foreground font-semibold">Adaptive Motion Logic</h4>
             </div>
-            <p className="text-gray-300 text-sm mb-2">Intelligent response based on context and usage patterns</p>
+            <p className="text-gray-300 text-sm mb-2">
+              Intelligent response based on context and usage patterns
+            </p>
             <ul className="text-gray-300 text-sm space-y-1">
               <li>• Brightness adjusts based on time of day</li>
               <li>• Different responses for different occupancy types</li>
@@ -64,7 +69,9 @@ export const MotionLogicSection = () => {
               <Move className="h-5 w-5 text-elec-yellow" />
               <h4 className="text-foreground font-semibold">Advanced Multi-Sensor Logic</h4>
             </div>
-            <p className="text-gray-300 text-sm mb-2">Combining multiple inputs for intelligent responses</p>
+            <p className="text-gray-300 text-sm mb-2">
+              Combining multiple inputs for intelligent responses
+            </p>
             <ul className="text-gray-300 text-sm space-y-1">
               <li>• Motion + ambient light level detection</li>
               <li>• Presence + time of day + room function</li>
@@ -76,8 +83,8 @@ export const MotionLogicSection = () => {
 
         <div className="bg-blue-900/20 border border-blue-600/50 p-4 rounded-lg">
           <p className="text-blue-200 text-sm">
-            <strong>Implementation Tip:</strong> Start with basic motion logic and gradually add conditional 
-            and adaptive features as users become comfortable with the system.
+            <strong>Implementation Tip:</strong> Start with basic motion logic and gradually add
+            conditional and adaptive features as users become comfortable with the system.
           </p>
         </div>
       </CardContent>

@@ -14,28 +14,34 @@ export const SmartHomeModule5Section3ContactSensors = () => {
         <div className="bg-blue-600/10 p-4 rounded-lg border border-blue-600/30">
           <h4 className="text-foreground font-semibold mb-3">How Contact Sensors Work</h4>
           <p className="text-sm mb-3">
-            Door and window contact sensors consist of two components: a magnetic switch (sensor) 
-            mounted on the frame and a magnet mounted on the moving door or window. When the door 
-            or window opens, the magnet moves away from the sensor, breaking the magnetic field 
-            and triggering an alert.
+            Door and window contact sensors consist of two components: a magnetic switch (sensor)
+            mounted on the frame and a magnet mounted on the moving door or window. When the door or
+            window opens, the magnet moves away from the sensor, breaking the magnetic field and
+            triggering an alert.
           </p>
           <p className="text-sm">
-            These sensors provide immediate detection of unauthorised entry attempts at perimeter 
+            These sensors provide immediate detection of unauthorised entry attempts at perimeter
             access points, forming the first line of defence in a layered security system.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Optimal Placement Locations</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Optimal Placement Locations
+            </h4>
             <div className="space-y-3">
               <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
                 <p className="text-green-400 font-semibold text-sm mb-1">Primary Entry Points</p>
-                <p className="text-xs text-foreground">Front door, back door, patio doors, main access routes</p>
+                <p className="text-xs text-foreground">
+                  Front door, back door, patio doors, main access routes
+                </p>
               </div>
               <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
                 <p className="text-blue-400 font-semibold text-sm mb-1">Ground Floor Windows</p>
-                <p className="text-xs text-foreground">Accessible windows, bay windows, French windows</p>
+                <p className="text-xs text-foreground">
+                  Accessible windows, bay windows, French windows
+                </p>
               </div>
               <div className="bg-purple-600/20 p-3 rounded border border-purple-600/40">
                 <p className="text-purple-400 font-semibold text-sm mb-1">Secondary Access</p>
@@ -43,13 +49,17 @@ export const SmartHomeModule5Section3ContactSensors = () => {
               </div>
               <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
                 <p className="text-orange-400 font-semibold text-sm mb-1">Vulnerable Areas</p>
-                <p className="text-xs text-foreground">Basement windows, roof access, conservatory doors</p>
+                <p className="text-xs text-foreground">
+                  Basement windows, roof access, conservatory doors
+                </p>
               </div>
             </div>
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">Key Advantages & Limitations</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              Key Advantages & Limitations
+            </h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-green-400 font-semibold text-sm mb-1">✓ Advantages</p>

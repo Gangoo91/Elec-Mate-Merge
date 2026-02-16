@@ -105,7 +105,9 @@ export const useCreateJobAssignment = () => {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['job-assignments', variables.assignment.job_id] });
-      queryClient.invalidateQueries({ queryKey: ['employee-assignments', variables.assignment.employee_id] });
+      queryClient.invalidateQueries({
+        queryKey: ['employee-assignments', variables.assignment.employee_id],
+      });
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
       queryClient.invalidateQueries({ queryKey: ['jobs'] });
     },

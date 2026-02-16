@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m2s1-check1",
-    question: "Which charging mode is prohibited in the UK?",
-    options: ["Mode 1", "Mode 2", "Mode 3", "Mode 4"],
+    id: 'evcharging-m2s1-check1',
+    question: 'Which charging mode is prohibited in the UK?',
+    options: ['Mode 1', 'Mode 2', 'Mode 3', 'Mode 4'],
     correctIndex: 0,
-    explanation: "Mode 1 charging (direct connection to standard AC mains without additional protection) is prohibited in the UK due to safety concerns. It lacks essential safety features including earth fault detection during charging."
+    explanation:
+      'Mode 1 charging (direct connection to standard AC mains without additional protection) is prohibited in the UK due to safety concerns. It lacks essential safety features including earth fault detection during charging.',
   },
   {
-    id: "evcharging-m2s1-check2",
-    question: "What is the maximum power for a single-phase Mode 3 charger at 32A?",
-    options: ["3.7kW", "7.4kW", "11kW", "22kW"],
+    id: 'evcharging-m2s1-check2',
+    question: 'What is the maximum power for a single-phase Mode 3 charger at 32A?',
+    options: ['3.7kW', '7.4kW', '11kW', '22kW'],
     correctIndex: 1,
-    explanation: "At 230V single-phase and 32A, the maximum power is 7.4kW (230V × 32A = 7.36kW). This is the typical power level for domestic wallbox installations."
+    explanation:
+      'At 230V single-phase and 32A, the maximum power is 7.4kW (230V × 32A = 7.36kW). This is the typical power level for domestic wallbox installations.',
   },
   {
-    id: "evcharging-m2s1-check3",
-    question: "What does the Control Pilot (CP) signal communicate?",
-    options: ["Vehicle speed", "Maximum available current via PWM duty cycle", "Battery temperature", "Charging cost"],
+    id: 'evcharging-m2s1-check3',
+    question: 'What does the Control Pilot (CP) signal communicate?',
+    options: [
+      'Vehicle speed',
+      'Maximum available current via PWM duty cycle',
+      'Battery temperature',
+      'Charging cost',
+    ],
     correctIndex: 1,
-    explanation: "The Control Pilot signal uses PWM (Pulse Width Modulation) to communicate the maximum available charging current from the EVSE to the vehicle. Different duty cycles correspond to specific current limits."
-  }
+    explanation:
+      'The Control Pilot signal uses PWM (Pulse Width Modulation) to communicate the maximum available charging current from the EVSE to the vehicle. Different duty cycles correspond to specific current limits.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why is Mode 1 prohibited in the UK?",
-    answer: "Mode 1 lacks essential safety features required for EV charging. It has no control pilot communication, no earth fault detection during charging, and relies only on basic household protection. IET Code of Practice and BS 7671 require additional safety measures that Mode 1 cannot provide."
+    question: 'Why is Mode 1 prohibited in the UK?',
+    answer:
+      'Mode 1 lacks essential safety features required for EV charging. It has no control pilot communication, no earth fault detection during charging, and relies only on basic household protection. IET Code of Practice and BS 7671 require additional safety measures that Mode 1 cannot provide.',
   },
   {
-    question: "When should I use Mode 2 vs Mode 3?",
-    answer: "Mode 2 (portable EVSE) is for temporary or emergency charging - ideal for travel, rental properties, or backup. Mode 3 (dedicated wallbox) is the standard for permanent installations at home or work, offering faster charging, smart features, and full safety systems."
+    question: 'When should I use Mode 2 vs Mode 3?',
+    answer:
+      'Mode 2 (portable EVSE) is for temporary or emergency charging - ideal for travel, rental properties, or backup. Mode 3 (dedicated wallbox) is the standard for permanent installations at home or work, offering faster charging, smart features, and full safety systems.',
   },
   {
-    question: "What determines charging speed during DC rapid charging?",
-    answer: "Mode 4 DC charging speed is determined by the charger's output capability, the vehicle's onboard charging system limits, battery state of charge (SOC), and battery temperature. Most vehicles accept maximum power up to about 80% SOC, then taper significantly."
+    question: 'What determines charging speed during DC rapid charging?',
+    answer:
+      "Mode 4 DC charging speed is determined by the charger's output capability, the vehicle's onboard charging system limits, battery state of charge (SOC), and battery temperature. Most vehicles accept maximum power up to about 80% SOC, then taper significantly.",
   },
   {
     question: "What is the CP signal voltage for 'vehicle ready to charge'?",
-    answer: "State C (+6V) indicates the vehicle is connected and ready for charging. State A (+12V) means no vehicle connected, State B (+9V) means connected but not ready, and State E (0V) indicates an error condition."
-  }
+    answer:
+      'State C (+6V) indicates the vehicle is connected and ready for charging. State A (+12V) means no vehicle connected, State B (+9V) means connected but not ready, and State E (0V) indicates an error condition.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A customer wants the fastest home charging possible from a single-phase supply. What should you recommend?",
-  options: [
-    "Mode 2 portable charger at 13A",
-    "Mode 3 wallbox at 32A (7.4kW)",
-    "Mode 4 DC charger at 50kW",
-    "Mode 3 wallbox at 63A (14.5kW)"
-  ],
-  correctAnswer: 1,
-  explanation: "A Mode 3 wallbox at 32A provides 7.4kW - the maximum for single-phase domestic supply. Mode 2 is slower (2.3kW at 10A). Mode 4 DC requires commercial infrastructure. 63A single-phase isn't available domestically."
-  }
+    question:
+      'A customer wants the fastest home charging possible from a single-phase supply. What should you recommend?',
+    options: [
+      'Mode 2 portable charger at 13A',
+      'Mode 3 wallbox at 32A (7.4kW)',
+      'Mode 4 DC charger at 50kW',
+      'Mode 3 wallbox at 63A (14.5kW)',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A Mode 3 wallbox at 32A provides 7.4kW - the maximum for single-phase domestic supply. Mode 2 is slower (2.3kW at 10A). Mode 4 DC requires commercial infrastructure. 63A single-phase isn't available domestically.",
+  },
 ];
 
 const EVChargingModule2Section1 = () => {
   useSEO({
-    title: "Mode 1-4 and Charging Speeds | EV Charging Module 2.1",
-    description: "Understand the four EV charging modes defined in IEC 61851-1, their power levels, safety features, and appropriate applications."
+    title: 'Mode 1-4 and Charging Speeds | EV Charging Module 2.1',
+    description:
+      'Understand the four EV charging modes defined in IEC 61851-1, their power levels, safety features, and appropriate applications.',
   });
 
   return (
@@ -98,9 +113,7 @@ const EVChargingModule2Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Mode 1–4 and Charging Speeds
           </h1>
-          <p className="text-white/80">
-            Charging modes and power levels per IEC 61851-1
-          </p>
+          <p className="text-white/80">Charging modes and power levels per IEC 61851-1</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,17 +121,29 @@ const EVChargingModule2Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Mode 1:</strong> Prohibited in UK (no safety features)</li>
-              <li><strong>Mode 2:</strong> Portable EVSE (2.3-7.4kW)</li>
-              <li><strong>Mode 3:</strong> Dedicated AC (3.7-43kW)</li>
-              <li><strong>Mode 4:</strong> DC rapid (50-350kW+)</li>
+              <li>
+                <strong>Mode 1:</strong> Prohibited in UK (no safety features)
+              </li>
+              <li>
+                <strong>Mode 2:</strong> Portable EVSE (2.3-7.4kW)
+              </li>
+              <li>
+                <strong>Mode 3:</strong> Dedicated AC (3.7-43kW)
+              </li>
+              <li>
+                <strong>Mode 4:</strong> DC rapid (50-350kW+)
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> CP/PP signals, tethered vs socketed</li>
-              <li><strong>Use:</strong> Mode 3 for most installations</li>
+              <li>
+                <strong>Spot:</strong> CP/PP signals, tethered vs socketed
+              </li>
+              <li>
+                <strong>Use:</strong> Mode 3 for most installations
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +153,12 @@ const EVChargingModule2Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand four charging modes per IEC 61851-1",
-              "Identify appropriate charging speeds for applications",
-              "Recognise safety features for each mode",
-              "Apply knowledge to select charging solutions",
-              "Understand Control Pilot communication",
-              "Calculate power levels for different configurations"
+              'Understand four charging modes per IEC 61851-1',
+              'Identify appropriate charging speeds for applications',
+              'Recognise safety features for each mode',
+              'Apply knowledge to select charging solutions',
+              'Understand Control Pilot communication',
+              'Calculate power levels for different configurations',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,8 +178,8 @@ const EVChargingModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              IEC 61851-1 defines four charging modes with increasing levels of safety
-              and control. Understanding these modes is fundamental for EV installers.
+              IEC 61851-1 defines four charging modes with increasing levels of safety and control.
+              Understanding these modes is fundamental for EV installers.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -184,7 +209,8 @@ const EVChargingModule2Section1 = () => {
               <p className="text-sm text-white">
                 <strong className="text-red-400">UK Regulation:</strong> Mode 1 is prohibited due to
                 safety concerns. IET Code of Practice and BS 7671 require additional safety measures
-                including earth fault detection and communication systems that Mode 1 cannot provide.
+                including earth fault detection and communication systems that Mode 1 cannot
+                provide.
               </p>
             </div>
           </div>
@@ -200,8 +226,8 @@ const EVChargingModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Mode 3 is the standard for permanent EV charging installations, providing
-              dedicated equipment with advanced control and safety systems.
+              Mode 3 is the standard for permanent EV charging installations, providing dedicated
+              equipment with advanced control and safety systems.
             </p>
 
             <div className="my-6">
@@ -247,8 +273,8 @@ const EVChargingModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Mode 4 provides direct DC supply to the vehicle battery, enabling rapid
-              charging at power levels from 50kW to 350kW+.
+              Mode 4 provides direct DC supply to the vehicle battery, enabling rapid charging at
+              power levels from 50kW to 350kW+.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -264,15 +290,23 @@ const EVChargingModule2Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">DC Standards</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>CCS:</strong> Type 2 + DC pins, up to 350kW</li>
-                  <li><strong>CHAdeMO:</strong> Separate connector, up to 100kW</li>
-                  <li><strong>Tesla:</strong> Proprietary, up to 250kW</li>
+                  <li>
+                    <strong>CCS:</strong> Type 2 + DC pins, up to 350kW
+                  </li>
+                  <li>
+                    <strong>CHAdeMO:</strong> Separate connector, up to 100kW
+                  </li>
+                  <li>
+                    <strong>Tesla:</strong> Proprietary, up to 250kW
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Typical Charging Times (50kWh battery, 20-80%):</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Typical Charging Times (50kWh battery, 20-80%):
+              </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
                 <div className="p-2 bg-white/5 rounded text-center">
                   <span className="text-white/70">50kW</span>
@@ -305,8 +339,8 @@ const EVChargingModule2Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The Control Pilot (CP) signal is fundamental to Mode 2 and Mode 3 charging,
-              enabling safe communication between EVSE and vehicle.
+              The Control Pilot (CP) signal is fundamental to Mode 2 and Mode 3 charging, enabling
+              safe communication between EVSE and vehicle.
             </p>
 
             <div className="my-6">
@@ -341,7 +375,9 @@ const EVChargingModule2Section1 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">PWM Duty Cycle Current Encoding</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                PWM Duty Cycle Current Encoding
+              </p>
               <div className="grid grid-cols-4 gap-2 text-xs">
                 <div className="p-2 bg-white/5 rounded">10% → 6A</div>
                 <div className="p-2 bg-white/5 rounded">30% → 12A</div>
@@ -351,7 +387,9 @@ const EVChargingModule2Section1 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Proximity Pilot (PP) - Cable Rating</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Proximity Pilot (PP) - Cable Rating
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>480Ω: 32A cable</li>
                 <li>220Ω: 20A cable</li>
@@ -369,19 +407,34 @@ const EVChargingModule2Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Mode Selection</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Mode 2:</strong> Temporary, travel, emergency backup only</li>
-                <li><strong>Mode 3:</strong> Standard for all permanent installations</li>
-                <li><strong>Mode 4:</strong> Commercial rapid charging infrastructure</li>
+                <li>
+                  <strong>Mode 2:</strong> Temporary, travel, emergency backup only
+                </li>
+                <li>
+                  <strong>Mode 3:</strong> Standard for all permanent installations
+                </li>
+                <li>
+                  <strong>Mode 4:</strong> Commercial rapid charging infrastructure
+                </li>
                 <li>Always match mode to application requirements</li>
               </ul>
             </div>
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Mode 2 as permanent:</strong> — Only for temporary use</li>
-                <li><strong>Ignoring supply limits:</strong> — Check available capacity first</li>
-                <li><strong>Wrong RCD type:</strong> — Mode 3 requires Type A minimum, Type B preferred</li>
-                <li><strong>No O-PEN protection:</strong> — Required for TN-C-S supplies</li>
+                <li>
+                  <strong>Mode 2 as permanent:</strong> — Only for temporary use
+                </li>
+                <li>
+                  <strong>Ignoring supply limits:</strong> — Check available capacity first
+                </li>
+                <li>
+                  <strong>Wrong RCD type:</strong> — Mode 3 requires Type A minimum, Type B
+                  preferred
+                </li>
+                <li>
+                  <strong>No O-PEN protection:</strong> — Required for TN-C-S supplies
+                </li>
               </ul>
             </div>
           </div>
@@ -427,10 +480,7 @@ const EVChargingModule2Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

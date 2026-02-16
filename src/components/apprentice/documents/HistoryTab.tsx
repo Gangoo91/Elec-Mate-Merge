@@ -1,89 +1,95 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Download, Eye, FileText, Clock, User } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, Download, Eye, FileText, Clock, User } from 'lucide-react';
 
 const HistoryTab = () => {
   const documentHistory = [
     {
-      id: "eic-001",
-      name: "Electrical Installation Certificate - Kitchen Extension",
-      type: "EIC",
-      downloadDate: "2024-01-15",
-      downloadTime: "14:30",
-      user: "Current User",
-      status: "Downloaded",
-      fileSize: "245 KB",
-      project: "Residential - Smith Property"
+      id: 'eic-001',
+      name: 'Electrical Installation Certificate - Kitchen Extension',
+      type: 'EIC',
+      downloadDate: '2024-01-15',
+      downloadTime: '14:30',
+      user: 'Current User',
+      status: 'Downloaded',
+      fileSize: '245 KB',
+      project: 'Residential - Smith Property',
     },
     {
-      id: "eicr-002", 
-      name: "EICR - Office Building Annual Inspection",
-      type: "EICR",
-      downloadDate: "2024-01-14",
-      downloadTime: "09:15",
-      user: "Current User",
-      status: "Downloaded",
-      fileSize: "387 KB",
-      project: "Commercial - City Office Complex"
+      id: 'eicr-002',
+      name: 'EICR - Office Building Annual Inspection',
+      type: 'EICR',
+      downloadDate: '2024-01-14',
+      downloadTime: '09:15',
+      user: 'Current User',
+      status: 'Downloaded',
+      fileSize: '387 KB',
+      project: 'Commercial - City Office Complex',
     },
     {
-      id: "meiwc-003",
-      name: "Minor Works Certificate - Additional Socket",
-      type: "MEIWC",
-      downloadDate: "2024-01-12",
-      downloadTime: "16:45",
-      user: "Current User",
-      status: "Downloaded",
-      fileSize: "156 KB",
-      project: "Residential - Jones House"
+      id: 'meiwc-003',
+      name: 'Minor Works Certificate - Additional Socket',
+      type: 'MEIWC',
+      downloadDate: '2024-01-12',
+      downloadTime: '16:45',
+      user: 'Current User',
+      status: 'Downloaded',
+      fileSize: '156 KB',
+      project: 'Residential - Jones House',
     },
     {
-      id: "schedule-004",
-      name: "Schedule of Test Results - Factory Installation",
-      type: "Schedule",
-      downloadDate: "2024-01-10",
-      downloadTime: "11:20",
-      user: "Current User",
-      status: "Downloaded",
-      fileSize: "298 KB",
-      project: "Industrial - Manufacturing Plant"
+      id: 'schedule-004',
+      name: 'Schedule of Test Results - Factory Installation',
+      type: 'Schedule',
+      downloadDate: '2024-01-10',
+      downloadTime: '11:20',
+      user: 'Current User',
+      status: 'Downloaded',
+      fileSize: '298 KB',
+      project: 'Industrial - Manufacturing Plant',
     },
     {
-      id: "eic-005",
-      name: "EIC Template - New Build Property",
-      type: "Template",
-      downloadDate: "2024-01-08",
-      downloadTime: "13:10",
-      user: "Current User",
-      status: "Downloaded",
-      fileSize: "189 KB",
-      project: "Template Library"
-    }
+      id: 'eic-005',
+      name: 'EIC Template - New Build Property',
+      type: 'Template',
+      downloadDate: '2024-01-08',
+      downloadTime: '13:10',
+      user: 'Current User',
+      status: 'Downloaded',
+      fileSize: '189 KB',
+      project: 'Template Library',
+    },
   ];
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'EIC': return 'bg-green-500/10 text-green-400 border-green-500/20';
-      case 'EICR': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-      case 'MEIWC': return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20';
-      case 'Schedule': return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-      case 'Template': return 'bg-white/5 text-white border-white/10';
-      default: return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+      case 'EIC':
+        return 'bg-green-500/10 text-green-400 border-green-500/20';
+      case 'EICR':
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+      case 'MEIWC':
+        return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20';
+      case 'Schedule':
+        return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+      case 'Template':
+        return 'bg-white/5 text-white border-white/10';
+      default:
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
     }
   };
 
   const stats = {
     totalDownloads: documentHistory.length,
-    thisWeek: documentHistory.filter(doc => {
+    thisWeek: documentHistory.filter((doc) => {
       const downloadDate = new Date(doc.downloadDate);
       const oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
       return downloadDate >= oneWeekAgo;
     }).length,
-    certificates: documentHistory.filter(doc => ['EIC', 'EICR', 'MEIWC'].includes(doc.type)).length,
-    schedules: documentHistory.filter(doc => doc.type === 'Schedule').length
+    certificates: documentHistory.filter((doc) => ['EIC', 'EICR', 'MEIWC'].includes(doc.type))
+      .length,
+    schedules: documentHistory.filter((doc) => doc.type === 'Schedule').length,
   };
 
   return (
@@ -137,7 +143,7 @@ const HistoryTab = () => {
                         {item.type}
                       </Badge>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
@@ -155,7 +161,7 @@ const HistoryTab = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="flex gap-2 ml-4">
                     <Button size="sm" variant="outline">
                       <Eye className="h-3 w-3 mr-1" />

@@ -36,7 +36,10 @@ export function StatRing({
   const centre = size / 2;
 
   return (
-    <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
+    <div
+      className="relative inline-flex items-center justify-center"
+      style={{ width: size, height: size }}
+    >
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
         {/* Track */}
         <circle
@@ -59,15 +62,15 @@ export function StatRing({
           strokeLinecap="round"
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
-          animate={{ strokeDashoffset: circumference - (circumference * Math.min(percent, 100)) / 100 }}
+          animate={{
+            strokeDashoffset: circumference - (circumference * Math.min(percent, 100)) / 100,
+          }}
           transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
         />
       </svg>
       {/* Centre content */}
       {children && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          {children}
-        </div>
+        <div className="absolute inset-0 flex items-center justify-center">{children}</div>
       )}
     </div>
   );

@@ -3,7 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Search,
@@ -18,7 +24,7 @@ import {
   Zap,
   Shield,
   Leaf,
-  Smartphone
+  Smartphone,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CPD_ACTIVITY_TEMPLATES, QUICK_ACTIVITY_TEMPLATES } from '@/data/cpd-templates';
@@ -38,18 +44,19 @@ const ActivityTemplates = () => {
     'professional-ethics': <Users className="h-4 w-4" />,
     'environmental-sustainability': <Leaf className="h-4 w-4" />,
     'digital-technology': <Smartphone className="h-4 w-4" />,
-    'customer-service': <Award className="h-4 w-4" />
+    'customer-service': <Award className="h-4 w-4" />,
   };
 
-  const filteredTemplates = CPD_ACTIVITY_TEMPLATES.filter(template => {
-    const matchesSearch = template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         template.description.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredTemplates = CPD_ACTIVITY_TEMPLATES.filter((template) => {
+    const matchesSearch =
+      template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      template.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || template.category === selectedCategory;
-    
+
     return matchesSearch && matchesCategory;
   });
 
-  const popularTemplates = filteredTemplates.filter(t => t.isPopular).slice(0, 6);
+  const popularTemplates = filteredTemplates.filter((t) => t.isPopular).slice(0, 6);
 
   const handleUseTemplate = (template: any, additionalHours?: number) => {
     const hours = additionalHours || template.estimatedHours;
@@ -66,7 +73,7 @@ const ActivityTemplates = () => {
     { value: 'professional-ethics', label: 'Professional Ethics' },
     { value: 'environmental-sustainability', label: 'Environmental' },
     { value: 'digital-technology', label: 'Digital Technology' },
-    { value: 'customer-service', label: 'Customer Service' }
+    { value: 'customer-service', label: 'Customer Service' },
   ];
 
   return (
@@ -81,16 +88,16 @@ const ActivityTemplates = () => {
             placeholder="Search activity templates..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={cn(!searchTerm && "pl-10")}
+            className={cn(!searchTerm && 'pl-10')}
           />
         </div>
-        
+
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="px-3 py-2 bg-background border border-border rounded-md text-foreground"
         >
-          {categories.map(category => (
+          {categories.map((category) => (
             <option key={category.value} value={category.value}>
               {category.label}
             </option>
@@ -108,8 +115,11 @@ const ActivityTemplates = () => {
         {/* Popular Templates */}
         <TabsContent value="popular" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {popularTemplates.map(template => (
-              <Card key={template.id} className="bg-card border-border hover:shadow-lg transition-shadow">
+            {popularTemplates.map((template) => (
+              <Card
+                key={template.id}
+                className="bg-card border-border hover:shadow-lg transition-shadow"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2">
@@ -126,7 +136,7 @@ const ActivityTemplates = () => {
                   <p className="text-xs text-muted-foreground line-clamp-2">
                     {template.description}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-1">
                     <Badge variant="secondary" className="text-xs">
                       {template.category.replace('-', ' ')}
@@ -138,8 +148,8 @@ const ActivityTemplates = () => {
 
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         className="w-full"
                         onClick={() => setSelectedTemplate(template)}
                       >
@@ -151,10 +161,7 @@ const ActivityTemplates = () => {
                       <DialogHeader>
                         <DialogTitle>{template.title}</DialogTitle>
                       </DialogHeader>
-                      <TemplateDetailModal 
-                        template={template}
-                        onUse={handleUseTemplate}
-                      />
+                      <TemplateDetailModal template={template} onUse={handleUseTemplate} />
                     </DialogContent>
                   </Dialog>
                 </CardContent>
@@ -166,7 +173,7 @@ const ActivityTemplates = () => {
         {/* All Templates */}
         <TabsContent value="all" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredTemplates.map(template => (
+            {filteredTemplates.map((template) => (
               <Card key={template.id} className="bg-card border-border">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
@@ -181,21 +188,19 @@ const ActivityTemplates = () => {
                   <CardTitle className="text-sm text-foreground">{template.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <p className="text-xs text-muted-foreground">
-                    {template.description}
-                  </p>
-                  
+                  <p className="text-xs text-muted-foreground">{template.description}</p>
+
                   <div className="flex items-center justify-between">
                     <div className="flex flex-wrap gap-1">
                       <Badge variant="secondary" className="text-xs">
                         {template.category.replace('-', ' ')}
                       </Badge>
                     </div>
-                    
+
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           variant="outline"
                           onClick={() => setSelectedTemplate(template)}
                         >
@@ -206,10 +211,7 @@ const ActivityTemplates = () => {
                         <DialogHeader>
                           <DialogTitle>{template.title}</DialogTitle>
                         </DialogHeader>
-                        <TemplateDetailModal 
-                          template={template}
-                          onUse={handleUseTemplate}
-                        />
+                        <TemplateDetailModal template={template} onUse={handleUseTemplate} />
                       </DialogContent>
                     </Dialog>
                   </div>
@@ -222,8 +224,11 @@ const ActivityTemplates = () => {
         {/* Quick Add */}
         <TabsContent value="quick" className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {QUICK_ACTIVITY_TEMPLATES.map(template => (
-              <Card key={template.id} className="bg-card border-border hover:bg-muted/20 transition-colors">
+            {QUICK_ACTIVITY_TEMPLATES.map((template) => (
+              <Card
+                key={template.id}
+                className="bg-card border-border hover:bg-muted/20 transition-colors"
+              >
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-medium text-sm text-foreground">{template.title}</h4>
@@ -231,14 +236,8 @@ const ActivityTemplates = () => {
                       {template.estimatedHours}h
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground mb-3">
-                    {template.description}
-                  </p>
-                  <Button 
-                    size="sm" 
-                    className="w-full"
-                    onClick={() => handleUseTemplate(template)}
-                  >
+                  <p className="text-xs text-muted-foreground mb-3">{template.description}</p>
+                  <Button size="sm" className="w-full" onClick={() => handleUseTemplate(template)}>
                     <Plus className="h-4 w-4 mr-2" />
                     Quick Add
                   </Button>
@@ -253,21 +252,23 @@ const ActivityTemplates = () => {
 };
 
 // Template Detail Modal Component
-const TemplateDetailModal = ({ template, onUse }: { template: any; onUse: (template: any, hours?: number) => void }) => {
+const TemplateDetailModal = ({
+  template,
+  onUse,
+}: {
+  template: any;
+  onUse: (template: any, hours?: number) => void;
+}) => {
   const [customHours, setCustomHours] = useState(template.estimatedHours);
 
   return (
     <div className="space-y-4">
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <Badge variant="secondary">
-            {template.category.replace('-', ' ')}
-          </Badge>
-          <Badge variant="outline">
-            {template.type.replace('-', ' ')}
-          </Badge>
+          <Badge variant="secondary">{template.category.replace('-', ' ')}</Badge>
+          <Badge variant="outline">{template.type.replace('-', ' ')}</Badge>
         </div>
-        
+
         {template.provider && (
           <p className="text-sm text-muted-foreground">
             <strong>Typical Provider:</strong> {template.provider}
@@ -285,7 +286,9 @@ const TemplateDetailModal = ({ template, onUse }: { template: any; onUse: (templ
           <h4 className="font-medium text-foreground mb-2">Learning Outcomes</h4>
           <ul className="list-disc list-inside space-y-1">
             {template.learningOutcomes.map((outcome: string, index: number) => (
-              <li key={index} className="text-sm text-muted-foreground">{outcome}</li>
+              <li key={index} className="text-sm text-muted-foreground">
+                {outcome}
+              </li>
             ))}
           </ul>
         </div>
@@ -318,11 +321,8 @@ const TemplateDetailModal = ({ template, onUse }: { template: any; onUse: (templ
             step="0.5"
           />
         </div>
-        
-        <Button 
-          onClick={() => onUse(template, customHours)}
-          className="ml-auto"
-        >
+
+        <Button onClick={() => onUse(template, customHours)} className="ml-auto">
           <Plus className="h-4 w-4 mr-2" />
           Add to CPD Log
         </Button>

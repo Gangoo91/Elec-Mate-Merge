@@ -88,7 +88,7 @@ export const CircuitReviewCard: React.FC<CircuitReviewCardProps> = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-3 p-3 rounded-lg border transition-colors",
+        'flex items-center gap-3 p-3 rounded-lg border transition-colors',
         config.bgColor,
         config.borderColor
       )}
@@ -106,7 +106,10 @@ export const CircuitReviewCard: React.FC<CircuitReviewCardProps> = ({
             {circuit.label || `Circuit ${circuit.position}`}
           </p>
           {circuit.phase === '3P' && (
-            <Badge variant="outline" className="text-xs px-1.5 py-0 border-purple-500/50 text-purple-500">
+            <Badge
+              variant="outline"
+              className="text-xs px-1.5 py-0 border-purple-500/50 text-purple-500"
+            >
               3P
             </Badge>
           )}
@@ -115,29 +118,18 @@ export const CircuitReviewCard: React.FC<CircuitReviewCardProps> = ({
           <Badge variant="outline" className="text-xs px-1.5 py-0">
             {circuit.device}
           </Badge>
-          {circuit.rating && (
-            <span>{circuit.rating}A</span>
-          )}
-          {circuit.curve && (
-            <span>Type {circuit.curve}</span>
-          )}
+          {circuit.rating && <span>{circuit.rating}A</span>}
+          {circuit.curve && <span>Type {circuit.curve}</span>}
         </div>
         {circuit.notes && (
-          <p className="text-xs text-muted-foreground mt-1 truncate">
-            {circuit.notes}
-          </p>
+          <p className="text-xs text-muted-foreground mt-1 truncate">{circuit.notes}</p>
         )}
       </div>
 
       {/* Confidence indicator and actions */}
       <div className="flex items-center gap-1 flex-shrink-0">
-        <ConfidenceIcon className={cn("h-4 w-4", config.color)} />
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onEdit}
-          className="h-8 w-8 touch-manipulation"
-        >
+        <ConfidenceIcon className={cn('h-4 w-4', config.color)} />
+        <Button variant="ghost" size="icon" onClick={onEdit} className="h-8 w-8 touch-manipulation">
           <Pencil className="h-4 w-4" />
         </Button>
         <Button

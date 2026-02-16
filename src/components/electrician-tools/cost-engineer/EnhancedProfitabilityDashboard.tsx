@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Target, AlertTriangle, CheckCircle2, DollarSign } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { TrendingUp, Target, AlertTriangle, CheckCircle2, DollarSign } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface ProfitabilityTier {
   label: string;
@@ -39,10 +39,10 @@ export const EnhancedProfitabilityDashboard = ({
   jobOverheads,
   breakEvenPoint,
   quoteTiers,
-  recommendations
+  recommendations,
 }: EnhancedProfitabilityDashboardProps) => {
   const totalCosts = directCosts.total + jobOverheads.total;
-  const safetyMarginPercent = ((quoteTiers.target.price - breakEvenPoint) / breakEvenPoint * 100);
+  const safetyMarginPercent = ((quoteTiers.target.price - breakEvenPoint) / breakEvenPoint) * 100;
 
   const getTierIcon = (tier: string) => {
     if (tier === 'minimum') return <AlertTriangle className="h-4 w-4" />;
@@ -51,8 +51,10 @@ export const EnhancedProfitabilityDashboard = ({
   };
 
   const getTierColor = (tier: string) => {
-    if (tier === 'minimum') return 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30';
-    if (tier === 'target') return 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30';
+    if (tier === 'minimum')
+      return 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30';
+    if (tier === 'target')
+      return 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30';
     return 'bg-primary/10 text-primary border-primary/30';
   };
 
@@ -81,12 +83,8 @@ export const EnhancedProfitabilityDashboard = ({
             <span className="text-sm font-medium text-foreground">Break-Even Point</span>
             <CheckCircle2 className="h-5 w-5 text-amber-500" />
           </div>
-          <p className="text-3xl font-bold text-foreground mb-1">
-            £{breakEvenPoint.toFixed(2)}
-          </p>
-          <p className="text-xs text-foreground">
-            Minimum price to cover all costs (no profit)
-          </p>
+          <p className="text-3xl font-bold text-foreground mb-1">£{breakEvenPoint.toFixed(2)}</p>
+          <p className="text-xs text-foreground">Minimum price to cover all costs (no profit)</p>
         </div>
 
         {/* Cost Breakdown */}
@@ -102,10 +100,7 @@ export const EnhancedProfitabilityDashboard = ({
                 <span className="text-sm text-foreground">Direct Materials</span>
                 <span className="font-semibold">£{directCosts.materials.toFixed(2)}</span>
               </div>
-              <Progress 
-                value={(directCosts.materials / totalCosts) * 100} 
-                className="h-2"
-              />
+              <Progress value={(directCosts.materials / totalCosts) * 100} className="h-2" />
             </div>
 
             <div className="space-y-2">
@@ -113,8 +108,8 @@ export const EnhancedProfitabilityDashboard = ({
                 <span className="text-sm text-foreground">Direct Labour</span>
                 <span className="font-semibold">£{directCosts.labour.toFixed(2)}</span>
               </div>
-              <Progress 
-                value={(directCosts.labour / totalCosts) * 100} 
+              <Progress
+                value={(directCosts.labour / totalCosts) * 100}
                 className="h-2 [&>div]:bg-emerald-500"
               />
             </div>
@@ -124,8 +119,8 @@ export const EnhancedProfitabilityDashboard = ({
                 <span className="text-sm text-foreground">Job Overheads</span>
                 <span className="font-semibold">£{jobOverheads.total.toFixed(2)}</span>
               </div>
-              <Progress 
-                value={(jobOverheads.total / totalCosts) * 100} 
+              <Progress
+                value={(jobOverheads.total / totalCosts) * 100}
                 className="h-2 [&>div]:bg-orange-500"
               />
             </div>
@@ -139,7 +134,9 @@ export const EnhancedProfitabilityDashboard = ({
           <TabsContent value="overheads" className="space-y-2 mt-4">
             <div className="flex items-center justify-between px-3 py-2 rounded bg-muted/30">
               <span className="text-sm text-foreground">Business Overheads</span>
-              <span className="font-medium">£{jobOverheads.allocatedBusinessOverheads.toFixed(2)}</span>
+              <span className="font-medium">
+                £{jobOverheads.allocatedBusinessOverheads.toFixed(2)}
+              </span>
             </div>
             <div className="flex items-center justify-between px-3 py-2 rounded bg-muted/30">
               <span className="text-sm text-foreground">Travel & Fuel</span>
@@ -167,14 +164,12 @@ export const EnhancedProfitabilityDashboard = ({
         {/* Quote Tiers */}
         <div className="space-y-3">
           <h4 className="text-sm font-semibold text-foreground">Recommended Quote Tiers</h4>
-          
+
           {Object.entries(quoteTiers).map(([key, tier]) => (
-            <Card 
+            <Card
               key={key}
               className={`border-2 ${
-                key === 'target' 
-                  ? 'border-emerald-500/40 bg-emerald-500/5' 
-                  : 'border-border/50'
+                key === 'target' ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-border/50'
               }`}
             >
               <CardContent className="p-4">
@@ -190,11 +185,9 @@ export const EnhancedProfitabilityDashboard = ({
                       </Badge>
                     )}
                   </div>
-                  <p className="text-2xl font-bold text-foreground">
-                    £{tier.price.toFixed(2)}
-                  </p>
+                  <p className="text-2xl font-bold text-foreground">£{tier.price.toFixed(2)}</p>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-2 text-sm mt-3">
                   <div className="flex flex-col">
                     <span className="text-xs text-foreground">Your Profit</span>
@@ -202,7 +195,9 @@ export const EnhancedProfitabilityDashboard = ({
                   </div>
                   <div className="flex flex-col">
                     <span className="text-xs text-foreground">Margin</span>
-                    <span className="font-semibold text-foreground">{tier.marginPercent.toFixed(1)}%</span>
+                    <span className="font-semibold text-foreground">
+                      {tier.marginPercent.toFixed(1)}%
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -219,7 +214,10 @@ export const EnhancedProfitabilityDashboard = ({
             </h4>
             <div className="space-y-2">
               {recommendations.map((rec, idx) => (
-                <div key={idx} className="flex items-start gap-2 px-3 py-2 rounded bg-primary/5 border border-primary/20">
+                <div
+                  key={idx}
+                  className="flex items-start gap-2 px-3 py-2 rounded bg-primary/5 border border-primary/20"
+                >
                   <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
                   <p className="text-sm text-foreground leading-relaxed">{rec}</p>
                 </div>

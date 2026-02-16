@@ -7,7 +7,7 @@ interface FaultProgressState {
 
 export const useFaultDiagnosisProgress = (faultId?: string) => {
   const storageKey = faultId ? `fault-progress-${faultId}` : 'fault-progress-current';
-  
+
   const [completedSteps, setCompletedSteps] = useState<Set<string>>(() => {
     try {
       const saved = localStorage.getItem(storageKey);
@@ -26,7 +26,7 @@ export const useFaultDiagnosisProgress = (faultId?: string) => {
     try {
       const state: FaultProgressState = {
         completedSteps: Array.from(completedSteps),
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
       };
       localStorage.setItem(storageKey, JSON.stringify(state));
     } catch (error) {
@@ -35,7 +35,7 @@ export const useFaultDiagnosisProgress = (faultId?: string) => {
   }, [completedSteps, storageKey]);
 
   const toggleStepComplete = (stepId: string, completed: boolean) => {
-    setCompletedSteps(prev => {
+    setCompletedSteps((prev) => {
       const next = new Set(prev);
       if (completed) {
         next.add(stepId);
@@ -70,6 +70,6 @@ export const useFaultDiagnosisProgress = (faultId?: string) => {
     toggleStepComplete,
     isStepCompleted,
     clearProgress,
-    getCompletionStats
+    getCompletionStats,
   };
 };

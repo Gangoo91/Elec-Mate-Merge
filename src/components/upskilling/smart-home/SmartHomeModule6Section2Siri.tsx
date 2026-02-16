@@ -8,13 +8,17 @@ export const SmartHomeModule6Section2Siri = () => {
       <Card className="bg-elec-gray border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
-            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">4</span>
+            <span className="bg-elec-yellow text-elec-dark w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold">
+              4
+            </span>
             Apple Siri (via HomeKit) Integration
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <p className="text-foreground leading-relaxed">
-            Apple's HomeKit ecosystem, controlled through Siri, prioritises security and privacy above all else, making it the preferred choice for clients who value data protection and seamless Apple device integration.
+            Apple's HomeKit ecosystem, controlled through Siri, prioritises security and privacy
+            above all else, making it the preferred choice for clients who value data protection and
+            seamless Apple device integration.
           </p>
 
           <div className="space-y-4">
@@ -23,10 +27,12 @@ export const SmartHomeModule6Section2Siri = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Security First Approach</h4>
                 <p className="text-foreground text-sm mb-3">
-                  All HomeKit communication uses end-to-end encryption. Device control data never leaves the local network unless specifically authorised.
+                  All HomeKit communication uses end-to-end encryption. Device control data never
+                  leaves the local network unless specifically authorised.
                 </p>
                 <p className="text-foreground text-sm">
-                  <strong>Advantage:</strong> Commands like "Turn off the lights" are processed locally on the Apple TV or HomePod hub, not in the cloud.
+                  <strong>Advantage:</strong> Commands like "Turn off the lights" are processed
+                  locally on the Apple TV or HomePod hub, not in the cloud.
                 </p>
               </div>
             </div>
@@ -36,10 +42,12 @@ export const SmartHomeModule6Section2Siri = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Apple Ecosystem Integration</h4>
                 <p className="text-foreground text-sm mb-3">
-                  Seamlessly works with iPhones, iPads, Apple Watches, and Macs. The Home app provides unified control across all Apple devices.
+                  Seamlessly works with iPhones, iPads, Apple Watches, and Macs. The Home app
+                  provides unified control across all Apple devices.
                 </p>
                 <p className="text-foreground text-sm">
-                  <strong>Benefit:</strong> Clients can control their home using Siri from any Apple device, with settings synced via iCloud.
+                  <strong>Benefit:</strong> Clients can control their home using Siri from any Apple
+                  device, with settings synced via iCloud.
                 </p>
               </div>
             </div>
@@ -49,10 +57,12 @@ export const SmartHomeModule6Section2Siri = () => {
               <div>
                 <h4 className="font-semibold text-foreground mb-2">Limited Device Compatibility</h4>
                 <p className="text-foreground text-sm mb-3">
-                  Only Apple-certified "Works with HomeKit" devices are compatible. This limits choice and often increases costs.
+                  Only Apple-certified "Works with HomeKit" devices are compatible. This limits
+                  choice and often increases costs.
                 </p>
                 <p className="text-foreground text-sm">
-                  <strong>Challenge:</strong> Many popular smart home brands don't offer HomeKit versions, requiring alternative solutions or bridges.
+                  <strong>Challenge:</strong> Many popular smart home brands don't offer HomeKit
+                  versions, requiring alternative solutions or bridges.
                 </p>
               </div>
             </div>
@@ -85,10 +95,18 @@ export const SmartHomeModule6Section2Siri = () => {
           <div className="bg-blue-900/10 border border-blue-500/30 rounded-lg p-4">
             <h4 className="font-semibold text-blue-400 mb-3">Ideal for Clients Who:</h4>
             <div className="space-y-2">
-              <p className="text-foreground text-sm">✓ Already use multiple Apple devices (iPhone, iPad, Mac)</p>
-              <p className="text-foreground text-sm">✓ Prioritise privacy and security over device variety</p>
-              <p className="text-foreground text-sm">✓ Are willing to pay premium prices for certified products</p>
-              <p className="text-foreground text-sm">✓ Want local processing without cloud dependencies</p>
+              <p className="text-foreground text-sm">
+                ✓ Already use multiple Apple devices (iPhone, iPad, Mac)
+              </p>
+              <p className="text-foreground text-sm">
+                ✓ Prioritise privacy and security over device variety
+              </p>
+              <p className="text-foreground text-sm">
+                ✓ Are willing to pay premium prices for certified products
+              </p>
+              <p className="text-foreground text-sm">
+                ✓ Want local processing without cloud dependencies
+              </p>
             </div>
           </div>
         </CardContent>

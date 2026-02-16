@@ -12,8 +12,8 @@ export const BestPracticesLoadCompatibilitySection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-foreground">
-          Following these proven practices ensures reliable, safe, and efficient smart lighting installations 
-          that perform as expected over their operational lifetime.
+          Following these proven practices ensures reliable, safe, and efficient smart lighting
+          installations that perform as expected over their operational lifetime.
         </p>
 
         <div className="grid gap-4">
@@ -71,7 +71,9 @@ export const BestPracticesLoadCompatibilitySection = () => {
         </div>
 
         <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
-          <h4 className="text-foreground font-semibold mb-2">Professional Installation Checklist:</h4>
+          <h4 className="text-foreground font-semibold mb-2">
+            Professional Installation Checklist:
+          </h4>
           <ul className="text-gray-300 text-sm space-y-1">
             <li>✓ Verify all components are compatible before installation</li>
             <li>✓ Test small sample before bulk installation</li>

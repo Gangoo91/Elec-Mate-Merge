@@ -7,28 +7,30 @@ const BS7671Module1 = () => {
   const sections = [
     {
       id: 1,
-      title: "Purpose and Legal Status of BS 7671",
+      title: 'Purpose and Legal Status of BS 7671',
       icon: Scale,
-      description: "Understanding the regulatory framework and legal standing of the wiring regulations"
+      description:
+        'Understanding the regulatory framework and legal standing of the wiring regulations',
     },
     {
       id: 2,
-      title: "Scope and Application of the Regulations",
+      title: 'Scope and Application of the Regulations',
       icon: BookOpen,
-      description: "Where and when BS 7671 applies in electrical installations"
+      description: 'Where and when BS 7671 applies in electrical installations',
     },
     {
       id: 3,
-      title: "Structure of BS 7671 (Parts, Chapters, Appendices)",
+      title: 'Structure of BS 7671 (Parts, Chapters, Appendices)',
       icon: FileText,
-      description: "How the regulations are organised and how to navigate them effectively"
+      description: 'How the regulations are organised and how to navigate them effectively',
     },
     {
       id: 4,
-      title: "Amendment 3 Highlights",
+      title: 'Amendment 3 Highlights',
       icon: Lightbulb,
-      description: "Latest changes including bidirectional protective devices and consumer unit requirements"
-    }
+      description:
+        'Latest changes including bidirectional protective devices and consumer unit requirements',
+    },
   ];
 
   return (

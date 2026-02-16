@@ -65,11 +65,15 @@ const SmartHomeModule7Section1Quiz = () => {
             <div className="text-4xl font-bold text-elec-yellow">
               {score}/{questions.length}
             </div>
-            <div className="text-xl text-foreground">
-              {percentage}% Complete
-            </div>
-            <div className={`text-lg ${percentage >= 80 ? 'text-green-400' : percentage >= 60 ? 'text-yellow-400' : 'text-red-400'}`}>
-              {percentage >= 80 ? 'Excellent Work!' : percentage >= 60 ? 'Good Effort!' : 'Needs Improvement'}
+            <div className="text-xl text-foreground">{percentage}% Complete</div>
+            <div
+              className={`text-lg ${percentage >= 80 ? 'text-green-400' : percentage >= 60 ? 'text-yellow-400' : 'text-red-400'}`}
+            >
+              {percentage >= 80
+                ? 'Excellent Work!'
+                : percentage >= 60
+                  ? 'Good Effort!'
+                  : 'Needs Improvement'}
             </div>
           </div>
 
@@ -94,9 +98,7 @@ const SmartHomeModule7Section1Quiz = () => {
                         Correct answer: {question.options[question.correctAnswer]}
                       </p>
                     )}
-                    <p className="text-gray-400 text-sm">
-                      {question.explanation}
-                    </p>
+                    <p className="text-gray-400 text-sm">{question.explanation}</p>
                   </div>
                 </div>
               </div>
@@ -126,20 +128,17 @@ const SmartHomeModule7Section1Quiz = () => {
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <div className="flex justify-between text-sm text-gray-400">
-            <span>Question {currentQuestion + 1} of {questions.length}</span>
+            <span>
+              Question {currentQuestion + 1} of {questions.length}
+            </span>
             <span>{Math.round(((currentQuestion + 1) / questions.length) * 100)}%</span>
           </div>
-          <Progress 
-            value={((currentQuestion + 1) / questions.length) * 100} 
-            className="w-full"
-          />
+          <Progress value={((currentQuestion + 1) / questions.length) * 100} className="w-full" />
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-foreground">
-            {currentQ.question}
-          </h3>
-          
+          <h3 className="text-lg font-semibold text-foreground">{currentQ.question}</h3>
+
           <div className="space-y-2">
             {currentQ.options.map((option, index) => (
               <Button
@@ -167,7 +166,7 @@ const SmartHomeModule7Section1Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

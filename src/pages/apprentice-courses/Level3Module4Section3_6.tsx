@@ -1,233 +1,252 @@
-import { useState } from "react";
-import { ArrowLeft, ArrowRight, ChevronDown, ChevronUp, Flame, ThermometerSun, AlertTriangle, Zap, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { useState } from 'react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  Flame,
+  ThermometerSun,
+  AlertTriangle,
+  Zap,
+  CheckCircle,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 // Quick check questions for inline comprehension
 const quickCheckQuestions = [
   {
-    id: "qc1",
-    question: "A termination shows discolouration but no visible damage. The cable insulation nearby has hardened and become brittle. What is the most likely cause?",
+    id: 'qc1',
+    question:
+      'A termination shows discolouration but no visible damage. The cable insulation nearby has hardened and become brittle. What is the most likely cause?',
     options: [
-      "Recent overload event",
-      "Chronic loose connection causing localised heating",
-      "Manufacturing defect in the cable",
-      "Water ingress damaging the insulation"
+      'Recent overload event',
+      'Chronic loose connection causing localised heating',
+      'Manufacturing defect in the cable',
+      'Water ingress damaging the insulation',
     ],
     correctIndex: 1,
-    explanation: "Chronic loose connections cause repeated heating cycles that gradually degrade insulation. The oxidation and discolouration indicate ongoing thermal stress, while the brittle insulation confirms prolonged exposure. A single overload would cause more uniform damage along the cable rather than localised effects at the termination."
+    explanation:
+      'Chronic loose connections cause repeated heating cycles that gradually degrade insulation. The oxidation and discolouration indicate ongoing thermal stress, while the brittle insulation confirms prolonged exposure. A single overload would cause more uniform damage along the cable rather than localised effects at the termination.',
   },
   {
-    id: "qc2",
-    question: "During inspection, you notice a faint burning smell near a consumer unit but cannot identify visible damage. What systematic approach should you take?",
+    id: 'qc2',
+    question:
+      'During inspection, you notice a faint burning smell near a consumer unit but cannot identify visible damage. What systematic approach should you take?',
     options: [
-      "Replace the entire consumer unit immediately",
-      "Use thermal imaging to identify hot spots, then investigate connections",
-      "Increase the rating of the MCBs to prevent overloading",
-      "Spray contact cleaner on all connections"
+      'Replace the entire consumer unit immediately',
+      'Use thermal imaging to identify hot spots, then investigate connections',
+      'Increase the rating of the MCBs to prevent overloading',
+      'Spray contact cleaner on all connections',
     ],
     correctIndex: 1,
-    explanation: "Thermal imaging reveals temperature anomalies invisible to the naked eye, identifying exactly where overheating occurs. This non-invasive method allows targeted investigation without unnecessarily disturbing sound connections. Replacing components without diagnosis wastes resources and may not address the actual fault location."
+    explanation:
+      'Thermal imaging reveals temperature anomalies invisible to the naked eye, identifying exactly where overheating occurs. This non-invasive method allows targeted investigation without unnecessarily disturbing sound connections. Replacing components without diagnosis wastes resources and may not address the actual fault location.',
   },
   {
-    id: "qc3",
-    question: "Insulation resistance testing on a 20-year-old installation shows readings of 0.8 megohms on several circuits. What does this indicate?",
+    id: 'qc3',
+    question:
+      'Insulation resistance testing on a 20-year-old installation shows readings of 0.8 megohms on several circuits. What does this indicate?',
     options: [
-      "The installation is dangerous and must be isolated immediately",
-      "Normal aging - no action required",
-      "Insulation degradation requiring investigation and remediation planning",
-      "Moisture ingress that will resolve naturally"
+      'The installation is dangerous and must be isolated immediately',
+      'Normal aging - no action required',
+      'Insulation degradation requiring investigation and remediation planning',
+      'Moisture ingress that will resolve naturally',
     ],
     correctIndex: 2,
-    explanation: "While 0.8 megohms meets the minimum 1 megohm standard when temperature-corrected, readings this low in an older installation indicate significant insulation degradation. BS 7671 recommends investigation when readings approach minimum values. This suggests planning for cable replacement whilst monitoring for further deterioration."
+    explanation:
+      'While 0.8 megohms meets the minimum 1 megohm standard when temperature-corrected, readings this low in an older installation indicate significant insulation degradation. BS 7671 recommends investigation when readings approach minimum values. This suggests planning for cable replacement whilst monitoring for further deterioration.',
   },
   {
-    id: "qc4",
-    question: "A thermal image shows a 15°C temperature rise at one MCB compared to adjacent units on the same busbar. What is the most probable cause?",
+    id: 'qc4',
+    question:
+      'A thermal image shows a 15°C temperature rise at one MCB compared to adjacent units on the same busbar. What is the most probable cause?',
     options: [
-      "Higher rated MCB generating more heat",
-      "Poor connection between MCB and busbar",
-      "Faulty thermal imaging equipment",
-      "Normal variation between MCBs"
+      'Higher rated MCB generating more heat',
+      'Poor connection between MCB and busbar',
+      'Faulty thermal imaging equipment',
+      'Normal variation between MCBs',
     ],
     correctIndex: 1,
-    explanation: "A 15°C differential between adjacent MCBs on the same busbar strongly indicates connection resistance at that specific device. Good connections show minimal temperature rise. The IET Guidance Note 3 considers rises above 10°C as requiring investigation, with 15°C+ warranting immediate attention to prevent fire risk."
-  }
+    explanation:
+      'A 15°C differential between adjacent MCBs on the same busbar strongly indicates connection resistance at that specific device. Good connections show minimal temperature rise. The IET Guidance Note 3 considers rises above 10°C as requiring investigation, with 15°C+ warranting immediate attention to prevent fire risk.',
+  },
 ];
 
 // Quiz questions for end-of-section assessment
 const quizQuestions = [
   {
-    id: "q1",
-    question: "What is the primary mechanism by which loose connections cause overheating?",
+    id: 'q1',
+    question: 'What is the primary mechanism by which loose connections cause overheating?',
     options: [
-      "Increased inductance in the circuit",
-      "Higher resistance at the connection point (P = I²R)",
-      "Capacitive heating effects",
-      "Electromagnetic interference"
+      'Increased inductance in the circuit',
+      'Higher resistance at the connection point (P = I²R)',
+      'Capacitive heating effects',
+      'Electromagnetic interference',
     ],
-    correctIndex: 1
+    correctIndex: 1,
   },
   {
-    id: "q2",
-    question: "According to BS 7671, what is the minimum acceptable insulation resistance for a 230V circuit?",
-    options: [
-      "0.5 megohms",
-      "1.0 megohms",
-      "2.0 megohms",
-      "5.0 megohms"
-    ],
-    correctIndex: 1
+    id: 'q2',
+    question:
+      'According to BS 7671, what is the minimum acceptable insulation resistance for a 230V circuit?',
+    options: ['0.5 megohms', '1.0 megohms', '2.0 megohms', '5.0 megohms'],
+    correctIndex: 1,
   },
   {
-    id: "q3",
-    question: "Which cable type is most susceptible to thermal degradation from overloading?",
+    id: 'q3',
+    question: 'Which cable type is most susceptible to thermal degradation from overloading?',
     options: [
-      "XLPE insulated cables",
-      "Mineral insulated cables",
-      "PVC insulated cables at maximum operating temperature",
-      "LSF (Low Smoke and Fume) cables"
+      'XLPE insulated cables',
+      'Mineral insulated cables',
+      'PVC insulated cables at maximum operating temperature',
+      'LSF (Low Smoke and Fume) cables',
     ],
-    correctIndex: 2
+    correctIndex: 2,
   },
   {
-    id: "q4",
-    question: "What temperature differential in thermal imaging typically indicates a connection requiring immediate attention?",
+    id: 'q4',
+    question:
+      'What temperature differential in thermal imaging typically indicates a connection requiring immediate attention?',
     options: [
-      "3-5°C above ambient",
-      "5-10°C above adjacent connections",
-      "10-15°C above adjacent connections",
-      "Greater than 15°C above adjacent connections"
+      '3-5°C above ambient',
+      '5-10°C above adjacent connections',
+      '10-15°C above adjacent connections',
+      'Greater than 15°C above adjacent connections',
     ],
-    correctIndex: 3
+    correctIndex: 3,
   },
   {
-    id: "q5",
-    question: "How does humidity affect insulation resistance readings?",
+    id: 'q5',
+    question: 'How does humidity affect insulation resistance readings?',
     options: [
-      "Humidity has no effect on insulation resistance",
-      "Higher humidity increases insulation resistance",
-      "Higher humidity decreases insulation resistance",
-      "Humidity only affects outdoor installations"
+      'Humidity has no effect on insulation resistance',
+      'Higher humidity increases insulation resistance',
+      'Higher humidity decreases insulation resistance',
+      'Humidity only affects outdoor installations',
     ],
-    correctIndex: 2
+    correctIndex: 2,
   },
   {
-    id: "q6",
-    question: "What visual indicator suggests chronic overheating at a cable termination?",
+    id: 'q6',
+    question: 'What visual indicator suggests chronic overheating at a cable termination?',
     options: [
-      "Bright copper coloration",
-      "Black oxidation and discolouration of conductors",
-      "Shiny terminal screws",
-      "Flexible cable insulation"
+      'Bright copper coloration',
+      'Black oxidation and discolouration of conductors',
+      'Shiny terminal screws',
+      'Flexible cable insulation',
     ],
-    correctIndex: 1
+    correctIndex: 1,
   },
   {
-    id: "q7",
-    question: "Which factor has the greatest impact on cable current-carrying capacity?",
+    id: 'q7',
+    question: 'Which factor has the greatest impact on cable current-carrying capacity?',
     options: [
-      "Cable colour",
-      "Installation method and grouping",
-      "Cable manufacturer",
-      "Time of installation"
+      'Cable colour',
+      'Installation method and grouping',
+      'Cable manufacturer',
+      'Time of installation',
     ],
-    correctIndex: 1
+    correctIndex: 1,
   },
   {
-    id: "q8",
-    question: "At what temperature does PVC insulation begin to soften and deform?",
-    options: [
-      "50°C",
-      "70°C",
-      "90°C",
-      "115°C"
-    ],
-    correctIndex: 1
+    id: 'q8',
+    question: 'At what temperature does PVC insulation begin to soften and deform?',
+    options: ['50°C', '70°C', '90°C', '115°C'],
+    correctIndex: 1,
   },
   {
-    id: "q9",
-    question: "What causes arcing at deteriorated connections?",
+    id: 'q9',
+    question: 'What causes arcing at deteriorated connections?',
     options: [
-      "Excessive voltage drop",
-      "High resistance creating heat that carbonises insulation, creating conductive paths",
-      "Incorrect polarity",
-      "Undersized neutral conductors"
+      'Excessive voltage drop',
+      'High resistance creating heat that carbonises insulation, creating conductive paths',
+      'Incorrect polarity',
+      'Undersized neutral conductors',
     ],
-    correctIndex: 1
+    correctIndex: 1,
   },
   {
-    id: "q10",
-    question: "Which thermal imaging temperature range is considered 'critical' requiring immediate isolation?",
+    id: 'q10',
+    question:
+      "Which thermal imaging temperature range is considered 'critical' requiring immediate isolation?",
     options: [
-      "10-20°C rise",
-      "20-40°C rise",
-      "40-70°C rise",
-      "Greater than 70°C rise or approaching material limits"
+      '10-20°C rise',
+      '20-40°C rise',
+      '40-70°C rise',
+      'Greater than 70°C rise or approaching material limits',
     ],
-    correctIndex: 3
+    correctIndex: 3,
   },
   {
-    id: "q11",
-    question: "How should cables in thermal insulation be derated according to BS 7671?",
+    id: 'q11',
+    question: 'How should cables in thermal insulation be derated according to BS 7671?',
     options: [
-      "No derating required",
-      "Derated by 25%",
-      "Derated by 50% or more depending on length in insulation",
-      "Cables must not pass through thermal insulation"
+      'No derating required',
+      'Derated by 25%',
+      'Derated by 50% or more depending on length in insulation',
+      'Cables must not pass through thermal insulation',
     ],
-    correctIndex: 2
+    correctIndex: 2,
   },
   {
-    id: "q12",
-    question: "What is the recommended action when insulation resistance falls below 2 megohms but remains above 1 megohm?",
+    id: 'q12',
+    question:
+      'What is the recommended action when insulation resistance falls below 2 megohms but remains above 1 megohm?',
     options: [
-      "No action required - circuit is compliant",
-      "Monitor and plan investigation - approaching minimum limits",
-      "Immediate circuit replacement required",
-      "Increase test voltage to obtain accurate reading"
+      'No action required - circuit is compliant',
+      'Monitor and plan investigation - approaching minimum limits',
+      'Immediate circuit replacement required',
+      'Increase test voltage to obtain accurate reading',
     ],
-    correctIndex: 1
-  }
+    correctIndex: 1,
+  },
 ];
 
 // FAQ data
 const faqs = [
   {
-    question: "How can I identify overheating damage that occurred in the past but is no longer active?",
-    answer: "Historical overheating leaves characteristic evidence: discoloured or blackened conductors and terminals, hardened and brittle insulation that cracks when flexed, melted or deformed cable sheaths, charred markings on enclosures, and a distinctive burnt smell that persists in components. The insulation may have changed colour from its original state - white becoming yellow or brown, and grey becoming darker. Check for crystallised or oxidised conductor surfaces. If insulation crumbles when touched, this indicates severe historical thermal damage requiring cable replacement regardless of current temperature readings."
+    question:
+      'How can I identify overheating damage that occurred in the past but is no longer active?',
+    answer:
+      'Historical overheating leaves characteristic evidence: discoloured or blackened conductors and terminals, hardened and brittle insulation that cracks when flexed, melted or deformed cable sheaths, charred markings on enclosures, and a distinctive burnt smell that persists in components. The insulation may have changed colour from its original state - white becoming yellow or brown, and grey becoming darker. Check for crystallised or oxidised conductor surfaces. If insulation crumbles when touched, this indicates severe historical thermal damage requiring cable replacement regardless of current temperature readings.',
   },
   {
-    question: "When should thermal imaging be performed during an electrical inspection?",
-    answer: "Thermal imaging is most effective when circuits are under normal load conditions - ideally during peak usage periods. For commercial installations, this typically means during business hours when lighting, equipment and HVAC systems operate. For domestic properties, evening periods when cooking, heating and entertainment systems run simultaneously provide representative loading. Allow circuits to reach thermal equilibrium (typically 30-60 minutes under load) before imaging. Record ambient temperature and note loading conditions for accurate interpretation. Thermal imaging should be part of periodic inspections for installations over 10 years old or where overheating risk factors exist."
+    question: 'When should thermal imaging be performed during an electrical inspection?',
+    answer:
+      'Thermal imaging is most effective when circuits are under normal load conditions - ideally during peak usage periods. For commercial installations, this typically means during business hours when lighting, equipment and HVAC systems operate. For domestic properties, evening periods when cooking, heating and entertainment systems run simultaneously provide representative loading. Allow circuits to reach thermal equilibrium (typically 30-60 minutes under load) before imaging. Record ambient temperature and note loading conditions for accurate interpretation. Thermal imaging should be part of periodic inspections for installations over 10 years old or where overheating risk factors exist.',
   },
   {
-    question: "What causes cables to fail prematurely even when correctly rated?",
-    answer: "Several factors accelerate cable degradation beyond calculated service life: grouping with other cables without adequate derating reduces heat dissipation; installation in thermal insulation traps heat; ambient temperatures exceeding design assumptions; harmonic currents in neutral conductors generating additional heat; repeated short-duration overloads that cycling heating and cooling stress insulation; exposure to UV radiation degrading sheath materials; chemical contamination from building materials or processes; and rodent damage compromising insulation integrity. Physical damage during installation that goes undetected can create localised hot spots. Regular inspection and testing identifies deterioration before failure occurs."
+    question: 'What causes cables to fail prematurely even when correctly rated?',
+    answer:
+      'Several factors accelerate cable degradation beyond calculated service life: grouping with other cables without adequate derating reduces heat dissipation; installation in thermal insulation traps heat; ambient temperatures exceeding design assumptions; harmonic currents in neutral conductors generating additional heat; repeated short-duration overloads that cycling heating and cooling stress insulation; exposure to UV radiation degrading sheath materials; chemical contamination from building materials or processes; and rodent damage compromising insulation integrity. Physical damage during installation that goes undetected can create localised hot spots. Regular inspection and testing identifies deterioration before failure occurs.',
   },
   {
-    question: "How do I determine if a circuit has been overloaded historically?",
-    answer: "Historical overload evidence includes: MCB or fuse that runs warm compared to lightly-loaded adjacent devices; conductor discolouration at terminations particularly in the consumer unit; insulation softening or deformation where cables exit enclosures; reduced insulation resistance compared to similar-aged circuits; evidence of thermal movement at cable supports; and user reports of intermittent tripping. Check the connected load against circuit rating - if close to or exceeding 80% continuously, chronic overload is likely. Examine neutral connections carefully as these often show damage first in single-phase overload scenarios due to loose connections being more common than phase conductors."
+    question: 'How do I determine if a circuit has been overloaded historically?',
+    answer:
+      'Historical overload evidence includes: MCB or fuse that runs warm compared to lightly-loaded adjacent devices; conductor discolouration at terminations particularly in the consumer unit; insulation softening or deformation where cables exit enclosures; reduced insulation resistance compared to similar-aged circuits; evidence of thermal movement at cable supports; and user reports of intermittent tripping. Check the connected load against circuit rating - if close to or exceeding 80% continuously, chronic overload is likely. Examine neutral connections carefully as these often show damage first in single-phase overload scenarios due to loose connections being more common than phase conductors.',
   },
   {
-    question: "What immediate actions should I take upon discovering active overheating?",
-    answer: "Upon discovering active overheating: 1) Assess fire risk - if imminent danger exists, isolate the supply and call emergency services; 2) If safe to proceed, isolate the affected circuit at the distribution board; 3) Allow components to cool before handling - hot terminations can cause burns; 4) Document the fault with photographs and thermal images if available; 5) Investigate the cause - loose connection, overload, or component failure; 6) Do not restore supply until the fault is rectified and verified; 7) If the cause cannot be immediately determined, recommend specialist investigation; 8) Issue an appropriate electrical installation condition report code reflecting the severity."
+    question: 'What immediate actions should I take upon discovering active overheating?',
+    answer:
+      'Upon discovering active overheating: 1) Assess fire risk - if imminent danger exists, isolate the supply and call emergency services; 2) If safe to proceed, isolate the affected circuit at the distribution board; 3) Allow components to cool before handling - hot terminations can cause burns; 4) Document the fault with photographs and thermal images if available; 5) Investigate the cause - loose connection, overload, or component failure; 6) Do not restore supply until the fault is rectified and verified; 7) If the cause cannot be immediately determined, recommend specialist investigation; 8) Issue an appropriate electrical installation condition report code reflecting the severity.',
   },
   {
-    question: "How does cable installation method affect overheating risk?",
-    answer: "Installation method critically impacts cable thermal performance. Cables clipped direct to surfaces dissipate heat effectively and can operate at full rated capacity. Enclosed cables in conduit or trunking require derating (typically 0.725-0.9 depending on grouping) as heat dissipation is restricted. Cables in thermal insulation require significant derating (0.5 or lower) as heat cannot escape. Buried cables depend on soil thermal resistivity. Grouping multiple circuits together requires cumulative derating as each cable heats its neighbours. Vertical cable runs in trunking can create chimney effects where heat rises and accumulates. Always verify installation method before assessing cable adequacy."
-  }
+    question: 'How does cable installation method affect overheating risk?',
+    answer:
+      'Installation method critically impacts cable thermal performance. Cables clipped direct to surfaces dissipate heat effectively and can operate at full rated capacity. Enclosed cables in conduit or trunking require derating (typically 0.725-0.9 depending on grouping) as heat dissipation is restricted. Cables in thermal insulation require significant derating (0.5 or lower) as heat cannot escape. Buried cables depend on soil thermal resistivity. Grouping multiple circuits together requires cumulative derating as each cable heats its neighbours. Vertical cable runs in trunking can create chimney effects where heat rises and accumulates. Always verify installation method before assessing cable adequacy.',
+  },
 ];
 
 const Level3Module4Section3_6 = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   useSEO(
-    "Overheating and Insulation Breakdown - Level 3 Fault Diagnosis",
-    "Identifying thermal faults and insulation failures in electrical systems"
+    'Overheating and Insulation Breakdown - Level 3 Fault Diagnosis',
+    'Identifying thermal faults and insulation failures in electrical systems'
   );
 
   return (
@@ -235,7 +254,11 @@ const Level3Module4Section3_6 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-10 border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            asChild
+          >
             <Link to="../section3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
@@ -258,8 +281,9 @@ const Level3Module4Section3_6 = () => {
             Overheating and Insulation Breakdown
           </h1>
           <p className="text-lg text-white/70">
-            Identifying thermal faults and insulation failures in electrical systems - understanding the mechanisms,
-            detection methods, and remediation strategies for preventing fire hazards and system failures.
+            Identifying thermal faults and insulation failures in electrical systems - understanding
+            the mechanisms, detection methods, and remediation strategies for preventing fire
+            hazards and system failures.
           </p>
         </div>
 
@@ -271,11 +295,11 @@ const Level3Module4Section3_6 = () => {
           </h2>
           <ul className="space-y-2">
             {[
-              "Understand the thermal mechanisms that cause conductor and connection overheating",
-              "Identify visual, thermal, and test indicators of insulation degradation",
-              "Apply thermal imaging techniques for non-invasive fault detection",
-              "Implement appropriate remediation strategies for thermal faults",
-              "Relate overheating risks to BS 7671 cable selection and installation requirements"
+              'Understand the thermal mechanisms that cause conductor and connection overheating',
+              'Identify visual, thermal, and test indicators of insulation degradation',
+              'Apply thermal imaging techniques for non-invasive fault detection',
+              'Implement appropriate remediation strategies for thermal faults',
+              'Relate overheating risks to BS 7671 cable selection and installation requirements',
             ].map((outcome, index) => (
               <li key={index} className="flex items-start gap-3 text-white/80">
                 <span className="text-elec-yellow mt-1">-</span>
@@ -296,10 +320,11 @@ const Level3Module4Section3_6 = () => {
 
             <div className="space-y-6 text-white/80">
               <p>
-                Electrical overheating represents one of the most significant fire risks in installations.
-                Understanding the thermal mechanisms allows electricians to identify potential hazards before
-                they develop into dangerous conditions. All overheating fundamentally derives from the
-                relationship P = I²R - power dissipated as heat equals current squared multiplied by resistance.
+                Electrical overheating represents one of the most significant fire risks in
+                installations. Understanding the thermal mechanisms allows electricians to identify
+                potential hazards before they develop into dangerous conditions. All overheating
+                fundamentally derives from the relationship P = I²R - power dissipated as heat
+                equals current squared multiplied by resistance.
               </p>
 
               <div className="bg-white/5 rounded-lg p-5 border border-white/10">
@@ -308,28 +333,38 @@ const Level3Module4Section3_6 = () => {
                   Loose Connections - The Primary Cause
                 </h3>
                 <p className="mb-4">
-                  Loose connections cause the majority of electrical fires. When a termination loosens, the
-                  contact area between conductor and terminal reduces, concentrating current flow through a
-                  smaller cross-section. This dramatically increases local resistance and heat generation.
-                  The heat then causes oxidation of the copper, further increasing resistance in a
-                  self-accelerating cycle.
+                  Loose connections cause the majority of electrical fires. When a termination
+                  loosens, the contact area between conductor and terminal reduces, concentrating
+                  current flow through a smaller cross-section. This dramatically increases local
+                  resistance and heat generation. The heat then causes oxidation of the copper,
+                  further increasing resistance in a self-accelerating cycle.
                 </p>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
                     <span className="text-red-400 font-bold">Stage 1:</span>
-                    <span>Initial loosening - slight resistance increase, minimal temperature rise</span>
+                    <span>
+                      Initial loosening - slight resistance increase, minimal temperature rise
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-orange-400 font-bold">Stage 2:</span>
-                    <span>Oxidation develops - resistance increases, noticeable warming, discolouration begins</span>
+                    <span>
+                      Oxidation develops - resistance increases, noticeable warming, discolouration
+                      begins
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-yellow-400 font-bold">Stage 3:</span>
-                    <span>Significant heating - insulation softens, burning smell, conductor blackening</span>
+                    <span>
+                      Significant heating - insulation softens, burning smell, conductor blackening
+                    </span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-red-500 font-bold">Stage 4:</span>
-                    <span>Critical - arcing begins, carbonised material creates conductive paths, fire risk imminent</span>
+                    <span>
+                      Critical - arcing begins, carbonised material creates conductive paths, fire
+                      risk imminent
+                    </span>
                   </div>
                 </div>
               </div>
@@ -339,8 +374,8 @@ const Level3Module4Section3_6 = () => {
                 <p className="mb-4">
                   When current exceeds cable rating, the I²R heating exceeds the cable's ability to
                   dissipate heat to surroundings. PVC insulation is rated to 70°C maximum operating
-                  temperature. Exceeding this degrades the plasticisers that keep insulation flexible,
-                  causing it to harden and eventually crack.
+                  temperature. Exceeding this degrades the plasticisers that keep insulation
+                  flexible, causing it to harden and eventually crack.
                 </p>
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="bg-white/5 rounded p-4">
@@ -374,30 +409,44 @@ const Level3Module4Section3_6 = () => {
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">-</span>
-                    <span><strong>Thermal insulation:</strong> Cables surrounded by loft or wall insulation cannot dissipate heat - 50% derating typically required</span>
+                    <span>
+                      <strong>Thermal insulation:</strong> Cables surrounded by loft or wall
+                      insulation cannot dissipate heat - 50% derating typically required
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">-</span>
-                    <span><strong>Cable grouping:</strong> Multiple cables in close proximity heat each other - cumulative derating required</span>
+                    <span>
+                      <strong>Cable grouping:</strong> Multiple cables in close proximity heat each
+                      other - cumulative derating required
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">-</span>
-                    <span><strong>High ambient temperature:</strong> Plant rooms, airing cupboards, and areas near heat sources require derating</span>
+                    <span>
+                      <strong>High ambient temperature:</strong> Plant rooms, airing cupboards, and
+                      areas near heat sources require derating
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">-</span>
-                    <span><strong>Enclosed trunking:</strong> Restricted airflow reduces heat dissipation compared to clipped direct</span>
+                    <span>
+                      <strong>Enclosed trunking:</strong> Restricted airflow reduces heat
+                      dissipation compared to clipped direct
+                    </span>
                   </li>
                 </ul>
               </div>
 
               <div className="bg-white/5 rounded-lg p-5 border border-white/10">
-                <h3 className="text-white font-medium mb-4">Harmonic Heating in Neutral Conductors</h3>
+                <h3 className="text-white font-medium mb-4">
+                  Harmonic Heating in Neutral Conductors
+                </h3>
                 <p className="mb-4">
-                  In three-phase systems with non-linear loads (LED drivers, computer equipment, VFDs),
-                  triplen harmonics (3rd, 9th, 15th) add arithmetically in the neutral rather than
-                  cancelling. This can result in neutral currents exceeding phase currents, causing
-                  overheating in neutrals sized assuming balanced cancellation.
+                  In three-phase systems with non-linear loads (LED drivers, computer equipment,
+                  VFDs), triplen harmonics (3rd, 9th, 15th) add arithmetically in the neutral rather
+                  than cancelling. This can result in neutral currents exceeding phase currents,
+                  causing overheating in neutrals sized assuming balanced cancellation.
                 </p>
                 <div className="bg-red-500/10 border border-red-500/30 rounded p-4 text-sm">
                   <p className="text-red-300 font-medium mb-2">Critical Consideration</p>
@@ -425,15 +474,17 @@ const Level3Module4Section3_6 = () => {
           <section>
             <div className="flex items-center gap-3 mb-6">
               <span className="text-3xl font-bold text-elec-yellow/30">02</span>
-              <h2 className="text-xl font-semibold text-white">Insulation Degradation Mechanisms</h2>
+              <h2 className="text-xl font-semibold text-white">
+                Insulation Degradation Mechanisms
+              </h2>
             </div>
 
             <div className="space-y-6 text-white/80">
               <p>
                 Insulation degradation is a progressive process that reduces the dielectric strength
-                separating live conductors from earth and each other. Understanding degradation mechanisms
-                allows prediction of failure modes and appropriate testing strategies. The goal is
-                detecting deterioration before complete failure causes faults or fires.
+                separating live conductors from earth and each other. Understanding degradation
+                mechanisms allows prediction of failure modes and appropriate testing strategies.
+                The goal is detecting deterioration before complete failure causes faults or fires.
               </p>
 
               <div className="bg-white/5 rounded-lg p-5 border border-white/10">
@@ -442,10 +493,11 @@ const Level3Module4Section3_6 = () => {
                   Thermal Ageing
                 </h3>
                 <p className="mb-4">
-                  Elevated temperatures accelerate insulation degradation through chemical changes in
-                  the polymer structure. The Arrhenius equation describes this relationship - for every
-                  10°C increase above rated temperature, insulation life approximately halves. A cable
-                  rated for 30-year life at 70°C might last only 15 years at 80°C and 7 years at 90°C.
+                  Elevated temperatures accelerate insulation degradation through chemical changes
+                  in the polymer structure. The Arrhenius equation describes this relationship - for
+                  every 10°C increase above rated temperature, insulation life approximately halves.
+                  A cable rated for 30-year life at 70°C might last only 15 years at 80°C and 7
+                  years at 90°C.
                 </p>
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-3">
@@ -482,20 +534,22 @@ const Level3Module4Section3_6 = () => {
                   <div className="bg-white/5 rounded p-4">
                     <h4 className="text-white font-medium mb-2">Surface Tracking</h4>
                     <p className="text-sm">
-                      Contaminated moisture on insulation surfaces creates conductive paths.
-                      When voltage stress exceeds the surface dielectric strength, small arcs
-                      carbonise the material, progressively extending the track until flashover
-                      occurs. Common in damp locations with pollution (industrial environments,
-                      outdoor terminations).
+                      Contaminated moisture on insulation surfaces creates conductive paths. When
+                      voltage stress exceeds the surface dielectric strength, small arcs carbonise
+                      the material, progressively extending the track until flashover occurs. Common
+                      in damp locations with pollution (industrial environments, outdoor
+                      terminations).
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-4">
-                    <h4 className="text-white font-medium mb-2">Water Trees (Underground Cables)</h4>
+                    <h4 className="text-white font-medium mb-2">
+                      Water Trees (Underground Cables)
+                    </h4>
                     <p className="text-sm">
                       Water molecules penetrate XLPE insulation under voltage stress, forming
                       tree-like structures that grow from the conductor or sheath towards the
-                      opposite side. Eventually these convert to electrical trees that cause
-                      cable failure. UV-resistant and water-blocked cables resist this degradation.
+                      opposite side. Eventually these convert to electrical trees that cause cable
+                      failure. UV-resistant and water-blocked cables resist this degradation.
                     </p>
                   </div>
                 </div>
@@ -507,33 +561,33 @@ const Level3Module4Section3_6 = () => {
                   <div className="space-y-2">
                     <h4 className="text-elec-yellow font-medium">UV Radiation</h4>
                     <p className="text-sm">
-                      Sunlight degrades cable sheaths not rated for UV exposure. PVC becomes
-                      brittle and cracks, exposing insulation. Use UV-resistant cables or
-                      protective conduit for external installations.
+                      Sunlight degrades cable sheaths not rated for UV exposure. PVC becomes brittle
+                      and cracks, exposing insulation. Use UV-resistant cables or protective conduit
+                      for external installations.
                     </p>
                   </div>
                   <div className="space-y-2">
                     <h4 className="text-elec-yellow font-medium">Chemical Attack</h4>
                     <p className="text-sm">
-                      Oils, solvents, and some building materials attack insulation. Check
-                      cable compatibility with environment. LSF cables resist many chemicals
-                      better than standard PVC.
+                      Oils, solvents, and some building materials attack insulation. Check cable
+                      compatibility with environment. LSF cables resist many chemicals better than
+                      standard PVC.
                     </p>
                   </div>
                   <div className="space-y-2">
                     <h4 className="text-elec-yellow font-medium">Mechanical Damage</h4>
                     <p className="text-sm">
-                      Physical damage from installation or subsequent works compromises
-                      insulation. Even minor nicks or abrasions concentrate electrical stress
-                      and admit moisture, accelerating degradation.
+                      Physical damage from installation or subsequent works compromises insulation.
+                      Even minor nicks or abrasions concentrate electrical stress and admit
+                      moisture, accelerating degradation.
                     </p>
                   </div>
                   <div className="space-y-2">
                     <h4 className="text-elec-yellow font-medium">Rodent Damage</h4>
                     <p className="text-sm">
-                      Rodents gnaw cable sheaths and insulation. Steel wire armoured cables
-                      or conduit provide protection in vulnerable areas. Regular inspection
-                      reveals damage before failure.
+                      Rodents gnaw cable sheaths and insulation. Steel wire armoured cables or
+                      conduit provide protection in vulnerable areas. Regular inspection reveals
+                      damage before failure.
                     </p>
                   </div>
                 </div>
@@ -580,8 +634,8 @@ const Level3Module4Section3_6 = () => {
                 </div>
                 <p className="text-sm mt-4 text-white/60">
                   Note: Temperature significantly affects readings. Cool, damp conditions produce
-                  lower readings than warm, dry conditions. Apply temperature correction factors
-                  for accurate comparison between tests performed in different conditions.
+                  lower readings than warm, dry conditions. Apply temperature correction factors for
+                  accurate comparison between tests performed in different conditions.
                 </p>
               </div>
             </div>
@@ -601,15 +655,17 @@ const Level3Module4Section3_6 = () => {
           <section>
             <div className="flex items-center gap-3 mb-6">
               <span className="text-3xl font-bold text-elec-yellow/30">03</span>
-              <h2 className="text-xl font-semibold text-white">Thermal Imaging and Detection Methods</h2>
+              <h2 className="text-xl font-semibold text-white">
+                Thermal Imaging and Detection Methods
+              </h2>
             </div>
 
             <div className="space-y-6 text-white/80">
               <p>
-                Thermal imaging (infrared thermography) has revolutionised electrical fault detection.
-                It allows non-contact, non-invasive identification of hot spots that indicate developing
-                faults before they cause failures or fires. Understanding proper technique and
-                interpretation is essential for effective use.
+                Thermal imaging (infrared thermography) has revolutionised electrical fault
+                detection. It allows non-contact, non-invasive identification of hot spots that
+                indicate developing faults before they cause failures or fires. Understanding proper
+                technique and interpretation is essential for effective use.
               </p>
 
               <div className="bg-white/5 rounded-lg p-5 border border-white/10">
@@ -627,8 +683,8 @@ const Level3Module4Section3_6 = () => {
                     <h4 className="text-white font-medium mb-2">Emissivity</h4>
                     <p className="text-sm mb-2">
                       How efficiently a surface emits infrared radiation compared to a perfect
-                      blackbody. Most painted and oxidised electrical components have emissivity
-                      of 0.9-0.95. Shiny metal surfaces may be as low as 0.1-0.3.
+                      blackbody. Most painted and oxidised electrical components have emissivity of
+                      0.9-0.95. Shiny metal surfaces may be as low as 0.1-0.3.
                     </p>
                     <ul className="text-sm space-y-1">
                       <li>- Oxidised copper: 0.78</li>
@@ -641,8 +697,8 @@ const Level3Module4Section3_6 = () => {
                     <h4 className="text-white font-medium mb-2">Temperature Differential (ΔT)</h4>
                     <p className="text-sm mb-2">
                       More reliable than absolute temperature for identifying faults. Compare
-                      similar components under similar load conditions. IET Guidance Note 3
-                      severity classifications:
+                      similar components under similar load conditions. IET Guidance Note 3 severity
+                      classifications:
                     </p>
                     <ul className="text-sm space-y-1">
                       <li>- 1-10°C: Monitor - schedule investigation</li>
@@ -662,11 +718,17 @@ const Level3Module4Section3_6 = () => {
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">1.</span>
-                        <span>Ensure circuits are under representative load - minimum 40% of rated capacity, ideally normal operating load</span>
+                        <span>
+                          Ensure circuits are under representative load - minimum 40% of rated
+                          capacity, ideally normal operating load
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">2.</span>
-                        <span>Allow thermal equilibrium - circuits should be energised for at least 30-60 minutes</span>
+                        <span>
+                          Allow thermal equilibrium - circuits should be energised for at least
+                          30-60 minutes
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">3.</span>
@@ -674,7 +736,10 @@ const Level3Module4Section3_6 = () => {
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">4.</span>
-                        <span>Arrange access to all distribution equipment with covers removed or inspection windows open</span>
+                        <span>
+                          Arrange access to all distribution equipment with covers removed or
+                          inspection windows open
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -683,19 +748,31 @@ const Level3Module4Section3_6 = () => {
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Scan all connections systematically - incoming supply, busbars, outgoing circuits</span>
+                        <span>
+                          Scan all connections systematically - incoming supply, busbars, outgoing
+                          circuits
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Compare similar components - three phases of same circuit, adjacent MCBs on same busbar</span>
+                        <span>
+                          Compare similar components - three phases of same circuit, adjacent MCBs
+                          on same busbar
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Document hot spots with photographs and thermal images together for location reference</span>
+                        <span>
+                          Document hot spots with photographs and thermal images together for
+                          location reference
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Record load current at time of survey for correlation with temperature data</span>
+                        <span>
+                          Record load current at time of survey for correlation with temperature
+                          data
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -746,15 +823,23 @@ const Level3Module4Section3_6 = () => {
                 <ul className="space-y-2 text-sm text-white/80">
                   <li className="flex items-start gap-2">
                     <span className="text-amber-400">-</span>
-                    <span>Thermal imaging of live equipment requires appropriate training and authorisation</span>
+                    <span>
+                      Thermal imaging of live equipment requires appropriate training and
+                      authorisation
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-amber-400">-</span>
-                    <span>Maintain safe working distances - use zoom capabilities rather than approaching closer</span>
+                    <span>
+                      Maintain safe working distances - use zoom capabilities rather than
+                      approaching closer
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-amber-400">-</span>
-                    <span>Never touch connections or components until isolated and proved dead</span>
+                    <span>
+                      Never touch connections or components until isolated and proved dead
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-amber-400">-</span>
@@ -783,7 +868,9 @@ const Level3Module4Section3_6 = () => {
           <section>
             <div className="flex items-center gap-3 mb-6">
               <span className="text-3xl font-bold text-elec-yellow/30">04</span>
-              <h2 className="text-xl font-semibold text-white">Remediation and Prevention Strategies</h2>
+              <h2 className="text-xl font-semibold text-white">
+                Remediation and Prevention Strategies
+              </h2>
             </div>
 
             <div className="space-y-6 text-white/80">
@@ -806,8 +893,13 @@ const Level3Module4Section3_6 = () => {
                     <ol className="space-y-2 text-sm list-decimal list-inside">
                       <li>Isolate and lock off the circuit - verify dead</li>
                       <li>Allow components to cool before handling</li>
-                      <li>Disconnect and examine the conductor - check for annealing (softening from heat)</li>
-                      <li>Examine the terminal - check for damage, oxidation, or material transfer</li>
+                      <li>
+                        Disconnect and examine the conductor - check for annealing (softening from
+                        heat)
+                      </li>
+                      <li>
+                        Examine the terminal - check for damage, oxidation, or material transfer
+                      </li>
                       <li>Assess insulation condition - flexibility, colour, integrity</li>
                       <li>Check enclosure for heat damage - melting, distortion, carbonisation</li>
                     </ol>
@@ -822,8 +914,8 @@ const Level3Module4Section3_6 = () => {
                         <li>- No enclosure damage</li>
                       </ul>
                       <p className="text-sm mt-2 text-green-200">
-                        Clean conductor, apply joint compound if aluminium,
-                        retighten to correct torque, and verify.
+                        Clean conductor, apply joint compound if aluminium, retighten to correct
+                        torque, and verify.
                       </p>
                     </div>
                     <div className="bg-red-500/10 border border-red-500/30 rounded p-4">
@@ -835,8 +927,7 @@ const Level3Module4Section3_6 = () => {
                         <li>- Evidence of arcing or carbonisation</li>
                       </ul>
                       <p className="text-sm mt-2 text-red-200">
-                        Cut back cable to sound material, replace
-                        terminal/device as required.
+                        Cut back cable to sound material, replace terminal/device as required.
                       </p>
                     </div>
                   </div>
@@ -855,28 +946,43 @@ const Level3Module4Section3_6 = () => {
                     <span className="text-elec-yellow font-bold">1.</span>
                     <div>
                       <span className="text-white font-medium">Measure actual load current</span>
-                      <p className="text-white/60">Use clamp meter over representative period - single reading may not capture peak demand</p>
+                      <p className="text-white/60">
+                        Use clamp meter over representative period - single reading may not capture
+                        peak demand
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-elec-yellow font-bold">2.</span>
                     <div>
-                      <span className="text-white font-medium">Verify cable selection was correct</span>
-                      <p className="text-white/60">Check original design against BS 7671 requirements for route, grouping, ambient</p>
+                      <span className="text-white font-medium">
+                        Verify cable selection was correct
+                      </span>
+                      <p className="text-white/60">
+                        Check original design against BS 7671 requirements for route, grouping,
+                        ambient
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-elec-yellow font-bold">3.</span>
                     <div>
-                      <span className="text-white font-medium">Identify load changes since installation</span>
-                      <p className="text-white/60">Additional equipment or higher-rated replacements may have exceeded original capacity</p>
+                      <span className="text-white font-medium">
+                        Identify load changes since installation
+                      </span>
+                      <p className="text-white/60">
+                        Additional equipment or higher-rated replacements may have exceeded original
+                        capacity
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-elec-yellow font-bold">4.</span>
                     <div>
                       <span className="text-white font-medium">Propose appropriate solution</span>
-                      <p className="text-white/60">Redistribute loads, upgrade cable, add circuits, or reduce connected load</p>
+                      <p className="text-white/60">
+                        Redistribute loads, upgrade cable, add circuits, or reduce connected load
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -915,23 +1021,37 @@ const Level3Module4Section3_6 = () => {
                 <h3 className="text-white font-medium mb-4">Prevention Through Good Practice</h3>
                 <div className="grid gap-4">
                   <div>
-                    <h4 className="text-elec-yellow font-medium mb-2">Installation Best Practices</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">
+                      Installation Best Practices
+                    </h4>
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Use correct torque settings for all terminations - under or over-tightening both cause problems</span>
+                        <span>
+                          Use correct torque settings for all terminations - under or
+                          over-tightening both cause problems
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Apply appropriate cable selection factors for installation method, grouping, and ambient</span>
+                        <span>
+                          Apply appropriate cable selection factors for installation method,
+                          grouping, and ambient
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Use correct cable types for environment - UV resistant, oil resistant, LSF as required</span>
+                        <span>
+                          Use correct cable types for environment - UV resistant, oil resistant, LSF
+                          as required
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Avoid damage during installation - suitable bending radii, no insulation nicks</span>
+                        <span>
+                          Avoid damage during installation - suitable bending radii, no insulation
+                          nicks
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
@@ -940,7 +1060,9 @@ const Level3Module4Section3_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-elec-yellow font-medium mb-2">Maintenance Recommendations</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">
+                      Maintenance Recommendations
+                    </h4>
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
@@ -948,11 +1070,15 @@ const Level3Module4Section3_6 = () => {
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Trend insulation resistance measurements to identify deterioration</span>
+                        <span>
+                          Trend insulation resistance measurements to identify deterioration
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Retorque connections after initial settling period (typically 6-12 months)</span>
+                        <span>
+                          Retorque connections after initial settling period (typically 6-12 months)
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
@@ -960,7 +1086,9 @@ const Level3Module4Section3_6 = () => {
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">-</span>
-                        <span>Document all thermal faults for pattern analysis across installations</span>
+                        <span>
+                          Document all thermal faults for pattern analysis across installations
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -975,19 +1103,30 @@ const Level3Module4Section3_6 = () => {
                 <ul className="space-y-2 text-sm text-white/80">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400">-</span>
-                    <span><strong>Chapter 42:</strong> Protection against thermal effects - fire, burns, overheating</span>
+                    <span>
+                      <strong>Chapter 42:</strong> Protection against thermal effects - fire, burns,
+                      overheating
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400">-</span>
-                    <span><strong>Chapter 43:</strong> Protection against overcurrent - correct device selection</span>
+                    <span>
+                      <strong>Chapter 43:</strong> Protection against overcurrent - correct device
+                      selection
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400">-</span>
-                    <span><strong>Chapter 52:</strong> Selection and erection of wiring systems</span>
+                    <span>
+                      <strong>Chapter 52:</strong> Selection and erection of wiring systems
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400">-</span>
-                    <span><strong>Appendix 4:</strong> Current-carrying capacities and voltage drop tables</span>
+                    <span>
+                      <strong>Appendix 4:</strong> Current-carrying capacities and voltage drop
+                      tables
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -1013,7 +1152,9 @@ const Level3Module4Section3_6 = () => {
 
             <div className="space-y-6 text-white/80">
               <div>
-                <h3 className="text-white font-medium mb-3">Scenario: Consumer Unit Running Warm</h3>
+                <h3 className="text-white font-medium mb-3">
+                  Scenario: Consumer Unit Running Warm
+                </h3>
                 <p className="text-sm mb-4">
                   A customer reports their consumer unit enclosure feels warm to touch. They notice
                   this is more pronounced in the evening when cooking and using the shower.
@@ -1021,7 +1162,9 @@ const Level3Module4Section3_6 = () => {
 
                 <div className="space-y-4">
                   <div className="bg-white/5 rounded p-4">
-                    <h4 className="text-elec-yellow font-medium mb-2">Step 1: Initial Assessment</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">
+                      Step 1: Initial Assessment
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>- Confirm customer description - when, how warm, any smells</li>
                       <li>- Check if protective devices have tripped recently</li>
@@ -1032,7 +1175,9 @@ const Level3Module4Section3_6 = () => {
                   </div>
 
                   <div className="bg-white/5 rounded p-4">
-                    <h4 className="text-elec-yellow font-medium mb-2">Step 2: Load Investigation</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">
+                      Step 2: Load Investigation
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>- Use clamp meter on main tails and heavily loaded circuits</li>
                       <li>- Identify which circuits carry highest current during peak use</li>
@@ -1042,7 +1187,9 @@ const Level3Module4Section3_6 = () => {
                   </div>
 
                   <div className="bg-white/5 rounded p-4">
-                    <h4 className="text-elec-yellow font-medium mb-2">Step 3: Internal Examination</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">
+                      Step 3: Internal Examination
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>- Isolate main switch and verify dead before opening</li>
                       <li>- If thermal camera available, image internal components first</li>
@@ -1055,8 +1202,14 @@ const Level3Module4Section3_6 = () => {
                   <div className="bg-white/5 rounded p-4">
                     <h4 className="text-elec-yellow font-medium mb-2">Step 4: Remediation</h4>
                     <ul className="text-sm space-y-1">
-                      <li>- If loose connections found: assess conductor condition, retorque or replace</li>
-                      <li>- If overloading confirmed: discuss load redistribution or additional circuits</li>
+                      <li>
+                        - If loose connections found: assess conductor condition, retorque or
+                        replace
+                      </li>
+                      <li>
+                        - If overloading confirmed: discuss load redistribution or additional
+                        circuits
+                      </li>
                       <li>- If component damage: replace affected MCBs, busbars, or neutral bar</li>
                       <li>- Document findings and actions in report for customer</li>
                       <li>- Recommend periodic thermal survey if installation at capacity</li>
@@ -1070,15 +1223,21 @@ const Level3Module4Section3_6 = () => {
                 <div className="grid gap-4 md:grid-cols-3 text-sm">
                   <div>
                     <span className="text-elec-yellow font-medium">Cooking Circuit</span>
-                    <p className="text-white/60">Hob and oven connections - high current, often problematic</p>
+                    <p className="text-white/60">
+                      Hob and oven connections - high current, often problematic
+                    </p>
                   </div>
                   <div>
                     <span className="text-elec-yellow font-medium">Shower Circuit</span>
-                    <p className="text-white/60">High current flow - check cable size matches shower rating</p>
+                    <p className="text-white/60">
+                      High current flow - check cable size matches shower rating
+                    </p>
                   </div>
                   <div>
                     <span className="text-elec-yellow font-medium">Neutral Bar</span>
-                    <p className="text-white/60">All return currents pass through - often overlooked connection point</p>
+                    <p className="text-white/60">
+                      All return currents pass through - often overlooked connection point
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1106,9 +1265,7 @@ const Level3Module4Section3_6 = () => {
                     )}
                   </button>
                   {openFAQ === index && (
-                    <div className="px-4 pb-4 text-white/70 text-sm">
-                      {faq.answer}
-                    </div>
+                    <div className="px-4 pb-4 text-white/70 text-sm">{faq.answer}</div>
                   )}
                 </div>
               ))}
@@ -1117,11 +1274,15 @@ const Level3Module4Section3_6 = () => {
 
           {/* Quick Reference Section */}
           <section className="bg-white/5 rounded-xl p-6 border border-white/10">
-            <h2 className="text-xl font-semibold text-white mb-6">Quick Reference: Thermal Fault Diagnosis</h2>
+            <h2 className="text-xl font-semibold text-white mb-6">
+              Quick Reference: Thermal Fault Diagnosis
+            </h2>
 
             <div className="space-y-6">
               <div>
-                <h3 className="text-elec-yellow font-medium mb-3">Temperature Differential Severity Guide</h3>
+                <h3 className="text-elec-yellow font-medium mb-3">
+                  Temperature Differential Severity Guide
+                </h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
@@ -1162,25 +1323,35 @@ const Level3Module4Section3_6 = () => {
                 <div className="grid gap-3 md:grid-cols-2">
                   <div className="bg-white/5 rounded p-3">
                     <span className="text-white font-medium">Consumer Unit:</span>
-                    <p className="text-sm text-white/60">Main switch connections, neutral bar, busbar joints, MCB terminals</p>
+                    <p className="text-sm text-white/60">
+                      Main switch connections, neutral bar, busbar joints, MCB terminals
+                    </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <span className="text-white font-medium">Socket Outlets:</span>
-                    <p className="text-sm text-white/60">Terminal screws, ring final connections, spur fused connection units</p>
+                    <p className="text-sm text-white/60">
+                      Terminal screws, ring final connections, spur fused connection units
+                    </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <span className="text-white font-medium">Lighting:</span>
-                    <p className="text-sm text-white/60">Ceiling rose terminals, switch terminals, loop-in connections</p>
+                    <p className="text-sm text-white/60">
+                      Ceiling rose terminals, switch terminals, loop-in connections
+                    </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <span className="text-white font-medium">Fixed Equipment:</span>
-                    <p className="text-sm text-white/60">Isolator switches, connection units, cooker connections</p>
+                    <p className="text-sm text-white/60">
+                      Isolator switches, connection units, cooker connections
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-elec-yellow font-medium mb-3">Insulation Resistance Interpretation</h3>
+                <h3 className="text-elec-yellow font-medium mb-3">
+                  Insulation Resistance Interpretation
+                </h3>
                 <div className="grid gap-3 md:grid-cols-3">
                   <div className="bg-green-500/10 border border-green-500/30 rounded p-3 text-center">
                     <span className="text-green-400 font-bold text-lg">&gt;200 MΩ</span>
@@ -1201,16 +1372,16 @@ const Level3Module4Section3_6 = () => {
 
           {/* Quiz Section */}
           <section>
-            <Quiz
-              title="Test Your Understanding"
-              questions={quizQuestions}
-              passingScore={75}
-            />
+            <Quiz title="Test Your Understanding" questions={quizQuestions} passingScore={75} />
           </section>
 
           {/* Navigation */}
           <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-white/10">
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" asChild>
+            <Button
+              variant="outline"
+              className="border-white/20 text-white hover:bg-white/10"
+              asChild
+            >
               <Link to="../section3-5">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Previous: Appliance and Equipment Faults

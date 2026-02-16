@@ -16,11 +16,7 @@ interface CircuitsStepProps {
  * Step 4: Circuits & Testing
  * Card-based circuit list with tap-to-edit
  */
-export const CircuitsStep: React.FC<CircuitsStepProps> = ({
-  data,
-  onChange,
-  isMobile,
-}) => {
+export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMobile }) => {
   const circuits = data.circuits || [];
   const [activeBoard, setActiveBoard] = useState<string>(MAIN_BOARD_ID);
 
@@ -36,7 +32,7 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({
   // Group circuits by board
   const circuitsByBoard = useMemo(() => {
     const grouped: Record<string, any[]> = {};
-    boards.forEach(board => {
+    boards.forEach((board) => {
       grouped[board.id] = circuits.filter((c: any) => (c.boardId || MAIN_BOARD_ID) === board.id);
     });
     return grouped;
@@ -44,7 +40,9 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({
 
   const handleAddCircuit = (boardId?: string) => {
     const targetBoardId = boardId || activeBoard;
-    const boardCircuits = circuits.filter((c: any) => (c.boardId || MAIN_BOARD_ID) === targetBoardId);
+    const boardCircuits = circuits.filter(
+      (c: any) => (c.boardId || MAIN_BOARD_ID) === targetBoardId
+    );
     const newCircuit = {
       id: crypto.randomUUID(),
       boardId: targetBoardId,
@@ -110,7 +108,7 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg">
               {boards.length > 1
-                ? `${boards.find(b => b.id === activeBoard)?.name || 'Board'} Circuits`
+                ? `${boards.find((b) => b.id === activeBoard)?.name || 'Board'} Circuits`
                 : 'Circuits'}
             </CardTitle>
             <Button
@@ -126,9 +124,8 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({
         </CardHeader>
         <CardContent className="space-y-2">
           {(() => {
-            const currentBoardCircuits = boards.length > 1
-              ? (circuitsByBoard[activeBoard] || [])
-              : circuits;
+            const currentBoardCircuits =
+              boards.length > 1 ? circuitsByBoard[activeBoard] || [] : circuits;
 
             return currentBoardCircuits.length === 0 ? (
               <EmptyState onAdd={() => handleAddCircuit(activeBoard)} />
@@ -180,17 +177,19 @@ interface CircuitCardProps {
 const CircuitCard: React.FC<CircuitCardProps> = ({ circuit, onClick, isMobile }) => {
   const status = circuit.status || 'pending';
 
-  const StatusIcon = {
-    complete: CheckCircle,
-    pending: Zap,
-    failed: AlertTriangle,
-  }[status] || Zap;
+  const StatusIcon =
+    {
+      complete: CheckCircle,
+      pending: Zap,
+      failed: AlertTriangle,
+    }[status] || Zap;
 
-  const statusColors = {
-    complete: 'text-green-500 bg-green-500/10 border-green-500/20',
-    pending: 'text-muted-foreground bg-muted/50 border-border',
-    failed: 'text-red-500 bg-red-500/10 border-red-500/20',
-  }[status] || '';
+  const statusColors =
+    {
+      complete: 'text-green-500 bg-green-500/10 border-green-500/20',
+      pending: 'text-muted-foreground bg-muted/50 border-border',
+      failed: 'text-red-500 bg-red-500/10 border-red-500/20',
+    }[status] || '';
 
   return (
     <button

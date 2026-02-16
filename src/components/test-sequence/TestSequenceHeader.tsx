@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,11 +11,11 @@ interface TestSequenceHeaderProps {
   checklistCompletion: number;
 }
 
-const TestSequenceHeader = ({ 
-  onToggleQuickRef, 
-  onToggleChecklist, 
-  showQuickRef, 
-  checklistCompletion 
+const TestSequenceHeader = ({
+  onToggleQuickRef,
+  onToggleChecklist,
+  showQuickRef,
+  checklistCompletion,
 }: TestSequenceHeaderProps) => {
   const navigate = useNavigate();
 
@@ -24,8 +23,8 @@ const TestSequenceHeader = ({
     <div className="space-y-6">
       {/* Navigation */}
       <div className="flex items-center gap-4">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={() => navigate(-1)}
           className="border-border text-gray-300 hover:bg-muted"
         >
@@ -43,19 +42,24 @@ const TestSequenceHeader = ({
           <div>
             <h1 className="text-3xl font-bold text-foreground">Electrical Test Sequence</h1>
             <p className="text-gray-400 mt-1">
-              Complete guide to the correct order for electrical installation testing according to BS7671
+              Complete guide to the correct order for electrical installation testing according to
+              BS7671
             </p>
           </div>
         </div>
         <div className="flex gap-2">
-          <Badge className="bg-red-500/20 text-red-400 border border-red-500/30">Safety First</Badge>
-          <Badge className="bg-blue-500/20 text-blue-400 border border-blue-500/30">BS7671 Compliant</Badge>
+          <Badge className="bg-red-500/20 text-red-400 border border-red-500/30">
+            Safety First
+          </Badge>
+          <Badge className="bg-blue-500/20 text-blue-400 border border-blue-500/30">
+            BS7671 Compliant
+          </Badge>
         </div>
       </div>
 
       {/* Quick Actions */}
       <div className="flex gap-4">
-        <Button 
+        <Button
           onClick={onToggleQuickRef}
           variant="outline"
           className="border-border text-gray-300 hover:bg-muted"
@@ -63,7 +67,7 @@ const TestSequenceHeader = ({
           <BookOpen className="h-4 w-4 mr-2" />
           {showQuickRef ? 'Hide' : 'Show'} Quick Reference
         </Button>
-        <Button 
+        <Button
           onClick={onToggleChecklist}
           variant="outline"
           className="border-border text-gray-300 hover:bg-muted"

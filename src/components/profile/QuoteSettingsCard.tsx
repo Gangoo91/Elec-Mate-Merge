@@ -22,28 +22,66 @@ const DEFAULT_TERMS_GROUPED = {
       { id: 'payment_30', label: 'Payment due within 30 days of invoice date' },
       { id: 'payment_14', label: 'Payment due within 14 days of invoice date' },
       { id: 'payment_on_completion', label: 'Payment due upon completion of works' },
-      { id: 'deposit_required', label: 'A deposit of the specified percentage is required before work commences' },
-      { id: 'additional_charges', label: 'Additional work not included in this quote will be charged at our standard hourly rate' },
-      { id: 'late_payment', label: 'Late payments may incur interest charges as per the Late Payment of Commercial Debts Act' },
+      {
+        id: 'deposit_required',
+        label: 'A deposit of the specified percentage is required before work commences',
+      },
+      {
+        id: 'additional_charges',
+        label:
+          'Additional work not included in this quote will be charged at our standard hourly rate',
+      },
+      {
+        id: 'late_payment',
+        label:
+          'Late payments may incur interest charges as per the Late Payment of Commercial Debts Act',
+      },
       { id: 'payment_methods', label: 'We accept bank transfer, card payments, and cash' },
     ],
   },
   warranty: {
     label: 'Warranty & Guarantee',
     terms: [
-      { id: 'warranty_workmanship', label: 'All workmanship is guaranteed for the warranty period specified' },
-      { id: 'warranty_materials', label: 'Materials are covered by manufacturer warranties where applicable' },
-      { id: 'warranty_callback', label: 'Free callback within warranty period for any defects in our workmanship' },
-      { id: 'warranty_exclusions', label: 'Warranty excludes damage caused by misuse, third-party interference, or acts of nature' },
+      {
+        id: 'warranty_workmanship',
+        label: 'All workmanship is guaranteed for the warranty period specified',
+      },
+      {
+        id: 'warranty_materials',
+        label: 'Materials are covered by manufacturer warranties where applicable',
+      },
+      {
+        id: 'warranty_callback',
+        label: 'Free callback within warranty period for any defects in our workmanship',
+      },
+      {
+        id: 'warranty_exclusions',
+        label:
+          'Warranty excludes damage caused by misuse, third-party interference, or acts of nature',
+      },
     ],
   },
   compliance: {
     label: 'Compliance & Certification',
     terms: [
-      { id: 'bs7671_compliance', label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations' },
-      { id: 'part_p_notification', label: 'Building control notification (Part P) included where required' },
-      { id: 'testing_cert', label: 'Electrical installation certificate or minor works certificate provided on completion' },
-      { id: 'competent_person', label: 'All work carried out by qualified electricians registered with a competent person scheme' },
+      {
+        id: 'bs7671_compliance',
+        label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations',
+      },
+      {
+        id: 'part_p_notification',
+        label: 'Building control notification (Part P) included where required',
+      },
+      {
+        id: 'testing_cert',
+        label:
+          'Electrical installation certificate or minor works certificate provided on completion',
+      },
+      {
+        id: 'competent_person',
+        label:
+          'All work carried out by qualified electricians registered with a competent person scheme',
+      },
       { id: 'insurance', label: 'Fully insured for public liability and professional indemnity' },
     ],
   },
@@ -51,37 +89,80 @@ const DEFAULT_TERMS_GROUPED = {
     label: 'Site Access & Safety',
     terms: [
       { id: 'access_required', label: 'Clear access to work areas must be provided' },
-      { id: 'power_isolation', label: 'Power may need to be isolated during installation - advance notice will be given' },
-      { id: 'site_safety', label: 'Work area will be left safe and clean at the end of each working day' },
-      { id: 'asbestos_disclaimer', label: 'This quote excludes work involving asbestos - if discovered, work will stop pending survey' },
+      {
+        id: 'power_isolation',
+        label: 'Power may need to be isolated during installation - advance notice will be given',
+      },
+      {
+        id: 'site_safety',
+        label: 'Work area will be left safe and clean at the end of each working day',
+      },
+      {
+        id: 'asbestos_disclaimer',
+        label:
+          'This quote excludes work involving asbestos - if discovered, work will stop pending survey',
+      },
       { id: 'parking', label: 'Suitable parking should be available close to the property' },
-      { id: 'working_hours', label: 'Standard working hours are 8am-5pm Monday to Friday unless otherwise agreed' },
+      {
+        id: 'working_hours',
+        label: 'Standard working hours are 8am-5pm Monday to Friday unless otherwise agreed',
+      },
     ],
   },
   general: {
     label: 'General Conditions',
     terms: [
-      { id: 'price_validity', label: 'This quotation is valid for the number of days specified from the date of issue' },
-      { id: 'cancellation', label: 'Cancellation within 48 hours of scheduled work may incur charges' },
-      { id: 'unforeseen_works', label: 'Unforeseen works discovered during installation will be quoted separately' },
-      { id: 'price_subject', label: 'Prices are subject to change if scope of work differs from description' },
-      { id: 'materials_ownership', label: 'All materials remain our property until paid for in full' },
-      { id: 'variations', label: 'Any variations to the agreed scope must be confirmed in writing' },
+      {
+        id: 'price_validity',
+        label: 'This quotation is valid for the number of days specified from the date of issue',
+      },
+      {
+        id: 'cancellation',
+        label: 'Cancellation within 48 hours of scheduled work may incur charges',
+      },
+      {
+        id: 'unforeseen_works',
+        label: 'Unforeseen works discovered during installation will be quoted separately',
+      },
+      {
+        id: 'price_subject',
+        label: 'Prices are subject to change if scope of work differs from description',
+      },
+      {
+        id: 'materials_ownership',
+        label: 'All materials remain our property until paid for in full',
+      },
+      {
+        id: 'variations',
+        label: 'Any variations to the agreed scope must be confirmed in writing',
+      },
     ],
   },
 };
 
-const ALL_DEFAULT_TERM_IDS = Object.values(DEFAULT_TERMS_GROUPED).flatMap(group => group.terms.map(t => t.id));
+const ALL_DEFAULT_TERM_IDS = Object.values(DEFAULT_TERMS_GROUPED).flatMap((group) =>
+  group.terms.map((t) => t.id)
+);
 
 interface CustomTerm {
   id: string;
   label: string;
 }
 
-function parseQuoteTerms(quoteTermsJson: string | undefined | null): { selected: string[]; custom: CustomTerm[] } {
+function parseQuoteTerms(quoteTermsJson: string | undefined | null): {
+  selected: string[];
+  custom: CustomTerm[];
+} {
   if (!quoteTermsJson) {
     return {
-      selected: ['payment_30', 'deposit_required', 'warranty_workmanship', 'bs7671_compliance', 'testing_cert', 'price_validity'],
+      selected: [
+        'payment_30',
+        'deposit_required',
+        'warranty_workmanship',
+        'bs7671_compliance',
+        'testing_cert',
+        'price_validity',
+      ],
       custom: [],
     };
   }
@@ -158,8 +239,8 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
     if (newCustomTerm.trim()) {
       const newId = `custom_${Date.now()}`;
       const newTerm = { id: newId, label: newCustomTerm.trim() };
-      setCustomTerms(prev => [...prev, newTerm]);
-      setSelectedTerms(prev => [...prev, newId]);
+      setCustomTerms((prev) => [...prev, newTerm]);
+      setSelectedTerms((prev) => [...prev, newId]);
       setNewCustomTerm('');
     }
   };
@@ -176,11 +257,11 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
           <span className="text-[15px] font-semibold text-white">Quote Settings</span>
-          <span className="text-xs text-white/40 ml-2">
-            {selectedCount} terms selected
-          </span>
+          <span className="text-xs text-white/40 ml-2">{selectedCount} terms selected</span>
         </div>
-        <ChevronRight className={cn("h-5 w-5 text-white/30 transition-transform", isExpanded && "rotate-90")} />
+        <ChevronRight
+          className={cn('h-5 w-5 text-white/30 transition-transform', isExpanded && 'rotate-90')}
+        />
       </button>
 
       {/* Collapsed Preview */}
@@ -249,8 +330,10 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
 
             {/* Grouped Terms */}
             {Object.entries(DEFAULT_TERMS_GROUPED).map(([groupKey, group]) => {
-              const groupTermIds = group.terms.map(t => t.id);
-              const selectedInGroup = groupTermIds.filter(id => selectedTerms.includes(id)).length;
+              const groupTermIds = group.terms.map((t) => t.id);
+              const selectedInGroup = groupTermIds.filter((id) =>
+                selectedTerms.includes(id)
+              ).length;
               const isGroupExpanded = expandedGroups.includes(groupKey);
 
               return (
@@ -258,23 +341,31 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                   key={groupKey}
                   open={isGroupExpanded}
                   onOpenChange={(open) => {
-                    setExpandedGroups(prev =>
-                      open ? [...prev, groupKey] : prev.filter(g => g !== groupKey)
+                    setExpandedGroups((prev) =>
+                      open ? [...prev, groupKey] : prev.filter((g) => g !== groupKey)
                     );
                   }}
                 >
                   <CollapsibleTrigger className="w-full">
                     <div className="flex items-center justify-between p-3 sm:p-3 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-colors touch-manipulation min-h-[48px]">
                       <div className="flex items-center gap-2.5">
-                        <div className={cn(
-                          "w-2 h-2 rounded-full",
-                          selectedInGroup > 0 ? "bg-elec-yellow" : "bg-white/20"
-                        )} />
-                        <span className="text-[14px] sm:text-sm font-medium text-white text-left">{group.label}</span>
-                        <span className={cn(
-                          "text-xs px-1.5 py-0.5 rounded-full",
-                          selectedInGroup > 0 ? "bg-elec-yellow/20 text-elec-yellow" : "bg-white/10 text-white/40"
-                        )}>
+                        <div
+                          className={cn(
+                            'w-2 h-2 rounded-full',
+                            selectedInGroup > 0 ? 'bg-elec-yellow' : 'bg-white/20'
+                          )}
+                        />
+                        <span className="text-[14px] sm:text-sm font-medium text-white text-left">
+                          {group.label}
+                        </span>
+                        <span
+                          className={cn(
+                            'text-xs px-1.5 py-0.5 rounded-full',
+                            selectedInGroup > 0
+                              ? 'bg-elec-yellow/20 text-elec-yellow'
+                              : 'bg-white/10 text-white/40'
+                          )}
+                        >
                           {selectedInGroup}/{groupTermIds.length}
                         </span>
                       </div>
@@ -297,15 +388,15 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                             <Checkbox
                               checked={isSelected}
                               onCheckedChange={(checked) => {
-                                setSelectedTerms(prev =>
-                                  checked
-                                    ? [...prev, term.id]
-                                    : prev.filter(id => id !== term.id)
+                                setSelectedTerms((prev) =>
+                                  checked ? [...prev, term.id] : prev.filter((id) => id !== term.id)
                                 );
                               }}
                               className="mt-0.5 h-5 w-5 shrink-0 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                             />
-                            <span className="text-[14px] sm:text-sm text-white/80 leading-relaxed text-left flex-1">{term.label}</span>
+                            <span className="text-[14px] sm:text-sm text-white/80 leading-relaxed text-left flex-1">
+                              {term.label}
+                            </span>
                           </label>
                         );
                       })}
@@ -353,22 +444,27 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                   {customTerms.map((term) => {
                     const isSelected = selectedTerms.includes(term.id);
                     return (
-                      <div key={term.id} className="flex items-start gap-3 p-2.5 sm:p-2 rounded-lg bg-white/5 min-h-[44px]">
+                      <div
+                        key={term.id}
+                        className="flex items-start gap-3 p-2.5 sm:p-2 rounded-lg bg-white/5 min-h-[44px]"
+                      >
                         <Checkbox
                           checked={isSelected}
                           onCheckedChange={(checked) => {
-                            setSelectedTerms(prev =>
-                              checked ? [...prev, term.id] : prev.filter(id => id !== term.id)
+                            setSelectedTerms((prev) =>
+                              checked ? [...prev, term.id] : prev.filter((id) => id !== term.id)
                             );
                           }}
                           className="mt-0.5 h-5 w-5 shrink-0 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                         />
-                        <span className="flex-1 text-[14px] sm:text-sm text-white/80 text-left leading-relaxed">{term.label}</span>
+                        <span className="flex-1 text-[14px] sm:text-sm text-white/80 text-left leading-relaxed">
+                          {term.label}
+                        </span>
                         <button
                           type="button"
                           onClick={() => {
-                            setCustomTerms(prev => prev.filter(t => t.id !== term.id));
-                            setSelectedTerms(prev => prev.filter(id => id !== term.id));
+                            setCustomTerms((prev) => prev.filter((t) => t.id !== term.id));
+                            setSelectedTerms((prev) => prev.filter((id) => id !== term.id));
                           }}
                           className="p-2 -m-1 rounded-lg hover:bg-red-500/20 active:bg-red-500/30 text-white/40 hover:text-red-400 transition-colors touch-manipulation"
                         >

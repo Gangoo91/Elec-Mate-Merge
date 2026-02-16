@@ -5,22 +5,22 @@ export interface CircuitTemplateData {
   // Circuit identification
   circuitDesignation: string;
   circuitReference: string;
-  
+
   // Protection
   protectiveDeviceType: string;
   protectiveDeviceRating: string;
   protectiveDeviceBs: string;
-  
+
   // Cables
   cableType: string;
   cableCsa: string;
   cableReferenceMethod: string;
-  
+
   // Circuit parameters
   maxDemand: string;
   designCurrent: string;
   voltageDrop: string;
-  
+
   // Test results (typical values - user should verify)
   r1r2: string;
   zs: string;
@@ -64,8 +64,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '1.37Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: '30mA / 28ms'
-    }
+      rcd: '30mA / 28ms',
+    },
   },
   {
     id: 'domestic-lighting-6a',
@@ -90,8 +90,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '7.28Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'domestic-cooker-32a',
@@ -116,8 +116,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '1.37Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'domestic-shower-40a',
@@ -142,8 +142,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '1.09Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: '30mA / 26ms'
-    }
+      rcd: '30mA / 26ms',
+    },
   },
   {
     id: 'domestic-immersion-16a',
@@ -168,8 +168,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '2.73Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'domestic-garage-20a',
@@ -194,8 +194,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '2.19Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: '30mA / 25ms'
-    }
+      rcd: '30mA / 25ms',
+    },
   },
   {
     id: 'domestic-smoke-alarms-6a',
@@ -220,8 +220,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '7.28Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
 
   // ========== COMMERCIAL CIRCUITS ==========
@@ -248,8 +248,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '0.35Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'commercial-emergency-lighting',
@@ -274,8 +274,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '4.37Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'commercial-fire-alarm',
@@ -300,8 +300,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '7.28Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'commercial-hvac-20a',
@@ -326,8 +326,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '2.19Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'commercial-office-sockets',
@@ -352,8 +352,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '1.37Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: '30mA / 27ms'
-    }
+      rcd: '30mA / 27ms',
+    },
   },
 
   // ========== INDUSTRIAL CIRCUITS ==========
@@ -380,8 +380,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '0.58Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'industrial-machinery-panel',
@@ -406,8 +406,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '0.29Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'industrial-welding-63a',
@@ -432,8 +432,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '0.35Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'industrial-conveyor-motor',
@@ -458,8 +458,8 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '0.67Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
+      rcd: 'N/A',
+    },
   },
   {
     id: 'industrial-compressor-15kw',
@@ -484,21 +484,21 @@ export const CIRCUIT_TEMPLATES: CircuitTemplate[] = [
       maxZs: '0.46Ω',
       insulation: '>200MΩ',
       polarity: 'Correct',
-      rcd: 'N/A'
-    }
-  }
+      rcd: 'N/A',
+    },
+  },
 ];
 
 // Helper function to get templates by category
 export const getTemplatesByCategory = (category: 'domestic' | 'commercial' | 'industrial') => {
-  return CIRCUIT_TEMPLATES.filter(t => t.category === category);
+  return CIRCUIT_TEMPLATES.filter((t) => t.category === category);
 };
 
 // Helper function to search templates
 export const searchTemplates = (query: string) => {
   const lowerQuery = query.toLowerCase();
   return CIRCUIT_TEMPLATES.filter(
-    t => t.name.toLowerCase().includes(lowerQuery) || 
-         t.description.toLowerCase().includes(lowerQuery)
+    (t) =>
+      t.name.toLowerCase().includes(lowerQuery) || t.description.toLowerCase().includes(lowerQuery)
   );
 };

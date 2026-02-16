@@ -1,5 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { HelpCircle } from 'lucide-react';
 
 export const BMSModule7Section4FAQ = () => {
@@ -18,8 +23,9 @@ export const BMSModule7Section4FAQ = () => {
               What is the purpose of software upload in a BMS?
             </AccordionTrigger>
             <AccordionContent className="text-foreground">
-              Software upload loads the control logic, device mappings, setpoints, and operational parameters into BMS controllers, 
-              enabling them to operate connected equipment according to the designed control sequences.
+              Software upload loads the control logic, device mappings, setpoints, and operational
+              parameters into BMS controllers, enabling them to operate connected equipment
+              according to the designed control sequences.
             </AccordionContent>
           </AccordionItem>
 
@@ -28,8 +34,9 @@ export const BMSModule7Section4FAQ = () => {
               Why must controllers be powered and stable before upload?
             </AccordionTrigger>
             <AccordionContent className="text-foreground">
-              Controllers need stable power to maintain memory during upload, process incoming software packages, and validate 
-              program integrity. Unstable power can corrupt uploads, damage controller memory, or cause programming failures.
+              Controllers need stable power to maintain memory during upload, process incoming
+              software packages, and validate program integrity. Unstable power can corrupt uploads,
+              damage controller memory, or cause programming failures.
             </AccordionContent>
           </AccordionItem>
 
@@ -38,8 +45,9 @@ export const BMSModule7Section4FAQ = () => {
               Why is time synchronisation important across BMS controllers?
             </AccordionTrigger>
             <AccordionContent className="text-foreground">
-              Time synchronisation ensures accurate data logging, coordinated equipment scheduling, proper alarm sequencing, 
-              and reliable energy monitoring. Without it, trend data becomes unreliable and troubleshooting becomes difficult.
+              Time synchronisation ensures accurate data logging, coordinated equipment scheduling,
+              proper alarm sequencing, and reliable energy monitoring. Without it, trend data
+              becomes unreliable and troubleshooting becomes difficult.
             </AccordionContent>
           </AccordionItem>
 
@@ -48,8 +56,9 @@ export const BMSModule7Section4FAQ = () => {
               What should be tested after software upload?
             </AccordionTrigger>
             <AccordionContent className="text-foreground">
-              Test all I/O point responses, verify safety function operation, check network communication, confirm parameter 
-              settings, and validate that physical equipment responds correctly to BMS commands.
+              Test all I/O point responses, verify safety function operation, check network
+              communication, confirm parameter settings, and validate that physical equipment
+              responds correctly to BMS commands.
             </AccordionContent>
           </AccordionItem>
         </Accordion>

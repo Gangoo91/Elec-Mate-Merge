@@ -1,10 +1,15 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { referenceMethodOptions } from '@/types/cableTypes';
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
-
 
 interface CircuitDetailsCellsProps {
   result: TestResult;

@@ -1,5 +1,13 @@
-import { Card } from "@/components/ui/card";
-import { Truck, ParkingCircle, Package, Trash2, Users, AlertTriangle, GraduationCap } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import {
+  Truck,
+  ParkingCircle,
+  Package,
+  Trash2,
+  Users,
+  AlertTriangle,
+  GraduationCap,
+} from 'lucide-react';
 
 interface SiteLogistics {
   vehicleAccess?: string;
@@ -27,7 +35,9 @@ export const SiteLogisticsSection = ({ logistics, competency }: SiteLogisticsSec
   return (
     <Card className="p-4 sm:p-6 space-y-6">
       <div>
-        <h3 className="text-lg font-semibold text-foreground mb-1">Site Requirements & Logistics</h3>
+        <h3 className="text-lg font-semibold text-foreground mb-1">
+          Site Requirements & Logistics
+        </h3>
         <p className="text-sm text-muted-foreground">Access, welfare, and competency information</p>
       </div>
 
@@ -123,8 +133,10 @@ export const SiteLogisticsSection = ({ logistics, competency }: SiteLogisticsSec
               <GraduationCap className="h-4 w-4 text-primary" />
             </div>
             <div className="flex-1">
-              <div className="text-sm font-semibold text-foreground mb-3">Competency Requirements</div>
-              
+              <div className="text-sm font-semibold text-foreground mb-3">
+                Competency Requirements
+              </div>
+
               {competency.competencyRequirements && (
                 <div className="mb-3">
                   <div className="text-xs text-muted-foreground mb-1">Minimum Qualifications</div>

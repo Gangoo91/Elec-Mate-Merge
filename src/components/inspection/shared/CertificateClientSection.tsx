@@ -100,7 +100,7 @@ const CertificateClientSection: React.FC<CertificateClientSectionProps> = ({
           className={cn(
             'flex-1 flex items-center justify-center gap-2 h-11 rounded-lg border-2 text-sm font-medium transition-all touch-manipulation',
             mode === 'new'
-              ? (accentColor || 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow')
+              ? accentColor || 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
               : 'bg-black/30 border-white/10 text-gray-400 hover:border-white/20'
           )}
         >
@@ -113,7 +113,7 @@ const CertificateClientSection: React.FC<CertificateClientSectionProps> = ({
           className={cn(
             'flex-1 flex items-center justify-center gap-2 h-11 rounded-lg border-2 text-sm font-medium transition-all touch-manipulation',
             mode === 'existing'
-              ? (accentColor || 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow')
+              ? accentColor || 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
               : 'bg-black/30 border-white/10 text-gray-400 hover:border-white/20'
           )}
         >

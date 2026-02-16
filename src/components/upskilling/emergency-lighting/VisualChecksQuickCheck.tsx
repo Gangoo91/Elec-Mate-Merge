@@ -10,7 +10,10 @@ export const VisualChecksQuickCheck = () => {
             ✅ Quick Check
           </h4>
           <p className="text-foreground text-sm sm:text-base leading-relaxed">
-            <span className="font-semibold">Visual inspection checklist:</span> Are all luminaires securely mounted with no visible damage? Are safety labels present and legible? Is the viewing distance and mounting height correct for escape route signs? Have you checked for correct luminaire types in each location?
+            <span className="font-semibold">Visual inspection checklist:</span> Are all luminaires
+            securely mounted with no visible damage? Are safety labels present and legible? Is the
+            viewing distance and mounting height correct for escape route signs? Have you checked
+            for correct luminaire types in each location?
           </p>
         </div>
       </div>

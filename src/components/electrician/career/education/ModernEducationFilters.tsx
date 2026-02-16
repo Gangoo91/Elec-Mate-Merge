@@ -1,22 +1,18 @@
-import { useState } from "react";
-import { Search, Filter, X, SlidersHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { Search, Filter, X, SlidersHorizontal } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import type { LiveEducationData } from "@/hooks/useLiveEducationData";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/select';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import type { LiveEducationData } from '@/hooks/useLiveEducationData';
+import { cn } from '@/lib/utils';
 
 export interface EducationFilters {
   searchTerm: string;
@@ -34,22 +30,27 @@ interface ModernEducationFiltersProps {
   resultCount: number;
 }
 
-const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCount }: ModernEducationFiltersProps) => {
+const ModernEducationFilters = ({
+  programmes,
+  onFiltersChange,
+  onReset,
+  resultCount,
+}: ModernEducationFiltersProps) => {
   const [filters, setFilters] = useState<EducationFilters>({
-    searchTerm: "",
-    category: "",
-    level: "",
-    studyMode: "",
-    location: "",
-    sortBy: "rating"
+    searchTerm: '',
+    category: '',
+    level: '',
+    studyMode: '',
+    location: '',
+    sortBy: 'rating',
   });
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Extract unique values for filter options
-  const categories = Array.from(new Set(programmes.map(p => p.category))).sort();
-  const levels = Array.from(new Set(programmes.map(p => p.level))).sort();
-  const studyModes = Array.from(new Set(programmes.map(p => p.studyMode))).sort();
-  const locations = Array.from(new Set(programmes.flatMap(p => p.locations))).sort();
+  const categories = Array.from(new Set(programmes.map((p) => p.category))).sort();
+  const levels = Array.from(new Set(programmes.map((p) => p.level))).sort();
+  const studyModes = Array.from(new Set(programmes.map((p) => p.studyMode))).sort();
+  const locations = Array.from(new Set(programmes.flatMap((p) => p.locations))).sort();
 
   const handleFilterChange = (key: keyof EducationFilters, value: string) => {
     const newFilters = { ...filters, [key]: value };
@@ -58,33 +59,33 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
   };
 
   const clearFilter = (key: keyof EducationFilters) => {
-    handleFilterChange(key, "");
+    handleFilterChange(key, '');
   };
 
   const clearAllFilters = () => {
     const resetFilters: EducationFilters = {
-      searchTerm: "",
-      category: "",
-      level: "",
-      studyMode: "",
-      location: "",
-      sortBy: "rating"
+      searchTerm: '',
+      category: '',
+      level: '',
+      studyMode: '',
+      location: '',
+      sortBy: 'rating',
     };
     setFilters(resetFilters);
     onFiltersChange(resetFilters);
     onReset();
   };
 
-  const activeFiltersCount = Object.entries(filters).filter(([key, value]) => 
-    key !== 'sortBy' && value !== ""
+  const activeFiltersCount = Object.entries(filters).filter(
+    ([key, value]) => key !== 'sortBy' && value !== ''
   ).length;
 
   const sortOptions = [
-    { value: "rating", label: "Highest Rated" },
-    { value: "employment", label: "Best Employment Rate" },
-    { value: "title", label: "Alphabetical" },
-    { value: "duration", label: "Shortest Duration" },
-    { value: "fees", label: "Lowest Fees" },
+    { value: 'rating', label: 'Highest Rated' },
+    { value: 'employment', label: 'Best Employment Rate' },
+    { value: 'title', label: 'Alphabetical' },
+    { value: 'duration', label: 'Shortest Duration' },
+    { value: 'fees', label: 'Lowest Fees' },
   ];
 
   return (
@@ -97,17 +98,17 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
         <Input
           placeholder="Search programmes, institutions, or topics..."
           value={filters.searchTerm}
-          onChange={(e) => handleFilterChange("searchTerm", e.target.value)}
+          onChange={(e) => handleFilterChange('searchTerm', e.target.value)}
           className={cn(
-            "bg-white/10 border-white/20 text-foreground placeholder:text-foreground/60 focus:border-elec-yellow/50 focus:ring-elec-yellow/20",
-            !filters.searchTerm && "pl-10"
+            'bg-white/10 border-white/20 text-foreground placeholder:text-foreground/60 focus:border-elec-yellow/50 focus:ring-elec-yellow/20',
+            !filters.searchTerm && 'pl-10'
           )}
         />
         {filters.searchTerm && (
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => clearFilter("searchTerm")}
+            onClick={() => clearFilter('searchTerm')}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 text-foreground/60 hover:text-foreground hover:bg-white/10"
           >
             <X className="h-3 w-3" />
@@ -120,7 +121,10 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
         <div className="flex items-center gap-3">
           <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
             <CollapsibleTrigger asChild>
-              <Button variant="outline" className="border-white/20 text-foreground hover:bg-white/10 hover:border-elec-yellow/30">
+              <Button
+                variant="outline"
+                className="border-white/20 text-foreground hover:bg-white/10 hover:border-elec-yellow/30"
+              >
                 <SlidersHorizontal className="h-4 w-4 mr-2" />
                 Filters
                 {activeFiltersCount > 0 && (
@@ -133,7 +137,10 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
           </Collapsible>
 
           {/* Sort By */}
-          <Select value={filters.sortBy} onValueChange={(value) => handleFilterChange("sortBy", value)}>
+          <Select
+            value={filters.sortBy}
+            onValueChange={(value) => handleFilterChange('sortBy', value)}
+          >
             <SelectTrigger className="w-48 bg-white/10 border-white/20 text-foreground">
               <SelectValue placeholder="Sort by..." />
             </SelectTrigger>
@@ -149,7 +156,8 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
 
         {/* Results Count */}
         <div className="text-sm text-foreground/80">
-          <span className="font-medium">{resultCount}</span> {resultCount === 1 ? 'programme' : 'programmes'}
+          <span className="font-medium">{resultCount}</span>{' '}
+          {resultCount === 1 ? 'programme' : 'programmes'}
         </div>
       </div>
 
@@ -160,14 +168,21 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
             {/* Category Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Category</label>
-              <Select value={filters.category || "all"} onValueChange={(value) => handleFilterChange("category", value === "all" ? "" : value)}>
+              <Select
+                value={filters.category || 'all'}
+                onValueChange={(value) =>
+                  handleFilterChange('category', value === 'all' ? '' : value)
+                }
+              >
                 <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border">
                   <SelectItem value="all">All Categories</SelectItem>
                   {categories.map((category) => (
-                    <SelectItem key={category} value={category}>{category}</SelectItem>
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -176,14 +191,19 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
             {/* Level Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Level</label>
-              <Select value={filters.level || "all"} onValueChange={(value) => handleFilterChange("level", value === "all" ? "" : value)}>
+              <Select
+                value={filters.level || 'all'}
+                onValueChange={(value) => handleFilterChange('level', value === 'all' ? '' : value)}
+              >
                 <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Levels" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border">
                   <SelectItem value="all">All Levels</SelectItem>
                   {levels.map((level) => (
-                    <SelectItem key={level} value={level}>{level}</SelectItem>
+                    <SelectItem key={level} value={level}>
+                      {level}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -192,14 +212,21 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
             {/* Study Mode Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Study Mode</label>
-              <Select value={filters.studyMode || "all"} onValueChange={(value) => handleFilterChange("studyMode", value === "all" ? "" : value)}>
+              <Select
+                value={filters.studyMode || 'all'}
+                onValueChange={(value) =>
+                  handleFilterChange('studyMode', value === 'all' ? '' : value)
+                }
+              >
                 <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Modes" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border">
                   <SelectItem value="all">All Modes</SelectItem>
                   {studyModes.map((mode) => (
-                    <SelectItem key={mode} value={mode}>{mode}</SelectItem>
+                    <SelectItem key={mode} value={mode}>
+                      {mode}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -208,14 +235,21 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
             {/* Location Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Location</label>
-              <Select value={filters.location || "all"} onValueChange={(value) => handleFilterChange("location", value === "all" ? "" : value)}>
+              <Select
+                value={filters.location || 'all'}
+                onValueChange={(value) =>
+                  handleFilterChange('location', value === 'all' ? '' : value)
+                }
+              >
                 <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Locations" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border max-h-48">
                   <SelectItem value="all">All Locations</SelectItem>
                   {locations.slice(0, 20).map((location) => (
-                    <SelectItem key={location} value={location}>{location}</SelectItem>
+                    <SelectItem key={location} value={location}>
+                      {location}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -232,7 +266,7 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => clearFilter("category")}
+                    onClick={() => clearFilter('category')}
                     className="ml-1 h-4 w-4 p-0 hover:bg-transparent"
                   >
                     <X className="h-3 w-3" />
@@ -245,7 +279,7 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => clearFilter("level")}
+                    onClick={() => clearFilter('level')}
                     className="ml-1 h-4 w-4 p-0 hover:bg-transparent"
                   >
                     <X className="h-3 w-3" />
@@ -258,7 +292,7 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => clearFilter("studyMode")}
+                    onClick={() => clearFilter('studyMode')}
                     className="ml-1 h-4 w-4 p-0 hover:bg-transparent"
                   >
                     <X className="h-3 w-3" />
@@ -271,7 +305,7 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => clearFilter("location")}
+                    onClick={() => clearFilter('location')}
                     className="ml-1 h-4 w-4 p-0 hover:bg-transparent"
                   >
                     <X className="h-3 w-3" />

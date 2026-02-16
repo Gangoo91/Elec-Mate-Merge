@@ -28,7 +28,9 @@ export const useCustomerReports = (customerId: string) => {
         setIsLoading(true);
         const { data, error } = await supabase
           .from('reports')
-          .select('id, certificate_number, report_type, status, created_at, inspection_date, client_name, installation_address')
+          .select(
+            'id, certificate_number, report_type, status, created_at, inspection_date, client_name, installation_address'
+          )
           .eq('customer_id', customerId)
           .order('created_at', { ascending: false });
 

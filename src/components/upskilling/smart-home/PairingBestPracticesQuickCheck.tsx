@@ -7,14 +7,14 @@ const PairingBestPracticesQuickCheck = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
 
-  const question = "Why should devices be paired one at a time during setup?";
+  const question = 'Why should devices be paired one at a time during setup?';
   const options = [
-    "To save battery power",
-    "To avoid confusion and conflicts during pairing",
-    "To reduce network traffic", 
-    "To make the process faster"
+    'To save battery power',
+    'To avoid confusion and conflicts during pairing',
+    'To reduce network traffic',
+    'To make the process faster',
   ];
-  const correctAnswer = "To avoid confusion and conflicts during pairing";
+  const correctAnswer = 'To avoid confusion and conflicts during pairing';
 
   const handleSubmit = () => {
     setShowAnswer(true);
@@ -32,7 +32,7 @@ const PairingBestPracticesQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -44,11 +44,11 @@ const PairingBestPracticesQuickCheck = () => {
                   ? option === correctAnswer
                     ? 'bg-green-600/20 border-green-600 text-green-100'
                     : option === selectedAnswer && !isCorrect
-                    ? 'bg-red-600/20 border-red-600 text-red-100'
-                    : 'border-gray-600 text-gray-400'
+                      ? 'bg-red-600/20 border-red-600 text-red-100'
+                      : 'border-gray-600 text-gray-400'
                   : selectedAnswer === option
-                  ? 'bg-blue-600/20 border-blue-600 text-blue-100'
-                  : 'border-gray-600 text-gray-300 hover:bg-gray-700'
+                    ? 'bg-blue-600/20 border-blue-600 text-blue-100'
+                    : 'border-gray-600 text-gray-300 hover:bg-gray-700'
               }`}
             >
               {option}
@@ -63,11 +63,11 @@ const PairingBestPracticesQuickCheck = () => {
         )}
 
         {showAnswer && (
-          <div className={`p-3 rounded-md border ${
-            isCorrect 
-              ? 'bg-green-600/10 border-green-600/30' 
-              : 'bg-red-600/10 border-red-600/30'
-          }`}>
+          <div
+            className={`p-3 rounded-md border ${
+              isCorrect ? 'bg-green-600/10 border-green-600/30' : 'bg-red-600/10 border-red-600/30'
+            }`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {isCorrect ? (
                 <CheckCircle className="h-4 w-4 text-green-400" />
@@ -79,7 +79,9 @@ const PairingBestPracticesQuickCheck = () => {
               </span>
             </div>
             <p className="text-gray-300 text-sm">
-              Pairing devices one at a time prevents confusion, allows for proper labelling immediately after pairing, and avoids conflicts that can occur when multiple devices try to pair simultaneously.
+              Pairing devices one at a time prevents confusion, allows for proper labelling
+              immediately after pairing, and avoids conflicts that can occur when multiple devices
+              try to pair simultaneously.
             </p>
           </div>
         )}

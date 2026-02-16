@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Loader2, CheckCircle, Clock, AlertCircle, ExternalLink, X } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { Loader2, CheckCircle, Clock, AlertCircle, ExternalLink, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
-import CancelSubscriptionDialog from "./CancelSubscriptionDialog";
+import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/components/ui/use-toast';
+import CancelSubscriptionDialog from './CancelSubscriptionDialog';
 
 // Helper function to calculate days remaining in trial
 const getDaysRemaining = (trialEndsAt: Date | null): number => {
@@ -16,7 +16,8 @@ const getDaysRemaining = (trialEndsAt: Date | null): number => {
 };
 
 const SubscriptionStatus = () => {
-  const { isTrialActive, trialEndsAt, isSubscribed, subscriptionTier, checkSubscriptionStatus } = useAuth();
+  const { isTrialActive, trialEndsAt, isSubscribed, subscriptionTier, checkSubscriptionStatus } =
+    useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
@@ -32,12 +33,14 @@ const SubscriptionStatus = () => {
       if (data?.url) {
         const newWindow = window.open(data.url, '_blank');
         if (!newWindow || newWindow.closed) {
-          setTimeout(() => { window.location.href = data.url; }, 500);
+          setTimeout(() => {
+            window.location.href = data.url;
+          }, 500);
         }
       } else if (data?.directManagement) {
         toast({
-          title: "Direct Management Mode",
-          description: "Please use the Cancel Subscription button.",
+          title: 'Direct Management Mode',
+          description: 'Please use the Cancel Subscription button.',
         });
       } else {
         throw new Error('No portal URL returned');
@@ -45,9 +48,9 @@ const SubscriptionStatus = () => {
     } catch (error) {
       console.error('Customer portal error:', error);
       toast({
-        title: "Error",
-        description: "Could not open portal. Please use the Cancel button instead.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Could not open portal. Please use the Cancel button instead.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -64,7 +67,7 @@ const SubscriptionStatus = () => {
           <div className="flex items-center gap-2">
             <CheckCircle className="h-4 w-4 text-green-400" />
             <span className="text-sm font-medium text-green-400">
-              {subscriptionTier || "Pro"} Plan
+              {subscriptionTier || 'Pro'} Plan
             </span>
           </div>
 

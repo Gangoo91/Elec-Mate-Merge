@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Confetti, StarBurst } from "@/components/ui/confetti";
+import React, { useEffect, useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Confetti, StarBurst } from '@/components/ui/confetti';
 import {
   Shield,
   Award,
@@ -19,10 +14,10 @@ import {
   Users,
   Eye,
   Zap,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-type VerificationTier = "basic" | "verified" | "premium";
+type VerificationTier = 'basic' | 'verified' | 'premium';
 
 interface TierUpgradeCelebrationProps {
   open: boolean;
@@ -43,36 +38,36 @@ const TIER_CONFIG: Record<
   }
 > = {
   basic: {
-    label: "Basic",
+    label: 'Basic',
     icon: Shield,
-    color: "text-foreground/70",
-    bgGradient: "from-gray-500/20 to-gray-600/20",
+    color: 'text-foreground/70',
+    bgGradient: 'from-gray-500/20 to-gray-600/20',
     benefits: [
-      { icon: Users, text: "Listed in Talent Pool" },
-      { icon: Eye, text: "Profile visible to employers" },
+      { icon: Users, text: 'Listed in Talent Pool' },
+      { icon: Eye, text: 'Profile visible to employers' },
     ],
   },
   verified: {
-    label: "Verified",
+    label: 'Verified',
     icon: Shield,
-    color: "text-blue-500",
-    bgGradient: "from-blue-500/20 to-blue-600/20",
+    color: 'text-blue-500',
+    bgGradient: 'from-blue-500/20 to-blue-600/20',
     benefits: [
-      { icon: CheckCircle2, text: "Verified badge on profile" },
-      { icon: TrendingUp, text: "Priority in search results" },
-      { icon: Users, text: "Employer notifications" },
+      { icon: CheckCircle2, text: 'Verified badge on profile' },
+      { icon: TrendingUp, text: 'Priority in search results' },
+      { icon: Users, text: 'Employer notifications' },
     ],
   },
   premium: {
-    label: "Premium",
+    label: 'Premium',
     icon: Crown,
-    color: "text-elec-yellow",
-    bgGradient: "from-elec-yellow/20 to-amber-500/20",
+    color: 'text-elec-yellow',
+    bgGradient: 'from-elec-yellow/20 to-amber-500/20',
     benefits: [
-      { icon: Crown, text: "Premium badge & top listing" },
-      { icon: Zap, text: "Instant employer alerts" },
-      { icon: Star, text: "QR code verification" },
-      { icon: Users, text: "Direct employer access" },
+      { icon: Crown, text: 'Premium badge & top listing' },
+      { icon: Zap, text: 'Instant employer alerts' },
+      { icon: Star, text: 'QR code verification' },
+      { icon: Users, text: 'Direct employer access' },
     ],
   },
 };
@@ -127,14 +122,14 @@ export function TierUpgradeCelebration({
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div
               className={cn(
-                "absolute -top-20 -left-20 w-40 h-40 rounded-full blur-3xl opacity-30",
-                newTier === "premium" ? "bg-elec-yellow" : "bg-blue-500"
+                'absolute -top-20 -left-20 w-40 h-40 rounded-full blur-3xl opacity-30',
+                newTier === 'premium' ? 'bg-elec-yellow' : 'bg-blue-500'
               )}
             />
             <div
               className={cn(
-                "absolute -bottom-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-30",
-                newTier === "premium" ? "bg-amber-500" : "bg-purple-500"
+                'absolute -bottom-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-30',
+                newTier === 'premium' ? 'bg-amber-500' : 'bg-purple-500'
               )}
             />
           </div>
@@ -145,28 +140,26 @@ export function TierUpgradeCelebration({
               {/* Glow ring */}
               <div
                 className={cn(
-                  "absolute inset-0 rounded-full blur-xl opacity-50 transition-all duration-1000",
-                  animationStep >= 1 ? "scale-100 opacity-50" : "scale-0 opacity-0",
-                  newTier === "premium" ? "bg-elec-yellow" : "bg-blue-500"
+                  'absolute inset-0 rounded-full blur-xl opacity-50 transition-all duration-1000',
+                  animationStep >= 1 ? 'scale-100 opacity-50' : 'scale-0 opacity-0',
+                  newTier === 'premium' ? 'bg-elec-yellow' : 'bg-blue-500'
                 )}
-                style={{ width: "120px", height: "120px", margin: "-10px" }}
+                style={{ width: '120px', height: '120px', margin: '-10px' }}
               />
 
               {/* Main badge */}
               <div
                 className={cn(
-                  "relative w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500",
+                  'relative w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500',
                   `bg-gradient-to-br ${tier.bgGradient}`,
-                  animationStep >= 1
-                    ? "scale-100 rotate-0"
-                    : "scale-0 rotate-180"
+                  animationStep >= 1 ? 'scale-100 rotate-0' : 'scale-0 rotate-180'
                 )}
               >
                 <TierIcon
                   className={cn(
-                    "h-12 w-12 transition-all duration-500",
+                    'h-12 w-12 transition-all duration-500',
                     tier.color,
-                    animationStep >= 2 ? "scale-100" : "scale-0"
+                    animationStep >= 2 ? 'scale-100' : 'scale-0'
                   )}
                 />
 
@@ -178,8 +171,8 @@ export function TierUpgradeCelebration({
             <DialogTitle className="text-2xl font-bold">
               <span
                 className={cn(
-                  "transition-all duration-500",
-                  animationStep >= 2 ? "opacity-100" : "opacity-0"
+                  'transition-all duration-500',
+                  animationStep >= 2 ? 'opacity-100' : 'opacity-0'
                 )}
               >
                 Congratulations!
@@ -189,12 +182,11 @@ export function TierUpgradeCelebration({
             <p className="text-foreground/70 mt-2">
               <span
                 className={cn(
-                  "transition-all duration-500",
-                  animationStep >= 2 ? "opacity-100" : "opacity-0"
+                  'transition-all duration-500',
+                  animationStep >= 2 ? 'opacity-100' : 'opacity-0'
                 )}
               >
-                You've unlocked{" "}
-                <span className={cn("font-bold", tier.color)}>{tier.label}</span>{" "}
+                You've unlocked <span className={cn('font-bold', tier.color)}>{tier.label}</span>{' '}
                 status
               </span>
             </p>
@@ -203,33 +195,29 @@ export function TierUpgradeCelebration({
           {/* Tier upgrade visual */}
           <div
             className={cn(
-              "flex items-center justify-center gap-3 py-4 transition-all duration-500",
-              animationStep >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              'flex items-center justify-center gap-3 py-4 transition-all duration-500',
+              animationStep >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             )}
           >
             <Badge
               variant="outline"
-              className={cn(
-                "px-3 py-1.5",
-                TIER_CONFIG[previousTier].color,
-                "border-current/30"
-              )}
+              className={cn('px-3 py-1.5', TIER_CONFIG[previousTier].color, 'border-current/30')}
             >
               {TIER_CONFIG[previousTier].label}
             </Badge>
             <div className="flex items-center">
               <div className="h-px w-8 bg-gradient-to-r from-muted-foreground/50 to-transparent" />
-              <Sparkles className={cn("h-5 w-5 mx-1", tier.color)} />
+              <Sparkles className={cn('h-5 w-5 mx-1', tier.color)} />
               <div className="h-px w-8 bg-gradient-to-l from-muted-foreground/50 to-transparent" />
             </div>
             <Badge
               variant="outline"
               className={cn(
-                "px-3 py-1.5 font-bold animate-pulse",
+                'px-3 py-1.5 font-bold animate-pulse',
                 tier.color,
-                newTier === "premium"
-                  ? "bg-elec-yellow/20 border-elec-yellow/30"
-                  : "bg-blue-500/20 border-blue-500/30"
+                newTier === 'premium'
+                  ? 'bg-elec-yellow/20 border-elec-yellow/30'
+                  : 'bg-blue-500/20 border-blue-500/30'
               )}
             >
               {tier.label}
@@ -239,8 +227,8 @@ export function TierUpgradeCelebration({
           {/* New benefits */}
           <div
             className={cn(
-              "space-y-2 transition-all duration-500",
-              animationStep >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              'space-y-2 transition-all duration-500',
+              animationStep >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             )}
           >
             <p className="text-sm font-medium text-center text-foreground/70 mb-3">
@@ -257,16 +245,14 @@ export function TierUpgradeCelebration({
                 >
                   <div
                     className={cn(
-                      "p-1.5 rounded-lg",
-                      newTier === "premium"
-                        ? "bg-elec-yellow/20"
-                        : "bg-blue-500/20"
+                      'p-1.5 rounded-lg',
+                      newTier === 'premium' ? 'bg-elec-yellow/20' : 'bg-blue-500/20'
                     )}
                   >
                     <benefit.icon
                       className={cn(
-                        "h-4 w-4",
-                        newTier === "premium" ? "text-elec-yellow" : "text-blue-400"
+                        'h-4 w-4',
+                        newTier === 'premium' ? 'text-elec-yellow' : 'text-blue-400'
                       )}
                     />
                   </div>
@@ -279,13 +265,11 @@ export function TierUpgradeCelebration({
           {/* CTA button */}
           <Button
             className={cn(
-              "w-full h-12 mt-4 font-semibold transition-all duration-500",
-              newTier === "premium"
-                ? "bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
-                : "bg-blue-500 hover:bg-blue-600 text-white",
-              animationStep >= 3
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4"
+              'w-full h-12 mt-4 font-semibold transition-all duration-500',
+              newTier === 'premium'
+                ? 'bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark'
+                : 'bg-blue-500 hover:bg-blue-600 text-white',
+              animationStep >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             )}
             onClick={onContinue}
           >

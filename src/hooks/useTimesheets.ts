@@ -24,10 +24,7 @@ export interface TimesheetWithDetails extends Timesheet {
 }
 
 export const getTimesheets = async (startDate?: string, endDate?: string): Promise<Timesheet[]> => {
-  let query = supabase
-    .from('employer_timesheets')
-    .select('*')
-    .order('date', { ascending: false });
+  let query = supabase.from('employer_timesheets').select('*').order('date', { ascending: false });
 
   if (startDate) {
     query = query.gte('date', startDate);
@@ -134,10 +131,7 @@ export const rejectTimesheet = async (id: string): Promise<boolean> => {
 };
 
 export const deleteTimesheet = async (id: string): Promise<boolean> => {
-  const { error } = await supabase
-    .from('employer_timesheets')
-    .delete()
-    .eq('id', id);
+  const { error } = await supabase.from('employer_timesheets').delete().eq('id', id);
 
   if (error) {
     console.error('Error deleting timesheet:', error);
@@ -153,7 +147,7 @@ export const useTimesheets = (startDate?: string, endDate?: string) => {
     queryKey: ['timesheets', startDate, endDate],
     queryFn: () => getTimesheets(startDate, endDate),
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
   });
 };
 
@@ -163,7 +157,7 @@ export const useEmployeeTimesheets = (employeeId: string) => {
     queryFn: () => getTimesheetsByEmployee(employeeId),
     enabled: !!employeeId,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
   });
 };
 
@@ -219,8 +213,8 @@ export const useBatchApproveTimesheets = () => {
 
   return useMutation({
     mutationFn: async ({ ids, approvedBy }: { ids: string[]; approvedBy: string }) => {
-      const results = await Promise.all(ids.map(id => approveTimesheet(id, approvedBy)));
-      return results.every(r => r);
+      const results = await Promise.all(ids.map((id) => approveTimesheet(id, approvedBy)));
+      return results.every((r) => r);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timesheets'] });
@@ -233,8 +227,8 @@ export const useBatchRejectTimesheets = () => {
 
   return useMutation({
     mutationFn: async (ids: string[]) => {
-      const results = await Promise.all(ids.map(id => rejectTimesheet(id)));
-      return results.every(r => r);
+      const results = await Promise.all(ids.map((id) => rejectTimesheet(id)));
+      return results.every((r) => r);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timesheets'] });

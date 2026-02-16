@@ -15,7 +15,15 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -35,41 +43,41 @@ interface InspectionItemCardProps {
   onNavigateToObservations?: () => void;
 }
 
-const InspectionItemCard = ({ 
-  sectionItem, 
-  inspectionItem, 
-  onUpdateItem, 
+const InspectionItemCard = ({
+  sectionItem,
+  inspectionItem,
+  onUpdateItem,
   onOutcomeChange,
-  onNavigateToObservations 
+  onNavigateToObservations,
 }: InspectionItemCardProps) => {
   const [localNotes, setLocalNotes] = React.useState(inspectionItem?.notes || '');
   const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
-  
+
   const currentOutcome = inspectionItem?.outcome || 'not-applicable';
   const isInspected = inspectionItem?.inspected || false;
-  
+
   // Sync local notes when inspection item changes
   React.useEffect(() => {
     setLocalNotes(inspectionItem?.notes || '');
   }, [inspectionItem?.notes]);
-  
+
   // Handle notes input with debouncing
   const handleNotesChange = (value: string) => {
     setLocalNotes(value);
-    
+
     // Clear existing timer
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
-    
+
     // Set new timer for debounced update
     const newTimer = setTimeout(() => {
       onUpdateItem(sectionItem.id, 'notes', value);
     }, 300); // 300ms debounce
-    
+
     setDebounceTimer(newTimer);
   };
-  
+
   // Clean up timer on unmount
   React.useEffect(() => {
     return () => {
@@ -78,7 +86,7 @@ const InspectionItemCard = ({
       }
     };
   }, [debounceTimer]);
-  
+
   // Distinguish between different critical outcomes
   const isC1OrC2 = currentOutcome === 'C1' || currentOutcome === 'C2';
   const isC3 = currentOutcome === 'C3';
@@ -87,24 +95,37 @@ const InspectionItemCard = ({
   // Get outcome styling - matching observation card design
   const getOutcomeIcon = () => {
     switch (currentOutcome) {
-      case 'satisfactory': return <CheckCircle2 className="h-4 w-4 text-green-500" />;
-      case 'C1': return <XCircle className="h-4 w-4 text-red-500" />;
-      case 'C2': return <AlertCircle className="h-4 w-4 text-orange-500" />;
-      case 'C3': return <AlertTriangle className="h-4 w-4 text-amber-500" />;
-      case 'limitation': return <FileText className="h-4 w-4 text-purple-500" />;
-      default: return null;
+      case 'satisfactory':
+        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+      case 'C1':
+        return <XCircle className="h-4 w-4 text-red-500" />;
+      case 'C2':
+        return <AlertCircle className="h-4 w-4 text-orange-500" />;
+      case 'C3':
+        return <AlertTriangle className="h-4 w-4 text-amber-500" />;
+      case 'limitation':
+        return <FileText className="h-4 w-4 text-purple-500" />;
+      default:
+        return null;
     }
   };
 
   const getBorderColor = () => {
     switch (currentOutcome) {
-      case 'satisfactory': return 'border-l-green-500';
-      case 'C1': return 'border-l-red-500';
-      case 'C2': return 'border-l-orange-500';
-      case 'C3': return 'border-l-amber-500';
-      case 'limitation': return 'border-l-purple-500';
-      case 'not-applicable': return 'border-l-gray-500';
-      default: return 'border-l-border';
+      case 'satisfactory':
+        return 'border-l-green-500';
+      case 'C1':
+        return 'border-l-red-500';
+      case 'C2':
+        return 'border-l-orange-500';
+      case 'C3':
+        return 'border-l-amber-500';
+      case 'limitation':
+        return 'border-l-purple-500';
+      case 'not-applicable':
+        return 'border-l-gray-500';
+      default:
+        return 'border-l-border';
     }
   };
 
@@ -120,9 +141,7 @@ const InspectionItemCard = ({
           <div className="flex items-center gap-2">
             <Checkbox
               checked={isInspected}
-              onCheckedChange={(checked) => 
-                onUpdateItem(sectionItem.id, 'inspected', checked)
-              }
+              onCheckedChange={(checked) => onUpdateItem(sectionItem.id, 'inspected', checked)}
             />
             <Label>Inspected</Label>
           </div>
@@ -134,20 +153,23 @@ const InspectionItemCard = ({
           <div>
             <Label className="cursor-pointer">BS 7671 Clause</Label>
             {sectionItem.clause ? (
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className={`mt-1 text-sm md:text-xs font-mono px-3 py-1 ${
                   sectionItem.clause.includes('Visual') || sectionItem.clause.includes('Reserved')
                     ? 'bg-purple-500/10 border-purple-500/30 text-purple-400'
                     : sectionItem.clause.includes('Part') || sectionItem.clause.includes('Chapter')
-                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                    : 'bg-blue-500/10 border-blue-500/30 text-blue-400'
+                      ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                      : 'bg-blue-500/10 border-blue-500/30 text-blue-400'
                 }`}
               >
                 {sectionItem.clause}
               </Badge>
             ) : (
-              <Badge variant="secondary" className="mt-1 text-sm md:text-xs font-mono px-3 py-1 bg-gray-500/10 border-gray-500/30 text-gray-400">
+              <Badge
+                variant="secondary"
+                className="mt-1 text-sm md:text-xs font-mono px-3 py-1 bg-gray-500/10 border-gray-500/30 text-gray-400"
+              >
                 No Specific Reg
               </Badge>
             )}
@@ -193,8 +215,8 @@ const InspectionItemCard = ({
               variant="outline"
               onClick={onNavigateToObservations}
               className={`w-full h-10 md:h-9 text-sm md:text-xs ${
-                isC1OrC2 
-                  ? 'bg-red-500/10 border-red-500/30 text-red-500 hover:bg-red-500/20' 
+                isC1OrC2
+                  ? 'bg-red-500/10 border-red-500/30 text-red-500 hover:bg-red-500/20'
                   : 'bg-amber-500/10 border-amber-500/30 text-amber-500 hover:bg-amber-500/20'
               }`}
             >

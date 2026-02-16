@@ -57,7 +57,7 @@ export const WhatsAppShareButton: React.FC<WhatsAppShareButtonProps> = ({
       variant={variant}
       className={cn(
         'h-11 gap-2 touch-manipulation bg-green-600/10 border-green-600/30 hover:bg-green-600/20 text-green-400 transition-all duration-200 active:scale-95',
-        className,
+        className
       )}
       onClick={handleShare}
       disabled={disabled || isGeneratingLink}

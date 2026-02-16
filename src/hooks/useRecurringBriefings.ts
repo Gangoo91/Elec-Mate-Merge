@@ -1,9 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { addDays, addWeeks, addMonths, format, parseISO } from "date-fns";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { addDays, addWeeks, addMonths, format, parseISO } from 'date-fns';
 
-export type RecurringPattern = "daily" | "weekly" | "biweekly" | "monthly";
+export type RecurringPattern = 'daily' | 'weekly' | 'biweekly' | 'monthly';
 
 export interface RecurringBriefingConfig {
   briefingId: string;
@@ -16,41 +16,41 @@ function getNextDate(currentDate: string, pattern: RecurringPattern): string {
   const date = parseISO(currentDate);
 
   switch (pattern) {
-    case "daily":
-      return format(addDays(date, 1), "yyyy-MM-dd");
-    case "weekly":
-      return format(addWeeks(date, 1), "yyyy-MM-dd");
-    case "biweekly":
-      return format(addWeeks(date, 2), "yyyy-MM-dd");
-    case "monthly":
-      return format(addMonths(date, 1), "yyyy-MM-dd");
+    case 'daily':
+      return format(addDays(date, 1), 'yyyy-MM-dd');
+    case 'weekly':
+      return format(addWeeks(date, 1), 'yyyy-MM-dd');
+    case 'biweekly':
+      return format(addWeeks(date, 2), 'yyyy-MM-dd');
+    case 'monthly':
+      return format(addMonths(date, 1), 'yyyy-MM-dd');
     default:
-      return format(addWeeks(date, 1), "yyyy-MM-dd");
+      return format(addWeeks(date, 1), 'yyyy-MM-dd');
   }
 }
 
 // Get human-readable pattern label
 export function getPatternLabel(pattern: RecurringPattern): string {
   switch (pattern) {
-    case "daily":
-      return "Daily";
-    case "weekly":
-      return "Weekly";
-    case "biweekly":
-      return "Every 2 weeks";
-    case "monthly":
-      return "Monthly";
+    case 'daily':
+      return 'Daily';
+    case 'weekly':
+      return 'Weekly';
+    case 'biweekly':
+      return 'Every 2 weeks';
+    case 'monthly':
+      return 'Monthly';
     default:
-      return "Weekly";
+      return 'Weekly';
   }
 }
 
 // Get pattern options for select
 export const RECURRING_PATTERNS: Array<{ value: RecurringPattern; label: string }> = [
-  { value: "daily", label: "Daily" },
-  { value: "weekly", label: "Weekly" },
-  { value: "biweekly", label: "Every 2 weeks" },
-  { value: "monthly", label: "Monthly" },
+  { value: 'daily', label: 'Daily' },
+  { value: 'weekly', label: 'Weekly' },
+  { value: 'biweekly', label: 'Every 2 weeks' },
+  { value: 'monthly', label: 'Monthly' },
 ];
 
 /**
@@ -67,30 +67,30 @@ export function useSetRecurring() {
       enabled,
     }: RecurringBriefingConfig): Promise<void> => {
       const { error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .update({
           recurring: enabled,
           recurring_pattern: enabled ? pattern : null,
           updated_at: new Date().toISOString(),
         })
-        .eq("id", briefingId);
+        .eq('id', briefingId);
 
       if (error) throw error;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: variables.enabled ? "Recurring enabled" : "Recurring disabled",
+        title: variables.enabled ? 'Recurring enabled' : 'Recurring disabled',
         description: variables.enabled
           ? `This briefing will repeat ${getPatternLabel(variables.pattern).toLowerCase()}.`
-          : "This briefing will no longer repeat.",
+          : 'This briefing will no longer repeat.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Failed to update",
+        title: 'Failed to update',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -107,24 +107,27 @@ export function useCreateNextOccurrence() {
     mutationFn: async (briefingId: string): Promise<string> => {
       // Get the parent briefing
       const { data: parentBriefing, error: fetchError } = await supabase
-        .from("briefings")
-        .select("*")
-        .eq("id", briefingId)
+        .from('briefings')
+        .select('*')
+        .eq('id', briefingId)
         .single();
 
       if (fetchError) throw fetchError;
-      if (!parentBriefing) throw new Error("Briefing not found");
+      if (!parentBriefing) throw new Error('Briefing not found');
       if (!parentBriefing.recurring || !parentBriefing.recurring_pattern) {
-        throw new Error("Briefing is not set to recurring");
+        throw new Error('Briefing is not set to recurring');
       }
 
       // Calculate next date
-      const currentDate = parentBriefing.date || format(new Date(), "yyyy-MM-dd");
-      const nextDate = getNextDate(currentDate, parentBriefing.recurring_pattern as RecurringPattern);
+      const currentDate = parentBriefing.date || format(new Date(), 'yyyy-MM-dd');
+      const nextDate = getNextDate(
+        currentDate,
+        parentBriefing.recurring_pattern as RecurringPattern
+      );
 
       // Create new briefing
       const { data: newBriefing, error: createError } = await supabase
-        .from("briefings")
+        .from('briefings')
         .insert({
           user_id: parentBriefing.user_id,
           job_id: parentBriefing.job_id,
@@ -135,7 +138,7 @@ export function useCreateNextOccurrence() {
           time: parentBriefing.time,
           location: parentBriefing.location,
           presenter: parentBriefing.presenter,
-          status: "Scheduled",
+          status: 'Scheduled',
           template_id: parentBriefing.template_id,
           toolbox_template_id: parentBriefing.toolbox_template_id,
           recurring: true,
@@ -152,18 +155,18 @@ export function useCreateNextOccurrence() {
       return newBriefing.id;
     },
     onSuccess: (newId) => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Next briefing created",
-        description: "The next occurrence has been scheduled.",
+        title: 'Next briefing created',
+        description: 'The next occurrence has been scheduled.',
       });
       return newId;
     },
     onError: (error) => {
       toast({
-        title: "Failed to create next occurrence",
+        title: 'Failed to create next occurrence',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -174,15 +177,15 @@ export function useCreateNextOccurrence() {
  */
 export function useRecurringSeries(parentBriefingId: string | undefined) {
   return useQuery({
-    queryKey: ["briefings", "recurring-series", parentBriefingId],
+    queryKey: ['briefings', 'recurring-series', parentBriefingId],
     queryFn: async () => {
       if (!parentBriefingId) return [];
 
       // Get the original parent ID (in case we're looking at a child)
       const { data: briefing, error: briefingError } = await supabase
-        .from("briefings")
-        .select("id, parent_briefing_id")
-        .eq("id", parentBriefingId)
+        .from('briefings')
+        .select('id, parent_briefing_id')
+        .eq('id', parentBriefingId)
         .single();
 
       if (briefingError) throw briefingError;
@@ -191,10 +194,10 @@ export function useRecurringSeries(parentBriefingId: string | undefined) {
 
       // Get all briefings in the series
       const { data, error } = await supabase
-        .from("briefings")
-        .select("*")
+        .from('briefings')
+        .select('*')
         .or(`id.eq.${rootId},parent_briefing_id.eq.${rootId}`)
-        .order("date", { ascending: true });
+        .order('date', { ascending: true });
 
       if (error) throw error;
       return data;
@@ -213,26 +216,26 @@ export function useCheckRecurringNeedsNext() {
   return async (briefingId: string) => {
     // Get the briefing
     const { data: briefing, error } = await supabase
-      .from("briefings")
-      .select("id, recurring, recurring_pattern, date, status")
-      .eq("id", briefingId)
+      .from('briefings')
+      .select('id, recurring, recurring_pattern, date, status')
+      .eq('id', briefingId)
       .single();
 
     if (error || !briefing) return false;
 
     // If it's recurring and being completed, check if next one exists
-    if (briefing.recurring && briefing.recurring_pattern && briefing.status === "Completed") {
+    if (briefing.recurring && briefing.recurring_pattern && briefing.status === 'Completed') {
       const nextDate = getNextDate(
-        briefing.date || format(new Date(), "yyyy-MM-dd"),
+        briefing.date || format(new Date(), 'yyyy-MM-dd'),
         briefing.recurring_pattern as RecurringPattern
       );
 
       // Check if next occurrence already exists
       const { data: existing, error: existError } = await supabase
-        .from("briefings")
-        .select("id")
-        .eq("parent_briefing_id", briefing.id)
-        .eq("date", nextDate)
+        .from('briefings')
+        .select('id')
+        .eq('parent_briefing_id', briefing.id)
+        .eq('date', nextDate)
         .single();
 
       if (!existError && existing) {
@@ -261,12 +264,12 @@ export function useCompleteBriefingWithRecurring() {
     mutationFn: async (briefingId: string): Promise<{ nextCreated: boolean }> => {
       // Update status to Completed
       const { error } = await supabase
-        .from("briefings")
+        .from('briefings')
         .update({
-          status: "Completed",
+          status: 'Completed',
           updated_at: new Date().toISOString(),
         })
-        .eq("id", briefingId);
+        .eq('id', briefingId);
 
       if (error) throw error;
 
@@ -275,19 +278,19 @@ export function useCompleteBriefingWithRecurring() {
       return { nextCreated };
     },
     onSuccess: ({ nextCreated }) => {
-      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ['briefings'] });
       toast({
-        title: "Briefing completed",
+        title: 'Briefing completed',
         description: nextCreated
-          ? "Next recurring briefing has been scheduled."
-          : "Briefing marked as completed.",
+          ? 'Next recurring briefing has been scheduled.'
+          : 'Briefing marked as completed.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Failed to complete",
+        title: 'Failed to complete',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });

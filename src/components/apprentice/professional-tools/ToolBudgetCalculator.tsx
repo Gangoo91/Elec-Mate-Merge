@@ -1,38 +1,43 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, PoundSterling, Wallet, Target } from "lucide-react";
-import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Calculator, PoundSterling, Wallet, Target } from 'lucide-react';
+import { useState } from 'react';
 
 const ToolBudgetCalculator = () => {
-  const [monthlyBudget, setMonthlyBudget] = useState<string>("200");
-  const [timeframe, setTimeframe] = useState<string>("12");
-  const [priority, setPriority] = useState<string>("essential");
+  const [monthlyBudget, setMonthlyBudget] = useState<string>('200');
+  const [timeframe, setTimeframe] = useState<string>('12');
+  const [priority, setPriority] = useState<string>('essential');
   const [totalBudget, setTotalBudget] = useState<number>(0);
-  const [breakdown, setBreakdown] = useState<{[key: string]: number}>({});
+  const [breakdown, setBreakdown] = useState<{ [key: string]: number }>({});
 
   const toolCosts = {
     essential: {
-      "Basic hand tools": 300,
-      "PPE & safety equipment": 150,
-      "Basic test equipment": 200,
-      "Tool storage": 100
+      'Basic hand tools': 300,
+      'PPE & safety equipment': 150,
+      'Basic test equipment': 200,
+      'Tool storage': 100,
     },
     recommended: {
-      "Power tools": 500,
-      "Advanced test equipment": 800,
-      "Professional hand tools": 400,
-      "Vehicle storage": 300
+      'Power tools': 500,
+      'Advanced test equipment': 800,
+      'Professional hand tools': 400,
+      'Vehicle storage': 300,
     },
     advanced: {
-      "Specialist test equipment": 1200,
-      "Professional power tools": 800,
-      "Advanced PPE": 200,
-      "Complete toolkit": 600
-    }
+      'Specialist test equipment': 1200,
+      'Professional power tools': 800,
+      'Advanced PPE': 200,
+      'Complete toolkit': 600,
+    },
   };
 
   const calculateBudget = () => {
@@ -43,12 +48,12 @@ const ToolBudgetCalculator = () => {
 
     const selectedTools = toolCosts[priority as keyof typeof toolCosts];
     const totalCost = Object.values(selectedTools).reduce((sum, cost) => sum + cost, 0);
-    
-    const budgetBreakdown: {[key: string]: number} = {};
+
+    const budgetBreakdown: { [key: string]: number } = {};
     Object.entries(selectedTools).forEach(([tool, cost]) => {
       budgetBreakdown[tool] = (cost / totalCost) * total;
     });
-    
+
     setBreakdown(budgetBreakdown);
   };
 
@@ -70,7 +75,9 @@ const ToolBudgetCalculator = () => {
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="monthly-budget" className="text-white/70">Monthly Budget (£)</Label>
+              <Label htmlFor="monthly-budget" className="text-white/70">
+                Monthly Budget (£)
+              </Label>
               <Input
                 id="monthly-budget"
                 type="number"
@@ -82,7 +89,9 @@ const ToolBudgetCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="timeframe" className="text-white/70">Timeframe (months)</Label>
+              <Label htmlFor="timeframe" className="text-white/70">
+                Timeframe (months)
+              </Label>
               <Select value={timeframe} onValueChange={setTimeframe}>
                 <SelectTrigger className="bg-white/10 border-white/20 h-11">
                   <SelectValue />
@@ -97,7 +106,9 @@ const ToolBudgetCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="priority" className="text-white/70">Priority Level</Label>
+              <Label htmlFor="priority" className="text-white/70">
+                Priority Level
+              </Label>
               <Select value={priority} onValueChange={setPriority}>
                 <SelectTrigger className="bg-white/10 border-white/20 h-11">
                   <SelectValue />

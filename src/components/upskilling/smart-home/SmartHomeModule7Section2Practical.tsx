@@ -12,7 +12,8 @@ const SmartHomeModule7Section2Practical = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 mb-4">
-          As an electrician working with smart home systems, these practical tips will help ensure successful commissioning:
+          As an electrician working with smart home systems, these practical tips will help ensure
+          successful commissioning:
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

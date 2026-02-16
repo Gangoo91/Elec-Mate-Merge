@@ -1,74 +1,178 @@
-import { Loader2 } from "lucide-react";
-import { useLocation } from "react-router-dom";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { useState, lazy, Suspense } from "react";
-import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
+import { Loader2 } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useState, lazy, Suspense } from 'react';
+import CalculatorSelector from '@/components/apprentice/calculators/CalculatorSelector';
 
 // Lazy load all calculators for better performance
-const CableSizingCalculator = lazy(() => import("@/components/apprentice/calculators/CableSizingCalculator"));
-const OhmsLawCalculator = lazy(() => import("@/components/apprentice/calculators/OhmsLawCalculator"));
-const VoltageDropCalculator = lazy(() => import("@/components/apprentice/calculators/VoltageDropCalculator"));
-const PowerFactorCalculator = lazy(() => import("@/components/apprentice/calculators/PowerFactorCalculator"));
-const LumenCalculator = lazy(() => import("@/components/apprentice/calculators/LumenCalculator"));
-const InstrumentationCalculator = lazy(() => import("@/components/apprentice/calculators/InstrumentationCalculator"));
-const ZsValuesCalculator = lazy(() => import("@/components/apprentice/calculators/ZsValuesCalculator"));
-const AdiabaticCalculator = lazy(() => import("@/components/apprentice/calculators/AdiabaticCalculator"));
-const ConduitFillCalculator = lazy(() => import("@/components/apprentice/calculators/ConduitFillCalculator"));
-const ResistorColourCodeCalculator = lazy(() => import("@/components/apprentice/calculators/ResistorColourCodeCalculator"));
-const RingCircuitCalculator = lazy(() => import("@/components/apprentice/calculators/RingCircuitCalculator"));
-const DiversityFactorCalculator = lazy(() => import("@/components/apprentice/calculators/DiversityFactorCalculator"));
-const EarthFaultLoopCalculator = lazy(() => import("@/components/apprentice/calculators/EarthFaultLoopCalculator"));
-const MaximumDemandCalculator = lazy(() => import("@/components/apprentice/calculators/MaximumDemandCalculator"));
-const RCDTripTimeCalculator = lazy(() => import("@/components/apprentice/calculators/RCDTripTimeCalculator"));
-const SolarPVCalculator = lazy(() => import("@/components/apprentice/calculators/SolarPVCalculator"));
-const BatteryBackupCalculator = lazy(() => import("@/components/apprentice/calculators/BatteryBackupCalculator"));
-const BS7671ZsLookupCalculator = lazy(() => import("@/components/apprentice/calculators/BS7671ZsLookupCalculator"));
-const R1R2Calculator = lazy(() => import("@/components/apprentice/calculators/R1R2Calculator"));
-const PFCCalculator = lazy(() => import("@/components/apprentice/calculators/PFCCalculator"));
-const RCDDiscriminationCalculator = lazy(() => import("@/components/apprentice/calculators/RCDDiscriminationCalculator"));
-const CableDeratingCalculator = lazy(() => import("@/components/apprentice/calculators/CableDeratingCalculator"));
-const LoadCalculator = lazy(() => import("@/components/apprentice/calculators/LoadCalculator"));
+const CableSizingCalculator = lazy(
+  () => import('@/components/apprentice/calculators/CableSizingCalculator')
+);
+const OhmsLawCalculator = lazy(
+  () => import('@/components/apprentice/calculators/OhmsLawCalculator')
+);
+const VoltageDropCalculator = lazy(
+  () => import('@/components/apprentice/calculators/VoltageDropCalculator')
+);
+const PowerFactorCalculator = lazy(
+  () => import('@/components/apprentice/calculators/PowerFactorCalculator')
+);
+const LumenCalculator = lazy(() => import('@/components/apprentice/calculators/LumenCalculator'));
+const InstrumentationCalculator = lazy(
+  () => import('@/components/apprentice/calculators/InstrumentationCalculator')
+);
+const ZsValuesCalculator = lazy(
+  () => import('@/components/apprentice/calculators/ZsValuesCalculator')
+);
+const AdiabaticCalculator = lazy(
+  () => import('@/components/apprentice/calculators/AdiabaticCalculator')
+);
+const ConduitFillCalculator = lazy(
+  () => import('@/components/apprentice/calculators/ConduitFillCalculator')
+);
+const ResistorColourCodeCalculator = lazy(
+  () => import('@/components/apprentice/calculators/ResistorColourCodeCalculator')
+);
+const RingCircuitCalculator = lazy(
+  () => import('@/components/apprentice/calculators/RingCircuitCalculator')
+);
+const DiversityFactorCalculator = lazy(
+  () => import('@/components/apprentice/calculators/DiversityFactorCalculator')
+);
+const EarthFaultLoopCalculator = lazy(
+  () => import('@/components/apprentice/calculators/EarthFaultLoopCalculator')
+);
+const MaximumDemandCalculator = lazy(
+  () => import('@/components/apprentice/calculators/MaximumDemandCalculator')
+);
+const RCDTripTimeCalculator = lazy(
+  () => import('@/components/apprentice/calculators/RCDTripTimeCalculator')
+);
+const SolarPVCalculator = lazy(
+  () => import('@/components/apprentice/calculators/SolarPVCalculator')
+);
+const BatteryBackupCalculator = lazy(
+  () => import('@/components/apprentice/calculators/BatteryBackupCalculator')
+);
+const BS7671ZsLookupCalculator = lazy(
+  () => import('@/components/apprentice/calculators/BS7671ZsLookupCalculator')
+);
+const R1R2Calculator = lazy(() => import('@/components/apprentice/calculators/R1R2Calculator'));
+const PFCCalculator = lazy(() => import('@/components/apprentice/calculators/PFCCalculator'));
+const RCDDiscriminationCalculator = lazy(
+  () => import('@/components/apprentice/calculators/RCDDiscriminationCalculator')
+);
+const CableDeratingCalculator = lazy(
+  () => import('@/components/apprentice/calculators/CableDeratingCalculator')
+);
+const LoadCalculator = lazy(() => import('@/components/apprentice/calculators/LoadCalculator'));
 // Phase 1 New Calculators
-const EnergyCostCalculator = lazy(() => import("@/components/apprentice/calculators/EnergyCostCalculator"));
-const UnitConverterCalculator = lazy(() => import("@/components/apprentice/calculators/UnitConverterCalculator"));
-const WireGaugeCalculator = lazy(() => import("@/components/apprentice/calculators/WireGaugeCalculator"));
+const EnergyCostCalculator = lazy(
+  () => import('@/components/apprentice/calculators/EnergyCostCalculator')
+);
+const UnitConverterCalculator = lazy(
+  () => import('@/components/apprentice/calculators/UnitConverterCalculator')
+);
+const WireGaugeCalculator = lazy(
+  () => import('@/components/apprentice/calculators/WireGaugeCalculator')
+);
 // Phase 2 New Calculators
-const ThreePhasePowerCalculator = lazy(() => import("@/components/apprentice/calculators/ThreePhasePowerCalculator"));
-const MotorStartingCurrentCalculator = lazy(() => import("@/components/apprentice/calculators/MotorStartingCurrentCalculator"));
-const CableCurrentCapacityCalculator = lazy(() => import("@/components/apprentice/calculators/CableCurrentCapacityCalculator"));
-const TransformerCalculator = lazy(() => import("@/components/apprentice/calculators/TransformerCalculator"));
-const LEDDriverCalculator = lazy(() => import("@/components/apprentice/calculators/LEDDriverCalculator"));
+const ThreePhasePowerCalculator = lazy(
+  () => import('@/components/apprentice/calculators/ThreePhasePowerCalculator')
+);
+const MotorStartingCurrentCalculator = lazy(
+  () => import('@/components/apprentice/calculators/MotorStartingCurrentCalculator')
+);
+const CableCurrentCapacityCalculator = lazy(
+  () => import('@/components/apprentice/calculators/CableCurrentCapacityCalculator')
+);
+const TransformerCalculator = lazy(
+  () => import('@/components/apprentice/calculators/TransformerCalculator')
+);
+const LEDDriverCalculator = lazy(
+  () => import('@/components/apprentice/calculators/LEDDriverCalculator')
+);
 // New Fundamental Calculators
-const ACPowerCalculator = lazy(() => import("@/components/apprentice/calculators/ACPowerCalculator"));
-const BasicACCircuitCalculator = lazy(() => import("@/components/apprentice/calculators/BasicACCircuitCalculator"));
+const ACPowerCalculator = lazy(
+  () => import('@/components/apprentice/calculators/ACPowerCalculator')
+);
+const BasicACCircuitCalculator = lazy(
+  () => import('@/components/apprentice/calculators/BasicACCircuitCalculator')
+);
 // Phase Rotation Calculator
-const PhaseRotationCalculator = lazy(() => import("@/components/apprentice/calculators/PhaseRotationCalculator"));
+const PhaseRotationCalculator = lazy(
+  () => import('@/components/apprentice/calculators/PhaseRotationCalculator')
+);
 // New Renewable Energy Calculators
-const BatteryStorageCalculator = lazy(() => import("@/components/apprentice/calculators/BatteryStorageCalculator"));
-const HeatPumpCalculator = lazy(() => import("@/components/apprentice/calculators/HeatPumpCalculator"));
-const EVChargingCalculator = lazy(() => import("@/components/apprentice/calculators/EVChargingCalculator"));
-const ArcFlashCalculator = lazy(() => import("@/components/apprentice/calculators/ArcFlashCalculator"));
-const EVSELoadCalculator = lazy(() => import("@/components/apprentice/calculators/EVSELoadCalculator"));
-const PowerQualityCalculator = lazy(() => import("@/components/apprentice/calculators/PowerQualityCalculator"));
-const EmergencyLightingCalculator = lazy(() => import("@/components/apprentice/calculators/EmergencyLightingCalculator"));
-const SwimmingPoolCalculator = lazy(() => import("@/components/apprentice/calculators/SwimmingPoolCalculator"));
-const SelectivityCalculator = lazy(() => import("@/components/apprentice/calculators/SelectivityCalculator"));
+const BatteryStorageCalculator = lazy(
+  () => import('@/components/apprentice/calculators/BatteryStorageCalculator')
+);
+const HeatPumpCalculator = lazy(
+  () => import('@/components/apprentice/calculators/HeatPumpCalculator')
+);
+const EVChargingCalculator = lazy(
+  () => import('@/components/apprentice/calculators/EVChargingCalculator')
+);
+const ArcFlashCalculator = lazy(
+  () => import('@/components/apprentice/calculators/ArcFlashCalculator')
+);
+const EVSELoadCalculator = lazy(
+  () => import('@/components/apprentice/calculators/EVSELoadCalculator')
+);
+const PowerQualityCalculator = lazy(
+  () => import('@/components/apprentice/calculators/PowerQualityCalculator')
+);
+const EmergencyLightingCalculator = lazy(
+  () => import('@/components/apprentice/calculators/EmergencyLightingCalculator')
+);
+const SwimmingPoolCalculator = lazy(
+  () => import('@/components/apprentice/calculators/SwimmingPoolCalculator')
+);
+const SelectivityCalculator = lazy(
+  () => import('@/components/apprentice/calculators/SelectivityCalculator')
+);
 // Working Renewable Energy Calculators
-const DataCentreCalculator = lazy(() => import("@/components/apprentice/calculators/DataCentreCalculator"));
-const SolarArrayCalculator = lazy(() => import("@/components/apprentice/calculators/SolarArrayCalculator"));
-const WindPowerCalculator = lazy(() => import("@/components/apprentice/calculators/WindPowerCalculator"));
-const MicroHydroCalculator = lazy(() => import("@/components/apprentice/calculators/MicroHydroCalculator"));
-const GridTieInverterCalculator = lazy(() => import("@/components/apprentice/calculators/GridTieInverterCalculator"));
-const OffGridSystemCalculator = lazy(() => import("@/components/apprentice/calculators/OffGridSystemCalculator"));
-const FeedInTariffCalculator = lazy(() => import("@/components/apprentice/calculators/FeedInTariffCalculator"));
-const MarineElectricalCalculator = lazy(() => import("@/components/apprentice/calculators/MarineElectricalCalculator"));
+const DataCentreCalculator = lazy(
+  () => import('@/components/apprentice/calculators/DataCentreCalculator')
+);
+const SolarArrayCalculator = lazy(
+  () => import('@/components/apprentice/calculators/SolarArrayCalculator')
+);
+const WindPowerCalculator = lazy(
+  () => import('@/components/apprentice/calculators/WindPowerCalculator')
+);
+const MicroHydroCalculator = lazy(
+  () => import('@/components/apprentice/calculators/MicroHydroCalculator')
+);
+const GridTieInverterCalculator = lazy(
+  () => import('@/components/apprentice/calculators/GridTieInverterCalculator')
+);
+const OffGridSystemCalculator = lazy(
+  () => import('@/components/apprentice/calculators/OffGridSystemCalculator')
+);
+const FeedInTariffCalculator = lazy(
+  () => import('@/components/apprentice/calculators/FeedInTariffCalculator')
+);
+const MarineElectricalCalculator = lazy(
+  () => import('@/components/apprentice/calculators/MarineElectricalCalculator')
+);
 // New Calculators
-const EarthElectrodeCalculator = lazy(() => import("@/components/apprentice/calculators/EarthElectrodeCalculator"));
-const PowerFactorCorrectionCalculator = lazy(() => import("@/components/apprentice/calculators/PowerFactorCorrectionCalculator"));
-const GeneratorSizingCalculator = lazy(() => import("@/components/apprentice/calculators/GeneratorSizingCalculator"));
+const EarthElectrodeCalculator = lazy(
+  () => import('@/components/apprentice/calculators/EarthElectrodeCalculator')
+);
+const PowerFactorCorrectionCalculator = lazy(
+  () => import('@/components/apprentice/calculators/PowerFactorCorrectionCalculator')
+);
+const GeneratorSizingCalculator = lazy(
+  () => import('@/components/apprentice/calculators/GeneratorSizingCalculator')
+);
 // Final Additions - Practical & Educational
-const ConduitBendingCalculator = lazy(() => import("@/components/apprentice/calculators/ConduitBendingCalculator"));
-const StarDeltaCalculator = lazy(() => import("@/components/apprentice/calculators/StarDeltaCalculator"));
+const ConduitBendingCalculator = lazy(
+  () => import('@/components/apprentice/calculators/ConduitBendingCalculator')
+);
+const StarDeltaCalculator = lazy(
+  () => import('@/components/apprentice/calculators/StarDeltaCalculator')
+);
 
 // Loading fallback component
 const CalculatorLoader = () => (
@@ -81,137 +185,137 @@ const CalculatorLoader = () => (
 );
 
 const OnJobCalculations = () => {
-  const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
+  const [calculatorType, setCalculatorType] = useState<string>('ohms-law');
   const location = useLocation();
 
   // Determine context based on current path
-  const isFromApprenticeHub = location.pathname === "/apprentice/calculators";
-  const pageTitle = isFromApprenticeHub ? "Electrical Calculators" : "On-the-Job Calculations";
+  const isFromApprenticeHub = location.pathname === '/apprentice/calculators';
+  const pageTitle = isFromApprenticeHub ? 'Electrical Calculators' : 'On-the-Job Calculations';
   const pageDescription = isFromApprenticeHub
-    ? "Professional electrical calculations for your studies and work"
-    : "Essential calculators for electrical installations and troubleshooting";
+    ? 'Professional electrical calculations for your studies and work'
+    : 'Essential calculators for electrical installations and troubleshooting';
 
   const renderCalculator = () => {
     switch (calculatorType) {
-      case "ohms-law":
+      case 'ohms-law':
         return <OhmsLawCalculator />;
-      case "ac-power":
+      case 'ac-power':
         return <ACPowerCalculator />;
-      case "basic-ac-circuit":
+      case 'basic-ac-circuit':
         return <BasicACCircuitCalculator />;
-      case "voltage-drop":
+      case 'voltage-drop':
         return <VoltageDropCalculator />;
-      case "power-factor":
+      case 'power-factor':
         return <PowerFactorCalculator />;
-      case "cable-size":
+      case 'cable-size':
         return <CableSizingCalculator />;
-      case "lumen":
+      case 'lumen':
         return <LumenCalculator />;
-      case "instrumentation":
+      case 'instrumentation':
         return <InstrumentationCalculator />;
-      case "zs-values":
+      case 'zs-values':
         return <ZsValuesCalculator />;
-      case "adiabatic":
+      case 'adiabatic':
         return <AdiabaticCalculator />;
-      case "conduit-fill":
+      case 'conduit-fill':
         return <ConduitFillCalculator />;
-      case "resistor-colour-code":
+      case 'resistor-colour-code':
         return <ResistorColourCodeCalculator />;
-      case "ring-circuit":
+      case 'ring-circuit':
         return <RingCircuitCalculator />;
-      case "diversity-factor":
+      case 'diversity-factor':
         return <DiversityFactorCalculator />;
-      case "earth-fault-loop":
+      case 'earth-fault-loop':
         return <EarthFaultLoopCalculator />;
-      case "maximum-demand":
+      case 'maximum-demand':
         return <MaximumDemandCalculator />;
-      case "rcd-trip-time":
+      case 'rcd-trip-time':
         return <RCDTripTimeCalculator />;
-      case "solar-pv":
+      case 'solar-pv':
         return <SolarPVCalculator />;
-      case "battery-backup":
+      case 'battery-backup':
         return <BatteryBackupCalculator />;
-      case "bs7671-zs-lookup":
+      case 'bs7671-zs-lookup':
         return <BS7671ZsLookupCalculator />;
-      case "r1r2":
+      case 'r1r2':
         return <R1R2Calculator />;
-      case "pfc":
+      case 'pfc':
         return <PFCCalculator />;
-      case "rcd-discrimination":
+      case 'rcd-discrimination':
         return <RCDDiscriminationCalculator />;
-      case "cable-derating":
+      case 'cable-derating':
         return <CableDeratingCalculator />;
-      case "load":
+      case 'load':
         return <LoadCalculator />;
-      case "phase-rotation":
+      case 'phase-rotation':
         return <PhaseRotationCalculator />;
       // Phase 1 New Calculators
-      case "energy-cost":
+      case 'energy-cost':
         return <EnergyCostCalculator />;
-      case "unit-converter":
+      case 'unit-converter':
         return <UnitConverterCalculator />;
-      case "wire-gauge":
+      case 'wire-gauge':
         return <WireGaugeCalculator />;
       // Phase 2 New Calculators
-      case "three-phase-power":
+      case 'three-phase-power':
         return <ThreePhasePowerCalculator />;
-      case "motor-starting-current":
+      case 'motor-starting-current':
         return <MotorStartingCurrentCalculator />;
-      case "cable-current-capacity":
+      case 'cable-current-capacity':
         return <CableCurrentCapacityCalculator />;
-      case "transformer-calculator":
+      case 'transformer-calculator':
         return <TransformerCalculator />;
-      case "led-driver":
+      case 'led-driver':
         return <LEDDriverCalculator />;
       // New Renewable Energy Calculators
-      case "battery-storage":
+      case 'battery-storage':
         return <BatteryStorageCalculator />;
-      case "heat-pump":
+      case 'heat-pump':
         return <HeatPumpCalculator />;
-      case "ev-charging":
+      case 'ev-charging':
         return <EVChargingCalculator />;
-      case "evse-load":
+      case 'evse-load':
         return <EVSELoadCalculator />;
-      case "arc-flash":
+      case 'arc-flash':
         return <ArcFlashCalculator />;
-      case "power-quality":
+      case 'power-quality':
         return <PowerQualityCalculator />;
-      case "emergency-lighting":
+      case 'emergency-lighting':
         return <EmergencyLightingCalculator />;
-      case "swimming-pool":
+      case 'swimming-pool':
         return <SwimmingPoolCalculator />;
-      case "selectivity":
+      case 'selectivity':
         return <SelectivityCalculator />;
       // Working Renewable Energy Calculators
-      case "solar-array":
+      case 'solar-array':
         return <SolarArrayCalculator />;
-      case "wind-power":
+      case 'wind-power':
         return <WindPowerCalculator />;
-      case "grid-tie-inverter":
+      case 'grid-tie-inverter':
         return <GridTieInverterCalculator />;
-      case "micro-hydro":
+      case 'micro-hydro':
         return <MicroHydroCalculator />;
-      case "off-grid-system":
+      case 'off-grid-system':
         return <OffGridSystemCalculator />;
-      case "feed-in-tariff":
+      case 'feed-in-tariff':
         return <FeedInTariffCalculator />;
       // Working Specialised Applications
-      case "data-centre":
+      case 'data-centre':
         return <DataCentreCalculator />;
       // Working Specialist Locations
-      case "marine-electrical":
+      case 'marine-electrical':
         return <MarineElectricalCalculator />;
       // New Calculators
-      case "earth-electrode":
+      case 'earth-electrode':
         return <EarthElectrodeCalculator />;
-      case "power-factor-correction":
+      case 'power-factor-correction':
         return <PowerFactorCorrectionCalculator />;
-      case "generator-sizing":
+      case 'generator-sizing':
         return <GeneratorSizingCalculator />;
       // Final Additions
-      case "conduit-bending":
+      case 'conduit-bending':
         return <ConduitBendingCalculator />;
-      case "star-delta":
+      case 'star-delta':
         return <StarDeltaCalculator />;
       default:
         return <OhmsLawCalculator />;
@@ -232,9 +336,7 @@ const OnJobCalculations = () => {
       <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
 
       {/* Dynamic Calculator with Suspense */}
-      <Suspense fallback={<CalculatorLoader />}>
-        {renderCalculator()}
-      </Suspense>
+      <Suspense fallback={<CalculatorLoader />}>{renderCalculator()}</Suspense>
     </div>
   );
 };

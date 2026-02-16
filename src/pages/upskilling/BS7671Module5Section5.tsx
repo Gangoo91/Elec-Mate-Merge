@@ -1,84 +1,88 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "ip-second-digit",
-    question: "What does the second digit in an IP rating refer to?",
+    id: 'ip-second-digit',
+    question: 'What does the second digit in an IP rating refer to?',
     options: [
-      "Protection against solid objects",
-      "Protection against liquids",
-      "Temperature resistance",
-      "Mechanical strength"
+      'Protection against solid objects',
+      'Protection against liquids',
+      'Temperature resistance',
+      'Mechanical strength',
     ],
     correctIndex: 1,
-    explanation: "The second digit in an IP rating specifically refers to protection against liquids, ranging from IPX0 (no protection) to IPX8 (continuous immersion)."
+    explanation:
+      'The second digit in an IP rating specifically refers to protection against liquids, ranging from IPX0 (no protection) to IPX8 (continuous immersion).',
   },
   {
-    id: "bathroom-ip",
+    id: 'bathroom-ip',
     question: "What's the minimum IP rating for most bathroom fixtures?",
-    options: [
-      "IP20",
-      "IP33",
-      "IP44",
-      "IP65"
-    ],
+    options: ['IP20', 'IP33', 'IP44', 'IP65'],
     correctIndex: 2,
-    explanation: "IP44 is the minimum rating for most bathroom fixtures, providing protection against solid objects >1mm and splashing water from any direction."
+    explanation:
+      'IP44 is the minimum rating for most bathroom fixtures, providing protection against solid objects >1mm and splashing water from any direction.',
   },
   {
-    id: "lszh-purpose",
-    question: "What is LSZH cable designed to do during a fire?",
+    id: 'lszh-purpose',
+    question: 'What is LSZH cable designed to do during a fire?',
     options: [
-      "Prevent fire spread completely",
-      "Maintain circuit integrity for longer",
-      "Emit low smoke and zero halogen gases",
-      "Provide better electrical insulation"
+      'Prevent fire spread completely',
+      'Maintain circuit integrity for longer',
+      'Emit low smoke and zero halogen gases',
+      'Provide better electrical insulation',
     ],
     correctIndex: 2,
-    explanation: "LSZH (Low Smoke Zero Halogen) cables are designed to emit minimal smoke and no halogen gases during a fire, reducing toxic fume hazards for occupants."
-  }
+    explanation:
+      'LSZH (Low Smoke Zero Halogen) cables are designed to emit minimal smoke and no halogen gases during a fire, reducing toxic fume hazards for occupants.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What IP rating do I need for outdoor lighting?",
-    answer: "Generally IP65 minimum for outdoor lighting - protected against dust ingress and water jets from any direction. More exposed locations may need IP66 or higher."
+    question: 'What IP rating do I need for outdoor lighting?',
+    answer:
+      'Generally IP65 minimum for outdoor lighting - protected against dust ingress and water jets from any direction. More exposed locations may need IP66 or higher.',
   },
   {
-    question: "Can IP ratings be combined with fire resistance?",
-    answer: "Yes, equipment can have both IP ratings for environmental protection and fire resistance ratings for circuit integrity. They address different hazards and both may be required."
+    question: 'Can IP ratings be combined with fire resistance?',
+    answer:
+      'Yes, equipment can have both IP ratings for environmental protection and fire resistance ratings for circuit integrity. They address different hazards and both may be required.',
   },
   {
     question: "What's the difference between LSZH and fire-resistant cable?",
-    answer: "LSZH reduces smoke and toxic gases during fire but doesn't maintain circuit function. Fire-resistant cables maintain circuit integrity for a specified time. Some cables combine both properties."
+    answer:
+      "LSZH reduces smoke and toxic gases during fire but doesn't maintain circuit function. Fire-resistant cables maintain circuit integrity for a specified time. Some cables combine both properties.",
   },
   {
-    question: "How long must fire alarm cables operate during a fire?",
-    answer: "Typically 30 minutes minimum for small premises, 60 minutes for most buildings, and up to 120 minutes for high-rise or complex buildings. BS5839 provides specific guidance."
-  }
+    question: 'How long must fire alarm cables operate during a fire?',
+    answer:
+      'Typically 30 minutes minimum for small premises, 60 minutes for most buildings, and up to 120 minutes for high-rise or complex buildings. BS5839 provides specific guidance.',
+  },
 ];
 
 const quizQuestion = {
-  question: "What could happen if an IP20 enclosure is installed outdoors?",
+  question: 'What could happen if an IP20 enclosure is installed outdoors?',
   options: [
-    "Improved ventilation",
-    "Better heat dissipation",
-    "Water ingress causing damage and safety hazards",
-    "Enhanced accessibility"
+    'Improved ventilation',
+    'Better heat dissipation',
+    'Water ingress causing damage and safety hazards',
+    'Enhanced accessibility',
   ],
   correctAnswer: 2,
-  explanation: "IP20 enclosures offer minimal protection and would allow water ingress outdoors, leading to equipment damage, corrosion, electrical faults, and potential safety hazards."
+  explanation:
+    'IP20 enclosures offer minimal protection and would allow water ingress outdoors, leading to equipment damage, corrosion, electrical faults, and potential safety hazards.',
 };
 
 const BS7671Module5Section5 = () => {
   useSEO({
-    title: "Environmental Protection - IP Ratings & Fire Resistance | BS7671 Module 5.5",
-    description: "Learn about IP ratings, fire resistance requirements, and environmental protection for electrical equipment per BS7671."
+    title: 'Environmental Protection - IP Ratings & Fire Resistance | BS7671 Module 5.5',
+    description:
+      'Learn about IP ratings, fire resistance requirements, and environmental protection for electrical equipment per BS7671.',
   });
 
   return (
@@ -120,17 +124,29 @@ const BS7671Module5Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>IP ratings:</strong> Two digits - solids protection, liquids protection</li>
-              <li><strong>Fire resistance:</strong> Maintains circuit integrity during fire</li>
-              <li><strong>LSZH:</strong> Reduces toxic smoke during fire</li>
+              <li>
+                <strong>IP ratings:</strong> Two digits - solids protection, liquids protection
+              </li>
+              <li>
+                <strong>Fire resistance:</strong> Maintains circuit integrity during fire
+              </li>
+              <li>
+                <strong>LSZH:</strong> Reduces toxic smoke during fire
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Common IP Ratings</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>IP20:</strong> Basic indoor - fingers protected</li>
-              <li><strong>IP44:</strong> Bathrooms - splash protected</li>
-              <li><strong>IP65:</strong> Outdoor - dust tight, water jets</li>
+              <li>
+                <strong>IP20:</strong> Basic indoor - fingers protected
+              </li>
+              <li>
+                <strong>IP44:</strong> Bathrooms - splash protected
+              </li>
+              <li>
+                <strong>IP65:</strong> Outdoor - dust tight, water jets
+              </li>
             </ul>
           </div>
         </div>
@@ -140,10 +156,10 @@ const BS7671Module5Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "How IP ratings define protection against solids and liquids",
-              "Required protection levels for different environments",
-              "When fire-resistant equipment is needed",
-              "BS7671 guidance for environmental durability"
+              'How IP ratings define protection against solids and liquids',
+              'Required protection levels for different environments',
+              'When fire-resistant equipment is needed',
+              'BS7671 guidance for environmental durability',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -163,34 +179,72 @@ const BS7671Module5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Ingress Protection (IP) ratings define protection against solid objects and liquids using two digits. The first digit indicates solid object protection, the second indicates liquid protection.
+              Ingress Protection (IP) ratings define protection against solid objects and liquids
+              using two digits. The first digit indicates solid object protection, the second
+              indicates liquid protection.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">First Digit - Solid Objects</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  First Digit - Solid Objects
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>IP0X:</strong> No protection</li>
-                  <li><strong>IP1X:</strong> &gt;50mm objects (back of hand)</li>
-                  <li><strong>IP2X:</strong> &gt;12.5mm objects (fingers)</li>
-                  <li><strong>IP3X:</strong> &gt;2.5mm objects (tools, wires)</li>
-                  <li><strong>IP4X:</strong> &gt;1mm objects (small wires)</li>
-                  <li><strong>IP5X:</strong> Dust protected (limited ingress)</li>
-                  <li><strong>IP6X:</strong> Dust tight (no ingress)</li>
+                  <li>
+                    <strong>IP0X:</strong> No protection
+                  </li>
+                  <li>
+                    <strong>IP1X:</strong> &gt;50mm objects (back of hand)
+                  </li>
+                  <li>
+                    <strong>IP2X:</strong> &gt;12.5mm objects (fingers)
+                  </li>
+                  <li>
+                    <strong>IP3X:</strong> &gt;2.5mm objects (tools, wires)
+                  </li>
+                  <li>
+                    <strong>IP4X:</strong> &gt;1mm objects (small wires)
+                  </li>
+                  <li>
+                    <strong>IP5X:</strong> Dust protected (limited ingress)
+                  </li>
+                  <li>
+                    <strong>IP6X:</strong> Dust tight (no ingress)
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Second Digit - Liquids</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Second Digit - Liquids
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>IPX0:</strong> No protection</li>
-                  <li><strong>IPX1:</strong> Dripping water (vertical)</li>
-                  <li><strong>IPX2:</strong> Dripping water (15° tilt)</li>
-                  <li><strong>IPX3:</strong> Spraying water (60° from vertical)</li>
-                  <li><strong>IPX4:</strong> Splashing water (all directions)</li>
-                  <li><strong>IPX5:</strong> Water jets (6.3mm nozzle)</li>
-                  <li><strong>IPX6:</strong> Powerful water jets (12.5mm)</li>
-                  <li><strong>IPX7:</strong> Temporary immersion (1m depth)</li>
-                  <li><strong>IPX8:</strong> Continuous immersion</li>
+                  <li>
+                    <strong>IPX0:</strong> No protection
+                  </li>
+                  <li>
+                    <strong>IPX1:</strong> Dripping water (vertical)
+                  </li>
+                  <li>
+                    <strong>IPX2:</strong> Dripping water (15° tilt)
+                  </li>
+                  <li>
+                    <strong>IPX3:</strong> Spraying water (60° from vertical)
+                  </li>
+                  <li>
+                    <strong>IPX4:</strong> Splashing water (all directions)
+                  </li>
+                  <li>
+                    <strong>IPX5:</strong> Water jets (6.3mm nozzle)
+                  </li>
+                  <li>
+                    <strong>IPX6:</strong> Powerful water jets (12.5mm)
+                  </li>
+                  <li>
+                    <strong>IPX7:</strong> Temporary immersion (1m depth)
+                  </li>
+                  <li>
+                    <strong>IPX8:</strong> Continuous immersion
+                  </li>
                 </ul>
               </div>
             </div>
@@ -207,7 +261,8 @@ const BS7671Module5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different environments require specific IP ratings based on the presence of dust, moisture, chemicals, and other environmental factors.
+              Different environments require specific IP ratings based on the presence of dust,
+              moisture, chemicals, and other environmental factors.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-4 my-6">
@@ -255,32 +310,56 @@ const BS7671Module5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Fire resistance and reaction to fire properties are critical for maintaining safety during fire incidents, ensuring escape routes remain viable and emergency systems continue operating.
+              Fire resistance and reaction to fire properties are critical for maintaining safety
+              during fire incidents, ensuring escape routes remain viable and emergency systems
+              continue operating.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">LSZH (Low Smoke Zero Halogen)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  LSZH (Low Smoke Zero Halogen)
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Low smoke:</strong> Minimal smoke emission</li>
-                  <li><strong>Zero halogen:</strong> No toxic halogen gases</li>
-                  <li><strong>Applications:</strong> Escape routes, public buildings</li>
-                  <li><strong>Benefit:</strong> Better visibility, safer evacuation</li>
+                  <li>
+                    <strong>Low smoke:</strong> Minimal smoke emission
+                  </li>
+                  <li>
+                    <strong>Zero halogen:</strong> No toxic halogen gases
+                  </li>
+                  <li>
+                    <strong>Applications:</strong> Escape routes, public buildings
+                  </li>
+                  <li>
+                    <strong>Benefit:</strong> Better visibility, safer evacuation
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fire-Resistant Cables</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Fire-Resistant Cables
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Purpose:</strong> Maintain circuit integrity in fire</li>
-                  <li><strong>Duration:</strong> 30, 60, 120 minutes rated</li>
-                  <li><strong>Applications:</strong> Fire alarms, emergency lighting</li>
-                  <li><strong>Types:</strong> FP, FRHF, mineral insulated (MI)</li>
+                  <li>
+                    <strong>Purpose:</strong> Maintain circuit integrity in fire
+                  </li>
+                  <li>
+                    <strong>Duration:</strong> 30, 60, 120 minutes rated
+                  </li>
+                  <li>
+                    <strong>Applications:</strong> Fire alarms, emergency lighting
+                  </li>
+                  <li>
+                    <strong>Types:</strong> FP, FRHF, mineral insulated (MI)
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Critical Circuits Requiring Fire Resistance:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Critical Circuits Requiring Fire Resistance:
+              </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Fire Alarms</p>
@@ -313,26 +392,45 @@ const BS7671Module5Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Equipment must be chosen for both operational and fault conditions. Factors include UV exposure, vibration, heat, chemicals, and mechanical stress.
+              Equipment must be chosen for both operational and fault conditions. Factors include UV
+              exposure, vibration, heat, chemicals, and mechanical stress.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Environmental Factors</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Environmental Factors
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Temperature cycling:</strong> Expansion/contraction stress</li>
-                  <li><strong>UV radiation:</strong> Plastic degradation</li>
-                  <li><strong>Moisture:</strong> Condensation, seal deterioration</li>
-                  <li><strong>Chemicals:</strong> Material compatibility</li>
+                  <li>
+                    <strong>Temperature cycling:</strong> Expansion/contraction stress
+                  </li>
+                  <li>
+                    <strong>UV radiation:</strong> Plastic degradation
+                  </li>
+                  <li>
+                    <strong>Moisture:</strong> Condensation, seal deterioration
+                  </li>
+                  <li>
+                    <strong>Chemicals:</strong> Material compatibility
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mechanical Stresses</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Vibration:</strong> Machinery, traffic, building movement</li>
-                  <li><strong>Impact:</strong> Accidental damage, maintenance</li>
-                  <li><strong>Vandalism:</strong> Public area protection</li>
-                  <li><strong>Installation:</strong> Handling during fitting</li>
+                  <li>
+                    <strong>Vibration:</strong> Machinery, traffic, building movement
+                  </li>
+                  <li>
+                    <strong>Impact:</strong> Accidental damage, maintenance
+                  </li>
+                  <li>
+                    <strong>Vandalism:</strong> Public area protection
+                  </li>
+                  <li>
+                    <strong>Installation:</strong> Handling during fitting
+                  </li>
                 </ul>
               </div>
             </div>
@@ -340,9 +438,15 @@ const BS7671Module5Section5 = () => {
             <div className="p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-white mb-2">Selection Considerations</p>
               <ul className="text-sm text-white/90 space-y-1">
-                <li><strong>Materials:</strong> UV-stable polymers, corrosion-resistant metals</li>
-                <li><strong>Design:</strong> Adequate ventilation, flexible connections, drainage</li>
-                <li><strong>Maintenance:</strong> Accessible inspection points, replaceable seals</li>
+                <li>
+                  <strong>Materials:</strong> UV-stable polymers, corrosion-resistant metals
+                </li>
+                <li>
+                  <strong>Design:</strong> Adequate ventilation, flexible connections, drainage
+                </li>
+                <li>
+                  <strong>Maintenance:</strong> Accessible inspection points, replaceable seals
+                </li>
               </ul>
             </div>
           </div>
@@ -352,18 +456,28 @@ const BS7671Module5Section5 = () => {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-6">Real World Application</h2>
           <div className="p-5 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-            <h3 className="text-sm font-medium text-elec-yellow mb-3">Underground Car Park Lighting Control</h3>
+            <h3 className="text-sm font-medium text-elec-yellow mb-3">
+              Underground Car Park Lighting Control
+            </h3>
             <p className="text-sm text-white/90 leading-relaxed mb-4">
-              A lighting control panel is installed in an underground car park. Due to humidity, frequent vehicle wash-downs, and poor ventilation, the equipment must meet IP66 and corrosion resistance requirements.
+              A lighting control panel is installed in an underground car park. Due to humidity,
+              frequent vehicle wash-downs, and poor ventilation, the equipment must meet IP66 and
+              corrosion resistance requirements.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 text-xs text-white/80">
               <div>
                 <p className="font-medium text-white mb-1">Environment Analysis</p>
-                <p>High humidity (&gt;80%), regular pressure washing, salt exposure from road treatments, poor air circulation, and temperature variations.</p>
+                <p>
+                  High humidity (&gt;80%), regular pressure washing, salt exposure from road
+                  treatments, poor air circulation, and temperature variations.
+                </p>
               </div>
               <div>
                 <p className="font-medium text-white mb-1">Solution</p>
-                <p>IP66-rated stainless steel enclosure with LSZH internal wiring, corrosion-resistant cable entries, elevated mounting, and internal heater.</p>
+                <p>
+                  IP66-rated stainless steel enclosure with LSZH internal wiring,
+                  corrosion-resistant cable entries, elevated mounting, and internal heater.
+                </p>
               </div>
             </div>
           </div>
@@ -384,7 +498,9 @@ const BS7671Module5Section5 = () => {
 
         {/* Quick Reference */}
         <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
-          <h3 className="text-sm font-medium text-white mb-4">Quick Reference - Common IP Ratings</h3>
+          <h3 className="text-sm font-medium text-white mb-4">
+            Quick Reference - Common IP Ratings
+          </h3>
           <div className="grid sm:grid-cols-3 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">Indoor</p>

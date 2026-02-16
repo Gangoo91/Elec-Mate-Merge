@@ -1,10 +1,10 @@
-import * as React from "react";
-import { IOSInput } from "@/components/ui/ios-input";
-import { IOSSelect } from "@/components/ui/ios-select";
-import { Info, Zap, ChevronDown, Building2, Calendar, Wrench, AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { cn } from "@/lib/utils";
+import * as React from 'react';
+import { IOSInput } from '@/components/ui/ios-input';
+import { IOSSelect } from '@/components/ui/ios-select';
+import { Info, Zap, ChevronDown, Building2, Calendar, Wrench, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 
 interface SupplyDetailsStepProps {
   voltage: number;
@@ -51,7 +51,7 @@ export const SupplyDetailsStep = ({
   mainSwitchRating,
   setMainSwitchRating,
   propertyAge,
-  setPropertyAge
+  setPropertyAge,
 }: SupplyDetailsStepProps) => {
   const [showAdvanced, setShowAdvanced] = React.useState(false);
 
@@ -60,47 +60,46 @@ export const SupplyDetailsStep = ({
     switch (installationType) {
       case 'domestic':
         return [
-          { value: "60", label: "60A" },
-          { value: "80", label: "80A" },
-          { value: "100", label: "100A (Standard)" },
-          { value: "125", label: "125A" },
+          { value: '60', label: '60A' },
+          { value: '80', label: '80A' },
+          { value: '100', label: '100A (Standard)' },
+          { value: '125', label: '125A' },
         ];
       case 'commercial':
         return [
-          { value: "100", label: "100A" },
-          { value: "125", label: "125A" },
-          { value: "160", label: "160A" },
-          { value: "200", label: "200A (Standard)" },
-          { value: "250", label: "250A" },
-          { value: "315", label: "315A" },
-          { value: "400", label: "400A" },
+          { value: '100', label: '100A' },
+          { value: '125', label: '125A' },
+          { value: '160', label: '160A' },
+          { value: '200', label: '200A (Standard)' },
+          { value: '250', label: '250A' },
+          { value: '315', label: '315A' },
+          { value: '400', label: '400A' },
         ];
       case 'industrial':
         return [
-          { value: "160", label: "160A" },
-          { value: "200", label: "200A" },
-          { value: "250", label: "250A" },
-          { value: "315", label: "315A" },
-          { value: "400", label: "400A (Standard)" },
-          { value: "500", label: "500A" },
-          { value: "630", label: "630A" },
-          { value: "800", label: "800A" },
-          { value: "1000", label: "1000A" },
+          { value: '160', label: '160A' },
+          { value: '200', label: '200A' },
+          { value: '250', label: '250A' },
+          { value: '315', label: '315A' },
+          { value: '400', label: '400A (Standard)' },
+          { value: '500', label: '500A' },
+          { value: '630', label: '630A' },
+          { value: '800', label: '800A' },
+          { value: '1000', label: '1000A' },
         ];
       default:
         return [
-          { value: "60", label: "60A" },
-          { value: "80", label: "80A" },
-          { value: "100", label: "100A (Standard)" },
-          { value: "125", label: "125A" },
+          { value: '60', label: '60A' },
+          { value: '80', label: '80A' },
+          { value: '100', label: '100A (Standard)' },
+          { value: '125', label: '125A' },
         ];
     }
   }, [installationType]);
 
   // Combined supply type (voltage + phases)
-  const supplyType = phases === 'single'
-    ? (voltage === 110 ? '110-single' : '230-single')
-    : '400-three';
+  const supplyType =
+    phases === 'single' ? (voltage === 110 ? '110-single' : '230-single') : '400-three';
 
   const handleSupplyTypeChange = (value: string) => {
     switch (value) {
@@ -139,14 +138,20 @@ export const SupplyDetailsStep = ({
   );
 
   // Premium info alert
-  const InfoAlert = ({ children, variant = 'info' }: { children: React.ReactNode; variant?: 'info' | 'warning' }) => (
+  const InfoAlert = ({
+    children,
+    variant = 'info',
+  }: {
+    children: React.ReactNode;
+    variant?: 'info' | 'warning';
+  }) => (
     <div
       className={cn(
-        "flex items-start gap-2 p-3 rounded-xl border",
-        "bg-white/[0.03]",
+        'flex items-start gap-2 p-3 rounded-xl border',
+        'bg-white/[0.03]',
         variant === 'warning'
-          ? "border-orange-500/30 text-orange-200"
-          : "border-blue-500/30 text-blue-200"
+          ? 'border-orange-500/30 text-orange-200'
+          : 'border-blue-500/30 text-blue-200'
       )}
     >
       {variant === 'warning' ? (
@@ -162,7 +167,8 @@ export const SupplyDetailsStep = ({
     <div className="space-y-6">
       {/* Smart defaults info */}
       <InfoAlert>
-        Smart defaults pre-filled based on your installation type. Adjust only if you have specific requirements.
+        Smart defaults pre-filled based on your installation type. Adjust only if you have specific
+        requirements.
       </InfoAlert>
 
       {/* Property Context Section */}
@@ -175,10 +181,10 @@ export const SupplyDetailsStep = ({
           onValueChange={(v) => setPropertyAge((v as any) || undefined)}
           placeholder="Select age (helps AI adjust factors)..."
           options={[
-            { value: "new-build", label: "New Build (< 5 years)" },
-            { value: "modern", label: "Modern (5-20 years)" },
-            { value: "older", label: "Older (20-40 years)" },
-            { value: "very-old", label: "Very Old (40+ years)" },
+            { value: 'new-build', label: 'New Build (< 5 years)' },
+            { value: 'modern', label: 'Modern (5-20 years)' },
+            { value: 'older', label: 'Older (20-40 years)' },
+            { value: 'very-old', label: 'Very Old (40+ years)' },
           ]}
           hint="Adjusts diversity factors and upgrade recommendations"
         />
@@ -193,9 +199,17 @@ export const SupplyDetailsStep = ({
           value={supplyType}
           onValueChange={handleSupplyTypeChange}
           options={[
-            { value: "110-single", label: "110V Single Phase", description: "Site/Temporary supply" },
-            { value: "230-single", label: "230V Single Phase", description: "UK Standard domestic" },
-            { value: "400-three", label: "400V Three Phase", description: "Commercial/Industrial" },
+            {
+              value: '110-single',
+              label: '110V Single Phase',
+              description: 'Site/Temporary supply',
+            },
+            {
+              value: '230-single',
+              label: '230V Single Phase',
+              description: 'UK Standard domestic',
+            },
+            { value: '400-three', label: '400V Three Phase', description: 'Commercial/Industrial' },
           ]}
         />
 
@@ -230,13 +244,13 @@ export const SupplyDetailsStep = ({
             value="auto"
             onValueChange={() => {}}
             options={[
-              { value: "auto", label: "Auto (Based on circuits)" },
-              { value: "6", label: "6 Way" },
-              { value: "8", label: "8 Way" },
-              { value: "10", label: "10 Way" },
-              { value: "12", label: "12 Way" },
-              { value: "16", label: "16 Way" },
-              { value: "18", label: "18 Way" },
+              { value: 'auto', label: 'Auto (Based on circuits)' },
+              { value: '6', label: '6 Way' },
+              { value: '8', label: '8 Way' },
+              { value: '10', label: '10 Way' },
+              { value: '12', label: '12 Way' },
+              { value: '16', label: '16 Way' },
+              { value: '18', label: '18 Way' },
             ]}
           />
 
@@ -245,9 +259,9 @@ export const SupplyDetailsStep = ({
             value="split-load"
             onValueChange={() => {}}
             options={[
-              { value: "split-load", label: "Split Load (Standard)" },
-              { value: "high-integrity", label: "High Integrity" },
-              { value: "main-switch", label: "Main Switch Only" },
+              { value: 'split-load', label: 'Split Load (Standard)' },
+              { value: 'high-integrity', label: 'High Integrity' },
+              { value: 'main-switch', label: 'Main Switch Only' },
             ]}
           />
         </div>
@@ -264,9 +278,9 @@ export const SupplyDetailsStep = ({
             value={earthingSystem}
             onValueChange={(v: any) => setEarthingSystem(v)}
             options={[
-              { value: "TN-S", label: "TN-S (PME)" },
-              { value: "TN-C-S", label: "TN-C-S (Most common)" },
-              { value: "TT", label: "TT (Rod earthing)" },
+              { value: 'TN-S', label: 'TN-S (PME)' },
+              { value: 'TN-C-S', label: 'TN-C-S (Most common)' },
+              { value: 'TT', label: 'TT (Rod earthing)' },
             ]}
             hint="Check your consumer unit label"
           />
@@ -296,11 +310,11 @@ export const SupplyDetailsStep = ({
           <Button
             variant="ghost"
             className={cn(
-              "w-full justify-between h-12 px-4 rounded-xl",
-              "bg-white/5 border border-white/[0.08]",
-              "hover:bg-white/10 hover:border-white/15",
-              "transition-all duration-ios-fast",
-              "touch-manipulation"
+              'w-full justify-between h-12 px-4 rounded-xl',
+              'bg-white/5 border border-white/[0.08]',
+              'hover:bg-white/10 hover:border-white/15',
+              'transition-all duration-ios-fast',
+              'touch-manipulation'
             )}
           >
             <span className="flex items-center gap-2 font-medium text-white/80">
@@ -308,8 +322,8 @@ export const SupplyDetailsStep = ({
             </span>
             <ChevronDown
               className={cn(
-                "h-4 w-4 text-white/60 transition-transform duration-ios-normal",
-                showAdvanced && "rotate-180"
+                'h-4 w-4 text-white/60 transition-transform duration-ios-normal',
+                showAdvanced && 'rotate-180'
               )}
             />
           </Button>
@@ -322,11 +336,11 @@ export const SupplyDetailsStep = ({
               value={installationMethod}
               onValueChange={setInstallationMethod}
               options={[
-                { value: "clipped-direct", label: "Clipped Direct", description: "Most common" },
-                { value: "in-conduit", label: "In Conduit" },
-                { value: "in-trunking", label: "In Trunking" },
-                { value: "buried-direct", label: "Buried Direct" },
-                { value: "in-insulation", label: "In Thermal Insulation" },
+                { value: 'clipped-direct', label: 'Clipped Direct', description: 'Most common' },
+                { value: 'in-conduit', label: 'In Conduit' },
+                { value: 'in-trunking', label: 'In Trunking' },
+                { value: 'buried-direct', label: 'Buried Direct' },
+                { value: 'in-insulation', label: 'In Thermal Insulation' },
               ]}
             />
 

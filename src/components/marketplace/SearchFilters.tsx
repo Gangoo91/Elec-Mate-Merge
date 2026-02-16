@@ -4,7 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { SearchFilters as SearchFiltersType, SearchFacets, SortOption } from '@/hooks/useMarketplaceSearch';
+import {
+  SearchFilters as SearchFiltersType,
+  SearchFacets,
+  SortOption,
+} from '@/hooks/useMarketplaceSearch';
 import { cn } from '@/lib/utils';
 
 interface SearchFiltersProps {
@@ -93,9 +97,7 @@ export function SearchFilters({
                   />
                   <span className="text-sm">{cat.name}</span>
                 </div>
-                <span className="text-xs text-muted-foreground">
-                  ({cat.count})
-                </span>
+                <span className="text-xs text-muted-foreground">({cat.count})</span>
               </label>
             ))}
           </div>
@@ -128,9 +130,7 @@ export function SearchFilters({
                   />
                   <span className="text-sm">{supplier.name}</span>
                 </div>
-                <span className="text-xs text-muted-foreground">
-                  ({supplier.count})
-                </span>
+                <span className="text-xs text-muted-foreground">({supplier.count})</span>
               </label>
             ))}
           </div>
@@ -144,19 +144,13 @@ export function SearchFilters({
           max={facets.priceRange.max}
           currentMin={filters.minPrice}
           currentMax={filters.maxPrice}
-          onChange={(minPrice, maxPrice) =>
-            onFiltersChange({ ...filters, minPrice, maxPrice })
-          }
+          onChange={(minPrice, maxPrice) => onFiltersChange({ ...filters, minPrice, maxPrice })}
         />
       </FilterSection>
 
       {/* Clear Filters */}
       {activeFilterCount > 0 && (
-        <Button
-          variant="outline"
-          onClick={clearFilters}
-          className="w-full h-11 touch-manipulation"
-        >
+        <Button variant="outline" onClick={clearFilters} className="w-full h-11 touch-manipulation">
           <X className="h-4 w-4 mr-2" />
           Clear all filters ({activeFilterCount})
         </Button>
@@ -188,10 +182,7 @@ export function SearchFilters({
       <div className="lg:hidden">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              className="h-11 touch-manipulation"
-            >
+            <Button variant="outline" className="h-11 touch-manipulation">
               <Filter className="h-4 w-4 mr-2" />
               Filters
               {activeFilterCount > 0 && (
@@ -304,10 +295,7 @@ function PriceRangeFilter({
   currentMax?: number;
   onChange: (min?: number, max?: number) => void;
 }) {
-  const [localRange, setLocalRange] = useState([
-    currentMin ?? min,
-    currentMax ?? max,
-  ]);
+  const [localRange, setLocalRange] = useState([currentMin ?? min, currentMax ?? max]);
 
   const handleChange = (values: number[]) => {
     setLocalRange(values);

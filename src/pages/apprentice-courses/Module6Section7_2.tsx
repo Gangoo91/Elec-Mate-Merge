@@ -1,87 +1,138 @@
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const Module6Section7_2 = () => {
   useSEO(
-    "Electrical Installation Certificates (EICs) - Level 2 Module 6 Section 7.2",
-    "Understanding Electrical Installation Certificates for new installations and major alterations"
+    'Electrical Installation Certificates (EICs) - Level 2 Module 6 Section 7.2',
+    'Understanding Electrical Installation Certificates for new installations and major alterations'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What does EIC stand for?",
-      options: ["Electrical Inspection Certificate", "Electrical Installation Certificate", "Electrical Investigation Certificate", "Emergency Installation Certificate"],
+      question: 'What does EIC stand for?',
+      options: [
+        'Electrical Inspection Certificate',
+        'Electrical Installation Certificate',
+        'Electrical Investigation Certificate',
+        'Emergency Installation Certificate',
+      ],
       correctAnswer: 1,
-      explanation: "EIC stands for Electrical Installation Certificate, required for new installations and major alterations."
+      explanation:
+        'EIC stands for Electrical Installation Certificate, required for new installations and major alterations.',
     },
     {
       id: 2,
-      question: "What type of work requires an EIC?",
-      options: ["Adding a single socket", "Minor repairs", "New installations and major alterations", "Testing only"],
+      question: 'What type of work requires an EIC?',
+      options: [
+        'Adding a single socket',
+        'Minor repairs',
+        'New installations and major alterations',
+        'Testing only',
+      ],
       correctAnswer: 2,
-      explanation: "EICs are required for new installations, major alterations like consumer unit upgrades, and large additions to existing installations."
+      explanation:
+        'EICs are required for new installations, major alterations like consumer unit upgrades, and large additions to existing installations.',
     },
     {
       id: 3,
-      question: "Which certificate is used instead of an EIC for minor alterations?",
-      options: ["EICR", "Minor Works Certificate", "Test Certificate", "Inspection Report"],
+      question: 'Which certificate is used instead of an EIC for minor alterations?',
+      options: ['EICR', 'Minor Works Certificate', 'Test Certificate', 'Inspection Report'],
       correctAnswer: 1,
-      explanation: "Minor Works Certificates (MWC) are used for minor alterations like adding single sockets or lighting points."
+      explanation:
+        'Minor Works Certificates (MWC) are used for minor alterations like adding single sockets or lighting points.',
     },
     {
       id: 4,
-      question: "What key information is recorded on an EIC?",
-      options: ["Just test results", "Installation details, test results, and signatures", "Only electrician details", "Cost information"],
+      question: 'What key information is recorded on an EIC?',
+      options: [
+        'Just test results',
+        'Installation details, test results, and signatures',
+        'Only electrician details',
+        'Cost information',
+      ],
       correctAnswer: 1,
-      explanation: "EICs record installation details, schedule of inspections and test results, and designer, installer, and tester signatures."
+      explanation:
+        'EICs record installation details, schedule of inspections and test results, and designer, installer, and tester signatures.',
     },
     {
       id: 5,
-      question: "Why must the EIC include signatures from the designer, installer, and tester?",
-      options: ["Legal requirement", "To ensure accountability at every stage", "For payment purposes", "Building control requirement"],
+      question: 'Why must the EIC include signatures from the designer, installer, and tester?',
+      options: [
+        'Legal requirement',
+        'To ensure accountability at every stage',
+        'For payment purposes',
+        'Building control requirement',
+      ],
       correctAnswer: 1,
-      explanation: "Signatures ensure accountability at every stage of the installation process - design, installation, and testing."
+      explanation:
+        'Signatures ensure accountability at every stage of the installation process - design, installation, and testing.',
     },
     {
       id: 6,
-      question: "True or False: An EIC is optional if the client does not request it.",
-      options: ["True", "False"],
+      question: 'True or False: An EIC is optional if the client does not request it.',
+      options: ['True', 'False'],
       correctAnswer: 1,
-      explanation: "False. An EIC is mandatory for new installations and major alterations regardless of client requests."
+      explanation:
+        'False. An EIC is mandatory for new installations and major alterations regardless of client requests.',
     },
     {
       id: 7,
-      question: "Who is legally responsible for signing an EIC?",
-      options: ["Any electrician", "The client", "Only competent and qualified persons", "Building control"],
+      question: 'Who is legally responsible for signing an EIC?',
+      options: [
+        'Any electrician',
+        'The client',
+        'Only competent and qualified persons',
+        'Building control',
+      ],
       correctAnswer: 2,
-      explanation: "Only competent and qualified persons who carried out or supervised the work can legally sign an EIC."
+      explanation:
+        'Only competent and qualified persons who carried out or supervised the work can legally sign an EIC.',
     },
     {
       id: 8,
-      question: "What risk does a client face if no EIC is issued for a new installation?",
-      options: ["Higher costs", "Non-compliance, insurance issues, and potential liability", "Delayed completion", "Building control complaints"],
+      question: 'What risk does a client face if no EIC is issued for a new installation?',
+      options: [
+        'Higher costs',
+        'Non-compliance, insurance issues, and potential liability',
+        'Delayed completion',
+        'Building control complaints',
+      ],
       correctAnswer: 1,
-      explanation: "Without an EIC, work is non-compliant, insurers may deny coverage, and both client and electrician face potential liability."
+      explanation:
+        'Without an EIC, work is non-compliant, insurers may deny coverage, and both client and electrician face potential liability.',
     },
     {
       id: 9,
-      question: "How does an EIC help future electricians?",
-      options: ["Provides pricing information", "Shows original installation details and test baselines", "Identifies the original contractor", "Lists materials used"],
+      question: 'How does an EIC help future electricians?',
+      options: [
+        'Provides pricing information',
+        'Shows original installation details and test baselines',
+        'Identifies the original contractor',
+        'Lists materials used',
+      ],
       correctAnswer: 1,
-      explanation: "EICs provide future electricians with original installation details and test baselines for comparison and troubleshooting."
+      explanation:
+        'EICs provide future electricians with original installation details and test baselines for comparison and troubleshooting.',
     },
     {
       id: 10,
-      question: "In the real-world example, why did the contractor's client face problems with insurance?",
-      options: ["Poor workmanship", "No EIC was issued to prove compliance", "Late completion", "Wrong certificate type"],
+      question:
+        "In the real-world example, why did the contractor's client face problems with insurance?",
+      options: [
+        'Poor workmanship',
+        'No EIC was issued to prove compliance',
+        'Late completion',
+        'Wrong certificate type',
+      ],
       correctAnswer: 1,
-      explanation: "The contractor failed to issue an EIC, leaving no evidence of compliance for the insurance company to verify."
-    }
+      explanation:
+        'The contractor failed to issue an EIC, leaving no evidence of compliance for the insurance company to verify.',
+    },
   ];
 
   return (
@@ -116,7 +167,8 @@ const Module6Section7_2 = () => {
               Awareness of Electrical Installation Certificates (EICs)
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Understanding Electrical Installation Certificates for new installations and major alterations
+              Understanding Electrical Installation Certificates for new installations and major
+              alterations
             </p>
           </header>
 
@@ -151,7 +203,10 @@ const Module6Section7_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                The Electrical Installation Certificate (EIC) is the primary document used to certify that new electrical installations, or significant alterations, comply with BS 7671. It confirms that the design, construction, inspection, and testing of the installation meet the required standards for safety and performance.
+                The Electrical Installation Certificate (EIC) is the primary document used to
+                certify that new electrical installations, or significant alterations, comply with
+                BS 7671. It confirms that the design, construction, inspection, and testing of the
+                installation meet the required standards for safety and performance.
               </p>
             </div>
           </section>
@@ -164,7 +219,12 @@ const Module6Section7_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                An Electrical Installation Certificate (EIC) is an official document required by BS 7671 to confirm that new electrical work has been inspected, tested, and complies with the Wiring Regulations. It applies to all new installations, as well as major alterations or additions that significantly change the characteristics of an installation. The EIC demonstrates that the installation is safe to energise and use.
+                An Electrical Installation Certificate (EIC) is an official document required by BS
+                7671 to confirm that new electrical work has been inspected, tested, and complies
+                with the Wiring Regulations. It applies to all new installations, as well as major
+                alterations or additions that significantly change the characteristics of an
+                installation. The EIC demonstrates that the installation is safe to energise and
+                use.
               </p>
 
               <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-400/50">
@@ -192,15 +252,26 @@ const Module6Section7_2 = () => {
               </div>
 
               <p>
-                The EIC is fundamentally different from other certificates because it covers the entire process from design through to completion. It requires input from potentially three different competent persons: the designer who specifies the installation, the installer who constructs it, and the tester who verifies compliance.
+                The EIC is fundamentally different from other certificates because it covers the
+                entire process from design through to completion. It requires input from potentially
+                three different competent persons: the designer who specifies the installation, the
+                installer who constructs it, and the tester who verifies compliance.
               </p>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50">
                 <h4 className="font-medium text-amber-300 mb-2">EIC vs Other Certificates:</h4>
                 <ul className="text-sm text-white/70 space-y-1">
-                  <li>• <strong>EIC:</strong> New installations and major alterations</li>
-                  <li>• <strong>Minor Works Certificate (MWC):</strong> Small additions like single circuits</li>
-                  <li>• <strong>Electrical Installation Condition Report (EICR):</strong> Periodic inspections of existing installations</li>
+                  <li>
+                    • <strong>EIC:</strong> New installations and major alterations
+                  </li>
+                  <li>
+                    • <strong>Minor Works Certificate (MWC):</strong> Small additions like single
+                    circuits
+                  </li>
+                  <li>
+                    • <strong>Electrical Installation Condition Report (EICR):</strong> Periodic
+                    inspections of existing installations
+                  </li>
                 </ul>
               </div>
             </div>
@@ -209,7 +280,12 @@ const Module6Section7_2 = () => {
           <InlineCheck
             id="eic-purpose-check"
             question="What is the purpose of an Electrical Installation Certificate?"
-            options={["To increase project costs", "To confirm that new electrical work has been inspected, tested, and complies with regulations", "To satisfy building control only", "To provide warranty coverage"]}
+            options={[
+              'To increase project costs',
+              'To confirm that new electrical work has been inspected, tested, and complies with regulations',
+              'To satisfy building control only',
+              'To provide warranty coverage',
+            ]}
             correctIndex={1}
             explanation="An EIC is required by BS 7671 to confirm that new electrical work has been inspected, tested, and complies with the Wiring Regulations, demonstrating the installation is safe to energise."
           />
@@ -228,7 +304,8 @@ const Module6Section7_2 = () => {
                 <li>Large additions (e.g., adding new circuits to an existing installation)</li>
               </ul>
               <p>
-                For minor works, such as adding a single socket or lighting point, an EIC is not required — instead, a Minor Works Certificate is used.
+                For minor works, such as adding a single socket or lighting point, an EIC is not
+                required — instead, a Minor Works Certificate is used.
               </p>
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
@@ -257,14 +334,22 @@ const Module6Section7_2 = () => {
               </div>
 
               <p>
-                Consumer unit replacement is a particular area where EICs are mandatory. Even though it might seem like a simple replacement, changing the consumer unit affects the entire installation's protection arrangements and requires comprehensive testing of all existing circuits.
+                Consumer unit replacement is a particular area where EICs are mandatory. Even though
+                it might seem like a simple replacement, changing the consumer unit affects the
+                entire installation's protection arrangements and requires comprehensive testing of
+                all existing circuits.
               </p>
 
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-400/50">
                 <h4 className="font-medium text-purple-300 mb-2">Special Considerations:</h4>
                 <ul className="text-sm text-white/70 space-y-1">
-                  <li>• Bathroom installations usually require EIC due to special location requirements</li>
-                  <li>• Outdoor installations often need EIC for comprehensive earthing verification</li>
+                  <li>
+                    • Bathroom installations usually require EIC due to special location
+                    requirements
+                  </li>
+                  <li>
+                    • Outdoor installations often need EIC for comprehensive earthing verification
+                  </li>
                   <li>• Commercial installations typically require EIC regardless of size</li>
                   <li>• Any work involving Part P notification usually needs EIC</li>
                   <li>• Installation of electric vehicle charging points often requires EIC</li>
@@ -276,7 +361,12 @@ const Module6Section7_2 = () => {
           <InlineCheck
             id="eic-when-check"
             question="Which type of certificate is used when replacing a consumer unit?"
-            options={["Minor Works Certificate", "Electrical Installation Certificate", "Periodic Inspection Report", "Test Certificate"]}
+            options={[
+              'Minor Works Certificate',
+              'Electrical Installation Certificate',
+              'Periodic Inspection Report',
+              'Test Certificate',
+            ]}
             correctIndex={1}
             explanation="Replacing a consumer unit is a major alteration that requires an Electrical Installation Certificate (EIC)."
           />
@@ -291,15 +381,23 @@ const Module6Section7_2 = () => {
               <p>An EIC includes:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Details of the installation (address, description, supply characteristics)</li>
-                <li>Schedule of inspections and test results (continuity, insulation resistance, polarity, Zs values, RCD trip times, etc.)</li>
-                <li>Designer, installer, and tester details — including names, signatures, and dates</li>
+                <li>
+                  Schedule of inspections and test results (continuity, insulation resistance,
+                  polarity, Zs values, RCD trip times, etc.)
+                </li>
+                <li>
+                  Designer, installer, and tester details — including names, signatures, and dates
+                </li>
               </ul>
               <p>
-                This ensures accountability at every stage of the installation process. Each section shows that the work has been carried out by competent persons.
+                This ensures accountability at every stage of the installation process. Each section
+                shows that the work has been carried out by competent persons.
               </p>
 
               <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-400/50">
-                <h4 className="font-medium text-orange-300 mb-2">Detailed EIC Information Sections:</h4>
+                <h4 className="font-medium text-orange-300 mb-2">
+                  Detailed EIC Information Sections:
+                </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
                   <div>
                     <strong>Installation Details:</strong>
@@ -323,7 +421,9 @@ const Module6Section7_2 = () => {
               </div>
 
               <p>
-                The schedule of test results forms the technical heart of the EIC. Each test result must be recorded accurately and compared against the acceptance criteria specified in BS 7671.
+                The schedule of test results forms the technical heart of the EIC. Each test result
+                must be recorded accurately and compared against the acceptance criteria specified
+                in BS 7671.
               </p>
             </div>
           </section>
@@ -331,7 +431,12 @@ const Module6Section7_2 = () => {
           <InlineCheck
             id="eic-signatures-check"
             question="Why does an EIC require signatures from the designer, installer, and tester?"
-            options={["Legal formality", "To ensure accountability at every stage of the installation process", "Building control requirement", "Insurance requirement"]}
+            options={[
+              'Legal formality',
+              'To ensure accountability at every stage of the installation process',
+              'Building control requirement',
+              'Insurance requirement',
+            ]}
             correctIndex={1}
             explanation="The EIC requires signatures from designer, installer, and tester to ensure accountability at every stage of the installation process and show that competent persons carried out each phase."
           />
@@ -344,7 +449,11 @@ const Module6Section7_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                The EIC provides legal evidence that the work complies with BS 7671 and the Electricity at Work Regulations 1989. Without it, the work may be considered non-compliant, leaving both the electrician and the client exposed to liability. Professionally, issuing an EIC demonstrates quality, transparency, and responsibility.
+                The EIC provides legal evidence that the work complies with BS 7671 and the
+                Electricity at Work Regulations 1989. Without it, the work may be considered
+                non-compliant, leaving both the electrician and the client exposed to liability.
+                Professionally, issuing an EIC demonstrates quality, transparency, and
+                responsibility.
               </p>
 
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
@@ -370,7 +479,9 @@ const Module6Section7_2 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-400/50">
-                <h4 className="font-medium text-purple-300 mb-2">Professional Consequences of Missing EICs:</h4>
+                <h4 className="font-medium text-purple-300 mb-2">
+                  Professional Consequences of Missing EICs:
+                </h4>
                 <ul className="text-sm text-white/70 space-y-1">
                   <li>• Potential removal from competent person schemes</li>
                   <li>• Difficulty obtaining professional insurance</li>
@@ -384,7 +495,12 @@ const Module6Section7_2 = () => {
           <InlineCheck
             id="eic-importance-check"
             question="What could happen if an electrician completes a new installation but does not issue an EIC?"
-            options={["Minor documentation issue", "Work is non-compliant with potential liability and insurance issues", "Client may complain", "Building control may ask questions"]}
+            options={[
+              'Minor documentation issue',
+              'Work is non-compliant with potential liability and insurance issues',
+              'Client may complain',
+              'Building control may ask questions',
+            ]}
             correctIndex={1}
             explanation="Without an EIC, work may be considered non-compliant, leaving both electrician and client exposed to liability and potential insurance issues."
           />
@@ -398,23 +514,33 @@ const Module6Section7_2 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Issue for Major Works</h4>
-                <p className="text-sm text-white/70">Always issue an EIC for new installations or major alterations.</p>
+                <p className="text-sm text-white/70">
+                  Always issue an EIC for new installations or major alterations.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Complete All Sections</h4>
-                <p className="text-sm text-white/70">Make sure all sections of the form are fully and accurately completed.</p>
+                <p className="text-sm text-white/70">
+                  Make sure all sections of the form are fully and accurately completed.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Use Approved Forms</h4>
-                <p className="text-sm text-white/70">Use BS 7671 Appendix 6 forms or approved digital software.</p>
+                <p className="text-sm text-white/70">
+                  Use BS 7671 Appendix 6 forms or approved digital software.
+                </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Retain Copies</h4>
-                <p className="text-sm text-white/70">Retain a copy for your records and provide the client with their own copy.</p>
+                <p className="text-sm text-white/70">
+                  Retain a copy for your records and provide the client with their own copy.
+                </p>
               </div>
             </div>
             <div className="mt-4 p-3 bg-amber-500/10 border-l-2 border-amber-400/50 rounded-lg">
-              <p className="text-sm font-medium text-amber-300">Remember: no EIC = no formal proof of compliance.</p>
+              <p className="text-sm font-medium text-amber-300">
+                Remember: no EIC = no formal proof of compliance.
+              </p>
             </div>
           </section>
 
@@ -426,14 +552,22 @@ const Module6Section7_2 = () => {
             </h2>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
-                <h4 className="font-medium text-red-300 mb-2">Insurance Problems Due to Missing EIC</h4>
+                <h4 className="font-medium text-red-300 mb-2">
+                  Insurance Problems Due to Missing EIC
+                </h4>
                 <p className="text-sm text-white/70">
-                  A contractor installed a new three-phase distribution board in a small workshop but failed to issue an Electrical Installation Certificate. Months later, when the client applied for insurance cover, the insurer requested evidence of compliance. Without an EIC, the insurer refused to provide full cover until the installation was retested and certified, costing the client extra time and money. The contractor's reputation was damaged, and they lost repeat business.
+                  A contractor installed a new three-phase distribution board in a small workshop
+                  but failed to issue an Electrical Installation Certificate. Months later, when the
+                  client applied for insurance cover, the insurer requested evidence of compliance.
+                  Without an EIC, the insurer refused to provide full cover until the installation
+                  was retested and certified, costing the client extra time and money. The
+                  contractor's reputation was damaged, and they lost repeat business.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
                 <p className="text-sm text-white/70">
-                  <strong className="text-green-300">Lesson:</strong> An EIC is not optional — it is essential for client confidence, legal compliance, and professional credibility.
+                  <strong className="text-green-300">Lesson:</strong> An EIC is not optional — it is
+                  essential for client confidence, legal compliance, and professional credibility.
                 </p>
               </div>
             </div>
@@ -448,15 +582,23 @@ const Module6Section7_2 = () => {
             <div className="space-y-4">
               <div className="border-b border-white/10 pb-4">
                 <h3 className="font-medium text-white mb-2">Q: Can an apprentice issue an EIC?</h3>
-                <p className="text-sm text-white/70">A: No. Only a competent and qualified person can sign an EIC.</p>
+                <p className="text-sm text-white/70">
+                  A: No. Only a competent and qualified person can sign an EIC.
+                </p>
               </div>
               <div className="border-b border-white/10 pb-4">
-                <h3 className="font-medium text-white mb-2">Q: Is an EIC needed for replacing a socket outlet?</h3>
-                <p className="text-sm text-white/70">A: No. That would normally require a Minor Works Certificate, not an EIC.</p>
+                <h3 className="font-medium text-white mb-2">
+                  Q: Is an EIC needed for replacing a socket outlet?
+                </h3>
+                <p className="text-sm text-white/70">
+                  A: No. That would normally require a Minor Works Certificate, not an EIC.
+                </p>
               </div>
               <div>
                 <h3 className="font-medium text-white mb-2">Q: How long should an EIC be kept?</h3>
-                <p className="text-sm text-white/70">A: For the life of the installation, or until it is replaced by new certification.</p>
+                <p className="text-sm text-white/70">
+                  A: For the life of the installation, or until it is replaced by new certification.
+                </p>
               </div>
             </div>
           </section>
@@ -466,7 +608,11 @@ const Module6Section7_2 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="font-semibold text-white mb-3">Recap</h2>
               <p className="text-sm text-white/80">
-                An Electrical Installation Certificate (EIC) is required for all new installations and major alterations. It records key details of the installation, test results, and the signatures of the designer, installer, and tester. It provides legal proof of compliance with BS 7671 and professional accountability. Without it, work is non-compliant, uninsured, and potentially unsafe.
+                An Electrical Installation Certificate (EIC) is required for all new installations
+                and major alterations. It records key details of the installation, test results, and
+                the signatures of the designer, installer, and tester. It provides legal proof of
+                compliance with BS 7671 and professional accountability. Without it, work is
+                non-compliant, uninsured, and potentially unsafe.
               </p>
             </div>
           </section>

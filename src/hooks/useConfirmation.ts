@@ -79,13 +79,16 @@ export function useConfirmation() {
     });
   }, []);
 
-  const handleOpenChange = useCallback((open: boolean) => {
-    if (!open && resolveRef) {
-      resolveRef(false);
-      setResolveRef(null);
-    }
-    setState((prev) => ({ ...prev, isOpen: open }));
-  }, [resolveRef]);
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open && resolveRef) {
+        resolveRef(false);
+        setResolveRef(null);
+      }
+      setState((prev) => ({ ...prev, isOpen: open }));
+    },
+    [resolveRef]
+  );
 
   const handleConfirm = useCallback(async () => {
     if (resolveRef) {

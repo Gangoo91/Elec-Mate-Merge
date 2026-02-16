@@ -4,7 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Camera, Upload, Loader2, MapPin, X, Image as ImageIcon } from 'lucide-react';
@@ -36,10 +42,12 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
   const [jobId, setJobId] = useState<string>('');
   const [notes, setNotes] = useState('');
   const [useLocation, setUseLocation] = useState(false);
-  const [location, setLocation] = useState<{ lat: number; lng: number; address?: string } | null>(null);
+  const [location, setLocation] = useState<{ lat: number; lng: number; address?: string } | null>(
+    null
+  );
   const [gettingLocation, setGettingLocation] = useState(false);
 
-  const activeJobs = jobs.filter(j => j.status === 'Active' || j.status === 'Pending');
+  const activeJobs = jobs.filter((j) => j.status === 'Active' || j.status === 'Pending');
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -119,10 +127,7 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn(
-          "flex flex-col p-0",
-          isMobile ? "h-[90vh] rounded-t-2xl" : "w-[450px]"
-        )}
+        className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
       >
         {/* Header */}
         <SheetHeader className="p-4 border-b border-border shrink-0">
@@ -184,13 +189,13 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
                   type="button"
                   onClick={() => setCategory(cat.value)}
                   className={cn(
-                    "flex flex-col items-center gap-1 p-2 rounded-lg border transition-all touch-manipulation",
+                    'flex flex-col items-center gap-1 p-2 rounded-lg border transition-all touch-manipulation',
                     category === cat.value
-                      ? "border-elec-yellow bg-elec-yellow/10"
-                      : "border-border/50 hover:border-border"
+                      ? 'border-elec-yellow bg-elec-yellow/10'
+                      : 'border-border/50 hover:border-border'
                   )}
                 >
-                  <div className={cn("h-3 w-3 rounded-full", cat.color)} />
+                  <div className={cn('h-3 w-3 rounded-full', cat.color)} />
                   <span className="text-[10px] font-medium">{cat.label}</span>
                 </button>
               ))}
@@ -200,7 +205,7 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
           {/* Job Selection */}
           <div className="space-y-2">
             <Label>Job (optional)</Label>
-            <Select value={jobId || "none"} onValueChange={(v) => setJobId(v === "none" ? "" : v)}>
+            <Select value={jobId || 'none'} onValueChange={(v) => setJobId(v === 'none' ? '' : v)}>
               <SelectTrigger className="h-12 touch-manipulation">
                 <SelectValue placeholder="Select a job..." />
               </SelectTrigger>
@@ -288,11 +293,7 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
               </>
             )}
           </Button>
-          <Button
-            variant="outline"
-            className="w-full h-12"
-            onClick={() => onOpenChange(false)}
-          >
+          <Button variant="outline" className="w-full h-12" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
         </div>

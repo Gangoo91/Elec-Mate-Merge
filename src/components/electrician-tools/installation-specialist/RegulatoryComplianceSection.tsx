@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card";
-import { BookOpen } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { BookOpen } from 'lucide-react';
 
 interface RegulatoryReference {
   number: string;
@@ -15,30 +15,32 @@ interface RegulatoryComplianceSectionProps {
 export const RegulatoryComplianceSection = ({
   regulatoryReferences = [],
   stepBsReferences = [],
-  sectionNumber = 6
+  sectionNumber = 6,
 }: RegulatoryComplianceSectionProps) => {
   // Parse step BS references (format: "BS 7671 Reg 132.10 - Safe isolation")
   const parsedStepReferences: RegulatoryReference[] = stepBsReferences
-    .map(ref => {
-      const match = ref.match(/(?:BS 7671 Reg |Regulation )?(\d+\.?\d*\.?\d*\.?\d*)\s*[-–—]\s*(.+)/i);
+    .map((ref) => {
+      const match = ref.match(
+        /(?:BS 7671 Reg |Regulation )?(\d+\.?\d*\.?\d*\.?\d*)\s*[-–—]\s*(.+)/i
+      );
       if (match) {
         return {
           number: match[1],
-          description: match[2].trim()
+          description: match[2].trim(),
         };
       }
       // Fallback: use entire string as description
       return {
         number: ref.split(/[-–—]/)[0].trim(),
-        description: ref.split(/[-–—]/)[1]?.trim() || ref
+        description: ref.split(/[-–—]/)[1]?.trim() || ref,
       };
     })
-    .filter(ref => ref.number && ref.description);
+    .filter((ref) => ref.number && ref.description);
 
   // Merge and deduplicate by regulation number
   const allReferences = [...regulatoryReferences, ...parsedStepReferences];
   const uniqueReferences = Array.from(
-    new Map(allReferences.map(ref => [ref.number, ref])).values()
+    new Map(allReferences.map((ref) => [ref.number, ref])).values()
   );
 
   // Sort by regulation number
@@ -80,12 +82,8 @@ export const RegulatoryComplianceSection = ({
               key={index}
               className="bg-card border border-border/50 rounded-lg p-4 border-l-4 border-l-green-500 hover:bg-card/80 transition-colors"
             >
-              <div className="font-bold text-foreground text-base mb-2">
-                {ref.number}
-              </div>
-              <div className="text-sm text-foreground leading-relaxed">
-                {ref.description}
-              </div>
+              <div className="font-bold text-foreground text-base mb-2">{ref.number}</div>
+              <div className="text-sm text-foreground leading-relaxed">{ref.description}</div>
             </div>
           ))}
         </div>
@@ -93,7 +91,8 @@ export const RegulatoryComplianceSection = ({
         {/* Total count badge */}
         <div className="mt-4 pt-4 border-t border-green-500/20">
           <p className="text-sm text-foreground text-center">
-            <span className="font-semibold">{sortedReferences.length}</span> BS 7671 regulations referenced in this installation method
+            <span className="font-semibold">{sortedReferences.length}</span> BS 7671 regulations
+            referenced in this installation method
           </p>
         </div>
       </Card>

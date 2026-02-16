@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,31 +13,41 @@ const QuickAccess: React.FC<QuickAccessProps> = ({ onRegulationClick }) => {
       title: 'Testing Essentials',
       icon: TestTube,
       color: 'text-green-400',
-      regulations: ['612.1', '612.2.1', '612.3.1', '612.6', '612.8', '612.10']
+      regulations: ['612.1', '612.2.1', '612.3.1', '612.6', '612.8', '612.10'],
     },
     {
       title: 'Protection Requirements',
       icon: Shield,
       color: 'text-red-400',
-      regulations: ['411.3.3', '415.1.1', '411.4.5', '433.1.1', 'Table 41.3']
+      regulations: ['411.3.3', '415.1.1', '411.4.5', '433.1.1', 'Table 41.3'],
     },
     {
       title: 'Installation Standards',
       icon: Home,
       color: 'text-blue-400',
-      regulations: ['522.6.204', '526.3', '537.2.1.1', '543.1.1', '314.1']
+      regulations: ['522.6.204', '526.3', '537.2.1.1', '543.1.1', '314.1'],
     },
     {
       title: 'Special Locations',
       icon: AlertTriangle,
       color: 'text-purple-400',
-      regulations: ['701.411.3.3', '701.32', '702.32', '705.411.1']
-    }
+      regulations: ['701.411.3.3', '701.32', '702.32', '705.411.1'],
+    },
   ];
 
   const mostUsedRegulations = [
-    '612.1', '612.2.1', '612.3.1', '612.8', '612.10', '411.3.3', 
-    '415.1.1', 'Table 41.3', '701.411.3.3', '522.6.204', '612.6', '643.7'
+    '612.1',
+    '612.2.1',
+    '612.3.1',
+    '612.8',
+    '612.10',
+    '411.3.3',
+    '415.1.1',
+    'Table 41.3',
+    '701.411.3.3',
+    '522.6.204',
+    '612.6',
+    '643.7',
   ];
 
   return (

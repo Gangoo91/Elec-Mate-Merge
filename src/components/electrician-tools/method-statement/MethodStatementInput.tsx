@@ -28,7 +28,7 @@ export const MethodStatementInput: React.FC<MethodStatementInputProps> = ({
   onGenerate,
   isProcessing,
   initialJobDescription = '',
-  initialProjectName = ''
+  initialProjectName = '',
 }) => {
   const [jobDescription, setJobDescription] = useState(initialJobDescription);
   const [projectName, setProjectName] = useState(initialProjectName);
@@ -49,7 +49,7 @@ export const MethodStatementInput: React.FC<MethodStatementInputProps> = ({
 
   const handleSubmit = () => {
     if (!jobDescription.trim() || !projectName.trim()) return;
-    
+
     onGenerate(
       jobDescription,
       {
@@ -57,7 +57,7 @@ export const MethodStatementInput: React.FC<MethodStatementInputProps> = ({
         location,
         assessor,
         contractor,
-        supervisor
+        supervisor,
       },
       jobScale
     );
@@ -136,18 +136,28 @@ export const MethodStatementInput: React.FC<MethodStatementInputProps> = ({
 
           <div>
             <Label>Job Scale</Label>
-            <RadioGroup value={jobScale} onValueChange={(value: any) => setJobScale(value)} className="flex gap-4 mt-2">
+            <RadioGroup
+              value={jobScale}
+              onValueChange={(value: any) => setJobScale(value)}
+              className="flex gap-4 mt-2"
+            >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="domestic" id="domestic" disabled={isProcessing} />
-                <Label htmlFor="domestic" className="cursor-pointer">Domestic</Label>
+                <Label htmlFor="domestic" className="cursor-pointer">
+                  Domestic
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="commercial" id="commercial" disabled={isProcessing} />
-                <Label htmlFor="commercial" className="cursor-pointer">Commercial</Label>
+                <Label htmlFor="commercial" className="cursor-pointer">
+                  Commercial
+                </Label>
               </div>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="industrial" id="industrial" disabled={isProcessing} />
-                <Label htmlFor="industrial" className="cursor-pointer">Industrial</Label>
+                <Label htmlFor="industrial" className="cursor-pointer">
+                  Industrial
+                </Label>
               </div>
             </RadioGroup>
           </div>

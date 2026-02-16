@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import {
   Download,
@@ -19,9 +20,14 @@ import {
   Trash2,
   Plus,
   Loader2,
+  BookOpen,
 } from 'lucide-react';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
+import { usePortfolioExportData } from '@/hooks/portfolio/usePortfolioExportData';
+import { StructuredPortfolioExportService } from '@/services/structuredPortfolioExportService';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 import PortfolioExportDialog from '@/components/apprentice/portfolio/PortfolioExportDialog';
 
 /**
@@ -32,6 +38,7 @@ import PortfolioExportDialog from '@/components/apprentice/portfolio/PortfolioEx
  */
 export function ExportSection() {
   const { entries } = useUltraFastPortfolio();
+  const { user } = useAuth();
   const {
     shares,
     isLoading: sharesLoading,
@@ -40,11 +47,35 @@ export function ExportSection() {
     getShareUrl,
     copyShareLink,
   } = usePortfolioSharing();
+  const { fetchExportData, isLoading: exportDataLoading } = usePortfolioExportData();
 
   const [copiedToken, setCopiedToken] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [revoking, setRevoking] = useState<string | null>(null);
   const [newShareExpiry, setNewShareExpiry] = useState<'24h' | '7d' | '30d' | 'never'>('7d');
+  const [generatingPDF, setGeneratingPDF] = useState(false);
+
+  const handleStructuredPDFDownload = async () => {
+    if (!user?.id) {
+      toast.error('You must be signed in to download your portfolio');
+      return;
+    }
+    setGeneratingPDF(true);
+    try {
+      const data = await fetchExportData(user.id);
+      if (!data) {
+        toast.error('Failed to load portfolio data');
+        return;
+      }
+      const service = new StructuredPortfolioExportService();
+      await service.exportToPDF(data, { includeAppendix: true });
+      toast.success('Structured portfolio PDF downloaded');
+    } catch (err: any) {
+      toast.error(err.message || 'PDF generation failed');
+    } finally {
+      setGeneratingPDF(false);
+    }
+  };
 
   const handleCreateShare = async () => {
     setCreating(true);
@@ -116,7 +147,9 @@ export function ExportSection() {
       {/* Header */}
       <div>
         <h1 className="text-xl sm:text-2xl font-bold text-foreground">Export & Share</h1>
-        <p className="text-sm text-muted-foreground">Download your portfolio or share with assessors and employers</p>
+        <p className="text-sm text-muted-foreground">
+          Download your portfolio or share with assessors and employers
+        </p>
       </div>
 
       {/* Portfolio Summary */}
@@ -129,21 +162,56 @@ export function ExportSection() {
             <div className="flex-1">
               <h3 className="font-semibold text-foreground">Your Portfolio</h3>
               <p className="text-sm text-muted-foreground">
-                {entries.length} evidence items • {entries.filter(e => e.status === 'completed').length} completed
+                {entries.length} evidence items •{' '}
+                {entries.filter((e) => e.status === 'completed').length} completed
               </p>
             </div>
             <Badge
               variant="outline"
               className={cn(
-                "text-xs",
+                'text-xs',
                 entries.length >= 10
-                  ? "bg-green-500/10 text-green-500 border-green-500/20"
-                  : "bg-amber-500/10 text-amber-500 border-amber-500/20"
+                  ? 'bg-green-500/10 text-green-500 border-green-500/20'
+                  : 'bg-amber-500/10 text-amber-500 border-amber-500/20'
               )}
             >
               {entries.length >= 10 ? 'Ready' : 'In Progress'}
             </Badge>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Structured Portfolio PDF — Primary Action */}
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-transparent">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-4">
+            <div className="h-14 w-14 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
+              <BookOpen className="h-7 w-7 text-elec-yellow" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-foreground">Structured Portfolio PDF</h3>
+              <p className="text-sm text-white">
+                Full qualification portfolio with AC tracking matrix, KSB coverage and OTJ hours — ready for your assessor or awarding body
+              </p>
+            </div>
+          </div>
+          <Button
+            onClick={handleStructuredPDFDownload}
+            disabled={generatingPDF || exportDataLoading}
+            className="w-full mt-4 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/80 font-semibold touch-manipulation"
+          >
+            {generatingPDF ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                Generating PDF...
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4 mr-2" />
+                Download Structured Portfolio PDF
+              </>
+            )}
+          </Button>
         </CardContent>
       </Card>
 
@@ -161,12 +229,17 @@ export function ExportSection() {
             <div
               key={option.id}
               className={cn(
-                "flex items-center gap-4 p-4 rounded-xl border transition-colors cursor-pointer touch-manipulation active:scale-[0.98]",
-                "hover:border-elec-yellow/30 hover:bg-elec-yellow/5",
-                option.recommended ? "border-elec-yellow/20" : "border-border"
+                'flex items-center gap-4 p-4 rounded-xl border transition-colors cursor-pointer touch-manipulation active:scale-[0.98]',
+                'hover:border-elec-yellow/30 hover:bg-elec-yellow/5',
+                option.recommended ? 'border-elec-yellow/20' : 'border-border'
               )}
             >
-              <div className={cn("h-12 w-12 rounded-xl flex items-center justify-center shrink-0", option.color)}>
+              <div
+                className={cn(
+                  'h-12 w-12 rounded-xl flex items-center justify-center shrink-0',
+                  option.color
+                )}
+              >
                 <option.icon className="h-6 w-6 text-white" />
               </div>
               <div className="flex-1 min-w-0">
@@ -214,7 +287,9 @@ export function ExportSection() {
               </div>
               <div className="flex-1">
                 <p className="text-sm font-medium text-foreground">Create Share Link</p>
-                <p className="text-xs text-muted-foreground">Your assessor can view evidence and leave feedback</p>
+                <p className="text-xs text-muted-foreground">
+                  Your assessor can view evidence and leave feedback
+                </p>
               </div>
             </div>
 
@@ -225,7 +300,9 @@ export function ExportSection() {
               <select
                 id="expiry-select"
                 value={newShareExpiry}
-                onChange={(e) => setNewShareExpiry(e.target.value as '24h' | '7d' | '30d' | 'never')}
+                onChange={(e) =>
+                  setNewShareExpiry(e.target.value as '24h' | '7d' | '30d' | 'never')
+                }
                 className="h-11 flex-1 px-3 rounded-lg bg-background border border-border text-foreground text-sm focus:outline-none focus:border-elec-yellow touch-manipulation"
               >
                 <option value="24h">Expires in 24 hours</option>
@@ -269,8 +346,8 @@ export function ExportSection() {
                   <div
                     key={share.id}
                     className={cn(
-                      "p-4 rounded-xl border",
-                      isExpired ? "border-red-500/20 bg-red-500/5" : "border-border bg-muted/30"
+                      'p-4 rounded-xl border',
+                      isExpired ? 'border-red-500/20 bg-red-500/5' : 'border-border bg-muted/30'
                     )}
                   >
                     {/* Link URL */}
@@ -348,7 +425,9 @@ export function ExportSection() {
             <div className="text-center py-6">
               <Share2 className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
               <p className="text-sm text-muted-foreground">No active share links</p>
-              <p className="text-xs text-muted-foreground mt-1">Create one above to share with your assessor</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Create one above to share with your assessor
+              </p>
             </div>
           )}
 
@@ -356,7 +435,8 @@ export function ExportSection() {
           <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
             <Shield className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
             <p className="text-xs text-amber-500">
-              Share links only show completed and approved evidence. Your assessor can leave per-item comments and submit formal reviews. Personal details are hidden.
+              Share links only show completed and approved evidence. Your assessor can leave
+              per-item comments and submit formal reviews. Personal details are hidden.
             </p>
           </div>
         </CardContent>
@@ -372,7 +452,9 @@ export function ExportSection() {
             <div>
               <h3 className="font-medium text-foreground mb-1">EPA Submission</h3>
               <p className="text-sm text-muted-foreground">
-                When you're ready for End-Point Assessment, use the PDF export to create a professional portfolio. Your assessor can verify evidence via the QR codes included in the export.
+                When you're ready for End-Point Assessment, use the PDF export to create a
+                professional portfolio. Your assessor can verify evidence via the QR codes included
+                in the export.
               </p>
             </div>
           </div>

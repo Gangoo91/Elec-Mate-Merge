@@ -1,10 +1,6 @@
 import { HelpCircle, ChevronDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useState } from 'react';
 
 interface FAQ {
@@ -20,10 +16,8 @@ export const DataCablingFAQs = ({ faqs }: DataCablingFAQsProps) => {
   const [openItems, setOpenItems] = useState<number[]>([]);
 
   const toggleItem = (index: number) => {
-    setOpenItems(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
+    setOpenItems((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
   };
 
@@ -44,10 +38,10 @@ export const DataCablingFAQs = ({ faqs }: DataCablingFAQsProps) => {
           >
             <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800/70 transition-colors text-left">
               <span className="text-gray-200 font-medium">{faq.question}</span>
-              <ChevronDown 
+              <ChevronDown
                 className={`h-4 w-4 text-elec-yellow transition-transform ${
                   openItems.includes(index) ? 'rotate-180' : ''
-                }`} 
+                }`}
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="px-4 pb-4">

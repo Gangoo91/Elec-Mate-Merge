@@ -4,106 +4,122 @@ import { Wifi, Bluetooth, Radio, Globe, Network, Sparkles } from 'lucide-react';
 export const CommonProtocolsSection = () => {
   const protocols = [
     {
-      name: "Zigbee",
+      name: 'Zigbee',
       icon: Radio,
-      frequency: "2.4GHz",
+      frequency: '2.4GHz',
       characteristics: [
-        "Low power consumption",
-        "Mesh networking capability", 
-        "Self-healing network",
-        "Used in lighting and sensors"
+        'Low power consumption',
+        'Mesh networking capability',
+        'Self-healing network',
+        'Used in lighting and sensors',
       ],
-      pros: ["Long battery life", "Reliable mesh network", "Good range when meshed"],
-      cons: ["Requires hub", "Can be affected by Wi-Fi interference"],
-      commonUses: "Smart bulbs, motion sensors, door/window sensors, smart switches",
-      color: "blue"
+      pros: ['Long battery life', 'Reliable mesh network', 'Good range when meshed'],
+      cons: ['Requires hub', 'Can be affected by Wi-Fi interference'],
+      commonUses: 'Smart bulbs, motion sensors, door/window sensors, smart switches',
+      color: 'blue',
     },
     {
-      name: "Z-Wave",
+      name: 'Z-Wave',
       icon: Radio,
-      frequency: "Sub-1GHz (868/908MHz)",
+      frequency: 'Sub-1GHz (868/908MHz)',
       characteristics: [
-        "Similar to Zigbee but different frequency",
-        "Less interference from Wi-Fi",
-        "Mesh networking",
-        "Maximum 232 devices per network"
+        'Similar to Zigbee but different frequency',
+        'Less interference from Wi-Fi',
+        'Mesh networking',
+        'Maximum 232 devices per network',
       ],
-      pros: ["Minimal Wi-Fi interference", "Strong mesh capability", "Interoperability certification"],
-      cons: ["More expensive devices", "Requires hub", "Regional frequency differences"],
-      commonUses: "Smart locks, thermostats, lighting controls, security systems",
-      color: "green"
+      pros: [
+        'Minimal Wi-Fi interference',
+        'Strong mesh capability',
+        'Interoperability certification',
+      ],
+      cons: ['More expensive devices', 'Requires hub', 'Regional frequency differences'],
+      commonUses: 'Smart locks, thermostats, lighting controls, security systems',
+      color: 'green',
     },
     {
-      name: "Wi-Fi",
+      name: 'Wi-Fi',
       icon: Wifi,
-      frequency: "2.4GHz / 5GHz",
+      frequency: '2.4GHz / 5GHz',
       characteristics: [
-        "High bandwidth capability",
-        "Direct internet connection",
-        "Star network topology",
-        "Higher power consumption"
+        'High bandwidth capability',
+        'Direct internet connection',
+        'Star network topology',
+        'Higher power consumption',
       ],
-      pros: ["High speed", "No hub required", "Existing infrastructure", "Good for video/audio"],
-      cons: ["High power use", "Network congestion", "Range limitations"],
-      commonUses: "Security cameras, voice assistants, smart TVs, streaming devices",
-      color: "purple"
+      pros: ['High speed', 'No hub required', 'Existing infrastructure', 'Good for video/audio'],
+      cons: ['High power use', 'Network congestion', 'Range limitations'],
+      commonUses: 'Security cameras, voice assistants, smart TVs, streaming devices',
+      color: 'purple',
     },
     {
-      name: "Bluetooth (inc. BLE)",
+      name: 'Bluetooth (inc. BLE)',
       icon: Bluetooth,
-      frequency: "2.4GHz",
+      frequency: '2.4GHz',
       characteristics: [
-        "Short-range communication",
-        "Very low power (BLE)",
-        "Point-to-point topology",
-        "Mobile device integration"
+        'Short-range communication',
+        'Very low power (BLE)',
+        'Point-to-point topology',
+        'Mobile device integration',
       ],
-      pros: ["Ultra-low power", "Smartphone integration", "Fast pairing"],
-      cons: ["Limited range", "Point-to-point only", "Device limit per hub"],
-      commonUses: "Smart locks, fitness trackers, beacons, proximity sensors",
-      color: "cyan"
+      pros: ['Ultra-low power', 'Smartphone integration', 'Fast pairing'],
+      cons: ['Limited range', 'Point-to-point only', 'Device limit per hub'],
+      commonUses: 'Smart locks, fitness trackers, beacons, proximity sensors',
+      color: 'cyan',
     },
     {
-      name: "Thread",
+      name: 'Thread',
       icon: Network,
-      frequency: "2.4GHz",
+      frequency: '2.4GHz',
       characteristics: [
-        "IPv6-based mesh networking",
-        "Designed specifically for IoT",
-        "Self-healing mesh capability",
-        "Low power consumption"
+        'IPv6-based mesh networking',
+        'Designed specifically for IoT',
+        'Self-healing mesh capability',
+        'Low power consumption',
       ],
-      pros: ["Future-proof IPv6", "Robust mesh", "Industry backing", "Low power"],
-      cons: ["Newer standard", "Limited device selection", "Requires Thread-compatible hub"],
-      commonUses: "Smart home sensors, lighting, thermostats, door locks",
-      color: "orange"
+      pros: ['Future-proof IPv6', 'Robust mesh', 'Industry backing', 'Low power'],
+      cons: ['Newer standard', 'Limited device selection', 'Requires Thread-compatible hub'],
+      commonUses: 'Smart home sensors, lighting, thermostats, door locks',
+      color: 'orange',
     },
     {
-      name: "Matter",
+      name: 'Matter',
       icon: Sparkles,
-      frequency: "Works over Wi-Fi, Thread, Ethernet",
+      frequency: 'Works over Wi-Fi, Thread, Ethernet',
       characteristics: [
-        "Interoperability standard",
-        "Works across different protocols",
-        "Industry-wide adoption",
-        "Local network operation"
+        'Interoperability standard',
+        'Works across different protocols',
+        'Industry-wide adoption',
+        'Local network operation',
       ],
-      pros: ["Cross-platform compatibility", "No vendor lock-in", "Local control", "Industry standard"],
-      cons: ["Still developing", "Requires compatible devices", "Limited current device selection"],
-      commonUses: "Smart speakers, lighting, thermostats, sensors (when Matter-certified)",
-      color: "yellow"
-    }
+      pros: [
+        'Cross-platform compatibility',
+        'No vendor lock-in',
+        'Local control',
+        'Industry standard',
+      ],
+      cons: ['Still developing', 'Requires compatible devices', 'Limited current device selection'],
+      commonUses: 'Smart speakers, lighting, thermostats, sensors (when Matter-certified)',
+      color: 'yellow',
+    },
   ];
 
   const getColorClasses = (color: string) => {
     switch (color) {
-      case 'blue': return 'border-blue-600 bg-blue-900/20';
-      case 'green': return 'border-green-600 bg-green-900/20';
-      case 'purple': return 'border-purple-600 bg-purple-900/20';
-      case 'cyan': return 'border-cyan-600 bg-cyan-900/20';
-      case 'orange': return 'border-orange-600 bg-orange-900/20';
-      case 'yellow': return 'border-yellow-600 bg-yellow-900/20';
-      default: return 'border-gray-600 bg-gray-900/20';
+      case 'blue':
+        return 'border-blue-600 bg-blue-900/20';
+      case 'green':
+        return 'border-green-600 bg-green-900/20';
+      case 'purple':
+        return 'border-purple-600 bg-purple-900/20';
+      case 'cyan':
+        return 'border-cyan-600 bg-cyan-900/20';
+      case 'orange':
+        return 'border-orange-600 bg-orange-900/20';
+      case 'yellow':
+        return 'border-yellow-600 bg-yellow-900/20';
+      default:
+        return 'border-gray-600 bg-gray-900/20';
     }
   };
 
@@ -117,9 +133,10 @@ export const CommonProtocolsSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="text-lg font-medium text-foreground mb-6">
-          Each protocol has unique characteristics that make it suitable for different smart home applications.
+          Each protocol has unique characteristics that make it suitable for different smart home
+          applications.
         </p>
-        
+
         {/* Protocol Cards */}
         <div className="space-y-6">
           {protocols.map((protocol, index) => (
@@ -131,7 +148,7 @@ export const CommonProtocolsSection = () => {
                     <h4 className="font-semibold text-foreground text-lg">{protocol.name}</h4>
                     <span className="text-sm text-gray-400 font-medium">{protocol.frequency}</span>
                   </div>
-                  
+
                   {/* Characteristics */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
                     <div>
@@ -145,13 +162,13 @@ export const CommonProtocolsSection = () => {
                         ))}
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h5 className="font-medium text-foreground mb-2">Common Uses</h5>
                       <p className="text-sm text-gray-300">{protocol.commonUses}</p>
                     </div>
                   </div>
-                  
+
                   {/* Pros and Cons */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -165,7 +182,7 @@ export const CommonProtocolsSection = () => {
                         ))}
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h5 className="font-medium text-red-300 mb-2">Limitations</h5>
                       <ul className="space-y-1 text-xs">

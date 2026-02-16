@@ -1,9 +1,25 @@
 import React, { useState } from 'react';
-import { Wrench, ChevronRight, Loader2, Check, Plus, Trash2, Calendar, Hash, Building2 } from 'lucide-react';
+import {
+  Wrench,
+  ChevronRight,
+  Loader2,
+  Check,
+  Plus,
+  Trash2,
+  Calendar,
+  Hash,
+  Building2,
+} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { CompanyProfile, TestingInstrument } from '@/types/company';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
@@ -47,21 +63,70 @@ const COMMON_MAKES = [
 ] as const;
 
 const COMMON_MODELS: Record<string, string[]> = {
-  'Fluke': ['1664 FC', '1663', '1662', '1653B', '1652C', '1651B', 'T6-1000', 'T5-600', '117', '115', '87V', '376 FC'],
-  'Megger': ['MFT-X1', 'MFT1845', 'MFT1835', 'MFT1825', 'MFT1741', 'MFT1730', 'MFT1720', 'MIT430', 'MIT420', 'MIT410', 'PAT450', 'PAT420', 'DET4TCR2', 'DET4TD2'],
-  'Kewtech': ['KT66DL', 'KT65DL', 'KT64DL', 'KT63DL', 'KT62', 'KT61', 'SMARTPAT', 'EZYPAT', 'LOOPCHECK', 'KEWPROVE 3'],
-  'Martindale': ['ET4500', 'ET4000', 'ET3000', 'VI13700', 'VI13800', 'EPAT1600', 'EPAT2100', 'EZ165', 'EZ150'],
-  'Metrel': ['MI3155', 'MI3152', 'MI3125BT', 'MI3102H', 'MI3100', 'MI3360', 'MI3325'],
-  'Robin': ['KMP7250', 'KMP6250', 'KMP450', 'Amprobe 5XP'],
-  'Seaward': ['Apollo 600+', 'Apollo 500', 'PrimeTest 350', 'PrimeTest 250+', 'Supernova Elite'],
-  'TIS': ['MFT1552', 'MFT1540', 'MFT1532'],
+  Fluke: [
+    '1664 FC',
+    '1663',
+    '1662',
+    '1653B',
+    '1652C',
+    '1651B',
+    'T6-1000',
+    'T5-600',
+    '117',
+    '115',
+    '87V',
+    '376 FC',
+  ],
+  Megger: [
+    'MFT-X1',
+    'MFT1845',
+    'MFT1835',
+    'MFT1825',
+    'MFT1741',
+    'MFT1730',
+    'MFT1720',
+    'MIT430',
+    'MIT420',
+    'MIT410',
+    'PAT450',
+    'PAT420',
+    'DET4TCR2',
+    'DET4TD2',
+  ],
+  Kewtech: [
+    'KT66DL',
+    'KT65DL',
+    'KT64DL',
+    'KT63DL',
+    'KT62',
+    'KT61',
+    'SMARTPAT',
+    'EZYPAT',
+    'LOOPCHECK',
+    'KEWPROVE 3',
+  ],
+  Martindale: [
+    'ET4500',
+    'ET4000',
+    'ET3000',
+    'VI13700',
+    'VI13800',
+    'EPAT1600',
+    'EPAT2100',
+    'EZ165',
+    'EZ150',
+  ],
+  Metrel: ['MI3155', 'MI3152', 'MI3125BT', 'MI3102H', 'MI3100', 'MI3360', 'MI3325'],
+  Robin: ['KMP7250', 'KMP6250', 'KMP450', 'Amprobe 5XP'],
+  Seaward: ['Apollo 600+', 'Apollo 500', 'PrimeTest 350', 'PrimeTest 250+', 'Supernova Elite'],
+  TIS: ['MFT1552', 'MFT1540', 'MFT1532'],
   'Socket & See': ['SOK50', 'SOK40', 'SOK32', 'DLMPRO'],
   'Di-Log': ['DL9118', 'DL9110', 'DL9109', 'CombiVolt 2'],
   'Chauvin Arnoux': ['C.A 6117', 'C.A 6116N', 'C.A 6113'],
 };
 
 const getInstrumentLabel = (type: string) => {
-  const found = INSTRUMENT_TYPES.find(t => t.value === type);
+  const found = INSTRUMENT_TYPES.find((t) => t.value === type);
   return found?.label || type;
 };
 
@@ -163,9 +228,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
         <div className="border-t border-white/[0.06]">
           {savedInstruments.length === 0 ? (
             <div className="px-4 py-4 text-center">
-              <p className="text-[13px] text-white/40">
-                No testing instruments configured
-              </p>
+              <p className="text-[13px] text-white/40">No testing instruments configured</p>
               <p className="text-[12px] text-white/30 mt-1">
                 Add your testers to autofill certificates
               </p>
@@ -193,7 +256,9 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                   <Hash className="h-4 w-4 text-blue-400" />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Serial Number</p>
+                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                    Serial Number
+                  </p>
                   <p className="text-[15px] text-white">
                     {primaryInstrument.serial_number || 'Not set'}
                   </p>
@@ -205,7 +270,9 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                   <Calendar className="h-4 w-4 text-green-400" />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">Calibration Date</p>
+                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                    Calibration Date
+                  </p>
                   <p className="text-[15px] text-white">
                     {primaryInstrument.calibration_date
                       ? new Date(primaryInstrument.calibration_date).toLocaleDateString('en-GB')
@@ -217,7 +284,8 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
               {savedInstruments.length > 1 && (
                 <div className="px-4 py-2 bg-white/[0.02]">
                   <p className="text-[12px] text-white/40 text-center">
-                    +{savedInstruments.length - 1} more instrument{savedInstruments.length > 2 ? 's' : ''}
+                    +{savedInstruments.length - 1} more instrument
+                    {savedInstruments.length > 2 ? 's' : ''}
                   </p>
                 </div>
               )}
@@ -227,7 +295,10 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
       </motion.div>
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+        >
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -248,7 +319,11 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
               {isSaving ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : showSuccess ? (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500 }}>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 500 }}
+                >
                   <Check className="h-5 w-5 text-green-400" />
                 </motion.div>
               ) : (
@@ -259,7 +334,8 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4 pb-8">
             <p className="text-[13px] text-white/50 px-1">
-              Add your testing instruments. The first instrument will be used to autofill EICR, EIC, and Minor Works certificates.
+              Add your testing instruments. The first instrument will be used to autofill EICR, EIC,
+              and Minor Works certificates.
             </p>
 
             <AnimatePresence mode="popLayout">
@@ -297,7 +373,9 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                           Default
                         </span>
                       )}
-                      <ChevronRight className={`h-5 w-5 text-white/30 transition-transform ${editingIndex === index ? 'rotate-90' : ''}`} />
+                      <ChevronRight
+                        className={`h-5 w-5 text-white/30 transition-transform ${editingIndex === index ? 'rotate-90' : ''}`}
+                      />
                     </div>
                   </button>
 
@@ -318,14 +396,22 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                             </Label>
                             <Select
                               value={instrument.instrument_type}
-                              onValueChange={(value) => updateInstrument(index, { instrument_type: value as TestingInstrument['instrument_type'] })}
+                              onValueChange={(value) =>
+                                updateInstrument(index, {
+                                  instrument_type: value as TestingInstrument['instrument_type'],
+                                })
+                              }
                             >
                               <SelectTrigger className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 touch-manipulation text-white">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-[#2c2c2e] border-white/[0.1] rounded-xl">
                                 {INSTRUMENT_TYPES.map((type) => (
-                                  <SelectItem key={type.value} value={type.value} className="text-white">
+                                  <SelectItem
+                                    key={type.value}
+                                    value={type.value}
+                                    className="text-white"
+                                  >
                                     {type.label}
                                   </SelectItem>
                                 ))}
@@ -362,7 +448,9 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                             <Label className="text-[12px] font-medium text-white/50 uppercase tracking-wide">
                               Model
                             </Label>
-                            {instrument.make && instrument.make !== 'Other' && COMMON_MODELS[instrument.make] ? (
+                            {instrument.make &&
+                            instrument.make !== 'Other' &&
+                            COMMON_MODELS[instrument.make] ? (
                               <Select
                                 value={instrument.model || ''}
                                 onValueChange={(value) => updateInstrument(index, { model: value })}
@@ -408,7 +496,9 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                             <Input
                               placeholder="Enter serial number"
                               value={instrument.serial_number}
-                              onChange={(e) => updateInstrument(index, { serial_number: e.target.value })}
+                              onChange={(e) =>
+                                updateInstrument(index, { serial_number: e.target.value })
+                              }
                               className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
                             />
                           </div>
@@ -421,7 +511,9 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                             <Input
                               type="date"
                               value={instrument.calibration_date}
-                              onChange={(e) => updateInstrument(index, { calibration_date: e.target.value })}
+                              onChange={(e) =>
+                                updateInstrument(index, { calibration_date: e.target.value })
+                              }
                               className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white [color-scheme:dark]"
                             />
                           </div>

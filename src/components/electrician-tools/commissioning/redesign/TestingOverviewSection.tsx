@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MobileAccordion } from "@/components/ui/mobile-accordion";
-import { FlaskConical, Zap } from "lucide-react";
-import { TestingProcedureCard } from "./TestingProcedureCard";
-import type { TestProcedure } from "@/types/commissioning-response";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { MobileAccordion } from '@/components/ui/mobile-accordion';
+import { FlaskConical, Zap } from 'lucide-react';
+import { TestingProcedureCard } from './TestingProcedureCard';
+import type { TestProcedure } from '@/types/commissioning-response';
 
 interface TestingOverviewSectionProps {
   deadTests?: TestProcedure[];
@@ -26,7 +26,9 @@ export const TestingOverviewSection = ({ deadTests, liveTests }: TestingOverview
           <FlaskConical className="h-5 w-5 text-elec-yellow" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-foreground">Testing & Commissioning Procedures</h3>
+          <h3 className="text-lg font-semibold text-foreground">
+            Testing & Commissioning Procedures
+          </h3>
           <div className="flex items-center gap-2 mt-1">
             <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow/80">
               BS 7671 Part 6

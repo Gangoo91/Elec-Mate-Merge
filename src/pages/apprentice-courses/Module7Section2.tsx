@@ -1,51 +1,51 @@
-import { ArrowLeft, Search, Zap, AlertTriangle, TestTube, Eye } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, Search, Zap, AlertTriangle, TestTube, Eye } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const subsections = [
   {
-    number: "Subsection 1",
-    title: "Open Circuit Faults (Breaks in Conductors)",
-    description: "Understanding breaks and discontinuity in electrical conductors",
+    number: 'Subsection 1',
+    title: 'Open Circuit Faults (Breaks in Conductors)',
+    description: 'Understanding breaks and discontinuity in electrical conductors',
     icon: Search,
-    href: "2-1"
+    href: '2-1',
   },
   {
-    number: "Subsection 2",
-    title: "Short Circuits",
-    description: "Identifying and understanding short circuit conditions",
+    number: 'Subsection 2',
+    title: 'Short Circuits',
+    description: 'Identifying and understanding short circuit conditions',
     icon: Zap,
-    href: "2-2"
+    href: '2-2',
   },
   {
-    number: "Subsection 3",
-    title: "Earth Faults and Leakage Currents",
-    description: "Recognising earth fault conditions and current leakage",
+    number: 'Subsection 3',
+    title: 'Earth Faults and Leakage Currents',
+    description: 'Recognising earth fault conditions and current leakage',
     icon: AlertTriangle,
-    href: "2-3"
+    href: '2-3',
   },
   {
-    number: "Subsection 4",
-    title: "Overload Conditions",
-    description: "Understanding electrical overload situations and their effects",
+    number: 'Subsection 4',
+    title: 'Overload Conditions',
+    description: 'Understanding electrical overload situations and their effects',
     icon: TestTube,
-    href: "2-4"
+    href: '2-4',
   },
   {
-    number: "Subsection 5",
-    title: "Incorrect Polarity",
-    description: "Identifying polarity faults in electrical installations",
+    number: 'Subsection 5',
+    title: 'Incorrect Polarity',
+    description: 'Identifying polarity faults in electrical installations',
     icon: Eye,
-    href: "2-5"
+    href: '2-5',
   },
   {
-    number: "Subsection 6",
-    title: "Loose or Poor Connections",
-    description: "Understanding connection faults and their consequences",
+    number: 'Subsection 6',
+    title: 'Loose or Poor Connections',
+    description: 'Understanding connection faults and their consequences',
     icon: Search,
-    href: "2-6"
-  }
+    href: '2-6',
+  },
 ];
 
 const Section2 = () => {

@@ -10,7 +10,7 @@ import {
   Zap,
   Activity,
   Target,
-  Eye
+  Eye,
 } from 'lucide-react';
 import { commonFaultCategories, CommonFaultCategory } from '../data/faultFindingData';
 
@@ -18,7 +18,7 @@ interface CommonFaultDetailProps {
   faultId: string;
 }
 
-const getCategoryIcon = (category: string, className: string = "h-6 w-6") => {
+const getCategoryIcon = (category: string, className: string = 'h-6 w-6') => {
   switch (category) {
     case 'overcurrent':
       return <Zap className={className} />;
@@ -39,37 +39,37 @@ const getCategoryColor = (category: string) => {
       return {
         text: 'text-red-400',
         bg: 'bg-red-500/10',
-        border: 'border-red-500/30'
+        border: 'border-red-500/30',
       };
     case 'earthing':
       return {
         text: 'text-green-400',
         bg: 'bg-green-500/10',
-        border: 'border-green-500/30'
+        border: 'border-green-500/30',
       };
     case 'insulation':
       return {
         text: 'text-purple-400',
         bg: 'bg-purple-500/10',
-        border: 'border-purple-500/30'
+        border: 'border-purple-500/30',
       };
     case 'supply_issues':
       return {
         text: 'text-cyan-400',
         bg: 'bg-cyan-500/10',
-        border: 'border-cyan-500/30'
+        border: 'border-cyan-500/30',
       };
     default:
       return {
         text: 'text-slate-400',
         bg: 'bg-slate-500/10',
-        border: 'border-slate-500/30'
+        border: 'border-slate-500/30',
       };
   }
 };
 
 const CommonFaultDetail = ({ faultId }: CommonFaultDetailProps) => {
-  const fault = commonFaultCategories.find(f => f.id === faultId);
+  const fault = commonFaultCategories.find((f) => f.id === faultId);
 
   if (!fault) {
     return (
@@ -87,16 +87,10 @@ const CommonFaultDetail = ({ faultId }: CommonFaultDetailProps) => {
       <Card className={`${colors.border} border-l-4 ${colors.bg}`}>
         <CardHeader className="pb-3">
           <div className="flex items-center gap-3">
-            <div className={colors.text}>
-              {getCategoryIcon(fault.category, "h-8 w-8")}
-            </div>
+            <div className={colors.text}>{getCategoryIcon(fault.category, 'h-8 w-8')}</div>
             <div>
-              <CardTitle className={`text-lg sm:text-xl ${colors.text}`}>
-                {fault.title}
-              </CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
-                {fault.description}
-              </p>
+              <CardTitle className={`text-lg sm:text-xl ${colors.text}`}>{fault.title}</CardTitle>
+              <p className="text-sm text-muted-foreground mt-1">{fault.description}</p>
             </div>
           </div>
         </CardHeader>
@@ -109,9 +103,7 @@ const CommonFaultDetail = ({ faultId }: CommonFaultDetailProps) => {
             <Lightbulb className="h-4 w-4" />
             Theory & Background
           </h3>
-          <p className="text-sm text-foreground leading-relaxed">
-            {fault.theory}
-          </p>
+          <p className="text-sm text-foreground leading-relaxed">{fault.theory}</p>
         </CardContent>
       </Card>
 
@@ -186,9 +178,7 @@ const CommonFaultDetail = ({ faultId }: CommonFaultDetailProps) => {
             <BookOpen className="h-4 w-4" />
             Regulatory Reference
           </h3>
-          <p className="text-sm text-purple-300">
-            {fault.regulation}
-          </p>
+          <p className="text-sm text-purple-300">{fault.regulation}</p>
         </CardContent>
       </Card>
     </div>

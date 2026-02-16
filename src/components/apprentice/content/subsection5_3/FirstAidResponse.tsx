@@ -1,17 +1,16 @@
-
-import React from "react";
-import { Heart, Zap, AlertCircle } from "lucide-react";
+import React from 'react';
+import { Heart, Zap, AlertCircle } from 'lucide-react';
 
 const FirstAidResponse = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-2xl font-bold text-elec-yellow">First Aid for Electrical Injuries</h3>
-      
+
       <p className="text-base md:text-lg mb-4">
-        Electrical injuries require specific first aid procedures. Understanding these procedures can help save lives
-        and minimise long-term damage while waiting for emergency services.
+        Electrical injuries require specific first aid procedures. Understanding these procedures
+        can help save lives and minimise long-term damage while waiting for emergency services.
       </p>
-      
+
       <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-4 md:p-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {/* First Column */}
@@ -22,17 +21,22 @@ const FirstAidResponse = () => {
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Electric Shock Response</h4>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Initial Action</h5>
               <ol className="list-decimal list-inside text-base space-y-2">
-                <li className="text-red-400 font-medium">Do NOT touch the casualty if they are still in contact with the electrical source</li>
+                <li className="text-red-400 font-medium">
+                  Do NOT touch the casualty if they are still in contact with the electrical source
+                </li>
                 <li>Turn off the power source if possible and safe to do so</li>
-                <li>If power cannot be turned off, use a non-conductive object (dry wood, plastic) to separate casualty from source</li>
+                <li>
+                  If power cannot be turned off, use a non-conductive object (dry wood, plastic) to
+                  separate casualty from source
+                </li>
                 <li>Call for emergency assistance (999) immediately</li>
               </ol>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Primary Assessment</h5>
               <ul className="list-disc list-inside text-base space-y-2">
@@ -43,7 +47,7 @@ const FirstAidResponse = () => {
               </ul>
             </div>
           </div>
-          
+
           {/* Second Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
@@ -52,7 +56,7 @@ const FirstAidResponse = () => {
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Treating Electrical Burns</h4>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Electrical Burn Care</h5>
               <ul className="list-disc list-inside text-base space-y-2">
@@ -63,19 +67,31 @@ const FirstAidResponse = () => {
                 <li>Monitor for signs of shock</li>
               </ul>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-2">Types of Electrical Burns</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-2">
+                Types of Electrical Burns
+              </h5>
               <ul className="list-disc list-inside text-base space-y-2">
-                <li><span className="text-elec-yellow">Entry/Exit burns:</span> Where current enters/exits body</li>
-                <li><span className="text-elec-yellow">Flash burns:</span> From electric arcs</li>
-                <li><span className="text-elec-yellow">Flame burns:</span> From ignited clothing</li>
-                <li><span className="text-elec-yellow">Contact burns:</span> From touching hot surfaces</li>
+                <li>
+                  <span className="text-elec-yellow">Entry/Exit burns:</span> Where current
+                  enters/exits body
+                </li>
+                <li>
+                  <span className="text-elec-yellow">Flash burns:</span> From electric arcs
+                </li>
+                <li>
+                  <span className="text-elec-yellow">Flame burns:</span> From ignited clothing
+                </li>
+                <li>
+                  <span className="text-elec-yellow">Contact burns:</span> From touching hot
+                  surfaces
+                </li>
                 <li>Remember: internal damage may be more severe than visible burns</li>
               </ul>
             </div>
           </div>
-          
+
           {/* Third Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
@@ -84,9 +100,11 @@ const FirstAidResponse = () => {
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Monitoring & Complications</h4>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-2">Signs of Complications</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-2">
+                Signs of Complications
+              </h5>
               <ul className="list-disc list-inside text-base space-y-2">
                 <li>Irregular heartbeat or cardiac arrest</li>
                 <li>Breathing difficulties</li>
@@ -95,7 +113,7 @@ const FirstAidResponse = () => {
                 <li>Seizures</li>
               </ul>
             </div>
-            
+
             <div className="bg-white/5 rounded-md p-3">
               <h5 className="font-medium text-elec-yellow text-base mb-2">Important Notes</h5>
               <ul className="list-disc list-inside text-base space-y-2">
@@ -108,13 +126,16 @@ const FirstAidResponse = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-4 p-4 bg-white/10 rounded-lg text-base">
           <p className="font-medium mb-1 text-elec-yellow">Important:</p>
-          <p>The Health and Safety (First-Aid) Regulations 1981 require employers to provide adequate first-aid equipment, 
-          facilities and trained personnel. In electrical work environments, specific first-aid provisions for electrical injuries 
-          should be available. Always ensure first aid kits are accessible and that workers know the location of first aid stations 
-          and how to contact first aiders.</p>
+          <p>
+            The Health and Safety (First-Aid) Regulations 1981 require employers to provide adequate
+            first-aid equipment, facilities and trained personnel. In electrical work environments,
+            specific first-aid provisions for electrical injuries should be available. Always ensure
+            first aid kits are accessible and that workers know the location of first aid stations
+            and how to contact first aiders.
+          </p>
         </div>
       </div>
     </div>

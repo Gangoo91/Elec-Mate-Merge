@@ -1,5 +1,14 @@
 import React from 'react';
-import { ArrowLeft, BookOpen, Layers, MapPin, Battery, Wrench, FileCheck, GraduationCap } from 'lucide-react';
+import {
+  ArrowLeft,
+  BookOpen,
+  Layers,
+  MapPin,
+  Battery,
+  Wrench,
+  FileCheck,
+  GraduationCap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -15,54 +24,54 @@ const EmergencyLightingCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Introduction to Emergency Lighting",
-      description: "Purpose, legal framework, and system fundamentals",
-      duration: "40 mins",
-      icon: BookOpen
+      title: 'Introduction to Emergency Lighting',
+      description: 'Purpose, legal framework, and system fundamentals',
+      duration: '40 mins',
+      icon: BookOpen,
     },
     {
       id: 2,
-      title: "System Categories and Lighting Types",
-      description: "Emergency lighting categories and applications",
-      duration: "45 mins",
-      icon: Layers
+      title: 'System Categories and Lighting Types',
+      description: 'Emergency lighting categories and applications',
+      duration: '45 mins',
+      icon: Layers,
     },
     {
       id: 3,
-      title: "Design Requirements and Placement",
-      description: "Technical design criteria and positioning",
-      duration: "50 mins",
-      icon: MapPin
+      title: 'Design Requirements and Placement',
+      description: 'Technical design criteria and positioning',
+      duration: '50 mins',
+      icon: MapPin,
     },
     {
       id: 4,
-      title: "Cabling, Battery Backup, and Circuiting",
-      description: "Power supply systems and circuit design",
-      duration: "55 mins",
-      icon: Battery
+      title: 'Cabling, Battery Backup, and Circuiting',
+      description: 'Power supply systems and circuit design',
+      duration: '55 mins',
+      icon: Battery,
     },
     {
       id: 5,
-      title: "Installation, Testing, and Maintenance",
-      description: "Complete testing procedures and protocols",
-      duration: "50 mins",
-      icon: Wrench
+      title: 'Installation, Testing, and Maintenance',
+      description: 'Complete testing procedures and protocols',
+      duration: '50 mins',
+      icon: Wrench,
     },
     {
       id: 6,
-      title: "Regulatory Compliance and BS 5266",
-      description: "Standards compliance and documentation",
-      duration: "40 mins",
-      icon: FileCheck
+      title: 'Regulatory Compliance and BS 5266',
+      description: 'Standards compliance and documentation',
+      duration: '40 mins',
+      icon: FileCheck,
     },
     {
       id: 7,
-      title: "Mock Exam",
-      description: "Test your knowledge",
-      duration: "75 mins",
+      title: 'Mock Exam',
+      description: 'Test your knowledge',
+      duration: '75 mins',
       icon: GraduationCap,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (
@@ -100,7 +109,11 @@ const EmergencyLightingCourse = () => {
           {modules.map((module, index) => (
             <ModuleCard
               key={module.id}
-              to={module.isExam ? `../emergency-lighting-mock-exam` : `../emergency-lighting-module-${module.id}`}
+              to={
+                module.isExam
+                  ? `../emergency-lighting-mock-exam`
+                  : `../emergency-lighting-module-${module.id}`
+              }
               moduleNumber={typeof module.id === 'number' ? module.id : index + 1}
               title={module.title}
               description={module.description}

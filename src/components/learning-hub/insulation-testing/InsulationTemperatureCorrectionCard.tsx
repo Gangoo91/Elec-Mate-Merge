@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Thermometer, Calculator } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +7,9 @@ interface InsulationTemperatureCorrectionCardProps {
   currentTest: InsulationTestResult;
 }
 
-const InsulationTemperatureCorrectionCard = ({ currentTest }: InsulationTemperatureCorrectionCardProps) => {
+const InsulationTemperatureCorrectionCard = ({
+  currentTest,
+}: InsulationTemperatureCorrectionCardProps) => {
   const calculateCorrection = (temperature: number) => {
     const factor = Math.pow(1.07, -(temperature - 20));
     return factor;
@@ -36,18 +37,28 @@ const InsulationTemperatureCorrectionCard = ({ currentTest }: InsulationTemperat
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
-              <p className="text-white mb-2">Test Temperature: <span className="text-foreground">{currentTest.temperature}°C</span></p>
-              <p className="text-white mb-2">Correction Factor: <span className="text-foreground">{correctionFactor.toFixed(3)}</span></p>
-              <p className="text-xs text-white/80">
-                Formula: Factor = 1.07^(20-T_measured)
+              <p className="text-white mb-2">
+                Test Temperature:{' '}
+                <span className="text-foreground">{currentTest.temperature}°C</span>
               </p>
+              <p className="text-white mb-2">
+                Correction Factor:{' '}
+                <span className="text-foreground">{correctionFactor.toFixed(3)}</span>
+              </p>
+              <p className="text-xs text-white/80">Formula: Factor = 1.07^(20-T_measured)</p>
             </div>
             <div>
               <p className="text-white mb-2">Temperature Effect:</p>
               <div className="text-xs space-y-1">
-                {temp < 20 && <p className="text-blue-400">• Cold conditions: Higher resistance readings</p>}
-                {temp === 20 && <p className="text-green-400">• Standard conditions: No correction needed</p>}
-                {temp > 20 && <p className="text-red-400">• Warm conditions: Lower resistance readings</p>}
+                {temp < 20 && (
+                  <p className="text-blue-400">• Cold conditions: Higher resistance readings</p>
+                )}
+                {temp === 20 && (
+                  <p className="text-green-400">• Standard conditions: No correction needed</p>
+                )}
+                {temp > 20 && (
+                  <p className="text-red-400">• Warm conditions: Lower resistance readings</p>
+                )}
                 <p className="text-white/80">• 7% change per °C temperature difference</p>
               </div>
             </div>
@@ -81,10 +92,21 @@ const InsulationTemperatureCorrectionCard = ({ currentTest }: InsulationTemperat
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
           <h4 className="font-medium text-yellow-400 mb-2">Why Temperature Correction Matters</h4>
           <div className="text-sm text-white space-y-1">
-            <p>• <strong>Fair Assessment:</strong> Ensures consistent evaluation regardless of weather</p>
-            <p>• <strong>Accurate Diagnosis:</strong> Reveals true insulation condition, not just temperature effects</p>
-            <p>• <strong>Trending Analysis:</strong> Allows meaningful comparison of tests taken at different times</p>
-            <p>• <strong>Compliance:</strong> BS 7671 requires consideration of temperature effects</p>
+            <p>
+              • <strong>Fair Assessment:</strong> Ensures consistent evaluation regardless of
+              weather
+            </p>
+            <p>
+              • <strong>Accurate Diagnosis:</strong> Reveals true insulation condition, not just
+              temperature effects
+            </p>
+            <p>
+              • <strong>Trending Analysis:</strong> Allows meaningful comparison of tests taken at
+              different times
+            </p>
+            <p>
+              • <strong>Compliance:</strong> BS 7671 requires consideration of temperature effects
+            </p>
           </div>
         </div>
       </CardContent>

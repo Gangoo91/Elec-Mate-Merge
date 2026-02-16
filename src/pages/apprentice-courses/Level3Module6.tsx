@@ -1,67 +1,80 @@
-import { ArrowLeft, PenTool, Calculator, Settings, MapPin, FileText, CheckCircle, Zap } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  PenTool,
+  Calculator,
+  Settings,
+  MapPin,
+  FileText,
+  CheckCircle,
+  Zap,
+} from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "Design Principles and Requirements",
-    description: "Understanding fundamental design principles, compliance requirements and client specifications",
+    number: 'Section 1',
+    title: 'Design Principles and Requirements',
+    description:
+      'Understanding fundamental design principles, compliance requirements and client specifications',
     icon: PenTool,
-    href: "../level3-module6-section1",
+    href: '../level3-module6-section1',
   },
   {
-    number: "Section 2",
-    title: "Circuit Design Calculations",
-    description: "Essential calculations for circuit design including current ratings, cable sizing and protection",
+    number: 'Section 2',
+    title: 'Circuit Design Calculations',
+    description:
+      'Essential calculations for circuit design including current ratings, cable sizing and protection',
     icon: Calculator,
-    href: "../level3-module6-section2",
+    href: '../level3-module6-section2',
   },
   {
-    number: "Section 3",
-    title: "Selection of Protective Devices and Equipment",
-    description: "Choosing appropriate protective devices, equipment and accessories for electrical installations",
+    number: 'Section 3',
+    title: 'Selection of Protective Devices and Equipment',
+    description:
+      'Choosing appropriate protective devices, equipment and accessories for electrical installations',
     icon: Settings,
-    href: "../level3-module6-section3",
+    href: '../level3-module6-section3',
   },
   {
-    number: "Section 4",
-    title: "Designing for Special Installations and Locations",
-    description: "Design considerations for special locations and installations with specific requirements",
+    number: 'Section 4',
+    title: 'Designing for Special Installations and Locations',
+    description:
+      'Design considerations for special locations and installations with specific requirements',
     icon: MapPin,
-    href: "../level3-module6-section4",
+    href: '../level3-module6-section4',
   },
   {
-    number: "Section 5",
-    title: "System Documentation and Drawings",
-    description: "Creating comprehensive design documentation, drawings and specifications",
+    number: 'Section 5',
+    title: 'System Documentation and Drawings',
+    description: 'Creating comprehensive design documentation, drawings and specifications',
     icon: FileText,
-    href: "../level3-module6-section5",
+    href: '../level3-module6-section5',
   },
   {
-    number: "Section 6",
-    title: "Verification of Design",
-    description: "Checking and verifying electrical system designs for compliance and performance",
+    number: 'Section 6',
+    title: 'Verification of Design',
+    description: 'Checking and verifying electrical system designs for compliance and performance',
     icon: CheckCircle,
-    href: "../level3-module6-section6",
+    href: '../level3-module6-section6',
   },
 ];
 
 const learningOutcomes = [
-  "Understand fundamental electrical design principles and compliance requirements",
-  "Perform circuit design calculations for cable sizing and protection",
-  "Select appropriate protective devices and equipment for installations",
-  "Design electrical systems for special locations and requirements",
-  "Create comprehensive design documentation and drawings",
-  "Verify electrical designs for compliance with BS7671",
+  'Understand fundamental electrical design principles and compliance requirements',
+  'Perform circuit design calculations for cable sizing and protection',
+  'Select appropriate protective devices and equipment for installations',
+  'Design electrical systems for special locations and requirements',
+  'Create comprehensive design documentation and drawings',
+  'Verify electrical designs for compliance with BS7671',
 ];
 
 const Level3Module6 = () => {
   useSEO(
-    "Module 6: Electrical Systems Design - Level 3 Electrical Course",
-    "Master electrical systems design principles, calculations and compliance with BS7671"
+    'Module 6: Electrical Systems Design - Level 3 Electrical Course',
+    'Master electrical systems design principles, calculations and compliance with BS7671'
   );
 
   return (
@@ -86,28 +99,22 @@ const Level3Module6 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        
-
-        
-
-        
-
-        {/* Sections Grid */}
-        <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Module Sections</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {sections.map((section, index) => (
-              <ModuleCard
-                key={index}
-                number={section.number}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                href={section.href}
-              />
-            ))}
-          </div>
-        </section>
+          {/* Sections Grid */}
+          <section>
+            <h2 className="text-lg font-semibold text-white mb-6">Module Sections</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {sections.map((section, index) => (
+                <ModuleCard
+                  key={index}
+                  number={section.number}
+                  title={section.title}
+                  description={section.description}
+                  icon={section.icon}
+                  href={section.href}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

@@ -66,42 +66,22 @@ const Dashboard = () => {
     <DashboardContainer>
       <div className="space-y-6 sm:space-y-8">
         {/* Premium Hero Welcome */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={0}
-        >
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
           <PremiumHero />
         </motion.section>
 
         {/* Live Stats Bar - Real data, swipeable on mobile */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={1}
-        >
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
           <LiveStatsBar />
         </motion.section>
 
         {/* Trial Banner (if applicable) */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={2}
-        >
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
           <TrialBanner />
         </motion.section>
 
         {/* Premium Hub Cards */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={3}
-        >
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={3}>
           <h2 className="text-xs sm:text-sm font-medium text-white/70 uppercase tracking-wider mb-3 px-0.5">
             Your Hubs
           </h2>
@@ -109,32 +89,17 @@ const Dashboard = () => {
         </motion.section>
 
         {/* Smart Actions - Prioritized action queue */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={4}
-        >
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={4}>
           <SmartActions />
         </motion.section>
 
         {/* Designed Circuits from Circuit Designer */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={5}
-        >
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={5}>
           <DesignedCircuitsCard />
         </motion.section>
 
         {/* Secondary Quick Access */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={6}
-        >
+        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={6}>
           <SecondaryQuickAccess />
         </motion.section>
 
@@ -143,10 +108,7 @@ const Dashboard = () => {
       </div>
 
       {/* Welcome modal for first-time users */}
-      <WelcomeModal
-        isOpen={showWelcome}
-        onClose={() => setShowWelcome(false)}
-      />
+      <WelcomeModal isOpen={showWelcome} onClose={() => setShowWelcome(false)} />
     </DashboardContainer>
   );
 };

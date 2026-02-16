@@ -16,7 +16,15 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome:
+    | 'satisfactory'
+    | 'C1'
+    | 'C2'
+    | 'C3'
+    | 'not-applicable'
+    | 'not-verified'
+    | 'limitation'
+    | '';
   notes?: string;
 }
 
@@ -36,18 +44,18 @@ interface InspectionItemRowProps {
   onNavigateToObservations?: () => void;
 }
 
-const InspectionItemRow = ({ 
-  sectionItem, 
-  inspectionItem, 
-  onUpdateItem, 
+const InspectionItemRow = ({
+  sectionItem,
+  inspectionItem,
+  onUpdateItem,
   onOutcomeChange,
-  onNavigateToObservations 
+  onNavigateToObservations,
 }: InspectionItemRowProps) => {
   const { id: reportId } = useParams();
   const [localNotes, setLocalNotes] = React.useState(inspectionItem?.notes || '');
   const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
   const [showPhotoUpload, setShowPhotoUpload] = React.useState(false);
-  
+
   const currentOutcome = inspectionItem?.outcome || 'not-applicable';
   const isInspected = inspectionItem?.inspected || false;
 
@@ -59,36 +67,36 @@ const InspectionItemRow = ({
 
   const handlePhotoCapture = async (file: File) => {
     // Upload with fault code if outcome is critical
-    const faultCode = ['C1', 'C2', 'C3', 'limitation'].includes(currentOutcome) 
-      ? currentOutcome as 'C1' | 'C2' | 'C3' | 'limitation'
+    const faultCode = ['C1', 'C2', 'C3', 'limitation'].includes(currentOutcome)
+      ? (currentOutcome as 'C1' | 'C2' | 'C3' | 'limitation')
       : undefined;
-    
+
     await uploadPhoto(file, faultCode, localNotes);
     setShowPhotoUpload(false);
   };
-  
+
   // Sync local notes when inspection item changes
   React.useEffect(() => {
     setLocalNotes(inspectionItem?.notes || '');
   }, [inspectionItem?.notes]);
-  
+
   // Handle notes input with debouncing
   const handleNotesChange = (value: string) => {
     setLocalNotes(value);
-    
+
     // Clear existing timer
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
-    
+
     // Set new timer for debounced update
     const newTimer = setTimeout(() => {
       onUpdateItem(sectionItem.id, 'notes', value);
     }, 300); // 300ms debounce
-    
+
     setDebounceTimer(newTimer);
   };
-  
+
   // Clean up timer on unmount
   React.useEffect(() => {
     return () => {
@@ -97,7 +105,7 @@ const InspectionItemRow = ({
       }
     };
   }, [debounceTimer]);
-  
+
   // Distinguish between different critical outcomes
   const isC1OrC2 = currentOutcome === 'C1' || currentOutcome === 'C2';
   const isC3 = currentOutcome === 'C3';
@@ -132,34 +140,41 @@ const InspectionItemRow = ({
       <TableCell>
         <Checkbox
           checked={isInspected}
-          onCheckedChange={(checked) => 
-            onUpdateItem(sectionItem.id, 'inspected', checked)
-          }
+          onCheckedChange={(checked) => onUpdateItem(sectionItem.id, 'inspected', checked)}
         />
       </TableCell>
       <TableCell>
         <div className="space-y-1">
-          <p className="text-sm font-medium">{sectionItem.number} {sectionItem.item}</p>
+          <p className="text-sm font-medium">
+            {sectionItem.number} {sectionItem.item}
+          </p>
           {sectionItem.clause ? (
-            <Badge 
-              variant="outline" 
+            <Badge
+              variant="outline"
               className={`text-sm md:text-xs font-mono px-2 py-0.5 ${
                 sectionItem.clause.includes('Visual') || sectionItem.clause.includes('Reserved')
                   ? 'bg-purple-500/10 border-purple-500/30 text-purple-400'
                   : sectionItem.clause.includes('Part') || sectionItem.clause.includes('Chapter')
-                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                  : 'bg-blue-500/10 border-blue-500/30 text-blue-400'
+                    ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                    : 'bg-blue-500/10 border-blue-500/30 text-blue-400'
               }`}
             >
               {sectionItem.clause}
             </Badge>
           ) : (
-            <Badge variant="secondary" className="text-sm md:text-xs font-mono px-2 py-0.5 bg-gray-500/10 border-gray-500/30 text-gray-400">
+            <Badge
+              variant="secondary"
+              className="text-sm md:text-xs font-mono px-2 py-0.5 bg-gray-500/10 border-gray-500/30 text-gray-400"
+            >
               No Specific Reg
             </Badge>
           )}
           {sectionItem.description && (
-            <p className={`text-xs ${(isC1OrC2 || isC3) ? 'text-gray-200' : 'text-muted-foreground'}`}>{sectionItem.description}</p>
+            <p
+              className={`text-xs ${isC1OrC2 || isC3 ? 'text-gray-200' : 'text-muted-foreground'}`}
+            >
+              {sectionItem.description}
+            </p>
           )}
         </div>
       </TableCell>
@@ -206,10 +221,7 @@ const InspectionItemRow = ({
         </div>
         {showPhotoUpload && (
           <div className="mt-2">
-            <InspectionPhotoUpload
-              onPhotoCapture={handlePhotoCapture}
-              isUploading={isUploading}
-            />
+            <InspectionPhotoUpload onPhotoCapture={handlePhotoCapture} isUploading={isUploading} />
           </div>
         )}
       </TableCell>

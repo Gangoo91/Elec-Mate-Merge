@@ -1,59 +1,72 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import TimeTracker from "@/components/apprentice/TimeTracker";
-import DigitalLogbook from "@/components/apprentice/time-tracking/DigitalLogbook";
-import WeeklyOverview from "@/components/apprentice/time-tracking/WeeklyOverview";
-import CertificatesManager from "@/components/apprentice/time-tracking/CertificatesManager";
-import TrainingEvidence from "@/components/apprentice/time-tracking/TrainingEvidence";
-import AutomatedTrackingCard from "@/components/apprentice/time-tracking/AutomatedTrackingCard";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Clock, ChevronDown } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import TimeTracker from '@/components/apprentice/TimeTracker';
+import DigitalLogbook from '@/components/apprentice/time-tracking/DigitalLogbook';
+import WeeklyOverview from '@/components/apprentice/time-tracking/WeeklyOverview';
+import CertificatesManager from '@/components/apprentice/time-tracking/CertificatesManager';
+import TrainingEvidence from '@/components/apprentice/time-tracking/TrainingEvidence';
+import AutomatedTrackingCard from '@/components/apprentice/time-tracking/AutomatedTrackingCard';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Clock, ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 
 interface TrainingManagementCardProps {
   initialActiveTab?: string;
   className?: string;
 }
 
-const TrainingManagementCard = ({ initialActiveTab = "recent", className }: TrainingManagementCardProps) => {
+const TrainingManagementCard = ({
+  initialActiveTab = 'recent',
+  className,
+}: TrainingManagementCardProps) => {
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const isMobile = useIsMobile();
 
   // Function to get tab display name
   const getTabDisplayName = (tabValue: string) => {
     switch (tabValue) {
-      case "recent": return "Recent";
-      case "logbook": return "Logbook";
-      case "weekly": return "Weekly";
-      case "certificates": return "Certificates";
-      case "evidence": return "Evidence";
-      case "auto": return "Auto-Track";
-      default: return tabValue;
+      case 'recent':
+        return 'Recent';
+      case 'logbook':
+        return 'Logbook';
+      case 'weekly':
+        return 'Weekly';
+      case 'certificates':
+        return 'Certificates';
+      case 'evidence':
+        return 'Evidence';
+      case 'auto':
+        return 'Auto-Track';
+      default:
+        return tabValue;
     }
   };
 
   return (
-    <Card className={cn("bg-white/5", className)}>
-      <CardHeader className={isMobile ? "pb-2" : ""}>
-        <div className={`flex items-center ${isMobile ? "justify-between flex-wrap gap-1" : "justify-between gap-4"}`}>
-          <CardTitle className={isMobile ? "text-2xl" : ""}>
+    <Card className={cn('bg-white/5', className)}>
+      <CardHeader className={isMobile ? 'pb-2' : ''}>
+        <div
+          className={`flex items-center ${isMobile ? 'justify-between flex-wrap gap-1' : 'justify-between gap-4'}`}
+        >
+          <CardTitle className={isMobile ? 'text-2xl' : ''}>
             {isMobile ? (
               <div className="flex flex-col">
                 <div className="text-3xl font-bold">Off-The-Job</div>
                 <div className="text-3xl font-bold">Training Logger</div>
-                <div className="text-sm text-white mt-1">Track your 20% off-the-job training time</div>
+                <div className="text-sm text-white mt-1">
+                  Track your 20% off-the-job training time
+                </div>
               </div>
             ) : (
-              "Training Management"
+              'Training Management'
             )}
           </CardTitle>
           {!isMobile && (
@@ -74,7 +87,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
           )}
         </div>
       </CardHeader>
-      <CardContent className={isMobile ? "px-3 py-2" : ""}>
+      <CardContent className={isMobile ? 'px-3 py-2' : ''}>
         {isMobile && (
           <div className="flex items-center gap-4 mb-4">
             <div className="flex items-center">
@@ -91,34 +104,55 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
             </div>
           </div>
         )}
-        
+
         <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
           {isMobile ? (
             <div className="mb-4 bg-white/10 rounded-md p-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="w-full justify-between bg-transparent text-white">
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-between bg-transparent text-white"
+                  >
                     {getTabDisplayName(activeTab)}
                     <ChevronDown className="h-4 w-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-full min-w-[200px] bg-white/10 border-elec-gray/40">
-                  <DropdownMenuItem onClick={() => setActiveTab("auto")} className="justify-center">
+                <DropdownMenuContent
+                  align="center"
+                  className="w-full min-w-[200px] bg-white/10 border-elec-gray/40"
+                >
+                  <DropdownMenuItem onClick={() => setActiveTab('auto')} className="justify-center">
                     Auto-Track
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setActiveTab("recent")} className="justify-center">
+                  <DropdownMenuItem
+                    onClick={() => setActiveTab('recent')}
+                    className="justify-center"
+                  >
                     Recent
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setActiveTab("logbook")} className="justify-center">
+                  <DropdownMenuItem
+                    onClick={() => setActiveTab('logbook')}
+                    className="justify-center"
+                  >
                     Logbook
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setActiveTab("weekly")} className="justify-center">
+                  <DropdownMenuItem
+                    onClick={() => setActiveTab('weekly')}
+                    className="justify-center"
+                  >
                     Weekly
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setActiveTab("certificates")} className="justify-center">
+                  <DropdownMenuItem
+                    onClick={() => setActiveTab('certificates')}
+                    className="justify-center"
+                  >
                     Certificates
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setActiveTab("evidence")} className="justify-center">
+                  <DropdownMenuItem
+                    onClick={() => setActiveTab('evidence')}
+                    className="justify-center"
+                  >
                     Evidence
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -126,40 +160,52 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
             </div>
           ) : (
             <TabsList className="mb-4 bg-white/10 w-full">
-              <TabsTrigger value="auto" className="flex-1">Auto-Track</TabsTrigger>
-              <TabsTrigger value="recent" className="flex-1">Recent</TabsTrigger>
-              <TabsTrigger value="logbook" className="flex-1">Logbook</TabsTrigger>
-              <TabsTrigger value="weekly" className="flex-1">Weekly</TabsTrigger>
-              <TabsTrigger value="certificates" className="flex-1">Certificates</TabsTrigger>
-              <TabsTrigger value="evidence" className="flex-1">Evidence</TabsTrigger>
+              <TabsTrigger value="auto" className="flex-1">
+                Auto-Track
+              </TabsTrigger>
+              <TabsTrigger value="recent" className="flex-1">
+                Recent
+              </TabsTrigger>
+              <TabsTrigger value="logbook" className="flex-1">
+                Logbook
+              </TabsTrigger>
+              <TabsTrigger value="weekly" className="flex-1">
+                Weekly
+              </TabsTrigger>
+              <TabsTrigger value="certificates" className="flex-1">
+                Certificates
+              </TabsTrigger>
+              <TabsTrigger value="evidence" className="flex-1">
+                Evidence
+              </TabsTrigger>
             </TabsList>
           )}
-          
+
           <TabsContent value="auto">
             <AutomatedTrackingCard />
           </TabsContent>
-          
+
           <TabsContent value="recent">
             <TimeTracker />
           </TabsContent>
-          
+
           <TabsContent value="logbook">
             <DigitalLogbook />
           </TabsContent>
-          
+
           <TabsContent value="weekly">
             <WeeklyOverview />
           </TabsContent>
-          
+
           <TabsContent value="certificates">
             <CertificatesManager />
           </TabsContent>
-          
+
           <TabsContent value="evidence">
             <TrainingEvidence />
           </TabsContent>
         </Tabs>
-        
+
         {isMobile && (
           <div className="flex items-center justify-between mt-6 pt-2 border-t border-elec-gray/30">
             <div className="flex items-center">

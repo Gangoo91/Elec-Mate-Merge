@@ -83,15 +83,19 @@ export const collegeConversationService = {
    */
   async getMyConversations(): Promise<CollegeConversation[]> {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase
         .from('college_conversations')
-        .select(`
+        .select(
+          `
           *,
           student:college_students(id, first_name, last_name)
-        `)
+        `
+        )
         .or(`participant_1_id.eq.${user.id},participant_2_id.eq.${user.id}`)
         .eq('status', 'active')
         .order('last_message_at', { ascending: false, nullsFirst: false });
@@ -140,7 +144,9 @@ export const collegeConversationService = {
       .select('*')
       .eq('institution_id', institutionId)
       .eq('conversation_type', 'student_tutor')
-      .or(`and(participant_1_id.eq.${studentUserId},participant_2_id.eq.${tutorUserId}),and(participant_1_id.eq.${tutorUserId},participant_2_id.eq.${studentUserId})`)
+      .or(
+        `and(participant_1_id.eq.${studentUserId},participant_2_id.eq.${tutorUserId}),and(participant_1_id.eq.${tutorUserId},participant_2_id.eq.${studentUserId})`
+      )
       .single();
 
     if (existing) return existing as unknown as CollegeConversation;
@@ -179,7 +185,9 @@ export const collegeConversationService = {
       .select('*')
       .eq('institution_id', institutionId)
       .eq('conversation_type', 'college_employer')
-      .or(`and(participant_1_id.eq.${staffUserId},participant_2_id.eq.${employerUserId}),and(participant_1_id.eq.${employerUserId},participant_2_id.eq.${staffUserId})`)
+      .or(
+        `and(participant_1_id.eq.${staffUserId},participant_2_id.eq.${employerUserId}),and(participant_1_id.eq.${employerUserId},participant_2_id.eq.${staffUserId})`
+      )
       .maybeSingle();
 
     if (existing) return existing as unknown as CollegeConversation;
@@ -219,7 +227,9 @@ export const collegeConversationService = {
    * Get conversation stats
    */
   async getStats(): Promise<{ total: number; unread: number }> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return { total: 0, unread: 0 };
 
     const { data, error } = await supabase
@@ -231,10 +241,11 @@ export const collegeConversationService = {
     if (error) return { total: 0, unread: 0 };
 
     const total = data?.length || 0;
-    const unread = data?.reduce((sum, conv) => {
-      const unreadCount = conv.participant_1_id === user.id ? conv.unread_1 : conv.unread_2;
-      return sum + (unreadCount || 0);
-    }, 0) || 0;
+    const unread =
+      data?.reduce((sum, conv) => {
+        const unreadCount = conv.participant_1_id === user.id ? conv.unread_1 : conv.unread_2;
+        return sum + (unreadCount || 0);
+      }, 0) || 0;
 
     return { total, unread };
   },
@@ -271,7 +282,9 @@ export const collegeMessageService = {
     visible_to_student?: boolean;
     metadata?: Record<string, unknown>;
   }): Promise<CollegeMessage> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
     const { data, error } = await supabase
@@ -300,7 +313,9 @@ export const collegeMessageService = {
    * Mark messages as read
    */
   async markAsRead(conversationId: string): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     // Update messages
@@ -351,12 +366,15 @@ export const collegeMessageService = {
   /**
    * Send a progress update (special message type for student progress)
    */
-  async sendProgressUpdate(conversationId: string, progressData: {
-    type: 'assessment' | 'attendance' | 'milestone';
-    title: string;
-    details: string;
-    score?: number;
-  }): Promise<CollegeMessage> {
+  async sendProgressUpdate(
+    conversationId: string,
+    progressData: {
+      type: 'assessment' | 'attendance' | 'milestone';
+      title: string;
+      details: string;
+      score?: number;
+    }
+  ): Promise<CollegeMessage> {
     return this.sendMessage({
       conversation_id: conversationId,
       content: progressData.title,
@@ -408,7 +426,10 @@ export const collegeChatHelpers = {
   /**
    * Get other participant details
    */
-  async getParticipantDetails(userId: string, type: ParticipantType): Promise<{
+  async getParticipantDetails(
+    userId: string,
+    type: ParticipantType
+  ): Promise<{
     name: string;
     avatar_url: string | null;
     role?: string;
@@ -477,8 +498,12 @@ async function sendCollegeMessagePush(conversationId: string, senderId: string, 
 
     // Determine recipient and sender type
     const isParticipant1 = (conv as any).participant_1_id === senderId;
-    const recipientId = isParticipant1 ? (conv as any).participant_2_id : (conv as any).participant_1_id;
-    const senderType = isParticipant1 ? (conv as any).participant_1_type : (conv as any).participant_2_type;
+    const recipientId = isParticipant1
+      ? (conv as any).participant_2_id
+      : (conv as any).participant_1_id;
+    const senderType = isParticipant1
+      ? (conv as any).participant_1_type
+      : (conv as any).participant_2_type;
 
     // Get sender name
     const senderDetails = await collegeChatHelpers.getParticipantDetails(senderId, senderType);

@@ -1,36 +1,51 @@
-import { ArrowLeft, ArrowRight, CheckCircle, Target } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, CheckCircle, Target } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Site Documentation Storage and Access - Module 5.7.5 | Level 2 Electrical Course";
-const DESCRIPTION = "Learn about proper storage and access of site documentation for electrical installations. Understand best practices for managing drawings, certificates, and records.";
+const TITLE = 'Site Documentation Storage and Access - Module 5.7.5 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Learn about proper storage and access of site documentation for electrical installations. Understand best practices for managing drawings, certificates, and records.';
 
 // Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "Name one type of site documentation that must be stored.",
-    options: ["Shopping lists", "Drawings and as-builts", "Personal notes", "Weather reports"],
+    question: 'Name one type of site documentation that must be stored.',
+    options: ['Shopping lists', 'Drawings and as-builts', 'Personal notes', 'Weather reports'],
     correctIndex: 1,
-    explanation: "Drawings and as-builts are critical site documentation that must be properly stored, along with specifications, test certificates, RAMS, and manufacturer instructions."
+    explanation:
+      'Drawings and as-builts are critical site documentation that must be properly stored, along with specifications, test certificates, RAMS, and manufacturer instructions.',
   },
   {
     id: 2,
-    question: "True or False: Out-of-date drawings can be used as long as they are close to the final design.",
-    options: ["True - close enough is acceptable", "False - only current versions should be used", "True - if no other copies available", "False - but only for large projects"],
+    question:
+      'True or False: Out-of-date drawings can be used as long as they are close to the final design.',
+    options: [
+      'True - close enough is acceptable',
+      'False - only current versions should be used',
+      'True - if no other copies available',
+      'False - but only for large projects',
+    ],
     correctIndex: 1,
-    explanation: "False. Only current, up-to-date versions of drawings should be used. Out-of-date drawings can lead to serious mistakes and compliance issues."
+    explanation:
+      'False. Only current, up-to-date versions of drawings should be used. Out-of-date drawings can lead to serious mistakes and compliance issues.',
   },
   {
     id: 3,
-    question: "Give one benefit of digital storage.",
-    options: ["Takes up physical space", "Easy backup and instant access", "Requires no maintenance", "Cannot be shared"],
+    question: 'Give one benefit of digital storage.',
+    options: [
+      'Takes up physical space',
+      'Easy backup and instant access',
+      'Requires no maintenance',
+      'Cannot be shared',
+    ],
     correctIndex: 1,
-    explanation: "Digital storage provides easy backup, instant access, version control, and can be shared with multiple team members simultaneously."
-  }
+    explanation:
+      'Digital storage provides easy backup, instant access, version control, and can be shared with multiple team members simultaneously.',
+  },
 ];
 
 export default function Module5Section7_5() {
@@ -39,147 +54,163 @@ export default function Module5Section7_5() {
   const quizQuestions = [
     {
       id: 1,
-      question: "Name one type of site documentation that must be stored.",
+      question: 'Name one type of site documentation that must be stored.',
       options: [
-        "Personal diary entries",
-        "Drawings, specifications, test certificates, RAMS, manufacturer instructions",
-        "Lunch menus",
-        "Personal contact lists"
+        'Personal diary entries',
+        'Drawings, specifications, test certificates, RAMS, manufacturer instructions',
+        'Lunch menus',
+        'Personal contact lists',
       ],
       correctAnswer: 1,
-      explanation: "Essential site documentation includes drawings, specifications, test certificates, RAMS, and manufacturer instructions."
+      explanation:
+        'Essential site documentation includes drawings, specifications, test certificates, RAMS, and manufacturer instructions.',
     },
     {
       id: 2,
-      question: "What is the purpose of test certificates?",
+      question: 'What is the purpose of test certificates?',
       options: [
-        "To look professional",
-        "To verify safety and compliance of installations",
-        "To increase project costs",
-        "For filing purposes only"
+        'To look professional',
+        'To verify safety and compliance of installations',
+        'To increase project costs',
+        'For filing purposes only',
       ],
       correctAnswer: 1,
-      explanation: "Test certificates verify safety and compliance of electrical installations, providing proof that work meets required standards."
+      explanation:
+        'Test certificates verify safety and compliance of electrical installations, providing proof that work meets required standards.',
     },
     {
       id: 3,
-      question: "True or False: Out-of-date drawings can be used as long as they are close to the final design.",
+      question:
+        'True or False: Out-of-date drawings can be used as long as they are close to the final design.',
       options: [
-        "True - close enough is acceptable",
-        "False - only current versions should be used",
-        "True - saves time and effort",
-        "False - but only on large projects"
+        'True - close enough is acceptable',
+        'False - only current versions should be used',
+        'True - saves time and effort',
+        'False - but only on large projects',
       ],
       correctAnswer: 1,
-      explanation: "False. Only current, up-to-date versions should be used. Out-of-date drawings can lead to serious mistakes and compliance issues."
+      explanation:
+        'False. Only current, up-to-date versions should be used. Out-of-date drawings can lead to serious mistakes and compliance issues.',
     },
     {
       id: 4,
-      question: "What is one risk of poor physical document storage?",
+      question: 'What is one risk of poor physical document storage?',
       options: [
-        "Documents look untidy",
-        "Loss or damage from water, fire, or misplacement",
-        "Takes too much time to organise",
-        "Costs too much money"
+        'Documents look untidy',
+        'Loss or damage from water, fire, or misplacement',
+        'Takes too much time to organise',
+        'Costs too much money',
       ],
       correctAnswer: 1,
-      explanation: "Poor physical storage can lead to loss or damage from water, fire, theft, or misplacement of critical documents."
+      explanation:
+        'Poor physical storage can lead to loss or damage from water, fire, theft, or misplacement of critical documents.',
     },
     {
       id: 5,
-      question: "Give one benefit of digital storage.",
+      question: 'Give one benefit of digital storage.',
       options: [
-        "Takes up more space",
-        "Easy backup, instant access, version control",
-        "Requires constant internet",
-        "Cannot be shared"
+        'Takes up more space',
+        'Easy backup, instant access, version control',
+        'Requires constant internet',
+        'Cannot be shared',
       ],
       correctAnswer: 1,
-      explanation: "Digital storage provides easy backup, instant access, version control, and sharing capabilities with multiple team members."
+      explanation:
+        'Digital storage provides easy backup, instant access, version control, and sharing capabilities with multiple team members.',
     },
     {
       id: 6,
-      question: "What is the correct way to issue drawings to site staff?",
+      question: 'What is the correct way to issue drawings to site staff?',
       options: [
-        "Any available version",
-        "Ensure they are the latest, stamped/dated copies",
-        "Handwritten copies only",
-        "Photocopies without dates"
+        'Any available version',
+        'Ensure they are the latest, stamped/dated copies',
+        'Handwritten copies only',
+        'Photocopies without dates',
       ],
       correctAnswer: 1,
-      explanation: "Only the latest versions should be issued, clearly stamped or dated to ensure everyone is working from current information."
+      explanation:
+        'Only the latest versions should be issued, clearly stamped or dated to ensure everyone is working from current information.',
     },
     {
       id: 7,
-      question: "In the real-world scenario, what caused project delays?",
+      question: 'In the real-world scenario, what caused project delays?',
       options: [
-        "Equipment failure",
-        "Paper drawings were destroyed by water damage, with no backups available",
-        "Staff shortage",
-        "Material delivery delays"
+        'Equipment failure',
+        'Paper drawings were destroyed by water damage, with no backups available',
+        'Staff shortage',
+        'Material delivery delays',
       ],
       correctAnswer: 1,
-      explanation: "The project was delayed because paper drawings were destroyed by water damage and no digital backups existed."
+      explanation:
+        'The project was delayed because paper drawings were destroyed by water damage and no digital backups existed.',
     },
     {
       id: 8,
-      question: "Who should have editing rights for site documents?",
+      question: 'Who should have editing rights for site documents?',
       options: [
-        "Everyone on site",
-        "Authorised supervisors/managers only",
-        "Only the client",
-        "Any electrician"
+        'Everyone on site',
+        'Authorised supervisors/managers only',
+        'Only the client',
+        'Any electrician',
       ],
       correctAnswer: 1,
-      explanation: "Only authorised supervisors or managers should have editing rights to maintain document control and prevent unauthorised changes."
+      explanation:
+        'Only authorised supervisors or managers should have editing rights to maintain document control and prevent unauthorised changes.',
     },
     {
       id: 9,
-      question: "Why should documents be accessible to all relevant team members?",
+      question: 'Why should documents be accessible to all relevant team members?',
       options: [
-        "To increase paperwork",
-        "To allow safe, compliant, and efficient working",
-        "To create more work",
-        "For entertainment purposes"
+        'To increase paperwork',
+        'To allow safe, compliant, and efficient working',
+        'To create more work',
+        'For entertainment purposes',
       ],
       correctAnswer: 1,
-      explanation: "Document access enables safe, compliant, and efficient working by ensuring all team members have the information they need."
+      explanation:
+        'Document access enables safe, compliant, and efficient working by ensuring all team members have the information they need.',
     },
     {
       id: 10,
-      question: "List one best practice for protecting physical copies of documents.",
+      question: 'List one best practice for protecting physical copies of documents.',
       options: [
-        "Leave them in the van",
-        "Store in waterproof folders or locked site cabinets",
-        "Keep them in your pocket",
-        "Store outside in the weather"
+        'Leave them in the van',
+        'Store in waterproof folders or locked site cabinets',
+        'Keep them in your pocket',
+        'Store outside in the weather',
       ],
       correctAnswer: 1,
-      explanation: "Physical documents should be stored in waterproof folders or locked site cabinets to protect from damage and unauthorised access."
-    }
+      explanation:
+        'Physical documents should be stored in waterproof folders or locked site cabinets to protect from damage and unauthorised access.',
+    },
   ];
 
   const faqs = [
     {
-      question: "What happens if I lose important site documents?",
-      answer: "Lost documents can cause serious delays while replacements are obtained. Always maintain backups and follow proper storage procedures. Report losses immediately to site management."
+      question: 'What happens if I lose important site documents?',
+      answer:
+        'Lost documents can cause serious delays while replacements are obtained. Always maintain backups and follow proper storage procedures. Report losses immediately to site management.',
     },
     {
-      question: "Can I take photos of drawings instead of carrying physical copies?",
-      answer: "Photos can be useful for quick reference, but ensure they're clear and current. Physical or official digital copies should still be maintained for formal reference and compliance purposes."
+      question: 'Can I take photos of drawings instead of carrying physical copies?',
+      answer:
+        "Photos can be useful for quick reference, but ensure they're clear and current. Physical or official digital copies should still be maintained for formal reference and compliance purposes.",
     },
     {
-      question: "Who controls which version of documents are current on site?",
-      answer: "Usually the site engineer, project manager, or document controller. They manage version control and ensure only current documents are in circulation."
+      question: 'Who controls which version of documents are current on site?',
+      answer:
+        'Usually the site engineer, project manager, or document controller. They manage version control and ensure only current documents are in circulation.',
     },
     {
-      question: "How long should site documents be kept after project completion?",
-      answer: "Follow company policy and regulatory requirements. Some documents like test certificates may need to be kept for many years for warranty and compliance purposes."
+      question: 'How long should site documents be kept after project completion?',
+      answer:
+        'Follow company policy and regulatory requirements. Some documents like test certificates may need to be kept for many years for warranty and compliance purposes.',
     },
     {
-      question: "What should I do if I find an out-of-date drawing being used?",
-      answer: "Stop the work if it affects safety or compliance. Inform the supervisor immediately and ensure the correct current version is obtained before continuing work."
-    }
+      question: 'What should I do if I find an out-of-date drawing being used?',
+      answer:
+        'Stop the work if it affects safety or compliance. Inform the supervisor immediately and ensure the correct current version is obtained before continuing work.',
+    },
   ];
 
   return (
@@ -214,7 +245,8 @@ export default function Module5Section7_5() {
               Site Documentation Storage and Access
             </h1>
             <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Learn proper storage and access methods for site documentation to ensure safety, compliance, and efficiency in electrical installations.
+              Learn proper storage and access methods for site documentation to ensure safety,
+              compliance, and efficiency in electrical installations.
             </p>
           </header>
 
@@ -236,9 +268,17 @@ export default function Module5Section7_5() {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li><strong>Spot:</strong> Secure filing systems, digital backups, version control.</li>
-                  <li><strong>Use:</strong> Controlled access, waterproof storage, current documents only.</li>
-                  <li><strong>Check:</strong> Document availability, backup systems, access permissions.</li>
+                  <li>
+                    <strong>Spot:</strong> Secure filing systems, digital backups, version control.
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Controlled access, waterproof storage, current documents
+                    only.
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Document availability, backup systems, access
+                    permissions.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -251,10 +291,20 @@ export default function Module5Section7_5() {
               Learning Outcomes
             </h2>
             <ul className="list-disc pl-6 space-y-2 text-white/90">
-              <li>Identify different types of site documentation that need to be stored securely.</li>
-              <li>Recognise the importance of controlled storage and access for electrical documentation.</li>
-              <li>Explain how poor documentation management affects safety and operational efficiency.</li>
-              <li>Apply best practices in storing and retrieving site documentation for electrical projects.</li>
+              <li>
+                Identify different types of site documentation that need to be stored securely.
+              </li>
+              <li>
+                Recognise the importance of controlled storage and access for electrical
+                documentation.
+              </li>
+              <li>
+                Explain how poor documentation management affects safety and operational efficiency.
+              </li>
+              <li>
+                Apply best practices in storing and retrieving site documentation for electrical
+                projects.
+              </li>
             </ul>
           </section>
 
@@ -265,33 +315,46 @@ export default function Module5Section7_5() {
               Types of Site Documentation
             </h2>
             <p className="text-white/90 mb-4">
-              Various types of documentation are essential for electrical installations and must be properly managed throughout the project lifecycle:
+              Various types of documentation are essential for electrical installations and must be
+              properly managed throughout the project lifecycle:
             </p>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-4">
-              <p className="font-semibold text-elec-yellow mb-2">Essential Documentation Categories</p>
-              <p className="text-white/90 mb-2"><strong>Drawings and as-builts:</strong> Visual records of electrical installations.</p>
+              <p className="font-semibold text-elec-yellow mb-2">
+                Essential Documentation Categories
+              </p>
+              <p className="text-white/90 mb-2">
+                <strong>Drawings and as-builts:</strong> Visual records of electrical installations.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Design drawings showing intended installation layouts and specifications</li>
                 <li>As-built drawings reflecting the actual completed installation</li>
                 <li>Schematic diagrams and circuit layouts for maintenance reference</li>
                 <li>Site plans showing cable routes and equipment locations</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Specifications and standards:</strong> Technical requirements and compliance documents.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Specifications and standards:</strong> Technical requirements and compliance
+                documents.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Equipment specifications defining required materials and standards</li>
                 <li>Installation standards and compliance requirements</li>
                 <li>Client specifications and special requirements</li>
                 <li>Technical data sheets and performance criteria</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Test certificates and compliance records:</strong> Verification of safety and standards.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Test certificates and compliance records:</strong> Verification of safety
+                and standards.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Electrical Installation Condition Reports (EICR) and test certificates</li>
                 <li>Installation certificates proving compliance with BS 7671</li>
                 <li>PAT testing records for portable electrical equipment</li>
                 <li>Inspection and testing documentation at various project stages</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Safety documentation:</strong> Risk management and procedural requirements.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Safety documentation:</strong> Risk management and procedural requirements.
+              </p>
               <ul className="text-sm text-white/80 ml-4 list-disc space-y-1">
                 <li>Risk Assessments and Method Statements (RAMS) for specific tasks</li>
                 <li>Health and safety policies and site-specific procedures</li>
@@ -301,7 +364,8 @@ export default function Module5Section7_5() {
             </div>
 
             <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white/80">
-              <strong>Comprehensive coverage:</strong> All documentation types are essential for safe, compliant, and efficient electrical work
+              <strong>Comprehensive coverage:</strong> All documentation types are essential for
+              safe, compliant, and efficient electrical work
             </div>
           </section>
 
@@ -322,33 +386,47 @@ export default function Module5Section7_5() {
               Why Proper Storage Matters
             </h2>
             <p className="text-white/90 mb-4">
-              Effective documentation storage is critical for maintaining project integrity, ensuring compliance, and supporting ongoing operations:
+              Effective documentation storage is critical for maintaining project integrity,
+              ensuring compliance, and supporting ongoing operations:
             </p>
 
             <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50 mb-4">
-              <p className="font-semibold text-green-400 mb-2">Critical Importance of Proper Document Management</p>
-              <p className="text-white/90 mb-2"><strong>Document protection and preservation:</strong> Preventing loss of critical information.</p>
+              <p className="font-semibold text-green-400 mb-2">
+                Critical Importance of Proper Document Management
+              </p>
+              <p className="text-white/90 mb-2">
+                <strong>Document protection and preservation:</strong> Preventing loss of critical
+                information.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Prevents loss or damage of critical documents from environmental factors</li>
                 <li>Maintains document integrity and legibility over time</li>
                 <li>Protects against theft, unauthorised access, or accidental destruction</li>
                 <li>Ensures long-term availability for warranty and maintenance requirements</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Regulatory compliance and standards:</strong> Meeting legal and professional obligations.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Regulatory compliance and standards:</strong> Meeting legal and professional
+                obligations.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Ensures compliance with BS 7671, CDM Regulations, and client requirements</li>
                 <li>Supports regulatory inspections and audit processes</li>
                 <li>Provides evidence of due diligence and professional standards</li>
                 <li>Meets insurance and warranty documentation requirements</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Operational efficiency and accessibility:</strong> Supporting daily work activities.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Operational efficiency and accessibility:</strong> Supporting daily work
+                activities.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Provides quick access for audits, inspections, and site queries</li>
                 <li>Enables efficient troubleshooting and maintenance activities</li>
                 <li>Supports coordination between different trades and supervisors</li>
                 <li>Reduces time spent searching for information during work activities</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Communication and collaboration:</strong> Enhancing team coordination.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Communication and collaboration:</strong> Enhancing team coordination.
+              </p>
               <ul className="text-sm text-white/80 ml-4 list-disc space-y-1">
                 <li>Improves communication between trades, supervisors, and clients</li>
                 <li>Ensures all team members work from the same current information</li>
@@ -358,7 +436,8 @@ export default function Module5Section7_5() {
             </div>
 
             <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white/80">
-              <strong>Foundation for success:</strong> Proper storage underpins safety, compliance, and operational effectiveness
+              <strong>Foundation for success:</strong> Proper storage underpins safety, compliance,
+              and operational effectiveness
             </div>
           </section>
 
@@ -379,33 +458,44 @@ export default function Module5Section7_5() {
               Methods of Storage
             </h2>
             <p className="text-white/90 mb-4">
-              Modern documentation storage combines physical and digital methods to ensure accessibility, security, and backup protection:
+              Modern documentation storage combines physical and digital methods to ensure
+              accessibility, security, and backup protection:
             </p>
 
             <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50 mb-4">
               <p className="font-semibold text-amber-400 mb-2">Comprehensive Storage Solutions</p>
-              <p className="text-white/90 mb-2"><strong>Physical storage systems:</strong> Secure on-site document management.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Physical storage systems:</strong> Secure on-site document management.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
-                <li>Secure site office filing cabinets with controlled access and locking systems</li>
+                <li>
+                  Secure site office filing cabinets with controlled access and locking systems
+                </li>
                 <li>Laminated drawings and key documents for harsh site environment use</li>
                 <li>Waterproof document containers and protective storage solutions</li>
                 <li>Organised filing systems with clear labelling and version control</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Digital storage platforms:</strong> Cloud-based and networked solutions.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Digital storage platforms:</strong> Cloud-based and networked solutions.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Cloud-based project management platforms (Procore, Viewpoint, SharePoint)</li>
                 <li>Shared network drives with controlled access permissions and backup systems</li>
                 <li>Document management systems with version control and audit trails</li>
                 <li>Integration with project management and collaboration tools</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Mobile access solutions:</strong> Field-accessible documentation systems.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Mobile access solutions:</strong> Field-accessible documentation systems.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Mobile apps for electricians to access drawings and documents on site</li>
                 <li>Tablet and smartphone solutions for field reference and updates</li>
                 <li>Offline access capabilities for areas with poor network coverage</li>
                 <li>Real-time synchronisation with central document repositories</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Hybrid storage approaches:</strong> Combining physical and digital benefits.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Hybrid storage approaches:</strong> Combining physical and digital benefits.
+              </p>
               <ul className="text-sm text-white/80 ml-4 list-disc space-y-1">
                 <li>Physical copies for critical reference with digital backups</li>
                 <li>QR codes linking physical documents to digital versions</li>
@@ -415,7 +505,8 @@ export default function Module5Section7_5() {
             </div>
 
             <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white/80">
-              <strong>Multi-layered approach:</strong> Effective storage combines multiple methods for reliability and accessibility
+              <strong>Multi-layered approach:</strong> Effective storage combines multiple methods
+              for reliability and accessibility
             </div>
           </section>
 
@@ -436,43 +527,62 @@ export default function Module5Section7_5() {
               Consequences of Poor Documentation Storage
             </h2>
             <p className="text-white/90 mb-4">
-              Inadequate documentation storage creates significant risks that affect safety, project delivery, and business operations:
+              Inadequate documentation storage creates significant risks that affect safety, project
+              delivery, and business operations:
             </p>
 
             <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50 mb-4">
-              <p className="font-semibold text-red-400 mb-2">Serious Risks from Poor Documentation Management</p>
-              <p className="text-white/90 mb-2"><strong>Operational failures and mistakes:</strong> Work quality and accuracy impacts.</p>
+              <p className="font-semibold text-red-400 mb-2">
+                Serious Risks from Poor Documentation Management
+              </p>
+              <p className="text-white/90 mb-2">
+                <strong>Operational failures and mistakes:</strong> Work quality and accuracy
+                impacts.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Lost drawings lead to mistakes, incorrect installations, and costly rework</li>
                 <li>Use of out-of-date documents increases risk of non-compliance and defects</li>
-                <li>Inability to verify installation details during maintenance and troubleshooting</li>
+                <li>
+                  Inability to verify installation details during maintenance and troubleshooting
+                </li>
                 <li>Confusion about specifications leading to incorrect material selection</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Project delays and inefficiencies:</strong> Time and cost implications.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Project delays and inefficiencies:</strong> Time and cost implications.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Delays during inspections and sign-offs due to missing documentation</li>
                 <li>Work stoppages while replacement documents are obtained</li>
                 <li>Increased labour costs from time spent searching for information</li>
                 <li>Extended project timelines affecting subsequent work schedules</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Compliance and legal issues:</strong> Regulatory and contractual consequences.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Compliance and legal issues:</strong> Regulatory and contractual
+                consequences.
+              </p>
               <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
                 <li>Failed regulatory inspections due to inadequate documentation</li>
                 <li>Legal disputes without proper evidence of compliance and work completion</li>
                 <li>Insurance claim difficulties due to missing certification records</li>
                 <li>Potential enforcement action from health and safety authorities</li>
               </ul>
-              <p className="text-white/90 mb-2"><strong>Safety and risk management failures:</strong> Hazard exposure and incident risks.</p>
+              <p className="text-white/90 mb-2">
+                <strong>Safety and risk management failures:</strong> Hazard exposure and incident
+                risks.
+              </p>
               <ul className="text-sm text-white/80 ml-4 list-disc space-y-1">
                 <li>Inability to access emergency procedures during critical situations</li>
                 <li>Unknown hazards due to missing risk assessments and safety documentation</li>
-                <li>Incorrect isolation procedures due to missing or outdated circuit information</li>
+                <li>
+                  Incorrect isolation procedures due to missing or outdated circuit information
+                </li>
                 <li>Compromised emergency response due to inaccessible building information</li>
               </ul>
             </div>
 
             <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white/80">
-              <strong>Far-reaching impact:</strong> Poor storage affects every aspect of electrical project delivery and ongoing operations
+              <strong>Far-reaching impact:</strong> Poor storage affects every aspect of electrical
+              project delivery and ongoing operations
             </div>
           </section>
 
@@ -485,41 +595,60 @@ export default function Module5Section7_5() {
 
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <h3 className="font-medium text-white mb-2">Commercial Office Project - Water Damage Disaster</h3>
+                <h3 className="font-medium text-white mb-2">
+                  Commercial Office Project - Water Damage Disaster
+                </h3>
                 <p className="text-white/90 mb-2">
-                  <strong>Situation:</strong> On a commercial office project, the site drawings were stored loosely in a van rather than a controlled office environment.
+                  <strong>Situation:</strong> On a commercial office project, the site drawings were
+                  stored loosely in a van rather than a controlled office environment.
                 </p>
                 <p className="text-sm text-white/80 mb-2">
-                  <strong>The Problem:</strong> A water leak ruined the only copies of critical drawings, and no digital backups existed. Work halted for two days until replacement drawings could be provided from the design office.
+                  <strong>The Problem:</strong> A water leak ruined the only copies of critical
+                  drawings, and no digital backups existed. Work halted for two days until
+                  replacement drawings could be provided from the design office.
                 </p>
                 <p className="text-sm text-white/70">
-                  This incident cost the contractor significant time and money, highlighted the vulnerability of poor storage practices, and demonstrated the critical need for backup systems.
+                  This incident cost the contractor significant time and money, highlighted the
+                  vulnerability of poor storage practices, and demonstrated the critical need for
+                  backup systems.
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-amber-500/5 border border-amber-500/30">
-                <h3 className="font-medium text-white mb-2">Hospital Project - Version Control Failure</h3>
+                <h3 className="font-medium text-white mb-2">
+                  Hospital Project - Version Control Failure
+                </h3>
                 <p className="text-white/90 mb-2">
-                  <strong>Situation:</strong> Multiple versions of electrical drawings were circulating on a hospital refurbishment project without proper version control.
+                  <strong>Situation:</strong> Multiple versions of electrical drawings were
+                  circulating on a hospital refurbishment project without proper version control.
                 </p>
                 <p className="text-sm text-white/80 mb-2">
-                  <strong>The Problem:</strong> Electricians worked from outdated drawings and installed circuits in wrong locations. The error wasn't discovered until final testing, requiring extensive rework in sensitive hospital areas.
+                  <strong>The Problem:</strong> Electricians worked from outdated drawings and
+                  installed circuits in wrong locations. The error wasn't discovered until final
+                  testing, requiring extensive rework in sensitive hospital areas.
                 </p>
                 <p className="text-sm text-white/70">
-                  Proper document control with clear version management would have prevented this costly mistake and reduced disruption to hospital operations.
+                  Proper document control with clear version management would have prevented this
+                  costly mistake and reduced disruption to hospital operations.
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-green-500/5 border border-green-500/30">
-                <h3 className="font-medium text-white mb-2">Good Practice - Digital Document Management</h3>
+                <h3 className="font-medium text-white mb-2">
+                  Good Practice - Digital Document Management
+                </h3>
                 <p className="text-white/90 mb-2">
-                  <strong>Situation:</strong> A large electrical contractor implemented a cloud-based document management system with mobile access for all site teams.
+                  <strong>Situation:</strong> A large electrical contractor implemented a
+                  cloud-based document management system with mobile access for all site teams.
                 </p>
                 <p className="text-sm text-white/80 mb-2">
-                  <strong>The Result:</strong> Real-time access to current drawings, automatic backup protection, and instant distribution of updates. Project efficiency improved significantly, and document-related delays virtually disappeared.
+                  <strong>The Result:</strong> Real-time access to current drawings, automatic
+                  backup protection, and instant distribution of updates. Project efficiency
+                  improved significantly, and document-related delays virtually disappeared.
                 </p>
                 <p className="text-sm text-white/70">
-                  This modern approach demonstrates how proper digital storage can transform project delivery and eliminate traditional documentation problems.
+                  This modern approach demonstrates how proper digital storage can transform project
+                  delivery and eliminate traditional documentation problems.
                 </p>
               </div>
             </div>
@@ -587,25 +716,35 @@ export default function Module5Section7_5() {
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">Store drawings, certificates, and manuals securely</span>
+                    <span className="text-sm text-white/90">
+                      Store drawings, certificates, and manuals securely
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">Always back up digital files with regular updates</span>
+                    <span className="text-sm text-white/90">
+                      Always back up digital files with regular updates
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">Ensure site staff can access documents quickly</span>
+                    <span className="text-sm text-white/90">
+                      Ensure site staff can access documents quickly
+                    </span>
                   </div>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">Only use the latest version of documents</span>
+                    <span className="text-sm text-white/90">
+                      Only use the latest version of documents
+                    </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">Protect physical copies from damage</span>
+                    <span className="text-sm text-white/90">
+                      Protect physical copies from damage
+                    </span>
                   </div>
                 </div>
               </div>
@@ -636,7 +775,10 @@ export default function Module5Section7_5() {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-white/90 mb-4">
-                In this subsection, you learned that site documentation storage is essential for safety, compliance, and efficiency. Documents must be organised, backed up, and made accessible to the right people. Poor storage practices can lead to costly delays, mistakes, or legal issues.
+                In this subsection, you learned that site documentation storage is essential for
+                safety, compliance, and efficiency. Documents must be organised, backed up, and made
+                accessible to the right people. Poor storage practices can lead to costly delays,
+                mistakes, or legal issues.
               </p>
               <ul className="text-sm text-white/80 space-y-2">
                 <li className="flex items-start gap-2">
@@ -645,11 +787,13 @@ export default function Module5Section7_5() {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 mt-0.5 text-green-500 flex-shrink-0" />
-                  Proper storage prevents loss, ensures compliance, and supports operational efficiency
+                  Proper storage prevents loss, ensures compliance, and supports operational
+                  efficiency
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 mt-0.5 text-green-500 flex-shrink-0" />
-                  Combination of physical and digital storage provides maximum protection and accessibility
+                  Combination of physical and digital storage provides maximum protection and
+                  accessibility
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 mt-0.5 text-green-500 flex-shrink-0" />
@@ -664,7 +808,10 @@ export default function Module5Section7_5() {
           </section>
 
           {/* Quiz */}
-          <Quiz title="Site Documentation Storage and Access Knowledge Check" questions={quizQuestions} />
+          <Quiz
+            title="Site Documentation Storage and Access Knowledge Check"
+            questions={quizQuestions}
+          />
 
           {/* Navigation */}
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">

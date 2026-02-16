@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -30,7 +29,7 @@ const EICRTabNavigation = ({
   getProgressPercentage,
   isCurrentTabComplete,
   currentTabHasRequiredFields,
-  onToggleComplete
+  onToggleComplete,
 }: EICRTabNavigationProps) => {
   const isLastTab = currentTabIndex === totalTabs - 1;
 
@@ -49,7 +48,9 @@ const EICRTabNavigation = ({
       {/* Progress Indicator */}
       <div className="space-y-3">
         <div className="flex justify-between items-center text-sm font-medium">
-          <span className="text-muted-foreground">Step {currentTabIndex + 1} of {totalTabs}</span>
+          <span className="text-muted-foreground">
+            Step {currentTabIndex + 1} of {totalTabs}
+          </span>
           <span className="text-elec-yellow">{getProgressPercentage()}% Complete</span>
         </div>
         <Progress value={getProgressPercentage()} className="w-full h-3" />
@@ -58,14 +59,14 @@ const EICRTabNavigation = ({
       {/* Mark as Complete Section */}
       <div className="flex justify-center py-2">
         <Button
-          variant={isCurrentTabComplete ? "default" : "outline"}
+          variant={isCurrentTabComplete ? 'default' : 'outline'}
           onClick={onToggleComplete}
           className={`h-10 px-6 gap-2 text-base transition-all ${
-            isCurrentTabComplete 
-              ? "bg-green-600 hover:bg-green-700 text-foreground border-green-600 shadow-lg shadow-green-600/20" 
-              : currentTabHasRequiredFields 
-                ? "border-green-600 text-green-600 hover:bg-green-600/10" 
-                : "opacity-50 cursor-not-allowed"
+            isCurrentTabComplete
+              ? 'bg-green-600 hover:bg-green-700 text-foreground border-green-600 shadow-lg shadow-green-600/20'
+              : currentTabHasRequiredFields
+                ? 'border-green-600 text-green-600 hover:bg-green-600/10'
+                : 'opacity-50 cursor-not-allowed'
           }`}
           disabled={!currentTabHasRequiredFields}
         >
@@ -75,10 +76,10 @@ const EICRTabNavigation = ({
             <Circle className="h-4 w-4" />
           )}
           <span className="hidden sm:inline">
-            {isCurrentTabComplete ? "Section Complete - Click to Edit" : "Mark as Complete"}
+            {isCurrentTabComplete ? 'Section Complete - Click to Edit' : 'Mark as Complete'}
           </span>
           <span className="sm:hidden font-medium">
-            {isCurrentTabComplete ? "Complete" : "Mark Complete"}
+            {isCurrentTabComplete ? 'Complete' : 'Mark Complete'}
           </span>
         </Button>
       </div>
@@ -113,7 +114,7 @@ const EICRTabNavigation = ({
           </p>
         </div>
       )}
-      
+
       {currentTabHasRequiredFields && !isCurrentTabComplete && (
         <div className="text-center px-2">
           <p className="text-sm text-green-600 font-medium">

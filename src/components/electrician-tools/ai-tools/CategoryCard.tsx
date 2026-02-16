@@ -24,23 +24,25 @@ export default function CategoryCard({
       className="group relative overflow-hidden rounded-xl border-2 border-border/30 bg-card/80 backdrop-blur-sm p-4 transition-all hover:border-elec-yellow/60 hover:shadow-xl hover:shadow-elec-yellow/20"
     >
       {/* Gradient overlay on hover */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-5 transition-opacity`} />
-      
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-5 transition-opacity`}
+      />
+
       <div className="relative z-10 space-y-3">
         {/* Icon & Title */}
         <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+          <div
+            className={`w-10 h-10 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}
+          >
             <Icon className="w-5 h-5 text-foreground" />
           </div>
           <h3 className="text-sm font-bold text-foreground group-hover:text-elec-yellow transition-colors">
             {title}
           </h3>
         </div>
-        
+
         {/* Description - visible on all screens but smaller on mobile */}
-        <p className="text-xs text-foreground/60 line-clamp-2 min-h-[2rem]">
-          {description}
-        </p>
+        <p className="text-xs text-foreground/60 line-clamp-2 min-h-[2rem]">{description}</p>
 
         {/* Example query button - more prominent */}
         <button
@@ -52,7 +54,12 @@ export default function CategoryCard({
         >
           <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow flex-shrink-0 group-hover/btn:animate-pulse" />
           <span className="line-clamp-1 flex-1">{examples[0]}</span>
-          <svg className="w-3 h-3 opacity-0 group-hover/btn:opacity-100 transition-opacity flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg
+            className="w-3 h-3 opacity-0 group-hover/btn:opacity-100 transition-opacity flex-shrink-0"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>

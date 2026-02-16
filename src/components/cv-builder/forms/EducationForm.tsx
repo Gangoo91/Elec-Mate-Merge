@@ -1,11 +1,11 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Plus, Trash2 } from "lucide-react";
-import { CVData, Education } from "../types";
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Plus, Trash2 } from 'lucide-react';
+import { CVData, Education } from '../types';
 
 interface EducationFormProps {
   cvData: CVData;
@@ -16,34 +16,32 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
   const addEducation = () => {
     const newEducation: Education = {
       id: Date.now().toString(),
-      qualification: "",
-      institution: "",
-      location: "",
-      startDate: "",
-      endDate: "",
+      qualification: '',
+      institution: '',
+      location: '',
+      startDate: '',
+      endDate: '',
       current: false,
-      grade: ""
+      grade: '',
     };
 
     onChange({
       ...cvData,
-      education: [...cvData.education, newEducation]
+      education: [...cvData.education, newEducation],
     });
   };
 
   const updateEducation = (id: string, field: string, value: string | boolean) => {
     onChange({
       ...cvData,
-      education: cvData.education.map(edu =>
-        edu.id === id ? { ...edu, [field]: value } : edu
-      )
+      education: cvData.education.map((edu) => (edu.id === id ? { ...edu, [field]: value } : edu)),
     });
   };
 
   const removeEducation = (id: string) => {
     onChange({
       ...cvData,
-      education: cvData.education.filter(edu => edu.id !== id)
+      education: cvData.education.filter((edu) => edu.id !== id),
     });
   };
 
@@ -76,7 +74,9 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor={`qualification-${edu.id}`} className="text-foreground">Qualification *</Label>
+                <Label htmlFor={`qualification-${edu.id}`} className="text-foreground">
+                  Qualification *
+                </Label>
                 <Input
                   id={`qualification-${edu.id}`}
                   value={edu.qualification}
@@ -87,7 +87,9 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
               </div>
 
               <div>
-                <Label htmlFor={`institution-${edu.id}`} className="text-foreground">Institution *</Label>
+                <Label htmlFor={`institution-${edu.id}`} className="text-foreground">
+                  Institution *
+                </Label>
                 <Input
                   id={`institution-${edu.id}`}
                   value={edu.institution}
@@ -98,7 +100,9 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
               </div>
 
               <div>
-                <Label htmlFor={`location-${edu.id}`} className="text-foreground">Location</Label>
+                <Label htmlFor={`location-${edu.id}`} className="text-foreground">
+                  Location
+                </Label>
                 <Input
                   id={`location-${edu.id}`}
                   value={edu.location}
@@ -109,7 +113,9 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
               </div>
 
               <div>
-                <Label htmlFor={`grade-${edu.id}`} className="text-foreground">Grade</Label>
+                <Label htmlFor={`grade-${edu.id}`} className="text-foreground">
+                  Grade
+                </Label>
                 <Input
                   id={`grade-${edu.id}`}
                   value={edu.grade}
@@ -120,7 +126,9 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
               </div>
 
               <div>
-                <Label htmlFor={`startDate-${edu.id}`} className="text-foreground">Start Date</Label>
+                <Label htmlFor={`startDate-${edu.id}`} className="text-foreground">
+                  Start Date
+                </Label>
                 <Input
                   id={`startDate-${edu.id}`}
                   type="month"
@@ -131,7 +139,9 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
               </div>
 
               <div>
-                <Label htmlFor={`endDate-${edu.id}`} className="text-foreground">End Date</Label>
+                <Label htmlFor={`endDate-${edu.id}`} className="text-foreground">
+                  End Date
+                </Label>
                 <Input
                   id={`endDate-${edu.id}`}
                   type="month"
@@ -153,7 +163,9 @@ export const EducationForm: React.FC<EducationFormProps> = ({ cvData, onChange }
                     }
                   }}
                 />
-                <Label htmlFor={`current-${edu.id}`} className="text-foreground">Currently Studying</Label>
+                <Label htmlFor={`current-${edu.id}`} className="text-foreground">
+                  Currently Studying
+                </Label>
               </div>
             </div>
           </CardContent>

@@ -1,57 +1,56 @@
-
-import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { useAuth } from "@/contexts/AuthContext";
+import { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { useAuth } from '@/contexts/AuthContext';
 
 // Import components
-import ExamIntroduction from "@/components/apprentice/mock-exams/ExamIntroduction";
-import ExamHeader from "@/components/apprentice/mock-exams/ExamHeader";
-import ExamQuestion from "@/components/apprentice/mock-exams/ExamQuestion";
-import ExamResults from "@/components/apprentice/mock-exams/ExamResults";
-import ExamExitDialog from "@/components/apprentice/mock-exams/ExamExitDialog";
+import ExamIntroduction from '@/components/apprentice/mock-exams/ExamIntroduction';
+import ExamHeader from '@/components/apprentice/mock-exams/ExamHeader';
+import ExamQuestion from '@/components/apprentice/mock-exams/ExamQuestion';
+import ExamResults from '@/components/apprentice/mock-exams/ExamResults';
+import ExamExitDialog from '@/components/apprentice/mock-exams/ExamExitDialog';
 
 // Import mock data
-import { mockExams, mockQuestions } from "@/data/apprentice/mockExams";
+import { mockExams, mockQuestions } from '@/data/apprentice/mockExams';
 
 // Import custom hooks
-import { useExam } from "@/hooks/apprentice/useExam";
+import { useExam } from '@/hooks/apprentice/useExam';
 
 const MockExamDetails = () => {
   const { examId } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { isSubscribed } = useAuth();
-  
+
   const [currentExam, setCurrentExam] = useState<any>(null);
 
   // Find the exam data based on the URL param
   useEffect(() => {
-    const exam = mockExams.find(e => e.id === examId);
-    
+    const exam = mockExams.find((e) => e.id === examId);
+
     if (!exam) {
       toast({
-        title: "Exam not found",
-        description: "The requested exam could not be found.",
-        variant: "destructive"
+        title: 'Exam not found',
+        description: 'The requested exam could not be found.',
+        variant: 'destructive',
       });
-      navigate("/apprentice/study/mock-exams");
+      navigate('/apprentice/study/mock-exams');
       return;
     }
-    
+
     // Check if premium exam and user not subscribed
     if (exam.isPremium && !isSubscribed) {
       toast({
-        title: "Premium Content",
-        description: "Please subscribe to access premium mock exams.",
-        variant: "destructive"
+        title: 'Premium Content',
+        description: 'Please subscribe to access premium mock exams.',
+        variant: 'destructive',
       });
-      navigate("/apprentice/study/mock-exams");
+      navigate('/apprentice/study/mock-exams');
       return;
     }
-    
+
     setCurrentExam(exam);
   }, [examId, navigate, isSubscribed, toast]);
 
@@ -70,7 +69,7 @@ const MockExamDetails = () => {
     goToPreviousQuestion,
     startExam,
     finishExam,
-    setShowResults
+    setShowResults,
   } = useExam(currentExam, mockQuestions);
 
   // Return to exam list
@@ -78,7 +77,7 @@ const MockExamDetails = () => {
     if (!isExamFinished && isExamStarted) {
       setExitDialogOpen(true);
     } else {
-      navigate("/apprentice/study/mock-exams");
+      navigate('/apprentice/study/mock-exams');
     }
   };
 
@@ -95,12 +94,12 @@ const MockExamDetails = () => {
           <h1 className="text-3xl font-bold tracking-tight">Exam Results</h1>
           <SmartBackButton />
         </div>
-        
-        <ExamResults 
+
+        <ExamResults
           examTitle={currentExam.title}
           questions={mockQuestions}
           selectedAnswers={selectedAnswers}
-          onReturn={() => navigate("/apprentice/study/mock-exams")}
+          onReturn={() => navigate('/apprentice/study/mock-exams')}
         />
       </div>
     );
@@ -116,20 +115,20 @@ const MockExamDetails = () => {
             <h1 className="text-2xl font-bold tracking-tight">{currentExam.title}</h1>
             <SmartBackButton />
           </div>
-          
+
           <ExamIntroduction exam={currentExam} onStart={startExam} />
         </div>
       ) : (
         // Exam in progress
         <div className="space-y-6">
-          <ExamHeader 
+          <ExamHeader
             currentQuestionIndex={currentQuestionIndex}
             totalQuestions={mockQuestions.length}
             timeRemaining={timeRemaining}
             onExit={() => setExitDialogOpen(true)}
           />
-          
-          <ExamQuestion 
+
+          <ExamQuestion
             question={mockQuestions[currentQuestionIndex]}
             selectedAnswer={selectedAnswers[mockQuestions[currentQuestionIndex].id]}
             onSelectAnswer={handleSelectAnswer}
@@ -141,12 +140,12 @@ const MockExamDetails = () => {
           />
         </div>
       )}
-      
+
       {/* Exit confirmation dialog */}
-      <ExamExitDialog 
+      <ExamExitDialog
         open={exitDialogOpen}
         onOpenChange={setExitDialogOpen}
-        onExit={() => navigate("/apprentice/study/mock-exams")}
+        onExit={() => navigate('/apprentice/study/mock-exams')}
       />
     </div>
   );

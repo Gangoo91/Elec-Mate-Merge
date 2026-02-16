@@ -1,176 +1,191 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Principles of Insulation Testing - Module 4 Section 1";
-const DESCRIPTION = "Understand insulation resistance fundamentals, why testing is essential, and the physics behind IR measurements.";
+const TITLE = 'Principles of Insulation Testing - Module 4 Section 1';
+const DESCRIPTION =
+  'Understand insulation resistance fundamentals, why testing is essential, and the physics behind IR measurements.';
 
 const quickCheckQuestions = [
   {
-    id: "ir-purpose",
-    question: "What does insulation resistance testing verify?",
+    id: 'ir-purpose',
+    question: 'What does insulation resistance testing verify?',
     options: [
-      "Circuit continuity",
-      "Adequate isolation between conductors and earth",
-      "Protective device operation",
-      "Earth electrode resistance"
+      'Circuit continuity',
+      'Adequate isolation between conductors and earth',
+      'Protective device operation',
+      'Earth electrode resistance',
     ],
     correctIndex: 1,
-    explanation: "Insulation resistance testing confirms conductors are adequately isolated from each other and from earth, preventing dangerous leakage currents."
+    explanation:
+      'Insulation resistance testing confirms conductors are adequately isolated from each other and from earth, preventing dangerous leakage currents.',
   },
   {
-    id: "ir-units",
-    question: "Insulation resistance is typically measured in:",
-    options: ["Milliohms (mΩ)", "Ohms (Ω)", "Megohms (MΩ)", "Kilohms (kΩ)"],
+    id: 'ir-units',
+    question: 'Insulation resistance is typically measured in:',
+    options: ['Milliohms (mΩ)', 'Ohms (Ω)', 'Megohms (MΩ)', 'Kilohms (kΩ)'],
     correctIndex: 2,
-    explanation: "Good insulation has very high resistance, typically measured in megohms (MΩ). 1 MΩ = 1,000,000 Ω."
+    explanation:
+      'Good insulation has very high resistance, typically measured in megohms (MΩ). 1 MΩ = 1,000,000 Ω.',
   },
   {
-    id: "ir-minimum",
-    question: "What is the minimum acceptable insulation resistance per BS 7671?",
-    options: ["0.5 MΩ", "1.0 MΩ", "2.0 MΩ", "5.0 MΩ"],
+    id: 'ir-minimum',
+    question: 'What is the minimum acceptable insulation resistance per BS 7671?',
+    options: ['0.5 MΩ', '1.0 MΩ', '2.0 MΩ', '5.0 MΩ'],
     correctIndex: 1,
-    explanation: "BS 7671 specifies minimum insulation resistance of 1.0 MΩ for LV circuits (≤500V). SELV/PELV circuits have a lower minimum of 0.5 MΩ tested at 250V DC. For standard 230V circuits, 1.0 MΩ is the correct minimum."
-  }
+    explanation:
+      'BS 7671 specifies minimum insulation resistance of 1.0 MΩ for LV circuits (≤500V). SELV/PELV circuits have a lower minimum of 0.5 MΩ tested at 250V DC. For standard 230V circuits, 1.0 MΩ is the correct minimum.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Insulation resistance testing verifies that:",
+    question: 'Insulation resistance testing verifies that:',
     options: [
-      "Protective devices will operate",
-      "Conductors are adequately isolated",
-      "The circuit has low impedance",
-      "RCDs will trip correctly"
+      'Protective devices will operate',
+      'Conductors are adequately isolated',
+      'The circuit has low impedance',
+      'RCDs will trip correctly',
     ],
     correctAnswer: 1,
-    explanation: "Insulation resistance testing confirms conductors are adequately separated from each other and from earth, preventing dangerous leakage currents."
+    explanation:
+      'Insulation resistance testing confirms conductors are adequately separated from each other and from earth, preventing dangerous leakage currents.',
   },
   {
     id: 2,
-    question: "Insulation resistance is measured in:",
-    options: ["Ohms (Ω)", "Milliohms (mΩ)", "Megohms (MΩ)", "Amperes (A)"],
+    question: 'Insulation resistance is measured in:',
+    options: ['Ohms (Ω)', 'Milliohms (mΩ)', 'Megohms (MΩ)', 'Amperes (A)'],
     correctAnswer: 2,
-    explanation: "Good insulation has very high resistance, typically measured in megohms (MΩ). 1 MΩ = 1,000,000 Ω."
+    explanation:
+      'Good insulation has very high resistance, typically measured in megohms (MΩ). 1 MΩ = 1,000,000 Ω.',
   },
   {
     id: 3,
-    question: "Why is DC voltage used for insulation testing?",
+    question: 'Why is DC voltage used for insulation testing?',
     options: [
       "It's safer than AC",
-      "It provides constant stress without charging effects",
+      'It provides constant stress without charging effects',
       "It's required by law",
-      "It gives higher readings"
+      'It gives higher readings',
     ],
     correctAnswer: 1,
-    explanation: "DC provides constant, steady stress on insulation. AC would cause capacitive charging effects that complicate measurement."
+    explanation:
+      'DC provides constant, steady stress on insulation. AC would cause capacitive charging effects that complicate measurement.',
   },
   {
     id: 4,
-    question: "A low insulation resistance reading indicates:",
+    question: 'A low insulation resistance reading indicates:',
     options: [
-      "Excellent insulation quality",
-      "New cable installation",
-      "Degraded or contaminated insulation",
-      "Correct polarity"
+      'Excellent insulation quality',
+      'New cable installation',
+      'Degraded or contaminated insulation',
+      'Correct polarity',
     ],
     correctAnswer: 2,
-    explanation: "Low readings suggest insulation is degraded, damaged, contaminated, or wet - allowing leakage current to flow."
+    explanation:
+      'Low readings suggest insulation is degraded, damaged, contaminated, or wet - allowing leakage current to flow.',
   },
   {
     id: 5,
-    question: "Which is NOT a common cause of insulation degradation?",
-    options: [
-      "Moisture ingress",
-      "Heat cycling",
-      "Correct installation",
-      "UV exposure"
-    ],
+    question: 'Which is NOT a common cause of insulation degradation?',
+    options: ['Moisture ingress', 'Heat cycling', 'Correct installation', 'UV exposure'],
     correctAnswer: 2,
-    explanation: "Correct installation actually protects insulation. Moisture, heat, UV, mechanical damage, and age all cause degradation."
+    explanation:
+      'Correct installation actually protects insulation. Moisture, heat, UV, mechanical damage, and age all cause degradation.',
   },
   {
     id: 6,
-    question: "Failed insulation can result in:",
+    question: 'Failed insulation can result in:',
     options: [
-      "Only nuisance tripping",
-      "Only equipment damage",
-      "Electric shock, fire, and equipment damage",
-      "None of the above"
+      'Only nuisance tripping',
+      'Only equipment damage',
+      'Electric shock, fire, and equipment damage',
+      'None of the above',
     ],
     correctAnswer: 2,
-    explanation: "Failed insulation can cause multiple hazards: electric shock, fire from leakage currents, equipment damage, and dangerous touch voltages."
+    explanation:
+      'Failed insulation can cause multiple hazards: electric shock, fire from leakage currents, equipment damage, and dangerous touch voltages.',
   },
   {
     id: 7,
-    question: "An insulation resistance tester generates:",
+    question: 'An insulation resistance tester generates:',
     options: [
-      "High AC voltage",
-      "Low DC voltage",
-      "Stabilised DC voltage at 250V, 500V, or 1000V",
-      "Variable frequency AC"
+      'High AC voltage',
+      'Low DC voltage',
+      'Stabilised DC voltage at 250V, 500V, or 1000V',
+      'Variable frequency AC',
     ],
     correctAnswer: 2,
-    explanation: "IR testers generate specific stabilised DC voltages - typically 250V, 500V, or 1000V depending on the circuit being tested."
+    explanation:
+      'IR testers generate specific stabilised DC voltages - typically 250V, 500V, or 1000V depending on the circuit being tested.',
   },
   {
     id: 8,
-    question: "Moisture on insulation surfaces will cause:",
+    question: 'Moisture on insulation surfaces will cause:',
     options: [
-      "Higher readings",
-      "Lower readings",
-      "No change in readings",
-      "Open circuit readings"
+      'Higher readings',
+      'Lower readings',
+      'No change in readings',
+      'Open circuit readings',
     ],
     correctAnswer: 1,
-    explanation: "Moisture creates a conductive path on insulation surfaces, reducing the measured resistance. Readings often improve when circuits dry out."
+    explanation:
+      'Moisture creates a conductive path on insulation surfaces, reducing the measured resistance. Readings often improve when circuits dry out.',
   },
   {
     id: 9,
-    question: "What unit represents 1,000,000 ohms?",
-    options: ["Kilohm (kΩ)", "Megohm (MΩ)", "Gigohm (GΩ)", "Milliohm (mΩ)"],
+    question: 'What unit represents 1,000,000 ohms?',
+    options: ['Kilohm (kΩ)', 'Megohm (MΩ)', 'Gigohm (GΩ)', 'Milliohm (mΩ)'],
     correctAnswer: 1,
-    explanation: "1 Megohm (MΩ) = 1,000,000 Ω. This is the typical unit for insulation resistance measurements."
+    explanation:
+      '1 Megohm (MΩ) = 1,000,000 Ω. This is the typical unit for insulation resistance measurements.',
   },
   {
     id: 10,
-    question: "The minimum acceptable insulation resistance per BS 7671 is:",
-    options: ["0.5 MΩ", "1.0 MΩ", "2.0 MΩ", "10 MΩ"],
+    question: 'The minimum acceptable insulation resistance per BS 7671 is:',
+    options: ['0.5 MΩ', '1.0 MΩ', '2.0 MΩ', '10 MΩ'],
     correctAnswer: 1,
-    explanation: "BS 7671 specifies a minimum insulation resistance of 1.0 MΩ for most circuits. Lower values require investigation."
-  }
+    explanation:
+      'BS 7671 specifies a minimum insulation resistance of 1.0 MΩ for most circuits. Lower values require investigation.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why use DC voltage for insulation testing?",
-    answer: "DC voltage provides a constant stress on the insulation without the charging effects of AC. The steady current flow through insulation defects is easier to measure accurately, and DC won't trip RCDs during testing."
+    question: 'Why use DC voltage for insulation testing?',
+    answer:
+      "DC voltage provides a constant stress on the insulation without the charging effects of AC. The steady current flow through insulation defects is easier to measure accurately, and DC won't trip RCDs during testing.",
   },
   {
-    question: "What does insulation resistance actually measure?",
-    answer: "It measures the resistance of the insulating material between conductors or between conductors and earth. High values (megohms) indicate good insulation; low values indicate degradation, damage, or contamination allowing leakage current."
+    question: 'What does insulation resistance actually measure?',
+    answer:
+      'It measures the resistance of the insulating material between conductors or between conductors and earth. High values (megohms) indicate good insulation; low values indicate degradation, damage, or contamination allowing leakage current.',
   },
   {
-    question: "Why does insulation degrade over time?",
-    answer: "Multiple factors: heat cycling causes expansion/contraction, moisture ingress, UV exposure, chemical contamination, mechanical damage, electrical stress, and natural aging of materials all contribute to gradual insulation breakdown."
+    question: 'Why does insulation degrade over time?',
+    answer:
+      'Multiple factors: heat cycling causes expansion/contraction, moisture ingress, UV exposure, chemical contamination, mechanical damage, electrical stress, and natural aging of materials all contribute to gradual insulation breakdown.',
   },
   {
-    question: "What happens if insulation fails?",
-    answer: "Failed insulation can cause: electric shock to persons, fire from leakage currents, equipment damage, nuisance tripping of protective devices, and potential earth faults leading to dangerous touch voltages on exposed metalwork."
+    question: 'What happens if insulation fails?',
+    answer:
+      'Failed insulation can cause: electric shock to persons, fire from leakage currents, equipment damage, nuisance tripping of protective devices, and potential earth faults leading to dangerous touch voltages on exposed metalwork.',
   },
   {
-    question: "How does an insulation resistance tester work?",
-    answer: "The instrument generates a stabilised DC voltage (250V, 500V, or 1000V). This is applied to the insulation. The tester measures the tiny current that flows through the insulation and calculates resistance using Ohm's law (R=V/I)."
+    question: 'How does an insulation resistance tester work?',
+    answer:
+      "The instrument generates a stabilised DC voltage (250V, 500V, or 1000V). This is applied to the insulation. The tester measures the tiny current that flows through the insulation and calculates resistance using Ohm's law (R=V/I).",
   },
   {
-    question: "Can low readings be temporary?",
-    answer: "Yes. Moisture on insulation surfaces can cause low readings that improve when the circuit dries out. Condensation is common in unheated buildings. However, consistently low readings after drying indicate genuine insulation degradation."
-  }
+    question: 'Can low readings be temporary?',
+    answer:
+      'Yes. Moisture on insulation surfaces can cause low readings that improve when the circuit dries out. Condensation is common in unheated buildings. However, consistently low readings after drying indicate genuine insulation degradation.',
+  },
 ];
 
 const InspectionTestingModule4Section1 = () => {
@@ -181,7 +196,12 @@ const InspectionTestingModule4Section1 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -192,7 +212,6 @@ const InspectionTestingModule4Section1 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -203,7 +222,8 @@ const InspectionTestingModule4Section1 = () => {
             Principles of Insulation Testing
           </h1>
           <p className="text-white/80">
-            Understand why insulation resistance testing is essential and the physics behind IR measurements
+            Understand why insulation resistance testing is essential and the physics behind IR
+            measurements
           </p>
         </header>
 
@@ -212,18 +232,32 @@ const InspectionTestingModule4Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Purpose:</strong> Verify conductors are adequately isolated</li>
-              <li><strong>Method:</strong> Apply high DC voltage, measure leakage</li>
-              <li><strong>Results:</strong> Low values = degradation or contamination</li>
-              <li><strong>Minimum:</strong> 1.0 MΩ per BS 7671</li>
+              <li>
+                <strong>Purpose:</strong> Verify conductors are adequately isolated
+              </li>
+              <li>
+                <strong>Method:</strong> Apply high DC voltage, measure leakage
+              </li>
+              <li>
+                <strong>Results:</strong> Low values = degradation or contamination
+              </li>
+              <li>
+                <strong>Minimum:</strong> 1.0 MΩ per BS 7671
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Why It Matters</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Shock Prevention:</strong> Isolate live from accessible parts</li>
-              <li><strong>Fire Prevention:</strong> Detect dangerous leakage currents</li>
-              <li><strong>Equipment Protection:</strong> Identify degradation early</li>
+              <li>
+                <strong>Shock Prevention:</strong> Isolate live from accessible parts
+              </li>
+              <li>
+                <strong>Fire Prevention:</strong> Detect dangerous leakage currents
+              </li>
+              <li>
+                <strong>Equipment Protection:</strong> Identify degradation early
+              </li>
             </ul>
           </div>
         </div>
@@ -233,12 +267,12 @@ const InspectionTestingModule4Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand the purpose of IR testing",
-              "Learn how insulation resistance works",
-              "Recognise causes of degradation",
-              "Understand safety implications",
-              "Know BS 7671 requirements",
-              "Learn how IR testers operate"
+              'Understand the purpose of IR testing',
+              'Learn how insulation resistance works',
+              'Recognise causes of degradation',
+              'Understand safety implications',
+              'Know BS 7671 requirements',
+              'Learn how IR testers operate',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -259,25 +293,34 @@ const InspectionTestingModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              <strong className="text-white">Insulation resistance (IR)</strong> is a measure of how well the
-              insulating materials in an electrical installation prevent unwanted current flow between conductors,
-              or from conductors to earth.
+              <strong className="text-white">Insulation resistance (IR)</strong> is a measure of how
+              well the insulating materials in an electrical installation prevent unwanted current
+              flow between conductors, or from conductors to earth.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Principle</p>
               <p className="text-sm text-white/90">
-                Perfect insulation would have infinite resistance. In reality, all insulating materials allow
-                some tiny current to pass - this is normal. Problems occur when this leakage becomes excessive.
+                Perfect insulation would have infinite resistance. In reality, all insulating
+                materials allow some tiny current to pass - this is normal. Problems occur when this
+                leakage becomes excessive.
               </p>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Key facts:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>IR testing verifies conductors are adequately isolated from each other and from earth</li>
-                <li>Tests apply a high DC voltage to stress insulation and measure leakage current</li>
-                <li>Results indicate insulation condition - low values suggest degradation or contamination</li>
+                <li>
+                  IR testing verifies conductors are adequately isolated from each other and from
+                  earth
+                </li>
+                <li>
+                  Tests apply a high DC voltage to stress insulation and measure leakage current
+                </li>
+                <li>
+                  Results indicate insulation condition - low values suggest degradation or
+                  contamination
+                </li>
                 <li>Measured in megohms (MΩ) - 1 MΩ = 1,000,000 Ω</li>
               </ul>
             </div>
@@ -294,25 +337,41 @@ const InspectionTestingModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Insulation testing is critical for electrical safety. It protects people and property from the
-              dangers of electrical faults.
+              Insulation testing is critical for electrical safety. It protects people and property
+              from the dangers of electrical faults.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Safety Benefits</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Prevent Electric Shock:</strong> Ensures live conductors cannot contact accessible metalwork</li>
-                  <li><strong>Prevent Fire:</strong> Detects leakage currents that could cause overheating</li>
-                  <li><strong>Protect Equipment:</strong> Identifies degradation before failure occurs</li>
+                  <li>
+                    <strong>Prevent Electric Shock:</strong> Ensures live conductors cannot contact
+                    accessible metalwork
+                  </li>
+                  <li>
+                    <strong>Prevent Fire:</strong> Detects leakage currents that could cause
+                    overheating
+                  </li>
+                  <li>
+                    <strong>Protect Equipment:</strong> Identifies degradation before failure occurs
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Compliance Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Compliance Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Verify Installation:</strong> Confirms new work meets safety standards</li>
-                  <li><strong>Periodic Testing:</strong> Monitors ongoing installation condition</li>
-                  <li><strong>Fault Finding:</strong> Locates insulation breakdown problems</li>
+                  <li>
+                    <strong>Verify Installation:</strong> Confirms new work meets safety standards
+                  </li>
+                  <li>
+                    <strong>Periodic Testing:</strong> Monitors ongoing installation condition
+                  </li>
+                  <li>
+                    <strong>Fault Finding:</strong> Locates insulation breakdown problems
+                  </li>
                 </ul>
               </div>
             </div>
@@ -327,8 +386,9 @@ const InspectionTestingModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              An insulation resistance tester applies a <strong className="text-white">stabilised DC voltage</strong> between
-              the conductors under test.
+              An insulation resistance tester applies a{' '}
+              <strong className="text-white">stabilised DC voltage</strong> between the conductors
+              under test.
             </p>
 
             <div className="my-6">
@@ -346,63 +406,245 @@ const InspectionTestingModule4Section1 = () => {
 
         {/* IR Test Connection Diagram */}
         <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
-          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
-          <h4 className="text-sm font-bold text-white mb-4">Insulation Resistance Test Connections</h4>
-          <svg viewBox="0 0 800 340" className="w-full h-auto" role="img" aria-label="Insulation resistance test connections showing Line-Neutral, Line-Earth, and Neutral-Earth test configurations">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+            Diagram
+          </p>
+          <h4 className="text-sm font-bold text-white mb-4">
+            Insulation Resistance Test Connections
+          </h4>
+          <svg
+            viewBox="0 0 800 340"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Insulation resistance test connections showing Line-Neutral, Line-Earth, and Neutral-Earth test configurations"
+          >
             {/* Distribution Board */}
-            <rect x="320" y="10" width="160" height="90" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
-            <text x="400" y="30" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontWeight="bold">DISTRIBUTION BOARD</text>
-            <text x="400" y="48" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="10">Main switch OFF, MCBs ON</text>
+            <rect
+              x="320"
+              y="10"
+              width="160"
+              height="90"
+              rx="8"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="2"
+            />
+            <text
+              x="400"
+              y="30"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.6)"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              DISTRIBUTION BOARD
+            </text>
+            <text x="400" y="48" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="10">
+              Main switch OFF, MCBs ON
+            </text>
 
             {/* Conductor bars */}
             <line x1="350" y1="65" x2="350" y2="100" stroke="#EF4444" strokeWidth="3" />
-            <text x="350" y="80" textAnchor="middle" fill="#EF4444" fontSize="10" fontWeight="bold">L</text>
+            <text x="350" y="80" textAnchor="middle" fill="#EF4444" fontSize="10" fontWeight="bold">
+              L
+            </text>
             <line x1="400" y1="65" x2="400" y2="100" stroke="#3B82F6" strokeWidth="3" />
-            <text x="400" y="80" textAnchor="middle" fill="#3B82F6" fontSize="10" fontWeight="bold">N</text>
+            <text x="400" y="80" textAnchor="middle" fill="#3B82F6" fontSize="10" fontWeight="bold">
+              N
+            </text>
             <line x1="450" y1="65" x2="450" y2="100" stroke="#22C55E" strokeWidth="3" />
-            <text x="450" y="80" textAnchor="middle" fill="#22C55E" fontSize="10" fontWeight="bold">E</text>
+            <text x="450" y="80" textAnchor="middle" fill="#22C55E" fontSize="10" fontWeight="bold">
+              E
+            </text>
 
             {/* Test 1: L-N */}
-            <rect x="50" y="130" width="200" height="90" rx="10" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.25)" strokeWidth="1.5" />
-            <text x="150" y="152" textAnchor="middle" fill="#FBBF24" fontSize="12" fontWeight="bold">Test 1: L – N</text>
-            <circle cx="105" cy="182" r="16" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
-            <text x="105" y="186" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">IR</text>
+            <rect
+              x="50"
+              y="130"
+              width="200"
+              height="90"
+              rx="10"
+              fill="rgba(251,191,36,0.06)"
+              stroke="rgba(251,191,36,0.25)"
+              strokeWidth="1.5"
+            />
+            <text
+              x="150"
+              y="152"
+              textAnchor="middle"
+              fill="#FBBF24"
+              fontSize="12"
+              fontWeight="bold"
+            >
+              Test 1: L – N
+            </text>
+            <circle
+              cx="105"
+              cy="182"
+              r="16"
+              fill="none"
+              stroke="rgba(255,255,255,0.4)"
+              strokeWidth="1.5"
+            />
+            <text x="105" y="186" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
+              IR
+            </text>
             <line x1="121" y1="175" x2="165" y2="175" stroke="#EF4444" strokeWidth="2" />
-            <text x="175" y="179" fill="#EF4444" fontSize="10" fontWeight="bold">L</text>
+            <text x="175" y="179" fill="#EF4444" fontSize="10" fontWeight="bold">
+              L
+            </text>
             <line x1="121" y1="189" x2="165" y2="189" stroke="#3B82F6" strokeWidth="2" />
-            <text x="175" y="193" fill="#3B82F6" fontSize="10" fontWeight="bold">N</text>
+            <text x="175" y="193" fill="#3B82F6" fontSize="10" fontWeight="bold">
+              N
+            </text>
 
             {/* Test 2: L-E */}
-            <rect x="300" y="130" width="200" height="90" rx="10" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.25)" strokeWidth="1.5" />
-            <text x="400" y="152" textAnchor="middle" fill="#FBBF24" fontSize="12" fontWeight="bold">Test 2: L – E</text>
-            <circle cx="355" cy="182" r="16" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
-            <text x="355" y="186" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">IR</text>
+            <rect
+              x="300"
+              y="130"
+              width="200"
+              height="90"
+              rx="10"
+              fill="rgba(251,191,36,0.06)"
+              stroke="rgba(251,191,36,0.25)"
+              strokeWidth="1.5"
+            />
+            <text
+              x="400"
+              y="152"
+              textAnchor="middle"
+              fill="#FBBF24"
+              fontSize="12"
+              fontWeight="bold"
+            >
+              Test 2: L – E
+            </text>
+            <circle
+              cx="355"
+              cy="182"
+              r="16"
+              fill="none"
+              stroke="rgba(255,255,255,0.4)"
+              strokeWidth="1.5"
+            />
+            <text x="355" y="186" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
+              IR
+            </text>
             <line x1="371" y1="175" x2="415" y2="175" stroke="#EF4444" strokeWidth="2" />
-            <text x="425" y="179" fill="#EF4444" fontSize="10" fontWeight="bold">L</text>
+            <text x="425" y="179" fill="#EF4444" fontSize="10" fontWeight="bold">
+              L
+            </text>
             <line x1="371" y1="189" x2="415" y2="189" stroke="#22C55E" strokeWidth="2" />
-            <text x="425" y="193" fill="#22C55E" fontSize="10" fontWeight="bold">E</text>
+            <text x="425" y="193" fill="#22C55E" fontSize="10" fontWeight="bold">
+              E
+            </text>
 
             {/* Test 3: N-E */}
-            <rect x="550" y="130" width="200" height="90" rx="10" fill="rgba(251,191,36,0.06)" stroke="rgba(251,191,36,0.25)" strokeWidth="1.5" />
-            <text x="650" y="152" textAnchor="middle" fill="#FBBF24" fontSize="12" fontWeight="bold">Test 3: N – E</text>
-            <circle cx="605" cy="182" r="16" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
-            <text x="605" y="186" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">IR</text>
+            <rect
+              x="550"
+              y="130"
+              width="200"
+              height="90"
+              rx="10"
+              fill="rgba(251,191,36,0.06)"
+              stroke="rgba(251,191,36,0.25)"
+              strokeWidth="1.5"
+            />
+            <text
+              x="650"
+              y="152"
+              textAnchor="middle"
+              fill="#FBBF24"
+              fontSize="12"
+              fontWeight="bold"
+            >
+              Test 3: N – E
+            </text>
+            <circle
+              cx="605"
+              cy="182"
+              r="16"
+              fill="none"
+              stroke="rgba(255,255,255,0.4)"
+              strokeWidth="1.5"
+            />
+            <text x="605" y="186" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="9">
+              IR
+            </text>
             <line x1="621" y1="175" x2="665" y2="175" stroke="#3B82F6" strokeWidth="2" />
-            <text x="675" y="179" fill="#3B82F6" fontSize="10" fontWeight="bold">N</text>
+            <text x="675" y="179" fill="#3B82F6" fontSize="10" fontWeight="bold">
+              N
+            </text>
             <line x1="621" y1="189" x2="665" y2="189" stroke="#22C55E" strokeWidth="2" />
-            <text x="675" y="193" fill="#22C55E" fontSize="10" fontWeight="bold">E</text>
+            <text x="675" y="193" fill="#22C55E" fontSize="10" fontWeight="bold">
+              E
+            </text>
 
             {/* Pass criteria */}
-            <rect x="100" y="250" width="600" height="80" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-            <text x="400" y="272" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontWeight="bold">Minimum Insulation Resistance (BS 7671 Table 6A)</text>
-            <text x="200" y="296" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">SELV/PELV: 250V DC</text>
-            <text x="200" y="312" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">≥ 0.5 MΩ</text>
-            <text x="400" y="296" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">≤500V circuits: 500V DC</text>
-            <text x="400" y="312" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">≥ 1.0 MΩ</text>
-            <text x="600" y="296" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">&gt;500V circuits: 1000V DC</text>
-            <text x="600" y="312" textAnchor="middle" fill="#FBBF24" fontSize="11" fontWeight="bold">≥ 1.0 MΩ</text>
+            <rect
+              x="100"
+              y="250"
+              width="600"
+              height="80"
+              rx="10"
+              fill="rgba(255,255,255,0.03)"
+              stroke="rgba(255,255,255,0.1)"
+              strokeWidth="1"
+            />
+            <text
+              x="400"
+              y="272"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.6)"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              Minimum Insulation Resistance (BS 7671 Table 6A)
+            </text>
+            <text x="200" y="296" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">
+              SELV/PELV: 250V DC
+            </text>
+            <text
+              x="200"
+              y="312"
+              textAnchor="middle"
+              fill="#FBBF24"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              ≥ 0.5 MΩ
+            </text>
+            <text x="400" y="296" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">
+              ≤500V circuits: 500V DC
+            </text>
+            <text
+              x="400"
+              y="312"
+              textAnchor="middle"
+              fill="#FBBF24"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              ≥ 1.0 MΩ
+            </text>
+            <text x="600" y="296" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">
+              &gt;500V circuits: 1000V DC
+            </text>
+            <text
+              x="600"
+              y="312"
+              textAnchor="middle"
+              fill="#FBBF24"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              ≥ 1.0 MΩ
+            </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">Three test configurations for insulation resistance: L-N, L-E, and N-E. Main switch off, all MCBs/fuses on. Disconnect voltage-sensitive equipment before testing.</p>
+          <p className="text-xs text-white/40 mt-3">
+            Three test configurations for insulation resistance: L-N, L-E, and N-E. Main switch off,
+            all MCBs/fuses on. Disconnect voltage-sensitive equipment before testing.
+          </p>
         </div>
 
         <InlineCheck {...quickCheckQuestions[1]} />
@@ -415,7 +657,8 @@ const InspectionTestingModule4Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              DC voltage is used for insulation testing because it provides the most accurate results:
+              DC voltage is used for insulation testing because it provides the most accurate
+              results:
             </p>
 
             <div className="my-6">
@@ -429,8 +672,8 @@ const InspectionTestingModule4Section1 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Note:</strong> If AC were used, cables would act as capacitors, and the readings would include
-              capacitive reactance rather than true insulation resistance.
+              <strong>Note:</strong> If AC were used, cables would act as capacitors, and the
+              readings would include capacitive reactance rather than true insulation resistance.
             </p>
           </div>
         </section>
@@ -442,18 +685,16 @@ const InspectionTestingModule4Section1 = () => {
             Causes of Degradation
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Insulation degrades over time due to various factors:
-            </p>
+            <p>Insulation degrades over time due to various factors:</p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               {[
-                { factor: "Heat", effect: "Accelerates aging, causes brittleness" },
-                { factor: "Moisture", effect: "Creates conductive paths" },
-                { factor: "UV Light", effect: "Breaks down plastic materials" },
-                { factor: "Chemicals", effect: "Attacks insulation compounds" },
-                { factor: "Mechanical", effect: "Abrasion, crushing, cuts" },
-                { factor: "Electrical", effect: "Overvoltage stress, arcing" }
+                { factor: 'Heat', effect: 'Accelerates aging, causes brittleness' },
+                { factor: 'Moisture', effect: 'Creates conductive paths' },
+                { factor: 'UV Light', effect: 'Breaks down plastic materials' },
+                { factor: 'Chemicals', effect: 'Attacks insulation compounds' },
+                { factor: 'Mechanical', effect: 'Abrasion, crushing, cuts' },
+                { factor: 'Electrical', effect: 'Overvoltage stress, arcing' },
               ].map((item, i) => (
                 <div key={i} className="text-sm">
                   <p className="text-elec-yellow/80 font-medium">{item.factor}</p>
@@ -477,13 +718,14 @@ const InspectionTestingModule4Section1 = () => {
             </div>
 
             <p>
-              This minimum applies to each circuit tested. In practice, new installations should achieve
-              readings significantly higher than 1 MΩ - typically 100 MΩ or more.
+              This minimum applies to each circuit tested. In practice, new installations should
+              achieve readings significantly higher than 1 MΩ - typically 100 MΩ or more.
             </p>
 
             <p className="text-sm text-white/70">
-              <strong className="text-elec-yellow">Note:</strong> The 1 MΩ minimum is measured with all equipment
-              disconnected. With equipment connected, readings may be lower due to electronic components.
+              <strong className="text-elec-yellow">Note:</strong> The 1 MΩ minimum is measured with
+              all equipment disconnected. With equipment connected, readings may be lower due to
+              electronic components.
             </p>
           </div>
         </section>
@@ -511,7 +753,9 @@ const InspectionTestingModule4Section1 = () => {
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Older Installations</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Readings decrease over time - this is normal</li>
-                <li>Monitor trends - gradual decline is expected, sudden drops indicate problems</li>
+                <li>
+                  Monitor trends - gradual decline is expected, sudden drops indicate problems
+                </li>
                 <li>Values approaching 1 MΩ require close monitoring</li>
               </ul>
             </div>
@@ -572,28 +816,33 @@ const InspectionTestingModule4Section1 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-3/section-6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-4/section-2">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

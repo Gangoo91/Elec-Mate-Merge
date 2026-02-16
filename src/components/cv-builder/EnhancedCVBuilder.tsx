@@ -1,15 +1,14 @@
-
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { FileText, Download, Save, Wand2, Sparkles, Eye } from "lucide-react";
-import { EnhancedCVForm } from "./EnhancedCVForm";
-import { CVPreview } from "./CVPreview";
-import { SmartCVWizard } from "./ai/SmartCVWizard";
-import { CVData, defaultCVData } from "./types";
-import { generateCVPDF } from "./pdfGenerator";
-import { toast } from "@/hooks/use-toast";
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { FileText, Download, Save, Wand2, Sparkles, Eye } from 'lucide-react';
+import { EnhancedCVForm } from './EnhancedCVForm';
+import { CVPreview } from './CVPreview';
+import { SmartCVWizard } from './ai/SmartCVWizard';
+import { CVData, defaultCVData } from './types';
+import { generateCVPDF } from './pdfGenerator';
+import { toast } from '@/hooks/use-toast';
 
 const EnhancedCVBuilder = () => {
   const [cvData, setCVData] = useState<CVData>(defaultCVData);
@@ -33,17 +32,17 @@ const EnhancedCVBuilder = () => {
   const handleSave = () => {
     if (!cvData.personalInfo.fullName) {
       toast({
-        title: "No CV Data",
-        description: "Please create or edit a CV first before saving.",
-        variant: "destructive"
+        title: 'No CV Data',
+        description: 'Please create or edit a CV first before saving.',
+        variant: 'destructive',
       });
       return;
     }
 
     localStorage.setItem('cvData', JSON.stringify(cvData));
     toast({
-      title: "CV Saved",
-      description: "Your CV has been saved locally."
+      title: 'CV Saved',
+      description: 'Your CV has been saved locally.',
     });
   };
 
@@ -54,21 +53,21 @@ const EnhancedCVBuilder = () => {
         const parsedCV = JSON.parse(saved);
         setCVData(parsedCV);
         toast({
-          title: "CV Loaded",
-          description: "Your saved CV has been loaded."
+          title: 'CV Loaded',
+          description: 'Your saved CV has been loaded.',
         });
       } catch (error) {
         toast({
-          title: "Load Failed",
-          description: "Error loading saved CV data.",
-          variant: "destructive"
+          title: 'Load Failed',
+          description: 'Error loading saved CV data.',
+          variant: 'destructive',
         });
       }
     } else {
       toast({
-        title: "No Saved CV",
-        description: "No saved CV found.",
-        variant: "destructive"
+        title: 'No Saved CV',
+        description: 'No saved CV found.',
+        variant: 'destructive',
       });
     }
   };
@@ -76,9 +75,9 @@ const EnhancedCVBuilder = () => {
   const handleDownload = async () => {
     if (!cvData.personalInfo.fullName) {
       toast({
-        title: "No CV Data",
-        description: "Please create or edit a CV first before downloading.",
-        variant: "destructive"
+        title: 'No CV Data',
+        description: 'Please create or edit a CV first before downloading.',
+        variant: 'destructive',
       });
       return;
     }
@@ -87,14 +86,14 @@ const EnhancedCVBuilder = () => {
     try {
       await generateCVPDF(cvData);
       toast({
-        title: "CV Downloaded",
-        description: "Your professional CV has been downloaded as a PDF."
+        title: 'CV Downloaded',
+        description: 'Your professional CV has been downloaded as a PDF.',
       });
     } catch (error) {
       toast({
-        title: "Download Failed",
-        description: "There was an error downloading your CV. Please try again.",
-        variant: "destructive"
+        title: 'Download Failed',
+        description: 'There was an error downloading your CV. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
@@ -104,21 +103,23 @@ const EnhancedCVBuilder = () => {
   const handleWizardComplete = (generatedCV: CVData) => {
     setCVData(generatedCV);
     setShowWizard(false);
-    
+
     // Save to localStorage
     localStorage.setItem('cvData', JSON.stringify(generatedCV));
-    
+
     toast({
-      title: "CV Generated Successfully",
-      description: "Your professional CV is ready for preview and download."
+      title: 'CV Generated Successfully',
+      description: 'Your professional CV is ready for preview and download.',
     });
   };
 
   const isEmptyCV = () => {
-    return !cvData.personalInfo.fullName && 
-           cvData.experience.length === 0 && 
-           cvData.education.length === 0 && 
-           cvData.skills.length === 0;
+    return (
+      !cvData.personalInfo.fullName &&
+      cvData.experience.length === 0 &&
+      cvData.education.length === 0 &&
+      cvData.skills.length === 0
+    );
   };
 
   // Preview Mode
@@ -135,10 +136,12 @@ const EnhancedCVBuilder = () => {
                 </div>
                 <div>
                   <CardTitle className="text-elec-light text-lg sm:text-xl">CV Preview</CardTitle>
-                  <p className="text-elec-light/60 text-xs sm:text-sm">Your professional CV ready for download</p>
+                  <p className="text-elec-light/60 text-xs sm:text-sm">
+                    Your professional CV ready for download
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex flex-wrap items-center gap-1 sm:gap-2 w-full sm:w-auto">
                 <Button
                   onClick={() => setShowPreview(false)}
@@ -165,7 +168,7 @@ const EnhancedCVBuilder = () => {
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs sm:text-sm flex-1 sm:flex-none"
                 >
                   <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                  {isGenerating ? "Generating..." : "Download PDF"}
+                  {isGenerating ? 'Generating...' : 'Download PDF'}
                 </Button>
               </div>
             </div>
@@ -192,10 +195,12 @@ const EnhancedCVBuilder = () => {
               </div>
               <div>
                 <CardTitle className="text-elec-light text-lg sm:text-xl">CV Editor</CardTitle>
-                <p className="text-elec-light/60 text-xs sm:text-sm">Edit and customise your professional CV</p>
+                <p className="text-elec-light/60 text-xs sm:text-sm">
+                  Edit and customise your professional CV
+                </p>
               </div>
             </div>
-            
+
             <div className="flex flex-wrap items-center gap-1 sm:gap-2 w-full sm:w-auto">
               {isEmptyCV() && (
                 <Button
@@ -242,7 +247,7 @@ const EnhancedCVBuilder = () => {
                 className="bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs sm:text-sm flex-1 sm:flex-none"
               >
                 <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                {isGenerating ? "Generating..." : "Download PDF"}
+                {isGenerating ? 'Generating...' : 'Download PDF'}
               </Button>
             </div>
           </div>
@@ -270,7 +275,7 @@ const EnhancedCVBuilder = () => {
 
       <Dialog open={showWizard} onOpenChange={setShowWizard}>
         <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto p-0">
-          <SmartCVWizard 
+          <SmartCVWizard
             onCVGenerated={handleWizardComplete}
             onClose={() => setShowWizard(false)}
           />

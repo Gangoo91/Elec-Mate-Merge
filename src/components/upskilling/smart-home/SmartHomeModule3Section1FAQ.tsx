@@ -8,20 +8,23 @@ export const SmartHomeModule3Section1FAQ = () => {
 
   const faqs = [
     {
-      question: "Do smart bulbs work with normal light switches?",
-      answer: "Yes, but the switch must stay 'on' — otherwise the bulb loses power and connectivity. Smart bulbs need constant power to maintain their wireless connection and respond to app commands.",
-      category: "technical"
+      question: 'Do smart bulbs work with normal light switches?',
+      answer:
+        "Yes, but the switch must stay 'on' — otherwise the bulb loses power and connectivity. Smart bulbs need constant power to maintain their wireless connection and respond to app commands.",
+      category: 'technical',
     },
     {
-      question: "Which is cheaper, smart bulbs or smart switches?",
-      answer: "For one room, smart bulbs may be cheaper (£50-100 vs £80-150 for a smart switch). For a whole house, smart switches are usually more cost-effective since one switch controls multiple bulbs.",
-      category: "cost"
+      question: 'Which is cheaper, smart bulbs or smart switches?',
+      answer:
+        'For one room, smart bulbs may be cheaper (£50-100 vs £80-150 for a smart switch). For a whole house, smart switches are usually more cost-effective since one switch controls multiple bulbs.',
+      category: 'cost',
     },
     {
-      question: "Can I mix smart bulbs and switches?",
-      answer: "Yes, but be careful — turning off a switch cuts power to smart bulbs, unless switches are designed for integration. Use smart switches that maintain standby power or ensure family members understand the setup.",
-      category: "compatibility"
-    }
+      question: 'Can I mix smart bulbs and switches?',
+      answer:
+        'Yes, but be careful — turning off a switch cuts power to smart bulbs, unless switches are designed for integration. Use smart switches that maintain standby power or ensure family members understand the setup.',
+      category: 'compatibility',
+    },
   ];
 
   const toggleQuestion = (index: number) => {
@@ -30,10 +33,14 @@ export const SmartHomeModule3Section1FAQ = () => {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'technical': return 'text-blue-400';
-      case 'cost': return 'text-yellow-400';
-      case 'compatibility': return 'text-green-400';
-      default: return 'text-gray-400';
+      case 'technical':
+        return 'text-blue-400';
+      case 'cost':
+        return 'text-yellow-400';
+      case 'compatibility':
+        return 'text-green-400';
+      default:
+        return 'text-gray-400';
     }
   };
 
@@ -49,7 +56,7 @@ export const SmartHomeModule3Section1FAQ = () => {
         <p className="text-foreground mb-6">
           Common questions about smart lighting systems and their practical implementation:
         </p>
-        
+
         <div className="space-y-3">
           {faqs.map((faq, index) => (
             <div key={index} className="border border-gray-600 rounded-lg overflow-hidden">
@@ -59,10 +66,14 @@ export const SmartHomeModule3Section1FAQ = () => {
                 className="w-full p-3 sm:p-4 text-left hover:bg-[#323232] justify-between min-h-0"
               >
                 <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-3 flex-1">
-                  <span className={`text-xs font-bold px-2 py-1 rounded ${getCategoryColor(faq.category)} bg-current/20 flex-shrink-0`}>
+                  <span
+                    className={`text-xs font-bold px-2 py-1 rounded ${getCategoryColor(faq.category)} bg-current/20 flex-shrink-0`}
+                  >
                     {faq.category.toUpperCase()}
                   </span>
-                  <span className="text-foreground font-medium text-sm sm:text-base">{faq.question}</span>
+                  <span className="text-foreground font-medium text-sm sm:text-base">
+                    {faq.question}
+                  </span>
                 </div>
                 {openQuestion === index ? (
                   <ChevronUp className="h-4 w-4 text-gray-400 flex-shrink-0 mt-1 sm:mt-0" />
@@ -70,12 +81,10 @@ export const SmartHomeModule3Section1FAQ = () => {
                   <ChevronDown className="h-4 w-4 text-gray-400 flex-shrink-0 mt-1 sm:mt-0" />
                 )}
               </Button>
-              
+
               {openQuestion === index && (
                 <div className="px-3 sm:px-4 pb-3 sm:pb-4 border-t border-gray-600 bg-[#1a1a1a]">
-                  <p className="text-foreground text-sm leading-relaxed pt-3">
-                    {faq.answer}
-                  </p>
+                  <p className="text-foreground text-sm leading-relaxed pt-3">{faq.answer}</p>
                 </div>
               )}
             </div>

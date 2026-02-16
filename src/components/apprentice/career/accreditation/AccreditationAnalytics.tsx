@@ -1,16 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  TrendingUp,
-  Award,
-  Users,
-  Target,
-  Clock,
-  PoundSterling,
-  MapPin,
-  Zap
-} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { TrendingUp, Award, Users, Target, Clock, PoundSterling, MapPin, Zap } from 'lucide-react';
 
 const AccreditationAnalytics = () => {
   return (
@@ -30,19 +20,28 @@ const AccreditationAnalytics = () => {
           <div className="space-y-2">
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
               <span className="text-xs text-white/80">IET Professional</span>
-              <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30 text-xs">
+              <Badge
+                variant="outline"
+                className="bg-green-500/10 text-green-400 border-green-500/30 text-xs"
+              >
                 95%
               </Badge>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
               <span className="text-xs text-white/80">NICEIC Approved</span>
-              <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30 text-xs">
+              <Badge
+                variant="outline"
+                className="bg-green-500/10 text-green-400 border-green-500/30 text-xs"
+              >
                 92%
               </Badge>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
               <span className="text-xs text-white/80">ECA Membership</span>
-              <Badge variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-500/30 text-xs">
+              <Badge
+                variant="outline"
+                className="bg-amber-500/10 text-amber-400 border-amber-500/30 text-xs"
+              >
                 88%
               </Badge>
             </div>
@@ -87,19 +86,28 @@ const AccreditationAnalytics = () => {
         <CardContent className="space-y-2 relative">
           <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
             <span className="text-xs text-white/80">Entry Level</span>
-            <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30 text-xs">
+            <Badge
+              variant="outline"
+              className="bg-green-500/10 text-green-400 border-green-500/30 text-xs"
+            >
               4 options
             </Badge>
           </div>
           <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
             <span className="text-xs text-white/80">Under £300</span>
-            <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
+            <Badge
+              variant="outline"
+              className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs"
+            >
               6 available
             </Badge>
           </div>
           <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
             <span className="text-xs text-white/80">Online/Hybrid</span>
-            <Badge variant="outline" className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-xs">
+            <Badge
+              variant="outline"
+              className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-xs"
+            >
               8 courses
             </Badge>
           </div>

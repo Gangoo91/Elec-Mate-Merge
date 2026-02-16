@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 import {
   Lightbulb,
   Shield,
@@ -10,7 +10,7 @@ import {
   ChevronDown,
   ChevronUp,
   BookOpen,
-} from "lucide-react";
+} from 'lucide-react';
 
 const ProfessionalTips = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -18,78 +18,78 @@ const ProfessionalTips = () => {
   const tips = [
     {
       icon: Wrench,
-      category: "Tool Care",
-      title: "Keep Your Tools Sharp",
+      category: 'Tool Care',
+      title: 'Keep Your Tools Sharp',
       content:
-        "Regularly sharpen wire strippers and cutters. Dull tools require more force and can damage cables or cause injury.",
-      difficulty: "Basic",
-      timeToRead: "2 min",
+        'Regularly sharpen wire strippers and cutters. Dull tools require more force and can damage cables or cause injury.',
+      difficulty: 'Basic',
+      timeToRead: '2 min',
       rating: 4.8,
     },
     {
       icon: Shield,
-      category: "Safety",
-      title: "Insulated Tools for Live Work",
+      category: 'Safety',
+      title: 'Insulated Tools for Live Work',
       content:
-        "Always use VDE-tested insulated tools when working on live circuits. Standard tools can conduct electricity and cause serious injury.",
-      difficulty: "Critical",
-      timeToRead: "3 min",
+        'Always use VDE-tested insulated tools when working on live circuits. Standard tools can conduct electricity and cause serious injury.',
+      difficulty: 'Critical',
+      timeToRead: '3 min',
       rating: 5.0,
     },
     {
       icon: Zap,
-      category: "Technique",
-      title: "Proper Torque Settings",
+      category: 'Technique',
+      title: 'Proper Torque Settings',
       content:
-        "Use a torque screwdriver for terminals. Over-tightening can damage connections, while under-tightening creates loose connections and fire hazards.",
-      difficulty: "Intermediate",
-      timeToRead: "4 min",
+        'Use a torque screwdriver for terminals. Over-tightening can damage connections, while under-tightening creates loose connections and fire hazards.',
+      difficulty: 'Intermediate',
+      timeToRead: '4 min',
       rating: 4.9,
     },
     {
       icon: Clock,
-      category: "Efficiency",
-      title: "Tool Organisation",
+      category: 'Efficiency',
+      title: 'Tool Organisation',
       content:
-        "Keep frequently used tools in easily accessible pockets. Arrange tools by job type rather than size for faster access during installations.",
-      difficulty: "Basic",
-      timeToRead: "2 min",
+        'Keep frequently used tools in easily accessible pockets. Arrange tools by job type rather than size for faster access during installations.',
+      difficulty: 'Basic',
+      timeToRead: '2 min',
       rating: 4.6,
     },
     {
       icon: Lightbulb,
-      category: "Pro Tip",
-      title: "Quality vs. Cost",
+      category: 'Pro Tip',
+      title: 'Quality vs. Cost',
       content:
         "Invest in quality hand tools that you'll use daily. Cheap screwdrivers and pliers will fail when you need them most and can damage expensive components.",
-      difficulty: "Basic",
-      timeToRead: "3 min",
+      difficulty: 'Basic',
+      timeToRead: '3 min',
       rating: 4.7,
     },
     {
       icon: Shield,
-      category: "Compliance",
-      title: "BS7671 Requirements",
+      category: 'Compliance',
+      title: 'BS7671 Requirements',
       content:
-        "Ensure your testing equipment meets current BS7671 standards. Non-compliant testers can give false readings and put you at legal risk.",
-      difficulty: "Important",
-      timeToRead: "5 min",
+        'Ensure your testing equipment meets current BS7671 standards. Non-compliant testers can give false readings and put you at legal risk.',
+      difficulty: 'Important',
+      timeToRead: '5 min',
       rating: 5.0,
     },
   ];
 
   const getDifficultyStyles = (difficulty: string) => {
     switch (difficulty) {
-      case "Critical":
-        return "bg-red-500/10 text-red-400 border-red-500/30";
-      case "Important":
-        return "bg-orange-500/10 text-orange-400 border-orange-500/30";
-      case "Intermediate":
-        return "bg-amber-500/10 text-amber-400 border-amber-500/30";
-      case "Basic":
-        return "bg-green-500/10 text-green-400 border-green-500/30";
+      case 'Critical':
+        return 'bg-red-500/10 text-red-400 border-red-500/30';
+      case 'Important':
+        return 'bg-orange-500/10 text-orange-400 border-orange-500/30';
+      case 'Intermediate':
+        return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+      case 'Basic':
+        return 'bg-green-500/10 text-green-400 border-green-500/30';
       default:
-        return "bg-blue-500/10 text-blue-400 border-blue-500/30";
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
     }
   };
 
@@ -118,10 +118,7 @@ const ProfessionalTips = () => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Badge
-            variant="outline"
-            className="bg-blue-500/10 text-blue-400 border-blue-500/30"
-          >
+          <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
             {tips.length} tips
           </Badge>
           {isExpanded ? (
@@ -166,22 +163,16 @@ const ProfessionalTips = () => {
                     <div className="p-1.5 rounded-lg bg-blue-500/10">
                       <tip.icon className="h-4 w-4 text-blue-400" />
                     </div>
-                    <span className="text-xs text-blue-400 font-medium">
-                      {tip.category}
-                    </span>
+                    <span className="text-xs text-blue-400 font-medium">{tip.category}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                    <span className="text-xs text-muted-foreground">
-                      {tip.rating}
-                    </span>
+                    <span className="text-xs text-muted-foreground">{tip.rating}</span>
                   </div>
                 </div>
 
                 {/* Title */}
-                <h4 className="font-semibold text-white leading-tight">
-                  {tip.title}
-                </h4>
+                <h4 className="font-semibold text-white leading-tight">{tip.title}</h4>
 
                 {/* Content */}
                 <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
@@ -190,10 +181,7 @@ const ProfessionalTips = () => {
 
                 {/* Footer */}
                 <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                  <Badge
-                    variant="outline"
-                    className={getDifficultyStyles(tip.difficulty)}
-                  >
+                  <Badge variant="outline" className={getDifficultyStyles(tip.difficulty)}>
                     {tip.difficulty}
                   </Badge>
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -212,13 +200,10 @@ const ProfessionalTips = () => {
                 <Shield className="h-5 w-5 text-blue-400" />
               </div>
               <div>
-                <h5 className="font-semibold text-white mb-1">
-                  Safety Reminder
-                </h5>
+                <h5 className="font-semibold text-white mb-1">Safety Reminder</h5>
                 <p className="text-sm text-muted-foreground">
-                  Always follow proper safety procedures and consult BS7671
-                  regulations. When in doubt, consult with a qualified
-                  supervisor or seek additional training.
+                  Always follow proper safety procedures and consult BS7671 regulations. When in
+                  doubt, consult with a qualified supervisor or seek additional training.
                 </p>
               </div>
             </div>

@@ -2,76 +2,73 @@ import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule4Section4 = () => {
   useSEO({
-    title: "Measurement Equipment: Multimeters, Clamp Meters, Oscilloscopes | Instrumentation Course",
-    description: "Learn about key electrical measurement instruments including digital multimeters, clamp meters, and oscilloscopes."
+    title:
+      'Measurement Equipment: Multimeters, Clamp Meters, Oscilloscopes | Instrumentation Course',
+    description:
+      'Learn about key electrical measurement instruments including digital multimeters, clamp meters, and oscilloscopes.',
   });
 
   const quizQuestions = [
     {
       id: 1,
-      question: "Which tool visualises electrical waveforms?",
-      options: [
-        "Multimeter",
-        "Clamp meter",
-        "Oscilloscope",
-        "Frequency counter"
-      ],
+      question: 'Which tool visualises electrical waveforms?',
+      options: ['Multimeter', 'Clamp meter', 'Oscilloscope', 'Frequency counter'],
       correct: 2,
-      explanation: "Oscilloscopes display voltage waveforms over time, allowing analysis of signal shape, timing, and characteristics that other instruments cannot show."
+      explanation:
+        'Oscilloscopes display voltage waveforms over time, allowing analysis of signal shape, timing, and characteristics that other instruments cannot show.',
     },
     {
       id: 2,
-      question: "Why use a clamp meter over direct current testing?",
+      question: 'Why use a clamp meter over direct current testing?',
       options: [
-        "More accurate readings",
-        "Cheaper to purchase",
-        "No need to break the circuit for measurement",
-        "Better for AC measurements only"
+        'More accurate readings',
+        'Cheaper to purchase',
+        'No need to break the circuit for measurement',
+        'Better for AC measurements only',
       ],
       correct: 2,
-      explanation: "Clamp meters measure current non-intrusively by detecting the magnetic field around a conductor, eliminating the need to disconnect circuits."
+      explanation:
+        'Clamp meters measure current non-intrusively by detecting the magnetic field around a conductor, eliminating the need to disconnect circuits.',
     },
     {
       id: 3,
-      question: "What feature protects a multimeter from overload?",
-      options: [
-        "Auto-ranging",
-        "Fuse protection",
-        "Digital display",
-        "Probe leads"
-      ],
+      question: 'What feature protects a multimeter from overload?',
+      options: ['Auto-ranging', 'Fuse protection', 'Digital display', 'Probe leads'],
       correct: 1,
-      explanation: "Fuse protection prevents damage to the meter's internal circuits when excessive current flows through the measurement path."
+      explanation:
+        "Fuse protection prevents damage to the meter's internal circuits when excessive current flows through the measurement path.",
     },
     {
       id: 4,
-      question: "When is an oscilloscope preferred over a DMM?",
+      question: 'When is an oscilloscope preferred over a DMM?',
       options: [
-        "For basic voltage measurements",
-        "When you need to see waveform details and timing",
-        "For resistance measurements",
-        "For current measurements only"
+        'For basic voltage measurements',
+        'When you need to see waveform details and timing',
+        'For resistance measurements',
+        'For current measurements only',
       ],
       correct: 1,
-      explanation: "Oscilloscopes excel at showing signal behaviour over time, revealing details like distortion, noise, and timing that DMMs cannot display."
+      explanation:
+        'Oscilloscopes excel at showing signal behaviour over time, revealing details like distortion, noise, and timing that DMMs cannot display.',
     },
     {
       id: 5,
-      question: "What safety precaution should you follow with all measurement tools?",
+      question: 'What safety precaution should you follow with all measurement tools?',
       options: [
-        "Always use the highest range setting",
-        "Check instrument ratings match circuit conditions",
-        "Only use digital instruments",
-        "Avoid using probes"
+        'Always use the highest range setting',
+        'Check instrument ratings match circuit conditions',
+        'Only use digital instruments',
+        'Avoid using probes',
       ],
       correct: 1,
-      explanation: "Always verify that the instrument's voltage, current, and frequency ratings are suitable for the circuit being measured to prevent damage and ensure safety."
-    }
+      explanation:
+        "Always verify that the instrument's voltage, current, and frequency ratings are suitable for the circuit being measured to prevent damage and ensure safety.",
+    },
   ];
 
   return (
@@ -79,7 +76,10 @@ const InstrumentationModule4Section4 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-4" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-4"
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back to Module 4
           </Link>
@@ -95,29 +95,33 @@ const InstrumentationModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Measurement Equipment Overview
           </h1>
-          <p className="text-white/80">
-            Multimeters, clamp meters, and oscilloscopes
-          </p>
+          <p className="text-white/80">Multimeters, clamp meters, and oscilloscopes</p>
         </div>
 
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
           <h2 className="font-semibold text-white mb-2">Quick Summary</h2>
           <p className="text-white text-sm">
-            With the right tool, you can make the right diagnosis. Understanding each instrument's capabilities and limitations is essential for effective troubleshooting and system analysis.
+            With the right tool, you can make the right diagnosis. Understanding each instrument's
+            capabilities and limitations is essential for effective troubleshooting and system
+            analysis.
           </p>
         </div>
 
         {/* Section 01: Digital Multimeters */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Digital Multimeters (DMMs)</h2>
           </div>
 
           <div className="space-y-4 text-white">
             <p>
-              Digital multimeters are the most versatile and commonly used electrical test instruments, capable of measuring voltage, current, resistance, and often additional parameters.
+              Digital multimeters are the most versatile and commonly used electrical test
+              instruments, capable of measuring voltage, current, resistance, and often additional
+              parameters.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4">
@@ -224,13 +228,16 @@ const InstrumentationModule4Section4 = () => {
         {/* Section 02: Clamp Meters */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Clamp Meters</h2>
           </div>
 
           <div className="space-y-4 text-white">
             <p>
-              Clamp meters measure current by detecting the magnetic field around a conductor, allowing non-contact measurement without breaking the circuit.
+              Clamp meters measure current by detecting the magnetic field around a conductor,
+              allowing non-contact measurement without breaking the circuit.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4">
@@ -339,20 +346,25 @@ const InstrumentationModule4Section4 = () => {
         {/* Section 03: Oscilloscopes */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Oscilloscopes</h2>
           </div>
 
           <div className="space-y-4 text-white">
             <p>
-              Oscilloscopes display voltage waveforms over time, revealing signal characteristics invisible to other instruments.
+              Oscilloscopes display voltage waveforms over time, revealing signal characteristics
+              invisible to other instruments.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">What Oscilloscopes Show</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Signal Characteristics:</h4>
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">
+                    Signal Characteristics:
+                  </h4>
                   <ul className="space-y-1 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
@@ -409,19 +421,29 @@ const InstrumentationModule4Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">Bandwidth</h4>
-                  <p className="text-white text-xs">Highest frequency that can be accurately measured. Should be 5x the signal frequency for amplitude accuracy.</p>
+                  <p className="text-white text-xs">
+                    Highest frequency that can be accurately measured. Should be 5x the signal
+                    frequency for amplitude accuracy.
+                  </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">Sample Rate</h4>
-                  <p className="text-white text-xs">How frequently the scope samples the input. Higher rates capture faster details.</p>
+                  <p className="text-white text-xs">
+                    How frequently the scope samples the input. Higher rates capture faster details.
+                  </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">Memory Depth</h4>
-                  <p className="text-white text-xs">Amount of data that can be captured. More memory allows longer captures at full sample rate.</p>
+                  <p className="text-white text-xs">
+                    Amount of data that can be captured. More memory allows longer captures at full
+                    sample rate.
+                  </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">Channels</h4>
-                  <p className="text-white text-xs">Number of signals viewable simultaneously. 2 or 4 channels are common.</p>
+                  <p className="text-white text-xs">
+                    Number of signals viewable simultaneously. 2 or 4 channels are common.
+                  </p>
                 </div>
               </div>
             </div>
@@ -431,7 +453,9 @@ const InstrumentationModule4Section4 = () => {
         {/* Section 04: Tool Selection Guide */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
             <h2 className="text-xl font-semibold text-white">Choosing the Right Tool</h2>
           </div>
 
@@ -459,7 +483,9 @@ const InstrumentationModule4Section4 = () => {
                   </ul>
                 </div>
                 <div className="bg-background/50 rounded p-4 border-l-2 border-purple-400">
-                  <h4 className="text-purple-400 font-medium text-sm mb-2">Use Oscilloscopes For:</h4>
+                  <h4 className="text-purple-400 font-medium text-sm mb-2">
+                    Use Oscilloscopes For:
+                  </h4>
                   <ul className="space-y-1 text-xs text-white">
                     <li>• Waveform analysis</li>
                     <li>• Signal timing measurements</li>
@@ -476,7 +502,9 @@ const InstrumentationModule4Section4 = () => {
         {/* Section 05: Safety and Best Practices */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              05
+            </span>
             <h2 className="text-xl font-semibold text-white">Safety and Best Practices</h2>
           </div>
 
@@ -543,21 +571,29 @@ const InstrumentationModule4Section4 = () => {
             <div className="bg-card/50 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-2">What does CAT rating mean?</h3>
               <p className="text-white text-sm">
-                CAT ratings (I to IV) indicate the level of transient overvoltage protection. Higher categories are used closer to the power source: CAT IV at the service entrance, CAT III at distribution panels, CAT II at receptacles, CAT I for protected electronics.
+                CAT ratings (I to IV) indicate the level of transient overvoltage protection. Higher
+                categories are used closer to the power source: CAT IV at the service entrance, CAT
+                III at distribution panels, CAT II at receptacles, CAT I for protected electronics.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-2">Do I need a True RMS meter?</h3>
               <p className="text-white text-sm">
-                Yes, if you measure AC on circuits with VSDs, dimmers, electronic loads, or any non-sinusoidal waveforms. For pure sine wave measurements (like clean mains), an average-responding meter is adequate.
+                Yes, if you measure AC on circuits with VSDs, dimmers, electronic loads, or any
+                non-sinusoidal waveforms. For pure sine wave measurements (like clean mains), an
+                average-responding meter is adequate.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-2">How do I choose oscilloscope bandwidth?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                How do I choose oscilloscope bandwidth?
+              </h3>
               <p className="text-white text-sm">
-                For sine waves, bandwidth should be at least 3x the highest frequency. For square waves or pulses, use bandwidth = 0.35/rise time. A 100MHz scope handles most industrial applications up to 20MHz signals.
+                For sine waves, bandwidth should be at least 3x the highest frequency. For square
+                waves or pulses, use bandwidth = 0.35/rise time. A 100MHz scope handles most
+                industrial applications up to 20MHz signals.
               </p>
             </div>
           </div>
@@ -570,13 +606,19 @@ const InstrumentationModule4Section4 = () => {
 
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-3 pt-6 border-t border-border">
-          <Link to="/electrician/upskilling/instrumentation-module-4-section-3" className="w-full sm:w-auto">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-4-section-3"
+            className="w-full sm:w-auto"
+          >
             <Button variant="outline" className="w-full sm:w-auto">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
           </Link>
-          <Link to="/electrician/upskilling/instrumentation-module-4-section-5" className="w-full sm:w-auto">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-4-section-5"
+            className="w-full sm:w-auto"
+          >
             <Button className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
             </Button>

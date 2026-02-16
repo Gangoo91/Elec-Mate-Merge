@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { electricalSymbols, SymbolCategory } from "./symbols/electricalSymbols";
-import { Input } from "@/components/ui/input";
-import { Search, ChevronDown } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { electricalSymbols, SymbolCategory } from './symbols/electricalSymbols';
+import { Input } from '@/components/ui/input';
+import { Search, ChevronDown } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface SymbolLibraryProps {
   onSymbolSelect: (symbolId: string) => void;
@@ -12,18 +12,29 @@ interface SymbolLibraryProps {
   isMobile?: boolean;
 }
 
-export const SymbolLibrary = ({ onSymbolSelect, selectedSymbolId, isMobile = false }: SymbolLibraryProps) => {
-  const [searchTerm, setSearchTerm] = useState("");
+export const SymbolLibrary = ({
+  onSymbolSelect,
+  selectedSymbolId,
+  isMobile = false,
+}: SymbolLibraryProps) => {
+  const [searchTerm, setSearchTerm] = useState('');
   const [openCategories, setOpenCategories] = useState<Set<SymbolCategory>>(
-    new Set(["lighting", "sockets", "switches"])
+    new Set(['lighting', 'sockets', 'switches'])
   );
 
-  const filteredSymbols = electricalSymbols.filter(symbol =>
-    symbol.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    symbol.category.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredSymbols = electricalSymbols.filter(
+    (symbol) =>
+      symbol.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      symbol.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const categories: SymbolCategory[] = ["lighting", "sockets", "switches", "distribution", "accessories"];
+  const categories: SymbolCategory[] = [
+    'lighting',
+    'sockets',
+    'switches',
+    'distribution',
+    'accessories',
+  ];
 
   const toggleCategory = (category: SymbolCategory) => {
     const newOpen = new Set(openCategories);
@@ -36,11 +47,11 @@ export const SymbolLibrary = ({ onSymbolSelect, selectedSymbolId, isMobile = fal
   };
 
   const categoryNames: Record<SymbolCategory, string> = {
-    lighting: "Lighting",
-    sockets: "Sockets & Outlets",
-    switches: "Switches & Controls",
-    distribution: "Distribution",
-    accessories: "Safety & Accessories",
+    lighting: 'Lighting',
+    sockets: 'Sockets & Outlets',
+    switches: 'Switches & Controls',
+    distribution: 'Distribution',
+    accessories: 'Safety & Accessories',
   };
 
   if (isMobile) {
@@ -53,8 +64,8 @@ export const SymbolLibrary = ({ onSymbolSelect, selectedSymbolId, isMobile = fal
               onClick={() => onSymbolSelect(symbol.id)}
               className={`aspect-square flex flex-col items-center justify-center p-1.5 rounded border transition-all ${
                 selectedSymbolId === symbol.id
-                  ? "border-elec-yellow bg-elec-yellow/10"
-                  : "border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40"
+                  ? 'border-elec-yellow bg-elec-yellow/10'
+                  : 'border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40'
               }`}
               title={symbol.name}
             >
@@ -81,14 +92,17 @@ export const SymbolLibrary = ({ onSymbolSelect, selectedSymbolId, isMobile = fal
             placeholder="Search symbols..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={cn("bg-elec-dark border-elec-yellow/20 text-elec-light", !searchTerm && "pl-9")}
+            className={cn(
+              'bg-elec-dark border-elec-yellow/20 text-elec-light',
+              !searchTerm && 'pl-9'
+            )}
           />
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-2">
         {categories.map((category) => {
-          const categorySymbols = filteredSymbols.filter(s => s.category === category);
+          const categorySymbols = filteredSymbols.filter((s) => s.category === category);
           if (categorySymbols.length === 0) return null;
 
           return (
@@ -105,12 +119,12 @@ export const SymbolLibrary = ({ onSymbolSelect, selectedSymbolId, isMobile = fal
                   <span className="font-medium">{categoryNames[category]}</span>
                   <ChevronDown
                     className={`h-4 w-4 transition-transform ${
-                      openCategories.has(category) ? "rotate-180" : ""
+                      openCategories.has(category) ? 'rotate-180' : ''
                     }`}
                   />
                 </Button>
               </CollapsibleTrigger>
-              
+
               <CollapsibleContent className="space-y-2 pt-2">
                 {categorySymbols.map((symbol) => (
                   <button
@@ -118,11 +132,16 @@ export const SymbolLibrary = ({ onSymbolSelect, selectedSymbolId, isMobile = fal
                     onClick={() => onSymbolSelect(symbol.id)}
                     className={`w-full flex items-center gap-3 p-3 rounded border transition-all ${
                       selectedSymbolId === symbol.id
-                        ? "border-elec-yellow bg-elec-yellow/10"
-                        : "border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40"
+                        ? 'border-elec-yellow bg-elec-yellow/10'
+                        : 'border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40'
                     }`}
                   >
-                    <svg width="32" height="32" viewBox="0 0 40 40" className="text-elec-yellow flex-shrink-0">
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 40 40"
+                      className="text-elec-yellow flex-shrink-0"
+                    >
                       <path d={symbol.svg} fill="currentColor" />
                     </svg>
                     <span className="text-sm text-elec-light text-left">{symbol.name}</span>

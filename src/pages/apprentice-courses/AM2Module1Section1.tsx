@@ -1,90 +1,99 @@
-import { CheckCircle, Users, Target, TrendingUp, AlertTriangle, Zap } from "lucide-react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
-import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
-import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
-import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
-import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
-import { AM2TestSequence } from "@/components/apprentice-courses/AM2TestSequence";
-import useSEO from "@/hooks/useSEO";
+import { CheckCircle, Users, Target, TrendingUp, AlertTriangle, Zap } from 'lucide-react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { AM2SectionLayout } from '@/components/apprentice-courses/AM2SectionLayout';
+import { AM2HeroSection } from '@/components/apprentice-courses/AM2HeroSection';
+import { AM2ContentCard } from '@/components/apprentice-courses/AM2ContentCard';
+import { AM2NavigationFooter } from '@/components/apprentice-courses/AM2NavigationFooter';
+import { AM2CriticalWarning } from '@/components/apprentice-courses/AM2CriticalWarning';
+import { AM2TestSequence } from '@/components/apprentice-courses/AM2TestSequence';
+import useSEO from '@/hooks/useSEO';
 
 const AM2Module1Section1 = () => {
   useSEO(
     "Section 1: Purpose of the AM2 and Who It's For - AM2 Preparation",
-    "Understanding the AM2 assessment objectives, target candidates, and why it matters for your electrical career"
+    'Understanding the AM2 assessment objectives, target candidates, and why it matters for your electrical career'
   );
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is the primary purpose of the AM2 assessment?",
+      question: 'What is the primary purpose of the AM2 assessment?',
       options: [
-        "To teach new electrical skills",
-        "To prove competence and readiness to work as a qualified electrician",
-        "To catch out apprentices with trick questions",
-        "To provide theoretical knowledge only"
+        'To teach new electrical skills',
+        'To prove competence and readiness to work as a qualified electrician',
+        'To catch out apprentices with trick questions',
+        'To provide theoretical knowledge only',
       ],
       correctAnswer: 1,
-      explanation: "The AM2 is designed to prove you are ready to work as a qualified electrician by demonstrating competence in practical skills."
+      explanation:
+        'The AM2 is designed to prove you are ready to work as a qualified electrician by demonstrating competence in practical skills.',
     },
     {
       id: 2,
-      question: "Who is the AM2 assessment primarily aimed at?",
+      question: 'Who is the AM2 assessment primarily aimed at?',
       options: [
-        "Complete beginners to electrical work",
-        "Final-stage apprentices and experienced electricians seeking qualification",
-        "Electrical engineers only",
-        "DIY enthusiasts"
+        'Complete beginners to electrical work',
+        'Final-stage apprentices and experienced electricians seeking qualification',
+        'Electrical engineers only',
+        'DIY enthusiasts',
       ],
       correctAnswer: 1,
-      explanation: "The AM2 is for apprentices at the end of their training or experienced electricians going through assessment routes like NVQ Level 3."
+      explanation:
+        'The AM2 is for apprentices at the end of their training or experienced electricians going through assessment routes like NVQ Level 3.',
     },
     {
       id: 3,
-      question: "What credential does passing the AM2 allow you to apply for?",
+      question: 'What credential does passing the AM2 allow you to apply for?',
       options: [
-        "City & Guilds certificate",
-        "University degree",
-        "ECS Gold Card",
-        "Health and Safety certificate"
+        'City & Guilds certificate',
+        'University degree',
+        'ECS Gold Card',
+        'Health and Safety certificate',
       ],
       correctAnswer: 2,
-      explanation: "Passing the AM2 allows you to apply for an ECS Gold Card, which is your passport to working as a fully qualified electrician in the UK."
-    }
+      explanation:
+        'Passing the AM2 allows you to apply for an ECS Gold Card, which is your passport to working as a fully qualified electrician in the UK.',
+    },
   ];
 
   const assessmentSteps = [
     {
-      title: "Section A1 - Risk Assessment & Initial Setup",
-      description: "Risk assessment completion and hazard identification, safe working method statements, PPE selection and workspace preparation before installation begins."
+      title: 'Section A1 - Risk Assessment & Initial Setup',
+      description:
+        'Risk assessment completion and hazard identification, safe working method statements, PPE selection and workspace preparation before installation begins.',
     },
     {
-      title: "Section A2-A5 - Composite Installation (8 hours 30 minutes) - Main Component",
-      description: "Cable installation using various methods (conduit, trunking, clipping), SWA cable termination techniques, mechanical protection and support systems, accessory installation and final connections."
+      title: 'Section A2-A5 - Composite Installation (8 hours 30 minutes) - Main Component',
+      description:
+        'Cable installation using various methods (conduit, trunking, clipping), SWA cable termination techniques, mechanical protection and support systems, accessory installation and final connections.',
     },
     {
-      title: "Section B - Inspection, Testing & Certification (3.5 hours)",
-      description: "Complete sequence of electrical tests, earth fault loop impedance measurements, insulation resistance testing, RCD testing and verification, certificate completion."
+      title: 'Section B - Inspection, Testing & Certification (3.5 hours)',
+      description:
+        'Complete sequence of electrical tests, earth fault loop impedance measurements, insulation resistance testing, RCD testing and verification, certificate completion.',
     },
     {
-      title: "Section C - Safe Isolation of Circuits (45 minutes)",
-      description: "Three scenarios requiring safe isolation procedures covering single-phase equipment isolation, three-phase isolator procedures, and distribution board isolation."
+      title: 'Section C - Safe Isolation of Circuits (45 minutes)',
+      description:
+        'Three scenarios requiring safe isolation procedures covering single-phase equipment isolation, three-phase isolator procedures, and distribution board isolation.',
     },
     {
-      title: "Section D - Fault Diagnosis & Rectification (2 hours)",
-      description: "Systematic fault diagnosis using test equipment, circuit analysis and problem identification, safe fault rectification procedures, verification testing after repairs."
+      title: 'Section D - Fault Diagnosis & Rectification (2 hours)',
+      description:
+        'Systematic fault diagnosis using test equipment, circuit analysis and problem identification, safe fault rectification procedures, verification testing after repairs.',
     },
     {
-      title: "Section E - Online Knowledge Test (1 hour)",
-      description: "BS 7671 Wiring Regulations questions, cable calculations and protective device selection, health and safety requirements, inspection and testing procedures."
-    }
+      title: 'Section E - Online Knowledge Test (1 hour)',
+      description:
+        'BS 7671 Wiring Regulations questions, cable calculations and protective device selection, health and safety requirements, inspection and testing procedures.',
+    },
   ];
 
   return (
     <AM2SectionLayout
       backHref="/study-centre/apprentice/am2/module1"
-      breadcrumbs={["AM2", "Module 1", "Section 1"]}
+      breadcrumbs={['AM2', 'Module 1', 'Section 1']}
     >
       {/* Hero Section */}
       <AM2HeroSection
@@ -118,30 +127,37 @@ const AM2Module1Section1 = () => {
       <AM2ContentCard accent>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">What is AM2?</h2>
         <p className="text-ios-body text-white/90 leading-relaxed mb-4">
-          AM2 (Achievement Measurement 2) is a 2½-day practical assessment totalling 16.5 hours for electrical workers completing their NVQ Level 3.
-          It proves your competency in electrical installation work and unlocks your ECS Gold Card.
+          AM2 (Achievement Measurement 2) is a 2½-day practical assessment totalling 16.5 hours for
+          electrical workers completing their NVQ Level 3. It proves your competency in electrical
+          installation work and unlocks your ECS Gold Card.
         </p>
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <p className="text-ios-callout text-white/90">
-            <strong className="text-elec-yellow">Important:</strong> This isn't just a test - it's your final step to becoming a fully qualified electrician.
-            The assessment simulates real workplace conditions and you'll be evaluated on safety, technical skill, and professional standards.
+            <strong className="text-elec-yellow">Important:</strong> This isn't just a test - it's
+            your final step to becoming a fully qualified electrician. The assessment simulates real
+            workplace conditions and you'll be evaluated on safety, technical skill, and
+            professional standards.
           </p>
         </div>
       </AM2ContentCard>
 
       {/* Assessment Breakdown */}
       <AM2ContentCard>
-        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">AM2 Assessment Components</h2>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
+          AM2 Assessment Components
+        </h2>
         <p className="text-ios-body text-white/90 mb-6">
-          The AM2 assessment comprises 6 distinct sections totalling ~16.5 hours over 2½ days.
-          Most of your time is spent on installation work, while other sections test how you finish, check, and fix your work.
+          The AM2 assessment comprises 6 distinct sections totalling ~16.5 hours over 2½ days. Most
+          of your time is spent on installation work, while other sections test how you finish,
+          check, and fix your work.
         </p>
         <AM2TestSequence steps={assessmentSteps} />
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4 mt-6">
           <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">Important Note</p>
           <p className="text-ios-callout text-white/80">
-            These timings vary slightly by assessment centre, but the balance remains the same across all providers.
-            The installation component always takes up the majority of your time.
+            These timings vary slightly by assessment centre, but the balance remains the same
+            across all providers. The installation component always takes up the majority of your
+            time.
           </p>
         </div>
       </AM2ContentCard>
@@ -150,13 +166,16 @@ const AM2Module1Section1 = () => {
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">How You'll Be Assessed</h2>
         <p className="text-ios-body text-white/90 mb-4">
-          The AM2 uses competence-based assessment. Assessors judge each criterion as Competent or Not Yet Competent using objective Yes/No marking rather than percentage scores:
+          The AM2 uses competence-based assessment. Assessors judge each criterion as Competent or
+          Not Yet Competent using objective Yes/No marking rather than percentage scores:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline text-white font-semibold mb-2">Practical Skills</h4>
-              <p className="text-ios-footnote text-elec-yellow mb-2">Each task assessed as Competent / Not Yet Competent</p>
+              <p className="text-ios-footnote text-elec-yellow mb-2">
+                Each task assessed as Competent / Not Yet Competent
+              </p>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -174,8 +193,12 @@ const AM2Module1Section1 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Safe Working Practices</h4>
-              <p className="text-ios-footnote text-elec-yellow mb-2">Must demonstrate safe isolation and compliance throughout</p>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Safe Working Practices
+              </h4>
+              <p className="text-ios-footnote text-elec-yellow mb-2">
+                Must demonstrate safe isolation and compliance throughout
+              </p>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -196,7 +219,9 @@ const AM2Module1Section1 = () => {
           <div className="space-y-3">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline text-white font-semibold mb-2">Testing & Results</h4>
-              <p className="text-ios-footnote text-elec-yellow mb-2">All test results must be within acceptable tolerances</p>
+              <p className="text-ios-footnote text-elec-yellow mb-2">
+                All test results must be within acceptable tolerances
+              </p>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -214,8 +239,12 @@ const AM2Module1Section1 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white font-semibold mb-2">Professional Standards</h4>
-              <p className="text-ios-footnote text-elec-yellow mb-2">Work must meet BS 7671 requirements</p>
+              <h4 className="text-ios-headline text-white font-semibold mb-2">
+                Professional Standards
+              </h4>
+              <p className="text-ios-footnote text-elec-yellow mb-2">
+                Work must meet BS 7671 requirements
+              </p>
               <ul className="text-ios-callout text-white/80 space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -239,10 +268,10 @@ const AM2Module1Section1 = () => {
         id="am2-understanding"
         question="What does AM2 stand for?"
         options={[
-          "Apprentice Module 2",
-          "Achievement Measurement 2",
-          "Advanced Maintenance 2",
-          "Assessed Module 2"
+          'Apprentice Module 2',
+          'Achievement Measurement 2',
+          'Advanced Maintenance 2',
+          'Assessed Module 2',
         ]}
         correctIndex={1}
         explanation="AM2 stands for Achievement Measurement 2, which is the practical assessment for electrical installation workers."
@@ -255,7 +284,8 @@ const AM2Module1Section1 = () => {
           Who Takes AM2?
         </h2>
         <p className="text-ios-body text-white/90 mb-4">
-          AM2 is designed for electrical workers at the final stage of their training or those seeking formal recognition of their skills.
+          AM2 is designed for electrical workers at the final stage of their training or those
+          seeking formal recognition of their skills.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -281,12 +311,14 @@ const AM2Module1Section1 = () => {
 
             <h3 className="text-ios-headline text-white font-semibold mb-2">Experience Level</h3>
             <p className="text-ios-callout text-white/80">
-              Most candidates have 2-4 years of electrical installation experience and are working towards
-              completing their NVQ Level 3 qualification.
+              Most candidates have 2-4 years of electrical installation experience and are working
+              towards completing their NVQ Level 3 qualification.
             </p>
           </div>
           <div>
-            <h3 className="text-ios-headline text-white font-semibold mb-3">Essential Requirements</h3>
+            <h3 className="text-ios-headline text-white font-semibold mb-3">
+              Essential Requirements
+            </h3>
             <ul className="space-y-2 text-ios-callout text-white/80 mb-4">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
@@ -307,10 +339,12 @@ const AM2Module1Section1 = () => {
             </ul>
 
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-3">
-              <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">Before You Book</p>
+              <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">
+                Before You Book
+              </p>
               <p className="text-ios-callout text-white/80">
-                Ensure you're confident with practical installation work, testing procedures,
-                and can work independently to professional standards.
+                Ensure you're confident with practical installation work, testing procedures, and
+                can work independently to professional standards.
               </p>
             </div>
           </div>
@@ -324,7 +358,8 @@ const AM2Module1Section1 = () => {
           How to Prepare
         </h2>
         <p className="text-ios-body text-white/90 mb-4">
-          Success in AM2 comes from thorough preparation. Here's your roadmap to assessment readiness:
+          Success in AM2 comes from thorough preparation. Here's your roadmap to assessment
+          readiness:
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -396,10 +431,13 @@ const AM2Module1Section1 = () => {
         </div>
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Recommended Preparation Time</h4>
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+            Recommended Preparation Time
+          </h4>
           <p className="text-ios-callout text-white/80">
-            Allow 3-6 months of focused preparation, including 40-60 hours of additional practice beyond your regular work.
-            Many training centres offer AM2 preparation courses which can significantly boost your confidence.
+            Allow 3-6 months of focused preparation, including 40-60 hours of additional practice
+            beyond your regular work. Many training centres offer AM2 preparation courses which can
+            significantly boost your confidence.
           </p>
         </div>
       </AM2ContentCard>
@@ -408,10 +446,10 @@ const AM2Module1Section1 = () => {
         id="target-audience"
         question="Which qualification is a prerequisite for AM2?"
         options={[
-          "Level 2 Electrical Installation",
-          "18th Edition IET Wiring Regulations",
-          "PAT Testing Certificate",
-          "First Aid Certificate"
+          'Level 2 Electrical Installation',
+          '18th Edition IET Wiring Regulations',
+          'PAT Testing Certificate',
+          'First Aid Certificate',
         ]}
         correctIndex={1}
         explanation="The 18th Edition IET Wiring Regulations qualification is essential before taking AM2."
@@ -424,7 +462,8 @@ const AM2Module1Section1 = () => {
           Why It Matters for Your Career
         </h2>
         <p className="text-ios-body text-white/90 mb-4">
-          Passing AM2 transforms your career prospects and opens doors that remain closed to unqualified electricians.
+          Passing AM2 transforms your career prospects and opens doors that remain closed to
+          unqualified electricians.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -435,48 +474,62 @@ const AM2Module1Section1 = () => {
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">ECS Gold Card</span>
-                  <p className="text-ios-callout text-white/70">Access to construction sites nationwide</p>
+                  <p className="text-ios-callout text-white/70">
+                    Access to construction sites nationwide
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">JIB Recognition</span>
-                  <p className="text-ios-callout text-white/70">Industry-wide acceptance of your skills</p>
+                  <p className="text-ios-callout text-white/70">
+                    Industry-wide acceptance of your skills
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Insurance Benefits</span>
-                  <p className="text-ios-callout text-white/70">Lower rates for qualified tradespeople</p>
+                  <p className="text-ios-callout text-white/70">
+                    Lower rates for qualified tradespeople
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white font-semibold mb-3">Long-term Opportunities</h3>
+            <h3 className="text-ios-headline text-white font-semibold mb-3">
+              Long-term Opportunities
+            </h3>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Self-Employment</span>
-                  <p className="text-ios-callout text-white/70">Start your own electrical business</p>
+                  <p className="text-ios-callout text-white/70">
+                    Start your own electrical business
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Management Roles</span>
-                  <p className="text-ios-callout text-white/70">Progress to supervisory positions</p>
+                  <p className="text-ios-callout text-white/70">
+                    Progress to supervisory positions
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Specialist Sectors</span>
-                  <p className="text-ios-callout text-white/70">Access high-value commercial projects</p>
+                  <p className="text-ios-callout text-white/70">
+                    Access high-value commercial projects
+                  </p>
                 </div>
               </div>
             </div>
@@ -513,7 +566,8 @@ const AM2Module1Section1 = () => {
           Common Challenges & How to Overcome Them
         </h2>
         <p className="text-ios-body text-white/90 mb-4">
-          Understanding common pitfalls helps you prepare more effectively and avoid typical mistakes.
+          Understanding common pitfalls helps you prepare more effectively and avoid typical
+          mistakes.
         </p>
 
         <div className="space-y-3 mb-4">
@@ -522,27 +576,34 @@ const AM2Module1Section1 = () => {
               Many candidates struggle to complete all tasks within the allocated timeframe.
             </p>
             <p className="text-ios-callout text-white/90">
-              <strong>Solution:</strong> Practice timed installations, create a personal checklist, and prioritise safety-critical tasks first.
+              <strong>Solution:</strong> Practice timed installations, create a personal checklist,
+              and prioritise safety-critical tasks first.
             </p>
           </AM2CriticalWarning>
 
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Testing Procedure Errors</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+              Testing Procedure Errors
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
               Incorrect testing sequence or missed tests are common failure points.
             </p>
             <p className="text-ios-callout text-white/90">
-              <strong>Solution:</strong> Memorise the BS 7671 testing sequence and practice until it becomes automatic.
+              <strong>Solution:</strong> Memorise the BS 7671 testing sequence and practice until it
+              becomes automatic.
             </p>
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Documentation Quality</h4>
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
+              Documentation Quality
+            </h4>
             <p className="text-ios-callout text-white/80 mb-2">
               Poor handwriting, incomplete certificates, or calculation errors can cost marks.
             </p>
             <p className="text-ios-callout text-white/90">
-              <strong>Solution:</strong> Practice certificate completion and double-check all calculations and entries.
+              <strong>Solution:</strong> Practice certificate completion and double-check all
+              calculations and entries.
             </p>
           </div>
         </div>
@@ -582,20 +643,17 @@ const AM2Module1Section1 = () => {
         id="career-benefits"
         question="What is one immediate benefit of passing AM2?"
         options={[
-          "Automatic salary increase",
-          "ECS Gold Card eligibility",
-          "Company vehicle provision",
-          "Guaranteed job placement"
+          'Automatic salary increase',
+          'ECS Gold Card eligibility',
+          'Company vehicle provision',
+          'Guaranteed job placement',
         ]}
         correctIndex={1}
         explanation="Passing AM2 makes you eligible for an ECS Gold Card, essential for working on construction sites."
       />
 
       {/* Quiz Section */}
-      <Quiz
-        questions={quizQuestions}
-        title="AM2 Understanding Quiz"
-      />
+      <Quiz questions={quizQuestions} title="AM2 Understanding Quiz" />
 
       {/* Navigation Footer */}
       <AM2NavigationFooter

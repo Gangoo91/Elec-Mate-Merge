@@ -18,7 +18,7 @@ export const useReportId = ({ reportType, currentReportId }: UseReportIdOptions)
       if (!currentReportId && !tempReportId) {
         const { offlineStorage } = await import('@/utils/offlineStorage');
         const existingTempId = await offlineStorage.getTempReportId(reportType);
-        
+
         if (existingTempId) {
           setTempReportId(existingTempId);
         } else {

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { SmartTabs } from '@/components/ui/smart-tabs';
@@ -19,23 +18,25 @@ const EnhancedPolarityTestCard = () => {
     lightingPoints: 'pending',
     isolatorSwitches: 'pending',
     result: 'pending',
-    notes: ''
+    notes: '',
   });
 
   const handleAddTest = () => {
-    if (currentTest.circuitRef && 
-        (currentTest.socketOutlets !== 'pending' || 
-         currentTest.lightingPoints !== 'pending' || 
-         currentTest.isolatorSwitches !== 'pending')) {
-      
+    if (
+      currentTest.circuitRef &&
+      (currentTest.socketOutlets !== 'pending' ||
+        currentTest.lightingPoints !== 'pending' ||
+        currentTest.isolatorSwitches !== 'pending')
+    ) {
       // Determine overall result
-      const hasFailures = currentTest.socketOutlets === 'fail' || 
-                         currentTest.lightingPoints === 'fail' || 
-                         currentTest.isolatorSwitches === 'fail';
-      
+      const hasFailures =
+        currentTest.socketOutlets === 'fail' ||
+        currentTest.lightingPoints === 'fail' ||
+        currentTest.isolatorSwitches === 'fail';
+
       const result: PolarityTestResult = {
         ...currentTest,
-        result: hasFailures ? 'fail' : 'pass'
+        result: hasFailures ? 'fail' : 'pass',
       };
 
       setTestResults([...testResults, result]);
@@ -46,7 +47,7 @@ const EnhancedPolarityTestCard = () => {
         lightingPoints: 'pending',
         isolatorSwitches: 'pending',
         result: 'pending',
-        notes: ''
+        notes: '',
       });
     }
   };
@@ -56,31 +57,31 @@ const EnhancedPolarityTestCard = () => {
   };
 
   const updateCurrentTest = (field: string, value: string) => {
-    setCurrentTest({...currentTest, [field]: value});
+    setCurrentTest({ ...currentTest, [field]: value });
   };
 
   const smartTabs = [
     {
-      value: "why",
-      label: "Why Test?",
+      value: 'why',
+      label: 'Why Test?',
       icon: <HelpCircle className="h-4 w-4" />,
-      content: <WhyTestSection />
+      content: <WhyTestSection />,
     },
     {
-      value: "how",
-      label: "How to Test",
+      value: 'how',
+      label: 'How to Test',
       icon: <Settings className="h-4 w-4" />,
-      content: <HowToTestSection />
+      content: <HowToTestSection />,
     },
     {
-      value: "guidance",
-      label: "Practical Guide",
+      value: 'guidance',
+      label: 'Practical Guide',
       icon: <BookOpen className="h-4 w-4" />,
-      content: <PracticalGuidanceSection />
+      content: <PracticalGuidanceSection />,
     },
     {
-      value: "practice",
-      label: "Practice",
+      value: 'practice',
+      label: 'Practice',
       icon: <TestTube className="h-4 w-4" />,
       content: (
         <div className="space-y-6">
@@ -89,13 +90,10 @@ const EnhancedPolarityTestCard = () => {
             onUpdateTest={updateCurrentTest}
             onAddTest={handleAddTest}
           />
-          <TestResultsList
-            testResults={testResults}
-            onRemoveTest={handleRemoveTest}
-          />
+          <TestResultsList testResults={testResults} onRemoveTest={handleRemoveTest} />
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return (
@@ -111,12 +109,7 @@ const EnhancedPolarityTestCard = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <SmartTabs 
-            tabs={smartTabs}
-            defaultValue="why" 
-            className="w-full"
-            breakpoint={4}
-          />
+          <SmartTabs tabs={smartTabs} defaultValue="why" className="w-full" breakpoint={4} />
         </CardContent>
       </Card>
     </div>

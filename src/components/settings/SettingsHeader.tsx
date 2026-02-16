@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { SettingsIcon } from "lucide-react";
+import { SettingsIcon } from 'lucide-react';
 
 const SettingsHeader = () => {
   return (

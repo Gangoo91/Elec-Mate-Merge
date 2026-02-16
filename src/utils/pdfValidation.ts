@@ -14,7 +14,11 @@ export interface PDFQualityMetrics {
   overallScore: number;
 }
 
-export const validateEICRData = (formData: any, inspectionItems: any[] = [], testResults: any[] = []): PDFValidationResult => {
+export const validateEICRData = (
+  formData: any,
+  inspectionItems: any[] = [],
+  testResults: any[] = []
+): PDFValidationResult => {
   const missingFields: string[] = [];
   const warnings: string[] = [];
   const criticalIssues: string[] = [];
@@ -24,7 +28,7 @@ export const validateEICRData = (formData: any, inspectionItems: any[] = [], tes
   if (!formData.clientName || formData.clientName.trim() === '') {
     criticalIssues.push('Client name is required for certificate validity');
   }
-  
+
   if (!formData.installationAddress || formData.installationAddress.trim() === '') {
     criticalIssues.push('Installation address is mandatory for legal compliance');
   }
@@ -64,21 +68,23 @@ export const validateEICRData = (formData: any, inspectionItems: any[] = [], tes
   if (!inspectionItems || inspectionItems.length === 0) {
     criticalIssues.push('No inspection items recorded - inspection checklist is mandatory');
   } else {
-    const completedItems = inspectionItems.filter(item => 
-      item.outcome && item.outcome !== '' && item.inspected
+    const completedItems = inspectionItems.filter(
+      (item) => item.outcome && item.outcome !== '' && item.inspected
     );
     const completionRate = (completedItems.length / inspectionItems.length) * 100;
-    
+
     if (completionRate < 80) {
-      warnings.push(`Only ${completionRate.toFixed(1)}% of inspection items completed - consider completing more items`);
+      warnings.push(
+        `Only ${completionRate.toFixed(1)}% of inspection items completed - consider completing more items`
+      );
     }
 
-    const criticalDefects = inspectionItems.filter(item => 
-      ['C1', 'C2'].includes(item.outcome)
-    );
-    
+    const criticalDefects = inspectionItems.filter((item) => ['C1', 'C2'].includes(item.outcome));
+
     if (criticalDefects.length > 0) {
-      warnings.push(`${criticalDefects.length} critical defect(s) identified - ensure appropriate remedial action is recommended`);
+      warnings.push(
+        `${criticalDefects.length} critical defect(s) identified - ensure appropriate remedial action is recommended`
+      );
     }
   }
 
@@ -86,20 +92,22 @@ export const validateEICRData = (formData: any, inspectionItems: any[] = [], tes
   if (!testResults || testResults.length === 0) {
     warnings.push('No test results recorded - testing schedule enhances certificate completeness');
   } else {
-    const incompleteTests = testResults.filter(test => 
-      !test.zs || test.zs === 'N/A' || !test.r1r2 || test.r1r2 === 'N/A'
+    const incompleteTests = testResults.filter(
+      (test) => !test.zs || test.zs === 'N/A' || !test.r1r2 || test.r1r2 === 'N/A'
     );
-    
+
     if (incompleteTests.length > 0) {
       warnings.push(`${incompleteTests.length} circuit(s) have incomplete test results`);
     }
 
-    const unsatisfactoryTests = testResults.filter(test => 
-      test.overallResult === 'unsatisfactory' || test.satisfactory === false
+    const unsatisfactoryTests = testResults.filter(
+      (test) => test.overallResult === 'unsatisfactory' || test.satisfactory === false
     );
-    
+
     if (unsatisfactoryTests.length > 0) {
-      warnings.push(`${unsatisfactoryTests.length} circuit(s) failed testing - ensure defects are documented`);
+      warnings.push(
+        `${unsatisfactoryTests.length} circuit(s) failed testing - ensure defects are documented`
+      );
     }
   }
 
@@ -125,7 +133,11 @@ export const validateEICRData = (formData: any, inspectionItems: any[] = [], tes
 
   // Calculate completion score
   const totalRequiredFields = 15; // Based on BS 7671 requirements
-  const completedFields = totalRequiredFields - criticalIssues.length - (missingFields.length * 0.7) - (warnings.length * 0.3);
+  const completedFields =
+    totalRequiredFields -
+    criticalIssues.length -
+    missingFields.length * 0.7 -
+    warnings.length * 0.3;
   const completionScore = Math.max(0, Math.min(100, (completedFields / totalRequiredFields) * 100));
 
   const isValid = criticalIssues.length === 0 && completionScore >= 70;
@@ -136,21 +148,31 @@ export const validateEICRData = (formData: any, inspectionItems: any[] = [], tes
     missingFields,
     warnings,
     criticalIssues,
-    recommendations
+    recommendations,
   };
 };
 
-export const calculateQualityMetrics = (formData: any, inspectionItems: any[] = [], testResults: any[] = []): PDFQualityMetrics => {
+export const calculateQualityMetrics = (
+  formData: any,
+  inspectionItems: any[] = [],
+  testResults: any[] = []
+): PDFQualityMetrics => {
   // Data completeness (40% of overall score)
   let dataFields = 0;
   let completedFields = 0;
-  
+
   const requiredFields = [
-    'clientName', 'installationAddress', 'inspectionDate', 'inspectorName',
-    'description', 'earthingArrangement', 'supplyVoltage', 'overallAssessment'
+    'clientName',
+    'installationAddress',
+    'inspectionDate',
+    'inspectorName',
+    'description',
+    'earthingArrangement',
+    'supplyVoltage',
+    'overallAssessment',
   ];
-  
-  requiredFields.forEach(field => {
+
+  requiredFields.forEach((field) => {
     dataFields++;
     if (formData[field] && formData[field].toString().trim() !== '') {
       completedFields++;
@@ -161,11 +183,11 @@ export const calculateQualityMetrics = (formData: any, inspectionItems: any[] = 
 
   // Regulatory compliance (35% of overall score)
   let complianceScore = 100;
-  
+
   if (!inspectionItems || inspectionItems.length < 50) {
     complianceScore -= 30; // Insufficient inspection coverage
   }
-  
+
   if (!testResults || testResults.length === 0) {
     complianceScore -= 20; // Missing test results
   }
@@ -180,7 +202,7 @@ export const calculateQualityMetrics = (formData: any, inspectionItems: any[] = 
 
   // Professional presentation (25% of overall score)
   let presentationScore = 60; // Base score
-  
+
   if (formData.inspectorSignature) presentationScore += 15;
   if (formData.companyLogo) presentationScore += 10;
   if (formData.brandingCompanyName) presentationScore += 10;
@@ -190,35 +212,35 @@ export const calculateQualityMetrics = (formData: any, inspectionItems: any[] = 
   const professionalPresentation = Math.min(100, presentationScore);
 
   // Calculate weighted overall score
-  const overallScore = (
-    dataCompleteness * 0.4 +
-    regulatoryCompliance * 0.35 +
-    professionalPresentation * 0.25
-  );
+  const overallScore =
+    dataCompleteness * 0.4 + regulatoryCompliance * 0.35 + professionalPresentation * 0.25;
 
   return {
     dataCompleteness: Math.round(dataCompleteness),
     regulatoryCompliance: Math.round(regulatoryCompliance),
     professionalPresentation: Math.round(professionalPresentation),
-    overallScore: Math.round(overallScore)
+    overallScore: Math.round(overallScore),
   };
 };
 
-export const generateCompletionReport = (validation: PDFValidationResult, metrics: PDFQualityMetrics): string => {
+export const generateCompletionReport = (
+  validation: PDFValidationResult,
+  metrics: PDFQualityMetrics
+): string => {
   let report = `EICR Certificate Quality Assessment\n`;
   report += `=====================================\n\n`;
-  
+
   report += `Overall Score: ${metrics.overallScore}% `;
   if (metrics.overallScore >= 90) report += `(Excellent)\n`;
   else if (metrics.overallScore >= 80) report += `(Good)\n`;
   else if (metrics.overallScore >= 70) report += `(Acceptable)\n`;
   else report += `(Needs Improvement)\n\n`;
-  
+
   report += `Completion Rate: ${validation.completionScore}%\n`;
   report += `Data Completeness: ${metrics.dataCompleteness}%\n`;
   report += `Regulatory Compliance: ${metrics.regulatoryCompliance}%\n`;
   report += `Professional Presentation: ${metrics.professionalPresentation}%\n\n`;
-  
+
   if (validation.criticalIssues.length > 0) {
     report += `Critical Issues (Must Fix):\n`;
     validation.criticalIssues.forEach((issue, index) => {
@@ -226,7 +248,7 @@ export const generateCompletionReport = (validation: PDFValidationResult, metric
     });
     report += `\n`;
   }
-  
+
   if (validation.warnings.length > 0) {
     report += `Warnings (Recommended to Fix):\n`;
     validation.warnings.forEach((warning, index) => {
@@ -234,13 +256,13 @@ export const generateCompletionReport = (validation: PDFValidationResult, metric
     });
     report += `\n`;
   }
-  
+
   if (validation.recommendations.length > 0) {
     report += `Recommendations for Enhancement:\n`;
     validation.recommendations.forEach((rec, index) => {
       report += `  ${index + 1}. ${rec}\n`;
     });
   }
-  
+
   return report;
 };

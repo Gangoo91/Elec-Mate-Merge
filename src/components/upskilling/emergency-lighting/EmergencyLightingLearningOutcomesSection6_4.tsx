@@ -3,11 +3,11 @@ import { Target, CheckCircle2 } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection6_4 = () => {
   const outcomes = [
-    "Identify all documentation required for emergency lighting audits",
-    "Understand what Fire Authorities and insurers look for during inspections",
-    "Maintain records in accordance with BS 5266-1 and BS 5266-8",
-    "Ensure certificates, test reports, and logbooks are up to date and accessible",
-    "Demonstrate compliance effectively during regulatory audits"
+    'Identify all documentation required for emergency lighting audits',
+    'Understand what Fire Authorities and insurers look for during inspections',
+    'Maintain records in accordance with BS 5266-1 and BS 5266-8',
+    'Ensure certificates, test reports, and logbooks are up to date and accessible',
+    'Demonstrate compliance effectively during regulatory audits',
   ];
 
   return (

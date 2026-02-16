@@ -1,14 +1,13 @@
-
 import { Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const InsulationResistanceLearningOutcomes = () => {
   const outcomes = [
-    "Understand the purpose of insulation resistance testing",
-    "Explain what insulation resistance readings reveal about circuit condition",
-    "Recognise when and why this test is essential under BS7671",
-    "Know the minimum acceptable values for different system voltages",
-    "Identify common faults detected by insulation resistance testing"
+    'Understand the purpose of insulation resistance testing',
+    'Explain what insulation resistance readings reveal about circuit condition',
+    'Recognise when and why this test is essential under BS7671',
+    'Know the minimum acceptable values for different system voltages',
+    'Identify common faults detected by insulation resistance testing',
   ];
 
   return (
@@ -20,9 +19,7 @@ export const InsulationResistanceLearningOutcomes = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By the end of this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By the end of this section, you will be able to:</p>
         <ul className="space-y-3">
           {outcomes.map((outcome, index) => (
             <li key={index} className="flex items-start gap-3 text-foreground">

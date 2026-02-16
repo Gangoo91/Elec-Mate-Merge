@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import {
-  PoundSterling,
-  FileText,
-  TrendingUp,
-  Loader2,
-} from 'lucide-react';
+import { PoundSterling, FileText, TrendingUp, Loader2 } from 'lucide-react';
 import {
   BarChart,
   Bar,
@@ -57,7 +52,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       <p className="font-medium text-foreground">{label}</p>
       {payload.map((p: any, i: number) => (
         <p key={i} className="text-muted-foreground">
-          {p.name}: {typeof p.value === 'number' && p.dataKey?.includes('value')
+          {p.name}:{' '}
+          {typeof p.value === 'number' && p.dataKey?.includes('value')
             ? formatCurrency(p.value)
             : p.value}
         </p>
@@ -114,7 +110,7 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
       });
     }
 
-    return months.map(m => {
+    return months.map((m) => {
       const entry: Record<string, any> = { month: m.label };
       for (const r of reports) {
         const rMonth = r.created_at.slice(0, 7);
@@ -130,7 +126,7 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
   // Unique cert types for stacked bar
   const certTypes = useMemo(() => {
     if (!reports) return [];
-    const types = new Set(reports.map(r => r.report_type || 'other'));
+    const types = new Set(reports.map((r) => r.report_type || 'other'));
     return Array.from(types);
   }, [reports]);
 
@@ -147,16 +143,17 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
       });
     }
 
-    return months.map(m => {
-      const count = activities.filter(a => a.createdAt.slice(0, 7) === m.key).length;
+    return months.map((m) => {
+      const count = activities.filter((a) => a.createdAt.slice(0, 7) === m.key).length;
       return { month: m.label, count };
     });
   }, [activities]);
 
   const totalValue = quoteStats.totalQuoted + quoteStats.totalInvoiced;
-  const averageJobValue = quoteStats.quoteCount + quoteStats.invoiceCount > 0
-    ? totalValue / (quoteStats.quoteCount + quoteStats.invoiceCount)
-    : 0;
+  const averageJobValue =
+    quoteStats.quoteCount + quoteStats.invoiceCount > 0
+      ? totalValue / (quoteStats.quoteCount + quoteStats.invoiceCount)
+      : 0;
 
   const isLoading = reportsLoading || activityLoading || loadingQuotes;
 
@@ -177,14 +174,18 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
             <PoundSterling className="h-3.5 w-3.5 text-green-400" />
             <span className="text-xs text-muted-foreground">Quoted</span>
           </div>
-          <p className="text-lg font-bold text-green-400">{formatCurrency(quoteStats.totalQuoted)}</p>
+          <p className="text-lg font-bold text-green-400">
+            {formatCurrency(quoteStats.totalQuoted)}
+          </p>
         </div>
         <div className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-3 text-center">
           <div className="flex items-center justify-center gap-1.5 mb-1">
             <FileText className="h-3.5 w-3.5 text-blue-400" />
             <span className="text-xs text-muted-foreground">Invoiced</span>
           </div>
-          <p className="text-lg font-bold text-blue-400">{formatCurrency(quoteStats.totalInvoiced)}</p>
+          <p className="text-lg font-bold text-blue-400">
+            {formatCurrency(quoteStats.totalInvoiced)}
+          </p>
         </div>
         <div className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-3 text-center">
           <div className="flex items-center justify-center gap-1.5 mb-1">
@@ -256,7 +257,10 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
           </h3>
           <div className="h-[160px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={activityFrequency} margin={{ top: 5, right: 5, bottom: 5, left: -15 }}>
+              <LineChart
+                data={activityFrequency}
+                margin={{ top: 5, right: 5, bottom: 5, left: -15 }}
+              >
                 <XAxis
                   dataKey="month"
                   tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}

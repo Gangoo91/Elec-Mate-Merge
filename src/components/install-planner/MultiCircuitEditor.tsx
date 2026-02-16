@@ -1,15 +1,14 @@
-
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Zap, Cable } from "lucide-react";
-import { Circuit } from "./types";
-import CircuitControls from "./CircuitControls";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Zap, Cable } from 'lucide-react';
+import { Circuit } from './types';
+import CircuitControls from './CircuitControls';
 
 interface MultiCircuitEditorProps {
   circuits: Circuit[];
@@ -17,22 +16,22 @@ interface MultiCircuitEditorProps {
   installationType: string;
 }
 
-const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({ 
-  circuits, 
+const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
+  circuits,
   onUpdateCircuits,
-  installationType 
+  installationType,
 }) => {
   const [expandedCircuit, setExpandedCircuit] = useState<string | null>(null);
 
   const updateCircuit = (id: string, updates: Partial<Circuit>) => {
-    const updatedCircuits = circuits.map(circuit => 
+    const updatedCircuits = circuits.map((circuit) =>
       circuit.id === id ? { ...circuit, ...updates } : circuit
     );
     onUpdateCircuits(updatedCircuits);
   };
 
   const deleteCircuit = (id: string) => {
-    const updatedCircuits = circuits.filter(circuit => circuit.id !== id);
+    const updatedCircuits = circuits.filter((circuit) => circuit.id !== id);
     onUpdateCircuits(updatedCircuits);
     if (expandedCircuit === id) {
       setExpandedCircuit(null);
@@ -43,7 +42,7 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
     const newCircuit: Circuit = {
       ...circuit,
       id: crypto.randomUUID(),
-      name: `${circuit.name} (Copy)`
+      name: `${circuit.name} (Copy)`,
     };
     const updatedCircuits = [...circuits, newCircuit];
     onUpdateCircuits(updatedCircuits);
@@ -55,25 +54,44 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
 
   const getLoadTypeIcon = (loadType: string) => {
     switch (loadType) {
-      case "lighting": return Zap;
-      case "power": return Cable;
-      case "cooker": return Zap;
-      case "shower": return Cable;
-      case "heating": return Zap;
-      case "ev-charging": return Cable;
-      case "motor-small": return Cable;
-      case "motor-large": return Cable;
-      case "motor": return Cable;
-      case "hvac": return Zap;
-      case "it-equipment": return Cable;
-      case "commercial-lighting": return Zap;
-      case "commercial-power": return Cable;
-      case "emergency": return Zap;
-      case "medical": return Cable;
-      case "welding": return Zap;
-      case "crane": return Cable;
-      case "furnace": return Zap;
-      default: return Cable;
+      case 'lighting':
+        return Zap;
+      case 'power':
+        return Cable;
+      case 'cooker':
+        return Zap;
+      case 'shower':
+        return Cable;
+      case 'heating':
+        return Zap;
+      case 'ev-charging':
+        return Cable;
+      case 'motor-small':
+        return Cable;
+      case 'motor-large':
+        return Cable;
+      case 'motor':
+        return Cable;
+      case 'hvac':
+        return Zap;
+      case 'it-equipment':
+        return Cable;
+      case 'commercial-lighting':
+        return Zap;
+      case 'commercial-power':
+        return Cable;
+      case 'emergency':
+        return Zap;
+      case 'medical':
+        return Cable;
+      case 'welding':
+        return Zap;
+      case 'crane':
+        return Cable;
+      case 'furnace':
+        return Zap;
+      default:
+        return Cable;
     }
   };
 
@@ -86,25 +104,25 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">Circuit Configuration</h3>
         <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-          {circuits.filter(c => c.enabled).length} / {circuits.length} Active
+          {circuits.filter((c) => c.enabled).length} / {circuits.length} Active
         </Badge>
       </div>
 
       <div className="space-y-4">
         {circuits.map((circuit) => (
-          <Card key={circuit.id} className={`border-2 transition-all ${
-            circuit.enabled ? 'border-elec-yellow/30 bg-elec-gray' : 'border-gray-600/30 bg-gray-800/30'
-          }`}>
-            <CardHeader 
-              className="cursor-pointer"
-              onClick={() => toggleExpanded(circuit.id)}
-            >
+          <Card
+            key={circuit.id}
+            className={`border-2 transition-all ${
+              circuit.enabled
+                ? 'border-elec-yellow/30 bg-elec-gray'
+                : 'border-gray-600/30 bg-gray-800/30'
+            }`}
+          >
+            <CardHeader className="cursor-pointer" onClick={() => toggleExpanded(circuit.id)}>
               <div className="flex flex-col gap-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
-                    <CardTitle className="text-base mb-3">
-                      {circuit.name}
-                    </CardTitle>
+                    <CardTitle className="text-base mb-3">{circuit.name}</CardTitle>
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       <div className="bg-elec-dark/50 rounded p-2 text-center">
                         <div className="text-xs text-muted-foreground mb-1">Load</div>
@@ -120,7 +138,11 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                       </div>
                       <div className="bg-elec-dark/50 rounded p-2 text-center">
                         <div className="text-xs text-muted-foreground mb-1">Type</div>
-                        <div className="font-medium text-purple-400 text-xs">{circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
+                        <div className="font-medium text-purple-400 text-xs">
+                          {circuit.loadType
+                            .replace('-', ' ')
+                            .replace(/\b\w/g, (l) => l.toUpperCase())}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -148,7 +170,7 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                       <Zap className="h-4 w-4" />
                       Circuit Details
                     </h4>
-                    
+
                     <div className="space-y-3">
                       <div>
                         <Label htmlFor={`name-${circuit.id}`}>Circuit Name</Label>
@@ -166,7 +188,9 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           id={`load-${circuit.id}`}
                           type="number"
                           value={circuit.totalLoad}
-                          onChange={(e) => updateCircuit(circuit.id, { totalLoad: Number(e.target.value) })}
+                          onChange={(e) =>
+                            updateCircuit(circuit.id, { totalLoad: Number(e.target.value) })
+                          }
                           className="bg-elec-dark border-elec-yellow/30"
                         />
                       </div>
@@ -176,10 +200,12 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           <MobileSelectWrapper
                             label="Voltage (V)"
                             value={circuit.voltage.toString()}
-                            onValueChange={(value) => updateCircuit(circuit.id, { voltage: Number(value) })}
+                            onValueChange={(value) =>
+                              updateCircuit(circuit.id, { voltage: Number(value) })
+                            }
                             options={[
-                              { value: "230", label: "230V" },
-                              { value: "400", label: "400V" }
+                              { value: '230', label: '230V' },
+                              { value: '400', label: '400V' },
                             ]}
                           />
                         </div>
@@ -188,16 +214,18 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           <MobileSelectWrapper
                             label="Phases"
                             value={circuit.phases}
-                            onValueChange={(value: "single" | "three") => updateCircuit(circuit.id, { phases: value })}
+                            onValueChange={(value: 'single' | 'three') =>
+                              updateCircuit(circuit.id, { phases: value })
+                            }
                             options={[
-                              { value: "single", label: "Single" },
-                              { value: "three", label: "Three" }
+                              { value: 'single', label: 'Single' },
+                              { value: 'three', label: 'Three' },
                             ]}
                           />
                         </div>
                       </div>
 
-                      {circuit.phases === "three" && (
+                      {circuit.phases === 'three' && (
                         <div>
                           <Label htmlFor={`pf-${circuit.id}`}>Power Factor</Label>
                           <Input
@@ -207,7 +235,9 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                             min="0.1"
                             max="1"
                             value={circuit.powerFactor || 0.85}
-                            onChange={(e) => updateCircuit(circuit.id, { powerFactor: Number(e.target.value) })}
+                            onChange={(e) =>
+                              updateCircuit(circuit.id, { powerFactor: Number(e.target.value) })
+                            }
                             className="bg-elec-dark border-elec-yellow/30"
                           />
                         </div>
@@ -221,7 +251,7 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                       <Cable className="h-4 w-4" />
                       Installation Details
                     </h4>
-                    
+
                     <div className="space-y-3">
                       <div>
                         <Label htmlFor={`length-${circuit.id}`}>Cable Length (m)</Label>
@@ -229,7 +259,9 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           id={`length-${circuit.id}`}
                           type="number"
                           value={circuit.cableLength}
-                          onChange={(e) => updateCircuit(circuit.id, { cableLength: Number(e.target.value) })}
+                          onChange={(e) =>
+                            updateCircuit(circuit.id, { cableLength: Number(e.target.value) })
+                          }
                           className="bg-elec-dark border-elec-yellow/30"
                         />
                       </div>
@@ -238,20 +270,25 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                         <MobileSelectWrapper
                           label="Installation Method"
                           value={circuit.installationMethod}
-                          onValueChange={(value) => updateCircuit(circuit.id, { installationMethod: value })}
+                          onValueChange={(value) =>
+                            updateCircuit(circuit.id, { installationMethod: value })
+                          }
                           options={[
-                            { value: "clipped-direct", label: "Clipped Direct (BS7671: C)" },
-                            { value: "enclosed-conduit", label: "Enclosed in Conduit (BS7671: A1)" },
-                            { value: "trunking", label: "Trunking (BS7671: B1)" },
-                            { value: "conduit", label: "Surface Conduit (BS7671: A2)" },
-                            { value: "tray", label: "Cable Tray (BS7671: E)" },
-                            { value: "ladder", label: "Cable Ladder (BS7671: F)" },
-                            { value: "basket", label: "Cable Basket (BS7671: G)" },
-                            { value: "buried-direct", label: "Buried Direct (BS7671: D1)" },
-                            { value: "ducted", label: "Ducted Underground (BS7671: D2)" },
-                            { value: "touching-wall", label: "Touching Wall (BS7671: C)" },
-                            { value: "spaced-from-wall", label: "Spaced from Wall (BS7671: C)" },
-                            { value: "in-air", label: "Free Air (BS7671: E, F, G)" }
+                            { value: 'clipped-direct', label: 'Clipped Direct (BS7671: C)' },
+                            {
+                              value: 'enclosed-conduit',
+                              label: 'Enclosed in Conduit (BS7671: A1)',
+                            },
+                            { value: 'trunking', label: 'Trunking (BS7671: B1)' },
+                            { value: 'conduit', label: 'Surface Conduit (BS7671: A2)' },
+                            { value: 'tray', label: 'Cable Tray (BS7671: E)' },
+                            { value: 'ladder', label: 'Cable Ladder (BS7671: F)' },
+                            { value: 'basket', label: 'Cable Basket (BS7671: G)' },
+                            { value: 'buried-direct', label: 'Buried Direct (BS7671: D1)' },
+                            { value: 'ducted', label: 'Ducted Underground (BS7671: D2)' },
+                            { value: 'touching-wall', label: 'Touching Wall (BS7671: C)' },
+                            { value: 'spaced-from-wall', label: 'Spaced from Wall (BS7671: C)' },
+                            { value: 'in-air', label: 'Free Air (BS7671: E, F, G)' },
                           ]}
                         />
                       </div>
@@ -262,17 +299,23 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           value={circuit.cableType}
                           onValueChange={(value) => updateCircuit(circuit.id, { cableType: value })}
                           options={[
-                            { value: "t&e", label: "Twin & Earth (T&E) - BS7671 Table 4E4A" },
-                            { value: "swa", label: "Steel Wire Armoured (SWA) - BS7671 Table 4E1A" },
-                            { value: "xlpe", label: "XLPE Single Core - BS7671 Table 4E1A" },
-                            { value: "pvc-single", label: "PVC Single Core - BS7671 Table 4E2A" },
-                            { value: "pvc-multicore", label: "PVC Multicore - BS7671 Table 4E3A" },
-                            { value: "mineral", label: "Mineral Insulated - BS7671 Table 4J1A" },
-                            { value: "aluminium", label: "Aluminium Conductor - BS7671 Table 4E5A" },
-                            { value: "lsf", label: "Low Smoke & Fume (LSF)" },
-                            { value: "lszh", label: "Low Smoke Zero Halogen (LSZH)" },
-                            { value: "fire-resistant", label: "Fire Resistant Cable" },
-                            { value: "data-cable", label: "Data/Communications Cable" }
+                            { value: 't&e', label: 'Twin & Earth (T&E) - BS7671 Table 4E4A' },
+                            {
+                              value: 'swa',
+                              label: 'Steel Wire Armoured (SWA) - BS7671 Table 4E1A',
+                            },
+                            { value: 'xlpe', label: 'XLPE Single Core - BS7671 Table 4E1A' },
+                            { value: 'pvc-single', label: 'PVC Single Core - BS7671 Table 4E2A' },
+                            { value: 'pvc-multicore', label: 'PVC Multicore - BS7671 Table 4E3A' },
+                            { value: 'mineral', label: 'Mineral Insulated - BS7671 Table 4J1A' },
+                            {
+                              value: 'aluminium',
+                              label: 'Aluminium Conductor - BS7671 Table 4E5A',
+                            },
+                            { value: 'lsf', label: 'Low Smoke & Fume (LSF)' },
+                            { value: 'lszh', label: 'Low Smoke Zero Halogen (LSZH)' },
+                            { value: 'fire-resistant', label: 'Fire Resistant Cable' },
+                            { value: 'data-cable', label: 'Data/Communications Cable' },
                           ]}
                         />
                       </div>
@@ -281,20 +324,22 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                         <MobileSelectWrapper
                           label="Protective Device"
                           value={circuit.protectiveDevice}
-                          onValueChange={(value) => updateCircuit(circuit.id, { protectiveDevice: value })}
+                          onValueChange={(value) =>
+                            updateCircuit(circuit.id, { protectiveDevice: value })
+                          }
                           options={[
-                            { value: "mcb-b", label: "MCB Type B (3-5 x In)" },
-                            { value: "mcb-c", label: "MCB Type C (5-10 x In)" },
-                            { value: "mcb-d", label: "MCB Type D (10-20 x In)" },
-                            { value: "rcbo-b", label: "RCBO Type B (30mA)" },
-                            { value: "rcbo-c", label: "RCBO Type C (30mA)" },
-                            { value: "rcbo-100ma", label: "RCBO 100mA (Fire Protection)" },
-                            { value: "rcd-30ma", label: "RCD 30mA + MCB" },
-                            { value: "rcd-100ma", label: "RCD 100mA + MCB" },
-                            { value: "afdd", label: "AFDD (Arc Fault Device)" },
-                            { value: "spd", label: "SPD (Surge Protection)" },
-                            { value: "fuse-bs88", label: "BS88 Fuse" },
-                            { value: "mccb", label: "MCCB (Moulded Case)" }
+                            { value: 'mcb-b', label: 'MCB Type B (3-5 x In)' },
+                            { value: 'mcb-c', label: 'MCB Type C (5-10 x In)' },
+                            { value: 'mcb-d', label: 'MCB Type D (10-20 x In)' },
+                            { value: 'rcbo-b', label: 'RCBO Type B (30mA)' },
+                            { value: 'rcbo-c', label: 'RCBO Type C (30mA)' },
+                            { value: 'rcbo-100ma', label: 'RCBO 100mA (Fire Protection)' },
+                            { value: 'rcd-30ma', label: 'RCD 30mA + MCB' },
+                            { value: 'rcd-100ma', label: 'RCD 100mA + MCB' },
+                            { value: 'afdd', label: 'AFDD (Arc Fault Device)' },
+                            { value: 'spd', label: 'SPD (Surge Protection)' },
+                            { value: 'fuse-bs88', label: 'BS88 Fuse' },
+                            { value: 'mccb', label: 'MCCB (Moulded Case)' },
                           ]}
                         />
                       </div>
@@ -303,7 +348,7 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                         <Label htmlFor={`notes-${circuit.id}`}>Notes (Optional)</Label>
                         <Textarea
                           id={`notes-${circuit.id}`}
-                          value={circuit.notes || ""}
+                          value={circuit.notes || ''}
                           onChange={(e) => updateCircuit(circuit.id, { notes: e.target.value })}
                           className="bg-elec-dark border-elec-yellow/30"
                           placeholder="Additional notes or requirements..."

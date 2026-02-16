@@ -50,12 +50,12 @@ export const generateInstallationMethodPDF = (data: InstallationMethodData): jsP
   doc.text('Installation Sequence', 15, yPos);
   yPos += 8;
 
-  const stepsRows = data.steps.map(step => [
+  const stepsRows = data.steps.map((step) => [
     step.sequence.toString(),
     step.task,
     step.duration,
     step.tools.join(', '),
-    step.notes || '-'
+    step.notes || '-',
   ]);
 
   autoTable(doc, {
@@ -70,8 +70,8 @@ export const generateInstallationMethodPDF = (data: InstallationMethodData): jsP
       1: { cellWidth: 60 },
       2: { cellWidth: 25 },
       3: { cellWidth: 50 },
-      4: { cellWidth: 40 }
-    }
+      4: { cellWidth: 40 },
+    },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 12;
@@ -88,11 +88,7 @@ export const generateInstallationMethodPDF = (data: InstallationMethodData): jsP
   doc.text('Required Materials', 15, yPos);
   yPos += 8;
 
-  const materialRows = data.materials.map(m => [
-    m.item,
-    m.quantity,
-    m.specification
-  ]);
+  const materialRows = data.materials.map((m) => [m.item, m.quantity, m.specification]);
 
   autoTable(doc, {
     startY: yPos,
@@ -100,7 +96,7 @@ export const generateInstallationMethodPDF = (data: InstallationMethodData): jsP
     body: materialRows,
     theme: 'grid',
     headStyles: { fillColor: [59, 130, 246], textColor: [255, 255, 255] },
-    styles: { fontSize: 9, cellPadding: 3 }
+    styles: { fontSize: 9, cellPadding: 3 },
   });
 
   yPos = (doc as any).lastAutoTable.finalY + 12;
@@ -119,7 +115,7 @@ export const generateInstallationMethodPDF = (data: InstallationMethodData): jsP
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    data.safetyNotes.forEach(note => {
+    data.safetyNotes.forEach((note) => {
       doc.text(`• ${note}`, 20, yPos);
       yPos += 6;
     });

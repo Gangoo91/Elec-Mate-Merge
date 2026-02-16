@@ -1,51 +1,45 @@
-import {
-  ArrowLeft,
-  ArrowUpFromLine,
-  Construction,
-  CableCar,
-  Wrench,
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowUpFromLine, Construction, CableCar, Wrench } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Ladders & Stepladders",
+    title: 'Ladders & Stepladders',
     icon: ArrowUpFromLine,
     description:
-      "When ladders are acceptable, types, 1:4 ratio, securing, EN 131, and industrial vs domestic class",
+      'When ladders are acceptable, types, 1:4 ratio, securing, EN 131, and industrial vs domestic class',
   },
   {
     id: 2,
-    title: "Scaffolding Basics",
+    title: 'Scaffolding Basics',
     icon: Construction,
     description:
-      "Independent, putlog, system, and tower scaffolds — components, inspection, NASC TG20, and scaffold tags",
+      'Independent, putlog, system, and tower scaffolds — components, inspection, NASC TG20, and scaffold tags',
   },
   {
     id: 3,
-    title: "MEWPs",
+    title: 'MEWPs',
     icon: CableCar,
     description:
-      "Scissor lifts, boom lifts, vertical masts — IPAF categories, pre-use checks, and rescue planning",
+      'Scissor lifts, boom lifts, vertical masts — IPAF categories, pre-use checks, and rescue planning',
   },
   {
     id: 4,
-    title: "Other Access Equipment",
+    title: 'Other Access Equipment',
     icon: Wrench,
     description:
-      "Podium steps, hop-ups, trestles, roof ladders, crawling boards, and temporary edge protection",
+      'Podium steps, hop-ups, trestles, roof ladders, crawling boards, and temporary edge protection',
   },
 ];
 
 export default function WorkingAtHeightModule2() {
   useSEO({
-    title: "Module 2: Access Equipment & Selection | Working at Height",
+    title: 'Module 2: Access Equipment & Selection | Working at Height',
     description:
-      "Ladders, scaffolding, MEWPs, and other access equipment — selection criteria, standards, and pre-use checks for working at height.",
+      'Ladders, scaffolding, MEWPs, and other access equipment — selection criteria, standards, and pre-use checks for working at height.',
   });
 
   return (
@@ -72,9 +66,7 @@ export default function WorkingAtHeightModule2() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 mb-3">
-              <span className="text-amber-400 text-xs font-semibold">
-                MODULE 2
-              </span>
+              <span className="text-amber-400 text-xs font-semibold">MODULE 2</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -84,8 +76,8 @@ export default function WorkingAtHeightModule2() {
               Access Equipment & Selection
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Choosing the right access equipment — ladders, scaffolding, MEWPs,
-              and specialist platforms for safe working at height
+              Choosing the right access equipment — ladders, scaffolding, MEWPs, and specialist
+              platforms for safe working at height
             </p>
           </div>
 

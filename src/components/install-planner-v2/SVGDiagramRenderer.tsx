@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 
 interface SVGDiagramRendererProps {
   svgContent: string;
@@ -51,10 +51,7 @@ export const SVGDiagramRenderer = ({ svgContent, title, isLoading }: SVGDiagramR
           <h4 className="text-sm font-medium">{title}</h4>
         </div>
       )}
-      <div 
-        className="overflow-auto max-h-96"
-        dangerouslySetInnerHTML={{ __html: svgContent }}
-      />
+      <div className="overflow-auto max-h-96" dangerouslySetInnerHTML={{ __html: svgContent }} />
     </Card>
   );
 };

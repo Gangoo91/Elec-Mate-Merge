@@ -1,57 +1,57 @@
-import { ArrowLeft, HardHat, Ruler, Wrench, Package, Plug, TestTube, Shield } from "lucide-react";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowLeft, HardHat, Ruler, Wrench, Package, Plug, TestTube, Shield } from 'lucide-react';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const sections = [
   {
-    number: "Section 1",
-    title: "Preparing to Install Wiring Systems",
-    description: "Planning and preparation for electrical installation work",
+    number: 'Section 1',
+    title: 'Preparing to Install Wiring Systems',
+    description: 'Planning and preparation for electrical installation work',
     icon: HardHat,
-    href: "section1"
+    href: 'section1',
   },
   {
-    number: "Section 2",
-    title: "Measuring, Marking, and Setting Out",
-    description: "Accurate measurement and marking techniques for installations",
+    number: 'Section 2',
+    title: 'Measuring, Marking, and Setting Out',
+    description: 'Accurate measurement and marking techniques for installations',
     icon: Ruler,
-    href: "section2"
+    href: 'section2',
   },
   {
-    number: "Section 3",
-    title: "Bending and Forming Conduit and Trunking",
-    description: "Techniques for bending and shaping containment systems",
+    number: 'Section 3',
+    title: 'Bending and Forming Conduit and Trunking',
+    description: 'Techniques for bending and shaping containment systems',
     icon: Wrench,
-    href: "section3"
+    href: 'section3',
   },
   {
-    number: "Section 4",
-    title: "Installing Conduit, Trunking, Tray, and Cables",
-    description: "Installation methods for containment systems and cable runs",
+    number: 'Section 4',
+    title: 'Installing Conduit, Trunking, Tray, and Cables',
+    description: 'Installation methods for containment systems and cable runs',
     icon: Package,
-    href: "section4"
+    href: 'section4',
   },
   {
-    number: "Section 5",
-    title: "Installing Electrical Accessories and Terminations",
-    description: "Installation of sockets, switches and cable terminations",
+    number: 'Section 5',
+    title: 'Installing Electrical Accessories and Terminations',
+    description: 'Installation of sockets, switches and cable terminations',
     icon: Plug,
-    href: "section5"
+    href: 'section5',
   },
   {
-    number: "Section 6",
-    title: "Testing and Inspecting the Completed Installation",
-    description: "Testing procedures and inspection of completed work",
+    number: 'Section 6',
+    title: 'Testing and Inspecting the Completed Installation',
+    description: 'Testing procedures and inspection of completed work',
     icon: TestTube,
-    href: "section6"
+    href: 'section6',
   },
   {
-    number: "Section 7",
-    title: "Safe Working and Tool Use During Installation",
-    description: "Safety practices and proper tool use during installation work",
+    number: 'Section 7',
+    title: 'Safe Working and Tool Use During Installation',
+    description: 'Safety practices and proper tool use during installation work',
     icon: Shield,
-    href: "section7"
+    href: 'section7',
   },
 ];
 

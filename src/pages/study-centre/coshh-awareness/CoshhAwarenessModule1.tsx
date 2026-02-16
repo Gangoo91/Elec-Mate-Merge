@@ -1,40 +1,45 @@
-import { ArrowLeft, FlaskConical, Layers, Route, HeartPulse } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, FlaskConical, Layers, Route, HeartPulse } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "What Is COSHH?",
+    title: 'What Is COSHH?',
     icon: FlaskConical,
-    description: "COSHH Regulations 2002 definition, scope, workplace statistics, and why controlling hazardous substances matters",
+    description:
+      'COSHH Regulations 2002 definition, scope, workplace statistics, and why controlling hazardous substances matters',
   },
   {
     id: 2,
-    title: "Types of Hazardous Substances",
+    title: 'Types of Hazardous Substances',
     icon: Layers,
-    description: "Chemicals, dusts, fumes, gases, biological agents, and GHS classification of hazardous substances",
+    description:
+      'Chemicals, dusts, fumes, gases, biological agents, and GHS classification of hazardous substances',
   },
   {
     id: 3,
-    title: "Routes of Exposure",
+    title: 'Routes of Exposure',
     icon: Route,
-    description: "Inhalation, ingestion, skin absorption, injection, and understanding workplace exposure limits (WELs)",
+    description:
+      'Inhalation, ingestion, skin absorption, injection, and understanding workplace exposure limits (WELs)',
   },
   {
     id: 4,
-    title: "Health Effects of Hazardous Substances",
+    title: 'Health Effects of Hazardous Substances',
     icon: HeartPulse,
-    description: "Acute vs chronic health effects, occupational diseases, target organs, and long-term consequences of exposure",
+    description:
+      'Acute vs chronic health effects, occupational diseases, target organs, and long-term consequences of exposure',
   },
 ];
 
 export default function CoshhAwarenessModule1() {
   useSEO({
-    title: "Module 1: Understanding COSHH | COSHH Awareness",
-    description: "Learn what COSHH means, the types of hazardous substances, routes of exposure, and the health effects of working with dangerous chemicals and materials.",
+    title: 'Module 1: Understanding COSHH | COSHH Awareness',
+    description:
+      'Learn what COSHH means, the types of hazardous substances, routes of exposure, and the health effects of working with dangerous chemicals and materials.',
   });
 
   return (
@@ -67,11 +72,10 @@ export default function CoshhAwarenessModule1() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">30 mins</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Understanding COSHH
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Understanding COSHH</h1>
             <p className="text-white/60 text-sm sm:text-base">
-              The fundamentals of the Control of Substances Hazardous to Health — what COSHH covers, the substances involved, how they enter the body, and the damage they can cause
+              The fundamentals of the Control of Substances Hazardous to Health — what COSHH covers,
+              the substances involved, how they enter the body, and the damage they can cause
             </p>
           </div>
 

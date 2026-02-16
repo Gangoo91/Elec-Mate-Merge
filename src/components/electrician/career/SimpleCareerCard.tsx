@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface SimpleCareerCardProps {
   title: string;
@@ -8,14 +8,12 @@ interface SimpleCareerCardProps {
 
 const SimpleCareerCard = ({ title, icon, onClick }: SimpleCareerCardProps) => {
   return (
-    <Card 
+    <Card
       className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-colors duration-200 cursor-pointer hover-scale"
       onClick={onClick}
     >
       <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
-        <div className="mb-3">
-          {icon}
-        </div>
+        <div className="mb-3">{icon}</div>
         <CardTitle className="text-base sm:text-lg leading-tight">{title}</CardTitle>
       </CardHeader>
     </Card>

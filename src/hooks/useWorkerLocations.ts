@@ -14,23 +14,23 @@ import {
 
 export const useWorkerLocations = () => {
   const queryClient = useQueryClient();
-  
+
   const query = useQuery({
     queryKey: ['worker-locations'],
     queryFn: getLatestWorkerLocations,
     refetchInterval: 30000, // Refetch every 30 seconds as backup
   });
-  
+
   // Subscribe to real-time updates
   useEffect(() => {
     const unsubscribe = subscribeToLocationUpdates(() => {
       // Invalidate and refetch on any location update
       queryClient.invalidateQueries({ queryKey: ['worker-locations'] });
     });
-    
+
     return unsubscribe;
   }, [queryClient]);
-  
+
   return query;
 };
 
@@ -44,7 +44,7 @@ export const useWorkerLocationsByJob = (jobId: string) => {
 
 export const useUpdateWorkerLocation = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: ({
       employeeId,
@@ -69,7 +69,7 @@ export const useUpdateWorkerLocation = () => {
 
 export const useCheckInWorker = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: ({
       employeeId,

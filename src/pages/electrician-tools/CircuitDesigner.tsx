@@ -1,7 +1,7 @@
-import { ArrowLeft, Zap } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { AIInstallationDesigner } from "@/components/electrician-tools/circuit-designer/AIInstallationDesigner";
-import { Card, CardContent } from "@/components/ui/card";
+import { ArrowLeft, Zap } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AIInstallationDesigner } from '@/components/electrician-tools/circuit-designer/AIInstallationDesigner';
+import { Card, CardContent } from '@/components/ui/card';
 
 const CircuitDesigner = () => {
   const location = useLocation();
@@ -14,12 +14,14 @@ const CircuitDesigner = () => {
       <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.08]">
         <div className="px-2 py-2">
           <button
-            onClick={() => navigate(fromAgentSelector ? "/electrician/agent-selector" : "/electrician")}
+            onClick={() =>
+              navigate(fromAgentSelector ? '/electrician/agent-selector' : '/electrician')
+            }
             className="flex items-center gap-2 text-white active:scale-[0.98] transition-all touch-manipulation h-11 -ml-1 px-2 rounded-lg hover:bg-white/5"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">
-              {fromAgentSelector ? "Agent Selector" : "Electrician Hub"}
+              {fromAgentSelector ? 'Agent Selector' : 'Electrician Hub'}
             </span>
           </button>
         </div>

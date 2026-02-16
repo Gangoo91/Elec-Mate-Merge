@@ -1,10 +1,19 @@
-import { useState } from "react";
-import { CheckCircle, XCircle, HelpCircle, AlertTriangle, Download, MessageSquare, Sparkles, ChevronDown } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
-import { RadialGauge, ExpandableSection } from "./results";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import {
+  CheckCircle,
+  XCircle,
+  HelpCircle,
+  AlertTriangle,
+  Download,
+  MessageSquare,
+  Sparkles,
+  ChevronDown,
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
+import { RadialGauge, ExpandableSection } from './results';
+import { cn } from '@/lib/utils';
 
 interface VerificationCheck {
   check_name: string;
@@ -30,12 +39,13 @@ interface InstallationVerificationResultsProps {
 
 type FilterType = 'all' | 'pass' | 'fail' | 'testing';
 
-const filterConfig: Record<FilterType, { label: string; icon: typeof CheckCircle; color: string }> = {
-  all: { label: 'All', icon: Sparkles, color: 'text-foreground' },
-  pass: { label: 'Pass', icon: CheckCircle, color: 'text-green-400' },
-  fail: { label: 'Fail', icon: XCircle, color: 'text-red-400' },
-  testing: { label: 'Test', icon: HelpCircle, color: 'text-amber-400' },
-};
+const filterConfig: Record<FilterType, { label: string; icon: typeof CheckCircle; color: string }> =
+  {
+    all: { label: 'All', icon: Sparkles, color: 'text-foreground' },
+    pass: { label: 'Pass', icon: CheckCircle, color: 'text-green-400' },
+    fail: { label: 'Fail', icon: XCircle, color: 'text-red-400' },
+    testing: { label: 'Test', icon: HelpCircle, color: 'text-amber-400' },
+  };
 
 const statusConfig = {
   pass: {
@@ -64,7 +74,7 @@ const statusConfig = {
 const InstallationVerificationResults = ({
   analysisResult,
   onStartChat,
-  onExportReport
+  onExportReport,
 }: InstallationVerificationResultsProps) => {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('all');
   const [expandedChecks, setExpandedChecks] = useState<Record<number, boolean>>({});
@@ -74,14 +84,14 @@ const InstallationVerificationResults = ({
   const recommendations = analysisResult?.improvement_recommendations || [];
 
   // Calculate counts
-  const passCount = checks.filter(c => c.status === 'pass').length;
-  const failCount = checks.filter(c => c.status === 'fail').length;
-  const testingCount = checks.filter(c => c.status === 'requires_testing').length;
+  const passCount = checks.filter((c) => c.status === 'pass').length;
+  const failCount = checks.filter((c) => c.status === 'fail').length;
+  const testingCount = checks.filter((c) => c.status === 'requires_testing').length;
   const totalChecks = checks.length;
   const passPercentage = totalChecks > 0 ? Math.round((passCount / totalChecks) * 100) : 0;
 
   // Filter checks
-  const filteredChecks = checks.filter(check => {
+  const filteredChecks = checks.filter((check) => {
     if (selectedFilter === 'all') return true;
     if (selectedFilter === 'pass') return check.status === 'pass';
     if (selectedFilter === 'fail') return check.status === 'fail';
@@ -90,20 +100,22 @@ const InstallationVerificationResults = ({
   });
 
   // Get failed checks for attention section
-  const failedChecks = checks.filter(c => c.status === 'fail');
+  const failedChecks = checks.filter((c) => c.status === 'fail');
 
   const toggleCheck = (index: number) => {
-    setExpandedChecks(prev => ({ ...prev, [index]: !prev[index] }));
+    setExpandedChecks((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   const toggleStep = (index: number) => {
-    setCompletedSteps(prev => ({ ...prev, [index]: !prev[index] }));
+    setCompletedSteps((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   // Build next steps
   const nextSteps = [
     ...(failCount > 0 ? [`Address ${failCount} failed check${failCount > 1 ? 's' : ''}`] : []),
-    ...(testingCount > 0 ? [`Complete ${testingCount} physical test${testingCount > 1 ? 's' : ''}`] : []),
+    ...(testingCount > 0
+      ? [`Complete ${testingCount} physical test${testingCount > 1 ? 's' : ''}`]
+      : []),
     ...recommendations.slice(0, 2),
     'Obtain certification from qualified electrician',
   ].slice(0, 4);
@@ -132,9 +144,7 @@ const InstallationVerificationResults = ({
                 <Sparkles className="h-5 w-5 text-elec-yellow" />
                 Verification Results
               </h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                {totalChecks} checks performed
-              </p>
+              <p className="text-sm text-muted-foreground mt-1">{totalChecks} checks performed</p>
             </div>
             <div className="flex gap-2">
               {onStartChat && (
@@ -187,7 +197,10 @@ const InstallationVerificationResults = ({
           </div>
           <div className="space-y-2">
             {failedChecks.map((check, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+              <div
+                key={idx}
+                className="flex items-start gap-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20"
+              >
                 <XCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm">{check.check_name}</p>
@@ -201,12 +214,17 @@ const InstallationVerificationResults = ({
 
       {/* Filter Tabs */}
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-        {(Object.keys(filterConfig) as FilterType[]).map(filter => {
+        {(Object.keys(filterConfig) as FilterType[]).map((filter) => {
           const config = filterConfig[filter];
           const Icon = config.icon;
-          const count = filter === 'all' ? totalChecks :
-                       filter === 'pass' ? passCount :
-                       filter === 'fail' ? failCount : testingCount;
+          const count =
+            filter === 'all'
+              ? totalChecks
+              : filter === 'pass'
+                ? passCount
+                : filter === 'fail'
+                  ? failCount
+                  : testingCount;
           const isActive = selectedFilter === filter;
 
           return (
@@ -214,11 +232,11 @@ const InstallationVerificationResults = ({
               key={filter}
               onClick={() => setSelectedFilter(filter)}
               className={cn(
-                "flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm",
-                "min-h-[44px] touch-manipulation transition-all flex-shrink-0",
+                'flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm',
+                'min-h-[44px] touch-manipulation transition-all flex-shrink-0',
                 isActive
-                  ? "bg-elec-yellow/20 border-2 border-elec-yellow/40 text-elec-yellow"
-                  : "bg-card/50 border border-border/30 text-muted-foreground hover:bg-accent/30"
+                  ? 'bg-elec-yellow/20 border-2 border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-card/50 border border-border/30 text-muted-foreground hover:bg-accent/30'
               )}
             >
               <Icon className="h-4 w-4" />
@@ -235,7 +253,9 @@ const InstallationVerificationResults = ({
       <div className="space-y-2">
         <AnimatePresence mode="popLayout">
           {filteredChecks.map((check, idx) => {
-            const status = statusConfig[check.status as keyof typeof statusConfig] || statusConfig.requires_testing;
+            const status =
+              statusConfig[check.status as keyof typeof statusConfig] ||
+              statusConfig.requires_testing;
             const Icon = status.icon;
             const isExpanded = expandedChecks[idx];
 
@@ -245,22 +265,20 @@ const InstallationVerificationResults = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className={cn(
-                  "rounded-xl border overflow-hidden",
-                  status.border,
-                  status.bg
-                )}
+                className={cn('rounded-xl border overflow-hidden', status.border, status.bg)}
               >
                 <button
                   onClick={() => toggleCheck(idx)}
                   className="w-full flex items-center justify-between gap-3 p-4 min-h-[56px] touch-manipulation text-left"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <Icon className={cn("h-5 w-5 flex-shrink-0", status.text)} />
+                    <Icon className={cn('h-5 w-5 flex-shrink-0', status.text)} />
                     <span className="font-medium text-foreground truncate">{check.check_name}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge className={cn("text-xs", status.bg, status.text, "border", status.border)}>
+                    <Badge
+                      className={cn('text-xs', status.bg, status.text, 'border', status.border)}
+                    >
                       {status.label}
                     </Badge>
                     <motion.div
@@ -276,7 +294,7 @@ const InstallationVerificationResults = ({
                   {isExpanded && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
+                      animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
@@ -328,26 +346,32 @@ const InstallationVerificationResults = ({
                 key={idx}
                 onClick={() => toggleStep(idx)}
                 className={cn(
-                  "w-full flex items-start gap-3 p-3 rounded-lg text-left",
-                  "min-h-[48px] touch-manipulation transition-colors",
+                  'w-full flex items-start gap-3 p-3 rounded-lg text-left',
+                  'min-h-[48px] touch-manipulation transition-colors',
                   completedSteps[idx]
-                    ? "bg-green-500/10 border border-green-500/30"
-                    : "bg-background/50 border border-border/30 hover:bg-accent/30"
+                    ? 'bg-green-500/10 border border-green-500/30'
+                    : 'bg-background/50 border border-border/30 hover:bg-accent/30'
                 )}
               >
-                <div className={cn(
-                  "w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0",
-                  "border-2 transition-colors",
-                  completedSteps[idx]
-                    ? "bg-green-500 border-green-500"
-                    : "border-muted-foreground/30"
-                )}>
+                <div
+                  className={cn(
+                    'w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0',
+                    'border-2 transition-colors',
+                    completedSteps[idx]
+                      ? 'bg-green-500 border-green-500'
+                      : 'border-muted-foreground/30'
+                  )}
+                >
                   {completedSteps[idx] && <CheckCircle className="h-4 w-4 text-white" />}
                 </div>
-                <span className={cn(
-                  "text-sm leading-relaxed",
-                  completedSteps[idx] ? "text-foreground line-through opacity-70" : "text-foreground/90"
-                )}>
+                <span
+                  className={cn(
+                    'text-sm leading-relaxed',
+                    completedSteps[idx]
+                      ? 'text-foreground line-through opacity-70'
+                      : 'text-foreground/90'
+                  )}
+                >
                   {step}
                 </span>
               </button>

@@ -1,33 +1,55 @@
-import { useState, useRef, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Plus, RotateCcw, Download, AlertCircle, Wrench, CheckCircle2, FileText, Database, TrendingUp, BookOpen, ChevronUp } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { InstallationStepCard } from "./InstallationStepCard";
-import { InstallationStep, InstallationMethodSummary, InstallationProjectDetails } from "@/types/installation-method";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { ProjectMetadataForm } from "./ProjectMetadataForm";
-import { InstallationHeroSummary } from "./InstallationHeroSummary";
-import { TestingProceduresSection } from "./TestingProceduresSection";
-import { EquipmentScheduleSection } from "./EquipmentScheduleSection";
-import { SiteLogisticsSection } from "./SiteLogisticsSection";
-import { ConditionalProceduresSection } from "./ConditionalProceduresSection";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { RAGExtractionBreakdown } from "./RAGExtractionBreakdown";
-import { CompetencyRequirementsCard } from "./CompetencyRequirementsCard";
-import { SiteLogisticsCard } from "./SiteLogisticsCard";
-import { RegulatoryCitationsPanel } from "./RegulatoryCitationsPanel";
-import { ExecutiveSummaryCard } from "./ExecutiveSummaryCard";
-import { RegulatoryComplianceSection } from "./RegulatoryComplianceSection";
-import { MaterialsListTable } from "./MaterialsListTable";
-import { TestingRequirementsTable } from "./TestingRequirementsTable";
-import { JSONSchemaViewer } from "./JSONSchemaViewer";
-import { ProjectMetadataCard } from "./ProjectMetadataCard";
-import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
-import { SectionNavigationTabs } from "./SectionNavigationTabs";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
+import { useState, useRef, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Plus,
+  RotateCcw,
+  Download,
+  AlertCircle,
+  Wrench,
+  CheckCircle2,
+  FileText,
+  Database,
+  TrendingUp,
+  BookOpen,
+  ChevronUp,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { InstallationStepCard } from './InstallationStepCard';
+import {
+  InstallationStep,
+  InstallationMethodSummary,
+  InstallationProjectDetails,
+} from '@/types/installation-method';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { ProjectMetadataForm } from './ProjectMetadataForm';
+import { InstallationHeroSummary } from './InstallationHeroSummary';
+import { TestingProceduresSection } from './TestingProceduresSection';
+import { EquipmentScheduleSection } from './EquipmentScheduleSection';
+import { SiteLogisticsSection } from './SiteLogisticsSection';
+import { ConditionalProceduresSection } from './ConditionalProceduresSection';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { RAGExtractionBreakdown } from './RAGExtractionBreakdown';
+import { CompetencyRequirementsCard } from './CompetencyRequirementsCard';
+import { SiteLogisticsCard } from './SiteLogisticsCard';
+import { RegulatoryCitationsPanel } from './RegulatoryCitationsPanel';
+import { ExecutiveSummaryCard } from './ExecutiveSummaryCard';
+import { RegulatoryComplianceSection } from './RegulatoryComplianceSection';
+import { MaterialsListTable } from './MaterialsListTable';
+import { TestingRequirementsTable } from './TestingRequirementsTable';
+import { JSONSchemaViewer } from './JSONSchemaViewer';
+import { ProjectMetadataCard } from './ProjectMetadataCard';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
+import { SectionNavigationTabs } from './SectionNavigationTabs';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+} from '@/components/ui/drawer';
 
 interface ProjectMetadata {
   documentRef: string;
@@ -129,11 +151,13 @@ export const InstallationResults = ({
   competencyRequirements: propCompetencyRequirements,
   siteLogistics: propSiteLogistics,
   regulatoryCitations,
-  onStartOver
+  onStartOver,
 }: InstallationResultsProps) => {
   const [steps, setSteps] = useState<InstallationStep[]>(initialSteps);
   const [showMetadataForm, setShowMetadataForm] = useState(false);
-  const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(initialMetadata);
+  const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(
+    initialMetadata
+  );
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -145,7 +169,7 @@ export const InstallationResults = ({
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 500);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -164,7 +188,8 @@ export const InstallationResults = ({
 
   // Extract comprehensive data - prioritize props over fullMethodStatement
   const testingProcedures = propTestingProcedures || fullMethodStatement?.testingProcedures || [];
-  const competencyRequirements = propCompetencyRequirements || fullMethodStatement?.competencyRequirements || {};
+  const competencyRequirements =
+    propCompetencyRequirements || fullMethodStatement?.competencyRequirements || {};
   const siteLogistics = propSiteLogistics || fullMethodStatement?.siteLogistics || {};
   const equipmentSchedule = fullMethodStatement?.equipmentSchedule || [];
   const conditionalFlags = fullMethodStatement?.conditionalFlags || {};
@@ -182,9 +207,7 @@ export const InstallationResults = ({
   }, 0);
 
   // Aggregate all unique BS references from steps
-  const allStepBsReferences = steps.flatMap((step: any) => 
-    (step.bsReferences || [])
-  );
+  const allStepBsReferences = steps.flatMap((step: any) => step.bsReferences || []);
   const uniqueStepBsReferences = [...new Set(allStepBsReferences)];
 
   const updateStep = (index: number, updated: InstallationStep) => {
@@ -192,8 +215,8 @@ export const InstallationResults = ({
     newSteps[index] = updated;
     setSteps(newSteps);
     toast({
-      title: "Step Updated",
-      description: "Your changes have been saved.",
+      title: 'Step Updated',
+      description: 'Your changes have been saved.',
     });
   };
 
@@ -201,12 +224,12 @@ export const InstallationResults = ({
     const newSteps = steps.filter((_, i) => i !== index);
     const renumberedSteps = newSteps.map((step, i) => ({
       ...step,
-      stepNumber: i + 1
+      stepNumber: i + 1,
     }));
     setSteps(renumberedSteps);
     toast({
-      title: "Step Deleted",
-      description: "The step has been removed.",
+      title: 'Step Deleted',
+      description: 'The step has been removed.',
     });
   };
 
@@ -216,7 +239,7 @@ export const InstallationResults = ({
     [newSteps[index], newSteps[targetIndex]] = [newSteps[targetIndex], newSteps[index]];
     const renumberedSteps = newSteps.map((step, i) => ({
       ...step,
-      stepNumber: i + 1
+      stepNumber: i + 1,
     }));
     setSteps(renumberedSteps);
   };
@@ -224,15 +247,15 @@ export const InstallationResults = ({
   const addNewStep = () => {
     const newStep: InstallationStep = {
       stepNumber: steps.length + 1,
-      title: "New Step",
-      content: "Enter step description here...",
+      title: 'New Step',
+      content: 'Enter step description here...',
       safety: [],
-      riskLevel: 'low'
+      riskLevel: 'low',
     };
     setSteps([...steps, newStep]);
     toast({
-      title: "Step Added",
-      description: "New step created. Click edit to customise it.",
+      title: 'Step Added',
+      description: 'New step created. Click edit to customise it.',
     });
   };
 
@@ -240,15 +263,17 @@ export const InstallationResults = ({
     try {
       setIsGeneratingPDF(true);
       toast({
-        title: "Generating PDF",
-        description: "Creating your installation method document...",
+        title: 'Generating PDF',
+        description: 'Creating your installation method document...',
       });
 
       // Parse step bsReferences into structured format
       // Format: "BS 7671 Reg 132.10 - Safe isolation" → { number: "132.10", description: "Safe isolation" }
       const parsedStepReferences = uniqueStepBsReferences
-        .map(ref => {
-          const match = ref.match(/(?:BS 7671 Reg |Regulation )?(\d+\.?\d*\.?\d*\.?\d*)\s*[-–—]\s*(.+)/i);
+        .map((ref) => {
+          const match = ref.match(
+            /(?:BS 7671 Reg |Regulation )?(\d+\.?\d*\.?\d*\.?\d*)\s*[-–—]\s*(.+)/i
+          );
           if (match) {
             return { number: match[1], description: match[2].trim() };
           }
@@ -257,14 +282,17 @@ export const InstallationResults = ({
         .filter(Boolean) as Array<{ number: string; description: string }>;
 
       // Merge with existing regulatoryReferences and deduplicate by number
-      const existingRefs = fullMethodStatement?.regulatoryReferences || regulatoryCitations?.map(ref => ({
-        number: ref.regulation || '',
-        description: ref.requirement || ''
-      })) || [];
+      const existingRefs =
+        fullMethodStatement?.regulatoryReferences ||
+        regulatoryCitations?.map((ref) => ({
+          number: ref.regulation || '',
+          description: ref.requirement || '',
+        })) ||
+        [];
 
       const allRefs = [...existingRefs, ...parsedStepReferences];
       const mergedRegulatoryReferences = Array.from(
-        new Map(allRefs.map(ref => [ref.number, ref])).values()
+        new Map(allRefs.map((ref) => [ref.number, ref])).values()
       ).sort((a, b) => {
         const aNum = parseFloat(a.number) || 0;
         const bNum = parseFloat(b.number) || 0;
@@ -277,9 +305,12 @@ export const InstallationResults = ({
         projectMetadata: fullMethodStatement?.projectMetadata || {
           documentRef: projectMetadata?.documentRef || `MS-${Date.now()}`,
           issueDate: projectMetadata?.issueDate || new Date().toISOString().split('T')[0],
-          reviewDate: projectMetadata?.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          reviewDate:
+            projectMetadata?.reviewDate ||
+            new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
           companyName: projectMetadata?.companyName || projectDetails?.clientName || 'Company Name',
-          contractor: projectMetadata?.contractor || projectDetails?.electricianName || 'Contractor',
+          contractor:
+            projectMetadata?.contractor || projectDetails?.electricianName || 'Contractor',
           siteManagerName: projectMetadata?.siteManagerName || '',
           siteManagerPhone: projectMetadata?.siteManagerPhone || '',
           firstAiderName: projectMetadata?.firstAiderName || '',
@@ -289,14 +320,15 @@ export const InstallationResults = ({
           assemblyPoint: projectMetadata?.assemblyPoint || 'Main Car Park',
           startDate: projectMetadata?.startDate || new Date().toISOString().split('T')[0],
           completionDate: projectMetadata?.completionDate || '',
-          siteSupervisor: projectMetadata?.siteSupervisor || projectDetails?.electricianName || 'Site Supervisor',
+          siteSupervisor:
+            projectMetadata?.siteSupervisor || projectDetails?.electricianName || 'Site Supervisor',
           clientContact: projectMetadata?.clientContact || projectDetails?.clientName || '',
           preparedByName: projectMetadata?.preparedByName || projectDetails?.electricianName || '',
           preparedByPosition: projectMetadata?.preparedByPosition || 'Lead Electrician',
           preparedDate: projectMetadata?.preparedDate || new Date().toISOString().split('T')[0],
           authorisedByName: projectMetadata?.authorisedByName || '',
           authorisedByPosition: projectMetadata?.authorisedByPosition || '',
-          authorisedDate: projectMetadata?.authorisedDate || ''
+          authorisedDate: projectMetadata?.authorisedDate || '',
         },
 
         // Executive Summary (exact schema match)
@@ -309,17 +341,20 @@ export const InstallationResults = ({
           protectiveDevice: '',
           voltageDrop: '',
           zsRequirement: '',
-          purpose: projectDetails?.projectName || ''
+          purpose: projectDetails?.projectName || '',
         },
 
         // Materials List (exact schema match)
-        materialsList: fullMethodStatement?.materialsList || (summary.materialsRequired?.map((m: any) => ({
-          description: typeof m === 'string' ? m : (m?.description || ''),
-          specification: typeof m === 'string' ? '' : (m?.specification || ''),
-          quantity: typeof m === 'string' ? '' : (m?.quantity || ''),
-          unit: typeof m === 'string' ? '' : (m?.unit || ''),
-          notes: typeof m === 'string' ? '' : (m?.notes || '')
-        })) || []),
+        materialsList:
+          fullMethodStatement?.materialsList ||
+          summary.materialsRequired?.map((m: any) => ({
+            description: typeof m === 'string' ? m : m?.description || '',
+            specification: typeof m === 'string' ? '' : m?.specification || '',
+            quantity: typeof m === 'string' ? '' : m?.quantity || '',
+            unit: typeof m === 'string' ? '' : m?.unit || '',
+            notes: typeof m === 'string' ? '' : m?.notes || '',
+          })) ||
+          [],
 
         // Installation Steps (exact schema match)
         steps: steps.map((step: any, index: number) => ({
@@ -334,16 +369,19 @@ export const InstallationResults = ({
           bsReferences: step.bsReferences || [],
           linkedHazards: step.linkedHazards || [],
           inspectionCheckpoints: step.inspectionCheckpoints || [],
-          riskLevel: (step.riskLevel || 'medium').toUpperCase()
+          riskLevel: (step.riskLevel || 'medium').toUpperCase(),
         })),
 
         // Testing Requirements (exact schema match)
-        testingRequirements: fullMethodStatement?.testingRequirements || testingProcedures?.map(test => ({
-          description: test.testName || '',
-          regulation: test.regulationRef || test.standard || '',
-          expectedReading: test.acceptanceCriteria || '',
-          passRange: test.certificateRequired || ''
-        })) || [],
+        testingRequirements:
+          fullMethodStatement?.testingRequirements ||
+          testingProcedures?.map((test) => ({
+            description: test.testName || '',
+            regulation: test.regulationRef || test.standard || '',
+            expectedReading: test.acceptanceCriteria || '',
+            passRange: test.certificateRequired || '',
+          })) ||
+          [],
 
         // Testing Procedures (backward compatibility)
         testingProcedures: fullMethodStatement?.testingProcedures || testingProcedures || [],
@@ -357,8 +395,10 @@ export const InstallationResults = ({
         // Scope of Work (exact schema match)
         scopeOfWork: fullMethodStatement?.scopeOfWork || {
           description: projectDetails?.projectName || 'Electrical installation work',
-          keyDeliverables: [`Complete installation of ${projectDetails?.installationType || 'electrical circuits'}`],
-          exclusions: ''
+          keyDeliverables: [
+            `Complete installation of ${projectDetails?.installationType || 'electrical circuits'}`,
+          ],
+          exclusions: '',
         },
 
         // Schedule Details (exact schema match)
@@ -367,7 +407,7 @@ export const InstallationResults = ({
           teamSize: '1-2 qualified electricians',
           weatherDependency: 'Indoor work - not weather dependent',
           accessRequirements: 'Standard site access required',
-          estimatedDuration: summary.estimatedDuration || 'Variable'
+          estimatedDuration: summary.estimatedDuration || 'Variable',
         },
 
         // Practical Tips (exact schema match)
@@ -387,15 +427,17 @@ export const InstallationResults = ({
         overallRiskLevel: (summary.overallRiskLevel || 'medium').toUpperCase(),
         toolsRequired: summary.toolsRequired || [],
         materialsRequired: summary.materialsRequired || [],
-        competencyRequirements: fullMethodStatement?.competencyRequirements || competencyRequirements || {},
+        competencyRequirements:
+          fullMethodStatement?.competencyRequirements || competencyRequirements || {},
         siteLogistics: fullMethodStatement?.siteLogistics || siteLogistics || {},
         conditionalFlags: fullMethodStatement?.conditionalFlags || conditionalFlags || {},
         equipmentSchedule: fullMethodStatement?.equipmentSchedule || equipmentSchedule || [],
-        workAtHeightEquipment: fullMethodStatement?.workAtHeightEquipment || workAtHeightEquipment || []
+        workAtHeightEquipment:
+          fullMethodStatement?.workAtHeightEquipment || workAtHeightEquipment || [],
       };
 
       const { data, error } = await supabase.functions.invoke('generate-method-statement-pdf', {
-        body: { methodStatement: methodStatementPayload }
+        body: { methodStatement: methodStatementPayload },
       });
 
       if (error) throw new Error(error.message || 'Failed to generate PDF');
@@ -409,15 +451,16 @@ export const InstallationResults = ({
       document.body.removeChild(link);
 
       toast({
-        title: "PDF Generated Successfully",
-        description: "Your installation method document has been downloaded.",
+        title: 'PDF Generated Successfully',
+        description: 'Your installation method document has been downloaded.',
       });
     } catch (error) {
       console.error('PDF export error:', error);
       toast({
-        title: "PDF Export Failed",
-        description: error instanceof Error ? error.message : "Could not generate PDF. Please try again.",
-        variant: "destructive",
+        title: 'PDF Export Failed',
+        description:
+          error instanceof Error ? error.message : 'Could not generate PDF. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGeneratingPDF(false);
@@ -442,7 +485,10 @@ export const InstallationResults = ({
                 <div className="flex flex-wrap gap-2">
                   {installationType && (
                     <Badge className="bg-gradient-to-r from-blue-400/20 to-blue-600/20 text-foreground border-blue-400/40 px-3 py-1 text-sm font-semibold">
-                      {installationType ? `${installationType.charAt(0).toUpperCase()}${installationType.slice(1)}` : 'General'} Installation
+                      {installationType
+                        ? `${installationType.charAt(0).toUpperCase()}${installationType.slice(1)}`
+                        : 'General'}{' '}
+                      Installation
                     </Badge>
                   )}
                   <Badge className="bg-gradient-to-r from-success/20 to-emerald-500/20 text-success border-success/40 px-3 py-1 text-sm font-semibold animate-pulse">
@@ -474,19 +520,25 @@ export const InstallationResults = ({
                   {projectDetails?.projectName && (
                     <div className="flex items-center gap-2 bg-muted/50 rounded px-3 py-2">
                       <span className="text-muted-foreground">Project:</span>
-                      <span className="font-semibold text-foreground">{projectDetails.projectName}</span>
+                      <span className="font-semibold text-foreground">
+                        {projectDetails.projectName}
+                      </span>
                     </div>
                   )}
                   {projectDetails?.location && (
                     <div className="flex items-center gap-2 bg-muted/50 rounded px-3 py-2">
                       <span className="text-muted-foreground">Location:</span>
-                      <span className="font-semibold text-foreground">{projectDetails.location}</span>
+                      <span className="font-semibold text-foreground">
+                        {projectDetails.location}
+                      </span>
                     </div>
                   )}
                   {projectDetails?.installationType && (
                     <div className="flex items-center gap-2 bg-muted/50 rounded px-3 py-2">
                       <span className="text-muted-foreground">Type:</span>
-                      <span className="font-semibold text-foreground">{projectDetails.installationType}</span>
+                      <span className="font-semibold text-foreground">
+                        {projectDetails.installationType}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -512,51 +564,71 @@ export const InstallationResults = ({
                 </div>
                 <h4 className="font-bold text-base">Generation Quality</h4>
               </div>
-              <Badge 
-                variant={qualityMetrics.overallScore >= 80 ? 'default' : qualityMetrics.overallScore >= 60 ? 'secondary' : 'destructive'}
+              <Badge
+                variant={
+                  qualityMetrics.overallScore >= 80
+                    ? 'default'
+                    : qualityMetrics.overallScore >= 60
+                      ? 'secondary'
+                      : 'destructive'
+                }
                 className="text-base px-3 py-1 font-bold"
               >
                 {qualityMetrics.overallScore}/100
               </Badge>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
                 <div className="flex items-center gap-2 mb-1">
                   <TrendingUp className="h-4 w-4 text-blue-400" />
-                  <span className="text-xs text-muted-foreground font-medium">RAG Extraction Rate</span>
+                  <span className="text-xs text-muted-foreground font-medium">
+                    RAG Extraction Rate
+                  </span>
                 </div>
-                <p className="text-2xl font-bold text-foreground">{qualityMetrics.ragExtractionRate}%</p>
+                <p className="text-2xl font-bold text-foreground">
+                  {qualityMetrics.ragExtractionRate}%
+                </p>
                 <p className="text-xs text-muted-foreground mt-1">
                   {qualityMetrics.stepsWithCompleteData}/{steps.length} steps with complete data
                 </p>
               </div>
-              
+
               <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
                 <div className="flex items-center gap-2 mb-1">
                   <Wrench className="h-4 w-4 text-blue-400" />
-                  <span className="text-xs text-muted-foreground font-medium">Practical Procedures</span>
+                  <span className="text-xs text-muted-foreground font-medium">
+                    Practical Procedures
+                  </span>
                 </div>
-                <p className="text-2xl font-bold text-foreground">{qualityMetrics.ragDataUsed.practicalProcedures}</p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Real-world installation guides
+                <p className="text-2xl font-bold text-foreground">
+                  {qualityMetrics.ragDataUsed.practicalProcedures}
                 </p>
+                <p className="text-xs text-muted-foreground mt-1">Real-world installation guides</p>
               </div>
-              
+
               <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
                 <div className="flex items-center gap-2 mb-1">
                   <BookOpen className="h-4 w-4 text-blue-400" />
-                  <span className="text-xs text-muted-foreground font-medium">BS 7671 Regulations</span>
+                  <span className="text-xs text-muted-foreground font-medium">
+                    BS 7671 Regulations
+                  </span>
                 </div>
-                <p className="text-2xl font-bold text-foreground">{qualityMetrics.ragDataUsed.regulations}</p>
+                <p className="text-2xl font-bold text-foreground">
+                  {qualityMetrics.ragDataUsed.regulations}
+                </p>
                 <p className="text-xs text-muted-foreground mt-1">
                   Regulatory references ({qualityMetrics.ragDataUsed.avgRelevance}% avg relevance)
                 </p>
               </div>
             </div>
-            
+
             <div className="mt-3 text-xs text-muted-foreground bg-blue-500/5 rounded p-2 border border-blue-500/20">
-              <strong>Quality Indicators:</strong> Based on tools specificity, materials completeness, hazard identification, and description richness extracted from {qualityMetrics.ragDataUsed.practicalProcedures + qualityMetrics.ragDataUsed.regulations} knowledge base entries.
+              <strong>Quality Indicators:</strong> Based on tools specificity, materials
+              completeness, hazard identification, and description richness extracted from{' '}
+              {qualityMetrics.ragDataUsed.practicalProcedures +
+                qualityMetrics.ragDataUsed.regulations}{' '}
+              knowledge base entries.
             </div>
           </CardContent>
         </Card>
@@ -573,14 +645,14 @@ export const InstallationResults = ({
       )}
 
       {/* Hero Summary */}
-        <InstallationHeroSummary
-          steps={steps.length}
-          duration={summary.estimatedDuration}
-          riskLevel={summary.overallRiskLevel}
-          toolsCount={summary.toolsRequired?.length || 0}
-          hazardsCount={totalHazards}
-          regulationsCount={totalRegulations}
-        />
+      <InstallationHeroSummary
+        steps={steps.length}
+        duration={summary.estimatedDuration}
+        riskLevel={summary.overallRiskLevel}
+        toolsCount={summary.toolsRequired?.length || 0}
+        hazardsCount={totalHazards}
+        regulationsCount={totalRegulations}
+      />
 
       {/* Metadata Call-to-Action */}
       {!projectMetadata?.siteManagerName && (
@@ -591,9 +663,12 @@ export const InstallationResults = ({
               <AlertCircle className="h-6 w-6 text-warning" />
             </div>
             <div className="flex-1 w-full text-center sm:text-left">
-              <h4 className="font-bold text-lg text-foreground mb-2">Complete Project Details for Professional PDF</h4>
+              <h4 className="font-bold text-lg text-foreground mb-2">
+                Complete Project Details for Professional PDF
+              </h4>
               <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                Add emergency contacts and site information to generate a comprehensive, regulation-compliant method statement
+                Add emergency contacts and site information to generate a comprehensive,
+                regulation-compliant method statement
               </p>
               <MobileButton
                 onClick={() => setShowMetadataForm(true)}
@@ -612,14 +687,32 @@ export const InstallationResults = ({
       {/* Project Metadata Form */}
       {showMetadataForm && (
         <ProjectMetadataForm
-          metadata={projectMetadata || {
-            documentRef: '', issueDate: '', reviewDate: '', companyName: '', contractor: '',
-            siteManagerName: '', siteManagerPhone: '', firstAiderName: '', firstAiderPhone: '',
-            safetyOfficerName: '', safetyOfficerPhone: '', assemblyPoint: '', startDate: '',
-            completionDate: '', siteSupervisor: '', clientContact: '', preparedByName: '',
-            preparedByPosition: '', preparedDate: '', authorisedByName: '', authorisedByPosition: '',
-            authorisedDate: ''
-          }}
+          metadata={
+            projectMetadata || {
+              documentRef: '',
+              issueDate: '',
+              reviewDate: '',
+              companyName: '',
+              contractor: '',
+              siteManagerName: '',
+              siteManagerPhone: '',
+              firstAiderName: '',
+              firstAiderPhone: '',
+              safetyOfficerName: '',
+              safetyOfficerPhone: '',
+              assemblyPoint: '',
+              startDate: '',
+              completionDate: '',
+              siteSupervisor: '',
+              clientContact: '',
+              preparedByName: '',
+              preparedByPosition: '',
+              preparedDate: '',
+              authorisedByName: '',
+              authorisedByPosition: '',
+              authorisedDate: '',
+            }
+          }
           onChange={setProjectMetadata}
         />
       )}
@@ -633,8 +726,15 @@ export const InstallationResults = ({
       {/* Installation Steps */}
       <div id="steps">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-foreground">Installation Procedure ({steps.length} Steps)</h3>
-          <MobileButton onClick={addNewStep} variant="outline" size="sm" icon={<Plus className="h-4 w-4" />}>
+          <h3 className="text-lg font-semibold text-foreground">
+            Installation Procedure ({steps.length} Steps)
+          </h3>
+          <MobileButton
+            onClick={addNewStep}
+            variant="outline"
+            size="sm"
+            icon={<Plus className="h-4 w-4" />}
+          >
             Add Step
           </MobileButton>
         </div>
@@ -660,37 +760,42 @@ export const InstallationResults = ({
       </div>
 
       {/* 🎓 Competency Requirements */}
-      {competencyRequirements && competencyRequirements.minimumQualifications && competencyRequirements.minimumQualifications.length > 0 && (
-        <CompetencyRequirementsCard competencyRequirements={competencyRequirements} />
-      )}
+      {competencyRequirements &&
+        competencyRequirements.minimumQualifications &&
+        competencyRequirements.minimumQualifications.length > 0 && (
+          <CompetencyRequirementsCard competencyRequirements={competencyRequirements} />
+        )}
 
       {/* 🗺️ Site Logistics & Planning */}
-      {siteLogistics && (siteLogistics.isolationPoints?.length > 0 || siteLogistics.accessRequirements) && (
-        <SiteLogisticsCard siteLogistics={siteLogistics} />
-      )}
+      {siteLogistics &&
+        (siteLogistics.isolationPoints?.length > 0 || siteLogistics.accessRequirements) && (
+          <SiteLogisticsCard siteLogistics={siteLogistics} />
+        )}
 
       {/* 🆕 JSON Schema & Output Data Viewer */}
       {fullMethodStatement && (
-        <JSONSchemaViewer 
-          fullMethodStatement={fullMethodStatement}
-          mode="full"
-        />
+        <JSONSchemaViewer fullMethodStatement={fullMethodStatement} mode="full" />
       )}
 
       {/* ✅ NEW: AI-Generated Testing Requirements */}
       <div id="testing">
-        {fullMethodStatement?.testingRequirements && fullMethodStatement.testingRequirements.length > 0 && (
-          <TestingRequirementsTable testingRequirements={fullMethodStatement.testingRequirements} />
-        )}
+        {fullMethodStatement?.testingRequirements &&
+          fullMethodStatement.testingRequirements.length > 0 && (
+            <TestingRequirementsTable
+              testingRequirements={fullMethodStatement.testingRequirements}
+            />
+          )}
 
         {/* Testing & Commissioning (Fallback for legacy data) */}
-        {!fullMethodStatement?.testingRequirements && testingProcedures && testingProcedures.length > 0 && (
-          <TestingProceduresSection procedures={testingProcedures} />
-        )}
+        {!fullMethodStatement?.testingRequirements &&
+          testingProcedures &&
+          testingProcedures.length > 0 && (
+            <TestingProceduresSection procedures={testingProcedures} />
+          )}
       </div>
 
       {/* 📖 BS 7671 Regulatory Compliance Section */}
-      <RegulatoryComplianceSection 
+      <RegulatoryComplianceSection
         regulatoryReferences={fullMethodStatement?.regulatoryReferences}
         stepBsReferences={uniqueStepBsReferences}
         sectionNumber={6}
@@ -700,13 +805,10 @@ export const InstallationResults = ({
       <EquipmentScheduleSection equipment={equipmentSchedule} />
 
       {/* Site Logistics (Old Component - Keep for backward compatibility) */}
-      <SiteLogisticsSection
-        logistics={siteLogistics}
-        competency={competencyRequirements}
-      />
+      <SiteLogisticsSection logistics={siteLogistics} competency={competencyRequirements} />
 
       {/* Section Navigation Tabs */}
-      <SectionNavigationTabs 
+      <SectionNavigationTabs
         onNavigate={(sectionId) => {
           const element = document.getElementById(sectionId);
           if (element) {
@@ -717,43 +819,43 @@ export const InstallationResults = ({
 
       {/* Action Buttons - Inline at bottom */}
       <Card className="mt-8">
-        <CardContent className={cn("p-6", isMobile && "p-4")}>
+        <CardContent className={cn('p-6', isMobile && 'p-4')}>
           <div className="space-y-3">
             {/* Primary CTA - Generate PDF */}
-            <Button 
-              onClick={handleExportPDF} 
+            <Button
+              onClick={handleExportPDF}
               variant="default"
               disabled={isGeneratingPDF}
               className={cn(
-                "w-full font-bold transition-all active:scale-95",
-                isMobile ? "h-14 text-base" : "h-12 text-sm"
+                'w-full font-bold transition-all active:scale-95',
+                isMobile ? 'h-14 text-base' : 'h-12 text-sm'
               )}
             >
-              <Download className={cn(isMobile ? "h-6 w-6 mr-2" : "h-5 w-5 mr-2")} />
+              <Download className={cn(isMobile ? 'h-6 w-6 mr-2' : 'h-5 w-5 mr-2')} />
               {isGeneratingPDF ? 'Generating PDF...' : 'Generate PDF'}
             </Button>
 
             {/* Secondary Actions */}
             <div className="flex gap-3">
-              <Button 
-                onClick={() => setShowMetadataForm(!showMetadataForm)} 
+              <Button
+                onClick={() => setShowMetadataForm(!showMetadataForm)}
                 variant="outline"
                 className={cn(
-                  "flex-1 font-semibold transition-all active:scale-95",
-                  isMobile ? "h-12" : "h-10"
+                  'flex-1 font-semibold transition-all active:scale-95',
+                  isMobile ? 'h-12' : 'h-10'
                 )}
               >
                 {showMetadataForm ? 'Hide' : 'Edit'} Metadata
               </Button>
-              <Button 
-                onClick={onStartOver} 
+              <Button
+                onClick={onStartOver}
                 variant="outline"
                 className={cn(
-                  "flex-1 font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50 transition-all active:scale-95",
-                  isMobile ? "h-12" : "h-10"
+                  'flex-1 font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50 transition-all active:scale-95',
+                  isMobile ? 'h-12' : 'h-10'
                 )}
               >
-                <RotateCcw className={cn(isMobile ? "h-5 w-5 mr-2" : "h-4 w-4 mr-2")} />
+                <RotateCcw className={cn(isMobile ? 'h-5 w-5 mr-2' : 'h-4 w-4 mr-2')} />
                 Start Over
               </Button>
             </div>
@@ -780,7 +882,8 @@ export const InstallationResults = ({
           </DrawerContent>
         </Drawer>
       ) : (
-        showMetadataForm && projectMetadata && (
+        showMetadataForm &&
+        projectMetadata && (
           <ProjectMetadataForm
             metadata={projectMetadata}
             onChange={(updated) => setProjectMetadata(updated)}
@@ -796,13 +899,9 @@ export const InstallationResults = ({
             className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 min-h-[48px]"
           >
             <Download className="h-4 w-4 mr-2" />
-            {isGeneratingPDF ? "Generating..." : "Export PDF"}
+            {isGeneratingPDF ? 'Generating...' : 'Export PDF'}
           </Button>
-          <Button
-            onClick={addNewStep}
-            variant="outline"
-            className="min-h-[48px]"
-          >
+          <Button onClick={addNewStep} variant="outline" className="min-h-[48px]">
             <Plus className="h-4 w-4" />
           </Button>
         </div>

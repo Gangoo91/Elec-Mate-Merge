@@ -24,7 +24,6 @@ import {
   AlertCircle,
   AlertTriangle,
   BookOpen,
-  Target,
   FileCheck,
   Calendar,
   Heart,
@@ -37,6 +36,7 @@ import { useKSBTracking } from '@/hooks/qualification/useKSBTracking';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
+import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
 
 interface EPAGatewayStatusProps {
   open: boolean;
@@ -45,7 +45,7 @@ interface EPAGatewayStatusProps {
 
 interface GatewayRequirement {
   id: string;
-  category: 'knowledge' | 'skills' | 'behaviours' | 'portfolio' | 'offjob';
+  category: 'knowledge' | 'behaviours' | 'portfolio' | 'offjob';
   title: string;
   description: string;
   status: 'complete' | 'in_progress' | 'not_started' | 'at_risk';
@@ -64,12 +64,12 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
     isLoading: ksbLoading,
     getKSBProgress,
     knowledge,
-    skills,
     behaviours,
   } = useKSBTracking({ qualificationId });
 
   const { entries: portfolioEntries, isLoading: portfolioLoading } = usePortfolioData();
   const { totalTime, isLoading: timeLoading } = useTimeEntries();
+  const { otjGoal } = useComplianceTracking();
 
   const isLoading = ksbLoading || portfolioLoading || timeLoading;
 
@@ -85,14 +85,22 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
       const p = getKSBProgress(k.id);
       return p?.status === 'completed' || p?.status === 'verified';
     }).length;
-    const knowledgeProgress = knowledgeTotal > 0 ? Math.round((knowledgeCompleted / knowledgeTotal) * 100) : 0;
+    const knowledgeProgress =
+      knowledgeTotal > 0 ? Math.round((knowledgeCompleted / knowledgeTotal) * 100) : 0;
 
     reqs.push({
       id: 'knowledge',
       category: 'knowledge',
       title: 'Knowledge Criteria',
       description: 'Theory knowledge demonstrated and evidenced',
-      status: knowledgeProgress >= 100 ? 'complete' : knowledgeProgress >= 70 ? 'in_progress' : knowledgeProgress > 0 ? 'at_risk' : 'not_started',
+      status:
+        knowledgeProgress >= 100
+          ? 'complete'
+          : knowledgeProgress >= 70
+            ? 'in_progress'
+            : knowledgeProgress > 0
+              ? 'at_risk'
+              : 'not_started',
       progress: knowledgeProgress,
       current: `${knowledgeCompleted}/${knowledgeTotal}`,
       target: `${knowledgeTotal} KSBs`,
@@ -101,42 +109,28 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
       currentGaps.push(`${knowledgeTotal - knowledgeCompleted} knowledge criteria remaining`);
     }
 
-    // 2. Skills KSBs
-    const skillsTotal = skills.length;
-    const skillsCompleted = skills.filter((k) => {
-      const p = getKSBProgress(k.id);
-      return p?.status === 'completed' || p?.status === 'verified';
-    }).length;
-    const skillsProgress = skillsTotal > 0 ? Math.round((skillsCompleted / skillsTotal) * 100) : 0;
-
-    reqs.push({
-      id: 'skills',
-      category: 'skills',
-      title: 'Practical Skills',
-      description: 'Hands-on skills demonstrated with evidence',
-      status: skillsProgress >= 100 ? 'complete' : skillsProgress >= 70 ? 'in_progress' : skillsProgress > 0 ? 'at_risk' : 'not_started',
-      progress: skillsProgress,
-      current: `${skillsCompleted}/${skillsTotal}`,
-      target: `${skillsTotal} KSBs`,
-    });
-    if (skillsProgress < 100 && skillsTotal > 0) {
-      currentGaps.push(`${skillsTotal - skillsCompleted} skills criteria remaining`);
-    }
-
-    // 3. Behaviours KSBs
+    // 2. Behaviours KSBs
     const behavioursTotal = behaviours.length;
     const behavioursCompleted = behaviours.filter((k) => {
       const p = getKSBProgress(k.id);
       return p?.status === 'completed' || p?.status === 'verified';
     }).length;
-    const behavioursProgress = behavioursTotal > 0 ? Math.round((behavioursCompleted / behavioursTotal) * 100) : 0;
+    const behavioursProgress =
+      behavioursTotal > 0 ? Math.round((behavioursCompleted / behavioursTotal) * 100) : 0;
 
     reqs.push({
       id: 'behaviours',
       category: 'behaviours',
       title: 'Professional Behaviours',
       description: 'Workplace behaviours evidenced',
-      status: behavioursProgress >= 100 ? 'complete' : behavioursProgress >= 70 ? 'in_progress' : behavioursProgress > 0 ? 'at_risk' : 'not_started',
+      status:
+        behavioursProgress >= 100
+          ? 'complete'
+          : behavioursProgress >= 70
+            ? 'in_progress'
+            : behavioursProgress > 0
+              ? 'at_risk'
+              : 'not_started',
       progress: behavioursProgress,
       current: `${behavioursCompleted}/${behavioursTotal}`,
       target: `${behavioursTotal} KSBs`,
@@ -149,26 +143,38 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
     const portfolioCount = portfolioEntries.length;
     const approvedCount = portfolioEntries.filter((e) => e.status === 'approved').length;
     const minPortfolioRequired = 20; // Typical apprenticeship requirement
-    const portfolioProgress = Math.min(Math.round((approvedCount / minPortfolioRequired) * 100), 100);
+    const portfolioProgress = Math.min(
+      Math.round((approvedCount / minPortfolioRequired) * 100),
+      100
+    );
 
     reqs.push({
       id: 'portfolio',
       category: 'portfolio',
       title: 'Portfolio Evidence',
       description: 'Quality evidence mapped to criteria',
-      status: portfolioProgress >= 100 ? 'complete' : portfolioProgress >= 50 ? 'in_progress' : portfolioProgress > 0 ? 'at_risk' : 'not_started',
+      status:
+        portfolioProgress >= 100
+          ? 'complete'
+          : portfolioProgress >= 50
+            ? 'in_progress'
+            : portfolioProgress > 0
+              ? 'at_risk'
+              : 'not_started',
       progress: portfolioProgress,
       current: `${approvedCount} approved`,
       target: `${minPortfolioRequired}+ items`,
     });
     if (approvedCount < minPortfolioRequired) {
-      currentGaps.push(`${minPortfolioRequired - approvedCount} more approved evidence items needed`);
+      currentGaps.push(
+        `${minPortfolioRequired - approvedCount} more approved evidence items needed`
+      );
       recs.push('Upload evidence and request tutor review');
     }
 
     // 5. Off-the-Job Training Hours
     const totalHours = totalTime.hours + totalTime.minutes / 60;
-    const requiredHours = 370; // ~20% of 18-month apprenticeship
+    const requiredHours = otjGoal?.target_hours || 400;
     const offJobProgress = Math.min(Math.round((totalHours / requiredHours) * 100), 100);
 
     reqs.push({
@@ -176,7 +182,14 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
       category: 'offjob',
       title: '20% Off-the-Job Training',
       description: 'Minimum training hours completed',
-      status: offJobProgress >= 100 ? 'complete' : offJobProgress >= 80 ? 'in_progress' : offJobProgress > 0 ? 'at_risk' : 'not_started',
+      status:
+        offJobProgress >= 100
+          ? 'complete'
+          : offJobProgress >= 80
+            ? 'in_progress'
+            : offJobProgress > 0
+              ? 'at_risk'
+              : 'not_started',
       progress: offJobProgress,
       current: `${Math.round(totalHours)}h`,
       target: `${requiredHours}h`,
@@ -190,12 +203,13 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
     }
 
     // Calculate overall readiness
-    const overallProgress = reqs.length > 0
-      ? Math.round(reqs.reduce((sum, r) => sum + r.progress, 0) / reqs.length)
-      : 0;
+    const overallProgress =
+      reqs.length > 0 ? Math.round(reqs.reduce((sum, r) => sum + r.progress, 0) / reqs.length) : 0;
 
     // Determine gateway status
-    const criticalGaps = reqs.filter((r) => r.status === 'at_risk' || r.status === 'not_started').length;
+    const criticalGaps = reqs.filter(
+      (r) => r.status === 'at_risk' || r.status === 'not_started'
+    ).length;
     let status: 'ready' | 'almost' | 'needs_work' | 'at_risk';
 
     if (overallProgress >= 95 && criticalGaps === 0) {
@@ -210,7 +224,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
 
     // Add recommendations based on status
     if (status === 'ready') {
-      recs.push('You\'re on track! Keep your portfolio up to date.');
+      recs.push("You're on track! Keep your portfolio up to date.");
     } else if (status === 'almost') {
       recs.push('Nearly there! Focus on your remaining gaps.');
     } else if (criticalGaps > 2) {
@@ -224,7 +238,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
       gaps: currentGaps,
       recommendations: recs,
     };
-  }, [knowledge, skills, behaviours, portfolioEntries, totalTime, getKSBProgress]);
+  }, [knowledge, behaviours, portfolioEntries, totalTime, getKSBProgress, otjGoal]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -240,7 +254,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
       case 'at_risk':
         return 'bg-red-500/10 text-red-500 border-red-500/20';
       default:
-        return 'bg-muted text-white/80';
+        return 'bg-muted text-white';
     }
   };
 
@@ -263,8 +277,6 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
     switch (category) {
       case 'knowledge':
         return BookOpen;
-      case 'skills':
-        return Target;
       case 'behaviours':
         return Heart;
       case 'portfolio':
@@ -280,8 +292,6 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
     switch (category) {
       case 'knowledge':
         return 'text-blue-500';
-      case 'skills':
-        return 'text-green-500';
       case 'behaviours':
         return 'text-pink-500';
       case 'portfolio':
@@ -289,7 +299,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
       case 'offjob':
         return 'text-amber-500';
       default:
-        return 'text-white/80';
+        return 'text-white';
     }
   };
 
@@ -303,15 +313,13 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
             <GraduationCap className="h-5 w-5 text-green-500" />
             EPA Gateway Status
           </SheetTitle>
-          <SheetDescription>
-            Track your End-Point Assessment readiness
-          </SheetDescription>
+          <SheetDescription>Track your End-Point Assessment readiness</SheetDescription>
         </SheetHeader>
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-white/80" />
-            <p className="text-sm text-white/80 mt-2">Checking readiness...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-white" />
+            <p className="text-sm text-white mt-2">Checking readiness...</p>
           </div>
         ) : (
           <ScrollArea className="h-[calc(85vh-8rem)] px-4 pb-8">
@@ -331,7 +339,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold text-foreground">{overallReadiness}%</p>
-                  <p className="text-xs text-white/80">complete</p>
+                  <p className="text-xs text-white">complete</p>
                 </div>
               </div>
               <Progress value={overallReadiness} className="h-2" />
@@ -339,7 +347,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
 
             {/* Requirements Checklist */}
             <div className="space-y-3 mb-6">
-              <h3 className="text-sm font-medium text-white/80 flex items-center gap-2">
+              <h3 className="text-sm font-medium text-white flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4" />
                 Gateway Requirements
               </h3>
@@ -349,10 +357,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
                 const iconColor = getCategoryColor(req.category);
 
                 return (
-                  <div
-                    key={req.id}
-                    className="p-3 rounded-xl bg-muted/30 border border-border"
-                  >
+                  <div key={req.id} className="p-3 rounded-xl bg-muted/30 border border-border">
                     <div className="flex items-start gap-3">
                       <div className={cn('p-2 rounded-lg', getStatusColor(req.status))}>
                         <Icon className={cn('h-4 w-4', iconColor)} />
@@ -362,9 +367,9 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
                           <p className="text-sm font-medium text-foreground">{req.title}</p>
                           <span className="text-sm font-bold">{req.progress}%</span>
                         </div>
-                        <p className="text-xs text-white/80 mb-2">{req.description}</p>
+                        <p className="text-xs text-white mb-2">{req.description}</p>
                         <Progress value={req.progress} className="h-1.5 mb-2" />
-                        <div className="flex items-center justify-between text-xs text-white/80">
+                        <div className="flex items-center justify-between text-xs text-white">
                           <span>Current: {req.current}</span>
                           <span>Target: {req.target}</span>
                         </div>
@@ -378,7 +383,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
             {/* Gaps to Address */}
             {gaps.length > 0 && (
               <div className="mb-6">
-                <h3 className="text-sm font-medium text-white/80 flex items-center gap-2 mb-3">
+                <h3 className="text-sm font-medium text-white flex items-center gap-2 mb-3">
                   <AlertTriangle className="h-4 w-4 text-amber-500" />
                   Gaps to Address
                 </h3>
@@ -399,7 +404,7 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
             {/* Recommendations */}
             {recommendations.length > 0 && (
               <div className="mb-6">
-                <h3 className="text-sm font-medium text-white/80 flex items-center gap-2 mb-3">
+                <h3 className="text-sm font-medium text-white flex items-center gap-2 mb-3">
                   <TrendingUp className="h-4 w-4 text-elec-yellow" />
                   Next Steps
                 </h3>
@@ -420,13 +425,13 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
             {/* Info Note */}
             <div className="p-4 rounded-xl bg-muted/30 border border-border">
               <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-white/80 shrink-0 mt-0.5" />
-                <div className="text-xs text-white/80">
+                <Clock className="h-5 w-5 text-white shrink-0 mt-0.5" />
+                <div className="text-xs text-white">
                   <p className="font-medium text-foreground mb-1">About the Gateway</p>
                   <p>
-                    The gateway is a formal check before your End-Point Assessment (EPA).
-                    Your employer and training provider must confirm you've met all requirements
-                    before you can proceed to the EPA.
+                    The gateway is a formal check before your End-Point Assessment (EPA). Your
+                    employer and training provider must confirm you've met all requirements before
+                    you can proceed to the EPA.
                   </p>
                 </div>
               </div>

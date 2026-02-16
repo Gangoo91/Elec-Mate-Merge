@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import TestingProceduresHeader from './testing-procedures/TestingProceduresHeader';
 import TestingProceduresGrid from './testing-procedures/TestingProceduresGrid';
@@ -20,7 +19,20 @@ interface TestingProceduresSectionProps {
   onBack: () => void;
 }
 
-type ViewMode = 'grid' | 'procedure' | 'isolation' | 'continuity' | 'insulation' | 'polarity' | 'zs' | 'rcd' | 'pfc' | 'functional' | 'supplementary' | 'certificate-guide' | 'schedule-guide';
+type ViewMode =
+  | 'grid'
+  | 'procedure'
+  | 'isolation'
+  | 'continuity'
+  | 'insulation'
+  | 'polarity'
+  | 'zs'
+  | 'rcd'
+  | 'pfc'
+  | 'functional'
+  | 'supplementary'
+  | 'certificate-guide'
+  | 'schedule-guide';
 
 const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => {
   const [currentView, setCurrentView] = useState<ViewMode>('grid');
@@ -87,34 +99,27 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     'polarity-testing': <EnhancedPolarityTestCard />,
     'zs-testing': <ZsTestCard />,
     'rcd-testing': <RcdTestCard />,
-    'functional-testing': <FunctionalTestCard />
+    'functional-testing': <FunctionalTestCard />,
   };
 
   if (currentView === 'isolation') {
-    return (
-      <SafeIsolationCard 
-        onBack={handleBackToProcedures}
-      />
-    );
+    return <SafeIsolationCard onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'continuity') {
-    return (
-      <ContinuityTestingProcedure 
-        onBack={handleBackToProcedures}
-      />
-    );
+    return <ContinuityTestingProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'insulation') {
     return (
       <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button 
+          <button
             onClick={handleBackToProcedures}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
           >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span><span className="sm:hidden">Back</span>
+            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
         <EnhancedInsulationResistanceTestCard />
@@ -126,11 +131,12 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     return (
       <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button 
+          <button
             onClick={handleBackToProcedures}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
           >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span><span className="sm:hidden">Back</span>
+            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
         <EnhancedPolarityTestCard />
@@ -142,11 +148,12 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     return (
       <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button 
+          <button
             onClick={handleBackToProcedures}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
           >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span><span className="sm:hidden">Back</span>
+            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
         <ZsTestCard />
@@ -158,11 +165,12 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     return (
       <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button 
+          <button
             onClick={handleBackToProcedures}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
           >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span><span className="sm:hidden">Back</span>
+            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
         <RcdTestCard />
@@ -174,11 +182,12 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     return (
       <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button 
+          <button
             onClick={handleBackToProcedures}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
           >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span><span className="sm:hidden">Back</span>
+            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
         <PfcTestCard />
@@ -190,11 +199,12 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     return (
       <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button 
+          <button
             onClick={handleBackToProcedures}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
           >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span><span className="sm:hidden">Back</span>
+            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
         <FunctionalTestCard />
@@ -206,11 +216,12 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     return (
       <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button 
+          <button
             onClick={handleBackToProcedures}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
           >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span><span className="sm:hidden">Back</span>
+            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
         <SupplementaryTestCard />
@@ -222,11 +233,12 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     return (
       <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button 
+          <button
             onClick={handleBackToProcedures}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
           >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span><span className="sm:hidden">Back</span>
+            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
         <CertificateGuideTab />
@@ -238,11 +250,12 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     return (
       <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button 
+          <button
             onClick={handleBackToProcedures}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
           >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span><span className="sm:hidden">Back</span>
+            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
+            <span className="sm:hidden">Back</span>
           </button>
         </div>
         <ScheduleGuideTab />
@@ -251,18 +264,13 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
   }
 
   if (currentView === 'procedure' && selectedProcedure) {
-    return (
-      <TestProcedureWizard 
-        procedure={selectedProcedure} 
-        onBack={handleBackToProcedures}
-      />
-    );
+    return <TestProcedureWizard procedure={selectedProcedure} onBack={handleBackToProcedures} />;
   }
 
   return (
     <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
       <TestingProceduresHeader onBack={onBack} />
-      
+
       <TestingProceduresGrid
         procedures={testingProceduresData}
         onStartProcedure={handleStartProcedure}

@@ -7,40 +7,40 @@ const BMSModule5 = () => {
   const sections = [
     {
       id: 1,
-      title: "Overview of BMS Protocols",
+      title: 'Overview of BMS Protocols',
       icon: Globe,
-      description: "Communication protocol fundamentals"
+      description: 'Communication protocol fundamentals',
     },
     {
       id: 2,
-      title: "BACnet Devices and Network Types",
+      title: 'BACnet Devices and Network Types',
       icon: Settings,
-      description: "BACnet architecture and implementation"
+      description: 'BACnet architecture and implementation',
     },
     {
       id: 3,
-      title: "Modbus RTU and TCP/IP Use Cases",
+      title: 'Modbus RTU and TCP/IP Use Cases',
       icon: Cable,
-      description: "Modbus protocol applications"
+      description: 'Modbus protocol applications',
     },
     {
       id: 4,
-      title: "KNX Topology and Bus Devices",
+      title: 'KNX Topology and Bus Devices',
       icon: Wifi,
-      description: "KNX bus system configuration"
+      description: 'KNX bus system configuration',
     },
     {
       id: 5,
-      title: "Gateways and Interoperability Between Protocols",
+      title: 'Gateways and Interoperability Between Protocols',
       icon: Network,
-      description: "Protocol integration and translation"
+      description: 'Protocol integration and translation',
     },
     {
       id: 6,
-      title: "Network Planning, Segmentation, and Latency Management",
+      title: 'Network Planning, Segmentation, and Latency Management',
       icon: Activity,
-      description: "Network design and performance optimization"
-    }
+      description: 'Network design and performance optimization',
+    },
   ];
 
   return (

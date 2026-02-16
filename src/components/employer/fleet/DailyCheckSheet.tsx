@@ -1,16 +1,11 @@
-import { useState, useRef, useEffect } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
+import { useState, useRef, useEffect } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
 import {
   ClipboardCheck,
   X,
@@ -21,9 +16,9 @@ import {
   Camera,
   History,
   ChevronRight,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import SignatureCanvas from "react-signature-canvas";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import SignatureCanvas from 'react-signature-canvas';
 import {
   useVehicleChecks,
   useLatestCheck,
@@ -32,9 +27,9 @@ import {
   useUploadDefectPhotos,
   CHECK_ITEMS,
   type CheckStatus,
-} from "@/hooks/useVehicleChecks";
-import type { Vehicle } from "@/hooks/useFleet";
-import { supabase } from "@/integrations/supabase/client";
+} from '@/hooks/useVehicleChecks';
+import type { Vehicle } from '@/hooks/useFleet';
+import { supabase } from '@/integrations/supabase/client';
 
 interface DailyCheckSheetProps {
   open: boolean;
@@ -42,19 +37,15 @@ interface DailyCheckSheetProps {
   vehicle: Vehicle;
 }
 
-type ViewMode = "check" | "history";
+type ViewMode = 'check' | 'history';
 
-export function DailyCheckSheet({
-  open,
-  onOpenChange,
-  vehicle,
-}: DailyCheckSheetProps) {
-  const [viewMode, setViewMode] = useState<ViewMode>("check");
+export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheetProps) {
+  const [viewMode, setViewMode] = useState<ViewMode>('check');
   const [checkState, setCheckState] = useState<Record<string, boolean>>({});
-  const [mileage, setMileage] = useState(vehicle.mileage?.toString() || "");
+  const [mileage, setMileage] = useState(vehicle.mileage?.toString() || '');
   const [defectsFound, setDefectsFound] = useState(false);
-  const [defectDetails, setDefectDetails] = useState("");
-  const [notes, setNotes] = useState("");
+  const [defectDetails, setDefectDetails] = useState('');
+  const [notes, setNotes] = useState('');
   const sigRef = useRef<SignatureCanvas>(null);
 
   const { data: checks = [] } = useVehicleChecks(vehicle.id);
@@ -66,10 +57,12 @@ export function DailyCheckSheet({
   // Initialize check state with all items checked by default
   const initializeCheckState = () => {
     const state: Record<string, boolean> = {};
-    Object.values(CHECK_ITEMS).flat().forEach((item) => {
-      state[item.key] = true;
-    });
-    state["dashboard_warnings"] = false; // This one is inverted (false = no warnings = good)
+    Object.values(CHECK_ITEMS)
+      .flat()
+      .forEach((item) => {
+        state[item.key] = true;
+      });
+    state['dashboard_warnings'] = false; // This one is inverted (false = no warnings = good)
     return state;
   };
 
@@ -86,21 +79,21 @@ export function DailyCheckSheet({
 
     // Upload signature if drawn
     if (sigRef.current && !sigRef.current.isEmpty()) {
-      const dataUrl = sigRef.current.toDataURL("image/png");
+      const dataUrl = sigRef.current.toDataURL('image/png');
       const blob = await fetch(dataUrl).then((r) => r.blob());
-      const file = new File([blob], "signature.png", { type: "image/png" });
+      const file = new File([blob], 'signature.png', { type: 'image/png' });
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user) {
         const fileName = `vehicle-check-signatures/${user.id}/${vehicle.id}/${Date.now()}.png`;
         const { data, error } = await supabase.storage
-          .from("visual-uploads")
+          .from('visual-uploads')
           .upload(fileName, file);
 
         if (!error && data) {
-          const { data: urlData } = supabase.storage
-            .from("visual-uploads")
-            .getPublicUrl(data.path);
+          const { data: urlData } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
           signatureUrl = urlData.publicUrl;
         }
       }
@@ -109,8 +102,8 @@ export function DailyCheckSheet({
     createCheck.mutate(
       {
         vehicle_id: vehicle.id,
-        check_date: new Date().toISOString().split("T")[0],
-        check_time: new Date().toTimeString().split(" ")[0].slice(0, 5),
+        check_date: new Date().toISOString().split('T')[0],
+        check_time: new Date().toTimeString().split(' ')[0].slice(0, 5),
         mileage: mileage ? parseInt(mileage) : undefined,
         tyres_ok: checkState.tyres_ok ?? true,
         lights_ok: checkState.lights_ok ?? true,
@@ -131,7 +124,7 @@ export function DailyCheckSheet({
         defect_details: defectDetails || undefined,
         signature_url: signatureUrl,
         notes: notes || undefined,
-        status: "pass", // Will be calculated by the hook
+        status: 'pass', // Will be calculated by the hook
       },
       {
         onSuccess: () => {
@@ -139,8 +132,8 @@ export function DailyCheckSheet({
           // Reset form
           setCheckState(initializeCheckState());
           setDefectsFound(false);
-          setDefectDetails("");
-          setNotes("");
+          setDefectDetails('');
+          setNotes('');
           sigRef.current?.clear();
         },
       }
@@ -149,13 +142,13 @@ export function DailyCheckSheet({
 
   const getStatusBadge = (status: CheckStatus) => {
     switch (status) {
-      case "pass":
+      case 'pass':
         return <Badge className="bg-green-500/20 text-green-400 border-0">Pass</Badge>;
-      case "minor_defects":
+      case 'minor_defects':
         return <Badge className="bg-yellow-500/20 text-yellow-400 border-0">Minor Defects</Badge>;
-      case "major_defects":
+      case 'major_defects':
         return <Badge className="bg-orange-500/20 text-orange-400 border-0">Major Defects</Badge>;
-      case "fail":
+      case 'fail':
         return <Badge className="bg-red-500/20 text-red-400 border-0">Fail</Badge>;
     }
   };
@@ -192,23 +185,23 @@ export function DailyCheckSheet({
           {/* Tab Toggle */}
           <div className="flex border-b border-border">
             <button
-              onClick={() => setViewMode("check")}
+              onClick={() => setViewMode('check')}
               className={cn(
-                "flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]",
-                viewMode === "check"
-                  ? "text-green-400 border-b-2 border-green-400"
-                  : "text-muted-foreground"
+                'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
+                viewMode === 'check'
+                  ? 'text-green-400 border-b-2 border-green-400'
+                  : 'text-muted-foreground'
               )}
             >
               New Check
             </button>
             <button
-              onClick={() => setViewMode("history")}
+              onClick={() => setViewMode('history')}
               className={cn(
-                "flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]",
-                viewMode === "history"
-                  ? "text-green-400 border-b-2 border-green-400"
-                  : "text-muted-foreground"
+                'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
+                viewMode === 'history'
+                  ? 'text-green-400 border-b-2 border-green-400'
+                  : 'text-muted-foreground'
               )}
             >
               History ({checks.length})
@@ -217,7 +210,7 @@ export function DailyCheckSheet({
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto">
-            {viewMode === "check" ? (
+            {viewMode === 'check' ? (
               <div className="p-4 space-y-6">
                 {/* Already Checked Today Alert */}
                 {hasCheckedToday && (
@@ -225,8 +218,7 @@ export function DailyCheckSheet({
                     <div className="flex items-center gap-2">
                       <Check className="h-4 w-4 text-green-400" />
                       <span className="text-sm text-green-400">
-                        Vehicle checked today at{" "}
-                        {latestCheck?.check_time?.slice(0, 5)}
+                        Vehicle checked today at {latestCheck?.check_time?.slice(0, 5)}
                       </span>
                     </div>
                   </div>
@@ -307,7 +299,10 @@ export function DailyCheckSheet({
                         className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card/50 touch-manipulation min-h-[52px]"
                       >
                         <Checkbox
-                          checked={checkState[item.key] ?? (item.key === "dashboard_warnings" ? false : true)}
+                          checked={
+                            checkState[item.key] ??
+                            (item.key === 'dashboard_warnings' ? false : true)
+                          }
                           onCheckedChange={(checked) =>
                             handleCheckChange(item.key, checked as boolean)
                           }
@@ -362,8 +357,8 @@ export function DailyCheckSheet({
                     <SignatureCanvas
                       ref={sigRef}
                       canvasProps={{
-                        className: "w-full h-32",
-                        style: { width: "100%", height: "128px" },
+                        className: 'w-full h-32',
+                        style: { width: '100%', height: '128px' },
                       }}
                       backgroundColor="white"
                     />
@@ -408,21 +403,21 @@ export function DailyCheckSheet({
                       <div
                         key={check.id}
                         className={cn(
-                          "p-4 rounded-xl border bg-card/50 touch-manipulation",
-                          check.status === "fail" || check.status === "major_defects"
-                            ? "border-red-500/30"
-                            : check.status === "minor_defects"
-                            ? "border-yellow-500/30"
-                            : "border-border"
+                          'p-4 rounded-xl border bg-card/50 touch-manipulation',
+                          check.status === 'fail' || check.status === 'major_defects'
+                            ? 'border-red-500/30'
+                            : check.status === 'minor_defects'
+                              ? 'border-yellow-500/30'
+                              : 'border-border'
                         )}
                       >
                         <div className="flex items-center justify-between mb-2">
                           <div>
                             <p className="font-semibold text-foreground text-base">
-                              {new Date(check.check_date).toLocaleDateString("en-GB", {
-                                weekday: "short",
-                                day: "numeric",
-                                month: "short",
+                              {new Date(check.check_date).toLocaleDateString('en-GB', {
+                                weekday: 'short',
+                                day: 'numeric',
+                                month: 'short',
                               })}
                             </p>
                             <p className="text-sm text-muted-foreground">

@@ -1,126 +1,133 @@
-import { ArrowLeft, ArrowRight, Settings, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, Settings, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Voice Control Logic and Routine Mapping";
-const DESCRIPTION = "Programming voice commands and automation routines for efficient smart home control";
+const TITLE = 'Voice Control Logic and Routine Mapping';
+const DESCRIPTION =
+  'Programming voice commands and automation routines for efficient smart home control';
 
 const quickCheckQuestions = [
   {
     question: "What is a 'routine' in voice assistant terminology?",
     options: [
-      "A single voice command",
-      "A sequence of automated actions triggered by a single command or event",
-      "A speaker volume setting",
-      "A device reset procedure"
+      'A single voice command',
+      'A sequence of automated actions triggered by a single command or event',
+      'A speaker volume setting',
+      'A device reset procedure',
     ],
     correctAnswer: 1,
-    explanation: "A routine is a sequence of multiple actions that execute automatically when triggered by a voice command, time, location, or other event. For example, 'Good night' triggering lights off, doors locked, and thermostat adjusted."
+    explanation:
+      "A routine is a sequence of multiple actions that execute automatically when triggered by a voice command, time, location, or other event. For example, 'Good night' triggering lights off, doors locked, and thermostat adjusted.",
   },
   {
-    question: "Why is it important to use logical device naming conventions?",
+    question: 'Why is it important to use logical device naming conventions?',
     options: [
-      "To match manufacturer branding",
-      "To ensure voice recognition accuracy and intuitive control",
-      "To reduce power consumption",
-      "To improve Wi-Fi signal"
+      'To match manufacturer branding',
+      'To ensure voice recognition accuracy and intuitive control',
+      'To reduce power consumption',
+      'To improve Wi-Fi signal',
     ],
     correctAnswer: 1,
-    explanation: "Logical naming ensures voice assistants correctly interpret commands and makes control intuitive. 'Kitchen ceiling light' is clearer than 'Light A' for both the assistant and the user."
+    explanation:
+      "Logical naming ensures voice assistants correctly interpret commands and makes control intuitive. 'Kitchen ceiling light' is clearer than 'Light A' for both the assistant and the user.",
   },
   {
-    question: "What should you test when verifying voice control logic?",
+    question: 'What should you test when verifying voice control logic?',
     options: [
-      "Only that devices turn on",
-      "Command recognition, execution timing, and correct device response",
-      "Only speaker volume",
-      "Only Wi-Fi speed"
+      'Only that devices turn on',
+      'Command recognition, execution timing, and correct device response',
+      'Only speaker volume',
+      'Only Wi-Fi speed',
     ],
     correctAnswer: 1,
-    explanation: "Comprehensive testing verifies that voice commands are correctly recognised, executed in reasonable time, and that the intended devices respond correctly. This catches issues with naming, grouping, or integration."
-  }
+    explanation:
+      'Comprehensive testing verifies that voice commands are correctly recognised, executed in reasonable time, and that the intended devices respond correctly. This catches issues with naming, grouping, or integration.',
+  },
 ];
 
 const quizQuestions = [
   {
-    question: "What type of routine trigger executes at a specific time?",
-    options: [
-      "Voice trigger",
-      "Location trigger",
-      "Schedule trigger",
-      "Sensor trigger"
-    ],
+    question: 'What type of routine trigger executes at a specific time?',
+    options: ['Voice trigger', 'Location trigger', 'Schedule trigger', 'Sensor trigger'],
     correctAnswer: 2,
-    explanation: "Schedule triggers execute routines at specified times, such as turning on porch lights at sunset or adjusting heating before wake-up time."
+    explanation:
+      'Schedule triggers execute routines at specified times, such as turning on porch lights at sunset or adjusting heating before wake-up time.',
   },
   {
     question: "What is a 'conditional' in automation logic?",
     options: [
-      "A device brand",
-      "An if-then rule that checks conditions before executing actions",
-      "A speaker setting",
-      "A network configuration"
+      'A device brand',
+      'An if-then rule that checks conditions before executing actions',
+      'A speaker setting',
+      'A network configuration',
     ],
     correctAnswer: 1,
-    explanation: "Conditionals are if-then rules that check whether specific conditions are met before executing actions. For example, 'If motion detected AND after sunset, turn on lights'."
+    explanation:
+      "Conditionals are if-then rules that check whether specific conditions are met before executing actions. For example, 'If motion detected AND after sunset, turn on lights'.",
   },
   {
-    question: "Why should complex automations be documented?",
+    question: 'Why should complex automations be documented?',
     options: [
-      "Legal requirement",
-      "To enable troubleshooting and handover to customers",
-      "To increase system speed",
-      "To reduce power usage"
+      'Legal requirement',
+      'To enable troubleshooting and handover to customers',
+      'To increase system speed',
+      'To reduce power usage',
     ],
     correctAnswer: 1,
-    explanation: "Documentation enables troubleshooting when issues arise and helps customers understand their system. It also aids future electricians who may service the installation."
+    explanation:
+      'Documentation enables troubleshooting when issues arise and helps customers understand their system. It also aids future electricians who may service the installation.',
   },
   {
     question: "What is a 'scene' in smart home terminology?",
     options: [
-      "A camera view",
-      "A pre-set combination of device states activated together",
-      "A troubleshooting mode",
-      "A network scan"
+      'A camera view',
+      'A pre-set combination of device states activated together',
+      'A troubleshooting mode',
+      'A network scan',
     ],
     correctAnswer: 1,
-    explanation: "A scene is a pre-configured combination of device states that can be activated with a single command. 'Movie mode' might dim lights, close blinds, and turn on the TV."
+    explanation:
+      "A scene is a pre-configured combination of device states that can be activated with a single command. 'Movie mode' might dim lights, close blinds, and turn on the TV.",
   },
   {
-    question: "What should be considered when creating voice command phrases?",
+    question: 'What should be considered when creating voice command phrases?',
     options: [
-      "Using the longest possible phrases",
-      "Natural, memorable phrases that are distinct from other commands",
-      "Using only single words",
-      "Matching manufacturer default phrases"
+      'Using the longest possible phrases',
+      'Natural, memorable phrases that are distinct from other commands',
+      'Using only single words',
+      'Matching manufacturer default phrases',
     ],
     correctAnswer: 1,
-    explanation: "Voice command phrases should be natural to say, easy to remember, and distinct from other commands to avoid accidental triggering. Custom phrases like 'Movie time' are more intuitive than default options."
-  }
+    explanation:
+      "Voice command phrases should be natural to say, easy to remember, and distinct from other commands to avoid accidental triggering. Custom phrases like 'Movie time' are more intuitive than default options.",
+  },
 ];
 
 const faqs = [
   {
-    question: "How many routines can I create?",
-    answer: "Most platforms allow hundreds of routines, but complexity should be managed. Too many overlapping routines can cause conflicts. Document routines clearly and test for interactions before adding new ones."
+    question: 'How many routines can I create?',
+    answer:
+      'Most platforms allow hundreds of routines, but complexity should be managed. Too many overlapping routines can cause conflicts. Document routines clearly and test for interactions before adding new ones.',
   },
   {
-    question: "Can routines be triggered by multiple methods?",
-    answer: "Yes, most platforms allow routines to have multiple triggers. The same 'Movie mode' routine could be triggered by voice command, app button, or scheduled time. However, ensure different triggers don't cause unexpected behaviour."
+    question: 'Can routines be triggered by multiple methods?',
+    answer:
+      "Yes, most platforms allow routines to have multiple triggers. The same 'Movie mode' routine could be triggered by voice command, app button, or scheduled time. However, ensure different triggers don't cause unexpected behaviour.",
   },
   {
-    question: "What if a routine fails partway through?",
-    answer: "Behaviour varies by platform. Some routines continue executing remaining actions, others stop. Test failure scenarios and consider creating separate routines for critical vs non-critical actions to ensure important actions always execute."
-  }
+    question: 'What if a routine fails partway through?',
+    answer:
+      'Behaviour varies by platform. Some routines continue executing remaining actions, others stop. Test failure scenarios and consider creating separate routines for critical vs non-critical actions to ensure important actions always execute.',
+  },
 ];
 
 const SmartHomeModule6Section3 = () => {
   useSEO({
     title: `${TITLE} | Smart Home Module 6`,
-    description: DESCRIPTION
+    description: DESCRIPTION,
   });
 
   return (
@@ -148,7 +155,9 @@ const SmartHomeModule6Section3 = () => {
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
             <Settings className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-medium text-elec-yellow">Voice Control and Hub Integration</span>
+            <span className="text-sm font-medium text-elec-yellow">
+              Voice Control and Hub Integration
+            </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{TITLE}</h1>
           <p className="text-lg text-white max-w-2xl mx-auto">{DESCRIPTION}</p>
@@ -184,19 +193,27 @@ const SmartHomeModule6Section3 = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Understand routine structure including triggers, conditions, and actions</span>
+                <span className="text-white">
+                  Understand routine structure including triggers, conditions, and actions
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Design effective voice commands that are intuitive and reliable</span>
+                <span className="text-white">
+                  Design effective voice commands that are intuitive and reliable
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Create scenes for common scenarios like movie mode, bedtime, and away</span>
+                <span className="text-white">
+                  Create scenes for common scenarios like movie mode, bedtime, and away
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <span className="text-white">Troubleshoot routine failures and optimise automation logic</span>
+                <span className="text-white">
+                  Troubleshoot routine failures and optimise automation logic
+                </span>
               </li>
             </ul>
           </div>
@@ -210,7 +227,9 @@ const SmartHomeModule6Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Routines are automated sequences that execute multiple actions in response to a trigger. They transform simple voice commands into powerful automation that controls multiple devices and services.
+              Routines are automated sequences that execute multiple actions in response to a
+              trigger. They transform simple voice commands into powerful automation that controls
+              multiple devices and services.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
@@ -219,19 +238,22 @@ const SmartHomeModule6Section3 = () => {
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Trigger</h4>
                   <p className="text-white text-sm">
-                    What initiates the routine: voice command, time schedule, location change, sensor activation, or manual button press.
+                    What initiates the routine: voice command, time schedule, location change,
+                    sensor activation, or manual button press.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Conditions (Optional)</h4>
                   <p className="text-white text-sm">
-                    Requirements that must be met: time of day, device state, weather, or presence detection. Actions only execute if conditions pass.
+                    Requirements that must be met: time of day, device state, weather, or presence
+                    detection. Actions only execute if conditions pass.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-elec-yellow text-sm">Actions</h4>
                   <p className="text-white text-sm">
-                    What happens: turn devices on/off, adjust settings, play media, send notifications, or trigger other routines.
+                    What happens: turn devices on/off, adjust settings, play media, send
+                    notifications, or trigger other routines.
                   </p>
                 </div>
               </div>
@@ -239,7 +261,9 @@ const SmartHomeModule6Section3 = () => {
 
             <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 p-4 rounded-r-lg">
               <p className="text-white">
-                <strong>Example routine:</strong> "Alexa, good morning" triggers: turn on kitchen lights, set thermostat to 20C, play news briefing, read calendar events. Condition: only between 6am-9am.
+                <strong>Example routine:</strong> "Alexa, good morning" triggers: turn on kitchen
+                lights, set thermostat to 20C, play news briefing, read calendar events. Condition:
+                only between 6am-9am.
               </p>
             </div>
           </div>
@@ -258,35 +282,42 @@ const SmartHomeModule6Section3 = () => {
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-2">Voice Triggers</h4>
                 <p className="text-white text-sm">
-                  Custom phrases like "Good night", "Movie time", or "I'm leaving". Should be distinct, memorable, and unlikely to be said accidentally.
+                  Custom phrases like "Good night", "Movie time", or "I'm leaving". Should be
+                  distinct, memorable, and unlikely to be said accidentally.
                 </p>
               </div>
 
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-2">Schedule Triggers</h4>
                 <p className="text-white text-sm">
-                  Time-based activation: specific times, sunrise/sunset, or recurring schedules. Useful for consistent daily routines like morning warm-up or evening lighting.
+                  Time-based activation: specific times, sunrise/sunset, or recurring schedules.
+                  Useful for consistent daily routines like morning warm-up or evening lighting.
                 </p>
               </div>
 
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">Location Triggers (Geofencing)</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">
+                  Location Triggers (Geofencing)
+                </h4>
                 <p className="text-white text-sm">
-                  Activate when entering or leaving a defined area. "Arriving home" can turn on lights and adjust heating. Requires phone location services.
+                  Activate when entering or leaving a defined area. "Arriving home" can turn on
+                  lights and adjust heating. Requires phone location services.
                 </p>
               </div>
 
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-2">Sensor Triggers</h4>
                 <p className="text-white text-sm">
-                  Motion detection, door opening, temperature thresholds, or other sensor events. Requires compatible sensors integrated with the voice platform.
+                  Motion detection, door opening, temperature thresholds, or other sensor events.
+                  Requires compatible sensors integrated with the voice platform.
                 </p>
               </div>
 
               <div className="bg-elec-gray/30 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-2">Device State Triggers</h4>
                 <p className="text-white text-sm">
-                  When a device changes state: smart lock unlocking, alarm disarming, or TV turning on. Enables responsive automation chains.
+                  When a device changes state: smart lock unlocking, alarm disarming, or TV turning
+                  on. Enables responsive automation chains.
                 </p>
               </div>
             </div>
@@ -301,7 +332,8 @@ const SmartHomeModule6Section3 = () => {
           </h2>
           <div className="space-y-4 text-white">
             <p>
-              Effective device naming is essential for reliable voice control. Poor naming leads to confusion, misrecognition, and frustrated customers.
+              Effective device naming is essential for reliable voice control. Poor naming leads to
+              confusion, misrecognition, and frustrated customers.
             </p>
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
@@ -309,23 +341,38 @@ const SmartHomeModule6Section3 = () => {
               <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Location + Function:</strong> "Kitchen ceiling light", "Living room lamp", "Bedroom fan"</span>
+                  <span>
+                    <strong>Location + Function:</strong> "Kitchen ceiling light", "Living room
+                    lamp", "Bedroom fan"
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Avoid numbers:</strong> "Light 1" is meaningless; "Hall pendant" is clear</span>
+                  <span>
+                    <strong>Avoid numbers:</strong> "Light 1" is meaningless; "Hall pendant" is
+                    clear
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Distinct names:</strong> Avoid similar sounding names that confuse recognition</span>
+                  <span>
+                    <strong>Distinct names:</strong> Avoid similar sounding names that confuse
+                    recognition
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Short but descriptive:</strong> Long names are harder to say and recognise</span>
+                  <span>
+                    <strong>Short but descriptive:</strong> Long names are harder to say and
+                    recognise
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
-                  <span><strong>Consistent format:</strong> Same pattern across all devices aids learning</span>
+                  <span>
+                    <strong>Consistent format:</strong> Same pattern across all devices aids
+                    learning
+                  </span>
                 </li>
               </ul>
             </div>
@@ -333,7 +380,8 @@ const SmartHomeModule6Section3 = () => {
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
               <h3 className="font-semibold text-white mb-3">Room Groups</h3>
               <p className="text-white mb-3">
-                Group devices by room for natural commands like "Turn off the bedroom" or "Dim the living room".
+                Group devices by room for natural commands like "Turn off the bedroom" or "Dim the
+                living room".
               </p>
               <ul className="space-y-1 text-white text-sm">
                 <li>- Kitchen: Ceiling light, under-cabinet lights, pendant</li>
@@ -389,7 +437,9 @@ const SmartHomeModule6Section3 = () => {
 
             <div className="bg-elec-gray/30 rounded-lg p-5 border border-white/10">
               <h3 className="font-semibold text-white mb-3">Away Mode</h3>
-              <p className="text-white text-sm mb-2">Trigger: "I'm leaving" or geofence departure</p>
+              <p className="text-white text-sm mb-2">
+                Trigger: "I'm leaving" or geofence departure
+              </p>
               <ul className="space-y-1 text-white text-sm">
                 <li>- Turn off all lights</li>
                 <li>- Lock all doors</li>
@@ -438,16 +488,28 @@ const SmartHomeModule6Section3 = () => {
               <h3 className="font-semibold text-white mb-3">Common Issues</h3>
               <div className="space-y-3 text-sm">
                 <div>
-                  <p className="text-white"><strong>Command not recognised:</strong> Check phrase is unique and clearly spoken. Try rephrasing or check voice history for what was heard.</p>
+                  <p className="text-white">
+                    <strong>Command not recognised:</strong> Check phrase is unique and clearly
+                    spoken. Try rephrasing or check voice history for what was heard.
+                  </p>
                 </div>
                 <div>
-                  <p className="text-white"><strong>Wrong device responds:</strong> Rename devices to be more distinct. Check room assignments.</p>
+                  <p className="text-white">
+                    <strong>Wrong device responds:</strong> Rename devices to be more distinct.
+                    Check room assignments.
+                  </p>
                 </div>
                 <div>
-                  <p className="text-white"><strong>Routine partially executes:</strong> Check all devices are online and responsive. Test each action individually.</p>
+                  <p className="text-white">
+                    <strong>Routine partially executes:</strong> Check all devices are online and
+                    responsive. Test each action individually.
+                  </p>
                 </div>
                 <div>
-                  <p className="text-white"><strong>Timing issues:</strong> Add delays between actions if devices need time to respond before next action.</p>
+                  <p className="text-white">
+                    <strong>Timing issues:</strong> Add delays between actions if devices need time
+                    to respond before next action.
+                  </p>
                 </div>
               </div>
             </div>

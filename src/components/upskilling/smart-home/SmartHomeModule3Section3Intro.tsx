@@ -12,7 +12,10 @@ export const SmartHomeModule3Section3Intro = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Smart lighting isn't limited to switching on and off. With modern systems, users can dim lights, adjust colour temperature, and even choose from millions of colours (RGBW). These features improve energy efficiency, comfort, and mood. For installers, understanding how these systems work and their limitations is essential for delivering the right solution.
+          Smart lighting isn't limited to switching on and off. With modern systems, users can dim
+          lights, adjust colour temperature, and even choose from millions of colours (RGBW). These
+          features improve energy efficiency, comfort, and mood. For installers, understanding how
+          these systems work and their limitations is essential for delivering the right solution.
         </p>
       </CardContent>
     </Card>

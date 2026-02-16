@@ -1,40 +1,42 @@
-import { ArrowLeft, ArrowDownToLine, Move, PackageOpen, Search } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowDownToLine, Move, PackageOpen, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Dismantling Procedure",
+    title: 'Dismantling Procedure',
     icon: ArrowDownToLine,
-    description: "Reverse of assembly, 3T and AGR dismantling, component lowering, common errors",
+    description: 'Reverse of assembly, 3T and AGR dismantling, component lowering, common errors',
   },
   {
     id: 2,
-    title: "Moving & Repositioning",
+    title: 'Moving & Repositioning',
     icon: Move,
-    description: "Pre-move conditions, push at base, post-move verification, zero-tolerance rules",
+    description: 'Pre-move conditions, push at base, post-move verification, zero-tolerance rules',
   },
   {
     id: 3,
-    title: "Storage & Maintenance",
+    title: 'Storage & Maintenance',
     icon: PackageOpen,
-    description: "Clean before storage, indoor dry storage, component segregation, maintenance schedule",
+    description:
+      'Clean before storage, indoor dry storage, component segregation, maintenance schedule',
   },
   {
     id: 4,
-    title: "Post-Use Inspection",
+    title: 'Post-Use Inspection',
     icon: Search,
-    description: "Why it matters, what to check, defect reporting, tagging system, record keeping",
+    description: 'Why it matters, what to check, defect reporting, tagging system, record keeping',
   },
 ];
 
 export default function PasmaModule4() {
   useSEO({
-    title: "Module 4: Dismantling, Moving & Storage | PASMA Towers for Users",
-    description: "Safe dismantling procedures, moving and repositioning, storage and maintenance, and post-use inspection for mobile access towers.",
+    title: 'Module 4: Dismantling, Moving & Storage | PASMA Towers for Users',
+    description:
+      'Safe dismantling procedures, moving and repositioning, storage and maintenance, and post-use inspection for mobile access towers.',
   });
 
   return (
@@ -73,7 +75,8 @@ export default function PasmaModule4() {
               Dismantling, Moving & Storage
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Safe dismantling procedures, repositioning rules, correct storage practices, and post-use inspection requirements
+              Safe dismantling procedures, repositioning rules, correct storage practices, and
+              post-use inspection requirements
             </p>
           </div>
 

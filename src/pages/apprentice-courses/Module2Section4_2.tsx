@@ -1,128 +1,145 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Sources of AC and DC - Level 2 Module 2 Section 4.2";
-const DESCRIPTION = "Comprehensive guide to AC and DC sources for UK electricians: mains, generators, batteries, PV, rectifiers, inverters, UPS, with BS 7671 guidance.";
+const TITLE = 'Sources of AC and DC - Level 2 Module 2 Section 4.2';
+const DESCRIPTION =
+  'Comprehensive guide to AC and DC sources for UK electricians: mains, generators, batteries, PV, rectifiers, inverters, UPS, with BS 7671 guidance.';
 
 const quickCheckQuestions = [
   {
-    id: "ac-sources",
-    question: "Which of these is a true AC source (not converted from DC)?",
-    options: ["Battery", "Rectifier output", "Alternator", "PV panel"],
+    id: 'ac-sources',
+    question: 'Which of these is a true AC source (not converted from DC)?',
+    options: ['Battery', 'Rectifier output', 'Alternator', 'PV panel'],
     correctIndex: 2,
-    explanation: "Alternators generate AC directly. Batteries are DC, rectifiers convert AC to DC, and PV panels produce DC."
+    explanation:
+      'Alternators generate AC directly. Batteries are DC, rectifiers convert AC to DC, and PV panels produce DC.',
   },
   {
-    id: "ups-topology",
-    question: "Which UPS topology provides the best isolation from mains supply issues?",
-    options: ["Offline/Standby", "Line-interactive", "Online/Double-conversion", "Passive"],
+    id: 'ups-topology',
+    question: 'Which UPS topology provides the best isolation from mains supply issues?',
+    options: ['Offline/Standby', 'Line-interactive', 'Online/Double-conversion', 'Passive'],
     correctIndex: 2,
-    explanation: "Online (double-conversion) UPS continuously converts AC→DC→AC, providing complete isolation from mains disturbances."
-  }
+    explanation:
+      'Online (double-conversion) UPS continuously converts AC→DC→AC, providing complete isolation from mains disturbances.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Which of the following is a DC source?",
-    options: ["Alternator output without rectifier", "Battery", "Mains socket", "Transformer secondary"],
+    question: 'Which of the following is a DC source?',
+    options: [
+      'Alternator output without rectifier',
+      'Battery',
+      'Mains socket',
+      'Transformer secondary',
+    ],
     correctAnswer: 1,
-    explanation: "Batteries provide DC; alternators and transformers produce AC unless rectified or inverted."
+    explanation:
+      'Batteries provide DC; alternators and transformers produce AC unless rectified or inverted.',
   },
   {
     id: 2,
-    question: "What section of BS 7671 covers generating sets and inverters?",
-    options: ["Section 551", "Section 712", "Section 722", "Section 414"],
+    question: 'What section of BS 7671 covers generating sets and inverters?',
+    options: ['Section 551', 'Section 712', 'Section 722', 'Section 414'],
     correctAnswer: 0,
-    explanation: "Section 551 addresses low-voltage generating sets including inverters."
+    explanation: 'Section 551 addresses low-voltage generating sets including inverters.',
   },
   {
     id: 3,
-    question: "Which UPS topology provides continuous conversion (best isolation)?",
-    options: ["Offline/Standby", "Line-interactive", "Online/Double-conversion", "Passive"],
+    question: 'Which UPS topology provides continuous conversion (best isolation)?',
+    options: ['Offline/Standby', 'Line-interactive', 'Online/Double-conversion', 'Passive'],
     correctAnswer: 2,
-    explanation: "Online (double-conversion) UPS continuously rectifies AC to DC and inverts back to AC."
+    explanation:
+      'Online (double-conversion) UPS continuously rectifies AC to DC and inverts back to AC.',
   },
   {
     id: 4,
-    question: "After full-wave rectification of 230 V AC (rms), what is the approximate DC peak before smoothing?",
-    options: ["230 V", "253 V", "325 V", "460 V"],
+    question:
+      'After full-wave rectification of 230 V AC (rms), what is the approximate DC peak before smoothing?',
+    options: ['230 V', '253 V', '325 V', '460 V'],
     correctAnswer: 2,
-    explanation: "Peak ≈ Vrms × √2 ≈ 230 × 1.414 ≈ 325 V (minus diode drops)."
+    explanation: 'Peak ≈ Vrms × √2 ≈ 230 × 1.414 ≈ 325 V (minus diode drops).',
   },
   {
     id: 5,
-    question: "A 12 V LED strip draws 2.4 A. What PSU current rating is sensible?",
-    options: ["2.5 A (no headroom)", "3 A (≈25% headroom)", "10 A (oversized)", "1 A (undersized)"],
+    question: 'A 12 V LED strip draws 2.4 A. What PSU current rating is sensible?',
+    options: ['2.5 A (no headroom)', '3 A (≈25% headroom)', '10 A (oversized)', '1 A (undersized)'],
     correctAnswer: 1,
-    explanation: "Providing sensible headroom (≈20–30%) is good practice."
+    explanation: 'Providing sensible headroom (≈20–30%) is good practice.',
   },
   {
     id: 6,
-    question: "Which section of BS 7671 is specific to PV systems?",
-    options: ["Section 551", "Section 712", "Section 722", "Section 414"],
+    question: 'Which section of BS 7671 is specific to PV systems?',
+    options: ['Section 551', 'Section 712', 'Section 722', 'Section 414'],
     correctAnswer: 1,
-    explanation: "Section 712 covers photovoltaic power supply systems."
+    explanation: 'Section 712 covers photovoltaic power supply systems.',
   },
   {
     id: 7,
-    question: "Which component converts DC to AC?",
-    options: ["Rectifier", "Inverter", "Transformer", "Battery"],
+    question: 'Which component converts DC to AC?',
+    options: ['Rectifier', 'Inverter', 'Transformer', 'Battery'],
     correctAnswer: 1,
-    explanation: "Inverters convert DC into AC."
+    explanation: 'Inverters convert DC into AC.',
   },
   {
     id: 8,
-    question: "Which symbol denotes AC on equipment labels?",
-    options: ["=", "~", "+/-", "≡"],
+    question: 'Which symbol denotes AC on equipment labels?',
+    options: ['=', '~', '+/-', '≡'],
     correctAnswer: 1,
-    explanation: "The tilde ~ marks alternating current. The equals sign = marks direct current."
+    explanation: 'The tilde ~ marks alternating current. The equals sign = marks direct current.',
   },
   {
     id: 9,
-    question: "EV charging installations are covered by which BS 7671 section?",
-    options: ["Section 551", "Section 712", "Section 722", "Section 560"],
+    question: 'EV charging installations are covered by which BS 7671 section?',
+    options: ['Section 551', 'Section 712', 'Section 722', 'Section 560'],
     correctAnswer: 2,
-    explanation: "Section 722 covers electric vehicle charging installations."
+    explanation: 'Section 722 covers electric vehicle charging installations.',
   },
   {
     id: 10,
-    question: "Which device reduces AC ripple after rectification?",
-    options: ["Inductor/capacitor filter", "Transformer", "Generator", "Contactor"],
+    question: 'Which device reduces AC ripple after rectification?',
+    options: ['Inductor/capacitor filter', 'Transformer', 'Generator', 'Contactor'],
     correctAnswer: 0,
-    explanation: "Filters (capacitors/inductors) smooth ripple on DC rails."
-  }
+    explanation: 'Filters (capacitors/inductors) smooth ripple on DC rails.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I parallel supplies of different types?",
-    answer: "Generally no without special control. Different sources (batteries, mains, generators) have different characteristics. Use proper transfer switches or paralleling equipment designed for the specific sources."
+    question: 'Can I parallel supplies of different types?',
+    answer:
+      'Generally no without special control. Different sources (batteries, mains, generators) have different characteristics. Use proper transfer switches or paralleling equipment designed for the specific sources.',
   },
   {
-    question: "How much headroom should I allow for a PSU?",
-    answer: "Typically 20-30% above the continuous load current. This accounts for start-up surges, component tolerances, aging, and ambient temperature effects."
+    question: 'How much headroom should I allow for a PSU?',
+    answer:
+      'Typically 20-30% above the continuous load current. This accounts for start-up surges, component tolerances, aging, and ambient temperature effects.',
   },
   {
-    question: "What level of ripple is acceptable for LEDs/electronics?",
-    answer: "Most LED drivers tolerate <5% ripple, but check manufacturer specs. Some electronics require <1% ripple. Poor filtering can cause visible flicker or premature failure."
+    question: 'What level of ripple is acceptable for LEDs/electronics?',
+    answer:
+      'Most LED drivers tolerate <5% ripple, but check manufacturer specs. Some electronics require <1% ripple. Poor filtering can cause visible flicker or premature failure.',
   },
   {
-    question: "Which RCD types are compatible with inverters/EV/PV?",
-    answer: "Check manufacturer instructions. Many require Type A or Type B RCDs due to DC components or high-frequency harmonics. Type AC may not provide adequate protection."
+    question: 'Which RCD types are compatible with inverters/EV/PV?',
+    answer:
+      'Check manufacturer instructions. Many require Type A or Type B RCDs due to DC components or high-frequency harmonics. Type AC may not provide adequate protection.',
   },
   {
-    question: "Do batteries require ventilation and temperature management?",
-    answer: "Yes, especially lead-acid (hydrogen gas risk) and some Li-ion chemistries. Follow manufacturer guidance on ventilation, temperature limits, and charging profiles."
+    question: 'Do batteries require ventilation and temperature management?',
+    answer:
+      'Yes, especially lead-acid (hydrogen gas risk) and some Li-ion chemistries. Follow manufacturer guidance on ventilation, temperature limits, and charging profiles.',
   },
   {
-    question: "Can a transformer provide DC? (Why not?)",
-    answer: "No. Transformers only work with changing magnetic fields (AC). For DC output, you need a rectifier after the transformer, or use a DC-DC converter for DC input."
-  }
+    question: 'Can a transformer provide DC? (Why not?)',
+    answer:
+      'No. Transformers only work with changing magnetic fields (AC). For DC output, you need a rectifier after the transformer, or use a DC-DC converter for DC input.',
+  },
 ];
 
 const Module2Section4_2 = () => {
@@ -133,7 +150,12 @@ const Module2Section4_2 = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.4
@@ -154,7 +176,8 @@ const Module2Section4_2 = () => {
             Sources of AC and DC
           </h1>
           <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
-            Mains, generators, rectifiers, batteries, PV, inverters and UPS - how to identify, select and work safely
+            Mains, generators, rectifiers, batteries, PV, inverters and UPS - how to identify,
+            select and work safely
           </p>
         </header>
 
@@ -163,14 +186,32 @@ const Module2Section4_2 = () => {
           <h2 className="text-white font-semibold mb-3">In 30 Seconds</h2>
           <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
             <ul className="list-disc pl-6 space-y-1">
-              <li><strong>AC sources:</strong> DNO mains, alternators/generators, transformers (AC↔AC only).</li>
-              <li><strong>DC sources:</strong> Batteries, rectifiers/SMPS, PV arrays, UPS DC bus, drives.</li>
-              <li><strong>Conversion:</strong> Rectifier (AC→DC), inverter (DC→AC); smoothing affects ripple.</li>
+              <li>
+                <strong>AC sources:</strong> DNO mains, alternators/generators, transformers (AC↔AC
+                only).
+              </li>
+              <li>
+                <strong>DC sources:</strong> Batteries, rectifiers/SMPS, PV arrays, UPS DC bus,
+                drives.
+              </li>
+              <li>
+                <strong>Conversion:</strong> Rectifier (AC→DC), inverter (DC→AC); smoothing affects
+                ripple.
+              </li>
             </ul>
             <ul className="list-disc pl-6 space-y-1">
-              <li><strong>UPS topologies:</strong> Offline, line-interactive, online (double-conversion).</li>
-              <li><strong>Selection:</strong> Headroom for surge, derating for temperature, RCD compatibility.</li>
-              <li><strong>Where:</strong> Plant rooms, switch rooms, UPS rooms, PV isolators, control panels.</li>
+              <li>
+                <strong>UPS topologies:</strong> Offline, line-interactive, online
+                (double-conversion).
+              </li>
+              <li>
+                <strong>Selection:</strong> Headroom for surge, derating for temperature, RCD
+                compatibility.
+              </li>
+              <li>
+                <strong>Where:</strong> Plant rooms, switch rooms, UPS rooms, PV isolators, control
+                panels.
+              </li>
             </ul>
           </div>
         </div>
@@ -185,7 +226,9 @@ const Module2Section4_2 = () => {
           <ul className="space-y-3 text-white/80">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Identify common AC and DC sources in domestic, commercial and industrial settings</span>
+              <span>
+                Identify common AC and DC sources in domestic, commercial and industrial settings
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -218,84 +261,176 @@ const Module2Section4_2 = () => {
           </h2>
           <div className="space-y-6 text-white/80">
             <p>
-              AC sources form the foundation of UK electrical infrastructure. Understanding their characteristics,
-              limitations, and applications is essential for safe design and installation work.
+              AC sources form the foundation of UK electrical infrastructure. Understanding their
+              characteristics, limitations, and applications is essential for safe design and
+              installation work.
             </p>
 
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold text-elec-yellow mb-3">DNO Mains Supply Characteristics</h3>
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">
+                  DNO Mains Supply Characteristics
+                </h3>
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                    <p className="text-white text-sm mb-2"><strong>UK Standard Supply Parameters:</strong></p>
+                    <p className="text-white text-sm mb-2">
+                      <strong>UK Standard Supply Parameters:</strong>
+                    </p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>Single-phase:</strong> 230V RMS ±10% at 50Hz ±1% (BS EN 50160)</li>
-                      <li><strong>Three-phase:</strong> 400V line-to-line, 230V line-to-neutral</li>
-                      <li><strong>Harmonics:</strong> Total harmonic distortion typically &lt;5% under normal conditions</li>
-                      <li><strong>Earthing:</strong> TN-S, TN-C-S, or TT systems per local DNO arrangements</li>
-                      <li><strong>Supply impedance:</strong> Varies by location, affects fault current levels</li>
+                      <li>
+                        <strong>Single-phase:</strong> 230V RMS ±10% at 50Hz ±1% (BS EN 50160)
+                      </li>
+                      <li>
+                        <strong>Three-phase:</strong> 400V line-to-line, 230V line-to-neutral
+                      </li>
+                      <li>
+                        <strong>Harmonics:</strong> Total harmonic distortion typically &lt;5% under
+                        normal conditions
+                      </li>
+                      <li>
+                        <strong>Earthing:</strong> TN-S, TN-C-S, or TT systems per local DNO
+                        arrangements
+                      </li>
+                      <li>
+                        <strong>Supply impedance:</strong> Varies by location, affects fault current
+                        levels
+                      </li>
                     </ul>
                   </div>
 
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                    <p className="text-white text-sm mb-2"><strong>Regional Variations and Considerations:</strong></p>
+                    <p className="text-white text-sm mb-2">
+                      <strong>Regional Variations and Considerations:</strong>
+                    </p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>Urban areas:</strong> Generally more stable supply, lower impedance</li>
-                      <li><strong>Rural areas:</strong> Higher impedance, voltage variations more common</li>
-                      <li><strong>Industrial estates:</strong> May have dedicated substations, better regulation</li>
-                      <li><strong>Voltage tolerance:</strong> Equipment must operate across ±10% range</li>
+                      <li>
+                        <strong>Urban areas:</strong> Generally more stable supply, lower impedance
+                      </li>
+                      <li>
+                        <strong>Rural areas:</strong> Higher impedance, voltage variations more
+                        common
+                      </li>
+                      <li>
+                        <strong>Industrial estates:</strong> May have dedicated substations, better
+                        regulation
+                      </li>
+                      <li>
+                        <strong>Voltage tolerance:</strong> Equipment must operate across ±10% range
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-elec-yellow mb-3">Generators and Alternators</h3>
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">
+                  Generators and Alternators
+                </h3>
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                    <p className="text-white text-sm mb-2"><strong>Portable and Standby Sets:</strong></p>
+                    <p className="text-white text-sm mb-2">
+                      <strong>Portable and Standby Sets:</strong>
+                    </p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>AVR (Automatic Voltage Regulation):</strong> Maintains stable output voltage</li>
-                      <li><strong>Governor control:</strong> Keeps frequency stable under varying loads</li>
-                      <li><strong>Earthing arrangements:</strong> May require separate earth electrode system</li>
-                      <li><strong>Changeover systems:</strong> Manual or automatic transfer switches (BS 7671 Section 551)</li>
-                      <li><strong>Synchronisation:</strong> Required for parallel operation with mains or other generators</li>
+                      <li>
+                        <strong>AVR (Automatic Voltage Regulation):</strong> Maintains stable output
+                        voltage
+                      </li>
+                      <li>
+                        <strong>Governor control:</strong> Keeps frequency stable under varying
+                        loads
+                      </li>
+                      <li>
+                        <strong>Earthing arrangements:</strong> May require separate earth electrode
+                        system
+                      </li>
+                      <li>
+                        <strong>Changeover systems:</strong> Manual or automatic transfer switches
+                        (BS 7671 Section 551)
+                      </li>
+                      <li>
+                        <strong>Synchronisation:</strong> Required for parallel operation with mains
+                        or other generators
+                      </li>
                     </ul>
                   </div>
 
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                    <p className="text-white text-sm mb-2"><strong>Installation Requirements:</strong></p>
+                    <p className="text-white text-sm mb-2">
+                      <strong>Installation Requirements:</strong>
+                    </p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>Ventilation:</strong> Adequate airflow for cooling and exhaust management</li>
-                      <li><strong>Fuel supply:</strong> Safe storage and handling per regulations</li>
-                      <li><strong>Noise control:</strong> Consider environmental impact and local bylaws</li>
-                      <li><strong>Emergency stop:</strong> Accessible shut-down facilities required</li>
+                      <li>
+                        <strong>Ventilation:</strong> Adequate airflow for cooling and exhaust
+                        management
+                      </li>
+                      <li>
+                        <strong>Fuel supply:</strong> Safe storage and handling per regulations
+                      </li>
+                      <li>
+                        <strong>Noise control:</strong> Consider environmental impact and local
+                        bylaws
+                      </li>
+                      <li>
+                        <strong>Emergency stop:</strong> Accessible shut-down facilities required
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-elec-yellow mb-3">Transformers and Voltage Conversion</h3>
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">
+                  Transformers and Voltage Conversion
+                </h3>
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                    <p className="text-white text-sm mb-2"><strong>Transformer Principles and Applications:</strong></p>
+                    <p className="text-white text-sm mb-2">
+                      <strong>Transformer Principles and Applications:</strong>
+                    </p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>Step-down transformers:</strong> 400V to 230V, 230V to 110V for tools</li>
-                      <li><strong>Isolation transformers:</strong> Provide galvanic separation for safety</li>
-                      <li><strong>Auto-transformers:</strong> Single winding, more compact but no isolation</li>
-                      <li><strong>Current transformers:</strong> For measurement and protection systems</li>
-                      <li><strong>Voltage transformers:</strong> For instrumentation and control circuits</li>
+                      <li>
+                        <strong>Step-down transformers:</strong> 400V to 230V, 230V to 110V for
+                        tools
+                      </li>
+                      <li>
+                        <strong>Isolation transformers:</strong> Provide galvanic separation for
+                        safety
+                      </li>
+                      <li>
+                        <strong>Auto-transformers:</strong> Single winding, more compact but no
+                        isolation
+                      </li>
+                      <li>
+                        <strong>Current transformers:</strong> For measurement and protection
+                        systems
+                      </li>
+                      <li>
+                        <strong>Voltage transformers:</strong> For instrumentation and control
+                        circuits
+                      </li>
                     </ul>
                   </div>
 
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                    <p className="text-white text-sm mb-2"><strong>Safety and Installation Notes:</strong></p>
+                    <p className="text-white text-sm mb-2">
+                      <strong>Safety and Installation Notes:</strong>
+                    </p>
                     <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>Temperature rating:</strong> Consider ambient conditions and loading</li>
-                      <li><strong>Overcurrent protection:</strong> Required on both primary and secondary</li>
-                      <li><strong>Earth bonding:</strong> Metalwork must be earthed per BS 7671</li>
-                      <li><strong>Nameplate data:</strong> Voltage ratios, kVA rating, connection diagrams</li>
+                      <li>
+                        <strong>Temperature rating:</strong> Consider ambient conditions and loading
+                      </li>
+                      <li>
+                        <strong>Overcurrent protection:</strong> Required on both primary and
+                        secondary
+                      </li>
+                      <li>
+                        <strong>Earth bonding:</strong> Metalwork must be earthed per BS 7671
+                      </li>
+                      <li>
+                        <strong>Nameplate data:</strong> Voltage ratios, kVA rating, connection
+                        diagrams
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -303,28 +438,34 @@ const Module2Section4_2 = () => {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-elec-yellow">
-                  <strong>Important Limitation:</strong> Transformers only work with AC - they cannot convert between AC and DC.
-                  For AC→DC conversion, you need rectification. For DC→AC, you need inversion. Transformers rely on
-                  changing magnetic fields which only occur with alternating current.
+                  <strong>Important Limitation:</strong> Transformers only work with AC - they
+                  cannot convert between AC and DC. For AC→DC conversion, you need rectification.
+                  For DC→AC, you need inversion. Transformers rely on changing magnetic fields which
+                  only occur with alternating current.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold text-elec-yellow mb-3">Selection Criteria and Applications</h3>
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">
+                  Selection Criteria and Applications
+                </h3>
                 <div className="space-y-2">
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-sm">
-                      <strong>Mains supply:</strong> First choice for fixed installations, most cost-effective
+                      <strong>Mains supply:</strong> First choice for fixed installations, most
+                      cost-effective
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-sm">
-                      <strong>Generators:</strong> Emergency backup, portable power, remote locations
+                      <strong>Generators:</strong> Emergency backup, portable power, remote
+                      locations
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-sm">
-                      <strong>Transformers:</strong> Voltage level conversion, safety isolation, impedance matching
+                      <strong>Transformers:</strong> Voltage level conversion, safety isolation,
+                      impedance matching
                     </p>
                   </div>
                 </div>
@@ -343,7 +484,8 @@ const Module2Section4_2 = () => {
           </h2>
           <div className="space-y-4 text-white/80">
             <p>
-              DC sources provide steady voltage with possible ripple. Understanding their characteristics is essential for proper selection and safety.
+              DC sources provide steady voltage with possible ripple. Understanding their
+              characteristics is essential for proper selection and safety.
             </p>
 
             <div className="space-y-4">
@@ -351,19 +493,35 @@ const Module2Section4_2 = () => {
                 <p className="font-bold text-white">Types of DC sources:</p>
                 <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                   <ul className="list-disc pl-6 space-y-1 text-sm text-elec-yellow">
-                    <li><strong>Batteries:</strong> Lead-acid, Li-ion, NiMH; note capacity (Ah), C-rate, temperature effects</li>
-                    <li><strong>Rectifiers/SMPS:</strong> AC→DC conversion; filtered output may have ripple</li>
-                    <li><strong>PV arrays:</strong> Solar panels produce DC varying with light/temperature (Section 712)</li>
-                    <li><strong>UPS DC bus:</strong> Internal battery-backed DC feeding inverter stages</li>
-                    <li><strong>Drive DC rails:</strong> Rectified mains feeding inverter sections in VFDs</li>
+                    <li>
+                      <strong>Batteries:</strong> Lead-acid, Li-ion, NiMH; note capacity (Ah),
+                      C-rate, temperature effects
+                    </li>
+                    <li>
+                      <strong>Rectifiers/SMPS:</strong> AC→DC conversion; filtered output may have
+                      ripple
+                    </li>
+                    <li>
+                      <strong>PV arrays:</strong> Solar panels produce DC varying with
+                      light/temperature (Section 712)
+                    </li>
+                    <li>
+                      <strong>UPS DC bus:</strong> Internal battery-backed DC feeding inverter
+                      stages
+                    </li>
+                    <li>
+                      <strong>Drive DC rails:</strong> Rectified mains feeding inverter sections in
+                      VFDs
+                    </li>
                   </ul>
                 </div>
               </div>
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-elec-yellow">
-                  <strong>Safety Note:</strong> DC systems can store significant energy in capacitors.
-                  Always discharge before maintenance and observe polarity - reverse connections can damage equipment.
+                  <strong>Safety Note:</strong> DC systems can store significant energy in
+                  capacitors. Always discharge before maintenance and observe polarity - reverse
+                  connections can damage equipment.
                 </p>
               </div>
             </div>
@@ -383,10 +541,21 @@ const Module2Section4_2 = () => {
               <h3 className="text-lg font-semibold text-teal-400">AC↔DC Conversion</h3>
               <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
                 <ul className="list-disc pl-6 space-y-2 text-sm">
-                  <li><strong>Rectification (AC→DC):</strong> Diode bridges, smoothing filters, expect some ripple</li>
-                  <li><strong>Inversion (DC→AC):</strong> Switch-mode electronics create AC from DC</li>
-                  <li><strong>Filtering:</strong> Capacitors/inductors reduce ripple but can't eliminate it completely</li>
-                  <li><strong>Harmonics:</strong> Power electronics can introduce distortion affecting other equipment</li>
+                  <li>
+                    <strong>Rectification (AC→DC):</strong> Diode bridges, smoothing filters, expect
+                    some ripple
+                  </li>
+                  <li>
+                    <strong>Inversion (DC→AC):</strong> Switch-mode electronics create AC from DC
+                  </li>
+                  <li>
+                    <strong>Filtering:</strong> Capacitors/inductors reduce ripple but can't
+                    eliminate it completely
+                  </li>
+                  <li>
+                    <strong>Harmonics:</strong> Power electronics can introduce distortion affecting
+                    other equipment
+                  </li>
                 </ul>
               </div>
             </div>
@@ -438,25 +607,56 @@ const Module2Section4_2 = () => {
               <h3 className="text-lg font-semibold text-amber-400">Selection Guidelines</h3>
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                 <ul className="list-disc pl-6 space-y-2 text-sm">
-                  <li><strong>Headroom:</strong> 20-30% above continuous load for surge/aging/temperature</li>
-                  <li><strong>Environment:</strong> Derate for high temperature, consider IP rating</li>
-                  <li><strong>Compatibility:</strong> Check RCD type requirements, earthing arrangements</li>
-                  <li><strong>Standards:</strong> Follow manufacturer instructions and relevant BS 7671 sections</li>
-                  <li><strong>Maintenance:</strong> Consider access for testing, battery replacement, ventilation</li>
+                  <li>
+                    <strong>Headroom:</strong> 20-30% above continuous load for
+                    surge/aging/temperature
+                  </li>
+                  <li>
+                    <strong>Environment:</strong> Derate for high temperature, consider IP rating
+                  </li>
+                  <li>
+                    <strong>Compatibility:</strong> Check RCD type requirements, earthing
+                    arrangements
+                  </li>
+                  <li>
+                    <strong>Standards:</strong> Follow manufacturer instructions and relevant BS
+                    7671 sections
+                  </li>
+                  <li>
+                    <strong>Maintenance:</strong> Consider access for testing, battery replacement,
+                    ventilation
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-amber-400">Isolation and Discharge Procedures</h3>
+              <h3 className="text-lg font-semibold text-amber-400">
+                Isolation and Discharge Procedures
+              </h3>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="space-y-2 text-sm">
-                  <p><strong>1. AC sources:</strong> Standard isolation, test for dead, lock off procedures</p>
-                  <p><strong>2. DC sources:</strong> Isolate both poles, discharge capacitors, verify zero energy</p>
-                  <p><strong>3. PV systems:</strong> Follow Section 712 - DC isolators first, wait for discharge</p>
-                  <p><strong>4. UPS systems:</strong> Isolate mains, battery, and internal DC before maintenance</p>
-                  <p><strong>5. Battery systems:</strong> Consider hydrogen ventilation, use insulated tools</p>
+                  <p>
+                    <strong>1. AC sources:</strong> Standard isolation, test for dead, lock off
+                    procedures
+                  </p>
+                  <p>
+                    <strong>2. DC sources:</strong> Isolate both poles, discharge capacitors, verify
+                    zero energy
+                  </p>
+                  <p>
+                    <strong>3. PV systems:</strong> Follow Section 712 - DC isolators first, wait
+                    for discharge
+                  </p>
+                  <p>
+                    <strong>4. UPS systems:</strong> Isolate mains, battery, and internal DC before
+                    maintenance
+                  </p>
+                  <p>
+                    <strong>5. Battery systems:</strong> Consider hydrogen ventilation, use
+                    insulated tools
+                  </p>
                 </div>
               </div>
             </div>
@@ -473,24 +673,49 @@ const Module2Section4_2 = () => {
           <div className="space-y-6">
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h3 className="font-bold text-white mb-2">Example 1: LED PSU Sizing</h3>
-              <p className="text-white/60 text-sm mb-2">Requirement: 12V LED strip drawing 2.4A continuous</p>
+              <p className="text-white/60 text-sm mb-2">
+                Requirement: 12V LED strip drawing 2.4A continuous
+              </p>
               <div className="space-y-1 text-sm text-white/80">
-                <p><strong>Calculation:</strong> 2.4A + 25% headroom = 3.0A minimum PSU rating</p>
-                <p><strong>Selection:</strong> Choose 12V, 3A+ PSU with appropriate IP rating</p>
-                <p><strong>Checks:</strong> Verify polarity marking, ripple specs, RCD compatibility</p>
-                <p><strong>Installation:</strong> Adequate ventilation, accessible for maintenance</p>
+                <p>
+                  <strong>Calculation:</strong> 2.4A + 25% headroom = 3.0A minimum PSU rating
+                </p>
+                <p>
+                  <strong>Selection:</strong> Choose 12V, 3A+ PSU with appropriate IP rating
+                </p>
+                <p>
+                  <strong>Checks:</strong> Verify polarity marking, ripple specs, RCD compatibility
+                </p>
+                <p>
+                  <strong>Installation:</strong> Adequate ventilation, accessible for maintenance
+                </p>
               </div>
             </div>
 
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-              <h3 className="font-bold text-white mb-2">Example 2: Small PV-Hybrid System Isolation</h3>
-              <p className="text-white/60 text-sm mb-2">Task: Safe isolation of PV array with battery storage for maintenance</p>
+              <h3 className="font-bold text-white mb-2">
+                Example 2: Small PV-Hybrid System Isolation
+              </h3>
+              <p className="text-white/60 text-sm mb-2">
+                Task: Safe isolation of PV array with battery storage for maintenance
+              </p>
               <div className="space-y-1 text-sm text-white/80">
-                <p><strong>Step 1:</strong> Isolate DC from PV array (Section 712 procedures)</p>
-                <p><strong>Step 2:</strong> Isolate battery DC connections</p>
-                <p><strong>Step 3:</strong> Allow capacitor discharge time per manufacturer instructions</p>
-                <p><strong>Step 4:</strong> Isolate AC side and prove dead before work</p>
-                <p><strong>Step 5:</strong> Test isolation effectiveness with appropriate instruments</p>
+                <p>
+                  <strong>Step 1:</strong> Isolate DC from PV array (Section 712 procedures)
+                </p>
+                <p>
+                  <strong>Step 2:</strong> Isolate battery DC connections
+                </p>
+                <p>
+                  <strong>Step 3:</strong> Allow capacitor discharge time per manufacturer
+                  instructions
+                </p>
+                <p>
+                  <strong>Step 4:</strong> Isolate AC side and prove dead before work
+                </p>
+                <p>
+                  <strong>Step 5:</strong> Test isolation effectiveness with appropriate instruments
+                </p>
               </div>
             </div>
           </div>
@@ -522,7 +747,9 @@ const Module2Section4_2 = () => {
             <div className="space-y-3">
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">AC Sources</p>
-                <p className="text-white/70">Mains (DNO) | Generator | Transformer | Inverter (DC→AC)</p>
+                <p className="text-white/70">
+                  Mains (DNO) | Generator | Transformer | Inverter (DC→AC)
+                </p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">DC Sources</p>
@@ -536,22 +763,28 @@ const Module2Section4_2 = () => {
             <div className="space-y-3">
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">UPS Types</p>
-                <p className="text-white/70">Offline | Line-interactive | Online (double-conversion)</p>
+                <p className="text-white/70">
+                  Offline | Line-interactive | Online (double-conversion)
+                </p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Selection Rules</p>
-                <p className="text-white/70">20-30% headroom | Derate for temperature | Check RCD compatibility</p>
+                <p className="text-white/70">
+                  20-30% headroom | Derate for temperature | Check RCD compatibility
+                </p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Safety Notes</p>
-                <p className="text-white/70">Discharge stored energy | Check polarity | Follow Section 712/551/722</p>
+                <p className="text-white/70">
+                  Discharge stored energy | Check polarity | Follow Section 712/551/722
+                </p>
               </div>
             </div>
           </div>
           <div className="mt-4 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/30">
             <p className="text-xs sm:text-sm text-white/80">
-              <strong>Quick Selection:</strong> PSU headroom ~25% | UPS: offline (basic), online (critical loads) |
-              RCD: Check manufacturer notes for Type A/B requirements.
+              <strong>Quick Selection:</strong> PSU headroom ~25% | UPS: offline (basic), online
+              (critical loads) | RCD: Check manufacturer notes for Type A/B requirements.
             </p>
           </div>
         </section>
@@ -563,11 +796,26 @@ const Module2Section4_2 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/apprentice/level2/module2/section4/4-1"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="/study-centre/apprentice/level2/module2/section4/4-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous
+            </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/apprentice/level2/module2/section4/4-3">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="/study-centre/apprentice/level2/module2/section4/4-3">
+              Next
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
           </Button>
         </nav>
       </div>

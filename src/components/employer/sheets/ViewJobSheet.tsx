@@ -1,43 +1,78 @@
-import { useState, useEffect } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { StatusBadge } from "@/components/employer/StatusBadge";
-import { AssignWorkersSheet } from "@/components/employer/sheets/AssignWorkersSheet";
-import { CopyJobSheet } from "@/components/employer/sheets/CopyJobSheet";
-import { JobLabelPicker } from "@/components/employer/JobLabelPicker";
-import { JobChecklist } from "@/components/employer/JobChecklist";
-import { JobActivityFeed } from "@/components/employer/JobActivityFeed";
-import { DueDateBadge } from "@/components/employer/DueDateBadge";
-import { toast } from "@/hooks/use-toast";
-import { useUpdateJob, useDeleteJob, useArchiveJob, useSetJobAsTemplate } from "@/hooks/useJobs";
-import { useJobAssignments, useRemoveWorkerFromJob } from "@/hooks/useJobAssignments";
-import { useLogJobActivity } from "@/hooks/useJobComments";
-import { Job, JobStatus } from "@/services/jobService";
-import { 
-  MapPin, Calendar, PoundSterling, Users, Trash2, Save, 
-  Edit3, X, Phone, MessageSquare, Navigation, FileText,
-  Clock, Camera, FolderOpen, UserPlus, Loader2, 
-  Copy, Archive, LayoutTemplate, MoreVertical, ChevronDown,
-  ListChecks, Activity
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Slider } from '@/components/ui/slider';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Card, CardContent } from '@/components/ui/card';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { StatusBadge } from '@/components/employer/StatusBadge';
+import { AssignWorkersSheet } from '@/components/employer/sheets/AssignWorkersSheet';
+import { CopyJobSheet } from '@/components/employer/sheets/CopyJobSheet';
+import { JobLabelPicker } from '@/components/employer/JobLabelPicker';
+import { JobChecklist } from '@/components/employer/JobChecklist';
+import { JobActivityFeed } from '@/components/employer/JobActivityFeed';
+import { DueDateBadge } from '@/components/employer/DueDateBadge';
+import { toast } from '@/hooks/use-toast';
+import { useUpdateJob, useDeleteJob, useArchiveJob, useSetJobAsTemplate } from '@/hooks/useJobs';
+import { useJobAssignments, useRemoveWorkerFromJob } from '@/hooks/useJobAssignments';
+import { useLogJobActivity } from '@/hooks/useJobComments';
+import { Job, JobStatus } from '@/services/jobService';
+import {
+  MapPin,
+  Calendar,
+  PoundSterling,
+  Users,
+  Trash2,
+  Save,
+  Edit3,
+  X,
+  Phone,
+  MessageSquare,
+  Navigation,
+  FileText,
+  Clock,
+  Camera,
+  FolderOpen,
+  UserPlus,
+  Loader2,
+  Copy,
+  Archive,
+  LayoutTemplate,
+  MoreVertical,
+  ChevronDown,
+  ListChecks,
+  Activity,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 interface ViewJobSheetProps {
   job: Job | null;
@@ -47,12 +82,18 @@ interface ViewJobSheetProps {
 
 const getStatusColour = (status: string) => {
   switch (status) {
-    case "Active": return "bg-success/10 border-success/30";
-    case "Pending": return "bg-warning/10 border-warning/30";
-    case "Completed": return "bg-muted border-muted-foreground/30";
-    case "On Hold": return "bg-info/10 border-info/30";
-    case "Cancelled": return "bg-destructive/10 border-destructive/30";
-    default: return "bg-muted border-border";
+    case 'Active':
+      return 'bg-success/10 border-success/30';
+    case 'Pending':
+      return 'bg-warning/10 border-warning/30';
+    case 'Completed':
+      return 'bg-muted border-muted-foreground/30';
+    case 'On Hold':
+      return 'bg-info/10 border-info/30';
+    case 'Cancelled':
+      return 'bg-destructive/10 border-destructive/30';
+    default:
+      return 'bg-muted border-border';
   }
 };
 
@@ -63,53 +104,55 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
   const setAsTemplate = useSetJobAsTemplate();
   const removeWorker = useRemoveWorkerFromJob();
   const logActivity = useLogJobActivity();
-  
-  const [title, setTitle] = useState("");
-  const [client, setClient] = useState("");
-  const [clientPhone, setClientPhone] = useState("");
-  const [clientEmail, setClientEmail] = useState("");
-  const [location, setLocation] = useState("");
-  const [status, setStatus] = useState<JobStatus>("Active");
+
+  const [title, setTitle] = useState('');
+  const [client, setClient] = useState('');
+  const [clientPhone, setClientPhone] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [location, setLocation] = useState('');
+  const [status, setStatus] = useState<JobStatus>('Active');
   const [progress, setProgress] = useState(0);
-  const [value, setValue] = useState("");
-  const [description, setDescription] = useState("");
+  const [value, setValue] = useState('');
+  const [description, setDescription] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [showAssignSheet, setShowAssignSheet] = useState(false);
   const [showCopySheet, setShowCopySheet] = useState(false);
-  
+
   // Collapsible sections state
   const [checklistOpen, setChecklistOpen] = useState(true);
   const [activityOpen, setActivityOpen] = useState(false);
   const [workersOpen, setWorkersOpen] = useState(true);
 
   // Fetch assigned workers
-  const { data: assignments = [], isLoading: loadingAssignments } = useJobAssignments(job?.id || "");
-  
+  const { data: assignments = [], isLoading: loadingAssignments } = useJobAssignments(
+    job?.id || ''
+  );
+
   // Reset form when job changes
   useEffect(() => {
     if (job) {
       setTitle(job.title);
       setClient(job.client);
-      setClientPhone(job.client_phone || "");
-      setClientEmail(job.client_email || "");
+      setClientPhone(job.client_phone || '');
+      setClientEmail(job.client_email || '');
       setLocation(job.location);
       setStatus(job.status);
       setProgress(job.progress);
-      setValue(job.value?.toString() || "");
-      setDescription(job.description || "");
+      setValue(job.value?.toString() || '');
+      setDescription(job.description || '');
       setIsEditing(false);
       setChecklistOpen(true);
       setActivityOpen(false);
       setWorkersOpen(true);
     }
   }, [job]);
-  
+
   const handleSave = async () => {
     if (!job) return;
-    
+
     const oldStatus = job.status;
     const oldProgress = job.progress;
-    
+
     try {
       await updateJob.mutateAsync({
         id: job.id,
@@ -123,9 +166,9 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
           progress,
           value: value ? parseFloat(value) : 0,
           description,
-        }
+        },
       });
-      
+
       if (oldStatus !== status) {
         logActivity.mutate({
           jobId: job.id,
@@ -133,7 +176,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
           commentType: 'status_change',
         });
       }
-      
+
       if (oldProgress !== progress) {
         logActivity.mutate({
           jobId: job.id,
@@ -141,51 +184,51 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
           commentType: 'progress',
         });
       }
-      
+
       toast({
-        title: "Job Updated",
+        title: 'Job Updated',
         description: `${title} has been updated.`,
       });
       setIsEditing(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update job.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update job.',
+        variant: 'destructive',
       });
     }
   };
-  
+
   const handleDelete = async () => {
     if (!job) return;
-    
+
     try {
       await deleteJob.mutateAsync(job.id);
       toast({
-        title: "Job Deleted",
+        title: 'Job Deleted',
         description: `${job.title} has been deleted.`,
       });
       onOpenChange(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to delete job.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to delete job.',
+        variant: 'destructive',
       });
     }
   };
-  
+
   const handleProgressChange = async (newProgress: number[]) => {
     if (!job) return;
     const oldProgress = progress;
     setProgress(newProgress[0]);
-    
+
     try {
       await updateJob.mutateAsync({
         id: job.id,
-        updates: { progress: newProgress[0] }
+        updates: { progress: newProgress[0] },
       });
-      
+
       if (oldProgress !== newProgress[0]) {
         logActivity.mutate({
           jobId: job.id,
@@ -194,24 +237,24 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
         });
       }
     } catch (error) {
-      console.error("Failed to update progress:", error);
+      console.error('Failed to update progress:', error);
     }
   };
 
   const handleRemoveWorker = async (employeeId: string, employeeName: string) => {
     if (!job) return;
-    
+
     try {
       await removeWorker.mutateAsync({ jobId: job.id, employeeId });
       toast({
-        title: "Worker Removed",
+        title: 'Worker Removed',
         description: `${employeeName} has been removed from this job.`,
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to remove worker.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to remove worker.',
+        variant: 'destructive',
       });
     }
   };
@@ -228,9 +271,9 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
       window.location.href = `tel:${job.client_phone}`;
     } else {
       toast({
-        title: "No phone number",
-        description: "Add a client phone number to enable calling.",
-        variant: "destructive",
+        title: 'No phone number',
+        description: 'Add a client phone number to enable calling.',
+        variant: 'destructive',
       });
     }
   };
@@ -243,58 +286,62 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
       window.location.href = `sms:${job.client_phone}`;
     } else {
       toast({
-        title: "No contact info",
-        description: "Add a client email or phone to enable messaging.",
-        variant: "destructive",
+        title: 'No contact info',
+        description: 'Add a client email or phone to enable messaging.',
+        variant: 'destructive',
       });
     }
   };
 
   const handleArchive = async () => {
     if (!job) return;
-    
+
     try {
       await archiveJob.mutateAsync(job.id);
       toast({
-        title: "Job Archived",
+        title: 'Job Archived',
         description: `${job.title} has been archived.`,
       });
       onOpenChange(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to archive job.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to archive job.',
+        variant: 'destructive',
       });
     }
   };
 
   const handleToggleTemplate = async () => {
     if (!job) return;
-    
+
     const newTemplateStatus = !job.is_template;
     try {
       await setAsTemplate.mutateAsync({ id: job.id, isTemplate: newTemplateStatus });
       toast({
-        title: newTemplateStatus ? "Saved as Template" : "Removed from Templates",
-        description: newTemplateStatus 
-          ? `${job.title} is now a template.` 
+        title: newTemplateStatus ? 'Saved as Template' : 'Removed from Templates',
+        description: newTemplateStatus
+          ? `${job.title} is now a template.`
           : `${job.title} is no longer a template.`,
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update template status.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update template status.',
+        variant: 'destructive',
       });
     }
   };
 
   if (!job) return null;
-  
+
   const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return "-";
-    return new Date(dateStr).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    if (!dateStr) return '-';
+    return new Date(dateStr).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
   };
 
   const calculateDuration = () => {
@@ -302,15 +349,15 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     const start = new Date(job.start_date);
     const end = new Date(job.end_date);
     const months = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24 * 30));
-    return months === 1 ? "1 month" : `${months} months`;
+    return months === 1 ? '1 month' : `${months} months`;
   };
-  
+
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent className="w-full sm:max-w-lg overflow-y-auto p-0">
           {/* Hero Header */}
-          <div className={cn("p-6 border-b", getStatusColour(job.status))}>
+          <div className={cn('p-6 border-b', getStatusColour(job.status))}>
             <SheetHeader className="text-left space-y-3">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
@@ -319,7 +366,10 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                       {job.title}
                     </SheetTitle>
                     {job.is_template && (
-                      <Badge variant="outline" className="text-xs gap-1 bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                      <Badge
+                        variant="outline"
+                        className="text-xs gap-1 bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+                      >
                         <LayoutTemplate className="h-3 w-3" />
                         Template
                       </Badge>
@@ -342,10 +392,13 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={handleToggleTemplate} className="gap-2">
                         <LayoutTemplate className="h-4 w-4" />
-                        {job.is_template ? "Remove from Templates" : "Save as Template"}
+                        {job.is_template ? 'Remove from Templates' : 'Save as Template'}
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={handleArchive} className="gap-2 text-warning focus:text-warning">
+                      <DropdownMenuItem
+                        onClick={handleArchive}
+                        className="gap-2 text-warning focus:text-warning"
+                      >
                         <Archive className="h-4 w-4" />
                         Archive
                       </DropdownMenuItem>
@@ -353,23 +406,33 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </DropdownMenu>
                 </div>
               </div>
-              
+
               {/* Labels */}
               <JobLabelPicker jobId={job.id} />
-              
+
               {/* Quick Actions */}
               <div className="flex gap-2 pt-2">
-                <Button variant="outline" size="sm" className="flex-1 h-10 gap-2" onClick={handleCall}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 h-10 gap-2"
+                  onClick={handleCall}
+                >
                   <Phone className="h-4 w-4" />
                   Call
                 </Button>
-                <Button variant="outline" size="sm" className="flex-1 h-10 gap-2" onClick={handleMessage}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 h-10 gap-2"
+                  onClick={handleMessage}
+                >
                   <MessageSquare className="h-4 w-4" />
                   Message
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="flex-1 h-10 gap-2"
                   onClick={handleNavigate}
                 >
@@ -379,7 +442,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
               </div>
             </SheetHeader>
           </div>
-          
+
           <div className="p-6 space-y-6">
             {/* Progress Section */}
             <Card className="border-elec-yellow/20 bg-elec-yellow/5">
@@ -415,7 +478,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="bg-elec-gray/50">
                 <CardContent className="p-3 flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-success/10">
@@ -423,11 +486,13 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">Value</p>
-                    <p className="text-sm font-bold text-success">£{(job.value || 0).toLocaleString()}</p>
+                    <p className="text-sm font-bold text-success">
+                      £{(job.value || 0).toLocaleString()}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="bg-elec-gray/50">
                 <CardContent className="p-3 flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-info/10">
@@ -435,11 +500,13 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">Duration</p>
-                    <p className="text-sm font-medium text-foreground">{calculateDuration() || "-"}</p>
+                    <p className="text-sm font-medium text-foreground">
+                      {calculateDuration() || '-'}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="bg-elec-gray/50">
                 <CardContent className="p-3 flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-warning/10">
@@ -447,7 +514,9 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">Workers</p>
-                    <p className="text-sm font-medium text-foreground">{assignments.length} assigned</p>
+                    <p className="text-sm font-medium text-foreground">
+                      {assignments.length} assigned
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -463,12 +532,16 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 <div className="flex justify-between items-center">
                   <div>
                     <p className="text-xs text-muted-foreground">Start Date</p>
-                    <p className="text-sm font-medium text-foreground">{formatDate(job.start_date)}</p>
+                    <p className="text-sm font-medium text-foreground">
+                      {formatDate(job.start_date)}
+                    </p>
                   </div>
                   <div className="h-px w-8 bg-border" />
                   <div className="text-right">
                     <p className="text-xs text-muted-foreground">End Date</p>
-                    <p className="text-sm font-medium text-foreground">{formatDate(job.end_date)}</p>
+                    <p className="text-sm font-medium text-foreground">
+                      {formatDate(job.end_date)}
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -478,7 +551,9 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
             {job.description && (
               <Card className="bg-elec-gray/50">
                 <CardContent className="p-4">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Description</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
+                    Description
+                  </p>
                   <p className="text-sm text-foreground leading-relaxed">{job.description}</p>
                 </CardContent>
               </Card>
@@ -492,8 +567,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm font-medium text-foreground">Assigned Workers</span>
-                        <Badge variant="secondary" className="text-xs">{assignments.length}</Badge>
+                        <span className="text-sm font-medium text-foreground">
+                          Assigned Workers
+                        </span>
+                        <Badge variant="secondary" className="text-xs">
+                          {assignments.length}
+                        </Badge>
                       </div>
                       <div className="flex items-center gap-2">
                         <Button
@@ -508,10 +587,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                           <UserPlus className="h-3.5 w-3.5" />
                           Assign
                         </Button>
-                        <ChevronDown className={cn(
-                          "h-4 w-4 text-muted-foreground transition-transform",
-                          workersOpen && "rotate-180"
-                        )} />
+                        <ChevronDown
+                          className={cn(
+                            'h-4 w-4 text-muted-foreground transition-transform',
+                            workersOpen && 'rotate-180'
+                          )}
+                        />
                       </div>
                     </div>
                   </CardContent>
@@ -528,23 +609,30 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                       </div>
                     ) : (
                       assignments.map((assignment) => (
-                        <div key={assignment.id} className="flex items-center gap-3 p-2 rounded-lg bg-background">
+                        <div
+                          key={assignment.id}
+                          className="flex items-center gap-3 p-2 rounded-lg bg-background"
+                        >
                           <Avatar className="h-8 w-8 bg-elec-yellow/10">
                             <AvatarFallback className="text-elec-yellow text-xs font-medium">
-                              {assignment.employee?.avatar_initials || "??"}
+                              {assignment.employee?.avatar_initials || '??'}
                             </AvatarFallback>
                           </Avatar>
                           <div className="flex-1 min-w-0">
                             <p className="font-medium text-sm text-foreground truncate">
-                              {assignment.employee?.name || "Unknown"}
+                              {assignment.employee?.name || 'Unknown'}
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {assignment.role_on_job || assignment.employee?.role || "Worker"}
+                              {assignment.role_on_job || assignment.employee?.role || 'Worker'}
                             </p>
                           </div>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-destructive">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7 text-muted-foreground hover:text-destructive"
+                              >
                                 <X className="h-3.5 w-3.5" />
                               </Button>
                             </AlertDialogTrigger>
@@ -552,13 +640,19 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                               <AlertDialogHeader>
                                 <AlertDialogTitle>Remove Worker?</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to remove {assignment.employee?.name} from this job?
+                                  Are you sure you want to remove {assignment.employee?.name} from
+                                  this job?
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction
-                                  onClick={() => handleRemoveWorker(assignment.employee_id, assignment.employee?.name || "")}
+                                  onClick={() =>
+                                    handleRemoveWorker(
+                                      assignment.employee_id,
+                                      assignment.employee?.name || ''
+                                    )
+                                  }
                                   className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                                 >
                                   Remove
@@ -584,10 +678,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                         <ListChecks className="h-4 w-4 text-muted-foreground" />
                         <span className="text-sm font-medium text-foreground">Checklist</span>
                       </div>
-                      <ChevronDown className={cn(
-                        "h-4 w-4 text-muted-foreground transition-transform",
-                        checklistOpen && "rotate-180"
-                      )} />
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-muted-foreground transition-transform',
+                          checklistOpen && 'rotate-180'
+                        )}
+                      />
                     </div>
                   </CardContent>
                 </CollapsibleTrigger>
@@ -609,10 +705,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                         <Activity className="h-4 w-4 text-muted-foreground" />
                         <span className="text-sm font-medium text-foreground">Activity</span>
                       </div>
-                      <ChevronDown className={cn(
-                        "h-4 w-4 text-muted-foreground transition-transform",
-                        activityOpen && "rotate-180"
-                      )} />
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-muted-foreground transition-transform',
+                          activityOpen && 'rotate-180'
+                        )}
+                      />
                     </div>
                   </CardContent>
                 </CollapsibleTrigger>
@@ -623,15 +721,19 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 </CollapsibleContent>
               </Card>
             </Collapsible>
-            
+
             {/* Quick Links */}
             <div className="space-y-2">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide px-1">Quick Links</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wide px-1">
+                Quick Links
+              </p>
               <div className="grid grid-cols-2 gap-2">
                 <Button
                   variant="outline"
                   className="h-12 justify-start gap-2"
-                  onClick={() => toast({ title: "Job Pack", description: "Job pack generation coming soon" })}
+                  onClick={() =>
+                    toast({ title: 'Job Pack', description: 'Job pack generation coming soon' })
+                  }
                 >
                   <FileText className="h-4 w-4 text-elec-yellow" />
                   Job Pack
@@ -639,7 +741,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 <Button
                   variant="outline"
                   className="h-12 justify-start gap-2"
-                  onClick={() => toast({ title: "Timesheets", description: "View timesheets in the Timesheets section" })}
+                  onClick={() =>
+                    toast({
+                      title: 'Timesheets',
+                      description: 'View timesheets in the Timesheets section',
+                    })
+                  }
                 >
                   <Clock className="h-4 w-4 text-elec-yellow" />
                   Timesheets
@@ -647,7 +754,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 <Button
                   variant="outline"
                   className="h-12 justify-start gap-2"
-                  onClick={() => toast({ title: "Photos", description: "View photos in the Photo Gallery section" })}
+                  onClick={() =>
+                    toast({
+                      title: 'Photos',
+                      description: 'View photos in the Photo Gallery section',
+                    })
+                  }
                 >
                   <Camera className="h-4 w-4 text-elec-yellow" />
                   Photos
@@ -655,21 +767,23 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                 <Button
                   variant="outline"
                   className="h-12 justify-start gap-2"
-                  onClick={() => toast({ title: "Documents", description: "Document management coming soon" })}
+                  onClick={() =>
+                    toast({ title: 'Documents', description: 'Document management coming soon' })
+                  }
                 >
                   <FolderOpen className="h-4 w-4 text-elec-yellow" />
                   Documents
                 </Button>
               </div>
             </div>
-            
+
             {/* Action Buttons */}
             <div className="flex gap-2 pt-4 border-t border-border">
               <Button onClick={() => setIsEditing(true)} className="flex-1 h-12 gap-2">
                 <Edit3 className="h-4 w-4" />
                 Edit Job
               </Button>
-              
+
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="destructive" size="icon" className="h-12 w-12">
@@ -706,10 +820,13 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                       <X className="h-5 w-5" />
                     </Button>
                   </div>
-                  
+
                   <div className="space-y-4 p-4 rounded-xl bg-muted/30 border border-border/50">
                     <div className="space-y-2">
-                      <Label htmlFor="title" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      <Label
+                        htmlFor="title"
+                        className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+                      >
                         Job Title
                       </Label>
                       <Input
@@ -719,9 +836,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                         className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="client" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      <Label
+                        htmlFor="client"
+                        className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+                      >
                         Client
                       </Label>
                       <Input
@@ -731,9 +851,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                         className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                       />
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="location" className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                      <Label
+                        htmlFor="location"
+                        className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5"
+                      >
                         <MapPin className="h-3.5 w-3.5" />
                         Location
                       </Label>
@@ -746,7 +869,10 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="description" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      <Label
+                        htmlFor="description"
+                        className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+                      >
                         Description
                       </Label>
                       <Textarea
@@ -757,10 +883,13 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="status" className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      <Label
+                        htmlFor="status"
+                        className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+                      >
                         Status
                       </Label>
                       <Select value={status} onValueChange={(v) => setStatus(v as JobStatus)}>
@@ -776,9 +905,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                         </SelectContent>
                       </Select>
                     </div>
-                    
+
                     <div className="space-y-2">
-                      <Label htmlFor="value" className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                      <Label
+                        htmlFor="value"
+                        className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5"
+                      >
                         <PoundSterling className="h-3.5 w-3.5" />
                         Value (£)
                       </Label>
@@ -791,13 +923,21 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="flex gap-2 pt-4">
-                    <Button onClick={handleSave} disabled={updateJob.isPending} className="flex-1 h-12 font-semibold gap-2">
+                    <Button
+                      onClick={handleSave}
+                      disabled={updateJob.isPending}
+                      className="flex-1 h-12 font-semibold gap-2"
+                    >
                       <Save className="h-4 w-4" />
                       Save Changes
                     </Button>
-                    <Button variant="outline" onClick={() => setIsEditing(false)} className="h-12 px-6">
+                    <Button
+                      variant="outline"
+                      onClick={() => setIsEditing(false)}
+                      className="h-12 px-6"
+                    >
                       <X className="h-4 w-4" />
                     </Button>
                   </div>
@@ -819,11 +959,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
       )}
 
       {/* Copy Job Sheet */}
-      <CopyJobSheet
-        job={job}
-        open={showCopySheet}
-        onOpenChange={setShowCopySheet}
-      />
+      <CopyJobSheet job={job} open={showCopySheet} onOpenChange={setShowCopySheet} />
     </>
   );
 }

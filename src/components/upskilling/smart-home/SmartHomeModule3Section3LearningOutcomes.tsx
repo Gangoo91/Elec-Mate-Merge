@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const SmartHomeModule3Section3LearningOutcomes = () => {
   const outcomes = [
-    "Explain how dimming works in smart lighting systems",
-    "Define RGBW and describe its applications",
-    "Differentiate between warm, neutral, and cool colour temperatures",
-    "Recognise compatibility issues with dimmers and LEDs",
-    "Advise clients on when and how to use dimming and colour control effectively"
+    'Explain how dimming works in smart lighting systems',
+    'Define RGBW and describe its applications',
+    'Differentiate between warm, neutral, and cool colour temperatures',
+    'Recognise compatibility issues with dimmers and LEDs',
+    'Advise clients on when and how to use dimming and colour control effectively',
   ];
 
   return (

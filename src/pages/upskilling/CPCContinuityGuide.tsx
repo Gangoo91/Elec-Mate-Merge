@@ -1,4 +1,16 @@
-import { ArrowLeft, Shield, Zap, CheckCircle, AlertTriangle, Info, Target, Settings, BookOpen, Eye, Activity } from 'lucide-react';
+import {
+  ArrowLeft,
+  Shield,
+  Zap,
+  CheckCircle,
+  AlertTriangle,
+  Info,
+  Target,
+  Settings,
+  BookOpen,
+  Eye,
+  Activity,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,173 +20,193 @@ const CPCContinuityGuide = () => {
   const testingSteps = [
     {
       step: 1,
-      title: "Pre-Test Preparation",
+      title: 'Pre-Test Preparation',
       icon: Settings,
-      description: "Essential preparation before testing begins",
+      description: 'Essential preparation before testing begins',
       details: [
-        "Ensure safe isolation is complete and verified",
-        "Select appropriate low-resistance ohmmeter (BS EN 61557-4)",
-        "Check test instrument calibration and test leads",
-        "Identify all CPC connections to be tested",
-        "Remove any parallel paths that could affect readings",
-        "Ensure all bonding conductors are disconnected if required"
+        'Ensure safe isolation is complete and verified',
+        'Select appropriate low-resistance ohmmeter (BS EN 61557-4)',
+        'Check test instrument calibration and test leads',
+        'Identify all CPC connections to be tested',
+        'Remove any parallel paths that could affect readings',
+        'Ensure all bonding conductors are disconnected if required',
       ],
       safetyPoints: [
-        "Never test on live circuits",
-        "Verify isolation with approved voltage indicator",
-        "Check test leads for damage before use"
-      ]
+        'Never test on live circuits',
+        'Verify isolation with approved voltage indicator',
+        'Check test leads for damage before use',
+      ],
     },
     {
       step: 2,
-      title: "Circuit Analysis",
+      title: 'Circuit Analysis',
       icon: Eye,
-      description: "Understanding the circuit before testing",
+      description: 'Understanding the circuit before testing',
       details: [
-        "Identify the CPC route from consumer unit to furthest point",
-        "Note any junction boxes or connection points",
-        "Check for any borrowed neutrals or cross-connections",
-        "Identify socket outlets, switches, and accessories on circuit",
-        "Map out ring final circuits if applicable",
-        "Note cable types and sizes used"
+        'Identify the CPC route from consumer unit to furthest point',
+        'Note any junction boxes or connection points',
+        'Check for any borrowed neutrals or cross-connections',
+        'Identify socket outlets, switches, and accessories on circuit',
+        'Map out ring final circuits if applicable',
+        'Note cable types and sizes used',
       ],
       safetyPoints: [
-        "Understand the complete circuit layout",
-        "Be aware of any unusual wiring arrangements"
-      ]
+        'Understand the complete circuit layout',
+        'Be aware of any unusual wiring arrangements',
+      ],
     },
     {
       step: 3,
-      title: "Test Method Selection",
+      title: 'Test Method Selection',
       icon: Target,
-      description: "Choose appropriate test method based on circuit type",
+      description: 'Choose appropriate test method based on circuit type',
       details: [
-        "Radial circuits: Test from CU earth terminal to furthest point",
-        "Ring circuits: Test using R1 + R2 method or separate R1 and R2",
-        "Use test current between 200mA and 1A (typically 200mA)",
-        "For long runs, consider temperature correction factors",
-        "Document which method is being used",
-        "Set up test leads for minimum resistance path"
+        'Radial circuits: Test from CU earth terminal to furthest point',
+        'Ring circuits: Test using R1 + R2 method or separate R1 and R2',
+        'Use test current between 200mA and 1A (typically 200mA)',
+        'For long runs, consider temperature correction factors',
+        'Document which method is being used',
+        'Set up test leads for minimum resistance path',
       ],
       safetyPoints: [
-        "Ensure correct test current selection",
-        "Verify test method suits circuit configuration"
-      ]
+        'Ensure correct test current selection',
+        'Verify test method suits circuit configuration',
+      ],
     },
     {
       step: 4,
-      title: "Resistance Measurement",
+      title: 'Resistance Measurement',
       icon: Activity,
-      description: "Performing the actual continuity test",
+      description: 'Performing the actual continuity test',
       details: [
-        "Connect test leads to CPC at distribution board and circuit end",
-        "Take reading with all connections made",
-        "Record resistance value in ohms (Ω)",
-        "Test each outlet/accessory on the circuit",
-        "For rings: test end-to-end and cross-connection resistance",
-        "Repeat test if readings seem unusual"
+        'Connect test leads to CPC at distribution board and circuit end',
+        'Take reading with all connections made',
+        'Record resistance value in ohms (Ω)',
+        'Test each outlet/accessory on the circuit',
+        'For rings: test end-to-end and cross-connection resistance',
+        'Repeat test if readings seem unusual',
       ],
       safetyPoints: [
-        "Ensure good contact at test points",
-        "Watch for intermittent connections",
-        "Be aware of contact resistance in test leads"
-      ]
-    }
+        'Ensure good contact at test points',
+        'Watch for intermittent connections',
+        'Be aware of contact resistance in test leads',
+      ],
+    },
   ];
 
   const whyWeTest = [
     {
-      title: "Legal Requirement",
-      description: "BS 7671 Regulation 543.2.1 requires all protective conductors to be tested",
-      icon: Shield
+      title: 'Legal Requirement',
+      description: 'BS 7671 Regulation 543.2.1 requires all protective conductors to be tested',
+      icon: Shield,
     },
     {
-      title: "Safety Critical",
-      description: "CPC provides the path for fault current to operate protective devices",
-      icon: AlertTriangle
+      title: 'Safety Critical',
+      description: 'CPC provides the path for fault current to operate protective devices',
+      icon: AlertTriangle,
     },
     {
-      title: "Protection Verification",
-      description: "Ensures protective devices will operate within required disconnection times",
-      icon: CheckCircle
+      title: 'Protection Verification',
+      description: 'Ensures protective devices will operate within required disconnection times',
+      icon: CheckCircle,
     },
     {
-      title: "Installation Integrity",
-      description: "Confirms electrical and mechanical integrity of protective connections",
-      icon: Zap
-    }
+      title: 'Installation Integrity',
+      description: 'Confirms electrical and mechanical integrity of protective connections',
+      icon: Zap,
+    },
   ];
 
   const scienceBehind = [
     {
       title: "Ohm's Law Application",
-      description: "V = I × R - Lower resistance = higher fault current = faster disconnection",
-      formula: "Fault Current (I) = Supply Voltage (V) ÷ Circuit Impedance (R)"
+      description: 'V = I × R - Lower resistance = higher fault current = faster disconnection',
+      formula: 'Fault Current (I) = Supply Voltage (V) ÷ Circuit Impedance (R)',
     },
     {
-      title: "Fault Current Path",
-      description: "Fault current flows through CPC back to source transformer neutral point",
-      formula: "Total Circuit Impedance = R1 + R2 (where R1 = line, R2 = CPC)"
+      title: 'Fault Current Path',
+      description: 'Fault current flows through CPC back to source transformer neutral point',
+      formula: 'Total Circuit Impedance = R1 + R2 (where R1 = line, R2 = CPC)',
     },
     {
-      title: "Temperature Effects",
-      description: "Conductor resistance increases with temperature - correction factors needed",
-      formula: "R₂ = R₁ × (1 + α(T₂ - T₁)) where α = temperature coefficient"
+      title: 'Temperature Effects',
+      description: 'Conductor resistance increases with temperature - correction factors needed',
+      formula: 'R₂ = R₁ × (1 + α(T₂ - T₁)) where α = temperature coefficient',
     },
     {
-      title: "Protective Device Operation",
-      description: "Device must operate before conductor temperature reaches damage threshold",
-      formula: "Disconnection Time ∝ 1/(Fault Current)²"
-    }
+      title: 'Protective Device Operation',
+      description: 'Device must operate before conductor temperature reaches damage threshold',
+      formula: 'Disconnection Time ∝ 1/(Fault Current)²',
+    },
   ];
 
   const expectedResults = [
     {
-      category: "Excellent",
-      range: "< 0.05Ω per 100m",
-      color: "text-green-400 bg-green-600/20",
-      description: "Very low resistance, excellent continuity",
-      implications: "High fault currents, fast protective device operation"
+      category: 'Excellent',
+      range: '< 0.05Ω per 100m',
+      color: 'text-green-400 bg-green-600/20',
+      description: 'Very low resistance, excellent continuity',
+      implications: 'High fault currents, fast protective device operation',
     },
     {
-      category: "Good",
-      range: "0.05Ω - 0.2Ω per 100m",
-      color: "text-elec-yellow bg-elec-yellow/20",
-      description: "Acceptable resistance for most applications",
-      implications: "Adequate fault current levels, normal operation expected"
+      category: 'Good',
+      range: '0.05Ω - 0.2Ω per 100m',
+      color: 'text-elec-yellow bg-elec-yellow/20',
+      description: 'Acceptable resistance for most applications',
+      implications: 'Adequate fault current levels, normal operation expected',
     },
     {
-      category: "Acceptable",
-      range: "0.2Ω - 1.0Ω",
-      color: "text-elec-yellow bg-elec-yellow/20",
-      description: "Higher resistance but still within limits",
-      implications: "Check against circuit requirements, may need investigation"
+      category: 'Acceptable',
+      range: '0.2Ω - 1.0Ω',
+      color: 'text-elec-yellow bg-elec-yellow/20',
+      description: 'Higher resistance but still within limits',
+      implications: 'Check against circuit requirements, may need investigation',
     },
     {
-      category: "Poor",
-      range: "> 1.0Ω",
-      color: "text-red-400 bg-red-600/20",
-      description: "High resistance indicating problems",
-      implications: "Investigate connections, possible safety risk"
-    }
+      category: 'Poor',
+      range: '> 1.0Ω',
+      color: 'text-red-400 bg-red-600/20',
+      description: 'High resistance indicating problems',
+      implications: 'Investigate connections, possible safety risk',
+    },
   ];
 
   const commonProblems = [
     {
-      problem: "High Resistance Reading",
-      causes: ["Poor connections", "Corroded terminals", "Undersized conductor", "Damaged cable"],
-      solutions: ["Check all connections", "Clean terminals", "Verify cable size", "Replace damaged sections"]
+      problem: 'High Resistance Reading',
+      causes: ['Poor connections', 'Corroded terminals', 'Undersized conductor', 'Damaged cable'],
+      solutions: [
+        'Check all connections',
+        'Clean terminals',
+        'Verify cable size',
+        'Replace damaged sections',
+      ],
     },
     {
-      problem: "Open Circuit (∞Ω)",
-      causes: ["Broken conductor", "Disconnected terminal", "Missing link", "Switch in circuit"],
-      solutions: ["Trace circuit path", "Check all terminals", "Verify connections", "Remove switches from test"]
+      problem: 'Open Circuit (∞Ω)',
+      causes: ['Broken conductor', 'Disconnected terminal', 'Missing link', 'Switch in circuit'],
+      solutions: [
+        'Trace circuit path',
+        'Check all terminals',
+        'Verify connections',
+        'Remove switches from test',
+      ],
     },
     {
-      problem: "Variable Readings",
-      causes: ["Loose connections", "Intermittent fault", "Parallel paths", "Poor test lead contact"],
-      solutions: ["Secure all connections", "Investigate cable route", "Remove parallel paths", "Check test equipment"]
-    }
+      problem: 'Variable Readings',
+      causes: [
+        'Loose connections',
+        'Intermittent fault',
+        'Parallel paths',
+        'Poor test lead contact',
+      ],
+      solutions: [
+        'Secure all connections',
+        'Investigate cable route',
+        'Remove parallel paths',
+        'Check test equipment',
+      ],
+    },
   ];
 
   return (
@@ -190,12 +222,12 @@ const CPCContinuityGuide = () => {
             Back to Practical Tests
           </Button>
         </Link>
-        
+
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <Zap className="h-8 w-8 text-elec-yellow" />
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className="bg-green-600/40 text-green-300 hover:bg-green-600/50 font-semibold text-sm px-3 py-1 border-0"
             >
               Continuity Testing
@@ -205,7 +237,8 @@ const CPCContinuityGuide = () => {
             Continuity of CPCs (Circuit Protective Conductors)
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-3xl">
-            Comprehensive guide to testing protective conductor continuity with practical procedures and result interpretation
+            Comprehensive guide to testing protective conductor continuity with practical procedures
+            and result interpretation
           </p>
         </div>
       </header>
@@ -213,7 +246,6 @@ const CPCContinuityGuide = () => {
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-6xl mx-auto space-y-8">
-
           {/* Why We Test Section */}
           <Card className="bg-transparent border-transparent">
             <CardHeader>
@@ -276,70 +308,112 @@ const CPCContinuityGuide = () => {
                   <h4 className="text-elec-yellow font-semibold">Before You Start</h4>
                 </div>
                 <p className="text-yellow-200 text-sm">
-                  You have a low-resistance ohmmeter (like a Megger MFT) and you're testing a radial socket circuit. 
-                  The power is isolated and proven dead.
+                  You have a low-resistance ohmmeter (like a Megger MFT) and you're testing a radial
+                  socket circuit. The power is isolated and proven dead.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">1</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
+                      1
+                    </div>
                     <h3 className="text-white text-lg font-semibold">Set Up Your Meter</h3>
                   </div>
                   <div className="space-y-3">
                     <p className="text-white">• Turn on your low-resistance ohmmeter</p>
-                    <p className="text-white">• Select continuity/low-resistance mode (usually marked with Ω symbol)</p>
-                    <p className="text-white">• Check test current is set to 200mA (standard for CPC testing)</p>
-                    <p className="text-white">• Connect your test leads to the meter (usually red = positive, black = negative)</p>
+                    <p className="text-white">
+                      • Select continuity/low-resistance mode (usually marked with Ω symbol)
+                    </p>
+                    <p className="text-white">
+                      • Check test current is set to 200mA (standard for CPC testing)
+                    </p>
+                    <p className="text-white">
+                      • Connect your test leads to the meter (usually red = positive, black =
+                      negative)
+                    </p>
                     <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow">
-                      <p className="text-blue-200 text-sm"><strong>Tip:</strong> Touch the test leads together - reading should be close to 0.00Ω (this is your lead resistance)</p>
+                      <p className="text-blue-200 text-sm">
+                        <strong>Tip:</strong> Touch the test leads together - reading should be
+                        close to 0.00Ω (this is your lead resistance)
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">2</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
+                      2
+                    </div>
                     <h3 className="text-white text-lg font-semibold">Locate Your Test Points</h3>
                   </div>
                   <div className="space-y-3">
                     <p className="text-white">• Go to the consumer unit/distribution board</p>
-                    <p className="text-white">• Find the circuit you're testing (check circuit schedule)</p>
-                    <p className="text-white">• Locate the earth terminal bar where the CPC connects</p>
+                    <p className="text-white">
+                      • Find the circuit you're testing (check circuit schedule)
+                    </p>
+                    <p className="text-white">
+                      • Locate the earth terminal bar where the CPC connects
+                    </p>
                     <p className="text-white">• Go to the furthest socket on the circuit</p>
-                    <p className="text-white">• Remove the socket faceplate to access the earth terminal</p>
+                    <p className="text-white">
+                      • Remove the socket faceplate to access the earth terminal
+                    </p>
                     <div className="bg-red-600/20 p-3 rounded border-l-4 border-red-400">
-                      <p className="text-red-200 text-sm"><strong>Safety:</strong> Double-check isolation is still in place before removing socket</p>
+                      <p className="text-red-200 text-sm">
+                        <strong>Safety:</strong> Double-check isolation is still in place before
+                        removing socket
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">3</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
+                      3
+                    </div>
                     <h3 className="text-white text-lg font-semibold">Make the Connections</h3>
                   </div>
                   <div className="space-y-3">
-                    <p className="text-white">• Connect one test lead to the earth terminal bar at the consumer unit</p>
-                    <p className="text-white">• Connect the other test lead to the earth terminal at the socket</p>
-                    <p className="text-white">• Ensure good mechanical contact (clean terminals if necessary)</p>
-                    <p className="text-white">• Make sure no parallel paths exist (disconnect bonding if required)</p>
+                    <p className="text-white">
+                      • Connect one test lead to the earth terminal bar at the consumer unit
+                    </p>
+                    <p className="text-white">
+                      • Connect the other test lead to the earth terminal at the socket
+                    </p>
+                    <p className="text-white">
+                      • Ensure good mechanical contact (clean terminals if necessary)
+                    </p>
+                    <p className="text-white">
+                      • Make sure no parallel paths exist (disconnect bonding if required)
+                    </p>
                     <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow">
-                      <p className="text-blue-200 text-sm"><strong>Physical Tip:</strong> Use crocodile clips for secure connection, press firmly on spring-loaded probes</p>
+                      <p className="text-blue-200 text-sm">
+                        <strong>Physical Tip:</strong> Use crocodile clips for secure connection,
+                        press firmly on spring-loaded probes
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">4</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
+                      4
+                    </div>
                     <h3 className="text-white text-lg font-semibold">Take the Reading</h3>
                   </div>
                   <div className="space-y-3">
                     <p className="text-white">• Press the test button on your meter</p>
-                    <p className="text-white">• Wait for the reading to stabilise (usually 2-3 seconds)</p>
-                    <p className="text-white">• Read the display - it will show resistance in ohms (Ω)</p>
+                    <p className="text-white">
+                      • Wait for the reading to stabilise (usually 2-3 seconds)
+                    </p>
+                    <p className="text-white">
+                      • Read the display - it will show resistance in ohms (Ω)
+                    </p>
                     <p className="text-white">• Record the reading on your test certificate</p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
                       <div className="bg-green-600/20 p-3 rounded text-center">
@@ -360,24 +434,37 @@ const CPCContinuityGuide = () => {
 
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">5</div>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
+                      5
+                    </div>
                     <h3 className="text-white text-lg font-semibold">Test Multiple Points</h3>
                   </div>
                   <div className="space-y-3">
                     <p className="text-white">• Keep one lead at the consumer unit earth bar</p>
-                    <p className="text-white">• Move the other lead to each socket/accessory on the circuit</p>
+                    <p className="text-white">
+                      • Move the other lead to each socket/accessory on the circuit
+                    </p>
                     <p className="text-white">• Record readings for each point tested</p>
-                    <p className="text-white">• The furthest point should give the highest reading</p>
+                    <p className="text-white">
+                      • The furthest point should give the highest reading
+                    </p>
                     <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow">
-                      <p className="text-blue-200 text-sm"><strong>Pattern:</strong> Readings should increase with distance - socket 1: 0.05Ω, socket 2: 0.08Ω, socket 3: 0.12Ω</p>
+                      <p className="text-blue-200 text-sm">
+                        <strong>Pattern:</strong> Readings should increase with distance - socket 1:
+                        0.05Ω, socket 2: 0.08Ω, socket 3: 0.12Ω
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">6</div>
-                    <h3 className="text-white text-lg font-semibold">What You See on Different Meters</h3>
+                    <div className="bg-elec-yellow text-black w-8 h-8 rounded-full flex items-center justify-center font-bold">
+                      6
+                    </div>
+                    <h3 className="text-white text-lg font-semibold">
+                      What You See on Different Meters
+                    </h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -388,7 +475,9 @@ const CPCContinuityGuide = () => {
                     </div>
                     <div className="space-y-2">
                       <p className="text-white font-medium">Analogue Needle:</p>
-                      <p className="text-white text-sm">• Needle deflects right = good continuity</p>
+                      <p className="text-white text-sm">
+                        • Needle deflects right = good continuity
+                      </p>
                       <p className="text-white text-sm">• No deflection = open circuit</p>
                       <p className="text-white text-sm">• Read value where needle points</p>
                     </div>
@@ -429,34 +518,43 @@ const CPCContinuityGuide = () => {
                   <h4 className="text-orange-400 font-semibold">Common Problem</h4>
                 </div>
                 <p className="text-orange-200 text-sm">
-                  Your test leads are only 3-4 metres long but the socket is 20 metres away from the DB. 
-                  Here's how to do the test properly without buying 50-metre leads!
+                  Your test leads are only 3-4 metres long but the socket is 20 metres away from the
+                  DB. Here's how to do the test properly without buying 50-metre leads!
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-4 flex items-center gap-3">
-                    <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                    <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                      1
+                    </span>
                     R1 + R2 Method at the Distribution Board
                   </h3>
                   <div className="space-y-3">
                     <p className="text-white font-medium">Best method for long circuits:</p>
                     <ul className="text-white text-sm space-y-2 ml-4">
-                      <li>• At the DB, disconnect the line and CPC conductors from their terminals</li>
+                      <li>
+                        • At the DB, disconnect the line and CPC conductors from their terminals
+                      </li>
                       <li>• Link the line and CPC together at the furthest point (socket end)</li>
                       <li>• Measure resistance between line and CPC at the DB end</li>
                       <li>• This gives you the total R1 + R2 value for the circuit</li>
                     </ul>
                     <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow mt-3">
-                      <p className="text-blue-200 text-sm"><strong>Why this works:</strong> Current flows down the line conductor, through the link, and back via the CPC</p>
+                      <p className="text-blue-200 text-sm">
+                        <strong>Why this works:</strong> Current flows down the line conductor,
+                        through the link, and back via the CPC
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-4 flex items-center gap-3">
-                    <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                    <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                      2
+                    </span>
                     Temporary Link Method
                   </h3>
                   <div className="space-y-3">
@@ -469,14 +567,19 @@ const CPCContinuityGuide = () => {
                       <li>• Remove the temporary link when finished</li>
                     </ul>
                     <div className="bg-green-600/20 p-3 rounded border-l-4 border-green-400 mt-3">
-                      <p className="text-green-200 text-sm"><strong>Equipment needed:</strong> Small piece of 1.5mm² cable or dedicated test link</p>
+                      <p className="text-green-200 text-sm">
+                        <strong>Equipment needed:</strong> Small piece of 1.5mm² cable or dedicated
+                        test link
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-4 flex items-center gap-3">
-                    <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
+                    <span className="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                      3
+                    </span>
                     Junction Box Test Points
                   </h3>
                   <div className="space-y-3">
@@ -488,14 +591,19 @@ const CPCContinuityGuide = () => {
                       <li>• Verify continuity through each section</li>
                     </ul>
                     <div className="bg-purple-600/20 p-3 rounded border-l-4 border-purple-400 mt-3">
-                      <p className="text-purple-200 text-sm"><strong>Example:</strong> DB to JB1: 0.05Ω, JB1 to Socket: 0.08Ω = Total: 0.13Ω</p>
+                      <p className="text-purple-200 text-sm">
+                        <strong>Example:</strong> DB to JB1: 0.05Ω, JB1 to Socket: 0.08Ω = Total:
+                        0.13Ω
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-transparent/80 p-6 rounded-lg">
                   <h3 className="text-white text-lg font-semibold mb-4 flex items-center gap-3">
-                    <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</span>
+                    <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                      4
+                    </span>
                     Extended Test Leads
                   </h3>
                   <div className="space-y-3">
@@ -507,20 +615,27 @@ const CPCContinuityGuide = () => {
                       <li>• Ensure good connections at joints</li>
                     </ul>
                     <div className="bg-elec-yellow/20 p-3 rounded border-l-4 border-elec-yellow mt-3">
-                      <p className="text-yellow-200 text-sm"><strong>Important:</strong> Null (zero) your leads AFTER extending to account for extra resistance</p>
+                      <p className="text-yellow-200 text-sm">
+                        <strong>Important:</strong> Null (zero) your leads AFTER extending to
+                        account for extra resistance
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-white text-lg font-semibold mb-4">Practical Example: Long Circuit Test</h3>
+                <h3 className="text-white text-lg font-semibold mb-4">
+                  Practical Example: Long Circuit Test
+                </h3>
                 <div className="space-y-4">
                   <div className="bg-transparent p-4 rounded">
                     <h4 className="text-elec-yellow font-medium mb-2">Scenario:</h4>
-                    <p className="text-white text-sm">32A ring main, 50 metres long, your leads are only 4 metres</p>
+                    <p className="text-white text-sm">
+                      32A ring main, 50 metres long, your leads are only 4 metres
+                    </p>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <h4 className="text-white font-medium mb-2">Method Used:</h4>
@@ -532,7 +647,7 @@ const CPCContinuityGuide = () => {
                         <li>4. Record result</li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-white font-medium mb-2">Verification:</h4>
                       <p className="text-white text-sm mb-2">Check makes sense for circuit</p>
@@ -582,9 +697,9 @@ const CPCContinuityGuide = () => {
                       <IconComponent className="h-6 w-6 text-elec-yellow" />
                       <h3 className="text-white text-lg font-semibold">{step.title}</h3>
                     </div>
-                    
+
                     <p className="text-white mb-4">{step.description}</p>
-                    
+
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                       <div>
                         <h4 className="text-white font-medium mb-2">Procedure:</h4>
@@ -597,7 +712,7 @@ const CPCContinuityGuide = () => {
                           ))}
                         </ul>
                       </div>
-                      
+
                       <div>
                         <h4 className="text-white font-medium mb-2">Safety Points:</h4>
                         <ul className="text-white text-sm space-y-1">
@@ -629,9 +744,7 @@ const CPCContinuityGuide = () => {
                 {expectedResults.map((result, index) => (
                   <div key={index} className="bg-transparent/80 p-4 rounded-lg">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge className={`${result.color} border-0`}>
-                        {result.category}
-                      </Badge>
+                      <Badge className={`${result.color} border-0`}>{result.category}</Badge>
                       <span className="text-white font-mono text-sm">{result.range}</span>
                     </div>
                     <p className="text-white text-sm mb-2">{result.description}</p>
@@ -639,7 +752,7 @@ const CPCContinuityGuide = () => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="bg-elec-yellow/20 p-4 rounded-lg border border-blue-600/30">
                 <div className="flex items-center gap-2 mb-2">
                   <Info className="h-5 w-5 text-elec-yellow" />
@@ -648,7 +761,10 @@ const CPCContinuityGuide = () => {
                 <ul className="text-blue-200 text-sm space-y-1">
                   <li>• Results must be compared with circuit design values</li>
                   <li>• Temperature correction may be required for accurate comparison</li>
-                  <li>• High resistance readings may indicate poor connections or undersized conductors</li>
+                  <li>
+                    • High resistance readings may indicate poor connections or undersized
+                    conductors
+                  </li>
                   <li>• Always verify results make sense for the circuit being tested</li>
                 </ul>
               </div>
@@ -725,7 +841,8 @@ const CPCContinuityGuide = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    Consider the installation environment and cable routing when interpreting results
+                    Consider the installation environment and cable routing when interpreting
+                    results
                   </li>
                 </ul>
               </div>
@@ -741,18 +858,20 @@ const CPCContinuityGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               {/* Scenario 1: Domestic Installation */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                  <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    1
+                  </span>
                   Domestic Kitchen Extension - 32A Ring Main
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
-                      <strong>Scenario:</strong> Testing a new kitchen ring main - 2.5mm² T&E cable, 25-metre run, 8 socket outlets
+                      <strong>Scenario:</strong> Testing a new kitchen ring main - 2.5mm² T&E cable,
+                      25-metre run, 8 socket outlets
                     </p>
                   </div>
 
@@ -767,7 +886,7 @@ const CPCContinuityGuide = () => {
                         <li>• Some sockets behind fitted units</li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-white font-medium mb-2">Practical Challenges:</h4>
                       <ul className="text-white text-sm space-y-2">
@@ -800,8 +919,9 @@ const CPCContinuityGuide = () => {
 
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-yellow-200 text-sm">
-                      <strong>Pro Tip:</strong> Mark each socket with masking tape as you test - "L1", "L2" etc. 
-                      This helps you track which leg of the ring each socket is on and speeds up the R1+R2 test.
+                      <strong>Pro Tip:</strong> Mark each socket with masking tape as you test -
+                      "L1", "L2" etc. This helps you track which leg of the ring each socket is on
+                      and speeds up the R1+R2 test.
                     </p>
                   </div>
                 </div>
@@ -810,37 +930,46 @@ const CPCContinuityGuide = () => {
               {/* Scenario 2: Commercial Installation */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                  <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    2
+                  </span>
                   Office Refurbishment - Multiple Circuits
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-green-600/20 p-4 rounded border-l-4 border-green-400">
                     <p className="text-green-200 text-sm">
-                      <strong>Scenario:</strong> Open-plan office, 12 ring circuits, SWA feeds to floor boxes, testing during weekend shutdown
+                      <strong>Scenario:</strong> Open-plan office, 12 ring circuits, SWA feeds to
+                      floor boxes, testing during weekend shutdown
                     </p>
                   </div>
 
                   <div className="space-y-3">
                     <h4 className="text-white font-medium">Practical Testing Strategy:</h4>
                     <div className="bg-transparent p-4 rounded space-y-2">
-                      <p className="text-white text-sm"><strong>1. Pre-Test Preparation (30 mins):</strong></p>
+                      <p className="text-white text-sm">
+                        <strong>1. Pre-Test Preparation (30 mins):</strong>
+                      </p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• Obtain site plans and circuit schedules</li>
                         <li>• Identify all distribution boards</li>
                         <li>• Check access to floor boxes and trunking</li>
                         <li>• Coordinate with site security for access</li>
                       </ul>
-                      
-                      <p className="text-white text-sm mt-3"><strong>2. Testing Sequence (2-3 hours):</strong></p>
+
+                      <p className="text-white text-sm mt-3">
+                        <strong>2. Testing Sequence (2-3 hours):</strong>
+                      </p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• Test one complete circuit at a time</li>
                         <li>• Use R1+R2 method to save time</li>
                         <li>• Label all circuits as you go</li>
                         <li>• Take photos of unusual results</li>
                       </ul>
-                      
-                      <p className="text-white text-sm mt-3"><strong>3. Common Issues Found:</strong></p>
+
+                      <p className="text-white text-sm mt-3">
+                        <strong>3. Common Issues Found:</strong>
+                      </p>
                       <ul className="text-white text-sm ml-4 space-y-1">
                         <li>• Mixed cable types in same circuit</li>
                         <li>• Incorrect labelling on distribution board</li>
@@ -855,14 +984,17 @@ const CPCContinuityGuide = () => {
               {/* Scenario 3: Fault Finding */}
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-xl font-semibold mb-4 flex items-center gap-3">
-                  <span className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</span>
+                  <span className="bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                    3
+                  </span>
                   Fault Investigation - High Resistance Reading
                 </h3>
-                
+
                 <div className="space-y-4">
                   <div className="bg-red-600/20 p-4 rounded border-l-4 border-red-400">
                     <p className="text-red-200 text-sm">
-                      <strong>Problem:</strong> Periodic inspection shows CPC continuity reading of 2.5Ω - should be around 0.3Ω
+                      <strong>Problem:</strong> Periodic inspection shows CPC continuity reading of
+                      2.5Ω - should be around 0.3Ω
                     </p>
                   </div>
 
@@ -870,7 +1002,9 @@ const CPCContinuityGuide = () => {
                     <h4 className="text-white font-medium">Systematic Fault Finding Process:</h4>
                     <div className="space-y-3">
                       <div className="bg-transparent p-3 rounded">
-                        <p className="text-elec-yellow font-medium text-sm">Step 1: Verify the Problem</p>
+                        <p className="text-elec-yellow font-medium text-sm">
+                          Step 1: Verify the Problem
+                        </p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Re-test with different meter</li>
                           <li>• Check test lead resistance</li>
@@ -878,9 +1012,11 @@ const CPCContinuityGuide = () => {
                           <li>• Compare with original test certificate</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-transparent p-3 rounded">
-                        <p className="text-elec-yellow font-medium text-sm">Step 2: Isolate the Problem</p>
+                        <p className="text-elec-yellow font-medium text-sm">
+                          Step 2: Isolate the Problem
+                        </p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Test continuity of each cable section</li>
                           <li>• Check connections at junction boxes</li>
@@ -888,9 +1024,11 @@ const CPCContinuityGuide = () => {
                           <li>• Test each socket back to previous point</li>
                         </ul>
                       </div>
-                      
+
                       <div className="bg-transparent p-3 rounded">
-                        <p className="text-elec-yellow font-medium text-sm">Step 3: Found the Culprit</p>
+                        <p className="text-elec-yellow font-medium text-sm">
+                          Step 3: Found the Culprit
+                        </p>
                         <ul className="text-white text-sm mt-2 space-y-1">
                           <li>• Loose earth terminal in junction box</li>
                           <li>• Adding 2.2Ω to circuit resistance</li>
@@ -903,8 +1041,8 @@ const CPCContinuityGuide = () => {
 
                   <div className="bg-green-600/20 p-4 rounded border-l-4 border-green-400">
                     <p className="text-green-200 text-sm">
-                      <strong>Result:</strong> After tightening connection, reading drops to 0.29Ω - problem solved! 
-                      Always check the obvious things first.
+                      <strong>Result:</strong> After tightening connection, reading drops to 0.29Ω -
+                      problem solved! Always check the obvious things first.
                     </p>
                   </div>
                 </div>
@@ -921,33 +1059,41 @@ const CPCContinuityGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Meter Selection & Setup</h3>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-elec-yellow font-medium mb-2">Recommended Meters:</h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span><strong>Megger MFT1731:</strong> Reliable, clear display, good for beginners</span>
+                        <span>
+                          <strong>Megger MFT1731:</strong> Reliable, clear display, good for
+                          beginners
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span><strong>Fluke 1664FC:</strong> Bluetooth connectivity, data logging</span>
+                        <span>
+                          <strong>Fluke 1664FC:</strong> Bluetooth connectivity, data logging
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span><strong>Kewtech KT65:</strong> Budget option, simple operation</span>
+                        <span>
+                          <strong>Kewtech KT65:</strong> Budget option, simple operation
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <span><strong>Robin KTS1710:</strong> Robust, good for site work</span>
+                        <span>
+                          <strong>Robin KTS1710:</strong> Robust, good for site work
+                        </span>
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div>
                     <h4 className="text-elec-yellow font-medium mb-2">Essential Setup Steps:</h4>
                     <ul className="text-white text-sm space-y-2">
@@ -963,15 +1109,16 @@ const CPCContinuityGuide = () => {
 
                 <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow mt-4">
                   <p className="text-yellow-200 text-sm">
-                    <strong>Field Tip:</strong> Always carry a basic multimeter as backup. Digital meters can fail, 
-                    and a simple continuity tester can get you out of trouble when you need to verify a circuit quickly.
+                    <strong>Field Tip:</strong> Always carry a basic multimeter as backup. Digital
+                    meters can fail, and a simple continuity tester can get you out of trouble when
+                    you need to verify a circuit quickly.
                   </p>
                 </div>
               </div>
 
               <div className="bg-transparent/80 p-6 rounded-lg">
                 <h3 className="text-white text-lg font-semibold mb-4">Test Lead Techniques</h3>
-                
+
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -984,7 +1131,7 @@ const CPCContinuityGuide = () => {
                         <li>• Banana plugs for panel connections</li>
                       </ul>
                     </div>
-                    
+
                     <div>
                       <h4 className="text-red-400 font-medium mb-2">Common Contact Problems:</h4>
                       <ul className="text-white text-sm space-y-2">
@@ -999,17 +1146,19 @@ const CPCContinuityGuide = () => {
 
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
                     <p className="text-blue-200 text-sm">
-                      <strong>Professional Technique:</strong> For critical measurements, take the reading three times 
-                      with slight probe movement each time. If all three readings are similar, you can be confident 
-                      in the result.
+                      <strong>Professional Technique:</strong> For critical measurements, take the
+                      reading three times with slight probe movement each time. If all three
+                      readings are similar, you can be confident in the result.
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-white text-lg font-semibold mb-4">Environmental Considerations</h3>
-                
+                <h3 className="text-white text-lg font-semibold mb-4">
+                  Environmental Considerations
+                </h3>
+
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-elec-yellow/20 p-4 rounded">
@@ -1021,7 +1170,7 @@ const CPCContinuityGuide = () => {
                         <li>• Keep meter warm for accuracy</li>
                       </ul>
                     </div>
-                    
+
                     <div className="bg-red-600/20 p-4 rounded">
                       <h4 className="text-red-400 font-semibold mb-2">Hot Conditions</h4>
                       <ul className="text-red-200 text-sm space-y-1">
@@ -1031,7 +1180,7 @@ const CPCContinuityGuide = () => {
                         <li>• Factor in operating temperature</li>
                       </ul>
                     </div>
-                    
+
                     <div className="bg-green-600/20 p-4 rounded">
                       <h4 className="text-green-400 font-semibold mb-2">Humid Conditions</h4>
                       <ul className="text-green-200 text-sm space-y-1">
@@ -1044,9 +1193,14 @@ const CPCContinuityGuide = () => {
                   </div>
 
                   <div className="bg-transparent p-4 rounded">
-                    <h4 className="text-elec-yellow font-medium mb-2">Temperature Correction Formula:</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">
+                      Temperature Correction Formula:
+                    </h4>
                     <p className="text-white text-sm font-mono">R₂ = R₁ × [1 + 0.004(T₂ - T₁)]</p>
-                    <p className="text-white text-sm mt-2">Where: R₁ = measured resistance, T₁ = test temp, T₂ = operating temp (typically 70°C)</p>
+                    <p className="text-white text-sm mt-2">
+                      Where: R₁ = measured resistance, T₁ = test temp, T₂ = operating temp
+                      (typically 70°C)
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1062,13 +1216,16 @@ const CPCContinuityGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-white text-lg font-semibold mb-4">Efficient Testing Workflow</h3>
-                
+                <h3 className="text-white text-lg font-semibold mb-4">
+                  Efficient Testing Workflow
+                </h3>
+
                 <div className="space-y-4">
                   <div className="bg-transparent p-4 rounded">
-                    <h4 className="text-elec-yellow font-medium mb-2">Pre-Test Organisation (Saves 30-40 minutes):</h4>
+                    <h4 className="text-elec-yellow font-medium mb-2">
+                      Pre-Test Organisation (Saves 30-40 minutes):
+                    </h4>
                     <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow">1.</span>
@@ -1104,7 +1261,7 @@ const CPCContinuityGuide = () => {
                         <li>• Complete R1+R2 tests circuit by circuit</li>
                       </ul>
                     </div>
-                    
+
                     <div className="bg-elec-yellow/20 p-4 rounded">
                       <h4 className="text-elec-yellow font-semibold mb-2">Smart Recording</h4>
                       <ul className="text-blue-200 text-sm space-y-1">
@@ -1120,14 +1277,19 @@ const CPCContinuityGuide = () => {
               </div>
 
               <div className="bg-transparent/80 p-6 rounded-lg">
-                <h3 className="text-white text-lg font-semibold mb-4">Common Shortcuts (That Actually Work)</h3>
-                
+                <h3 className="text-white text-lg font-semibold mb-4">
+                  Common Shortcuts (That Actually Work)
+                </h3>
+
                 <div className="space-y-4">
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
-                    <h4 className="text-elec-yellow font-semibold mb-2">The "Reference Socket" Method</h4>
+                    <h4 className="text-elec-yellow font-semibold mb-2">
+                      The "Reference Socket" Method
+                    </h4>
                     <p className="text-yellow-200 text-sm mb-2">
-                      For multiple similar circuits, establish a "reference" reading from a known good circuit, 
-                      then you can quickly spot any circuits that read significantly different.
+                      For multiple similar circuits, establish a "reference" reading from a known
+                      good circuit, then you can quickly spot any circuits that read significantly
+                      different.
                     </p>
                     <ul className="text-yellow-200 text-sm space-y-1">
                       <li>• Test one complete circuit thoroughly first</li>
@@ -1138,9 +1300,12 @@ const CPCContinuityGuide = () => {
                   </div>
 
                   <div className="bg-elec-yellow/20 p-4 rounded border-l-4 border-elec-yellow">
-                    <h4 className="text-elec-yellow font-semibold mb-2">The "Pattern Recognition" Approach</h4>
+                    <h4 className="text-elec-yellow font-semibold mb-2">
+                      The "Pattern Recognition" Approach
+                    </h4>
                     <p className="text-blue-200 text-sm mb-2">
-                      Experienced electricians develop an eye for normal vs abnormal readings based on circuit characteristics.
+                      Experienced electricians develop an eye for normal vs abnormal readings based
+                      on circuit characteristics.
                     </p>
                     <ul className="text-blue-200 text-sm space-y-1">
                       <li>• 2.5mm² T&E, 20m run ≈ 0.15-0.20Ω typically</li>
@@ -1166,7 +1331,6 @@ const CPCContinuityGuide = () => {
               </div>
             </CardContent>
           </Card>
-
         </div>
       </main>
     </div>

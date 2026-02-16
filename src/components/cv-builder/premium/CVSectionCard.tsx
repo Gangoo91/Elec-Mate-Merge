@@ -3,20 +3,14 @@
  * Expandable with AI assist button and completion indicator
  */
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import {
-  ChevronDown,
-  Check,
-  Sparkles,
-  GripVertical,
-  AlertCircle,
-} from "lucide-react";
-import { cardExpandVariants, cardPressVariants } from "./animations/variants";
-import { MiniProgressRing } from "./CVProgressRing";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import { ChevronDown, Check, Sparkles, GripVertical, AlertCircle } from 'lucide-react';
+import { cardExpandVariants, cardPressVariants } from './animations/variants';
+import { MiniProgressRing } from './CVProgressRing';
 
 interface CVSectionCardProps {
   title: string;
@@ -61,14 +55,14 @@ const CVSectionCard = ({
   return (
     <motion.div
       variants={cardPressVariants}
-      whileTap={isExpanded ? undefined : "tap"}
+      whileTap={isExpanded ? undefined : 'tap'}
       className={cn(
-        "rounded-2xl border overflow-hidden transition-all duration-300",
+        'rounded-2xl border overflow-hidden transition-all duration-300',
         showComplete
-          ? "border-emerald-500/30 bg-emerald-500/5"
+          ? 'border-emerald-500/30 bg-emerald-500/5'
           : isExpanded
-          ? "border-blue-500/30 bg-blue-500/5"
-          : "border-white/10 bg-white/[0.03] hover:border-white/20",
+            ? 'border-blue-500/30 bg-blue-500/5'
+            : 'border-white/10 bg-white/[0.03] hover:border-white/20',
         className
       )}
     >
@@ -92,21 +86,13 @@ const CVSectionCard = ({
         <div className="relative flex-shrink-0">
           <div
             className={cn(
-              "w-10 h-10 rounded-xl flex items-center justify-center",
-              showComplete
-                ? "bg-emerald-500/20"
-                : isExpanded
-                ? "bg-blue-500/20"
-                : "bg-white/10"
+              'w-10 h-10 rounded-xl flex items-center justify-center',
+              showComplete ? 'bg-emerald-500/20' : isExpanded ? 'bg-blue-500/20' : 'bg-white/10'
             )}
           >
             <div
               className={cn(
-                showComplete
-                  ? "text-emerald-400"
-                  : isExpanded
-                  ? "text-blue-400"
-                  : "text-white/60"
+                showComplete ? 'text-emerald-400' : isExpanded ? 'text-blue-400' : 'text-white/60'
               )}
             >
               {icon}
@@ -133,9 +119,7 @@ const CVSectionCard = ({
               </Badge>
             )}
           </div>
-          {description && (
-            <p className="text-xs text-white/50 truncate">{description}</p>
-          )}
+          {description && <p className="text-xs text-white/50 truncate">{description}</p>}
         </div>
 
         {/* Progress/Count */}
@@ -160,26 +144,21 @@ const CVSectionCard = ({
               }}
               disabled={isAILoading}
               className={cn(
-                "h-8 w-8 rounded-lg",
-                isAILoading
-                  ? "bg-purple-500/20"
-                  : "bg-white/5 hover:bg-purple-500/20"
+                'h-8 w-8 rounded-lg',
+                isAILoading ? 'bg-purple-500/20' : 'bg-white/5 hover:bg-purple-500/20'
               )}
             >
               <Sparkles
                 className={cn(
-                  "h-4 w-4",
-                  isAILoading ? "text-purple-400 animate-pulse" : "text-purple-400"
+                  'h-4 w-4',
+                  isAILoading ? 'text-purple-400 animate-pulse' : 'text-purple-400'
                 )}
               />
             </Button>
           )}
 
           {/* Expand Arrow */}
-          <motion.div
-            animate={{ rotate: isExpanded ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
+          <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
             <ChevronDown className="h-5 w-5 text-white/40" />
           </motion.div>
         </div>
@@ -195,9 +174,7 @@ const CVSectionCard = ({
             exit="collapsed"
             className="overflow-hidden"
           >
-            <div className="px-4 pb-4 pt-2 border-t border-white/5">
-              {children}
-            </div>
+            <div className="px-4 pb-4 pt-2 border-t border-white/5">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -229,10 +206,10 @@ export const CVEntryCard = ({
 }: CVEntryCardProps) => (
   <div
     className={cn(
-      "p-3 rounded-xl border transition-all",
+      'p-3 rounded-xl border transition-all',
       isValid
-        ? "border-white/10 bg-white/[0.02] hover:border-white/20"
-        : "border-amber-500/30 bg-amber-500/5",
+        ? 'border-white/10 bg-white/[0.02] hover:border-white/20'
+        : 'border-amber-500/30 bg-amber-500/5',
       className
     )}
   >
@@ -295,11 +272,11 @@ export const CVAddButton = ({ label, onClick, className }: CVAddButtonProps) => 
   <button
     onClick={onClick}
     className={cn(
-      "w-full py-3 px-4 rounded-xl border-2 border-dashed",
-      "border-white/10 hover:border-blue-500/30 hover:bg-blue-500/5",
-      "text-white/50 hover:text-blue-400",
-      "transition-all duration-200",
-      "flex items-center justify-center gap-2",
+      'w-full py-3 px-4 rounded-xl border-2 border-dashed',
+      'border-white/10 hover:border-blue-500/30 hover:bg-blue-500/5',
+      'text-white/50 hover:text-blue-400',
+      'transition-all duration-200',
+      'flex items-center justify-center gap-2',
       className
     )}
   >

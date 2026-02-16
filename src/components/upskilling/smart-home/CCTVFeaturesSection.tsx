@@ -5,62 +5,62 @@ import { Zap, Brain, Volume2, Lightbulb, Smartphone } from 'lucide-react';
 export const CCTVFeaturesSection = () => {
   const features = [
     {
-      name: "Motion Detection",
+      name: 'Motion Detection',
       icon: Zap,
-      description: "Smart alerts triggered by movement",
-      details: ["Reduces false alarms", "Saves storage space", "Instant notifications"]
+      description: 'Smart alerts triggered by movement',
+      details: ['Reduces false alarms', 'Saves storage space', 'Instant notifications'],
     },
     {
-      name: "AI Recognition",
+      name: 'AI Recognition',
       icon: Brain,
-      description: "Advanced detection of people, vehicles, packages",
-      details: ["People vs animal detection", "Vehicle recognition", "Package delivery alerts"]
+      description: 'Advanced detection of people, vehicles, packages',
+      details: ['People vs animal detection', 'Vehicle recognition', 'Package delivery alerts'],
     },
     {
-      name: "Two-Way Audio",
+      name: 'Two-Way Audio',
       icon: Volume2,
-      description: "Communicate through doorbell cameras",
-      details: ["Speak to visitors", "Deterrent function", "Remote communication"]
+      description: 'Communicate through doorbell cameras',
+      details: ['Speak to visitors', 'Deterrent function', 'Remote communication'],
     },
     {
-      name: "Lighting Integration",
+      name: 'Lighting Integration',
       icon: Lightbulb,
-      description: "Automatic lighting triggers and alarm integration",
-      details: ["Motion-activated lights", "Security scene automation", "Deterrent lighting"]
+      description: 'Automatic lighting triggers and alarm integration',
+      details: ['Motion-activated lights', 'Security scene automation', 'Deterrent lighting'],
     },
     {
-      name: "Remote Access",
+      name: 'Remote Access',
       icon: Smartphone,
-      description: "Monitor via smartphone app or web interface",
-      details: ["Live viewing", "Playback footage", "System management"]
-    }
+      description: 'Monitor via smartphone app or web interface',
+      details: ['Live viewing', 'Playback footage', 'System management'],
+    },
   ];
 
   const comparisonData = [
     {
-      feature: "Local Storage",
-      internet: "Not required",
-      security: "Vulnerable to theft/damage",
-      access: "Limited to local network"
+      feature: 'Local Storage',
+      internet: 'Not required',
+      security: 'Vulnerable to theft/damage',
+      access: 'Limited to local network',
     },
     {
-      feature: "Cloud Storage",
-      internet: "Required",
-      security: "Secure and encrypted",
-      access: "Accessible anywhere"
+      feature: 'Cloud Storage',
+      internet: 'Required',
+      security: 'Secure and encrypted',
+      access: 'Accessible anywhere',
     },
     {
-      feature: "High Resolution",
-      internet: "Higher bandwidth needed",
-      security: "Excellent clarity",
-      access: "More storage required"
+      feature: 'High Resolution',
+      internet: 'Higher bandwidth needed',
+      security: 'Excellent clarity',
+      access: 'More storage required',
     },
     {
-      feature: "Wireless Cameras",
-      internet: "Wi-Fi dependent",
-      security: "Easy installation",
-      access: "Flexible placement"
-    }
+      feature: 'Wireless Cameras',
+      internet: 'Wi-Fi dependent',
+      security: 'Easy installation',
+      access: 'Flexible placement',
+    },
   ];
 
   return (
@@ -85,7 +85,11 @@ export const CCTVFeaturesSection = () => {
               </div>
               <div className="flex flex-wrap gap-1">
                 {feature.details.map((detail, idx) => (
-                  <Badge key={idx} variant="outline" className="border-gray-500 text-gray-300 text-xs">
+                  <Badge
+                    key={idx}
+                    variant="outline"
+                    className="border-gray-500 text-gray-300 text-xs"
+                  >
                     {detail}
                   </Badge>
                 ))}

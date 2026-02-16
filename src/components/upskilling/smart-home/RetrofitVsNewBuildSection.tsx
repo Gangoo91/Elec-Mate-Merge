@@ -12,9 +12,10 @@ export const RetrofitVsNewBuildSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          The choice of lighting system depends heavily on whether you're retrofitting an existing property or designing for new construction.
+          The choice of lighting system depends heavily on whether you're retrofitting an existing
+          property or designing for new construction.
         </p>
-        
+
         <div className="space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-4 bg-blue-600/10 border border-blue-600/20 rounded-lg">
@@ -72,12 +73,22 @@ export const RetrofitVsNewBuildSection = () => {
 
           <div className="p-3 bg-yellow-600/10 border border-yellow-600/20 rounded-lg">
             <h5 className="font-semibold text-yellow-200 mb-2">Installer Decision Framework</h5>
-            <p className="text-sm text-yellow-100 mb-2">Important to balance client requirements:</p>
+            <p className="text-sm text-yellow-100 mb-2">
+              Important to balance client requirements:
+            </p>
             <ul className="text-sm text-yellow-100 space-y-1">
-              <li>• <strong>Budget:</strong> Smart bulbs (£100s) vs Centralised (£1000s)</li>
-              <li>• <strong>Aesthetics:</strong> Visible vs integrated solutions</li>
-              <li>• <strong>Expansion:</strong> Current needs vs future growth</li>
-              <li>• <strong>Reliability:</strong> Convenience vs mission-critical</li>
+              <li>
+                • <strong>Budget:</strong> Smart bulbs (£100s) vs Centralised (£1000s)
+              </li>
+              <li>
+                • <strong>Aesthetics:</strong> Visible vs integrated solutions
+              </li>
+              <li>
+                • <strong>Expansion:</strong> Current needs vs future growth
+              </li>
+              <li>
+                • <strong>Reliability:</strong> Convenience vs mission-critical
+              </li>
             </ul>
           </div>
         </div>

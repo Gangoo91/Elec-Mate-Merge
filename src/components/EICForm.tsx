@@ -17,7 +17,7 @@ import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import {
   validateLoadedData,
   saveToLocalStorageBackup,
-  logIntegrityEvent
+  logIntegrityEvent,
 } from '@/utils/dataIntegrity';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import EICFormHeader from './eic/EICFormHeader';
@@ -31,7 +31,15 @@ import { Badge } from '@/components/ui/badge';
 import { Save, Upload, AlertTriangle, Bell, CircuitBoard, Zap } from 'lucide-react';
 import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 
-const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; initialReportId?: string | null; designId?: string | null }) => {
+const EICForm = ({
+  onBack,
+  initialReportId,
+  designId,
+}: {
+  onBack: () => void;
+  initialReportId?: string | null;
+  designId?: string | null;
+}) => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,11 +49,11 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
   const customerDataFromNav = location.state?.customerData;
-  
+
   const [formData, setFormData] = useState({
     // Certificate Details
-    certificateNumber: '',  // Will be generated asynchronously
-    
+    certificateNumber: '', // Will be generated asynchronously
+
     // Installation Details
     clientName: '',
     clientAddress: '',
@@ -56,7 +64,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     description: '',
     designStandard: 'BS7671',
     partPCompliance: '',
-    
+
     // Supply & Earthing - Default to most common UK domestic values
     supplyVoltage: '230',
     supplyFrequency: '50',
@@ -70,11 +78,11 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     earthElectrodeResistance: '',
     mainBondingConductor: '',
     supplementaryBonding: '',
-    
+
     // Schedule of Inspections
     inspections: {},
     inspectionItems: [],
-    
+
     // Schedule of Testing
     scheduleOfTests: [],
 
@@ -86,7 +94,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     testVoltage: '',
     testNotes: '',
     testInstruments: '',
-    
+
     // Declarations
     designerName: '',
     designerQualifications: '',
@@ -120,17 +128,17 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     reportAuthorisedByPosition: '',
     reportAuthorisedByAddress: '',
     reportAuthorisedByMembershipNo: '',
-    
+
     // Compliance checkboxes
     bs7671Compliance: false,
     buildingRegsCompliance: false,
     competentPersonScheme: false,
-    
+
     // Form state
     completedSections: {},
-    
+
     // Observations
-    observations: []
+    observations: [],
   });
 
   // State for cloud sync
@@ -157,11 +165,11 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     hasUnsavedChanges,
     manualSave,
     loadFromLocalStorage,
-    clearAutoSave
+    clearAutoSave,
   } = useEICAutoSave({
     formData,
     interval: 30, // Auto-save every 30 seconds
-    enabled: true
+    enabled: true,
   });
 
   // Load saved data from IndexedDB on mount
@@ -174,12 +182,13 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         // This ensures each new EIC gets a unique certificate number
         if (initialReportId) {
           // EXISTING report - preserve the certificate number
-          const certificateNumber = savedData.formData.certificateNumber || formData.certificateNumber;
+          const certificateNumber =
+            savedData.formData.certificateNumber || formData.certificateNumber;
           setFormData({ ...savedData.formData, certificateNumber });
         } else {
           // NEW report - discard old certificate number, let generation effect create new one
           const { certificateNumber: _discarded, ...dataWithoutCertNumber } = savedData.formData;
-          setFormData(prev => ({ ...prev, ...dataWithoutCertNumber }));
+          setFormData((prev) => ({ ...prev, ...dataWithoutCertNumber }));
         }
       }
     };
@@ -198,12 +207,15 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     const draft = draftStorage.loadDraft('eic', null);
     if (draft?.data && !formData.clientName) {
       // Auto-recover if form is empty and draft has meaningful data
-      if (draft.data.clientName || draft.data.installationAddress ||
-          (draft.data.scheduleOfTests && draft.data.scheduleOfTests.length > 0)) {
+      if (
+        draft.data.clientName ||
+        draft.data.installationAddress ||
+        (draft.data.scheduleOfTests && draft.data.scheduleOfTests.length > 0)
+      ) {
         console.log('[EIC] Auto-recovering draft for new report');
         // Don't preserve old certificate number for NEW reports - generate fresh
         const { certificateNumber: _discarded, ...draftDataWithoutCertNumber } = draft.data;
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           ...draftDataWithoutCertNumber,
           // Keep current cert number (will be generated by separate effect)
@@ -226,7 +238,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
         const certNumber = await generateCertificateNumber('eic');
         console.log('[EIC] Generated certificate number:', certNumber);
-        setFormData(prev => ({ ...prev, certificateNumber: certNumber }));
+        setFormData((prev) => ({ ...prev, certificateNumber: certNumber }));
       }
     };
     initCertificateNumber();
@@ -239,7 +251,16 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     setCurrentReportId(newReportId);
   }, []);
 
-  const { syncState, syncToCloud, loadFromCloud, isOnline, isAuthenticated, authCheckComplete, syncNow, onTabChange } = useCloudSync({
+  const {
+    syncState,
+    syncToCloud,
+    loadFromCloud,
+    isOnline,
+    isAuthenticated,
+    authCheckComplete,
+    syncNow,
+    onTabChange,
+  } = useCloudSync({
     reportId: currentReportId,
     reportType: 'eic',
     data: formData,
@@ -284,7 +305,8 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         // ALWAYS warn the user if data hasn't synced to cloud
         e.preventDefault();
         // Custom message for the warning dialog
-        e.returnValue = 'Your certificate has NOT been saved to the cloud. If you leave, you may lose your work on other devices.';
+        e.returnValue =
+          'Your certificate has NOT been saved to the cloud. If you leave, you may lose your work on other devices.';
         return;
       }
 
@@ -297,12 +319,20 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [formData, currentReportId, syncState.status, syncState.queuedChanges, isOnline, isAuthenticated, syncNow]);
-  
+  }, [
+    formData,
+    currentReportId,
+    syncState.status,
+    syncState.queuedChanges,
+    isOnline,
+    isAuthenticated,
+    syncNow,
+  ]);
+
   // Pre-fill customer details if navigating from customer page
   useEffect(() => {
     if (customerDataFromNav && !initialReportId) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         clientName: customerDataFromNav.name || '',
         clientAddress: customerDataFromNav.address || '',
@@ -317,54 +347,60 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       const scheduleData = designData.schedule_data;
 
       // Transform design circuits to test results format
-      const transformedCircuits = scheduleData.circuits?.map((circuit: any, idx: number) => ({
-        id: `design-${Date.now()}-${idx + 1}`,
-        circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
-        circuitDesignation: `C${idx + 1}`,
-        circuitDescription: circuit.circuitDescription || circuit.name || '',
-        circuitType: circuit.loadType || '',
-        phaseType: circuit.phaseType || (circuit.phases === 3 ? '3P' : '1P'),
-        referenceMethod: circuit.referenceMethod || circuit.installationMethod || '',
-        pointsServed: circuit.pointsServed || '',
-        liveSize: circuit.liveSize || circuit.cableSize?.toString() || '',
-        cpcSize: circuit.cpcSize || '',
-        bsStandard: circuit.bsStandard || 'BS EN 60898',
-        protectiveDeviceType: circuit.protectiveDeviceType || circuit.protectionDevice?.type || 'MCB',
-        protectiveDeviceCurve: circuit.protectiveDeviceCurve || circuit.protectionDevice?.curve || 'B',
-        protectiveDeviceRating: circuit.protectiveDeviceRating || circuit.protectionDevice?.rating?.toString() || '',
-        protectiveDeviceKaRating: circuit.protectiveDeviceKaRating || '6',
-        // Expected values from design (shown as guidance)
-        expectedR1R2: circuit.r1r2 || circuit.expectedTestResults?.r1r2?.at20C || '',
-        expectedZs: circuit.zs || circuit.calculations?.zs?.toString() || '',
-        expectedMaxZs: circuit.maxZs || circuit.calculations?.maxZs?.toString() || '',
-        // Actual test values (to be filled on-site)
-        r1r2: '',
-        zs: '',
-        maxZs: circuit.maxZs || circuit.calculations?.maxZs?.toString() || '',
-        insulationTestVoltage: circuit.insulationTestVoltage || '500V',
-        insulationLiveNeutral: '',
-        insulationLiveEarth: '',
-        polarity: '',
-        rcdRating: circuit.rcdRating || (circuit.rcdProtected ? '30mA' : ''),
-        rcdType: circuit.rcdType || '',
-        rcdOneX: '',
-        rcdFiveX: '',
-        pfc: '',
-        functionalTesting: '',
-        autoFilled: true,
-        fromDesigner: true,
-        notes: 'Pre-filled from AI Circuit Designer - verify on-site'
-      })) || [];
+      const transformedCircuits =
+        scheduleData.circuits?.map((circuit: any, idx: number) => ({
+          id: `design-${Date.now()}-${idx + 1}`,
+          circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
+          circuitDesignation: `C${idx + 1}`,
+          circuitDescription: circuit.circuitDescription || circuit.name || '',
+          circuitType: circuit.loadType || '',
+          phaseType: circuit.phaseType || (circuit.phases === 3 ? '3P' : '1P'),
+          referenceMethod: circuit.referenceMethod || circuit.installationMethod || '',
+          pointsServed: circuit.pointsServed || '',
+          liveSize: circuit.liveSize || circuit.cableSize?.toString() || '',
+          cpcSize: circuit.cpcSize || '',
+          bsStandard: circuit.bsStandard || 'BS EN 60898',
+          protectiveDeviceType:
+            circuit.protectiveDeviceType || circuit.protectionDevice?.type || 'MCB',
+          protectiveDeviceCurve:
+            circuit.protectiveDeviceCurve || circuit.protectionDevice?.curve || 'B',
+          protectiveDeviceRating:
+            circuit.protectiveDeviceRating || circuit.protectionDevice?.rating?.toString() || '',
+          protectiveDeviceKaRating: circuit.protectiveDeviceKaRating || '6',
+          // Expected values from design (shown as guidance)
+          expectedR1R2: circuit.r1r2 || circuit.expectedTestResults?.r1r2?.at20C || '',
+          expectedZs: circuit.zs || circuit.calculations?.zs?.toString() || '',
+          expectedMaxZs: circuit.maxZs || circuit.calculations?.maxZs?.toString() || '',
+          // Actual test values (to be filled on-site)
+          r1r2: '',
+          zs: '',
+          maxZs: circuit.maxZs || circuit.calculations?.maxZs?.toString() || '',
+          insulationTestVoltage: circuit.insulationTestVoltage || '500V',
+          insulationLiveNeutral: '',
+          insulationLiveEarth: '',
+          polarity: '',
+          rcdRating: circuit.rcdRating || (circuit.rcdProtected ? '30mA' : ''),
+          rcdType: circuit.rcdType || '',
+          rcdOneX: '',
+          rcdFiveX: '',
+          pfc: '',
+          functionalTesting: '',
+          autoFilled: true,
+          fromDesigner: true,
+          notes: 'Pre-filled from AI Circuit Designer - verify on-site',
+        })) || [];
 
       // Pre-populate form data
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         installationAddress: designData.installation_address || prev.installationAddress,
         clientName: scheduleData.projectInfo?.clientName || prev.clientName,
         description: scheduleData.projectInfo?.projectName || prev.description,
         supplyVoltage: scheduleData.supply?.voltage?.toString() || '230',
         phases: scheduleData.supply?.phases === 3 ? 'three' : 'single',
-        earthingArrangement: (scheduleData.supply?.earthingSystem || 'TN-C-S').toLowerCase().replace(/-/g, ''),
+        earthingArrangement: (scheduleData.supply?.earthingSystem || 'TN-C-S')
+          .toLowerCase()
+          .replace(/-/g, ''),
         scheduleOfTests: transformedCircuits,
         // Store design source reference
         designSourceId: designId,
@@ -436,13 +472,15 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       }
 
       // Step 2: Load from cloud (use ref to avoid stale dep loop)
-      loadFromCloudRef.current(initialReportId).then(cloudResult => {
+      loadFromCloudRef.current(initialReportId).then((cloudResult) => {
         // Step 3: Compare timestamps - use whichever is NEWER
         // cloudResult is now { data, databaseId } format
         if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
           const data = cloudResult.data as any;
           const cloudTime = new Date(data.updated_at || data.last_synced_at || 0).getTime();
-          const localTime = localDraft?.lastModified ? new Date(localDraft.lastModified).getTime() : 0;
+          const localTime = localDraft?.lastModified
+            ? new Date(localDraft.lastModified).getTime()
+            : 0;
 
           console.log('[EIC] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
 
@@ -455,7 +493,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
               reportType: 'eic',
               reportId: initialReportId,
               fieldCount: integrity.fieldCount,
-              error: integrity.warnings.join('; ')
+              error: integrity.warnings.join('; '),
             });
 
             // Try localStorage backup if cloud data is empty
@@ -463,7 +501,8 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
               const localIntegrity = validateLoadedData(localDraft.data, 'eic');
               if (localIntegrity.hasData) {
                 console.log('[EIC] Cloud data empty, using local backup');
-                const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
+                const certificateNumber =
+                  localDraft.data.certificateNumber || formData.certificateNumber;
                 setFormData({ ...localDraft.data, certificateNumber });
                 setCurrentReportId(initialReportId);
                 toast({
@@ -478,13 +517,14 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
           if (localDraft?.data && localTime > cloudTime) {
             // Local is newer - use local data
             console.log('[EIC] Using LOCAL draft (newer than cloud)');
-            const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
+            const certificateNumber =
+              localDraft.data.certificateNumber || formData.certificateNumber;
             setFormData({ ...localDraft.data, certificateNumber });
             logIntegrityEvent('load_success', {
               reportType: 'eic',
               reportId: initialReportId,
               fieldCount: Object.keys(localDraft.data).length,
-              source: 'local'
+              source: 'local',
             });
             toast({
               title: 'Recovered unsaved changes',
@@ -499,7 +539,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
               reportType: 'eic',
               reportId: initialReportId,
               fieldCount: integrity.fieldCount,
-              source: 'cloud'
+              source: 'cloud',
             });
           }
           setCurrentReportId(initialReportId);
@@ -512,7 +552,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
           logIntegrityEvent('recovery_success', {
             reportType: 'eic',
             reportId: initialReportId,
-            source: 'local'
+            source: 'local',
           });
           toast({
             title: 'Loaded from local storage',
@@ -522,7 +562,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
           logIntegrityEvent('recovery_failed', {
             reportType: 'eic',
             reportId: initialReportId,
-            error: 'No data found in cloud or local'
+            error: 'No data found in cloud or local',
           });
           toast({
             title: 'Report not found',
@@ -532,7 +572,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         }
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialReportId, authCheckComplete, isAuthenticated, isOnline]);
 
   // Observations hook
@@ -542,7 +582,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     updateObservation,
     removeObservation,
     autoCreateObservation,
-    removeObservationForInspectionItem
+    removeObservationForInspectionItem,
   } = useEICObservations(formData.observations);
 
   // Tabs hook
@@ -560,16 +600,16 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     navigateNext,
     navigatePrevious,
     getProgressPercentage,
-    getCurrentTabLabel
+    getCurrentTabLabel,
   } = useEICTabs(formData);
 
   // Prevent space bar from triggering anything - removed keyboard shortcut handling
-  
+
   // Removed auto-save restore dialog check
 
   // Update observations in form data when they change
   useEffect(() => {
-    setFormData(prev => ({ ...prev, observations }));
+    setFormData((prev) => ({ ...prev, observations }));
   }, [observations]);
 
   const handleUpdate = (field: string, value: any) => {
@@ -579,11 +619,12 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       return;
     }
 
-    setFormData(prev => {
+    setFormData((prev) => {
       // Support functional updaters for array fields (prevents stale closure bugs)
       const resolvedValue = typeof value === 'function' ? value(prev[field]) : value;
       // Sanitize string inputs to prevent XSS
-      const sanitizedValue = typeof resolvedValue === 'string' ? sanitizeTextInput(resolvedValue) : resolvedValue;
+      const sanitizedValue =
+        typeof resolvedValue === 'string' ? sanitizeTextInput(resolvedValue) : resolvedValue;
       return { ...prev, [field]: sanitizedValue };
     });
   };
@@ -602,88 +643,86 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
 
   // Handle board scan completion - populate circuits
   // BoardPhotoCapture returns: { circuits, board, metadata, warnings, decisions }
-  const handleBoardScanComplete = useCallback((data: {
-    board: any;
-    circuits: any[];
-    metadata?: any;
-    warnings?: string[];
-  }) => {
-    // Convert detected circuits to test results format
-    // BoardPhotoCapture already transforms circuits to: { position, label, device, rating, curve, ... }
-    const newCircuits = data.circuits.map((circuit, index) => {
-      const ratingAmps = circuit.rating || null;
-      const deviceCategory = circuit.device || 'MCB';
-      const deviceCurve = circuit.curve || 'B';
+  const handleBoardScanComplete = useCallback(
+    (data: { board: any; circuits: any[]; metadata?: any; warnings?: string[] }) => {
+      // Convert detected circuits to test results format
+      // BoardPhotoCapture already transforms circuits to: { position, label, device, rating, curve, ... }
+      const newCircuits = data.circuits.map((circuit, index) => {
+        const ratingAmps = circuit.rating || null;
+        const deviceCategory = circuit.device || 'MCB';
+        const deviceCurve = circuit.curve || 'B';
 
-      // Get cable size from detected rating
-      const liveSize = getCableSizeForRating(ratingAmps) || '2.5mm';
-      const cpcSize = getCpcForLive(liveSize) || '1.5mm';
+        // Get cable size from detected rating
+        const liveSize = getCableSizeForRating(ratingAmps) || '2.5mm';
+        const cpcSize = getCpcForLive(liveSize) || '1.5mm';
 
-      // Get BS standard from device category
-      const bsStandard = BS_STANDARD_MAP[deviceCategory] || 'MCB (BS EN 60898)';
+        // Get BS standard from device category
+        const bsStandard = BS_STANDARD_MAP[deviceCategory] || 'MCB (BS EN 60898)';
 
-      // Calculate Max Zs from detected device
-      const maxZs = getMaxZsFromDeviceDetails(
-        bsStandard,
-        deviceCurve,
-        ratingAmps?.toString() || '',
-        circuit.label || ''
-      );
+        // Calculate Max Zs from detected device
+        const maxZs = getMaxZsFromDeviceDetails(
+          bsStandard,
+          deviceCurve,
+          ratingAmps?.toString() || '',
+          circuit.label || ''
+        );
 
-      return {
-        id: `circuit-${Date.now()}-${index}`,
-        circuitNumber: circuit.position?.toString() || String(index + 1),
-        circuitDesignation: `C${circuit.position?.toString() || String(index + 1)}`,
-        circuitDescription: circuit.label || `Circuit ${index + 1}`,
-        circuitType: '',
-        type: '',
-        // Use DETECTED device values
-        protectiveDeviceType: deviceCategory,
-        protectiveDeviceRating: ratingAmps?.toString() || '',
-        protectiveDeviceCurve: deviceCurve,
-        bsStandard: bsStandard,
-        // Cable sizes from detected rating
-        liveSize: liveSize,
-        cpcSize: cpcSize,
-        // Max Zs calculated from BS 7671 tables
-        maxZs: maxZs?.toString() || '',
-        phaseType: circuit.phase === '3P' ? '3P' : '1P' as '1P' | '3P',
-        // RCD details if RCBO
-        rcdBsStandard: deviceCategory === 'RCBO' ? 'RCBO (BS EN 61009)' : '',
-        rcdType: deviceCategory === 'RCBO' ? 'A' : '',
-        rcdRating: deviceCategory === 'RCBO' ? '30' : '',
-        // Default test values - user must fill these
-        r1r2: '',
-        r2: '',
-        zs: '',
-        polarity: '',
-        insulationTestVoltage: '500',
-        insulationLiveNeutral: '',
-        insulationLiveEarth: '',
-        rcdOneX: '',
-        autoFilled: true,
-        notes: circuit.notes || '',
-      };
-    });
+        return {
+          id: `circuit-${Date.now()}-${index}`,
+          circuitNumber: circuit.position?.toString() || String(index + 1),
+          circuitDesignation: `C${circuit.position?.toString() || String(index + 1)}`,
+          circuitDescription: circuit.label || `Circuit ${index + 1}`,
+          circuitType: '',
+          type: '',
+          // Use DETECTED device values
+          protectiveDeviceType: deviceCategory,
+          protectiveDeviceRating: ratingAmps?.toString() || '',
+          protectiveDeviceCurve: deviceCurve,
+          bsStandard: bsStandard,
+          // Cable sizes from detected rating
+          liveSize: liveSize,
+          cpcSize: cpcSize,
+          // Max Zs calculated from BS 7671 tables
+          maxZs: maxZs?.toString() || '',
+          phaseType: circuit.phase === '3P' ? '3P' : ('1P' as '1P' | '3P'),
+          // RCD details if RCBO
+          rcdBsStandard: deviceCategory === 'RCBO' ? 'RCBO (BS EN 61009)' : '',
+          rcdType: deviceCategory === 'RCBO' ? 'A' : '',
+          rcdRating: deviceCategory === 'RCBO' ? '30' : '',
+          // Default test values - user must fill these
+          r1r2: '',
+          r2: '',
+          zs: '',
+          polarity: '',
+          insulationTestVoltage: '500',
+          insulationLiveNeutral: '',
+          insulationLiveEarth: '',
+          rcdOneX: '',
+          autoFilled: true,
+          notes: circuit.notes || '',
+        };
+      });
 
-    // Merge with existing circuits
-    const existingCircuits = formData.scheduleOfTests || [];
-    handleUpdate('scheduleOfTests', [...existingCircuits, ...newCircuits]);
+      // Merge with existing circuits
+      const existingCircuits = formData.scheduleOfTests || [];
+      handleUpdate('scheduleOfTests', [...existingCircuits, ...newCircuits]);
 
-    // Store board info - BoardPhotoCapture returns: { make, model, mainSwitch, spd, totalWays, ... }
-    if (data.board) {
-      handleUpdate('boardBrand', data.board.make || '');
-      handleUpdate('boardModel', data.board.model || '');
-      handleUpdate('mainSwitchRating', data.board.mainSwitch || '');
-    }
+      // Store board info - BoardPhotoCapture returns: { make, model, mainSwitch, spd, totalWays, ... }
+      if (data.board) {
+        handleUpdate('boardBrand', data.board.make || '');
+        handleUpdate('boardModel', data.board.model || '');
+        handleUpdate('mainSwitchRating', data.board.mainSwitch || '');
+      }
 
-    setShowBoardScan(false);
+      setShowBoardScan(false);
 
-    toast({
-      title: 'Board Scanned Successfully',
-      description: `${newCircuits.length} circuits detected and added to schedule.`,
-    });
-  }, [formData.scheduleOfTests, handleUpdate, toast]);
+      toast({
+        title: 'Board Scanned Successfully',
+        description: `${newCircuits.length} circuits detected and added to schedule.`,
+      });
+    },
+    [formData.scheduleOfTests, handleUpdate, toast]
+  );
 
   const confirmStartNew = async () => {
     clearAutoSave();
@@ -760,24 +799,25 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       competentPersonScheme: false,
       completedSections: {},
       inspectionItems: [],
-      observations: []
+      observations: [],
     });
     setShowStartNewDialog(false);
     toast({
-      title: "New EIC started",
-      description: "Started a new EIC report.",
+      title: 'New EIC started',
+      description: 'Started a new EIC report.',
     });
   };
 
   const handleDuplicate = async () => {
     const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
     const certificateNumber = await generateCertificateNumber('eic');
-    
+
     // Deep clone current form data with polyfill (preserves Date objects)
-    const duplicatedData: any = (typeof structuredClone === 'function' 
-      ? structuredClone(formData)
-      : JSON.parse(JSON.stringify(formData)));
-    
+    const duplicatedData: any =
+      typeof structuredClone === 'function'
+        ? structuredClone(formData)
+        : JSON.parse(JSON.stringify(formData));
+
     // Reset metadata fields (might exist from cloud-loaded reports)
     delete duplicatedData.id;
     delete duplicatedData.report_id;
@@ -789,13 +829,13 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     delete duplicatedData.certificateGeneratedAt;
     duplicatedData.certificateNumber = certificateNumber;
     duplicatedData.status = 'draft';
-    
+
     setFormData(duplicatedData);
     setCurrentReportId(null);
     setShowStartNewDialog(false);
-    
+
     toast({
-      title: "Report duplicated",
+      title: 'Report duplicated',
       description: `New certificate number: ${certificateNumber}`,
     });
   };
@@ -809,8 +849,8 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     }
     setFormData({ ...data, certificateNumber });
     toast({
-      title: "Save Point Loaded",
-      description: "Your saved EIC has been restored successfully.",
+      title: 'Save Point Loaded',
+      description: 'Your saved EIC has been restored successfully.',
     });
   };
 
@@ -826,22 +866,22 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         ...formData,
         certificateGenerated: true,
         certificateGeneratedAt: new Date().toISOString(),
-        status: 'completed'
+        status: 'completed',
       };
-      
+
       setFormData(completedData);
-      
+
       // Save current state before generating
       await manualSave();
-      
+
       // Sync to cloud with completed data
       const result = await syncToCloud(true);
       if (result && typeof result === 'object' && 'reportId' in result) {
         setCurrentReportId(result.reportId as string);
       }
-      
+
       console.log('Generating EIC certificate...', formData);
-      
+
       // Check if work is notifiable under Part P
       const isNotifiable = isNotifiableWork(
         formData.description || '',
@@ -854,86 +894,95 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         // The notification tracks the 30-day submission deadline regardless of signature status
 
         // Check BS7671 compliance before creating Part P notification
-          let complianceWarning = false;
-          if (formData.scheduleOfTests && Array.isArray(formData.scheduleOfTests) && formData.scheduleOfTests.length > 0) {
-            const { checkAllResultsCompliance } = require('@/utils/autoRegChecker');
-            const complianceResult = checkAllResultsCompliance(formData.scheduleOfTests);
-            const hasFailures = complianceResult.some(
-              (result: any) => result.warnings.some((w: any) => w.severity === 'error')
-            );
-            if (hasFailures) {
-              complianceWarning = true;
-              toast({
-                title: "Compliance Warning",
-                description: "Test results show BS7671 compliance issues. Part P notification will include these non-compliances.",
-                variant: "destructive",
-                duration: 8000,
-              });
-            }
-          }
-          
-          // Create Part P notification (with warning if non-compliant)
-          try {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (user && result.reportId) {
-              const notificationResult = await createNotificationFromCertificate(
-                result.reportId as string,
-                'eic',
-                formData,
-                user.id
-              );
-
-              if (notificationResult.success) {
-                // Invalidate notifications query to update dashboard
-                queryClient.invalidateQueries({ queryKey: ['notifications'] });
-                
-                // Invalidate dashboard queries to show updated status
-                queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
-                queryClient.invalidateQueries({ queryKey: ['my-reports'] });
-                
-                toast({
-                  title: "EIC Generated Successfully",
-                  description: "Part P notification created. Submission required within 30 days of completion date.",
-                  action: (
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => navigate('/?section=notifications')}
-                    >
-                      <Bell className="h-3 w-3 mr-1" />
-                      View Notifications
-                    </Button>
-                  ),
-                });
-              } else {
-                throw new Error(notificationResult.error);
-              }
-            }
-          } catch (notificationError) {
-            console.error('Notification creation failed:', notificationError);
+        let complianceWarning = false;
+        if (
+          formData.scheduleOfTests &&
+          Array.isArray(formData.scheduleOfTests) &&
+          formData.scheduleOfTests.length > 0
+        ) {
+          const { checkAllResultsCompliance } = require('@/utils/autoRegChecker');
+          const complianceResult = checkAllResultsCompliance(formData.scheduleOfTests);
+          const hasFailures = complianceResult.some((result: any) =>
+            result.warnings.some((w: any) => w.severity === 'error')
+          );
+          if (hasFailures) {
+            complianceWarning = true;
             toast({
-              title: "EIC Generated",
-              description: "Certificate created successfully, but notification creation failed. You can create it manually from the Notifications page.",
+              title: 'Compliance Warning',
+              description:
+                'Test results show BS7671 compliance issues. Part P notification will include these non-compliances.',
+              variant: 'destructive',
+              duration: 8000,
             });
           }
+        }
+
+        // Create Part P notification (with warning if non-compliant)
+        try {
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          if (user && result.reportId) {
+            const notificationResult = await createNotificationFromCertificate(
+              result.reportId as string,
+              'eic',
+              formData,
+              user.id
+            );
+
+            if (notificationResult.success) {
+              // Invalidate notifications query to update dashboard
+              queryClient.invalidateQueries({ queryKey: ['notifications'] });
+
+              // Invalidate dashboard queries to show updated status
+              queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
+              queryClient.invalidateQueries({ queryKey: ['my-reports'] });
+
+              toast({
+                title: 'EIC Generated Successfully',
+                description:
+                  'Part P notification created. Submission required within 30 days of completion date.',
+                action: (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => navigate('/?section=notifications')}
+                  >
+                    <Bell className="h-3 w-3 mr-1" />
+                    View Notifications
+                  </Button>
+                ),
+              });
+            } else {
+              throw new Error(notificationResult.error);
+            }
+          }
+        } catch (notificationError) {
+          console.error('Notification creation failed:', notificationError);
+          toast({
+            title: 'EIC Generated',
+            description:
+              'Certificate created successfully, but notification creation failed. You can create it manually from the Notifications page.',
+          });
+        }
       } else {
         // Invalidate dashboard queries to show updated status
         queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
         queryClient.invalidateQueries({ queryKey: ['my-reports'] });
-        
+
         toast({
-          title: "EIC Generated",
-          description: "Your Electrical Installation Certificate has been generated successfully.",
+          title: 'EIC Generated',
+          description: 'Your Electrical Installation Certificate has been generated successfully.',
         });
       }
-      
+
       // Clear auto-save after successful generation
       clearAutoSave();
     } catch (error) {
       toast({
-        title: "Generation Failed",
-        description: "There was an error generating the certificate. Please try again.",
-        variant: "destructive",
+        title: 'Generation Failed',
+        description: 'There was an error generating the certificate. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -949,7 +998,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       logIntegrityEvent('backup_saved', {
         reportType: 'eic',
         reportId: reportIdForBackup,
-        fieldCount: Object.keys(formData).filter(k => !k.startsWith('_')).length
+        fieldCount: Object.keys(formData).filter((k) => !k.startsWith('_')).length,
       });
     }
 
@@ -1000,9 +1049,9 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
   const handleNavigateToObservations = () => {
     const observationsElement = document.getElementById('eic-observations-section');
     if (observationsElement) {
-      observationsElement.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
+      observationsElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
       });
     }
   };
@@ -1013,9 +1062,9 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       defectCode: 'C2',
       description: '',
       recommendation: '',
-      rectified: false
+      rectified: false,
     });
-    
+
     setTimeout(() => handleNavigateToObservations(), 100);
     return newObsId;
   };
@@ -1033,19 +1082,19 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     currentTabHasRequiredFields: hasRequiredFields(currentTab),
     onToggleComplete: handleToggleComplete,
     onGenerateCertificate: handleGenerateCertificate,
-    canGenerateCertificate: canGenerateCertificate()
+    canGenerateCertificate: canGenerateCertificate(),
   };
 
   const handleSyncObservationToInspectionItem = (inspectionItemId: string, newOutcome: string) => {
-    console.log(`[EICForm] Syncing observation change to inspection item ${inspectionItemId}: ${newOutcome}`);
-    
-    const items = formData.inspectionItems || [];
-    const updatedItems = items.map((item: any) => 
-      item.id === inspectionItemId 
-        ? { ...item, outcome: newOutcome, inspected: true }
-        : item
+    console.log(
+      `[EICForm] Syncing observation change to inspection item ${inspectionItemId}: ${newOutcome}`
     );
-    
+
+    const items = formData.inspectionItems || [];
+    const updatedItems = items.map((item: any) =>
+      item.id === inspectionItemId ? { ...item, outcome: newOutcome, inspected: true } : item
+    );
+
     handleUpdate('inspectionItems', updatedItems);
   };
 
@@ -1057,12 +1106,17 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     onRemoveObservation: removeObservation,
     onAutoCreateObservation: autoCreateObservation,
     onNavigateToObservations: handleNavigateToObservations,
-    onSyncToInspectionItem: handleSyncObservationToInspectionItem
+    onSyncToInspectionItem: handleSyncObservationToInspectionItem,
   };
 
   // Calculate completed sections for progress
   const completedSections = new Set<number>();
-  if (formData.clientName && formData.installationAddress && formData.phases && formData.earthingArrangement) {
+  if (
+    formData.clientName &&
+    formData.installationAddress &&
+    formData.phases &&
+    formData.earthingArrangement
+  ) {
     completedSections.add(0);
   }
   if (formData.inspectionItems?.length > 0) {
@@ -1106,7 +1160,9 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
           </div>
           <div>
             <h3 className="text-lg font-semibold text-foreground">Loading Design</h3>
-            <p className="text-sm text-muted-foreground">Pre-filling circuits from Circuit Designer...</p>
+            <p className="text-sm text-muted-foreground">
+              Pre-filling circuits from Circuit Designer...
+            </p>
           </div>
         </div>
       </div>
@@ -1137,7 +1193,8 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
               <Zap className="h-4 w-4 text-elec-yellow" />
               <AlertDescription className="text-elec-yellow">
                 <span className="font-medium">Circuit Designer Integration:</span>{' '}
-                {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test values. Enter actual readings on-site.
+                {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test
+                values. Enter actual readings on-site.
               </AlertDescription>
             </Alert>
           )}

@@ -12,12 +12,12 @@ import {
   ClipboardCheck,
   Eye,
   RefreshCw,
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 /* ------------------------------------------------------------------ */
 /*  DATA                                                               */
@@ -25,42 +25,40 @@ import useSEO from "@/hooks/useSEO";
 
 const quickCheckQuestions = [
   {
-    id: "employer-hierarchy",
+    id: 'employer-hierarchy',
     question:
-      "Under the MHOR 1992, what is the FIRST thing an employer must do when a manual handling task is identified?",
+      'Under the MHOR 1992, what is the FIRST thing an employer must do when a manual handling task is identified?',
     options: [
-      "Provide training on correct lifting technique",
-      "Issue PPE such as back support belts",
-      "Avoid the hazardous manual handling operation altogether, so far as is reasonably practicable",
-      "Carry out a risk assessment and provide mechanical aids",
+      'Provide training on correct lifting technique',
+      'Issue PPE such as back support belts',
+      'Avoid the hazardous manual handling operation altogether, so far as is reasonably practicable',
+      'Carry out a risk assessment and provide mechanical aids',
     ],
     correctIndex: 2,
     explanation:
-      "The MHOR 1992 follows a clear hierarchy. The FIRST duty is to AVOID hazardous manual handling so far as is reasonably practicable — can the task be eliminated, automated, or redesigned so that manual handling is not needed? Only if avoidance is not reasonably practicable does the employer move to step 2: assess the remaining risk. Training alone is never sufficient if the task could have been avoided or mechanised.",
+      'The MHOR 1992 follows a clear hierarchy. The FIRST duty is to AVOID hazardous manual handling so far as is reasonably practicable — can the task be eliminated, automated, or redesigned so that manual handling is not needed? Only if avoidance is not reasonably practicable does the employer move to step 2: assess the remaining risk. Training alone is never sufficient if the task could have been avoided or mechanised.',
   },
   {
-    id: "employee-duty",
-    question:
-      "Which of the following is an employee's duty under the MHOR 1992?",
+    id: 'employee-duty',
+    question: "Which of the following is an employee's duty under the MHOR 1992?",
     options: [
-      "Writing the manual handling risk assessment for their own tasks",
-      "Deciding whether to use mechanical aids based on their own experience",
-      "Using the systems of work provided by the employer, cooperating with training, and reporting problems",
-      "Carrying out RIDDOR reports for manual handling injuries",
+      'Writing the manual handling risk assessment for their own tasks',
+      'Deciding whether to use mechanical aids based on their own experience',
+      'Using the systems of work provided by the employer, cooperating with training, and reporting problems',
+      'Carrying out RIDDOR reports for manual handling injuries',
     ],
     correctIndex: 2,
     explanation:
-      "Under the MHOR 1992 and the Health and Safety at Work Act 1974, employees have a duty to: use the systems of work provided by their employer, use mechanical aids when provided, cooperate with manual handling training, and report any problems, difficulties, or symptoms to their supervisor. Writing risk assessments and RIDDOR reports are employer responsibilities.",
+      'Under the MHOR 1992 and the Health and Safety at Work Act 1974, employees have a duty to: use the systems of work provided by their employer, use mechanical aids when provided, cooperate with manual handling training, and report any problems, difficulties, or symptoms to their supervisor. Writing risk assessments and RIDDOR reports are employer responsibilities.',
   },
   {
-    id: "training-refresh",
-    question:
-      "How often should manual handling training be refreshed?",
+    id: 'training-refresh',
+    question: 'How often should manual handling training be refreshed?',
     options: [
-      "Only once — initial training is sufficient for a whole career",
-      "Every 1 to 3 years, or sooner if tasks, equipment, or legislation change",
-      "Every 10 years",
-      "Refresher training is optional and has no recommended frequency",
+      'Only once — initial training is sufficient for a whole career',
+      'Every 1 to 3 years, or sooner if tasks, equipment, or legislation change',
+      'Every 10 years',
+      'Refresher training is optional and has no recommended frequency',
     ],
     correctIndex: 1,
     explanation:
@@ -70,26 +68,23 @@ const quickCheckQuestions = [
 
 const faqs = [
   {
-    question:
-      "Does the MHOR 1992 set a maximum weight that workers can lift?",
+    question: 'Does the MHOR 1992 set a maximum weight that workers can lift?',
     answer:
       "No. The MHOR 1992 deliberately does NOT set a maximum weight limit. This is because the risk of injury depends on many factors beyond just the weight — the posture, distance from the body, twisting, repetition, individual capability, and environment all affect the risk. The HSE provides guideline figures (25 kg for men, 16 kg for women in the best-case posture) as a starting point for assessment, but these are NOT legal limits. They are filters to help identify tasks that need a more detailed assessment. A 10 kg load can be dangerous if handled repeatedly, at arms' length, in an awkward posture.",
   },
   {
-    question:
-      "Who can be a 'competent person' to carry out manual handling assessments?",
+    question: "Who can be a 'competent person' to carry out manual handling assessments?",
     answer:
-      "A competent person for manual handling assessment is someone who has sufficient training, experience, and knowledge to identify the hazards, assess the risks, and recommend appropriate control measures. This does not require a specific qualification, but the person should have: a thorough understanding of the MHOR 1992 and the TILE framework, practical experience of the types of manual handling tasks being assessed, knowledge of available control measures and mechanical aids, and the ability to record and communicate their findings clearly. Many organisations use trained supervisors, health and safety officers, or external consultants.",
+      'A competent person for manual handling assessment is someone who has sufficient training, experience, and knowledge to identify the hazards, assess the risks, and recommend appropriate control measures. This does not require a specific qualification, but the person should have: a thorough understanding of the MHOR 1992 and the TILE framework, practical experience of the types of manual handling tasks being assessed, knowledge of available control measures and mechanical aids, and the ability to record and communicate their findings clearly. Many organisations use trained supervisors, health and safety officers, or external consultants.',
   },
   {
     question:
-      "Can an employer simply provide a back support belt instead of doing a proper risk assessment?",
+      'Can an employer simply provide a back support belt instead of doing a proper risk assessment?',
     answer:
-      "No. Back support belts are NOT a substitute for a proper risk assessment and the hierarchy of controls. The HSE does not recommend back support belts as a control measure for manual handling because there is no reliable evidence that they prevent injuries. They may even increase risk by giving workers a false sense of security, encouraging them to lift heavier loads or use poorer technique. The employer must follow the MHOR 1992 hierarchy: avoid, assess, reduce. PPE (personal protective equipment) is always the last resort, and back support belts do not qualify as effective PPE for manual handling.",
+      'No. Back support belts are NOT a substitute for a proper risk assessment and the hierarchy of controls. The HSE does not recommend back support belts as a control measure for manual handling because there is no reliable evidence that they prevent injuries. They may even increase risk by giving workers a false sense of security, encouraging them to lift heavier loads or use poorer technique. The employer must follow the MHOR 1992 hierarchy: avoid, assess, reduce. PPE (personal protective equipment) is always the last resort, and back support belts do not qualify as effective PPE for manual handling.',
   },
   {
-    question:
-      "What is the difference between a toolbox talk and formal manual handling training?",
+    question: 'What is the difference between a toolbox talk and formal manual handling training?',
     answer:
       "Formal manual handling training is a structured programme that covers the full curriculum: legislation, TILE assessment, kinetic lifting technique, mechanical aids, risk assessment, and practical demonstration. It is typically delivered by a qualified trainer and takes several hours. A toolbox talk is a short (5-15 minute), focused briefing on a specific topic — for example, 'using the new electric pallet truck' or 'correct technique for lifting cable drums.' Toolbox talks reinforce and supplement formal training but do NOT replace it. Both are essential components of an effective manual handling training programme.",
   },
@@ -98,115 +93,109 @@ const faqs = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      "What is the correct order of the employer's duty hierarchy under the MHOR 1992?",
+    question: "What is the correct order of the employer's duty hierarchy under the MHOR 1992?",
     options: [
-      "Assess, Avoid, Reduce, Inform",
-      "Avoid, Assess, Reduce, Inform",
-      "Train, Assess, Monitor, Review",
-      "Reduce, Avoid, Inform, Assess",
+      'Assess, Avoid, Reduce, Inform',
+      'Avoid, Assess, Reduce, Inform',
+      'Train, Assess, Monitor, Review',
+      'Reduce, Avoid, Inform, Assess',
     ],
     correctAnswer: 1,
     explanation:
-      "The MHOR 1992 hierarchy is: (1) AVOID hazardous manual handling so far as is reasonably practicable; (2) ASSESS the risk of any remaining manual handling that cannot be avoided; (3) REDUCE the risk to the lowest level reasonably practicable; (4) provide INFORMATION on the weight and centre of gravity of loads. This hierarchy must be followed in order — you cannot skip straight to training without first considering avoidance and reduction.",
+      'The MHOR 1992 hierarchy is: (1) AVOID hazardous manual handling so far as is reasonably practicable; (2) ASSESS the risk of any remaining manual handling that cannot be avoided; (3) REDUCE the risk to the lowest level reasonably practicable; (4) provide INFORMATION on the weight and centre of gravity of loads. This hierarchy must be followed in order — you cannot skip straight to training without first considering avoidance and reduction.',
   },
   {
     id: 2,
     question:
-      "Under the MHOR 1992, what information must an employer provide to workers about loads they will be handling?",
+      'Under the MHOR 1992, what information must an employer provide to workers about loads they will be handling?',
     options: [
-      "Only the colour of the load for identification",
-      "The weight of the load and, where the centre of gravity is not central, the heaviest side",
-      "Only verbal reassurance that the load is safe to lift",
-      "No information is required — workers should assess loads themselves",
+      'Only the colour of the load for identification',
+      'The weight of the load and, where the centre of gravity is not central, the heaviest side',
+      'Only verbal reassurance that the load is safe to lift',
+      'No information is required — workers should assess loads themselves',
     ],
     correctAnswer: 1,
     explanation:
-      "Regulation 4(1)(b)(iii) of the MHOR 1992 requires employers to provide workers with information about the weight of each load and, where the centre of gravity is not at the geometric centre, to indicate which side is the heaviest. This enables workers to plan their lift correctly and judge whether mechanical aids or team lifting is needed.",
+      'Regulation 4(1)(b)(iii) of the MHOR 1992 requires employers to provide workers with information about the weight of each load and, where the centre of gravity is not at the geometric centre, to indicate which side is the heaviest. This enables workers to plan their lift correctly and judge whether mechanical aids or team lifting is needed.',
   },
   {
     id: 3,
-    question:
-      "Which of the following is NOT an employee's duty under the MHOR 1992?",
+    question: "Which of the following is NOT an employee's duty under the MHOR 1992?",
     options: [
-      "Using the systems of work provided by the employer",
-      "Using mechanical aids when they are provided",
-      "Writing the risk assessment for their own manual handling tasks",
-      "Reporting problems, symptoms, and difficulties to their supervisor",
+      'Using the systems of work provided by the employer',
+      'Using mechanical aids when they are provided',
+      'Writing the risk assessment for their own manual handling tasks',
+      'Reporting problems, symptoms, and difficulties to their supervisor',
     ],
     correctAnswer: 2,
     explanation:
-      "Writing risk assessments is an EMPLOYER duty, not an employee duty. Employees must: use the safe systems of work provided, use mechanical aids when available, cooperate with training, and report any problems. However, employees should contribute to the assessment process by sharing their knowledge of the task.",
+      'Writing risk assessments is an EMPLOYER duty, not an employee duty. Employees must: use the safe systems of work provided, use mechanical aids when available, cooperate with training, and report any problems. However, employees should contribute to the assessment process by sharing their knowledge of the task.',
   },
   {
     id: 4,
-    question:
-      "What makes a person 'competent' to carry out manual handling risk assessments?",
+    question: "What makes a person 'competent' to carry out manual handling risk assessments?",
     options: [
-      "They must hold a university degree in ergonomics",
-      "They must be the most senior person on site",
-      "They must have sufficient training, experience, and knowledge to identify hazards and recommend controls",
-      "Any worker can carry out a risk assessment without any training",
+      'They must hold a university degree in ergonomics',
+      'They must be the most senior person on site',
+      'They must have sufficient training, experience, and knowledge to identify hazards and recommend controls',
+      'Any worker can carry out a risk assessment without any training',
     ],
     correctAnswer: 2,
     explanation:
-      "Competence is defined by having sufficient training, experience, and knowledge — not by a specific qualification or job title. The competent person must understand the MHOR 1992, the TILE framework, the types of tasks being assessed, and the available control measures. This might be a trained supervisor, a health and safety professional, or an external consultant.",
+      'Competence is defined by having sufficient training, experience, and knowledge — not by a specific qualification or job title. The competent person must understand the MHOR 1992, the TILE framework, the types of tasks being assessed, and the available control measures. This might be a trained supervisor, a health and safety professional, or an external consultant.',
   },
   {
     id: 5,
-    question:
-      "What should good manual handling training ALWAYS include, in addition to theory?",
+    question: 'What should good manual handling training ALWAYS include, in addition to theory?',
     options: [
-      "A written exam lasting at least 2 hours",
-      "Practical demonstration and hands-on practice of correct technique",
-      "A tour of the nearest hospital to show the consequences of injury",
-      "Only a certificate of attendance — practical skills are not required",
+      'A written exam lasting at least 2 hours',
+      'Practical demonstration and hands-on practice of correct technique',
+      'A tour of the nearest hospital to show the consequences of injury',
+      'Only a certificate of attendance — practical skills are not required',
     ],
     correctAnswer: 1,
     explanation:
-      "Good manual handling training must include practical demonstration and hands-on practice. Theory alone is insufficient because manual handling is a physical skill. Workers need to practise the kinetic lifting technique under supervision, receive feedback on their posture and movements, and have the opportunity to ask questions about their specific tasks. A certificate without practical competence is meaningless.",
+      'Good manual handling training must include practical demonstration and hands-on practice. Theory alone is insufficient because manual handling is a physical skill. Workers need to practise the kinetic lifting technique under supervision, receive feedback on their posture and movements, and have the opportunity to ask questions about their specific tasks. A certificate without practical competence is meaningless.',
   },
   {
     id: 6,
     question:
-      "How often does HSE guidance and industry best practice recommend refresher training for manual handling?",
+      'How often does HSE guidance and industry best practice recommend refresher training for manual handling?',
     options: [
-      "Once every 10 years",
-      "Only after an injury has occurred",
-      "Every 1 to 3 years, depending on the risk level and any changes to tasks or equipment",
-      "Refresher training is not recommended — initial training is sufficient",
+      'Once every 10 years',
+      'Only after an injury has occurred',
+      'Every 1 to 3 years, depending on the risk level and any changes to tasks or equipment',
+      'Refresher training is not recommended — initial training is sufficient',
     ],
     correctAnswer: 2,
     explanation:
-      "HSE guidance and industry best practice recommend refresher training every 1 to 3 years. Higher-risk roles may need more frequent refreshers. Training should also be refreshed when tasks change, new equipment is introduced, after incidents, when legislation changes, or when a worker moves to a new role or returns after extended absence.",
+      'HSE guidance and industry best practice recommend refresher training every 1 to 3 years. Higher-risk roles may need more frequent refreshers. Training should also be refreshed when tasks change, new equipment is introduced, after incidents, when legislation changes, or when a worker moves to a new role or returns after extended absence.',
   },
   {
     id: 7,
-    question:
-      "What is the purpose of toolbox talks in the context of manual handling?",
+    question: 'What is the purpose of toolbox talks in the context of manual handling?',
     options: [
-      "They replace formal manual handling training entirely",
-      "They provide short, focused reinforcement of specific manual handling topics relevant to current work",
-      "They are only required if a worker has been injured",
-      "They are purely social events with no safety content",
+      'They replace formal manual handling training entirely',
+      'They provide short, focused reinforcement of specific manual handling topics relevant to current work',
+      'They are only required if a worker has been injured',
+      'They are purely social events with no safety content',
     ],
     correctAnswer: 1,
     explanation:
-      "Toolbox talks are short (5-15 minute) focused briefings that reinforce specific aspects of manual handling relevant to current tasks. For example, a talk on correct technique for a specific load, how to use a new piece of equipment, or lessons learned from a recent near miss. They supplement but do NOT replace formal training.",
+      'Toolbox talks are short (5-15 minute) focused briefings that reinforce specific aspects of manual handling relevant to current tasks. For example, a talk on correct technique for a specific load, how to use a new piece of equipment, or lessons learned from a recent near miss. They supplement but do NOT replace formal training.',
   },
   {
     id: 8,
-    question:
-      "What is the role of supervision and monitoring in manual handling safety?",
+    question: 'What is the role of supervision and monitoring in manual handling safety?',
     options: [
-      "Supervision is only needed for workers under 18",
-      "Supervision ensures that safe systems of work, correct technique, and mechanical aids are actually being used in practice",
-      "Supervision is optional if workers have been trained",
-      "Supervision only involves checking that work is completed on time",
+      'Supervision is only needed for workers under 18',
+      'Supervision ensures that safe systems of work, correct technique, and mechanical aids are actually being used in practice',
+      'Supervision is optional if workers have been trained',
+      'Supervision only involves checking that work is completed on time',
     ],
     correctAnswer: 1,
     explanation:
-      "Supervision and monitoring are essential to ensure that what was planned is actually being done in practice. Training teaches workers the correct way; supervision checks that they are doing it consistently. This includes observing technique, checking that mechanical aids are being used, ensuring risk assessments are being followed, and identifying any new or changing hazards. Without supervision, unsafe practices can develop unnoticed.",
+      'Supervision and monitoring are essential to ensure that what was planned is actually being done in practice. Training teaches workers the correct way; supervision checks that they are doing it consistently. This includes observing technique, checking that mechanical aids are being used, ensuring risk assessments are being followed, and identifying any new or changing hazards. Without supervision, unsafe practices can develop unnoticed.',
   },
 ];
 
@@ -216,10 +205,9 @@ const quizQuestions = [
 
 export default function ManualHandlingModule5Section4() {
   useSEO({
-    title:
-      "Roles, Responsibilities & Training | Manual Handling Module 5.4",
+    title: 'Roles, Responsibilities & Training | Manual Handling Module 5.4',
     description:
-      "Employer and employee duties under MHOR 1992, competent person requirements, training content, refresher schedules, toolbox talks, supervision and monitoring.",
+      'Employer and employee duties under MHOR 1992, competent person requirements, training content, refresher schedules, toolbox talks, supervision and monitoring.',
   });
 
   return (
@@ -256,66 +244,56 @@ export default function ManualHandlingModule5Section4() {
             Roles, Responsibilities &amp; Training
           </h1>
           <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
-            Employer and employee duties under MHOR 1992, competent persons
-            for assessment, training requirements, toolbox talks, and the
-            role of supervision and monitoring
+            Employer and employee duties under MHOR 1992, competent persons for assessment, training
+            requirements, toolbox talks, and the role of supervision and monitoring
           </p>
         </header>
 
         {/* Quick Summary Boxes */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-emerald-500/5 border-l-2 border-emerald-500/50">
-            <p className="text-emerald-400 text-base font-medium mb-2">
-              In 30 Seconds
-            </p>
+            <p className="text-emerald-400 text-base font-medium mb-2">In 30 Seconds</p>
             <ul className="text-base text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                 <span>
-                  <strong>Employer hierarchy:</strong> avoid &rarr; assess
-                  &rarr; reduce &rarr; inform
+                  <strong>Employer hierarchy:</strong> avoid &rarr; assess &rarr; reduce &rarr;
+                  inform
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                 <span>
-                  <strong>Employee duties:</strong> use systems provided,
-                  cooperate, report
+                  <strong>Employee duties:</strong> use systems provided, cooperate, report
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                 <span>
-                  <strong>Refresher:</strong> every 1&ndash;3 years or when
-                  tasks change
+                  <strong>Refresher:</strong> every 1&ndash;3 years or when tasks change
                 </span>
               </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-emerald-500/5 border-l-2 border-emerald-500/50">
-            <p className="text-emerald-400/90 text-base font-medium mb-2">
-              Key Facts
-            </p>
+            <p className="text-emerald-400/90 text-base font-medium mb-2">Key Facts</p>
             <ul className="text-base text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                 <span>
-                  <strong>No weight limit</strong> in law &mdash; risk depends
-                  on many factors
+                  <strong>No weight limit</strong> in law &mdash; risk depends on many factors
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                 <span>
-                  <strong>Training must be practical</strong> &mdash; not
-                  theory-only
+                  <strong>Training must be practical</strong> &mdash; not theory-only
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                 <span>
-                  <strong>Supervision</strong> ensures safe practice in the
-                  real world
+                  <strong>Supervision</strong> ensures safe practice in the real world
                 </span>
               </li>
             </ul>
@@ -331,12 +309,12 @@ export default function ManualHandlingModule5Section4() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {[
               "State the employer's four-step duty hierarchy under the MHOR 1992",
-              "Explain what information employers must provide about loads (weight and centre of gravity)",
+              'Explain what information employers must provide about loads (weight and centre of gravity)',
               "Describe the employee's duties under the MHOR 1992 and HSWA 1974",
               "Define what makes a person 'competent' to carry out manual handling assessments",
-              "Outline the content requirements for effective manual handling training",
-              "State the recommended refresher training frequency and triggers for re-training",
-              "Explain the role of toolbox talks, supervision, and monitoring in maintaining safe practice",
+              'Outline the content requirements for effective manual handling training',
+              'State the recommended refresher training frequency and triggers for re-training',
+              'Explain the role of toolbox talks, supervision, and monitoring in maintaining safe practice',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-emerald-400/70 mt-0.5 flex-shrink-0" />
@@ -357,12 +335,10 @@ export default function ManualHandlingModule5Section4() {
           <div className="border-l-2 border-emerald-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                The Manual Handling Operations Regulations 1992 (as amended)
-                place clear duties on employers. These duties follow a{" "}
-                <strong>strict hierarchy</strong> &mdash; each step must be
-                considered in order. You cannot skip straight to training
-                without first considering whether the task can be avoided or
-                mechanised.
+                The Manual Handling Operations Regulations 1992 (as amended) place clear duties on
+                employers. These duties follow a <strong>strict hierarchy</strong> &mdash; each step
+                must be considered in order. You cannot skip straight to training without first
+                considering whether the task can be avoided or mechanised.
               </p>
 
               <div className="space-y-3">
@@ -373,12 +349,8 @@ export default function ManualHandlingModule5Section4() {
                       <span className="text-white text-sm font-black">1</span>
                     </div>
                     <div>
-                      <p className="text-emerald-400 text-base font-bold">
-                        AVOID
-                      </p>
-                      <p className="text-xs text-white/60">
-                        So far as is reasonably practicable
-                      </p>
+                      <p className="text-emerald-400 text-base font-bold">AVOID</p>
+                      <p className="text-xs text-white/60">So far as is reasonably practicable</p>
                     </div>
                   </div>
                   <ul className="text-sm text-white/80 space-y-1 ml-11">
@@ -404,9 +376,7 @@ export default function ManualHandlingModule5Section4() {
                       <span className="text-white text-sm font-black">2</span>
                     </div>
                     <div>
-                      <p className="text-amber-400 text-base font-bold">
-                        ASSESS
-                      </p>
+                      <p className="text-amber-400 text-base font-bold">ASSESS</p>
                       <p className="text-xs text-white/60">
                         Any remaining manual handling that cannot be avoided
                       </p>
@@ -435,9 +405,7 @@ export default function ManualHandlingModule5Section4() {
                       <span className="text-white text-sm font-black">3</span>
                     </div>
                     <div>
-                      <p className="text-orange-400 text-base font-bold">
-                        REDUCE
-                      </p>
+                      <p className="text-orange-400 text-base font-bold">REDUCE</p>
                       <p className="text-xs text-white/60">
                         Risk to the lowest level reasonably practicable
                       </p>
@@ -470,9 +438,7 @@ export default function ManualHandlingModule5Section4() {
                       <span className="text-white text-sm font-black">4</span>
                     </div>
                     <div>
-                      <p className="text-blue-400 text-base font-bold">
-                        INFORM
-                      </p>
+                      <p className="text-blue-400 text-base font-bold">INFORM</p>
                       <p className="text-xs text-white/60">
                         Provide information on load weight and centre of gravity
                       </p>
@@ -509,79 +475,61 @@ export default function ManualHandlingModule5Section4() {
           <div className="border-l-2 border-emerald-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                While the primary duties under the MHOR 1992 rest with the
-                employer, employees also have important legal
-                responsibilities. These come from both the MHOR 1992 and the
+                While the primary duties under the MHOR 1992 rest with the employer, employees also
+                have important legal responsibilities. These come from both the MHOR 1992 and the
                 Health and Safety at Work Act 1974 (Section 7).
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <Users className="h-4 w-4 text-emerald-400" />
-                  <p className="text-sm font-medium text-white">
-                    Employee Responsibilities
-                  </p>
+                  <p className="text-sm font-medium text-white">Employee Responsibilities</p>
                 </div>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Use systems of work provided:
-                      </strong>{" "}
-                      follow the procedures, techniques, and methods your
-                      employer has established for manual handling tasks
+                      <strong className="text-white">Use systems of work provided:</strong> follow
+                      the procedures, techniques, and methods your employer has established for
+                      manual handling tasks
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Use mechanical aids:
-                      </strong>{" "}
-                      when trolleys, hoists, or other aids are provided, use
-                      them &mdash; do not bypass them to &ldquo;save
-                      time&rdquo;
+                      <strong className="text-white">Use mechanical aids:</strong> when trolleys,
+                      hoists, or other aids are provided, use them &mdash; do not bypass them to
+                      &ldquo;save time&rdquo;
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Report problems:
-                      </strong>{" "}
-                      report any difficulties, symptoms, broken equipment,
-                      or unsafe conditions to your supervisor
+                      <strong className="text-white">Report problems:</strong> report any
+                      difficulties, symptoms, broken equipment, or unsafe conditions to your
+                      supervisor
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Cooperate with training:
-                      </strong>{" "}
-                      attend manual handling training, apply what you learn,
-                      and participate in refresher sessions
+                      <strong className="text-white">Cooperate with training:</strong> attend manual
+                      handling training, apply what you learn, and participate in refresher sessions
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Take reasonable care:
-                      </strong>{" "}
-                      do not put yourself or others at risk through your
-                      actions or omissions
+                      <strong className="text-white">Take reasonable care:</strong> do not put
+                      yourself or others at risk through your actions or omissions
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Disclose conditions:
-                      </strong>{" "}
-                      inform your employer of any pre-existing condition that
-                      may affect your ability to carry out manual handling
+                      <strong className="text-white">Disclose conditions:</strong> inform your
+                      employer of any pre-existing condition that may affect your ability to carry
+                      out manual handling
                     </span>
                   </li>
                 </ul>
@@ -595,12 +543,10 @@ export default function ManualHandlingModule5Section4() {
                   </p>
                 </div>
                 <p className="text-sm text-white/80">
-                  Employees who deliberately ignore safe systems of work,
-                  bypass mechanical aids, or fail to cooperate with training
-                  can face disciplinary action from their employer. In
-                  serious cases, employees can also be prosecuted under
-                  Section 7 of the Health and Safety at Work Act 1974 for
-                  failing to take reasonable care for the safety of
+                  Employees who deliberately ignore safe systems of work, bypass mechanical aids, or
+                  fail to cooperate with training can face disciplinary action from their employer.
+                  In serious cases, employees can also be prosecuted under Section 7 of the Health
+                  and Safety at Work Act 1974 for failing to take reasonable care for the safety of
                   themselves and others.
                 </p>
               </div>
@@ -617,69 +563,50 @@ export default function ManualHandlingModule5Section4() {
           <div className="border-l-2 border-emerald-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                The MHOR 1992 requires that manual handling risk assessments
-                are carried out by a{" "}
-                <strong>competent person</strong>. Competence is not defined
-                by a specific certificate but by a combination of training,
-                experience, and knowledge.
+                The MHOR 1992 requires that manual handling risk assessments are carried out by a{' '}
+                <strong>competent person</strong>. Competence is not defined by a specific
+                certificate but by a combination of training, experience, and knowledge.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <ClipboardCheck className="h-4 w-4 text-emerald-400" />
-                  <p className="text-sm font-medium text-white">
-                    What Makes a Person Competent?
-                  </p>
+                  <p className="text-sm font-medium text-white">What Makes a Person Competent?</p>
                 </div>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Understanding of MHOR 1992:
-                      </strong>{" "}
-                      knows the legal requirements, the duty hierarchy, and
-                      the employer&rsquo;s obligations
+                      <strong className="text-white">Understanding of MHOR 1992:</strong> knows the
+                      legal requirements, the duty hierarchy, and the employer&rsquo;s obligations
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        TILE framework knowledge:
-                      </strong>{" "}
-                      can apply the Task, Individual, Load, Environment
-                      assessment systematically
+                      <strong className="text-white">TILE framework knowledge:</strong> can apply
+                      the Task, Individual, Load, Environment assessment systematically
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Practical experience:
-                      </strong>{" "}
-                      has hands-on knowledge of the types of manual handling
-                      tasks being assessed
+                      <strong className="text-white">Practical experience:</strong> has hands-on
+                      knowledge of the types of manual handling tasks being assessed
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Control measure knowledge:
-                      </strong>{" "}
-                      knows what mechanical aids, workplace adjustments, and
-                      procedural changes are available
+                      <strong className="text-white">Control measure knowledge:</strong> knows what
+                      mechanical aids, workplace adjustments, and procedural changes are available
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Communication skills:
-                      </strong>{" "}
-                      can record findings clearly and communicate
-                      recommendations effectively
+                      <strong className="text-white">Communication skills:</strong> can record
+                      findings clearly and communicate recommendations effectively
                     </span>
                   </li>
                 </ul>
@@ -699,13 +626,10 @@ export default function ManualHandlingModule5Section4() {
           <div className="border-l-2 border-emerald-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Manual handling training is a legal requirement under the
-                MHOR 1992. However, not all training is created equal. The
-                HSE is clear that{" "}
-                <strong>
-                  training must be practical and task-specific
-                </strong>{" "}
-                &mdash; a generic presentation alone is not sufficient.
+                Manual handling training is a legal requirement under the MHOR 1992. However, not
+                all training is created equal. The HSE is clear that{' '}
+                <strong>training must be practical and task-specific</strong> &mdash; a generic
+                presentation alone is not sufficient.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -721,10 +645,9 @@ export default function ManualHandlingModule5Section4() {
                       Initial Induction Training
                     </p>
                     <p className="text-xs text-white/70">
-                      Provided to all new workers before they carry out any
-                      manual handling. Covers the basics: legislation, TILE,
-                      kinetic technique, how to use mechanical aids, and
-                      reporting procedures.
+                      Provided to all new workers before they carry out any manual handling. Covers
+                      the basics: legislation, TILE, kinetic technique, how to use mechanical aids,
+                      and reporting procedures.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
@@ -732,10 +655,9 @@ export default function ManualHandlingModule5Section4() {
                       Task-Specific Training
                     </p>
                     <p className="text-xs text-white/70">
-                      Focused on the specific manual handling tasks the
-                      worker will actually perform. Includes practical
-                      demonstration and supervised practice with the actual
-                      loads, equipment, and working conditions.
+                      Focused on the specific manual handling tasks the worker will actually
+                      perform. Includes practical demonstration and supervised practice with the
+                      actual loads, equipment, and working conditions.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
@@ -743,10 +665,9 @@ export default function ManualHandlingModule5Section4() {
                       Practical Demonstration
                     </p>
                     <p className="text-xs text-white/70">
-                      Workers must practise correct technique under
-                      supervision. Observation, feedback, and correction are
-                      essential. A worker cannot be considered trained if
-                      they have only watched a video or read a handout.
+                      Workers must practise correct technique under supervision. Observation,
+                      feedback, and correction are essential. A worker cannot be considered trained
+                      if they have only watched a video or read a handout.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
@@ -757,10 +678,9 @@ export default function ManualHandlingModule5Section4() {
                       </p>
                     </div>
                     <p className="text-xs text-white/70">
-                      Reinforces correct technique, addresses any bad habits
-                      that have developed, covers any changes to tasks,
-                      equipment, or legislation, and incorporates lessons
-                      learned from recent incidents.
+                      Reinforces correct technique, addresses any bad habits that have developed,
+                      covers any changes to tasks, equipment, or legislation, and incorporates
+                      lessons learned from recent incidents.
                     </p>
                   </div>
                 </div>
@@ -778,82 +698,61 @@ export default function ManualHandlingModule5Section4() {
           <div className="border-l-2 border-emerald-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Effective manual handling training covers both theory and
-                practice. The following are the core topics that should be
-                included in any comprehensive training programme.
+                Effective manual handling training covers both theory and practice. The following
+                are the core topics that should be included in any comprehensive training programme.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm font-medium text-white mb-3">
-                  Core Training Content
-                </p>
+                <p className="text-sm font-medium text-white mb-3">Core Training Content</p>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">TILE assessment:</strong>{" "}
-                      how to assess any manual handling task using Task,
-                      Individual, Load, Environment
+                      <strong className="text-white">TILE assessment:</strong> how to assess any
+                      manual handling task using Task, Individual, Load, Environment
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Kinetic lifting technique:
-                      </strong>{" "}
-                      correct posture, foot placement, grip, lifting
-                      sequence, and the importance of keeping the load close
-                      to the body
+                      <strong className="text-white">Kinetic lifting technique:</strong> correct
+                      posture, foot placement, grip, lifting sequence, and the importance of keeping
+                      the load close to the body
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Mechanical aids:
-                      </strong>{" "}
-                      what aids are available, how to use them correctly, and
-                      when they are required
+                      <strong className="text-white">Mechanical aids:</strong> what aids are
+                      available, how to use them correctly, and when they are required
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Risk assessment:
-                      </strong>{" "}
-                      how to recognise hazards and make dynamic assessments
-                      before each lift
+                      <strong className="text-white">Risk assessment:</strong> how to recognise
+                      hazards and make dynamic assessments before each lift
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Team lifting:
-                      </strong>{" "}
-                      when team lifts are needed, how to coordinate, and the
-                      role of the lead lifter
+                      <strong className="text-white">Team lifting:</strong> when team lifts are
+                      needed, how to coordinate, and the role of the lead lifter
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Reporting procedures:
-                      </strong>{" "}
-                      how to report injuries, near misses, and difficulties
+                      <strong className="text-white">Reporting procedures:</strong> how to report
+                      injuries, near misses, and difficulties
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        MSD awareness:
-                      </strong>{" "}
-                      understanding the types of injuries that can result and
-                      why early reporting is critical
+                      <strong className="text-white">MSD awareness:</strong> understanding the types
+                      of injuries that can result and why early reporting is critical
                     </span>
                   </li>
                 </ul>
@@ -898,9 +797,7 @@ export default function ManualHandlingModule5Section4() {
                     <span className="text-white text-sm font-black">1</span>
                   </div>
                   <div>
-                    <p className="text-emerald-400 text-sm font-bold">
-                      Can you AVOID it?
-                    </p>
+                    <p className="text-emerald-400 text-sm font-bold">Can you AVOID it?</p>
                     <p className="text-xs text-white/60">
                       Eliminate, automate, or redesign the task
                     </p>
@@ -924,12 +821,8 @@ export default function ManualHandlingModule5Section4() {
                     <span className="text-white text-sm font-black">2</span>
                   </div>
                   <div>
-                    <p className="text-amber-400 text-sm font-bold">
-                      ASSESS the risk (TILE)
-                    </p>
-                    <p className="text-xs text-white/60">
-                      Task, Individual, Load, Environment
-                    </p>
+                    <p className="text-amber-400 text-sm font-bold">ASSESS the risk (TILE)</p>
+                    <p className="text-xs text-white/60">Task, Individual, Load, Environment</p>
                   </div>
                 </div>
               </div>
@@ -948,9 +841,7 @@ export default function ManualHandlingModule5Section4() {
                     <span className="text-white text-sm font-black">3</span>
                   </div>
                   <div>
-                    <p className="text-orange-400 text-sm font-bold">
-                      REDUCE risk to lowest ALARP
-                    </p>
+                    <p className="text-orange-400 text-sm font-bold">REDUCE risk to lowest ALARP</p>
                     <p className="text-xs text-white/60">
                       Mechanical aids, task redesign, team lifts
                     </p>
@@ -972,9 +863,7 @@ export default function ManualHandlingModule5Section4() {
                     <span className="text-white text-sm font-black">4</span>
                   </div>
                   <div>
-                    <p className="text-blue-400 text-sm font-bold">
-                      INFORM workers
-                    </p>
+                    <p className="text-blue-400 text-sm font-bold">INFORM workers</p>
                     <p className="text-xs text-white/60">
                       Load weight, centre of gravity, training
                     </p>
@@ -996,9 +885,7 @@ export default function ManualHandlingModule5Section4() {
                     <RefreshCw className="h-4 w-4 text-white" />
                   </div>
                   <div>
-                    <p className="text-purple-400 text-sm font-bold">
-                      REVIEW regularly
-                    </p>
+                    <p className="text-purple-400 text-sm font-bold">REVIEW regularly</p>
                     <p className="text-xs text-white/60">
                       When tasks change, after incidents, or at least annually
                     </p>
@@ -1008,8 +895,8 @@ export default function ManualHandlingModule5Section4() {
             </div>
 
             <p className="text-white/50 text-xs italic text-center mt-5">
-              This hierarchy must be followed in order. Training and PPE are
-              NOT substitutes for avoidance, assessment, and risk reduction.
+              This hierarchy must be followed in order. Training and PPE are NOT substitutes for
+              avoidance, assessment, and risk reduction.
             </p>
           </div>
         </section>
@@ -1025,10 +912,9 @@ export default function ManualHandlingModule5Section4() {
           <div className="border-l-2 border-emerald-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Toolbox talks are short, focused briefings (typically
-                5&ndash;15 minutes) delivered on site. They are a vital tool
-                for reinforcing manual handling safety in the context of
-                current work activities.
+                Toolbox talks are short, focused briefings (typically 5&ndash;15 minutes) delivered
+                on site. They are a vital tool for reinforcing manual handling safety in the context
+                of current work activities.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
@@ -1065,13 +951,12 @@ export default function ManualHandlingModule5Section4() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-amber-400">Important:</strong>{" "}
-                  Toolbox talks <strong>supplement</strong> formal training
-                  &mdash; they do <strong>NOT replace</strong> it. A toolbox
-                  talk cannot be the only manual handling training a worker
-                  receives. However, regular toolbox talks are one of the
-                  most effective ways to keep manual handling safety at the
-                  forefront of workers&rsquo; minds.
+                  <strong className="text-amber-400">Important:</strong> Toolbox talks{' '}
+                  <strong>supplement</strong> formal training &mdash; they do{' '}
+                  <strong>NOT replace</strong> it. A toolbox talk cannot be the only manual handling
+                  training a worker receives. However, regular toolbox talks are one of the most
+                  effective ways to keep manual handling safety at the forefront of workers&rsquo;
+                  minds.
                 </p>
               </div>
             </div>
@@ -1087,68 +972,50 @@ export default function ManualHandlingModule5Section4() {
           <div className="border-l-2 border-emerald-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
               <p>
-                Training tells workers what to do. Supervision ensures they{" "}
-                <strong>actually do it</strong>. Without effective supervision
-                and monitoring, unsafe practices can develop unnoticed and
-                become normalised.
+                Training tells workers what to do. Supervision ensures they{' '}
+                <strong>actually do it</strong>. Without effective supervision and monitoring,
+                unsafe practices can develop unnoticed and become normalised.
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <Eye className="h-4 w-4 text-emerald-400" />
-                  <p className="text-sm font-medium text-white">
-                    What Supervision Should Check
-                  </p>
+                  <p className="text-sm font-medium text-white">What Supervision Should Check</p>
                 </div>
                 <ul className="text-sm text-white/80 space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Correct technique:
-                      </strong>{" "}
-                      are workers using the kinetic lifting method, or have
-                      bad habits developed?
+                      <strong className="text-white">Correct technique:</strong> are workers using
+                      the kinetic lifting method, or have bad habits developed?
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Mechanical aids in use:
-                      </strong>{" "}
-                      are the provided aids actually being used, or are they
-                      sitting idle?
+                      <strong className="text-white">Mechanical aids in use:</strong> are the
+                      provided aids actually being used, or are they sitting idle?
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Risk assessments followed:
-                      </strong>{" "}
-                      are the procedures from the assessment being implemented
-                      on the ground?
+                      <strong className="text-white">Risk assessments followed:</strong> are the
+                      procedures from the assessment being implemented on the ground?
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        New or changing hazards:
-                      </strong>{" "}
-                      has anything changed that the current assessment does
-                      not cover?
+                      <strong className="text-white">New or changing hazards:</strong> has anything
+                      changed that the current assessment does not cover?
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
-                      <strong className="text-white">
-                        Worker wellbeing:
-                      </strong>{" "}
-                      are workers showing signs of fatigue, pain, or
-                      difficulty?
+                      <strong className="text-white">Worker wellbeing:</strong> are workers showing
+                      signs of fatigue, pain, or difficulty?
                     </span>
                   </li>
                 </ul>
@@ -1156,15 +1023,11 @@ export default function ManualHandlingModule5Section4() {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <p className="text-sm text-white">
-                  <strong className="text-emerald-400">
-                    The Supervision Cycle:
-                  </strong>{" "}
-                  Effective supervision is not a one-off event &mdash; it is
-                  a continuous cycle of{" "}
-                  <strong>observe, feedback, correct, reinforce</strong>.
-                  Workers should see supervision as supportive, not punitive.
-                  The goal is to maintain high standards and catch problems
-                  early, not to find fault.
+                  <strong className="text-emerald-400">The Supervision Cycle:</strong> Effective
+                  supervision is not a one-off event &mdash; it is a continuous cycle of{' '}
+                  <strong>observe, feedback, correct, reinforce</strong>. Workers should see
+                  supervision as supportive, not punitive. The goal is to maintain high standards
+                  and catch problems early, not to find fault.
                 </p>
               </div>
             </div>
@@ -1173,21 +1036,12 @@ export default function ManualHandlingModule5Section4() {
 
         {/* FAQ Section */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">
-            Frequently Asked Questions
-          </h2>
+          <h2 className="text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="pb-4 border-b border-white/5 last:border-0"
-              >
-                <h3 className="text-sm font-medium text-white mb-1">
-                  {faq.question}
-                </h3>
-                <p className="text-sm text-white/80 leading-relaxed">
-                  {faq.answer}
-                </p>
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

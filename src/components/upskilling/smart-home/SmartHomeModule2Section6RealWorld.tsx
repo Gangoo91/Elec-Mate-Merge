@@ -9,21 +9,23 @@ export const SmartHomeModule2Section6RealWorld = () => {
   const [showAnalysis, setShowAnalysis] = useState(false);
 
   const scenario = {
-    title: "Philips Hue Integration Challenge",
-    description: "An installer sets up Philips Hue Zigbee bulbs. The client wants to control them with Alexa, but Alexa doesn't natively support Zigbee.",
-    solution: "Use the Hue Bridge to translate Zigbee → Wi-Fi → Alexa"
+    title: 'Philips Hue Integration Challenge',
+    description:
+      "An installer sets up Philips Hue Zigbee bulbs. The client wants to control them with Alexa, but Alexa doesn't natively support Zigbee.",
+    solution: 'Use the Hue Bridge to translate Zigbee → Wi-Fi → Alexa',
   };
 
   const steps = [
     {
-      title: "Understanding the Problem",
+      title: 'Understanding the Problem',
       icon: AlertTriangle,
       content: (
         <div className="space-y-4">
           <div className="bg-red-900/10 border border-red-600/20 rounded-lg p-4">
             <h4 className="text-red-200 font-semibold mb-2">The Challenge</h4>
             <p className="text-red-100 text-sm mb-3">
-              Client has purchased Philips Hue Zigbee bulbs and wants voice control via Amazon Alexa Echo devices.
+              Client has purchased Philips Hue Zigbee bulbs and wants voice control via Amazon Alexa
+              Echo devices.
             </p>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
@@ -37,24 +39,46 @@ export const SmartHomeModule2Section6RealWorld = () => {
             </div>
           </div>
           <p className="text-foreground text-sm">
-            <strong>Problem:</strong> Direct protocol incompatibility prevents communication between Zigbee bulbs and Wi-Fi-based Alexa.
+            <strong>Problem:</strong> Direct protocol incompatibility prevents communication between
+            Zigbee bulbs and Wi-Fi-based Alexa.
           </p>
         </div>
-      )
+      ),
     },
     {
-      title: "Evaluating Solutions",
+      title: 'Evaluating Solutions',
       icon: CheckCircle,
       content: (
         <div className="space-y-4">
           <p className="text-foreground text-sm mb-4">What options does the installer have?</p>
-          
+
           <div className="space-y-3">
             {[
-              { id: 'bridge', text: 'Use Philips Hue Bridge for protocol translation', correct: true, explanation: 'Correct: The bridge translates between Zigbee and Wi-Fi/cloud services' },
-              { id: 'replace', text: 'Replace bulbs with Wi-Fi versions', correct: false, explanation: 'Possible but expensive and wasteful of existing Zigbee bulbs' },
-              { id: 'impossible', text: 'Tell client it\'s impossible', correct: false, explanation: 'Incorrect: Bridge solutions exist for this exact scenario' },
-              { id: 'different', text: 'Use a different voice assistant', correct: false, explanation: 'Avoids the problem rather than solving it' }
+              {
+                id: 'bridge',
+                text: 'Use Philips Hue Bridge for protocol translation',
+                correct: true,
+                explanation:
+                  'Correct: The bridge translates between Zigbee and Wi-Fi/cloud services',
+              },
+              {
+                id: 'replace',
+                text: 'Replace bulbs with Wi-Fi versions',
+                correct: false,
+                explanation: 'Possible but expensive and wasteful of existing Zigbee bulbs',
+              },
+              {
+                id: 'impossible',
+                text: "Tell client it's impossible",
+                correct: false,
+                explanation: 'Incorrect: Bridge solutions exist for this exact scenario',
+              },
+              {
+                id: 'different',
+                text: 'Use a different voice assistant',
+                correct: false,
+                explanation: 'Avoids the problem rather than solving it',
+              },
             ].map((option) => (
               <div
                 key={option.id}
@@ -73,25 +97,25 @@ export const SmartHomeModule2Section6RealWorld = () => {
           {selectedSolution && (
             <div className="mt-4 p-4 bg-blue-900/10 border border-blue-600/20 rounded-lg">
               <p className="text-blue-200 text-sm">
-              {selectedSolution === 'bridge' ? 
-                "✅ Excellent choice! The Hue Bridge is designed exactly for this scenario." :
-                "Consider the bridge solution - it's designed specifically for this compatibility challenge."
-              }
+                {selectedSolution === 'bridge'
+                  ? '✅ Excellent choice! The Hue Bridge is designed exactly for this scenario.'
+                  : "Consider the bridge solution - it's designed specifically for this compatibility challenge."}
               </p>
             </div>
           )}
         </div>
-      )
+      ),
     },
     {
-      title: "Implementation Analysis",
+      title: 'Implementation Analysis',
       icon: Home,
       content: (
         <div className="space-y-4">
           <div className="bg-green-900/10 border border-green-600/20 rounded-lg p-4">
             <h4 className="text-green-200 font-semibold mb-2">Solution: Philips Hue Bridge</h4>
             <p className="text-green-100 text-sm mb-3">
-              The Hue Bridge acts as a protocol translator, enabling communication between Zigbee bulbs and Wi-Fi/cloud ecosystems.
+              The Hue Bridge acts as a protocol translator, enabling communication between Zigbee
+              bulbs and Wi-Fi/cloud ecosystems.
             </p>
             <div className="flex items-center justify-between text-sm mb-2">
               <span className="text-purple-400">Zigbee Bulbs</span>
@@ -123,7 +147,7 @@ export const SmartHomeModule2Section6RealWorld = () => {
                   <li>• Manufacturer support</li>
                 </ul>
               </div>
-              
+
               <div className="bg-red-900/10 border border-red-600/20 rounded-lg p-4">
                 <h5 className="text-red-400 font-medium mb-2">Cons</h5>
                 <ul className="text-sm space-y-1 text-red-200">
@@ -137,8 +161,8 @@ export const SmartHomeModule2Section6RealWorld = () => {
             </div>
           )}
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const nextStep = () => {
@@ -188,11 +212,13 @@ export const SmartHomeModule2Section6RealWorld = () => {
         {/* Current step content */}
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            {React.createElement(steps[currentStep].icon, { className: "h-5 w-5 text-indigo-400" })}
+            {React.createElement(steps[currentStep].icon, { className: 'h-5 w-5 text-indigo-400' })}
             <h4 className="text-foreground font-semibold">{steps[currentStep].title}</h4>
-            <span className="text-gray-400 text-sm">({currentStep + 1}/{steps.length})</span>
+            <span className="text-gray-400 text-sm">
+              ({currentStep + 1}/{steps.length})
+            </span>
           </div>
-          
+
           {steps[currentStep].content}
         </div>
 
@@ -206,7 +232,7 @@ export const SmartHomeModule2Section6RealWorld = () => {
           >
             Previous
           </Button>
-          
+
           <div className="flex gap-2">
             {currentStep < steps.length - 1 ? (
               <Button

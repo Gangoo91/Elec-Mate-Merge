@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m3s5-check1",
-    question: "What must emergency lighting layout drawings show?",
-    options: ["Wiring details only", "Luminaire positions and types", "Building structural details", "Fire alarm positions only"],
+    id: 'emergencylighting-m3s5-check1',
+    question: 'What must emergency lighting layout drawings show?',
+    options: [
+      'Wiring details only',
+      'Luminaire positions and types',
+      'Building structural details',
+      'Fire alarm positions only',
+    ],
     correctIndex: 1,
-    explanation: "Emergency lighting layout drawings must show luminaire positions, types (maintained/non-maintained), exit sign locations, and coverage areas. They form part of the compliance documentation."
+    explanation:
+      'Emergency lighting layout drawings must show luminaire positions, types (maintained/non-maintained), exit sign locations, and coverage areas. They form part of the compliance documentation.',
   },
   {
-    id: "emergencylighting-m3s5-check2",
-    question: "What symbol standard is commonly used for emergency lighting drawings?",
-    options: ["BS 7671", "BS EN 60617", "ISO 9001", "BS 5266-1 annex"],
+    id: 'emergencylighting-m3s5-check2',
+    question: 'What symbol standard is commonly used for emergency lighting drawings?',
+    options: ['BS 7671', 'BS EN 60617', 'ISO 9001', 'BS 5266-1 annex'],
     correctIndex: 1,
-    explanation: "BS EN 60617 provides standard graphical symbols for electrical diagrams. BS 5266-1 includes emergency lighting specific symbols in its annexes for use on layout drawings."
+    explanation:
+      'BS EN 60617 provides standard graphical symbols for electrical diagrams. BS 5266-1 includes emergency lighting specific symbols in its annexes for use on layout drawings.',
   },
   {
-    id: "emergencylighting-m3s5-check3",
-    question: "What type of drawing shows the installed system after completion?",
-    options: ["Design drawing", "Schematic drawing", "As-built drawing", "Proposal drawing"],
+    id: 'emergencylighting-m3s5-check3',
+    question: 'What type of drawing shows the installed system after completion?',
+    options: ['Design drawing', 'Schematic drawing', 'As-built drawing', 'Proposal drawing'],
     correctIndex: 2,
-    explanation: "As-built drawings record the actual installed system, reflecting any changes made during installation. These are essential for maintenance and future modifications."
-  }
+    explanation:
+      'As-built drawings record the actual installed system, reflecting any changes made during installation. These are essential for maintenance and future modifications.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What scale should emergency lighting drawings be?",
-    answer: "1:100 or 1:200 is typical for floor plans, allowing clear identification of luminaire positions. Larger scales (1:50) may be needed for complex areas. The scale must be clearly stated on the drawing."
+    question: 'What scale should emergency lighting drawings be?',
+    answer:
+      '1:100 or 1:200 is typical for floor plans, allowing clear identification of luminaire positions. Larger scales (1:50) may be needed for complex areas. The scale must be clearly stated on the drawing.',
   },
   {
-    question: "Do I need separate drawings for emergency and normal lighting?",
-    answer: "Emergency lighting should have dedicated drawings or clearly distinguished layers on combined drawings. This aids maintenance, testing, and compliance verification. Separate drawings are preferred for complex installations."
+    question: 'Do I need separate drawings for emergency and normal lighting?',
+    answer:
+      'Emergency lighting should have dedicated drawings or clearly distinguished layers on combined drawings. This aids maintenance, testing, and compliance verification. Separate drawings are preferred for complex installations.',
   },
   {
-    question: "What information goes in the drawing legend?",
-    answer: "Symbol definitions, luminaire types and models, maintained/non-maintained status, wiring type, circuit references, and any site-specific annotations. Include drawing revision history."
+    question: 'What information goes in the drawing legend?',
+    answer:
+      'Symbol definitions, luminaire types and models, maintained/non-maintained status, wiring type, circuit references, and any site-specific annotations. Include drawing revision history.',
   },
   {
-    question: "How often should as-built drawings be updated?",
-    answer: "After any modification to the system - added luminaires, relocated units, changed luminaire types, or circuit alterations. Keep revision history and ensure current drawings are available on site."
-  }
+    question: 'How often should as-built drawings be updated?',
+    answer:
+      'After any modification to the system - added luminaires, relocated units, changed luminaire types, or circuit alterations. Keep revision history and ensure current drawings are available on site.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A fire officer requests emergency lighting documentation. What drawing must be available on site?",
-  options: [
-    "Original design proposal only",
-    "Current as-built layout drawing",
-    "Manufacturer product sheets",
-    "Building structural plans"
-  ],
-  correctAnswer: 1,
-  explanation: "Current as-built drawings showing the installed system must be available for inspection. These should reflect any modifications and be part of the log book documentation."
-  }
+    question:
+      'A fire officer requests emergency lighting documentation. What drawing must be available on site?',
+    options: [
+      'Original design proposal only',
+      'Current as-built layout drawing',
+      'Manufacturer product sheets',
+      'Building structural plans',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Current as-built drawings showing the installed system must be available for inspection. These should reflect any modifications and be part of the log book documentation.',
+  },
 ];
 
 const EmergencyLightingModule3Section5 = () => {
   useSEO({
-    title: "Layout Drawings and Documentation | Emergency Lighting Module 3.5",
-    description: "Create and interpret emergency lighting layout drawings for compliance, installation guidance, and fire safety documentation using standard symbols."
+    title: 'Layout Drawings and Documentation | Emergency Lighting Module 3.5',
+    description:
+      'Create and interpret emergency lighting layout drawings for compliance, installation guidance, and fire safety documentation using standard symbols.',
   });
 
   return (
@@ -108,17 +123,29 @@ const EmergencyLightingModule3Section5 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Symbols:</strong> BS EN 60617 standard</li>
-              <li><strong>Scale:</strong> 1:100 or 1:200 typical</li>
-              <li><strong>As-built:</strong> Reflects actual installation</li>
+              <li>
+                <strong>Symbols:</strong> BS EN 60617 standard
+              </li>
+              <li>
+                <strong>Scale:</strong> 1:100 or 1:200 typical
+              </li>
+              <li>
+                <strong>As-built:</strong> Reflects actual installation
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Documentation</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Design:</strong> Initial proposal</li>
-              <li><strong>Installation:</strong> Working drawings</li>
-              <li><strong>Completion:</strong> As-built records</li>
+              <li>
+                <strong>Design:</strong> Initial proposal
+              </li>
+              <li>
+                <strong>Installation:</strong> Working drawings
+              </li>
+              <li>
+                <strong>Completion:</strong> As-built records
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +155,12 @@ const EmergencyLightingModule3Section5 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Interpret emergency lighting symbols",
-              "Create compliant layout drawings",
-              "Distinguish drawing types and purposes",
-              "Maintain as-built documentation",
-              "Use appropriate scales and legends",
-              "Present drawings for inspection"
+              'Interpret emergency lighting symbols',
+              'Create compliant layout drawings',
+              'Distinguish drawing types and purposes',
+              'Maintain as-built documentation',
+              'Use appropriate scales and legends',
+              'Present drawings for inspection',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -159,7 +186,9 @@ const EmergencyLightingModule3Section5 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Information</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Essential Information
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Luminaire positions and types</li>
                   <li>Exit sign locations</li>
@@ -169,7 +198,9 @@ const EmergencyLightingModule3Section5 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Supporting Information</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Supporting Information
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Drawing scale and orientation</li>
                   <li>Symbol legend</li>
@@ -192,18 +223,28 @@ const EmergencyLightingModule3Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Using standardised symbols ensures drawings can be understood by all
-              stakeholders - installers, maintenance personnel, and inspectors.
+              Using standardised symbols ensures drawings can be understood by all stakeholders -
+              installers, maintenance personnel, and inspectors.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Common Symbol Elements:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Circle with arrow:</strong> Self-contained luminaire with direction</li>
-                <li><strong>Rectangle:</strong> Exit sign (with M for maintained)</li>
-                <li><strong>M designation:</strong> Maintained operation</li>
-                <li><strong>NM designation:</strong> Non-maintained operation</li>
-                <li><strong>Circuit number:</strong> Reference to specific circuit</li>
+                <li>
+                  <strong>Circle with arrow:</strong> Self-contained luminaire with direction
+                </li>
+                <li>
+                  <strong>Rectangle:</strong> Exit sign (with M for maintained)
+                </li>
+                <li>
+                  <strong>M designation:</strong> Maintained operation
+                </li>
+                <li>
+                  <strong>NM designation:</strong> Non-maintained operation
+                </li>
+                <li>
+                  <strong>Circuit number:</strong> Reference to specific circuit
+                </li>
               </ul>
             </div>
 
@@ -234,22 +275,32 @@ const EmergencyLightingModule3Section5 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different drawing types serve different purposes through the project
-              lifecycle. Understanding each type ensures appropriate documentation.
+              Different drawing types serve different purposes through the project lifecycle.
+              Understanding each type ensures appropriate documentation.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Project Stages</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Proposal:</strong> Initial design concept</li>
-                  <li><strong>Detailed design:</strong> Full specification</li>
-                  <li><strong>Installation:</strong> Working drawings</li>
-                  <li><strong>As-built:</strong> Final installed system</li>
+                  <li>
+                    <strong>Proposal:</strong> Initial design concept
+                  </li>
+                  <li>
+                    <strong>Detailed design:</strong> Full specification
+                  </li>
+                  <li>
+                    <strong>Installation:</strong> Working drawings
+                  </li>
+                  <li>
+                    <strong>As-built:</strong> Final installed system
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">As-Built Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  As-Built Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Reflects actual installation</li>
                   <li>Updated for any changes</li>
@@ -268,7 +319,9 @@ const EmergencyLightingModule3Section5 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Drawing Best Practice</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Drawing Best Practice
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Use consistent symbols throughout</li>
                 <li>Include comprehensive legend</li>
@@ -281,10 +334,18 @@ const EmergencyLightingModule3Section5 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Drawing Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Missing legend:</strong> — Symbols must be defined</li>
-                <li><strong>Outdated drawings:</strong> — Must reflect current installation</li>
-                <li><strong>No scale:</strong> — Essential for interpretation</li>
-                <li><strong>Missing revision history:</strong> — Track all changes</li>
+                <li>
+                  <strong>Missing legend:</strong> — Symbols must be defined
+                </li>
+                <li>
+                  <strong>Outdated drawings:</strong> — Must reflect current installation
+                </li>
+                <li>
+                  <strong>No scale:</strong> — Essential for interpretation
+                </li>
+                <li>
+                  <strong>Missing revision history:</strong> — Track all changes
+                </li>
               </ul>
             </div>
           </div>
@@ -330,10 +391,7 @@ const EmergencyLightingModule3Section5 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

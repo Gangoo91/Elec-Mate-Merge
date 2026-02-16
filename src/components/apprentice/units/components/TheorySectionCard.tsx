@@ -1,6 +1,5 @@
-
-import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
+import { Link } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface TheorySectionCardProps {
   sectionNumber: string | number;
@@ -11,16 +10,16 @@ interface TheorySectionCardProps {
   onClick: () => void;
 }
 
-const TheorySectionCard = ({ 
-  sectionNumber, 
-  title, 
-  description, 
-  courseSlug, 
+const TheorySectionCard = ({
+  sectionNumber,
+  title,
+  description,
+  courseSlug,
   unitCode,
-  onClick 
+  onClick,
 }: TheorySectionCardProps) => {
   const unitCodeFormatted = unitCode.toLowerCase().replace('/', '-');
-  
+
   return (
     <Link
       to={`/apprentice/study/eal/${courseSlug}/unit/${unitCodeFormatted}/section/${sectionNumber}`}
@@ -36,9 +35,7 @@ const TheorySectionCard = ({
               </div>
               <h3 className="text-lg font-medium">{title}</h3>
             </div>
-            <p className="text-sm text-white pl-[52px]">
-              {description}
-            </p>
+            <p className="text-sm text-white pl-[52px]">{description}</p>
           </div>
         </CardContent>
       </Card>

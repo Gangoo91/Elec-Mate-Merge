@@ -1,13 +1,21 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Download, Calendar as CalendarIcon, RotateCcw, Edit3, Eye } from "lucide-react";
-import { PhaseCard } from "./PhaseCard";
-import { EditablePhaseCard } from "./editable/EditablePhaseCard";
-import { PhaseDetailsSheet } from "./PhaseDetailsSheet";
-import { Badge } from "@/components/ui/badge";
-import { useSwipeable } from "react-swipeable";
-import { motion, AnimatePresence } from "framer-motion";
-import { EditableProjectPlan, ProjectPhase } from "@/types/projectPlan";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  Calendar as CalendarIcon,
+  RotateCcw,
+  Edit3,
+  Eye,
+} from 'lucide-react';
+import { PhaseCard } from './PhaseCard';
+import { EditablePhaseCard } from './editable/EditablePhaseCard';
+import { PhaseDetailsSheet } from './PhaseDetailsSheet';
+import { Badge } from '@/components/ui/badge';
+import { useSwipeable } from 'react-swipeable';
+import { motion, AnimatePresence } from 'framer-motion';
+import { EditableProjectPlan, ProjectPhase } from '@/types/projectPlan';
 
 interface MobilePhaseResultsProps {
   plan: EditableProjectPlan;
@@ -40,7 +48,7 @@ export const MobilePhaseResults = ({
   onAddTask,
   onUpdateTask,
   onDeleteTask,
-  onToggleTask
+  onToggleTask,
 }: MobilePhaseResultsProps) => {
   const phases = plan.phases || [];
   const [activePhaseIndex, setActivePhaseIndex] = useState(0);
@@ -50,14 +58,14 @@ export const MobilePhaseResults = ({
   const goToNextPhase = () => {
     if (activePhaseIndex < phases.length - 1) {
       setDirection(1);
-      setActivePhaseIndex(prev => prev + 1);
+      setActivePhaseIndex((prev) => prev + 1);
     }
   };
 
   const goToPrevPhase = () => {
     if (activePhaseIndex > 0) {
       setDirection(-1);
-      setActivePhaseIndex(prev => prev - 1);
+      setActivePhaseIndex((prev) => prev - 1);
     }
   };
 
@@ -66,35 +74,31 @@ export const MobilePhaseResults = ({
     onSwipedRight: goToPrevPhase,
     trackMouse: true,
     preventScrollOnSwipe: true,
-    delta: 50
+    delta: 50,
   });
 
   if (!phases || phases.length === 0) {
-    return (
-      <div className="text-center py-8 text-muted-foreground">
-        No phases available
-      </div>
-    );
+    return <div className="text-center py-8 text-muted-foreground">No phases available</div>;
   }
 
   const activePhase = phases[activePhaseIndex];
-  const completedCount = phases.filter(p => p.completed).length;
+  const completedCount = phases.filter((p) => p.completed).length;
   const totalPhases = phases.length;
   const progressPercent = (completedCount / totalPhases) * 100;
 
   const variants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 300 : -300,
-      opacity: 0
+      opacity: 0,
     }),
     center: {
       x: 0,
-      opacity: 1
+      opacity: 1,
     },
     exit: (direction: number) => ({
       x: direction < 0 ? 300 : -300,
-      opacity: 0
-    })
+      opacity: 0,
+    }),
   };
 
   return (
@@ -110,15 +114,13 @@ export const MobilePhaseResults = ({
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40">
+              <Badge
+                variant="outline"
+                className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40"
+              >
                 {Math.round(progressPercent)}%
               </Badge>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onToggleEditMode}
-                className="h-8 w-8 p-0"
-              >
+              <Button variant="ghost" size="sm" onClick={onToggleEditMode} className="h-8 w-8 p-0">
                 {editMode ? <Eye className="h-4 w-4" /> : <Edit3 className="h-4 w-4" />}
               </Button>
             </div>
@@ -130,7 +132,7 @@ export const MobilePhaseResults = ({
               className="h-full bg-gradient-to-r from-elec-yellow to-yellow-400"
               initial={{ width: 0 }}
               animate={{ width: `${progressPercent}%` }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
             />
           </div>
         </div>
@@ -172,8 +174,8 @@ export const MobilePhaseResults = ({
             animate="center"
             exit="exit"
             transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 }
+              x: { type: 'spring', stiffness: 300, damping: 30 },
+              opacity: { duration: 0.2 },
             }}
           >
             {editMode ? (
@@ -238,20 +240,12 @@ export const MobilePhaseResults = ({
             <Download className="mr-2 h-4 w-4" />
             Export PDF
           </Button>
-          <Button
-            onClick={onExportCalendar}
-            variant="outline"
-            className="touch-manipulation h-12"
-          >
+          <Button onClick={onExportCalendar} variant="outline" className="touch-manipulation h-12">
             <CalendarIcon className="mr-2 h-4 w-4" />
             Calendar
           </Button>
         </div>
-        <Button
-          onClick={onStartOver}
-          variant="ghost"
-          className="w-full touch-manipulation"
-        >
+        <Button onClick={onStartOver} variant="ghost" className="w-full touch-manipulation">
           <RotateCcw className="mr-2 h-4 w-4" />
           Start New Plan
         </Button>

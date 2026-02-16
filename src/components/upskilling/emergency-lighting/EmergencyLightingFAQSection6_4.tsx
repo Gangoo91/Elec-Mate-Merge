@@ -10,17 +10,20 @@ import {
 export const EmergencyLightingFAQSection6_4 = () => {
   const faqs = [
     {
-      question: "How long must emergency lighting records be kept?",
-      answer: "At least six years, though ideally for the life of the installation. This ensures a complete system history is available for inspections and demonstrates ongoing compliance over time."
+      question: 'How long must emergency lighting records be kept?',
+      answer:
+        'At least six years, though ideally for the life of the installation. This ensures a complete system history is available for inspections and demonstrates ongoing compliance over time.',
     },
     {
-      question: "Can digital records replace paper ones?",
-      answer: "Yes, if they're securely stored, easily accessible, and printable during an inspection. However, you must be able to produce them immediately when requested by Fire Authorities, so both digital backups and readily available paper copies are recommended."
+      question: 'Can digital records replace paper ones?',
+      answer:
+        "Yes, if they're securely stored, easily accessible, and printable during an inspection. However, you must be able to produce them immediately when requested by Fire Authorities, so both digital backups and readily available paper copies are recommended.",
     },
     {
-      question: "Who is responsible for maintaining documentation?",
-      answer: "The building's Responsible Person under the Regulatory Reform (Fire Safety) Order 2005, often supported by maintenance contractors. The Responsible Person has ultimate legal accountability for ensuring all records are complete, accurate, and accessible."
-    }
+      question: 'Who is responsible for maintaining documentation?',
+      answer:
+        "The building's Responsible Person under the Regulatory Reform (Fire Safety) Order 2005, often supported by maintenance contractors. The Responsible Person has ultimate legal accountability for ensuring all records are complete, accurate, and accessible.",
+    },
   ];
 
   return (

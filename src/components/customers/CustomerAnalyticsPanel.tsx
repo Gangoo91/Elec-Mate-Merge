@@ -37,9 +37,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       <p className="font-medium text-foreground">{label}</p>
       {payload.map((p: any, i: number) => (
         <p key={i} className="text-muted-foreground">
-          {typeof p.value === 'number' && p.name === 'revenue'
-            ? formatCurrency(p.value)
-            : p.value}
+          {typeof p.value === 'number' && p.name === 'revenue' ? formatCurrency(p.value) : p.value}
         </p>
       ))}
     </div>
@@ -103,17 +101,15 @@ export const CustomerAnalyticsPanel = () => {
             className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-3"
           >
             <div className="flex items-center gap-2 mb-1.5">
-              <div className={cn('w-7 h-7 rounded-lg flex items-center justify-center', stat.bgColour)}>
+              <div
+                className={cn('w-7 h-7 rounded-lg flex items-center justify-center', stat.bgColour)}
+              >
                 <stat.icon className={cn('h-3.5 w-3.5', stat.colour)} />
               </div>
               <span className="text-xs text-muted-foreground">{stat.label}</span>
             </div>
-            <p className={cn('text-lg font-bold', stat.colour)}>
-              {stat.value}
-            </p>
-            {stat.sub && (
-              <p className="text-[11px] text-muted-foreground mt-0.5">{stat.sub}</p>
-            )}
+            <p className={cn('text-lg font-bold', stat.colour)}>{stat.value}</p>
+            {stat.sub && <p className="text-[11px] text-muted-foreground mt-0.5">{stat.sub}</p>}
           </div>
         ))}
       </div>
@@ -152,7 +148,10 @@ export const CustomerAnalyticsPanel = () => {
                 </h3>
                 <div className="h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={data.customerGrowth} margin={{ top: 5, right: 5, bottom: 5, left: -15 }}>
+                    <BarChart
+                      data={data.customerGrowth}
+                      margin={{ top: 5, right: 5, bottom: 5, left: -15 }}
+                    >
                       <XAxis
                         dataKey="month"
                         tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
@@ -208,12 +207,7 @@ export const CustomerAnalyticsPanel = () => {
                         width={80}
                       />
                       <Tooltip content={<CustomTooltip />} />
-                      <Bar
-                        dataKey="revenue"
-                        fill="#10b981"
-                        radius={[0, 4, 4, 0]}
-                        maxBarSize={28}
-                      />
+                      <Bar dataKey="revenue" fill="#10b981" radius={[0, 4, 4, 0]} maxBarSize={28} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -253,7 +247,10 @@ export const CustomerAnalyticsPanel = () => {
                   {/* Legend */}
                   <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
                     {data.certTypeDistribution.map((item, i) => (
-                      <div key={item.type} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <div
+                        key={item.type}
+                        className="flex items-center gap-1.5 text-xs text-muted-foreground"
+                      >
                         <div
                           className="w-2 h-2 rounded-full flex-shrink-0"
                           style={{ backgroundColor: PIE_COLOURS[i % PIE_COLOURS.length] }}
@@ -274,7 +271,10 @@ export const CustomerAnalyticsPanel = () => {
                   </h3>
                   <div className="h-[180px]">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={data.activityByDay} margin={{ top: 5, right: 5, bottom: 5, left: -15 }}>
+                      <BarChart
+                        data={data.activityByDay}
+                        margin={{ top: 5, right: 5, bottom: 5, left: -15 }}
+                      >
                         <XAxis
                           dataKey="day"
                           tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
@@ -288,12 +288,7 @@ export const CustomerAnalyticsPanel = () => {
                           allowDecimals={false}
                         />
                         <Tooltip content={<CustomTooltip />} />
-                        <Bar
-                          dataKey="count"
-                          fill="#8b5cf6"
-                          radius={[4, 4, 0, 0]}
-                          maxBarSize={32}
-                        />
+                        <Bar dataKey="count" fill="#8b5cf6" radius={[4, 4, 0, 0]} maxBarSize={32} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>

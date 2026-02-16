@@ -1,200 +1,220 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Connectorisation Techniques - Fibre Optics Technology";
-const DESCRIPTION = "Learn field-installable connector methods, factory termination options, and best practices for fibre optic connector installation and testing.";
+const TITLE = 'Connectorisation Techniques - Fibre Optics Technology';
+const DESCRIPTION =
+  'Learn field-installable connector methods, factory termination options, and best practices for fibre optic connector installation and testing.';
 
 const quickCheckQuestions = [
   {
-    id: "connector-qc1",
-    question: "What is the main advantage of field-installable connectors?",
+    id: 'connector-qc1',
+    question: 'What is the main advantage of field-installable connectors?',
     options: [
-      "Lower cost per connector",
-      "No need for splicing equipment",
-      "Always better performance than fusion",
-      "No testing required"
+      'Lower cost per connector',
+      'No need for splicing equipment',
+      'Always better performance than fusion',
+      'No testing required',
     ],
     correctIndex: 1,
-    explanation: "Field-installable connectors eliminate the need for expensive fusion splicing equipment, making them practical for low-volume work or where splicers are not available."
+    explanation:
+      'Field-installable connectors eliminate the need for expensive fusion splicing equipment, making them practical for low-volume work or where splicers are not available.',
   },
   {
-    id: "connector-qc2",
-    question: "What type of field connector uses a pre-polished factory ferrule?",
+    id: 'connector-qc2',
+    question: 'What type of field connector uses a pre-polished factory ferrule?',
     options: [
-      "Epoxy and polish",
-      "Mechanical splice-on",
-      "Pre-polished/no-epoxy connector",
-      "Crimp-on connector"
+      'Epoxy and polish',
+      'Mechanical splice-on',
+      'Pre-polished/no-epoxy connector',
+      'Crimp-on connector',
     ],
     correctIndex: 2,
-    explanation: "Pre-polished (no-epoxy) connectors have a factory-polished ferrule with an internal mechanical splice that joins to the field fibre, eliminating field polishing."
+    explanation:
+      'Pre-polished (no-epoxy) connectors have a factory-polished ferrule with an internal mechanical splice that joins to the field fibre, eliminating field polishing.',
   },
   {
-    id: "connector-qc3",
-    question: "What is a critical step after installing any field connector?",
+    id: 'connector-qc3',
+    question: 'What is a critical step after installing any field connector?',
     options: [
-      "Paint it for identification",
-      "Visual inspection and insertion loss testing",
-      "Wait 24 hours before use",
-      "Apply protective gel"
+      'Paint it for identification',
+      'Visual inspection and insertion loss testing',
+      'Wait 24 hours before use',
+      'Apply protective gel',
     ],
     correctIndex: 1,
-    explanation: "Every connector must be visually inspected for end-face quality and tested for insertion loss. Never install connectors without verification."
-  }
+    explanation:
+      'Every connector must be visually inspected for end-face quality and tested for insertion loss. Never install connectors without verification.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What advantage does a fusion splice-on connector offer?",
+    question: 'What advantage does a fusion splice-on connector offer?',
     options: [
-      "No equipment needed",
-      "Lowest possible loss - fusion spliced to factory pigtail",
-      "Fastest installation",
-      "No testing required"
+      'No equipment needed',
+      'Lowest possible loss - fusion spliced to factory pigtail',
+      'Fastest installation',
+      'No testing required',
     ],
     correctAnswer: 1,
-    explanation: "Fusion splice-on connectors provide the lowest possible loss by fusion splicing the field fibre to a factory-terminated pigtail connector."
+    explanation:
+      'Fusion splice-on connectors provide the lowest possible loss by fusion splicing the field fibre to a factory-terminated pigtail connector.',
   },
   {
     id: 2,
-    question: "In epoxy-polish connectorisation, what cures the epoxy?",
+    question: 'In epoxy-polish connectorisation, what cures the epoxy?',
     options: [
-      "UV light only",
-      "Heat from an oven",
-      "Time (anaerobic cure) or heat acceleration",
-      "Pressure only"
+      'UV light only',
+      'Heat from an oven',
+      'Time (anaerobic cure) or heat acceleration',
+      'Pressure only',
     ],
     correctAnswer: 2,
-    explanation: "Epoxy can cure at ambient temperature over time (anaerobic cure) or be accelerated with heat in a curing oven."
+    explanation:
+      'Epoxy can cure at ambient temperature over time (anaerobic cure) or be accelerated with heat in a curing oven.',
   },
   {
     id: 3,
-    question: "What is the typical insertion loss specification for a field connector?",
+    question: 'What is the typical insertion loss specification for a field connector?',
     options: [
-      "Less than 0.1 dB",
-      "Less than 0.5 dB (often 0.3 dB)",
-      "Less than 1.0 dB",
-      "Less than 2.0 dB"
+      'Less than 0.1 dB',
+      'Less than 0.5 dB (often 0.3 dB)',
+      'Less than 1.0 dB',
+      'Less than 2.0 dB',
     ],
     correctAnswer: 1,
-    explanation: "Field connectors typically specify less than 0.5 dB maximum insertion loss, with good installations achieving 0.3 dB or less."
+    explanation:
+      'Field connectors typically specify less than 0.5 dB maximum insertion loss, with good installations achieving 0.3 dB or less.',
   },
   {
     id: 4,
-    question: "What is the purpose of polishing in epoxy connectorisation?",
+    question: 'What is the purpose of polishing in epoxy connectorisation?',
     options: [
-      "Remove epoxy from outside",
-      "Create smooth, scratch-free end face for low loss",
-      "Clean the ferrule",
-      "Adjust connector length"
+      'Remove epoxy from outside',
+      'Create smooth, scratch-free end face for low loss',
+      'Clean the ferrule',
+      'Adjust connector length',
     ],
     correctAnswer: 1,
-    explanation: "Polishing creates a smooth, scratch-free end face that minimises insertion loss and prevents damage to mating connectors."
+    explanation:
+      'Polishing creates a smooth, scratch-free end face that minimises insertion loss and prevents damage to mating connectors.',
   },
   {
     id: 5,
-    question: "What polish grade is typically used for APC connectors?",
+    question: 'What polish grade is typically used for APC connectors?',
     options: [
-      "Flat polish only",
-      "Special angled polishing process",
-      "Same as UPC",
-      "No polishing needed"
+      'Flat polish only',
+      'Special angled polishing process',
+      'Same as UPC',
+      'No polishing needed',
     ],
     correctAnswer: 1,
-    explanation: "APC connectors require special angled polishing fixtures to maintain the 8 degree angle on the end face."
+    explanation:
+      'APC connectors require special angled polishing fixtures to maintain the 8 degree angle on the end face.',
   },
   {
     id: 6,
-    question: "What indicates a good connector end face under microscope?",
+    question: 'What indicates a good connector end face under microscope?',
     options: [
-      "Any smooth surface",
-      "Clean, scratch-free, properly polished/shaped",
-      "Visible fibre core",
-      "Opaque appearance"
+      'Any smooth surface',
+      'Clean, scratch-free, properly polished/shaped',
+      'Visible fibre core',
+      'Opaque appearance',
     ],
     correctAnswer: 1,
-    explanation: "A good end face shows a clean, scratch-free surface with proper polish geometry (flat, domed, or angled depending on type)."
+    explanation:
+      'A good end face shows a clean, scratch-free surface with proper polish geometry (flat, domed, or angled depending on type).',
   },
   {
     id: 7,
-    question: "Why might you choose pre-polished connectors over epoxy-polish?",
+    question: 'Why might you choose pre-polished connectors over epoxy-polish?',
     options: [
-      "Better performance always",
-      "Faster installation, no polishing equipment needed",
-      "Lower cost per connector",
-      "Works on any fibre type"
+      'Better performance always',
+      'Faster installation, no polishing equipment needed',
+      'Lower cost per connector',
+      'Works on any fibre type',
     ],
     correctAnswer: 1,
-    explanation: "Pre-polished connectors offer faster installation times and eliminate the need for polishing equipment and supplies."
+    explanation:
+      'Pre-polished connectors offer faster installation times and eliminate the need for polishing equipment and supplies.',
   },
   {
     id: 8,
-    question: "What is the fibre stub in a pre-polished connector?",
+    question: 'What is the fibre stub in a pre-polished connector?',
     options: [
-      "External protection",
-      "Factory-terminated fibre inside connector that field fibre joins to",
-      "Cleaning tool",
-      "Strain relief"
+      'External protection',
+      'Factory-terminated fibre inside connector that field fibre joins to',
+      'Cleaning tool',
+      'Strain relief',
     ],
     correctAnswer: 1,
-    explanation: "The fibre stub is a short factory-terminated fibre inside the connector that the field fibre mechanically splices to."
+    explanation:
+      'The fibre stub is a short factory-terminated fibre inside the connector that the field fibre mechanically splices to.',
   },
   {
     id: 9,
-    question: "How should excess fibre at a connector be managed?",
+    question: 'How should excess fibre at a connector be managed?',
     options: [
-      "Cut off close to connector",
-      "Coil loosely maintaining bend radius",
-      "Leave extended in straight line",
-      "Tape tightly against cable"
+      'Cut off close to connector',
+      'Coil loosely maintaining bend radius',
+      'Leave extended in straight line',
+      'Tape tightly against cable',
     ],
     correctAnswer: 1,
-    explanation: "Excess fibre should be coiled loosely while maintaining minimum bend radius to avoid signal loss from excessive bending."
+    explanation:
+      'Excess fibre should be coiled loosely while maintaining minimum bend radius to avoid signal loss from excessive bending.',
   },
   {
     id: 10,
-    question: "What documentation is required for connector terminations?",
+    question: 'What documentation is required for connector terminations?',
     options: [
-      "None - connectors are standard",
-      "Insertion loss, return loss, visual inspection results",
-      "Connector brand only",
-      "Date only"
+      'None - connectors are standard',
+      'Insertion loss, return loss, visual inspection results',
+      'Connector brand only',
+      'Date only',
     ],
     correctAnswer: 1,
-    explanation: "Complete documentation includes insertion loss, return loss, visual inspection results, and technician identification for quality assurance."
-  }
+    explanation:
+      'Complete documentation includes insertion loss, return loss, visual inspection results, and technician identification for quality assurance.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Should I use field connectors or splice pigtails?",
-    answer: "Fusion splicing factory-terminated pigtails generally provides lowest loss and highest reliability. Field connectors are convenient for low-volume work, quick repairs, or where splicing equipment is not available. For permanent infrastructure, splice pigtails are preferred. For moves/adds/changes and troubleshooting, field connectors offer flexibility."
+    question: 'Should I use field connectors or splice pigtails?',
+    answer:
+      'Fusion splicing factory-terminated pigtails generally provides lowest loss and highest reliability. Field connectors are convenient for low-volume work, quick repairs, or where splicing equipment is not available. For permanent infrastructure, splice pigtails are preferred. For moves/adds/changes and troubleshooting, field connectors offer flexibility.',
   },
   {
-    question: "Can I terminate APC connectors in the field?",
-    answer: "Yes, but with care. Pre-polished APC field connectors are available (e.g., Corning Unicam). Epoxy-polish APC requires special angled polishing fixtures. APC ferrules must maintain the 8 degree angle precisely. Test carefully - APC connector quality is critical for PON and analogue video systems."
+    question: 'Can I terminate APC connectors in the field?',
+    answer:
+      'Yes, but with care. Pre-polished APC field connectors are available (e.g., Corning Unicam). Epoxy-polish APC requires special angled polishing fixtures. APC ferrules must maintain the 8 degree angle precisely. Test carefully - APC connector quality is critical for PON and analogue video systems.',
   },
   {
-    question: "What causes high loss in field connectors?",
-    answer: "Common causes: contaminated end face, poor cleave in mechanical splice connectors, incomplete fibre seating, damaged internal splice mechanism, and scratched or improperly polished end face. Always inspect and test. If loss exceeds specification, re-terminate rather than accept a marginal connector."
+    question: 'What causes high loss in field connectors?',
+    answer:
+      'Common causes: contaminated end face, poor cleave in mechanical splice connectors, incomplete fibre seating, damaged internal splice mechanism, and scratched or improperly polished end face. Always inspect and test. If loss exceeds specification, re-terminate rather than accept a marginal connector.',
   },
   {
-    question: "How long does field connector installation take?",
-    answer: "Pre-polished connectors: 2-5 minutes once skilled. Epoxy-polish: 15-30 minutes including cure time and polishing. Fusion splice-on: 5-10 minutes including splice. Speed improves significantly with practice. Do not rush - quality is more important than speed."
+    question: 'How long does field connector installation take?',
+    answer:
+      'Pre-polished connectors: 2-5 minutes once skilled. Epoxy-polish: 15-30 minutes including cure time and polishing. Fusion splice-on: 5-10 minutes including splice. Speed improves significantly with practice. Do not rush - quality is more important than speed.',
   },
   {
-    question: "Are field connectors as reliable as factory connectors?",
-    answer: "Quality field installations can match factory performance. However, factory termination in controlled conditions with production equipment often provides more consistent results. For critical infrastructure, factory-terminated assemblies with fusion splice to the cable may offer best overall reliability."
+    question: 'Are field connectors as reliable as factory connectors?',
+    answer:
+      'Quality field installations can match factory performance. However, factory termination in controlled conditions with production equipment often provides more consistent results. For critical infrastructure, factory-terminated assemblies with fusion splice to the cable may offer best overall reliability.',
   },
   {
-    question: "What equipment do I need for field connectorisation?",
-    answer: "Minimum: stripping tools, cleaver (for mechanical types), cleaning supplies, and test equipment. For epoxy-polish: add epoxy, curing oven (or wait for ambient cure), polishing films, and inspection microscope. Investment ranges from 200-500 pounds for mechanical connector kits to 2,000 pounds+ for full epoxy-polish setups."
-  }
+    question: 'What equipment do I need for field connectorisation?',
+    answer:
+      'Minimum: stripping tools, cleaver (for mechanical types), cleaning supplies, and test equipment. For epoxy-polish: add epoxy, curing oven (or wait for ambient cure), polishing films, and inspection microscope. Investment ranges from 200-500 pounds for mechanical connector kits to 2,000 pounds+ for full epoxy-polish setups.',
+  },
 ];
 
 const FiberOpticsModule4Section4 = () => {
@@ -208,7 +228,12 @@ const FiberOpticsModule4Section4 = () => {
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/electrician/upskilling/fiber-optics-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -227,9 +252,7 @@ const FiberOpticsModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Connectorisation Techniques
           </h1>
-          <p className="text-white/80">
-            Field-installable connector methods and best practices
-          </p>
+          <p className="text-white/80">Field-installable connector methods and best practices</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -237,18 +260,32 @@ const FiberOpticsModule4Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Pre-polished:</strong> Fast, no polish equipment</li>
-              <li><strong>Epoxy-polish:</strong> Low cost per unit</li>
-              <li><strong>Splice-on:</strong> Lowest loss possible</li>
-              <li><strong>Always:</strong> Inspect and test every connector</li>
+              <li>
+                <strong>Pre-polished:</strong> Fast, no polish equipment
+              </li>
+              <li>
+                <strong>Epoxy-polish:</strong> Low cost per unit
+              </li>
+              <li>
+                <strong>Splice-on:</strong> Lowest loss possible
+              </li>
+              <li>
+                <strong>Always:</strong> Inspect and test every connector
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Quality Targets</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>IL:</strong> Under 0.5 dB (typical under 0.3)</li>
-              <li><strong>RL:</strong> &gt;45 dB (UPC), &gt;60 dB (APC)</li>
-              <li><strong>End face:</strong> Clean, scratch-free</li>
+              <li>
+                <strong>IL:</strong> Under 0.5 dB (typical under 0.3)
+              </li>
+              <li>
+                <strong>RL:</strong> &gt;45 dB (UPC), &gt;60 dB (APC)
+              </li>
+              <li>
+                <strong>End face:</strong> Clean, scratch-free
+              </li>
             </ul>
           </div>
         </div>
@@ -258,12 +295,12 @@ const FiberOpticsModule4Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Pre-polished connector installation",
-              "Epoxy and polish technique",
-              "Fusion splice-on connectors",
-              "End face inspection criteria",
-              "Testing requirements",
-              "Method selection guidance"
+              'Pre-polished connector installation',
+              'Epoxy and polish technique',
+              'Fusion splice-on connectors',
+              'End face inspection criteria',
+              'Testing requirements',
+              'Method selection guidance',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -291,10 +328,20 @@ const FiberOpticsModule4Section4 = () => {
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm font-medium text-elec-yellow mb-2">How They Work</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Internal structure:</strong> Factory-polished ferrule with short fibre stub inside</li>
-                <li><strong>Mechanical splice:</strong> Index-matching gel and alignment mechanism</li>
-                <li><strong>Field fibre joins:</strong> Cleaved field fibre butts against internal stub</li>
-                <li><strong>Cam or clamp:</strong> Locks field fibre in alignment</li>
+                <li>
+                  <strong>Internal structure:</strong> Factory-polished ferrule with short fibre
+                  stub inside
+                </li>
+                <li>
+                  <strong>Mechanical splice:</strong> Index-matching gel and alignment mechanism
+                </li>
+                <li>
+                  <strong>Field fibre joins:</strong> Cleaved field fibre butts against internal
+                  stub
+                </li>
+                <li>
+                  <strong>Cam or clamp:</strong> Locks field fibre in alignment
+                </li>
               </ul>
             </div>
 
@@ -338,10 +385,18 @@ const FiberOpticsModule4Section4 = () => {
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm font-medium text-elec-yellow mb-2">Popular Products</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Corning Unicam:</strong> Widely used, available in all connector types</li>
-                <li><strong>3M NPC:</strong> No-Polish Connector range</li>
-                <li><strong>CommScope LightCrimp Plus:</strong> Mechanical crimp design</li>
-                <li><strong>Senko UPC/APC:</strong> Various pre-polished options</li>
+                <li>
+                  <strong>Corning Unicam:</strong> Widely used, available in all connector types
+                </li>
+                <li>
+                  <strong>3M NPC:</strong> No-Polish Connector range
+                </li>
+                <li>
+                  <strong>CommScope LightCrimp Plus:</strong> Mechanical crimp design
+                </li>
+                <li>
+                  <strong>Senko UPC/APC:</strong> Various pre-polished options
+                </li>
               </ul>
             </div>
           </div>
@@ -357,20 +412,33 @@ const FiberOpticsModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Traditional epoxy-polish termination bonds the fibre into the connector ferrule
-              with epoxy, then polishes the end face to optical quality. Lower per-connector
-              cost but requires more equipment and skill.
+              Traditional epoxy-polish termination bonds the fibre into the connector ferrule with
+              epoxy, then polishes the end face to optical quality. Lower per-connector cost but
+              requires more equipment and skill.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Equipment Required:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Connectors:</strong> Appropriate type for application (SC, LC, ST, etc.)</li>
-                <li><strong>Epoxy:</strong> Two-part or heat-cure optical epoxy</li>
-                <li><strong>Curing oven:</strong> For heat-cure epoxy (or wait for anaerobic cure)</li>
-                <li><strong>Polishing films:</strong> Multiple grades (5 micrometre, 3 micrometre, 1 micrometre, 0.3 micrometre)</li>
-                <li><strong>Polishing puck:</strong> Holds connector for polishing</li>
-                <li><strong>Inspection microscope:</strong> Verify end face quality</li>
+                <li>
+                  <strong>Connectors:</strong> Appropriate type for application (SC, LC, ST, etc.)
+                </li>
+                <li>
+                  <strong>Epoxy:</strong> Two-part or heat-cure optical epoxy
+                </li>
+                <li>
+                  <strong>Curing oven:</strong> For heat-cure epoxy (or wait for anaerobic cure)
+                </li>
+                <li>
+                  <strong>Polishing films:</strong> Multiple grades (5 micrometre, 3 micrometre, 1
+                  micrometre, 0.3 micrometre)
+                </li>
+                <li>
+                  <strong>Polishing puck:</strong> Holds connector for polishing
+                </li>
+                <li>
+                  <strong>Inspection microscope:</strong> Verify end face quality
+                </li>
               </ul>
             </div>
 
@@ -396,10 +464,18 @@ const FiberOpticsModule4Section4 = () => {
                 Progressive polishing removes scratches from previous steps:
               </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>5 micrometre film:</strong> Remove excess epoxy and fibre</li>
-                <li><strong>3 micrometre film:</strong> Remove 5 micrometre scratches</li>
-                <li><strong>1 micrometre film:</strong> Further refinement</li>
-                <li><strong>0.3 micrometre film:</strong> Final polish for mirror finish</li>
+                <li>
+                  <strong>5 micrometre film:</strong> Remove excess epoxy and fibre
+                </li>
+                <li>
+                  <strong>3 micrometre film:</strong> Remove 5 micrometre scratches
+                </li>
+                <li>
+                  <strong>1 micrometre film:</strong> Further refinement
+                </li>
+                <li>
+                  <strong>0.3 micrometre film:</strong> Final polish for mirror finish
+                </li>
               </ul>
               <p className="text-xs text-white mt-2">
                 Use figure-8 motion, consistent pressure, 20-30 seconds per grade.
@@ -417,17 +493,26 @@ const FiberOpticsModule4Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <p>
               Fusion splice-on connectors combine the low loss of fusion splicing with the
-              convenience of a connector. A factory-terminated pigtail connector is fusion
-              spliced to the field fibre.
+              convenience of a connector. A factory-terminated pigtail connector is fusion spliced
+              to the field fibre.
             </p>
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm font-medium text-elec-yellow mb-2">How They Work</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Factory connector:</strong> Pre-terminated, tested connector with short pigtail</li>
-                <li><strong>Fusion splice:</strong> Field fibre spliced to pigtail</li>
-                <li><strong>Integrated package:</strong> Splice protected within connector assembly</li>
-                <li><strong>Result:</strong> Connector with fusion splice quality</li>
+                <li>
+                  <strong>Factory connector:</strong> Pre-terminated, tested connector with short
+                  pigtail
+                </li>
+                <li>
+                  <strong>Fusion splice:</strong> Field fibre spliced to pigtail
+                </li>
+                <li>
+                  <strong>Integrated package:</strong> Splice protected within connector assembly
+                </li>
+                <li>
+                  <strong>Result:</strong> Connector with fusion splice quality
+                </li>
               </ul>
             </div>
 
@@ -473,9 +558,9 @@ const FiberOpticsModule4Section4 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">When to Use</p>
               <p className="text-sm text-white">
                 Fusion splice-on connectors are ideal when you need connector convenience with
-                fusion-splice quality. Perfect for data centres, high-density installations,
-                and anywhere maximum performance matters. The additional cost is justified
-                where loss budgets are tight.
+                fusion-splice quality. Perfect for data centres, high-density installations, and
+                anywhere maximum performance matters. The additional cost is justified where loss
+                budgets are tight.
               </p>
             </div>
           </div>
@@ -491,18 +576,26 @@ const FiberOpticsModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Inspecting the connector end face before testing catches defects that cause
-              high loss or damage mating connectors. Use a fibre inspection microscope at
-              200x or 400x magnification.
+              Inspecting the connector end face before testing catches defects that cause high loss
+              or damage mating connectors. Use a fibre inspection microscope at 200x or 400x
+              magnification.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">IEC 61300-3-35 Zones:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Zone A (Core):</strong> No defects allowed in core area</li>
-                <li><strong>Zone B (Cladding):</strong> Limited small scratches acceptable</li>
-                <li><strong>Zone C (Adhesive):</strong> Some contamination may be acceptable</li>
-                <li><strong>Zone D (Contact):</strong> Ferrule contact area - limited defects</li>
+                <li>
+                  <strong>Zone A (Core):</strong> No defects allowed in core area
+                </li>
+                <li>
+                  <strong>Zone B (Cladding):</strong> Limited small scratches acceptable
+                </li>
+                <li>
+                  <strong>Zone C (Adhesive):</strong> Some contamination may be acceptable
+                </li>
+                <li>
+                  <strong>Zone D (Contact):</strong> Ferrule contact area - limited defects
+                </li>
               </ul>
             </div>
 
@@ -515,7 +608,9 @@ const FiberOpticsModule4Section4 = () => {
                     <li>Dust particles</li>
                     <li>Oil/residue</li>
                     <li>Dried fluids</li>
-                    <li><strong>Solution:</strong> Clean and re-inspect</li>
+                    <li>
+                      <strong>Solution:</strong> Clean and re-inspect
+                    </li>
                   </ul>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -524,7 +619,9 @@ const FiberOpticsModule4Section4 = () => {
                     <li>Scratches</li>
                     <li>Chips</li>
                     <li>Cracks</li>
-                    <li><strong>Solution:</strong> Re-terminate</li>
+                    <li>
+                      <strong>Solution:</strong> Re-terminate
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -533,11 +630,21 @@ const FiberOpticsModule4Section4 = () => {
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
               <p className="text-sm font-medium text-red-400 mb-2">Critical Inspection Points</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Core area must be clean:</strong> Any defect here causes loss</li>
-                <li><strong>No deep scratches:</strong> Can damage mating connector</li>
-                <li><strong>Proper polish geometry:</strong> Flat or correctly domed</li>
-                <li><strong>APC angle:</strong> Must show correct 8 degree face</li>
-                <li><strong>Clean before inspection:</strong> Distinguish dirt from damage</li>
+                <li>
+                  <strong>Core area must be clean:</strong> Any defect here causes loss
+                </li>
+                <li>
+                  <strong>No deep scratches:</strong> Can damage mating connector
+                </li>
+                <li>
+                  <strong>Proper polish geometry:</strong> Flat or correctly domed
+                </li>
+                <li>
+                  <strong>APC angle:</strong> Must show correct 8 degree face
+                </li>
+                <li>
+                  <strong>Clean before inspection:</strong> Distinguish dirt from damage
+                </li>
               </ul>
             </div>
           </div>
@@ -558,9 +665,16 @@ const FiberOpticsModule4Section4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Test Parameters:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Insertion Loss (IL):</strong> Signal loss through connector, measured in dB</li>
-                <li><strong>Return Loss (RL):</strong> Reflected signal level, higher is better</li>
-                <li><strong>Visual inspection:</strong> End face quality verification</li>
+                <li>
+                  <strong>Insertion Loss (IL):</strong> Signal loss through connector, measured in
+                  dB
+                </li>
+                <li>
+                  <strong>Return Loss (RL):</strong> Reflected signal level, higher is better
+                </li>
+                <li>
+                  <strong>Visual inspection:</strong> End face quality verification
+                </li>
               </ul>
             </div>
 
@@ -599,10 +713,18 @@ const FiberOpticsModule4Section4 = () => {
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm font-medium text-elec-yellow mb-2">Test Equipment</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Optical power meter:</strong> Measures signal level for IL calculation</li>
-                <li><strong>Light source:</strong> Calibrated reference source</li>
-                <li><strong>OTDR:</strong> Can measure individual connector loss and location</li>
-                <li><strong>Test cables:</strong> Reference-quality cables for measurement</li>
+                <li>
+                  <strong>Optical power meter:</strong> Measures signal level for IL calculation
+                </li>
+                <li>
+                  <strong>Light source:</strong> Calibrated reference source
+                </li>
+                <li>
+                  <strong>OTDR:</strong> Can measure individual connector loss and location
+                </li>
+                <li>
+                  <strong>Test cables:</strong> Reference-quality cables for measurement
+                </li>
               </ul>
             </div>
 
@@ -610,8 +732,8 @@ const FiberOpticsModule4Section4 = () => {
               <p className="text-sm font-medium text-white mb-2">Documentation</p>
               <p className="text-sm text-white">
                 Record for each connector: location/ID, connector type, test date, wavelength,
-                measured IL and RL values, visual inspection result, and technician ID.
-                Failed connectors should be re-terminated and re-tested.
+                measured IL and RL values, visual inspection result, and technician ID. Failed
+                connectors should be re-terminated and re-tested.
               </p>
             </div>
           </div>
@@ -701,7 +823,9 @@ const FiberOpticsModule4Section4 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Use Fusion Splice-On When:</p>
+                <p className="text-sm font-medium text-elec-yellow mb-2">
+                  Use Fusion Splice-On When:
+                </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Lowest loss essential</li>
                   <li>Fusion splicer available</li>
@@ -721,33 +845,65 @@ const FiberOpticsModule4Section4 = () => {
             <div>
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Best Practices</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Clean first, always:</strong> Inspect end face before and after cleaning</li>
-                <li><strong>Follow specifications:</strong> Use exact strip and cleave lengths</li>
-                <li><strong>Test every connector:</strong> No exceptions - catch problems early</li>
-                <li><strong>Document results:</strong> Maintain records for handover</li>
-                <li><strong>Practice technique:</strong> Skill improves with experience</li>
+                <li>
+                  <strong>Clean first, always:</strong> Inspect end face before and after cleaning
+                </li>
+                <li>
+                  <strong>Follow specifications:</strong> Use exact strip and cleave lengths
+                </li>
+                <li>
+                  <strong>Test every connector:</strong> No exceptions - catch problems early
+                </li>
+                <li>
+                  <strong>Document results:</strong> Maintain records for handover
+                </li>
+                <li>
+                  <strong>Practice technique:</strong> Skill improves with experience
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Troubleshooting High Loss</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Troubleshooting High Loss
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Clean and retest:</strong> Contamination is most common cause</li>
-                <li><strong>Check end face:</strong> Inspect for damage under microscope</li>
-                <li><strong>Verify insertion:</strong> Connector fully seated?</li>
-                <li><strong>Check cleave:</strong> Was cleave quality good?</li>
-                <li><strong>Re-terminate if needed:</strong> Do not accept marginal connectors</li>
+                <li>
+                  <strong>Clean and retest:</strong> Contamination is most common cause
+                </li>
+                <li>
+                  <strong>Check end face:</strong> Inspect for damage under microscope
+                </li>
+                <li>
+                  <strong>Verify insertion:</strong> Connector fully seated?
+                </li>
+                <li>
+                  <strong>Check cleave:</strong> Was cleave quality good?
+                </li>
+                <li>
+                  <strong>Re-terminate if needed:</strong> Do not accept marginal connectors
+                </li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Skipping inspection</strong> - installing contaminated connectors</li>
-                <li><strong>Wrong cleave length</strong> - causes incomplete seating or stress</li>
-                <li><strong>Inadequate polishing</strong> - scratched end face causes loss</li>
-                <li><strong>Mixing polish types</strong> - APC and UPC are NOT interchangeable</li>
-                <li><strong>Rushing</strong> - quality suffers when you skip steps</li>
+                <li>
+                  <strong>Skipping inspection</strong> - installing contaminated connectors
+                </li>
+                <li>
+                  <strong>Wrong cleave length</strong> - causes incomplete seating or stress
+                </li>
+                <li>
+                  <strong>Inadequate polishing</strong> - scratched end face causes loss
+                </li>
+                <li>
+                  <strong>Mixing polish types</strong> - APC and UPC are NOT interchangeable
+                </li>
+                <li>
+                  <strong>Rushing</strong> - quality suffers when you skip steps
+                </li>
               </ul>
             </div>
           </div>
@@ -769,7 +925,9 @@ const FiberOpticsModule4Section4 = () => {
         {/* Quick Reference */}
         <section className="mb-10">
           <div className="p-5 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Field Connectorisation</h3>
+            <h3 className="text-sm font-medium text-white mb-4">
+              Quick Reference: Field Connectorisation
+            </h3>
             <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
                 <p className="font-medium text-elec-yellow mb-1">Methods</p>
@@ -798,21 +956,27 @@ const FiberOpticsModule4Section4 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../section-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

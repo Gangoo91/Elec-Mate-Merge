@@ -149,8 +149,7 @@ export function useAIEvidenceTagger(): UseAIEvidenceTaggerReturn {
 
         return analysisResult;
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : 'Analysis failed';
+        const errorMessage = err instanceof Error ? err.message : 'Analysis failed';
         setError(errorMessage);
 
         toast({
@@ -184,9 +183,7 @@ export function useAIEvidenceTagger(): UseAIEvidenceTaggerReturn {
 /**
  * Helper to get evidence strength colour
  */
-export function getStrengthColor(
-  strength: 'strong' | 'moderate' | 'weak'
-): string {
+export function getStrengthColor(strength: 'strong' | 'moderate' | 'weak'): string {
   switch (strength) {
     case 'strong':
       return 'bg-green-500/20 text-green-500 border-green-500/30';
@@ -212,19 +209,15 @@ export function getConfidenceColor(confidence: number): string {
  * Helper to get confidence badge variant
  */
 export function getConfidenceBadgeClass(confidence: number): string {
-  if (confidence >= 80)
-    return 'bg-green-500/20 text-green-500 border-green-500/30';
-  if (confidence >= 60)
-    return 'bg-amber-500/20 text-amber-500 border-amber-500/30';
+  if (confidence >= 80) return 'bg-green-500/20 text-green-500 border-green-500/30';
+  if (confidence >= 60) return 'bg-amber-500/20 text-amber-500 border-amber-500/30';
   return 'bg-orange-500/20 text-orange-500 border-orange-500/30';
 }
 
 /**
  * Legacy helper — kept for backwards compat with AITagSuggestions
  */
-export function getKSBCategoryColor(
-  category: 'knowledge' | 'skill' | 'behaviour'
-): string {
+export function getKSBCategoryColor(category: 'knowledge' | 'skill' | 'behaviour'): string {
   switch (category) {
     case 'knowledge':
       return 'bg-blue-500/20 text-blue-500 border-blue-500/30';

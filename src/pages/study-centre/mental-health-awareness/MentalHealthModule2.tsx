@@ -1,45 +1,44 @@
-import { ArrowLeft, User, Users, Flame, AlertTriangle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, User, Users, Flame, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Signs and Symptoms in Yourself",
+    title: 'Signs and Symptoms in Yourself',
     icon: User,
     description:
       "Self-awareness, mood changes, physical symptoms, and recognising when you're not okay",
   },
   {
     id: 2,
-    title: "Spotting Changes in Others",
+    title: 'Spotting Changes in Others',
     icon: Users,
-    description:
-      "Behavioural changes, withdrawal, performance drops, and what to look for on site",
+    description: 'Behavioural changes, withdrawal, performance drops, and what to look for on site',
   },
   {
     id: 3,
-    title: "Stress, Anxiety and Burnout",
+    title: 'Stress, Anxiety and Burnout',
     icon: Flame,
     description:
-      "The difference between stress and burnout, the stages of burnout, and early warning signs",
+      'The difference between stress and burnout, the stages of burnout, and early warning signs',
   },
   {
     id: 4,
-    title: "Crisis Awareness and Suicide Prevention",
+    title: 'Crisis Awareness and Suicide Prevention',
     icon: AlertTriangle,
     description:
-      "Warning signs, risk factors, construction suicide statistics, and what to do if someone is in crisis",
+      'Warning signs, risk factors, construction suicide statistics, and what to do if someone is in crisis',
   },
 ];
 
 export default function MentalHealthModule2() {
   useSEO({
-    title: "Module 2: Recognising the Signs | Mental Health Awareness",
+    title: 'Module 2: Recognising the Signs | Mental Health Awareness',
     description:
-      "Signs and symptoms in yourself and others, stress vs burnout, and crisis awareness.",
+      'Signs and symptoms in yourself and others, stress vs burnout, and crisis awareness.',
   });
 
   return (
@@ -76,8 +75,8 @@ export default function MentalHealthModule2() {
               Recognising the Signs
             </h1>
             <p className="text-white text-sm sm:text-base">
-              Signs in yourself and others, the difference between stress and
-              burnout, and how to recognise when someone is in crisis
+              Signs in yourself and others, the difference between stress and burnout, and how to
+              recognise when someone is in crisis
             </p>
           </div>
 

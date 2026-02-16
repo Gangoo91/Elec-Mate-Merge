@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Package, Clock, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Package, Clock, ExternalLink } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface MaterialItem {
   item: string;
@@ -24,7 +24,7 @@ interface MaterialProcurementCardProps {
 const MaterialProcurementCard = ({
   materialProcurement,
   materialProgress,
-  onToggleMaterial
+  onToggleMaterial,
 }: MaterialProcurementCardProps) => {
   const hasOrderNow = materialProcurement.orderNow && materialProcurement.orderNow.length > 0;
   const hasOrderWeek1 = materialProcurement.orderWeek1 && materialProcurement.orderWeek1.length > 0;
@@ -36,16 +36,16 @@ const MaterialProcurementCard = ({
       {items.map((item, idx) => {
         const itemId = `${priority}-${idx}`;
         const isOrdered = materialProgress[itemId]?.ordered || false;
-        
+
         return (
-          <div 
+          <div
             key={idx}
             className={`p-3 rounded-lg border transition-all ${
-              isOrdered 
-                ? 'bg-muted/30 border-border/40 opacity-70' 
+              isOrdered
+                ? 'bg-muted/30 border-border/40 opacity-70'
                 : priority === 'high'
-                ? 'bg-destructive/5 border-destructive/20'
-                : 'bg-warning/5 border-warning/20'
+                  ? 'bg-destructive/5 border-destructive/20'
+                  : 'bg-warning/5 border-warning/20'
             }`}
           >
             <div className="flex items-start gap-3">
@@ -57,31 +57,31 @@ const MaterialProcurementCard = ({
               <div className="flex-1 space-y-2">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1">
-                    <div className={`font-medium text-sm ${isOrdered ? 'line-through text-muted-foreground' : ''}`}>
+                    <div
+                      className={`font-medium text-sm ${isOrdered ? 'line-through text-muted-foreground' : ''}`}
+                    >
                       {item.item}
                     </div>
                     {item.supplier && (
                       <div className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
                         {item.supplier}
-                        {(item.supplier.includes('CEF') || item.supplier.includes('Screwfix') || item.supplier.includes('TLC')) && (
-                          <ExternalLink className="h-3 w-3" />
-                        )}
+                        {(item.supplier.includes('CEF') ||
+                          item.supplier.includes('Screwfix') ||
+                          item.supplier.includes('TLC')) && <ExternalLink className="h-3 w-3" />}
                       </div>
                     )}
                   </div>
                   {item.cost && (
-                    <div className="text-sm font-semibold text-pink-400">
-                      £{item.cost}
-                    </div>
+                    <div className="text-sm font-semibold text-pink-400">£{item.cost}</div>
                   )}
                 </div>
-                
+
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Badge 
-                    variant="outline" 
+                  <Badge
+                    variant="outline"
                     className={`text-xs ${
-                      priority === 'high' 
-                        ? 'bg-destructive/20 border-destructive/40' 
+                      priority === 'high'
+                        ? 'bg-destructive/20 border-destructive/40'
                         : 'bg-warning/20 border-warning/40'
                     }`}
                   >
@@ -125,12 +125,17 @@ const MaterialProcurementCard = ({
             <div className="flex items-center justify-between">
               <h5 className="font-semibold text-sm flex items-center gap-2">
                 🔴 Order Immediately
-                <Badge variant="destructive" className="text-xs">High Priority</Badge>
+                <Badge variant="destructive" className="text-xs">
+                  High Priority
+                </Badge>
               </h5>
               <div className="text-xs text-muted-foreground">
-                {materialProcurement.orderNow!.filter((_, idx) => 
-                  materialProgress[`high-${idx}`]?.ordered
-                ).length} / {materialProcurement.orderNow!.length} ordered
+                {
+                  materialProcurement.orderNow!.filter(
+                    (_, idx) => materialProgress[`high-${idx}`]?.ordered
+                  ).length
+                }{' '}
+                / {materialProcurement.orderNow!.length} ordered
               </div>
             </div>
             {renderMaterialList(materialProcurement.orderNow!, 'high')}
@@ -148,9 +153,12 @@ const MaterialProcurementCard = ({
                 </Badge>
               </h5>
               <div className="text-xs text-muted-foreground">
-                {materialProcurement.orderWeek1!.filter((_, idx) => 
-                  materialProgress[`medium-${idx}`]?.ordered
-                ).length} / {materialProcurement.orderWeek1!.length} ordered
+                {
+                  materialProcurement.orderWeek1!.filter(
+                    (_, idx) => materialProgress[`medium-${idx}`]?.ordered
+                  ).length
+                }{' '}
+                / {materialProcurement.orderWeek1!.length} ordered
               </div>
             </div>
             {renderMaterialList(materialProcurement.orderWeek1!, 'medium')}

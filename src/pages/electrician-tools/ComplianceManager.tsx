@@ -1,20 +1,19 @@
-
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileCheck, Calendar, Bell, Scroll } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, FileCheck, Calendar, Bell, Scroll } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { toast } from '@/hooks/use-toast';
 
 const ComplianceManager = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "certificates";
+  const activeTab = searchParams.get('tab') || 'certificates';
   const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
 
   const handleAction = (action: string) => {
     toast({
-      title: "Action Triggered",
+      title: 'Action Triggered',
       description: `${action} functionality will be available soon.`,
     });
   };
@@ -72,15 +71,12 @@ const ComplianceManager = () => {
                     <span className="text-sm">EL-2023-78945</span>
                   </div>
                 </div>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Certificate")}
-                >
+                <Button className="w-full" onClick={() => handleAction('View Certificate')}>
                   View Certificate
                 </Button>
               </CardContent>
             </Card>
-            
+
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <div className="flex justify-between items-start">
@@ -100,25 +96,19 @@ const ComplianceManager = () => {
                     <span className="text-sm">PLI-458721-B</span>
                   </div>
                 </div>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Renew Insurance")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Renew Insurance')}>
                   Renew Insurance
                 </Button>
               </CardContent>
             </Card>
-            
+
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle>Add New Certificate</CardTitle>
                 <CardDescription>Upload a new certification document</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Add Certificate")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Add Certificate')}>
                   Add Certificate
                 </Button>
               </CardContent>
@@ -144,7 +134,7 @@ const ComplianceManager = () => {
                     <p className="text-sm mt-1">June 30, 2025</p>
                   </div>
                 </div>
-                
+
                 <div className="flex justify-between items-center pb-2 border-b border-elec-yellow/10">
                   <div>
                     <p className="font-medium">Health & Safety Certificate</p>
@@ -155,7 +145,7 @@ const ComplianceManager = () => {
                     <p className="text-sm mt-1">July 15, 2025</p>
                   </div>
                 </div>
-                
+
                 <div className="flex justify-between items-center">
                   <div>
                     <p className="font-medium">Business Registration</p>
@@ -166,11 +156,8 @@ const ComplianceManager = () => {
                     <p className="text-sm mt-1">Nov 30, 2025</p>
                   </div>
                 </div>
-                
-                <Button 
-                  className="w-full mt-4" 
-                  onClick={() => handleAction("Set Up Reminders")}
-                >
+
+                <Button className="w-full mt-4" onClick={() => handleAction('Set Up Reminders')}>
                   Set Up Reminders
                 </Button>
               </div>
@@ -182,14 +169,13 @@ const ComplianceManager = () => {
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <CardTitle>Reminder Settings</CardTitle>
-              <CardDescription>Configure notification preferences for compliance documents</CardDescription>
+              <CardDescription>
+                Configure notification preferences for compliance documents
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Configure Reminders")}
-                >
+                <Button className="w-full" onClick={() => handleAction('Configure Reminders')}>
                   Configure Notifications
                 </Button>
               </div>
@@ -212,11 +198,8 @@ const ComplianceManager = () => {
                   </div>
                   <Badge>Current</Badge>
                 </div>
-                
-                <Button 
-                  className="w-full mt-4" 
-                  onClick={() => handleAction("View Regulations")}
-                >
+
+                <Button className="w-full mt-4" onClick={() => handleAction('View Regulations')}>
                   View Regulations
                 </Button>
               </div>

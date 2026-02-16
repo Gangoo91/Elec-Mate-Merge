@@ -1,22 +1,18 @@
-import { useState, useRef, useEffect } from "react";
-import { format, parseISO } from "date-fns";
-import { Send, AtSign, Reply, MoreHorizontal, Smile, Trash2 } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState, useRef, useEffect } from 'react';
+import { format, parseISO } from 'date-fns';
+import { Send, AtSign, Reply, MoreHorizontal, Smile, Trash2 } from 'lucide-react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/dropdown-menu';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 
 export interface PhotoComment {
   id: string;
@@ -47,7 +43,7 @@ interface PhotoCommentsProps {
   onReaction: (commentId: string, emoji: string) => void;
 }
 
-const EMOJI_OPTIONS = ["👍", "❤️", "🔥", "👀", "✅", "❌"];
+const EMOJI_OPTIONS = ['👍', '❤️', '🔥', '👀', '✅', '❌'];
 
 export const PhotoComments = ({
   photoId,
@@ -58,20 +54,19 @@ export const PhotoComments = ({
   onDeleteComment,
   onReaction,
 }: PhotoCommentsProps) => {
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState('');
   const [showMentions, setShowMentions] = useState(false);
-  const [mentionSearch, setMentionSearch] = useState("");
+  const [mentionSearch, setMentionSearch] = useState('');
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [selectedMentions, setSelectedMentions] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Filter comments for this photo
   const photoComments = comments.filter((c) => c.photoId === photoId);
-  
+
   // Separate root comments and replies
   const rootComments = photoComments.filter((c) => !c.parentId);
-  const getReplies = (parentId: string) =>
-    photoComments.filter((c) => c.parentId === parentId);
+  const getReplies = (parentId: string) => photoComments.filter((c) => c.parentId === parentId);
 
   // Filter employees for mention dropdown
   const filteredEmployees = employees.filter((emp) =>
@@ -83,13 +78,13 @@ export const PhotoComments = ({
     setNewComment(value);
 
     // Check for @ mentions
-    const lastAtIndex = value.lastIndexOf("@");
+    const lastAtIndex = value.lastIndexOf('@');
     if (lastAtIndex !== -1 && lastAtIndex === value.length - 1) {
       setShowMentions(true);
-      setMentionSearch("");
+      setMentionSearch('');
     } else if (lastAtIndex !== -1) {
       const searchText = value.slice(lastAtIndex + 1);
-      if (!searchText.includes(" ")) {
+      if (!searchText.includes(' ')) {
         setShowMentions(true);
         setMentionSearch(searchText);
       } else {
@@ -101,7 +96,7 @@ export const PhotoComments = ({
   };
 
   const handleSelectMention = (employee: Employee) => {
-    const lastAtIndex = newComment.lastIndexOf("@");
+    const lastAtIndex = newComment.lastIndexOf('@');
     const beforeMention = newComment.slice(0, lastAtIndex);
     setNewComment(`${beforeMention}@${employee.name} `);
     setSelectedMentions([...selectedMentions, employee.id]);
@@ -114,7 +109,7 @@ export const PhotoComments = ({
     if (!newComment.trim()) return;
 
     onAddComment(newComment.trim(), selectedMentions, replyingTo || undefined);
-    setNewComment("");
+    setNewComment('');
     setSelectedMentions([]);
     setReplyingTo(null);
   };
@@ -140,7 +135,7 @@ export const PhotoComments = ({
     if (diffHours < 24) {
       return `${Math.floor(diffHours)}h ago`;
     }
-    return format(date, "d MMM");
+    return format(date, 'd MMM');
   };
 
   const renderComment = (comment: PhotoComment, isReply = false) => {
@@ -151,7 +146,7 @@ export const PhotoComments = ({
     const highlightMentions = (content: string) => {
       const parts = content.split(/(@\w+\s?)/g);
       return parts.map((part, i) => {
-        if (part.startsWith("@")) {
+        if (part.startsWith('@')) {
           return (
             <span key={i} className="text-elec-yellow font-medium">
               {part}
@@ -163,7 +158,7 @@ export const PhotoComments = ({
     };
 
     return (
-      <div key={comment.id} className={cn("group", isReply && "ml-8 mt-2")}>
+      <div key={comment.id} className={cn('group', isReply && 'ml-8 mt-2')}>
         <div className="flex gap-3">
           <Avatar className="h-8 w-8 flex-shrink-0">
             <AvatarFallback className="text-xs bg-elec-yellow/20 text-elec-yellow">
@@ -191,10 +186,10 @@ export const PhotoComments = ({
                     key={i}
                     onClick={() => onReaction(comment.id, reaction.emoji)}
                     className={cn(
-                      "px-1.5 py-0.5 rounded-full text-xs flex items-center gap-1 transition-colors",
+                      'px-1.5 py-0.5 rounded-full text-xs flex items-center gap-1 transition-colors',
                       reaction.userReacted
-                        ? "bg-elec-yellow/20 text-elec-yellow"
-                        : "bg-muted hover:bg-muted/80"
+                        ? 'bg-elec-yellow/20 text-elec-yellow'
+                        : 'bg-muted hover:bg-muted/80'
                     )}
                   >
                     {reaction.emoji} {reaction.count}
@@ -286,8 +281,7 @@ export const PhotoComments = ({
       {replyingTo && (
         <div className="flex items-center justify-between px-3 py-2 bg-muted/50 border-t border-border/50">
           <span className="text-xs text-muted-foreground">
-            Replying to{" "}
-            {comments.find((c) => c.id === replyingTo)?.authorName}
+            Replying to {comments.find((c) => c.id === replyingTo)?.authorName}
           </span>
           <button
             onClick={cancelReply}
@@ -321,9 +315,7 @@ export const PhotoComments = ({
             {showMentions && (
               <div className="absolute bottom-full left-0 right-0 mb-1 bg-popover border border-border rounded-lg shadow-lg max-h-48 overflow-y-auto">
                 {filteredEmployees.length === 0 ? (
-                  <div className="p-3 text-sm text-muted-foreground">
-                    No team members found
-                  </div>
+                  <div className="p-3 text-sm text-muted-foreground">No team members found</div>
                 ) : (
                   filteredEmployees.map((emp) => (
                     <button

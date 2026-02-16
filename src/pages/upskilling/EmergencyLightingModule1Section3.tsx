@@ -1,72 +1,97 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m1s3-check1",
-    question: "What is the main advantage of a central battery system over self-contained luminaires?",
-    options: ["Lower installation cost", "Centralised monitoring and maintenance", "No wiring required", "Longer battery life"],
+    id: 'emergencylighting-m1s3-check1',
+    question:
+      'What is the main advantage of a central battery system over self-contained luminaires?',
+    options: [
+      'Lower installation cost',
+      'Centralised monitoring and maintenance',
+      'No wiring required',
+      'Longer battery life',
+    ],
     correctIndex: 1,
-    explanation: "Central battery systems allow centralised monitoring, testing, and maintenance. All batteries are in one location, making management easier in larger installations. However, they require more complex wiring."
+    explanation:
+      'Central battery systems allow centralised monitoring, testing, and maintenance. All batteries are in one location, making management easier in larger installations. However, they require more complex wiring.',
   },
   {
-    id: "emergencylighting-m1s3-check2",
+    id: 'emergencylighting-m1s3-check2',
     question: "In a 'maintained' emergency lighting system, when does the emergency lamp operate?",
-    options: ["Only during mains failure", "Continuously (all the time)", "Only during testing", "Only when manually activated"],
+    options: [
+      'Only during mains failure',
+      'Continuously (all the time)',
+      'Only during testing',
+      'Only when manually activated',
+    ],
     correctIndex: 1,
-    explanation: "Maintained emergency lighting operates continuously - both from mains supply and battery during failure. This provides constant illumination and is required in entertainment venues and places of assembly."
+    explanation:
+      'Maintained emergency lighting operates continuously - both from mains supply and battery during failure. This provides constant illumination and is required in entertainment venues and places of assembly.',
   },
   {
-    id: "emergencylighting-m1s3-check3",
-    question: "Which system type is most suitable for a small office with 10 emergency luminaires?",
-    options: ["Central battery system", "Self-contained luminaires", "Generator backup", "Static inverter"],
+    id: 'emergencylighting-m1s3-check3',
+    question: 'Which system type is most suitable for a small office with 10 emergency luminaires?',
+    options: [
+      'Central battery system',
+      'Self-contained luminaires',
+      'Generator backup',
+      'Static inverter',
+    ],
     correctIndex: 1,
-    explanation: "Self-contained luminaires are most cost-effective and practical for smaller installations. Each luminaire has its own battery, reducing wiring complexity and providing redundancy."
-  }
+    explanation:
+      'Self-contained luminaires are most cost-effective and practical for smaller installations. Each luminaire has its own battery, reducing wiring complexity and providing redundancy.',
+  },
 ];
 
 const faqs = [
   {
     question: "What's the difference between maintained and non-maintained systems?",
-    answer: "Maintained systems operate continuously (lamp always lit from mains or battery). Non-maintained systems only illuminate during mains failure. Maintained is required in cinemas, theatres, and places of assembly."
+    answer:
+      'Maintained systems operate continuously (lamp always lit from mains or battery). Non-maintained systems only illuminate during mains failure. Maintained is required in cinemas, theatres, and places of assembly.',
   },
   {
-    question: "Can I mix self-contained and central battery systems?",
-    answer: "Yes, hybrid systems are common. Central battery may serve main escape routes while self-contained units cover outlying areas. Both must meet BS 5266-1 requirements and testing must cover both systems."
+    question: 'Can I mix self-contained and central battery systems?',
+    answer:
+      'Yes, hybrid systems are common. Central battery may serve main escape routes while self-contained units cover outlying areas. Both must meet BS 5266-1 requirements and testing must cover both systems.',
   },
   {
-    question: "What is a static inverter system?",
-    answer: "A static inverter provides emergency power from a central battery to existing luminaires via the normal lighting circuit. It's used where normal luminaires must also function as emergency lighting."
+    question: 'What is a static inverter system?',
+    answer:
+      "A static inverter provides emergency power from a central battery to existing luminaires via the normal lighting circuit. It's used where normal luminaires must also function as emergency lighting.",
   },
   {
-    question: "How do central battery systems handle cable faults?",
-    answer: "Modern central systems use multiple circuits with automatic monitoring. A fault on one circuit doesn't affect others. Sub-circuit monitoring detects lamp failures and cable faults, reporting them centrally."
-  }
+    question: 'How do central battery systems handle cable faults?',
+    answer:
+      "Modern central systems use multiple circuits with automatic monitoring. A fault on one circuit doesn't affect others. Sub-circuit monitoring detects lamp failures and cable faults, reporting them centrally.",
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A cinema auditorium requires emergency lighting. Which system type is mandatory?",
-  options: [
-    "Non-maintained (lights off until mains fails)",
-    "Maintained (lights always on)",
-    "Self-contained only",
-    "Central battery only"
-  ],
-  correctAnswer: 1,
-  explanation: "Maintained emergency lighting is required in cinemas, theatres, and other entertainment venues. The emergency lamps must operate continuously so audiences aren't suddenly plunged into darkness."
-  }
+    question: 'A cinema auditorium requires emergency lighting. Which system type is mandatory?',
+    options: [
+      'Non-maintained (lights off until mains fails)',
+      'Maintained (lights always on)',
+      'Self-contained only',
+      'Central battery only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Maintained emergency lighting is required in cinemas, theatres, and other entertainment venues. The emergency lamps must operate continuously so audiences aren't suddenly plunged into darkness.",
+  },
 ];
 
 const EmergencyLightingModule1Section3 = () => {
   useSEO({
-    title: "Types of Emergency Lighting Systems | Emergency Lighting Module 1.3",
-    description: "Understanding different emergency lighting system configurations, self-contained vs central battery, maintained vs non-maintained systems."
+    title: 'Types of Emergency Lighting Systems | Emergency Lighting Module 1.3',
+    description:
+      'Understanding different emergency lighting system configurations, self-contained vs central battery, maintained vs non-maintained systems.',
   });
 
   return (
@@ -108,17 +133,29 @@ const EmergencyLightingModule1Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Self-contained:</strong> Battery in each luminaire</li>
-              <li><strong>Central battery:</strong> Single battery location</li>
-              <li><strong>Maintained:</strong> Lamp always on</li>
+              <li>
+                <strong>Self-contained:</strong> Battery in each luminaire
+              </li>
+              <li>
+                <strong>Central battery:</strong> Single battery location
+              </li>
+              <li>
+                <strong>Maintained:</strong> Lamp always on
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Application Guide</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Small premises:</strong> Self-contained</li>
-              <li><strong>Large buildings:</strong> Central battery</li>
-              <li><strong>Cinemas:</strong> Maintained required</li>
+              <li>
+                <strong>Small premises:</strong> Self-contained
+              </li>
+              <li>
+                <strong>Large buildings:</strong> Central battery
+              </li>
+              <li>
+                <strong>Cinemas:</strong> Maintained required
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +165,12 @@ const EmergencyLightingModule1Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Distinguish self-contained from central systems",
-              "Understand maintained vs non-maintained",
-              "Select appropriate system types",
-              "Recognise hybrid system applications",
-              "Identify where maintained is mandatory",
-              "Evaluate system advantages/disadvantages"
+              'Distinguish self-contained from central systems',
+              'Understand maintained vs non-maintained',
+              'Select appropriate system types',
+              'Recognise hybrid system applications',
+              'Identify where maintained is mandatory',
+              'Evaluate system advantages/disadvantages',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -207,8 +244,8 @@ const EmergencyLightingModule1Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The operating mode defines when the emergency lamp illuminates. This has
-              significant implications for application suitability and running costs.
+              The operating mode defines when the emergency lamp illuminates. This has significant
+              implications for application suitability and running costs.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -253,11 +290,21 @@ const EmergencyLightingModule1Section3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Selection Factors:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Building size:</strong> &lt;50 luminaires typically self-contained</li>
-                <li><strong>Maintenance access:</strong> Central easier for high-ceiling areas</li>
-                <li><strong>Monitoring needs:</strong> Central provides better oversight</li>
-                <li><strong>Venue type:</strong> Entertainment requires maintained</li>
-                <li><strong>Budget constraints:</strong> Self-contained lower initial cost</li>
+                <li>
+                  <strong>Building size:</strong> &lt;50 luminaires typically self-contained
+                </li>
+                <li>
+                  <strong>Maintenance access:</strong> Central easier for high-ceiling areas
+                </li>
+                <li>
+                  <strong>Monitoring needs:</strong> Central provides better oversight
+                </li>
+                <li>
+                  <strong>Venue type:</strong> Entertainment requires maintained
+                </li>
+                <li>
+                  <strong>Budget constraints:</strong> Self-contained lower initial cost
+                </li>
               </ul>
             </div>
           </div>
@@ -270,7 +317,9 @@ const EmergencyLightingModule1Section3 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Maintained Requirements</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Maintained Requirements
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Cinemas and theatres during performances</li>
                 <li>Concert halls and places of assembly</li>
@@ -280,12 +329,22 @@ const EmergencyLightingModule1Section3 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Specification Errors</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Specification Errors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Non-maintained in cinemas:</strong> — Maintained is mandatory</li>
-                <li><strong>Central for small premises:</strong> — Often over-engineered</li>
-                <li><strong>No monitoring planned:</strong> — Consider addressable systems</li>
-                <li><strong>Ignoring access:</strong> — Central needs plant room space</li>
+                <li>
+                  <strong>Non-maintained in cinemas:</strong> — Maintained is mandatory
+                </li>
+                <li>
+                  <strong>Central for small premises:</strong> — Often over-engineered
+                </li>
+                <li>
+                  <strong>No monitoring planned:</strong> — Consider addressable systems
+                </li>
+                <li>
+                  <strong>Ignoring access:</strong> — Central needs plant room space
+                </li>
               </ul>
             </div>
           </div>
@@ -331,10 +390,7 @@ const EmergencyLightingModule1Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

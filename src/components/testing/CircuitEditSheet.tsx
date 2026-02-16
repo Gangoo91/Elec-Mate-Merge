@@ -3,7 +3,13 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { X, Save, Trash2, Zap, TestTube, Shield, Check, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -43,7 +49,7 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
   if (!editedCircuit) return null;
 
   const updateField = (field: keyof TestResult, value: string) => {
-    setEditedCircuit(prev => prev ? { ...prev, [field]: value } : null);
+    setEditedCircuit((prev) => (prev ? { ...prev, [field]: value } : null));
   };
 
   const handleSave = () => {
@@ -63,24 +69,27 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
   };
 
   // Check if circuit has essential test data
-  const hasEssentialTests = editedCircuit.zs && editedCircuit.polarity &&
+  const hasEssentialTests =
+    editedCircuit.zs &&
+    editedCircuit.polarity &&
     (editedCircuit.insulationLiveEarth || editedCircuit.insulationResistance);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
-      >
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="px-4 py-3 border-b border-white/10 bg-card/50">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className={cn(
-                  "h-10 w-10 rounded-lg flex items-center justify-center font-bold",
-                  hasEssentialTests ? "bg-green-500/20 text-green-400" : "bg-elec-yellow/20 text-elec-yellow"
-                )}>
+                <div
+                  className={cn(
+                    'h-10 w-10 rounded-lg flex items-center justify-center font-bold',
+                    hasEssentialTests
+                      ? 'bg-green-500/20 text-green-400'
+                      : 'bg-elec-yellow/20 text-elec-yellow'
+                  )}
+                >
                   {editedCircuit.circuitDesignation || `C${editedCircuit.circuitNumber}`}
                 </div>
                 <div>
@@ -93,9 +102,7 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                {hasEssentialTests && (
-                  <Check className="h-5 w-5 text-green-400" />
-                )}
+                {hasEssentialTests && <Check className="h-5 w-5 text-green-400" />}
                 <Button
                   variant="ghost"
                   size="icon"
@@ -109,7 +116,11 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
           </SheetHeader>
 
           {/* Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="flex-1 flex flex-col overflow-hidden"
+          >
             <TabsList className="w-full justify-start rounded-none border-b border-white/10 bg-transparent h-12 px-4 gap-1">
               <TabsTrigger
                 value="tests"
@@ -136,10 +147,7 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
 
             {/* Tests Tab - Quick entry grid */}
             <TabsContent value="tests" className="flex-1 overflow-y-auto p-4 m-0 space-y-4">
-              <TestValueGrid
-                circuit={editedCircuit}
-                onUpdate={updateField}
-              />
+              <TestValueGrid circuit={editedCircuit} onUpdate={updateField} />
 
               {/* Ring final tests (if applicable) */}
               {editedCircuit.circuitType?.toLowerCase().includes('ring') && (
@@ -366,7 +374,8 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
               </div>
 
               {/* RCD Section */}
-              {(editedCircuit.protectiveDeviceType === 'RCBO' || editedCircuit.protectiveDeviceType === 'RCD') && (
+              {(editedCircuit.protectiveDeviceType === 'RCBO' ||
+                editedCircuit.protectiveDeviceType === 'RCD') && (
                 <div className="space-y-3 pt-4 border-t border-white/10">
                   <h4 className="text-sm font-medium text-white/60">RCD Details</h4>
                   <div className="grid grid-cols-2 gap-3">

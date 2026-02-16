@@ -14,45 +14,54 @@ const tabConfigs: TabConfig[] = [
     id: 'details',
     label: 'Installation Details',
     shortLabel: 'Details',
-    requiredFields: ['clientName', 'installationAddress', 'installationDate', 'installationType', 'supplyVoltage', 'supplyFrequency', 'earthingArrangement', 'mainProtectiveDevice']
+    requiredFields: [
+      'clientName',
+      'installationAddress',
+      'installationDate',
+      'installationType',
+      'supplyVoltage',
+      'supplyFrequency',
+      'earthingArrangement',
+      'mainProtectiveDevice',
+    ],
   },
   {
     id: 'inspection',
     label: 'Schedule of Inspections',
     shortLabel: 'Inspection',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'testing',
     label: 'Schedule of Testing',
     shortLabel: 'Testing',
-    requiredFields: []
+    requiredFields: [],
   },
   {
     id: 'declarations',
     label: 'Declarations',
     shortLabel: 'Declarations',
-    requiredFields: ['designerName', 'constructorName', 'inspectorName']
+    requiredFields: ['designerName', 'constructorName', 'inspectorName'],
   },
   {
     id: 'certificate',
     label: 'Certificate',
     shortLabel: 'Certificate',
-    requiredFields: ['inspectedByName', 'reportAuthorisedByName']
-  }
+    requiredFields: ['inspectedByName', 'reportAuthorisedByName'],
+  },
 ];
 
 export const useEICTabs = (formData: any) => {
   const [currentTab, setCurrentTab] = useState<EICTabValue>('details');
 
-  const currentTabIndex = tabConfigs.findIndex(tab => tab.id === currentTab);
+  const currentTabIndex = tabConfigs.findIndex((tab) => tab.id === currentTab);
   const totalTabs = tabConfigs.length;
 
   const hasRequiredFields = (tabId: EICTabValue): boolean => {
-    const tab = tabConfigs.find(t => t.id === tabId);
+    const tab = tabConfigs.find((t) => t.id === tabId);
     if (!tab) return false;
 
-    return tab.requiredFields.every(field => {
+    return tab.requiredFields.every((field) => {
       const value = formData[field];
       return value && value.toString().trim() !== '';
     });
@@ -68,28 +77,40 @@ export const useEICTabs = (formData: any) => {
     // Auto-complete based on required fields being filled
     switch (tabId) {
       case 'details':
-        return completedSections[tabId] ||
-          (formData.clientName && formData.installationAddress && formData.phases && formData.earthingArrangement);
+        return (
+          completedSections[tabId] ||
+          (formData.clientName &&
+            formData.installationAddress &&
+            formData.phases &&
+            formData.earthingArrangement)
+        );
       case 'inspection':
-        return completedSections[tabId] || (formData.inspectionItems?.length > 0);
+        return completedSections[tabId] || formData.inspectionItems?.length > 0;
       case 'testing':
-        return completedSections[tabId] || (formData.scheduleOfTests?.length > 0);
+        return completedSections[tabId] || formData.scheduleOfTests?.length > 0;
       case 'declarations':
-        return completedSections[tabId] ||
-          (formData.designerName && formData.constructorName && formData.inspectorName);
+        return (
+          completedSections[tabId] ||
+          (formData.designerName && formData.constructorName && formData.inspectorName)
+        );
       case 'certificate':
-        return completedSections[tabId] ||
-          (formData.inspectedByName && formData.reportAuthorisedByName && formData.bs7671Compliance);
+        return (
+          completedSections[tabId] ||
+          (formData.inspectedByName && formData.reportAuthorisedByName && formData.bs7671Compliance)
+        );
       default:
         return completedSections[tabId] === true;
     }
   };
 
-  const toggleTabComplete = (tabId: EICTabValue, onUpdate: (field: string, value: any) => void): void => {
+  const toggleTabComplete = (
+    tabId: EICTabValue,
+    onUpdate: (field: string, value: any) => void
+  ): void => {
     const completedSections = formData.completedSections || {};
     const newCompletedSections = {
       ...completedSections,
-      [tabId]: !completedSections[tabId]
+      [tabId]: !completedSections[tabId],
     };
     onUpdate('completedSections', newCompletedSections);
   };
@@ -118,12 +139,12 @@ export const useEICTabs = (formData: any) => {
 
   const getProgressPercentage = (): number => {
     // Calculate based on completed tabs
-    const completedCount = tabConfigs.filter(tab => isTabComplete(tab.id)).length;
+    const completedCount = tabConfigs.filter((tab) => isTabComplete(tab.id)).length;
     return Math.round((completedCount / totalTabs) * 100);
   };
 
   const getCurrentTabLabel = (): string => {
-    const tab = tabConfigs.find(t => t.id === currentTab);
+    const tab = tabConfigs.find((t) => t.id === currentTab);
     return tab?.label || '';
   };
 
@@ -142,6 +163,6 @@ export const useEICTabs = (formData: any) => {
     navigateNext,
     navigatePrevious,
     getProgressPercentage,
-    getCurrentTabLabel
+    getCurrentTabLabel,
   };
 };

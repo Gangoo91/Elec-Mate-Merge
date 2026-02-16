@@ -12,7 +12,8 @@ const SmartHomeModule7Section3Practical = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 mb-4">
-          As an electrician working with smart home wireless systems, these practical approaches will help ensure reliable connectivity:
+          As an electrician working with smart home wireless systems, these practical approaches
+          will help ensure reliable connectivity:
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -61,7 +62,9 @@ const SmartHomeModule7Section3Practical = () => {
               <span className="font-medium text-foreground">Design Considerations</span>
             </div>
             <ul className="space-y-1 text-gray-300 text-sm">
-              <li>• Design installations around strong coverage, not force devices into dead zones</li>
+              <li>
+                • Design installations around strong coverage, not force devices into dead zones
+              </li>
               <li>• Consider mesh network requirements early in planning</li>
               <li>• Account for building materials that affect signals</li>
               <li>• Plan for future expansion and additional devices</li>

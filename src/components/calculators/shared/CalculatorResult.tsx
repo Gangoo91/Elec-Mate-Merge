@@ -1,13 +1,9 @@
-import { ReactNode } from "react";
-import { CheckCircle, AlertTriangle, Info, ChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { CALCULATOR_CONFIG, CalculatorCategory } from "./CalculatorConfig";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { useState } from "react";
+import { ReactNode } from 'react';
+import { CheckCircle, AlertTriangle, Info, ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CALCULATOR_CONFIG, CalculatorCategory } from './CalculatorConfig';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useState } from 'react';
 
 interface CalculatorResultProps {
   category: CalculatorCategory;
@@ -20,7 +16,7 @@ export const CalculatorResult = ({
   category,
   children,
   variant = 'success',
-  className
+  className,
 }: CalculatorResultProps) => {
   const config = CALCULATOR_CONFIG[category];
 
@@ -50,23 +46,15 @@ export const CalculatorResult = ({
 
   return (
     <div
-      className={cn(
-        "calculator-result rounded-xl p-4 border animate-fade-in",
-        className
-      )}
+      className={cn('calculator-result rounded-xl p-4 border animate-fade-in', className)}
       style={{
         borderColor: styles.border,
         background: styles.bg,
       }}
     >
       <div className="flex items-start gap-3">
-        <Icon
-          className="h-5 w-5 mt-0.5 shrink-0"
-          style={{ color: styles.iconColor }}
-        />
-        <div className="flex-1 space-y-3">
-          {children}
-        </div>
+        <Icon className="h-5 w-5 mt-0.5 shrink-0" style={{ color: styles.iconColor }} />
+        <div className="flex-1 space-y-3">{children}</div>
       </div>
     </div>
   );
@@ -88,7 +76,7 @@ export const ResultValue = ({
   unit,
   category,
   size = 'md',
-  className
+  className,
 }: ResultValueProps) => {
   const config = CALCULATOR_CONFIG[category];
 
@@ -101,11 +89,11 @@ export const ResultValue = ({
   const sizes = sizeClasses[size];
 
   return (
-    <div className={cn("space-y-1.5 min-w-0", className)}>
-      <p className={cn("text-white/60 font-medium truncate", sizes.label)}>{label}</p>
+    <div className={cn('space-y-1.5 min-w-0', className)}>
+      <p className={cn('text-white/60 font-medium truncate', sizes.label)}>{label}</p>
       <div className="flex items-baseline gap-1.5 sm:gap-2 min-w-0">
         <span
-          className={cn("font-bold bg-clip-text text-transparent break-words min-w-0", sizes.value)}
+          className={cn('font-bold bg-clip-text text-transparent break-words min-w-0', sizes.value)}
           style={{
             backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
           }}
@@ -113,9 +101,7 @@ export const ResultValue = ({
           {typeof value === 'number' ? value.toLocaleString() : value}
         </span>
         {unit && (
-          <span className={cn("text-white/50 font-medium shrink-0", sizes.unit)}>
-            {unit}
-          </span>
+          <span className={cn('text-white/50 font-medium shrink-0', sizes.unit)}>{unit}</span>
         )}
       </div>
     </div>
@@ -129,23 +115,15 @@ interface ResultsGridProps {
   className?: string;
 }
 
-export const ResultsGrid = ({
-  children,
-  columns = 2,
-  className
-}: ResultsGridProps) => {
+export const ResultsGrid = ({ children, columns = 2, className }: ResultsGridProps) => {
   const gridClass = {
-    1: "grid-cols-1",
-    2: "grid-cols-1 sm:grid-cols-2",
-    3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
-    4: "grid-cols-2 sm:grid-cols-4",
+    1: 'grid-cols-1',
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-2 sm:grid-cols-4',
   }[columns];
 
-  return (
-    <div className={cn("grid gap-4", gridClass, className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn('grid gap-4', gridClass, className)}>{children}</div>;
 };
 
 // Collapsible section for additional details
@@ -158,26 +136,21 @@ interface ResultDetailsProps {
 }
 
 export const ResultDetails = ({
-  title = "Calculation Details",
+  title = 'Calculation Details',
   children,
   defaultOpen = false,
   category,
-  className
+  className,
 }: ResultDetailsProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const config = CALCULATOR_CONFIG[category];
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className={className}>
-      <CollapsibleTrigger
-        className="flex items-center justify-between w-full min-h-11 py-2 text-sm font-medium text-white/60 hover:text-white/80 transition-colors touch-manipulation"
-      >
+      <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 text-sm font-medium text-white/60 hover:text-white/80 transition-colors touch-manipulation">
         <span>{title}</span>
         <ChevronDown
-          className={cn(
-            "h-4 w-4 transition-transform duration-200",
-            isOpen && "rotate-180"
-          )}
+          className={cn('h-4 w-4 transition-transform duration-200', isOpen && 'rotate-180')}
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="pt-2">
@@ -202,11 +175,7 @@ interface ResultBadgeProps {
   className?: string;
 }
 
-export const ResultBadge = ({
-  status,
-  label,
-  className
-}: ResultBadgeProps) => {
+export const ResultBadge = ({ status, label, className }: ResultBadgeProps) => {
   const statusStyles = {
     pass: 'bg-green-500/20 text-green-400 border-green-500/30',
     fail: 'bg-red-500/20 text-red-400 border-red-500/30',
@@ -217,7 +186,7 @@ export const ResultBadge = ({
   return (
     <span
       className={cn(
-        "inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold border",
+        'inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold border',
         statusStyles[status],
         className
       )}

@@ -25,15 +25,16 @@ export async function getSetting(key: string): Promise<string | null> {
 }
 
 export async function setSetting(key: string, value: string): Promise<boolean> {
-  const { error } = await supabase
-    .from('app_settings')
-    .upsert({ 
-      key, 
-      value, 
-      updated_at: new Date().toISOString() 
-    }, { 
-      onConflict: 'key' 
-    });
+  const { error } = await supabase.from('app_settings').upsert(
+    {
+      key,
+      value,
+      updated_at: new Date().toISOString(),
+    },
+    {
+      onConflict: 'key',
+    }
+  );
 
   if (error) {
     console.error('Error saving setting:', error);
@@ -65,7 +66,7 @@ export interface BrandingSettings {
 export async function getCompanySettings(): Promise<CompanySettings> {
   const keys = [
     'company_name',
-    'company_address', 
+    'company_address',
     'company_phone',
     'company_email',
     'company_number',
@@ -73,13 +74,10 @@ export async function getCompanySettings(): Promise<CompanySettings> {
     'company_website',
     'bank_account_name',
     'bank_sort_code',
-    'bank_account_number'
+    'bank_account_number',
   ];
 
-  const { data, error } = await supabase
-    .from('app_settings')
-    .select('key, value')
-    .in('key', keys);
+  const { data, error } = await supabase.from('app_settings').select('key, value').in('key', keys);
 
   if (error) {
     console.error('Error fetching company settings:', error);
@@ -95,10 +93,10 @@ export async function getCompanySettings(): Promise<CompanySettings> {
     company_website: '',
     bank_account_name: '',
     bank_sort_code: '',
-    bank_account_number: ''
+    bank_account_number: '',
   };
 
-  data?.forEach(row => {
+  data?.forEach((row) => {
     if (row.key in settings) {
       settings[row.key as keyof CompanySettings] = row.value || '';
     }
@@ -109,22 +107,19 @@ export async function getCompanySettings(): Promise<CompanySettings> {
 
 export async function saveCompanySettings(settings: CompanySettings): Promise<boolean> {
   const entries = Object.entries(settings);
-  
+
   for (const [key, value] of entries) {
     const success = await setSetting(key, value);
     if (!success) return false;
   }
-  
+
   return true;
 }
 
 export async function getBrandingSettings(): Promise<BrandingSettings> {
   const keys = ['company_logo_url', 'brand_primary_color', 'brand_secondary_color'];
 
-  const { data, error } = await supabase
-    .from('app_settings')
-    .select('key, value')
-    .in('key', keys);
+  const { data, error } = await supabase.from('app_settings').select('key, value').in('key', keys);
 
   if (error) {
     console.error('Error fetching branding settings:', error);
@@ -133,10 +128,10 @@ export async function getBrandingSettings(): Promise<BrandingSettings> {
   const settings: BrandingSettings = {
     company_logo_url: null,
     brand_primary_color: '#f59e0b',
-    brand_secondary_color: '#0f172a'
+    brand_secondary_color: '#0f172a',
   };
 
-  data?.forEach(row => {
+  data?.forEach((row) => {
     if (row.key === 'company_logo_url') {
       settings.company_logo_url = row.value;
     } else if (row.key === 'brand_primary_color' && row.value) {
@@ -151,14 +146,14 @@ export async function getBrandingSettings(): Promise<BrandingSettings> {
 
 export async function saveBrandingSettings(settings: BrandingSettings): Promise<boolean> {
   const entries = Object.entries(settings);
-  
+
   for (const [key, value] of entries) {
     if (value !== null) {
       const success = await setSetting(key, value);
       if (!success) return false;
     }
   }
-  
+
   return true;
 }
 
@@ -176,9 +171,7 @@ export async function uploadCompanyLogo(file: File): Promise<string | null> {
     return null;
   }
 
-  const { data } = supabase.storage
-    .from('company-branding')
-    .getPublicUrl(filePath);
+  const { data } = supabase.storage.from('company-branding').getPublicUrl(filePath);
 
   const logoUrl = data.publicUrl;
 
@@ -193,10 +186,7 @@ export async function uploadCompanyLogo(file: File): Promise<string | null> {
 }
 
 export async function getAllSettings(): Promise<AppSetting[]> {
-  const { data, error } = await supabase
-    .from('app_settings')
-    .select('*')
-    .order('key');
+  const { data, error } = await supabase.from('app_settings').select('*').order('key');
 
   if (error) {
     console.error('Error fetching all settings:', error);
@@ -230,10 +220,7 @@ export interface OfficeLocation {
 export async function getOfficeLocation(): Promise<OfficeLocation> {
   const keys = ['office_lat', 'office_lng', 'office_address'];
 
-  const { data, error } = await supabase
-    .from('app_settings')
-    .select('key, value')
-    .in('key', keys);
+  const { data, error } = await supabase.from('app_settings').select('key, value').in('key', keys);
 
   if (error) {
     console.error('Error fetching office location:', error);
@@ -245,7 +232,7 @@ export async function getOfficeLocation(): Promise<OfficeLocation> {
     address: null,
   };
 
-  data?.forEach(row => {
+  data?.forEach((row) => {
     if (row.key === 'office_lat' && row.value) {
       location.lat = parseFloat(row.value);
     } else if (row.key === 'office_lng' && row.value) {

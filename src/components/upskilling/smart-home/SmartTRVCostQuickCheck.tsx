@@ -7,12 +7,12 @@ export const SmartTRVCostQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "Why might smart TRVs be expensive in large properties?";
+  const question = 'Why might smart TRVs be expensive in large properties?';
   const options = [
-    "They use too much electricity",
-    "Each radiator requires its own smart TRV",
-    "They need professional calibration",
-    "They have short lifespans"
+    'They use too much electricity',
+    'Each radiator requires its own smart TRV',
+    'They need professional calibration',
+    'They have short lifespans',
   ];
   const correctAnswer = 1;
 
@@ -36,7 +36,7 @@ export const SmartTRVCostQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <h3 className="text-lg font-semibold text-foreground">{question}</h3>
-        
+
         <div className="space-y-3">
           {options.map((option, index) => (
             <Button
@@ -49,11 +49,11 @@ export const SmartTRVCostQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'bg-green-600/20 border-green-500 text-green-200'
                     : selectedAnswer === index.toString()
-                    ? 'bg-red-600/20 border-red-500 text-red-200'
-                    : 'text-gray-400'
+                      ? 'bg-red-600/20 border-red-500 text-red-200'
+                      : 'text-gray-400'
                   : selectedAnswer === index.toString()
-                  ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
-                  : 'text-gray-300'
+                    ? 'bg-elec-yellow text-elec-dark border-elec-yellow'
+                    : 'text-gray-300'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -72,7 +72,10 @@ export const SmartTRVCostQuickCheck = () => {
         {showResult && (
           <div className="p-4 bg-[#1a1a1a] border border-gray-600 rounded-lg">
             <p className="text-gray-300 text-sm">
-              <strong className="text-foreground">Explanation:</strong> In large properties with many radiators, the cost of smart TRVs can add up quickly since each radiator requires its own smart valve for individual zone control, potentially costing £50-100+ per radiator.
+              <strong className="text-foreground">Explanation:</strong> In large properties with
+              many radiators, the cost of smart TRVs can add up quickly since each radiator requires
+              its own smart valve for individual zone control, potentially costing £50-100+ per
+              radiator.
             </p>
             <Button
               onClick={resetQuestion}

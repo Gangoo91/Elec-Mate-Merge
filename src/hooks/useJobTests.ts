@@ -1,20 +1,20 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export type TestType =
-  | "Continuity"
-  | "Insulation Resistance"
-  | "Polarity"
-  | "Earth Fault Loop Impedance"
-  | "RCD"
-  | "Prospective Fault Current"
-  | "Ring Final Circuit"
-  | "Functional Test"
-  | "Visual Inspection"
-  | "Other";
+  | 'Continuity'
+  | 'Insulation Resistance'
+  | 'Polarity'
+  | 'Earth Fault Loop Impedance'
+  | 'RCD'
+  | 'Prospective Fault Current'
+  | 'Ring Final Circuit'
+  | 'Functional Test'
+  | 'Visual Inspection'
+  | 'Other';
 
-export type TestResult = "Pending" | "Pass" | "Fail" | "N/A" | "Limited";
+export type TestResult = 'Pending' | 'Pass' | 'Fail' | 'N/A' | 'Limited';
 
 export interface JobTest {
   id: string;
@@ -50,40 +50,50 @@ export interface JobTest {
   };
 }
 
-export type CreateJobTestInput = Omit<JobTest, "id" | "user_id" | "created_at" | "updated_at" | "job" | "tester">;
+export type CreateJobTestInput = Omit<
+  JobTest,
+  'id' | 'user_id' | 'created_at' | 'updated_at' | 'job' | 'tester'
+>;
 export type UpdateJobTestInput = Partial<CreateJobTestInput>;
 
 // Standard test types with their units
-export const TEST_TYPE_CONFIG: Record<TestType, { unit: string; minLabel?: string; maxLabel?: string }> = {
-  "Continuity": { unit: "Ω", maxLabel: "Max R" },
-  "Insulation Resistance": { unit: "MΩ", minLabel: "Min IR" },
-  "Polarity": { unit: "", },
-  "Earth Fault Loop Impedance": { unit: "Ω", maxLabel: "Max Zs" },
-  "RCD": { unit: "ms", maxLabel: "Max time" },
-  "Prospective Fault Current": { unit: "kA", maxLabel: "Max PFC" },
-  "Ring Final Circuit": { unit: "Ω", },
-  "Functional Test": { unit: "", },
-  "Visual Inspection": { unit: "", },
-  "Other": { unit: "", },
+export const TEST_TYPE_CONFIG: Record<
+  TestType,
+  { unit: string; minLabel?: string; maxLabel?: string }
+> = {
+  Continuity: { unit: 'Ω', maxLabel: 'Max R' },
+  'Insulation Resistance': { unit: 'MΩ', minLabel: 'Min IR' },
+  Polarity: { unit: '' },
+  'Earth Fault Loop Impedance': { unit: 'Ω', maxLabel: 'Max Zs' },
+  RCD: { unit: 'ms', maxLabel: 'Max time' },
+  'Prospective Fault Current': { unit: 'kA', maxLabel: 'Max PFC' },
+  'Ring Final Circuit': { unit: 'Ω' },
+  'Functional Test': { unit: '' },
+  'Visual Inspection': { unit: '' },
+  Other: { unit: '' },
 };
 
 // Fetch all job tests for the current user
 export function useJobTests() {
   return useQuery({
-    queryKey: ["jobTests"],
+    queryKey: ['jobTests'],
     queryFn: async (): Promise<JobTest[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("job_tests")
-        .select(`
+        .from('job_tests')
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
-        `)
-        .eq("user_id", user.id)
-        .order("test_date", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .order('test_date', { ascending: false });
 
       if (error) throw error;
       return data as JobTest[];
@@ -94,24 +104,28 @@ export function useJobTests() {
 // Fetch job tests for a specific job
 export function useJobTestsByJob(jobId: string | undefined) {
   return useQuery({
-    queryKey: ["jobTests", "job", jobId],
+    queryKey: ['jobTests', 'job', jobId],
     queryFn: async (): Promise<JobTest[]> => {
       if (!jobId) return [];
 
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("job_tests")
-        .select(`
+        .from('job_tests')
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
-        `)
-        .eq("user_id", user.id)
-        .eq("job_id", jobId)
-        .order("circuit_ref", { ascending: true })
-        .order("test_type", { ascending: true });
+        `
+        )
+        .eq('user_id', user.id)
+        .eq('job_id', jobId)
+        .order('circuit_ref', { ascending: true })
+        .order('test_type', { ascending: true });
 
       if (error) throw error;
       return data as JobTest[];
@@ -123,21 +137,25 @@ export function useJobTestsByJob(jobId: string | undefined) {
 // Fetch pending tests only
 export function usePendingJobTests() {
   return useQuery({
-    queryKey: ["jobTests", "pending"],
+    queryKey: ['jobTests', 'pending'],
     queryFn: async (): Promise<JobTest[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("job_tests")
-        .select(`
+        .from('job_tests')
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
-        `)
-        .eq("user_id", user.id)
-        .eq("result", "Pending")
-        .order("created_at", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .eq('result', 'Pending')
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as JobTest[];
@@ -148,21 +166,25 @@ export function usePendingJobTests() {
 // Fetch failed tests only
 export function useFailedJobTests() {
   return useQuery({
-    queryKey: ["jobTests", "failed"],
+    queryKey: ['jobTests', 'failed'],
     queryFn: async (): Promise<JobTest[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("job_tests")
-        .select(`
+        .from('job_tests')
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
-        `)
-        .eq("user_id", user.id)
-        .eq("result", "Fail")
-        .order("created_at", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .eq('result', 'Fail')
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as JobTest[];
@@ -173,18 +195,20 @@ export function useFailedJobTests() {
 // Fetch a single job test by ID
 export function useJobTest(id: string | undefined) {
   return useQuery({
-    queryKey: ["jobTests", id],
+    queryKey: ['jobTests', id],
     queryFn: async (): Promise<JobTest | null> => {
       if (!id) return null;
 
       const { data, error } = await supabase
-        .from("job_tests")
-        .select(`
+        .from('job_tests')
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
-        `)
-        .eq("id", id)
+        `
+        )
+        .eq('id', id)
         .single();
 
       if (error) throw error;
@@ -197,28 +221,35 @@ export function useJobTest(id: string | undefined) {
 // Get job test statistics
 export function useJobTestStats() {
   return useQuery({
-    queryKey: ["jobTests", "stats"],
+    queryKey: ['jobTests', 'stats'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("job_tests")
-        .select("id, result, test_type, job_id")
-        .eq("user_id", user.id);
+        .from('job_tests')
+        .select('id, result, test_type, job_id')
+        .eq('user_id', user.id);
 
       if (error) throw error;
 
       const stats = {
         total: data.length,
-        pending: data.filter(t => t.result === "Pending").length,
-        pass: data.filter(t => t.result === "Pass").length,
-        fail: data.filter(t => t.result === "Fail").length,
-        na: data.filter(t => t.result === "N/A").length,
-        uniqueJobs: new Set(data.map(t => t.job_id)).size,
-        passRate: data.length > 0
-          ? Math.round((data.filter(t => t.result === "Pass").length / data.filter(t => t.result !== "Pending" && t.result !== "N/A").length) * 100)
-          : 0,
+        pending: data.filter((t) => t.result === 'Pending').length,
+        pass: data.filter((t) => t.result === 'Pass').length,
+        fail: data.filter((t) => t.result === 'Fail').length,
+        na: data.filter((t) => t.result === 'N/A').length,
+        uniqueJobs: new Set(data.map((t) => t.job_id)).size,
+        passRate:
+          data.length > 0
+            ? Math.round(
+                (data.filter((t) => t.result === 'Pass').length /
+                  data.filter((t) => t.result !== 'Pending' && t.result !== 'N/A').length) *
+                  100
+              )
+            : 0,
       };
 
       return stats;
@@ -233,34 +264,38 @@ export function useCreateJobTest() {
 
   return useMutation({
     mutationFn: async (input: CreateJobTestInput): Promise<JobTest> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("job_tests")
+        .from('job_tests')
         .insert({ ...input, user_id: user.id })
-        .select(`
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as JobTest;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["jobTests"] });
+      queryClient.invalidateQueries({ queryKey: ['jobTests'] });
       toast({
-        title: "Test recorded",
-        description: "The test result has been saved successfully.",
+        title: 'Test recorded',
+        description: 'The test result has been saved successfully.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -273,15 +308,14 @@ export function useBatchCreateJobTests() {
 
   return useMutation({
     mutationFn: async (inputs: CreateJobTestInput[]): Promise<JobTest[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
-      const testsWithUser = inputs.map(input => ({ ...input, user_id: user.id }));
+      const testsWithUser = inputs.map((input) => ({ ...input, user_id: user.id }));
 
-      const { data, error } = await supabase
-        .from("job_tests")
-        .insert(testsWithUser)
-        .select(`
+      const { data, error } = await supabase.from('job_tests').insert(testsWithUser).select(`
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
@@ -291,17 +325,17 @@ export function useBatchCreateJobTests() {
       return data as JobTest[];
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["jobTests"] });
+      queryClient.invalidateQueries({ queryKey: ['jobTests'] });
       toast({
-        title: "Tests recorded",
+        title: 'Tests recorded',
         description: `${data.length} test results have been saved.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -315,32 +349,34 @@ export function useUpdateJobTest() {
   return useMutation({
     mutationFn: async ({ id, ...input }: UpdateJobTestInput & { id: string }): Promise<JobTest> => {
       const { data, error } = await supabase
-        .from("job_tests")
+        .from('job_tests')
         .update({ ...input, updated_at: new Date().toISOString() })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as JobTest;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["jobTests"] });
-      queryClient.invalidateQueries({ queryKey: ["jobTests", data.id] });
+      queryClient.invalidateQueries({ queryKey: ['jobTests'] });
+      queryClient.invalidateQueries({ queryKey: ['jobTests', data.id] });
       toast({
-        title: "Test updated",
-        description: "The test result has been updated successfully.",
+        title: 'Test updated',
+        description: 'The test result has been updated successfully.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -352,42 +388,54 @@ export function useRecordTestResult() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, result, reading, notes }: { id: string; result: TestResult; reading?: string; notes?: string }): Promise<JobTest> => {
+    mutationFn: async ({
+      id,
+      result,
+      reading,
+      notes,
+    }: {
+      id: string;
+      result: TestResult;
+      reading?: string;
+      notes?: string;
+    }): Promise<JobTest> => {
       const updates: Partial<JobTest> = {
         result,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       };
 
       if (reading) updates.reading = reading;
       if (notes) updates.notes = notes;
 
       const { data, error } = await supabase
-        .from("job_tests")
+        .from('job_tests')
         .update(updates)
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as JobTest;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["jobTests"] });
-      queryClient.invalidateQueries({ queryKey: ["jobTests", data.id] });
+      queryClient.invalidateQueries({ queryKey: ['jobTests'] });
+      queryClient.invalidateQueries({ queryKey: ['jobTests', data.id] });
       toast({
-        title: "Result recorded",
+        title: 'Result recorded',
         description: `Test marked as ${data.result}.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -400,40 +448,44 @@ export function useVerifyJobTest() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<JobTest> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("job_tests")
+        .from('job_tests')
         .update({
           verified_by: user.id,
           verified_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as JobTest;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["jobTests"] });
-      queryClient.invalidateQueries({ queryKey: ["jobTests", data.id] });
+      queryClient.invalidateQueries({ queryKey: ['jobTests'] });
+      queryClient.invalidateQueries({ queryKey: ['jobTests', data.id] });
       toast({
-        title: "Test verified",
-        description: "The test result has been verified.",
+        title: 'Test verified',
+        description: 'The test result has been verified.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -446,25 +498,22 @@ export function useDeleteJobTest() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from("job_tests")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from('job_tests').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["jobTests"] });
+      queryClient.invalidateQueries({ queryKey: ['jobTests'] });
       toast({
-        title: "Test deleted",
-        description: "The test record has been removed.",
+        title: 'Test deleted',
+        description: 'The test record has been removed.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });

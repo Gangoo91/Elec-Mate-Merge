@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Sparkles, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import type { ExperienceLevel } from "./schema";
+import { useState } from 'react';
+import { Sparkles, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import type { ExperienceLevel } from './schema';
 
 interface AIDescriptionGeneratorProps {
   jobTitle: string;
@@ -23,9 +23,9 @@ export function AIDescriptionGenerator({
   const handleGenerate = async () => {
     if (!jobTitle) {
       toast({
-        title: "Job title required",
-        description: "Please enter a job title first",
-        variant: "destructive",
+        title: 'Job title required',
+        description: 'Please enter a job title first',
+        variant: 'destructive',
       });
       return;
     }
@@ -33,30 +33,27 @@ export function AIDescriptionGenerator({
     setIsGenerating(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke(
-        "generate-job-description",
-        {
-          body: {
-            jobTitle,
-            requirements,
-            experienceLevel: experienceLevel || "Mid",
-          },
-        }
-      );
+      const { data, error } = await supabase.functions.invoke('generate-job-description', {
+        body: {
+          jobTitle,
+          requirements,
+          experienceLevel: experienceLevel || 'Mid',
+        },
+      });
 
       if (error) throw error;
 
       if (data?.description) {
         onGenerated(data.description);
         toast({
-          title: "Description generated",
-          description: "AI has created a job description for you to customize",
+          title: 'Description generated',
+          description: 'AI has created a job description for you to customize',
         });
       } else {
-        throw new Error("No description returned");
+        throw new Error('No description returned');
       }
     } catch (error) {
-      console.error("AI generation error:", error);
+      console.error('AI generation error:', error);
 
       // Fallback to a template if AI fails
       const fallbackDescription = generateFallbackDescription(
@@ -67,8 +64,8 @@ export function AIDescriptionGenerator({
       onGenerated(fallbackDescription);
 
       toast({
-        title: "Template applied",
-        description: "Using a template description. Customize it for your role.",
+        title: 'Template applied',
+        description: 'Using a template description. Customize it for your role.',
       });
     } finally {
       setIsGenerating(false);
@@ -106,13 +103,13 @@ function generateFallbackDescription(
   experienceLevel?: ExperienceLevel
 ): string {
   const levelText = {
-    Entry: "entry-level",
-    Mid: "experienced",
-    Senior: "senior",
-    Lead: "lead",
+    Entry: 'entry-level',
+    Mid: 'experienced',
+    Senior: 'senior',
+    Lead: 'lead',
   };
 
-  const level = levelText[experienceLevel || "Mid"];
+  const level = levelText[experienceLevel || 'Mid'];
 
   return `<h2>About the Role</h2>
 <p>We are looking for a ${level} ${jobTitle} to join our growing team. This is an excellent opportunity for someone who is passionate about delivering high-quality electrical work and wants to be part of a professional, supportive team.</p>
@@ -128,7 +125,7 @@ function generateFallbackDescription(
 
 <h2>What We're Looking For</h2>
 <ul>
-${requirements.map((req) => `<li>${req}</li>`).join("\n")}
+${requirements.map((req) => `<li>${req}</li>`).join('\n')}
 </ul>
 
 <h2>What We Offer</h2>

@@ -14,64 +14,61 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: "What is the minimum retention period for OZEV installation records?",
-    options: [
-      "5 years",
-      "7 years", 
-      "10 years",
-      "15 years"
-    ],
+    question: 'What is the minimum retention period for OZEV installation records?',
+    options: ['5 years', '7 years', '10 years', '15 years'],
     correctAnswer: 2,
-    explanation: "Installation records must be retained for a minimum of 10 years to comply with OZEV requirements."
+    explanation:
+      'Installation records must be retained for a minimum of 10 years to comply with OZEV requirements.',
   },
   {
     id: 2,
-    question: "Which backup strategy is recommended for document management systems?",
+    question: 'Which backup strategy is recommended for document management systems?',
     options: [
-      "Daily backups only",
-      "Weekly backups with cloud storage",
-      "3-2-1 backup rule implementation", 
-      "Monthly physical backups"
+      'Daily backups only',
+      'Weekly backups with cloud storage',
+      '3-2-1 backup rule implementation',
+      'Monthly physical backups',
     ],
     correctAnswer: 2,
-    explanation: "The 3-2-1 backup rule (3 copies, 2 different media, 1 offsite) provides comprehensive data protection."
+    explanation:
+      'The 3-2-1 backup rule (3 copies, 2 different media, 1 offsite) provides comprehensive data protection.',
   },
   {
     id: 3,
-    question: "What is the target customer satisfaction score for quality performance monitoring?",
+    question: 'What is the target customer satisfaction score for quality performance monitoring?',
     options: [
-      "Greater than 3.5/5",
-      "Greater than 4.0/5",
-      "Greater than 4.5/5",
-      "Greater than 4.8/5"
+      'Greater than 3.5/5',
+      'Greater than 4.0/5',
+      'Greater than 4.5/5',
+      'Greater than 4.8/5',
     ],
     correctAnswer: 2,
-    explanation: "A customer satisfaction score greater than 4.5/5 is the target KPI for quality performance monitoring."
+    explanation:
+      'A customer satisfaction score greater than 4.5/5 is the target KPI for quality performance monitoring.',
   },
   {
     id: 4,
-    question: "Under GDPR, what is required when a data subject requests access to their personal data?",
+    question:
+      'Under GDPR, what is required when a data subject requests access to their personal data?',
     options: [
-      "Response within 72 hours",
-      "Response within 1 month",
-      "Response within 2 months", 
-      "No specific timeframe"
+      'Response within 72 hours',
+      'Response within 1 month',
+      'Response within 2 months',
+      'No specific timeframe',
     ],
     correctAnswer: 1,
-    explanation: "Under GDPR, data controllers must respond to subject access requests within one month of receipt."
+    explanation:
+      'Under GDPR, data controllers must respond to subject access requests within one month of receipt.',
   },
   {
     id: 5,
-    question: "What is the Recovery Time Objective (RTO) for critical systems in business continuity planning?",
-    options: [
-      "2 hours",
-      "4 hours",
-      "8 hours",
-      "24 hours"
-    ],
+    question:
+      'What is the Recovery Time Objective (RTO) for critical systems in business continuity planning?',
+    options: ['2 hours', '4 hours', '8 hours', '24 hours'],
     correctAnswer: 1,
-    explanation: "The recommended RTO for critical systems is 4 hours to minimise business disruption during incidents."
-  }
+    explanation:
+      'The recommended RTO for critical systems is 4 hours to minimise business disruption during incidents.',
+  },
 ];
 
 export const EVChargingModule7Section4Quiz = () => {
@@ -143,7 +140,7 @@ export const EVChargingModule7Section4Quiz = () => {
               ~5 minutes
             </span>
           </div>
-          <Button 
+          <Button
             onClick={() => setQuizStarted(true)}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -171,13 +168,13 @@ export const EVChargingModule7Section4Quiz = () => {
             <div className={`text-4xl font-bold mb-2 ${getScoreColor(score)}`}>
               {score}/{quizData.length}
             </div>
-            <div className={`text-xl mb-4 ${getScoreColor(score)}`}>
-              {percentage}% Correct
-            </div>
+            <div className={`text-xl mb-4 ${getScoreColor(score)}`}>{percentage}% Correct</div>
             <p className="text-gray-300">
-              {percentage >= 80 ? "Excellent work! You have a strong understanding of the material." :
-               percentage >= 60 ? "Good job! Review the areas you missed to strengthen your knowledge." :
-               "Consider reviewing the material and retaking the quiz to improve your understanding."}
+              {percentage >= 80
+                ? 'Excellent work! You have a strong understanding of the material.'
+                : percentage >= 60
+                  ? 'Good job! Review the areas you missed to strengthen your knowledge.'
+                  : 'Consider reviewing the material and retaking the quiz to improve your understanding.'}
             </p>
           </div>
 
@@ -189,11 +186,13 @@ export const EVChargingModule7Section4Quiz = () => {
                   {index + 1}. {question.question}
                 </p>
                 <div className="space-y-2">
-                  <div className={`p-2 rounded ${
-                    selectedAnswers[index] === question.correctAnswer 
-                      ? 'bg-green-900/30 border border-green-600' 
-                      : 'bg-red-900/30 border border-red-600'
-                  }`}>
+                  <div
+                    className={`p-2 rounded ${
+                      selectedAnswers[index] === question.correctAnswer
+                        ? 'bg-green-900/30 border border-green-600'
+                        : 'bg-red-900/30 border border-red-600'
+                    }`}
+                  >
                     <span className="text-sm">
                       Your answer: {question.options[selectedAnswers[index]]}
                     </span>
@@ -205,16 +204,14 @@ export const EVChargingModule7Section4Quiz = () => {
                       </span>
                     </div>
                   )}
-                  <p className="text-sm text-gray-300 mt-2">
-                    {question.explanation}
-                  </p>
+                  <p className="text-sm text-gray-300 mt-2">{question.explanation}</p>
                 </div>
               </div>
             ))}
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={handleRestart}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
             >
@@ -239,12 +236,10 @@ export const EVChargingModule7Section4Quiz = () => {
               Question {currentQuestion + 1} of {quizData.length}
             </CardTitle>
           </div>
-          <div className="text-sm text-gray-400">
-            {Math.round(progress)}% Complete
-          </div>
+          <div className="text-sm text-gray-400">{Math.round(progress)}% Complete</div>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
@@ -252,9 +247,7 @@ export const EVChargingModule7Section4Quiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h3 className="text-lg font-medium text-foreground mb-4">
-            {currentQ.question}
-          </h3>
+          <h3 className="text-lg font-medium text-foreground mb-4">{currentQ.question}</h3>
           <div className="space-y-3">
             {currentQ.options.map((option, index) => (
               <button
@@ -267,11 +260,13 @@ export const EVChargingModule7Section4Quiz = () => {
                 }`}
               >
                 <span className="flex items-center gap-3">
-                  <span className={`w-6 h-6 rounded-full border flex items-center justify-center text-sm ${
-                    selectedAnswers[currentQuestion] === index
-                      ? 'border-elec-yellow bg-elec-yellow text-elec-dark'
-                      : 'border-gray-500'
-                  }`}>
+                  <span
+                    className={`w-6 h-6 rounded-full border flex items-center justify-center text-sm ${
+                      selectedAnswers[currentQuestion] === index
+                        ? 'border-elec-yellow bg-elec-yellow text-elec-dark'
+                        : 'border-gray-500'
+                    }`}
+                  >
                     {String.fromCharCode(65 + index)}
                   </span>
                   {option}

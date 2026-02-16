@@ -1,16 +1,16 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { FileText } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { FileText } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface JobNotesCardProps {
   projectName?: string;
 }
 
 const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
-  const [siteObservations, setSiteObservations] = useState("");
-  const [pipelineNotes, setPipelineNotes] = useState("");
+  const [siteObservations, setSiteObservations] = useState('');
+  const [pipelineNotes, setPipelineNotes] = useState('');
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -18,8 +18,8 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
       const stored = localStorage.getItem(`job-notes-${projectName}`);
       if (stored) {
         const notes = JSON.parse(stored);
-        setSiteObservations(notes.siteObservations || "");
-        setPipelineNotes(notes.pipelineNotes || "");
+        setSiteObservations(notes.siteObservations || '');
+        setPipelineNotes(notes.pipelineNotes || '');
       }
     }
   }, [projectName]);
@@ -27,11 +27,14 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
   // Save to localStorage on change
   const handleSave = () => {
     if (projectName) {
-      localStorage.setItem(`job-notes-${projectName}`, JSON.stringify({
-        siteObservations,
-        pipelineNotes,
-        updatedAt: new Date().toISOString()
-      }));
+      localStorage.setItem(
+        `job-notes-${projectName}`,
+        JSON.stringify({
+          siteObservations,
+          pipelineNotes,
+          updatedAt: new Date().toISOString(),
+        })
+      );
     }
   };
 
@@ -46,7 +49,10 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Site Observations */}
         <div className="space-y-2">
-          <Label htmlFor="site-observations" className="text-base sm:text-sm font-medium text-foreground">
+          <Label
+            htmlFor="site-observations"
+            className="text-base sm:text-sm font-medium text-foreground"
+          >
             Site Observations
           </Label>
           <Textarea
@@ -62,7 +68,10 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
 
         {/* Pipeline Discussions */}
         <div className="space-y-2">
-          <Label htmlFor="pipeline-notes" className="text-base sm:text-sm font-medium text-foreground">
+          <Label
+            htmlFor="pipeline-notes"
+            className="text-base sm:text-sm font-medium text-foreground"
+          >
             Future Work Discussions
           </Label>
           <Textarea

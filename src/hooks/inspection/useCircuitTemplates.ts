@@ -29,16 +29,18 @@ export const useCircuitTemplates = () => {
 
       if (error) throw error;
 
-      setTemplates(data.map(t => ({
-        id: t.id,
-        name: t.name,
-        description: t.description || undefined,
-        category: t.category || undefined,
-        isPublic: t.is_public,
-        templateData: t.template_data,
-        usageCount: t.usage_count,
-        createdAt: t.created_at,
-      })));
+      setTemplates(
+        data.map((t) => ({
+          id: t.id,
+          name: t.name,
+          description: t.description || undefined,
+          category: t.category || undefined,
+          isPublic: t.is_public,
+          templateData: t.template_data,
+          usageCount: t.usage_count,
+          createdAt: t.created_at,
+        }))
+      );
     } catch (error) {
       console.error('Failed to load templates:', error);
     } finally {
@@ -51,21 +53,23 @@ export const useCircuitTemplates = () => {
   }, []);
 
   // Save template
-  const saveTemplate = async (template: Omit<CircuitTemplate, 'id' | 'usageCount' | 'createdAt'>) => {
+  const saveTemplate = async (
+    template: Omit<CircuitTemplate, 'id' | 'usageCount' | 'createdAt'>
+  ) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
-      const { error } = await supabase
-        .from('circuit_templates')
-        .insert({
-          user_id: user.id,
-          name: template.name,
-          description: template.description,
-          category: template.category,
-          is_public: template.isPublic,
-          template_data: template.templateData,
-        });
+      const { error } = await supabase.from('circuit_templates').insert({
+        user_id: user.id,
+        name: template.name,
+        description: template.description,
+        category: template.category,
+        is_public: template.isPublic,
+        template_data: template.templateData,
+      });
 
       if (error) throw error;
 
@@ -87,10 +91,7 @@ export const useCircuitTemplates = () => {
   // Delete template
   const deleteTemplate = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('circuit_templates')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('circuit_templates').delete().eq('id', id);
 
       if (error) throw error;
 
@@ -112,7 +113,7 @@ export const useCircuitTemplates = () => {
   // Use template (increment usage count)
   const useTemplate = async (id: string) => {
     try {
-      const template = templates.find(t => t.id === id);
+      const template = templates.find((t) => t.id === id);
       if (!template) return null;
 
       // Increment usage count

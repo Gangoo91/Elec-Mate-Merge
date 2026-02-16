@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { ExternalLink } from 'lucide-react';
 
 interface ResourceCardProps {
   title: string;
@@ -19,9 +19,9 @@ const ResourceCard = ({ title, description, url, isMobile = false }: ResourceCar
         <p className="font-medium text-foreground leading-tight mb-2">{title}</p>
         <p className="text-sm text-foreground/80 leading-relaxed">{description}</p>
       </div>
-      <Button 
-        variant="ghost" 
-        size={isMobile ? "sm" : "default"}
+      <Button
+        variant="ghost"
+        size={isMobile ? 'sm' : 'default'}
         className="ml-4 flex-shrink-0 text-elec-yellow hover:text-foreground hover:bg-elec-yellow/20 transition-colors"
         onClick={handleClick}
         aria-label={`Visit ${title} website`}

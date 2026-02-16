@@ -1,12 +1,11 @@
-
-import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Plus, X } from "lucide-react";
-import { CVData } from "../types";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Plus, X } from 'lucide-react';
+import { CVData } from '../types';
 
 interface SkillsFormProps {
   cvData: CVData;
@@ -14,23 +13,23 @@ interface SkillsFormProps {
 }
 
 export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
-  const [newSkill, setNewSkill] = useState("");
-  const [newCertification, setNewCertification] = useState("");
+  const [newSkill, setNewSkill] = useState('');
+  const [newCertification, setNewCertification] = useState('');
 
   const addSkill = () => {
     if (newSkill.trim() && !cvData.skills.includes(newSkill.trim())) {
       onChange({
         ...cvData,
-        skills: [...cvData.skills, newSkill.trim()]
+        skills: [...cvData.skills, newSkill.trim()],
       });
-      setNewSkill("");
+      setNewSkill('');
     }
   };
 
   const removeSkill = (skill: string) => {
     onChange({
       ...cvData,
-      skills: cvData.skills.filter(s => s !== skill)
+      skills: cvData.skills.filter((s) => s !== skill),
     });
   };
 
@@ -38,31 +37,50 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
     if (newCertification.trim() && !cvData.certifications.includes(newCertification.trim())) {
       onChange({
         ...cvData,
-        certifications: [...cvData.certifications, newCertification.trim()]
+        certifications: [...cvData.certifications, newCertification.trim()],
       });
-      setNewCertification("");
+      setNewCertification('');
     }
   };
 
   const removeCertification = (cert: string) => {
     onChange({
       ...cvData,
-      certifications: cvData.certifications.filter(c => c !== cert)
+      certifications: cvData.certifications.filter((c) => c !== cert),
     });
   };
 
   const suggestedSkills = [
-    "Electrical Installation", "Wiring", "Testing & Inspection", "PAT Testing",
-    "Circuit Design", "Fault Finding", "Health & Safety", "BS 7671 Regulations",
-    "NICEIC Knowledge", "Solar Panel Installation", "Emergency Lighting",
-    "Fire Alarm Systems", "CCTV Systems", "LED Lighting", "Three Phase Systems"
+    'Electrical Installation',
+    'Wiring',
+    'Testing & Inspection',
+    'PAT Testing',
+    'Circuit Design',
+    'Fault Finding',
+    'Health & Safety',
+    'BS 7671 Regulations',
+    'NICEIC Knowledge',
+    'Solar Panel Installation',
+    'Emergency Lighting',
+    'Fire Alarm Systems',
+    'CCTV Systems',
+    'LED Lighting',
+    'Three Phase Systems',
   ];
 
   const suggestedCertifications = [
-    "18th Edition Wiring Regulations", "Level 3 Electrical Installation",
-    "2391 Testing & Inspection", "PAT Testing Certification", "NICEIC Approved",
-    "ECS Gold Card", "IPAF Licence", "First Aid Certificate", "CSCS Card",
-    "City & Guilds 2365", "AM2 Assessment", "Level 2 Electrical Installation"
+    '18th Edition Wiring Regulations',
+    'Level 3 Electrical Installation',
+    '2391 Testing & Inspection',
+    'PAT Testing Certification',
+    'NICEIC Approved',
+    'ECS Gold Card',
+    'IPAF Licence',
+    'First Aid Certificate',
+    'CSCS Card',
+    'City & Guilds 2365',
+    'AM2 Assessment',
+    'Level 2 Electrical Installation',
   ];
 
   return (
@@ -115,7 +133,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
             <Label className="text-foreground text-sm">Suggested Skills:</Label>
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestedSkills
-                .filter(skill => !cvData.skills.includes(skill))
+                .filter((skill) => !cvData.skills.includes(skill))
                 .slice(0, 8)
                 .map((skill, index) => (
                   <Button
@@ -123,7 +141,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
                     onClick={() => {
                       onChange({
                         ...cvData,
-                        skills: [...cvData.skills, skill]
+                        skills: [...cvData.skills, skill],
                       });
                     }}
                     variant="outline"
@@ -186,7 +204,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
             <Label className="text-foreground text-sm">Suggested Certifications:</Label>
             <div className="flex flex-wrap gap-1 mt-2">
               {suggestedCertifications
-                .filter(cert => !cvData.certifications.includes(cert))
+                .filter((cert) => !cvData.certifications.includes(cert))
                 .slice(0, 6)
                 .map((cert, index) => (
                   <Button
@@ -194,7 +212,7 @@ export const SkillsForm: React.FC<SkillsFormProps> = ({ cvData, onChange }) => {
                     onClick={() => {
                       onChange({
                         ...cvData,
-                        certifications: [...cvData.certifications, cert]
+                        certifications: [...cvData.certifications, cert],
                       });
                     }}
                     variant="outline"

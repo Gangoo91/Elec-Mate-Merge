@@ -2,9 +2,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
-import { 
-  Download, FileText, Upload, Share2, 
-  CheckCircle2, AlertTriangle, Zap, Shield 
+import {
+  Download,
+  FileText,
+  Upload,
+  Share2,
+  CheckCircle2,
+  AlertTriangle,
+  Zap,
+  Shield,
 } from 'lucide-react';
 
 interface ResultsActionsPanelProps {
@@ -20,7 +26,7 @@ export const ResultsActionsPanel = ({
   selectedCircuit,
   onDownloadEIC,
   onSendToPlanner,
-  isExporting
+  isExporting,
 }: ResultsActionsPanelProps) => {
   return (
     <div className="space-y-4">
@@ -30,7 +36,7 @@ export const ResultsActionsPanel = ({
           <CardTitle className="text-base">Quick Actions</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
-          <Button 
+          <Button
             onClick={onDownloadEIC}
             disabled={isExporting}
             className="w-full justify-start"
@@ -39,9 +45,9 @@ export const ResultsActionsPanel = ({
             <Download className="h-4 w-4 mr-2" />
             Download EIC Schedule
           </Button>
-          
-          <Button 
-            variant="outline" 
+
+          <Button
+            variant="outline"
             onClick={onSendToPlanner}
             className="w-full justify-start"
             size="sm"
@@ -49,12 +55,8 @@ export const ResultsActionsPanel = ({
             <Upload className="h-4 w-4 mr-2" />
             Send to Install Planner
           </Button>
-          
-          <Button 
-            variant="outline" 
-            className="w-full justify-start"
-            size="sm"
-          >
+
+          <Button variant="outline" className="w-full justify-start" size="sm">
             <Share2 className="h-4 w-4 mr-2" />
             Share Design
           </Button>
@@ -84,20 +86,20 @@ export const ResultsActionsPanel = ({
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Max Zs</span>
-              <Badge variant="secondary">
-                {selectedCircuit.calculations?.maxZs?.toFixed(2)}Ω
-              </Badge>
+              <Badge variant="secondary">{selectedCircuit.calculations?.maxZs?.toFixed(2)}Ω</Badge>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Compliance Status */}
-      <Card className={
-        selectedCircuit.warnings && selectedCircuit.warnings.length > 0
-          ? "bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-900/50"
-          : "bg-primary/5 border-primary/20"
-      }>
+      <Card
+        className={
+          selectedCircuit.warnings && selectedCircuit.warnings.length > 0
+            ? 'bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-900/50'
+            : 'bg-primary/5 border-primary/20'
+        }
+      >
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center gap-2">
             {selectedCircuit.warnings && selectedCircuit.warnings.length > 0 ? (
@@ -112,20 +114,15 @@ export const ResultsActionsPanel = ({
           {selectedCircuit.warnings && selectedCircuit.warnings.length > 0 ? (
             <div className="space-y-2">
               <p className="text-sm font-medium text-orange-900 dark:text-orange-100">
-                {selectedCircuit.warnings.length} Warning{selectedCircuit.warnings.length !== 1 ? 's' : ''}
+                {selectedCircuit.warnings.length} Warning
+                {selectedCircuit.warnings.length !== 1 ? 's' : ''}
               </p>
-              <p className="text-xs text-muted-foreground">
-                Review warnings in detail panel
-              </p>
+              <p className="text-xs text-muted-foreground">Review warnings in detail panel</p>
             </div>
           ) : (
             <div className="space-y-2">
-              <p className="text-sm font-medium text-primary">
-                ✓ BS 7671 Compliant
-              </p>
-              <p className="text-xs text-muted-foreground">
-                All calculations verified
-              </p>
+              <p className="text-sm font-medium text-primary">✓ BS 7671 Compliant</p>
+              <p className="text-xs text-muted-foreground">All calculations verified</p>
             </div>
           )}
         </CardContent>
@@ -143,15 +140,21 @@ export const ResultsActionsPanel = ({
           </div>
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Voltage</span>
-            <span className="font-semibold">{design.consumerUnit?.incomingSupply?.voltage || design.circuits[0]?.voltage}V</span>
+            <span className="font-semibold">
+              {design.consumerUnit?.incomingSupply?.voltage || design.circuits[0]?.voltage}V
+            </span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Phases</span>
-            <span className="font-semibold capitalize">{design.consumerUnit?.incomingSupply?.phases || 'single'}</span>
+            <span className="font-semibold capitalize">
+              {design.consumerUnit?.incomingSupply?.phases || 'single'}
+            </span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Earthing</span>
-            <span className="font-semibold">{design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-S'}</span>
+            <span className="font-semibold">
+              {design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-S'}
+            </span>
           </div>
         </CardContent>
       </Card>

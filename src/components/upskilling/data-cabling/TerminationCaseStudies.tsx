@@ -13,7 +13,6 @@ export const TerminationCaseStudies = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-6">
-          
           <div className="bg-blue-900/30 p-4 rounded-lg">
             <h4 className="font-semibold text-blue-400 mb-2">Calibration Requirements</h4>
             <p className="text-sm text-gray-300 mb-2">
@@ -44,9 +43,7 @@ export const TerminationCaseStudies = () => {
 
           <div className="bg-blue-900/30 p-4 rounded-lg">
             <h4 className="font-semibold text-blue-400 mb-2">Storage Requirements</h4>
-            <p className="text-sm text-gray-300 mb-2">
-              Proper storage protects tool investment:
-            </p>
+            <p className="text-sm text-gray-300 mb-2">Proper storage protects tool investment:</p>
             <ul className="text-sm text-gray-400 space-y-1 ml-4">
               <li>• Climate-controlled environment</li>
               <li>• Protective cases for transport</li>
@@ -66,7 +63,6 @@ export const TerminationCaseStudies = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-6">
-          
           <div className="bg-[#323232] p-4 rounded-lg">
             <h4 className="font-semibold text-elec-yellow mb-2">Cat 6A Specific Requirements</h4>
             <p className="text-sm text-gray-300 mb-2">
@@ -86,19 +82,27 @@ export const TerminationCaseStudies = () => {
             <div className="space-y-3">
               <div>
                 <h5 className="font-semibold text-foreground text-sm">Pre-Termination</h5>
-                <p className="text-xs text-gray-400">Cable preparation, tool calibration check, workspace setup</p>
+                <p className="text-xs text-gray-400">
+                  Cable preparation, tool calibration check, workspace setup
+                </p>
               </div>
               <div>
                 <h5 className="font-semibold text-foreground text-sm">During Termination</h5>
-                <p className="text-xs text-gray-400">Consistent technique, proper untwist lengths, careful insertion</p>
+                <p className="text-xs text-gray-400">
+                  Consistent technique, proper untwist lengths, careful insertion
+                </p>
               </div>
               <div>
                 <h5 className="font-semibold text-foreground text-sm">Post-Termination</h5>
-                <p className="text-xs text-gray-400">Visual inspection, pull testing, electrical verification</p>
+                <p className="text-xs text-gray-400">
+                  Visual inspection, pull testing, electrical verification
+                </p>
               </div>
               <div>
                 <h5 className="font-semibold text-foreground text-sm">Documentation</h5>
-                <p className="text-xs text-gray-400">Record termination parameters, test results, quality metrics</p>
+                <p className="text-xs text-gray-400">
+                  Record termination parameters, test results, quality metrics
+                </p>
               </div>
             </div>
           </div>
@@ -114,7 +118,6 @@ export const TerminationCaseStudies = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-6">
-          
           <div className="bg-red-900/30 p-4 rounded-lg">
             <h4 className="font-semibold text-red-400 mb-2">Tool-Related Issues</h4>
             <ul className="text-sm text-gray-400 space-y-1 ml-4">

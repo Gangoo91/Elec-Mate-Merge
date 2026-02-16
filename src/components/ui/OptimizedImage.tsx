@@ -96,14 +96,9 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   }
 
   return (
-    <div
-      className={cn('relative overflow-hidden', containerClassName)}
-      style={{ aspectRatio }}
-    >
+    <div className={cn('relative overflow-hidden', containerClassName)} style={{ aspectRatio }}>
       {/* Skeleton placeholder */}
-      {!loaded && showSkeleton && (
-        <Skeleton className="absolute inset-0 rounded" />
-      )}
+      {!loaded && showSkeleton && <Skeleton className="absolute inset-0 rounded" />}
 
       {/* Optimized image */}
       <img
@@ -159,12 +154,14 @@ export const OptimizedAvatar: React.FC<OptimizedAvatarProps> = ({
   const [error, setError] = useState(false);
 
   // Generate initials from alt text if not provided
-  const displayInitials = initials || alt
-    .split(' ')
-    .map((word) => word[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
+  const displayInitials =
+    initials ||
+    alt
+      .split(' ')
+      .map((word) => word[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
 
   if (!src || error) {
     return (

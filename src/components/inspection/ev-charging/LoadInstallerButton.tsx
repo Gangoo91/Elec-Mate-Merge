@@ -10,7 +10,11 @@ import React from 'react';
 import { Settings, Loader2, Check, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useEVChargingSmartForm, InstallerDetails, CompanyBranding } from '@/hooks/inspection/useEVChargingSmartForm';
+import {
+  useEVChargingSmartForm,
+  InstallerDetails,
+  CompanyBranding,
+} from '@/hooks/inspection/useEVChargingSmartForm';
 import { useToast } from '@/hooks/use-toast';
 
 interface LoadInstallerButtonProps {
@@ -26,14 +30,14 @@ export const LoadInstallerButton: React.FC<LoadInstallerButtonProps> = ({
   onLoadBranding,
   variant = 'default',
   className,
-  showBrandingOption = false
+  showBrandingOption = false,
 }) => {
   const {
     loading,
     hasSavedInstallerDetails,
     hasSavedCompanyBranding,
     loadInstallerDetails,
-    loadCompanyBranding
+    loadCompanyBranding,
   } = useEVChargingSmartForm();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -74,7 +78,7 @@ export const LoadInstallerButton: React.FC<LoadInstallerButtonProps> = ({
       toast({
         title: 'Failed to Load',
         description: 'Could not load your saved details. Please try again.',
-        variant: 'destructive'
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -91,9 +95,9 @@ export const LoadInstallerButton: React.FC<LoadInstallerButtonProps> = ({
         onClick={handleLoadDetails}
         disabled={loading || isLoading}
         className={cn(
-          "h-10 w-10 rounded-xl",
-          "border border-border/30 hover:border-elec-yellow hover:bg-elec-yellow/10",
-          justLoaded && "border-green-500 bg-green-500/10",
+          'h-10 w-10 rounded-xl',
+          'border border-border/30 hover:border-elec-yellow hover:bg-elec-yellow/10',
+          justLoaded && 'border-green-500 bg-green-500/10',
           className
         )}
         title="Load saved details"
@@ -119,9 +123,9 @@ export const LoadInstallerButton: React.FC<LoadInstallerButtonProps> = ({
         onClick={handleLoadDetails}
         disabled={loading || isLoading}
         className={cn(
-          "h-9 px-3 touch-manipulation",
-          "border-border/50 hover:border-elec-yellow hover:bg-elec-yellow/10",
-          justLoaded && "border-green-500 bg-green-500/10 text-green-400",
+          'h-9 px-3 touch-manipulation',
+          'border-border/50 hover:border-elec-yellow hover:bg-elec-yellow/10',
+          justLoaded && 'border-green-500 bg-green-500/10 text-green-400',
           className
         )}
       >
@@ -145,9 +149,9 @@ export const LoadInstallerButton: React.FC<LoadInstallerButtonProps> = ({
       onClick={handleLoadDetails}
       disabled={loading || isLoading}
       className={cn(
-        "w-full h-11 touch-manipulation font-medium",
-        "border-border/50 text-foreground hover:border-elec-yellow hover:bg-elec-yellow/10",
-        justLoaded && "border-green-500 bg-green-500/10 text-green-400",
+        'w-full h-11 touch-manipulation font-medium',
+        'border-border/50 text-foreground hover:border-elec-yellow hover:bg-elec-yellow/10',
+        justLoaded && 'border-green-500 bg-green-500/10 text-green-400',
         className
       )}
     >

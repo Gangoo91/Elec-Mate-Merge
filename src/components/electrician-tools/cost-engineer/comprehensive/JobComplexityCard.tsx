@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Star } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { TrendingUp, Star } from 'lucide-react';
 
 interface JobComplexityCardProps {
   complexity: any;
@@ -8,9 +8,9 @@ interface JobComplexityCardProps {
 
 const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
   const getComplexityColor = (rating: number) => {
-    if (rating <= 4) return "text-green-500";
-    if (rating <= 6) return "text-yellow-500";
-    return "text-red-500";
+    if (rating <= 4) return 'text-green-500';
+    if (rating <= 6) return 'text-yellow-500';
+    return 'text-red-500';
   };
 
   return (
@@ -21,13 +21,15 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             Job Complexity
           </CardTitle>
-          <Badge className={`${
-            complexity.rating <= 4 
-              ? 'bg-green-500/20 text-green-500 border-green-500/30' 
-              : complexity.rating <= 6 
-              ? 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30' 
-              : 'bg-red-500/20 text-red-500 border-red-500/30'
-          }`}>
+          <Badge
+            className={`${
+              complexity.rating <= 4
+                ? 'bg-green-500/20 text-green-500 border-green-500/30'
+                : complexity.rating <= 6
+                  ? 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30'
+                  : 'bg-red-500/20 text-red-500 border-red-500/30'
+            }`}
+          >
             {complexity.label}
           </Badge>
         </div>
@@ -35,7 +37,9 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Rating */}
         <div className="flex items-center gap-3">
-          <div className={`text-5xl sm:text-4xl font-bold ${getComplexityColor(complexity.rating)}`}>
+          <div
+            className={`text-5xl sm:text-4xl font-bold ${getComplexityColor(complexity.rating)}`}
+          >
             {complexity.rating}/10
           </div>
           <div className="flex gap-0.5 flex-wrap max-w-[140px]">
@@ -43,8 +47,8 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
               <Star
                 key={star}
                 className={`h-4 w-4 ${
-                  star <= complexity.rating 
-                    ? `fill-current ${getComplexityColor(complexity.rating)}` 
+                  star <= complexity.rating
+                    ? `fill-current ${getComplexityColor(complexity.rating)}`
                     : 'text-foreground/30'
                 }`}
               />
@@ -62,10 +66,15 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
         {/* Factors */}
         {complexity.factors && complexity.factors.length > 0 && (
           <div>
-            <div className="text-lg sm:text-base font-medium text-foreground mb-2">Contributing Factors:</div>
+            <div className="text-lg sm:text-base font-medium text-foreground mb-2">
+              Contributing Factors:
+            </div>
             <ul className="space-y-2">
               {complexity.factors.map((factor: string, idx: number) => (
-                <li key={idx} className="text-base sm:text-sm text-foreground flex items-start gap-2">
+                <li
+                  key={idx}
+                  className="text-base sm:text-sm text-foreground flex items-start gap-2"
+                >
                   <span className="text-elec-yellow">•</span>
                   <span>{factor}</span>
                 </li>

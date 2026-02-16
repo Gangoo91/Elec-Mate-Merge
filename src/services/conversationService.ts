@@ -133,7 +133,8 @@ export interface VacancyInvitation {
 export const getConversations = async (): Promise<Conversation[]> => {
   const { data, error } = await supabase
     .from('employer_conversations')
-    .select(`
+    .select(
+      `
       *,
       electrician_profile:employer_elec_id_profiles (
         id,
@@ -157,7 +158,8 @@ export const getConversations = async (): Promise<Conversation[]> => {
         id,
         status
       )
-    `)
+    `
+    )
     .eq('status', 'active')
     .order('last_message_at', { ascending: false, nullsFirst: false });
 
@@ -172,7 +174,8 @@ export const getConversations = async (): Promise<Conversation[]> => {
 export const getConversationById = async (id: string): Promise<Conversation | null> => {
   const { data, error } = await supabase
     .from('employer_conversations')
-    .select(`
+    .select(
+      `
       *,
       electrician_profile:employer_elec_id_profiles (
         id,
@@ -196,7 +199,8 @@ export const getConversationById = async (id: string): Promise<Conversation | nu
         id,
         status
       )
-    `)
+    `
+    )
     .eq('id', id)
     .single();
 
@@ -281,10 +285,7 @@ export const deleteConversation = async (id: string): Promise<boolean> => {
   }
 
   // Then delete the conversation itself
-  const { error: convError } = await supabase
-    .from('employer_conversations')
-    .delete()
-    .eq('id', id);
+  const { error: convError } = await supabase.from('employer_conversations').delete().eq('id', id);
 
   if (convError) {
     console.error('Error deleting conversation:', convError);
@@ -378,7 +379,12 @@ export const sendMessage = async (params: {
   }
 
   // Send push notification to recipient (fire and forget)
-  sendJobMessagePushNotification(params.conversation_id, params.sender_type, params.sender_id, params.content).catch(console.error);
+  sendJobMessagePushNotification(
+    params.conversation_id,
+    params.sender_type,
+    params.sender_id,
+    params.content
+  ).catch(console.error);
 
   return data;
 };
@@ -394,14 +400,16 @@ const sendJobMessagePushNotification = async (
     // Get conversation to find recipient
     const { data: conversation } = await supabase
       .from('employer_conversations')
-      .select(`
+      .select(
+        `
         employer_id,
         electrician_profile_id,
         vacancy:employer_vacancies(title),
         electrician_profile:employer_elec_id_profiles(
           employee:employer_employees(name, user_id)
         )
-      `)
+      `
+      )
       .eq('id', conversationId)
       .single();
 
@@ -524,10 +532,7 @@ export const addReaction = async (
 };
 
 export const removeReaction = async (reactionId: string): Promise<void> => {
-  const { error } = await supabase
-    .from('employer_message_reactions')
-    .delete()
-    .eq('id', reactionId);
+  const { error } = await supabase.from('employer_message_reactions').delete().eq('id', reactionId);
 
   if (error) {
     console.error('Error removing reaction:', error);
@@ -554,10 +559,7 @@ export const getReactionsForMessage = async (messageId: string): Promise<Message
 // Message Search
 // =====================================================
 
-export const searchMessages = async (
-  conversationId: string,
-  query: string
-): Promise<Message[]> => {
+export const searchMessages = async (conversationId: string, query: string): Promise<Message[]> => {
   // Use ilike for basic search (full-text search can be added with pg_trgm extension)
   const { data, error } = await supabase
     .from('employer_messages')
@@ -582,14 +584,16 @@ export const searchAllMessages = async (
 ): Promise<Message[]> => {
   let queryBuilder = supabase
     .from('employer_messages')
-    .select(`
+    .select(
+      `
       *,
       conversation:employer_conversations (
         id,
         employer_id,
         electrician_profile_id
       )
-    `)
+    `
+    )
     .ilike('content', `%${query}%`)
     .is('deleted_at', null)
     .order('sent_at', { ascending: false })
@@ -612,14 +616,16 @@ export const searchAllMessages = async (
 export const getInvitationsForProfile = async (profileId: string): Promise<VacancyInvitation[]> => {
   const { data, error } = await supabase
     .from('employer_vacancy_invitations')
-    .select(`
+    .select(
+      `
       *,
       vacancy:employer_vacancies (
         id,
         title,
         location
       )
-    `)
+    `
+    )
     .eq('electrician_profile_id', profileId)
     .order('sent_at', { ascending: false });
 
@@ -634,7 +640,8 @@ export const getInvitationsForProfile = async (profileId: string): Promise<Vacan
 export const getInvitationsForVacancy = async (vacancyId: string): Promise<VacancyInvitation[]> => {
   const { data, error } = await supabase
     .from('employer_vacancy_invitations')
-    .select(`
+    .select(
+      `
       *,
       electrician_profile:employer_elec_id_profiles (
         id,
@@ -643,7 +650,8 @@ export const getInvitationsForVacancy = async (vacancyId: string): Promise<Vacan
           name
         )
       )
-    `)
+    `
+    )
     .eq('vacancy_id', vacancyId)
     .order('sent_at', { ascending: false });
 
@@ -757,7 +765,8 @@ export const getElectricianConversations = async (
   try {
     const { data, error } = await supabase
       .from('employer_conversations')
-      .select(`
+      .select(
+        `
         *,
         vacancy:employer_vacancies (
           id,
@@ -771,7 +780,8 @@ export const getElectricianConversations = async (
           id,
           status
         )
-      `)
+      `
+      )
       .eq('electrician_profile_id', electricianProfileId)
       .eq('status', 'active')
       .order('last_message_at', { ascending: false, nullsFirst: false });
@@ -839,7 +849,10 @@ export const getConversationStats = async (): Promise<{
 }> => {
   const [totalResult, unreadResult, activeResult] = await Promise.all([
     supabase.from('employer_conversations').select('id', { count: 'exact' }),
-    supabase.from('employer_conversations').select('id', { count: 'exact' }).gt('unread_employer', 0),
+    supabase
+      .from('employer_conversations')
+      .select('id', { count: 'exact' })
+      .gt('unread_employer', 0),
     supabase.from('employer_conversations').select('id', { count: 'exact' }).eq('status', 'active'),
   ]);
 

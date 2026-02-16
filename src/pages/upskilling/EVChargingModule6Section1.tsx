@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m6s1-check1",
-    question: "What is the correct sequence when proving a circuit dead?",
-    options: ["Test circuit, test tester, isolate", "Test tester, test circuit, test tester again", "Isolate, test circuit, re-energise", "Test circuit only if visible break confirmed"],
+    id: 'evcharging-m6s1-check1',
+    question: 'What is the correct sequence when proving a circuit dead?',
+    options: [
+      'Test circuit, test tester, isolate',
+      'Test tester, test circuit, test tester again',
+      'Isolate, test circuit, re-energise',
+      'Test circuit only if visible break confirmed',
+    ],
     correctIndex: 1,
-    explanation: "The safe isolation procedure requires testing your voltage indicator on a known live source, then testing the circuit, then re-testing your indicator to prove it's still functioning correctly."
+    explanation:
+      "The safe isolation procedure requires testing your voltage indicator on a known live source, then testing the circuit, then re-testing your indicator to prove it's still functioning correctly.",
   },
   {
-    id: "evcharging-m6s1-check2",
-    question: "What is the minimum safe digging distance from electricity cables?",
-    options: ["200mm", "300mm", "500mm", "750mm"],
+    id: 'evcharging-m6s1-check2',
+    question: 'What is the minimum safe digging distance from electricity cables?',
+    options: ['200mm', '300mm', '500mm', '750mm'],
     correctIndex: 2,
-    explanation: "The minimum safe digging distance from electricity cables is 500mm. This allows sufficient clearance to prevent accidental damage during excavation work."
+    explanation:
+      'The minimum safe digging distance from electricity cables is 500mm. This allows sufficient clearance to prevent accidental damage during excavation work.',
   },
   {
-    id: "evcharging-m6s1-check3",
-    question: "How often must Class 0 insulating gloves be formally tested?",
-    options: ["Monthly", "Every 6 months", "Annually", "Every 2 years"],
+    id: 'evcharging-m6s1-check3',
+    question: 'How often must Class 0 insulating gloves be formally tested?',
+    options: ['Monthly', 'Every 6 months', 'Annually', 'Every 2 years'],
     correctIndex: 1,
-    explanation: "Class 0 insulating gloves must be formally tested every 6 months. Visual inspection before each use is also mandatory."
-  }
+    explanation:
+      'Class 0 insulating gloves must be formally tested every 6 months. Visual inspection before each use is also mandatory.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What should I do if I cannot achieve safe isolation?",
-    answer: "Stop work immediately and consult with a competent person. Live working requires special procedures, permits, and additional PPE. Consider alternative isolation methods or postponing work until safe isolation can be achieved."
+    question: 'What should I do if I cannot achieve safe isolation?',
+    answer:
+      'Stop work immediately and consult with a competent person. Live working requires special procedures, permits, and additional PPE. Consider alternative isolation methods or postponing work until safe isolation can be achieved.',
   },
   {
-    question: "How often should PPE be inspected and replaced?",
-    answer: "Visual inspection before each use is mandatory. Formal inspections: insulating gloves every 6 months, hard hats every 12 months or after impact, safety boots when showing wear. Replace immediately if defects are found."
+    question: 'How often should PPE be inspected and replaced?',
+    answer:
+      'Visual inspection before each use is mandatory. Formal inspections: insulating gloves every 6 months, hard hats every 12 months or after impact, safety boots when showing wear. Replace immediately if defects are found.',
   },
   {
-    question: "Who can authorise live working on EV charging installations?",
-    answer: "Only competent persons with appropriate training and experience. Most EV charging work should be done dead. Live working requires risk assessment, permits, enhanced PPE, and often two-person working."
+    question: 'Who can authorise live working on EV charging installations?',
+    answer:
+      'Only competent persons with appropriate training and experience. Most EV charging work should be done dead. Live working requires risk assessment, permits, enhanced PPE, and often two-person working.',
   },
   {
-    question: "What documentation is required before starting work?",
-    answer: "Risk assessment, method statement, permits to work (if required), proof of competency, insurance certificates, customer agreements, and emergency contact details."
-  }
+    question: 'What documentation is required before starting work?',
+    answer:
+      'Risk assessment, method statement, permits to work (if required), proof of competency, insurance certificates, customer agreements, and emergency contact details.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "During a site survey, you discover a TN-C-S (PME) earthing system with no earth electrode. What is the most significant safety implication for EV charging?",
-  options: [
-    "The installation cannot proceed",
-    "Open PEN fault could make the charger dangerous",
-    "RCD protection is not required",
-    "Earth fault loop impedance will be too high"
-  ],
-  correctAnswer: 1,
-  explanation: "An open PEN fault in a PME system could cause dangerous voltages on exposed metalwork. BS 7671 requires additional protective measures for EV charging on PME systems, including earth electrodes or protective multiple earthing arrangements."
-  }
+    question:
+      'During a site survey, you discover a TN-C-S (PME) earthing system with no earth electrode. What is the most significant safety implication for EV charging?',
+    options: [
+      'The installation cannot proceed',
+      'Open PEN fault could make the charger dangerous',
+      'RCD protection is not required',
+      'Earth fault loop impedance will be too high',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An open PEN fault in a PME system could cause dangerous voltages on exposed metalwork. BS 7671 requires additional protective measures for EV charging on PME systems, including earth electrodes or protective multiple earthing arrangements.',
+  },
 ];
 
 const EVChargingModule6Section1 = () => {
   useSEO({
-    title: "Safe Installation: Isolation and Site Prep | EV Charging Module 6.1",
-    description: "Master safe installation practices for EV charging systems including isolation procedures, site preparation, and safety protocols according to BS 7671."
+    title: 'Safe Installation: Isolation and Site Prep | EV Charging Module 6.1',
+    description:
+      'Master safe installation practices for EV charging systems including isolation procedures, site preparation, and safety protocols according to BS 7671.',
   });
 
   return (
@@ -108,16 +123,26 @@ const EVChargingModule6Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Isolation:</strong> Test-isolate-lock-test-test sequence</li>
-              <li><strong>PPE:</strong> Class 0 gloves, safety boots, eye protection</li>
-              <li><strong>Site prep:</strong> CAT scan, risk assess, barriers</li>
+              <li>
+                <strong>Isolation:</strong> Test-isolate-lock-test-test sequence
+              </li>
+              <li>
+                <strong>PPE:</strong> Class 0 gloves, safety boots, eye protection
+              </li>
+              <li>
+                <strong>Site prep:</strong> CAT scan, risk assess, barriers
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Isolation points, underground services</li>
-              <li><strong>Use:</strong> GS38 testers, lock-off devices, PPE</li>
+              <li>
+                <strong>Spot:</strong> Isolation points, underground services
+              </li>
+              <li>
+                <strong>Use:</strong> GS38 testers, lock-off devices, PPE
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +152,12 @@ const EVChargingModule6Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Conduct comprehensive site risk assessments",
-              "Implement safe electrical isolation procedures",
-              "Select appropriate personal protective equipment",
-              "Identify and mitigate installation hazards",
-              "Apply emergency procedures and protocols",
-              "Comply with BS 7671 and HSE requirements"
+              'Conduct comprehensive site risk assessments',
+              'Implement safe electrical isolation procedures',
+              'Select appropriate personal protective equipment',
+              'Identify and mitigate installation hazards',
+              'Apply emergency procedures and protocols',
+              'Comply with BS 7671 and HSE requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -152,25 +177,41 @@ const EVChargingModule6Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Safe isolation is the foundation of all electrical work. The BS 7671 procedure
-              must be followed without exception to protect against electric shock.
+              Safe isolation is the foundation of all electrical work. The BS 7671 procedure must be
+              followed without exception to protect against electric shock.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Six-Step Safe Isolation Sequence:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Six-Step Safe Isolation Sequence:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1. Identify:</strong> Confirm correct circuit using schedules and testing</li>
-                <li><strong>2. Isolate:</strong> Switch off using device with visible break contact</li>
-                <li><strong>3. Secure:</strong> Lock off and tag the isolation point</li>
-                <li><strong>4. Test tester:</strong> Verify voltage indicator on known live source</li>
-                <li><strong>5. Test dead:</strong> Test all conductors against earth and each other</li>
-                <li><strong>6. Re-test tester:</strong> Verify voltage indicator still functions</li>
+                <li>
+                  <strong>1. Identify:</strong> Confirm correct circuit using schedules and testing
+                </li>
+                <li>
+                  <strong>2. Isolate:</strong> Switch off using device with visible break contact
+                </li>
+                <li>
+                  <strong>3. Secure:</strong> Lock off and tag the isolation point
+                </li>
+                <li>
+                  <strong>4. Test tester:</strong> Verify voltage indicator on known live source
+                </li>
+                <li>
+                  <strong>5. Test dead:</strong> Test all conductors against earth and each other
+                </li>
+                <li>
+                  <strong>6. Re-test tester:</strong> Verify voltage indicator still functions
+                </li>
               </ul>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Approved Test Equipment</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Approved Test Equipment
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>GS38 compliant voltage indicators</li>
                   <li>Two-pole testers preferred</li>
@@ -179,7 +220,9 @@ const EVChargingModule6Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Lock-Off Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Lock-Off Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Unique keyed padlocks</li>
                   <li>Danger tags with details</li>
@@ -201,13 +244,15 @@ const EVChargingModule6Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Comprehensive risk assessment before work begins identifies hazards and
-              determines appropriate control measures for safe installation.
+              Comprehensive risk assessment before work begins identifies hazards and determines
+              appropriate control measures for safe installation.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Electrical Assessment</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Electrical Assessment
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Existing installation condition</li>
                   <li>Consumer unit type and capacity</li>
@@ -229,11 +274,21 @@ const EVChargingModule6Section1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Underground Services Detection:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Step 1:</strong> Obtain utility records before excavation</li>
-                <li><strong>Step 2:</strong> CAT scan to detect live cables</li>
-                <li><strong>Step 3:</strong> Mark detected services with paint</li>
-                <li><strong>Step 4:</strong> Hand dig trial holes to confirm positions</li>
-                <li><strong>Step 5:</strong> Maintain safe working distances</li>
+                <li>
+                  <strong>Step 1:</strong> Obtain utility records before excavation
+                </li>
+                <li>
+                  <strong>Step 2:</strong> CAT scan to detect live cables
+                </li>
+                <li>
+                  <strong>Step 3:</strong> Mark detected services with paint
+                </li>
+                <li>
+                  <strong>Step 4:</strong> Hand dig trial holes to confirm positions
+                </li>
+                <li>
+                  <strong>Step 5:</strong> Maintain safe working distances
+                </li>
               </ul>
             </div>
 
@@ -264,37 +319,61 @@ const EVChargingModule6Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Appropriate PPE selection and maintenance is essential for protection
-              against electrical and physical hazards during installation.
+              Appropriate PPE selection and maintenance is essential for protection against
+              electrical and physical hazards during installation.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mandatory PPE</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Head:</strong> Hard hat to EN 397</li>
-                  <li><strong>Eyes:</strong> Safety glasses EN 166</li>
-                  <li><strong>Hands:</strong> Class 0 insulating gloves (1kV)</li>
-                  <li><strong>Feet:</strong> Class 0 electrical safety boots</li>
+                  <li>
+                    <strong>Head:</strong> Hard hat to EN 397
+                  </li>
+                  <li>
+                    <strong>Eyes:</strong> Safety glasses EN 166
+                  </li>
+                  <li>
+                    <strong>Hands:</strong> Class 0 insulating gloves (1kV)
+                  </li>
+                  <li>
+                    <strong>Feet:</strong> Class 0 electrical safety boots
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Testing Schedule</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Daily:</strong> Visual inspection before use</li>
-                  <li><strong>6-monthly:</strong> Formal glove testing</li>
-                  <li><strong>Annual:</strong> Hard hat replacement review</li>
-                  <li><strong>As needed:</strong> Replace if damaged</li>
+                  <li>
+                    <strong>Daily:</strong> Visual inspection before use
+                  </li>
+                  <li>
+                    <strong>6-monthly:</strong> Formal glove testing
+                  </li>
+                  <li>
+                    <strong>Annual:</strong> Hard hat replacement review
+                  </li>
+                  <li>
+                    <strong>As needed:</strong> Replace if damaged
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Arc Flash Protection Categories:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Arc Flash Protection Categories:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Category 1 (4 cal/cm²):</strong> Cotton clothing - basic protection</li>
-                <li><strong>Category 2 (8 cal/cm²):</strong> Arc-rated clothing required</li>
-                <li><strong>Category 3 (25 cal/cm²):</strong> Full arc flash suits</li>
+                <li>
+                  <strong>Category 1 (4 cal/cm²):</strong> Cotton clothing - basic protection
+                </li>
+                <li>
+                  <strong>Category 2 (8 cal/cm²):</strong> Arc-rated clothing required
+                </li>
+                <li>
+                  <strong>Category 3 (25 cal/cm²):</strong> Full arc flash suits
+                </li>
               </ul>
             </div>
           </div>
@@ -320,10 +399,18 @@ const EVChargingModule6Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Critical Safety Rules</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Never assume dead:</strong> — always test before touching</li>
-                <li><strong>Never bypass isolation:</strong> — complete procedure every time</li>
-                <li><strong>Never work alone:</strong> — buddy system for high-risk tasks</li>
-                <li><strong>Stop if unsure:</strong> — authority to halt work exists</li>
+                <li>
+                  <strong>Never assume dead:</strong> — always test before touching
+                </li>
+                <li>
+                  <strong>Never bypass isolation:</strong> — complete procedure every time
+                </li>
+                <li>
+                  <strong>Never work alone:</strong> — buddy system for high-risk tasks
+                </li>
+                <li>
+                  <strong>Stop if unsure:</strong> — authority to halt work exists
+                </li>
               </ul>
             </div>
           </div>
@@ -367,10 +454,7 @@ const EVChargingModule6Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

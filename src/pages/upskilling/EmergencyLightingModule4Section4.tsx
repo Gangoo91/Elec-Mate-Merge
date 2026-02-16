@@ -1,72 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m4s4-check1",
-    question: "Why must emergency lighting circuits be segregated from other circuits?",
-    options: ["To reduce cost", "To prevent fire damage affecting multiple systems", "For easier identification", "To use smaller cables"],
+    id: 'emergencylighting-m4s4-check1',
+    question: 'Why must emergency lighting circuits be segregated from other circuits?',
+    options: [
+      'To reduce cost',
+      'To prevent fire damage affecting multiple systems',
+      'For easier identification',
+      'To use smaller cables',
+    ],
     correctIndex: 1,
-    explanation: "Circuit segregation ensures that a fire damaging one cable route doesn't disable both normal and emergency lighting. Segregation provides redundancy and maintains escape route illumination."
+    explanation:
+      "Circuit segregation ensures that a fire damaging one cable route doesn't disable both normal and emergency lighting. Segregation provides redundancy and maintains escape route illumination.",
   },
   {
-    id: "emergencylighting-m4s4-check2",
-    question: "What is the purpose of fire barriers at cable penetrations?",
-    options: ["Mechanical protection only", "To maintain fire compartment integrity", "Reduce cable heating", "Improve aesthetics"],
+    id: 'emergencylighting-m4s4-check2',
+    question: 'What is the purpose of fire barriers at cable penetrations?',
+    options: [
+      'Mechanical protection only',
+      'To maintain fire compartment integrity',
+      'Reduce cable heating',
+      'Improve aesthetics',
+    ],
     correctIndex: 1,
-    explanation: "Fire barriers maintain the integrity of fire compartments where cables pass through walls or floors. Without proper fire stopping, fire and smoke can spread through cable penetrations."
+    explanation:
+      'Fire barriers maintain the integrity of fire compartments where cables pass through walls or floors. Without proper fire stopping, fire and smoke can spread through cable penetrations.',
   },
   {
-    id: "emergencylighting-m4s4-check3",
-    question: "What BS 7671 chapter covers safety services including emergency lighting?",
-    options: ["Chapter 41", "Chapter 52", "Chapter 56", "Chapter 61"],
+    id: 'emergencylighting-m4s4-check3',
+    question: 'What BS 7671 chapter covers safety services including emergency lighting?',
+    options: ['Chapter 41', 'Chapter 52', 'Chapter 56', 'Chapter 61'],
     correctIndex: 2,
-    explanation: "BS 7671 Chapter 56 covers safety services, including emergency lighting. Section 560 provides requirements for sources, circuits, and wiring systems for safety services."
-  }
+    explanation:
+      'BS 7671 Chapter 56 covers safety services, including emergency lighting. Section 560 provides requirements for sources, circuits, and wiring systems for safety services.',
+  },
 ];
 
 const faqs = [
   {
-    question: "What level of segregation is required for emergency lighting?",
-    answer: "BS 5266-1 requires segregation of emergency lighting supplies from other circuits such that a fire disabling one supply doesn't affect the other. Physical separation or fire-resistant enclosure achieves this."
+    question: 'What level of segregation is required for emergency lighting?',
+    answer:
+      "BS 5266-1 requires segregation of emergency lighting supplies from other circuits such that a fire disabling one supply doesn't affect the other. Physical separation or fire-resistant enclosure achieves this.",
   },
   {
-    question: "Can emergency and normal lighting share the same containment?",
-    answer: "Only if the containment provides fire resistance matching the cable rating, or the cables are fire-resistant throughout. Otherwise, separate routes are required to achieve segregation."
+    question: 'Can emergency and normal lighting share the same containment?',
+    answer:
+      'Only if the containment provides fire resistance matching the cable rating, or the cables are fire-resistant throughout. Otherwise, separate routes are required to achieve segregation.',
   },
   {
-    question: "What fire stopping products are acceptable?",
-    answer: "Products must be tested and certified for the specific cable/penetration combination. Intumescent collars, fire pillows, or ablative coatings must achieve the required fire rating (typically matching the wall/floor)."
+    question: 'What fire stopping products are acceptable?',
+    answer:
+      'Products must be tested and certified for the specific cable/penetration combination. Intumescent collars, fire pillows, or ablative coatings must achieve the required fire rating (typically matching the wall/floor).',
   },
   {
-    question: "How do I verify fire integrity during installation?",
-    answer: "Check cable type matches specification, fixings are correct type and spacing, fire stopping is complete at all penetrations, and segregation is achieved. Document with photographs and test certificates."
-  }
+    question: 'How do I verify fire integrity during installation?',
+    answer:
+      'Check cable type matches specification, fixings are correct type and spacing, fire stopping is complete at all penetrations, and segregation is achieved. Document with photographs and test certificates.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "Emergency lighting cables must pass through a 60-minute fire compartment wall. What is required at the penetration?",
-  options: [
-    "Standard grommet only",
-    "Fire stopping rated for 60 minutes",
-    "Metal sleeve without sealing",
-    "Larger opening for heat dissipation"
-  ],
-  correctAnswer: 1,
-  explanation: "Fire stopping at penetrations must match the fire rating of the element being penetrated. A 60-minute compartment wall requires 60-minute rated fire stopping to maintain compartment integrity."
-  }
+    question:
+      'Emergency lighting cables must pass through a 60-minute fire compartment wall. What is required at the penetration?',
+    options: [
+      'Standard grommet only',
+      'Fire stopping rated for 60 minutes',
+      'Metal sleeve without sealing',
+      'Larger opening for heat dissipation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Fire stopping at penetrations must match the fire rating of the element being penetrated. A 60-minute compartment wall requires 60-minute rated fire stopping to maintain compartment integrity.',
+  },
 ];
 
 const EmergencyLightingModule4Section4 = () => {
   useSEO({
-    title: "Circuit Segregation and Fire Integrity | Emergency Lighting Module 4.4",
-    description: "Understand circuit segregation, fire barriers, cable penetrations, and maintaining fire integrity for emergency lighting systems."
+    title: 'Circuit Segregation and Fire Integrity | Emergency Lighting Module 4.4',
+    description:
+      'Understand circuit segregation, fire barriers, cable penetrations, and maintaining fire integrity for emergency lighting systems.',
   });
 
   return (
@@ -98,9 +118,7 @@ const EmergencyLightingModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Circuit Segregation and Fire Integrity
           </h1>
-          <p className="text-white/80">
-            Maintaining circuit integrity under fire conditions
-          </p>
+          <p className="text-white/80">Maintaining circuit integrity under fire conditions</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,17 +126,29 @@ const EmergencyLightingModule4Section4 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Segregation:</strong> Separate from normal circuits</li>
-              <li><strong>Fire barriers:</strong> At all penetrations</li>
-              <li><strong>BS 7671:</strong> Chapter 56 requirements</li>
+              <li>
+                <strong>Segregation:</strong> Separate from normal circuits
+              </li>
+              <li>
+                <strong>Fire barriers:</strong> At all penetrations
+              </li>
+              <li>
+                <strong>BS 7671:</strong> Chapter 56 requirements
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Protection Methods</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Physical:</strong> Separate routes</li>
-              <li><strong>Enclosure:</strong> Fire-rated containment</li>
-              <li><strong>Cable:</strong> Fire-resistant types</li>
+              <li>
+                <strong>Physical:</strong> Separate routes
+              </li>
+              <li>
+                <strong>Enclosure:</strong> Fire-rated containment
+              </li>
+              <li>
+                <strong>Cable:</strong> Fire-resistant types
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +158,12 @@ const EmergencyLightingModule4Section4 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Apply circuit segregation principles",
-              "Specify fire stopping requirements",
-              "Maintain compartment integrity",
-              "Select appropriate protection methods",
-              "Comply with BS 7671 Chapter 56",
-              "Verify installation integrity"
+              'Apply circuit segregation principles',
+              'Specify fire stopping requirements',
+              'Maintain compartment integrity',
+              'Select appropriate protection methods',
+              'Comply with BS 7671 Chapter 56',
+              'Verify installation integrity',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -153,8 +183,8 @@ const EmergencyLightingModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Emergency lighting circuits must be segregated from other electrical
-              services to ensure a fire affecting one system doesn't disable another.
+              Emergency lighting circuits must be segregated from other electrical services to
+              ensure a fire affecting one system doesn't disable another.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -205,25 +235,35 @@ const EmergencyLightingModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Where cables penetrate fire compartment boundaries (walls, floors), fire
-              stopping must maintain the fire resistance of the building element.
+              Where cables penetrate fire compartment boundaries (walls, floors), fire stopping must
+              maintain the fire resistance of the building element.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Fire Stopping Requirements:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Rating:</strong> Match the fire compartment rating</li>
-                <li><strong>Products:</strong> Tested and certified for cable type</li>
-                <li><strong>Installation:</strong> Per manufacturer's instructions</li>
-                <li><strong>Inspection:</strong> Visual check and certificate</li>
-                <li><strong>Future access:</strong> Maintain when adding cables</li>
+                <li>
+                  <strong>Rating:</strong> Match the fire compartment rating
+                </li>
+                <li>
+                  <strong>Products:</strong> Tested and certified for cable type
+                </li>
+                <li>
+                  <strong>Installation:</strong> Per manufacturer's instructions
+                </li>
+                <li>
+                  <strong>Inspection:</strong> Visual check and certificate
+                </li>
+                <li>
+                  <strong>Future access:</strong> Maintain when adding cables
+                </li>
               </ul>
             </div>
 
             <p>
-              Common fire stopping products include intumescent collars, fire pillows,
-              ablative coatings, and proprietary transit systems. Each must be appropriate
-              for the cable type and opening size.
+              Common fire stopping products include intumescent collars, fire pillows, ablative
+              coatings, and proprietary transit systems. Each must be appropriate for the cable type
+              and opening size.
             </p>
           </div>
         </section>
@@ -238,13 +278,15 @@ const EmergencyLightingModule4Section4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 7671 Chapter 56 provides specific requirements for safety services
-              including emergency lighting, covering power sources, circuits, and wiring.
+              BS 7671 Chapter 56 provides specific requirements for safety services including
+              emergency lighting, covering power sources, circuits, and wiring.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Chapter 56 Key Points</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Chapter 56 Key Points
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>560.1: Scope and definitions</li>
                   <li>560.6: Sources</li>
@@ -272,7 +314,9 @@ const EmergencyLightingModule4Section4 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Checklist</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Installation Checklist
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Verify cable route segregation on drawings</li>
                 <li>Check fire-resistant cable specification</li>
@@ -283,12 +327,22 @@ const EmergencyLightingModule4Section4 = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Fire Integrity Errors</h3>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">
+                Common Fire Integrity Errors
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Missing fire stopping:</strong> — Penetrations left unsealed</li>
-                <li><strong>Wrong products:</strong> — Not rated for cable type</li>
-                <li><strong>Poor installation:</strong> — Not per manufacturer data</li>
-                <li><strong>Breached later:</strong> — Additional cables without resealing</li>
+                <li>
+                  <strong>Missing fire stopping:</strong> — Penetrations left unsealed
+                </li>
+                <li>
+                  <strong>Wrong products:</strong> — Not rated for cable type
+                </li>
+                <li>
+                  <strong>Poor installation:</strong> — Not per manufacturer data
+                </li>
+                <li>
+                  <strong>Breached later:</strong> — Additional cables without resealing
+                </li>
               </ul>
             </div>
           </div>
@@ -334,10 +388,7 @@ const EmergencyLightingModule4Section4 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

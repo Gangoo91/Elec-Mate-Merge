@@ -100,7 +100,7 @@ export function useRecentSearches(maxItems: number = 5) {
     const trimmed = query.trim();
     if (!trimmed) return;
 
-    const updated = [trimmed, ...searches.filter(s => s !== trimmed)].slice(0, maxItems);
+    const updated = [trimmed, ...searches.filter((s) => s !== trimmed)].slice(0, maxItems);
     setSearches(updated);
     localStorage.setItem('marketplace-recent-searches', JSON.stringify(updated));
   };

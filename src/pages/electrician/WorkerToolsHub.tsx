@@ -144,9 +144,7 @@ function WorkerToolCard({
             <p className="text-sm font-semibold text-white mb-0.5 group-hover:text-elec-yellow transition-colors">
               {title}
             </p>
-            <p className={cn('text-xs', subtitleColour)}>
-              {subtitle}
-            </p>
+            <p className={cn('text-xs', subtitleColour)}>{subtitle}</p>
           </div>
           <ChevronRight className="absolute top-4 right-3 h-4 w-4 text-white/30" />
         </div>
@@ -156,7 +154,12 @@ function WorkerToolCard({
 }
 
 export default function WorkerToolsHub() {
-  useSEO({ title: 'Worker Tools', description: 'Self-service hub for employed electricians. Timesheets, leave, team comms, and expenses.', noindex: true });
+  useSEO({
+    title: 'Worker Tools',
+    description:
+      'Self-service hub for employed electricians. Timesheets, leave, team comms, and expenses.',
+    noindex: true,
+  });
   const [statusSheetOpen, setStatusSheetOpen] = useState(false);
   const [timesheetSheetOpen, setTimesheetSheetOpen] = useState(false);
   const [leaveSheetOpen, setLeaveSheetOpen] = useState(false);
@@ -218,7 +221,8 @@ export default function WorkerToolsHub() {
             </div>
             <h1 className="text-2xl font-bold text-white mb-3">Worker Tools</h1>
             <p className="text-white/60 max-w-sm mx-auto">
-              You don't have an employee profile linked to your account. Contact your employer to get access to Worker Tools.
+              You don't have an employee profile linked to your account. Contact your employer to
+              get access to Worker Tools.
             </p>
           </div>
         </div>
@@ -317,8 +321,8 @@ export default function WorkerToolsHub() {
                   isClockedIn
                     ? `Clocked in: ${formatDuration(duration)}`
                     : todaysHours > 0
-                    ? `${todaysHours.toFixed(1)}h today`
-                    : 'Not clocked in'
+                      ? `${todaysHours.toFixed(1)}h today`
+                      : 'Not clocked in'
                 }
                 subtitleColour={isClockedIn ? 'text-green-400' : 'text-white/60'}
                 onClick={() => setTimesheetSheetOpen(true)}
@@ -363,7 +367,9 @@ export default function WorkerToolsHub() {
               <WorkerToolCard
                 icon={ShieldCheck}
                 title="Safety Docs"
-                subtitle={pendingSafetyDocs > 0 ? `${pendingSafetyDocs} pending` : 'All acknowledged'}
+                subtitle={
+                  pendingSafetyDocs > 0 ? `${pendingSafetyDocs} pending` : 'All acknowledged'
+                }
                 subtitleColour={pendingSafetyDocs > 0 ? 'text-amber-400' : 'text-white/60'}
                 badge={pendingSafetyDocs}
                 onClick={() => setSafetyDocsSheetOpen(true)}
@@ -401,46 +407,16 @@ export default function WorkerToolsHub() {
       </div>
 
       {/* Bottom Sheets */}
-      <StatusSheet
-        open={statusSheetOpen}
-        onOpenChange={setStatusSheetOpen}
-      />
-      <TimesheetSheet
-        open={timesheetSheetOpen}
-        onOpenChange={setTimesheetSheetOpen}
-      />
-      <LeaveRequestSheet
-        open={leaveSheetOpen}
-        onOpenChange={setLeaveSheetOpen}
-      />
-      <CommsSheet
-        open={commsSheetOpen}
-        onOpenChange={setCommsSheetOpen}
-      />
-      <MyJobsSheet
-        open={jobsSheetOpen}
-        onOpenChange={setJobsSheetOpen}
-      />
-      <CredentialsSheet
-        open={credentialsSheetOpen}
-        onOpenChange={setCredentialsSheetOpen}
-      />
-      <ProgressNotesSheet
-        open={progressNotesSheetOpen}
-        onOpenChange={setProgressNotesSheetOpen}
-      />
-      <SafetyDocsSheet
-        open={safetyDocsSheetOpen}
-        onOpenChange={setSafetyDocsSheetOpen}
-      />
-      <ExpenseSheet
-        open={expenseSheetOpen}
-        onOpenChange={setExpenseSheetOpen}
-      />
-      <SnagReportSheet
-        open={snagReportSheetOpen}
-        onOpenChange={setSnagReportSheetOpen}
-      />
+      <StatusSheet open={statusSheetOpen} onOpenChange={setStatusSheetOpen} />
+      <TimesheetSheet open={timesheetSheetOpen} onOpenChange={setTimesheetSheetOpen} />
+      <LeaveRequestSheet open={leaveSheetOpen} onOpenChange={setLeaveSheetOpen} />
+      <CommsSheet open={commsSheetOpen} onOpenChange={setCommsSheetOpen} />
+      <MyJobsSheet open={jobsSheetOpen} onOpenChange={setJobsSheetOpen} />
+      <CredentialsSheet open={credentialsSheetOpen} onOpenChange={setCredentialsSheetOpen} />
+      <ProgressNotesSheet open={progressNotesSheetOpen} onOpenChange={setProgressNotesSheetOpen} />
+      <SafetyDocsSheet open={safetyDocsSheetOpen} onOpenChange={setSafetyDocsSheetOpen} />
+      <ExpenseSheet open={expenseSheetOpen} onOpenChange={setExpenseSheetOpen} />
+      <SnagReportSheet open={snagReportSheetOpen} onOpenChange={setSnagReportSheetOpen} />
     </div>
   );
 }

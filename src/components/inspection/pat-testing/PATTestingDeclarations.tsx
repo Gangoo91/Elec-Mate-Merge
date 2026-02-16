@@ -32,10 +32,7 @@ interface PATTestingDeclarationsProps {
   onUpdate: (field: string, value: any) => void;
 }
 
-const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
-  formData,
-  onUpdate,
-}) => {
+const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({ formData, onUpdate }) => {
   const isMobile = useIsMobile();
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
     tester: true,
@@ -88,12 +85,14 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
     <div className="space-y-6">
       {/* Tester Declaration */}
       <Collapsible open={openSections.tester} onOpenChange={() => toggleSection('tester')}>
-        <div className={cn(isMobile ? "" : "eicr-section-card")}>
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
           <CollapsibleTrigger asChild>
-            <div className={cn(
-              "cursor-pointer transition-colors p-4",
-              isMobile ? "bg-card/30 border-y border-border/20" : "hover:bg-muted/50"
-            )}>
+            <div
+              className={cn(
+                'cursor-pointer transition-colors p-4',
+                isMobile ? 'bg-card/30 border-y border-border/20' : 'hover:bg-muted/50'
+              )}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
@@ -101,7 +100,12 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
                   </div>
                   <span className="font-semibold text-lg">Tester Declaration</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 transition-transform", openSections.tester && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 transition-transform',
+                    openSections.tester && 'rotate-180'
+                  )}
+                />
               </div>
             </div>
           </CollapsibleTrigger>
@@ -122,9 +126,10 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
               <Alert className="border-blue-500/30 bg-blue-500/10">
                 <Shield className="h-4 w-4 text-blue-500" />
                 <AlertDescription className="text-blue-200 text-sm">
-                  <strong>Declaration:</strong> I certify that the appliances listed in this report have been
-                  inspected and tested in accordance with the IET Code of Practice for In-Service Inspection
-                  and Testing of Electrical Equipment, and the results are as recorded.
+                  <strong>Declaration:</strong> I certify that the appliances listed in this report
+                  have been inspected and tested in accordance with the IET Code of Practice for
+                  In-Service Inspection and Testing of Electrical Equipment, and the results are as
+                  recorded.
                 </AlertDescription>
               </Alert>
 
@@ -188,12 +193,14 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
 
       {/* Retest Schedule */}
       <Collapsible open={openSections.retest} onOpenChange={() => toggleSection('retest')}>
-        <div className={cn(isMobile ? "" : "eicr-section-card")}>
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
           <CollapsibleTrigger asChild>
-            <div className={cn(
-              "cursor-pointer transition-colors p-4",
-              isMobile ? "border-b border-border/20" : "hover:bg-muted/50"
-            )}>
+            <div
+              className={cn(
+                'cursor-pointer transition-colors p-4',
+                isMobile ? 'border-b border-border/20' : 'hover:bg-muted/50'
+              )}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
@@ -201,7 +208,12 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
                   </div>
                   <span className="font-semibold text-lg">Retest Schedule</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 transition-transform", openSections.retest && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 transition-transform',
+                    openSections.retest && 'rotate-180'
+                  )}
+                />
               </div>
             </div>
           </CollapsibleTrigger>
@@ -210,8 +222,9 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
               <Alert className="border-amber-500/30 bg-amber-500/10">
                 <Info className="h-4 w-4 text-amber-500" />
                 <AlertDescription className="text-amber-200 text-sm">
-                  <strong>IET CoP Guidance:</strong> Suggested retest intervals depend on equipment type and environment.
-                  Construction sites may need 3-monthly tests; office IT equipment may be 48 months.
+                  <strong>IET CoP Guidance:</strong> Suggested retest intervals depend on equipment
+                  type and environment. Construction sites may need 3-monthly tests; office IT
+                  equipment may be 48 months.
                 </AlertDescription>
               </Alert>
 
@@ -281,12 +294,14 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
 
       {/* Summary */}
       <Collapsible open={openSections.summary} onOpenChange={() => toggleSection('summary')}>
-        <div className={cn(isMobile ? "" : "eicr-section-card")}>
+        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
           <CollapsibleTrigger asChild>
-            <div className={cn(
-              "cursor-pointer transition-colors p-4",
-              isMobile ? "border-b border-border/20" : "hover:bg-muted/50"
-            )}>
+            <div
+              className={cn(
+                'cursor-pointer transition-colors p-4',
+                isMobile ? 'border-b border-border/20' : 'hover:bg-muted/50'
+              )}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-xl bg-green-500/20 flex items-center justify-center">
@@ -294,7 +309,12 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
                   </div>
                   <span className="font-semibold text-lg">Test Summary</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 transition-transform", openSections.summary && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 transition-transform',
+                    openSections.summary && 'rotate-180'
+                  )}
+                />
               </div>
             </div>
           </CollapsibleTrigger>
@@ -319,16 +339,18 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
                 <Alert className="border-red-500/30 bg-red-500/10 mb-4">
                   <AlertTriangle className="h-4 w-4 text-red-500" />
                   <AlertDescription className="text-red-200 text-sm">
-                    <strong>{formData.totalFailed} appliance(s) failed.</strong> These items must be taken out
-                    of service until repaired and retested, or replaced.
+                    <strong>{formData.totalFailed} appliance(s) failed.</strong> These items must be
+                    taken out of service until repaired and retested, or replaced.
                   </AlertDescription>
                 </Alert>
               )}
 
-              <div className={cn(
-                "rounded-lg p-4 text-sm",
-                isMobile ? "bg-card/20 border border-border/20" : "bg-muted/30"
-              )}>
+              <div
+                className={cn(
+                  'rounded-lg p-4 text-sm',
+                  isMobile ? 'bg-card/20 border border-border/20' : 'bg-muted/30'
+                )}
+              >
                 <p className="font-medium mb-2">Report Summary</p>
                 <ul className="space-y-1 text-muted-foreground">
                   <li>Test Date: {formData.testDate || 'Not set'}</li>
@@ -348,15 +370,16 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({
         <Alert className="border-green-200 bg-green-50">
           <CheckCircle2 className="h-4 w-4 text-green-600" />
           <AlertDescription className="text-green-800 text-xs sm:text-sm">
-            <strong>Certificate ready for generation.</strong> All required fields have been completed.
+            <strong>Certificate ready for generation.</strong> All required fields have been
+            completed.
           </AlertDescription>
         </Alert>
       ) : (
         <Alert className="border-amber-200 bg-amber-50">
           <AlertTriangle className="h-4 w-4 text-amber-600" />
           <AlertDescription className="text-amber-800 text-xs sm:text-sm">
-            <strong>Incomplete declaration.</strong> Tester name and signature are required
-            before the certificate can be generated.
+            <strong>Incomplete declaration.</strong> Tester name and signature are required before
+            the certificate can be generated.
           </AlertDescription>
         </Alert>
       )}

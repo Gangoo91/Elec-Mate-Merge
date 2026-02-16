@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
   CreditCard,
   Zap,
@@ -17,15 +17,15 @@ import {
   Mail,
   Sparkles,
   BadgeCheck,
-} from "lucide-react";
+} from 'lucide-react';
 import StripeConnectSetup from '@/components/electrician/settings/StripeConnectSetup';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.03, delayChildren: 0 }
-  }
+    transition: { staggerChildren: 0.03, delayChildren: 0 },
+  },
 };
 
 const itemVariants = {
@@ -33,8 +33,8 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.25, ease: 'easeOut' }
-  }
+    transition: { duration: 0.25, ease: 'easeOut' },
+  },
 };
 
 const BillingTab = () => {
@@ -79,11 +79,11 @@ const BillingTab = () => {
           {/* Plan Header */}
           <div className="flex items-start justify-between gap-4 mb-5">
             <div className="flex items-center gap-4">
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
-                isSubscribed
-                  ? 'bg-elec-yellow/20 ring-2 ring-elec-yellow/30'
-                  : 'bg-white/10'
-              }`}>
+              <div
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
+                  isSubscribed ? 'bg-elec-yellow/20 ring-2 ring-elec-yellow/30' : 'bg-white/10'
+                }`}
+              >
                 {isSubscribed ? (
                   <Crown className="h-7 w-7 text-elec-yellow" />
                 ) : (
@@ -93,14 +93,14 @@ const BillingTab = () => {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-xl font-bold text-foreground">
-                    {isSubscribed ? (subscriptionTier || 'Pro') : 'Free'} Plan
+                    {isSubscribed ? subscriptionTier || 'Pro' : 'Free'} Plan
                   </h3>
-                  {isSubscribed && (
-                    <BadgeCheck className="h-5 w-5 text-elec-yellow" />
-                  )}
+                  {isSubscribed && <BadgeCheck className="h-5 w-5 text-elec-yellow" />}
                 </div>
                 <p className="text-sm text-muted-foreground mt-0.5">
-                  {isSubscribed ? 'Full access to all premium features' : 'Upgrade to unlock all features'}
+                  {isSubscribed
+                    ? 'Full access to all premium features'
+                    : 'Upgrade to unlock all features'}
                 </p>
               </div>
             </div>
@@ -111,7 +111,8 @@ const BillingTab = () => {
             <div className="flex items-center gap-2 mb-5 p-3 rounded-xl bg-black/20">
               <Clock className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm text-foreground/80">
-                Next billing date: <span className="font-medium text-foreground">1st February 2026</span>
+                Next billing date:{' '}
+                <span className="font-medium text-foreground">1st February 2026</span>
               </span>
             </div>
           )}
@@ -123,16 +124,17 @@ const BillingTab = () => {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-2.5 text-sm"
-                >
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    isSubscribed ? 'bg-green-500/20' : 'bg-white/10'
-                  }`}>
-                    <CheckCircle className={`h-3.5 w-3.5 ${
-                      isSubscribed ? 'text-green-400' : 'text-muted-foreground'
-                    }`} />
+                <div key={index} className="flex items-center gap-2.5 text-sm">
+                  <div
+                    className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      isSubscribed ? 'bg-green-500/20' : 'bg-white/10'
+                    }`}
+                  >
+                    <CheckCircle
+                      className={`h-3.5 w-3.5 ${
+                        isSubscribed ? 'text-green-400' : 'text-muted-foreground'
+                      }`}
+                    />
                   </div>
                   <span className="text-foreground/90">{feature}</span>
                 </div>
@@ -171,7 +173,10 @@ const BillingTab = () => {
 
       {/* Billing Management */}
       {isSubscribed && (
-        <motion.div variants={itemVariants} className="rounded-2xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+        <motion.div
+          variants={itemVariants}
+          className="rounded-2xl bg-elec-gray/50 border border-white/10 overflow-hidden"
+        >
           <div className="px-5 py-4 border-b border-white/10">
             <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
               <CreditCard className="h-4 w-4 text-elec-yellow" />
@@ -180,7 +185,9 @@ const BillingTab = () => {
           </div>
           <div className="p-3 space-y-2">
             <button
-              onClick={() => window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')}
+              onClick={() =>
+                window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')
+              }
               className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-3">
@@ -196,7 +203,9 @@ const BillingTab = () => {
             </button>
 
             <button
-              onClick={() => window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')}
+              onClick={() =>
+                window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')
+              }
               className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-3">

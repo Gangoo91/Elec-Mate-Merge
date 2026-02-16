@@ -17,7 +17,12 @@ import { WorkerStatus } from '@/services/locationService';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 
-const STATUS_OPTIONS: { value: WorkerStatus; label: string; icon: typeof MapPin; colour: string }[] = [
+const STATUS_OPTIONS: {
+  value: WorkerStatus;
+  label: string;
+  icon: typeof MapPin;
+  colour: string;
+}[] = [
   { value: 'Office', label: 'Office', icon: Building2, colour: 'text-purple-400' },
   { value: 'En Route', label: 'En Route', icon: Navigation, colour: 'text-amber-400' },
   { value: 'On Site', label: 'On Site', icon: MapPin, colour: 'text-green-400' },
@@ -79,14 +84,15 @@ export function WorkerStatusCard() {
         lat,
         lng,
         status: selectedStatus,
-        jobId: selectedStatus === 'On Site' || selectedStatus === 'En Route' ? selectedJobId : undefined,
+        jobId:
+          selectedStatus === 'On Site' || selectedStatus === 'En Route' ? selectedJobId : undefined,
         accuracy,
       });
 
       if (result) {
         toast({
           title: 'Status Updated',
-          description: `You are now ${selectedStatus}${selectedJobId ? ` - ${jobs?.find(j => j.id === selectedJobId)?.title}` : ''}`,
+          description: `You are now ${selectedStatus}${selectedJobId ? ` - ${jobs?.find((j) => j.id === selectedJobId)?.title}` : ''}`,
           variant: 'success',
         });
       } else {
@@ -163,9 +169,7 @@ export function WorkerStatusCard() {
                 >
                   <Icon className={cn('h-4 w-4', isSelected ? option.colour : 'text-current')} />
                   <span className="text-sm font-medium">{option.label}</span>
-                  {isSelected && (
-                    <CheckCircle className="h-3.5 w-3.5 ml-auto text-elec-yellow" />
-                  )}
+                  {isSelected && <CheckCircle className="h-3.5 w-3.5 ml-auto text-elec-yellow" />}
                 </button>
               );
             })}

@@ -17,7 +17,9 @@ export const useUnreadCount = () => {
   return useQuery({
     queryKey: ['employer-notifications', 'unread-count'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return 0;
 
       const { count, error } = await supabase
@@ -42,7 +44,9 @@ export const useNotifications = () => {
   return useQuery({
     queryKey: ['employer-notifications'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase
@@ -88,7 +92,9 @@ export const useMarkAllAsRead = () => {
 
   return useMutation({
     mutationFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase

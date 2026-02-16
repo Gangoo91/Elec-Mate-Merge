@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Cable, BarChart4, PlugZap } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Cable, BarChart4, PlugZap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const CalculatorCards = () => {
   return (
@@ -19,13 +18,16 @@ const CalculatorCards = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                Calculate proper cable sizes based on current, distance, and voltage drop requirements.
+                Calculate proper cable sizes based on current, distance, and voltage drop
+                requirements.
               </p>
-              <Button variant="outline" className="w-full">Open Calculator</Button>
+              <Button variant="outline" className="w-full">
+                Open Calculator
+              </Button>
             </CardContent>
           </Card>
         </Link>
-        
+
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
@@ -37,12 +39,18 @@ const CalculatorCards = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Calculate total load requirements for domestic and commercial installations.
             </p>
-            <Button variant="outline" className="w-full" onClick={() => {
-              document.getElementById('load-calculator')?.scrollIntoView({ behavior: 'smooth' });
-            }}>View Calculator</Button>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                document.getElementById('load-calculator')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              View Calculator
+            </Button>
           </CardContent>
         </Card>
-        
+
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
@@ -54,9 +62,17 @@ const CalculatorCards = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Calculate power factor and related electrical parameters for efficient power usage.
             </p>
-            <Button variant="outline" className="w-full" onClick={() => {
-              document.getElementById('power-factor-calculator')?.scrollIntoView({ behavior: 'smooth' });
-            }}>View Calculator</Button>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                document
+                  .getElementById('power-factor-calculator')
+                  ?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              View Calculator
+            </Button>
           </CardContent>
         </Card>
       </div>

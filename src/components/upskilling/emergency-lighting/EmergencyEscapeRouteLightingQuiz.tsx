@@ -3,7 +3,7 @@ import { emergencyEscapeRouteQuizData } from '@/data/upskilling/emergencyEscapeR
 
 export const EmergencyEscapeRouteLightingQuiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={emergencyEscapeRouteQuizData}
       title="Section 4 Quiz: Escape Route Lighting"
     />

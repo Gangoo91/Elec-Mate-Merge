@@ -105,7 +105,7 @@ export function useDashboardData(): DashboardData {
 
       return {
         total: count || 0,
-        completed: completedCount || 0
+        completed: completedCount || 0,
       };
     },
     enabled: !!user?.id,
@@ -113,7 +113,13 @@ export function useDashboardData(): DashboardData {
   });
 
   // Aggregate loading state
-  const isLoading = authLoading || streakLoading || quotesLoading || invoicesLoading || reportsLoading || jobsLoading;
+  const isLoading =
+    authLoading ||
+    streakLoading ||
+    quotesLoading ||
+    invoicesLoading ||
+    reportsLoading ||
+    jobsLoading;
 
   // User data
   const userData = useMemo((): DashboardUserData => {
@@ -153,26 +159,25 @@ export function useDashboardData(): DashboardData {
   // Business data from quotes and invoices
   const businessData = useMemo((): DashboardBusinessData => {
     // Filter active/pending quotes
-    const activeQuotes = savedQuotes?.filter(q =>
-      q.status === 'sent' || q.status === 'pending' || q.status === 'draft'
-    ) || [];
+    const activeQuotes =
+      savedQuotes?.filter(
+        (q) => q.status === 'sent' || q.status === 'pending' || q.status === 'draft'
+      ) || [];
 
-    const pendingQuotes = savedQuotes?.filter(q =>
-      q.status === 'sent' && q.acceptance_status === 'pending'
-    ) || [];
+    const pendingQuotes =
+      savedQuotes?.filter((q) => q.status === 'sent' && q.acceptance_status === 'pending') || [];
 
     // Calculate total pipeline value (ALL quotes - matches QuotesPage)
     const quoteValue = savedQuotes?.reduce((sum, q) => sum + (q.total || 0), 0) || 0;
-    const formattedQuoteValue = quoteValue >= 1000
-      ? `£${(quoteValue / 1000).toFixed(1)}k`
-      : `£${quoteValue.toLocaleString()}`;
+    const formattedQuoteValue =
+      quoteValue >= 1000
+        ? `£${(quoteValue / 1000).toFixed(1)}k`
+        : `£${quoteValue.toLocaleString()}`;
 
     // Invoice calculations
-    const unpaidInvoices = invoices?.filter(i =>
-      i.invoice_status !== 'paid'
-    ) || [];
+    const unpaidInvoices = invoices?.filter((i) => i.invoice_status !== 'paid') || [];
 
-    const overdueInvoices = unpaidInvoices.filter(i => {
+    const overdueInvoices = unpaidInvoices.filter((i) => {
       if (!i.invoice_due_date) return false;
       return isPast(new Date(i.invoice_due_date));
     });
@@ -212,12 +217,13 @@ export function useDashboardData(): DashboardData {
     const items: DashboardActionItem[] = [];
 
     // Urgent: Overdue invoices
-    const overdueInvoicesList = invoices?.filter(i => {
-      if (!i.invoice_due_date || i.invoice_status === 'paid') return false;
-      return isPast(new Date(i.invoice_due_date));
-    }) || [];
+    const overdueInvoicesList =
+      invoices?.filter((i) => {
+        if (!i.invoice_due_date || i.invoice_status === 'paid') return false;
+        return isPast(new Date(i.invoice_due_date));
+      }) || [];
 
-    overdueInvoicesList.slice(0, 2).forEach(inv => {
+    overdueInvoicesList.slice(0, 2).forEach((inv) => {
       const daysOverdue = differenceInDays(new Date(), new Date(inv.invoice_due_date!));
       items.push({
         id: `invoice-${inv.id}`,
@@ -231,11 +237,10 @@ export function useDashboardData(): DashboardData {
     });
 
     // Warning: Pending quotes awaiting response
-    const pendingQuotesList = savedQuotes?.filter(q =>
-      q.status === 'sent' && q.acceptance_status === 'pending'
-    ) || [];
+    const pendingQuotesList =
+      savedQuotes?.filter((q) => q.status === 'sent' && q.acceptance_status === 'pending') || [];
 
-    pendingQuotesList.slice(0, 2).forEach(quote => {
+    pendingQuotesList.slice(0, 2).forEach((quote) => {
       items.push({
         id: `quote-${quote.id}`,
         type: 'warning',

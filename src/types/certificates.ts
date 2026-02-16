@@ -1,4 +1,3 @@
-
 export type Certificate = {
   id: string;
   name: string;

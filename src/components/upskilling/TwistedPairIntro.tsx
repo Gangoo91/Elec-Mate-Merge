@@ -12,17 +12,17 @@ export const TwistedPairIntro = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-4">
         <p>
-          Twisted pair cables form the backbone of modern data communications infrastructure. 
-          These cables consist of pairs of copper wires that are twisted together to reduce 
+          Twisted pair cables form the backbone of modern data communications infrastructure. These
+          cables consist of pairs of copper wires that are twisted together to reduce
           electromagnetic interference and crosstalk between adjacent pairs.
         </p>
         <p>
-          Understanding twisted pair cable construction, categories, and performance characteristics 
-          is fundamental to designing reliable structured cabling systems that meet current needs 
+          Understanding twisted pair cable construction, categories, and performance characteristics
+          is fundamental to designing reliable structured cabling systems that meet current needs
           whilst providing future-proof solutions.
         </p>
         <p>
-          This section covers the essential knowledge required for selecting, installing, and 
+          This section covers the essential knowledge required for selecting, installing, and
           testing twisted pair cables in commercial and industrial environments.
         </p>
       </CardContent>

@@ -12,36 +12,61 @@ export const ColourTemperatureSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Colour temperature, measured in Kelvin (K), describes the warmth or coolness of white light and significantly impacts mood, productivity, and circadian rhythms.
+          Colour temperature, measured in Kelvin (K), describes the warmth or coolness of white
+          light and significantly impacts mood, productivity, and circadian rhythms.
         </p>
-        
+
         <div className="space-y-4">
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-3 bg-orange-600/10 border border-orange-600/20 rounded-lg">
               <h5 className="font-semibold text-orange-200 mb-2">Warm White (2200-3000K)</h5>
               <ul className="text-sm text-orange-100 space-y-1">
-                <li>• <strong>2700K:</strong> Standard warm white</li>
-                <li>• <strong>Characteristics:</strong> Cosy, relaxing, yellow-orange tint</li>
-                <li>• <strong>Best for:</strong> Living rooms, bedrooms, dining areas</li>
-                <li>• <strong>Effects:</strong> Promotes relaxation and sleep preparation</li>
+                <li>
+                  • <strong>2700K:</strong> Standard warm white
+                </li>
+                <li>
+                  • <strong>Characteristics:</strong> Cosy, relaxing, yellow-orange tint
+                </li>
+                <li>
+                  • <strong>Best for:</strong> Living rooms, bedrooms, dining areas
+                </li>
+                <li>
+                  • <strong>Effects:</strong> Promotes relaxation and sleep preparation
+                </li>
               </ul>
             </div>
             <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
               <h5 className="font-semibold text-blue-200 mb-2">Neutral White (3500-4000K)</h5>
               <ul className="text-sm text-blue-100 space-y-1">
-                <li>• <strong>3500K:</strong> Balanced neutral tone</li>
-                <li>• <strong>Characteristics:</strong> Natural, neither warm nor cool</li>
-                <li>• <strong>Best for:</strong> General lighting, task areas</li>
-                <li>• <strong>Effects:</strong> Comfortable for most activities</li>
+                <li>
+                  • <strong>3500K:</strong> Balanced neutral tone
+                </li>
+                <li>
+                  • <strong>Characteristics:</strong> Natural, neither warm nor cool
+                </li>
+                <li>
+                  • <strong>Best for:</strong> General lighting, task areas
+                </li>
+                <li>
+                  • <strong>Effects:</strong> Comfortable for most activities
+                </li>
               </ul>
             </div>
             <div className="p-3 bg-cyan-600/10 border border-cyan-600/20 rounded-lg">
               <h5 className="font-semibold text-cyan-200 mb-2">Cool White (5000-6500K)</h5>
               <ul className="text-sm text-cyan-100 space-y-1">
-                <li>• <strong>5000K:</strong> Daylight white</li>
-                <li>• <strong>6500K:</strong> Cool daylight</li>
-                <li>• <strong>Best for:</strong> Offices, kitchens, workshops</li>
-                <li>• <strong>Effects:</strong> Promotes alertness and concentration</li>
+                <li>
+                  • <strong>5000K:</strong> Daylight white
+                </li>
+                <li>
+                  • <strong>6500K:</strong> Cool daylight
+                </li>
+                <li>
+                  • <strong>Best for:</strong> Offices, kitchens, workshops
+                </li>
+                <li>
+                  • <strong>Effects:</strong> Promotes alertness and concentration
+                </li>
               </ul>
             </div>
           </div>
@@ -50,7 +75,8 @@ export const ColourTemperatureSection = () => {
             <h5 className="font-semibold text-green-200 mb-2">Circadian Rhythm Lighting</h5>
             <div className="space-y-3">
               <p className="text-sm text-green-100">
-                Smart systems can automatically adjust colour temperature throughout the day to support natural sleep-wake cycles:
+                Smart systems can automatically adjust colour temperature throughout the day to
+                support natural sleep-wake cycles:
               </p>
               <div className="grid md:grid-cols-4 gap-3">
                 <div className="text-center">
@@ -80,11 +106,21 @@ export const ColourTemperatureSection = () => {
           <div className="p-3 bg-purple-600/10 border border-purple-600/20 rounded-lg">
             <h5 className="font-semibold text-purple-200 mb-2">Smart System Capabilities</h5>
             <ul className="text-sm text-purple-100 space-y-1">
-              <li>• <strong>Automatic adjustment:</strong> Follow sunrise/sunset patterns</li>
-              <li>• <strong>Gradual transitions:</strong> Smooth changes over time</li>
-              <li>• <strong>Scene integration:</strong> Colour temperature part of lighting scenes</li>
-              <li>• <strong>Manual override:</strong> User control when needed</li>
-              <li>• <strong>Seasonal adaptation:</strong> Adjust for changing daylight hours</li>
+              <li>
+                • <strong>Automatic adjustment:</strong> Follow sunrise/sunset patterns
+              </li>
+              <li>
+                • <strong>Gradual transitions:</strong> Smooth changes over time
+              </li>
+              <li>
+                • <strong>Scene integration:</strong> Colour temperature part of lighting scenes
+              </li>
+              <li>
+                • <strong>Manual override:</strong> User control when needed
+              </li>
+              <li>
+                • <strong>Seasonal adaptation:</strong> Adjust for changing daylight hours
+              </li>
             </ul>
           </div>
 
@@ -94,19 +130,35 @@ export const ColourTemperatureSection = () => {
               <div>
                 <h6 className="font-medium text-yellow-100 mb-1">Room-Specific Recommendations:</h6>
                 <ul className="text-sm text-yellow-100 space-y-1">
-                  <li>• <strong>Kitchen:</strong> 4000-5000K for food prep</li>
-                  <li>• <strong>Home Office:</strong> 5000K for concentration</li>
-                  <li>• <strong>Living Room:</strong> 2700-3000K for relaxation</li>
-                  <li>• <strong>Bedroom:</strong> 2200-2700K for sleep quality</li>
+                  <li>
+                    • <strong>Kitchen:</strong> 4000-5000K for food prep
+                  </li>
+                  <li>
+                    • <strong>Home Office:</strong> 5000K for concentration
+                  </li>
+                  <li>
+                    • <strong>Living Room:</strong> 2700-3000K for relaxation
+                  </li>
+                  <li>
+                    • <strong>Bedroom:</strong> 2200-2700K for sleep quality
+                  </li>
                 </ul>
               </div>
               <div>
                 <h6 className="font-medium text-yellow-100 mb-1">Activity-Based Settings:</h6>
                 <ul className="text-sm text-yellow-100 space-y-1">
-                  <li>• <strong>Reading/Study:</strong> 4000-5000K</li>
-                  <li>• <strong>Entertaining:</strong> 2700-3000K</li>
-                  <li>• <strong>Detailed Work:</strong> 5000-6000K</li>
-                  <li>• <strong>Relaxation:</strong> 2200-2700K</li>
+                  <li>
+                    • <strong>Reading/Study:</strong> 4000-5000K
+                  </li>
+                  <li>
+                    • <strong>Entertaining:</strong> 2700-3000K
+                  </li>
+                  <li>
+                    • <strong>Detailed Work:</strong> 5000-6000K
+                  </li>
+                  <li>
+                    • <strong>Relaxation:</strong> 2200-2700K
+                  </li>
                 </ul>
               </div>
             </div>

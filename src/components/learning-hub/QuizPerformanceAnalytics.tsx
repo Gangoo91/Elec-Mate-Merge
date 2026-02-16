@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -42,7 +41,7 @@ const QuizPerformanceAnalytics = ({ onViewReport }: QuizPerformanceAnalyticsProp
                 </span>
               </div>
               <div className="w-full bg-muted rounded-full h-1.5 sm:h-2">
-                <div 
+                <div
                   className={`h-1.5 sm:h-2 rounded-full ${subject.color}`}
                   style={{ width: `${subject.score}%` }}
                 />
@@ -50,11 +49,11 @@ const QuizPerformanceAnalytics = ({ onViewReport }: QuizPerformanceAnalyticsProp
             </div>
           ))}
         </div>
-        
+
         <div className="pt-3 sm:pt-4 border-t border-border">
-          <Button 
+          <Button
             className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 text-sm"
-            onClick={() => onViewReport ? onViewReport() : setShowDetailedReport(true)}
+            onClick={() => (onViewReport ? onViewReport() : setShowDetailedReport(true))}
             disabled={isLoading}
           >
             <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />

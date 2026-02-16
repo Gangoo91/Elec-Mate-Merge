@@ -1,6 +1,11 @@
-
 import React, { useCallback } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { cableSizeOptions } from '@/types/cableTypes';
@@ -11,13 +16,19 @@ interface ConductorCellsProps {
 }
 
 const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpdate }) => {
-  const handleLiveSizeChange = useCallback((value: string) => {
-    onUpdate(result.id, 'liveSize', value);
-  }, [result.id, onUpdate]);
+  const handleLiveSizeChange = useCallback(
+    (value: string) => {
+      onUpdate(result.id, 'liveSize', value);
+    },
+    [result.id, onUpdate]
+  );
 
-  const handleCpcSizeChange = useCallback((value: string) => {
-    onUpdate(result.id, 'cpcSize', value);
-  }, [result.id, onUpdate]);
+  const handleCpcSizeChange = useCallback(
+    (value: string) => {
+      onUpdate(result.id, 'cpcSize', value);
+    },
+    [result.id, onUpdate]
+  );
 
   return (
     <>
@@ -31,9 +42,16 @@ const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpda
           <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="Live" />
           </SelectTrigger>
-          <SelectContent key={`liveSize-content-${result.id}`} className="bg-background border border-border rounded-md z-[100]">
+          <SelectContent
+            key={`liveSize-content-${result.id}`}
+            className="bg-background border border-border rounded-md z-[100]"
+          >
             {cableSizeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-xs text-neutral-100"
+              >
                 {option.label}
               </SelectItem>
             ))}
@@ -51,9 +69,16 @@ const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpda
           <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="CPC" />
           </SelectTrigger>
-          <SelectContent key={`cpcSize-content-${result.id}`} className="bg-background border border-border rounded-md z-[100]">
+          <SelectContent
+            key={`cpcSize-content-${result.id}`}
+            className="bg-background border border-border rounded-md z-[100]"
+          >
             {cableSizeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-xs text-neutral-100"
+              >
                 {option.label}
               </SelectItem>
             ))}

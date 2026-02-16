@@ -1,4 +1,3 @@
-
 // Re-export all the cell components for easy importing
 export { CircuitDetailsCells } from './table-cells/CircuitDetailsCells';
 export { TypeOfWiringCell } from './table-cells/TypeOfWiringCell';
@@ -13,5 +12,3 @@ export { AfddCell } from './table-cells/AfddCell';
 
 export { FunctionalTestCell } from './table-cells/FunctionalTestCell';
 export { RemarksCell } from './table-cells/RemarksCell';
-
-

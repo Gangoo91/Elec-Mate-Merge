@@ -1,4 +1,4 @@
-import ElectricianProfessionalAccreditation from "./accreditation/ElectricianProfessionalAccreditation";
+import ElectricianProfessionalAccreditation from './accreditation/ElectricianProfessionalAccreditation';
 
 const ProfessionalAccreditation = () => {
   return <ElectricianProfessionalAccreditation />;

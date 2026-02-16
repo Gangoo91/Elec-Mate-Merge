@@ -2,10 +2,28 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CheckCircle, Download, AlertTriangle, FileCheck, Bell, Mail, Loader2, Send, FileText, Receipt } from 'lucide-react';
+import {
+  CheckCircle,
+  Download,
+  AlertTriangle,
+  FileCheck,
+  Bell,
+  Mail,
+  Loader2,
+  Send,
+  FileText,
+  Receipt,
+} from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -13,7 +31,10 @@ import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import { validateMinorWorksFormData, formatFieldForPdf } from '@/utils/minorWorksValidation';
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { useNavigate } from 'react-router-dom';
-import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
+import {
+  createQuoteFromCertificate,
+  createInvoiceFromCertificate,
+} from '@/utils/certificateToQuote';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 
 interface MinorWorksPdfGeneratorProps {
@@ -29,7 +50,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   isFormValid,
   onSuccess,
   reportId,
-  userId
+  userId,
 }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -62,7 +83,9 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       // Get user ID if not provided
       let currentUserId = userId;
       if (!currentUserId) {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (!user) return;
         currentUserId = user.id;
       }
@@ -89,19 +112,15 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
 
       if (result.success) {
         console.log('✅ Part P notification created:', result.notificationId);
-        
+
         // Invalidate notifications query to update dashboard
         queryClient.invalidateQueries({ queryKey: ['notifications'] });
-        
+
         toast({
-          title: "Part P Notification Created",
-          description: "Notification created successfully. Submission required within 30 days.",
+          title: 'Part P Notification Created',
+          description: 'Notification created successfully. Submission required within 30 days.',
           action: (
-            <Button 
-              size="sm" 
-              variant="outline"
-              onClick={() => navigate('/?section=notifications')}
-            >
+            <Button size="sm" variant="outline" onClick={() => navigate('/?section=notifications')}>
               <Bell className="h-3 w-3 mr-1" />
               View Notifications
             </Button>
@@ -109,19 +128,19 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         });
       } else {
         console.error('Failed to create notification:', result.error);
-        
+
         toast({
-          title: "Notification Creation Failed",
-          description: result.error || "Unable to create Part P notification.",
-          variant: "destructive",
+          title: 'Notification Creation Failed',
+          description: result.error || 'Unable to create Part P notification.',
+          variant: 'destructive',
         });
       }
     } catch (error) {
       console.error('Notification creation failed:', error);
       toast({
-        title: "Notification Error",
-        description: "An error occurred while creating the notification.",
-        variant: "destructive",
+        title: 'Notification Error',
+        description: 'An error occurred while creating the notification.',
+        variant: 'destructive',
       });
     }
   };
@@ -136,43 +155,43 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   const generateFallbackPdf = async () => {
     // Fallback to browser-based PDF generation using existing utils
     const { generateMinorWorksPdf } = await import('@/utils/minorWorksPdfExport');
-    
+
     setProgress(50);
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate processing
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate processing
+
     generateMinorWorksPdf(formData);
     setProgress(100);
-    
+
     return true;
   };
 
   const handleGeneratePdf = async (forceLocal = false) => {
     // Validate form data before generation
     const validation = validateMinorWorksFormData(formData);
-    
+
     if (!validation.isValid) {
       toast({
-        title: "Form Validation Failed",
+        title: 'Form Validation Failed',
         description: `Please fix ${validation.errors.length} error(s): ${validation.errors[0]?.message}`,
-        variant: "destructive",
+        variant: 'destructive',
       });
       return;
     }
-    
+
     if (!isFormValid) {
       toast({
-        title: "Form Incomplete",
-        description: "Please complete all required fields before generating the certificate.",
-        variant: "destructive",
+        title: 'Form Incomplete',
+        description: 'Please complete all required fields before generating the certificate.',
+        variant: 'destructive',
       });
       return;
     }
-    
-      if (validation.warnings.length > 0) {
+
+    if (validation.warnings.length > 0) {
       toast({
         title: `${validation.warnings.length} Warning(s)`,
         description: validation.warnings[0]?.message,
-        variant: "default",
+        variant: 'default',
       });
     }
 
@@ -186,17 +205,17 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       if (forceLocal) {
         setCurrentMethod('local');
         setProgress(10);
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         await generateFallbackPdf();
-        
+
         toast({
-          title: "Certificate Generated",
-          description: "Certificate generated using local template.",
+          title: 'Certificate Generated',
+          description: 'Certificate generated using local template.',
         });
-        
+
         onSuccess?.();
         await handleNotificationCreation();
-        
+
         // Invalidate dashboard queries
         queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
         queryClient.invalidateQueries({ queryKey: ['my-reports'] });
@@ -205,23 +224,27 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
 
       setCurrentMethod('cloud');
       setProgress(10);
-      
+
       // Step 1: Ensure report is saved to database first
       console.log('[MinorWorks PDF] Step 1: Ensuring report is saved to database...');
       console.log('[MinorWorks PDF] reportId:', reportId);
-      
+
       // Save report to database if not already saved
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('User not authenticated');
       }
-      
+
       const { reportCloud } = await import('@/utils/reportCloud');
-      
+
       // Check if report exists in database
-      const existingReport = reportId ? await reportCloud.getReportByReportId(reportId, user.id) : null;
+      const existingReport = reportId
+        ? await reportCloud.getReportByReportId(reportId, user.id)
+        : null;
       let savedReportId = reportId;
-      
+
       if (!existingReport) {
         console.log('[MinorWorks PDF] Report not found in database, creating...');
         const createResult = await reportCloud.createReport(user.id, 'minor-works', formData);
@@ -236,19 +259,19 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           await reportCloud.updateReport(savedReportId, user.id, formData);
         }
       }
-      
+
       setProgress(20);
-      
+
       // Get saved template ID from settings
       const { offlineStorage: offlineStorageModule } = await import('@/utils/offlineStorage');
       const credentials = await offlineStorageModule.getApiCredentials('pdfMonkey');
       const savedTemplateId = credentials.templateId;
-      
+
       // Try PDF Monkey via edge function
       console.log('[MinorWorks PDF] Step 2: Calling edge function...');
       console.log('[MinorWorks PDF] Using template ID:', savedTemplateId || 'default');
       setProgress(30);
-      
+
       // Merge company branding into form data
       let dataWithBranding = { ...formData };
       if (hasSavedCompanyBranding) {
@@ -257,8 +280,16 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           dataWithBranding = {
             ...dataWithBranding,
             companyLogo: branding.companyLogo || dataWithBranding.companyLogo || '',
-            companyName: branding.companyName || dataWithBranding.companyName || dataWithBranding.contractorName || '',
-            companyAddress: branding.companyAddress || dataWithBranding.companyAddress || dataWithBranding.contractorAddress || '',
+            companyName:
+              branding.companyName ||
+              dataWithBranding.companyName ||
+              dataWithBranding.contractorName ||
+              '',
+            companyAddress:
+              branding.companyAddress ||
+              dataWithBranding.companyAddress ||
+              dataWithBranding.contractorAddress ||
+              '',
             companyPhone: branding.companyPhone || dataWithBranding.companyPhone || '',
             companyEmail: branding.companyEmail || dataWithBranding.companyEmail || '',
           };
@@ -267,45 +298,62 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
 
       // Format form data for better PDF presentation
       const formattedFormData = { ...dataWithBranding };
-      Object.keys(formattedFormData).forEach(key => {
+      Object.keys(formattedFormData).forEach((key) => {
         if (formattedFormData[key]) {
           formattedFormData[key] = formatFieldForPdf(key, formattedFormData[key]);
         }
       });
-      
-      const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-minor-works-pdf', {
-        body: { 
-          formData: formattedFormData,
-          templateId: savedTemplateId
+
+      const { data: functionData, error: functionError } = await supabase.functions.invoke(
+        'generate-minor-works-pdf',
+        {
+          body: {
+            formData: formattedFormData,
+            templateId: savedTemplateId,
+          },
         }
-      });
-      
-      console.log('[MinorWorks PDF] Edge function raw response:', JSON.stringify(functionData).substring(0, 300));
+      );
+
+      console.log(
+        '[MinorWorks PDF] Edge function raw response:',
+        JSON.stringify(functionData).substring(0, 300)
+      );
       console.log('[MinorWorks PDF] Edge function error:', functionError);
-      console.log('[MinorWorks PDF] Response keys:', functionData ? Object.keys(functionData) : 'null');
-      
+      console.log(
+        '[MinorWorks PDF] Response keys:',
+        functionData ? Object.keys(functionData) : 'null'
+      );
+
       if (functionError) {
-        console.warn('[MinorWorks PDF] Edge function error, falling back to local generation:', functionError);
+        console.warn(
+          '[MinorWorks PDF] Edge function error, falling back to local generation:',
+          functionError
+        );
         setCurrentMethod('local');
         setCanRetryCloud(true);
         setError(`Cloud generation failed. Using local generation instead.`);
         setProgress(50);
         await generateFallbackPdf();
-        
+
         toast({
-          title: "Certificate Generated",
-          description: "Certificate generated using local template. Cloud service encountered an issue.",
+          title: 'Certificate Generated',
+          description:
+            'Certificate generated using local template. Cloud service encountered an issue.',
         });
-        
+
         onSuccess?.();
         await handleNotificationCreation();
-        
+
         // Invalidate dashboard queries
         queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
         queryClient.invalidateQueries({ queryKey: ['my-reports'] });
       } else {
         // Try multiple response formats
-        const pdfUrlFromResponse = functionData?.pdfUrl || functionData?.pdf_url || functionData?.url || functionData?.data?.pdfUrl;
+        const pdfUrlFromResponse =
+          functionData?.pdfUrl ||
+          functionData?.pdf_url ||
+          functionData?.url ||
+          functionData?.data?.pdfUrl;
 
         if (pdfUrlFromResponse) {
           console.log('[MinorWorks PDF] Step 3: PDF URL extracted:', pdfUrlFromResponse);
@@ -326,12 +374,18 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               storagePath = storageResult.storagePath;
               console.log('[MinorWorks PDF] PDF saved to permanent storage:', storagePath);
             } catch (storageError) {
-              console.error('[MinorWorks PDF] Failed to save PDF permanently, using temp URL:', storageError);
+              console.error(
+                '[MinorWorks PDF] Failed to save PDF permanently, using temp URL:',
+                storageError
+              );
               // Continue with temp URL - user can still download, just won't persist long-term
             }
           }
 
-          console.log('[MinorWorks PDF] Step 4: Saving PDF URL to database for report_id:', savedReportId);
+          console.log(
+            '[MinorWorks PDF] Step 4: Saving PDF URL to database for report_id:',
+            savedReportId
+          );
 
           // Save PDF URL to database
           if (savedReportId) {
@@ -356,9 +410,9 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               console.error('[MinorWorks PDF] PDF URL that failed to save:', permanentUrl);
 
               toast({
-                title: "Warning",
-                description: "PDF generated but not saved to your account.",
-                variant: "destructive"
+                title: 'Warning',
+                description: 'PDF generated but not saved to your account.',
+                variant: 'destructive',
               });
             } else {
               console.log('[MinorWorks PDF] PDF URL saved successfully:', dbUpdateData);
@@ -369,15 +423,15 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           setProgress(100);
 
           toast({
-            title: "Certificate Generated",
+            title: 'Certificate Generated',
             description: storagePath
-              ? "Certificate generated and saved permanently."
-              : "Certificate generated successfully using your custom template.",
+              ? 'Certificate generated and saved permanently.'
+              : 'Certificate generated successfully using your custom template.',
           });
-          
+
           onSuccess?.();
           await handleNotificationCreation();
-          
+
           // Invalidate dashboard queries
           queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
           queryClient.invalidateQueries({ queryKey: ['my-reports'] });
@@ -385,25 +439,27 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           // Fallback to local generation
           const errorMsg = functionData?.error || 'Edge function returned no PDF URL';
           const isTimeout = functionData?.timeout;
-        
+
           console.warn('PDF Monkey failed, using fallback:', errorMsg);
           setCurrentMethod('local');
           setCanRetryCloud(isTimeout);
-          setError(isTimeout ? 
-            'Cloud generation timed out (may be busy). Using local generation.' : 
-            `Cloud generation failed: ${errorMsg}. Using local generation.`
+          setError(
+            isTimeout
+              ? 'Cloud generation timed out (may be busy). Using local generation.'
+              : `Cloud generation failed: ${errorMsg}. Using local generation.`
           );
           setProgress(50);
           await generateFallbackPdf();
-          
+
           toast({
-            title: "Certificate Generated",
-            description: "Certificate generated using local template. Cloud service encountered an issue.",
+            title: 'Certificate Generated',
+            description:
+              'Certificate generated using local template. Cloud service encountered an issue.',
           });
-          
+
           onSuccess?.();
           await handleNotificationCreation();
-          
+
           // Invalidate dashboard queries
           queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
           queryClient.invalidateQueries({ queryKey: ['my-reports'] });
@@ -432,32 +488,32 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           formData.clientName || formData.propertyAddress || 'Client',
           formData.workDate || new Date()
         );
-        
+
         // Fetch PDF as blob to ensure correct filename
         const response = await fetch(pdfUrl);
         const blob = await response.blob();
         const blobUrl = URL.createObjectURL(blob);
-        
+
         const link = document.createElement('a');
         link.href = blobUrl;
         link.download = filename;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        
+
         // Clean up blob URL
         setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
-        
+
         toast({
-          title: "Download Started",
-          description: "Your certificate is downloading.",
+          title: 'Download Started',
+          description: 'Your certificate is downloading.',
         });
       } catch (error) {
         console.error('Download error:', error);
         toast({
-          title: "Download Failed",
-          description: "Opening PDF in new tab instead.",
-          variant: "default",
+          title: 'Download Failed',
+          description: 'Opening PDF in new tab instead.',
+          variant: 'default',
         });
         // Fallback: Open in new window
         window.open(pdfUrl, '_blank');
@@ -486,9 +542,9 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   const handleSendEmail = async () => {
     if (!emailRecipient || !emailRecipient.includes('@')) {
       toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
+        title: 'Invalid Email',
+        description: 'Please enter a valid email address.',
+        variant: 'destructive',
       });
       return;
     }
@@ -497,9 +553,10 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     const currentReportId = reportId || formData.certificateNumber;
     if (!reportId) {
       toast({
-        title: "Save Required",
-        description: "Please save the certificate first before emailing. Click 'Save Draft' then try again.",
-        variant: "destructive",
+        title: 'Save Required',
+        description:
+          "Please save the certificate first before emailing. Click 'Save Draft' then try again.",
+        variant: 'destructive',
       });
       return;
     }
@@ -509,12 +566,15 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     try {
       // Call the Resend-based edge function to generate PDF and send email
 
-      const { data: result, error: fnError } = await supabase.functions.invoke('send-certificate-resend', {
-        body: {
-          reportId: currentReportId,
-          recipientEmail: emailRecipient,
+      const { data: result, error: fnError } = await supabase.functions.invoke(
+        'send-certificate-resend',
+        {
+          body: {
+            reportId: currentReportId,
+            recipientEmail: emailRecipient,
+          },
         }
-      });
+      );
 
       if (fnError) {
         let errorMessage = fnError.message;
@@ -532,18 +592,17 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       }
 
       toast({
-        title: "Certificate Sent",
+        title: 'Certificate Sent',
         description: `Minor Works certificate sent successfully to ${emailRecipient}`,
       });
 
       setShowEmailDialog(false);
       setEmailRecipient('');
-
     } catch (error) {
       toast({
-        title: "Email Failed",
-        description: error instanceof Error ? error.message : "Failed to send certificate email.",
-        variant: "destructive",
+        title: 'Email Failed',
+        description: error instanceof Error ? error.message : 'Failed to send certificate email.',
+        variant: 'destructive',
       });
     } finally {
       setIsSendingEmail(false);
@@ -581,7 +640,6 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     });
     navigate(url);
   };
-
 
   return (
     <>
@@ -629,9 +687,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         </div>
 
         {isPdfMonkeyConfigured() && (
-          <p className="text-xs text-center text-muted-foreground">
-            Using custom PDF template
-          </p>
+          <p className="text-xs text-center text-muted-foreground">Using custom PDF template</p>
         )}
 
         {!isPdfMonkeyConfigured() && (
@@ -654,13 +710,15 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               {!currentMethod && 'Preparing to generate your Minor Works Certificate...'}
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             {isGenerating && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span>
-                    {currentMethod === 'cloud' && progress < 50 && 'Processing with cloud service...'}
+                    {currentMethod === 'cloud' &&
+                      progress < 50 &&
+                      'Processing with cloud service...'}
                     {currentMethod === 'cloud' && progress >= 50 && 'Finalizing PDF...'}
                     {currentMethod === 'local' && 'Generating PDF locally...'}
                     {!currentMethod && 'Preparing...'}
@@ -681,9 +739,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
             {!isGenerating && !error && progress === 100 && (
               <Alert>
                 <CheckCircle className="h-4 w-4" />
-                <AlertDescription>
-                  Certificate generated successfully!
-                </AlertDescription>
+                <AlertDescription>Certificate generated successfully!</AlertDescription>
               </Alert>
             )}
 
@@ -704,10 +760,14 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
                 </Button>
               )}
             </div>
-            
+
             {!isGenerating && !error && !pdfUrl && (
               <div className="flex gap-2 pt-2 border-t">
-                <Button variant="outline" onClick={() => handleGeneratePdf(true)} className="flex-1">
+                <Button
+                  variant="outline"
+                  onClick={() => handleGeneratePdf(true)}
+                  className="flex-1"
+                >
                   Use Local Generation
                 </Button>
               </div>
@@ -725,7 +785,8 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               Email Minor Works Certificate
             </DialogTitle>
             <DialogDescription>
-              Enter the recipient's email address. The certificate will be generated and sent as a PDF attachment.
+              Enter the recipient's email address. The certificate will be generated and sent as a
+              PDF attachment.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
@@ -781,7 +842,6 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
     </>
   );
 };

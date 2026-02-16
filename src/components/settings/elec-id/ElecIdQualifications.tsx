@@ -1,26 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Drawer } from "vaul";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Drawer } from 'vaul';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 import {
   Plus,
   GraduationCap,
@@ -42,20 +37,20 @@ import {
   Bell,
   Network,
   Factory,
-} from "lucide-react";
-import { UK_QUALIFICATIONS, getQualificationLabel } from "@/data/uk-electrician-constants";
-import { getExpiryStatus, getDaysUntilExpiry } from "@/utils/elecIdGenerator";
-import { useNotifications } from "@/components/notifications/NotificationProvider";
-import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
-import { useElecIdProfile } from "@/hooks/useElecIdProfile";
-import { useIsMobile } from "@/hooks/use-mobile";
+} from 'lucide-react';
+import { UK_QUALIFICATIONS, getQualificationLabel } from '@/data/uk-electrician-constants';
+import { getExpiryStatus, getDaysUntilExpiry } from '@/utils/elecIdGenerator';
+import { useNotifications } from '@/components/notifications/NotificationProvider';
+import ConfirmDeleteDialog from './ConfirmDeleteDialog';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   getQualificationsByProfileId,
   addElecIdQualification,
   updateElecIdQualification,
   deleteElecIdQualification,
   ElecIdQualification,
-} from "@/services/elecIdService";
+} from '@/services/elecIdService';
 
 interface Qualification {
   id: string;
@@ -102,13 +97,13 @@ const ElecIdQualifications = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedQual, setSelectedQual] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedQual, setSelectedQual] = useState<string>('');
   const [formData, setFormData] = useState({
-    awardingBody: "",
-    dateAchieved: "",
-    expiryDate: "",
-    certificateNumber: "",
+    awardingBody: '',
+    dateAchieved: '',
+    expiryDate: '',
+    certificateNumber: '',
   });
 
   const [qualifications, setQualifications] = useState<Qualification[]>([]);
@@ -137,9 +132,9 @@ const ElecIdQualifications = () => {
       } catch (error) {
         console.error('Error fetching qualifications:', error);
         addNotification({
-          title: "Error",
-          message: "Failed to load qualifications",
-          type: "error",
+          title: 'Error',
+          message: 'Failed to load qualifications',
+          type: 'error',
         });
       } finally {
         setIsFetching(false);
@@ -152,9 +147,9 @@ const ElecIdQualifications = () => {
   const handleAddQualification = async () => {
     if (!profile?.id) {
       addNotification({
-        title: "Error",
-        message: "Profile not found. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Profile not found. Please try again.',
+        type: 'error',
       });
       return;
     }
@@ -189,16 +184,16 @@ const ElecIdQualifications = () => {
       resetForm();
 
       addNotification({
-        title: "Qualification Added",
+        title: 'Qualification Added',
         message: `${getQualificationLabel(selectedQual)} has been added to your profile.`,
-        type: "success",
+        type: 'success',
       });
     } catch (error) {
       console.error('Error adding qualification:', error);
       addNotification({
-        title: "Error",
-        message: "Failed to add qualification. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Failed to add qualification. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsLoading(false);
@@ -236,16 +231,16 @@ const ElecIdQualifications = () => {
       resetForm();
 
       addNotification({
-        title: "Qualification Updated",
-        message: "Your qualification details have been updated.",
-        type: "success",
+        title: 'Qualification Updated',
+        message: 'Your qualification details have been updated.',
+        type: 'success',
       });
     } catch (error) {
       console.error('Error updating qualification:', error);
       addNotification({
-        title: "Error",
-        message: "Failed to update qualification. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Failed to update qualification. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsLoading(false);
@@ -264,18 +259,18 @@ const ElecIdQualifications = () => {
       setDeleteConfirm({ open: false, id: null });
 
       addNotification({
-        title: "Qualification Removed",
+        title: 'Qualification Removed',
         message: deletedQual
           ? `${getQualificationLabel(deletedQual.qualificationValue)} has been removed.`
-          : "Qualification has been removed.",
-        type: "info",
+          : 'Qualification has been removed.',
+        type: 'info',
       });
     } catch (error) {
       console.error('Error deleting qualification:', error);
       addNotification({
-        title: "Error",
-        message: "Failed to delete qualification. Please try again.",
-        type: "error",
+        title: 'Error',
+        message: 'Failed to delete qualification. Please try again.',
+        type: 'error',
       });
     } finally {
       setIsLoading(false);
@@ -289,20 +284,20 @@ const ElecIdQualifications = () => {
     setFormData({
       awardingBody: qual.awardingBody,
       dateAchieved: qual.dateAchieved,
-      expiryDate: qual.expiryDate || "",
-      certificateNumber: qual.certificateNumber || "",
+      expiryDate: qual.expiryDate || '',
+      certificateNumber: qual.certificateNumber || '',
     });
     setIsEditSheetOpen(true);
   };
 
   const resetForm = () => {
-    setSelectedCategory("");
-    setSelectedQual("");
+    setSelectedCategory('');
+    setSelectedQual('');
     setFormData({
-      awardingBody: "",
-      dateAchieved: "",
-      expiryDate: "",
-      certificateNumber: "",
+      awardingBody: '',
+      dateAchieved: '',
+      expiryDate: '',
+      certificateNumber: '',
     });
   };
 
@@ -343,7 +338,11 @@ const ElecIdQualifications = () => {
       cards: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', border: 'border-emerald-500/30' },
       specialist: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' },
       renewable: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30' },
-      fire_security: { bg: 'bg-orange-500/20', text: 'text-orange-400', border: 'border-orange-500/30' },
+      fire_security: {
+        bg: 'bg-orange-500/20',
+        text: 'text-orange-400',
+        border: 'border-orange-500/30',
+      },
       data_comms: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/30' },
       industrial: { bg: 'bg-slate-500/20', text: 'text-slate-400', border: 'border-slate-500/30' },
     };
@@ -377,13 +376,13 @@ const ElecIdQualifications = () => {
                   type="button"
                   onClick={() => {
                     setSelectedCategory(key);
-                    setSelectedQual("");
+                    setSelectedQual('');
                   }}
                   className={cn(
-                    "px-3 py-1.5 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.97]",
+                    'px-3 py-1.5 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.97]',
                     isSelected
                       ? `${colors.bg} ${colors.text} ${colors.border} border`
-                      : "bg-white/[0.06] text-foreground/70 hover:bg-white/[0.1]"
+                      : 'bg-white/[0.06] text-foreground/70 hover:bg-white/[0.1]'
                   )}
                 >
                   {shortLabel}
@@ -462,7 +461,9 @@ const ElecIdQualifications = () => {
             </div>
           )}
           <div className="space-y-1.5 col-span-2">
-            <Label className="text-xs text-foreground/70">Certificate No. <span className="text-foreground/40">(optional)</span></Label>
+            <Label className="text-xs text-foreground/70">
+              Certificate No. <span className="text-foreground/40">(optional)</span>
+            </Label>
             <Input
               value={formData.certificateNumber}
               onChange={(e) => setFormData({ ...formData, certificateNumber: e.target.value })}
@@ -493,19 +494,18 @@ const ElecIdQualifications = () => {
         className="flex-1 h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.98]"
         onClick={isEdit ? handleEditQualification : handleAddQualification}
         disabled={
-          (!isEdit && (!selectedCategory || !selectedQual || !formData.dateAchieved)) ||
-          isLoading
+          (!isEdit && (!selectedCategory || !selectedQual || !formData.dateAchieved)) || isLoading
         }
       >
         {isLoading ? (
           <>
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            {isEdit ? "Saving..." : "Adding..."}
+            {isEdit ? 'Saving...' : 'Adding...'}
           </>
         ) : isEdit ? (
-          "Save Changes"
+          'Save Changes'
         ) : (
-          "Add Qualification"
+          'Add Qualification'
         )}
       </Button>
     </div>
@@ -541,9 +541,7 @@ const ElecIdQualifications = () => {
                 <h3 className="text-lg font-bold text-foreground">Add Qualification</h3>
                 <p className="text-sm text-foreground/70">Add a new credential to your profile</p>
               </div>
-              <div className="flex-1 overflow-y-auto px-5 pb-4">
-                {FormContent({})}
-              </div>
+              <div className="flex-1 overflow-y-auto px-5 pb-4">{FormContent({})}</div>
               <div className="p-5 border-t border-white/[0.08] bg-background/95 backdrop-blur-sm">
                 {FormFooter({ onClose: () => setIsAddSheetOpen(false) })}
               </div>
@@ -601,7 +599,7 @@ const ElecIdQualifications = () => {
         <div>
           <h3 className="text-lg font-semibold text-foreground">Qualifications</h3>
           <p className="text-sm text-foreground/70">
-            {qualifications.length} credential{qualifications.length !== 1 ? "s" : ""} recorded
+            {qualifications.length} credential{qualifications.length !== 1 ? 's' : ''} recorded
           </p>
         </div>
         <Button
@@ -634,8 +632,8 @@ const ElecIdQualifications = () => {
                       const IconComponent = getCategoryIcon(catKey);
                       const colors = getCategoryColor(catKey);
                       return (
-                        <div className={cn("p-1.5 rounded-lg", colors.bg)}>
-                          <IconComponent className={cn("h-4 w-4", colors.text)} />
+                        <div className={cn('p-1.5 rounded-lg', colors.bg)}>
+                          <IconComponent className={cn('h-4 w-4', colors.text)} />
                         </div>
                       );
                     })()}
@@ -649,19 +647,18 @@ const ElecIdQualifications = () => {
                 {/* Qualification Cards - Enhanced Design */}
                 <div className="p-3 space-y-3">
                   {categoryQuals.map((qual, index) => {
-                    const expiryStatus = qual.expiryDate
-                      ? getExpiryStatus(qual.expiryDate)
-                      : null;
+                    const expiryStatus = qual.expiryDate ? getExpiryStatus(qual.expiryDate) : null;
                     const daysUntil = qual.expiryDate ? getDaysUntilExpiry(qual.expiryDate) : null;
                     const colors = getCategoryColor(catKey);
                     const IconComponent = getCategoryIcon(catKey);
 
                     // Determine card border color based on expiry
-                    const cardBorderClass = expiryStatus?.status === "expired"
-                      ? "border-red-500/40"
-                      : expiryStatus?.status === "expiring"
-                      ? "border-orange-500/40"
-                      : "border-white/[0.08]";
+                    const cardBorderClass =
+                      expiryStatus?.status === 'expired'
+                        ? 'border-red-500/40'
+                        : expiryStatus?.status === 'expiring'
+                          ? 'border-orange-500/40'
+                          : 'border-white/[0.08]';
 
                     return (
                       <motion.div
@@ -670,12 +667,12 @@ const ElecIdQualifications = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
                         className={cn(
-                          "relative rounded-xl border bg-gradient-to-br from-white/[0.04] to-white/[0.01] overflow-hidden",
+                          'relative rounded-xl border bg-gradient-to-br from-white/[0.04] to-white/[0.01] overflow-hidden',
                           cardBorderClass
                         )}
                       >
                         {/* Expiry Warning Banner */}
-                        {expiryStatus?.status === "expired" && (
+                        {expiryStatus?.status === 'expired' && (
                           <div className="px-4 py-2 bg-red-500/20 border-b border-red-500/30 flex items-center gap-2">
                             <AlertCircle className="h-4 w-4 text-red-400" />
                             <span className="text-xs font-medium text-red-400">
@@ -683,7 +680,7 @@ const ElecIdQualifications = () => {
                             </span>
                           </div>
                         )}
-                        {expiryStatus?.status === "expiring" && daysUntil && daysUntil <= 30 && (
+                        {expiryStatus?.status === 'expiring' && daysUntil && daysUntil <= 30 && (
                           <div className="px-4 py-2 bg-orange-500/20 border-b border-orange-500/30 flex items-center gap-2">
                             <Clock className="h-4 w-4 text-orange-400" />
                             <span className="text-xs font-medium text-orange-400">
@@ -698,11 +695,13 @@ const ElecIdQualifications = () => {
                         >
                           <div className="flex gap-4">
                             {/* Icon */}
-                            <div className={cn(
-                              "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
-                              colors.bg
-                            )}>
-                              <IconComponent className={cn("h-6 w-6", colors.text)} />
+                            <div
+                              className={cn(
+                                'w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0',
+                                colors.bg
+                              )}
+                            >
+                              <IconComponent className={cn('h-6 w-6', colors.text)} />
                             </div>
 
                             {/* Content */}
@@ -714,7 +713,7 @@ const ElecIdQualifications = () => {
                                     {getQualificationLabel(qual.qualificationValue)}
                                   </h4>
                                   <p className="text-xs text-foreground/60 mt-0.5">
-                                    {qual.awardingBody || "Unknown awarding body"}
+                                    {qual.awardingBody || 'Unknown awarding body'}
                                   </p>
                                 </div>
                                 {qual.isVerified && (
@@ -733,41 +732,71 @@ const ElecIdQualifications = () => {
                                     <Calendar className="h-3.5 w-3.5 text-foreground/50" />
                                   </div>
                                   <div>
-                                    <p className="text-[10px] text-foreground/50 uppercase tracking-wide">Achieved</p>
+                                    <p className="text-[10px] text-foreground/50 uppercase tracking-wide">
+                                      Achieved
+                                    </p>
                                     <p className="text-xs font-medium text-foreground/80">
                                       {qual.dateAchieved
-                                        ? new Date(qual.dateAchieved).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
-                                        : "Not set"}
+                                        ? new Date(qual.dateAchieved).toLocaleDateString('en-GB', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                            year: 'numeric',
+                                          })
+                                        : 'Not set'}
                                     </p>
                                   </div>
                                 </div>
 
                                 {/* Expiry Date */}
                                 <div className="flex items-center gap-2">
-                                  <div className={cn(
-                                    "w-6 h-6 rounded-md flex items-center justify-center",
-                                    expiryStatus?.status === "expired" ? "bg-red-500/20" :
-                                    expiryStatus?.status === "expiring" ? "bg-orange-500/20" :
-                                    qual.expiryDate ? "bg-green-500/20" : "bg-white/[0.06]"
-                                  )}>
-                                    <Clock className={cn(
-                                      "h-3.5 w-3.5",
-                                      expiryStatus?.status === "expired" ? "text-red-400" :
-                                      expiryStatus?.status === "expiring" ? "text-orange-400" :
-                                      qual.expiryDate ? "text-green-400" : "text-foreground/50"
-                                    )} />
+                                  <div
+                                    className={cn(
+                                      'w-6 h-6 rounded-md flex items-center justify-center',
+                                      expiryStatus?.status === 'expired'
+                                        ? 'bg-red-500/20'
+                                        : expiryStatus?.status === 'expiring'
+                                          ? 'bg-orange-500/20'
+                                          : qual.expiryDate
+                                            ? 'bg-green-500/20'
+                                            : 'bg-white/[0.06]'
+                                    )}
+                                  >
+                                    <Clock
+                                      className={cn(
+                                        'h-3.5 w-3.5',
+                                        expiryStatus?.status === 'expired'
+                                          ? 'text-red-400'
+                                          : expiryStatus?.status === 'expiring'
+                                            ? 'text-orange-400'
+                                            : qual.expiryDate
+                                              ? 'text-green-400'
+                                              : 'text-foreground/50'
+                                      )}
+                                    />
                                   </div>
                                   <div>
-                                    <p className="text-[10px] text-foreground/50 uppercase tracking-wide">Expires</p>
-                                    <p className={cn(
-                                      "text-xs font-medium",
-                                      expiryStatus?.status === "expired" ? "text-red-400" :
-                                      expiryStatus?.status === "expiring" ? "text-orange-400" :
-                                      qual.expiryDate ? "text-green-400" : "text-foreground/50"
-                                    )}>
+                                    <p className="text-[10px] text-foreground/50 uppercase tracking-wide">
+                                      Expires
+                                    </p>
+                                    <p
+                                      className={cn(
+                                        'text-xs font-medium',
+                                        expiryStatus?.status === 'expired'
+                                          ? 'text-red-400'
+                                          : expiryStatus?.status === 'expiring'
+                                            ? 'text-orange-400'
+                                            : qual.expiryDate
+                                              ? 'text-green-400'
+                                              : 'text-foreground/50'
+                                      )}
+                                    >
                                       {qual.expiryDate
-                                        ? new Date(qual.expiryDate).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
-                                        : "No expiry"}
+                                        ? new Date(qual.expiryDate).toLocaleDateString('en-GB', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                            year: 'numeric',
+                                          })
+                                        : 'No expiry'}
                                     </p>
                                   </div>
                                 </div>
@@ -776,10 +805,14 @@ const ElecIdQualifications = () => {
                                 {qual.certificateNumber && (
                                   <div className="flex items-center gap-2 col-span-2">
                                     <div className="w-6 h-6 rounded-md bg-white/[0.06] flex items-center justify-center">
-                                      <span className="text-[10px] font-bold text-foreground/50">#</span>
+                                      <span className="text-[10px] font-bold text-foreground/50">
+                                        #
+                                      </span>
                                     </div>
                                     <div>
-                                      <p className="text-[10px] text-foreground/50 uppercase tracking-wide">Certificate No.</p>
+                                      <p className="text-[10px] text-foreground/50 uppercase tracking-wide">
+                                        Certificate No.
+                                      </p>
                                       <p className="text-xs font-mono font-medium text-foreground/80">
                                         {qual.certificateNumber}
                                       </p>
@@ -793,20 +826,20 @@ const ElecIdQualifications = () => {
                                 {expiryStatus ? (
                                   <Badge
                                     className={cn(
-                                      "text-[10px] font-medium",
-                                      expiryStatus.status === "expired"
-                                        ? "bg-red-500/20 text-red-400 border-red-500/30"
-                                        : expiryStatus.status === "expiring"
-                                        ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
-                                        : "bg-green-500/20 text-green-400 border-green-500/30"
+                                      'text-[10px] font-medium',
+                                      expiryStatus.status === 'expired'
+                                        ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                                        : expiryStatus.status === 'expiring'
+                                          ? 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+                                          : 'bg-green-500/20 text-green-400 border-green-500/30'
                                     )}
                                   >
-                                    {expiryStatus.status === "expired" ? (
+                                    {expiryStatus.status === 'expired' ? (
                                       <>
                                         <AlertCircle className="h-3 w-3 mr-1" />
                                         Expired
                                       </>
-                                    ) : expiryStatus.status === "expiring" ? (
+                                    ) : expiryStatus.status === 'expiring' ? (
                                       <>
                                         <Clock className="h-3 w-3 mr-1" />
                                         {daysUntil} days remaining

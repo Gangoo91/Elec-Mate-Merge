@@ -1,7 +1,6 @@
-
-import React, { useState } from "react";
-import { CreditCard, Car, Plus, X } from "lucide-react";
-import { CVData, ProfessionalCards } from "../types";
+import React, { useState } from 'react';
+import { CreditCard, Car, Plus, X } from 'lucide-react';
+import { CVData, ProfessionalCards } from '../types';
 
 interface ProfessionalCardsFormProps {
   cvData: CVData;
@@ -28,7 +27,10 @@ const DRIVING_LICENCE_OPTIONS = [
   'IPAF',
 ];
 
-export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({ cvData, onChange }) => {
+export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({
+  cvData,
+  onChange,
+}) => {
   const [newLicence, setNewLicence] = useState('');
 
   const updateCards = (field: keyof ProfessionalCards, value: string | string[]) => {
@@ -36,8 +38,8 @@ export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({ cv
       ...cvData,
       professionalCards: {
         ...cvData.professionalCards,
-        [field]: value
-      }
+        [field]: value,
+      },
     });
   };
 
@@ -51,7 +53,7 @@ export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({ cv
   const removeLicence = (licence: string) => {
     updateCards(
       'drivingLicence',
-      cvData.professionalCards.drivingLicence.filter(l => l !== licence)
+      cvData.professionalCards.drivingLicence.filter((l) => l !== licence)
     );
   };
 
@@ -69,26 +71,26 @@ export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({ cv
 
         <div className="space-y-4">
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-elec-light">
-              ECS Card Type
-            </label>
+            <label className="text-sm font-semibold text-elec-light">ECS Card Type</label>
             <select
               value={cvData.professionalCards.ecsCardType || ''}
-              onChange={(e) => updateCards('ecsCardType', e.target.value as ProfessionalCards['ecsCardType'])}
+              onChange={(e) =>
+                updateCards('ecsCardType', e.target.value as ProfessionalCards['ecsCardType'])
+              }
               className="flex min-h-[48px] w-full rounded-md border border-input bg-card px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 touch-manipulation"
             >
               <option value="">Select card type...</option>
-              {ECS_CARD_TYPES.map(type => (
-                <option key={type.value} value={type.value}>{type.label}</option>
+              {ECS_CARD_TYPES.map((type) => (
+                <option key={type.value} value={type.value}>
+                  {type.label}
+                </option>
               ))}
             </select>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light">
-                Card Number
-              </label>
+              <label className="text-sm font-semibold text-elec-light">Card Number</label>
               <input
                 type="text"
                 value={cvData.professionalCards.ecsCardNumber || ''}
@@ -98,9 +100,7 @@ export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({ cv
               />
             </div>
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light">
-                Expiry Date
-              </label>
+              <label className="text-sm font-semibold text-elec-light">Expiry Date</label>
               <input
                 type="date"
                 value={cvData.professionalCards.ecsExpiry || ''}
@@ -124,9 +124,7 @@ export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({ cv
 
         <div className="space-y-4">
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-elec-light">
-              CSCS Card Type
-            </label>
+            <label className="text-sm font-semibold text-elec-light">CSCS Card Type</label>
             <input
               type="text"
               value={cvData.professionalCards.cscsCardType || ''}
@@ -138,9 +136,7 @@ export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({ cv
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light">
-                Card Number
-              </label>
+              <label className="text-sm font-semibold text-elec-light">Card Number</label>
               <input
                 type="text"
                 value={cvData.professionalCards.cscsCardNumber || ''}
@@ -150,9 +146,7 @@ export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({ cv
               />
             </div>
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-elec-light">
-                Expiry Date
-              </label>
+              <label className="text-sm font-semibold text-elec-light">Expiry Date</label>
               <input
                 type="date"
                 value={cvData.professionalCards.cscsExpiry || ''}
@@ -196,30 +190,26 @@ export const ProfessionalCardsForm: React.FC<ProfessionalCardsFormProps> = ({ cv
 
         {/* Quick Add Buttons */}
         <div className="space-y-3">
-          <label className="text-sm font-semibold text-elec-light">
-            Quick Add
-          </label>
+          <label className="text-sm font-semibold text-elec-light">Quick Add</label>
           <div className="flex flex-wrap gap-2">
-            {DRIVING_LICENCE_OPTIONS
-              .filter(opt => !cvData.professionalCards.drivingLicence.includes(opt))
-              .map((option) => (
-                <button
-                  key={option}
-                  onClick={() => addLicence(option)}
-                  className="flex items-center gap-1 px-3 py-2 text-sm bg-elec-gray/50 text-elec-light/80 rounded-lg border border-elec-light/20 hover:bg-elec-gray/70 touch-manipulation active:scale-95"
-                >
-                  <Plus className="h-3 w-3" />
-                  {option}
-                </button>
-              ))}
+            {DRIVING_LICENCE_OPTIONS.filter(
+              (opt) => !cvData.professionalCards.drivingLicence.includes(opt)
+            ).map((option) => (
+              <button
+                key={option}
+                onClick={() => addLicence(option)}
+                className="flex items-center gap-1 px-3 py-2 text-sm bg-elec-gray/50 text-elec-light/80 rounded-lg border border-elec-light/20 hover:bg-elec-gray/70 touch-manipulation active:scale-95"
+              >
+                <Plus className="h-3 w-3" />
+                {option}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Custom Licence Input */}
         <div className="mt-4 space-y-3">
-          <label className="text-sm font-semibold text-elec-light">
-            Add Custom Licence/Ticket
-          </label>
+          <label className="text-sm font-semibold text-elec-light">Add Custom Licence/Ticket</label>
           <div className="flex gap-2">
             <input
               type="text"

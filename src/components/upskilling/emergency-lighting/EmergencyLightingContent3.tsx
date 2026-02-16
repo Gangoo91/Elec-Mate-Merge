@@ -17,7 +17,8 @@ export const EmergencyLightingContent3 = () => {
             <div className="space-y-3">
               <h4 className="text-green-300 font-semibold">Central Battery Systems</h4>
               <p className="text-sm">
-                Centralised power supply serving multiple luminaires throughout the building. Batteries are housed in a dedicated plant room or service area.
+                Centralised power supply serving multiple luminaires throughout the building.
+                Batteries are housed in a dedicated plant room or service area.
               </p>
               <div className="bg-green-500/10 p-3 rounded border-l-2 border-green-500">
                 <p className="text-green-300 font-medium text-sm">Advantages:</p>
@@ -32,7 +33,8 @@ export const EmergencyLightingContent3 = () => {
             <div className="space-y-3">
               <h4 className="text-blue-300 font-semibold">Self-Contained Systems</h4>
               <p className="text-sm">
-                Each luminaire contains its own battery, charger, and control gear. No central power supply required.
+                Each luminaire contains its own battery, charger, and control gear. No central power
+                supply required.
               </p>
               <div className="bg-blue-500/10 p-3 rounded border-l-2 border-blue-500">
                 <p className="text-blue-300 font-medium text-sm">Advantages:</p>
@@ -61,7 +63,8 @@ export const EmergencyLightingContent3 = () => {
             <div className="p-4 bg-gradient-to-br from-amber-600/20 to-orange-800/10 border border-amber-500/40 rounded-lg">
               <h4 className="text-amber-300 font-semibold mb-2">Non-Maintained</h4>
               <p className="text-sm mb-2">
-                Luminaires operate only during mains failure. Most common type for general applications.
+                Luminaires operate only during mains failure. Most common type for general
+                applications.
               </p>
               <div className="text-xs text-amber-200">
                 <p>• Activates on mains failure</p>
@@ -108,36 +111,65 @@ export const EmergencyLightingContent3 = () => {
             <div className="space-y-4">
               <h4 className="text-blue-300 font-semibold">Escape Route Lighting</h4>
               <div className="space-y-2 text-sm">
-                <p><strong>Bulkhead Luminaires:</strong> Robust, vandal-resistant units for corridors and stairwells</p>
-                <p><strong>Recessed Luminaires:</strong> Ceiling-mounted units providing uniform light distribution</p>
-                <p><strong>Emergency Downlights:</strong> Integrated LED units with emergency battery backup</p>
+                <p>
+                  <strong>Bulkhead Luminaires:</strong> Robust, vandal-resistant units for corridors
+                  and stairwells
+                </p>
+                <p>
+                  <strong>Recessed Luminaires:</strong> Ceiling-mounted units providing uniform
+                  light distribution
+                </p>
+                <p>
+                  <strong>Emergency Downlights:</strong> Integrated LED units with emergency battery
+                  backup
+                </p>
               </div>
             </div>
             <div className="space-y-4">
               <h4 className="text-purple-300 font-semibold">Exit and Safety Signs</h4>
               <div className="space-y-2 text-sm">
-                <p><strong>Exit Signs:</strong> Internally illuminated directional indicators</p>
-                <p><strong>Pictogram Signs:</strong> Universal symbols for fire exits and safety equipment</p>
-                <p><strong>Combination Units:</strong> Combined lighting and signage in single unit</p>
+                <p>
+                  <strong>Exit Signs:</strong> Internally illuminated directional indicators
+                </p>
+                <p>
+                  <strong>Pictogram Signs:</strong> Universal symbols for fire exits and safety
+                  equipment
+                </p>
+                <p>
+                  <strong>Combination Units:</strong> Combined lighting and signage in single unit
+                </p>
               </div>
             </div>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-6 mt-6">
             <div className="space-y-4">
               <h4 className="text-green-300 font-semibold">Open Area Lighting</h4>
               <div className="space-y-2 text-sm">
-                <p><strong>High Bay Units:</strong> For warehouses and large open spaces</p>
-                <p><strong>Floodlights:</strong> Wide-area coverage for assembly points</p>
-                <p><strong>Linear Luminaires:</strong> Continuous lighting strips for large areas</p>
+                <p>
+                  <strong>High Bay Units:</strong> For warehouses and large open spaces
+                </p>
+                <p>
+                  <strong>Floodlights:</strong> Wide-area coverage for assembly points
+                </p>
+                <p>
+                  <strong>Linear Luminaires:</strong> Continuous lighting strips for large areas
+                </p>
               </div>
             </div>
             <div className="space-y-4">
               <h4 className="text-amber-300 font-semibold">High-Risk Task Lighting</h4>
               <div className="space-y-2 text-sm">
-                <p><strong>Task-Specific Units:</strong> Focused lighting for critical operations</p>
-                <p><strong>Hazardous Area Luminaires:</strong> ATEX-rated units for explosive atmospheres</p>
-                <p><strong>Emergency Spotlights:</strong> Directional lighting for equipment shutdown</p>
+                <p>
+                  <strong>Task-Specific Units:</strong> Focused lighting for critical operations
+                </p>
+                <p>
+                  <strong>Hazardous Area Luminaires:</strong> ATEX-rated units for explosive
+                  atmospheres
+                </p>
+                <p>
+                  <strong>Emergency Spotlights:</strong> Directional lighting for equipment shutdown
+                </p>
               </div>
             </div>
           </div>
@@ -182,7 +214,7 @@ export const EmergencyLightingContent3 = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="mt-6 p-4 bg-gradient-to-r from-amber-600/20 to-orange-600/20 border border-amber-500/40 rounded-lg">
             <h4 className="text-amber-300 font-semibold mb-2">Duration Requirements</h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">

@@ -1,15 +1,22 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  Copy, Download, Mail, MessageSquare, FileText, CheckCircle,
-  Sparkles, Send, FileDown
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+  Copy,
+  Download,
+  Mail,
+  MessageSquare,
+  FileText,
+  CheckCircle,
+  Sparkles,
+  Send,
+  FileDown,
+} from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import { generateProfessionalElectricalPDF } from '@/utils/professional-electrical-pdf';
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface OutputPanelProps {
   content: string;
@@ -42,35 +49,45 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
 
     const sections = cleanText.split(/\n\n+/);
 
-    return sections.map(section => {
-      let formatted = section.trim();
+    return sections
+      .map((section) => {
+        let formatted = section.trim();
 
-      if (!formatted) return '';
+        if (!formatted) return '';
 
-      if (/^\*\*.*\*\*:?$/.test(formatted)) {
-        const headingText = formatted.replace(/\*\*/g, '').replace(/:$/, '');
-        return `<h3 class="text-lg font-bold text-elec-yellow mb-4 mt-6 first:mt-0">${headingText}</h3>`;
-      }
+        if (/^\*\*.*\*\*:?$/.test(formatted)) {
+          const headingText = formatted.replace(/\*\*/g, '').replace(/:$/, '');
+          return `<h3 class="text-lg font-bold text-elec-yellow mb-4 mt-6 first:mt-0">${headingText}</h3>`;
+        }
 
-      formatted = formatted
-        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em class="italic text-foreground">$1</em>')
-        .replace(/BS 7671/gi, '<span class="text-elec-yellow font-medium">BS 7671</span>')
-        .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>')
-        .replace(/(C[123]|FI)\b/g, '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 text-xs font-semibold">$1</span>');
+        formatted = formatted
+          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
+          .replace(/\*(.*?)\*/g, '<em class="italic text-foreground">$1</em>')
+          .replace(/BS 7671/gi, '<span class="text-elec-yellow font-medium">BS 7671</span>')
+          .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>')
+          .replace(
+            /(C[123]|FI)\b/g,
+            '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 text-xs font-semibold">$1</span>'
+          );
 
-      if (/^[\d\-\*•]\s/.test(formatted)) {
-        const items = formatted.split(/\n/).filter(item => item.trim());
-        return '<ul class="space-y-3 mb-6 ml-0 list-none">' +
-          items.map(item => {
-            const cleanItem = item.replace(/^[\d\-\*•]\s*/, '').trim();
-            return `<li class="text-foreground leading-relaxed pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold text-base">${cleanItem}</li>`;
-          }).join('') +
-          '</ul>';
-      }
+        if (/^[\d\-\*•]\s/.test(formatted)) {
+          const items = formatted.split(/\n/).filter((item) => item.trim());
+          return (
+            '<ul class="space-y-3 mb-6 ml-0 list-none">' +
+            items
+              .map((item) => {
+                const cleanItem = item.replace(/^[\d\-\*•]\s*/, '').trim();
+                return `<li class="text-foreground leading-relaxed pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold text-base">${cleanItem}</li>`;
+              })
+              .join('') +
+            '</ul>'
+          );
+        }
 
-      return `<p class="text-foreground leading-relaxed mb-6 text-base">${formatted}</p>`;
-    }).filter(s => s).join('');
+        return `<p class="text-foreground leading-relaxed mb-6 text-base">${formatted}</p>`;
+      })
+      .filter((s) => s)
+      .join('');
   };
 
   const handleCopy = async () => {
@@ -79,15 +96,15 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
       toast({
-        title: "Copied",
-        description: "Explanation copied to clipboard",
-        variant: "success"
+        title: 'Copied',
+        description: 'Explanation copied to clipboard',
+        variant: 'success',
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to copy to clipboard",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to copy to clipboard',
+        variant: 'destructive',
       });
     }
   };
@@ -125,23 +142,28 @@ ${content}
 *Date: ${new Date().toLocaleDateString('en-GB')}*
       `;
 
-      await generateProfessionalElectricalPDF(formattedContent, "Client Explanation", 'client-explanation.pdf', {
-        reportType: "Client Explanation",
-        companyName: "ElecConnect Professional",
-        includeSignatures: false,
-        watermark: "CLIENT COMMUNICATION"
-      });
+      await generateProfessionalElectricalPDF(
+        formattedContent,
+        'Client Explanation',
+        'client-explanation.pdf',
+        {
+          reportType: 'Client Explanation',
+          companyName: 'ElecConnect Professional',
+          includeSignatures: false,
+          watermark: 'CLIENT COMMUNICATION',
+        }
+      );
 
       toast({
-        title: "Success",
-        description: "Professional PDF downloaded successfully",
-        variant: "success"
+        title: 'Success',
+        description: 'Professional PDF downloaded successfully',
+        variant: 'success',
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to generate professional PDF",
-        variant: "destructive"
+        title: 'Error',
+        description: 'Failed to generate professional PDF',
+        variant: 'destructive',
       });
     } finally {
       setIsGeneratingPDF(false);
@@ -149,13 +171,15 @@ ${content}
   };
 
   const handleEmailTemplate = () => {
-    const subject = encodeURIComponent("Electrical Work Explanation");
-    const body = encodeURIComponent(`Dear Client,\n\nPlease find below the explanation of the electrical work findings:\n\n${content}\n\nBest regards,\nYour Electrician`);
+    const subject = encodeURIComponent('Electrical Work Explanation');
+    const body = encodeURIComponent(
+      `Dear Client,\n\nPlease find below the explanation of the electrical work findings:\n\n${content}\n\nBest regards,\nYour Electrician`
+    );
     window.open(`mailto:?subject=${subject}&body=${body}`);
   };
 
   const handleSMSTemplate = () => {
-    const smsContent = content.length > 160 ? content.substring(0, 157) + "..." : content;
+    const smsContent = content.length > 160 ? content.substring(0, 157) + '...' : content;
     const smsBody = encodeURIComponent(`Hi, regarding your electrical work: ${smsContent}`);
     window.open(`sms:?body=${smsBody}`);
   };
@@ -220,7 +244,8 @@ Thank you for choosing our electrical services.`;
           <div className="space-y-2">
             <h3 className="text-lg font-semibold text-foreground">Ready to Generate</h3>
             <p className="text-sm text-muted-foreground max-w-sm">
-              Your client-friendly explanation will appear here. Available in multiple formats: standard, email, SMS, and quotation.
+              Your client-friendly explanation will appear here. Available in multiple formats:
+              standard, email, SMS, and quotation.
             </p>
           </div>
         </div>
@@ -243,7 +268,9 @@ Thank you for choosing our electrical services.`;
             </div>
             <div>
               <h2 className="font-bold text-foreground">Generated Explanation</h2>
-              <p className="text-xs text-muted-foreground capitalize">{settings.tone} tone • {settings.clientType}</p>
+              <p className="text-xs text-muted-foreground capitalize">
+                {settings.tone} tone • {settings.clientType}
+              </p>
             </div>
           </div>
 
@@ -254,8 +281,8 @@ Thank you for choosing our electrical services.`;
               size="sm"
               onClick={handleCopy}
               className={cn(
-                "h-10 px-4 min-w-[80px] border-border/30 transition-all",
-                copied && "bg-green-500/10 border-green-500/30 text-green-400"
+                'h-10 px-4 min-w-[80px] border-border/30 transition-all',
+                copied && 'bg-green-500/10 border-green-500/30 text-green-400'
               )}
             >
               {copied ? (
@@ -278,7 +305,7 @@ Thank you for choosing our electrical services.`;
               className="h-10 px-4 border-border/30"
             >
               <FileDown className="h-4 w-4 mr-2" />
-              {isGeneratingPDF ? "..." : "PDF"}
+              {isGeneratingPDF ? '...' : 'PDF'}
             </Button>
           </div>
         </div>
@@ -325,7 +352,7 @@ Thank you for choosing our electrical services.`;
                 lineHeight: '1.8',
               }}
               dangerouslySetInnerHTML={{
-                __html: processContentForDisplay(content)
+                __html: processContentForDisplay(content),
               }}
             />
           </div>
@@ -351,11 +378,13 @@ Thank you for choosing our electrical services.`;
 
           <div className="rounded-xl bg-background/50 border border-border/30 p-5">
             <div className="space-y-4">
-              {formatForEmail(content).split('\n').map((line, index) => (
-                <p key={index} className="text-foreground leading-relaxed text-base">
-                  {line || <br />}
-                </p>
-              ))}
+              {formatForEmail(content)
+                .split('\n')
+                .map((line, index) => (
+                  <p key={index} className="text-foreground leading-relaxed text-base">
+                    {line || <br />}
+                  </p>
+                ))}
             </div>
           </div>
         </TabsContent>
@@ -389,8 +418,10 @@ Thank you for choosing our electrical services.`;
                 <Badge
                   variant="outline"
                   className={cn(
-                    "text-xs",
-                    formatForSMS(content).length > 160 ? "text-red-400 border-red-500/30" : "text-green-400 border-green-500/30"
+                    'text-xs',
+                    formatForSMS(content).length > 160
+                      ? 'text-red-400 border-red-500/30'
+                      : 'text-green-400 border-green-500/30'
                   )}
                 >
                   {formatForSMS(content).length}/160
@@ -426,7 +457,7 @@ Thank you for choosing our electrical services.`;
                 lineHeight: '1.8',
               }}
               dangerouslySetInnerHTML={{
-                __html: processContentForDisplay(formatForQuote(content))
+                __html: processContentForDisplay(formatForQuote(content)),
               }}
             />
           </div>

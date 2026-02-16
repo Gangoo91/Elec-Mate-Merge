@@ -12,7 +12,8 @@ const SmartHomeModule7Section6Practical = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground mb-4">
-          As an electrician managing smart home documentation and aftercare, these practical guidelines ensure professional standards and client satisfaction:
+          As an electrician managing smart home documentation and aftercare, these practical
+          guidelines ensure professional standards and client satisfaction:
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -74,7 +75,9 @@ const SmartHomeModule7Section6Practical = () => {
         </div>
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-          <h4 className="font-semibold text-elec-yellow mb-2">Professional Documentation Checklist</h4>
+          <h4 className="font-semibold text-elec-yellow mb-2">
+            Professional Documentation Checklist
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <ul className="space-y-2 text-gray-300 text-sm">
               <li className="flex items-start gap-2">

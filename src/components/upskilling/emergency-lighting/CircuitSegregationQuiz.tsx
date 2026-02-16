@@ -3,7 +3,7 @@ import { circuitSegregationQuizQuestions } from '@/data/upskilling/emergencyLigh
 
 export const CircuitSegregationQuiz = () => {
   return (
-    <SingleQuestionQuiz 
+    <SingleQuestionQuiz
       questions={circuitSegregationQuizQuestions}
       title="Section 4 Quiz: Circuit Segregation and Fire Integrity"
     />

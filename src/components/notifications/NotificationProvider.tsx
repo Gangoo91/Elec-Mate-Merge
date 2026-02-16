@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from '@/hooks/use-toast';
 import { Bell } from 'lucide-react';
@@ -41,31 +40,35 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   // Get authenticated user from Supabase directly to avoid circular dependency
   useEffect(() => {
     const getUser = async () => {
-      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      const {
+        data: { user: currentUser },
+      } = await supabase.auth.getUser();
       setUser(currentUser);
     };
-    
+
     getUser();
-    
+
     // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
-    
+
     return () => {
       subscription.unsubscribe();
     };
   }, []);
-  
+
   // Calculate unread count
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   useEffect(() => {
     if (!user) {
       setNotifications([]);
       return;
     }
-    
+
     // Load notifications from localStorage for now
     // In a real app, you'd fetch these from the database
     const savedNotifications = localStorage.getItem(`notifications_${user.id}`);
@@ -76,7 +79,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         console.error('Failed to parse notifications', e);
       }
     }
-    
+
     // Set up real-time notification listener with Supabase
     // This is a placeholder for future implementation
     // const channel = supabase.channel('notifications')
@@ -86,7 +89,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     //     }
     //   })
     //   .subscribe();
-    
+
     // return () => {
     //   supabase.removeChannel(channel);
     // };
@@ -100,8 +103,8 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   }, [notifications, user]);
 
   const markAsRead = (id: string) => {
-    setNotifications(prev => {
-      const updated = prev.map(n => n.id === id ? { ...n, read: true } : n);
+    setNotifications((prev) => {
+      const updated = prev.map((n) => (n.id === id ? { ...n, read: true } : n));
       // Save immediately to localStorage
       if (user) {
         localStorage.setItem(`notifications_${user.id}`, JSON.stringify(updated));
@@ -111,8 +114,8 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   const markAllAsRead = () => {
-    setNotifications(prev => {
-      const updated = prev.map(n => ({ ...n, read: true }));
+    setNotifications((prev) => {
+      const updated = prev.map((n) => ({ ...n, read: true }));
       // Save immediately to localStorage
       if (user) {
         localStorage.setItem(`notifications_${user.id}`, JSON.stringify(updated));
@@ -122,7 +125,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   const deleteNotification = (id: string) => {
-    setNotifications(prev => prev.filter(n => n.id !== id));
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
 
   const clearAllNotifications = () => {
@@ -140,9 +143,9 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
       read: false,
       createdAt: new Date().toISOString(),
     };
-    
-    setNotifications(prev => [newNotification, ...prev]);
-    
+
+    setNotifications((prev) => [newNotification, ...prev]);
+
     // Also show as toast
     toast({
       title: notification.title,
@@ -154,15 +157,17 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   return (
-    <NotificationContext.Provider value={{
-      notifications,
-      unreadCount,
-      markAsRead,
-      markAllAsRead,
-      addNotification,
-      deleteNotification,
-      clearAllNotifications,
-    }}>
+    <NotificationContext.Provider
+      value={{
+        notifications,
+        unreadCount,
+        markAsRead,
+        markAllAsRead,
+        addNotification,
+        deleteNotification,
+        clearAllNotifications,
+      }}
+    >
       {children}
     </NotificationContext.Provider>
   );

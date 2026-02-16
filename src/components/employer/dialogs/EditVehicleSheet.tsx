@@ -3,10 +3,26 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Trash2, Save, Loader2, Car } from 'lucide-react';
@@ -108,10 +124,7 @@ export function EditVehicleSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn(
-          "flex flex-col p-0",
-          isMobile ? "h-[90vh] rounded-t-2xl" : "w-[450px]"
-        )}
+        className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
       >
         {/* Header */}
         <SheetHeader className="p-4 border-b border-border shrink-0">
@@ -183,7 +196,9 @@ export function EditVehicleSheet({
                 </SelectTrigger>
                 <SelectContent className="z-[100]">
                   {VEHICLE_TYPES.map((type) => (
-                    <SelectItem key={type} value={type}>{type}</SelectItem>
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -208,7 +223,9 @@ export function EditVehicleSheet({
                 </SelectTrigger>
                 <SelectContent className="z-[100]">
                   {VEHICLE_STATUSES.map((s) => (
-                    <SelectItem key={s} value={s}>{s}</SelectItem>
+                    <SelectItem key={s} value={s}>
+                      {s}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -288,11 +305,7 @@ export function EditVehicleSheet({
               <Label htmlFor="tracker">Tracker Fitted</Label>
               <p className="text-xs text-muted-foreground">GPS tracking device installed</p>
             </div>
-            <Switch
-              id="tracker"
-              checked={trackerFitted}
-              onCheckedChange={setTrackerFitted}
-            />
+            <Switch id="tracker" checked={trackerFitted} onCheckedChange={setTrackerFitted} />
           </div>
 
           <div className="space-y-2">
@@ -350,7 +363,8 @@ export function EditVehicleSheet({
               <AlertDialogHeader>
                 <AlertDialogTitle>Delete Vehicle</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Are you sure you want to delete {registration}? This will also delete all associated fuel logs. This action cannot be undone.
+                  Are you sure you want to delete {registration}? This will also delete all
+                  associated fuel logs. This action cannot be undone.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>

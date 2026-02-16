@@ -1,4 +1,3 @@
-
 import { Users, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -18,16 +17,16 @@ export const InsulationResistanceScenario = () => {
             <div>
               <h3 className="text-red-200 font-medium mb-3">The Situation</h3>
               <p className="text-foreground text-sm leading-relaxed mb-4">
-                You skip the insulation resistance test because "the wiring is new." Later, 
-                a neutral-to-earth short causes nuisance tripping.
+                You skip the insulation resistance test because "the wiring is new." Later, a
+                neutral-to-earth short causes nuisance tripping.
               </p>
-              
+
               <div className="bg-[#323232] rounded-lg p-3 border-l-4 border-green-500/50 mt-4">
                 <h4 className="text-green-200 font-medium mb-2">The Answer</h4>
                 <p className="text-foreground text-sm leading-relaxed">
-                  Even new installations can have faults. Insulation testing is required 
-                  regardless of installation age. Manufacturing defects, installation damage, 
-                  or contamination can all cause insulation problems in brand new cables.
+                  Even new installations can have faults. Insulation testing is required regardless
+                  of installation age. Manufacturing defects, installation damage, or contamination
+                  can all cause insulation problems in brand new cables.
                 </p>
               </div>
             </div>

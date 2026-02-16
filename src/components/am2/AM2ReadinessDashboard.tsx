@@ -222,7 +222,10 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
             return (
               <div
                 key={i}
-                className={cn('flex items-start gap-3 p-3 rounded-xl border bg-elec-gray', priorityColour)}
+                className={cn(
+                  'flex items-start gap-3 p-3 rounded-xl border bg-elec-gray',
+                  priorityColour
+                )}
               >
                 <span
                   className={cn(
@@ -299,7 +302,11 @@ function ComponentScoreCard({
     >
       <Card className={cn('border-l-4 bg-elec-gray', accent, statusColour.border)}>
         <CardContent className="p-3.5 flex items-center gap-3">
-          <div className={cn('h-10 w-10 rounded-xl flex items-center justify-center shrink-0 bg-white/5')}>
+          <div
+            className={cn(
+              'h-10 w-10 rounded-xl flex items-center justify-center shrink-0 bg-white/5'
+            )}
+          >
             <Icon className={cn('h-5 w-5', statusColour.text)} />
           </div>
 
@@ -334,7 +341,9 @@ function ComponentScoreCard({
 
             <div className="flex items-center justify-between mt-1">
               <span className="text-[10px] text-white">{component.detail}</span>
-              <span className="text-[10px] text-white">{Math.round(component.weight * 100)}% weight</span>
+              <span className="text-[10px] text-white">
+                {Math.round(component.weight * 100)}% weight
+              </span>
             </div>
           </div>
 

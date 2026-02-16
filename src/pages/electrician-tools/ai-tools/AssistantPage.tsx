@@ -1,4 +1,4 @@
-import ConversationalSearch from "@/components/electrician-tools/ai-tools/ConversationalSearch";
+import ConversationalSearch from '@/components/electrician-tools/ai-tools/ConversationalSearch';
 
 const AssistantPage = () => {
   return (
@@ -8,7 +8,7 @@ const AssistantPage = () => {
       className="fixed inset-0 bg-background flex flex-col"
       style={{
         top: 'var(--header-height, 56px)',
-        zIndex: 40
+        zIndex: 40,
       }}
     >
       <ConversationalSearch />

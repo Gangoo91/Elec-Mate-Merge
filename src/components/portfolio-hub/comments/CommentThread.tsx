@@ -14,7 +14,10 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
-import { type CommentThread as CommentThreadType, type PortfolioComment } from '@/hooks/portfolio/usePortfolioComments';
+import {
+  type CommentThread as CommentThreadType,
+  type PortfolioComment,
+} from '@/hooks/portfolio/usePortfolioComments';
 
 interface CommentThreadProps {
   thread: CommentThreadType;
@@ -39,7 +42,10 @@ export function CommentThread({
   const { rootComment, replies } = thread;
   const hasReplies = replies.length > 0;
   const isFromTutor = rootComment.authorRole !== 'student';
-  const needsAction = rootComment.requiresAction && !rootComment.isResolved && rootComment.actionOwner === currentUserId;
+  const needsAction =
+    rootComment.requiresAction &&
+    !rootComment.isResolved &&
+    rootComment.actionOwner === currentUserId;
 
   const handleSubmitReply = async () => {
     if (!replyContent.trim() || isSubmitting) return;
@@ -76,12 +82,12 @@ export function CommentThread({
   return (
     <div
       className={cn(
-        "rounded-lg border transition-all",
+        'rounded-lg border transition-all',
         needsAction
-          ? "border-amber-500/30 bg-amber-500/5"
+          ? 'border-amber-500/30 bg-amber-500/5'
           : rootComment.isResolved
-          ? "border-green-500/20 bg-green-500/5"
-          : "border-border bg-card"
+            ? 'border-green-500/20 bg-green-500/5'
+            : 'border-border bg-card'
       )}
     >
       {/* Main Comment */}
@@ -91,10 +97,10 @@ export function CommentThread({
           <Avatar className="h-8 w-8 sm:h-10 sm:w-10 shrink-0">
             <AvatarFallback
               className={cn(
-                "text-xs font-medium",
+                'text-xs font-medium',
                 isFromTutor
-                  ? "bg-elec-yellow/20 text-elec-yellow"
-                  : "bg-green-500/20 text-green-500"
+                  ? 'bg-elec-yellow/20 text-elec-yellow'
+                  : 'bg-green-500/20 text-green-500'
               )}
             >
               {rootComment.authorInitials}
@@ -105,12 +111,10 @@ export function CommentThread({
           <div className="flex-1 min-w-0">
             {/* Header */}
             <div className="flex flex-wrap items-center gap-2 mb-1">
-              <span className="font-medium text-sm text-foreground">
-                {rootComment.authorName}
-              </span>
+              <span className="font-medium text-sm text-foreground">{rootComment.authorName}</span>
               <Badge
                 variant="outline"
-                className={cn("text-[10px] capitalize", getRoleBadgeColor(rootComment.authorRole))}
+                className={cn('text-[10px] capitalize', getRoleBadgeColor(rootComment.authorRole))}
               >
                 {rootComment.authorRole}
               </Badge>
@@ -135,9 +139,7 @@ export function CommentThread({
             </div>
 
             {/* Message */}
-            <p className="text-sm text-foreground/90 whitespace-pre-wrap">
-              {rootComment.content}
-            </p>
+            <p className="text-sm text-foreground/90 whitespace-pre-wrap">{rootComment.content}</p>
 
             {/* Footer */}
             <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
@@ -248,10 +250,8 @@ function CommentReply({ comment, currentUserId }: CommentReplyProps) {
         <Avatar className="h-6 w-6 sm:h-8 sm:w-8 shrink-0">
           <AvatarFallback
             className={cn(
-              "text-[10px] sm:text-xs font-medium",
-              isOwnComment
-                ? "bg-green-500/20 text-green-500"
-                : "bg-elec-yellow/20 text-elec-yellow"
+              'text-[10px] sm:text-xs font-medium',
+              isOwnComment ? 'bg-green-500/20 text-green-500' : 'bg-elec-yellow/20 text-elec-yellow'
             )}
           >
             {comment.authorInitials}

@@ -5,71 +5,79 @@
  * Dark theme with elec-yellow accent
  */
 
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 // ============================================
 // SEO CONFIGURATION
 // ============================================
-const TITLE = "Client Communication Skills - Level 3 Module 7 Section 3.4";
-const DESCRIPTION = "Master professional client communication for UK electrical contractors. Learn quotation writing, managing expectations, handling complaints, and building long-term customer relationships.";
+const TITLE = 'Client Communication Skills - Level 3 Module 7 Section 3.4';
+const DESCRIPTION =
+  'Master professional client communication for UK electrical contractors. Learn quotation writing, managing expectations, handling complaints, and building long-term customer relationships.';
 
 // ============================================
 // INLINE CHECK QUESTIONS
 // ============================================
 const quickCheckQuestions = [
   {
-    id: "check-1",
-    question: "A client asks you to change the agreed scope of work mid-project. What is your first action?",
+    id: 'check-1',
+    question:
+      'A client asks you to change the agreed scope of work mid-project. What is your first action?',
     options: [
-      "Refuse to make any changes to the original plan",
-      "Complete the extra work without discussing costs",
-      "Document the variation and provide a written quote before proceeding",
-      "Tell the client to contact the office"
+      'Refuse to make any changes to the original plan',
+      'Complete the extra work without discussing costs',
+      'Document the variation and provide a written quote before proceeding',
+      'Tell the client to contact the office',
     ],
     correctIndex: 2,
-    explanation: "Variation orders must be documented in writing with clear costs before proceeding. This protects both you and the client from disputes over scope and payment."
+    explanation:
+      'Variation orders must be documented in writing with clear costs before proceeding. This protects both you and the client from disputes over scope and payment.',
   },
   {
-    id: "check-2",
-    question: "When should you provide a client with the Electrical Installation Certificate (EIC)?",
+    id: 'check-2',
+    question:
+      'When should you provide a client with the Electrical Installation Certificate (EIC)?',
     options: [
-      "Only if they specifically request it",
-      "Upon completion of the work, before leaving site",
-      "Within 30 days of completing the work",
-      "Only for commercial installations"
+      'Only if they specifically request it',
+      'Upon completion of the work, before leaving site',
+      'Within 30 days of completing the work',
+      'Only for commercial installations',
     ],
     correctIndex: 1,
-    explanation: "BS 7671 requires that all new installations receive an EIC upon completion. This document must be provided to the client or person ordering the work before you leave site."
+    explanation:
+      'BS 7671 requires that all new installations receive an EIC upon completion. This document must be provided to the client or person ordering the work before you leave site.',
   },
   {
-    id: "check-3",
-    question: "A client is unhappy with the final cost being higher than your initial estimate. How should you handle this?",
+    id: 'check-3',
+    question:
+      'A client is unhappy with the final cost being higher than your initial estimate. How should you handle this?',
     options: [
-      "Reduce your invoice to match the estimate",
-      "Refuse to discuss it and demand full payment",
-      "Explain each variation with documentation and offer payment options",
-      "Tell them estimates are not binding and walk away"
+      'Reduce your invoice to match the estimate',
+      'Refuse to discuss it and demand full payment',
+      'Explain each variation with documentation and offer payment options',
+      'Tell them estimates are not binding and walk away',
     ],
     correctIndex: 2,
-    explanation: "Professional communication means explaining costs clearly with supporting documentation. Showing variation records and offering reasonable payment options maintains the relationship while ensuring fair payment."
+    explanation:
+      'Professional communication means explaining costs clearly with supporting documentation. Showing variation records and offering reasonable payment options maintains the relationship while ensuring fair payment.',
   },
   {
-    id: "check-4",
-    question: "What information must be included in a quotation for electrical work?",
+    id: 'check-4',
+    question: 'What information must be included in a quotation for electrical work?',
     options: [
-      "Just the total price",
-      "A detailed breakdown of labour, materials, and any exclusions or assumptions",
-      "Only the start date and total price",
-      "A verbal agreement is sufficient"
+      'Just the total price',
+      'A detailed breakdown of labour, materials, and any exclusions or assumptions',
+      'Only the start date and total price',
+      'A verbal agreement is sufficient',
     ],
     correctIndex: 1,
-    explanation: "A professional quotation must include a detailed breakdown of labour, materials, exclusions, assumptions, validity period, and payment terms. This clarity prevents disputes and demonstrates professionalism."
-  }
+    explanation:
+      'A professional quotation must include a detailed breakdown of labour, materials, exclusions, assumptions, validity period, and payment terms. This clarity prevents disputes and demonstrates professionalism.',
+  },
 ];
 
 // ============================================
@@ -78,124 +86,138 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the key difference between an estimate and a quotation?",
+    question: 'What is the key difference between an estimate and a quotation?',
     options: [
-      "There is no difference - they are interchangeable terms",
-      "An estimate is an approximate cost while a quotation is a fixed price",
-      "A quotation is verbal while an estimate is written",
-      "An estimate is legally binding while a quotation is not"
+      'There is no difference - they are interchangeable terms',
+      'An estimate is an approximate cost while a quotation is a fixed price',
+      'A quotation is verbal while an estimate is written',
+      'An estimate is legally binding while a quotation is not',
     ],
     correctAnswer: 1,
-    explanation: "An estimate gives an approximate cost that may change, while a quotation is a fixed price for specified work. Quotations are generally binding if accepted within their validity period, while estimates can vary."
+    explanation:
+      'An estimate gives an approximate cost that may change, while a quotation is a fixed price for specified work. Quotations are generally binding if accepted within their validity period, while estimates can vary.',
   },
   {
     id: 2,
-    question: "When attending a domestic property for a survey, what should you do first?",
+    question: 'When attending a domestic property for a survey, what should you do first?',
     options: [
-      "Start measuring and making notes immediately",
-      "Introduce yourself, show identification, and explain the purpose of your visit",
-      "Ask where the consumer unit is located",
-      "Discuss payment terms"
+      'Start measuring and making notes immediately',
+      'Introduce yourself, show identification, and explain the purpose of your visit',
+      'Ask where the consumer unit is located',
+      'Discuss payment terms',
     ],
     correctAnswer: 1,
-    explanation: "Professional conduct requires introducing yourself, showing identification (company ID, ECS card), and clearly explaining why you are there. This builds trust and makes the client comfortable."
+    explanation:
+      'Professional conduct requires introducing yourself, showing identification (company ID, ECS card), and clearly explaining why you are there. This builds trust and makes the client comfortable.',
   },
   {
     id: 3,
-    question: "A client asks a technical question you're unsure about. What is the most professional response?",
+    question:
+      "A client asks a technical question you're unsure about. What is the most professional response?",
     options: [
-      "Give your best guess to appear knowledgeable",
+      'Give your best guess to appear knowledgeable',
       "Tell them it's not your area and refuse to help",
       "Admit you're unsure and offer to find out the correct information",
-      "Change the subject to avoid the question"
+      'Change the subject to avoid the question',
     ],
     correctAnswer: 2,
-    explanation: "Honesty builds trust. Admitting uncertainty and committing to find accurate information is far more professional than guessing, which could lead to incorrect advice and damage your reputation."
+    explanation:
+      'Honesty builds trust. Admitting uncertainty and committing to find accurate information is far more professional than guessing, which could lead to incorrect advice and damage your reputation.',
   },
   {
     id: 4,
-    question: "How long should a quotation remain valid?",
+    question: 'How long should a quotation remain valid?',
     options: [
-      "Indefinitely",
-      "1 week",
-      "Typically 30 days, clearly stated on the quotation",
-      "Until the client accepts or rejects it"
+      'Indefinitely',
+      '1 week',
+      'Typically 30 days, clearly stated on the quotation',
+      'Until the client accepts or rejects it',
     ],
     correctAnswer: 2,
-    explanation: "Quotations should include a clear validity period, typically 30 days. This protects you from material price increases and labour cost changes while giving the client reasonable time to decide."
+    explanation:
+      'Quotations should include a clear validity period, typically 30 days. This protects you from material price increases and labour cost changes while giving the client reasonable time to decide.',
   },
   {
     id: 5,
-    question: "What should you do if you discover additional work is needed during an installation?",
+    question:
+      'What should you do if you discover additional work is needed during an installation?',
     options: [
-      "Complete the extra work and add it to the final bill",
-      "Stop work immediately and leave",
-      "Notify the client, explain the issue, and provide a written variation before proceeding",
-      "Ignore it if it's only a small amount of extra work"
+      'Complete the extra work and add it to the final bill',
+      'Stop work immediately and leave',
+      'Notify the client, explain the issue, and provide a written variation before proceeding',
+      "Ignore it if it's only a small amount of extra work",
     ],
     correctAnswer: 2,
-    explanation: "Additional work must be communicated to the client before proceeding. Provide a written variation order with costs for approval. This prevents disputes and maintains transparency."
+    explanation:
+      'Additional work must be communicated to the client before proceeding. Provide a written variation order with costs for approval. This prevents disputes and maintains transparency.',
   },
   {
     id: 6,
-    question: "When should you inform a client about potential disruption to their electrical supply?",
+    question:
+      'When should you inform a client about potential disruption to their electrical supply?',
     options: [
-      "Just before you switch it off",
-      "During the initial quotation stage and again before starting work",
-      "Only if they specifically ask",
-      "After the work is complete"
+      'Just before you switch it off',
+      'During the initial quotation stage and again before starting work',
+      'Only if they specifically ask',
+      'After the work is complete',
     ],
     correctAnswer: 1,
-    explanation: "Clients need advance notice of supply interruptions to make arrangements (computers, freezers, medical equipment, alarms). Discuss this at quotation stage and confirm before starting work."
+    explanation:
+      'Clients need advance notice of supply interruptions to make arrangements (computers, freezers, medical equipment, alarms). Discuss this at quotation stage and confirm before starting work.',
   },
   {
     id: 7,
     question: "A client's payment is overdue by 30 days. What is the appropriate first step?",
     options: [
-      "Immediately take legal action",
-      "Send a polite reminder referencing the original payment terms",
-      "Remove the work you installed until payment is received",
-      "Never work for them again but don't chase payment"
+      'Immediately take legal action',
+      'Send a polite reminder referencing the original payment terms',
+      'Remove the work you installed until payment is received',
+      "Never work for them again but don't chase payment",
     ],
     correctAnswer: 1,
-    explanation: "A professional approach starts with a polite reminder. Many late payments are oversights. Reference the original payment terms and invoice number. Escalate only if payment remains outstanding after reminders."
+    explanation:
+      'A professional approach starts with a polite reminder. Many late payments are oversights. Reference the original payment terms and invoice number. Escalate only if payment remains outstanding after reminders.',
   },
   {
     id: 8,
-    question: "What documentation should you leave with the client after completing a rewire?",
+    question: 'What documentation should you leave with the client after completing a rewire?',
     options: [
-      "Just a receipt for payment",
-      "EIC, test results, circuit charts, user instructions, and product warranties",
-      "Only the Electrical Installation Certificate",
-      "No documentation is required for domestic work"
+      'Just a receipt for payment',
+      'EIC, test results, circuit charts, user instructions, and product warranties',
+      'Only the Electrical Installation Certificate',
+      'No documentation is required for domestic work',
     ],
     correctAnswer: 1,
-    explanation: "A complete handover includes the EIC with test results, circuit charts/schedules, user instructions for new equipment, manufacturer warranties, and guidance on periodic inspection."
+    explanation:
+      'A complete handover includes the EIC with test results, circuit charts/schedules, user instructions for new equipment, manufacturer warranties, and guidance on periodic inspection.',
   },
   {
     id: 9,
-    question: "How should you handle a complaint about your work?",
+    question: 'How should you handle a complaint about your work?',
     options: [
-      "Defend your work and refuse to return",
-      "Agree to everything the client says to avoid conflict",
-      "Listen carefully, investigate objectively, and propose a fair resolution",
-      "Refer them to your insurance company immediately"
+      'Defend your work and refuse to return',
+      'Agree to everything the client says to avoid conflict',
+      'Listen carefully, investigate objectively, and propose a fair resolution',
+      'Refer them to your insurance company immediately',
     ],
     correctAnswer: 2,
-    explanation: "Professional complaint handling involves active listening, objective investigation of the issue, and proposing a fair resolution. This often retains customers and prevents escalation."
+    explanation:
+      'Professional complaint handling involves active listening, objective investigation of the issue, and proposing a fair resolution. This often retains customers and prevents escalation.',
   },
   {
     id: 10,
-    question: "What should you do if a client asks you to install something that would breach regulations?",
+    question:
+      'What should you do if a client asks you to install something that would breach regulations?',
     options: [
-      "Do it anyway if the client signs a waiver",
-      "Explain why it cannot be done and offer compliant alternatives",
-      "Refuse without explanation",
-      "Report the client to the authorities"
+      'Do it anyway if the client signs a waiver',
+      'Explain why it cannot be done and offer compliant alternatives',
+      'Refuse without explanation',
+      'Report the client to the authorities',
     ],
     correctAnswer: 1,
-    explanation: "You cannot install non-compliant work regardless of client requests. Explain clearly why it breaches regulations, what the risks are, and offer compliant alternatives that meet their needs."
-  }
+    explanation:
+      'You cannot install non-compliant work regardless of client requests. Explain clearly why it breaches regulations, what the risks are, and offer compliant alternatives that meet their needs.',
+  },
 ];
 
 // ============================================
@@ -203,25 +225,30 @@ const quizQuestions = [
 // ============================================
 const faqs = [
   {
-    question: "Should I provide free quotes or charge for surveys?",
-    answer: "This depends on your business model and the job complexity. Simple jobs often warrant free quotes to remain competitive. For complex surveys requiring significant time (commercial projects, full rewires), charging a survey fee that's deducted from the final invoice if you win the work is reasonable and filters out non-serious enquiries."
+    question: 'Should I provide free quotes or charge for surveys?',
+    answer:
+      "This depends on your business model and the job complexity. Simple jobs often warrant free quotes to remain competitive. For complex surveys requiring significant time (commercial projects, full rewires), charging a survey fee that's deducted from the final invoice if you win the work is reasonable and filters out non-serious enquiries.",
   },
   {
-    question: "How detailed should my quotation be?",
-    answer: "Detailed enough to prevent disputes. List specific work to be done, materials and brands to be used, exclusions (making good, decoration), assumptions made, payment terms, validity period, and any provisional sums for uncertain elements. More detail protects both parties."
+    question: 'How detailed should my quotation be?',
+    answer:
+      'Detailed enough to prevent disputes. List specific work to be done, materials and brands to be used, exclusions (making good, decoration), assumptions made, payment terms, validity period, and any provisional sums for uncertain elements. More detail protects both parties.',
   },
   {
-    question: "What if a client wants to supply their own materials?",
-    answer: "You can work with customer-supplied materials but should clearly state in writing that you cannot warranty these items and any failures may not be covered by your guarantee. Check materials before installation and refuse any that are clearly unsuitable or non-compliant."
+    question: 'What if a client wants to supply their own materials?',
+    answer:
+      'You can work with customer-supplied materials but should clearly state in writing that you cannot warranty these items and any failures may not be covered by your guarantee. Check materials before installation and refuse any that are clearly unsuitable or non-compliant.',
   },
   {
-    question: "How should I handle clients who want to negotiate on price?",
-    answer: "Stand by your pricing if it's fair, explaining the value you provide (qualifications, insurance, guarantees, quality materials). You can offer alternatives such as phased work, different specifications, or payment plans rather than simply cutting your margins."
+    question: 'How should I handle clients who want to negotiate on price?',
+    answer:
+      "Stand by your pricing if it's fair, explaining the value you provide (qualifications, insurance, guarantees, quality materials). You can offer alternatives such as phased work, different specifications, or payment plans rather than simply cutting your margins.",
   },
   {
-    question: "What records should I keep of client communications?",
-    answer: "Keep all written communications (emails, texts, letters), signed quotations and variations, photographs of work, test results, and notes of significant verbal discussions. Store for at least 6 years (limitation period for contract disputes). Good records protect you if disputes arise."
-  }
+    question: 'What records should I keep of client communications?',
+    answer:
+      'Keep all written communications (emails, texts, letters), signed quotations and variations, photographs of work, test results, and notes of significant verbal discussions. Store for at least 6 years (limitation period for contract disputes). Good records protect you if disputes arise.',
+  },
 ];
 
 // ============================================
@@ -232,7 +259,6 @@ const Level3Module7Section3_4 = () => {
 
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
-
       {/* STICKY HEADER */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
@@ -252,35 +278,48 @@ const Level3Module7Section3_4 = () => {
 
       {/* MAIN ARTICLE CONTENT */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* HEADER */}
-        
 
         {/* QUICK SUMMARY BOXES */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>First Impressions:</strong> Professional appearance, identification, clear introductions</li>
-              <li><strong>Written Clarity:</strong> Detailed quotations, variation orders, certificates on completion</li>
-              <li><strong>Managing Expectations:</strong> Realistic timescales, clear scope, no hidden costs</li>
-              <li><strong>Problem Solving:</strong> Listen first, investigate fairly, resolve professionally</li>
+              <li>
+                <strong>First Impressions:</strong> Professional appearance, identification, clear
+                introductions
+              </li>
+              <li>
+                <strong>Written Clarity:</strong> Detailed quotations, variation orders,
+                certificates on completion
+              </li>
+              <li>
+                <strong>Managing Expectations:</strong> Realistic timescales, clear scope, no hidden
+                costs
+              </li>
+              <li>
+                <strong>Problem Solving:</strong> Listen first, investigate fairly, resolve
+                professionally
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Clients who need technical concepts explained simply</li>
-              <li><strong>Use:</strong> Plain English, analogies, and visual aids where helpful</li>
-              <li><strong>Apply:</strong> Every interaction builds or damages your reputation</li>
+              <li>
+                <strong>Spot:</strong> Clients who need technical concepts explained simply
+              </li>
+              <li>
+                <strong>Use:</strong> Plain English, analogies, and visual aids where helpful
+              </li>
+              <li>
+                <strong>Apply:</strong> Every interaction builds or damages your reputation
+              </li>
             </ul>
           </div>
         </div>
 
         {/* LEARNING OUTCOMES */}
-        
-
-        
 
         {/* CONTENT SECTION 01 */}
         <section className="mb-10">
@@ -290,17 +329,25 @@ const Level3Module7Section3_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Your first interaction with a potential client sets the tone for the entire relationship. Whether it's a phone call, email, or face-to-face meeting, professionalism and responsiveness are essential. Clients are often assessing multiple contractors, and those who respond promptly, clearly, and courteously stand out.
+              Your first interaction with a potential client sets the tone for the entire
+              relationship. Whether it's a phone call, email, or face-to-face meeting,
+              professionalism and responsiveness are essential. Clients are often assessing multiple
+              contractors, and those who respond promptly, clearly, and courteously stand out.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Responding to Enquiries:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Respond to enquiries within 24 hours, ideally same day for phone calls</li>
-                <li>Acknowledge receipt of email enquiries even if you need time to prepare a full response</li>
+                <li>
+                  Acknowledge receipt of email enquiries even if you need time to prepare a full
+                  response
+                </li>
                 <li>Ask clarifying questions to understand the full scope before quoting</li>
                 <li>Be honest about your availability and realistic about timescales</li>
-                <li>If you cannot take on the work, say so politely rather than ignoring the enquiry</li>
+                <li>
+                  If you cannot take on the work, say so politely rather than ignoring the enquiry
+                </li>
               </ul>
             </div>
 
@@ -308,7 +355,9 @@ const Level3Module7Section3_4 = () => {
               <p className="text-sm font-medium text-white mb-2">Site Surveys:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Arrive on time - if delayed, call ahead to inform the client</li>
-                <li>Present yourself professionally with clean workwear and company identification</li>
+                <li>
+                  Present yourself professionally with clean workwear and company identification
+                </li>
                 <li>Show your ECS card and explain your qualifications if asked</li>
                 <li>Listen carefully to understand what the client actually needs</li>
                 <li>Take photographs and measurements with permission</li>
@@ -317,7 +366,9 @@ const Level3Module7Section3_4 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Clients are inviting you into their homes or businesses. Respect their property, their time, and their concerns. Your conduct during the survey significantly influences whether you win the work.
+              <strong>Remember:</strong> Clients are inviting you into their homes or businesses.
+              Respect their property, their time, and their concerns. Your conduct during the survey
+              significantly influences whether you win the work.
             </p>
           </div>
         </section>
@@ -333,7 +384,10 @@ const Level3Module7Section3_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              A well-written quotation demonstrates professionalism and protects both you and your client. It should clearly define what work will be done, what materials will be used, what is excluded, and what the cost will be. Vague quotations lead to disputes; detailed quotations build trust.
+              A well-written quotation demonstrates professionalism and protects both you and your
+              client. It should clearly define what work will be done, what materials will be used,
+              what is excluded, and what the cost will be. Vague quotations lead to disputes;
+              detailed quotations build trust.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -351,7 +405,9 @@ const Level3Module7Section3_4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Exclusions and Assumptions</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Exclusions and Assumptions
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Making good (plastering, decorating)</li>
                   <li>Work by other trades</li>
@@ -365,7 +421,9 @@ const Level3Module7Section3_4 = () => {
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> "This quotation assumes that existing circuits are in serviceable condition and can be extended. If additional remedial work is required upon exposure, this will be quoted separately before proceeding."
+              <strong>Example:</strong> "This quotation assumes that existing circuits are in
+              serviceable condition and can be extended. If additional remedial work is required
+              upon exposure, this will be quoted separately before proceeding."
             </p>
           </div>
         </section>
@@ -381,7 +439,10 @@ const Level3Module7Section3_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Clear, ongoing communication throughout the project prevents misunderstandings and builds client confidence. Clients appreciate being kept informed of progress, any issues discovered, and expected completion times. Silence breeds concern; regular updates build trust.
+              Clear, ongoing communication throughout the project prevents misunderstandings and
+              builds client confidence. Clients appreciate being kept informed of progress, any
+              issues discovered, and expected completion times. Silence breeds concern; regular
+              updates build trust.
             </p>
 
             <div className="my-6">
@@ -399,7 +460,9 @@ const Level3Module7Section3_4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">During the Project:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Provide regular progress updates (daily or every few days depending on job length)</li>
+                <li>
+                  Provide regular progress updates (daily or every few days depending on job length)
+                </li>
                 <li>Immediately notify clients of any issues or variations required</li>
                 <li>Document variations in writing with costs before proceeding</li>
                 <li>Keep the work area as clean and tidy as practicable</li>
@@ -409,7 +472,9 @@ const Level3Module7Section3_4 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Critical Point:</strong> Never proceed with additional work without written agreement on scope and cost. Verbal agreements lead to disputes. Even for small additions, send a quick email or text confirming the variation and cost.
+              <strong>Critical Point:</strong> Never proceed with additional work without written
+              agreement on scope and cost. Verbal agreements lead to disputes. Even for small
+              additions, send a quick email or text confirming the variation and cost.
             </p>
           </div>
         </section>
@@ -425,13 +490,18 @@ const Level3Module7Section3_4 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The completion of work is as important as the installation itself. A professional handover ensures the client understands their new installation, has all required documentation, and leaves with a positive impression that leads to referrals and repeat business.
+              The completion of work is as important as the installation itself. A professional
+              handover ensures the client understands their new installation, has all required
+              documentation, and leaves with a positive impression that leads to referrals and
+              repeat business.
             </p>
 
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Documentation</p>
-                <p className="text-white/90 text-xs">EIC, test results, circuit charts, warranties</p>
+                <p className="text-white/90 text-xs">
+                  EIC, test results, circuit charts, warranties
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Demonstration</p>
@@ -439,7 +509,9 @@ const Level3Module7Section3_4 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Follow-up</p>
-                <p className="text-white/90 text-xs">Check satisfaction, request feedback/reviews</p>
+                <p className="text-white/90 text-xs">
+                  Check satisfaction, request feedback/reviews
+                </p>
               </div>
             </div>
 
@@ -457,7 +529,9 @@ const Level3Module7Section3_4 = () => {
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Example:</strong> A follow-up call or message one week after completion asking if everything is working well shows you care about quality and often prompts positive reviews or referrals.
+              <strong>Example:</strong> A follow-up call or message one week after completion asking
+              if everything is working well shows you care about quality and often prompts positive
+              reviews or referrals.
             </p>
           </div>
         </section>
@@ -473,9 +547,13 @@ const Level3Module7Section3_4 = () => {
 
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Effective Communication Techniques</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Effective Communication Techniques
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Use plain English - avoid jargon unless the client is technically knowledgeable</li>
+                <li>
+                  Use plain English - avoid jargon unless the client is technically knowledgeable
+                </li>
                 <li>Listen actively and ask questions to understand needs fully</li>
                 <li>Confirm understanding by summarising key points back to the client</li>
                 <li>Put important information in writing - emails create a paper trail</li>
@@ -484,7 +562,9 @@ const Level3Module7Section3_4 = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Handling Difficult Conversations</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Handling Difficult Conversations
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Stay calm and professional, even if the client is upset</li>
                 <li>Focus on solutions rather than defending your position</li>
@@ -497,10 +577,18 @@ const Level3Module7Section3_4 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Vague quotations</strong> - Lead to disputes about scope and cost</li>
-                <li><strong>Poor time estimates</strong> - Overpromising delivery damages trust</li>
-                <li><strong>No paper trail</strong> - Verbal agreements are hard to prove</li>
-                <li><strong>Ignoring issues</strong> - Small problems grow when not addressed</li>
+                <li>
+                  <strong>Vague quotations</strong> - Lead to disputes about scope and cost
+                </li>
+                <li>
+                  <strong>Poor time estimates</strong> - Overpromising delivery damages trust
+                </li>
+                <li>
+                  <strong>No paper trail</strong> - Verbal agreements are hard to prove
+                </li>
+                <li>
+                  <strong>Ignoring issues</strong> - Small problems grow when not addressed
+                </li>
               </ul>
             </div>
           </div>
@@ -524,7 +612,9 @@ const Level3Module7Section3_4 = () => {
         {/* QUICK REFERENCE */}
         <section className="mb-10">
           <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference - Client Communication</h3>
+            <h3 className="text-sm font-medium text-white mb-4">
+              Quick Reference - Client Communication
+            </h3>
             <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
                 <p className="font-medium text-white mb-1">Documentation to Provide</p>
@@ -552,10 +642,7 @@ const Level3Module7Section3_4 = () => {
 
         {/* QUIZ */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* NAVIGATION */}
@@ -582,7 +669,6 @@ const Level3Module7Section3_4 = () => {
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

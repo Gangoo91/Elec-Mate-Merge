@@ -1,11 +1,10 @@
-
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Clock, FileText, Plus } from "lucide-react";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Clock, FileText, Plus } from 'lucide-react';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
 
 export interface TimeEntryFormProps {
   onAddEntry: (duration: number, activity: string, notes: string) => void;
@@ -14,32 +13,32 @@ export interface TimeEntryFormProps {
 
 const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
   const [duration, setDuration] = useState<number>(60);
-  const [activity, setActivity] = useState<string>("");
-  const [notes, setNotes] = useState<string>("");
+  const [activity, setActivity] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
 
   // Pre-defined activity types for easy selection
   const activityTypes = [
-    "College Session",
-    "Online Learning Module",
-    "Skills Workshop",
-    "Mentoring Session", 
-    "Assessment Preparation",
-    "Technical Reading",
-    "Safety Training",
-    "Practical Exercise",
-    "Research & Study",
-    "Reflection & Planning"
+    'College Session',
+    'Online Learning Module',
+    'Skills Workshop',
+    'Mentoring Session',
+    'Assessment Preparation',
+    'Technical Reading',
+    'Safety Training',
+    'Practical Exercise',
+    'Research & Study',
+    'Reflection & Planning',
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!activity.trim()) return;
-    
+
     onAddEntry(duration, activity, notes);
     // Reset form fields
     setDuration(60);
-    setActivity("");
-    setNotes("");
+    setActivity('');
+    setNotes('');
   };
 
   return (
@@ -63,7 +62,7 @@ const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
             placeholder="Select activity type"
             value={activity}
             onValueChange={setActivity}
-            options={activityTypes.map(type => ({ value: type, label: type }))}
+            options={activityTypes.map((type) => ({ value: type, label: type }))}
           />
         </div>
 
@@ -86,17 +85,17 @@ const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
 
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
           {onCancel && (
-            <Button 
-              variant="outline" 
-              onClick={onCancel} 
+            <Button
+              variant="outline"
+              onClick={onCancel}
               type="button"
               className="w-full sm:w-auto border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
             >
               Cancel
             </Button>
           )}
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             disabled={!activity.trim()}
             className="w-full sm:w-auto bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
           >

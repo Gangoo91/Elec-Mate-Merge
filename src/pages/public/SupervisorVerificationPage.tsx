@@ -30,10 +30,7 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY,
-} from '@/integrations/supabase/client';
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
 
 // Separate client for public verification — uses anon key, no auth session
 const anonClient = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
@@ -68,9 +65,7 @@ interface VerificationData {
 
 const SupervisorVerificationPage = () => {
   const { token } = useParams<{ token: string }>();
-  const [verification, setVerification] = useState<VerificationData | null>(
-    null
-  );
+  const [verification, setVerification] = useState<VerificationData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -137,10 +132,9 @@ const SupervisorVerificationPage = () => {
   const loadVerification = async () => {
     try {
       setLoading(true);
-      const { data, error: rpcError } = await anonClient.rpc(
-        'get_verification_by_token',
-        { p_token: token }
-      );
+      const { data, error: rpcError } = await anonClient.rpc('get_verification_by_token', {
+        p_token: token,
+      });
 
       if (rpcError) throw rpcError;
       if (!data || data.error === 'not_found') {
@@ -245,8 +239,7 @@ const SupervisorVerificationPage = () => {
 
   // --- Submit ---
   const handleSubmit = async () => {
-    if (!supervisorName.trim() || !confirmed || !signatureData || !token)
-      return;
+    if (!supervisorName.trim() || !confirmed || !signatureData || !token) return;
 
     setSubmitting(true);
     try {
@@ -260,24 +253,21 @@ const SupervisorVerificationPage = () => {
         /* non-critical */
       }
 
-      const { data, error: rpcError } = await anonClient.rpc(
-        'submit_supervisor_verification',
-        {
-          p_token: token,
-          p_supervisor_name: supervisorName.trim(),
-          p_supervisor_company: supervisorCompany.trim() || null,
-          p_supervisor_email: supervisorEmail.trim() || null,
-          p_confirmed: confirmed,
-          p_feedback: feedback.trim() || null,
-          p_voice_url: null,
-          p_signature: signatureData,
-          p_geo_lat: geo?.lat ?? null,
-          p_geo_lng: geo?.lng ?? null,
-          p_geo_acc: geo?.acc ?? null,
-          p_ip: clientIp,
-          p_ua: navigator.userAgent.substring(0, 200),
-        }
-      );
+      const { data, error: rpcError } = await anonClient.rpc('submit_supervisor_verification', {
+        p_token: token,
+        p_supervisor_name: supervisorName.trim(),
+        p_supervisor_company: supervisorCompany.trim() || null,
+        p_supervisor_email: supervisorEmail.trim() || null,
+        p_confirmed: confirmed,
+        p_feedback: feedback.trim() || null,
+        p_voice_url: null,
+        p_signature: signatureData,
+        p_geo_lat: geo?.lat ?? null,
+        p_geo_lng: geo?.lng ?? null,
+        p_geo_acc: geo?.acc ?? null,
+        p_ip: clientIp,
+        p_ua: navigator.userAgent.substring(0, 200),
+      });
 
       if (rpcError) throw rpcError;
       if (data && !data.success) throw new Error(data.error);
@@ -285,8 +275,7 @@ const SupervisorVerificationPage = () => {
       setResultHash(data?.verification_hash || '');
       setShowSuccess(true);
     } catch (err: unknown) {
-      const message =
-        err instanceof Error ? err.message : 'Failed to submit verification';
+      const message = err instanceof Error ? err.message : 'Failed to submit verification';
       console.error('Verification error:', err);
       alert(message);
     } finally {
@@ -316,9 +305,7 @@ const SupervisorVerificationPage = () => {
           <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mx-auto mb-4">
             <AlertTriangle className="h-8 w-8 text-red-400" />
           </div>
-          <h1 className="text-xl font-bold text-white mb-2">
-            Link Not Valid
-          </h1>
+          <h1 className="text-xl font-bold text-white mb-2">Link Not Valid</h1>
           <p className="text-white/50 text-sm">
             {error || 'This verification link is invalid or has expired.'}
           </p>
@@ -369,9 +356,7 @@ const SupervisorVerificationPage = () => {
               </span>
             </div>
             {verification.supervisor_company && (
-              <p className="text-xs text-white/50 ml-7">
-                {verification.supervisor_company}
-              </p>
+              <p className="text-xs text-white/50 ml-7">{verification.supervisor_company}</p>
             )}
             <p className="text-xs text-white/40 ml-7 mt-1">
               {new Date(verification.verified_at).toLocaleDateString('en-GB', {
@@ -394,9 +379,7 @@ const SupervisorVerificationPage = () => {
             <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2 mb-1">
                 <Hash className="h-3.5 w-3.5 text-white/40" />
-                <span className="text-xs font-medium text-white/40">
-                  Verification Hash
-                </span>
+                <span className="text-xs font-medium text-white/40">Verification Hash</span>
               </div>
               <p className="text-[10px] text-white/30 font-mono break-all">
                 {verification.verification_hash}
@@ -406,7 +389,11 @@ const SupervisorVerificationPage = () => {
 
           {/* Evidence summary */}
           {isTimeEntry ? (
-            <TimeEntrySummary snapshot={snapshot} apprenticeName={verification.apprentice_name} formatDuration={formatDurationMinutes} />
+            <TimeEntrySummary
+              snapshot={snapshot}
+              apprenticeName={verification.apprentice_name}
+              formatDuration={formatDurationMinutes}
+            />
           ) : (
             <EvidenceSummary snapshot={snapshot} apprenticeName={verification.apprentice_name} />
           )}
@@ -443,22 +430,17 @@ const SupervisorVerificationPage = () => {
             {isTimeEntry ? 'Training Hours Verified' : 'Evidence Verified'}
           </h1>
           <p className="text-white/50 text-sm mb-6">
-            Thank you, {supervisorName}. Your verification of{' '}
-            {verification.apprentice_name}&apos;s {isTimeEntry ? 'training hours' : 'evidence'} has been recorded and is
-            tamper-evident.
+            Thank you, {supervisorName}. Your verification of {verification.apprentice_name}&apos;s{' '}
+            {isTimeEntry ? 'training hours' : 'evidence'} has been recorded and is tamper-evident.
           </p>
 
           {resultHash && (
             <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-left mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <Hash className="h-3.5 w-3.5 text-emerald-400" />
-                <span className="text-xs font-medium text-emerald-400">
-                  Verification Hash
-                </span>
+                <span className="text-xs font-medium text-emerald-400">Verification Hash</span>
               </div>
-              <p className="text-[10px] text-white/40 font-mono break-all">
-                {resultHash}
-              </p>
+              <p className="text-[10px] text-white/40 font-mono break-all">{resultHash}</p>
             </div>
           )}
 
@@ -488,15 +470,19 @@ const SupervisorVerificationPage = () => {
             {isTimeEntry ? 'Training Hours Verification' : 'Witness Statement Request'}
           </h1>
           <p className="text-sm text-white/50">
-            {verification.apprentice_name} has requested you verify the
-            following {isTimeEntry ? 'training hours' : 'evidence from their apprenticeship portfolio'}.
+            {verification.apprentice_name} has requested you verify the following{' '}
+            {isTimeEntry ? 'training hours' : 'evidence from their apprenticeship portfolio'}.
           </p>
         </div>
 
         {/* Evidence summary */}
         <div className="px-5 pb-4">
           {isTimeEntry ? (
-            <TimeEntrySummary snapshot={snapshot} apprenticeName={verification.apprentice_name} formatDuration={formatDurationMinutes} />
+            <TimeEntrySummary
+              snapshot={snapshot}
+              apprenticeName={verification.apprentice_name}
+              formatDuration={formatDurationMinutes}
+            />
           ) : (
             <EvidenceSummary snapshot={snapshot} apprenticeName={verification.apprentice_name} />
           )}
@@ -524,9 +510,7 @@ const SupervisorVerificationPage = () => {
 
           {/* Supervisor name */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">
-              Your Full Name *
-            </label>
+            <label className="text-xs font-medium text-white/60">Your Full Name *</label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
               <input
@@ -547,9 +531,7 @@ const SupervisorVerificationPage = () => {
 
           {/* Company (optional) */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">
-              Company (optional)
-            </label>
+            <label className="text-xs font-medium text-white/60">Company (optional)</label>
             <div className="relative">
               <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
               <input
@@ -570,9 +552,7 @@ const SupervisorVerificationPage = () => {
 
           {/* Email (optional) */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">
-              Email (optional)
-            </label>
+            <label className="text-xs font-medium text-white/60">Email (optional)</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
               <input
@@ -593,9 +573,7 @@ const SupervisorVerificationPage = () => {
 
           {/* Feedback (optional) */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">
-              Feedback (optional)
-            </label>
+            <label className="text-xs font-medium text-white/60">Feedback (optional)</label>
             <div className="relative">
               <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-white/30" />
               <textarea
@@ -617,9 +595,7 @@ const SupervisorVerificationPage = () => {
           {/* Signature pad */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-medium text-white/60">
-                Your Signature *
-              </label>
+              <label className="text-xs font-medium text-white/60">Your Signature *</label>
               {hasDrawn && (
                 <button
                   type="button"
@@ -652,9 +628,7 @@ const SupervisorVerificationPage = () => {
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div className="text-center text-gray-400">
                       <Pen className="h-5 w-5 mx-auto mb-1 opacity-50" />
-                      <p className="text-xs font-medium">
-                        Draw your signature here
-                      </p>
+                      <p className="text-xs font-medium">Draw your signature here</p>
                     </div>
                   </div>
                 )}
@@ -666,9 +640,7 @@ const SupervisorVerificationPage = () => {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={
-              submitting || !supervisorName.trim() || !confirmed || !hasDrawn
-            }
+            disabled={submitting || !supervisorName.trim() || !confirmed || !hasDrawn}
             className={cn(
               'w-full h-14 rounded-xl flex items-center justify-center gap-2',
               'text-base font-semibold transition-all touch-manipulation',
@@ -749,13 +721,9 @@ function EvidenceSummary({
 
         {snapshot.title && (
           <div className="pt-2 border-t border-white/5">
-            <h3 className="text-sm font-semibold text-white">
-              {snapshot.title}
-            </h3>
+            <h3 className="text-sm font-semibold text-white">{snapshot.title}</h3>
             {snapshot.description && (
-              <p className="text-xs text-white/50 mt-1 line-clamp-3">
-                {snapshot.description}
-              </p>
+              <p className="text-xs text-white/50 mt-1 line-clamp-3">{snapshot.description}</p>
             )}
           </div>
         )}
@@ -816,15 +784,8 @@ function EvidenceSummary({
           </div>
           <div className="grid grid-cols-3 gap-2">
             {snapshot.photos.slice(0, 6).map((url, i) => (
-              <div
-                key={i}
-                className="aspect-square rounded-lg overflow-hidden bg-white/5"
-              >
-                <img
-                  src={url}
-                  alt={`Evidence ${i + 1}`}
-                  className="w-full h-full object-cover"
-                />
+              <div key={i} className="aspect-square rounded-lg overflow-hidden bg-white/5">
+                <img src={url} alt={`Evidence ${i + 1}`} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
@@ -840,9 +801,7 @@ function EvidenceSummary({
               What Was Learned
             </span>
           </div>
-          <p className="text-sm text-white/60 leading-relaxed">
-            {snapshot.learned}
-          </p>
+          <p className="text-sm text-white/60 leading-relaxed">{snapshot.learned}</p>
         </div>
       )}
     </div>
@@ -885,9 +844,7 @@ function TimeEntrySummary({
             <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
               <Clock className="h-3.5 w-3.5 text-white/50" />
             </div>
-            <span className="text-white/70">
-              {formatDuration(snapshot.duration_minutes)}
-            </span>
+            <span className="text-white/70">{formatDuration(snapshot.duration_minutes)}</span>
           </div>
         )}
 
@@ -908,9 +865,7 @@ function TimeEntrySummary({
 
         {snapshot.notes && (
           <div className="pt-2 border-t border-white/5">
-            <p className="text-xs text-white/50 leading-relaxed">
-              {snapshot.notes}
-            </p>
+            <p className="text-xs text-white/50 leading-relaxed">{snapshot.notes}</p>
           </div>
         )}
       </div>

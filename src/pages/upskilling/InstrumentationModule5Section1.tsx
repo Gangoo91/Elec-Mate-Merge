@@ -2,13 +2,14 @@ import { ArrowLeft, Zap, CheckCircle, HelpCircle, RotateCcw, Play, RefreshCw } f
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule5Section1 = () => {
   useSEO({
-    title: "Open Loop vs Closed Loop Systems | Instrumentation Module 5",
-    description: "Understand the difference between open and closed loop control systems and how each functions in industrial control environments."
+    title: 'Open Loop vs Closed Loop Systems | Instrumentation Module 5',
+    description:
+      'Understand the difference between open and closed loop control systems and how each functions in industrial control environments.',
   });
 
   return (
@@ -16,7 +17,10 @@ const InstrumentationModule5Section1 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-5" className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-5"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Module 5
           </Link>
@@ -36,16 +40,19 @@ const InstrumentationModule5Section1 = () => {
             Quick Summary
           </h2>
           <p className="text-white/80 text-sm">
-            Control systems can be categorised as open loop (no feedback) or closed loop (with feedback).
-            Understanding the differences helps in selecting the right approach for industrial applications.
-            Closed loop systems offer self-correction while open loop systems are simpler and faster.
+            Control systems can be categorised as open loop (no feedback) or closed loop (with
+            feedback). Understanding the differences helps in selecting the right approach for
+            industrial applications. Closed loop systems offer self-correction while open loop
+            systems are simpler and faster.
           </p>
         </div>
 
         {/* Section 01 - Open Loop Systems */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Open Loop Systems</h2>
           </div>
 
@@ -55,9 +62,10 @@ const InstrumentationModule5Section1 = () => {
               <div>
                 <h3 className="font-medium text-white mb-2">What is an Open Loop System?</h3>
                 <p className="text-white/80 text-sm">
-                  Open loop systems operate without feedback. They execute predetermined actions based on input
-                  commands, regardless of the actual output or system conditions. The controller sends a signal
-                  to the actuator, but there is no measurement of the result to adjust the output.
+                  Open loop systems operate without feedback. They execute predetermined actions
+                  based on input commands, regardless of the actual output or system conditions. The
+                  controller sends a signal to the actuator, but there is no measurement of the
+                  result to adjust the output.
                 </p>
               </div>
             </div>
@@ -89,7 +97,9 @@ const InstrumentationModule5Section1 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Basic Timer Switch</p>
-                  <p className="text-white/70 text-xs">Runs for a set time regardless of conditions</p>
+                  <p className="text-white/70 text-xs">
+                    Runs for a set time regardless of conditions
+                  </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Manual Control Valve</p>
@@ -139,7 +149,9 @@ const InstrumentationModule5Section1 = () => {
         {/* Section 02 - Closed Loop Systems */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Closed Loop Systems</h2>
           </div>
 
@@ -149,9 +161,10 @@ const InstrumentationModule5Section1 = () => {
               <div>
                 <h3 className="font-medium text-white mb-2">What is a Closed Loop System?</h3>
                 <p className="text-white/80 text-sm">
-                  Closed loop systems use feedback to continuously monitor output and adjust control actions.
-                  They compare actual performance with desired performance (setpoint) and make corrections
-                  automatically. This creates a continuous loop of measurement, comparison, and adjustment.
+                  Closed loop systems use feedback to continuously monitor output and adjust control
+                  actions. They compare actual performance with desired performance (setpoint) and
+                  make corrections automatically. This creates a continuous loop of measurement,
+                  comparison, and adjustment.
                 </p>
               </div>
             </div>
@@ -230,7 +243,9 @@ const InstrumentationModule5Section1 = () => {
         {/* Section 03 - Comparison */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">System Comparison</h2>
           </div>
 
@@ -240,8 +255,8 @@ const InstrumentationModule5Section1 = () => {
               <div>
                 <h3 className="font-medium text-white mb-2">When to Use Each System</h3>
                 <p className="text-white/80 text-sm">
-                  The choice between open and closed loop control depends on accuracy requirements, cost
-                  constraints, response speed needs, and the predictability of disturbances.
+                  The choice between open and closed loop control depends on accuracy requirements,
+                  cost constraints, response speed needs, and the predictability of disturbances.
                 </p>
               </div>
             </div>
@@ -290,11 +305,17 @@ const InstrumentationModule5Section1 = () => {
               <div className="space-y-3 text-white/80 text-sm">
                 <div>
                   <p className="text-white font-medium">Open Loop (Timer-Based):</p>
-                  <p>Runs for predetermined periods regardless of actual room temperature. Cannot respond to changes in weather, occupancy, or heat losses.</p>
+                  <p>
+                    Runs for predetermined periods regardless of actual room temperature. Cannot
+                    respond to changes in weather, occupancy, or heat losses.
+                  </p>
                 </div>
                 <div>
                   <p className="text-white font-medium">Closed Loop (Thermostat):</p>
-                  <p>Measures temperature and adjusts heating to maintain setpoint. Automatically adjusts to maintain comfort despite changing conditions.</p>
+                  <p>
+                    Measures temperature and adjusts heating to maintain setpoint. Automatically
+                    adjusts to maintain comfort despite changing conditions.
+                  </p>
                 </div>
               </div>
             </div>
@@ -317,38 +338,47 @@ const InstrumentationModule5Section1 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">Can open loop systems adjust to change?</h4>
+              <h4 className="font-medium text-white mb-2">
+                Can open loop systems adjust to change?
+              </h4>
               <p className="text-white/70 text-sm">
-                No, open loop systems cannot adjust to changes because they lack feedback mechanisms. They operate
-                according to predetermined patterns regardless of actual conditions. Any adjustment requires
-                manual intervention.
+                No, open loop systems cannot adjust to changes because they lack feedback
+                mechanisms. They operate according to predetermined patterns regardless of actual
+                conditions. Any adjustment requires manual intervention.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">What is the main advantage of open loop systems in high-speed applications?</h4>
+              <h4 className="font-medium text-white mb-2">
+                What is the main advantage of open loop systems in high-speed applications?
+              </h4>
               <p className="text-white/70 text-sm">
-                Open loop systems have no feedback delay, making them faster in response time. This is advantageous
-                in high-speed applications where immediate action is required and the process is well understood
-                and predictable.
+                Open loop systems have no feedback delay, making them faster in response time. This
+                is advantageous in high-speed applications where immediate action is required and
+                the process is well understood and predictable.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">Does adding feedback always improve system stability?</h4>
+              <h4 className="font-medium text-white mb-2">
+                Does adding feedback always improve system stability?
+              </h4>
               <p className="text-white/70 text-sm">
-                Not necessarily. Adding feedback can improve or decrease stability depending on the system design
-                and tuning. Properly designed feedback improves stability, but poor design or incorrect tuning
-                can cause oscillations and instability.
+                Not necessarily. Adding feedback can improve or decrease stability depending on the
+                system design and tuning. Properly designed feedback improves stability, but poor
+                design or incorrect tuning can cause oscillations and instability.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="font-medium text-white mb-2">Why are closed loop systems preferred for precision control?</h4>
+              <h4 className="font-medium text-white mb-2">
+                Why are closed loop systems preferred for precision control?
+              </h4>
               <p className="text-white/70 text-sm">
-                Closed loop systems continuously measure and correct errors, automatically compensating for
-                disturbances, component variations, and environmental changes. This makes them essential for
-                applications requiring tight tolerances and consistent performance.
+                Closed loop systems continuously measure and correct errors, automatically
+                compensating for disturbances, component variations, and environmental changes. This
+                makes them essential for applications requiring tight tolerances and consistent
+                performance.
               </p>
             </div>
           </div>
@@ -359,10 +389,10 @@ const InstrumentationModule5Section1 = () => {
           <SingleQuestionQuiz
             question="In a washing machine, which component represents a closed loop system?"
             options={[
-              "The timer that runs the wash cycle",
-              "The water level sensor and fill valve",
-              "The drain pump motor",
-              "The door latch mechanism"
+              'The timer that runs the wash cycle',
+              'The water level sensor and fill valve',
+              'The drain pump motor',
+              'The door latch mechanism',
             ]}
             correctAnswer={1}
             explanation="The water level sensor and fill valve form a closed loop system - the sensor provides feedback about actual water level, and the valve adjusts flow to maintain the desired level. The timer is open loop as it runs regardless of conditions."

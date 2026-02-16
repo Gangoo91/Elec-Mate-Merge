@@ -7,8 +7,8 @@ const EICRCompletionTab = () => {
         <h4 className="font-semibold text-orange-400 mb-3">EICR Assessment Process</h4>
         <div className="text-sm space-y-3">
           <p>
-            EICRs require careful assessment of existing installations against current standards, 
-            considering the age and purpose of the installation. The assessment must be based on 
+            EICRs require careful assessment of existing installations against current standards,
+            considering the age and purpose of the installation. The assessment must be based on
             safety rather than strict compliance with current regulations.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -27,10 +27,18 @@ const EICRCompletionTab = () => {
             <div>
               <h5 className="font-medium text-foreground mb-2">Defect Classification:</h5>
               <ul className="space-y-1">
-                <li>• <strong>C1:</strong> Danger present (immediate disconnection required)</li>
-                <li>• <strong>C2:</strong> Potentially dangerous (urgent remedial action)</li>
-                <li>• <strong>C3:</strong> Improvement recommended (not immediately dangerous)</li>
-                <li>• <strong>FI:</strong> Further investigation required (insufficient access)</li>
+                <li>
+                  • <strong>C1:</strong> Danger present (immediate disconnection required)
+                </li>
+                <li>
+                  • <strong>C2:</strong> Potentially dangerous (urgent remedial action)
+                </li>
+                <li>
+                  • <strong>C3:</strong> Improvement recommended (not immediately dangerous)
+                </li>
+                <li>
+                  • <strong>FI:</strong> Further investigation required (insufficient access)
+                </li>
                 <li>• Clear explanations for each code required</li>
                 <li>• Photographic evidence where appropriate</li>
               </ul>
@@ -43,20 +51,34 @@ const EICRCompletionTab = () => {
         <h4 className="font-semibold text-cyan-400 mb-3">EICR Testing Strategy and Sampling</h4>
         <div className="text-sm space-y-3">
           <p>
-            EICR testing differs from new installation testing. Sample testing is permitted, 
-            but the inspector must ensure adequate coverage to identify potential safety issues.
+            EICR testing differs from new installation testing. Sample testing is permitted, but the
+            inspector must ensure adequate coverage to identify potential safety issues.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h5 className="font-medium text-foreground mb-2">Sampling Guidelines:</h5>
               <ul className="space-y-1">
-                <li>• <strong>Minimum 10%</strong> of all circuits tested</li>
-                <li>• <strong>All RCDs</strong> must be tested (no sampling)</li>
-                <li>• <strong>Main earthing</strong> and bonding connections tested</li>
-                <li>• <strong>At least one point</strong> on each type of circuit</li>
-                <li>• <strong>Highest risk areas</strong> prioritised (kitchens, bathrooms)</li>
-                <li>• <strong>Oldest installations</strong> require more comprehensive testing</li>
-                <li>• <strong>Any suspected problems</strong> fully investigated</li>
+                <li>
+                  • <strong>Minimum 10%</strong> of all circuits tested
+                </li>
+                <li>
+                  • <strong>All RCDs</strong> must be tested (no sampling)
+                </li>
+                <li>
+                  • <strong>Main earthing</strong> and bonding connections tested
+                </li>
+                <li>
+                  • <strong>At least one point</strong> on each type of circuit
+                </li>
+                <li>
+                  • <strong>Highest risk areas</strong> prioritised (kitchens, bathrooms)
+                </li>
+                <li>
+                  • <strong>Oldest installations</strong> require more comprehensive testing
+                </li>
+                <li>
+                  • <strong>Any suspected problems</strong> fully investigated
+                </li>
               </ul>
             </div>
             <div>
@@ -79,8 +101,8 @@ const EICRCompletionTab = () => {
         <h4 className="font-semibold text-red-400 mb-3">EICR Coding Examples and Justifications</h4>
         <div className="text-sm space-y-3">
           <p>
-            Understanding when to apply each code is crucial for accurate EICRs. 
-            Each code must be justified with clear safety reasoning.
+            Understanding when to apply each code is crucial for accurate EICRs. Each code must be
+            justified with clear safety reasoning.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -96,7 +118,9 @@ const EICRCompletionTab = () => {
               </ul>
             </div>
             <div>
-              <h5 className="font-medium text-foreground mb-2">C2 Examples (Potentially Dangerous):</h5>
+              <h5 className="font-medium text-foreground mb-2">
+                C2 Examples (Potentially Dangerous):
+              </h5>
               <ul className="space-y-1">
                 <li>• Inadequate protective conductor sizing</li>
                 <li>• Missing RCD protection where required</li>
@@ -109,7 +133,9 @@ const EICRCompletionTab = () => {
             </div>
           </div>
           <div className="mt-3">
-            <h5 className="font-medium text-foreground mb-2">C3 Examples (Improvement Recommended):</h5>
+            <h5 className="font-medium text-foreground mb-2">
+              C3 Examples (Improvement Recommended):
+            </h5>
             <ul className="space-y-1 text-xs">
               <li>• Missing supplementary bonding (where not required by current standards)</li>
               <li>• Old colour cable (red/black) - document for future reference</li>
@@ -122,7 +148,9 @@ const EICRCompletionTab = () => {
       </div>
 
       <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-        <h4 className="font-semibold text-purple-400 mb-3">EICR Recommendations and Next Inspection</h4>
+        <h4 className="font-semibold text-purple-400 mb-3">
+          EICR Recommendations and Next Inspection
+        </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
             <h5 className="font-medium text-foreground mb-2">Assessment Criteria:</h5>
@@ -139,24 +167,38 @@ const EICRCompletionTab = () => {
           <div>
             <h5 className="font-medium text-foreground mb-2">Next Inspection Periods:</h5>
             <ul className="space-y-1">
-              <li>• <strong>Domestic (owner-occupied):</strong> 10 years maximum</li>
-              <li>• <strong>Domestic (rented):</strong> 5 years maximum</li>
-              <li>• <strong>Commercial offices:</strong> 5 years typical</li>
-              <li>• <strong>Industrial premises:</strong> 3-5 years</li>
-              <li>• <strong>Schools/hospitals:</strong> 5 years</li>
-              <li>• <strong>Harsh environments:</strong> 1-3 years</li>
-              <li>• <strong>Caravan/marina sites:</strong> 1 year</li>
+              <li>
+                • <strong>Domestic (owner-occupied):</strong> 10 years maximum
+              </li>
+              <li>
+                • <strong>Domestic (rented):</strong> 5 years maximum
+              </li>
+              <li>
+                • <strong>Commercial offices:</strong> 5 years typical
+              </li>
+              <li>
+                • <strong>Industrial premises:</strong> 3-5 years
+              </li>
+              <li>
+                • <strong>Schools/hospitals:</strong> 5 years
+              </li>
+              <li>
+                • <strong>Harsh environments:</strong> 1-3 years
+              </li>
+              <li>
+                • <strong>Caravan/marina sites:</strong> 1 year
+              </li>
             </ul>
           </div>
         </div>
-        
+
         <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded">
           <h6 className="font-medium text-amber-400 mb-2">⚠️ Inspection Period Factors</h6>
           <p className="text-xs">
-            The recommended inspection period should be based on installation condition, 
-            environment, and usage. A badly maintained installation may need inspection 
-            in 1-2 years, whilst a well-maintained modern installation may be suitable 
-            for the maximum period.
+            The recommended inspection period should be based on installation condition,
+            environment, and usage. A badly maintained installation may need inspection in 1-2
+            years, whilst a well-maintained modern installation may be suitable for the maximum
+            period.
           </p>
         </div>
       </div>

@@ -49,7 +49,9 @@ export const useCustomerAnalytics = () => {
   return useQuery({
     queryKey: ['customer-analytics'],
     queryFn: async (): Promise<CustomerAnalytics> => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
       const now = new Date();
@@ -106,9 +108,12 @@ export const useCustomerAnalytics = () => {
       ]);
 
       // Gracefully handle individual query errors
-      if (customersResult.error) console.warn('Customer analytics: customers query failed', customersResult.error.message);
-      if (reportsResult.error) console.warn('Customer analytics: reports query failed', reportsResult.error.message);
-      if (activityResult.error) console.warn('Customer analytics: activity query failed', activityResult.error.message);
+      if (customersResult.error)
+        console.warn('Customer analytics: customers query failed', customersResult.error.message);
+      if (reportsResult.error)
+        console.warn('Customer analytics: reports query failed', reportsResult.error.message);
+      if (activityResult.error)
+        console.warn('Customer analytics: activity query failed', activityResult.error.message);
 
       const customers = customersResult.data || [];
       const totalCustomers = customersResult.count || 0;
@@ -139,18 +144,21 @@ export const useCustomerAnalytics = () => {
 
       // Revenue by customer — use RPC if available, otherwise skip
       let revenueByCustomer: RevenueByCustomer[] = [];
-      const customerIds = customers.map(c => c.id);
+      const customerIds = customers.map((c) => c.id);
       if (customerIds.length > 0) {
         try {
-          const { data: quoteData, error: rpcError } = await supabase.rpc('get_customer_quote_stats', {
-            p_customer_ids: customerIds,
-          });
+          const { data: quoteData, error: rpcError } = await supabase.rpc(
+            'get_customer_quote_stats',
+            {
+              p_customer_ids: customerIds,
+            }
+          );
           if (rpcError) {
             console.warn('Customer analytics: quote stats RPC failed', rpcError.message);
           } else if (quoteData && quoteData.length > 0) {
             const revenueList = quoteData
               .map((q: any) => {
-                const customer = customers.find(c => c.id === q.customer_id);
+                const customer = customers.find((c) => c.id === q.customer_id);
                 return {
                   name: customer?.name || 'Unknown',
                   revenue: Number(q.total_quoted || 0) + Number(q.total_invoiced || 0),
@@ -184,7 +192,7 @@ export const useCustomerAnalytics = () => {
 
       // Active certificates
       const activeCertificates = reports.filter(
-        r => r.status === 'completed' || r.status === 'in-progress'
+        (r) => r.status === 'completed' || r.status === 'in-progress'
       ).length;
 
       // Activity by day of week

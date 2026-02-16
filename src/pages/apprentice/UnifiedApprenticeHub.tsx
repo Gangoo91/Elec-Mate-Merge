@@ -24,15 +24,18 @@ import { UnifiedCaptureSheet } from '@/components/apprentice-hub/UnifiedCaptureS
 import { ProgressDashboard } from '@/components/apprentice/progress/ProgressDashboard';
 
 export default function UnifiedApprenticeHub() {
-  useSEO({ title: 'Apprentice Hub', description: 'Track your electrical apprenticeship. Portfolio evidence, OJT hours, and progress tracking.', noindex: true });
+  useSEO({
+    title: 'Apprentice Hub',
+    description:
+      'Track your electrical apprenticeship. Portfolio evidence, OJT hours, and progress tracking.',
+    noindex: true,
+  });
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Get tab from URL or default to 'home'
   const tabParam = searchParams.get('tab') as ApprenticeHubTab | null;
   const [activeTab, setActiveTab] = useState<ApprenticeHubTab>(
-    tabParam && ['home', 'work', 'hours', 'progress', 'me'].includes(tabParam)
-      ? tabParam
-      : 'home'
+    tabParam && ['home', 'work', 'hours', 'progress', 'me'].includes(tabParam) ? tabParam : 'home'
   );
 
   // Capture sheet state
@@ -77,19 +80,14 @@ export default function UnifiedApprenticeHub() {
   const tabContentVariants = {
     initial: { opacity: 0, y: 8 },
     animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -8 }
+    exit: { opacity: 0, y: -8 },
   };
 
   // Render active tab content
   const renderTabContent = () => {
     switch (activeTab) {
       case 'home':
-        return (
-          <UnifiedDashboard
-            onNavigate={handleTabChange}
-            onCapture={handleCapture}
-          />
-        );
+        return <UnifiedDashboard onNavigate={handleTabChange} onCapture={handleCapture} />;
       case 'work':
         return <PortfolioGrid onCapture={handleCapture} />;
       case 'hours':

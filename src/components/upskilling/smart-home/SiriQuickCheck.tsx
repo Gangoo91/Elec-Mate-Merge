@@ -8,16 +8,18 @@ export const SiriQuickCheck = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const question = "What is one reason Apple HomeKit is considered more secure than other platforms?";
+  const question =
+    'What is one reason Apple HomeKit is considered more secure than other platforms?';
   const options = [
     "It doesn't use wireless communication",
-    "All communication uses end-to-end encryption and processes locally",
-    "It only works with Apple devices",
-    "It requires manual control only"
+    'All communication uses end-to-end encryption and processes locally',
+    'It only works with Apple devices',
+    'It requires manual control only',
   ];
-  
+
   const correctAnswer = 1;
-  const explanation = "HomeKit uses end-to-end encryption for all communication and processes many commands locally through Apple TV or HomePod hubs, reducing cloud dependencies and protecting user privacy.";
+  const explanation =
+    'HomeKit uses end-to-end encryption for all communication and processes many commands locally through Apple TV or HomePod hubs, reducing cloud dependencies and protecting user privacy.';
 
   const handleSubmit = () => {
     setShowResult(true);
@@ -38,7 +40,7 @@ export const SiriQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-foreground font-medium">{question}</p>
-        
+
         <div className="space-y-3">
           {options.map((option, index) => (
             <button
@@ -49,11 +51,11 @@ export const SiriQuickCheck = () => {
                   ? index === correctAnswer
                     ? 'border-green-500 bg-green-500/20 text-foreground'
                     : index === selectedAnswer && index !== correctAnswer
-                    ? 'border-red-500 bg-red-500/20 text-foreground'
-                    : 'border-gray-600 bg-gray-800/50 text-gray-300'
+                      ? 'border-red-500 bg-red-500/20 text-foreground'
+                      : 'border-gray-600 bg-gray-800/50 text-gray-300'
                   : selectedAnswer === index
-                  ? 'border-elec-yellow bg-elec-yellow/20 text-foreground'
-                  : 'border-gray-600 bg-gray-800/50 text-foreground hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
+                    ? 'border-elec-yellow bg-elec-yellow/20 text-foreground'
+                    : 'border-gray-600 bg-gray-800/50 text-foreground hover:border-elec-yellow/50 hover:bg-elec-yellow/10'
               }`}
               disabled={showResult}
             >
@@ -72,7 +74,7 @@ export const SiriQuickCheck = () => {
         </div>
 
         {!showResult && selectedAnswer !== null && (
-          <Button 
+          <Button
             onClick={handleSubmit}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-500"
           >
@@ -82,22 +84,26 @@ export const SiriQuickCheck = () => {
 
         {showResult && (
           <div className="space-y-3">
-            <div className={`p-4 rounded-lg border ${
-              selectedAnswer === correctAnswer 
-                ? 'border-green-500 bg-green-500/20' 
-                : 'border-red-500 bg-red-500/20'
-            }`}>
+            <div
+              className={`p-4 rounded-lg border ${
+                selectedAnswer === correctAnswer
+                  ? 'border-green-500 bg-green-500/20'
+                  : 'border-red-500 bg-red-500/20'
+              }`}
+            >
               <div className="flex items-center gap-2 mb-2">
                 {selectedAnswer === correctAnswer ? (
-                  <Badge variant="secondary" className="bg-green-500 text-foreground">Correct!</Badge>
+                  <Badge variant="secondary" className="bg-green-500 text-foreground">
+                    Correct!
+                  </Badge>
                 ) : (
                   <Badge variant="destructive">Incorrect</Badge>
                 )}
               </div>
               <p className="text-foreground text-sm">{explanation}</p>
             </div>
-            
-            <Button 
+
+            <Button
               onClick={resetQuiz}
               variant="outline"
               className="w-full border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"

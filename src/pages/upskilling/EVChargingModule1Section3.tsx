@@ -1,72 +1,87 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "evcharging-m1s3-check1",
-    question: "Which regulation requires competence for all electrical work?",
-    options: ["Building Regulations Part P", "Health and Safety at Work Act 1974", "Electricity at Work Regulations 1989", "CDM Regulations 2015"],
+    id: 'evcharging-m1s3-check1',
+    question: 'Which regulation requires competence for all electrical work?',
+    options: [
+      'Building Regulations Part P',
+      'Health and Safety at Work Act 1974',
+      'Electricity at Work Regulations 1989',
+      'CDM Regulations 2015',
+    ],
     correctIndex: 2,
-    explanation: "The Electricity at Work Regulations 1989 specifically requires competence for all electrical work, including proper construction, maintenance, and safe working practices."
+    explanation:
+      'The Electricity at Work Regulations 1989 specifically requires competence for all electrical work, including proper construction, maintenance, and safe working practices.',
   },
   {
-    id: "evcharging-m1s3-check2",
-    question: "What is the minimum recommended public liability insurance for EV installers?",
-    options: ["£500,000", "£1 million", "£2 million", "£5 million"],
+    id: 'evcharging-m1s3-check2',
+    question: 'What is the minimum recommended public liability insurance for EV installers?',
+    options: ['£500,000', '£1 million', '£2 million', '£5 million'],
     correctIndex: 2,
-    explanation: "A minimum of £2 million public liability insurance is recommended for EV charging installers due to the high-value property damage potential and personal injury risks associated with high-power electrical installations."
+    explanation:
+      'A minimum of £2 million public liability insurance is recommended for EV charging installers due to the high-value property damage potential and personal injury risks associated with high-power electrical installations.',
   },
   {
-    id: "evcharging-m1s3-check3",
-    question: "How often should public EV charging installations typically be inspected?",
-    options: ["Every 6 months", "1-3 years", "5 years", "10 years"],
+    id: 'evcharging-m1s3-check3',
+    question: 'How often should public EV charging installations typically be inspected?',
+    options: ['Every 6 months', '1-3 years', '5 years', '10 years'],
     correctIndex: 1,
-    explanation: "Public EV charging installations should typically be inspected every 1-3 years due to high usage levels. Higher usage locations may require annual inspection."
-  }
+    explanation:
+      'Public EV charging installations should typically be inspected every 1-3 years due to high usage levels. Higher usage locations may require annual inspection.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Do I need to be part of a competent person scheme to install EV chargers?",
-    answer: "While not strictly mandatory, membership of a competent person scheme (NICEIC, NAPIT, etc.) allows self-certification under Part P of the Building Regulations and is required for OZEV grant eligibility. It also provides insurance benefits and demonstrates professional competence."
+    question: 'Do I need to be part of a competent person scheme to install EV chargers?',
+    answer:
+      'While not strictly mandatory, membership of a competent person scheme (NICEIC, NAPIT, etc.) allows self-certification under Part P of the Building Regulations and is required for OZEV grant eligibility. It also provides insurance benefits and demonstrates professional competence.',
   },
   {
-    question: "What documentation must I provide after an EV charger installation?",
-    answer: "You must provide an Electrical Installation Certificate (EIC) for new circuits, including test results. Additional documentation includes user manuals, warranty information, maintenance requirements, and G98/G99 notification confirmation if applicable."
+    question: 'What documentation must I provide after an EV charger installation?',
+    answer:
+      'You must provide an Electrical Installation Certificate (EIC) for new circuits, including test results. Additional documentation includes user manuals, warranty information, maintenance requirements, and G98/G99 notification confirmation if applicable.',
   },
   {
-    question: "What insurance do I need for EV charging installations?",
-    answer: "Essential coverage includes public liability (minimum £2M), professional indemnity insurance, employer's liability if employing staff, and product liability. Cyber liability should be considered for smart charging systems."
+    question: 'What insurance do I need for EV charging installations?',
+    answer:
+      "Essential coverage includes public liability (minimum £2M), professional indemnity insurance, employer's liability if employing staff, and product liability. Cyber liability should be considered for smart charging systems.",
   },
   {
-    question: "What is the OZEV Approved Installer Scheme?",
-    answer: "The OZEV (Office for Zero Emission Vehicles) scheme certifies installers who meet specific competency requirements, allowing them to install grant-funded chargers. Requirements include MCS certification, Level 3+ electrical qualification, 18th Edition certification, and appropriate insurance."
-  }
+    question: 'What is the OZEV Approved Installer Scheme?',
+    answer:
+      'The OZEV (Office for Zero Emission Vehicles) scheme certifies installers who meet specific competency requirements, allowing them to install grant-funded chargers. Requirements include MCS certification, Level 3+ electrical qualification, 18th Edition certification, and appropriate insurance.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "An employer asks you to install EV chargers at their premises but skip the risk assessment to save time. What should you do?",
-  options: [
-    "Proceed without the risk assessment as they are the client",
-    "Refuse the work and explain the legal requirement",
-    "Complete a basic verbal risk assessment",
-    "Install and do the risk assessment later"
-  ],
-  correctAnswer: 1,
-  explanation: "Risk assessment is a legal requirement under the Health and Safety at Work Act 1974 and CDM Regulations 2015. Refusing work without proper safety procedures is the professional response. Installers have a duty of care that cannot be waived by client requests."
-  }
+    question:
+      'An employer asks you to install EV chargers at their premises but skip the risk assessment to save time. What should you do?',
+    options: [
+      'Proceed without the risk assessment as they are the client',
+      'Refuse the work and explain the legal requirement',
+      'Complete a basic verbal risk assessment',
+      'Install and do the risk assessment later',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Risk assessment is a legal requirement under the Health and Safety at Work Act 1974 and CDM Regulations 2015. Refusing work without proper safety procedures is the professional response. Installers have a duty of care that cannot be waived by client requests.',
+  },
 ];
 
 const EVChargingModule1Section3 = () => {
   useSEO({
-    title: "Installer Responsibilities | EV Charging Module 1.3",
-    description: "Understand the legal, professional and safety responsibilities for EV charging installers including competent person schemes and documentation requirements."
+    title: 'Installer Responsibilities | EV Charging Module 1.3',
+    description:
+      'Understand the legal, professional and safety responsibilities for EV charging installers including competent person schemes and documentation requirements.',
   });
 
   return (
@@ -108,16 +123,26 @@ const EVChargingModule1Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Legal:</strong> H&S Act 1974, EAWR 1989, Building Regs</li>
-              <li><strong>Schemes:</strong> NICEIC, NAPIT, ECA for self-certification</li>
-              <li><strong>Docs:</strong> EIC, risk assessment, G98/G99 notifications</li>
+              <li>
+                <strong>Legal:</strong> H&S Act 1974, EAWR 1989, Building Regs
+              </li>
+              <li>
+                <strong>Schemes:</strong> NICEIC, NAPIT, ECA for self-certification
+              </li>
+              <li>
+                <strong>Docs:</strong> EIC, risk assessment, G98/G99 notifications
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Part P requirements, OZEV scheme eligibility</li>
-              <li><strong>Use:</strong> Risk assessment before every installation</li>
+              <li>
+                <strong>Spot:</strong> Part P requirements, OZEV scheme eligibility
+              </li>
+              <li>
+                <strong>Use:</strong> Risk assessment before every installation
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +152,12 @@ const EVChargingModule1Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Identify key legal responsibilities for installers",
-              "Understand competent person scheme requirements",
-              "Apply risk assessment and safety procedures",
-              "Complete proper documentation and certification",
-              "Recognise ongoing maintenance responsibilities",
-              "Navigate OZEV approved installer requirements"
+              'Identify key legal responsibilities for installers',
+              'Understand competent person scheme requirements',
+              'Apply risk assessment and safety procedures',
+              'Complete proper documentation and certification',
+              'Recognise ongoing maintenance responsibilities',
+              'Navigate OZEV approved installer requirements',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -160,28 +185,47 @@ const EVChargingModule1Section3 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Primary Legislation</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>H&S at Work Act 1974:</strong> Duty of care</li>
-                  <li><strong>EAWR 1989:</strong> Competence requirement</li>
-                  <li><strong>Building Regs Part P:</strong> Notification</li>
-                  <li><strong>CDM 2015:</strong> Construction safety</li>
+                  <li>
+                    <strong>H&S at Work Act 1974:</strong> Duty of care
+                  </li>
+                  <li>
+                    <strong>EAWR 1989:</strong> Competence requirement
+                  </li>
+                  <li>
+                    <strong>Building Regs Part P:</strong> Notification
+                  </li>
+                  <li>
+                    <strong>CDM 2015:</strong> Construction safety
+                  </li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Insurance Requirements</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Insurance Requirements
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Public liability:</strong> £2M minimum</li>
-                  <li><strong>Professional indemnity:</strong> Design errors</li>
-                  <li><strong>Employer's liability:</strong> If employing staff</li>
-                  <li><strong>Product liability:</strong> Equipment defects</li>
+                  <li>
+                    <strong>Public liability:</strong> £2M minimum
+                  </li>
+                  <li>
+                    <strong>Professional indemnity:</strong> Design errors
+                  </li>
+                  <li>
+                    <strong>Employer's liability:</strong> If employing staff
+                  </li>
+                  <li>
+                    <strong>Product liability:</strong> Equipment defects
+                  </li>
                 </ul>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm text-white">
-                <strong className="text-red-400">Critical:</strong> EV charging installations operate
-                at high power levels with potentially lethal voltages. Professional competence,
-                regulatory compliance, and safety awareness are non-negotiable requirements.
+                <strong className="text-red-400">Critical:</strong> EV charging installations
+                operate at high power levels with potentially lethal voltages. Professional
+                competence, regulatory compliance, and safety awareness are non-negotiable
+                requirements.
               </p>
             </div>
           </div>
@@ -228,11 +272,21 @@ const EVChargingModule1Section3 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">OZEV Approved Installer Scheme</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                OZEV Approved Installer Scheme
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Purpose:</strong> Required for grant-funded installations</li>
-                <li><strong>Requirements:</strong> MCS certification, Level 3+ qualification, 18th Edition</li>
-                <li><strong>Benefits:</strong> Grant eligibility, customer confidence, market differentiation</li>
+                <li>
+                  <strong>Purpose:</strong> Required for grant-funded installations
+                </li>
+                <li>
+                  <strong>Requirements:</strong> MCS certification, Level 3+ qualification, 18th
+                  Edition
+                </li>
+                <li>
+                  <strong>Benefits:</strong> Grant eligibility, customer confidence, market
+                  differentiation
+                </li>
               </ul>
             </div>
           </div>
@@ -254,7 +308,9 @@ const EVChargingModule1Section3 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Site-Specific Hazards</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Site-Specific Hazards
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Existing electrical installation condition</li>
                   <li>Working at height requirements</li>
@@ -276,9 +332,15 @@ const EVChargingModule1Section3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Safe Systems of Work:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Method statements:</strong> Step-by-step installation procedures</li>
-                <li><strong>Permit to work:</strong> High-risk activity authorisation</li>
-                <li><strong>Emergency procedures:</strong> First aid and incident response</li>
+                <li>
+                  <strong>Method statements:</strong> Step-by-step installation procedures
+                </li>
+                <li>
+                  <strong>Permit to work:</strong> High-risk activity authorisation
+                </li>
+                <li>
+                  <strong>Emergency procedures:</strong> First aid and incident response
+                </li>
               </ul>
             </div>
           </div>
@@ -294,27 +356,45 @@ const EVChargingModule1Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Proper documentation protects both installer and client while demonstrating
-              compliance with regulations.
+              Proper documentation protects both installer and client while demonstrating compliance
+              with regulations.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Certificates</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Installation Certificates
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>EIC:</strong> Required for all new circuits</li>
-                  <li><strong>MEIWC:</strong> Additions to existing circuits</li>
-                  <li><strong>Test results:</strong> Full schedule required</li>
-                  <li><strong>Departures:</strong> Note any deviations from BS 7671</li>
+                  <li>
+                    <strong>EIC:</strong> Required for all new circuits
+                  </li>
+                  <li>
+                    <strong>MEIWC:</strong> Additions to existing circuits
+                  </li>
+                  <li>
+                    <strong>Test results:</strong> Full schedule required
+                  </li>
+                  <li>
+                    <strong>Departures:</strong> Note any deviations from BS 7671
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Additional Documents</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Building Control:</strong> Part P self-certification</li>
-                  <li><strong>DNO notifications:</strong> G98/G99 applications</li>
-                  <li><strong>Handover pack:</strong> User manuals, warranty info</li>
-                  <li><strong>Maintenance schedule:</strong> Recommended intervals</li>
+                  <li>
+                    <strong>Building Control:</strong> Part P self-certification
+                  </li>
+                  <li>
+                    <strong>DNO notifications:</strong> G98/G99 applications
+                  </li>
+                  <li>
+                    <strong>Handover pack:</strong> User manuals, warranty info
+                  </li>
+                  <li>
+                    <strong>Maintenance schedule:</strong> Recommended intervals
+                  </li>
                 </ul>
               </div>
             </div>
@@ -348,7 +428,9 @@ const EVChargingModule1Section3 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Professional Best Practice</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Professional Best Practice
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Maintain current qualifications and CPD records</li>
                 <li>Document all risk assessments before starting work</li>
@@ -360,10 +442,19 @@ const EVChargingModule1Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Skipping risk assessment:</strong> — Legal requirement, not optional</li>
-                <li><strong>Incomplete certificates:</strong> — All sections must be completed</li>
-                <li><strong>Missing DNO notification:</strong> — G98/G99 required for applicable installations</li>
-                <li><strong>Inadequate insurance:</strong> — Review coverage annually as work expands</li>
+                <li>
+                  <strong>Skipping risk assessment:</strong> — Legal requirement, not optional
+                </li>
+                <li>
+                  <strong>Incomplete certificates:</strong> — All sections must be completed
+                </li>
+                <li>
+                  <strong>Missing DNO notification:</strong> — G98/G99 required for applicable
+                  installations
+                </li>
+                <li>
+                  <strong>Inadequate insurance:</strong> — Review coverage annually as work expands
+                </li>
               </ul>
             </div>
           </div>
@@ -409,10 +500,7 @@ const EVChargingModule1Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

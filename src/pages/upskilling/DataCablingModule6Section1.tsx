@@ -1,69 +1,79 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "TIA/EIA 568 and ISO/IEC 11801 Overview | Data Cabling Module 6.1";
-const DESCRIPTION = "Understanding international cabling standards for structured cabling system design and installation.";
+const TITLE = 'TIA/EIA 568 and ISO/IEC 11801 Overview | Data Cabling Module 6.1';
+const DESCRIPTION =
+  'Understanding international cabling standards for structured cabling system design and installation.';
 
 const quickCheckQuestions = [
   {
-    id: "datacabling-m6s1-check1",
-    question: "What is the maximum horizontal cable length specified in TIA/EIA-568?",
-    options: ["80 metres", "90 metres", "100 metres", "110 metres"],
+    id: 'datacabling-m6s1-check1',
+    question: 'What is the maximum horizontal cable length specified in TIA/EIA-568?',
+    options: ['80 metres', '90 metres', '100 metres', '110 metres'],
     correctIndex: 1,
-    explanation: "TIA/EIA-568 specifies a maximum horizontal cable length of 90 metres, with an additional 10 metres allowed for patch cords (5m each end) for a total channel length of 100m."
+    explanation:
+      'TIA/EIA-568 specifies a maximum horizontal cable length of 90 metres, with an additional 10 metres allowed for patch cords (5m each end) for a total channel length of 100m.',
   },
   {
-    id: "datacabling-m6s1-check2",
-    question: "Which topology is specified as the primary architecture in TIA/EIA-568?",
-    options: ["Ring topology", "Bus topology", "Star topology", "Mesh topology"],
+    id: 'datacabling-m6s1-check2',
+    question: 'Which topology is specified as the primary architecture in TIA/EIA-568?',
+    options: ['Ring topology', 'Bus topology', 'Star topology', 'Mesh topology'],
     correctIndex: 2,
-    explanation: "TIA/EIA-568 specifies star topology as the primary architecture, with each outlet connected directly to a telecommunications room via horizontal cabling."
+    explanation:
+      'TIA/EIA-568 specifies star topology as the primary architecture, with each outlet connected directly to a telecommunications room via horizontal cabling.',
   },
   {
-    id: "datacabling-m6s1-check3",
-    question: "What does ISO Class EA correspond to in TIA category terms?",
-    options: ["Category 5e", "Category 6", "Category 6A", "Category 7"],
+    id: 'datacabling-m6s1-check3',
+    question: 'What does ISO Class EA correspond to in TIA category terms?',
+    options: ['Category 5e', 'Category 6', 'Category 6A', 'Category 7'],
     correctIndex: 2,
-    explanation: "ISO Class EA corresponds to TIA Category 6A, both supporting frequencies up to 500 MHz and enabling 10GBASE-T applications over the full 100-metre channel length."
-  }
+    explanation:
+      'ISO Class EA corresponds to TIA Category 6A, both supporting frequencies up to 500 MHz and enabling 10GBASE-T applications over the full 100-metre channel length.',
+  },
 ];
 
 const faqs = [
   {
     question: "What's the difference between TIA-568 and ISO/IEC 11801?",
-    answer: "TIA-568 is the North American standard, while ISO/IEC 11801 is the international equivalent. Both specify similar requirements for structured cabling but use different terminology (categories vs classes). Performance requirements are largely harmonised."
+    answer:
+      'TIA-568 is the North American standard, while ISO/IEC 11801 is the international equivalent. Both specify similar requirements for structured cabling but use different terminology (categories vs classes). Performance requirements are largely harmonised.',
   },
   {
-    question: "Which standard should I follow in the UK?",
-    answer: "In the UK, EN 50173 applies, which is the European implementation of ISO/IEC 11801. It uses class designations (D, E, EA, F) rather than categories, though performance specifications align with TIA standards."
+    question: 'Which standard should I follow in the UK?',
+    answer:
+      'In the UK, EN 50173 applies, which is the European implementation of ISO/IEC 11801. It uses class designations (D, E, EA, F) rather than categories, though performance specifications align with TIA standards.',
   },
   {
     question: "What does 'channel' mean in cabling standards?",
-    answer: "A channel refers to the complete end-to-end transmission path including horizontal cables, patch cords, connectors, and all interconnection hardware. Maximum channel length is 100m (90m permanent link + 10m patch cords)."
+    answer:
+      'A channel refers to the complete end-to-end transmission path including horizontal cables, patch cords, connectors, and all interconnection hardware. Maximum channel length is 100m (90m permanent link + 10m patch cords).',
   },
   {
-    question: "Can I mix standards in the same installation?",
-    answer: "Yes, but consistency is important. Use the same wiring scheme throughout (T568A or T568B), and ensure all components meet at least the minimum class/category specification. Documentation should clearly state which standards apply."
-  }
+    question: 'Can I mix standards in the same installation?',
+    answer:
+      'Yes, but consistency is important. Use the same wiring scheme throughout (T568A or T568B), and ensure all components meet at least the minimum class/category specification. Documentation should clearly state which standards apply.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-  question: "A multinational company needs to standardise network infrastructure across offices in New York, London, and Singapore. What is the key consideration for ensuring compatibility?",
-  options: [
-    "Use TIA-568 exclusively in all locations",
-    "Ensure equivalent class/category performance despite different regional standards",
-    "Install different cable types in each region",
-    "Only use wireless networks to avoid standards conflicts"
-  ],
-  correctAnswer: 1,
-  explanation: "Different regions follow different standards (TIA-568, EN 50173, ISO/IEC 11801), but performance specifications are harmonised. Using equivalent class/category specifications (e.g., Cat 6A/Class EA) ensures compatibility regardless of regional standard."
-  }
+    question:
+      'A multinational company needs to standardise network infrastructure across offices in New York, London, and Singapore. What is the key consideration for ensuring compatibility?',
+    options: [
+      'Use TIA-568 exclusively in all locations',
+      'Ensure equivalent class/category performance despite different regional standards',
+      'Install different cable types in each region',
+      'Only use wireless networks to avoid standards conflicts',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Different regions follow different standards (TIA-568, EN 50173, ISO/IEC 11801), but performance specifications are harmonised. Using equivalent class/category specifications (e.g., Cat 6A/Class EA) ensures compatibility regardless of regional standard.',
+  },
 ];
 
 const DataCablingModule6Section1 = () => {
@@ -98,9 +108,7 @@ const DataCablingModule6Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             TIA/EIA 568 and ISO/IEC 11801 Overview
           </h1>
-          <p className="text-white/80">
-            International cabling standards and requirements
-          </p>
+          <p className="text-white/80">International cabling standards and requirements</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,16 +116,26 @@ const DataCablingModule6Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>TIA-568:</strong> North American standard (categories)</li>
-              <li><strong>ISO/IEC 11801:</strong> International standard (classes)</li>
-              <li><strong>Key limit:</strong> 90m horizontal + 10m patch cords</li>
+              <li>
+                <strong>TIA-568:</strong> North American standard (categories)
+              </li>
+              <li>
+                <strong>ISO/IEC 11801:</strong> International standard (classes)
+              </li>
+              <li>
+                <strong>Key limit:</strong> 90m horizontal + 10m patch cords
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Star topology, category markings on cables</li>
-              <li><strong>Use:</strong> Match regional standard, ensure class equivalence</li>
+              <li>
+                <strong>Spot:</strong> Star topology, category markings on cables
+              </li>
+              <li>
+                <strong>Use:</strong> Match regional standard, ensure class equivalence
+              </li>
             </ul>
           </div>
         </div>
@@ -127,12 +145,12 @@ const DataCablingModule6Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand TIA-568 and ISO 11801 scope",
-              "Compare categories and classes",
-              "Apply architectural requirements",
-              "Identify regional standards differences",
-              "Select appropriate specifications",
-              "Ensure international compatibility"
+              'Understand TIA-568 and ISO 11801 scope',
+              'Compare categories and classes',
+              'Apply architectural requirements',
+              'Identify regional standards differences',
+              'Select appropriate specifications',
+              'Ensure international compatibility',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -159,21 +177,39 @@ const DataCablingModule6Section1 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Current Standard Structure</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Current Standard Structure
+                </p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>TIA-568.0-E:</strong> Generic Cabling (2020)</li>
-                  <li><strong>TIA-568.1-E:</strong> Commercial Buildings (2020)</li>
-                  <li><strong>TIA-568.2-D:</strong> Twisted-Pair (2018)</li>
-                  <li><strong>TIA-568.3-D:</strong> Optical Fibre (2016)</li>
+                  <li>
+                    <strong>TIA-568.0-E:</strong> Generic Cabling (2020)
+                  </li>
+                  <li>
+                    <strong>TIA-568.1-E:</strong> Commercial Buildings (2020)
+                  </li>
+                  <li>
+                    <strong>TIA-568.2-D:</strong> Twisted-Pair (2018)
+                  </li>
+                  <li>
+                    <strong>TIA-568.3-D:</strong> Optical Fibre (2016)
+                  </li>
                 </ul>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Requirements</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li><strong>Topology:</strong> Star configuration</li>
-                  <li><strong>Horizontal:</strong> 90m maximum</li>
-                  <li><strong>Channel:</strong> 100m total</li>
-                  <li><strong>No splices:</strong> Point-to-point only</li>
+                  <li>
+                    <strong>Topology:</strong> Star configuration
+                  </li>
+                  <li>
+                    <strong>Horizontal:</strong> 90m maximum
+                  </li>
+                  <li>
+                    <strong>Channel:</strong> 100m total
+                  </li>
+                  <li>
+                    <strong>No splices:</strong> Point-to-point only
+                  </li>
                 </ul>
               </div>
             </div>
@@ -210,12 +246,22 @@ const DataCablingModule6Section1 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Standard Series Structure:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Standard Series Structure:
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>ISO/IEC 11801-1:</strong> General Requirements (2017)</li>
-                <li><strong>ISO/IEC 11801-2:</strong> Office Premises (2017)</li>
-                <li><strong>ISO/IEC 11801-3:</strong> Industrial Premises (2017)</li>
-                <li><strong>ISO/IEC 11801-5:</strong> Data Centres (2017)</li>
+                <li>
+                  <strong>ISO/IEC 11801-1:</strong> General Requirements (2017)
+                </li>
+                <li>
+                  <strong>ISO/IEC 11801-2:</strong> Office Premises (2017)
+                </li>
+                <li>
+                  <strong>ISO/IEC 11801-3:</strong> Industrial Premises (2017)
+                </li>
+                <li>
+                  <strong>ISO/IEC 11801-5:</strong> Data Centres (2017)
+                </li>
               </ul>
             </div>
 
@@ -252,12 +298,14 @@ const DataCablingModule6Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Understanding the relationship between ISO classes and TIA categories is essential
-              for specifying compatible cabling across different regional standards.
+              Understanding the relationship between ISO classes and TIA categories is essential for
+              specifying compatible cabling across different regional standards.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Class/Category Comparison:</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Class/Category Comparison:
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">ISO Classes</p>
@@ -300,7 +348,9 @@ const DataCablingModule6Section1 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Regional Considerations</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Regional Considerations
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Verify which standard applies in your region</li>
                 <li>Use equivalent class/category for multinational projects</li>
@@ -312,10 +362,18 @@ const DataCablingModule6Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Mixing terminology:</strong> — Confusing classes with categories</li>
-                <li><strong>Wrong test limits:</strong> — Using TIA limits for ISO certification</li>
-                <li><strong>Exceeding distances:</strong> — Not accounting for total channel length</li>
-                <li><strong>Ignoring regional:</strong> — Assuming TIA applies everywhere</li>
+                <li>
+                  <strong>Mixing terminology:</strong> — Confusing classes with categories
+                </li>
+                <li>
+                  <strong>Wrong test limits:</strong> — Using TIA limits for ISO certification
+                </li>
+                <li>
+                  <strong>Exceeding distances:</strong> — Not accounting for total channel length
+                </li>
+                <li>
+                  <strong>Ignoring regional:</strong> — Assuming TIA applies everywhere
+                </li>
               </ul>
             </div>
           </div>
@@ -359,10 +417,7 @@ const DataCablingModule6Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

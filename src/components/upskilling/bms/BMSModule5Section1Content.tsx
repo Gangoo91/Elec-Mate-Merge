@@ -14,18 +14,19 @@ export const BMSModule5Section1Content = () => {
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
           <p>
-            A protocol is like a language that devices use to exchange information. Without a shared protocol, 
-            devices cannot understand each other.
+            A protocol is like a language that devices use to exchange information. Without a shared
+            protocol, devices cannot understand each other.
           </p>
           <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold mb-2">Analogy</h4>
             <p className="text-sm text-gray-300">
-              Think of HVAC equipment speaking "BACnet," while lighting speaks "DALI." The BMS acts as the 
-              interpreter so both can communicate.
+              Think of HVAC equipment speaking "BACnet," while lighting speaks "DALI." The BMS acts
+              as the interpreter so both can communicate.
             </p>
           </div>
           <p>
-            Protocols define message structure, addressing, and how data is transmitted across networks.
+            Protocols define message structure, addressing, and how data is transmitted across
+            networks.
           </p>
         </CardContent>
       </Card>
@@ -62,8 +63,8 @@ export const BMSModule5Section1Content = () => {
           <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-lg p-4">
             <h4 className="text-foreground font-semibold mb-2">Example</h4>
             <p className="text-sm text-gray-300">
-              A chiller using Modbus can be integrated into any Modbus-compatible BMS. But a chiller with a 
-              proprietary protocol may only work with its manufacturer's control system.
+              A chiller using Modbus can be integrated into any Modbus-compatible BMS. But a chiller
+              with a proprietary protocol may only work with its manufacturer's control system.
             </p>
           </div>
         </CardContent>
@@ -122,14 +123,14 @@ export const BMSModule5Section1Content = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-gray-300 space-y-4">
-          <p>
-            Even though configuration is usually handled by BMS engineers, electricians must:
-          </p>
+          <p>Even though configuration is usually handled by BMS engineers, electricians must:</p>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                <span className="font-medium text-foreground">Wire communication buses correctly</span>
+                <span className="font-medium text-foreground">
+                  Wire communication buses correctly
+                </span>
               </div>
               <p className="text-sm text-gray-400 ml-4">Twisted pair, RS-485, Ethernet, etc.</p>
             </div>

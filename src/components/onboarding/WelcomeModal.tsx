@@ -16,7 +16,7 @@ import {
   Users,
   Bot,
   Clock,
-  CheckCircle2
+  CheckCircle2,
 } from 'lucide-react';
 
 interface WelcomeModalProps {
@@ -137,7 +137,9 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
         <div className={`relative px-6 md:px-8 pt-8 md:pt-10 pb-6 md:pb-8 ${content.bgColor}`}>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-neutral-900" />
           <div className="relative z-10 text-center">
-            <div className={`inline-flex p-4 md:p-5 rounded-2xl ${content.bgColor} ${content.borderColor} border mb-4 md:mb-5`}>
+            <div
+              className={`inline-flex p-4 md:p-5 rounded-2xl ${content.bgColor} ${content.borderColor} border mb-4 md:mb-5`}
+            >
               <Icon className={`h-10 w-10 md:h-12 md:w-12 ${content.color}`} />
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{content.title}</h2>

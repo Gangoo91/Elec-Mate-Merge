@@ -13,9 +13,9 @@ export const useTableNavigation = ({ totalRows, totalColumns }: UseTableNavigati
 
     const targetRow = rows[rowIndex];
     const inputs = targetRow.querySelectorAll('input, select');
-    
+
     if (columnIndex < 0 || columnIndex >= inputs.length) return;
-    
+
     const targetInput = inputs[columnIndex] as HTMLElement;
     targetInput?.focus();
   }, []);

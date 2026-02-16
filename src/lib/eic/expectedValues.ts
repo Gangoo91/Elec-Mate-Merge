@@ -45,7 +45,7 @@ const CONDUCTOR_RESISTANCE_20C: Record<number, number> = {
   185: 0.0991,
   240: 0.0754,
   300: 0.0601,
-  400: 0.0470
+  400: 0.047,
 };
 
 /**
@@ -59,18 +59,18 @@ export function calculateExpectedR1R2(
 ): { at20C: number; at70C: number; formatted: string } {
   const r1 = CONDUCTOR_RESISTANCE_20C[liveSize] || 0;
   const r2 = CONDUCTOR_RESISTANCE_20C[cpcSize] || 0;
-  
+
   // Calculate at 20°C
   const r1r2At20C = ((r1 + r2) * length) / 1000; // Convert mΩ to Ω
-  
+
   // Apply 1.2 multiplier for operating temperature (70°C for thermoplastic)
   // BS 7671 requires testing to account for conductor temperature rise
   const r1r2At70C = r1r2At20C * 1.2;
-  
+
   return {
     at20C: Number(r1r2At20C.toFixed(4)),
     at70C: Number(r1r2At70C.toFixed(4)),
-    formatted: `${r1r2At70C.toFixed(3)}Ω`
+    formatted: `${r1r2At70C.toFixed(3)}Ω`,
   };
 }
 
@@ -78,10 +78,7 @@ export function calculateExpectedR1R2(
  * Calculate expected Zs (Ze + R1+R2)
  * BS 7671 Reg 612.9 - Earth fault loop impedance
  */
-export function calculateExpectedZs(
-  ze: number,
-  r1r2: number
-): number {
+export function calculateExpectedZs(ze: number, r1r2: number): number {
   return Number((ze + r1r2).toFixed(3));
 }
 
@@ -98,22 +95,22 @@ export function getExpectedInsulationResistance(
     return {
       testVoltage: '250V DC',
       minResistance: '≥0.5 MΩ',
-      regulation: 'BS 7671 Table 61 (SELV/PELV)'
+      regulation: 'BS 7671 Table 61 (SELV/PELV)',
     };
   }
-  
+
   if (voltage <= 500) {
     return {
       testVoltage: '500V DC',
       minResistance: '≥1.0 MΩ',
-      regulation: 'BS 7671 Table 61 (LV up to 500V)'
+      regulation: 'BS 7671 Table 61 (LV up to 500V)',
     };
   }
-  
+
   return {
     testVoltage: '1000V DC',
     minResistance: '≥1.0 MΩ',
-    regulation: 'BS 7671 Table 61 (LV above 500V)'
+    regulation: 'BS 7671 Table 61 (LV above 500V)',
   };
 }
 
@@ -137,13 +134,13 @@ export function getMaxZsForDevice(params: {
   disconnectionTime: number;
 }): number {
   const { deviceType, rating, curve, voltage, disconnectionTime } = params;
-  
+
   // Simplified lookup - in production, use full BS 7671 Appendix 3 tables
   // Maximum Zs = (0.8 × Uo) / Ia
   // Where Ia is current causing disconnection in required time
-  
+
   let ia: number;
-  
+
   if (deviceType === 'MCB' || deviceType === 'RCBO') {
     // For MCBs: Ia typically 5× In for Type B, 10× In for Type C, 20× In for Type D
     const multipliers = { B: 5, C: 10, D: 20 };
@@ -155,11 +152,11 @@ export function getMaxZsForDevice(params: {
   } else {
     ia = rating * 5; // Default
   }
-  
+
   // Calculate maximum Zs
   const uo = voltage; // Phase-earth voltage
   const maxZs = (0.8 * uo) / ia;
-  
+
   return Number(maxZs.toFixed(3));
 }
 
@@ -174,25 +171,25 @@ export function getExpectedRCDTripTime(params: {
 }): { maxTripTime: string; regulation: string } {
   const { testCurrent, rcdRating } = params;
   const testMultiplier = testCurrent / rcdRating;
-  
+
   // BS 7671 Table 61 - RCD trip time requirements
   if (testMultiplier === 1) {
     // Test at 1× IΔn
     return {
       maxTripTime: '< 300ms',
-      regulation: 'BS 7671 Reg 612.13.2 (1× IΔn)'
+      regulation: 'BS 7671 Reg 612.13.2 (1× IΔn)',
     };
   } else if (testMultiplier === 5) {
     // Test at 5× IΔn
     return {
       maxTripTime: '< 40ms',
-      regulation: 'BS 7671 Reg 612.13.2 (5× IΔn)'
+      regulation: 'BS 7671 Reg 612.13.2 (5× IΔn)',
     };
   }
-  
+
   return {
     maxTripTime: '< 300ms',
-    regulation: 'BS 7671 Reg 612.13.2'
+    regulation: 'BS 7671 Reg 612.13.2',
   };
 }
 
@@ -212,41 +209,37 @@ export function generateExpectedValues(circuit: {
   };
   rcdRating?: number;
 }): ExpectedTestValues {
-  const r1r2Result = calculateExpectedR1R2(
-    circuit.liveSize,
-    circuit.cpcSize,
-    circuit.length
-  );
-  
+  const r1r2Result = calculateExpectedR1R2(circuit.liveSize, circuit.cpcSize, circuit.length);
+
   const expectedZs = calculateExpectedZs(circuit.ze, r1r2Result.at70C);
   const maxZs = getMaxZsForDevice({
     deviceType: circuit.protectionDevice?.type ?? 'MCB',
     rating: circuit.protectionDevice?.rating ?? 6,
     curve: circuit.protectionDevice?.curve ?? 'B',
     voltage: circuit.voltage,
-    disconnectionTime: 0.4 // Standard 0.4s for final circuits
+    disconnectionTime: 0.4, // Standard 0.4s for final circuits
   });
-  
+
   const insulationRequirements = getExpectedInsulationResistance(circuit.voltage);
-  
+
   return {
     r1r2: {
       value: r1r2Result.formatted,
       at20C: r1r2Result.at20C,
       at70C: r1r2Result.at70C,
-      regulation: 'BS 7671 Reg 612.2'
+      regulation: 'BS 7671 Reg 612.2',
     },
     zs: {
       value: expectedZs,
       maxPermitted: maxZs,
       compliant: expectedZs <= maxZs,
-      regulation: 'BS 7671 Reg 612.9'
+      regulation: 'BS 7671 Reg 612.9',
     },
     insulationResistance: insulationRequirements,
     earthFaultLoopImpedance: {
       measured: 'To be tested',
       maximum: maxZs,
-      margin: `${((maxZs - expectedZs) / maxZs * 100).toFixed(1)}%`
-    }
+      margin: `${(((maxZs - expectedZs) / maxZs) * 100).toFixed(1)}%`,
+    },
   };
 }

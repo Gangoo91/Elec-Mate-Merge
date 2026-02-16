@@ -1,75 +1,85 @@
-import { ArrowLeft, GraduationCap, Clock, Target, RotateCcw, BookOpen, ShieldCheck, AlertTriangle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import useSEO from '@/hooks/useSEO';
 
 const examFeatures = [
   {
     icon: BookOpen,
-    label: "200-Question Bank",
-    description: "Randomly selected each attempt so no two exams are the same",
+    label: '200-Question Bank',
+    description: 'Randomly selected each attempt so no two exams are the same',
   },
   {
     icon: Target,
-    label: "20 Questions Per Exam",
-    description: "Balanced across all five content modules for fair coverage",
+    label: '20 Questions Per Exam',
+    description: 'Balanced across all five content modules for fair coverage',
   },
   {
     icon: Clock,
-    label: "30-Minute Timer",
-    description: "Timed under exam conditions with a 5-minute warning alert",
+    label: '30-Minute Timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert',
   },
   {
     icon: ShieldCheck,
-    label: "80% Pass Mark (16/20)",
-    description: "Matches the standard required by confined spaces awareness assessments",
+    label: '80% Pass Mark (16/20)',
+    description: 'Matches the standard required by confined spaces awareness assessments',
   },
   {
     icon: RotateCcw,
-    label: "Unlimited Retakes",
-    description: "Practise as many times as you need until you feel confident",
+    label: 'Unlimited Retakes',
+    description: 'Practise as many times as you need until you feel confident',
   },
 ];
 
 const preparationTips = [
   {
-    title: "Know the Confined Spaces Regulations 1997",
+    title: 'Know the Confined Spaces Regulations 1997',
     description:
-      "Understand Regulations 1 to 5, the duties they impose, and how they link to the Health and Safety at Work Act 1974 and the Management of Health and Safety at Work Regulations 1999.",
+      'Understand Regulations 1 to 5, the duties they impose, and how they link to the Health and Safety at Work Act 1974 and the Management of Health and Safety at Work Regulations 1999.',
   },
   {
-    title: "Learn the Atmospheric Limits",
+    title: 'Learn the Atmospheric Limits',
     description:
-      "Oxygen depletion below 19.5%, oxygen enrichment above 23.5%, and the occupational exposure limits for common toxic gases such as hydrogen sulphide, carbon monoxide, and carbon dioxide.",
+      'Oxygen depletion below 19.5%, oxygen enrichment above 23.5%, and the occupational exposure limits for common toxic gases such as hydrogen sulphide, carbon monoxide, and carbon dioxide.',
   },
   {
-    title: "Understand the Hierarchy of Controls",
+    title: 'Understand the Hierarchy of Controls',
     description:
-      "Avoid entry wherever possible, then implement a safe system of work, then arrange emergency procedures. Know real examples of each level and why avoidance is always preferred.",
+      'Avoid entry wherever possible, then implement a safe system of work, then arrange emergency procedures. Know real examples of each level and why avoidance is always preferred.',
   },
   {
-    title: "Master the Permit-to-Work Process",
+    title: 'Master the Permit-to-Work Process',
     description:
-      "Understand when a permit is required, what it must contain, the roles of authorised persons, competent persons, and entrants, and the full permit lifecycle from issue to cancellation.",
+      'Understand when a permit is required, what it must contain, the roles of authorised persons, competent persons, and entrants, and the full permit lifecycle from issue to cancellation.',
   },
   {
-    title: "Know Your Rescue Equipment",
+    title: 'Know Your Rescue Equipment',
     description:
-      "Tripods, winches, davit systems, breathing apparatus, stretchers, and communication equipment. Understand the difference between non-entry rescue and entry rescue, and why non-entry is always preferred.",
+      'Tripods, winches, davit systems, breathing apparatus, stretchers, and communication equipment. Understand the difference between non-entry rescue and entry rescue, and why non-entry is always preferred.',
   },
   {
-    title: "Flag and Return",
+    title: 'Flag and Return',
     description:
-      "During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.",
+      'During the exam you can flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
   },
 ];
 
 export default function ConfinedSpacesModule6() {
   useSEO({
-    title: "Confined Spaces Awareness Mock Exam | Module 6",
+    title: 'Confined Spaces Awareness Mock Exam | Module 6',
     description:
-      "Test your confined spaces awareness knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.",
+      'Test your confined spaces awareness knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
@@ -98,9 +108,7 @@ export default function ConfinedSpacesModule6() {
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">Mock Examination</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Mock Exam
-            </h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
             <p className="text-white/60 text-sm sm:text-base">
               Put your confined spaces awareness knowledge to the test under timed exam conditions.
               Questions are drawn from a 200-question bank covering all five content modules.
@@ -115,7 +123,9 @@ export default function ConfinedSpacesModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">Simulates real confined spaces awareness assessment conditions</p>
+                  <p className="text-white/50 text-xs">
+                    Simulates real confined spaces awareness assessment conditions
+                  </p>
                 </div>
               </div>
 
@@ -130,9 +140,7 @@ export default function ConfinedSpacesModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -148,11 +156,11 @@ export default function ConfinedSpacesModule6() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {[
-                  { module: "Module 1", name: "Understanding Confined Spaces", count: 40 },
-                  { module: "Module 2", name: "Legislation & Risk Assessment", count: 40 },
-                  { module: "Module 3", name: "Hazards & Atmospheric Monitoring", count: 40 },
-                  { module: "Module 4", name: "Safe Entry & Working Procedures", count: 40 },
-                  { module: "Module 5", name: "Emergency & Rescue Procedures", count: 40 },
+                  { module: 'Module 1', name: 'Understanding Confined Spaces', count: 40 },
+                  { module: 'Module 2', name: 'Legislation & Risk Assessment', count: 40 },
+                  { module: 'Module 3', name: 'Hazards & Atmospheric Monitoring', count: 40 },
+                  { module: 'Module 4', name: 'Safe Entry & Working Procedures', count: 40 },
+                  { module: 'Module 5', name: 'Emergency & Rescue Procedures', count: 40 },
                 ].map((cat) => (
                   <div
                     key={cat.name}
@@ -204,9 +212,7 @@ export default function ConfinedSpacesModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">
-                        {tip.description}
-                      </p>
+                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

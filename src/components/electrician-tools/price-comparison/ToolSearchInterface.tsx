@@ -1,43 +1,70 @@
-import { useState, useRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, RefreshCw, Wrench } from "lucide-react";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useState, useRef } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Search, Filter, RefreshCw, Wrench } from 'lucide-react';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const COMMON_TOOLS = [
-  "18V Drill Driver", "12V Drill Driver", "Cordless Drill", "Impact Driver 18V",
-  "Angle Grinder 115mm", "Angle Grinder 230mm", "Circular Saw 18V", "Reciprocating Saw",
-  "Digital Multimeter", "Clamp Meter", "Voltage Tester", "PAT Tester",
-  "Cable Strippers", "Wire Strippers", "Cable Cutters", "Electrical Pliers",
-  "LED Torch", "Head Torch", "Work Light", "Inspection Light",
-  "Spirit Level", "Laser Level", "Measuring Tape 5m", "Cable Detector",
-  "Tool Bag", "Tool Box", "Storage Case", "Van Storage"
+  '18V Drill Driver',
+  '12V Drill Driver',
+  'Cordless Drill',
+  'Impact Driver 18V',
+  'Angle Grinder 115mm',
+  'Angle Grinder 230mm',
+  'Circular Saw 18V',
+  'Reciprocating Saw',
+  'Digital Multimeter',
+  'Clamp Meter',
+  'Voltage Tester',
+  'PAT Tester',
+  'Cable Strippers',
+  'Wire Strippers',
+  'Cable Cutters',
+  'Electrical Pliers',
+  'LED Torch',
+  'Head Torch',
+  'Work Light',
+  'Inspection Light',
+  'Spirit Level',
+  'Laser Level',
+  'Measuring Tape 5m',
+  'Cable Detector',
+  'Tool Bag',
+  'Tool Box',
+  'Storage Case',
+  'Van Storage',
 ];
 
 const TOOL_CATEGORIES = [
-  { value: "all", label: "All Tools" },
-  { value: "power tools", label: "Power Tools" },
-  { value: "test equipment", label: "Test Equipment" },
-  { value: "hand tools", label: "Hand Tools" },
-  { value: "lighting tools", label: "Lighting Tools" },
-  { value: "cable tools", label: "Cable Tools" },
-  { value: "measuring tools", label: "Measuring Tools" },
-  { value: "safety equipment", label: "Safety Equipment" },
-  { value: "storage", label: "Storage" }
+  { value: 'all', label: 'All Tools' },
+  { value: 'power tools', label: 'Power Tools' },
+  { value: 'test equipment', label: 'Test Equipment' },
+  { value: 'hand tools', label: 'Hand Tools' },
+  { value: 'lighting tools', label: 'Lighting Tools' },
+  { value: 'cable tools', label: 'Cable Tools' },
+  { value: 'measuring tools', label: 'Measuring Tools' },
+  { value: 'safety equipment', label: 'Safety Equipment' },
+  { value: 'storage', label: 'Storage' },
 ];
 
 const TOOL_SUPPLIERS = [
-  { value: "all", label: "All Suppliers" },
-  { value: "screwfix", label: "Screwfix" },
-  { value: "toolstation", label: "Toolstation" },
-  { value: "amazon", label: "Amazon Business" },
-  { value: "cef", label: "CEF" },
-  { value: "rs", label: "RS Components" }
+  { value: 'all', label: 'All Suppliers' },
+  { value: 'screwfix', label: 'Screwfix' },
+  { value: 'toolstation', label: 'Toolstation' },
+  { value: 'amazon', label: 'Amazon Business' },
+  { value: 'cef', label: 'CEF' },
+  { value: 'rs', label: 'RS Components' },
 ];
 
 interface ToolSearchInterfaceProps {
@@ -63,7 +90,7 @@ export const ToolSearchInterface = ({
   isLoading,
   onSearch,
   onClearSelection,
-  showingPreSelected
+  showingPreSelected,
 }: ToolSearchInterfaceProps) => {
   const isMobile = useIsMobile();
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -72,9 +99,9 @@ export const ToolSearchInterface = ({
 
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
-    
+
     if (value.length > 1) {
-      const filtered = COMMON_TOOLS.filter(tool =>
+      const filtered = COMMON_TOOLS.filter((tool) =>
         tool.toLowerCase().includes(value.toLowerCase())
       ).slice(0, 5);
       setSuggestions(filtered);
@@ -106,9 +133,9 @@ export const ToolSearchInterface = ({
           {showingPreSelected && onClearSelection && (
             <div className="flex items-center justify-between p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
               <span className="text-sm text-blue-400">Showing selected tools from category</span>
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={onClearSelection}
                 className="text-blue-400 border-blue-500/30 hover:bg-blue-500/20"
               >
@@ -122,7 +149,7 @@ export const ToolSearchInterface = ({
           <div className="relative">
             {isMobile ? (
               <div className="relative">
-                <MobileInputWrapper 
+                <MobileInputWrapper
                   label="Search Tools"
                   placeholder="e.g., 18V Drill Driver, Digital Multimeter..."
                   value={searchQuery}
@@ -165,7 +192,7 @@ export const ToolSearchInterface = ({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setSearchQuery("18V")}
+              onClick={() => setSearchQuery('18V')}
               className="text-xs border-elec-yellow/30 hover:bg-elec-yellow/10"
             >
               18V System
@@ -173,7 +200,7 @@ export const ToolSearchInterface = ({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setSearchQuery("12V")}
+              onClick={() => setSearchQuery('12V')}
               className="text-xs border-elec-yellow/30 hover:bg-elec-yellow/10"
             >
               12V System
@@ -181,7 +208,7 @@ export const ToolSearchInterface = ({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setSearchQuery("Cordless")}
+              onClick={() => setSearchQuery('Cordless')}
               className="text-xs border-elec-yellow/30 hover:bg-elec-yellow/10"
             >
               Cordless
@@ -189,7 +216,7 @@ export const ToolSearchInterface = ({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setSearchQuery("Multimeter")}
+              onClick={() => setSearchQuery('Multimeter')}
               className="text-xs border-elec-yellow/30 hover:bg-elec-yellow/10"
             >
               Test Equipment
@@ -200,7 +227,7 @@ export const ToolSearchInterface = ({
           <div className={`${isMobile ? 'space-y-3' : 'flex gap-4'}`}>
             {isMobile ? (
               <>
-                <MobileSelectWrapper 
+                <MobileSelectWrapper
                   label="Tool Category"
                   placeholder="Select category..."
                   value={selectedCategory}
@@ -208,7 +235,7 @@ export const ToolSearchInterface = ({
                   options={TOOL_CATEGORIES}
                 />
 
-                <MobileSelectWrapper 
+                <MobileSelectWrapper
                   label="Supplier"
                   placeholder="Select supplier..."
                   value={selectedSupplier}
@@ -224,7 +251,7 @@ export const ToolSearchInterface = ({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {TOOL_CATEGORIES.map(category => (
+                    {TOOL_CATEGORIES.map((category) => (
                       <SelectItem key={category.value} value={category.value}>
                         {category.label}
                       </SelectItem>
@@ -237,7 +264,7 @@ export const ToolSearchInterface = ({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {TOOL_SUPPLIERS.map(supplier => (
+                    {TOOL_SUPPLIERS.map((supplier) => (
                       <SelectItem key={supplier.value} value={supplier.value}>
                         {supplier.label}
                       </SelectItem>

@@ -1,7 +1,6 @@
-
-import MentalHealthPageLayout from "@/components/mental-health/MentalHealthPageLayout";
-import { Scale } from "lucide-react";
-import WorkLifeBalanceTab from "@/components/apprentice/time-management/WorkLifeBalanceTab";
+import MentalHealthPageLayout from '@/components/mental-health/MentalHealthPageLayout';
+import { Scale } from 'lucide-react';
+import WorkLifeBalanceTab from '@/components/apprentice/time-management/WorkLifeBalanceTab';
 
 const WorkLifeBalance = () => {
   return (

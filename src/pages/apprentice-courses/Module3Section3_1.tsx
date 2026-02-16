@@ -1,4 +1,4 @@
-import useSEO from "@/hooks/useSEO";
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   Wrench,
@@ -13,191 +13,157 @@ import {
   CheckCircle2,
   Zap,
   Hammer,
-
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import React from "react";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 
 const quickCheckQuestions = [
   {
-    id: "vde-importance",
-    question: "Why is it important to use insulated screwdrivers in electrical work?",
+    id: 'vde-importance',
+    question: 'Why is it important to use insulated screwdrivers in electrical work?',
     options: [
-      "To improve grip",
-      "To ensure insulation against electric shock",
-      "To make them lighter",
+      'To improve grip',
+      'To ensure insulation against electric shock',
+      'To make them lighter',
     ],
     correctIndex: 1,
     explanation:
-      "VDE-rated screwdrivers are tested to 1,000V and provide essential protection against electric shock when working on or near live electrical equipment.",
+      'VDE-rated screwdrivers are tested to 1,000V and provide essential protection against electric shock when working on or near live electrical equipment.',
   },
   {
-    id: "long-nose-pliers",
-    question: "Which type of pliers would you use to grip small components in a tight space?",
-    options: [
-      "Combination pliers",
-      "Long-nose pliers",
-      "Water pump pliers",
-    ],
+    id: 'long-nose-pliers',
+    question: 'Which type of pliers would you use to grip small components in a tight space?',
+    options: ['Combination pliers', 'Long-nose pliers', 'Water pump pliers'],
     correctIndex: 1,
     explanation:
-      "Long-nose pliers have a narrow, elongated jaw design that makes them ideal for reaching into confined spaces and gripping small components precisely.",
+      'Long-nose pliers have a narrow, elongated jaw design that makes them ideal for reaching into confined spaces and gripping small components precisely.',
   },
   {
-    id: "wrong-screwdriver",
-    question: "Name one reason why using the wrong size screwdriver can cause problems.",
+    id: 'wrong-screwdriver',
+    question: 'Name one reason why using the wrong size screwdriver can cause problems.',
     options: [
-      "It damages the screw head or tool",
-      "It makes work faster",
-      "It improves electrical connections",
+      'It damages the screw head or tool',
+      'It makes work faster',
+      'It improves electrical connections',
     ],
     correctIndex: 0,
     explanation:
-      "Using the wrong size screwdriver can strip screw heads, damage the tool tip, or result in poor connections that could fail or overheat.",
+      'Using the wrong size screwdriver can strip screw heads, damage the tool tip, or result in poor connections that could fail or overheat.',
   },
   {
-    id: "cable-protection",
-    question: "What should be installed at entry points to protect cable insulation?",
-    options: [
-      "Insulation tape",
-      "Grommets or bushes",
-      "Paint",
-    ],
+    id: 'cable-protection',
+    question: 'What should be installed at entry points to protect cable insulation?',
+    options: ['Insulation tape', 'Grommets or bushes', 'Paint'],
     correctIndex: 1,
     explanation:
-      "Grommets or bushes provide a smooth, protective surface that prevents sharp edges from cutting through cable insulation during installation or movement.",
+      'Grommets or bushes provide a smooth, protective surface that prevents sharp edges from cutting through cable insulation during installation or movement.',
   },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Why should screwdrivers used in electrical work be VDE-rated?",
+    question: 'Why should screwdrivers used in electrical work be VDE-rated?',
     options: [
-      "To improve grip",
-      "To ensure insulation against electric shock",
-      "To make them lighter",
-      "To meet aesthetic standards",
+      'To improve grip',
+      'To ensure insulation against electric shock',
+      'To make them lighter',
+      'To meet aesthetic standards',
     ],
     correctAnswer: 1,
     explanation:
-      "VDE-rated screwdrivers are tested to 1,000V and provide essential protection against electric shock when working on live electrical equipment.",
+      'VDE-rated screwdrivers are tested to 1,000V and provide essential protection against electric shock when working on live electrical equipment.',
   },
   {
     id: 2,
-    question: "Which tool is used for stripping insulation from conductors without damaging them?",
-    options: [
-      "Pliers",
-      "Screwdriver",
-      "Cable strippers",
-      "Hacksaw",
-    ],
+    question: 'Which tool is used for stripping insulation from conductors without damaging them?',
+    options: ['Pliers', 'Screwdriver', 'Cable strippers', 'Hacksaw'],
     correctAnswer: 2,
     explanation:
-      "Cable strippers are specifically designed to remove insulation cleanly without cutting into or damaging the copper conductors underneath.",
+      'Cable strippers are specifically designed to remove insulation cleanly without cutting into or damaging the copper conductors underneath.',
   },
   {
     id: 3,
-    question: "True or False: Side cutters are suitable for cutting steel wire armour.",
-    options: ["True", "False"],
+    question: 'True or False: Side cutters are suitable for cutting steel wire armour.',
+    options: ['True', 'False'],
     correctAnswer: 1,
     explanation:
-      "False. Side cutters are designed for small conductors. Steel wire armour requires specialist SWA cutters or hacksaws to avoid tool damage.",
+      'False. Side cutters are designed for small conductors. Steel wire armour requires specialist SWA cutters or hacksaws to avoid tool damage.',
   },
   {
     id: 4,
-    question: "Name one type of screwdriver head commonly used in electrical work.",
-    options: [
-      "Robertson",
-      "Slotted",
-      "Hex",
-      "Star",
-    ],
+    question: 'Name one type of screwdriver head commonly used in electrical work.',
+    options: ['Robertson', 'Slotted', 'Hex', 'Star'],
     correctAnswer: 1,
     explanation:
-      "Slotted screwdrivers are one of the most common types used in electrical work, along with Phillips, Pozidriv, and Torx for various screw heads.",
+      'Slotted screwdrivers are one of the most common types used in electrical work, along with Phillips, Pozidriv, and Torx for various screw heads.',
   },
   {
     id: 5,
-    question: "Which pliers are best for reaching into confined spaces?",
-    options: [
-      "Combination pliers",
-      "Long-nose pliers",
-      "Water pump pliers",
-      "Ratchet pliers",
-    ],
+    question: 'Which pliers are best for reaching into confined spaces?',
+    options: ['Combination pliers', 'Long-nose pliers', 'Water pump pliers', 'Ratchet pliers'],
     correctAnswer: 1,
     explanation:
-      "Long-nose pliers have a narrow, elongated design that makes them ideal for precision work in tight spaces and gripping small components.",
+      'Long-nose pliers have a narrow, elongated design that makes them ideal for precision work in tight spaces and gripping small components.',
   },
   {
     id: 6,
-    question: "Give one reason for keeping plier jaws clean.",
+    question: 'Give one reason for keeping plier jaws clean.',
     options: [
-      "To maintain a strong grip and prevent slipping",
-      "To improve appearance",
-      "To reduce weight",
-      "To prevent rust",
+      'To maintain a strong grip and prevent slipping',
+      'To improve appearance',
+      'To reduce weight',
+      'To prevent rust',
     ],
     correctAnswer: 0,
     explanation:
-      "Clean plier jaws provide better grip on components, preventing slipping that could cause damage to work or injury to the user.",
+      'Clean plier jaws provide better grip on components, preventing slipping that could cause damage to work or injury to the user.',
   },
   {
     id: 7,
-    question: "What should be used to cut larger power cables cleanly?",
-    options: [
-      "Ratchet cable cutters",
-      "Long-nose pliers",
-      "Adjustable spanner",
-      "Knife",
-    ],
+    question: 'What should be used to cut larger power cables cleanly?',
+    options: ['Ratchet cable cutters', 'Long-nose pliers', 'Adjustable spanner', 'Knife'],
     correctAnswer: 0,
     explanation:
-      "Ratchet cable cutters provide the leverage needed to cut through larger power cables cleanly without crushing or distorting the conductors.",
+      'Ratchet cable cutters provide the leverage needed to cut through larger power cables cleanly without crushing or distorting the conductors.',
   },
   {
     id: 8,
-    question: "Name one measuring tool commonly used in electrical installations.",
-    options: [
-      "Compass",
-      "Tape measure",
-      "Protractor",
-      "Caliper",
-    ],
+    question: 'Name one measuring tool commonly used in electrical installations.',
+    options: ['Compass', 'Tape measure', 'Protractor', 'Caliper'],
     correctAnswer: 1,
     explanation:
-      "Tape measures are essential for accurate layout work, measuring cable runs, and ensuring proper spacing in electrical installations.",
+      'Tape measures are essential for accurate layout work, measuring cable runs, and ensuring proper spacing in electrical installations.',
   },
 ];
 
 const Module3Section3_1: React.FC = () => {
-  console.log("Module3Section3_1 component loaded");
+  console.log('Module3Section3_1 component loaded');
 
   useSEO(
-    "Essential Hand Tools (Strippers, Cutters, Drivers) – Module 3 (3.3.1)",
-    "Complete guide to essential electrical hand tools. Cable strippers, cutters, screwdrivers, pliers and best practices for safe, efficient work."
+    'Essential Hand Tools (Strippers, Cutters, Drivers) – Module 3 (3.3.1)',
+    'Complete guide to essential electrical hand tools. Cable strippers, cutters, screwdrivers, pliers and best practices for safe, efficient work.'
   );
 
   const faqs = [
     {
-      q: "Can I use one set of cutters for all cable types?",
-      a: "No — use cutters designed for the cable type and size. SWA cables require specific tools to avoid damage.",
+      q: 'Can I use one set of cutters for all cable types?',
+      a: 'No — use cutters designed for the cable type and size. SWA cables require specific tools to avoid damage.',
     },
     {
-      q: "How often should I replace my cable strippers?",
-      a: "When blades are worn, stripping becomes inconsistent, or the tool no longer grips insulation properly.",
+      q: 'How often should I replace my cable strippers?',
+      a: 'When blades are worn, stripping becomes inconsistent, or the tool no longer grips insulation properly.',
     },
     {
-      q: "Are automatic strippers better than manual ones?",
-      a: "They are faster and consistent for high-volume work but may not be necessary for small jobs.",
+      q: 'Are automatic strippers better than manual ones?',
+      a: 'They are faster and consistent for high-volume work but may not be necessary for small jobs.',
     },
     {
       q: "What's the difference between VDE and standard screwdrivers?",
-      a: "VDE screwdrivers are tested to 1,000V and provide insulation against electric shock, essential for electrical work.",
+      a: 'VDE screwdrivers are tested to 1,000V and provide insulation against electric shock, essential for electrical work.',
     },
   ];
 
@@ -251,20 +217,25 @@ const Module3Section3_1: React.FC = () => {
                 <li>Cable strippers: remove insulation cleanly without conductor damage.</li>
                 <li>Cable cutters: clean cuts without crushing (ratchet for larger cables).</li>
                 <li>VDE screwdrivers: insulated protection up to 1,000V for safe work.</li>
-                <li>Pliers: grip, twist, bend - choose type for job (long-nose for tight spaces).</li>
+                <li>
+                  Pliers: grip, twist, bend - choose type for job (long-nose for tight spaces).
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
-                  <strong>Spot:</strong> Red/yellow insulated handles (VDE), adjustable stripper jaws, ratchet mechanisms.
+                  <strong>Spot:</strong> Red/yellow insulated handles (VDE), adjustable stripper
+                  jaws, ratchet mechanisms.
                 </li>
                 <li>
-                  <strong>Use:</strong> Right tool for job size - don't use side cutters on SWA cables.
+                  <strong>Use:</strong> Right tool for job size - don't use side cutters on SWA
+                  cables.
                 </li>
                 <li>
-                  <strong>Check:</strong> Tool condition, blade sharpness, insulation integrity before each use.
+                  <strong>Check:</strong> Tool condition, blade sharpness, insulation integrity
+                  before each use.
                 </li>
               </ul>
             </div>
@@ -453,17 +424,31 @@ const Module3Section3_1: React.FC = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Support Tools</p>
                     <ul className="list-disc pl-4 space-y-1 text-white">
-                      <li><strong>Adjustable Spanners:</strong> Tightening cable glands and fixing bolts</li>
-                      <li><strong>Hacksaws:</strong> Cutting conduit, trunking, and armoured cables</li>
-                      <li><strong>Files:</strong> Smoothing cut edges and removing burrs</li>
+                      <li>
+                        <strong>Adjustable Spanners:</strong> Tightening cable glands and fixing
+                        bolts
+                      </li>
+                      <li>
+                        <strong>Hacksaws:</strong> Cutting conduit, trunking, and armoured cables
+                      </li>
+                      <li>
+                        <strong>Files:</strong> Smoothing cut edges and removing burrs
+                      </li>
                     </ul>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-2">Measuring & Marking</p>
                     <ul className="list-disc pl-4 space-y-1 text-white">
-                      <li><strong>Tape Measures:</strong> Accurate layout and cable length measurement</li>
-                      <li><strong>Spirit Levels:</strong> Ensuring level installation of equipment</li>
-                      <li><strong>Permanent Markers:</strong> Cable identification and equipment labelling</li>
+                      <li>
+                        <strong>Tape Measures:</strong> Accurate layout and cable length measurement
+                      </li>
+                      <li>
+                        <strong>Spirit Levels:</strong> Ensuring level installation of equipment
+                      </li>
+                      <li>
+                        <strong>Permanent Markers:</strong> Cable identification and equipment
+                        labelling
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -495,7 +480,9 @@ const Module3Section3_1: React.FC = () => {
               <ul className="list-disc pl-6 space-y-1">
                 <li>Proper stripping prevents conductor damage that could cause overheating</li>
                 <li>Clean cuts ensure good connections and professional appearance</li>
-                <li>Correct screwdriver fit prevents terminal damage and ensures secure connections</li>
+                <li>
+                  Correct screwdriver fit prevents terminal damage and ensures secure connections
+                </li>
                 <li>Right tool for the job improves efficiency and reduces material waste</li>
               </ul>
             </div>
@@ -542,19 +529,40 @@ const Module3Section3_1: React.FC = () => {
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Using non-VDE tools on live circuits</strong> - Risk of electric shock or electrocution</li>
-                <li><strong>Wrong size screwdrivers</strong> - Damages screw heads and reduces connection security</li>
-                <li><strong>Side cutters on SWA cables</strong> - Tool damage and poor cuts</li>
-                <li><strong>Overstripping conductors</strong> - Exposes copper that can cause short circuits</li>
+                <li>
+                  <strong>Using non-VDE tools on live circuits</strong> - Risk of electric shock or
+                  electrocution
+                </li>
+                <li>
+                  <strong>Wrong size screwdrivers</strong> - Damages screw heads and reduces
+                  connection security
+                </li>
+                <li>
+                  <strong>Side cutters on SWA cables</strong> - Tool damage and poor cuts
+                </li>
+                <li>
+                  <strong>Overstripping conductors</strong> - Exposes copper that can cause short
+                  circuits
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Quality Issues</p>
               <ul className="list-disc pl-6 space-y-1 text-white">
-                <li><strong>Blunt cutting tools</strong> - Crush conductors and create poor connections</li>
-                <li><strong>Dirty plier jaws</strong> - Poor grip leads to slipping and component damage</li>
-                <li><strong>Using pliers as spanners</strong> - Rounds off nuts and damages surfaces</li>
-                <li><strong>Poor tool storage</strong> - Leads to damage, rust, and safety hazards</li>
+                <li>
+                  <strong>Blunt cutting tools</strong> - Crush conductors and create poor
+                  connections
+                </li>
+                <li>
+                  <strong>Dirty plier jaws</strong> - Poor grip leads to slipping and component
+                  damage
+                </li>
+                <li>
+                  <strong>Using pliers as spanners</strong> - Rounds off nuts and damages surfaces
+                </li>
+                <li>
+                  <strong>Poor tool storage</strong> - Leads to damage, rust, and safety hazards
+                </li>
               </ul>
             </div>
           </div>
@@ -570,10 +578,20 @@ const Module3Section3_1: React.FC = () => {
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
               <p className="font-medium mb-2">Relevant Sections</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Section 526:</strong> Connection requirements - proper termination techniques</li>
-                <li><strong>Section 543:</strong> Protective conductor requirements for earthing continuity</li>
-                <li><strong>Appendix 15:</strong> Safety procedures for live working</li>
-                <li><strong>Part 6:</strong> Inspection and testing requirements for installations</li>
+                <li>
+                  <strong>Section 526:</strong> Connection requirements - proper termination
+                  techniques
+                </li>
+                <li>
+                  <strong>Section 543:</strong> Protective conductor requirements for earthing
+                  continuity
+                </li>
+                <li>
+                  <strong>Appendix 15:</strong> Safety procedures for live working
+                </li>
+                <li>
+                  <strong>Part 6:</strong> Inspection and testing requirements for installations
+                </li>
               </ul>
             </div>
             <div className="rounded-lg p-4 bg-violet-500/10 border border-violet-400/30">
@@ -599,9 +617,10 @@ const Module3Section3_1: React.FC = () => {
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Non-VDE Tool Incident</p>
             <p className="text-sm mb-4">
-              An electrician used a non-insulated screwdriver when tightening a live terminal on a lighting circuit.
-              A short circuit occurred, damaging the screwdriver tip and causing a minor burn to the electrician's hand.
-              The incident would have been avoided with a VDE-rated insulated screwdriver.
+              An electrician used a non-insulated screwdriver when tightening a live terminal on a
+              lighting circuit. A short circuit occurred, damaging the screwdriver tip and causing a
+              minor burn to the electrician's hand. The incident would have been avoided with a
+              VDE-rated insulated screwdriver.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
@@ -651,8 +670,9 @@ const Module3Section3_1: React.FC = () => {
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
-              Essential hand tools are the backbone of electrical work. Knowing how to select, use, and maintain them
-              ensures safe, precise, and efficient installations, while also protecting both the tools and the materials you're working with.
+              Essential hand tools are the backbone of electrical work. Knowing how to select, use,
+              and maintain them ensures safe, precise, and efficient installations, while also
+              protecting both the tools and the materials you're working with.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
@@ -756,10 +776,18 @@ const Module3Section3_1: React.FC = () => {
             Key References
           </h2>
           <div className="text-xs sm:text-sm text-white space-y-2">
-            <p><strong>BS 7671:</strong> IET Wiring Regulations (18th Edition)</p>
-            <p><strong>GS38:</strong> Electrical test equipment for use by electricians</p>
-            <p><strong>HSE Guidance:</strong> Safe working practices with electrical tools</p>
-            <p><strong>Tool Standards:</strong> VDE 0682 for insulated hand tools</p>
+            <p>
+              <strong>BS 7671:</strong> IET Wiring Regulations (18th Edition)
+            </p>
+            <p>
+              <strong>GS38:</strong> Electrical test equipment for use by electricians
+            </p>
+            <p>
+              <strong>HSE Guidance:</strong> Safe working practices with electrical tools
+            </p>
+            <p>
+              <strong>Tool Standards:</strong> VDE 0682 for insulated hand tools
+            </p>
           </div>
         </section>
 
@@ -774,7 +802,11 @@ const Module3Section3_1: React.FC = () => {
 
         {/* Navigation */}
         <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
-          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="outline"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.3

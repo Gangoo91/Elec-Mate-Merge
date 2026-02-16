@@ -285,31 +285,30 @@ export const EICWizard: React.FC<EICWizardProps> = ({
       case 'declarations':
         return <DeclarationsStep {...stepProps} />;
       case 'review':
-        return (
-          <ReviewStep
-            {...stepProps}
-            onGoToStep={goToStep}
-            onComplete={handleComplete}
-          />
-        );
+        return <ReviewStep {...stepProps} onGoToStep={goToStep} onComplete={handleComplete} />;
       default:
         return null;
     }
   };
 
   // Check if current step needs full-page layout (no container)
-  const isFullPageStep = currentStepConfig?.id === 'inspections' || currentStepConfig?.id === 'circuits';
+  const isFullPageStep =
+    currentStepConfig?.id === 'inspections' || currentStepConfig?.id === 'circuits';
 
   return (
-    <div className={cn(
-      "fixed inset-0 z-50 flex flex-col bg-background",
-      !isFullPageStep && "overflow-hidden"
-    )}>
+    <div
+      className={cn(
+        'fixed inset-0 z-50 flex flex-col bg-background',
+        !isFullPageStep && 'overflow-hidden'
+      )}
+    >
       {/* Header - Ultra compact for full-page steps */}
-      <header className={cn(
-        "z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shrink-0",
-        isFullPageStep ? "border-b-0" : "border-b border-border"
-      )}>
+      <header
+        className={cn(
+          'z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shrink-0',
+          isFullPageStep ? 'border-b-0' : 'border-b border-border'
+        )}
+      >
         {isFullPageStep ? (
           /* Minimal header for full-page steps */
           <div className="px-2 py-1.5 flex items-center justify-between">
@@ -319,28 +318,21 @@ export const EICWizard: React.FC<EICWizardProps> = ({
                   key={step.id}
                   onClick={() => goToStep(idx)}
                   className={cn(
-                    "w-2 h-2 rounded-full transition-all",
-                    idx === currentStep && "w-6 bg-elec-yellow",
-                    completedSteps.has(idx) && idx !== currentStep && "bg-green-500",
-                    !completedSteps.has(idx) && idx !== currentStep && "bg-muted-foreground/30"
+                    'w-2 h-2 rounded-full transition-all',
+                    idx === currentStep && 'w-6 bg-elec-yellow',
+                    completedSteps.has(idx) && idx !== currentStep && 'bg-green-500',
+                    !completedSteps.has(idx) && idx !== currentStep && 'bg-muted-foreground/30'
                   )}
                 />
               ))}
             </div>
-            <span className="text-xs text-muted-foreground">
-              {currentStepConfig?.label}
-            </span>
+            <span className="text-xs text-muted-foreground">{currentStepConfig?.label}</span>
           </div>
         ) : (
           /* Full header for other steps */
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
             <div className="flex items-center justify-between mb-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleClose}
-                className="gap-1 -ml-2"
-              >
+              <Button variant="ghost" size="sm" onClick={handleClose} className="gap-1 -ml-2">
                 <X className="h-4 w-4" />
                 {!isMobile && <span>Close</span>}
               </Button>
@@ -387,10 +379,7 @@ export const EICWizard: React.FC<EICWizardProps> = ({
       </header>
 
       {/* Step content */}
-      <main className={cn(
-        "flex-1 min-h-0",
-        isFullPageStep ? "flex flex-col" : "overflow-y-auto"
-      )}>
+      <main className={cn('flex-1 min-h-0', isFullPageStep ? 'flex flex-col' : 'overflow-y-auto')}>
         {isFullPageStep ? (
           /* Full-width steps: inspections and circuits (no container, edge-to-edge) */
           renderStepContent()
@@ -398,13 +387,9 @@ export const EICWizard: React.FC<EICWizardProps> = ({
           /* Other steps: constrained width */
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pb-20">
             <div className="mb-4">
-              <h2 className="text-xl font-bold text-foreground">
-                {currentStepConfig?.label}
-              </h2>
+              <h2 className="text-xl font-bold text-foreground">{currentStepConfig?.label}</h2>
               {currentStepConfig?.description && (
-                <p className="text-sm text-muted-foreground">
-                  {currentStepConfig.description}
-                </p>
+                <p className="text-sm text-muted-foreground">{currentStepConfig.description}</p>
               )}
             </div>
             {renderStepContent()}
@@ -414,12 +399,14 @@ export const EICWizard: React.FC<EICWizardProps> = ({
 
       {/* Navigation footer - ultra-compact for full-page steps */}
       {currentStepConfig?.id !== 'review' && (
-        <footer className={cn(
-          "z-30 pb-safe shrink-0",
-          isFullPageStep
-            ? "fixed bottom-2 left-2 right-2"
-            : "sticky bottom-0 border-t border-border bg-background/95 backdrop-blur"
-        )}>
+        <footer
+          className={cn(
+            'z-30 pb-safe shrink-0',
+            isFullPageStep
+              ? 'fixed bottom-2 left-2 right-2'
+              : 'sticky bottom-0 border-t border-border bg-background/95 backdrop-blur'
+          )}
+        >
           {isFullPageStep ? (
             /* Floating pill navigation for full-page steps */
             <div className="flex items-center justify-between gap-2 max-w-md mx-auto bg-background/95 backdrop-blur border border-border rounded-full px-2 py-1.5 shadow-lg">
@@ -428,10 +415,7 @@ export const EICWizard: React.FC<EICWizardProps> = ({
                 size="sm"
                 onClick={handlePrev}
                 disabled={isFirstStep}
-                className={cn(
-                  'h-8 w-8 p-0 rounded-full',
-                  isFirstStep && 'invisible'
-                )}
+                className={cn('h-8 w-8 p-0 rounded-full', isFirstStep && 'invisible')}
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
@@ -450,11 +434,7 @@ export const EICWizard: React.FC<EICWizardProps> = ({
                   Done
                 </Button>
               ) : (
-                <Button
-                  size="sm"
-                  onClick={handleNext}
-                  className="h-8 px-4 rounded-full gap-1"
-                >
+                <Button size="sm" onClick={handleNext} className="h-8 px-4 rounded-full gap-1">
                   Next
                   <ChevronRight className="h-3 w-3" />
                 </Button>

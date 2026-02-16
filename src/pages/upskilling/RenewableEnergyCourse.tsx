@@ -1,5 +1,17 @@
 import React from 'react';
-import { ArrowLeft, TrendingUp, Sun, Wind, Battery, Zap, GitBranch, Wrench, FileText, PoundSterling, GraduationCap } from 'lucide-react';
+import {
+  ArrowLeft,
+  TrendingUp,
+  Sun,
+  Wind,
+  Battery,
+  Zap,
+  GitBranch,
+  Wrench,
+  FileText,
+  PoundSterling,
+  GraduationCap,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -15,75 +27,75 @@ const RenewableEnergyCourse = () => {
   }> = [
     {
       id: 1,
-      title: "Overview of Renewable Energy Technologies",
-      description: "Introduction to renewable energy systems",
-      duration: "45 mins",
-      icon: TrendingUp
+      title: 'Overview of Renewable Energy Technologies',
+      description: 'Introduction to renewable energy systems',
+      duration: '45 mins',
+      icon: TrendingUp,
     },
     {
       id: 2,
-      title: "Solar PV System Design and Operation",
-      description: "Photovoltaic system design and operation",
-      duration: "60 mins",
-      icon: Sun
+      title: 'Solar PV System Design and Operation',
+      description: 'Photovoltaic system design and operation',
+      duration: '60 mins',
+      icon: Sun,
     },
     {
       id: 3,
-      title: "Wind Turbines and Microgeneration Systems",
-      description: "Wind energy and small-scale generation",
-      duration: "55 mins",
-      icon: Wind
+      title: 'Wind Turbines and Microgeneration Systems',
+      description: 'Wind energy and small-scale generation',
+      duration: '55 mins',
+      icon: Wind,
     },
     {
       id: 4,
-      title: "Battery Storage and Energy Management",
-      description: "Storage systems and energy management",
-      duration: "50 mins",
-      icon: Battery
+      title: 'Battery Storage and Energy Management',
+      description: 'Storage systems and energy management',
+      duration: '50 mins',
+      icon: Battery,
     },
     {
       id: 5,
-      title: "Inverter Technology and Grid Integration",
-      description: "Power conversion and grid connection",
-      duration: "65 mins",
-      icon: Zap
+      title: 'Inverter Technology and Grid Integration',
+      description: 'Power conversion and grid connection',
+      duration: '65 mins',
+      icon: Zap,
     },
     {
       id: 6,
-      title: "Off-Grid vs Grid-Tied System Configuration",
-      description: "System configurations and design",
-      duration: "55 mins",
-      icon: GitBranch
+      title: 'Off-Grid vs Grid-Tied System Configuration',
+      description: 'System configurations and design',
+      duration: '55 mins',
+      icon: GitBranch,
     },
     {
       id: 7,
-      title: "Installation, Maintenance, and Troubleshooting",
-      description: "Practical installation and maintenance",
-      duration: "70 mins",
-      icon: Wrench
+      title: 'Installation, Maintenance, and Troubleshooting',
+      description: 'Practical installation and maintenance',
+      duration: '70 mins',
+      icon: Wrench,
     },
     {
       id: 8,
-      title: "Regulations, Planning, and Compliance",
-      description: "Regulatory requirements and compliance",
-      duration: "45 mins",
-      icon: FileText
+      title: 'Regulations, Planning, and Compliance',
+      description: 'Regulatory requirements and compliance',
+      duration: '45 mins',
+      icon: FileText,
     },
     {
       id: 9,
-      title: "Incentives, Payback, and Financial Modelling",
-      description: "Financial analysis and incentives",
-      duration: "40 mins",
-      icon: PoundSterling
+      title: 'Incentives, Payback, and Financial Modelling',
+      description: 'Financial analysis and incentives',
+      duration: '40 mins',
+      icon: PoundSterling,
     },
     {
       id: 10,
-      title: "Mock Exam",
-      description: "Test your knowledge",
-      duration: "120 mins",
+      title: 'Mock Exam',
+      description: 'Test your knowledge',
+      duration: '120 mins',
       icon: GraduationCap,
-      isExam: true
-    }
+      isExam: true,
+    },
   ];
 
   return (
@@ -121,7 +133,11 @@ const RenewableEnergyCourse = () => {
           {modules.map((module, index) => (
             <ModuleCard
               key={module.id}
-              to={module.isExam ? `../renewable-energy-mock-exam` : `../renewable-energy-module-${module.id}`}
+              to={
+                module.isExam
+                  ? `../renewable-energy-mock-exam`
+                  : `../renewable-energy-module-${module.id}`
+              }
               moduleNumber={module.id}
               title={module.title}
               description={module.description}

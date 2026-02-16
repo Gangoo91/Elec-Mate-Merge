@@ -14,14 +14,16 @@ const PodcastsTab = () => {
   // Get filtered podcasts and counts
   const { filteredPodcasts, podcastCounts } = useMemo(() => {
     const counts: Record<string, number> = {
-      'all': podcasts.filter(p => !p.featured).length,
-      'trades-specific': podcasts.filter(p => p.category === 'trades-specific').length,
-      'general-mental-health': podcasts.filter(p => p.category === 'general-mental-health').length,
-      'personal-stories': podcasts.filter(p => p.category === 'personal-stories' && !p.featured).length,
-      'sleep-anxiety': podcasts.filter(p => p.category === 'sleep-anxiety').length,
+      all: podcasts.filter((p) => !p.featured).length,
+      'trades-specific': podcasts.filter((p) => p.category === 'trades-specific').length,
+      'general-mental-health': podcasts.filter((p) => p.category === 'general-mental-health')
+        .length,
+      'personal-stories': podcasts.filter((p) => p.category === 'personal-stories' && !p.featured)
+        .length,
+      'sleep-anxiety': podcasts.filter((p) => p.category === 'sleep-anxiety').length,
     };
 
-    const filtered = getPodcastsByCategory(selectedCategory).filter(p => !p.featured);
+    const filtered = getPodcastsByCategory(selectedCategory).filter((p) => !p.featured);
     return { filteredPodcasts: filtered, podcastCounts: counts };
   }, [selectedCategory]);
 
@@ -49,9 +51,10 @@ const PodcastsTab = () => {
       </div>
 
       {/* Featured Podcast Hero */}
-      {featuredPodcast && (selectedCategory === 'all' || selectedCategory === featuredPodcast.category) && (
-        <FeaturedPodcastHero podcast={featuredPodcast} />
-      )}
+      {featuredPodcast &&
+        (selectedCategory === 'all' || selectedCategory === featuredPodcast.category) && (
+          <FeaturedPodcastHero podcast={featuredPodcast} />
+        )}
 
       {/* Sticky Category Filter */}
       <div className="sticky top-0 z-20 py-3 -mx-4 px-4 bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/5">
@@ -67,7 +70,9 @@ const PodcastsTab = () => {
         <div className="flex items-center justify-between">
           <h2 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-orange-400" />
-            {selectedCategory === 'all' ? 'All Podcasts' : `${selectedCategory.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`}
+            {selectedCategory === 'all'
+              ? 'All Podcasts'
+              : `${selectedCategory.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}`}
           </h2>
           <span className="text-xs text-white">{filteredPodcasts.length} results</span>
         </div>
@@ -105,7 +110,8 @@ const PodcastsTab = () => {
                 Know a great podcast?
               </h3>
               <p className="text-xs sm:text-sm text-white">
-                We're always looking for quality mental health content. Let us know through the feedback section if there's a podcast we should include.
+                We're always looking for quality mental health content. Let us know through the
+                feedback section if there's a podcast we should include.
               </p>
             </div>
           </div>

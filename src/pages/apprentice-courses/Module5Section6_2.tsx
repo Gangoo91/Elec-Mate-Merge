@@ -1,178 +1,177 @@
-import { ArrowLeft, ArrowRight, FileText, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, FileText, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const quizQuestions = [
   {
     id: 1,
-    question: "Why are written instructions important in electrical work?",
+    question: 'Why are written instructions important in electrical work?',
     options: [
       "They're required by law in all cases",
-      "They provide a permanent record, reduce reliance on memory, and ensure consistency",
+      'They provide a permanent record, reduce reliance on memory, and ensure consistency',
       "They're faster than verbal communication",
-      "They're only needed for complex work"
+      "They're only needed for complex work",
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 2,
-    question: "Give three common forms of written communication on site.",
+    question: 'Give three common forms of written communication on site.',
     options: [
-      "Emails, texts, phone calls",
-      "Labels, handover notes, and record books/logs",
-      "Drawings, specifications, invoices",
-      "Reports, certificates, warranties"
+      'Emails, texts, phone calls',
+      'Labels, handover notes, and record books/logs',
+      'Drawings, specifications, invoices',
+      'Reports, certificates, warranties',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 3,
-    question: "What are the three key qualities of effective written communication?",
+    question: 'What are the three key qualities of effective written communication?',
     options: [
-      "Speed, brevity, formality",
-      "Clarity, accuracy, legibility",
-      "Complexity, detail, length",
-      "Creativity, style, colour"
+      'Speed, brevity, formality',
+      'Clarity, accuracy, legibility',
+      'Complexity, detail, length',
+      'Creativity, style, colour',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 4,
-    question: "What should always be included on a written note?",
+    question: 'What should always be included on a written note?',
     options: [
-      "Only the message content",
-      "Date, time, and name of the person writing it",
-      "Company letterhead",
-      "Supervisor approval"
+      'Only the message content',
+      'Date, time, and name of the person writing it',
+      'Company letterhead',
+      'Supervisor approval',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 5,
-    question: "Why are handover sheets necessary?",
+    question: 'Why are handover sheets necessary?',
     options: [
       "They're required by insurance",
-      "They ensure continuity of work, prevent missed tasks, and highlight safety issues",
-      "They reduce paperwork",
-      "They're only needed for large projects"
+      'They ensure continuity of work, prevent missed tasks, and highlight safety issues',
+      'They reduce paperwork',
+      "They're only needed for large projects",
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 6,
-    question: "What four items should a handover include?",
+    question: 'What four items should a handover include?',
     options: [
-      "Name, date, time, location",
-      "Work completed, outstanding work, issues/hazards, required materials/tools",
-      "Start time, break time, end time, overtime",
-      "Client details, costs, timescales, drawings"
+      'Name, date, time, location',
+      'Work completed, outstanding work, issues/hazards, required materials/tools',
+      'Start time, break time, end time, overtime',
+      'Client details, costs, timescales, drawings',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 7,
-    question: "What standard covers labelling requirements?",
+    question: 'What standard covers labelling requirements?',
     options: [
-      "BS 5839",
-      "BS 7671 and site-specific requirements",
-      "BS 6701",
-      "Health and Safety Executive guidelines only"
+      'BS 5839',
+      'BS 7671 and site-specific requirements',
+      'BS 6701',
+      'Health and Safety Executive guidelines only',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 8,
-    question: "Why is handwritten labelling often discouraged?",
+    question: 'Why is handwritten labelling often discouraged?',
     options: [
-      "It takes too long",
-      "It may be unclear, inconsistent, and less durable",
+      'It takes too long',
+      'It may be unclear, inconsistent, and less durable',
       "It's not legal",
-      "It costs too much"
+      'It costs too much',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 9,
     question: "What's a professional way to mark a circuit that should not be used?",
     options: [
-      "Remove all the cables",
+      'Remove all the cables',
       "Use a label or note such as 'DO NOT ENERGISE – STILL UNDER TEST'",
-      "Just tell people verbally",
-      "Paint it a different colour"
+      'Just tell people verbally',
+      'Paint it a different colour',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 10,
-    question: "What is the risk of not leaving a written handover?",
+    question: 'What is the risk of not leaving a written handover?',
     options: [
-      "Nothing serious will happen",
-      "Miscommunication, duplication of work, or dangerous mistakes",
-      "Only minor delays",
-      "Paperwork will be incomplete"
+      'Nothing serious will happen',
+      'Miscommunication, duplication of work, or dangerous mistakes',
+      'Only minor delays',
+      'Paperwork will be incomplete',
     ],
-    correctAnswer: 1
-  }
+    correctAnswer: 1,
+  },
 ];
 
 const quickCheckQuestions = [
   {
-    id: "written1",
-    question: "What is one main benefit of written instructions over verbal ones?",
+    id: 'written1',
+    question: 'What is one main benefit of written instructions over verbal ones?',
     options: [
       "They're faster to create",
-      "They provide a permanent record and reduce reliance on memory",
+      'They provide a permanent record and reduce reliance on memory',
       "They're always more detailed",
-      "They don't require any skills"
+      "They don't require any skills",
     ],
     correctIndex: 1,
-    explanation: "Written instructions provide a permanent record that can be referred back to, reducing reliance on memory and ensuring consistency across teams and shifts."
+    explanation:
+      'Written instructions provide a permanent record that can be referred back to, reducing reliance on memory and ensuring consistency across teams and shifts.',
   },
   {
-    id: "written2",
-    question: "What should be included in a proper handover sheet?",
+    id: 'written2',
+    question: 'What should be included in a proper handover sheet?',
     options: [
-      "Only the work completed",
-      "Work completed, outstanding work, issues/hazards, and required materials",
-      "Just safety issues",
-      "Only your name and date"
+      'Only the work completed',
+      'Work completed, outstanding work, issues/hazards, and required materials',
+      'Just safety issues',
+      'Only your name and date',
     ],
     correctIndex: 1,
-    explanation: "A comprehensive handover should include work completed, outstanding work, any issues or hazards, and materials or tools required for continuation."
+    explanation:
+      'A comprehensive handover should include work completed, outstanding work, any issues or hazards, and materials or tools required for continuation.',
   },
   {
-    id: "written3",
-    question: "Which standard covers electrical labelling requirements?",
-    options: [
-      "BS 5839",
-      "BS 7671",
-      "BS 7909",
-      "BS 6701"
-    ],
+    id: 'written3',
+    question: 'Which standard covers electrical labelling requirements?',
+    options: ['BS 5839', 'BS 7671', 'BS 7909', 'BS 6701'],
     correctIndex: 1,
-    explanation: "BS 7671 (the IET Wiring Regulations) covers labelling requirements along with site-specific requirements."
+    explanation:
+      'BS 7671 (the IET Wiring Regulations) covers labelling requirements along with site-specific requirements.',
   },
   {
-    id: "written4",
-    question: "What are the three key qualities of effective written communication?",
+    id: 'written4',
+    question: 'What are the three key qualities of effective written communication?',
     options: [
-      "Speed, brevity, formality",
-      "Clarity, accuracy, legibility",
-      "Complexity, detail, length",
-      "Creativity, style, colour"
+      'Speed, brevity, formality',
+      'Clarity, accuracy, legibility',
+      'Complexity, detail, length',
+      'Creativity, style, colour',
     ],
     correctIndex: 1,
-    explanation: "Effective written communication must be clear, accurate, and legible to be useful and professional."
-  }
+    explanation:
+      'Effective written communication must be clear, accurate, and legible to be useful and professional.',
+  },
 ];
 
 const Module5Section6_2 = () => {
   useSEO(
-    "Written Instructions and Handovers: Basic Notes and Labels | Electrical Training",
-    "Learn about written communication in electrical work, including basic notes, labels, and handover procedures for maintaining safety and continuity."
+    'Written Instructions and Handovers: Basic Notes and Labels | Electrical Training',
+    'Learn about written communication in electrical work, including basic notes, labels, and handover procedures for maintaining safety and continuity.'
   );
 
   return (
@@ -226,9 +225,15 @@ const Module5Section6_2 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="text-white/80 text-sm space-y-1">
-                  <li>• <strong>Spot:</strong> Unlabelled circuits or unclear handover notes</li>
-                  <li>• <strong>Use:</strong> Clear labelling and structured handover sheets</li>
-                  <li>• <strong>Check:</strong> All notes include date, time, and name</li>
+                  <li>
+                    • <strong>Spot:</strong> Unlabelled circuits or unclear handover notes
+                  </li>
+                  <li>
+                    • <strong>Use:</strong> Clear labelling and structured handover sheets
+                  </li>
+                  <li>
+                    • <strong>Check:</strong> All notes include date, time, and name
+                  </li>
                 </ul>
               </div>
             </div>
@@ -241,7 +246,9 @@ const Module5Section6_2 = () => {
               Learning Outcomes
             </h2>
             <ul className="text-white/80 space-y-2 leading-relaxed">
-              <li>• Understand the role of written instructions and handovers in electrical work</li>
+              <li>
+                • Understand the role of written instructions and handovers in electrical work
+              </li>
               <li>• Write clear, accurate, and professional notes and labels</li>
               <li>• Identify situations where written communication is essential</li>
               <li>• Apply best practices for creating effective written documentation</li>
@@ -256,7 +263,9 @@ const Module5Section6_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Written communication is vital in electrical work for recording, passing on, and confirming information. Unlike verbal instructions, written notes create permanent records:
+                Written communication is vital in electrical work for recording, passing on, and
+                confirming information. Unlike verbal instructions, written notes create permanent
+                records:
               </p>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -278,26 +287,37 @@ const Module5Section6_2 = () => {
               Common Written Communication in Electrical Work
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
-              <p>
-                Several types of written communication are essential on electrical sites:
-              </p>
+              <p>Several types of written communication are essential on electrical sites:</p>
 
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Labels</p>
-                  <p className="text-sm text-white/70">Marking distribution boards, circuits, isolators, and accessories. Must clearly identify circuits, phases, and isolators. Follow BS 7671 and site-specific requirements.</p>
+                  <p className="text-sm text-white/70">
+                    Marking distribution boards, circuits, isolators, and accessories. Must clearly
+                    identify circuits, phases, and isolators. Follow BS 7671 and site-specific
+                    requirements.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Basic Notes</p>
-                  <p className="text-sm text-white/70">Quick reminders left for colleagues. Example: "Do not energise – still under test". Always include date, time, and your name.</p>
+                  <p className="text-sm text-white/70">
+                    Quick reminders left for colleagues. Example: "Do not energise – still under
+                    test". Always include date, time, and your name.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Handover Sheets</p>
-                  <p className="text-sm text-white/70">Summarising progress for the next shift. Include work completed, outstanding tasks, safety issues, and materials required.</p>
+                  <p className="text-sm text-white/70">
+                    Summarising progress for the next shift. Include work completed, outstanding
+                    tasks, safety issues, and materials required.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Record Books/Logs</p>
-                  <p className="text-sm text-white/70">Used on larger sites for tracking works. Maintain project history, record decisions and changes, track material usage.</p>
+                  <p className="text-sm text-white/70">
+                    Used on larger sites for tracking works. Maintain project history, record
+                    decisions and changes, track material usage.
+                  </p>
                 </div>
               </div>
             </div>
@@ -313,25 +333,42 @@ const Module5Section6_2 = () => {
             </h2>
             <div className="text-white/80 space-y-4 leading-relaxed">
               <p>
-                Professional written communication requires specific qualities to be effective and useful:
+                Professional written communication requires specific qualities to be effective and
+                useful:
               </p>
 
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <p className="font-semibold text-elec-yellow mb-2">Clarity</p>
-                  <p className="text-sm text-white/70">Use simple, unambiguous wording. Avoid technical jargon unless universally understood. Structure information logically. Break complex information into clear steps.</p>
+                  <p className="text-sm text-white/70">
+                    Use simple, unambiguous wording. Avoid technical jargon unless universally
+                    understood. Structure information logically. Break complex information into
+                    clear steps.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                   <p className="font-semibold text-green-400 mb-2">Accuracy</p>
-                  <p className="text-sm text-white/70">Double-check all details. Verify circuit numbers, ratings, and specifications. Check names, dates, and locations. Correct any errors immediately when discovered.</p>
+                  <p className="text-sm text-white/70">
+                    Double-check all details. Verify circuit numbers, ratings, and specifications.
+                    Check names, dates, and locations. Correct any errors immediately when
+                    discovered.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
                   <p className="font-semibold text-blue-400 mb-2">Legibility</p>
-                  <p className="text-sm text-white/70">Ensure it can be read by anyone. Use printed labels where possible for durability. If handwriting is necessary, use block capitals. Choose appropriate pen/marker for conditions.</p>
+                  <p className="text-sm text-white/70">
+                    Ensure it can be read by anyone. Use printed labels where possible for
+                    durability. If handwriting is necessary, use block capitals. Choose appropriate
+                    pen/marker for conditions.
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
                   <p className="font-semibold text-purple-400 mb-2">Professionalism</p>
-                  <p className="text-sm text-white/70">Maintain appropriate tone. Avoid slang or casual language in formal notes. Use accepted abbreviations (e.g., "DB" for Distribution Board). Follow company and site standards.</p>
+                  <p className="text-sm text-white/70">
+                    Maintain appropriate tone. Avoid slang or casual language in formal notes. Use
+                    accepted abbreviations (e.g., "DB" for Distribution Board). Follow company and
+                    site standards.
+                  </p>
                 </div>
               </div>
             </div>
@@ -363,10 +400,22 @@ const Module5Section6_2 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Essential Handover Content</p>
                 <ul className="text-sm space-y-1 text-white/70">
-                  <li>• <strong className="text-white">Work completed:</strong> What has been finished and tested</li>
-                  <li>• <strong className="text-white">Outstanding work:</strong> Tasks that still need completion</li>
-                  <li>• <strong className="text-white">Issues or hazards:</strong> Safety concerns or problems encountered</li>
-                  <li>• <strong className="text-white">Materials or tools required:</strong> Resources needed for continuation</li>
+                  <li>
+                    • <strong className="text-white">Work completed:</strong> What has been finished
+                    and tested
+                  </li>
+                  <li>
+                    • <strong className="text-white">Outstanding work:</strong> Tasks that still
+                    need completion
+                  </li>
+                  <li>
+                    • <strong className="text-white">Issues or hazards:</strong> Safety concerns or
+                    problems encountered
+                  </li>
+                  <li>
+                    • <strong className="text-white">Materials or tools required:</strong> Resources
+                    needed for continuation
+                  </li>
                 </ul>
               </div>
             </div>
@@ -386,7 +435,9 @@ const Module5Section6_2 = () => {
               </p>
 
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
-                <p className="font-semibold text-red-400 mb-2">Requirements for Electrical Labels</p>
+                <p className="font-semibold text-red-400 mb-2">
+                  Requirements for Electrical Labels
+                </p>
                 <ul className="text-sm space-y-1 text-white/70">
                   <li>• Must be durable enough to withstand the electrical environment</li>
                   <li>• Must remain legible throughout the installation's life</li>
@@ -418,7 +469,9 @@ const Module5Section6_2 = () => {
             <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50">
               <p className="font-semibold text-amber-400 mb-2">The Cost of Poor Communication</p>
               <p className="text-white/80 text-sm mb-3">
-                On a commercial site, an apprentice leaves no handover note at the end of their shift. The next morning, another team mistakenly energises a circuit still under testing, causing equipment damage.
+                On a commercial site, an apprentice leaves no handover note at the end of their
+                shift. The next morning, another team mistakenly energises a circuit still under
+                testing, causing equipment damage.
               </p>
               <div className="p-3 bg-red-500/10 rounded border border-red-500/20 mb-3">
                 <p className="text-sm text-red-300 font-medium mb-1">Consequences:</p>
@@ -432,7 +485,8 @@ const Module5Section6_2 = () => {
               <div className="p-3 bg-green-500/10 rounded border border-green-500/20">
                 <p className="text-sm text-green-300 font-medium mb-1">The Solution:</p>
                 <p className="text-sm text-white/70">
-                  A simple note stating "Circuit 3 DB2 still under test - DO NOT ENERGISE - Contact J. Smith 07XXX XXXXXX" would have prevented this costly mistake.
+                  A simple note stating "Circuit 3 DB2 still under test - DO NOT ENERGISE - Contact
+                  J. Smith 07XXX XXXXXX" would have prevented this costly mistake.
                 </p>
               </div>
             </div>
@@ -480,7 +534,10 @@ const Module5Section6_2 = () => {
               <p className="text-white/80 text-sm mb-3">In this subsection, you've learned:</p>
               <ul className="text-white/80 text-sm space-y-1">
                 <li>• Why written instructions and handovers are essential for electrical work</li>
-                <li>• The qualities of effective written communication: clarity, accuracy, legibility, and professionalism</li>
+                <li>
+                  • The qualities of effective written communication: clarity, accuracy, legibility,
+                  and professionalism
+                </li>
                 <li>• How to write clear notes, labels, and handovers that prevent mistakes</li>
                 <li>• The importance of following labelling standards and best practices</li>
               </ul>
@@ -489,7 +546,10 @@ const Module5Section6_2 = () => {
 
           {/* Quiz */}
           <section className="mb-10">
-            <Quiz title="Written Instructions and Handovers Knowledge Check" questions={quizQuestions} />
+            <Quiz
+              title="Written Instructions and Handovers Knowledge Check"
+              questions={quizQuestions}
+            />
           </section>
 
           {/* Navigation */}

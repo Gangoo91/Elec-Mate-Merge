@@ -1,58 +1,69 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Building, GraduationCap, Factory, Users, Globe, Award } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Building, GraduationCap, Factory, Users, Globe, Award } from 'lucide-react';
 
 const TrainingProvidersCard = () => {
   const providerTypes = [
     {
-      type: "Further Education Colleges",
+      type: 'Further Education Colleges',
       icon: <GraduationCap className="h-5 w-5 text-blue-400" />,
-      description: "Traditional colleges offering apprenticeship programmes",
-      characteristics: ["Established facilities", "Qualified teaching staff", "Broad curriculum"],
-      examples: ["Local FE colleges", "Sixth form colleges", "Technical colleges"],
-      considerations: ["Fixed timetables", "Group-based learning", "Academic focus"]
+      description: 'Traditional colleges offering apprenticeship programmes',
+      characteristics: ['Established facilities', 'Qualified teaching staff', 'Broad curriculum'],
+      examples: ['Local FE colleges', 'Sixth form colleges', 'Technical colleges'],
+      considerations: ['Fixed timetables', 'Group-based learning', 'Academic focus'],
     },
     {
-      type: "Private Training Providers",
+      type: 'Private Training Providers',
       icon: <Building className="h-5 w-5 text-green-400" />,
-      description: "Commercial organisations specialising in apprenticeship training",
-      characteristics: ["Industry-focused", "Flexible delivery", "Employer partnerships"],
-      examples: ["JTL", "NICEIC Training", "ECITB providers"],
-      considerations: ["Specialist expertise", "Industry connections", "Variable quality"]
+      description: 'Commercial organisations specialising in apprenticeship training',
+      characteristics: ['Industry-focused', 'Flexible delivery', 'Employer partnerships'],
+      examples: ['JTL', 'NICEIC Training', 'ECITB providers'],
+      considerations: ['Specialist expertise', 'Industry connections', 'Variable quality'],
     },
     {
-      type: "University Technical Colleges",
+      type: 'University Technical Colleges',
       icon: <Factory className="h-5 w-5 text-purple-400" />,
-      description: "Specialist institutions for 14-19 year olds with industry focus",
-      characteristics: ["State-of-the-art facilities", "Industry partnerships", "Technical specialisation"],
-      examples: ["Energy Coast UTC", "Advanced Manufacturing UTC"],
-      considerations: ["Age-specific", "Limited locations", "High standards"]
+      description: 'Specialist institutions for 14-19 year olds with industry focus',
+      characteristics: [
+        'State-of-the-art facilities',
+        'Industry partnerships',
+        'Technical specialisation',
+      ],
+      examples: ['Energy Coast UTC', 'Advanced Manufacturing UTC'],
+      considerations: ['Age-specific', 'Limited locations', 'High standards'],
     },
     {
-      type: "Employer-Led Training",
+      type: 'Employer-Led Training',
       icon: <Users className="h-5 w-5 text-orange-400" />,
-      description: "Large employers providing their own training programmes",
-      characteristics: ["Company-specific", "Career progression", "Internal expertise"],
-      examples: ["National Grid", "BAE Systems", "Rolls Royce"],
-      considerations: ["Limited external recognition", "Company culture", "Career progression"]
+      description: 'Large employers providing their own training programmes',
+      characteristics: ['Company-specific', 'Career progression', 'Internal expertise'],
+      examples: ['National Grid', 'BAE Systems', 'Rolls Royce'],
+      considerations: ['Limited external recognition', 'Company culture', 'Career progression'],
     },
     {
-      type: "Online Training Platforms",
+      type: 'Online Training Platforms',
       icon: <Globe className="h-5 w-5 text-cyan-400" />,
-      description: "Digital-first training providers offering flexible learning",
-      characteristics: ["24/7 access", "Self-paced learning", "Interactive content"],
-      examples: ["Multiverse", "Baltic Training", "Digital platforms"],
-      considerations: ["Self-motivation required", "Limited practical work", "Technology dependence"]
+      description: 'Digital-first training providers offering flexible learning',
+      characteristics: ['24/7 access', 'Self-paced learning', 'Interactive content'],
+      examples: ['Multiverse', 'Baltic Training', 'Digital platforms'],
+      considerations: [
+        'Self-motivation required',
+        'Limited practical work',
+        'Technology dependence',
+      ],
     },
     {
-      type: "Industry Bodies",
+      type: 'Industry Bodies',
       icon: <Award className="h-5 w-5 text-red-400" />,
-      description: "Professional organisations offering recognised training",
-      characteristics: ["Industry credibility", "Professional standards", "Networking opportunities"],
-      examples: ["IET", "SELECT", "ECS"],
-      considerations: ["Professional focus", "Higher costs", "Entry requirements"]
-    }
+      description: 'Professional organisations offering recognised training',
+      characteristics: [
+        'Industry credibility',
+        'Professional standards',
+        'Networking opportunities',
+      ],
+      examples: ['IET', 'SELECT', 'ECS'],
+      considerations: ['Professional focus', 'Higher costs', 'Entry requirements'],
+    },
   ];
 
   return (
@@ -72,7 +83,7 @@ const TrainingProvidersCard = () => {
                 <h4 className="font-medium text-white">{provider.type}</h4>
               </div>
               <p className="text-sm text-white mb-3">{provider.description}</p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <span className="text-xs font-medium text-green-400">Key Features:</span>
@@ -85,7 +96,7 @@ const TrainingProvidersCard = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div>
                   <span className="text-xs font-medium text-blue-400">Examples:</span>
                   <ul className="text-xs text-white mt-1 space-y-1">
@@ -97,7 +108,7 @@ const TrainingProvidersCard = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div>
                   <span className="text-xs font-medium text-yellow-400">Considerations:</span>
                   <ul className="text-xs text-white mt-1 space-y-1">
@@ -113,7 +124,7 @@ const TrainingProvidersCard = () => {
             </div>
           ))}
         </div>
-        
+
         <div className="mt-6 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
           <h5 className="font-medium text-blue-400 mb-2">Choosing the Right Provider</h5>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">

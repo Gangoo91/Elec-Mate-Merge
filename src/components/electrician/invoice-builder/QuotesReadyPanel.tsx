@@ -1,9 +1,9 @@
-import { Quote } from "@/types/quote";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { Receipt, User, Calendar, FileText, Check } from "lucide-react";
-import { format } from "date-fns";
+import { Quote } from '@/types/quote';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { Receipt, User, Calendar, FileText, Check } from 'lucide-react';
+import { format } from 'date-fns';
 
 interface QuotesReadyPanelProps {
   quotes: Quote[];
@@ -12,9 +12,9 @@ interface QuotesReadyPanelProps {
 
 export const QuotesReadyPanel = ({ quotes, onRaiseInvoice }: QuotesReadyPanelProps) => {
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
-      currency: "GBP",
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
     }).format(amount);
   };
 
@@ -79,7 +79,7 @@ export const QuotesReadyPanel = ({ quotes, onRaiseInvoice }: QuotesReadyPanelPro
             <div className="flex items-center gap-3 text-xs text-muted-foreground">
               <div className="flex items-center gap-1.5">
                 <Calendar className="h-3.5 w-3.5" />
-                <span>{format(quote.createdAt, "dd MMM yyyy")}</span>
+                <span>{format(quote.createdAt, 'dd MMM yyyy')}</span>
               </div>
               <span className="text-border">•</span>
               <div className="flex items-center gap-1.5">

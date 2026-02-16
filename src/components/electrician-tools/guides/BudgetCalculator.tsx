@@ -1,10 +1,9 @@
-
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Slider } from "@/components/ui/slider";
-import { Calculator, TrendingUp, DollarSign, Clock } from "lucide-react";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Slider } from '@/components/ui/slider';
+import { Calculator, TrendingUp, DollarSign, Clock } from 'lucide-react';
 
 interface BudgetCalculatorProps {
   toolCategories: any[];
@@ -14,37 +13,37 @@ interface BudgetCalculatorProps {
 const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalculatorProps) => {
   const [budget, setBudget] = useState([1000]);
   const [timeline, setTimeline] = useState([12]);
-  const [experience, setExperience] = useState("apprentice");
-  const [workType, setWorkType] = useState("domestic");
+  const [experience, setExperience] = useState('apprentice');
+  const [workType, setWorkType] = useState('domestic');
 
   const experienceLevels = {
-    apprentice: { multiplier: 0.8, label: "Apprentice", priority: "essential" },
-    intermediate: { multiplier: 1.0, label: "Intermediate", priority: "recommended" },
-    professional: { multiplier: 1.3, label: "Professional", priority: "all" }
+    apprentice: { multiplier: 0.8, label: 'Apprentice', priority: 'essential' },
+    intermediate: { multiplier: 1.0, label: 'Intermediate', priority: 'recommended' },
+    professional: { multiplier: 1.3, label: 'Professional', priority: 'all' },
   };
 
   const workTypes = {
-    domestic: { multiplier: 0.9, label: "Domestic" },
-    commercial: { multiplier: 1.1, label: "Commercial" },
-    industrial: { multiplier: 1.4, label: "Industrial" }
+    domestic: { multiplier: 0.9, label: 'Domestic' },
+    commercial: { multiplier: 1.1, label: 'Commercial' },
+    industrial: { multiplier: 1.4, label: 'Industrial' },
   };
 
   const calculateRecommendations = () => {
     const expLevel = experienceLevels[experience as keyof typeof experienceLevels];
     const workTypeLevel = workTypes[workType as keyof typeof workTypes];
     const monthlyBudget = budget[0] / timeline[0];
-    
+
     // Mock calculation for tool recommendations
-    const recommendations = toolCategories.map(category => {
+    const recommendations = toolCategories.map((category) => {
       const adjustedPrice = 100 * expLevel.multiplier * workTypeLevel.multiplier;
-      const priority = Math.random() > 0.5 ? "high" : "medium";
-      
+      const priority = Math.random() > 0.5 ? 'high' : 'medium';
+
       return {
-        category: category.title || "Tool Category",
+        category: category.title || 'Tool Category',
         estimatedCost: Math.round(adjustedPrice),
         priority,
         timeline: Math.ceil(adjustedPrice / monthlyBudget),
-        roiMonths: Math.floor(Math.random() * 12) + 6
+        roiMonths: Math.floor(Math.random() * 12) + 6,
       };
     });
 
@@ -58,7 +57,7 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
       recommendations,
       totalCost,
       monthsToComplete,
-      budgetUtilization: Math.min((totalCost / budget[0]) * 100, 100)
+      budgetUtilization: Math.min((totalCost / budget[0]) * 100, 100),
     };
 
     onCalculationUpdate(calculation);
@@ -116,17 +115,20 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
               </div>
 
               <div>
-                <label className="text-sm font-medium text-foreground mb-2 block">Experience Level</label>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Experience Level
+                </label>
                 <div className="grid grid-cols-3 gap-2">
                   {Object.entries(experienceLevels).map(([key, level]) => (
                     <Button
                       key={key}
-                      variant={experience === key ? "default" : "outline"}
+                      variant={experience === key ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => setExperience(key)}
-                      className={experience === key ? 
-                        "bg-elec-yellow text-black" : 
-                        "border-elec-yellow/30 hover:bg-elec-yellow/10"
+                      className={
+                        experience === key
+                          ? 'bg-elec-yellow text-black'
+                          : 'border-elec-yellow/30 hover:bg-elec-yellow/10'
                       }
                     >
                       {level.label}
@@ -136,17 +138,20 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
               </div>
 
               <div>
-                <label className="text-sm font-medium text-foreground mb-2 block">Primary Work Type</label>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Primary Work Type
+                </label>
                 <div className="grid grid-cols-3 gap-2">
                   {Object.entries(workTypes).map(([key, type]) => (
                     <Button
                       key={key}
-                      variant={workType === key ? "default" : "outline"}
+                      variant={workType === key ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => setWorkType(key)}
-                      className={workType === key ? 
-                        "bg-elec-yellow text-black" : 
-                        "border-elec-yellow/30 hover:bg-elec-yellow/10"
+                      className={
+                        workType === key
+                          ? 'bg-elec-yellow text-black'
+                          : 'border-elec-yellow/30 hover:bg-elec-yellow/10'
                       }
                     >
                       {type.label}
@@ -166,7 +171,9 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Monthly Budget:</span>
-                    <span className="text-foreground font-medium">£{Math.round(calculation.monthlyBudget)}</span>
+                    <span className="text-foreground font-medium">
+                      £{Math.round(calculation.monthlyBudget)}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Estimated Total Cost:</span>
@@ -174,17 +181,22 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Time to Complete:</span>
-                    <span className="text-foreground font-medium">{calculation.monthsToComplete} months</span>
+                    <span className="text-foreground font-medium">
+                      {calculation.monthsToComplete} months
+                    </span>
                   </div>
                 </div>
-                
+
                 <div className="mt-3 pt-3 border-t border-elec-yellow/20">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Budget Utilization:</span>
-                    <Badge className={calculation.budgetUtilization <= 100 ? 
-                      "bg-green-500/20 text-green-400" : 
-                      "bg-red-500/20 text-red-400"
-                    }>
+                    <Badge
+                      className={
+                        calculation.budgetUtilization <= 100
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-red-500/20 text-red-400'
+                      }
+                    >
                       {Math.round(calculation.budgetUtilization)}%
                     </Badge>
                   </div>
@@ -200,15 +212,21 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Average ROI:</span>
                     <span className="text-green-400 font-medium">
-                      {Math.round(calculation.recommendations.reduce((sum, rec) => sum + rec.roiMonths, 0) / calculation.recommendations.length)} months
+                      {Math.round(
+                        calculation.recommendations.reduce((sum, rec) => sum + rec.roiMonths, 0) /
+                          calculation.recommendations.length
+                      )}{' '}
+                      months
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Best Investment:</span>
                     <span className="text-foreground font-medium">
-                      {calculation.recommendations.reduce((best, rec) => 
-                        rec.roiMonths < best.roiMonths ? rec : best
-                      ).category}
+                      {
+                        calculation.recommendations.reduce((best, rec) =>
+                          rec.roiMonths < best.roiMonths ? rec : best
+                        ).category
+                      }
                     </span>
                   </div>
                 </div>
@@ -226,17 +244,18 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
           <div className="space-y-3">
             {calculation.recommendations
               .sort((a, b) => {
-                if (a.priority === "high" && b.priority !== "high") return -1;
-                if (b.priority === "high" && a.priority !== "high") return 1;
+                if (a.priority === 'high' && b.priority !== 'high') return -1;
+                if (b.priority === 'high' && a.priority !== 'high') return 1;
                 return a.timeline - b.timeline;
               })
               .map((rec, index) => (
-                <div key={index} className="p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
+                <div
+                  key={index}
+                  className="p-3 bg-elec-dark/30 rounded-lg border border-elec-yellow/10"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Badge className="bg-elec-yellow/20 text-elec-yellow">
-                        {index + 1}
-                      </Badge>
+                      <Badge className="bg-elec-yellow/20 text-elec-yellow">{index + 1}</Badge>
                       <div>
                         <h4 className="text-foreground font-medium text-sm">{rec.category}</h4>
                         <p className="text-xs text-muted-foreground">
@@ -246,10 +265,13 @@ const BudgetCalculator = ({ toolCategories, onCalculationUpdate }: BudgetCalcula
                     </div>
                     <div className="text-right">
                       <div className="text-elec-yellow font-medium">£{rec.estimatedCost}</div>
-                      <Badge className={rec.priority === "high" ? 
-                        "bg-red-500/20 text-red-400" : 
-                        "bg-amber-500/20 text-amber-400"
-                      }>
+                      <Badge
+                        className={
+                          rec.priority === 'high'
+                            ? 'bg-red-500/20 text-red-400'
+                            : 'bg-amber-500/20 text-amber-400'
+                        }
+                      >
                         {rec.priority} priority
                       </Badge>
                     </div>

@@ -46,7 +46,8 @@ export function BrandingStep({ formData, onChange }: StepProps) {
           <div className="text-sm">
             <p className="font-medium mb-1">Stand out with professional branding</p>
             <p className="text-muted-foreground">
-              Adding your logo and brand colors makes quotes look more professional. You can always add these later in Settings.
+              Adding your logo and brand colors makes quotes look more professional. You can always
+              add these later in Settings.
             </p>
           </div>
         </div>
@@ -90,7 +91,9 @@ export function BrandingStep({ formData, onChange }: StepProps) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="primary-color" className="text-base">Primary Color</Label>
+            <Label htmlFor="primary-color" className="text-base">
+              Primary Color
+            </Label>
             <div className="flex items-center gap-2 mt-2">
               <input
                 id="primary-color"
@@ -108,7 +111,9 @@ export function BrandingStep({ formData, onChange }: StepProps) {
           </div>
 
           <div>
-            <Label htmlFor="accent-color" className="text-base">Accent Color</Label>
+            <Label htmlFor="accent-color" className="text-base">
+              Accent Color
+            </Label>
             <div className="flex items-center gap-2 mt-2">
               <input
                 id="accent-color"

@@ -69,9 +69,7 @@ const AM2Simulator = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-white">AM2 Readiness</h1>
-              <p className="text-white text-sm">
-                Identify practical gaps before you book your AM2
-              </p>
+              <p className="text-white text-sm">Identify practical gaps before you book your AM2</p>
             </div>
           </div>
         </div>
@@ -111,17 +109,13 @@ const AM2Simulator = () => {
           <SafeIsolationAssessment onSessionComplete={invalidateReadiness} />
         )}
 
-        {activeTab === 'testing' && (
-          <TestingSimulator onSessionComplete={invalidateReadiness} />
-        )}
+        {activeTab === 'testing' && <TestingSimulator onSessionComplete={invalidateReadiness} />}
 
         {activeTab === 'faults' && (
           <FaultFindingSimulator onSessionComplete={invalidateReadiness} />
         )}
 
-        {activeTab === 'knowledge' && (
-          <AM2KnowledgeQuiz onSessionComplete={invalidateReadiness} />
-        )}
+        {activeTab === 'knowledge' && <AM2KnowledgeQuiz onSessionComplete={invalidateReadiness} />}
 
         {activeTab === 'history' && <AM2HistoryTab onNavigateToTab={setActiveTab} />}
       </div>

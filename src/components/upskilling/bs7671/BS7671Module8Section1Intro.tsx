@@ -12,12 +12,14 @@ const BS7671Module8Section1Intro = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          The BS 7671:2018+A3:2025 appendices form the backbone of electrical design calculations and verification procedures. 
-          These reference materials are essential tools that every electrical professional must master for safe, compliant installations.
+          The BS 7671:2018+A3:2025 appendices form the backbone of electrical design calculations
+          and verification procedures. These reference materials are essential tools that every
+          electrical professional must master for safe, compliant installations.
         </p>
         <p>
-          This comprehensive section provides detailed guidance on navigating the most critical appendices, including Zs tables for 
-          protective device selection, conductor sizing methodologies, and voltage drop calculations that ensure optimal system performance.
+          This comprehensive section provides detailed guidance on navigating the most critical
+          appendices, including Zs tables for protective device selection, conductor sizing
+          methodologies, and voltage drop calculations that ensure optimal system performance.
         </p>
         <div className="bg-elec-dark p-4 rounded-md border border-gray-600 mt-4">
           <h5 className="text-elec-yellow font-semibold mb-2">Key Appendices Covered:</h5>

@@ -8,6 +8,7 @@ import { getSEORoutes } from '@/routes/SEORoutes';
 // Core components that should load immediately (small, critical path)
 import Layout from '@/components/layout/Layout';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
+const CollegeGuard = lazy(() => import('@/components/auth/CollegeGuard'));
 
 // Critical pages use lazyWithRetry for automatic retry on chunk failures
 const Walkthrough = lazyWithRetry(() => import('@/pages/Walkthrough'));
@@ -1701,12 +1702,14 @@ const AppRouter = () => {
             }
           />
 
-          {/* College Hub Routes */}
+          {/* College Hub Routes — requires college_id on profile */}
           <Route
             path="college"
             element={
               <LazyRoute>
-                <CollegeDashboard />
+                <CollegeGuard>
+                  <CollegeDashboard />
+                </CollegeGuard>
               </LazyRoute>
             }
           />

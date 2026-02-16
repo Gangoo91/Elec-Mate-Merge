@@ -6,11 +6,11 @@ import {
   ResponsiveDialogTitle,
   ResponsiveDialogBody,
   ResponsiveDialogFooter,
-} from "@/components/ui/responsive-dialog";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ToolItem } from "@/hooks/useToolsData";
-import { ExternalLink, Plus, Check, Package, Shield, Zap } from "lucide-react";
+} from '@/components/ui/responsive-dialog';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ToolItem } from '@/hooks/useToolsData';
+import { ExternalLink, Plus, Check, Package, Shield, Zap } from 'lucide-react';
 
 interface ToolDetailModalProps {
   tool: ToolItem | null;
@@ -29,17 +29,17 @@ const ToolDetailModal = ({
   onAddToCompare,
   onRemoveFromCompare,
   isSelected = false,
-  isCompareDisabled = false
+  isCompareDisabled = false,
 }: ToolDetailModalProps) => {
   if (!tool) return null;
 
   // Calculate discount percentage
   const getDiscountPercentage = () => {
     if (!tool.isOnSale || !tool.salePrice || !tool.price) return null;
-    
+
     const originalPrice = parseFloat(tool.price.replace(/[£,]/g, ''));
     const salePrice = parseFloat(tool.salePrice.replace(/[£,]/g, ''));
-    
+
     if (originalPrice > salePrice) {
       return Math.round(((originalPrice - salePrice) / originalPrice) * 100);
     }
@@ -50,23 +50,24 @@ const ToolDetailModal = ({
 
   // Get product URL
   const getProductUrl = () => {
-    const supplier = (tool.supplier || "").toLowerCase();
+    const supplier = (tool.supplier || '').toLowerCase();
     const hosts: Record<string, string> = {
-      "screwfix": "screwfix.com",
-      "city electrical factors": "cef.co.uk",
-      "city-electrical-factors": "cef.co.uk",
-      "electricaldirect": "electricaldirect.co.uk",
-      "toolstation": "toolstation.com",
+      screwfix: 'screwfix.com',
+      'city electrical factors': 'cef.co.uk',
+      'city-electrical-factors': 'cef.co.uk',
+      electricaldirect: 'electricaldirect.co.uk',
+      toolstation: 'toolstation.com',
     };
     const expectedHost = hosts[supplier];
 
     const buildSearch = (q: string) => {
       const term = encodeURIComponent(q);
-      if (supplier.includes("electricaldirect")) return `https://www.electricaldirect.co.uk/search?query=${term}`;
-      if (supplier.includes("city")) return `https://www.cef.co.uk/search?q=${term}`;
-      if (supplier.includes("screwfix")) return `https://www.screwfix.com/search?search=${term}`;
-      if (supplier.includes("toolstation")) return `https://www.toolstation.com/search?q=${term}`;
-      return "#";
+      if (supplier.includes('electricaldirect'))
+        return `https://www.electricaldirect.co.uk/search?query=${term}`;
+      if (supplier.includes('city')) return `https://www.cef.co.uk/search?q=${term}`;
+      if (supplier.includes('screwfix')) return `https://www.screwfix.com/search?search=${term}`;
+      if (supplier.includes('toolstation')) return `https://www.toolstation.com/search?q=${term}`;
+      return '#';
     };
 
     if (tool.productUrl || tool.view_product_url) {
@@ -88,18 +89,18 @@ const ToolDetailModal = ({
   // Normalise image
   const imageSrc = (() => {
     const src = tool.image;
-    if (!src) return "/placeholder.svg";
-    
+    if (!src) return '/placeholder.svg';
+
     let finalSrc = src;
-    
-    if (!/^https?:\/\//i.test(src) && !src.startsWith("/")) {
+
+    if (!/^https?:\/\//i.test(src) && !src.startsWith('/')) {
       finalSrc = `/${src}`;
     }
-    
-    if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
-      finalSrc = finalSrc.replace(/wid=136/g, "wid=400").replace(/hei=136/g, "hei=400");
+
+    if (finalSrc.includes('wid=136') && finalSrc.includes('hei=136')) {
+      finalSrc = finalSrc.replace(/wid=136/g, 'wid=400').replace(/hei=136/g, 'hei=400');
     }
-    
+
     return finalSrc;
   })();
 
@@ -126,7 +127,9 @@ const ToolDetailModal = ({
                     src={imageSrc}
                     alt={tool.name}
                     className="w-full h-full object-contain"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
+                    }}
                   />
                 </div>
                 {discount && (
@@ -141,7 +144,9 @@ const ToolDetailModal = ({
                 {/* Supplier */}
                 <div className="flex items-center gap-2">
                   <Package className="h-5 w-5 text-elec-yellow" />
-                  <span className="text-sm font-medium text-foreground">Supplier: {tool.supplier}</span>
+                  <span className="text-sm font-medium text-foreground">
+                    Supplier: {tool.supplier}
+                  </span>
                 </div>
 
                 {/* Category */}
@@ -168,18 +173,19 @@ const ToolDetailModal = ({
 
                 {/* Stock Status */}
                 <div className="flex items-center gap-2">
-                  <Badge 
+                  <Badge
                     variant={
-                      tool.stockStatus === "In Stock" ? "success" : 
-                      tool.stockStatus === "Low Stock" ? "warning" : 
-                      "destructive"
+                      tool.stockStatus === 'In Stock'
+                        ? 'success'
+                        : tool.stockStatus === 'Low Stock'
+                          ? 'warning'
+                          : 'destructive'
                     }
                     className="text-sm px-3 py-1"
                   >
-                    {tool.stockStatus || "In Stock"}
+                    {tool.stockStatus || 'In Stock'}
                   </Badge>
                 </div>
-
               </div>
             </div>
 
@@ -192,7 +198,10 @@ const ToolDetailModal = ({
                 </h3>
                 <div className="grid gap-2">
                   {tool.highlights.map((highlight, index) => (
-                    <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-background/30">
+                    <div
+                      key={index}
+                      className="flex items-start gap-3 p-3 rounded-lg bg-background/30"
+                    >
                       <Check className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
                       <span className="text-sm text-foreground">{highlight}</span>
                     </div>

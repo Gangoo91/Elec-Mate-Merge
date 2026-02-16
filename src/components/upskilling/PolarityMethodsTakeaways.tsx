@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const PolarityMethodsTakeaways = () => {
   const takeaways = [
-    "Polarity must be tested before energising using continuity (dead) testing methods",
-    "Always confirm switches and protective devices are wired on the line conductor",
-    "Sockets and accessories must be checked for correct terminal connections",
-    "Use the distribution board outgoing terminals as reference points for testing",
-    "Never assume wiring is correct - always verify through proper testing procedures"
+    'Polarity must be tested before energising using continuity (dead) testing methods',
+    'Always confirm switches and protective devices are wired on the line conductor',
+    'Sockets and accessories must be checked for correct terminal connections',
+    'Use the distribution board outgoing terminals as reference points for testing',
+    'Never assume wiring is correct - always verify through proper testing procedures',
   ];
 
   return (

@@ -1,8 +1,7 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Smartphone, Cloud, Camera, FileText, Video } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ExternalLink, Smartphone, Cloud, Camera, FileText, Video } from 'lucide-react';
 
 interface DigitalTool {
   name: string;
@@ -10,7 +9,7 @@ interface DigitalTool {
   description: string;
   features: string[];
   platform: string[];
-  cost: "Free" | "Paid" | "Freemium";
+  cost: 'Free' | 'Paid' | 'Freemium';
   icon: React.ReactNode;
   url: string;
 }
@@ -18,53 +17,67 @@ interface DigitalTool {
 const DigitalToolsIntegration = () => {
   const tools: DigitalTool[] = [
     {
-      name: "Google Drive",
-      category: "Cloud Storage",
-      description: "Store and organise your portfolio files in the cloud",
-      features: ["15GB free storage", "Document collaboration", "Mobile access", "Version history"],
-      platform: ["Web", "iOS", "Android"],
-      cost: "Freemium",
+      name: 'Google Drive',
+      category: 'Cloud Storage',
+      description: 'Store and organise your portfolio files in the cloud',
+      features: ['15GB free storage', 'Document collaboration', 'Mobile access', 'Version history'],
+      platform: ['Web', 'iOS', 'Android'],
+      cost: 'Freemium',
       icon: <Cloud className="h-5 w-5" />,
-      url: "https://drive.google.com"
+      url: 'https://drive.google.com',
     },
     {
-      name: "Adobe Creative Cloud",
-      category: "Content Creation",
-      description: "Professional tools for creating and editing portfolio content",
-      features: ["Photo editing", "Video creation", "PDF documents", "Portfolio templates"],
-      platform: ["Windows", "Mac", "Mobile"],
-      cost: "Paid",
+      name: 'Adobe Creative Cloud',
+      category: 'Content Creation',
+      description: 'Professional tools for creating and editing portfolio content',
+      features: ['Photo editing', 'Video creation', 'PDF documents', 'Portfolio templates'],
+      platform: ['Windows', 'Mac', 'Mobile'],
+      cost: 'Paid',
       icon: <Camera className="h-5 w-5" />,
-      url: "https://www.adobe.com/uk/creativecloud.html"
+      url: 'https://www.adobe.com/uk/creativecloud.html',
     },
     {
-      name: "Microsoft 365",
-      category: "Documentation",
-      description: "Create professional documentation and presentations",
-      features: ["Word documents", "PowerPoint presentations", "Excel tracking", "OneDrive storage"],
-      platform: ["Web", "Windows", "Mac", "Mobile"],
-      cost: "Freemium",
+      name: 'Microsoft 365',
+      category: 'Documentation',
+      description: 'Create professional documentation and presentations',
+      features: [
+        'Word documents',
+        'PowerPoint presentations',
+        'Excel tracking',
+        'OneDrive storage',
+      ],
+      platform: ['Web', 'Windows', 'Mac', 'Mobile'],
+      cost: 'Freemium',
       icon: <FileText className="h-5 w-5" />,
-      url: "https://www.microsoft.com/en-gb/microsoft-365"
+      url: 'https://www.microsoft.com/en-gb/microsoft-365',
     },
     {
-      name: "Canva",
-      category: "Design",
-      description: "Create professional-looking portfolio layouts and graphics",
-      features: ["Portfolio templates", "Drag-and-drop design", "Photo editing", "Brand consistency"],
-      platform: ["Web", "iOS", "Android"],
-      cost: "Freemium",
+      name: 'Canva',
+      category: 'Design',
+      description: 'Create professional-looking portfolio layouts and graphics',
+      features: [
+        'Portfolio templates',
+        'Drag-and-drop design',
+        'Photo editing',
+        'Brand consistency',
+      ],
+      platform: ['Web', 'iOS', 'Android'],
+      cost: 'Freemium',
       icon: <Video className="h-5 w-5" />,
-      url: "https://www.canva.com"
-    }
+      url: 'https://www.canva.com',
+    },
   ];
 
   const getCostColor = (cost: string) => {
     switch (cost) {
-      case "Free": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Paid": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "Freemium": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      default: return "bg-white/10 text-white border-white/30";
+      case 'Free':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'Paid':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'Freemium':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/30';
     }
   };
 
@@ -76,7 +89,9 @@ const DigitalToolsIntegration = () => {
     <div className="space-y-4">
       <Card className="border-purple-500/30 bg-white/5">
         <CardHeader className="pb-3">
-          <CardTitle className="text-purple-400 text-base sm:text-lg">Digital Portfolio Tools</CardTitle>
+          <CardTitle className="text-purple-400 text-base sm:text-lg">
+            Digital Portfolio Tools
+          </CardTitle>
           <p className="text-xs sm:text-sm text-white">
             Modern tools to create, organise, and present your portfolio professionally
           </p>
@@ -87,9 +102,7 @@ const DigitalToolsIntegration = () => {
               <div key={index} className="p-3 bg-black/20 rounded-lg border border-purple-500/20">
                 <div className="flex items-start justify-between mb-2 gap-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className="p-1.5 bg-purple-500/20 rounded flex-shrink-0">
-                      {tool.icon}
-                    </div>
+                    <div className="p-1.5 bg-purple-500/20 rounded flex-shrink-0">{tool.icon}</div>
                     <div className="min-w-0">
                       <h4 className="font-medium text-white text-sm truncate">{tool.name}</h4>
                       <p className="text-xs text-white">{tool.category}</p>
@@ -99,9 +112,9 @@ const DigitalToolsIntegration = () => {
                     {tool.cost}
                   </Badge>
                 </div>
-                
+
                 <p className="text-xs text-white mb-2 line-clamp-2">{tool.description}</p>
-                
+
                 <div className="mb-2">
                   <span className="text-xs font-medium text-purple-400">Features:</span>
                   <ul className="mt-1 space-y-0.5">
@@ -118,17 +131,15 @@ const DigitalToolsIntegration = () => {
                     )}
                   </ul>
                 </div>
-                
+
                 <div className="flex items-center gap-2 mb-3">
                   <Smartphone className="h-3 w-3 text-white flex-shrink-0" />
-                  <span className="text-xs text-white truncate">
-                    {tool.platform.join(", ")}
-                  </span>
+                  <span className="text-xs text-white truncate">{tool.platform.join(', ')}</span>
                 </div>
-                
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="w-full text-xs"
                   onClick={() => handleLearnMore(tool.url)}
                 >
@@ -140,7 +151,7 @@ const DigitalToolsIntegration = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <Card className="border-blue-500/30 bg-white/5">
         <CardHeader className="pb-3">
           <CardTitle className="font-medium text-blue-400 text-sm">Getting Started Tips</CardTitle>

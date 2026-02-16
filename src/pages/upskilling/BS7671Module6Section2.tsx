@@ -1,83 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "bs7671-m6s2-check1",
-    question: "Why must visual inspection be completed before electrical testing?",
+    id: 'bs7671-m6s2-check1',
+    question: 'Why must visual inspection be completed before electrical testing?',
     options: [
-      "It reduces the cost of testing",
-      "BS 7671 requires it for proper documentation",
-      "It identifies defects that could make testing unsafe or provide false results",
-      "It is only required for commercial installations"
+      'It reduces the cost of testing',
+      'BS 7671 requires it for proper documentation',
+      'It identifies defects that could make testing unsafe or provide false results',
+      'It is only required for commercial installations',
     ],
     correctIndex: 2,
-    explanation: "Visual inspection identifies defects that could make testing unsafe or mask underlying problems. Testing faulty installations can damage equipment, cause injury, or produce invalid results. BS 7671 Regulation 611 requires visual inspection to be completed with the installation disconnected before any electrical testing begins."
+    explanation:
+      'Visual inspection identifies defects that could make testing unsafe or mask underlying problems. Testing faulty installations can damage equipment, cause injury, or produce invalid results. BS 7671 Regulation 611 requires visual inspection to be completed with the installation disconnected before any electrical testing begins.',
   },
   {
-    id: "bs7671-m6s2-check2",
-    question: "What are two items that must be checked during visual inspection?",
+    id: 'bs7671-m6s2-check2',
+    question: 'What are two items that must be checked during visual inspection?',
     options: [
-      "Cable colours and brand names",
-      "Conductor selection and protective devices",
-      "Building materials and paint colours",
-      "Weather conditions and time of day"
+      'Cable colours and brand names',
+      'Conductor selection and protective devices',
+      'Building materials and paint colours',
+      'Weather conditions and time of day',
     ],
     correctIndex: 1,
-    explanation: "Visual inspection must include checking conductor selection (current-carrying capacity, voltage rating, environmental suitability) and protective devices (current rating, type characteristics, breaking capacity, RCD protection). These are critical for installation safety."
+    explanation:
+      'Visual inspection must include checking conductor selection (current-carrying capacity, voltage rating, environmental suitability) and protective devices (current rating, type characteristics, breaking capacity, RCD protection). These are critical for installation safety.',
   },
   {
-    id: "bs7671-m6s2-check3",
-    question: "Who is legally responsible for inspection and testing results once a certificate is signed?",
+    id: 'bs7671-m6s2-check3',
+    question:
+      'Who is legally responsible for inspection and testing results once a certificate is signed?',
     options: [
-      "The client who commissioned the work",
-      "The building control officer",
-      "The competent person signing the certificate",
-      "The electricity supplier"
+      'The client who commissioned the work',
+      'The building control officer',
+      'The competent person signing the certificate',
+      'The electricity supplier',
     ],
     correctIndex: 2,
-    explanation: "The competent person signing the certificate is personally responsible for all test results and their accuracy. This includes ensuring correct test methods, calibrated instruments, proper interpretation of results, and comprehensive documentation."
-  }
+    explanation:
+      'The competent person signing the certificate is personally responsible for all test results and their accuracy. This includes ensuring correct test methods, calibrated instruments, proper interpretation of results, and comprehensive documentation.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I skip visual inspection if the installation looks new?",
-    answer: "No. Visual inspection is mandatory for all installations regardless of age. Even new installations may have installation errors, incorrect protective device selections, or non-compliant workmanship that only systematic inspection will reveal."
+    question: 'Can I skip visual inspection if the installation looks new?',
+    answer:
+      'No. Visual inspection is mandatory for all installations regardless of age. Even new installations may have installation errors, incorrect protective device selections, or non-compliant workmanship that only systematic inspection will reveal.',
   },
   {
-    question: "What happens if I find defects during inspection?",
-    answer: "All defects must be recorded and communicated to the client. Depending on severity, the installation may need rectification before testing can proceed. C1 (danger present) and C2 (potentially dangerous) codes require immediate or urgent action."
+    question: 'What happens if I find defects during inspection?',
+    answer:
+      'All defects must be recorded and communicated to the client. Depending on severity, the installation may need rectification before testing can proceed. C1 (danger present) and C2 (potentially dangerous) codes require immediate or urgent action.',
   },
   {
     question: "How do I document areas I couldn't inspect?",
-    answer: "Record all limitations clearly on the certificate, specifying which areas couldn't be accessed and why. This protects you legally and informs the client of scope restrictions. Extensive limitations may affect certificate validity."
-  }
+    answer:
+      "Record all limitations clearly on the certificate, specifying which areas couldn't be accessed and why. This protects you legally and informs the client of scope restrictions. Extensive limitations may affect certificate validity.",
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What must an electrician do if test results fall outside BS 7671 limits?",
+    question: 'What must an electrician do if test results fall outside BS 7671 limits?',
     options: [
       "Ignore the results if they're close to the limits",
-      "Continue with the next test in the sequence",
-      "Rectify the defect and re-test before energising",
-      "Document the result but proceed with certification"
+      'Continue with the next test in the sequence',
+      'Rectify the defect and re-test before energising',
+      'Document the result but proceed with certification',
     ],
     correctAnswer: 2,
-    explanation: "If test results fall outside BS 7671 limits, mandatory corrective action is required. The installation must remain isolated, defects must be rectified completely, and re-testing is required after corrections. The installation cannot be energised or certified until compliance is achieved."
-  }
+    explanation:
+      'If test results fall outside BS 7671 limits, mandatory corrective action is required. The installation must remain isolated, defects must be rectified completely, and re-testing is required after corrections. The installation cannot be energised or certified until compliance is achieved.',
+  },
 ];
 
 const BS7671Module6Section2 = () => {
   useSEO({
-    title: "Visual Inspection and Testing Responsibilities | BS7671 Module 6.2",
-    description: "Learn about visual inspection requirements, key inspection items, and electrician responsibilities during testing under BS 7671."
+    title: 'Visual Inspection and Testing Responsibilities | BS7671 Module 6.2',
+    description:
+      'Learn about visual inspection requirements, key inspection items, and electrician responsibilities during testing under BS 7671.',
   });
 
   return (
@@ -119,16 +128,29 @@ const BS7671Module6Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Visual First:</strong> Always complete visual inspection before testing</li>
-              <li><strong>Safety Critical:</strong> Identifies hazards that could make testing dangerous</li>
-              <li><strong>Legal Requirement:</strong> BS 7671 Regulation 611 mandates systematic inspection</li>
+              <li>
+                <strong>Visual First:</strong> Always complete visual inspection before testing
+              </li>
+              <li>
+                <strong>Safety Critical:</strong> Identifies hazards that could make testing
+                dangerous
+              </li>
+              <li>
+                <strong>Legal Requirement:</strong> BS 7671 Regulation 611 mandates systematic
+                inspection
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Damaged cables, loose terminations, incorrect protective devices</li>
-              <li><strong>Use:</strong> Schedule of Inspections (BS 7671 Appendix 6) as your checklist</li>
+              <li>
+                <strong>Spot:</strong> Damaged cables, loose terminations, incorrect protective
+                devices
+              </li>
+              <li>
+                <strong>Use:</strong> Schedule of Inspections (BS 7671 Appendix 6) as your checklist
+              </li>
             </ul>
           </div>
         </div>
@@ -138,10 +160,10 @@ const BS7671Module6Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Why visual inspection must precede testing",
-              "Key items to check during inspection",
-              "Responsibilities during testing",
-              "Link between inspection, testing, and certification"
+              'Why visual inspection must precede testing',
+              'Key items to check during inspection',
+              'Responsibilities during testing',
+              'Link between inspection, testing, and certification',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -161,18 +183,20 @@ const BS7671Module6Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Visual inspection represents the first and most crucial phase of initial verification. Under BS 7671
-              Regulation 611, this systematic examination must be completed with the installation completely
-              disconnected from the supply. The inspection serves multiple critical purposes: ensuring tester safety,
-              identifying defects that could compromise subsequent electrical testing, and verifying compliance with
-              design specifications and regulatory requirements.
+              Visual inspection represents the first and most crucial phase of initial verification.
+              Under BS 7671 Regulation 611, this systematic examination must be completed with the
+              installation completely disconnected from the supply. The inspection serves multiple
+              critical purposes: ensuring tester safety, identifying defects that could compromise
+              subsequent electrical testing, and verifying compliance with design specifications and
+              regulatory requirements.
             </p>
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 my-6">
               <p className="text-sm font-medium text-red-400/80 mb-2">Critical Safety Protocol</p>
               <p className="text-sm text-white">
-                Electrical testing must NEVER be carried out without first completing a thorough visual inspection.
-                Testing faulty installations can result in equipment damage, personal injury, or invalidate test results.
+                Electrical testing must NEVER be carried out without first completing a thorough
+                visual inspection. Testing faulty installations can result in equipment damage,
+                personal injury, or invalidate test results.
               </p>
             </div>
 
@@ -188,7 +212,9 @@ const BS7671Module6Section2 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Defect Identification</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Defect Identification
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Damaged cables and insulation breaches</li>
                   <li>Loose or inadequate terminations</li>
@@ -200,10 +226,14 @@ const BS7671Module6Section2 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Systematic Inspection Methodology:</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Systematic Inspection Methodology:
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">Supply to Load Path</p>
+                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">
+                    Supply to Load Path
+                  </p>
                   <ul className="text-sm text-white space-y-0.5 ml-4">
                     <li>1. Incoming supply arrangements</li>
                     <li>2. Main switchgear and distribution</li>
@@ -214,7 +244,9 @@ const BS7671Module6Section2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">Safety Systems Check</p>
+                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">
+                    Safety Systems Check
+                  </p>
                   <ul className="text-sm text-white space-y-0.5 ml-4">
                     <li>1. Earthing system integrity</li>
                     <li>2. Equipotential bonding completeness</li>
@@ -241,37 +273,62 @@ const BS7671Module6Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 7671 Appendix 6 provides the definitive Schedule of Inspections that must be completed for all
-              installations. This checklist ensures consistency and completeness across all verification activities.
-              Every item marked as applicable must be inspected and recorded as satisfactory before proceeding to testing.
+              BS 7671 Appendix 6 provides the definitive Schedule of Inspections that must be
+              completed for all installations. This checklist ensures consistency and completeness
+              across all verification activities. Every item marked as applicable must be inspected
+              and recorded as satisfactory before proceeding to testing.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-3">Equipment Selection and Suitability:</p>
+              <p className="text-sm font-medium text-white mb-3">
+                Equipment Selection and Suitability:
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">Conductor Selection</p>
+                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">
+                    Conductor Selection
+                  </p>
                   <ul className="text-sm text-white space-y-1 ml-4">
-                    <li><strong>Current-carrying capacity:</strong> Cable size adequate for design current</li>
-                    <li><strong>Voltage rating:</strong> Insulation suitable for system voltage</li>
-                    <li><strong>Environmental suitability:</strong> Temperature, chemical, UV resistance</li>
-                    <li><strong>Identification:</strong> Core colours comply with BS 7671 Table 51</li>
+                    <li>
+                      <strong>Current-carrying capacity:</strong> Cable size adequate for design
+                      current
+                    </li>
+                    <li>
+                      <strong>Voltage rating:</strong> Insulation suitable for system voltage
+                    </li>
+                    <li>
+                      <strong>Environmental suitability:</strong> Temperature, chemical, UV
+                      resistance
+                    </li>
+                    <li>
+                      <strong>Identification:</strong> Core colours comply with BS 7671 Table 51
+                    </li>
                   </ul>
                 </div>
                 <div>
                   <p className="text-xs font-medium text-elec-yellow/70 mb-1">Protective Devices</p>
                   <ul className="text-sm text-white space-y-1 ml-4">
-                    <li><strong>Current rating:</strong> Device rating ≥ design current</li>
-                    <li><strong>Type characteristics:</strong> B, C, D curves appropriate for load</li>
-                    <li><strong>Breaking capacity:</strong> Adequate for prospective fault current</li>
-                    <li><strong>RCD protection:</strong> Type and sensitivity appropriate</li>
+                    <li>
+                      <strong>Current rating:</strong> Device rating ≥ design current
+                    </li>
+                    <li>
+                      <strong>Type characteristics:</strong> B, C, D curves appropriate for load
+                    </li>
+                    <li>
+                      <strong>Breaking capacity:</strong> Adequate for prospective fault current
+                    </li>
+                    <li>
+                      <strong>RCD protection:</strong> Type and sensitivity appropriate
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-3">IP Rating Verification by Environment:</p>
+              <p className="text-sm font-medium text-white mb-3">
+                IP Rating Verification by Environment:
+              </p>
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Standard</p>
@@ -292,10 +349,14 @@ const BS7671Module6Section2 = () => {
             </div>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-2">Special Location Requirements (Section 7):</p>
+              <p className="text-sm font-medium text-white mb-2">
+                Special Location Requirements (Section 7):
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">Bathrooms (Section 701)</p>
+                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">
+                    Bathrooms (Section 701)
+                  </p>
                   <ul className="text-sm text-white space-y-0.5 ml-4">
                     <li>Zone 0: No electrical equipment</li>
                     <li>Zone 1: IPX4, SELV only</li>
@@ -304,7 +365,9 @@ const BS7671Module6Section2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">Swimming Pools (Section 702)</p>
+                  <p className="text-xs font-medium text-elec-yellow/70 mb-1">
+                    Swimming Pools (Section 702)
+                  </p>
                   <ul className="text-sm text-white space-y-0.5 ml-4">
                     <li>Zone 0: 12V SELV maximum</li>
                     <li>Zone 1: IPX5, SELV circuits only</li>
@@ -329,28 +392,45 @@ const BS7671Module6Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The electrician conducting testing assumes full legal responsibility for safety and accuracy.
-              This includes criminal liability under health and safety legislation and professional accountability
-              for all recorded results and safety assessments.
+              The electrician conducting testing assumes full legal responsibility for safety and
+              accuracy. This includes criminal liability under health and safety legislation and
+              professional accountability for all recorded results and safety assessments.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-white mb-3">Mandatory Testing Sequence (Regulation 612):</p>
+              <p className="text-sm font-medium text-white mb-3">
+                Mandatory Testing Sequence (Regulation 612):
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-transparent border border-white/10">
                   <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dead Testing Phase</p>
                   <ul className="text-sm text-white space-y-1">
-                    <li><strong>1-2. Continuity Tests:</strong> Protective conductors, ring circuits, bonding</li>
-                    <li><strong>3. Insulation Resistance:</strong> Minimum ≥1MΩ at specified test voltages</li>
-                    <li><strong>4. Polarity Check:</strong> Single-pole device connections, socket verification</li>
+                    <li>
+                      <strong>1-2. Continuity Tests:</strong> Protective conductors, ring circuits,
+                      bonding
+                    </li>
+                    <li>
+                      <strong>3. Insulation Resistance:</strong> Minimum ≥1MΩ at specified test
+                      voltages
+                    </li>
+                    <li>
+                      <strong>4. Polarity Check:</strong> Single-pole device connections, socket
+                      verification
+                    </li>
                   </ul>
                 </div>
                 <div className="p-4 rounded-lg bg-transparent border border-white/10">
                   <p className="text-sm font-medium text-elec-yellow/80 mb-2">Live Testing Phase</p>
                   <ul className="text-sm text-white space-y-1">
-                    <li><strong>5. Earth Fault Loop Impedance:</strong> Ze and Zs verification</li>
-                    <li><strong>6-7. Protection Testing:</strong> RCD operation times, phase sequence</li>
-                    <li><strong>Functional Testing:</strong> Device operation, emergency systems</li>
+                    <li>
+                      <strong>5. Earth Fault Loop Impedance:</strong> Ze and Zs verification
+                    </li>
+                    <li>
+                      <strong>6-7. Protection Testing:</strong> RCD operation times, phase sequence
+                    </li>
+                    <li>
+                      <strong>Functional Testing:</strong> Device operation, emergency systems
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -391,14 +471,16 @@ const BS7671Module6Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The person signing inspection and testing certificates assumes full legal responsibility for all
-              recorded information. This creates both professional accountability and potential criminal liability
-              under health and safety legislation.
+              The person signing inspection and testing certificates assumes full legal
+              responsibility for all recorded information. This creates both professional
+              accountability and potential criminal liability under health and safety legislation.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mandatory Recording (EIC/MEIWC)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Mandatory Recording (EIC/MEIWC)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>All inspection results documented</li>
                   <li>Complete test results recorded</li>
@@ -409,7 +491,9 @@ const BS7671Module6Section2 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Individual Accountability</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Individual Accountability
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Formal electrical qualifications required</li>
                   <li>Current BS 7671 knowledge essential</li>
@@ -430,7 +514,9 @@ const BS7671Module6Section2 = () => {
           <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Distribution Board Inspection</h3>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Distribution Board Inspection
+              </h3>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Verify IP rating appropriate for location and environment</li>
                 <li>Check all protective devices correctly rated and type-tested</li>
@@ -442,10 +528,22 @@ const BS7671Module6Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Skipping visual inspection:</strong> Never skip under time pressure - safety is paramount</li>
-                <li><strong>Testing out of sequence:</strong> Can lead to dangerous situations and invalid results</li>
-                <li><strong>Incomplete documentation:</strong> All results must be recorded accurately at the time of testing</li>
-                <li><strong>Signing without verification:</strong> Never sign certificates for work you haven't personally verified</li>
+                <li>
+                  <strong>Skipping visual inspection:</strong> Never skip under time pressure -
+                  safety is paramount
+                </li>
+                <li>
+                  <strong>Testing out of sequence:</strong> Can lead to dangerous situations and
+                  invalid results
+                </li>
+                <li>
+                  <strong>Incomplete documentation:</strong> All results must be recorded accurately
+                  at the time of testing
+                </li>
+                <li>
+                  <strong>Signing without verification:</strong> Never sign certificates for work
+                  you haven't personally verified
+                </li>
               </ul>
             </div>
           </div>
@@ -495,10 +593,7 @@ const BS7671Module6Section2 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10">
-          <SingleQuestionQuiz
-            questions={quizQuestions}
-            title="Section Quiz"
-          />
+          <SingleQuestionQuiz questions={quizQuestions} title="Section Quiz" />
         </section>
 
         {/* Bottom Navigation */}

@@ -1,52 +1,51 @@
-
 import { Compass } from 'lucide-react';
 
 export const DesignInformation = () => {
   const designElements = [
     {
-      title: "Circuit Design Information",
+      title: 'Circuit Design Information',
       details: [
-        "Maximum demand calculations and diversity factors",
-        "Protective device characteristics and discrimination",
-        "Cable sizing calculations and voltage drop",
-        "Earthing system arrangements (TN-S, TN-C-S, TT)",
-        "RCD selection and coordination",
-        "Special location design requirements"
-      ]
+        'Maximum demand calculations and diversity factors',
+        'Protective device characteristics and discrimination',
+        'Cable sizing calculations and voltage drop',
+        'Earthing system arrangements (TN-S, TN-C-S, TT)',
+        'RCD selection and coordination',
+        'Special location design requirements',
+      ],
     },
     {
-      title: "Installation Methods",
+      title: 'Installation Methods',
       details: [
-        "Cable installation methods and reference numbers",
-        "Containment systems and support requirements",
-        "Segregation requirements for different circuit types",
-        "IP ratings and environmental protection levels",
-        "Fire barrier and compartmentation details",
-        "Access and maintenance provisions"
-      ]
+        'Cable installation methods and reference numbers',
+        'Containment systems and support requirements',
+        'Segregation requirements for different circuit types',
+        'IP ratings and environmental protection levels',
+        'Fire barrier and compartmentation details',
+        'Access and maintenance provisions',
+      ],
     },
     {
-      title: "Load and Performance Data",
+      title: 'Load and Performance Data',
       details: [
-        "Connected loads and operating characteristics",
-        "Starting currents and power factor corrections",
-        "Harmonic considerations and filtering requirements",
-        "Emergency and standby supply arrangements",
-        "Control and monitoring system integration",
-        "Energy efficiency and sustainability measures"
-      ]
+        'Connected loads and operating characteristics',
+        'Starting currents and power factor corrections',
+        'Harmonic considerations and filtering requirements',
+        'Emergency and standby supply arrangements',
+        'Control and monitoring system integration',
+        'Energy efficiency and sustainability measures',
+      ],
     },
     {
-      title: "Safety and Protection Systems",
+      title: 'Safety and Protection Systems',
       details: [
-        "Arc fault detection and protection systems",
-        "Emergency lighting and fire alarm integration",
-        "Surge protection device specifications",
-        "Isolation and switching arrangements",
-        "Warning and identification systems",
-        "Personal protective equipment requirements"
-      ]
-    }
+        'Arc fault detection and protection systems',
+        'Emergency lighting and fire alarm integration',
+        'Surge protection device specifications',
+        'Isolation and switching arrangements',
+        'Warning and identification systems',
+        'Personal protective equipment requirements',
+      ],
+    },
   ];
 
   return (
@@ -75,7 +74,9 @@ export const DesignInformation = () => {
       </div>
       <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
         <p className="text-green-200 font-medium">
-          <strong>Professional Tip:</strong> If design calculations aren't available, you may need to reverse-engineer the installation to verify compliance. This significantly increases inspection time and may require additional testing.
+          <strong>Professional Tip:</strong> If design calculations aren't available, you may need
+          to reverse-engineer the installation to verify compliance. This significantly increases
+          inspection time and may require additional testing.
         </p>
       </div>
     </div>

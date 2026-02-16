@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
-import { DesignReviewEditor } from "./DesignReviewEditor";
-import { DesignProcessingView } from "./DesignProcessingView";
-import { DesignInputs, CircuitInput } from "@/types/installation-design";
-import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { useCircuitDesignGeneration } from "@/hooks/useCircuitDesignGeneration";
-import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
-import { AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { StructuredDesignWizard } from './structured-input/StructuredDesignWizard';
+import { DesignReviewEditor } from './DesignReviewEditor';
+import { DesignProcessingView } from './DesignProcessingView';
+import { DesignInputs, CircuitInput } from '@/types/installation-design';
+import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { useCircuitDesignGeneration } from '@/hooks/useCircuitDesignGeneration';
+import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
+import { AnimatePresence } from 'framer-motion';
 
 // User-friendly error message mapper
 const getFriendlyErrorMessage = (error: string): string => {
@@ -31,7 +31,7 @@ const getFriendlyErrorMessage = (error: string): string => {
   if (error.includes('OpenAI') || error.includes('API')) {
     return 'AI service temporarily unavailable. Please try again in a moment.';
   }
-  
+
   // Generic fallback
   return `Design generation failed: ${error.slice(0, 100)}`;
 };
@@ -39,14 +39,14 @@ const getFriendlyErrorMessage = (error: string): string => {
 // Format structured installation guidance into readable text
 const formatInstallationGuidance = (guidance: any): string => {
   if (!guidance) return '';
-  
+
   const sections: string[] = [];
-  
+
   // Executive Summary
   if (guidance.executiveSummary) {
     sections.push(`📋 OVERVIEW\n${guidance.executiveSummary}\n`);
   }
-  
+
   // Safety Considerations
   if (guidance.safetyConsiderations?.length > 0) {
     const safetyItems = guidance.safetyConsiderations
@@ -54,7 +54,7 @@ const formatInstallationGuidance = (guidance: any): string => {
       .join('\n');
     sections.push(`⚠️ SAFETY CONSIDERATIONS\n${safetyItems}\n`);
   }
-  
+
   // Materials Required
   if (guidance.materialsRequired?.length > 0) {
     const materials = guidance.materialsRequired
@@ -67,7 +67,7 @@ const formatInstallationGuidance = (guidance: any): string => {
       .join('\n');
     sections.push(`📦 MATERIALS REQUIRED\n${materials}\n`);
   }
-  
+
   // Tools Required
   if (guidance.toolsRequired?.length > 0) {
     const tools = guidance.toolsRequired
@@ -75,7 +75,7 @@ const formatInstallationGuidance = (guidance: any): string => {
       .join('\n');
     sections.push(`🔧 TOOLS REQUIRED\n${tools}\n`);
   }
-  
+
   // Cable Routing
   if (guidance.cableRouting?.length > 0) {
     const routing = guidance.cableRouting
@@ -83,7 +83,7 @@ const formatInstallationGuidance = (guidance: any): string => {
       .join('\n');
     sections.push(`🔌 CABLE ROUTING\n${routing}\n`);
   }
-  
+
   // Installation Procedure
   if (guidance.installationProcedure?.length > 0) {
     const steps = guidance.installationProcedure
@@ -96,43 +96,43 @@ const formatInstallationGuidance = (guidance: any): string => {
       .join('\n\n');
     sections.push(`🔧 INSTALLATION STEPS\n${steps}\n`);
   }
-  
+
   // Testing Requirements removed - handled separately in expectedTests
-  
+
   return sections.join('\n---\n\n');
 };
 
 // Map progress percentage to stage for accurate UI display
 // Phase 1 (Designer): 0-50%, Phase 2 (Installation): 50-100%
 const getStageFromProgress = (progress: number): number => {
-  if (progress < 5) return 0;   // Initialising
-  if (progress < 15) return 1;  // Understanding Requirements
-  if (progress < 25) return 2;  // Searching Regulations
-  if (progress < 50) return 3;  // AI Circuit Design (Phase 1)
-  if (progress < 70) return 4;  // Installation Guidance (Phase 2)
-  if (progress < 95) return 5;  // Compliance Validation
-  return 6;                      // Finalising/Downloading
+  if (progress < 5) return 0; // Initialising
+  if (progress < 15) return 1; // Understanding Requirements
+  if (progress < 25) return 2; // Searching Regulations
+  if (progress < 50) return 3; // AI Circuit Design (Phase 1)
+  if (progress < 70) return 4; // Installation Guidance (Phase 2)
+  if (progress < 95) return 5; // Compliance Validation
+  return 6; // Finalising/Downloading
 };
 
 // Transform Installation Agent's testingRequirements to expectedTestResults format
 const transformTestingRequirements = (testingReqs: any): any => {
   if (!testingReqs?.tests || !Array.isArray(testingReqs.tests)) return undefined;
-  
+
   const result: any = {
     r1r2: { at20C: '', at70C: '', calculation: '' },
     zs: { calculated: '', maxPermitted: '', compliant: 'Yes' },
     insulationResistance: { testVoltage: '500V DC', minResistance: '≥1.0MΩ' },
     polarity: 'Verify correct polarity at all terminations',
-    rcdTest: { at1x: '≤300ms @ 30mA', at5x: '≤40ms @ 150mA' }
+    rcdTest: { at1x: '≤300ms @ 30mA', at5x: '≤40ms @ 150mA' },
   };
-  
+
   // Extract values from structured testing requirements
   testingReqs.tests.forEach((test: any) => {
     const testName = test.testName || '';
     const procedure = test.procedure || '';
     const expectedReading = test.expectedReading || '';
     const acceptanceCriteria = test.acceptanceCriteria || '';
-    
+
     if (testName.toLowerCase().includes('continuity') || testName.toLowerCase().includes('r1+r2')) {
       result.r1r2.calculation = procedure;
       result.r1r2.at70C = expectedReading;
@@ -142,7 +142,8 @@ const transformTestingRequirements = (testingReqs: any): any => {
       result.zs.maxPermitted = acceptanceCriteria;
     }
     if (testName.toLowerCase().includes('insulation')) {
-      result.insulationResistance.minResistance = expectedReading || result.insulationResistance.minResistance;
+      result.insulationResistance.minResistance =
+        expectedReading || result.insulationResistance.minResistance;
     }
     if (testName.toLowerCase().includes('polarity')) {
       result.polarity = procedure || result.polarity;
@@ -151,7 +152,7 @@ const transformTestingRequirements = (testingReqs: any): any => {
       result.rcdTest = { ...result.rcdTest, ...(test.details || {}) };
     }
   });
-  
+
   return result;
 };
 
@@ -159,34 +160,47 @@ const transformTestingRequirements = (testingReqs: any): any => {
 // Returns numerical values only (no Ω suffix) - null when data unavailable
 const transformExpectedTests = (expectedTests: any): any => {
   if (!expectedTests) return null;
-  
+
   // Validate we have actual numerical data
-  const hasR1R2 = typeof expectedTests.r1r2?.at20C === 'number' || typeof expectedTests.r1r2?.at70C === 'number';
-  const hasZs = typeof expectedTests.zs?.expected === 'number' || typeof expectedTests.zs?.maxPermitted === 'number';
-  
+  const hasR1R2 =
+    typeof expectedTests.r1r2?.at20C === 'number' || typeof expectedTests.r1r2?.at70C === 'number';
+  const hasZs =
+    typeof expectedTests.zs?.expected === 'number' ||
+    typeof expectedTests.zs?.maxPermitted === 'number';
+
   if (!hasR1R2 && !hasZs) return null;
-  
+
   return {
     r1r2: {
-      at20C: typeof expectedTests.r1r2?.at20C === 'number' ? expectedTests.r1r2.at20C.toFixed(3) : null,
-      at70C: typeof expectedTests.r1r2?.at70C === 'number' ? expectedTests.r1r2.at70C.toFixed(3) : null,
-      calculation: expectedTests.r1r2?.value || null
+      at20C:
+        typeof expectedTests.r1r2?.at20C === 'number' ? expectedTests.r1r2.at20C.toFixed(3) : null,
+      at70C:
+        typeof expectedTests.r1r2?.at70C === 'number' ? expectedTests.r1r2.at70C.toFixed(3) : null,
+      calculation: expectedTests.r1r2?.value || null,
     },
     zs: {
-      calculated: typeof expectedTests.zs?.expected === 'number' ? expectedTests.zs.expected.toFixed(2) : null,
-      maxPermitted: typeof expectedTests.zs?.maxPermitted === 'number' ? expectedTests.zs.maxPermitted.toFixed(2) : null,
-      compliant: expectedTests.zs?.compliant ?? null
+      calculated:
+        typeof expectedTests.zs?.expected === 'number'
+          ? expectedTests.zs.expected.toFixed(2)
+          : null,
+      maxPermitted:
+        typeof expectedTests.zs?.maxPermitted === 'number'
+          ? expectedTests.zs.maxPermitted.toFixed(2)
+          : null,
+      compliant: expectedTests.zs?.compliant ?? null,
     },
     insulationResistance: {
       testVoltage: expectedTests.insulationResistance?.testVoltage || '500V DC',
-      minResistance: expectedTests.insulationResistance?.minResistance || '≥1.0MΩ'
+      minResistance: expectedTests.insulationResistance?.minResistance || '≥1.0MΩ',
     },
     polarity: 'Verify correct polarity at all terminations',
-    rcdTest: expectedTests.rcd ? {
-      at1x: `≤${expectedTests.rcd.maxTripTimeMs}ms @ ${expectedTests.rcd.ratingmA}mA`,
-      at5x: `≤40ms @ ${expectedTests.rcd.ratingmA * 5}mA`,
-      regulation: expectedTests.rcd.regulation || 'BS 7671 Reg 612.13.2'
-    } : null
+    rcdTest: expectedTests.rcd
+      ? {
+          at1x: `≤${expectedTests.rcd.maxTripTimeMs}ms @ ${expectedTests.rcd.ratingmA}mA`,
+          at5x: `≤40ms @ ${expectedTests.rcd.ratingmA * 5}mA`,
+          regulation: expectedTests.rcd.regulation || 'BS 7671 Reg 612.13.2',
+        }
+      : null,
   };
 };
 
@@ -201,16 +215,17 @@ const mapContextToWizardData = (contextData: any): Partial<DesignInputs> => {
     phases: contextData.phases || 'single',
     ze: contextData.ze || 0.35,
     earthingSystem: contextData.earthingSystem || 'TN-C-S',
-    circuits: contextData.circuits?.map((c: any) => ({
-      id: crypto.randomUUID(),
-      name: c.name || 'Imported Circuit',
-      loadType: c.loadType || 'general',
-      loadPower: c.loadPower || c.power,
-      cableLength: c.cableLength || c.length,
-      phases: c.phases || 'single',
-      specialLocation: c.specialLocation || 'none',
-      notes: c.notes || ''
-    })) || []
+    circuits:
+      contextData.circuits?.map((c: any) => ({
+        id: crypto.randomUUID(),
+        name: c.name || 'Imported Circuit',
+        loadType: c.loadType || 'general',
+        loadPower: c.loadPower || c.power,
+        cableLength: c.cableLength || c.length,
+        phases: c.phases || 'single',
+        specialLocation: c.specialLocation || 'none',
+        notes: c.notes || '',
+      })) || [],
   };
 };
 
@@ -248,16 +263,28 @@ export const AIInstallationDesigner = () => {
   const successToastShown = useRef(!!savedResultsState?.fromSavedResults);
   // State for context imported from other agents via AgentInbox
   const [importedContext, setImportedContext] = useState<ImportedAgentContext | null>(null);
-  const [wizardInitialData, setWizardInitialData] = useState<Partial<DesignInputs> | undefined>(undefined);
-  
+  const [wizardInitialData, setWizardInitialData] = useState<Partial<DesignInputs> | undefined>(
+    undefined
+  );
+
   // Use job polling hook (now includes installationGuidance and installationAgentStatus)
-  const { job, progress, status, currentStep, designData: jobDesignData, installationGuidance, installationAgentStatus, error } = useCircuitDesignGeneration(jobId);
+  const {
+    job,
+    progress,
+    status,
+    currentStep,
+    designData: jobDesignData,
+    installationGuidance,
+    installationAgentStatus,
+    error,
+  } = useCircuitDesignGeneration(jobId);
 
   const handleGenerate = async (inputs: DesignInputs) => {
     try {
       successToastShown.current = false; // Reset flag for new job
       // Store user request and circuit count for processing view
-      const userDescription = inputs.additionalPrompt || 
+      const userDescription =
+        inputs.additionalPrompt ||
         `${inputs.projectName} - ${inputs.circuits.length} circuit${inputs.circuits.length !== 1 ? 's' : ''}`;
       sessionStorage.setItem('design-user-request', userDescription);
       sessionStorage.setItem('design-total-circuits', String(inputs.circuits.length));
@@ -265,11 +292,9 @@ export const AIInstallationDesigner = () => {
       setTotalCircuits(inputs.circuits.length);
 
       // Count circuits that require AI processing
-      const aiRequiredCircuits = inputs.circuits.filter(c => {
-        const isComplex = 
-          (c.loadPower || 0) > 7200 || 
-          (c.cableLength || 0) > 100 || 
-          c.specialLocation !== 'none';
+      const aiRequiredCircuits = inputs.circuits.filter((c) => {
+        const isComplex =
+          (c.loadPower || 0) > 7200 || (c.cableLength || 0) > 100 || c.specialLocation !== 'none';
         return isComplex || !['socket', 'lighting'].includes(c.loadType || '');
       });
 
@@ -277,12 +302,12 @@ export const AIInstallationDesigner = () => {
       if (aiRequiredCircuits.length > 16) {
         toast.warning('Large design detected', {
           description: `${aiRequiredCircuits.length} complex circuits may take 3-5 minutes to process.`,
-          duration: 8000
+          duration: 8000,
         });
       }
 
       setCurrentView('processing');
-      
+
       // Create async job via job queue
       const { data, error } = await supabase.functions.invoke('create-circuit-design-job', {
         body: {
@@ -292,7 +317,7 @@ export const AIInstallationDesigner = () => {
             location: inputs.location || 'Not specified',
             clientName: inputs.clientName,
             electricianName: inputs.electricianName,
-            installationType: inputs.propertyType || 'domestic'
+            installationType: inputs.propertyType || 'domestic',
           },
           supply: {
             voltage: inputs.voltage || 230,
@@ -301,7 +326,7 @@ export const AIInstallationDesigner = () => {
             ze: inputs.ze || 0.35,
             earthingSystem: inputs.earthingSystem || 'TN-C-S',
             consumerUnitType: 'split-load',
-            mainSwitchRating: inputs.mainSwitchRating || 100
+            mainSwitchRating: inputs.mainSwitchRating || 100,
           },
           circuits: inputs.circuits || [],
           additionalPrompt: inputs.additionalPrompt || '',
@@ -309,14 +334,14 @@ export const AIInstallationDesigner = () => {
           installationConstraints: {
             ambientTemp: inputs.ambientTemp || 30,
             groupingFactor: inputs.groupingFactor || 1,
-            budget: inputs.budgetLevel || 'standard'
-          }
-        }
+            budget: inputs.budgetLevel || 'standard',
+          },
+        },
       });
 
       if (error) {
         toast.error('Failed to start design generation', {
-          description: error.message || 'Please try again'
+          description: error.message || 'Please try again',
         });
         setCurrentView('input');
         return;
@@ -325,11 +350,10 @@ export const AIInstallationDesigner = () => {
       // Start polling the job
       setJobId(data.jobId);
       console.log('🚀 Started circuit design job:', data.jobId);
-      
     } catch (error: any) {
       console.error('Design generation error:', error);
       toast.error('Design generation failed', {
-        description: error.message || 'Please try again'
+        description: error.message || 'Please try again',
       });
       setCurrentView('input');
     }
@@ -338,10 +362,11 @@ export const AIInstallationDesigner = () => {
   // Monitor job completion
   useEffect(() => {
     // Check if installation agent is ready (complete, failed, skipped, or timeout)
-    const guidanceReady = installationAgentStatus === 'complete' ||
-                          installationAgentStatus === 'failed' ||
-                          installationAgentStatus === 'skipped' ||
-                          installationAgentStatus === 'timeout';
+    const guidanceReady =
+      installationAgentStatus === 'complete' ||
+      installationAgentStatus === 'failed' ||
+      installationAgentStatus === 'skipped' ||
+      installationAgentStatus === 'timeout';
 
     // Debug logging for installation guidance
     console.log('📦 Installation guidance status:', {
@@ -349,21 +374,21 @@ export const AIInstallationDesigner = () => {
       agentStatus: installationAgentStatus,
       guidanceReady,
       keys: installationGuidance ? Object.keys(installationGuidance) : [],
-      sample: installationGuidance?.circuit_0 ? 'Has circuit_0' : 'No circuit_0'
+      sample: installationGuidance?.circuit_0 ? 'Has circuit_0' : 'No circuit_0',
     });
 
     if (status === 'complete' && jobDesignData && guidanceReady && !successToastShown.current) {
       console.log('✅ Job complete with guidance ready, processing results...');
-      
+
       // Extract project info from job inputs
       const jobInputs = (job as any)?.job_inputs;
-      
+
       const designWithMetadata = {
         circuits: jobDesignData.circuits.map((circuit: any, index: number) => {
           // Get circuit-specific guidance
           const circuitKey = `circuit_${index}`;
           const circuitGuidance = installationGuidance?.[circuitKey];
-          
+
           return {
             ...circuit,
             // Explicitly preserve all core fields
@@ -380,14 +405,14 @@ export const AIInstallationDesigner = () => {
             justifications: circuit.justifications,
             installationMethod: circuit.installationMethod || circuit.installMethod,
             // Format circuit-specific installation guidance for UI display
-            installationGuidance: circuitGuidance?.guidance ? 
-              formatInstallationGuidance(circuitGuidance.guidance) : 
-              undefined,
+            installationGuidance: circuitGuidance?.guidance
+              ? formatInstallationGuidance(circuitGuidance.guidance)
+              : undefined,
             // Pass structured guidance object for PDF consumption
             installationGuidanceStructured: circuitGuidance?.guidance || undefined,
             // Use backend expectedTests as primary source - NO text fallback
             // Only numerical values from expectedTests, null if unavailable
-            expectedTestResults: circuit.expectedTests 
+            expectedTestResults: circuit.expectedTests
               ? transformExpectedTests(circuit.expectedTests)
               : null,
             reasoning: circuit.reasoning,
@@ -397,35 +422,44 @@ export const AIInstallationDesigner = () => {
             // CRITICAL: Preserve expectedTests
             expectedTests: circuit.expectedTests,
             // CRITICAL: Deep clone structuredOutput to preserve all nested data
-            structuredOutput: circuit.structuredOutput ? {
-              atAGlanceSummary: circuit.structuredOutput.atAGlanceSummary ? {
-                loadKw: circuit.structuredOutput.atAGlanceSummary.loadKw,
-                loadIb: circuit.structuredOutput.atAGlanceSummary.loadIb,
-                cable: circuit.structuredOutput.atAGlanceSummary.cable,
-                protectiveDevice: circuit.structuredOutput.atAGlanceSummary.protectiveDevice,
-                voltageDrop: circuit.structuredOutput.atAGlanceSummary.voltageDrop,
-                zs: circuit.structuredOutput.atAGlanceSummary.zs,
-                complianceTick: circuit.structuredOutput.atAGlanceSummary.complianceTick,
-                notes: circuit.structuredOutput.atAGlanceSummary.notes
-              } : undefined,
-              sections: circuit.structuredOutput.sections
-            } : undefined
+            structuredOutput: circuit.structuredOutput
+              ? {
+                  atAGlanceSummary: circuit.structuredOutput.atAGlanceSummary
+                    ? {
+                        loadKw: circuit.structuredOutput.atAGlanceSummary.loadKw,
+                        loadIb: circuit.structuredOutput.atAGlanceSummary.loadIb,
+                        cable: circuit.structuredOutput.atAGlanceSummary.cable,
+                        protectiveDevice:
+                          circuit.structuredOutput.atAGlanceSummary.protectiveDevice,
+                        voltageDrop: circuit.structuredOutput.atAGlanceSummary.voltageDrop,
+                        zs: circuit.structuredOutput.atAGlanceSummary.zs,
+                        complianceTick: circuit.structuredOutput.atAGlanceSummary.complianceTick,
+                        notes: circuit.structuredOutput.atAGlanceSummary.notes,
+                      }
+                    : undefined,
+                  sections: circuit.structuredOutput.sections,
+                }
+              : undefined,
           };
         }),
         projectInfo: jobInputs?.projectInfo || {
           projectName: 'Untitled Project',
-          location: 'Not specified'
+          location: 'Not specified',
         },
         supply: jobInputs?.supply || {
           voltage: 230,
           phases: 'single',
           pfc: 16000,
           ze: 0.35,
-          earthingSystem: 'TN-C-S'
+          earthingSystem: 'TN-C-S',
         },
         // Transform supply into consumerUnit format with complete data mapping
         consumerUnit: {
-          type: (jobInputs?.supply?.consumerUnitType as 'split-load' | 'high-integrity' | 'main-switch') || 'split-load',
+          type:
+            (jobInputs?.supply?.consumerUnitType as
+              | 'split-load'
+              | 'high-integrity'
+              | 'main-switch') || 'split-load',
           mainSwitchRating: jobInputs?.supply?.mainSwitchRating || 100,
           ways: jobDesignData.circuits?.length || 0,
           incomingSupply: {
@@ -433,26 +467,38 @@ export const AIInstallationDesigner = () => {
             phases: (jobInputs?.supply?.phases as 'single' | 'three') || 'single',
             incomingPFC: jobInputs?.supply?.pfc || jobInputs?.supply?.pscc || 16,
             Ze: jobInputs?.supply?.ze || 0.35,
-            earthingSystem: (jobInputs?.supply?.earthingSystem || jobInputs?.supply?.earthing as 'TN-S' | 'TN-C-S' | 'TT') || 'TN-C-S'
-          }
+            earthingSystem:
+              jobInputs?.supply?.earthingSystem ||
+              (jobInputs?.supply?.earthing as 'TN-S' | 'TN-C-S' | 'TT') ||
+              'TN-C-S',
+          },
         },
         projectName: jobInputs?.projectInfo?.projectName || 'Untitled Project',
         location: jobInputs?.projectInfo?.location || 'Not specified',
         clientName: jobInputs?.projectInfo?.clientName,
         electricianName: jobInputs?.projectInfo?.electricianName,
-        installationType: (jobInputs?.projectInfo?.installationType as 'domestic' | 'commercial' | 'industrial') || 'domestic',
+        installationType:
+          (jobInputs?.projectInfo?.installationType as 'domestic' | 'commercial' | 'industrial') ||
+          'domestic',
         // ✅ Pass through diversity values from backend (Phase 4.9 synced values)
-        totalLoad: jobDesignData.totalLoad || jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0,
+        totalLoad:
+          jobDesignData.totalLoad ||
+          jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) ||
+          0,
         diversifiedLoad: jobDesignData.diversifiedLoad || 0,
         diversityFactor: jobDesignData.diversityFactor || 0.65,
         // ✅ Calculate Total Design Ib from all circuits
-        totalDesignCurrent: jobDesignData.circuits?.reduce((sum: number, c: any) => sum + (c.calculations?.Ib || c.designCurrent || 0), 0) || 0,
+        totalDesignCurrent:
+          jobDesignData.circuits?.reduce(
+            (sum: number, c: any) => sum + (c.calculations?.Ib || c.designCurrent || 0),
+            0
+          ) || 0,
         diversityBreakdown: jobDesignData.diversityBreakdown || {
           totalConnectedLoad: jobDesignData.totalLoad || 0,
           diversifiedLoad: jobDesignData.diversifiedLoad || 0,
           overallDiversityFactor: jobDesignData.diversityFactor || 0.65,
           byCategory: [],
-          reasoning: 'Calculated per BS 7671'
+          reasoning: 'Calculated per BS 7671',
         },
         diversityApplied: false,
         materials: [],
@@ -462,7 +508,7 @@ export const AIInstallationDesigner = () => {
         // CRITICAL: Pass validation state to frontend
         validationPassed: jobDesignData.validationPassed,
         validationIssues: jobDesignData.validationIssues || [],
-        autoFixSuggestions: jobDesignData.autoFixSuggestions || []
+        autoFixSuggestions: jobDesignData.autoFixSuggestions || [],
       };
 
       console.log('🔧 Design data mapped:', {
@@ -471,39 +517,39 @@ export const AIInstallationDesigner = () => {
         hasAtAGlance: !!designWithMetadata.circuits[0]?.structuredOutput?.atAGlanceSummary,
         hasExpectedTests: !!designWithMetadata.circuits[0]?.expectedTests,
         validationPassed: designWithMetadata.validationPassed,
-        issueCount: designWithMetadata.validationIssues.length
+        issueCount: designWithMetadata.validationIssues.length,
       });
 
       setDesignData(designWithMetadata);
       sessionStorage.setItem('circuit-design-data', JSON.stringify(designWithMetadata));
       setCurrentView('results');
-      
+
       const failedCount = jobDesignData.failedCircuits?.count || 0;
       const failedNames = jobDesignData.failedCircuits?.names || [];
       const cacheInfo = jobDesignData.fromCache ? ' (from cache)' : '';
       const autoFixInfo = jobDesignData.autoFixApplied ? ' (auto-fixed)' : '';
-      const validationInfo = !jobDesignData.validationPassed 
-        ? ` - ${jobDesignData.validationIssues?.length || 0} validation issue(s) found` 
+      const validationInfo = !jobDesignData.validationPassed
+        ? ` - ${jobDesignData.validationIssues?.length || 0} validation issue(s) found`
         : '';
-      
+
       if (failedCount > 0) {
         toast.warning(`${failedCount} circuit${failedCount !== 1 ? 's' : ''} failed to generate`, {
           description: `Completed: ${jobDesignData.circuits?.length || 0}. Failed: ${failedNames.join(', ')}`,
-          duration: 8000
+          duration: 8000,
         });
       } else {
         toast.success('Design generated successfully' + cacheInfo + autoFixInfo, {
-          description: `${jobDesignData.circuits?.length || 0} circuit${(jobDesignData.circuits?.length || 0) !== 1 ? 's' : ''} designed${validationInfo}`
+          description: `${jobDesignData.circuits?.length || 0} circuit${(jobDesignData.circuits?.length || 0) !== 1 ? 's' : ''} designed${validationInfo}`,
         });
       }
-      
+
       // Mark toast as shown
       successToastShown.current = true;
     }
-    
+
     if (status === 'failed' && error) {
       toast.error('Design generation failed', {
-        description: error || 'Please try again'
+        description: error || 'Please try again',
       });
       setCurrentView('input');
       setJobId(null);
@@ -526,7 +572,7 @@ export const AIInstallationDesigner = () => {
     if (jobId) {
       // Cancel the job
       await supabase.functions.invoke('cancel-circuit-design-job', {
-        body: { jobId }
+        body: { jobId },
       });
     }
     setCurrentView('input');
@@ -550,11 +596,11 @@ export const AIInstallationDesigner = () => {
         setImportedContext({
           contextData,
           instruction,
-          source: contextData.sourceAgent || contextData.projectName || 'another agent'
+          source: contextData.sourceAgent || contextData.projectName || 'another agent',
         });
 
         toast.success('Context loaded', {
-          description: 'Work forwarded from another agent. Click "Use Context" to populate form.'
+          description: 'Work forwarded from another agent. Click "Use Context" to populate form.',
         });
       } catch (error) {
         console.error('Failed to parse agent context:', error);
@@ -571,7 +617,7 @@ export const AIInstallationDesigner = () => {
       setImportedContext(null);
 
       toast.success('Form populated', {
-        description: `Imported ${mappedData.circuits?.length || 0} circuit(s) from ${importedContext.source}`
+        description: `Imported ${mappedData.circuits?.length || 0} circuit(s) from ${importedContext.source}`,
       });
     }
   };
@@ -583,10 +629,7 @@ export const AIInstallationDesigner = () => {
   return (
     <div className="space-y-4">
       {/* Agent Inbox */}
-      <AgentInbox
-        currentAgent="designer"
-        onTaskAccept={handleTaskAccept}
-      />
+      <AgentInbox currentAgent="designer" onTaskAccept={handleTaskAccept} />
 
       {/* Imported Context Banner - show when context is available and in input view */}
       <AnimatePresence>
@@ -609,15 +652,15 @@ export const AIInstallationDesigner = () => {
       )}
 
       {currentView === 'processing' && (
-        <DesignProcessingView 
-          progress={{ 
-            stage: getStageFromProgress(progress), 
+        <DesignProcessingView
+          progress={{
+            stage: getStageFromProgress(progress),
             percent: progress,
             message: currentStep || 'Processing...',
             designer_progress: job?.designer_progress || 0,
             designer_status: job?.designer_status || 'pending',
             installer_progress: job?.installer_progress || 0,
-            installer_status: job?.installer_status || 'pending'
+            installer_status: job?.installer_status || 'pending',
           }}
           userRequest={userRequest}
           totalCircuits={totalCircuits}
@@ -626,10 +669,7 @@ export const AIInstallationDesigner = () => {
       )}
 
       {currentView === 'results' && designData && (
-        <DesignReviewEditor 
-          design={designData}
-          onReset={handleRetry}
-        />
+        <DesignReviewEditor design={designData} onReset={handleRetry} />
       )}
     </div>
   );

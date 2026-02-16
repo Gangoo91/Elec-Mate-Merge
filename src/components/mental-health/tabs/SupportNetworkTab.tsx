@@ -1,91 +1,98 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Phone, Clock, Zap, ExternalLink, ChevronRight, MessageSquare, PhoneCall } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  Phone,
+  Clock,
+  Zap,
+  ExternalLink,
+  ChevronRight,
+  MessageSquare,
+  PhoneCall,
+} from 'lucide-react';
 
 const SupportNetworkTab = () => {
   // Quick contact cards data
   const quickContacts = [
     {
-      name: "Samaritans",
-      phone: "116123",
-      displayPhone: "116 123",
-      availability: "24/7, 365 days",
-      icon: PhoneCall
+      name: 'Samaritans',
+      phone: '116123',
+      displayPhone: '116 123',
+      availability: '24/7, 365 days',
+      icon: PhoneCall,
     },
     {
-      name: "Crisis Text Line",
-      phone: "85258",
-      displayPhone: "Text SHOUT to 85258",
-      availability: "24/7 text support",
+      name: 'Crisis Text Line',
+      phone: '85258',
+      displayPhone: 'Text SHOUT to 85258',
+      availability: '24/7 text support',
       icon: MessageSquare,
-      isSMS: true
+      isSMS: true,
     },
     {
-      name: "NHS 111",
-      phone: "111",
-      displayPhone: "111 (Option 2)",
-      availability: "24/7 mental health",
-      icon: Phone
+      name: 'NHS 111',
+      phone: '111',
+      displayPhone: '111 (Option 2)',
+      availability: '24/7 mental health',
+      icon: Phone,
     },
     {
-      name: "Mind",
-      phone: "03001233393",
-      displayPhone: "0300 123 3393",
-      availability: "Mon-Fri 9am-6pm",
-      icon: Phone
-    }
+      name: 'Mind',
+      phone: '03001233393',
+      displayPhone: '0300 123 3393',
+      availability: 'Mon-Fri 9am-6pm',
+      icon: Phone,
+    },
   ];
 
   // Industry-specific contacts
   const industryContacts = [
     {
-      name: "Electrical Industries Charity",
-      phone: "01895823726",
-      displayPhone: "01895 823 726",
-      description: "Comprehensive support for electrical sector workers and families"
+      name: 'Electrical Industries Charity',
+      phone: '01895823726',
+      displayPhone: '01895 823 726',
+      description: 'Comprehensive support for electrical sector workers and families',
     },
     {
-      name: "Mates in Mind",
-      phone: "02035105960",
-      displayPhone: "0203 510 5960",
-      description: "Mental health in construction and related industries"
+      name: 'Mates in Mind',
+      phone: '02035105960',
+      displayPhone: '0203 510 5960',
+      description: 'Mental health in construction and related industries',
     },
     {
-      name: "Lighthouse Charity",
-      phone: "03456051956",
-      displayPhone: "0345 605 1956",
-      description: "24/7 helpline for construction workers and families"
-    }
+      name: 'Lighthouse Charity',
+      phone: '03456051956',
+      displayPhone: '0345 605 1956',
+      description: '24/7 helpline for construction workers and families',
+    },
   ];
 
   // Online resources
   const onlineResources = [
     {
-      name: "NHS Talking Therapies",
-      url: "https://www.nhs.uk/mental-health/talking-therapies-medicine-treatments/talking-therapies-and-counselling/",
-      description: "Free psychological therapies on the NHS"
+      name: 'NHS Talking Therapies',
+      url: 'https://www.nhs.uk/mental-health/talking-therapies-medicine-treatments/talking-therapies-and-counselling/',
+      description: 'Free psychological therapies on the NHS',
     },
     {
       name: "Andy's Man Club",
-      url: "https://andysmanclub.co.uk",
-      description: "Free weekly peer support groups for men"
+      url: 'https://andysmanclub.co.uk',
+      description: 'Free weekly peer support groups for men',
     },
     {
-      name: "CALM (Campaign Against Living Miserably)",
-      url: "https://www.thecalmzone.net",
-      description: "Support for men in crisis"
+      name: 'CALM (Campaign Against Living Miserably)',
+      url: 'https://www.thecalmzone.net',
+      description: 'Support for men in crisis',
     },
     {
-      name: "Hub of Hope",
-      url: "https://hubofhope.co.uk",
-      description: "Find local mental health services"
+      name: 'Hub of Hope',
+      url: 'https://hubofhope.co.uk',
+      description: 'Find local mental health services',
     },
     {
-      name: "Mental Health Mates",
-      url: "https://mentalhealthmates.co.uk",
-      description: "Peer support walks and communities"
-    }
+      name: 'Mental Health Mates',
+      url: 'https://mentalhealthmates.co.uk',
+      description: 'Peer support walks and communities',
+    },
   ];
 
   return (
@@ -99,7 +106,9 @@ const SupportNetworkTab = () => {
             </div>
             <div className="flex-1">
               <h3 className="text-xl font-bold text-white mb-1">In Crisis?</h3>
-              <p className="text-sm text-white">Talk to someone now - free, confidential support 24/7</p>
+              <p className="text-sm text-white">
+                Talk to someone now - free, confidential support 24/7
+              </p>
             </div>
           </div>
           <a href="tel:116123" className="block w-full mt-4">
@@ -153,7 +162,10 @@ const SupportNetworkTab = () => {
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-white text-sm mb-1">{contact.name}</h3>
                   <p className="text-sm text-white mb-2">{contact.description}</p>
-                  <a href={`tel:${contact.phone}`} className="inline-flex items-center gap-2 text-amber-300 font-medium hover:text-amber-200">
+                  <a
+                    href={`tel:${contact.phone}`}
+                    className="inline-flex items-center gap-2 text-amber-300 font-medium hover:text-amber-200"
+                  >
                     <Phone className="h-4 w-4" />
                     <span className="text-sm">{contact.displayPhone}</span>
                   </a>
@@ -197,7 +209,8 @@ const SupportNetworkTab = () => {
       <Card className="border-blue-500/20 bg-blue-500/10">
         <CardContent className="p-4">
           <p className="text-sm text-white text-center">
-            All services listed are free and confidential. Don't hesitate to reach out - help is available.
+            All services listed are free and confidential. Don't hesitate to reach out - help is
+            available.
           </p>
         </CardContent>
       </Card>

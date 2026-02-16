@@ -1,13 +1,12 @@
-
 import { CheckCircle, Eye } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const AccessibilityTakeaways = () => {
   const takeaways = [
-    "All test points and equipment must be safely accessible",
-    "Poor access or missing labels = incomplete inspection = legal risk",
+    'All test points and equipment must be safely accessible',
+    'Poor access or missing labels = incomplete inspection = legal risk',
     "Labelling is not optional—it's a compliance requirement under BS 7671",
-    "Always note limitations and raise issues with the client before proceeding"
+    'Always note limitations and raise issues with the client before proceeding',
   ];
 
   return (
@@ -23,7 +22,9 @@ export const AccessibilityTakeaways = () => {
           {takeaways.map((takeaway, index) => (
             <li key={index} className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-foreground text-base sm:text-lg leading-relaxed">{takeaway}</span>
+              <span className="text-foreground text-base sm:text-lg leading-relaxed">
+                {takeaway}
+              </span>
             </li>
           ))}
         </ul>

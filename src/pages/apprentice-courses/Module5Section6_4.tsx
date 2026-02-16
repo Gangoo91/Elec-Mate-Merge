@@ -1,193 +1,200 @@
-import { ArrowLeft, ArrowRight, MessageCircle, Target, CheckCircle2, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, MessageCircle, Target, CheckCircle2, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is a common cause of misunderstandings on site?",
+    question: 'What is a common cause of misunderstandings on site?',
     options: [
-      "Poorly explained instructions",
-      "Good teamwork",
-      "Clear drawings",
-      "Proper planning"
+      'Poorly explained instructions',
+      'Good teamwork',
+      'Clear drawings',
+      'Proper planning',
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
   },
   {
     id: 2,
-    question: "Give two signs that a misunderstanding may have occurred.",
+    question: 'Give two signs that a misunderstanding may have occurred.',
     options: [
-      "Fast work completion and happy workers",
-      "Confused expressions and work done incorrectly",
-      "Clear instructions and good progress",
-      "Quiet site and efficient work"
+      'Fast work completion and happy workers',
+      'Confused expressions and work done incorrectly',
+      'Clear instructions and good progress',
+      'Quiet site and efficient work',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 3,
-    question: "What should you do if you are unsure of an instruction?",
+    question: 'What should you do if you are unsure of an instruction?',
     options: [
-      "Guess what is meant",
-      "Stop and ask for clarification immediately",
-      "Continue working and hope for the best",
-      "Ask a colleague to guess"
+      'Guess what is meant',
+      'Stop and ask for clarification immediately',
+      'Continue working and hope for the best',
+      'Ask a colleague to guess',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 4,
     question: "Explain the 'Repeat Back' method.",
     options: [
-      "Saying instructions louder",
-      "Summarising instructions back to the supervisor to confirm accuracy",
-      "Writing down everything said",
-      "Asking someone else to repeat"
+      'Saying instructions louder',
+      'Summarising instructions back to the supervisor to confirm accuracy',
+      'Writing down everything said',
+      'Asking someone else to repeat',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 5,
-    question: "Why is it important to clarify conflicting instructions?",
+    question: 'Why is it important to clarify conflicting instructions?',
     options: [
-      "To waste time",
-      "To avoid mistakes and ensure the correct task is carried out",
-      "To show off knowledge",
-      "To create more confusion"
+      'To waste time',
+      'To avoid mistakes and ensure the correct task is carried out',
+      'To show off knowledge',
+      'To create more confusion',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 6,
-    question: "What resource should you refer to if instructions are unclear?",
+    question: 'What resource should you refer to if instructions are unclear?',
     options: [
-      "Social media",
-      "Site drawings, specifications, or BS 7671 regulations",
-      "Personal opinion",
-      "Previous job experience only"
+      'Social media',
+      'Site drawings, specifications, or BS 7671 regulations',
+      'Personal opinion',
+      'Previous job experience only',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 7,
-    question: "How can clarification improve teamwork?",
+    question: 'How can clarification improve teamwork?',
     options: [
-      "It creates more work",
-      "It builds trust and ensures everyone works to the same standard",
-      "It slows down progress",
-      "It causes arguments"
+      'It creates more work',
+      'It builds trust and ensures everyone works to the same standard',
+      'It slows down progress',
+      'It causes arguments',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 8,
-    question: "True or False: Asking questions shows you are inexperienced.",
+    question: 'True or False: Asking questions shows you are inexperienced.',
     options: [
-      "True - it shows weakness",
-      "False — it shows professionalism and commitment to safety",
-      "True - experienced workers never ask questions",
-      "False - but only if asked quietly"
+      'True - it shows weakness',
+      'False — it shows professionalism and commitment to safety',
+      'True - experienced workers never ask questions',
+      'False - but only if asked quietly',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 9,
-    question: "What is the risk of not asking for clarification?",
+    question: 'What is the risk of not asking for clarification?',
     options: [
-      "Nothing happens",
-      "Errors, rework, delays, and possible safety hazards",
-      "Work gets completed faster",
-      "Supervisors are impressed"
+      'Nothing happens',
+      'Errors, rework, delays, and possible safety hazards',
+      'Work gets completed faster',
+      'Supervisors are impressed',
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
   },
   {
     id: 10,
     question: "What should you do if technical jargon is used and you don't understand it?",
     options: [
-      "Pretend to understand",
-      "Ask for simpler terms or request to see a drawing",
-      "Ignore it completely",
-      "Ask a random colleague"
+      'Pretend to understand',
+      'Ask for simpler terms or request to see a drawing',
+      'Ignore it completely',
+      'Ask a random colleague',
     ],
-    correctAnswer: 1
-  }
+    correctAnswer: 1,
+  },
 ];
 
 const quickCheckQuestions = [
   {
-    id: "clarify1",
-    question: "What should you do if you receive unclear instructions?",
+    id: 'clarify1',
+    question: 'What should you do if you receive unclear instructions?',
     options: [
-      "Guess what is meant and start working",
-      "Ask for clarification immediately before starting work",
-      "Wait until you make a mistake then ask",
-      "Ask a colleague to interpret"
+      'Guess what is meant and start working',
+      'Ask for clarification immediately before starting work',
+      'Wait until you make a mistake then ask',
+      'Ask a colleague to interpret',
     ],
     correctIndex: 1,
-    explanation: "Always ask for clarification immediately if instructions are unclear. Guessing can lead to errors, rework, and potential safety hazards."
+    explanation:
+      'Always ask for clarification immediately if instructions are unclear. Guessing can lead to errors, rework, and potential safety hazards.',
   },
   {
-    id: "clarify2",
+    id: 'clarify2',
     question: "What is the 'Repeat Back' method?",
     options: [
-      "Repeating instructions word for word",
-      "Summarising instructions back to confirm understanding",
-      "Writing down every instruction",
-      "Asking someone else to repeat instructions"
+      'Repeating instructions word for word',
+      'Summarising instructions back to confirm understanding',
+      'Writing down every instruction',
+      'Asking someone else to repeat instructions',
     ],
     correctIndex: 1,
-    explanation: "The 'Repeat Back' method involves summarising instructions in your own words to confirm you've understood correctly, helping prevent misunderstandings."
+    explanation:
+      "The 'Repeat Back' method involves summarising instructions in your own words to confirm you've understood correctly, helping prevent misunderstandings.",
   },
   {
-    id: "clarify3",
-    question: "How should you respond if two supervisors give conflicting instructions?",
+    id: 'clarify3',
+    question: 'How should you respond if two supervisors give conflicting instructions?',
     options: [
-      "Follow the first instruction received",
-      "Politely explain the conflict and ask which should take priority",
-      "Ignore both instructions",
-      "Choose the easier instruction to follow"
+      'Follow the first instruction received',
+      'Politely explain the conflict and ask which should take priority',
+      'Ignore both instructions',
+      'Choose the easier instruction to follow',
     ],
     correctIndex: 1,
-    explanation: "When instructions conflict, politely bring this to attention and ask for clarification on which takes priority to avoid mistakes and confusion."
+    explanation:
+      'When instructions conflict, politely bring this to attention and ask for clarification on which takes priority to avoid mistakes and confusion.',
   },
   {
-    id: "clarify4",
-    question: "Why is it professional to ask questions when unsure?",
+    id: 'clarify4',
+    question: 'Why is it professional to ask questions when unsure?',
     options: [
       "It shows you're not paying attention",
-      "It demonstrates commitment to doing the job correctly and safely",
+      'It demonstrates commitment to doing the job correctly and safely',
       "It proves you're inexperienced",
-      "It wastes everyone's time"
+      "It wastes everyone's time",
     ],
     correctIndex: 1,
-    explanation: "Asking questions when unsure shows professionalism, commitment to safety, and ensures work is done correctly the first time."
-  }
+    explanation:
+      'Asking questions when unsure shows professionalism, commitment to safety, and ensures work is done correctly the first time.',
+  },
 ];
 
 const Module5Section6_4 = () => {
   useSEO(
-    "Resolving Misunderstandings and Asking for Clarification | Electrical Training",
-    "Learn how to spot and resolve misunderstandings and effectively ask for clarification in electrical work to ensure safety and accuracy."
+    'Resolving Misunderstandings and Asking for Clarification | Electrical Training',
+    'Learn how to spot and resolve misunderstandings and effectively ask for clarification in electrical work to ensure safety and accuracy.'
   );
 
   const faqs = [
     {
       question: "Won't asking questions make me look inexperienced?",
-      answer: "No — asking questions shows professionalism and a commitment to safety. Experienced professionals always clarify when unsure."
+      answer:
+        'No — asking questions shows professionalism and a commitment to safety. Experienced professionals always clarify when unsure.',
     },
     {
-      question: "What if two supervisors give conflicting instructions?",
-      answer: "Politely explain the conflict and ask which instruction should take priority. This prevents mistakes and shows good communication skills."
+      question: 'What if two supervisors give conflicting instructions?',
+      answer:
+        'Politely explain the conflict and ask which instruction should take priority. This prevents mistakes and shows good communication skills.',
     },
     {
       question: "How do I clarify something if I don't understand technical jargon?",
-      answer: "Ask for it to be explained in simpler terms or request to see a drawing. Most supervisors appreciate when workers ensure they understand correctly."
-    }
+      answer:
+        'Ask for it to be explained in simpler terms or request to see a drawing. Most supervisors appreciate when workers ensure they understand correctly.',
+    },
   ];
 
   return (
@@ -245,9 +252,15 @@ const Module5Section6_4 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li><strong>Spot:</strong> Confused expressions or hesitation from colleagues</li>
-                  <li><strong>Use:</strong> "Repeat Back" method for confirmation</li>
-                  <li><strong>Check:</strong> Against drawings and specifications when uncertain</li>
+                  <li>
+                    <strong>Spot:</strong> Confused expressions or hesitation from colleagues
+                  </li>
+                  <li>
+                    <strong>Use:</strong> "Repeat Back" method for confirmation
+                  </li>
+                  <li>
+                    <strong>Check:</strong> Against drawings and specifications when uncertain
+                  </li>
                 </ul>
               </div>
             </div>
@@ -266,7 +279,9 @@ const Module5Section6_4 = () => {
               <li>Recognise signs of miscommunication on site</li>
               <li>Use effective techniques to ask for clarification</li>
               <li>Apply strategies to resolve misunderstandings quickly</li>
-              <li>Appreciate the importance of clear communication to prevent errors and accidents</li>
+              <li>
+                Appreciate the importance of clear communication to prevent errors and accidents
+              </li>
             </ul>
           </section>
 
@@ -277,7 +292,8 @@ const Module5Section6_4 = () => {
               Causes of Misunderstandings
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              On construction sites, communication breakdowns can happen easily. Understanding the common causes helps prevent them:
+              On construction sites, communication breakdowns can happen easily. Understanding the
+              common causes helps prevent them:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
@@ -357,7 +373,10 @@ const Module5Section6_4 = () => {
                 <p className="font-medium text-white mb-2">The "Repeat Back" Method:</p>
                 <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
                   <li>Summarise instructions in your own words for confirmation</li>
-                  <li>Example: "Just to confirm, you want this conduit run along the ceiling and dropped into the riser?"</li>
+                  <li>
+                    Example: "Just to confirm, you want this conduit run along the ceiling and
+                    dropped into the riser?"
+                  </li>
                   <li>Helps identify misunderstandings before work begins</li>
                   <li>Shows active listening and professionalism</li>
                 </ul>
@@ -434,7 +453,8 @@ const Module5Section6_4 = () => {
               Benefits of Clarification
             </h2>
             <p className="text-white/80 mb-4 leading-relaxed">
-              Effective clarification provides multiple benefits for individuals, teams, and projects:
+              Effective clarification provides multiple benefits for individuals, teams, and
+              projects:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
@@ -476,15 +496,39 @@ const Module5Section6_4 = () => {
               Practical Guidance
             </h2>
             <div className="space-y-4 text-white/80 leading-relaxed">
-              <p><strong className="text-white">If instructions are unclear, always ask immediately rather than guessing.</strong> Guessing can lead to costly errors and safety risks.</p>
+              <p>
+                <strong className="text-white">
+                  If instructions are unclear, always ask immediately rather than guessing.
+                </strong>{' '}
+                Guessing can lead to costly errors and safety risks.
+              </p>
 
-              <p><strong className="text-white">Use the "Repeat Back" method:</strong> summarise instructions to confirm understanding. For example: "So you want me to install three sockets on this wall, with the cables run behind the plasterboard?"</p>
+              <p>
+                <strong className="text-white">Use the "Repeat Back" method:</strong> summarise
+                instructions to confirm understanding. For example: "So you want me to install three
+                sockets on this wall, with the cables run behind the plasterboard?"
+              </p>
 
-              <p><strong className="text-white">Keep questions short, clear, and specific.</strong> Instead of "I don't understand," ask "Could you show me exactly where this cable should terminate?"</p>
+              <p>
+                <strong className="text-white">Keep questions short, clear, and specific.</strong>{' '}
+                Instead of "I don't understand," ask "Could you show me exactly where this cable
+                should terminate?"
+              </p>
 
-              <p><strong className="text-white">Avoid blaming language — focus on the task, not the person.</strong> Say "Could you clarify the connection sequence?" rather than "You didn't explain this properly."</p>
+              <p>
+                <strong className="text-white">
+                  Avoid blaming language — focus on the task, not the person.
+                </strong>{' '}
+                Say "Could you clarify the connection sequence?" rather than "You didn't explain
+                this properly."
+              </p>
 
-              <p><strong className="text-white">When in doubt, check against drawings or the BS 7671 Wiring Regulations.</strong> These provide authoritative guidance when verbal instructions are unclear.</p>
+              <p>
+                <strong className="text-white">
+                  When in doubt, check against drawings or the BS 7671 Wiring Regulations.
+                </strong>{' '}
+                These provide authoritative guidance when verbal instructions are unclear.
+              </p>
             </div>
           </section>
 
@@ -498,13 +542,19 @@ const Module5Section6_4 = () => {
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h3 className="font-semibold text-red-400 mb-2">Communication Breakdown</h3>
                 <p className="text-white/80 text-sm leading-relaxed">
-                  An apprentice is told to "terminate the cable in the distribution board." He assumes this means connecting it to the main switch, but the supervisor intended it to be connected to an outgoing circuit breaker. Because he didn't clarify, the result was a wasted hour of rework and an unnecessary safety risk.
+                  An apprentice is told to "terminate the cable in the distribution board." He
+                  assumes this means connecting it to the main switch, but the supervisor intended
+                  it to be connected to an outgoing circuit breaker. Because he didn't clarify, the
+                  result was a wasted hour of rework and an unnecessary safety risk.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <h3 className="font-semibold text-green-400 mb-2">Successful Resolution</h3>
                 <p className="text-white/80 text-sm leading-relaxed">
-                  By simply repeating back the instruction for confirmation - "Just to confirm, you want me to connect this cable to the main switch in the board?" - the mistake would have been avoided. The supervisor could then clarify: "No, connect it to the spare MCB in position 6."
+                  By simply repeating back the instruction for confirmation - "Just to confirm, you
+                  want me to connect this cable to the main switch in the board?" - the mistake
+                  would have been avoided. The supervisor could then clarify: "No, connect it to the
+                  spare MCB in position 6."
                 </p>
               </div>
             </div>
@@ -518,7 +568,10 @@ const Module5Section6_4 = () => {
             </h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
+                >
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
                   <p className="text-white/80 text-sm">A: {faq.answer}</p>
                 </div>
@@ -569,12 +622,17 @@ const Module5Section6_4 = () => {
               <li>Common causes and signs of misunderstandings on construction sites</li>
               <li>Effective ways to ask for clarification professionally and politely</li>
               <li>Strategies to resolve confusion quickly and safely before errors occur</li>
-              <li>Why clarification is vital for saving time, avoiding rework, and ensuring safety</li>
+              <li>
+                Why clarification is vital for saving time, avoiding rework, and ensuring safety
+              </li>
             </ul>
           </section>
 
           {/* Quiz */}
-          <Quiz questions={quizQuestions} title="Test Your Knowledge: Resolving Misunderstandings" />
+          <Quiz
+            questions={quizQuestions}
+            title="Test Your Knowledge: Resolving Misunderstandings"
+          />
 
           {/* Navigation */}
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">

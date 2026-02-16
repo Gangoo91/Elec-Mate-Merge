@@ -7,14 +7,10 @@ const MinimumDbmQuickCheck = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
 
-  const question = "What is the minimum recommended Wi-Fi signal strength (in dBm) for reliable operation?";
-  const options = [
-    "-90 dBm",
-    "-75 dBm", 
-    "-65 dBm",
-    "-50 dBm"
-  ];
-  const correctAnswer = "-65 dBm";
+  const question =
+    'What is the minimum recommended Wi-Fi signal strength (in dBm) for reliable operation?';
+  const options = ['-90 dBm', '-75 dBm', '-65 dBm', '-50 dBm'];
+  const correctAnswer = '-65 dBm';
 
   const handleSubmit = () => {
     setShowAnswer(true);
@@ -32,7 +28,7 @@ const MinimumDbmQuickCheck = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-gray-300 font-medium">{question}</p>
-        
+
         <div className="space-y-2">
           {options.map((option, index) => (
             <button
@@ -44,11 +40,11 @@ const MinimumDbmQuickCheck = () => {
                   ? option === correctAnswer
                     ? 'bg-green-600/20 border-green-600 text-green-100'
                     : option === selectedAnswer && !isCorrect
-                    ? 'bg-red-600/20 border-red-600 text-red-100'
-                    : 'border-gray-600 text-gray-400'
+                      ? 'bg-red-600/20 border-red-600 text-red-100'
+                      : 'border-gray-600 text-gray-400'
                   : selectedAnswer === option
-                  ? 'bg-blue-600/20 border-blue-600 text-blue-100'
-                  : 'border-gray-600 text-gray-300 hover:bg-gray-700'
+                    ? 'bg-blue-600/20 border-blue-600 text-blue-100'
+                    : 'border-gray-600 text-gray-300 hover:bg-gray-700'
               }`}
             >
               {option}
@@ -63,11 +59,11 @@ const MinimumDbmQuickCheck = () => {
         )}
 
         {showAnswer && (
-          <div className={`p-3 rounded-md border ${
-            isCorrect 
-              ? 'bg-green-600/10 border-green-600/30' 
-              : 'bg-red-600/10 border-red-600/30'
-          }`}>
+          <div
+            className={`p-3 rounded-md border ${
+              isCorrect ? 'bg-green-600/10 border-green-600/30' : 'bg-red-600/10 border-red-600/30'
+            }`}
+          >
             <div className="flex items-center gap-2 mb-2">
               {isCorrect ? (
                 <CheckCircle className="h-4 w-4 text-green-400" />
@@ -79,7 +75,9 @@ const MinimumDbmQuickCheck = () => {
               </span>
             </div>
             <p className="text-gray-300 text-sm">
-              -65 dBm or stronger is the recommended minimum for reliable Wi-Fi operation. Remember, dBm values are negative, so -50 dBm is stronger than -70 dBm. Critical devices like security systems should have -50 dBm or better.
+              -65 dBm or stronger is the recommended minimum for reliable Wi-Fi operation. Remember,
+              dBm values are negative, so -50 dBm is stronger than -70 dBm. Critical devices like
+              security systems should have -50 dBm or better.
             </p>
           </div>
         )}

@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Briefcase,
   Users,
@@ -11,17 +11,17 @@ import {
   ChevronDown,
   CheckSquare,
   Square,
-} from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+} from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   Sheet,
   SheetContent,
@@ -29,49 +29,69 @@ import {
   SheetTitle,
   SheetDescription,
   SheetFooter,
-} from "@/components/ui/sheet";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/sheet';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 // Import new premium components
-import { VacanciesHeroCard } from "@/components/employer/vacancies/VacanciesHeroCard";
-import { PremiumVacancyCard } from "@/components/employer/vacancies/PremiumVacancyCard";
-import { PremiumCandidateCard } from "@/components/employer/vacancies/PremiumCandidateCard";
-import { VacancyFilterPills, candidateStatusColors, elecIdTierColors } from "@/components/employer/vacancies/VacancyFilterPills";
-import { PremiumTabs } from "@/components/employer/vacancies/PremiumTabs";
-import { ConversationList } from "@/components/employer/vacancies/ConversationList";
-import { ChatView } from "@/components/employer/messaging/ChatView";
-import { VacancyFormWizard } from "@/components/employer/vacancy-form/VacancyFormWizard";
-import { BulkActionBar } from "@/components/employer/vacancies/BulkActionBar";
+import { VacanciesHeroCard } from '@/components/employer/vacancies/VacanciesHeroCard';
+import { PremiumVacancyCard } from '@/components/employer/vacancies/PremiumVacancyCard';
+import { PremiumCandidateCard } from '@/components/employer/vacancies/PremiumCandidateCard';
+import {
+  VacancyFilterPills,
+  candidateStatusColors,
+  elecIdTierColors,
+} from '@/components/employer/vacancies/VacancyFilterPills';
+import { PremiumTabs } from '@/components/employer/vacancies/PremiumTabs';
+import { ConversationList } from '@/components/employer/vacancies/ConversationList';
+import { ChatView } from '@/components/employer/messaging/ChatView';
+import { VacancyFormWizard } from '@/components/employer/vacancy-form/VacancyFormWizard';
+import { BulkActionBar } from '@/components/employer/vacancies/BulkActionBar';
 
 // Hooks
-import { useVacancies, useToggleVacancyStatus } from "@/hooks/useVacancies";
-import { useVacancyApplications, useUpdateApplicationStatus, useBulkUpdateApplicationStatus } from "@/hooks/useVacancyApplications";
-import { useConversations } from "@/hooks/useConversations";
-import { useEmployer } from "@/contexts/EmployerContext";
-import { toast } from "@/hooks/use-toast";
+import { useVacancies, useToggleVacancyStatus } from '@/hooks/useVacancies';
+import {
+  useVacancyApplications,
+  useUpdateApplicationStatus,
+  useBulkUpdateApplicationStatus,
+} from '@/hooks/useVacancyApplications';
+import { useConversations } from '@/hooks/useConversations';
+import { useEmployer } from '@/contexts/EmployerContext';
+import { toast } from '@/hooks/use-toast';
 
 // Types
-import { Vacancy, VacancyApplication } from "@/services/vacancyService";
-import type { Conversation } from "@/services/conversationService";
+import { Vacancy, VacancyApplication } from '@/services/vacancyService';
+import type { Conversation } from '@/services/conversationService';
 
-type StatusFilter = "all" | "New" | "Reviewing" | "Shortlisted" | "Interviewed" | "Offered" | "Hired" | "Rejected";
-type TierFilter = "all" | "basic" | "verified" | "premium";
-type SortOption = "date-desc" | "date-asc" | "name";
+type StatusFilter =
+  | 'all'
+  | 'New'
+  | 'Reviewing'
+  | 'Shortlisted'
+  | 'Interviewed'
+  | 'Offered'
+  | 'Hired'
+  | 'Rejected';
+type TierFilter = 'all' | 'basic' | 'verified' | 'premium';
+type SortOption = 'date-desc' | 'date-asc' | 'name';
 
 export function JobVacanciesSection() {
   // Data hooks
   const { data: vacancies = [], isLoading: vacanciesLoading } = useVacancies();
   const { data: applications = [], isLoading: applicationsLoading } = useVacancyApplications();
-  const { data: conversations = [], isLoading: conversationsLoading, totalUnread } = useConversations();
+  const {
+    data: conversations = [],
+    isLoading: conversationsLoading,
+    totalUnread,
+  } = useConversations();
   const toggleVacancyStatus = useToggleVacancyStatus();
   const updateApplicationStatus = useUpdateApplicationStatus();
   const bulkUpdateStatus = useBulkUpdateApplicationStatus();
   const { employer } = useEmployer();
 
   // UI State
-  const [activeTab, setActiveTab] = useState("vacancies");
+  const [activeTab, setActiveTab] = useState('vacancies');
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const [editingVacancy, setEditingVacancy] = useState<Vacancy | null>(null);
   const [duplicatingVacancy, setDuplicatingVacancy] = useState<Vacancy | null>(null);
@@ -83,36 +103,36 @@ export function JobVacanciesSection() {
   const [selectedApplicants, setSelectedApplicants] = useState<Set<string>>(new Set());
 
   // Filter and sort state
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
-  const [tierFilter, setTierFilter] = useState<TierFilter>("all");
-  const [vacancyFilter, setVacancyFilter] = useState<string>("all");
-  const [sortBy, setSortBy] = useState<SortOption>("date-desc");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  const [tierFilter, setTierFilter] = useState<TierFilter>('all');
+  const [vacancyFilter, setVacancyFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<SortOption>('date-desc');
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Calculate stats
   const totalApplicants = applications.length;
-  const newApplicants = applications.filter((a) => a.status === "New").length;
-  const openVacancies = vacancies.filter((v) => v.status === "Open").length;
-  const shortlistedCount = applications.filter((a) => a.status === "Shortlisted").length;
-  const hiredCount = applications.filter((a) => a.status === "Hired").length;
+  const newApplicants = applications.filter((a) => a.status === 'New').length;
+  const openVacancies = vacancies.filter((v) => v.status === 'Open').length;
+  const shortlistedCount = applications.filter((a) => a.status === 'Shortlisted').length;
+  const hiredCount = applications.filter((a) => a.status === 'Hired').length;
   const fillRate = totalApplicants > 0 ? Math.round((hiredCount / totalApplicants) * 100) : 0;
 
   // Filtered and sorted applications
   const filteredApplications = useMemo(() => {
     let filtered = [...applications];
 
-    if (statusFilter !== "all") {
+    if (statusFilter !== 'all') {
       filtered = filtered.filter((a) => a.status === statusFilter);
     }
 
-    if (tierFilter !== "all") {
+    if (tierFilter !== 'all') {
       filtered = filtered.filter((a) => {
         const tier = a.elec_id_profile?.verification_tier;
         return tier === tierFilter;
       });
     }
 
-    if (vacancyFilter !== "all") {
+    if (vacancyFilter !== 'all') {
       filtered = filtered.filter((a) => a.vacancy_id === vacancyFilter);
     }
 
@@ -127,11 +147,11 @@ export function JobVacanciesSection() {
 
     filtered.sort((a, b) => {
       switch (sortBy) {
-        case "date-desc":
+        case 'date-desc':
           return new Date(b.applied_at).getTime() - new Date(a.applied_at).getTime();
-        case "date-asc":
+        case 'date-asc':
           return new Date(a.applied_at).getTime() - new Date(b.applied_at).getTime();
-        case "name":
+        case 'name':
           return a.applicant_name.localeCompare(b.applicant_name);
         default:
           return 0;
@@ -146,40 +166,90 @@ export function JobVacanciesSection() {
 
   // Status filter options with colors
   const statusFilterOptions = [
-    { value: "all" as const, label: "All", count: applications.length, color: candidateStatusColors.all },
-    { value: "New" as const, label: "New", count: newApplicants, color: candidateStatusColors.New },
-    { value: "Reviewing" as const, label: "Reviewing", count: applications.filter((a) => a.status === "Reviewing").length, color: candidateStatusColors.Reviewing },
-    { value: "Shortlisted" as const, label: "Shortlisted", count: shortlistedCount, color: candidateStatusColors.Shortlisted },
-    { value: "Interviewed" as const, label: "Interview", count: applications.filter((a) => a.status === "Interviewed").length, color: candidateStatusColors.Interviewed },
-    { value: "Offered" as const, label: "Offered", count: applications.filter((a) => a.status === "Offered").length, color: candidateStatusColors.Offered },
-    { value: "Rejected" as const, label: "Rejected", count: applications.filter((a) => a.status === "Rejected").length, color: candidateStatusColors.Rejected },
+    {
+      value: 'all' as const,
+      label: 'All',
+      count: applications.length,
+      color: candidateStatusColors.all,
+    },
+    { value: 'New' as const, label: 'New', count: newApplicants, color: candidateStatusColors.New },
+    {
+      value: 'Reviewing' as const,
+      label: 'Reviewing',
+      count: applications.filter((a) => a.status === 'Reviewing').length,
+      color: candidateStatusColors.Reviewing,
+    },
+    {
+      value: 'Shortlisted' as const,
+      label: 'Shortlisted',
+      count: shortlistedCount,
+      color: candidateStatusColors.Shortlisted,
+    },
+    {
+      value: 'Interviewed' as const,
+      label: 'Interview',
+      count: applications.filter((a) => a.status === 'Interviewed').length,
+      color: candidateStatusColors.Interviewed,
+    },
+    {
+      value: 'Offered' as const,
+      label: 'Offered',
+      count: applications.filter((a) => a.status === 'Offered').length,
+      color: candidateStatusColors.Offered,
+    },
+    {
+      value: 'Rejected' as const,
+      label: 'Rejected',
+      count: applications.filter((a) => a.status === 'Rejected').length,
+      color: candidateStatusColors.Rejected,
+    },
   ];
 
   // Elec-ID tier filter options
   const tierFilterOptions = [
-    { value: "all" as const, label: "All Tiers", count: applications.length, color: elecIdTierColors.all },
-    { value: "premium" as const, label: "Premium", count: applications.filter((a) => a.elec_id_profile?.verification_tier === "premium").length, color: elecIdTierColors.premium },
-    { value: "verified" as const, label: "Verified", count: applications.filter((a) => a.elec_id_profile?.verification_tier === "verified").length, color: elecIdTierColors.verified },
-    { value: "basic" as const, label: "Basic", count: applications.filter((a) => a.elec_id_profile?.verification_tier === "basic").length, color: elecIdTierColors.basic },
+    {
+      value: 'all' as const,
+      label: 'All Tiers',
+      count: applications.length,
+      color: elecIdTierColors.all,
+    },
+    {
+      value: 'premium' as const,
+      label: 'Premium',
+      count: applications.filter((a) => a.elec_id_profile?.verification_tier === 'premium').length,
+      color: elecIdTierColors.premium,
+    },
+    {
+      value: 'verified' as const,
+      label: 'Verified',
+      count: applications.filter((a) => a.elec_id_profile?.verification_tier === 'verified').length,
+      color: elecIdTierColors.verified,
+    },
+    {
+      value: 'basic' as const,
+      label: 'Basic',
+      count: applications.filter((a) => a.elec_id_profile?.verification_tier === 'basic').length,
+      color: elecIdTierColors.basic,
+    },
   ];
 
   // Handlers
   const handleUpdateStatus = async (
     appId: string,
-    status: VacancyApplication["status"],
+    status: VacancyApplication['status'],
     name: string
   ) => {
     try {
       await updateApplicationStatus.mutateAsync({ id: appId, status });
       toast({
-        title: "Status Updated",
+        title: 'Status Updated',
         description: `${name} has been marked as ${status}.`,
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update application status.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update application status.',
+        variant: 'destructive',
       });
     }
   };
@@ -188,14 +258,14 @@ export function JobVacanciesSection() {
     try {
       await toggleVacancyStatus.mutateAsync({ id: vacancy.id, currentStatus: vacancy.status });
       toast({
-        title: vacancy.status === "Open" ? "Vacancy Closed" : "Vacancy Reopened",
-        description: `${vacancy.title} is now ${vacancy.status === "Open" ? "closed" : "open"}.`,
+        title: vacancy.status === 'Open' ? 'Vacancy Closed' : 'Vacancy Reopened',
+        description: `${vacancy.title} is now ${vacancy.status === 'Open' ? 'closed' : 'open'}.`,
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update vacancy status.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update vacancy status.',
+        variant: 'destructive',
       });
     }
   };
@@ -218,7 +288,7 @@ export function JobVacanciesSection() {
 
   const handleViewApplicants = (vacancyId: string) => {
     setVacancyFilter(vacancyId);
-    setActiveTab("applications");
+    setActiveTab('applications');
   };
 
   // Selection mode handlers
@@ -244,18 +314,18 @@ export function JobVacanciesSection() {
   const handleBulkShortlist = async () => {
     const ids = Array.from(selectedApplicants);
     try {
-      await bulkUpdateStatus.mutateAsync({ ids, status: "Shortlisted" });
+      await bulkUpdateStatus.mutateAsync({ ids, status: 'Shortlisted' });
       toast({
-        title: "Candidates Shortlisted",
-        description: `${ids.length} candidate${ids.length !== 1 ? "s" : ""} have been shortlisted.`,
+        title: 'Candidates Shortlisted',
+        description: `${ids.length} candidate${ids.length !== 1 ? 's' : ''} have been shortlisted.`,
       });
       setSelectedApplicants(new Set());
       setSelectionMode(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update candidate statuses.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update candidate statuses.',
+        variant: 'destructive',
       });
     }
   };
@@ -263,18 +333,18 @@ export function JobVacanciesSection() {
   const handleBulkReject = async () => {
     const ids = Array.from(selectedApplicants);
     try {
-      await bulkUpdateStatus.mutateAsync({ ids, status: "Rejected" });
+      await bulkUpdateStatus.mutateAsync({ ids, status: 'Rejected' });
       toast({
-        title: "Candidates Rejected",
-        description: `${ids.length} candidate${ids.length !== 1 ? "s" : ""} have been rejected.`,
+        title: 'Candidates Rejected',
+        description: `${ids.length} candidate${ids.length !== 1 ? 's' : ''} have been rejected.`,
       });
       setSelectedApplicants(new Set());
       setSelectionMode(false);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update candidate statuses.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to update candidate statuses.',
+        variant: 'destructive',
       });
     }
   };
@@ -287,9 +357,24 @@ export function JobVacanciesSection() {
 
   // Tab configuration
   const tabs = [
-    { id: "vacancies", label: "Vacancies", count: openVacancies, icon: <Briefcase className="h-4 w-4" /> },
-    { id: "applications", label: "Candidates", count: totalApplicants, icon: <Users className="h-4 w-4" /> },
-    { id: "conversations", label: "Messages", count: totalUnread, icon: <MessageSquare className="h-4 w-4" /> },
+    {
+      id: 'vacancies',
+      label: 'Vacancies',
+      count: openVacancies,
+      icon: <Briefcase className="h-4 w-4" />,
+    },
+    {
+      id: 'applications',
+      label: 'Candidates',
+      count: totalApplicants,
+      icon: <Users className="h-4 w-4" />,
+    },
+    {
+      id: 'conversations',
+      label: 'Messages',
+      count: totalUnread,
+      icon: <MessageSquare className="h-4 w-4" />,
+    },
   ];
 
   return (
@@ -319,7 +404,7 @@ export function JobVacanciesSection() {
           {/* Tab Content */}
           <AnimatePresence mode="wait">
             {/* Vacancies Tab */}
-            {activeTab === "vacancies" && (
+            {activeTab === 'vacancies' && (
               <motion.div
                 key="vacancies"
                 initial={{ opacity: 0, y: 10 }}
@@ -335,7 +420,8 @@ export function JobVacanciesSection() {
                       </div>
                       <h3 className="font-semibold text-white text-lg mb-2">No Vacancies Yet</h3>
                       <p className="text-sm text-white/60 mb-6 max-w-sm mx-auto">
-                        Post your first job vacancy to start receiving applications from qualified electricians.
+                        Post your first job vacancy to start receiving applications from qualified
+                        electricians.
                       </p>
                       <Button
                         onClick={() => setIsWizardOpen(true)}
@@ -354,7 +440,7 @@ export function JobVacanciesSection() {
                         title={vacancy.title}
                         location={vacancy.location}
                         type={vacancy.type}
-                        status={vacancy.status as "Open" | "Closed" | "Draft"}
+                        status={vacancy.status as 'Open' | 'Closed' | 'Draft'}
                         salaryMin={vacancy.salary_min || undefined}
                         salaryMax={vacancy.salary_max || undefined}
                         salaryPeriod={vacancy.salary_period || undefined}
@@ -363,7 +449,7 @@ export function JobVacanciesSection() {
                         postedAt={vacancy.created_at}
                         closingDate={vacancy.closing_date || undefined}
                         workArrangement={vacancy.work_arrangement}
-                        companyInitial={employer?.company_name?.charAt(0) || "E"}
+                        companyInitial={employer?.company_name?.charAt(0) || 'E'}
                         onEdit={() => handleEditVacancy(vacancy)}
                         onDuplicate={() => handleDuplicateVacancy(vacancy)}
                         onToggleStatus={() => handleToggleVacancy(vacancy)}
@@ -376,7 +462,7 @@ export function JobVacanciesSection() {
             )}
 
             {/* Candidates Tab */}
-            {activeTab === "applications" && (
+            {activeTab === 'applications' && (
               <motion.div
                 key="applications"
                 initial={{ opacity: 0, y: 10 }}
@@ -409,10 +495,10 @@ export function JobVacanciesSection() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className={cn(
-                        "h-11 bg-white/5 border-white/10 rounded-xl",
-                        "text-white placeholder:text-white/40",
-                        "focus:border-elec-yellow/60",
-                        !searchQuery && "pl-10"
+                        'h-11 bg-white/5 border-white/10 rounded-xl',
+                        'text-white placeholder:text-white/40',
+                        'focus:border-elec-yellow/60',
+                        !searchQuery && 'pl-10'
                       )}
                     />
                   </div>
@@ -422,14 +508,18 @@ export function JobVacanciesSection() {
                     variant="outline"
                     size="icon"
                     className={cn(
-                      "h-11 w-11 shrink-0 rounded-xl touch-manipulation",
+                      'h-11 w-11 shrink-0 rounded-xl touch-manipulation',
                       selectionMode
-                        ? "bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow"
-                        : "bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10"
+                        ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
+                        : 'bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10'
                     )}
                     onClick={toggleSelectionMode}
                   >
-                    {selectionMode ? <CheckSquare className="h-4 w-4" /> : <Square className="h-4 w-4" />}
+                    {selectionMode ? (
+                      <CheckSquare className="h-4 w-4" />
+                    ) : (
+                      <Square className="h-4 w-4" />
+                    )}
                   </Button>
 
                   <Select value={vacancyFilter} onValueChange={setVacancyFilter}>
@@ -469,9 +559,12 @@ export function JobVacanciesSection() {
                       </div>
                       <h3 className="font-semibold text-white text-lg mb-2">No Candidates Found</h3>
                       <p className="text-sm text-white/60">
-                        {statusFilter !== "all" || tierFilter !== "all" || vacancyFilter !== "all" || searchQuery
-                          ? "Try adjusting your filters or search query."
-                          : "Applications will appear here when candidates apply to your vacancies."}
+                        {statusFilter !== 'all' ||
+                        tierFilter !== 'all' ||
+                        vacancyFilter !== 'all' ||
+                        searchQuery
+                          ? 'Try adjusting your filters or search query.'
+                          : 'Applications will appear here when candidates apply to your vacancies.'}
                       </p>
                     </CardContent>
                   </Card>
@@ -489,17 +582,23 @@ export function JobVacanciesSection() {
                           phone={app.applicant_phone || undefined}
                           status={app.status as any}
                           appliedAt={app.applied_at}
-                          vacancyTitle={vacancy?.title || "Unknown Position"}
+                          vacancyTitle={vacancy?.title || 'Unknown Position'}
                           elecIdTier={app.elec_id_profile?.verification_tier as any}
                           ecsCardType={app.elec_id_profile?.ecs_card_type}
                           selectionMode={selectionMode}
                           isSelected={selectedApplicants.has(app.id)}
                           onSelectionChange={(selected) => handleSelectionChange(app.id, selected)}
-                          onShortlist={() => handleUpdateStatus(app.id, "Shortlisted", app.applicant_name)}
-                          onReject={() => handleUpdateStatus(app.id, "Rejected", app.applicant_name)}
-                          onInterview={() => handleUpdateStatus(app.id, "Interviewed", app.applicant_name)}
-                          onOffer={() => handleUpdateStatus(app.id, "Offered", app.applicant_name)}
-                          onHire={() => handleUpdateStatus(app.id, "Hired", app.applicant_name)}
+                          onShortlist={() =>
+                            handleUpdateStatus(app.id, 'Shortlisted', app.applicant_name)
+                          }
+                          onReject={() =>
+                            handleUpdateStatus(app.id, 'Rejected', app.applicant_name)
+                          }
+                          onInterview={() =>
+                            handleUpdateStatus(app.id, 'Interviewed', app.applicant_name)
+                          }
+                          onOffer={() => handleUpdateStatus(app.id, 'Offered', app.applicant_name)}
+                          onHire={() => handleUpdateStatus(app.id, 'Hired', app.applicant_name)}
                           onClick={() => setViewingApplication(app)}
                         />
                       );
@@ -510,7 +609,7 @@ export function JobVacanciesSection() {
             )}
 
             {/* Conversations Tab */}
-            {activeTab === "conversations" && (
+            {activeTab === 'conversations' && (
               <motion.div
                 key="conversations"
                 initial={{ opacity: 0, y: 10 }}
@@ -541,25 +640,25 @@ export function JobVacanciesSection() {
                 title: editingVacancy.title,
                 type: editingVacancy.type as any,
                 location: editingVacancy.location,
-                workArrangement: "On-site",
+                workArrangement: 'On-site',
                 salaryMin: editingVacancy.salary_min || undefined,
                 salaryMax: editingVacancy.salary_max || undefined,
-                salaryPeriod: (editingVacancy.salary_period?.includes("year")
-                  ? "year"
-                  : editingVacancy.salary_period?.includes("month")
-                  ? "month"
-                  : editingVacancy.salary_period?.includes("week")
-                  ? "week"
-                  : editingVacancy.salary_period?.includes("day")
-                  ? "day"
-                  : editingVacancy.salary_period?.includes("hour")
-                  ? "hour"
-                  : "year") as any,
+                salaryPeriod: (editingVacancy.salary_period?.includes('year')
+                  ? 'year'
+                  : editingVacancy.salary_period?.includes('month')
+                    ? 'month'
+                    : editingVacancy.salary_period?.includes('week')
+                      ? 'week'
+                      : editingVacancy.salary_period?.includes('day')
+                        ? 'day'
+                        : editingVacancy.salary_period?.includes('hour')
+                          ? 'hour'
+                          : 'year') as any,
                 benefits: editingVacancy.benefits || [],
                 requirements: editingVacancy.requirements || [],
-                experienceLevel: "Mid",
-                description: editingVacancy.description || "",
-                closingDate: editingVacancy.closing_date || "",
+                experienceLevel: 'Mid',
+                description: editingVacancy.description || '',
+                closingDate: editingVacancy.closing_date || '',
               }
             : undefined
         }
@@ -569,39 +668,44 @@ export function JobVacanciesSection() {
                 title: `${duplicatingVacancy.title} (Copy)`,
                 type: duplicatingVacancy.type as any,
                 location: duplicatingVacancy.location,
-                workArrangement: "On-site",
+                workArrangement: 'On-site',
                 salaryMin: duplicatingVacancy.salary_min || undefined,
                 salaryMax: duplicatingVacancy.salary_max || undefined,
-                salaryPeriod: (duplicatingVacancy.salary_period?.includes("year")
-                  ? "year"
-                  : duplicatingVacancy.salary_period?.includes("month")
-                  ? "month"
-                  : duplicatingVacancy.salary_period?.includes("week")
-                  ? "week"
-                  : duplicatingVacancy.salary_period?.includes("day")
-                  ? "day"
-                  : duplicatingVacancy.salary_period?.includes("hour")
-                  ? "hour"
-                  : "year") as any,
+                salaryPeriod: (duplicatingVacancy.salary_period?.includes('year')
+                  ? 'year'
+                  : duplicatingVacancy.salary_period?.includes('month')
+                    ? 'month'
+                    : duplicatingVacancy.salary_period?.includes('week')
+                      ? 'week'
+                      : duplicatingVacancy.salary_period?.includes('day')
+                        ? 'day'
+                        : duplicatingVacancy.salary_period?.includes('hour')
+                          ? 'hour'
+                          : 'year') as any,
                 benefits: duplicatingVacancy.benefits || [],
                 requirements: duplicatingVacancy.requirements || [],
-                experienceLevel: "Mid",
-                description: duplicatingVacancy.description || "",
-                closingDate: "",
+                experienceLevel: 'Mid',
+                description: duplicatingVacancy.description || '',
+                closingDate: '',
               }
             : undefined
         }
       />
 
       {/* View Application Sheet */}
-      <Sheet open={!!viewingApplication} onOpenChange={(open) => !open && setViewingApplication(null)}>
+      <Sheet
+        open={!!viewingApplication}
+        onOpenChange={(open) => !open && setViewingApplication(null)}
+      >
         <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl bg-elec-gray border-white/10">
           {viewingApplication && (
             <>
               <SheetHeader className="pb-4 border-b border-white/10">
                 <SheetTitle className="text-white">{viewingApplication.applicant_name}</SheetTitle>
                 <SheetDescription className="text-white/60">
-                  Applied for: {vacancies.find((v) => v.id === viewingApplication.vacancy_id)?.title || "Unknown Position"}
+                  Applied for:{' '}
+                  {vacancies.find((v) => v.id === viewingApplication.vacancy_id)?.title ||
+                    'Unknown Position'}
                 </SheetDescription>
               </SheetHeader>
 
@@ -611,14 +715,16 @@ export function JobVacanciesSection() {
                   <Avatar className="w-20 h-20 border-2 border-white/10">
                     <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-2xl">
                       {viewingApplication.applicant_name
-                        .split(" ")
+                        .split(' ')
                         .map((n) => n[0])
-                        .join("")
+                        .join('')
                         .toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="font-semibold text-xl text-white">{viewingApplication.applicant_name}</h3>
+                    <h3 className="font-semibold text-xl text-white">
+                      {viewingApplication.applicant_name}
+                    </h3>
                     {viewingApplication.applicant_email && (
                       <p className="text-sm text-white/60">{viewingApplication.applicant_email}</p>
                     )}
@@ -639,15 +745,21 @@ export function JobVacanciesSection() {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
                         <p className="text-white/50">ID Number</p>
-                        <p className="text-white font-medium">{viewingApplication.elec_id_profile.elec_id_number}</p>
+                        <p className="text-white font-medium">
+                          {viewingApplication.elec_id_profile.elec_id_number}
+                        </p>
                       </div>
                       <div>
                         <p className="text-white/50">ECS Card</p>
-                        <p className="text-white font-medium">{viewingApplication.elec_id_profile.ecs_card_type}</p>
+                        <p className="text-white font-medium">
+                          {viewingApplication.elec_id_profile.ecs_card_type}
+                        </p>
                       </div>
                       <div>
                         <p className="text-white/50">Verification</p>
-                        <p className="text-white font-medium capitalize">{viewingApplication.elec_id_profile.verification_tier}</p>
+                        <p className="text-white font-medium capitalize">
+                          {viewingApplication.elec_id_profile.verification_tier}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -667,23 +779,27 @@ export function JobVacanciesSection() {
                 <div className="flex items-center justify-between text-sm pt-4 border-t border-white/10">
                   <span className="text-white/50">Applied</span>
                   <span className="text-white">
-                    {new Date(viewingApplication.applied_at).toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
+                    {new Date(viewingApplication.applied_at).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
                     })}
                   </span>
                 </div>
               </div>
 
               <SheetFooter className="pt-4 border-t border-white/10">
-                {viewingApplication.status === "New" && (
+                {viewingApplication.status === 'New' && (
                   <div className="flex gap-3 w-full">
                     <Button
                       variant="outline"
                       className="flex-1 h-12 bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20"
                       onClick={() => {
-                        handleUpdateStatus(viewingApplication.id, "Rejected", viewingApplication.applicant_name);
+                        handleUpdateStatus(
+                          viewingApplication.id,
+                          'Rejected',
+                          viewingApplication.applicant_name
+                        );
                         setViewingApplication(null);
                       }}
                     >
@@ -692,7 +808,11 @@ export function JobVacanciesSection() {
                     <Button
                       className="flex-1 h-12 bg-purple-500 hover:bg-purple-500/90"
                       onClick={() => {
-                        handleUpdateStatus(viewingApplication.id, "Shortlisted", viewingApplication.applicant_name);
+                        handleUpdateStatus(
+                          viewingApplication.id,
+                          'Shortlisted',
+                          viewingApplication.applicant_name
+                        );
                         setViewingApplication(null);
                       }}
                     >
@@ -700,33 +820,45 @@ export function JobVacanciesSection() {
                     </Button>
                   </div>
                 )}
-                {viewingApplication.status === "Shortlisted" && (
+                {viewingApplication.status === 'Shortlisted' && (
                   <Button
                     className="w-full h-12 bg-cyan-500 hover:bg-cyan-500/90"
                     onClick={() => {
-                      handleUpdateStatus(viewingApplication.id, "Interviewed", viewingApplication.applicant_name);
+                      handleUpdateStatus(
+                        viewingApplication.id,
+                        'Interviewed',
+                        viewingApplication.applicant_name
+                      );
                       setViewingApplication(null);
                     }}
                   >
                     Mark as Interviewed
                   </Button>
                 )}
-                {viewingApplication.status === "Interviewed" && (
+                {viewingApplication.status === 'Interviewed' && (
                   <Button
                     className="w-full h-12 bg-emerald-500 hover:bg-emerald-500/90"
                     onClick={() => {
-                      handleUpdateStatus(viewingApplication.id, "Offered", viewingApplication.applicant_name);
+                      handleUpdateStatus(
+                        viewingApplication.id,
+                        'Offered',
+                        viewingApplication.applicant_name
+                      );
                       setViewingApplication(null);
                     }}
                   >
                     Make Offer
                   </Button>
                 )}
-                {viewingApplication.status === "Offered" && (
+                {viewingApplication.status === 'Offered' && (
                   <Button
                     className="w-full h-12 bg-green-500 hover:bg-green-500/90"
                     onClick={() => {
-                      handleUpdateStatus(viewingApplication.id, "Hired", viewingApplication.applicant_name);
+                      handleUpdateStatus(
+                        viewingApplication.id,
+                        'Hired',
+                        viewingApplication.applicant_name
+                      );
                       setViewingApplication(null);
                     }}
                   >

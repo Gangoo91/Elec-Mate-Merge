@@ -1,73 +1,94 @@
-import { ArrowLeft, Scale, Layers, Wrench, ArrowDownToLine, ClipboardCheck, AlertTriangle, GraduationCap, HardHat, BookOpen, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  Scale,
+  Layers,
+  Wrench,
+  ArrowDownToLine,
+  ClipboardCheck,
+  AlertTriangle,
+  GraduationCap,
+  HardHat,
+  BookOpen,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Legislation & PASMA Standards",
-    description: "Work at Height Regulations 2005, HSWA 1974, EN 1004:2020, PASMA Code of Practice, and CDM 2015",
+    title: 'Legislation & PASMA Standards',
+    description:
+      'Work at Height Regulations 2005, HSWA 1974, EN 1004:2020, PASMA Code of Practice, and CDM 2015',
     icon: Scale,
-    duration: "35 mins",
-    link: "../pasma-module-1",
+    duration: '35 mins',
+    link: '../pasma-module-1',
   },
   {
     moduleNumber: 2,
-    title: "Tower Types & Components",
-    description: "Tower classifications, structural and safety components, selection planning, and tower anatomy",
+    title: 'Tower Types & Components',
+    description:
+      'Tower classifications, structural and safety components, selection planning, and tower anatomy',
     icon: Layers,
-    duration: "35 mins",
-    link: "../pasma-module-2",
+    duration: '35 mins',
+    link: '../pasma-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Assembly Methods",
-    description: "Pre-assembly planning, 3T Through The Trap method, AGR Advance Guard Rail method, and stability",
+    title: 'Assembly Methods',
+    description:
+      'Pre-assembly planning, 3T Through The Trap method, AGR Advance Guard Rail method, and stability',
     icon: Wrench,
-    duration: "40 mins",
-    link: "../pasma-module-3",
+    duration: '40 mins',
+    link: '../pasma-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Dismantling, Moving & Storage",
-    description: "Safe dismantling procedures, moving and repositioning, storage, maintenance, and post-use checks",
+    title: 'Dismantling, Moving & Storage',
+    description:
+      'Safe dismantling procedures, moving and repositioning, storage, maintenance, and post-use checks',
     icon: ArrowDownToLine,
-    duration: "30 mins",
-    link: "../pasma-module-4",
+    duration: '30 mins',
+    link: '../pasma-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Inspection & Compliance",
-    description: "Pre-use visual checks, formal 7-day inspections, records and documentation, TowerSure app",
+    title: 'Inspection & Compliance',
+    description:
+      'Pre-use visual checks, formal 7-day inspections, records and documentation, TowerSure app',
     icon: ClipboardCheck,
-    duration: "35 mins",
-    link: "../pasma-module-5",
+    duration: '35 mins',
+    link: '../pasma-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Safety, Hazards & Rescue",
-    description: "Common hazards, risk assessment, rescue procedures, physical fitness and safe working practices",
+    title: 'Safety, Hazards & Rescue',
+    description:
+      'Common hazards, risk assessment, rescue procedures, physical fitness and safe working practices',
     icon: AlertTriangle,
-    duration: "35 mins",
-    link: "../pasma-module-6",
+    duration: '35 mins',
+    link: '../pasma-module-6',
   },
   {
     moduleNumber: 7,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../pasma-module-7",
+    duration: '30 mins',
+    link: '../pasma-module-7',
     isExam: true,
   },
 ];
 
 export default function PasmaCourse() {
   useSEO({
-    title: "PASMA Towers for Users Training | General Upskilling",
-    description: "Complete PASMA Towers for Users training covering legislation, tower types, assembly methods, dismantling, inspections, safety, and mock exam preparation.",
+    title: 'PASMA Towers for Users Training | General Upskilling',
+    description:
+      'Complete PASMA Towers for Users training covering legislation, tower types, assembly methods, dismantling, inspections, safety, and mock exam preparation.',
   });
 
   return (

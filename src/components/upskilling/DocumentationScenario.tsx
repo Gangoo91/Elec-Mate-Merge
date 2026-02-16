@@ -1,4 +1,3 @@
-
 import { Wrench, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -15,7 +14,10 @@ export const DocumentationScenario = () => {
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
           <p className="text-blue-200 font-medium mb-2">Scenario:</p>
           <p className="text-foreground leading-relaxed text-base sm:text-lg">
-            You arrive at a commercial premises for a periodic inspection. The client says they have "all the paperwork somewhere" but can't locate the original installation certificates or design drawings. They want you to proceed immediately as they have business operations to maintain.
+            You arrive at a commercial premises for a periodic inspection. The client says they have
+            "all the paperwork somewhere" but can't locate the original installation certificates or
+            design drawings. They want you to proceed immediately as they have business operations
+            to maintain.
           </p>
         </div>
         <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
@@ -24,7 +26,11 @@ export const DocumentationScenario = () => {
             Correct Approach:
           </p>
           <p className="text-foreground leading-relaxed text-base sm:text-lg">
-            <strong className="text-foreground">Explain the limitations.</strong> Without proper documentation, you cannot verify original design intent or compliance. Proceed with a comprehensive visual inspection, document everything you find, and clearly state limitations in your report. Quote additional time for creating as-built drawings if needed.
+            <strong className="text-foreground">Explain the limitations.</strong> Without proper
+            documentation, you cannot verify original design intent or compliance. Proceed with a
+            comprehensive visual inspection, document everything you find, and clearly state
+            limitations in your report. Quote additional time for creating as-built drawings if
+            needed.
           </p>
         </div>
       </CardContent>

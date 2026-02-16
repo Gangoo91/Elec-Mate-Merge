@@ -15,64 +15,69 @@ interface QuizQuestion {
 const quizData: QuizQuestion[] = [
   {
     id: 1,
-    question: "What does PEI stand for?",
+    question: 'What does PEI stand for?',
     options: [
-      "Power Equipment Installation",
-      "Prosumer Electrical Installation",
-      "Protected Electrical Infrastructure",
-      "Primary Energy Interface"
+      'Power Equipment Installation',
+      'Prosumer Electrical Installation',
+      'Protected Electrical Infrastructure',
+      'Primary Energy Interface',
     ],
     correctAnswer: 1,
-    explanation: "PEI stands for Prosumer Electrical Installation - installations that both consume and produce electrical energy, such as solar PV systems with battery storage."
+    explanation:
+      'PEI stands for Prosumer Electrical Installation - installations that both consume and produce electrical energy, such as solar PV systems with battery storage.',
   },
   {
     id: 2,
     question: "What's the main risk of backfeed?",
     options: [
-      "Higher electricity bills",
-      "Energising supposedly dead lines, creating shock risk",
-      "Equipment running slower",
-      "Reduced system efficiency"
+      'Higher electricity bills',
+      'Energising supposedly dead lines, creating shock risk',
+      'Equipment running slower',
+      'Reduced system efficiency',
     ],
     correctAnswer: 1,
-    explanation: "Backfeed occurs when locally generated power flows back into the grid, potentially energising lines that workers believe are dead, creating serious shock and electrocution risks."
+    explanation:
+      'Backfeed occurs when locally generated power flows back into the grid, potentially energising lines that workers believe are dead, creating serious shock and electrocution risks.',
   },
   {
     id: 3,
     question: "What's islanding in electrical terms?",
     options: [
-      "Installing equipment on actual islands",
-      "Separating loads into different zones",
-      "When local generation continues to supply local loads during a grid outage",
-      "Underground cable installation"
+      'Installing equipment on actual islands',
+      'Separating loads into different zones',
+      'When local generation continues to supply local loads during a grid outage',
+      'Underground cable installation',
     ],
     correctAnswer: 2,
-    explanation: "Islanding occurs when local generation (like solar PV) continues to supply local loads even when the main grid supply is disconnected, which can be dangerous for utility workers."
+    explanation:
+      'Islanding occurs when local generation (like solar PV) continues to supply local loads even when the main grid supply is disconnected, which can be dangerous for utility workers.',
   },
   {
     id: 4,
-    question: "Are PEIs covered by Amendment 2?",
+    question: 'Are PEIs covered by Amendment 2?',
     options: [
       "No, they're not mentioned",
-      "Yes, through the introduction of Part 8",
-      "Only for commercial installations",
-      "Only for battery systems"
+      'Yes, through the introduction of Part 8',
+      'Only for commercial installations',
+      'Only for battery systems',
     ],
     correctAnswer: 1,
-    explanation: "Amendment 2 introduced Part 8 specifically to address Prosumer Electrical Installations and their unique requirements for safety and grid interaction."
+    explanation:
+      'Amendment 2 introduced Part 8 specifically to address Prosumer Electrical Installations and their unique requirements for safety and grid interaction.',
   },
   {
     id: 5,
-    question: "What kind of EMS features are used?",
+    question: 'What kind of EMS features are used?',
     options: [
-      "Only basic timers",
-      "Load balancing, energy storage management, and grid interaction control",
-      "Just monitoring functions",
-      "Only emergency shutdown"
+      'Only basic timers',
+      'Load balancing, energy storage management, and grid interaction control',
+      'Just monitoring functions',
+      'Only emergency shutdown',
     ],
     correctAnswer: 1,
-    explanation: "Energy Management Systems for PEIs include sophisticated features like load balancing, battery storage optimisation, grid interaction control, and demand response capabilities."
-  }
+    explanation:
+      'Energy Management Systems for PEIs include sophisticated features like load balancing, battery storage optimisation, grid interaction control, and demand response capabilities.',
+  },
 ];
 
 const BS7671Module7Section5Quiz = () => {
@@ -130,7 +135,7 @@ const BS7671Module7Section5Quiz = () => {
           <p className="text-gray-300">
             Test your understanding of Prosumer Electrical Installations with this 5-question quiz.
           </p>
-          <Button 
+          <Button
             onClick={() => setQuizStarted(true)}
             className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -154,10 +159,14 @@ const BS7671Module7Section5Quiz = () => {
               {score}/{quizData.length}
             </div>
             <p className="text-gray-300 mt-2">
-              {score >= 4 ? 'Excellent knowledge of PEI systems!' : score >= 3 ? 'Good understanding!' : 'Review the material and try again!'}
+              {score >= 4
+                ? 'Excellent knowledge of PEI systems!'
+                : score >= 3
+                  ? 'Good understanding!'
+                  : 'Review the material and try again!'}
             </p>
           </div>
-          
+
           <div className="space-y-3">
             {quizData.map((question, index) => (
               <div key={question.id} className="bg-elec-dark p-3 rounded-md border border-gray-600">
@@ -171,16 +180,14 @@ const BS7671Module7Section5Quiz = () => {
                     <p className="text-sm font-semibold text-foreground mb-1">
                       {question.id}. {question.question}
                     </p>
-                    <p className="text-xs text-gray-400">
-                      {question.explanation}
-                    </p>
+                    <p className="text-xs text-gray-400">{question.explanation}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          <Button 
+
+          <Button
             onClick={handleRestart}
             className="w-full bg-elec-yellow text-elec-dark hover:bg-yellow-600"
           >
@@ -204,7 +211,7 @@ const BS7671Module7Section5Quiz = () => {
           </Badge>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           ></div>
@@ -215,7 +222,7 @@ const BS7671Module7Section5Quiz = () => {
           <p className="text-foreground font-semibold mb-4">
             {question.id}. {question.question}
           </p>
-          
+
           <div className="space-y-2">
             {question.options.map((option, index) => (
               <button
@@ -235,7 +242,7 @@ const BS7671Module7Section5Quiz = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="flex justify-between">
           <Button
             onClick={handlePrevious}
@@ -245,7 +252,7 @@ const BS7671Module7Section5Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

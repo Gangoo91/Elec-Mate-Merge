@@ -1,69 +1,70 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, FileText, Target, Users, Clock } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckCircle, FileText, Target, Users, Clock } from 'lucide-react';
 
 const PortfolioStepByStepGuide = () => {
   const steps = [
     {
       number: 1,
-      title: "Understand Your Requirements",
+      title: 'Understand Your Requirements',
       icon: Target,
-      description: "Familiarise yourself with your apprenticeship framework requirements and assessment criteria.",
+      description:
+        'Familiarise yourself with your apprenticeship framework requirements and assessment criteria.',
       tasks: [
-        "Review your apprenticeship standard",
-        "Understand the assessment criteria",
-        "Identify required evidence types",
-        "Note submission deadlines"
-      ]
+        'Review your apprenticeship standard',
+        'Understand the assessment criteria',
+        'Identify required evidence types',
+        'Note submission deadlines',
+      ],
     },
     {
       number: 2,
-      title: "Plan Your Portfolio Structure",
+      title: 'Plan Your Portfolio Structure',
       icon: FileText,
-      description: "Organise your portfolio into logical sections that align with your learning outcomes.",
+      description:
+        'Organise your portfolio into logical sections that align with your learning outcomes.',
       tasks: [
-        "Create sections for each unit/module",
-        "Plan evidence collection strategy",
-        "Set up filing system (digital/physical)",
-        "Create timeline for submissions"
-      ]
+        'Create sections for each unit/module',
+        'Plan evidence collection strategy',
+        'Set up filing system (digital/physical)',
+        'Create timeline for submissions',
+      ],
     },
     {
       number: 3,
-      title: "Collect and Document Evidence",
+      title: 'Collect and Document Evidence',
       icon: CheckCircle,
-      description: "Gather evidence systematically throughout your apprenticeship journey.",
+      description: 'Gather evidence systematically throughout your apprenticeship journey.',
       tasks: [
-        "Take photos of practical work",
-        "Save certificates and qualifications",
-        "Document workplace projects",
-        "Collect witness testimonies"
-      ]
+        'Take photos of practical work',
+        'Save certificates and qualifications',
+        'Document workplace projects',
+        'Collect witness testimonies',
+      ],
     },
     {
       number: 4,
-      title: "Reflect and Analyse",
+      title: 'Reflect and Analyse',
       icon: Users,
-      description: "Add reflective commentary to demonstrate your learning and development.",
+      description: 'Add reflective commentary to demonstrate your learning and development.',
       tasks: [
-        "Write reflections for each piece of evidence",
-        "Analyse what you learned",
-        "Identify areas for improvement",
-        "Link to theoretical knowledge"
-      ]
+        'Write reflections for each piece of evidence',
+        'Analyse what you learned',
+        'Identify areas for improvement',
+        'Link to theoretical knowledge',
+      ],
     },
     {
       number: 5,
-      title: "Review and Submit",
+      title: 'Review and Submit',
       icon: Clock,
-      description: "Regularly review your portfolio quality and submit according to deadlines.",
+      description: 'Regularly review your portfolio quality and submit according to deadlines.',
       tasks: [
-        "Check against assessment criteria",
-        "Ensure all requirements met",
-        "Proofread all written work",
-        "Submit on time"
-      ]
-    }
+        'Check against assessment criteria',
+        'Ensure all requirements met',
+        'Proofread all written work',
+        'Submit on time',
+      ],
+    },
   ];
 
   return (
@@ -74,7 +75,7 @@ const PortfolioStepByStepGuide = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            Follow this systematic approach to build a comprehensive portfolio that demonstrates 
+            Follow this systematic approach to build a comprehensive portfolio that demonstrates
             your competency and learning throughout your electrical apprenticeship.
           </p>
         </CardContent>
@@ -94,7 +95,7 @@ const PortfolioStepByStepGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-white">{step.description}</p>
-              
+
               <div className="space-y-2">
                 <h4 className="text-sm font-medium text-elec-yellow">Key Tasks:</h4>
                 <ul className="space-y-1">

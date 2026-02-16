@@ -15,31 +15,43 @@ export const EmergencyLightingPracticalSection4_2 = () => {
           <li className="flex items-start gap-3">
             <span className="text-elec-yellow mt-1 font-bold">→</span>
             <p className="text-foreground leading-relaxed">
-              <strong className="text-elec-yellow">For smaller projects</strong>, recommend self-contained units for cost and simplicity. They're easier to install and don't require dedicated battery rooms.
+              <strong className="text-elec-yellow">For smaller projects</strong>, recommend
+              self-contained units for cost and simplicity. They're easier to install and don't
+              require dedicated battery rooms.
             </p>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-elec-yellow mt-1 font-bold">→</span>
             <p className="text-foreground leading-relaxed">
-              <strong className="text-elec-yellow">For critical infrastructure</strong>, central battery systems provide long-term reliability and reduced maintenance workload despite higher upfront costs.
+              <strong className="text-elec-yellow">For critical infrastructure</strong>, central
+              battery systems provide long-term reliability and reduced maintenance workload despite
+              higher upfront costs.
             </p>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-elec-yellow mt-1 font-bold">→</span>
             <p className="text-foreground leading-relaxed">
-              <strong className="text-elec-yellow">Always design central battery cabling</strong> using enhanced fire-resistant cable (FP200, FP Plus, or equivalent) to maintain circuit integrity during fire conditions.
+              <strong className="text-elec-yellow">Always design central battery cabling</strong>{' '}
+              using enhanced fire-resistant cable (FP200, FP Plus, or equivalent) to maintain
+              circuit integrity during fire conditions.
             </p>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-elec-yellow mt-1 font-bold">→</span>
             <p className="text-foreground leading-relaxed">
-              <strong className="text-elec-yellow">Discuss maintenance budgets</strong> with the client — central systems cost more upfront but save labour in the long run. Calculate 10-year lifecycle costs to demonstrate value.
+              <strong className="text-elec-yellow">Discuss maintenance budgets</strong> with the
+              client — central systems cost more upfront but save labour in the long run. Calculate
+              10-year lifecycle costs to demonstrate value.
             </p>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-elec-yellow mt-1 font-bold">→</span>
             <p className="text-foreground leading-relaxed">
-              <strong className="text-elec-yellow">Ensure battery rooms are ventilated and secure</strong> if central systems are used. They must be accessible for maintenance but protected from unauthorised access.
+              <strong className="text-elec-yellow">
+                Ensure battery rooms are ventilated and secure
+              </strong>{' '}
+              if central systems are used. They must be accessible for maintenance but protected
+              from unauthorised access.
             </p>
           </li>
         </ul>

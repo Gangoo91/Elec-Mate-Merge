@@ -1,45 +1,45 @@
-import { ArrowLeft, ArrowUpFromLine, Wrench, PackageOpen, Shield } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowUpFromLine, Wrench, PackageOpen, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Working at Height Regulations",
+    title: 'Working at Height Regulations',
     icon: ArrowUpFromLine,
     description:
-      "The Work at Height Regulations 2005, hierarchy of controls, duty holders, and when work at height applies",
+      'The Work at Height Regulations 2005, hierarchy of controls, duty holders, and when work at height applies',
   },
   {
     id: 2,
-    title: "Access Equipment",
+    title: 'Access Equipment',
     icon: Wrench,
     description:
-      "Ladders, stepladders, scaffolding, mobile towers, MEWPs, podium steps, and selection criteria for each",
+      'Ladders, stepladders, scaffolding, mobile towers, MEWPs, podium steps, and selection criteria for each',
   },
   {
     id: 3,
-    title: "Manual Handling Assessment",
+    title: 'Manual Handling Assessment',
     icon: PackageOpen,
     description:
-      "The Manual Handling Operations Regulations 1992, TILEO factors, ergonomic risk assessment, and reducing risk",
+      'The Manual Handling Operations Regulations 1992, TILEO factors, ergonomic risk assessment, and reducing risk',
   },
   {
     id: 4,
-    title: "Fall Protection & Safe Lifting",
+    title: 'Fall Protection & Safe Lifting',
     icon: Shield,
     description:
-      "Guard rails, personal fall protection, fragile surfaces, safe lifting techniques, and team handling",
+      'Guard rails, personal fall protection, fragile surfaces, safe lifting techniques, and team handling',
   },
 ];
 
 export default function CscsCardModule3() {
   useSEO({
-    title: "Module 3: Working at Height & Manual Handling | CSCS Card Preparation",
+    title: 'Module 3: Working at Height & Manual Handling | CSCS Card Preparation',
     description:
-      "Learn about working at height regulations, access equipment, manual handling assessment, and fall protection for the CSCS HS&E test.",
+      'Learn about working at height regulations, access equipment, manual handling assessment, and fall protection for the CSCS HS&E test.',
   });
 
   return (
@@ -76,8 +76,8 @@ export default function CscsCardModule3() {
               Working at Height &amp; Manual Handling
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Understand the Work at Height Regulations, select appropriate access equipment,
-              carry out manual handling assessments, and apply fall protection and safe lifting
+              Understand the Work at Height Regulations, select appropriate access equipment, carry
+              out manual handling assessments, and apply fall protection and safe lifting
               techniques.
             </p>
           </div>

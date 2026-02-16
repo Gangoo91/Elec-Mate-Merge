@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { cpdDataService, CPDEntry, CPDStats, CPDGoal } from '@/services/cpdDataService';
 import { useToast } from '@/components/ui/use-toast';
@@ -15,16 +14,16 @@ export const useCPDData = () => {
       const newEntries = cpdDataService.getEntries();
       const newGoals = cpdDataService.getGoals();
       const newStats = cpdDataService.getStats();
-      
+
       setEntries(newEntries);
       setGoals(newGoals);
       setStats(newStats);
     } catch (error) {
       console.error('Error refreshing CPD data:', error);
       toast({
-        title: "Error loading CPD data",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error loading CPD data',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -40,16 +39,16 @@ export const useCPDData = () => {
       const newEntry = cpdDataService.saveEntry(entryData);
       refreshData();
       toast({
-        title: "CPD entry added",
+        title: 'CPD entry added',
         description: `${entryData.activity} has been recorded.`,
       });
       return newEntry;
     } catch (error) {
       console.error('Error adding CPD entry:', error);
       toast({
-        title: "Error adding entry",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error adding entry',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
       return null;
     }
@@ -61,17 +60,17 @@ export const useCPDData = () => {
       if (updatedEntry) {
         refreshData();
         toast({
-          title: "CPD entry updated",
-          description: "Your changes have been saved.",
+          title: 'CPD entry updated',
+          description: 'Your changes have been saved.',
         });
       }
       return updatedEntry;
     } catch (error) {
       console.error('Error updating CPD entry:', error);
       toast({
-        title: "Error updating entry",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error updating entry',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
       return null;
     }
@@ -83,17 +82,17 @@ export const useCPDData = () => {
       if (success) {
         refreshData();
         toast({
-          title: "CPD entry deleted",
-          description: "The entry has been removed.",
+          title: 'CPD entry deleted',
+          description: 'The entry has been removed.',
         });
       }
       return success;
     } catch (error) {
       console.error('Error deleting CPD entry:', error);
       toast({
-        title: "Error deleting entry",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error deleting entry',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
       return false;
     }
@@ -104,16 +103,16 @@ export const useCPDData = () => {
       const newGoal = cpdDataService.saveGoal(goalData);
       refreshData();
       toast({
-        title: "CPD goal created",
+        title: 'CPD goal created',
         description: `${goalData.title} has been added to your goals.`,
       });
       return newGoal;
     } catch (error) {
       console.error('Error adding CPD goal:', error);
       toast({
-        title: "Error creating goal",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error creating goal',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
       return null;
     }
@@ -125,17 +124,17 @@ export const useCPDData = () => {
       if (updatedGoal) {
         refreshData();
         toast({
-          title: "CPD goal updated",
-          description: "Your changes have been saved.",
+          title: 'CPD goal updated',
+          description: 'Your changes have been saved.',
         });
       }
       return updatedGoal;
     } catch (error) {
       console.error('Error updating CPD goal:', error);
       toast({
-        title: "Error updating goal",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error updating goal',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
       return null;
     }
@@ -147,17 +146,17 @@ export const useCPDData = () => {
       if (success) {
         refreshData();
         toast({
-          title: "CPD goal deleted",
-          description: "The goal has been removed.",
+          title: 'CPD goal deleted',
+          description: 'The goal has been removed.',
         });
       }
       return success;
     } catch (error) {
       console.error('Error deleting CPD goal:', error);
       toast({
-        title: "Error deleting goal",
-        description: "Please try again later.",
-        variant: "destructive"
+        title: 'Error deleting goal',
+        description: 'Please try again later.',
+        variant: 'destructive',
       });
       return false;
     }
@@ -168,7 +167,7 @@ export const useCPDData = () => {
       const newEntry = cpdDataService.addAutoTrackedHours(activity, hours, source);
       refreshData();
       toast({
-        title: "Auto-tracked hours added",
+        title: 'Auto-tracked hours added',
         description: `${hours} hours from ${activity} has been automatically recorded.`,
       });
       return newEntry;

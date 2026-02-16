@@ -3,11 +3,11 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingLearningOutcomesSection2_2 = () => {
   const outcomes = [
-    "Describe the role of anti-panic lighting in life safety",
-    "Identify which open areas require anti-panic lighting under BS 5266",
-    "Apply design principles such as spacing, lux levels, and uniformity",
-    "Carry out installation, inspection, and maintenance procedures correctly",
-    "Record test results in compliance with emergency lighting regulations"
+    'Describe the role of anti-panic lighting in life safety',
+    'Identify which open areas require anti-panic lighting under BS 5266',
+    'Apply design principles such as spacing, lux levels, and uniformity',
+    'Carry out installation, inspection, and maintenance procedures correctly',
+    'Record test results in compliance with emergency lighting regulations',
   ];
 
   return (
@@ -19,9 +19,7 @@ export const EmergencyLightingLearningOutcomesSection2_2 = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-foreground mb-4">
-          By completing this section, you will be able to:
-        </p>
+        <p className="text-foreground mb-4">By completing this section, you will be able to:</p>
         <div className="grid grid-cols-1 gap-3">
           {outcomes.map((outcome, index) => (
             <div key={index} className="flex items-start gap-3">

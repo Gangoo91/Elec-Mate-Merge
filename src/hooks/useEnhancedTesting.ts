@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from 'react';
 import { TestSession, TestFlow, TestResult } from '@/types/inspection-testing';
 
@@ -20,7 +19,7 @@ export const useEnhancedTesting = (): UseEnhancedTestingReturn => {
 
   const startSession = useCallback((flow: TestFlow, installationDetails: any, technician: any) => {
     console.log('Starting enhanced testing session with flow:', flow.id);
-    
+
     const newSession: TestSession = {
       id: `session-${Date.now()}`,
       flowId: flow.id,
@@ -33,7 +32,7 @@ export const useEnhancedTesting = (): UseEnhancedTestingReturn => {
       status: 'in-progress',
       isComprehensive: flow.isComprehensive,
       installationDetails,
-      technician
+      technician,
     };
 
     setSession(newSession);
@@ -42,60 +41,63 @@ export const useEnhancedTesting = (): UseEnhancedTestingReturn => {
 
   const pauseSession = useCallback(() => {
     if (!session) return;
-    
+
     console.log('Pausing testing session');
-    setSession(prev => prev ? { ...prev, status: 'pending' } : null);
+    setSession((prev) => (prev ? { ...prev, status: 'pending' } : null));
   }, [session]);
 
   const resumeSession = useCallback(() => {
     if (!session) return;
-    
+
     console.log('Resuming testing session');
-    setSession(prev => prev ? { ...prev, status: 'in-progress' } : null);
+    setSession((prev) => (prev ? { ...prev, status: 'in-progress' } : null));
   }, [session]);
 
-  const recordResult = useCallback((stepId: string, result: Omit<TestResult, 'stepId' | 'timestamp'>) => {
-    if (!session) {
-      console.warn('No active session to record result');
-      return;
-    }
-
-    console.log('Recording result for step:', stepId, result);
-
-    const newResult: TestResult = {
-      ...result,
-      stepId,
-      timestamp: new Date()
-    };
-
-    setSession(prev => {
-      if (!prev) return null;
-
-      const existingIndex = prev.results.findIndex(r => r.stepId === stepId);
-      const updatedResults = [...prev.results];
-
-      if (existingIndex >= 0) {
-        updatedResults[existingIndex] = newResult;
-      } else {
-        updatedResults.push(newResult);
+  const recordResult = useCallback(
+    (stepId: string, result: Omit<TestResult, 'stepId' | 'timestamp'>) => {
+      if (!session) {
+        console.warn('No active session to record result');
+        return;
       }
 
-      return {
-        ...prev,
-        results: updatedResults
+      console.log('Recording result for step:', stepId, result);
+
+      const newResult: TestResult = {
+        ...result,
+        stepId,
+        timestamp: new Date(),
       };
-    });
-  }, [session]);
+
+      setSession((prev) => {
+        if (!prev) return null;
+
+        const existingIndex = prev.results.findIndex((r) => r.stepId === stepId);
+        const updatedResults = [...prev.results];
+
+        if (existingIndex >= 0) {
+          updatedResults[existingIndex] = newResult;
+        } else {
+          updatedResults.push(newResult);
+        }
+
+        return {
+          ...prev,
+          results: updatedResults,
+        };
+      });
+    },
+    [session]
+  );
 
   const nextStep = useCallback(() => {
     if (!session) return;
 
-    setSession(prev => {
+    setSession((prev) => {
       if (!prev || (prev.currentStepIndex ?? 0) >= prev.steps.length - 1) return prev;
-      
+
       return {
         ...prev,
-        currentStepIndex: (prev.currentStepIndex ?? 0) + 1
+        currentStepIndex: (prev.currentStepIndex ?? 0) + 1,
       };
     });
   }, [session]);
@@ -103,12 +105,12 @@ export const useEnhancedTesting = (): UseEnhancedTestingReturn => {
   const previousStep = useCallback(() => {
     if (!session) return;
 
-    setSession(prev => {
+    setSession((prev) => {
       if (!prev || (prev.currentStepIndex ?? 0) <= 0) return prev;
-      
+
       return {
         ...prev,
-        currentStepIndex: (prev.currentStepIndex ?? 0) - 1
+        currentStepIndex: (prev.currentStepIndex ?? 0) - 1,
       };
     });
   }, [session]);
@@ -117,14 +119,14 @@ export const useEnhancedTesting = (): UseEnhancedTestingReturn => {
     if (!session) return;
 
     console.log('Completing enhanced testing session');
-    
-    setSession(prev => {
+
+    setSession((prev) => {
       if (!prev) return null;
-      
+
       return {
         ...prev,
         endTime: new Date(),
-        status: 'completed'
+        status: 'completed',
       };
     });
   }, [session]);
@@ -136,11 +138,11 @@ export const useEnhancedTesting = (): UseEnhancedTestingReturn => {
 
   const getStepProgress = useCallback(() => {
     if (!session) return { current: 0, total: 0, percentage: 0 };
-    
+
     const current = (session.currentStepIndex ?? 0) + 1;
     const total = session.steps.length;
     const percentage = Math.round((current / total) * 100);
-    
+
     return { current, total, percentage };
   }, [session]);
 
@@ -154,6 +156,6 @@ export const useEnhancedTesting = (): UseEnhancedTestingReturn => {
     previousStep,
     completeSession,
     getCurrentStep,
-    getStepProgress
+    getStepProgress,
   };
 };

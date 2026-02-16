@@ -1,9 +1,17 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
-export type DocumentType = "Quote" | "Contract" | "Certificate" | "RAMS" | "Timesheet" | "Completion" | "Variation" | "Invoice";
-export type SignatureStatus = "Pending" | "Sent" | "Viewed" | "Signed" | "Declined" | "Expired";
+export type DocumentType =
+  | 'Quote'
+  | 'Contract'
+  | 'Certificate'
+  | 'RAMS'
+  | 'Timesheet'
+  | 'Completion'
+  | 'Variation'
+  | 'Invoice';
+export type SignatureStatus = 'Pending' | 'Sent' | 'Viewed' | 'Signed' | 'Declined' | 'Expired';
 
 export interface SignatureRequest {
   id: string;
@@ -33,25 +41,32 @@ export interface SignatureRequest {
   };
 }
 
-export type CreateSignatureRequestInput = Omit<SignatureRequest, "id" | "user_id" | "created_at" | "updated_at" | "job">;
+export type CreateSignatureRequestInput = Omit<
+  SignatureRequest,
+  'id' | 'user_id' | 'created_at' | 'updated_at' | 'job'
+>;
 export type UpdateSignatureRequestInput = Partial<CreateSignatureRequestInput>;
 
 // Fetch all signature requests for the current user
 export function useSignatureRequests() {
   return useQuery({
-    queryKey: ["signatureRequests"],
+    queryKey: ['signatureRequests'],
     queryFn: async (): Promise<SignatureRequest[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("signature_requests")
-        .select(`
+        .from('signature_requests')
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client)
-        `)
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as SignatureRequest[];
@@ -62,20 +77,24 @@ export function useSignatureRequests() {
 // Fetch pending signature requests
 export function usePendingSignatures() {
   return useQuery({
-    queryKey: ["signatureRequests", "pending"],
+    queryKey: ['signatureRequests', 'pending'],
     queryFn: async (): Promise<SignatureRequest[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("signature_requests")
-        .select(`
+        .from('signature_requests')
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client)
-        `)
-        .eq("user_id", user.id)
-        .in("status", ["Pending", "Sent", "Viewed"])
-        .order("created_at", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .in('status', ['Pending', 'Sent', 'Viewed'])
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as SignatureRequest[];
@@ -86,15 +105,17 @@ export function usePendingSignatures() {
 // Get signature request statistics
 export function useSignatureStats() {
   return useQuery({
-    queryKey: ["signatureRequests", "stats"],
+    queryKey: ['signatureRequests', 'stats'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("signature_requests")
-        .select("id, status, expires_at")
-        .eq("user_id", user.id);
+        .from('signature_requests')
+        .select('id, status, expires_at')
+        .eq('user_id', user.id);
 
       if (error) throw error;
 
@@ -102,10 +123,14 @@ export function useSignatureStats() {
 
       const stats = {
         total: data.length,
-        pending: data.filter(s => ["Pending", "Sent", "Viewed"].includes(s.status)).length,
-        signed: data.filter(s => s.status === "Signed").length,
-        declined: data.filter(s => s.status === "Declined").length,
-        expired: data.filter(s => s.status === "Expired" || (s.expires_at && s.expires_at < today && s.status !== "Signed")).length,
+        pending: data.filter((s) => ['Pending', 'Sent', 'Viewed'].includes(s.status)).length,
+        signed: data.filter((s) => s.status === 'Signed').length,
+        declined: data.filter((s) => s.status === 'Declined').length,
+        expired: data.filter(
+          (s) =>
+            s.status === 'Expired' ||
+            (s.expires_at && s.expires_at < today && s.status !== 'Signed')
+        ).length,
       };
 
       return stats;
@@ -120,19 +145,23 @@ export function useCreateSignatureRequest() {
 
   return useMutation({
     mutationFn: async (input: CreateSignatureRequestInput): Promise<SignatureRequest> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       // Generate a unique access token for public signing URL
       const accessToken = crypto.randomUUID();
 
       const { data, error } = await supabase
-        .from("signature_requests")
+        .from('signature_requests')
         .insert({ ...input, user_id: user.id, access_token: accessToken })
-        .select(`
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
@@ -140,11 +169,11 @@ export function useCreateSignatureRequest() {
       // If email provided, send signing request email
       if (input.signer_email && data) {
         try {
-          await supabase.functions.invoke("send-signature-request", {
-            body: { signatureRequestId: data.id }
+          await supabase.functions.invoke('send-signature-request', {
+            body: { signatureRequestId: data.id },
           });
         } catch (emailError) {
-          console.warn("Could not send signature request email:", emailError);
+          console.warn('Could not send signature request email:', emailError);
           // Don't fail the overall operation
         }
       }
@@ -152,17 +181,17 @@ export function useCreateSignatureRequest() {
       return data as SignatureRequest;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["signatureRequests"] });
+      queryClient.invalidateQueries({ queryKey: ['signatureRequests'] });
       toast({
-        title: "Signature request created",
+        title: 'Signature request created',
         description: `Request sent to ${data.signer_name}.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -174,32 +203,37 @@ export function useUpdateSignatureRequest() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, ...input }: UpdateSignatureRequestInput & { id: string }): Promise<SignatureRequest> => {
+    mutationFn: async ({
+      id,
+      ...input
+    }: UpdateSignatureRequestInput & { id: string }): Promise<SignatureRequest> => {
       const { data, error } = await supabase
-        .from("signature_requests")
+        .from('signature_requests')
         .update({ ...input, updated_at: new Date().toISOString() })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as SignatureRequest;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["signatureRequests"] });
+      queryClient.invalidateQueries({ queryKey: ['signatureRequests'] });
       toast({
-        title: "Request updated",
-        description: "The signature request has been updated.",
+        title: 'Request updated',
+        description: 'The signature request has been updated.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -213,16 +247,18 @@ export function useResendSignatureRequest() {
   return useMutation({
     mutationFn: async (id: string): Promise<SignatureRequest> => {
       const { data, error } = await supabase
-        .from("signature_requests")
+        .from('signature_requests')
         .update({
-          status: "Sent",
-          updated_at: new Date().toISOString()
+          status: 'Sent',
+          updated_at: new Date().toISOString(),
         })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
@@ -230,28 +266,28 @@ export function useResendSignatureRequest() {
       // Send signing request email
       if (data?.signer_email) {
         try {
-          await supabase.functions.invoke("send-signature-request", {
-            body: { signatureRequestId: data.id }
+          await supabase.functions.invoke('send-signature-request', {
+            body: { signatureRequestId: data.id },
           });
         } catch (emailError) {
-          console.warn("Could not send signature request email:", emailError);
+          console.warn('Could not send signature request email:', emailError);
         }
       }
 
       return data as SignatureRequest;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["signatureRequests"] });
+      queryClient.invalidateQueries({ queryKey: ['signatureRequests'] });
       toast({
-        title: "Request resent",
+        title: 'Request resent',
         description: `Reminder sent to ${data.signer_name}.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -263,37 +299,45 @@ export function useMarkAsSigned() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, signatureUrl }: { id: string; signatureUrl?: string }): Promise<SignatureRequest> => {
+    mutationFn: async ({
+      id,
+      signatureUrl,
+    }: {
+      id: string;
+      signatureUrl?: string;
+    }): Promise<SignatureRequest> => {
       const { data, error } = await supabase
-        .from("signature_requests")
+        .from('signature_requests')
         .update({
-          status: "Signed",
+          status: 'Signed',
           signed_at: new Date().toISOString(),
           signature_url: signatureUrl,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           job:employer_jobs(id, title, client)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as SignatureRequest;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["signatureRequests"] });
+      queryClient.invalidateQueries({ queryKey: ['signatureRequests'] });
       toast({
-        title: "Signature recorded",
+        title: 'Signature recorded',
         description: `${data.signer_name} has signed.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -306,25 +350,22 @@ export function useDeleteSignatureRequest() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from("signature_requests")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from('signature_requests').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["signatureRequests"] });
+      queryClient.invalidateQueries({ queryKey: ['signatureRequests'] });
       toast({
-        title: "Request deleted",
-        description: "The signature request has been removed.",
+        title: 'Request deleted',
+        description: 'The signature request has been removed.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });

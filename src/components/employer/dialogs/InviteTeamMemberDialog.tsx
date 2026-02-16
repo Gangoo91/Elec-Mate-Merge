@@ -1,16 +1,32 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Loader2, Mail, UserPlus } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import type { TeamMemberRole } from '@/hooks/useTeamMembers';
 
 const ROLES: { value: TeamMemberRole; label: string; description: string }[] = [
   { value: 'Admin', label: 'Admin', description: 'Full access to all features' },
-  { value: 'Manager', label: 'Manager', description: 'Can manage jobs, employees, and view reports' },
+  {
+    value: 'Manager',
+    label: 'Manager',
+    description: 'Can manage jobs, employees, and view reports',
+  },
   { value: 'Member', label: 'Member', description: 'Limited view access only' },
 ];
 
@@ -51,7 +67,7 @@ export function InviteTeamMemberDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={isMobile ? "max-w-[95vw] p-0" : "sm:max-w-md p-0"}>
+      <DialogContent className={isMobile ? 'max-w-[95vw] p-0' : 'sm:max-w-md p-0'}>
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-elec-yellow via-elec-yellow to-elec-yellow/50 rounded-t-lg" />
 
         <form onSubmit={handleSubmit}>
@@ -105,7 +121,9 @@ export function InviteTeamMemberDialog({
                       <SelectItem key={r.value} value={r.value}>
                         <div>
                           <span className="font-medium">{r.label}</span>
-                          <span className="text-xs text-muted-foreground ml-2">{r.description}</span>
+                          <span className="text-xs text-muted-foreground ml-2">
+                            {r.description}
+                          </span>
                         </div>
                       </SelectItem>
                     ))}
@@ -124,11 +142,7 @@ export function InviteTeamMemberDialog({
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              className="flex-1 h-12"
-              disabled={!email.trim() || isInviting}
-            >
+            <Button type="submit" className="flex-1 h-12" disabled={!email.trim() || isInviting}>
               {isInviting ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />

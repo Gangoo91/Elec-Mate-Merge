@@ -1,16 +1,15 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { GraduationCap, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { GraduationCap, CheckCircle } from 'lucide-react';
 
 const CareerAdvancementTips = () => {
   const tips = [
-    "Continuously update your skills through courses and certifications",
-    "Join professional organisations like the IET, ECA, or NICEIC to network with others in the field",
-    "Consider specialising in growth areas like renewable energy, electric vehicles, or smart building systems",
-    "Document your work and build a portfolio showcasing your most impressive projects",
-    "Pursue additional qualifications like the 18th Edition Wiring Regulations or inspection and testing certification",
-    "Consider gaining experience in different sectors (domestic, commercial, industrial) to broaden your expertise",
-    "Build relationships with suppliers, manufacturers and specialists to stay informed about industry developments"
+    'Continuously update your skills through courses and certifications',
+    'Join professional organisations like the IET, ECA, or NICEIC to network with others in the field',
+    'Consider specialising in growth areas like renewable energy, electric vehicles, or smart building systems',
+    'Document your work and build a portfolio showcasing your most impressive projects',
+    'Pursue additional qualifications like the 18th Edition Wiring Regulations or inspection and testing certification',
+    'Consider gaining experience in different sectors (domestic, commercial, industrial) to broaden your expertise',
+    'Build relationships with suppliers, manufacturers and specialists to stay informed about industry developments',
   ];
 
   return (
@@ -27,7 +26,10 @@ const CareerAdvancementTips = () => {
       <CardContent className="relative">
         <ul className="space-y-3">
           {tips.map((tip, index) => (
-            <li key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors">
+            <li
+              key={index}
+              className="flex items-start gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors"
+            >
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
               <span className="text-sm text-white/80">{tip}</span>
             </li>

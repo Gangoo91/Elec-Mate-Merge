@@ -9,9 +9,9 @@
  */
 
 export type AreaType =
-  | 'general'              // General occupied areas
-  | 'sleeping'             // Bedrooms, dormitories, sleeping areas
-  | 'high-ambient-noise';  // Areas with high background noise
+  | 'general' // General occupied areas
+  | 'sleeping' // Bedrooms, dormitories, sleeping areas
+  | 'high-ambient-noise'; // Areas with high background noise
 
 export type PremisesCategory =
   | 'care-home'
@@ -28,10 +28,7 @@ export type PremisesCategory =
   | 'hospitality'
   | 'mixed-use';
 
-export type SystemCategoryType =
-  | 'L1' | 'L2' | 'L3' | 'L4' | 'L5'
-  | 'M'
-  | 'P1' | 'P2';
+export type SystemCategoryType = 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'M' | 'P1' | 'P2';
 
 export interface ValidationResult {
   valid: boolean;
@@ -71,21 +68,21 @@ export interface ServiceInterval {
  * may be necessary in addition to sounders.
  */
 export const SOUND_LEVEL_REQUIREMENTS: Record<AreaType, SoundLevelRequirement> = {
-  'general': {
+  general: {
     minDb: 65,
     description: 'General occupied areas - minimum 65 dB(A) or 5 dB above ambient',
-    reference: 'BS 5839-1:2017 Clause 16.5.1'
+    reference: 'BS 5839-1:2017 Clause 16.5.1',
   },
-  'sleeping': {
+  sleeping: {
     minDb: 75,
     description: 'Sleeping areas (bedrooms) - minimum 75 dB(A) at bedhead',
-    reference: 'BS 5839-1:2017 Clause 16.5.2'
+    reference: 'BS 5839-1:2017 Clause 16.5.2',
   },
   'high-ambient-noise': {
     minDb: 65,
     description: 'High ambient noise areas - 5 dB(A) above ambient noise level',
-    reference: 'BS 5839-1:2017 Clause 16.5.1'
-  }
+    reference: 'BS 5839-1:2017 Clause 16.5.1',
+  },
 };
 
 // ============================================
@@ -121,32 +118,32 @@ export const SERVICE_INTERVALS = {
     months: 0.25,
     days: 7,
     description: 'Weekly user check - verify panel shows normal, no faults',
-    reference: 'BS 5839-1:2017 Clause 45.2'
+    reference: 'BS 5839-1:2017 Clause 45.2',
   },
   monthly: {
     months: 1,
     days: 30,
     description: 'Monthly test - operate one device per zone (rotation)',
-    reference: 'BS 5839-1:2017 Clause 45.3'
+    reference: 'BS 5839-1:2017 Clause 45.3',
   },
   quarterly: {
     months: 3,
     days: 90,
     description: 'Quarterly test - 25% of devices, check batteries',
-    reference: 'BS 5839-1:2017 Clause 45.4'
+    reference: 'BS 5839-1:2017 Clause 45.4',
   },
   sixMonthly: {
     months: 6,
     days: 183,
     description: 'Six-monthly service - full inspection by competent person',
-    reference: 'BS 5839-1:2017 Clause 45.5'
+    reference: 'BS 5839-1:2017 Clause 45.5',
   },
   annual: {
     months: 12,
     days: 365,
     description: 'Annual comprehensive test - load test batteries, check all cables',
-    reference: 'BS 5839-1:2017 Clause 45.6'
-  }
+    reference: 'BS 5839-1:2017 Clause 45.6',
+  },
 };
 
 // ============================================
@@ -171,18 +168,18 @@ export const BATTERY_REQUIREMENTS = {
   standardStandby: {
     hours: 24,
     description: '24 hours normal standby operation',
-    reference: 'BS 5839-1:2017 Clause 25.2'
+    reference: 'BS 5839-1:2017 Clause 25.2',
   },
   alarmDuration: {
     minutes: 30,
     description: '30 minutes in alarm condition after standby',
-    reference: 'BS 5839-1:2017 Clause 25.2'
+    reference: 'BS 5839-1:2017 Clause 25.2',
   },
   extendedStandby: {
     hours: 72,
     description: 'Extended standby for remote/unmonitored sites',
-    reference: 'BS 5839-1:2017 Clause 25.2 Note'
-  }
+    reference: 'BS 5839-1:2017 Clause 25.2 Note',
+  },
 };
 
 // ============================================
@@ -206,69 +203,72 @@ export const BATTERY_REQUIREMENTS = {
  * Manual Category (M):
  * M - Manual call points only (no automatic detection)
  */
-export const SYSTEM_CATEGORIES: Record<SystemCategoryType, {
-  name: string;
-  description: string;
-  coverage: string;
-  typicalUse: string[];
-  reference: string;
-}> = {
-  'L1': {
+export const SYSTEM_CATEGORIES: Record<
+  SystemCategoryType,
+  {
+    name: string;
+    description: string;
+    coverage: string;
+    typicalUse: string[];
+    reference: string;
+  }
+> = {
+  L1: {
     name: 'L1 - Full Coverage (Life)',
     description: 'Automatic detection throughout all areas of the building',
     coverage: 'All areas including voids, roof spaces, and risers',
     typicalUse: ['Care homes', 'Hospitals', 'Hotels', 'HMOs', 'High-risk residential'],
-    reference: 'BS 5839-1:2017 Clause 8.2'
+    reference: 'BS 5839-1:2017 Clause 8.2',
   },
-  'L2': {
+  L2: {
     name: 'L2 - Enhanced Coverage (Life)',
     description: 'Automatic detection in escape routes plus high-risk/specified areas',
     coverage: 'Escape routes + specified rooms (often bedrooms, high fire load areas)',
     typicalUse: ['Residential care', 'Sheltered housing', 'Large HMOs'],
-    reference: 'BS 5839-1:2017 Clause 8.3'
+    reference: 'BS 5839-1:2017 Clause 8.3',
   },
-  'L3': {
+  L3: {
     name: 'L3 - Standard Coverage (Life)',
     description: 'Automatic detection in escape routes only',
     coverage: 'All circulation spaces forming escape routes',
     typicalUse: ['Offices', 'Shops', 'Warehouses', 'Standard commercial'],
-    reference: 'BS 5839-1:2017 Clause 8.4'
+    reference: 'BS 5839-1:2017 Clause 8.4',
   },
-  'L4': {
+  L4: {
     name: 'L4 - Escape Route Only (Life)',
     description: 'Automatic detection within escape routes',
     coverage: 'Circulation routes (corridors, stairwells, lobbies)',
     typicalUse: ['Single-occupancy dwellings', 'Small premises'],
-    reference: 'BS 5839-1:2017 Clause 8.5'
+    reference: 'BS 5839-1:2017 Clause 8.5',
   },
-  'L5': {
+  L5: {
     name: 'L5 - Engineered System (Life)',
     description: 'Coverage as determined by fire risk assessment',
     coverage: 'Custom coverage based on fire engineering principles',
     typicalUse: ['Complex buildings', 'Fire-engineered solutions'],
-    reference: 'BS 5839-1:2017 Clause 8.6'
+    reference: 'BS 5839-1:2017 Clause 8.6',
   },
-  'M': {
+  M: {
     name: 'M - Manual System',
     description: 'Manual call points only, no automatic detection',
     coverage: 'Manual call points at exits and on escape routes',
     typicalUse: ['Low-risk premises', 'Simple buildings with good visibility'],
-    reference: 'BS 5839-1:2017 Clause 7'
+    reference: 'BS 5839-1:2017 Clause 7',
   },
-  'P1': {
+  P1: {
     name: 'P1 - Full Coverage (Property)',
     description: 'Automatic detection throughout for property protection',
     coverage: 'All areas to protect property and contents',
     typicalUse: ['Museums', 'Archives', 'High-value storage', 'Insurance requirement'],
-    reference: 'BS 5839-1:2017 Clause 9.2'
+    reference: 'BS 5839-1:2017 Clause 9.2',
   },
-  'P2': {
+  P2: {
     name: 'P2 - Partial Coverage (Property)',
     description: 'Automatic detection in defined high-risk areas for property protection',
     coverage: 'Specified high-value or high-risk areas only',
     typicalUse: ['Server rooms', 'Plant rooms', 'Storage areas'],
-    reference: 'BS 5839-1:2017 Clause 9.3'
-  }
+    reference: 'BS 5839-1:2017 Clause 9.3',
+  },
 };
 
 // ============================================
@@ -279,76 +279,79 @@ export const SYSTEM_CATEGORIES: Record<SystemCategoryType, {
  * Suggested system categories based on premises type
  * Per BS 5839-1:2017 recommendations and fire safety guidance
  */
-export const PREMISES_CATEGORY_SUGGESTIONS: Record<PremisesCategory, {
-  recommended: SystemCategoryType;
-  minimum: SystemCategoryType;
-  reason: string;
-}> = {
+export const PREMISES_CATEGORY_SUGGESTIONS: Record<
+  PremisesCategory,
+  {
+    recommended: SystemCategoryType;
+    minimum: SystemCategoryType;
+    reason: string;
+  }
+> = {
   'care-home': {
     recommended: 'L1',
     minimum: 'L1',
-    reason: 'Sleeping risk with occupants who may need assistance evacuating'
+    reason: 'Sleeping risk with occupants who may need assistance evacuating',
   },
-  'hospital': {
+  hospital: {
     recommended: 'L1',
     minimum: 'L1',
-    reason: 'Sleeping risk with non-ambulant patients'
+    reason: 'Sleeping risk with non-ambulant patients',
   },
-  'hotel': {
+  hotel: {
     recommended: 'L1',
     minimum: 'L2',
-    reason: 'Sleeping risk - guests unfamiliar with building'
+    reason: 'Sleeping risk - guests unfamiliar with building',
   },
-  'hmo': {
+  hmo: {
     recommended: 'L2',
     minimum: 'L2',
-    reason: 'Sleeping risk with shared escape routes'
+    reason: 'Sleeping risk with shared escape routes',
   },
-  'residential': {
+  residential: {
     recommended: 'L3',
     minimum: 'L4',
-    reason: 'Standard residential - escape route protection'
+    reason: 'Standard residential - escape route protection',
   },
-  'office': {
+  office: {
     recommended: 'L3',
     minimum: 'M',
-    reason: 'Day use only - occupants familiar with building'
+    reason: 'Day use only - occupants familiar with building',
   },
-  'retail': {
+  retail: {
     recommended: 'L3',
     minimum: 'M',
-    reason: 'High visibility, easy evacuation'
+    reason: 'High visibility, easy evacuation',
   },
-  'warehouse': {
+  warehouse: {
     recommended: 'P1',
     minimum: 'L3',
-    reason: 'Property protection often primary concern'
+    reason: 'Property protection often primary concern',
   },
-  'industrial': {
+  industrial: {
     recommended: 'L3',
     minimum: 'M',
-    reason: 'Day use, trained occupants'
+    reason: 'Day use, trained occupants',
   },
-  'educational': {
+  educational: {
     recommended: 'L3',
     minimum: 'L3',
-    reason: 'High occupancy, includes children'
+    reason: 'High occupancy, includes children',
   },
-  'healthcare': {
+  healthcare: {
     recommended: 'L1',
     minimum: 'L2',
-    reason: 'Vulnerable occupants, possible sleeping risk'
+    reason: 'Vulnerable occupants, possible sleeping risk',
   },
-  'hospitality': {
+  hospitality: {
     recommended: 'L2',
     minimum: 'L3',
-    reason: 'Mixed use with possible sleeping'
+    reason: 'Mixed use with possible sleeping',
   },
   'mixed-use': {
     recommended: 'L2',
     minimum: 'L3',
-    reason: 'Complex occupancy requires assessment'
-  }
+    reason: 'Complex occupancy requires assessment',
+  },
 };
 
 // ============================================
@@ -368,7 +371,7 @@ export function validateSoundLevel(
     return {
       valid: false,
       status: 'fail',
-      message: 'Unknown area type'
+      message: 'Unknown area type',
     };
   }
 
@@ -380,14 +383,14 @@ export function validateSoundLevel(
         valid: true,
         status: 'pass',
         message: `${dbReading} dB(A) meets requirement of ${required} dB(A) (ambient ${ambientNoise} + 5 dB)`,
-        reference: requirement.reference
+        reference: requirement.reference,
       };
     }
     return {
       valid: false,
       status: 'fail',
       message: `${dbReading} dB(A) FAILS - requires ${required} dB(A) (ambient ${ambientNoise} + 5 dB)`,
-      reference: requirement.reference
+      reference: requirement.reference,
     };
   }
 
@@ -397,7 +400,7 @@ export function validateSoundLevel(
       valid: true,
       status: 'pass',
       message: `${dbReading} dB(A) meets minimum requirement of ${requirement.minDb} dB(A)`,
-      reference: requirement.reference
+      reference: requirement.reference,
     };
   }
 
@@ -407,7 +410,7 @@ export function validateSoundLevel(
       valid: false,
       status: 'warning',
       message: `${dbReading} dB(A) is below ${requirement.minDb} dB(A) but within tolerance - verify measurement`,
-      reference: requirement.reference
+      reference: requirement.reference,
     };
   }
 
@@ -415,7 +418,7 @@ export function validateSoundLevel(
     valid: false,
     status: 'fail',
     message: `${dbReading} dB(A) FAILS minimum requirement of ${requirement.minDb} dB(A)`,
-    reference: requirement.reference
+    reference: requirement.reference,
   };
 }
 
@@ -464,8 +467,8 @@ export function calculateNextServiceDates(fromDate: Date | string): {
       nextMonthly: formatDate(nextMonthly),
       nextQuarterly: formatDate(nextQuarterly),
       nextSixMonthly: formatDate(nextSixMonthly),
-      nextAnnual: formatDate(nextAnnual)
-    }
+      nextAnnual: formatDate(nextAnnual),
+    },
   };
 }
 
@@ -480,7 +483,8 @@ export function isServiceOverdue(
     return { overdue: true, daysSinceService: Infinity, daysOverdue: Infinity };
   }
 
-  const serviceDate = typeof lastServiceDate === 'string' ? new Date(lastServiceDate) : lastServiceDate;
+  const serviceDate =
+    typeof lastServiceDate === 'string' ? new Date(lastServiceDate) : lastServiceDate;
   const now = new Date();
   const diffTime = now.getTime() - serviceDate.getTime();
   const daysSinceService = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -491,7 +495,7 @@ export function isServiceOverdue(
   return {
     overdue: daysOverdue > 0,
     daysSinceService,
-    daysOverdue: Math.max(0, daysOverdue)
+    daysOverdue: Math.max(0, daysOverdue),
   };
 }
 
@@ -502,7 +506,7 @@ export function suggestSystemCategory(premisesType: string): {
   recommended: SystemCategoryType;
   minimum: SystemCategoryType;
   reason: string;
-  categoryDetails: typeof SYSTEM_CATEGORIES[SystemCategoryType];
+  categoryDetails: (typeof SYSTEM_CATEGORIES)[SystemCategoryType];
 } | null {
   // Normalize input
   const normalizedType = premisesType.toLowerCase().replace(/[^a-z]/g, '-') as PremisesCategory;
@@ -512,40 +516,40 @@ export function suggestSystemCategory(premisesType: string): {
     const suggestion = PREMISES_CATEGORY_SUGGESTIONS[normalizedType];
     return {
       ...suggestion,
-      categoryDetails: SYSTEM_CATEGORIES[suggestion.recommended]
+      categoryDetails: SYSTEM_CATEGORIES[suggestion.recommended],
     };
   }
 
   // Check for partial matches
   const typeMap: Record<string, PremisesCategory> = {
-    'care': 'care-home',
-    'nursing': 'care-home',
-    'hospital': 'hospital',
-    'clinic': 'healthcare',
-    'surgery': 'healthcare',
-    'hotel': 'hotel',
-    'guest': 'hotel',
-    'hostel': 'hmo',
-    'hmo': 'hmo',
-    'flat': 'residential',
-    'house': 'residential',
-    'dwelling': 'residential',
-    'apartment': 'residential',
-    'office': 'office',
-    'shop': 'retail',
-    'store': 'retail',
-    'retail': 'retail',
-    'warehouse': 'warehouse',
-    'factory': 'industrial',
-    'industrial': 'industrial',
-    'school': 'educational',
-    'college': 'educational',
-    'university': 'educational',
-    'restaurant': 'hospitality',
-    'pub': 'hospitality',
-    'bar': 'hospitality',
-    'cinema': 'hospitality',
-    'theatre': 'hospitality'
+    care: 'care-home',
+    nursing: 'care-home',
+    hospital: 'hospital',
+    clinic: 'healthcare',
+    surgery: 'healthcare',
+    hotel: 'hotel',
+    guest: 'hotel',
+    hostel: 'hmo',
+    hmo: 'hmo',
+    flat: 'residential',
+    house: 'residential',
+    dwelling: 'residential',
+    apartment: 'residential',
+    office: 'office',
+    shop: 'retail',
+    store: 'retail',
+    retail: 'retail',
+    warehouse: 'warehouse',
+    factory: 'industrial',
+    industrial: 'industrial',
+    school: 'educational',
+    college: 'educational',
+    university: 'educational',
+    restaurant: 'hospitality',
+    pub: 'hospitality',
+    bar: 'hospitality',
+    cinema: 'hospitality',
+    theatre: 'hospitality',
   };
 
   for (const [keyword, category] of Object.entries(typeMap)) {
@@ -553,7 +557,7 @@ export function suggestSystemCategory(premisesType: string): {
       const suggestion = PREMISES_CATEGORY_SUGGESTIONS[category];
       return {
         ...suggestion,
-        categoryDetails: SYSTEM_CATEGORIES[suggestion.recommended]
+        categoryDetails: SYSTEM_CATEGORIES[suggestion.recommended],
       };
     }
   }
@@ -562,7 +566,7 @@ export function suggestSystemCategory(premisesType: string): {
   const defaultSuggestion = PREMISES_CATEGORY_SUGGESTIONS['office'];
   return {
     ...defaultSuggestion,
-    categoryDetails: SYSTEM_CATEGORIES[defaultSuggestion.recommended]
+    categoryDetails: SYSTEM_CATEGORIES[defaultSuggestion.recommended],
   };
 }
 
@@ -581,7 +585,7 @@ export function validateBatteryDuration(
       valid: true,
       status: 'pass',
       message: `Battery capacity meets requirements (${standbyHours}hr standby + ${alarmMinutes}min alarm)`,
-      reference: BATTERY_REQUIREMENTS.standardStandby.reference
+      reference: BATTERY_REQUIREMENTS.standardStandby.reference,
     };
   }
 
@@ -590,7 +594,7 @@ export function validateBatteryDuration(
       valid: false,
       status: 'fail',
       message: `Standby duration ${standbyHours}hr FAILS minimum ${BATTERY_REQUIREMENTS.standardStandby.hours}hr`,
-      reference: BATTERY_REQUIREMENTS.standardStandby.reference
+      reference: BATTERY_REQUIREMENTS.standardStandby.reference,
     };
   }
 
@@ -598,16 +602,17 @@ export function validateBatteryDuration(
     valid: false,
     status: 'fail',
     message: `Alarm duration ${alarmMinutes}min FAILS minimum ${BATTERY_REQUIREMENTS.alarmDuration.minutes}min`,
-    reference: BATTERY_REQUIREMENTS.alarmDuration.reference
+    reference: BATTERY_REQUIREMENTS.alarmDuration.reference,
   };
 }
 
 /**
  * Get defect severity suggestion based on description
  */
-export function suggestDefectSeverity(
-  description: string
-): { severity: 'critical' | 'non-critical' | 'recommendation'; reason: string } {
+export function suggestDefectSeverity(description: string): {
+  severity: 'critical' | 'non-critical' | 'recommendation';
+  reason: string;
+} {
   const lowerDesc = description.toLowerCase();
 
   // Critical - immediate safety risk
@@ -625,13 +630,13 @@ export function suggestDefectSeverity(
     'zone fault',
     'no indication',
     'fire door held open',
-    'exit blocked'
+    'exit blocked',
   ];
 
-  if (criticalKeywords.some(k => lowerDesc.includes(k))) {
+  if (criticalKeywords.some((k) => lowerDesc.includes(k))) {
     return {
       severity: 'critical',
-      reason: 'Safety-critical issue requiring immediate attention'
+      reason: 'Safety-critical issue requiring immediate attention',
     };
   }
 
@@ -646,20 +651,20 @@ export function suggestDefectSeverity(
     'cosmetic',
     'label missing',
     'documentation',
-    'legend faded'
+    'legend faded',
   ];
 
-  if (nonCriticalKeywords.some(k => lowerDesc.includes(k))) {
+  if (nonCriticalKeywords.some((k) => lowerDesc.includes(k))) {
     return {
       severity: 'non-critical',
-      reason: 'Issue requiring attention but not immediately safety-critical'
+      reason: 'Issue requiring attention but not immediately safety-critical',
     };
   }
 
   // Default to recommendation
   return {
     severity: 'recommendation',
-    reason: 'Advisory item for consideration'
+    reason: 'Advisory item for consideration',
   };
 }
 

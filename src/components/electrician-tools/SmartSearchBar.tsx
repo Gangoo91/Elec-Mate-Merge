@@ -1,10 +1,10 @@
-import { useState, useMemo, useRef, useEffect } from "react";
-import { Search, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ToolItem } from "@/hooks/useToolsData";
-import { cn } from "@/lib/utils";
+import { useState, useMemo, useRef, useEffect } from 'react';
+import { Search, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { ToolItem } from '@/hooks/useToolsData';
+import { cn } from '@/lib/utils';
 
 interface SmartSearchBarProps {
   value: string;
@@ -13,7 +13,12 @@ interface SmartSearchBarProps {
   placeholder?: string;
 }
 
-const SmartSearchBar = ({ value, onChange, tools, placeholder = "Search tools..." }: SmartSearchBarProps) => {
+const SmartSearchBar = ({
+  value,
+  onChange,
+  tools,
+  placeholder = 'Search tools...',
+}: SmartSearchBarProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,21 +32,21 @@ const SmartSearchBar = ({ value, onChange, tools, placeholder = "Search tools...
     const suggestionSet = new Set<string>();
 
     // Add matching tool names
-    tools.forEach(tool => {
+    tools.forEach((tool) => {
       if (tool.name.toLowerCase().includes(query)) {
         suggestionSet.add(tool.name);
       }
     });
 
     // Add matching categories
-    tools.forEach(tool => {
+    tools.forEach((tool) => {
       if (tool.category?.toLowerCase().includes(query)) {
         suggestionSet.add(tool.category);
       }
     });
 
     // Add matching suppliers
-    tools.forEach(tool => {
+    tools.forEach((tool) => {
       if (tool.supplier?.toLowerCase().includes(query)) {
         suggestionSet.add(tool.supplier);
       }
@@ -49,19 +54,19 @@ const SmartSearchBar = ({ value, onChange, tools, placeholder = "Search tools...
 
     // Add smart category suggestions for common terms
     const categoryMap: Record<string, string[]> = {
-      'screw': ['Screwdrivers', 'Screws', 'Hand Tools'],
-      'drill': ['Power Tools', 'Drills', 'Cordless Tools'],
-      'test': ['Test Equipment', 'Multimeters', 'Testers'],
-      'wire': ['Wire Strippers', 'Cable Tools', 'Hand Tools'],
-      'safety': ['Safety Tools', 'PPE', 'Protection'],
-      'cable': ['Cable Tools', 'Specialist Tools', 'Wiring'],
-      'power': ['Power Tools', 'Cordless Tools', 'Battery Tools'],
-      'light': ['Lighting', 'Work Lights', 'LED'],
+      screw: ['Screwdrivers', 'Screws', 'Hand Tools'],
+      drill: ['Power Tools', 'Drills', 'Cordless Tools'],
+      test: ['Test Equipment', 'Multimeters', 'Testers'],
+      wire: ['Wire Strippers', 'Cable Tools', 'Hand Tools'],
+      safety: ['Safety Tools', 'PPE', 'Protection'],
+      cable: ['Cable Tools', 'Specialist Tools', 'Wiring'],
+      power: ['Power Tools', 'Cordless Tools', 'Battery Tools'],
+      light: ['Lighting', 'Work Lights', 'LED'],
     };
 
     Object.entries(categoryMap).forEach(([term, categories]) => {
       if (query.includes(term)) {
-        categories.forEach(cat => suggestionSet.add(cat));
+        categories.forEach((cat) => suggestionSet.add(cat));
       }
     });
 
@@ -119,9 +124,9 @@ const SmartSearchBar = ({ value, onChange, tools, placeholder = "Search tools...
           onChange={(e) => handleInputChange(e.target.value)}
           onFocus={handleInputFocus}
           className={cn(
-            "pr-10 h-12 bg-elec-card/50 border-elec-yellow/20 text-elec-light placeholder:text-text-muted focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200",
+            'pr-10 h-12 bg-elec-card/50 border-elec-yellow/20 text-elec-light placeholder:text-text-muted focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200',
             isFocused && 'ring-2 ring-elec-yellow/20',
-            !value && "pl-10"
+            !value && 'pl-10'
           )}
         />
         {value && (

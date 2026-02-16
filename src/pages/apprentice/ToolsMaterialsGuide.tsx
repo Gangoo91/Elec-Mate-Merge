@@ -1,7 +1,6 @@
-
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { SmartBackButton } from '@/components/ui/smart-back-button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   Wrench,
   CheckCircle,
@@ -10,86 +9,91 @@ import {
   Settings,
   Zap,
   AlertTriangle,
-  BadgePoundSterling
-} from "lucide-react";
+  BadgePoundSterling,
+} from 'lucide-react';
 
 const ToolsMaterialsGuide = () => {
   const essentialTools = [
-    "Multifunction tester (insulation, continuity, RCD testing)",
-    "Voltage tester and proving unit (GS38 compliant)",
-    "Socket tester for quick outlet verification",
-    "Cable strippers and crimping tools",
-    "SWA cable stripping knife and gland spanners",
-    "Cordless drill and SDS for cable runs"
+    'Multifunction tester (insulation, continuity, RCD testing)',
+    'Voltage tester and proving unit (GS38 compliant)',
+    'Socket tester for quick outlet verification',
+    'Cable strippers and crimping tools',
+    'SWA cable stripping knife and gland spanners',
+    'Cordless drill and SDS for cable runs',
   ];
 
   const consumables = [
-    "Twin & Earth cable (1.5mm², 2.5mm², 6mm², 10mm²)",
-    "SWA cable for external runs",
-    "Cable clips, trunking and conduit systems",
-    "MCBs, RCBOs and consumer units",
-    "Wago connectors and terminal blocks",
-    "Cable glands and grommets"
+    'Twin & Earth cable (1.5mm², 2.5mm², 6mm², 10mm²)',
+    'SWA cable for external runs',
+    'Cable clips, trunking and conduit systems',
+    'MCBs, RCBOs and consumer units',
+    'Wago connectors and terminal blocks',
+    'Cable glands and grommets',
   ];
 
   const safetyEquipment = [
-    "Voltage tester and proving unit",
-    "Insulated tools (VDE approved)",
-    "Safety boots and hard hat",
-    "RCD plug tester",
-    "Lock-off devices and safety signs",
-    "First aid kit and emergency contacts"
+    'Voltage tester and proving unit',
+    'Insulated tools (VDE approved)',
+    'Safety boots and hard hat',
+    'RCD plug tester',
+    'Lock-off devices and safety signs',
+    'First aid kit and emergency contacts',
   ];
 
   const testingEquipment = [
     {
-      tool: "Multifunction Tester",
-      purpose: "Insulation resistance, continuity, loop impedance, RCD testing",
-      cost: "£300-800",
-      features: ["Auto-ranging", "Bluetooth connectivity", "Memory storage", "PC software"],
-      brands: ["Megger", "Fluke", "Kewtech", "Metrel"]
+      tool: 'Multifunction Tester',
+      purpose: 'Insulation resistance, continuity, loop impedance, RCD testing',
+      cost: '£300-800',
+      features: ['Auto-ranging', 'Bluetooth connectivity', 'Memory storage', 'PC software'],
+      brands: ['Megger', 'Fluke', 'Kewtech', 'Metrel'],
     },
     {
-      tool: "Voltage Tester",
-      purpose: "Proving dead before work (GS38 compliant)",
-      cost: "£15-50",
-      features: ["LED/LCD display", "Audible indication", "Proving unit compatible", "CAT III rated"],
-      brands: ["Fluke", "Martindale", "Kewtech", "Megger"]
+      tool: 'Voltage Tester',
+      purpose: 'Proving dead before work (GS38 compliant)',
+      cost: '£15-50',
+      features: [
+        'LED/LCD display',
+        'Audible indication',
+        'Proving unit compatible',
+        'CAT III rated',
+      ],
+      brands: ['Fluke', 'Martindale', 'Kewtech', 'Megger'],
     },
     {
-      tool: "Socket Tester",
-      purpose: "Quick verification of socket wiring and RCD operation",
-      cost: "£20-60",
-      features: ["Wiring fault indication", "RCD test button", "Earth loop test", "Portable"],
-      brands: ["Martindale", "Megger", "Socket & See", "Kewtech"]
-    }
+      tool: 'Socket Tester',
+      purpose: 'Quick verification of socket wiring and RCD operation',
+      cost: '£20-60',
+      features: ['Wiring fault indication', 'RCD test button', 'Earth loop test', 'Portable'],
+      brands: ['Martindale', 'Megger', 'Socket & See', 'Kewtech'],
+    },
   ];
 
   const handTools = [
     {
-      category: "Cutting Tools",
+      category: 'Cutting Tools',
       tools: [
-        { name: "Side cutters", cost: "£20-60", purpose: "Cable cutting and stripping" },
-        { name: "Cable strippers", cost: "£15-40", purpose: "Insulation removal" },
-        { name: "SWA stripping knife", cost: "£30-50", purpose: "SWA cable preparation" }
-      ]
+        { name: 'Side cutters', cost: '£20-60', purpose: 'Cable cutting and stripping' },
+        { name: 'Cable strippers', cost: '£15-40', purpose: 'Insulation removal' },
+        { name: 'SWA stripping knife', cost: '£30-50', purpose: 'SWA cable preparation' },
+      ],
     },
     {
-      category: "Screwdrivers",
+      category: 'Screwdrivers',
       tools: [
-        { name: "VDE screwdriver set", cost: "£30-80", purpose: "Insulated work near live parts" },
-        { name: "Terminal screwdrivers", cost: "£15-30", purpose: "Small terminal work" },
-        { name: "Pozi/Phillips set", cost: "£20-40", purpose: "General electrical work" }
-      ]
+        { name: 'VDE screwdriver set', cost: '£30-80', purpose: 'Insulated work near live parts' },
+        { name: 'Terminal screwdrivers', cost: '£15-30', purpose: 'Small terminal work' },
+        { name: 'Pozi/Phillips set', cost: '£20-40', purpose: 'General electrical work' },
+      ],
     },
     {
-      category: "Spanners & Keys",
+      category: 'Spanners & Keys',
       tools: [
-        { name: "Gland spanners", cost: "£25-60", purpose: "SWA gland installation" },
-        { name: "MCB lock-off keys", cost: "£10-25", purpose: "Circuit breaker isolation" },
-        { name: "Meter tail crimps", cost: "£40-80", purpose: "Main supply connections" }
-      ]
-    }
+        { name: 'Gland spanners', cost: '£25-60', purpose: 'SWA gland installation' },
+        { name: 'MCB lock-off keys', cost: '£10-25', purpose: 'Circuit breaker isolation' },
+        { name: 'Meter tail crimps', cost: '£40-80', purpose: 'Main supply connections' },
+      ],
+    },
   ];
 
   return (
@@ -202,7 +206,9 @@ const ToolsMaterialsGuide = () => {
                       </div>
                     </div>
                     <div>
-                      <h5 className="text-sm font-medium text-elec-yellow mb-1">Recommended Brands:</h5>
+                      <h5 className="text-sm font-medium text-elec-yellow mb-1">
+                        Recommended Brands:
+                      </h5>
                       <p className="text-xs text-white">{equipment.brands.join(', ')}</p>
                     </div>
                   </div>
@@ -229,7 +235,10 @@ const ToolsMaterialsGuide = () => {
                 <h4 className="font-medium text-white mb-4">{category.category}</h4>
                 <div className="space-y-3">
                   {category.tools.map((tool, toolIndex) => (
-                    <div key={toolIndex} className="border-b border-elec-yellow/20 pb-2 last:border-b-0">
+                    <div
+                      key={toolIndex}
+                      className="border-b border-elec-yellow/20 pb-2 last:border-b-0"
+                    >
                       <div className="flex items-center justify-between mb-1">
                         <h5 className="text-sm font-medium text-elec-yellow">{tool.name}</h5>
                         <span className="text-xs text-green-300">{tool.cost}</span>
@@ -329,16 +338,18 @@ const ToolsMaterialsGuide = () => {
         <CardContent className="p-4 md:p-6">
           <div className="space-y-3">
             <p className="text-sm text-white">
-              <strong className="text-orange-300">VDE Tools Required:</strong> All screwdrivers and hand tools used near
-              live parts must be individually tested to 10,000V and marked with VDE approval.
+              <strong className="text-orange-300">VDE Tools Required:</strong> All screwdrivers and
+              hand tools used near live parts must be individually tested to 10,000V and marked with
+              VDE approval.
             </p>
             <p className="text-sm text-white">
-              <strong className="text-orange-300">GS38 Compliance:</strong> Voltage testers must comply with GS38
-              Health and Safety guidance including fused test leads and proving units.
+              <strong className="text-orange-300">GS38 Compliance:</strong> Voltage testers must
+              comply with GS38 Health and Safety guidance including fused test leads and proving
+              units.
             </p>
             <p className="text-sm text-white">
-              <strong className="text-orange-300">Regular Calibration:</strong> Test equipment must be calibrated
-              annually to maintain accuracy and ensure reliable results.
+              <strong className="text-orange-300">Regular Calibration:</strong> Test equipment must
+              be calibrated annually to maintain accuracy and ensure reliable results.
             </p>
           </div>
         </CardContent>

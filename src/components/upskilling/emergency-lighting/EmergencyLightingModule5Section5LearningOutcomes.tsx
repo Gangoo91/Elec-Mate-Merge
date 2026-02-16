@@ -3,11 +3,11 @@ import { Target } from 'lucide-react';
 
 export const EmergencyLightingModule5Section5LearningOutcomes = () => {
   const outcomes = [
-    "Explain the purpose and legal significance of emergency lighting certification",
-    "Identify the required certificates under BS 5266 and BS 7671",
-    "Complete and verify commissioning checklists accurately",
-    "Understand the relationship between testing, certification, and handover documentation",
-    "Ensure compliance documentation is ready for client and fire authority review"
+    'Explain the purpose and legal significance of emergency lighting certification',
+    'Identify the required certificates under BS 5266 and BS 7671',
+    'Complete and verify commissioning checklists accurately',
+    'Understand the relationship between testing, certification, and handover documentation',
+    'Ensure compliance documentation is ready for client and fire authority review',
   ];
 
   return (
@@ -28,7 +28,9 @@ export const EmergencyLightingModule5Section5LearningOutcomes = () => {
               <div className="w-7 h-7 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center font-bold flex-shrink-0 text-sm">
                 {index + 1}
               </div>
-              <span className="text-foreground text-sm sm:text-base lg:text-lg flex-1">{outcome}</span>
+              <span className="text-foreground text-sm sm:text-base lg:text-lg flex-1">
+                {outcome}
+              </span>
             </div>
           ))}
         </div>

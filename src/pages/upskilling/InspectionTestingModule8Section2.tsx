@@ -1,201 +1,206 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Identification & Labelling - Module 8 Section 2";
-const DESCRIPTION = "Learn the requirements for correct circuit identification, conductor marking, warning labels, and documentation for electrical installations.";
+const TITLE = 'Identification & Labelling - Module 8 Section 2';
+const DESCRIPTION =
+  'Learn the requirements for correct circuit identification, conductor marking, warning labels, and documentation for electrical installations.';
 
 const quickCheckQuestions = [
   {
-    id: "circuit-identification",
-    question: "What does Regulation 514.9.1 require regarding circuit identification?",
+    id: 'circuit-identification',
+    question: 'What does Regulation 514.9.1 require regarding circuit identification?',
     options: [
-      "Circuits may be identified verbally",
-      "Every circuit should be identified at its origin",
-      "Only main circuits need identification",
-      "Identification is optional for domestic installations"
+      'Circuits may be identified verbally',
+      'Every circuit should be identified at its origin',
+      'Only main circuits need identification',
+      'Identification is optional for domestic installations',
     ],
     correctIndex: 1,
-    explanation: "Regulation 514.9.1 requires every circuit to be identified at its origin by a suitable arrangement. This enables safe isolation and maintenance."
+    explanation:
+      'Regulation 514.9.1 requires every circuit to be identified at its origin by a suitable arrangement. This enables safe isolation and maintenance.',
   },
   {
-    id: "neutral-colour",
-    question: "Which conductor colour identifies neutral in a single-phase installation?",
-    options: [
-      "Brown",
-      "Black",
-      "Blue",
-      "Grey"
-    ],
+    id: 'neutral-colour',
+    question: 'Which conductor colour identifies neutral in a single-phase installation?',
+    options: ['Brown', 'Black', 'Blue', 'Grey'],
     correctIndex: 2,
-    explanation: "Under harmonised colours, blue identifies the neutral conductor. Brown is line, and green/yellow stripes identify the protective conductor."
+    explanation:
+      'Under harmonised colours, blue identifies the neutral conductor. Brown is line, and green/yellow stripes identify the protective conductor.',
   },
   {
-    id: "mixed-colours",
-    question: "Where mixed cable colours exist (old and new), what labelling is required?",
+    id: 'mixed-colours',
+    question: 'Where mixed cable colours exist (old and new), what labelling is required?',
     options: [
-      "No labelling required",
-      "A caution notice warning that old cable colours are present",
-      "The old cables must be rewired",
-      "Just note in paperwork"
+      'No labelling required',
+      'A caution notice warning that old cable colours are present',
+      'The old cables must be rewired',
+      'Just note in paperwork',
     ],
     correctIndex: 1,
-    explanation: "Regulation 514.14.1 requires a warning notice where different cable colour systems are used in the same installation, alerting workers to the mixed colours."
-  }
+    explanation:
+      'Regulation 514.14.1 requires a warning notice where different cable colour systems are used in the same installation, alerting workers to the mixed colours.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What does Regulation 514.9.1 require regarding circuit identification?",
+    question: 'What does Regulation 514.9.1 require regarding circuit identification?',
     options: [
-      "Circuits may be identified verbally",
-      "Every circuit should be identified at its origin",
-      "Only main circuits need identification",
-      "Identification is optional for domestic installations"
+      'Circuits may be identified verbally',
+      'Every circuit should be identified at its origin',
+      'Only main circuits need identification',
+      'Identification is optional for domestic installations',
     ],
     correctAnswer: 1,
-    explanation: "Regulation 514.9.1 requires every circuit to be identified at its origin by a suitable arrangement. This enables safe isolation and maintenance."
+    explanation:
+      'Regulation 514.9.1 requires every circuit to be identified at its origin by a suitable arrangement. This enables safe isolation and maintenance.',
   },
   {
     id: 2,
-    question: "Which conductor colour identifies neutral in a single-phase installation?",
-    options: [
-      "Brown",
-      "Black",
-      "Blue",
-      "Grey"
-    ],
+    question: 'Which conductor colour identifies neutral in a single-phase installation?',
+    options: ['Brown', 'Black', 'Blue', 'Grey'],
     correctAnswer: 2,
-    explanation: "Under harmonised colours, blue identifies the neutral conductor. Brown is line, and green/yellow stripes identify the protective conductor."
+    explanation:
+      'Under harmonised colours, blue identifies the neutral conductor. Brown is line, and green/yellow stripes identify the protective conductor.',
   },
   {
     id: 3,
-    question: "In a three-phase installation, what colour identifies L2?",
-    options: [
-      "Brown",
-      "Black",
-      "Grey",
-      "Blue"
-    ],
+    question: 'In a three-phase installation, what colour identifies L2?',
+    options: ['Brown', 'Black', 'Grey', 'Blue'],
     correctAnswer: 1,
-    explanation: "Three-phase harmonised colours are: L1 = Brown, L2 = Black, L3 = Grey. Blue is neutral, green/yellow is protective conductor."
+    explanation:
+      'Three-phase harmonised colours are: L1 = Brown, L2 = Black, L3 = Grey. Blue is neutral, green/yellow is protective conductor.',
   },
   {
     id: 4,
-    question: "When must warning labels be provided at the origin of an installation?",
+    question: 'When must warning labels be provided at the origin of an installation?',
     options: [
-      "Only for commercial installations",
-      "For all installations - specifying type of earthing, nominal voltage, and for RCD test frequency",
-      "Only when specifically requested",
-      "Only for three-phase installations"
+      'Only for commercial installations',
+      'For all installations - specifying type of earthing, nominal voltage, and for RCD test frequency',
+      'Only when specifically requested',
+      'Only for three-phase installations',
     ],
     correctAnswer: 1,
-    explanation: "Regulations require labels at the origin showing earthing arrangement, nominal voltage/frequency, and RCD test button instructions. Additional labels required for specific situations."
+    explanation:
+      'Regulations require labels at the origin showing earthing arrangement, nominal voltage/frequency, and RCD test button instructions. Additional labels required for specific situations.',
   },
   {
     id: 5,
-    question: "What information should a circuit chart at the consumer unit include?",
+    question: 'What information should a circuit chart at the consumer unit include?',
     options: [
-      "Just circuit numbers",
-      "Circuit number, description, protective device type and rating",
-      "Only the installation address",
-      "Manufacturer warranty information"
+      'Just circuit numbers',
+      'Circuit number, description, protective device type and rating',
+      'Only the installation address',
+      'Manufacturer warranty information',
     ],
     correctAnswer: 1,
-    explanation: "Circuit charts should show circuit number, description of what it supplies, protective device type (MCB/RCBO/fuse), rating, and any associated RCD protection."
+    explanation:
+      'Circuit charts should show circuit number, description of what it supplies, protective device type (MCB/RCBO/fuse), rating, and any associated RCD protection.',
   },
   {
     id: 6,
-    question: "Where mixed cable colours exist (old and new), what labelling is required?",
+    question: 'Where mixed cable colours exist (old and new), what labelling is required?',
     options: [
-      "No labelling required",
-      "A caution notice warning that old cable colours are present",
-      "The old cables must be rewired",
-      "Just note in paperwork"
+      'No labelling required',
+      'A caution notice warning that old cable colours are present',
+      'The old cables must be rewired',
+      'Just note in paperwork',
     ],
     correctAnswer: 1,
-    explanation: "Regulation 514.14.1 requires a warning notice where different cable colour systems are used in the same installation, alerting workers to the mixed colours."
+    explanation:
+      'Regulation 514.14.1 requires a warning notice where different cable colour systems are used in the same installation, alerting workers to the mixed colours.',
   },
   {
     id: 7,
-    question: "What colour must a label warning of voltage be?",
+    question: 'What colour must a label warning of voltage be?',
     options: [
-      "Any colour",
-      "Blue text on white",
-      "Black text on yellow background",
-      "White text on red"
+      'Any colour',
+      'Blue text on white',
+      'Black text on yellow background',
+      'White text on red',
     ],
     correctAnswer: 2,
-    explanation: "Safety labels warning of electrical danger should use black text/symbols on a yellow background, following safety sign standards (BS EN ISO 7010)."
+    explanation:
+      'Safety labels warning of electrical danger should use black text/symbols on a yellow background, following safety sign standards (BS EN ISO 7010).',
   },
   {
     id: 8,
-    question: "Labels should be designed to last:",
+    question: 'Labels should be designed to last:',
     options: [
-      "At least 1 year",
-      "Until the next inspection",
-      "For the expected life of the installation",
-      "6 months minimum"
+      'At least 1 year',
+      'Until the next inspection',
+      'For the expected life of the installation',
+      '6 months minimum',
     ],
     correctAnswer: 2,
-    explanation: "Regulation 514.1.1 requires labels to be durable and legible for the expected life of the installation. Handwritten labels that fade are not acceptable."
+    explanation:
+      'Regulation 514.1.1 requires labels to be durable and legible for the expected life of the installation. Handwritten labels that fade are not acceptable.',
   },
   {
     id: 9,
-    question: "What label is required where an RCD is installed?",
+    question: 'What label is required where an RCD is installed?',
     options: [
-      "No label required",
-      "A notice recommending quarterly test button operation",
-      "A label showing RCD price",
-      "Only manufacturer's label"
+      'No label required',
+      'A notice recommending quarterly test button operation',
+      'A label showing RCD price',
+      "Only manufacturer's label",
     ],
     correctAnswer: 1,
-    explanation: "Regulation 514.12.2 requires a notice at or near the origin advising users to test RCDs quarterly (every 3 months) using the test button."
+    explanation:
+      'Regulation 514.12.2 requires a notice at or near the origin advising users to test RCDs quarterly (every 3 months) using the test button.',
   },
   {
     id: 10,
-    question: "If equipment has more than one supply, what labelling is required?",
+    question: 'If equipment has more than one supply, what labelling is required?',
     options: [
-      "Normal circuit labels only",
-      "Warning labels indicating all supply sources at each point of isolation",
-      "No special labelling needed",
-      "Just a note in the log book"
+      'Normal circuit labels only',
+      'Warning labels indicating all supply sources at each point of isolation',
+      'No special labelling needed',
+      'Just a note in the log book',
     ],
     correctAnswer: 1,
-    explanation: "Regulation 514.15.1 requires warning labels at points of isolation where equipment may be fed from more than one source. This prevents unsafe isolation attempts."
-  }
+    explanation:
+      'Regulation 514.15.1 requires warning labels at points of isolation where equipment may be fed from more than one source. This prevents unsafe isolation attempts.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Can I use handwritten labels?",
-    answer: "Handwritten labels are generally not acceptable as they fade and become illegible over time. Labels should be durable, legible, and designed to last the expected life of the installation. Printed labels, engraved labels, or proper label makers should be used."
+    question: 'Can I use handwritten labels?',
+    answer:
+      'Handwritten labels are generally not acceptable as they fade and become illegible over time. Labels should be durable, legible, and designed to last the expected life of the installation. Printed labels, engraved labels, or proper label makers should be used.',
   },
   {
-    question: "What if old colour cables are present?",
-    answer: "Where old and new cable colours are used in the same installation, a warning notice must be provided at the origin (Regulation 514.14.1). The notice should warn that different cable colour coding systems exist and care must be taken during work."
+    question: 'What if old colour cables are present?',
+    answer:
+      'Where old and new cable colours are used in the same installation, a warning notice must be provided at the origin (Regulation 514.14.1). The notice should warn that different cable colour coding systems exist and care must be taken during work.',
   },
   {
-    question: "Do I need to label every circuit?",
-    answer: "Yes. Regulation 514.9.1 requires every circuit to be identified at its origin. A circuit chart should clearly describe what each circuit supplies, not just 'Circuit 1', 'Circuit 2' etc."
+    question: 'Do I need to label every circuit?',
+    answer:
+      "Yes. Regulation 514.9.1 requires every circuit to be identified at its origin. A circuit chart should clearly describe what each circuit supplies, not just 'Circuit 1', 'Circuit 2' etc.",
   },
   {
-    question: "What labels are required at an earth electrode?",
-    answer: "The main earth terminal should be labelled, and earth electrode connections should be marked with a label warning 'Safety Electrical Connection - Do Not Remove' to prevent inadvertent disconnection during other work."
+    question: 'What labels are required at an earth electrode?',
+    answer:
+      "The main earth terminal should be labelled, and earth electrode connections should be marked with a label warning 'Safety Electrical Connection - Do Not Remove' to prevent inadvertent disconnection during other work.",
   },
   {
-    question: "Are warning labels required for PV installations?",
-    answer: "Yes. PV installations require specific warning labels including warnings that parts remain live when isolated from the mains, DC isolation point markings, and warning labels on both DC and AC sides of the inverter."
+    question: 'Are warning labels required for PV installations?',
+    answer:
+      'Yes. PV installations require specific warning labels including warnings that parts remain live when isolated from the mains, DC isolation point markings, and warning labels on both DC and AC sides of the inverter.',
   },
   {
-    question: "What if a circuit description changes?",
-    answer: "Labels must be updated to reflect current use. An outdated label could lead to incorrect isolation. If circuit usage changes significantly, the circuit chart should be updated and re-signed by a competent person."
-  }
+    question: 'What if a circuit description changes?',
+    answer:
+      'Labels must be updated to reflect current use. An outdated label could lead to incorrect isolation. If circuit usage changes significantly, the circuit chart should be updated and re-signed by a competent person.',
+  },
 ];
 
 const InspectionTestingModule8Section2 = () => {
@@ -206,7 +211,12 @@ const InspectionTestingModule8Section2 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="../module-8">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 8
@@ -217,7 +227,6 @@ const InspectionTestingModule8Section2 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -228,7 +237,8 @@ const InspectionTestingModule8Section2 = () => {
             Identification & Labelling
           </h1>
           <p className="text-white/80">
-            Ensure proper identification of circuits, conductors, and equipment with clear, durable labelling
+            Ensure proper identification of circuits, conductors, and equipment with clear, durable
+            labelling
           </p>
         </header>
 
@@ -237,18 +247,32 @@ const InspectionTestingModule8Section2 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Requirement:</strong> Every circuit identified at origin (Reg 514.9.1)</li>
-              <li><strong>Durability:</strong> Labels must last life of installation</li>
-              <li><strong>Warnings:</strong> RCDs, mixed colours, multiple supplies</li>
-              <li><strong>Colours:</strong> L=Brown, N=Blue, CPC=Green/Yellow</li>
+              <li>
+                <strong>Requirement:</strong> Every circuit identified at origin (Reg 514.9.1)
+              </li>
+              <li>
+                <strong>Durability:</strong> Labels must last life of installation
+              </li>
+              <li>
+                <strong>Warnings:</strong> RCDs, mixed colours, multiple supplies
+              </li>
+              <li>
+                <strong>Colours:</strong> L=Brown, N=Blue, CPC=Green/Yellow
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Labels Required</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Origin:</strong> Earthing type, voltage, RCD notice</li>
-              <li><strong>Earth:</strong> "Safety Electrical Connection"</li>
-              <li><strong>Warning:</strong> Black on yellow background</li>
+              <li>
+                <strong>Origin:</strong> Earthing type, voltage, RCD notice
+              </li>
+              <li>
+                <strong>Earth:</strong> "Safety Electrical Connection"
+              </li>
+              <li>
+                <strong>Warning:</strong> Black on yellow background
+              </li>
             </ul>
           </div>
         </div>
@@ -258,12 +282,12 @@ const InspectionTestingModule8Section2 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand circuit identification requirements",
-              "Apply correct conductor colour coding",
-              "Label protective devices appropriately",
-              "Identify isolation point labelling needs",
-              "Create clear circuit charts and schedules",
-              "Apply warning and safety labels correctly"
+              'Understand circuit identification requirements',
+              'Apply correct conductor colour coding',
+              'Label protective devices appropriately',
+              'Identify isolation point labelling needs',
+              'Create clear circuit charts and schedules',
+              'Apply warning and safety labels correctly',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -284,11 +308,15 @@ const InspectionTestingModule8Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Regulation 514.9.1 requires every circuit to be arranged so it can be identified. Clear identification enables safe isolation and helps with maintenance and fault finding.
+              Regulation 514.9.1 requires every circuit to be arranged so it can be identified.
+              Clear identification enables safe isolation and helps with maintenance and fault
+              finding.
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Circuit Chart Requirements</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Circuit Chart Requirements
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Unique circuit number or reference</li>
                 <li>Clear description (e.g., "Kitchen Sockets" not just "Circuit 3")</li>
@@ -298,7 +326,8 @@ const InspectionTestingModule8Section2 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Circuit charts should be located at the distribution board and kept up to date whenever changes are made.
+              <strong>Remember:</strong> Circuit charts should be located at the distribution board
+              and kept up to date whenever changes are made.
             </p>
           </div>
         </section>
@@ -313,7 +342,8 @@ const InspectionTestingModule8Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 7671 Table 51 specifies harmonised cable colours. These must be verified during inspection:
+              BS 7671 Table 51 specifies harmonised cable colours. These must be verified during
+              inspection:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -354,7 +384,8 @@ const InspectionTestingModule8Section2 = () => {
             </div>
 
             <p className="text-sm text-white/90 italic">
-              <strong>Note:</strong> Old UK colours (red/yellow/blue for 3-phase, red/black for single-phase) are still found in existing installations.
+              <strong>Note:</strong> Old UK colours (red/yellow/blue for 3-phase, red/black for
+              single-phase) are still found in existing installations.
             </p>
           </div>
         </section>
@@ -368,9 +399,7 @@ const InspectionTestingModule8Section2 = () => {
             Required Warning Labels
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              BS 7671 requires specific warning labels in various situations:
-            </p>
+            <p>BS 7671 requires specific warning labels in various situations:</p>
 
             <div className="my-6 space-y-4">
               <div className="p-3 rounded bg-transparent border border-amber-500/30">
@@ -382,12 +411,22 @@ const InspectionTestingModule8Section2 = () => {
                 </ul>
               </div>
               <div className="p-3 rounded bg-transparent border border-amber-500/30">
-                <p className="text-sm font-medium text-amber-400 mb-2">Mixed Colours (Reg 514.14.1)</p>
-                <p className="text-sm text-white/80">"CAUTION - This installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration, or repair."</p>
+                <p className="text-sm font-medium text-amber-400 mb-2">
+                  Mixed Colours (Reg 514.14.1)
+                </p>
+                <p className="text-sm text-white/80">
+                  "CAUTION - This installation has wiring colours to two versions of BS 7671. Great
+                  care should be taken before undertaking extension, alteration, or repair."
+                </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-amber-500/30">
-                <p className="text-sm font-medium text-amber-400 mb-2">Multiple Supplies (Reg 514.15.1)</p>
-                <p className="text-sm text-white/80">"WARNING - This installation has more than one source of supply. Isolate all supplies before working."</p>
+                <p className="text-sm font-medium text-amber-400 mb-2">
+                  Multiple Supplies (Reg 514.15.1)
+                </p>
+                <p className="text-sm text-white/80">
+                  "WARNING - This installation has more than one source of supply. Isolate all
+                  supplies before working."
+                </p>
               </div>
             </div>
           </div>
@@ -403,11 +442,14 @@ const InspectionTestingModule8Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Critical earthing connections must be permanently labelled to prevent accidental disconnection:
+              Critical earthing connections must be permanently labelled to prevent accidental
+              disconnection:
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Locations Requiring Labels</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Locations Requiring Labels
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Main earthing terminal</li>
                 <li>Earth electrode connections</li>
@@ -417,7 +459,9 @@ const InspectionTestingModule8Section2 = () => {
             </div>
 
             <div className="p-3 rounded bg-transparent border border-green-500/30 text-center">
-              <p className="text-sm font-medium text-green-400">"Safety Electrical Connection - Do Not Remove"</p>
+              <p className="text-sm font-medium text-green-400">
+                "Safety Electrical Connection - Do Not Remove"
+              </p>
             </div>
           </div>
         </section>
@@ -430,12 +474,15 @@ const InspectionTestingModule8Section2 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Regulation 514.1.1 requires labels to remain legible for the expected life of the installation. Consider:
+              Regulation 514.1.1 requires labels to remain legible for the expected life of the
+              installation. Consider:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Acceptable Label Types</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  Acceptable Label Types
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Engraved labels on metal or plastic</li>
                   <li>Industrial label printer output</li>
@@ -463,9 +510,7 @@ const InspectionTestingModule8Section2 = () => {
             Verification During Inspection
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              During inspection, verify all required labels are present and correct:
-            </p>
+            <p>During inspection, verify all required labels are present and correct:</p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Inspection Checklist</p>
@@ -480,7 +525,8 @@ const InspectionTestingModule8Section2 = () => {
             </div>
 
             <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Missing or illegible labels should be recorded as observations with appropriate C-codes.
+              <strong>Remember:</strong> Missing or illegible labels should be recorded as
+              observations with appropriate C-codes.
             </p>
           </div>
         </section>
@@ -516,10 +562,19 @@ const InspectionTestingModule8Section2 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Using handwritten labels</strong> — they fade and become illegible</li>
-                <li><strong>Not updating labels</strong> — when circuit use changes</li>
-                <li><strong>Missing warning labels</strong> — for RCDs, mixed colours, multiple supplies</li>
-                <li><strong>Poor descriptions</strong> — "Circuit 3" instead of "Kitchen Sockets"</li>
+                <li>
+                  <strong>Using handwritten labels</strong> — they fade and become illegible
+                </li>
+                <li>
+                  <strong>Not updating labels</strong> — when circuit use changes
+                </li>
+                <li>
+                  <strong>Missing warning labels</strong> — for RCDs, mixed colours, multiple
+                  supplies
+                </li>
+                <li>
+                  <strong>Poor descriptions</strong> — "Circuit 3" instead of "Kitchen Sockets"
+                </li>
               </ul>
             </div>
           </div>
@@ -570,28 +625,33 @@ const InspectionTestingModule8Section2 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-8/section-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-8/section-3">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

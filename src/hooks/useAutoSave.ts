@@ -12,7 +12,7 @@ export function useAutoSave<T>({
   data,
   onSave,
   delay = 30000, // 30 seconds default
-  enabled = true
+  enabled = true,
 }: UseAutoSaveOptions<T>) {
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | undefined>();
@@ -49,7 +49,7 @@ export function useAutoSave<T>({
   // Manual save function
   const saveNow = useCallback(async () => {
     debouncedSave.cancel(); // Cancel any pending debounced save
-    
+
     setIsSaving(true);
     setError(undefined);
 
@@ -67,6 +67,6 @@ export function useAutoSave<T>({
     isSaving,
     lastSaved,
     error,
-    saveNow
+    saveNow,
   };
 }

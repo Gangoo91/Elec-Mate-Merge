@@ -14,10 +14,26 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
-  ArrowLeft, ArrowRight, Zap, Cable, Shield, TrendingDown,
-  CheckCircle2, AlertTriangle, AlertCircle, Download, RotateCcw,
-  FileCheck, Loader2, Send, Wrench, FileText, Calculator, TestTube,
-  Settings, Clipboard
+  ArrowLeft,
+  ArrowRight,
+  Zap,
+  Cable,
+  Shield,
+  TrendingDown,
+  CheckCircle2,
+  AlertTriangle,
+  AlertCircle,
+  Download,
+  RotateCcw,
+  FileCheck,
+  Loader2,
+  Send,
+  Wrench,
+  FileText,
+  Calculator,
+  TestTube,
+  Settings,
+  Clipboard,
 } from 'lucide-react';
 import { CircuitWorkingsSheet } from './CircuitWorkingsSheet';
 import { CircuitCard } from './CircuitCard';
@@ -39,7 +55,7 @@ export const MobileCircuitResults = ({
   onReset,
   onExport,
   onSendToEIC,
-  isSendingToEIC = false
+  isSendingToEIC = false,
 }: MobileCircuitResultsProps) => {
   const navigate = useNavigate();
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
@@ -73,7 +89,7 @@ export const MobileCircuitResults = ({
         rams: '/electrician/health-safety',
         'cost-engineer': '/electrician/cost-engineer',
         'method-statement': '/electrician/method-statement',
-        maintenance: '/electrician/maintenance'
+        maintenance: '/electrician/maintenance',
       };
 
       const agentNames: Record<AgentType, string> = {
@@ -81,17 +97,17 @@ export const MobileCircuitResults = ({
         rams: 'Risk Assessment',
         'cost-engineer': 'Cost Engineer',
         'method-statement': 'Method Statement',
-        maintenance: 'Maintenance Instructions'
+        maintenance: 'Maintenance Instructions',
       };
 
       navigate(agentRoutes[agentType]);
       toast.success(`Circuit context sent to ${agentNames[agentType]}`, {
-        description: `${circuitIndices.length} circuit${circuitIndices.length !== 1 ? 's' : ''} ready for processing`
+        description: `${circuitIndices.length} circuit${circuitIndices.length !== 1 ? 's' : ''} ready for processing`,
       });
     } catch (error) {
       console.error('Failed to send to agent:', error);
       toast.error('Failed to send circuit context', {
-        description: 'Please try again'
+        description: 'Please try again',
       });
     }
   };
@@ -99,28 +115,39 @@ export const MobileCircuitResults = ({
   const selectedCircuit = design.circuits[selectedCircuitIndex];
 
   // Use backend complianceStatus for consistent results
-  const allCircuitsCompliant = design.circuits.every(c => {
+  const allCircuitsCompliant = design.circuits.every((c) => {
     const status = (c as any).complianceStatus;
     // Use backend status if available, fallback to calculation check
-    return status ? status === 'pass' : 
-      (c.calculations?.voltageDrop?.compliant && 
-       (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999));
+    return status
+      ? status === 'pass'
+      : c.calculations?.voltageDrop?.compliant &&
+          (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999);
   });
-  const hasWarnings = design.circuits.some(c => (c as any).complianceStatus === 'warning' || (c.warnings && c.warnings.length > 0));
+  const hasWarnings = design.circuits.some(
+    (c) => (c as any).complianceStatus === 'warning' || (c.warnings && c.warnings.length > 0)
+  );
   const overallStatus = !allCircuitsCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
 
   // Calculate compliance stats for MobileSystemSummary
-  const complianceStats = design.circuits.reduce((acc, circuit) => {
-    const status = (circuit as any).complianceStatus;
-    if (status === 'pass' || (!status && circuit.calculations?.voltageDrop?.compliant && (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999))) {
-      acc.compliant++;
-    } else if (status === 'warning' || circuit.warnings?.length > 0) {
-      acc.warnings++;
-    } else {
-      acc.fails++;
-    }
-    return acc;
-  }, { compliant: 0, warnings: 0, fails: 0 });
+  const complianceStats = design.circuits.reduce(
+    (acc, circuit) => {
+      const status = (circuit as any).complianceStatus;
+      if (
+        status === 'pass' ||
+        (!status &&
+          circuit.calculations?.voltageDrop?.compliant &&
+          (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999))
+      ) {
+        acc.compliant++;
+      } else if (status === 'warning' || circuit.warnings?.length > 0) {
+        acc.warnings++;
+      } else {
+        acc.fails++;
+      }
+      return acc;
+    },
+    { compliant: 0, warnings: 0, fails: 0 }
+  );
 
   // Swipe handlers for circuit navigation
   const swipeHandlers = useSwipeable({
@@ -140,7 +167,7 @@ export const MobileCircuitResults = ({
     },
     trackMouse: false,
     preventScrollOnSwipe: false,
-    delta: 80
+    delta: 80,
   });
 
   const navigateCircuit = (direction: 'prev' | 'next') => {
@@ -157,25 +184,29 @@ export const MobileCircuitResults = ({
       <div className="px-4 pt-safe pb-3 bg-gradient-to-b from-elec-dark to-transparent">
         {/* Status Bar */}
         <div className="flex items-center justify-between mb-4">
-          <Badge className="bg-white/10 text-white/80 border-0 text-xs">
-            BS 7671:2018+A3:2024
-          </Badge>
+          <Badge className="bg-white/10 text-white/80 border-0 text-xs">BS 7671:2018+A3:2024</Badge>
           <Badge
             className={cn(
-              "border-0 font-medium",
+              'border-0 font-medium',
               overallStatus === 'pass'
-                ? "bg-green-500/20 text-green-400"
+                ? 'bg-green-500/20 text-green-400'
                 : overallStatus === 'warning'
-                ? "bg-amber-500/20 text-amber-400"
-                : "bg-red-500/20 text-red-400"
+                  ? 'bg-amber-500/20 text-amber-400'
+                  : 'bg-red-500/20 text-red-400'
             )}
           >
             {overallStatus === 'pass' ? (
-              <><CheckCircle2 className="h-3 w-3 mr-1" /> Compliant</>
+              <>
+                <CheckCircle2 className="h-3 w-3 mr-1" /> Compliant
+              </>
             ) : overallStatus === 'warning' ? (
-              <><AlertTriangle className="h-3 w-3 mr-1" /> Review</>
+              <>
+                <AlertTriangle className="h-3 w-3 mr-1" /> Review
+              </>
             ) : (
-              <><AlertCircle className="h-3 w-3 mr-1" /> Issues</>
+              <>
+                <AlertCircle className="h-3 w-3 mr-1" /> Issues
+              </>
             )}
           </Badge>
         </div>
@@ -186,9 +217,7 @@ export const MobileCircuitResults = ({
             <Zap className="h-6 w-6 text-black" />
           </div>
           <div className="min-w-0 flex-1">
-            <h1 className="text-xl font-bold text-white truncate">
-              {design.projectName}
-            </h1>
+            <h1 className="text-xl font-bold text-white truncate">{design.projectName}</h1>
             <p className="text-sm text-white/50 flex items-center gap-1 mt-0.5">
               <span className="truncate">{design.location}</span>
             </p>
@@ -199,10 +228,7 @@ export const MobileCircuitResults = ({
       {/* Main Content - Single Padding Source */}
       <main className="px-4 space-y-3">
         {/* System Summary */}
-        <MobileSystemSummary
-          design={design}
-          complianceStats={complianceStats}
-        />
+        <MobileSystemSummary design={design} complianceStats={complianceStats} />
 
         {/* Circuit Selector */}
         <div className="py-3 border-b border-elec-yellow/10">
@@ -234,7 +260,8 @@ export const MobileCircuitResults = ({
             {design.circuits.map((circuit, idx) => {
               const isActive = idx === selectedCircuitIndex;
               // Use backend complianceStatus, fallback to warning check
-              const status = (circuit as any).complianceStatus ||
+              const status =
+                (circuit as any).complianceStatus ||
                 (circuit.warnings?.length > 0 ? 'warning' : 'pass');
 
               return (
@@ -258,7 +285,9 @@ export const MobileCircuitResults = ({
                       )}
                     </span>
                     {status !== 'pass' && (
-                      <AlertTriangle className={`h-3 w-3 ${status === 'fail' ? 'text-red-400' : 'text-orange-400'}`} />
+                      <AlertTriangle
+                        className={`h-3 w-3 ${status === 'fail' ? 'text-red-400' : 'text-orange-400'}`}
+                      />
                     )}
                   </div>
                 </button>
@@ -302,7 +331,11 @@ export const MobileCircuitResults = ({
                   Send to Agent
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" side="top" className="w-56 mb-2 bg-elec-dark border-elec-yellow/30">
+              <DropdownMenuContent
+                align="center"
+                side="top"
+                className="w-56 mb-2 bg-elec-dark border-elec-yellow/30"
+              >
                 <DropdownMenuItem
                   onClick={() => sendToAgent('cost-engineer')}
                   className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 cursor-pointer"
@@ -340,13 +373,19 @@ export const MobileCircuitResults = ({
               <MobileButton
                 variant="elec-outline"
                 size="wide"
-                icon={isSendingToEIC ? <Loader2 className="h-5 w-5 animate-spin" /> : <FileCheck className="h-5 w-5" />}
+                icon={
+                  isSendingToEIC ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <FileCheck className="h-5 w-5" />
+                  )
+                }
                 onClick={onSendToEIC}
                 disabled={isSendingToEIC}
                 className={cn(
-                  "h-11 bg-elec-yellow/10 border-elec-yellow/30",
-                  "hover:bg-elec-yellow/20 hover:border-elec-yellow/50",
-                  "text-elec-yellow"
+                  'h-11 bg-elec-yellow/10 border-elec-yellow/30',
+                  'hover:bg-elec-yellow/20 hover:border-elec-yellow/50',
+                  'text-elec-yellow'
                 )}
               >
                 {isSendingToEIC ? 'Saving...' : 'Send to EIC'}
@@ -358,8 +397,8 @@ export const MobileCircuitResults = ({
               icon={<RotateCcw className="h-5 w-5" />}
               onClick={onReset}
               className={cn(
-                "h-11 text-white/60 hover:text-white hover:bg-white/5",
-                !onSendToEIC && "col-span-2"
+                'h-11 text-white/60 hover:text-white hover:bg-white/5',
+                !onSendToEIC && 'col-span-2'
               )}
             >
               New Design

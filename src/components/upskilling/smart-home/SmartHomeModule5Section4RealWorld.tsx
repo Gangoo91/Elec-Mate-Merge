@@ -14,9 +14,9 @@ export const SmartHomeModule5Section4RealWorld = () => {
         <div className="bg-green-600/10 p-4 rounded-lg border border-green-600/30">
           <h4 className="text-foreground font-semibold mb-3">London Holiday Security Alert</h4>
           <p className="text-sm mb-3">
-            A homeowner in London installed a smart security system with door sensors, cameras, 
-            and alarms before going on holiday abroad. The system was configured with remote 
-            access through a mobile app, including push notifications for any security events.
+            A homeowner in London installed a smart security system with door sensors, cameras, and
+            alarms before going on holiday abroad. The system was configured with remote access
+            through a mobile app, including push notifications for any security events.
           </p>
         </div>
 
@@ -27,29 +27,31 @@ export const SmartHomeModule5Section4RealWorld = () => {
               <div className="bg-blue-600/20 p-3 rounded border border-blue-600/40">
                 <p className="text-blue-400 font-semibold text-sm mb-1">Alert Received</p>
                 <p className="text-xs text-foreground">
-                  While holidaying in Spain, the homeowner received a push notification at 2:30 PM 
+                  While holidaying in Spain, the homeowner received a push notification at 2:30 PM
                   that the back door had been opened unexpectedly.
                 </p>
               </div>
               <div className="bg-orange-600/20 p-3 rounded border border-orange-600/40">
                 <p className="text-orange-400 font-semibold text-sm mb-1">Immediate Response</p>
                 <p className="text-xs text-foreground">
-                  Using the mobile app, they immediately accessed the CCTV feed from the back 
-                  garden camera to see who had entered the property.
+                  Using the mobile app, they immediately accessed the CCTV feed from the back garden
+                  camera to see who had entered the property.
                 </p>
               </div>
               <div className="bg-green-600/20 p-3 rounded border border-green-600/40">
                 <p className="text-green-400 font-semibold text-sm mb-1">Situation Resolved</p>
                 <p className="text-xs text-foreground">
-                  The camera revealed their trusted neighbour entering through the back door 
-                  to feed their cat, as previously arranged.
+                  The camera revealed their trusted neighbour entering through the back door to feed
+                  their cat, as previously arranged.
                 </p>
               </div>
             </div>
           </div>
 
           <div>
-            <h4 className="text-foreground font-semibold text-lg mb-4">System Benefits Demonstrated</h4>
+            <h4 className="text-foreground font-semibold text-lg mb-4">
+              System Benefits Demonstrated
+            </h4>
             <div className="space-y-3">
               <div className="bg-elec-dark p-3 rounded border border-gray-600">
                 <p className="text-cyan-400 font-semibold text-sm mb-1">✓ Immediate Awareness</p>
@@ -116,7 +118,9 @@ export const SmartHomeModule5Section4RealWorld = () => {
           <h4 className="text-purple-400 font-semibold mb-3">Lessons for Electricians</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <p className="text-foreground font-semibold text-sm mb-2">Installation Best Practices:</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Installation Best Practices:
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Ensure robust internet connectivity before installation</li>
                 <li>• Test remote access thoroughly during commissioning</li>
@@ -125,7 +129,9 @@ export const SmartHomeModule5Section4RealWorld = () => {
               </ul>
             </div>
             <div>
-              <p className="text-foreground font-semibold text-sm mb-2">Customer Education Points:</p>
+              <p className="text-foreground font-semibold text-sm mb-2">
+                Customer Education Points:
+              </p>
               <ul className="text-xs space-y-1">
                 <li>• Demonstrate how to check camera feeds remotely</li>
                 <li>• Explain notification settings and customisation</li>

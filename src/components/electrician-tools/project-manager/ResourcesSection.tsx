@@ -1,17 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Users } from 'lucide-react';
 
 interface ResourcesSectionProps {
   resources: {
     team?: Array<{ role: string; quantity: number; duration?: number } | string>;
     labour?: Array<{ role?: string; name?: string; quantity?: number; count?: number } | string>;
-    materials?: Array<{ description?: string; name?: string; quantity?: string; amount?: string } | string>;
+    materials?: Array<
+      { description?: string; name?: string; quantity?: string; amount?: string } | string
+    >;
     equipment?: string[];
   };
 }
 
 const ResourcesSection = ({ resources }: ResourcesSectionProps) => {
-  const hasLabour = (resources.labour && resources.labour.length > 0) || (resources.team && resources.team.length > 0);
+  const hasLabour =
+    (resources.labour && resources.labour.length > 0) ||
+    (resources.team && resources.team.length > 0);
   const hasMaterials = resources.materials && resources.materials.length > 0;
   const hasEquipment = resources.equipment && resources.equipment.length > 0;
 
@@ -33,18 +37,22 @@ const ResourcesSection = ({ resources }: ResourcesSectionProps) => {
             <div className="text-sm font-medium mb-2">Labour & Team</div>
             <div className="space-y-2">
               {labourList.map((item: any, idx: number) => {
-                const role = typeof item === 'string' ? item : item.role || item.name || 'Team Member';
-                const quantity = typeof item === 'string' ? '1' : item.quantity || item.count || '1';
-                const duration = typeof item !== 'string' && item.duration ? ` for ${item.duration} days` : '';
-                
+                const role =
+                  typeof item === 'string' ? item : item.role || item.name || 'Team Member';
+                const quantity =
+                  typeof item === 'string' ? '1' : item.quantity || item.count || '1';
+                const duration =
+                  typeof item !== 'string' && item.duration ? ` for ${item.duration} days` : '';
+
                 return (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="flex items-center justify-between text-sm bg-muted/30 p-3 rounded-lg"
                   >
                     <span className="font-medium text-foreground">{role}</span>
                     <span className="text-foreground/70">
-                      {quantity} {parseInt(quantity) === 1 ? 'person' : 'people'}{duration}
+                      {quantity} {parseInt(quantity) === 1 ? 'person' : 'people'}
+                      {duration}
                     </span>
                   </div>
                 );
@@ -58,12 +66,14 @@ const ResourcesSection = ({ resources }: ResourcesSectionProps) => {
             <div className="text-sm font-medium mb-2">Key Materials</div>
             <div className="space-y-2">
               {resources.materials!.map((item: any, idx: number) => {
-                const description = typeof item === 'string' ? item : item.description || item.name || 'Material';
-                const quantity = typeof item === 'string' ? '-' : item.quantity || item.amount || '-';
-                
+                const description =
+                  typeof item === 'string' ? item : item.description || item.name || 'Material';
+                const quantity =
+                  typeof item === 'string' ? '-' : item.quantity || item.amount || '-';
+
                 return (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="flex items-center justify-between text-sm bg-muted/30 p-3 rounded-lg"
                   >
                     <span className="text-foreground">{description}</span>
@@ -80,10 +90,7 @@ const ResourcesSection = ({ resources }: ResourcesSectionProps) => {
             <div className="text-sm font-medium mb-2">Equipment</div>
             <div className="flex flex-wrap gap-2">
               {resources.equipment!.map((item: string, idx: number) => (
-                <div 
-                  key={idx}
-                  className="text-xs bg-muted/30 px-3 py-2 rounded-lg text-foreground"
-                >
+                <div key={idx} className="text-xs bg-muted/30 px-3 py-2 rounded-lg text-foreground">
                   {item}
                 </div>
               ))}

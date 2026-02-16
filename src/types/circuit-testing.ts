@@ -1,4 +1,3 @@
-
 export interface CircuitTestStep {
   id: string;
   title: string;
@@ -12,7 +11,14 @@ export interface CircuitTestStep {
     unit?: string;
   };
   estimatedTime?: string;
-  category: 'safe-isolation' | 'continuity' | 'insulation-resistance' | 'earth-fault-loop' | 'rcd-test' | 'polarity' | 'functional-test';
+  category:
+    | 'safe-isolation'
+    | 'continuity'
+    | 'insulation-resistance'
+    | 'earth-fault-loop'
+    | 'rcd-test'
+    | 'polarity'
+    | 'functional-test';
   testType: 'visual' | 'measurement' | 'procedural';
   order: number;
   prerequisites?: string[];

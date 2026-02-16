@@ -58,9 +58,7 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
           <Calculator className="h-4 w-4" />
           <span>Calculated at {DEFAULT_MILEAGE_RATE * 100}p per mile</span>
         </div>
-        <p className="text-3xl font-bold text-green-400">
-          £{calculatedAmount.toFixed(2)}
-        </p>
+        <p className="text-3xl font-bold text-green-400">£{calculatedAmount.toFixed(2)}</p>
       </motion.div>
 
       {/* Miles Input */}
@@ -80,9 +78,7 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
             className="h-14 text-2xl font-semibold touch-manipulation flex-1"
             autoFocus
           />
-          <span className="text-muted-foreground flex-shrink-0">
-            miles
-          </span>
+          <span className="text-muted-foreground flex-shrink-0">miles</span>
         </div>
       </div>
 

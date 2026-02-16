@@ -36,7 +36,7 @@ export const ScheduledHeatingControlSection = () => {
                 <li>• No dependency on sensors</li>
               </ul>
             </div>
-            
+
             <div className="bg-[#1a1a1a] border border-red-600 rounded-lg p-4">
               <h4 className="font-semibold text-red-200 mb-3">Cons</h4>
               <ul className="space-y-2 text-sm text-red-100">
@@ -50,7 +50,10 @@ export const ScheduledHeatingControlSection = () => {
 
           <div className="bg-blue-950/30 border border-blue-600 rounded-lg p-4">
             <h4 className="font-semibold text-blue-200 mb-2">Best For</h4>
-            <p className="text-blue-100">Regular households with consistent daily patterns, elderly users who prefer predictable systems, and situations where simplicity is prioritised over optimisation.</p>
+            <p className="text-blue-100">
+              Regular households with consistent daily patterns, elderly users who prefer
+              predictable systems, and situations where simplicity is prioritised over optimisation.
+            </p>
           </div>
         </div>
       </CardContent>

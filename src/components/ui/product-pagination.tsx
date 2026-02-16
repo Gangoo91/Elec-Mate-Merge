@@ -1,7 +1,13 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 interface ProductPaginationProps {
   currentPage: number;
@@ -24,7 +30,7 @@ const ProductPagination: React.FC<ProductPaginationProps> = ({
   itemsPerPage,
   onPageChange,
   onItemsPerPageChange,
-  itemType = "products"
+  itemType = 'products',
 }) => {
   if (totalPages <= 1) {
     return null;
@@ -40,10 +46,10 @@ const ProductPagination: React.FC<ProductPaginationProps> = ({
         pages.push(
           <Button
             key={i}
-            variant={currentPage === i ? "outline" : "ghost"}
+            variant={currentPage === i ? 'outline' : 'ghost'}
             size="icon"
             onClick={() => onPageChange(i)}
-            aria-current={currentPage === i ? "page" : undefined}
+            aria-current={currentPage === i ? 'page' : undefined}
             className="h-9 w-9"
           >
             {i}
@@ -55,10 +61,10 @@ const ProductPagination: React.FC<ProductPaginationProps> = ({
       pages.push(
         <Button
           key={1}
-          variant={currentPage === 1 ? "outline" : "ghost"}
+          variant={currentPage === 1 ? 'outline' : 'ghost'}
           size="icon"
           onClick={() => onPageChange(1)}
-          aria-current={currentPage === 1 ? "page" : undefined}
+          aria-current={currentPage === 1 ? 'page' : undefined}
           className="h-9 w-9"
         >
           1
@@ -85,10 +91,10 @@ const ProductPagination: React.FC<ProductPaginationProps> = ({
         pages.push(
           <Button
             key={i}
-            variant={currentPage === i ? "outline" : "ghost"}
+            variant={currentPage === i ? 'outline' : 'ghost'}
             size="icon"
             onClick={() => onPageChange(i)}
-            aria-current={currentPage === i ? "page" : undefined}
+            aria-current={currentPage === i ? 'page' : undefined}
             className="h-9 w-9"
           >
             {i}
@@ -113,10 +119,10 @@ const ProductPagination: React.FC<ProductPaginationProps> = ({
         pages.push(
           <Button
             key={totalPages}
-            variant={currentPage === totalPages ? "outline" : "ghost"}
+            variant={currentPage === totalPages ? 'outline' : 'ghost'}
             size="icon"
             onClick={() => onPageChange(totalPages)}
-            aria-current={currentPage === totalPages ? "page" : undefined}
+            aria-current={currentPage === totalPages ? 'page' : undefined}
             className="h-9 w-9"
           >
             {totalPages}
@@ -137,7 +143,10 @@ const ProductPagination: React.FC<ProductPaginationProps> = ({
         </span>
         <div className="flex items-center gap-2">
           <span>Show:</span>
-          <Select value={itemsPerPage.toString()} onValueChange={(value) => onItemsPerPageChange(Number(value))}>
+          <Select
+            value={itemsPerPage.toString()}
+            onValueChange={(value) => onItemsPerPageChange(Number(value))}
+          >
             <SelectTrigger className="w-16 h-8">
               <SelectValue />
             </SelectTrigger>
@@ -163,9 +172,7 @@ const ProductPagination: React.FC<ProductPaginationProps> = ({
           <span className="hidden sm:inline">Previous</span>
         </Button>
 
-        <div className="flex items-center gap-1">
-          {renderPageNumbers()}
-        </div>
+        <div className="flex items-center gap-1">{renderPageNumbers()}</div>
 
         <Button
           variant="ghost"

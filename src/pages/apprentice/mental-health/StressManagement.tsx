@@ -1,16 +1,15 @@
-
-import MentalHealthPageLayout from "@/components/mental-health/MentalHealthPageLayout";
-import { AlertTriangle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import InteractiveStressAssessment from "@/components/mental-health/stress/InteractiveStressAssessment";
-import BreathingExercise from "@/components/mental-health/stress/BreathingExercise";
-import ApprenticeScenarios from "@/components/mental-health/stress/ApprenticeScenarios";
-import StressSignsCards from "@/components/mental-health/stress/StressSignsCards";
-import ApprenticeStressors from "@/components/mental-health/stress/ApprenticeStressors";
-import QuickTips from "@/components/mental-health/stress/QuickTips";
-import AdvancedTechniques from "@/components/mental-health/stress/AdvancedTechniques";
-import ResourcesSection from "@/components/mental-health/stress/ResourcesSection";
-import SupportCallout from "@/components/mental-health/stress/SupportCallout";
+import MentalHealthPageLayout from '@/components/mental-health/MentalHealthPageLayout';
+import { AlertTriangle } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import InteractiveStressAssessment from '@/components/mental-health/stress/InteractiveStressAssessment';
+import BreathingExercise from '@/components/mental-health/stress/BreathingExercise';
+import ApprenticeScenarios from '@/components/mental-health/stress/ApprenticeScenarios';
+import StressSignsCards from '@/components/mental-health/stress/StressSignsCards';
+import ApprenticeStressors from '@/components/mental-health/stress/ApprenticeStressors';
+import QuickTips from '@/components/mental-health/stress/QuickTips';
+import AdvancedTechniques from '@/components/mental-health/stress/AdvancedTechniques';
+import ResourcesSection from '@/components/mental-health/stress/ResourcesSection';
+import SupportCallout from '@/components/mental-health/stress/SupportCallout';
 
 const StressManagement = () => {
   return (

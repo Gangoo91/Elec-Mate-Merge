@@ -4,46 +4,51 @@ import { AlertTriangle, Link, Battery, Shield } from 'lucide-react';
 export const ProtocolImportanceSection = () => {
   const importanceFactors = [
     {
-      factor: "Compatibility",
+      factor: 'Compatibility',
       icon: Link,
       description: "Not all devices use the same 'language'",
-      impact: "Device integration challenges",
-      example: "Zigbee lights may not work directly with Wi-Fi hubs",
-      color: "blue"
+      impact: 'Device integration challenges',
+      example: 'Zigbee lights may not work directly with Wi-Fi hubs',
+      color: 'blue',
     },
     {
-      factor: "Reliability",
+      factor: 'Reliability',
       icon: AlertTriangle,
-      description: "Some protocols cope better with interference",
-      impact: "System stability and performance",
-      example: "2.4GHz protocols compete with Wi-Fi and microwaves",
-      color: "orange"
+      description: 'Some protocols cope better with interference',
+      impact: 'System stability and performance',
+      example: '2.4GHz protocols compete with Wi-Fi and microwaves',
+      color: 'orange',
     },
     {
-      factor: "Power Use",
+      factor: 'Power Use',
       icon: Battery,
-      description: "Impacts battery life of smart sensors",
-      impact: "Maintenance frequency and costs",
-      example: "Wi-Fi sensors need frequent battery changes vs Zigbee",
-      color: "green"
+      description: 'Impacts battery life of smart sensors',
+      impact: 'Maintenance frequency and costs',
+      example: 'Wi-Fi sensors need frequent battery changes vs Zigbee',
+      color: 'green',
     },
     {
-      factor: "Security",
+      factor: 'Security',
       icon: Shield,
-      description: "Encryption levels differ between standards",
-      impact: "Data protection and privacy",
-      example: "Some protocols offer military-grade encryption",
-      color: "red"
-    }
+      description: 'Encryption levels differ between standards',
+      impact: 'Data protection and privacy',
+      example: 'Some protocols offer military-grade encryption',
+      color: 'red',
+    },
   ];
 
   const getColorClasses = (color: string) => {
     switch (color) {
-      case 'blue': return 'border-blue-600 bg-blue-900/20';
-      case 'orange': return 'border-orange-600 bg-orange-900/20';
-      case 'green': return 'border-green-600 bg-green-900/20';
-      case 'red': return 'border-red-600 bg-red-900/20';
-      default: return 'border-gray-600 bg-gray-900/20';
+      case 'blue':
+        return 'border-blue-600 bg-blue-900/20';
+      case 'orange':
+        return 'border-orange-600 bg-orange-900/20';
+      case 'green':
+        return 'border-green-600 bg-green-900/20';
+      case 'red':
+        return 'border-red-600 bg-red-900/20';
+      default:
+        return 'border-gray-600 bg-gray-900/20';
     }
   };
 
@@ -57,9 +62,10 @@ export const ProtocolImportanceSection = () => {
       </CardHeader>
       <CardContent className="text-gray-300 space-y-6">
         <p className="text-lg font-medium text-foreground mb-4">
-          Protocol choice affects every aspect of your smart home system's performance and user experience.
+          Protocol choice affects every aspect of your smart home system's performance and user
+          experience.
         </p>
-        
+
         {/* Key Factors */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {importanceFactors.map((factor, index) => (
@@ -69,7 +75,7 @@ export const ProtocolImportanceSection = () => {
                 <div className="flex-1">
                   <h4 className="font-semibold text-foreground mb-2">{factor.factor}</h4>
                   <p className="text-gray-300 text-sm mb-3">{factor.description}</p>
-                  
+
                   <div className="space-y-2">
                     <div>
                       <span className="text-xs font-medium text-gray-400">Impact: </span>
@@ -115,7 +121,8 @@ export const ProtocolImportanceSection = () => {
         <div className="p-4 bg-gradient-to-r from-purple-900/20 to-pink-900/20 border border-purple-600 rounded-lg">
           <h4 className="font-semibold text-foreground mb-3">Real-World Impact Example</h4>
           <p className="text-gray-300 text-sm mb-3">
-            A homeowner installed Wi-Fi smart door sensors throughout their large house. After a few weeks, they noticed:
+            A homeowner installed Wi-Fi smart door sensors throughout their large house. After a few
+            weeks, they noticed:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2">

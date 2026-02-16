@@ -1,6 +1,16 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { GitBranch, ArrowRight, Zap, Calculator, Shield, Wrench, Clipboard, CheckCircle2, Settings } from 'lucide-react';
+import {
+  GitBranch,
+  ArrowRight,
+  Zap,
+  Calculator,
+  Shield,
+  Wrench,
+  Clipboard,
+  CheckCircle2,
+  Settings,
+} from 'lucide-react';
 import { AgentType } from '@/types/agent-request';
 
 interface AgentFlowDiagramProps {
@@ -9,25 +19,25 @@ interface AgentFlowDiagramProps {
 }
 
 const AGENT_FLOW_PATHS: Record<AgentType, AgentType[]> = {
-  'designer': ['cost-engineer', 'installer', 'health-safety'],
+  designer: ['cost-engineer', 'installer', 'health-safety'],
   'cost-engineer': ['designer', 'installer', 'project-manager'],
-  'installer': ['health-safety', 'commissioning'],
+  installer: ['health-safety', 'commissioning'],
   'health-safety': ['installer', 'commissioning'],
-  'commissioning': ['maintenance', 'project-manager'],
-  'maintenance': ['commissioning', 'designer'],
+  commissioning: ['maintenance', 'project-manager'],
+  maintenance: ['commissioning', 'designer'],
   'project-manager': ['designer', 'cost-engineer', 'installer'],
-  'tutor': []
+  tutor: [],
 };
 
 const AGENT_META: Record<AgentType, { name: string; icon: typeof Zap; color: string }> = {
-  'designer': { name: 'Circuit Designer', icon: Zap, color: 'text-blue-400' },
+  designer: { name: 'Circuit Designer', icon: Zap, color: 'text-blue-400' },
   'cost-engineer': { name: 'Cost Engineer', icon: Calculator, color: 'text-green-400' },
-  'installer': { name: 'Installation Specialist', icon: Wrench, color: 'text-blue-400' },
+  installer: { name: 'Installation Specialist', icon: Wrench, color: 'text-blue-400' },
   'health-safety': { name: 'Health & Safety', icon: Shield, color: 'text-orange-400' },
-  'commissioning': { name: 'Testing & Commissioning', icon: CheckCircle2, color: 'text-purple-400' },
-  'maintenance': { name: 'Maintenance Specialist', icon: Settings, color: 'text-cyan-400' },
+  commissioning: { name: 'Testing & Commissioning', icon: CheckCircle2, color: 'text-purple-400' },
+  maintenance: { name: 'Maintenance Specialist', icon: Settings, color: 'text-cyan-400' },
   'project-manager': { name: 'Project Manager', icon: Clipboard, color: 'text-pink-400' },
-  'tutor': { name: 'AI Tutor', icon: Clipboard, color: 'text-yellow-400' }
+  tutor: { name: 'AI Tutor', icon: Clipboard, color: 'text-yellow-400' },
 };
 
 export const AgentFlowDiagram = ({ currentAgent, onQuickForward }: AgentFlowDiagramProps) => {
@@ -42,16 +52,14 @@ export const AgentFlowDiagram = ({ currentAgent, onQuickForward }: AgentFlowDiag
           <GitBranch className="h-5 w-5 text-elec-yellow" />
           <CardTitle>Workflow Suggestions</CardTitle>
         </div>
-        <CardDescription>
-          Quick forward your work to the next specialist
-        </CardDescription>
+        <CardDescription>Quick forward your work to the next specialist</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-wrap gap-2">
-          {suggestedAgents.map(agentId => {
+          {suggestedAgents.map((agentId) => {
             const meta = AGENT_META[agentId];
             const Icon = meta.icon;
-            
+
             return (
               <Button
                 key={agentId}

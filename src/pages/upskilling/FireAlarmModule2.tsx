@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Module 2: Detectors, Call Points & Devices - Fire Alarm Course";
-const DESCRIPTION = "Learn about smoke, heat, and multisensor detectors, manual call points, sounders, and visual alarm devices used in fire alarm systems.";
+const TITLE = 'Module 2: Detectors, Call Points & Devices - Fire Alarm Course';
+const DESCRIPTION =
+  'Learn about smoke, heat, and multisensor detectors, manual call points, sounders, and visual alarm devices used in fire alarm systems.';
 
 const FireAlarmModule2 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
@@ -13,34 +14,34 @@ const FireAlarmModule2 = () => {
   const sections = [
     {
       id: 1,
-      title: "Detector Technologies",
+      title: 'Detector Technologies',
       icon: CheckCircle,
-      description: "Smoke, heat, multisensor and beam detectors"
+      description: 'Smoke, heat, multisensor and beam detectors',
     },
     {
       id: 2,
-      title: "Detector Siting & Coverage",
+      title: 'Detector Siting & Coverage',
       icon: CheckCircle,
-      description: "Spacing, ceiling heights and environments"
+      description: 'Spacing, ceiling heights and environments',
     },
     {
       id: 3,
-      title: "Manual Call Points",
+      title: 'Manual Call Points',
       icon: CheckCircle,
-      description: "Types, positioning and accessibility"
+      description: 'Types, positioning and accessibility',
     },
     {
       id: 4,
-      title: "Sounders & VADs",
+      title: 'Sounders & VADs',
       icon: CheckCircle,
-      description: "Audible and visual alarm devices"
+      description: 'Audible and visual alarm devices',
     },
     {
       id: 5,
-      title: "False Alarm Management",
+      title: 'False Alarm Management',
       icon: CheckCircle,
-      description: "Causes and mitigation strategies"
-    }
+      description: 'Causes and mitigation strategies',
+    },
   ];
 
   return (
@@ -81,7 +82,8 @@ const FireAlarmModule2 = () => {
             Detectors, Call Points & Devices
           </h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Understanding detection technologies, device selection, siting requirements and false alarm prevention.
+            Understanding detection technologies, device selection, siting requirements and false
+            alarm prevention.
           </p>
         </div>
 

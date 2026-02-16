@@ -6,12 +6,14 @@
  * QualificationProgress for per-unit breakdown.
  */
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { ChevronDown, GraduationCap, Pencil, BookOpen } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
+import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
 import { QualificationProgress } from '@/components/apprentice/portfolio/QualificationProgress';
 import { QualificationRequirements } from '@/components/apprentice/portfolio/QualificationRequirements';
 
@@ -23,6 +25,11 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
   const [expanded, setExpanded] = useState(true);
   const [requirementsOpen, setRequirementsOpen] = useState(false);
   const { qualificationName, qualificationCode, isLoading } = useStudentQualification();
+  const { entries: portfolioEntries } = usePortfolioData();
+  const evidencedACs = useMemo(
+    () => parseEvidencedACs(portfolioEntries || []),
+    [portfolioEntries]
+  );
 
   if (isLoading) {
     return (
@@ -116,6 +123,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
             <QualificationProgress
               qualificationCode={qualificationCode}
               qualificationName={qualificationName}
+              evidencedACs={evidencedACs}
             />
 
             <button

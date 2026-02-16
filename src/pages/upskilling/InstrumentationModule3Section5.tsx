@@ -2,76 +2,82 @@ import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule3Section5 = () => {
   useSEO({
-    title: "Signal Integrity: Noise, Grounding, and Shielding | Instrumentation Course",
-    description: "Master signal integrity techniques including noise reduction, proper grounding, and cable shielding for reliable instrumentation systems."
+    title: 'Signal Integrity: Noise, Grounding, and Shielding | Instrumentation Course',
+    description:
+      'Master signal integrity techniques including noise reduction, proper grounding, and cable shielding for reliable instrumentation systems.',
   });
 
   const quizQuestions = [
     {
       id: 1,
-      question: "What is a ground loop?",
+      question: 'What is a ground loop?',
       options: [
-        "A type of cable connector",
-        "Multiple ground points at different potentials causing current flow",
-        "A grounding safety device",
-        "A measurement technique"
+        'A type of cable connector',
+        'Multiple ground points at different potentials causing current flow',
+        'A grounding safety device',
+        'A measurement technique',
       ],
       correct: 1,
-      explanation: "A ground loop occurs when there are multiple ground connections at different potentials, causing unwanted current to flow through signal cables and creating noise."
+      explanation:
+        'A ground loop occurs when there are multiple ground connections at different potentials, causing unwanted current to flow through signal cables and creating noise.',
     },
     {
       id: 2,
-      question: "What type of cable is best for reducing electromagnetic interference?",
+      question: 'What type of cable is best for reducing electromagnetic interference?',
       options: [
-        "Unshielded twisted pair",
-        "Single conductor cable",
-        "Shielded cable with drain wire",
-        "Coaxial power cable"
+        'Unshielded twisted pair',
+        'Single conductor cable',
+        'Shielded cable with drain wire',
+        'Coaxial power cable',
       ],
       correct: 2,
-      explanation: "Shielded cable with a drain wire provides protection against electromagnetic interference by containing electric fields and providing a path for induced currents."
+      explanation:
+        'Shielded cable with a drain wire provides protection against electromagnetic interference by containing electric fields and providing a path for induced currents.',
     },
     {
       id: 3,
-      question: "How should cable shields typically be grounded?",
+      question: 'How should cable shields typically be grounded?',
       options: [
-        "At both ends always",
-        "At neither end",
-        "At one end only for low frequency signals",
-        "Only when convenient"
+        'At both ends always',
+        'At neither end',
+        'At one end only for low frequency signals',
+        'Only when convenient',
       ],
       correct: 2,
-      explanation: "For low frequency signals, shields should be grounded at one end only to prevent ground loops. High frequency applications may require grounding at both ends with proper bonding."
+      explanation:
+        'For low frequency signals, shields should be grounded at one end only to prevent ground loops. High frequency applications may require grounding at both ends with proper bonding.',
     },
     {
       id: 4,
-      question: "What is common mode noise?",
+      question: 'What is common mode noise?',
       options: [
-        "Noise that appears on both signal wires equally",
-        "Noise unique to each wire",
-        "Mechanical vibration noise",
-        "Audio frequency interference"
+        'Noise that appears on both signal wires equally',
+        'Noise unique to each wire',
+        'Mechanical vibration noise',
+        'Audio frequency interference',
       ],
       correct: 0,
-      explanation: "Common mode noise appears equally on both signal conductors relative to ground. It can be rejected by differential amplifiers with good common mode rejection ratio (CMRR)."
+      explanation:
+        'Common mode noise appears equally on both signal conductors relative to ground. It can be rejected by differential amplifiers with good common mode rejection ratio (CMRR).',
     },
     {
       id: 5,
-      question: "Why separate signal cables from power cables?",
+      question: 'Why separate signal cables from power cables?',
       options: [
-        "To save space in cable trays",
-        "To prevent electromagnetic coupling and interference",
-        "To make identification easier",
-        "To reduce installation costs"
+        'To save space in cable trays',
+        'To prevent electromagnetic coupling and interference',
+        'To make identification easier',
+        'To reduce installation costs',
       ],
       correct: 1,
-      explanation: "Power cables generate electromagnetic fields that can couple into nearby signal cables, causing interference. Physical separation reduces this coupling significantly."
-    }
+      explanation:
+        'Power cables generate electromagnetic fields that can couple into nearby signal cables, causing interference. Physical separation reduces this coupling significantly.',
+    },
   ];
 
   return (
@@ -79,7 +85,10 @@ const InstrumentationModule3Section5 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to="/electrician/upskilling/instrumentation-module-3" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-3"
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back to Module 3
           </Link>
@@ -104,20 +113,26 @@ const InstrumentationModule3Section5 = () => {
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
           <h2 className="font-semibold text-white mb-2">Quick Summary</h2>
           <p className="text-white text-sm">
-            Signal integrity is crucial for reliable instrumentation. Understanding noise sources, proper grounding techniques, and effective shielding methods ensures accurate measurements in industrial environments.
+            Signal integrity is crucial for reliable instrumentation. Understanding noise sources,
+            proper grounding techniques, and effective shielding methods ensures accurate
+            measurements in industrial environments.
           </p>
         </div>
 
         {/* Section 01: Understanding Electrical Noise */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              01
+            </span>
             <h2 className="text-xl font-semibold text-white">Understanding Electrical Noise</h2>
           </div>
 
           <div className="space-y-4 text-white">
             <p>
-              Electrical noise is any unwanted signal that corrupts the desired measurement signal. In instrumentation systems, noise can come from many sources and significantly affect measurement accuracy.
+              Electrical noise is any unwanted signal that corrupts the desired measurement signal.
+              In instrumentation systems, noise can come from many sources and significantly affect
+              measurement accuracy.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4">
@@ -181,19 +196,31 @@ const InstrumentationModule3Section5 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">Capacitive Coupling</h4>
-                  <p className="text-white text-xs">Electric fields couple between conductors. Increases with frequency and decreases with distance.</p>
+                  <p className="text-white text-xs">
+                    Electric fields couple between conductors. Increases with frequency and
+                    decreases with distance.
+                  </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">Inductive Coupling</h4>
-                  <p className="text-white text-xs">Magnetic fields induce voltages in loops. Worse with large loop areas near current-carrying conductors.</p>
+                  <p className="text-white text-xs">
+                    Magnetic fields induce voltages in loops. Worse with large loop areas near
+                    current-carrying conductors.
+                  </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">Conducted Noise</h4>
-                  <p className="text-white text-xs">Noise travels through power supplies and ground connections. Common in shared power systems.</p>
+                  <p className="text-white text-xs">
+                    Noise travels through power supplies and ground connections. Common in shared
+                    power systems.
+                  </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">Radiated Noise</h4>
-                  <p className="text-white text-xs">Electromagnetic waves picked up by cables acting as antennas. Significant at high frequencies.</p>
+                  <p className="text-white text-xs">
+                    Electromagnetic waves picked up by cables acting as antennas. Significant at
+                    high frequencies.
+                  </p>
                 </div>
               </div>
             </div>
@@ -208,13 +235,17 @@ const InstrumentationModule3Section5 = () => {
         {/* Section 02: Ground Loops */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              02
+            </span>
             <h2 className="text-xl font-semibold text-white">Ground Loops and Prevention</h2>
           </div>
 
           <div className="space-y-4 text-white">
             <p>
-              Ground loops are one of the most common causes of noise in instrumentation systems. They occur when multiple ground connections create closed loops through which currents can flow.
+              Ground loops are one of the most common causes of noise in instrumentation systems.
+              They occur when multiple ground connections create closed loops through which currents
+              can flow.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4">
@@ -252,28 +283,37 @@ const InstrumentationModule3Section5 = () => {
                   <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Single Point Grounding</h4>
-                    <p className="text-white text-xs">Connect all grounds to a single reference point, creating a star topology.</p>
+                    <p className="text-white text-xs">
+                      Connect all grounds to a single reference point, creating a star topology.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Galvanic Isolation</h4>
-                    <p className="text-white text-xs">Use isolators to break the conductive path between ground references.</p>
+                    <p className="text-white text-xs">
+                      Use isolators to break the conductive path between ground references.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Differential Signalling</h4>
-                    <p className="text-white text-xs">Use differential inputs that reject common mode voltages including ground loop noise.</p>
+                    <p className="text-white text-xs">
+                      Use differential inputs that reject common mode voltages including ground loop
+                      noise.
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Current Loop Signals</h4>
-                    <p className="text-white text-xs">4-20mA signals are inherently immune to ground loop problems.</p>
+                    <p className="text-white text-xs">
+                      4-20mA signals are inherently immune to ground loop problems.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -289,13 +329,16 @@ const InstrumentationModule3Section5 = () => {
         {/* Section 03: Cable Shielding */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              03
+            </span>
             <h2 className="text-xl font-semibold text-white">Cable Shielding Techniques</h2>
           </div>
 
           <div className="space-y-4 text-white">
             <p>
-              Proper cable shielding is essential for protecting sensitive signals from electromagnetic interference (EMI) in industrial environments.
+              Proper cable shielding is essential for protecting sensitive signals from
+              electromagnetic interference (EMI) in industrial environments.
             </p>
 
             <div className="bg-card/50 rounded-lg p-4">
@@ -344,21 +387,28 @@ const InstrumentationModule3Section5 = () => {
               <h3 className="font-semibold text-white mb-3">Shield Grounding Rules</h3>
               <div className="space-y-3">
                 <div className="bg-background/50 rounded p-3">
-                  <h4 className="text-white font-medium text-sm mb-2">Low Frequency Signals (below 1MHz)</h4>
+                  <h4 className="text-white font-medium text-sm mb-2">
+                    Low Frequency Signals (below 1MHz)
+                  </h4>
                   <p className="text-white text-xs">
-                    Ground shield at one end only, typically at the receiving end (instrument or PLC). This prevents ground loops while still providing electrostatic shielding.
+                    Ground shield at one end only, typically at the receiving end (instrument or
+                    PLC). This prevents ground loops while still providing electrostatic shielding.
                   </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
-                  <h4 className="text-white font-medium text-sm mb-2">High Frequency Signals (above 1MHz)</h4>
+                  <h4 className="text-white font-medium text-sm mb-2">
+                    High Frequency Signals (above 1MHz)
+                  </h4>
                   <p className="text-white text-xs">
-                    Ground shield at both ends with low impedance connections. May require additional bonding at intermediate points for long runs.
+                    Ground shield at both ends with low impedance connections. May require
+                    additional bonding at intermediate points for long runs.
                   </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-white font-medium text-sm mb-2">Mixed Environment</h4>
                   <p className="text-white text-xs">
-                    Use foil shield grounded at one end for low frequency, with overall braid grounded at both ends for high frequency protection.
+                    Use foil shield grounded at one end for low frequency, with overall braid
+                    grounded at both ends for high frequency protection.
                   </p>
                 </div>
               </div>
@@ -369,7 +419,9 @@ const InstrumentationModule3Section5 = () => {
         {/* Section 04: Cable Installation Practices */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              04
+            </span>
             <h2 className="text-xl font-semibold text-white">Cable Installation Best Practices</h2>
           </div>
 
@@ -380,8 +432,12 @@ const InstrumentationModule3Section5 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left py-3 px-4 text-elec-yellow font-semibold">Cable Type</th>
-                      <th className="text-left py-3 px-4 text-white font-semibold">Minimum Separation</th>
+                      <th className="text-left py-3 px-4 text-elec-yellow font-semibold">
+                        Cable Type
+                      </th>
+                      <th className="text-left py-3 px-4 text-white font-semibold">
+                        Minimum Separation
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="text-white">
@@ -464,7 +520,9 @@ const InstrumentationModule3Section5 = () => {
         {/* Section 05: Noise Filtering */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              05
+            </span>
             <h2 className="text-xl font-semibold text-white">Noise Filtering Techniques</h2>
           </div>
 
@@ -474,19 +532,32 @@ const InstrumentationModule3Section5 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">RC Filters</h4>
-                  <p className="text-white text-xs">Simple first-order low-pass filters at signal inputs. Effective for high-frequency noise rejection.</p>
+                  <p className="text-white text-xs">
+                    Simple first-order low-pass filters at signal inputs. Effective for
+                    high-frequency noise rejection.
+                  </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">Ferrite Beads</h4>
-                  <p className="text-white text-xs">High-frequency suppression on cable entries. Acts as a frequency-dependent resistor.</p>
+                  <p className="text-white text-xs">
+                    High-frequency suppression on cable entries. Acts as a frequency-dependent
+                    resistor.
+                  </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
                   <h4 className="text-elec-yellow font-medium text-sm mb-1">EMI Filters</h4>
-                  <p className="text-white text-xs">Mains input filters to prevent conducted noise. Essential for sensitive equipment.</p>
+                  <p className="text-white text-xs">
+                    Mains input filters to prevent conducted noise. Essential for sensitive
+                    equipment.
+                  </p>
                 </div>
                 <div className="bg-background/50 rounded p-3">
-                  <h4 className="text-elec-yellow font-medium text-sm mb-1">Transient Suppressors</h4>
-                  <p className="text-white text-xs">TVS diodes and MOVs protect against voltage spikes and surges.</p>
+                  <h4 className="text-elec-yellow font-medium text-sm mb-1">
+                    Transient Suppressors
+                  </h4>
+                  <p className="text-white text-xs">
+                    TVS diodes and MOVs protect against voltage spikes and surges.
+                  </p>
                 </div>
               </div>
             </div>
@@ -503,19 +574,22 @@ const InstrumentationModule3Section5 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <div>
-                    <strong>Moving average:</strong> Rolling average of recent samples for smooth output
+                    <strong>Moving average:</strong> Rolling average of recent samples for smooth
+                    output
                   </div>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <div>
-                    <strong>Median filtering:</strong> Rejects outliers and impulse noise effectively
+                    <strong>Median filtering:</strong> Rejects outliers and impulse noise
+                    effectively
                   </div>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <div>
-                    <strong>Digital low-pass:</strong> Software implementation of frequency filtering
+                    <strong>Digital low-pass:</strong> Software implementation of frequency
+                    filtering
                   </div>
                 </li>
               </ul>
@@ -526,50 +600,79 @@ const InstrumentationModule3Section5 = () => {
         {/* Section 06: Troubleshooting */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">06</span>
-            <h2 className="text-xl font-semibold text-white">Troubleshooting Signal Integrity Issues</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">
+              06
+            </span>
+            <h2 className="text-xl font-semibold text-white">
+              Troubleshooting Signal Integrity Issues
+            </h2>
           </div>
 
           <div className="bg-card/50 rounded-lg p-4">
             <h3 className="font-semibold text-white mb-3">Systematic Approach</h3>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">1</div>
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">
+                  1
+                </div>
                 <div>
                   <h4 className="text-white font-medium text-sm">Characterise the Noise</h4>
-                  <p className="text-white text-xs">Use an oscilloscope to identify noise frequency and pattern. 50Hz suggests mains coupling; high-frequency spikes suggest switching noise.</p>
+                  <p className="text-white text-xs">
+                    Use an oscilloscope to identify noise frequency and pattern. 50Hz suggests mains
+                    coupling; high-frequency spikes suggest switching noise.
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">2</div>
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">
+                  2
+                </div>
                 <div>
                   <h4 className="text-white font-medium text-sm">Identify the Source</h4>
-                  <p className="text-white text-xs">Turn off suspected noise sources one at a time. Check if noise correlates with specific equipment operation.</p>
+                  <p className="text-white text-xs">
+                    Turn off suspected noise sources one at a time. Check if noise correlates with
+                    specific equipment operation.
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">3</div>
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">
+                  3
+                </div>
                 <div>
                   <h4 className="text-white font-medium text-sm">Check Grounding</h4>
-                  <p className="text-white text-xs">Verify single-point grounding. Look for multiple ground paths and unintended connections.</p>
+                  <p className="text-white text-xs">
+                    Verify single-point grounding. Look for multiple ground paths and unintended
+                    connections.
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">4</div>
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">
+                  4
+                </div>
                 <div>
                   <h4 className="text-white font-medium text-sm">Inspect Cable Routing</h4>
-                  <p className="text-white text-xs">Check for inadequate separation from power cables, proper shield termination, and cable damage.</p>
+                  <p className="text-white text-xs">
+                    Check for inadequate separation from power cables, proper shield termination,
+                    and cable damage.
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">5</div>
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">
+                  5
+                </div>
                 <div>
                   <h4 className="text-white font-medium text-sm">Apply Remediation</h4>
-                  <p className="text-white text-xs">Implement appropriate fixes: add filtering, improve shielding, re-route cables, or add isolation.</p>
+                  <p className="text-white text-xs">
+                    Implement appropriate fixes: add filtering, improve shielding, re-route cables,
+                    or add isolation.
+                  </p>
                 </div>
               </div>
             </div>
@@ -582,23 +685,36 @@ const InstrumentationModule3Section5 = () => {
 
           <div className="space-y-4">
             <div className="bg-card/50 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-2">How do I know if I have a ground loop problem?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                How do I know if I have a ground loop problem?
+              </h3>
               <p className="text-white text-sm">
-                Common symptoms include 50Hz hum on signals, readings that change when nearby equipment is switched on or off, and noise that disappears when you disconnect one end of the cable shield. An oscilloscope will show 50Hz or harmonics superimposed on the signal.
+                Common symptoms include 50Hz hum on signals, readings that change when nearby
+                equipment is switched on or off, and noise that disappears when you disconnect one
+                end of the cable shield. An oscilloscope will show 50Hz or harmonics superimposed on
+                the signal.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-2">Should I always use shielded cable for instrumentation?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                Should I always use shielded cable for instrumentation?
+              </h3>
               <p className="text-white text-sm">
-                In industrial environments, yes. The small additional cost of shielded cable is worthwhile insurance against interference problems. Only in very clean electrical environments with short cable runs might unshielded cable be acceptable.
+                In industrial environments, yes. The small additional cost of shielded cable is
+                worthwhile insurance against interference problems. Only in very clean electrical
+                environments with short cable runs might unshielded cable be acceptable.
               </p>
             </div>
 
             <div className="bg-card/50 rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-2">What if I cannot maintain recommended cable separation?</h3>
+              <h3 className="font-semibold text-white mb-2">
+                What if I cannot maintain recommended cable separation?
+              </h3>
               <p className="text-white text-sm">
-                Use better shielded cable, metal conduit, or signal isolators. For crossings, ensure they are at 90 degrees. Consider using 4-20mA current loops instead of voltage signals for better noise immunity.
+                Use better shielded cable, metal conduit, or signal isolators. For crossings, ensure
+                they are at 90 degrees. Consider using 4-20mA current loops instead of voltage
+                signals for better noise immunity.
               </p>
             </div>
           </div>
@@ -611,7 +727,10 @@ const InstrumentationModule3Section5 = () => {
 
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-3 pt-6 border-t border-border">
-          <Link to="/electrician/upskilling/instrumentation-module-3-section-4" className="w-full sm:w-auto">
+          <Link
+            to="/electrician/upskilling/instrumentation-module-3-section-4"
+            className="w-full sm:w-auto"
+          >
             <Button variant="outline" className="w-full sm:w-auto">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back

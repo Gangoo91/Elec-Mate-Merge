@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Loader2, Sparkles, XCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { InstallPlanDataV2 } from "./types";
+import { useState, useRef, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Send, Loader2, Sparkles, XCircle } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { InstallPlanDataV2 } from './types';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -23,10 +23,11 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "👋 Welcome to the AI Guided Installation Designer! I'm here to help you design your electrical installation to BS 7671:2018 standards.\n\nTell me what you're planning to install, and I'll guide you through the process, asking questions to ensure we get all the details right.\n\nFor example, you could say:\n- \"I need to install a shower in a bathroom\"\n- \"Planning an EV charger for the driveway\"\n- \"Design a complete consumer unit for a 3-bed house\""
-    }
+      content:
+        '👋 Welcome to the AI Guided Installation Designer! I\'m here to help you design your electrical installation to BS 7671:2018 standards.\n\nTell me what you\'re planning to install, and I\'ll guide you through the process, asking questions to ensure we get all the details right.\n\nFor example, you could say:\n- "I need to install a shower in a bathroom"\n- "Planning an EV charger for the driveway"\n- "Design a complete consumer unit for a 3-bed house"',
+    },
   ]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -40,19 +41,19 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
-    setInput("");
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    setInput('');
+    setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
 
     try {
       console.log('🔍 AIGuidedPlanner: Calling agent-router with project-manager');
       const { data, error } = await supabase.functions.invoke('agent-router', {
-        body: { 
+        body: {
           userMessage,
           selectedAgents: ['project-manager'],
           messages: [...messages, { role: 'user', content: userMessage }],
-          currentDesign: planData 
-        }
+          currentDesign: planData,
+        },
       });
 
       if (error) throw error;
@@ -64,30 +65,35 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
       // Extract response from agent-router structure
       const agentResponse = data.responses?.[0]?.response?.response;
       const structuredData = data.responses?.[0]?.response?.structuredData;
-      
+
       if (!agentResponse) {
         throw new Error('No response from agent');
       }
 
       // Add assistant response
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: agentResponse 
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: agentResponse,
+        },
+      ]);
 
       // Update plan data if AI extracted structured data
       if (structuredData) {
         updatePlanData({ ...planData, ...structuredData });
-        toast.success("Installation details updated");
+        toast.success('Installation details updated');
       }
-
     } catch (error) {
       console.error('AI conversation error:', error);
       toast.error(error instanceof Error ? error.message : 'Failed to get AI response');
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: "I'm sorry, I encountered an error. Please try again or start over." 
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: "I'm sorry, I encountered an error. Please try again or start over.",
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
@@ -109,11 +115,7 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
               <Sparkles className="h-5 w-5 text-primary" />
               AI Guided Installation Designer
             </CardTitle>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onReset}
-            >
+            <Button variant="outline" size="sm" onClick={onReset}>
               <XCircle className="h-4 w-4 mr-2" />
               Start Over
             </Button>
@@ -121,10 +123,7 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Chat Messages */}
-          <ScrollArea 
-            ref={scrollRef}
-            className="h-[500px] rounded-lg border bg-muted/20 p-4"
-          >
+          <ScrollArea ref={scrollRef} className="h-[500px] rounded-lg border bg-muted/20 p-4">
             <div className="space-y-4">
               {messages.map((message, index) => (
                 <div
@@ -162,11 +161,7 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
               disabled={isLoading}
               className="flex-1"
             />
-            <Button 
-              onClick={handleSend}
-              disabled={isLoading || !input.trim()}
-              size="icon"
-            >
+            <Button onClick={handleSend} disabled={isLoading || !input.trim()} size="icon">
               <Send className="h-4 w-4" />
             </Button>
           </div>
@@ -178,7 +173,7 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  setInput("I need to install a 9.5kW shower, 18 metres from the consumer unit");
+                  setInput('I need to install a 9.5kW shower, 18 metres from the consumer unit');
                 }}
               >
                 Shower Installation
@@ -187,7 +182,7 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  setInput("Design a complete board for a 3-bed house");
+                  setInput('Design a complete board for a 3-bed house');
                 }}
               >
                 Whole House Design
@@ -196,7 +191,7 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  setInput("7kW EV charger in garage, 25m cable run");
+                  setInput('7kW EV charger in garage, 25m cable run');
                 }}
               >
                 EV Charger

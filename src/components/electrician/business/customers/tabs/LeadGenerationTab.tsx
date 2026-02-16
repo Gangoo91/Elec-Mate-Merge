@@ -1,50 +1,68 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Target, Phone, Mail, MessageCircle, Clock, CheckCircle, Users, FileText, TrendingUp, Filter, Calendar, AlertTriangle } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  MobileAccordion,
+  MobileAccordionContent,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+} from '@/components/ui/mobile-accordion';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Target,
+  Phone,
+  Mail,
+  MessageCircle,
+  Clock,
+  CheckCircle,
+  Users,
+  FileText,
+  TrendingUp,
+  Filter,
+  Calendar,
+  AlertTriangle,
+} from 'lucide-react';
 
 const LeadGenerationTab = () => {
   const isMobile = useIsMobile();
 
   const leadMetrics = [
     {
-      metric: "Lead Response Time",
-      data: "< 5 minutes optimal",
+      metric: 'Lead Response Time',
+      data: '< 5 minutes optimal',
       icon: <Clock className="h-5 w-5 text-green-400" />,
-      detail: "First to respond wins 50% of opportunities"
+      detail: 'First to respond wins 50% of opportunities',
     },
     {
-      metric: "Phone Lead Conversion",
-      data: "65-85% conversion rate",
+      metric: 'Phone Lead Conversion',
+      data: '65-85% conversion rate',
       icon: <Phone className="h-5 w-5 text-blue-400" />,
-      detail: "Phone leads convert much higher than online"
+      detail: 'Phone leads convert much higher than online',
     },
     {
-      metric: "Quote-to-Job Success",
-      data: "45-65% conversion rate",
+      metric: 'Quote-to-Job Success',
+      data: '45-65% conversion rate',
       icon: <CheckCircle className="h-5 w-5 text-purple-400" />,
-      detail: "Professional quoting process essential"
+      detail: 'Professional quoting process essential',
     },
     {
-      metric: "Lead Qualification Rate",
-      data: "70% of leads are qualified",
+      metric: 'Lead Qualification Rate',
+      data: '70% of leads are qualified',
       icon: <Filter className="h-5 w-5 text-orange-400" />,
-      detail: "Proper screening improves efficiency"
+      detail: 'Proper screening improves efficiency',
     },
     {
-      metric: "Customer Acquisition Cost",
-      data: "£35-85 per customer",
+      metric: 'Customer Acquisition Cost',
+      data: '£35-85 per customer',
       icon: <Target className="h-5 w-5 text-yellow-400" />,
-      detail: "Total cost to acquire paying customer"
+      detail: 'Total cost to acquire paying customer',
     },
     {
-      metric: "Emergency Call Premium",
-      data: "3x higher conversion rate",
+      metric: 'Emergency Call Premium',
+      data: '3x higher conversion rate',
       icon: <AlertTriangle className="h-5 w-5 text-red-400" />,
-      detail: "Emergency leads have urgency advantage"
-    }
+      detail: 'Emergency leads have urgency advantage',
+    },
   ];
 
   return (
@@ -52,17 +70,24 @@ const LeadGenerationTab = () => {
       <Alert className="border-green-400/50 bg-green-400/10">
         <Target className="h-4 w-4 text-green-400" />
         <AlertDescription className="text-green-400">
-          Rapid lead response can increase conversion rates by 300-400%. The first business to respond wins 50% of opportunities.
+          Rapid lead response can increase conversion rates by 300-400%. The first business to
+          respond wins 50% of opportunities.
         </AlertDescription>
       </Alert>
 
-      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-3 xl:grid-cols-6'}`}>
+      <div
+        className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-3 xl:grid-cols-6'}`}
+      >
         {leadMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
               {metric.icon}
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>{metric.metric}</div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
+                {metric.metric}
+              </div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                {metric.data}
+              </div>
             </div>
           </Card>
         ))}
@@ -76,16 +101,20 @@ const LeadGenerationTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Successful electricians use multiple lead generation channels to ensure consistent customer flow and reduce dependency on single sources.
+                Successful electricians use multiple lead generation channels to ensure consistent
+                customer flow and reduce dependency on single sources.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Channel Strategy</h4>
-                    <p className="text-sm">Diversify lead sources across digital, referral, and traditional channels to maintain steady business flow.</p>
+                    <p className="text-sm">
+                      Diversify lead sources across digital, referral, and traditional channels to
+                      maintain steady business flow.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -95,7 +124,7 @@ const LeadGenerationTab = () => {
                       <li>• Month 4+: Scale successful channels</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Channel Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -106,10 +135,12 @@ const LeadGenerationTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">High-Converting Digital Sources</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      High-Converting Digital Sources
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Google Local Services Ads</li>
                       <li>• Website contact forms & chat</li>
@@ -119,9 +150,11 @@ const LeadGenerationTab = () => {
                       <li>• Email marketing to past customers</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
-                    <h4 className="font-semibold text-yellow-400 mb-2">Referral & Traditional Sources</h4>
+                    <h4 className="font-semibold text-yellow-400 mb-2">
+                      Referral & Traditional Sources
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Customer referral programmes</li>
                       <li>• Trade partner recommendations</li>
@@ -131,7 +164,7 @@ const LeadGenerationTab = () => {
                       <li>• Direct mail campaigns</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Channel Performance Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -155,16 +188,20 @@ const LeadGenerationTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Proper lead qualification saves time, improves conversion rates, and ensures you focus on the most promising opportunities.
+                Proper lead qualification saves time, improves conversion rates, and ensures you
+                focus on the most promising opportunities.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Qualification Strategy</h4>
-                    <p className="text-sm">Screen leads early to identify budget, urgency, and decision-making authority before investing time in quotes.</p>
+                    <p className="text-sm">
+                      Screen leads early to identify budget, urgency, and decision-making authority
+                      before investing time in quotes.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Screening Process</h4>
                     <ul className="text-sm space-y-1">
@@ -174,7 +211,7 @@ const LeadGenerationTab = () => {
                       <li>• Budget range discussion</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Impact</h4>
                     <ul className="text-sm space-y-1">
@@ -185,7 +222,7 @@ const LeadGenerationTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
                     <h4 className="font-semibold text-purple-400 mb-2">Key Qualifying Questions</h4>
@@ -198,7 +235,7 @@ const LeadGenerationTab = () => {
                       <li>• "What's most important to you - price, speed, or quality?"</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Lead Scoring Criteria</h4>
                     <ul className="text-sm space-y-1">
@@ -210,7 +247,7 @@ const LeadGenerationTab = () => {
                       <li>• Previous experience: Trust factor</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Qualification Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -234,18 +271,24 @@ const LeadGenerationTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Speed of response is critical - the first electrician to respond professionally wins 50% of all opportunities.
+                Speed of response is critical - the first electrician to respond professionally wins
+                50% of all opportunities.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Response Strategy</h4>
-                    <p className="text-sm">Implement systems for immediate lead response across all channels to maximise conversion opportunities.</p>
+                    <p className="text-sm">
+                      Implement systems for immediate lead response across all channels to maximise
+                      conversion opportunities.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
-                    <h4 className="font-semibold text-green-400 mb-2">Response Timeline Standards</h4>
+                    <h4 className="font-semibold text-green-400 mb-2">
+                      Response Timeline Standards
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Phone calls: Answer within 3 rings</li>
                       <li>• Text messages: Respond within 5 minutes</li>
@@ -253,7 +296,7 @@ const LeadGenerationTab = () => {
                       <li>• Web forms: Contact within 15 minutes</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Speed Advantages</h4>
                     <ul className="text-sm space-y-1">
@@ -264,10 +307,12 @@ const LeadGenerationTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Professional Phone Protocol</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Professional Phone Protocol
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• "Good morning, [Company Name], this is [Name]"</li>
                       <li>• Active listening with note-taking</li>
@@ -277,7 +322,7 @@ const LeadGenerationTab = () => {
                       <li>• Professional follow-up scheduling</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Response Systems</h4>
                     <ul className="text-sm space-y-1">
@@ -289,7 +334,7 @@ const LeadGenerationTab = () => {
                       <li>• CRM integration for tracking</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Response Impact Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -313,16 +358,20 @@ const LeadGenerationTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Professional quoting separates you from competitors and builds customer confidence in your expertise and pricing structure.
+                Professional quoting separates you from competitors and builds customer confidence
+                in your expertise and pricing structure.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Quoting Strategy</h4>
-                    <p className="text-sm">Create detailed, professional quotes that demonstrate value, build trust, and justify your pricing structure.</p>
+                    <p className="text-sm">
+                      Create detailed, professional quotes that demonstrate value, build trust, and
+                      justify your pricing structure.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Quote Development Process</h4>
                     <ul className="text-sm space-y-1">
@@ -332,7 +381,7 @@ const LeadGenerationTab = () => {
                       <li>• Professional quote delivery within 24hrs</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Professional Benefits</h4>
                     <ul className="text-sm space-y-1">
@@ -343,10 +392,12 @@ const LeadGenerationTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Essential Quote Components</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Essential Quote Components
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Detailed scope of work description</li>
                       <li>• Materials list with specifications</li>
@@ -357,9 +408,11 @@ const LeadGenerationTab = () => {
                       <li>• Professional company branding</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
-                    <h4 className="font-semibold text-yellow-400 mb-2">Pricing Strategy Elements</h4>
+                    <h4 className="font-semibold text-yellow-400 mb-2">
+                      Pricing Strategy Elements
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Competitive rate analysis</li>
                       <li>• Value-based pricing structure</li>
@@ -369,7 +422,7 @@ const LeadGenerationTab = () => {
                       <li>• Multiple payment options</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Quote Performance Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -393,16 +446,20 @@ const LeadGenerationTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Converting leads to paying customers requires understanding customer psychology, addressing concerns, and presenting compelling value propositions.
+                Converting leads to paying customers requires understanding customer psychology,
+                addressing concerns, and presenting compelling value propositions.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Conversion Strategy</h4>
-                    <p className="text-sm">Use proven sales psychology and customer relationship techniques to convert qualified leads into loyal customers.</p>
+                    <p className="text-sm">
+                      Use proven sales psychology and customer relationship techniques to convert
+                      qualified leads into loyal customers.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Sales Process Timeline</h4>
                     <ul className="text-sm space-y-1">
@@ -412,7 +469,7 @@ const LeadGenerationTab = () => {
                       <li>• Objection handling: Address concerns</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Psychological Factors</h4>
                     <ul className="text-sm space-y-1">
@@ -423,7 +480,7 @@ const LeadGenerationTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
                     <h4 className="font-semibold text-purple-400 mb-2">Key Value Propositions</h4>
@@ -436,9 +493,11 @@ const LeadGenerationTab = () => {
                       <li>• Local family business with 5★ reviews</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
-                    <h4 className="font-semibold text-yellow-400 mb-2">Common Objection Responses</h4>
+                    <h4 className="font-semibold text-yellow-400 mb-2">
+                      Common Objection Responses
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• "Price too high" → Value & quality focus</li>
                       <li>• "Need to think" → Limited time offers</li>
@@ -448,7 +507,7 @@ const LeadGenerationTab = () => {
                       <li>• "Previous bad experience" → Guarantees</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Conversion Metrics</h4>
                     <ul className="text-sm space-y-1">
@@ -472,16 +531,20 @@ const LeadGenerationTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                Systematic lead tracking enables data-driven decisions about marketing investment and sales process optimisation.
+                Systematic lead tracking enables data-driven decisions about marketing investment
+                and sales process optimisation.
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Tracking Strategy</h4>
-                    <p className="text-sm">Implement comprehensive lead tracking to measure ROI, optimise marketing spend, and improve sales processes.</p>
+                    <p className="text-sm">
+                      Implement comprehensive lead tracking to measure ROI, optimise marketing
+                      spend, and improve sales processes.
+                    </p>
                   </div>
-                  
+
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">System Implementation</h4>
                     <ul className="text-sm space-y-1">
@@ -491,9 +554,11 @@ const LeadGenerationTab = () => {
                       <li>• Week 4: Reporting dashboard creation</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
-                    <h4 className="font-semibold text-orange-400 mb-2">Business Intelligence Benefits</h4>
+                    <h4 className="font-semibold text-orange-400 mb-2">
+                      Business Intelligence Benefits
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Optimise marketing budget allocation</li>
                       <li>• Identify best performing channels</li>
@@ -502,10 +567,12 @@ const LeadGenerationTab = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                    <h4 className="font-semibold text-purple-400 mb-2">Essential Tracking Metrics</h4>
+                    <h4 className="font-semibold text-purple-400 mb-2">
+                      Essential Tracking Metrics
+                    </h4>
                     <ul className="text-sm space-y-1">
                       <li>• Lead source attribution</li>
                       <li>• Cost per lead by channel</li>
@@ -516,7 +583,7 @@ const LeadGenerationTab = () => {
                       <li>• Return on marketing investment</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Tracking Tools</h4>
                     <ul className="text-sm space-y-1">
@@ -528,7 +595,7 @@ const LeadGenerationTab = () => {
                       <li>• Sales performance dashboards</li>
                     </ul>
                   </div>
-                  
+
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Performance Benchmarks</h4>
                     <ul className="text-sm space-y-1">

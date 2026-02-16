@@ -1,9 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
-export type PolicyCategory = "Safety" | "HR" | "Legal" | "Operations";
-export type PolicyStatus = "Draft" | "Active" | "Review Due" | "Archived";
+export type PolicyCategory = 'Safety' | 'HR' | 'Legal' | 'Operations';
+export type PolicyStatus = 'Draft' | 'Active' | 'Review Due' | 'Archived';
 
 // Policy template (system-provided)
 export interface PolicyTemplate {
@@ -55,13 +55,13 @@ export interface UpdatePolicyInput {
 // Fetch all policy templates
 export function usePolicyTemplates() {
   return useQuery({
-    queryKey: ["policyTemplates"],
+    queryKey: ['policyTemplates'],
     queryFn: async (): Promise<PolicyTemplate[]> => {
       const { data, error } = await supabase
-        .from("employer_policy_templates")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order", { ascending: true });
+        .from('employer_policy_templates')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true });
 
       if (error) throw error;
       return data as PolicyTemplate[];
@@ -72,14 +72,14 @@ export function usePolicyTemplates() {
 // Fetch policy templates by category
 export function usePolicyTemplatesByCategory(category: PolicyCategory) {
   return useQuery({
-    queryKey: ["policyTemplates", "category", category],
+    queryKey: ['policyTemplates', 'category', category],
     queryFn: async (): Promise<PolicyTemplate[]> => {
       const { data, error } = await supabase
-        .from("employer_policy_templates")
-        .select("*")
-        .eq("is_active", true)
-        .eq("category", category)
-        .order("sort_order", { ascending: true });
+        .from('employer_policy_templates')
+        .select('*')
+        .eq('is_active', true)
+        .eq('category', category)
+        .order('sort_order', { ascending: true });
 
       if (error) throw error;
       return data as PolicyTemplate[];
@@ -90,14 +90,14 @@ export function usePolicyTemplatesByCategory(category: PolicyCategory) {
 // Fetch a single policy template
 export function usePolicyTemplate(id: string | undefined) {
   return useQuery({
-    queryKey: ["policyTemplates", id],
+    queryKey: ['policyTemplates', id],
     queryFn: async (): Promise<PolicyTemplate | null> => {
       if (!id) return null;
 
       const { data, error } = await supabase
-        .from("employer_policy_templates")
-        .select("*")
-        .eq("id", id)
+        .from('employer_policy_templates')
+        .select('*')
+        .eq('id', id)
         .single();
 
       if (error) throw error;
@@ -110,19 +110,23 @@ export function usePolicyTemplate(id: string | undefined) {
 // Fetch user's adopted policies
 export function useUserPolicies() {
   return useQuery({
-    queryKey: ["userPolicies"],
+    queryKey: ['userPolicies'],
     queryFn: async (): Promise<UserPolicy[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("employer_policies")
-        .select(`
+        .from('employer_policies')
+        .select(
+          `
           *,
           template:employer_policy_templates(*)
-        `)
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+        `
+        )
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       return data as UserPolicy[];
@@ -133,21 +137,25 @@ export function useUserPolicies() {
 // Fetch a single user policy
 export function useUserPolicy(id: string | undefined) {
   return useQuery({
-    queryKey: ["userPolicies", id],
+    queryKey: ['userPolicies', id],
     queryFn: async (): Promise<UserPolicy | null> => {
       if (!id) return null;
 
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("employer_policies")
-        .select(`
+        .from('employer_policies')
+        .select(
+          `
           *,
           template:employer_policy_templates(*)
-        `)
-        .eq("id", id)
-        .eq("user_id", user.id)
+        `
+        )
+        .eq('id', id)
+        .eq('user_id', user.id)
         .single();
 
       if (error) throw error;
@@ -160,33 +168,34 @@ export function useUserPolicy(id: string | undefined) {
 // Get policy statistics
 export function usePolicyStats() {
   return useQuery({
-    queryKey: ["userPolicies", "stats"],
+    queryKey: ['userPolicies', 'stats'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("employer_policies")
-        .select("id, status, review_date")
-        .eq("user_id", user.id);
+        .from('employer_policies')
+        .select('id, status, review_date')
+        .eq('user_id', user.id);
 
       if (error) throw error;
 
-      const today = new Date().toISOString().split("T")[0];
-      const thirtyDaysFromNow = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+      const today = new Date().toISOString().split('T')[0];
+      const thirtyDaysFromNow = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split('T')[0];
 
       const stats = {
         total: data.length,
-        active: data.filter(p => p.status === "Active").length,
-        draft: data.filter(p => p.status === "Draft").length,
-        reviewDue: data.filter(p =>
-          p.status === "Review Due" ||
-          (p.review_date && p.review_date <= today)
+        active: data.filter((p) => p.status === 'Active').length,
+        draft: data.filter((p) => p.status === 'Draft').length,
+        reviewDue: data.filter(
+          (p) => p.status === 'Review Due' || (p.review_date && p.review_date <= today)
         ).length,
-        reviewingSoon: data.filter(p =>
-          p.review_date &&
-          p.review_date > today &&
-          p.review_date <= thirtyDaysFromNow
+        reviewingSoon: data.filter(
+          (p) => p.review_date && p.review_date > today && p.review_date <= thirtyDaysFromNow
         ).length,
       };
 
@@ -198,19 +207,21 @@ export function usePolicyStats() {
 // Check which templates have been adopted
 export function useAdoptedTemplateIds() {
   return useQuery({
-    queryKey: ["userPolicies", "adoptedTemplateIds"],
+    queryKey: ['userPolicies', 'adoptedTemplateIds'],
     queryFn: async (): Promise<string[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase
-        .from("employer_policies")
-        .select("template_id")
-        .eq("user_id", user.id)
-        .not("template_id", "is", null);
+        .from('employer_policies')
+        .select('template_id')
+        .eq('user_id', user.id)
+        .not('template_id', 'is', null);
 
       if (error) throw error;
-      return (data || []).map(p => p.template_id).filter(Boolean) as string[];
+      return (data || []).map((p) => p.template_id).filter(Boolean) as string[];
     },
   });
 }
@@ -222,14 +233,16 @@ export function useAdoptPolicy() {
 
   return useMutation({
     mutationFn: async (input: AdoptPolicyInput): Promise<UserPolicy> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
       // Fetch the template
       const { data: template, error: templateError } = await supabase
-        .from("employer_policy_templates")
-        .select("*")
-        .eq("id", input.template_id)
+        .from('employer_policy_templates')
+        .select('*')
+        .eq('id', input.template_id)
         .single();
 
       if (templateError) throw templateError;
@@ -242,38 +255,40 @@ export function useAdoptPolicy() {
 
       // Create user's policy from template
       const { data, error } = await supabase
-        .from("employer_policies")
+        .from('employer_policies')
         .insert({
           user_id: user.id,
           template_id: input.template_id,
           name: template.name,
           content: content,
-          status: "Active",
+          status: 'Active',
           company_name: input.company_name || null,
           adopted_at: new Date().toISOString(),
           review_date: input.review_date || null,
         })
-        .select(`
+        .select(
+          `
           *,
           template:employer_policy_templates(*)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as UserPolicy;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["userPolicies"] });
+      queryClient.invalidateQueries({ queryKey: ['userPolicies'] });
       toast({
-        title: "Policy adopted",
+        title: 'Policy adopted',
         description: `"${data.name}" has been added to your policies.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -287,33 +302,35 @@ export function useUpdatePolicy() {
   return useMutation({
     mutationFn: async ({ id, ...input }: UpdatePolicyInput): Promise<UserPolicy> => {
       const { data, error } = await supabase
-        .from("employer_policies")
+        .from('employer_policies')
         .update({
           ...input,
           updated_at: new Date().toISOString(),
         })
-        .eq("id", id)
-        .select(`
+        .eq('id', id)
+        .select(
+          `
           *,
           template:employer_policy_templates(*)
-        `)
+        `
+        )
         .single();
 
       if (error) throw error;
       return data as UserPolicy;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["userPolicies"] });
+      queryClient.invalidateQueries({ queryKey: ['userPolicies'] });
       toast({
-        title: "Policy updated",
+        title: 'Policy updated',
         description: `"${data.name}" has been updated.`,
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -326,25 +343,22 @@ export function useDeletePolicy() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from("employer_policies")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from('employer_policies').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["userPolicies"] });
+      queryClient.invalidateQueries({ queryKey: ['userPolicies'] });
       toast({
-        title: "Policy removed",
-        description: "The policy has been removed from your list.",
+        title: 'Policy removed',
+        description: 'The policy has been removed from your list.',
       });
     },
     onError: (error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });

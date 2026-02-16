@@ -1,4 +1,3 @@
-
 import { Wrench, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -15,7 +14,8 @@ export const CommonDefectsScenario = () => {
         <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-4">
           <p className="text-blue-200 font-medium mb-2">Scenario:</p>
           <p className="text-gray-300">
-            You inspect a new socket and see that the CPC is loose in the terminal. Everything else looks fine.
+            You inspect a new socket and see that the CPC is loose in the terminal. Everything else
+            looks fine.
           </p>
         </div>
         <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
@@ -24,7 +24,8 @@ export const CommonDefectsScenario = () => {
             Answer:
           </p>
           <p className="text-gray-300">
-            <strong className="text-foreground">That socket fails visual inspection</strong>—a loose CPC means the circuit is unsafe and must not be energised.
+            <strong className="text-foreground">That socket fails visual inspection</strong>—a loose
+            CPC means the circuit is unsafe and must not be energised.
           </p>
         </div>
       </CardContent>

@@ -12,17 +12,30 @@ export const CompatibilityAndControlSection = () => {
       </CardHeader>
       <CardContent className="text-foreground space-y-4">
         <p>
-          Successful implementation of dimming and colour control requires careful consideration of compatibility between components and control methods.
+          Successful implementation of dimming and colour control requires careful consideration of
+          compatibility between components and control methods.
         </p>
-        
+
         <div className="space-y-4">
           <div className="p-3 bg-red-600/10 border border-red-600/20 rounded-lg">
             <h5 className="font-semibold text-red-200 mb-2">System Compatibility Issues</h5>
             <ul className="text-sm text-red-100 space-y-1">
-              <li>• <strong>Limited RGBW support:</strong> Not all smart systems support full colour control</li>
-              <li>• <strong>Protocol restrictions:</strong> Some systems only support basic white tuning</li>
-              <li>• <strong>Hub limitations:</strong> Entry-level hubs may lack advanced colour features</li>
-              <li>• <strong>App functionality:</strong> Mobile apps vary in colour control sophistication</li>
+              <li>
+                • <strong>Limited RGBW support:</strong> Not all smart systems support full colour
+                control
+              </li>
+              <li>
+                • <strong>Protocol restrictions:</strong> Some systems only support basic white
+                tuning
+              </li>
+              <li>
+                • <strong>Hub limitations:</strong> Entry-level hubs may lack advanced colour
+                features
+              </li>
+              <li>
+                • <strong>App functionality:</strong> Mobile apps vary in colour control
+                sophistication
+              </li>
             </ul>
           </div>
 
@@ -53,10 +66,19 @@ export const CompatibilityAndControlSection = () => {
           <div className="p-3 bg-blue-600/10 border border-blue-600/20 rounded-lg">
             <h5 className="font-semibold text-blue-200 mb-2">LED Strip Lighting Considerations</h5>
             <ul className="text-sm text-blue-100 space-y-1">
-              <li>• <strong>LED drivers required:</strong> Convert mains voltage to safe DC levels</li>
-              <li>• <strong>RGBW controllers:</strong> Separate controllers needed for full colour control</li>
-              <li>• <strong>Current capacity:</strong> Ensure drivers match total LED strip load</li>
-              <li>• <strong>Voltage drop:</strong> Consider cable runs and power injection points</li>
+              <li>
+                • <strong>LED drivers required:</strong> Convert mains voltage to safe DC levels
+              </li>
+              <li>
+                • <strong>RGBW controllers:</strong> Separate controllers needed for full colour
+                control
+              </li>
+              <li>
+                • <strong>Current capacity:</strong> Ensure drivers match total LED strip load
+              </li>
+              <li>
+                • <strong>Voltage drop:</strong> Consider cable runs and power injection points
+              </li>
             </ul>
           </div>
 
@@ -66,17 +88,29 @@ export const CompatibilityAndControlSection = () => {
               <div>
                 <h6 className="font-medium text-green-100 mb-1">Wireless Control:</h6>
                 <ul className="text-sm text-green-100 space-y-1">
-                  <li>• <strong>Pros:</strong> Easy installation, flexible placement</li>
-                  <li>• <strong>Cons:</strong> Potential latency, interference issues</li>
-                  <li>• <strong>Best for:</strong> Retrofit applications, portable solutions</li>
+                  <li>
+                    • <strong>Pros:</strong> Easy installation, flexible placement
+                  </li>
+                  <li>
+                    • <strong>Cons:</strong> Potential latency, interference issues
+                  </li>
+                  <li>
+                    • <strong>Best for:</strong> Retrofit applications, portable solutions
+                  </li>
                 </ul>
               </div>
               <div>
                 <h6 className="font-medium text-green-100 mb-1">Wired Control:</h6>
                 <ul className="text-sm text-green-100 space-y-1">
-                  <li>• <strong>Pros:</strong> Instant response, no interference</li>
-                  <li>• <strong>Cons:</strong> Installation complexity, fixed locations</li>
-                  <li>• <strong>Best for:</strong> New builds, professional installations</li>
+                  <li>
+                    • <strong>Pros:</strong> Instant response, no interference
+                  </li>
+                  <li>
+                    • <strong>Cons:</strong> Installation complexity, fixed locations
+                  </li>
+                  <li>
+                    • <strong>Best for:</strong> New builds, professional installations
+                  </li>
                 </ul>
               </div>
             </div>
@@ -85,11 +119,21 @@ export const CompatibilityAndControlSection = () => {
           <div className="p-3 bg-purple-600/10 border border-purple-600/20 rounded-lg">
             <h5 className="font-semibold text-purple-200 mb-2">Pre-Installation Checklist</h5>
             <ul className="text-sm text-purple-100 space-y-1">
-              <li>• <strong>Verify bulb compatibility:</strong> Check dimming and colour capabilities</li>
-              <li>• <strong>Confirm system support:</strong> Ensure hub/app supports required features</li>
-              <li>• <strong>Test dimmer compatibility:</strong> Use manufacturer compatibility lists</li>
-              <li>• <strong>Plan control interfaces:</strong> Apps, wall switches, voice control</li>
-              <li>• <strong>Consider future expansion:</strong> Leave room for additional features</li>
+              <li>
+                • <strong>Verify bulb compatibility:</strong> Check dimming and colour capabilities
+              </li>
+              <li>
+                • <strong>Confirm system support:</strong> Ensure hub/app supports required features
+              </li>
+              <li>
+                • <strong>Test dimmer compatibility:</strong> Use manufacturer compatibility lists
+              </li>
+              <li>
+                • <strong>Plan control interfaces:</strong> Apps, wall switches, voice control
+              </li>
+              <li>
+                • <strong>Consider future expansion:</strong> Leave room for additional features
+              </li>
             </ul>
           </div>
 

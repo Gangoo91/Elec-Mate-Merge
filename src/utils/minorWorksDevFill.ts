@@ -137,16 +137,20 @@ export const MINOR_WORKS_DEV_FILL: MinorWorksDevFillData = {
   postcode: 'B91 3PQ',
   workDate: new Date().toISOString().split('T')[0], // Today's date
   dateOfCompletion: new Date().toISOString().split('T')[0], // Today's date
-  nextInspectionDue: new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toISOString().split('T')[0], // 5 years
+  nextInspectionDue: new Date(new Date().setFullYear(new Date().getFullYear() + 5))
+    .toISOString()
+    .split('T')[0], // 5 years
   contractorName: 'Sparks Electrical Ltd',
   contractorAddress: 'Unit 5, Industrial Estate, Birmingham, B12 9QR',
   workType: 'socket-addition',
   workLocation: 'Kitchen',
-  workDescription: 'Installation of additional double socket outlet in kitchen to existing ring final circuit. Socket located above worktop for additional appliances. Cable routed in existing surface-mounted mini-trunking.',
+  workDescription:
+    'Installation of additional double socket outlet in kitchen to existing ring final circuit. Socket located above worktop for additional appliances. Cable routed in existing surface-mounted mini-trunking.',
   departuresFromBS7671: 'None',
   permittedExceptions: 'None',
   riskAssessmentAttached: false,
-  commentsOnExistingInstallation: 'Existing installation inspected and found to be in satisfactory condition. Main earthing and bonding arrangements adequate. Consumer unit is 18th Edition compliant split-load type with RCBO protection on all circuits. No defects observed that would affect the safety of the new work.',
+  commentsOnExistingInstallation:
+    'Existing installation inspected and found to be in satisfactory condition. Main earthing and bonding arrangements adequate. Consumer unit is 18th Edition compliant split-load type with RCBO protection on all circuits. No defects observed that would affect the safety of the new work.',
 
   // ==========================================
   // Supply characteristics
@@ -249,7 +253,8 @@ export const MINOR_WORKS_DEV_FILL: MinorWorksDevFillData = {
   workSafety: true,
   partPNotification: true,
   copyProvided: true,
-  additionalNotes: 'Customer advised to test RCD quarterly using test button. Socket circuit now has 7 double sockets.',
+  additionalNotes:
+    'Customer advised to test RCD quarterly using test button. Socket circuit now has 7 double sockets.',
   signatureDate: new Date().toISOString().split('T')[0],
   signature: '', // Leave empty - user will draw
 
@@ -265,7 +270,8 @@ export const MINOR_WORKS_DEV_FILL: MinorWorksDevFillData = {
 export const MINOR_WORKS_DEV_FILL_TT: Partial<MinorWorksDevFillData> = {
   earthingArrangement: 'TT',
   zdb: '21.5',
-  commentsOnExistingInstallation: 'TT earthing system with earth electrode. Electrode resistance measured at 21Ω. RCD protection essential for all circuits. Installation in satisfactory condition.',
+  commentsOnExistingInstallation:
+    'TT earthing system with earth electrode. Electrode resistance measured at 21Ω. RCD protection essential for all circuits. Installation in satisfactory condition.',
 };
 
 /**
@@ -274,7 +280,8 @@ export const MINOR_WORKS_DEV_FILL_TT: Partial<MinorWorksDevFillData> = {
 export const MINOR_WORKS_DEV_FILL_LIGHTING: Partial<MinorWorksDevFillData> = {
   workType: 'lighting-addition',
   workLocation: 'Bathroom',
-  workDescription: 'Installation of LED downlights in bathroom. IP65 rated fittings used. Connected to existing lighting circuit with new switch.',
+  workDescription:
+    'Installation of LED downlights in bathroom. IP65 rated fittings used. Connected to existing lighting circuit with new switch.',
   circuitDesignation: '1',
   circuitDescription: 'Downstairs Lighting',
   circuitType: 'radial',
@@ -320,9 +327,7 @@ export function applyMinorWorksDevFill(
  * Clears all form fields (reset)
  * @param onUpdate - Form update function
  */
-export function clearMinorWorksForm(
-  onUpdate: (field: string, value: any) => void
-): void {
+export function clearMinorWorksForm(onUpdate: (field: string, value: any) => void): void {
   const emptyData: Partial<MinorWorksDevFillData> = {
     clientName: '',
     personOrderingWork: '',

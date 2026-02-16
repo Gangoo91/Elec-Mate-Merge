@@ -1,72 +1,92 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import useSEO from '@/hooks/useSEO';
 
 const quickCheckQuestions = [
   {
-    id: "emergencylighting-m6s3-check1",
-    question: "What determines whether a 1-hour or 3-hour duration system is required?",
-    options: ["Building aesthetics", "Client budget", "Risk category and occupancy type", "Electrician preference"],
+    id: 'emergencylighting-m6s3-check1',
+    question: 'What determines whether a 1-hour or 3-hour duration system is required?',
+    options: [
+      'Building aesthetics',
+      'Client budget',
+      'Risk category and occupancy type',
+      'Electrician preference',
+    ],
     correctIndex: 2,
-    explanation: "The building's risk category and occupancy type determine duration. Low-risk buildings with simple layouts may use 1-hour duration; public or complex premises require 3-hour duration."
+    explanation:
+      "The building's risk category and occupancy type determine duration. Low-risk buildings with simple layouts may use 1-hour duration; public or complex premises require 3-hour duration.",
   },
   {
-    id: "emergencylighting-m6s3-check2",
-    question: "What is the minimum illuminance required for high-risk task areas?",
-    options: ["0.5 lux", "1 lux", "5 lux", "15 lux"],
+    id: 'emergencylighting-m6s3-check2',
+    question: 'What is the minimum illuminance required for high-risk task areas?',
+    options: ['0.5 lux', '1 lux', '5 lux', '15 lux'],
     correctIndex: 3,
-    explanation: "BS 5266-1 specifies 15 lux for high-risk task areas (such as operating theatres), 1 lux for escape routes, and 0.5 lux for open areas."
+    explanation:
+      'BS 5266-1 specifies 15 lux for high-risk task areas (such as operating theatres), 1 lux for escape routes, and 0.5 lux for open areas.',
   },
   {
-    id: "emergencylighting-m6s3-check3",
-    question: "When must a fire risk assessment be reviewed?",
-    options: ["Only when fire occurs", "Every 5 years", "At least annually or after building changes", "Only when requested"],
+    id: 'emergencylighting-m6s3-check3',
+    question: 'When must a fire risk assessment be reviewed?',
+    options: [
+      'Only when fire occurs',
+      'Every 5 years',
+      'At least annually or after building changes',
+      'Only when requested',
+    ],
     correctIndex: 2,
-    explanation: "Risk assessments must be reviewed at least annually, and whenever there are changes to building use, layout, occupancy, or after incidents."
-  }
+    explanation:
+      'Risk assessments must be reviewed at least annually, and whenever there are changes to building use, layout, occupancy, or after incidents.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Who is responsible for carrying out the fire risk assessment?",
-    answer: "The building's Responsible Person must ensure it's completed by a competent person — often a certified fire risk assessor. This may be an employee with suitable training or an external consultant."
+    question: 'Who is responsible for carrying out the fire risk assessment?',
+    answer:
+      "The building's Responsible Person must ensure it's completed by a competent person — often a certified fire risk assessor. This may be an employee with suitable training or an external consultant.",
   },
   {
-    question: "What if the lighting design and risk assessment conflict?",
-    answer: "Always default to the higher safety requirement and document your decision for audit purposes. Consult with the fire risk assessor and the Responsible Person to resolve conflicts before proceeding."
+    question: 'What if the lighting design and risk assessment conflict?',
+    answer:
+      'Always default to the higher safety requirement and document your decision for audit purposes. Consult with the fire risk assessor and the Responsible Person to resolve conflicts before proceeding.',
   },
   {
-    question: "Can I use a 1-hour system if the client wants to save money?",
-    answer: "No — if the risk assessment specifies 3-hour duration, you must comply. Installing inadequate systems makes both you and the client liable for prosecution. Always quote to the correct standard."
+    question: 'Can I use a 1-hour system if the client wants to save money?',
+    answer:
+      'No — if the risk assessment specifies 3-hour duration, you must comply. Installing inadequate systems makes both you and the client liable for prosecution. Always quote to the correct standard.',
   },
   {
     question: "What happens if there's no risk assessment in place?",
-    answer: "This is a legal breach under the Fire Safety Order. You should not proceed with design or installation until a proper risk assessment has been completed and approved."
-  }
+    answer:
+      'This is a legal breach under the Fire Safety Order. You should not proceed with design or installation until a proper risk assessment has been completed and approved.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "A school building would typically be classified as which risk category for emergency lighting?",
+    question:
+      'A school building would typically be classified as which risk category for emergency lighting?',
     options: [
-      "Low risk - 1-hour duration sufficient",
-      "Medium risk - 3-hour duration with anti-panic lighting",
-      "High risk - central battery systems required",
-      "No risk - emergency lighting optional"
+      'Low risk - 1-hour duration sufficient',
+      'Medium risk - 3-hour duration with anti-panic lighting',
+      'High risk - central battery systems required',
+      'No risk - emergency lighting optional',
     ],
     correctAnswer: 1,
-    explanation: "Schools are typically medium risk, requiring 3-hour duration and anti-panic lighting in open areas such as halls and assembly spaces, due to the presence of children and public access."
-  }
+    explanation:
+      'Schools are typically medium risk, requiring 3-hour duration and anti-panic lighting in open areas such as halls and assembly spaces, due to the presence of children and public access.',
+  },
 ];
 
 const EmergencyLightingModule6Section3 = () => {
   useSEO({
-    title: "Emergency Lighting in Risk Assessments | Emergency Lighting Module 6.3",
-    description: "Understand how fire risk assessments drive emergency lighting design decisions under BS 5266-1 and the Regulatory Reform (Fire Safety) Order 2005."
+    title: 'Emergency Lighting in Risk Assessments | Emergency Lighting Module 6.3',
+    description:
+      'Understand how fire risk assessments drive emergency lighting design decisions under BS 5266-1 and the Regulatory Reform (Fire Safety) Order 2005.',
   });
 
   return (
@@ -98,9 +118,7 @@ const EmergencyLightingModule6Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Lighting in Risk Assessments
           </h1>
-          <p className="text-white/80">
-            How fire risk assessments drive emergency lighting design
-          </p>
+          <p className="text-white/80">How fire risk assessments drive emergency lighting design</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -108,17 +126,29 @@ const EmergencyLightingModule6Section3 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Starting point:</strong> Fire risk assessment</li>
-              <li><strong>Determines:</strong> Duration, illuminance</li>
-              <li><strong>Standard:</strong> BS 5266-1 guidance</li>
+              <li>
+                <strong>Starting point:</strong> Fire risk assessment
+              </li>
+              <li>
+                <strong>Determines:</strong> Duration, illuminance
+              </li>
+              <li>
+                <strong>Standard:</strong> BS 5266-1 guidance
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Risk Categories</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Low:</strong> 1-hour, basic lighting</li>
-              <li><strong>Medium:</strong> 3-hour, anti-panic</li>
-              <li><strong>High:</strong> 3-hour+, redundancy</li>
+              <li>
+                <strong>Low:</strong> 1-hour, basic lighting
+              </li>
+              <li>
+                <strong>Medium:</strong> 3-hour, anti-panic
+              </li>
+              <li>
+                <strong>High:</strong> 3-hour+, redundancy
+              </li>
             </ul>
           </div>
         </div>
@@ -128,12 +158,12 @@ const EmergencyLightingModule6Section3 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Interpret fire risk assessments",
-              "Apply BS 5266-1 to risk findings",
-              "Understand risk categories",
-              "Determine duration requirements",
-              "Select appropriate illuminance",
-              "Review and update assessments"
+              'Interpret fire risk assessments',
+              'Apply BS 5266-1 to risk findings',
+              'Understand risk categories',
+              'Determine duration requirements',
+              'Select appropriate illuminance',
+              'Review and update assessments',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -206,31 +236,41 @@ const EmergencyLightingModule6Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              BS 5266-1 translates fire risk findings into specific design requirements.
-              The standard provides illuminance levels, duration requirements, and
-              circuit design guidance based on risk category.
+              BS 5266-1 translates fire risk findings into specific design requirements. The
+              standard provides illuminance levels, duration requirements, and circuit design
+              guidance based on risk category.
             </p>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Illuminance Requirements:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Escape routes:</strong> 1 lux minimum along centre line</li>
-                <li><strong>Open areas:</strong> 0.5 lux (anti-panic lighting)</li>
-                <li><strong>High-risk task areas:</strong> 15 lux (operating theatres, switchrooms)</li>
+                <li>
+                  <strong>Escape routes:</strong> 1 lux minimum along centre line
+                </li>
+                <li>
+                  <strong>Open areas:</strong> 0.5 lux (anti-panic lighting)
+                </li>
+                <li>
+                  <strong>High-risk task areas:</strong> 15 lux (operating theatres, switchrooms)
+                </li>
               </ul>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Duration Requirements:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>1 hour:</strong> Low-risk buildings with simple layouts</li>
-                <li><strong>3 hours:</strong> Public buildings, complex premises, sleeping risk</li>
+                <li>
+                  <strong>1 hour:</strong> Low-risk buildings with simple layouts
+                </li>
+                <li>
+                  <strong>3 hours:</strong> Public buildings, complex premises, sleeping risk
+                </li>
               </ul>
             </div>
 
             <p>
-              The risk assessment determines which requirements apply. Electricians must
-              understand the assessment findings to specify compliant systems.
+              The risk assessment determines which requirements apply. Electricians must understand
+              the assessment findings to specify compliant systems.
             </p>
           </div>
         </section>
@@ -245,8 +285,8 @@ const EmergencyLightingModule6Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Fire risk assessments typically categorise buildings into low, medium, or
-              high risk. Each category has specific emergency lighting implications.
+              Fire risk assessments typically categorise buildings into low, medium, or high risk.
+              Each category has specific emergency lighting implications.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-4 my-6">
@@ -277,8 +317,8 @@ const EmergencyLightingModule6Section3 = () => {
             </div>
 
             <p>
-              High-risk premises may require central battery systems, enhanced
-              fire-resistant cabling, and high-risk task area lighting at 15 lux.
+              High-risk premises may require central battery systems, enhanced fire-resistant
+              cabling, and high-risk task area lighting at 15 lux.
             </p>
           </div>
         </section>
@@ -303,10 +343,18 @@ const EmergencyLightingModule6Section3 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Assessment Errors</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Generic designs:</strong> — Not tailored to specific risks</li>
-                <li><strong>Wrong duration:</strong> — 1-hour where 3-hour required</li>
-                <li><strong>Ignored findings:</strong> — Client budget overriding safety</li>
-                <li><strong>No documentation:</strong> — Design not linked to assessment</li>
+                <li>
+                  <strong>Generic designs:</strong> — Not tailored to specific risks
+                </li>
+                <li>
+                  <strong>Wrong duration:</strong> — 1-hour where 3-hour required
+                </li>
+                <li>
+                  <strong>Ignored findings:</strong> — Client budget overriding safety
+                </li>
+                <li>
+                  <strong>No documentation:</strong> — Design not linked to assessment
+                </li>
               </ul>
             </div>
           </div>
@@ -352,10 +400,7 @@ const EmergencyLightingModule6Section3 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <SingleQuestionQuiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Bottom Navigation */}

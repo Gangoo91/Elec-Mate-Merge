@@ -5,7 +5,7 @@ import { Calculator, FileText, Settings, Battery } from 'lucide-react';
 
 const OffGridDesignPractical = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("offgrid") || "sizing";
+  const activeTab = searchParams.get('offgrid') || 'sizing';
   const setActiveTab = (tab: string) => setSearchParams({ offgrid: tab }, { replace: false });
 
   return (
@@ -19,19 +19,31 @@ const OffGridDesignPractical = () => {
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-4 bg-elec-dark">
-            <TabsTrigger value="sizing" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="sizing"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <Calculator className="h-4 w-4 mr-1" />
               Battery Sizing
             </TabsTrigger>
-            <TabsTrigger value="generator" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="generator"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <Settings className="h-4 w-4 mr-1" />
               Generator Guide
             </TabsTrigger>
-            <TabsTrigger value="worksheet" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
+            <TabsTrigger
+              value="worksheet"
+              className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+            >
               <FileText className="h-4 w-4 mr-1" />
               Load Analysis
             </TabsTrigger>
-            <TabsTrigger value="maintenance" className="data-[state=active]:bg-elec-yellow data-[state-active]:text-elec-dark">
+            <TabsTrigger
+              value="maintenance"
+              className="data-[state=active]:bg-elec-yellow data-[state-active]:text-elec-dark"
+            >
               <Battery className="h-4 w-4 mr-1" />
               Maintenance
             </TabsTrigger>
@@ -43,38 +55,60 @@ const OffGridDesignPractical = () => {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="bg-gray-800 p-3 rounded">
-                    <h4 className="text-foreground font-medium mb-2">Step 1: Daily Energy Calculation</h4>
+                    <h4 className="text-foreground font-medium mb-2">
+                      Step 1: Daily Energy Calculation
+                    </h4>
                     <div className="text-gray-300 space-y-1">
                       <p>Daily Load = Σ(Power × Hours used)</p>
                       <p>Example: 5kW × 4h = 20kWh/day</p>
                       <p>Add 10% for inefficiencies</p>
-                      <p><strong className="text-elec-yellow">Total: 22kWh/day</strong></p>
+                      <p>
+                        <strong className="text-elec-yellow">Total: 22kWh/day</strong>
+                      </p>
                     </div>
                   </div>
                   <div className="bg-gray-800 p-3 rounded">
-                    <h4 className="text-foreground font-medium mb-2">Step 2: Autonomy Requirements</h4>
+                    <h4 className="text-foreground font-medium mb-2">
+                      Step 2: Autonomy Requirements
+                    </h4>
                     <div className="text-gray-300 space-y-1">
                       <p>Autonomy days: 3 (typical UK)</p>
                       <p>Safety factor: 1.2</p>
                       <p>Total energy: 22 × 3 × 1.2 = 79.2kWh</p>
-                      <p><strong className="text-elec-yellow">Required: 79.2kWh</strong></p>
+                      <p>
+                        <strong className="text-elec-yellow">Required: 79.2kWh</strong>
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div className="bg-gray-800 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Step 3: Battery Capacity by Technology</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Step 3: Battery Capacity by Technology
+                  </h4>
                   <div className="grid grid-cols-3 gap-3 text-sm text-gray-300">
                     <div>
-                      <p><strong className="text-foreground">Lithium (80% DOD):</strong></p>
-                      <p>79.2 ÷ 0.8 = <span className="text-elec-yellow">99kWh</span></p>
+                      <p>
+                        <strong className="text-foreground">Lithium (80% DOD):</strong>
+                      </p>
+                      <p>
+                        79.2 ÷ 0.8 = <span className="text-elec-yellow">99kWh</span>
+                      </p>
                     </div>
                     <div>
-                      <p><strong className="text-foreground">AGM (50% DOD):</strong></p>
-                      <p>79.2 ÷ 0.5 = <span className="text-elec-yellow">158kWh</span></p>
+                      <p>
+                        <strong className="text-foreground">AGM (50% DOD):</strong>
+                      </p>
+                      <p>
+                        79.2 ÷ 0.5 = <span className="text-elec-yellow">158kWh</span>
+                      </p>
                     </div>
                     <div>
-                      <p><strong className="text-foreground">Flooded (50% DOD):</strong></p>
-                      <p>79.2 ÷ 0.5 = <span className="text-elec-yellow">158kWh</span></p>
+                      <p>
+                        <strong className="text-foreground">Flooded (50% DOD):</strong>
+                      </p>
+                      <p>
+                        79.2 ÷ 0.5 = <span className="text-elec-yellow">158kWh</span>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -84,7 +118,9 @@ const OffGridDesignPractical = () => {
 
           <TabsContent value="generator" className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h3 className="text-elec-yellow font-semibold mb-3">Generator Selection & Setup Guide</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Generator Selection & Setup Guide
+              </h3>
               <div className="space-y-4 text-sm">
                 <div className="border border-gray-600 p-3 rounded">
                   <h4 className="text-foreground font-medium mb-2">Sizing Requirements</h4>
@@ -127,7 +163,9 @@ const OffGridDesignPractical = () => {
               <h3 className="text-elec-yellow font-semibold mb-3">Load Analysis Worksheet</h3>
               <div className="space-y-4 text-sm">
                 <div className="border border-gray-600 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Critical Loads (Must run 24/7)</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Critical Loads (Must run 24/7)
+                  </h4>
                   <table className="w-full text-gray-300">
                     <thead>
                       <tr className="border-b border-gray-600">
@@ -138,16 +176,47 @@ const OffGridDesignPractical = () => {
                       </tr>
                     </thead>
                     <tbody className="space-y-1">
-                      <tr><td>Refrigerator</td><td>150</td><td>24</td><td>3.6</td></tr>
-                      <tr><td>Freezer</td><td>200</td><td>18</td><td>3.6</td></tr>
-                      <tr><td>LED Lighting</td><td>100</td><td>8</td><td>0.8</td></tr>
-                      <tr><td>Router/Modem</td><td>20</td><td>24</td><td>0.5</td></tr>
-                      <tr className="border-t border-gray-600"><td><strong>Total Critical</strong></td><td></td><td></td><td><strong>8.5 kWh</strong></td></tr>
+                      <tr>
+                        <td>Refrigerator</td>
+                        <td>150</td>
+                        <td>24</td>
+                        <td>3.6</td>
+                      </tr>
+                      <tr>
+                        <td>Freezer</td>
+                        <td>200</td>
+                        <td>18</td>
+                        <td>3.6</td>
+                      </tr>
+                      <tr>
+                        <td>LED Lighting</td>
+                        <td>100</td>
+                        <td>8</td>
+                        <td>0.8</td>
+                      </tr>
+                      <tr>
+                        <td>Router/Modem</td>
+                        <td>20</td>
+                        <td>24</td>
+                        <td>0.5</td>
+                      </tr>
+                      <tr className="border-t border-gray-600">
+                        <td>
+                          <strong>Total Critical</strong>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <strong>8.5 kWh</strong>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
                 <div className="border border-gray-600 p-3 rounded">
-                  <h4 className="text-foreground font-medium mb-2">Non-Critical Loads (Can be shed during low power)</h4>
+                  <h4 className="text-foreground font-medium mb-2">
+                    Non-Critical Loads (Can be shed during low power)
+                  </h4>
                   <table className="w-full text-gray-300">
                     <thead>
                       <tr className="border-b border-gray-600">
@@ -158,10 +227,34 @@ const OffGridDesignPractical = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td>Washing Machine</td><td>2000</td><td>1</td><td>2.0</td></tr>
-                      <tr><td>Electric Heating</td><td>3000</td><td>6</td><td>18.0</td></tr>
-                      <tr><td>Entertainment</td><td>300</td><td>4</td><td>1.2</td></tr>
-                      <tr className="border-t border-gray-600"><td><strong>Total Non-Critical</strong></td><td></td><td></td><td><strong>21.2 kWh</strong></td></tr>
+                      <tr>
+                        <td>Washing Machine</td>
+                        <td>2000</td>
+                        <td>1</td>
+                        <td>2.0</td>
+                      </tr>
+                      <tr>
+                        <td>Electric Heating</td>
+                        <td>3000</td>
+                        <td>6</td>
+                        <td>18.0</td>
+                      </tr>
+                      <tr>
+                        <td>Entertainment</td>
+                        <td>300</td>
+                        <td>4</td>
+                        <td>1.2</td>
+                      </tr>
+                      <tr className="border-t border-gray-600">
+                        <td>
+                          <strong>Total Non-Critical</strong>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <strong>21.2 kWh</strong>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -171,7 +264,9 @@ const OffGridDesignPractical = () => {
 
           <TabsContent value="maintenance" className="space-y-4">
             <div className="bg-elec-dark p-4 rounded-lg">
-              <h3 className="text-elec-yellow font-semibold mb-3">Maintenance Schedule & Procedures</h3>
+              <h3 className="text-elec-yellow font-semibold mb-3">
+                Maintenance Schedule & Procedures
+              </h3>
               <div className="space-y-4 text-sm">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="border border-gray-600 p-3 rounded">

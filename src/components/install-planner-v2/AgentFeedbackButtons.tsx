@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ThumbsUp, ThumbsDown, Flag } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
-import { FeedbackModal } from "./FeedbackModal";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ThumbsUp, ThumbsDown, Flag } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { FeedbackModal } from './FeedbackModal';
 
 interface AgentFeedbackButtonsProps {
   agentId: string;
@@ -20,7 +20,7 @@ export const AgentFeedbackButtons = ({
   question,
   response,
   structuredData,
-  conversationId
+  conversationId,
 }: AgentFeedbackButtonsProps) => {
   const [userRating, setUserRating] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,34 +29,36 @@ export const AgentFeedbackButtons = ({
   const submitFeedback = async (rating: number, correction?: string) => {
     setIsSubmitting(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       if (!user) {
-        toast.error("You must be signed in to provide feedback");
+        toast.error('You must be signed in to provide feedback');
         return;
       }
 
-      const { error } = await supabase
-        .from('ai_interaction_feedback')
-        .insert({
-          user_id: user.id,
-          conversation_id: conversationId,
-          agent_name: agentName,
-          question,
-          ai_response: response,
-          structured_data: structuredData || {},
-          user_rating: rating,
-          user_correction: correction,
-          feedback_type: correction ? 'correction' : 'rating'
-        });
+      const { error } = await supabase.from('ai_interaction_feedback').insert({
+        user_id: user.id,
+        conversation_id: conversationId,
+        agent_name: agentName,
+        question,
+        ai_response: response,
+        structured_data: structuredData || {},
+        user_rating: rating,
+        user_correction: correction,
+        feedback_type: correction ? 'correction' : 'rating',
+      });
 
       if (error) throw error;
 
       setUserRating(rating);
-      toast.success(rating === 1 ? "Thanks for your feedback! 👍" : "Feedback recorded, we'll improve this");
+      toast.success(
+        rating === 1 ? 'Thanks for your feedback! 👍' : "Feedback recorded, we'll improve this"
+      );
     } catch (error) {
       console.error('Error submitting feedback:', error);
-      toast.error("Failed to submit feedback");
+      toast.error('Failed to submit feedback');
     } finally {
       setIsSubmitting(false);
     }
@@ -85,7 +87,7 @@ export const AgentFeedbackButtons = ({
         <span className="text-xs text-muted-foreground mr-2">Was this helpful?</span>
         <Button
           size="sm"
-          variant={userRating === 1 ? "default" : "ghost"}
+          variant={userRating === 1 ? 'default' : 'ghost'}
           onClick={handleThumbsUp}
           disabled={isSubmitting || userRating !== null}
           className="h-7 text-xs"
@@ -95,7 +97,7 @@ export const AgentFeedbackButtons = ({
         </Button>
         <Button
           size="sm"
-          variant={userRating === -1 ? "destructive" : "ghost"}
+          variant={userRating === -1 ? 'destructive' : 'ghost'}
           onClick={handleThumbsDown}
           disabled={isSubmitting || userRating !== null}
           className="h-7 text-xs"

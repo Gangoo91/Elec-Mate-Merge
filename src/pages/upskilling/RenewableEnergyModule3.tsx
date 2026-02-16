@@ -7,34 +7,36 @@ const RenewableEnergyModule3 = () => {
   const sections = [
     {
       id: 1,
-      title: "Wind Generation Principles and Power Curves",
+      title: 'Wind Generation Principles and Power Curves',
       icon: Wind,
-      description: "Understand the conversion of wind energy to electrical power and power curve interpretation"
+      description:
+        'Understand the conversion of wind energy to electrical power and power curve interpretation',
     },
     {
       id: 2,
-      title: "Horizontal vs Vertical Axis Turbines",
+      title: 'Horizontal vs Vertical Axis Turbines',
       icon: RotateCw,
-      description: "Compare HAWT and VAWT designs, efficiency trade-offs, and application scenarios"
+      description:
+        'Compare HAWT and VAWT designs, efficiency trade-offs, and application scenarios',
     },
     {
       id: 3,
-      title: "Wind Resource Assessment",
+      title: 'Wind Resource Assessment',
       icon: MapPin,
-      description: "Site evaluation, wind measurement, and resource characterisation methods"
+      description: 'Site evaluation, wind measurement, and resource characterisation methods',
     },
     {
       id: 4,
-      title: "Wind Farm Layout and Wake Effects",
+      title: 'Wind Farm Layout and Wake Effects',
       icon: Settings,
-      description: "Optimising turbine spacing, wake management, and array performance"
+      description: 'Optimising turbine spacing, wake management, and array performance',
     },
     {
       id: 5,
-      title: "Offshore Wind Technology",
+      title: 'Offshore Wind Technology',
       icon: Waves,
-      description: "Offshore wind systems, floating platforms, and marine considerations"
-    }
+      description: 'Offshore wind systems, floating platforms, and marine considerations',
+    },
   ];
 
   return (
@@ -70,7 +72,8 @@ const RenewableEnergyModule3 = () => {
             Wind Turbines and Microgeneration Systems
           </h1>
           <p className="text-white/60 text-sm sm:text-base">
-            Comprehensive coverage of wind energy technology, from fundamental principles to advanced offshore systems
+            Comprehensive coverage of wind energy technology, from fundamental principles to
+            advanced offshore systems
           </p>
         </div>
 

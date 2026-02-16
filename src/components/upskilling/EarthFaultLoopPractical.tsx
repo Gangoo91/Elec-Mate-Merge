@@ -18,11 +18,13 @@ export const EarthFaultLoopPractical = () => {
             <CheckCircle className="h-5 w-5 text-green-400" />
             <h3 className="text-foreground font-semibold">Step-by-Step Testing Procedure</h3>
           </div>
-          
+
           <div className="grid gap-4">
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-blue-500">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-blue-600 text-foreground">Step 1</Badge>
+                <Badge variant="secondary" className="bg-blue-600 text-foreground">
+                  Step 1
+                </Badge>
                 <h4 className="text-foreground font-medium">Preparation</h4>
               </div>
               <ul className="text-xs sm:text-sm space-y-1">
@@ -35,7 +37,9 @@ export const EarthFaultLoopPractical = () => {
 
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-green-500">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-green-600 text-foreground">Step 2</Badge>
+                <Badge variant="secondary" className="bg-green-600 text-foreground">
+                  Step 2
+                </Badge>
                 <h4 className="text-foreground font-medium">Ze Measurement</h4>
               </div>
               <ul className="text-sm space-y-1">
@@ -48,7 +52,9 @@ export const EarthFaultLoopPractical = () => {
 
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-orange-500">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-orange-600 text-foreground">Step 3</Badge>
+                <Badge variant="secondary" className="bg-orange-600 text-foreground">
+                  Step 3
+                </Badge>
                 <h4 className="text-foreground font-medium">Zs Measurement</h4>
               </div>
               <ul className="text-sm space-y-1">
@@ -61,7 +67,9 @@ export const EarthFaultLoopPractical = () => {
 
             <div className="bg-elec-dark p-4 rounded-lg border-l-4 border-purple-500">
               <div className="flex items-center gap-2 mb-2">
-                <Badge variant="secondary" className="bg-purple-600 text-foreground">Step 4</Badge>
+                <Badge variant="secondary" className="bg-purple-600 text-foreground">
+                  Step 4
+                </Badge>
                 <h4 className="text-foreground font-medium">Result Analysis</h4>
               </div>
               <ul className="text-sm space-y-1">
@@ -80,14 +88,19 @@ export const EarthFaultLoopPractical = () => {
             <AlertTriangle className="h-5 w-5 text-red-400" />
             <h3 className="text-foreground font-semibold">Critical Safety Points</h3>
           </div>
-          
+
           <div className="bg-red-900/20 border border-red-600 p-3 sm:p-4 rounded-lg">
-            <h4 className="text-red-400 font-semibold mb-2 text-sm sm:text-base">Essential Safety Measures</h4>
+            <h4 className="text-red-400 font-semibold mb-2 text-sm sm:text-base">
+              Essential Safety Measures
+            </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-red-400 mt-1">•</span>
-                  <span>Never disconnect earthing with installation energised unless using safe isolation</span>
+                  <span>
+                    Never disconnect earthing with installation energised unless using safe
+                    isolation
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400 mt-1">•</span>
@@ -122,7 +135,7 @@ export const EarthFaultLoopPractical = () => {
             <Calculator className="h-5 w-5 text-blue-400" />
             <h3 className="text-foreground font-semibold">Practical Tips and Best Practices</h3>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-elec-dark p-4 rounded-lg">
               <h4 className="text-foreground font-semibold mb-2">Testing Efficiency</h4>
@@ -134,7 +147,7 @@ export const EarthFaultLoopPractical = () => {
                 <li>• Consider using wireless test equipment</li>
               </ul>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg">
               <h4 className="text-foreground font-semibold mb-2">Common Challenges</h4>
               <ul className="text-sm space-y-1">
@@ -175,7 +188,9 @@ export const EarthFaultLoopPractical = () => {
 
         {/* Troubleshooting */}
         <div className="bg-elec-dark p-3 sm:p-4 rounded-lg border border-gray-600">
-          <h4 className="text-foreground font-semibold mb-3 text-sm sm:text-base">Troubleshooting High Zs Readings</h4>
+          <h4 className="text-foreground font-semibold mb-3 text-sm sm:text-base">
+            Troubleshooting High Zs Readings
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
             <div>
               <p className="font-medium text-foreground mb-2">Check Connections:</p>

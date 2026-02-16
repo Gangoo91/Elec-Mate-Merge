@@ -1,10 +1,16 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FullCircuitDesign } from "../types";
-import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { MobileInput } from '@/components/ui/mobile-input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { FullCircuitDesign } from '../types';
+import { useState } from 'react';
 
 interface CircuitFormDialogProps {
   open: boolean;
@@ -13,16 +19,26 @@ interface CircuitFormDialogProps {
   onSave: (circuit: Partial<FullCircuitDesign>) => void;
 }
 
-export const CircuitFormDialog = ({ open, onOpenChange, circuit, onSave }: CircuitFormDialogProps) => {
+export const CircuitFormDialog = ({
+  open,
+  onOpenChange,
+  circuit,
+  onSave,
+}: CircuitFormDialogProps) => {
   const [formData, setFormData] = useState({
-    name: circuit?.name || "",
-    loadType: circuit?.loadType || "socket",
+    name: circuit?.name || '',
+    loadType: circuit?.loadType || 'socket',
     loadPower: circuit?.loadPower || 0,
-    phases: circuit?.phases || "single",
+    phases: circuit?.phases || 'single',
     cableLength: circuit?.cableLength || 0,
     cpcSize: circuit?.cpcSize || 1.5,
     rcdProtected: circuit?.rcdProtected || false,
-    protectionDevice: circuit?.protectionDevice || { type: "MCB", curve: "B", rating: 0, kaRating: 6 }
+    protectionDevice: circuit?.protectionDevice || {
+      type: 'MCB',
+      curve: 'B',
+      rating: 0,
+      kaRating: 6,
+    },
   });
 
   const handleSave = () => {
@@ -35,7 +51,7 @@ export const CircuitFormDialog = ({ open, onOpenChange, circuit, onSave }: Circu
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-background">
         <DialogHeader className="pb-4 border-b border-border">
           <DialogTitle className="text-2xl">
-            {circuit ? "Edit Circuit" : "Add New Circuit"}
+            {circuit ? 'Edit Circuit' : 'Add New Circuit'}
           </DialogTitle>
         </DialogHeader>
 
@@ -45,19 +61,22 @@ export const CircuitFormDialog = ({ open, onOpenChange, circuit, onSave }: Circu
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
               Circuit Details
             </h3>
-            
+
             <MobileInput
               label="Circuit Name"
               type="text"
               value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="e.g. Kitchen Sockets"
               hint="Descriptive name for this circuit"
             />
 
             <div className="space-y-2">
               <Label className="text-sm font-medium">Load Type</Label>
-              <Select value={formData.loadType} onValueChange={(v) => setFormData({...formData, loadType: v})}>
+              <Select
+                value={formData.loadType}
+                onValueChange={(v) => setFormData({ ...formData, loadType: v })}
+              >
                 <SelectTrigger className="h-12 bg-card border-primary/30 focus:ring-2 focus:ring-elec-yellow">
                   <SelectValue />
                 </SelectTrigger>
@@ -80,14 +99,14 @@ export const CircuitFormDialog = ({ open, onOpenChange, circuit, onSave }: Circu
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
               Load Specifications
             </h3>
-            
+
             <div className="grid gap-4 sm:grid-cols-2">
               <MobileInput
                 label="Total Load"
                 type="number"
                 inputMode="decimal"
                 value={formData.loadPower}
-                onChange={(e) => setFormData({...formData, loadPower: Number(e.target.value)})}
+                onChange={(e) => setFormData({ ...formData, loadPower: Number(e.target.value) })}
                 unit="W"
                 hint="Total wattage of all connected loads"
                 placeholder="e.g. 3000"
@@ -95,7 +114,10 @@ export const CircuitFormDialog = ({ open, onOpenChange, circuit, onSave }: Circu
 
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Phases</Label>
-                <Select value={formData.phases} onValueChange={(v) => setFormData({...formData, phases: v as any})}>
+                <Select
+                  value={formData.phases}
+                  onValueChange={(v) => setFormData({ ...formData, phases: v as any })}
+                >
                   <SelectTrigger className="h-12 bg-card border-primary/30 focus:ring-2 focus:ring-elec-yellow">
                     <SelectValue />
                   </SelectTrigger>
@@ -112,7 +134,7 @@ export const CircuitFormDialog = ({ open, onOpenChange, circuit, onSave }: Circu
               type="number"
               inputMode="decimal"
               value={formData.cableLength}
-              onChange={(e) => setFormData({...formData, cableLength: Number(e.target.value)})}
+              onChange={(e) => setFormData({ ...formData, cableLength: Number(e.target.value) })}
               unit="m"
               hint="Distance from consumer unit to load"
               placeholder="e.g. 15"
@@ -124,13 +146,18 @@ export const CircuitFormDialog = ({ open, onOpenChange, circuit, onSave }: Circu
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
               Protection Device
             </h3>
-            
+
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Protection Type</Label>
-                <Select 
-                  value={formData.protectionDevice.type} 
-                  onValueChange={(v) => setFormData({...formData, protectionDevice: {...formData.protectionDevice, type: v}})}
+                <Select
+                  value={formData.protectionDevice.type}
+                  onValueChange={(v) =>
+                    setFormData({
+                      ...formData,
+                      protectionDevice: { ...formData.protectionDevice, type: v },
+                    })
+                  }
                 >
                   <SelectTrigger className="h-12 bg-card border-primary/30 focus:ring-2 focus:ring-elec-yellow">
                     <SelectValue />
@@ -144,9 +171,14 @@ export const CircuitFormDialog = ({ open, onOpenChange, circuit, onSave }: Circu
 
               <div className="space-y-2">
                 <Label className="text-sm font-medium">MCB Curve Type</Label>
-                <Select 
-                  value={formData.protectionDevice.curve} 
-                  onValueChange={(v) => setFormData({...formData, protectionDevice: {...formData.protectionDevice, curve: v}})}
+                <Select
+                  value={formData.protectionDevice.curve}
+                  onValueChange={(v) =>
+                    setFormData({
+                      ...formData,
+                      protectionDevice: { ...formData.protectionDevice, curve: v },
+                    })
+                  }
                 >
                   <SelectTrigger className="h-12 bg-card border-primary/30 focus:ring-2 focus:ring-elec-yellow">
                     <SelectValue />
@@ -164,21 +196,16 @@ export const CircuitFormDialog = ({ open, onOpenChange, circuit, onSave }: Circu
 
         {/* Sticky footer buttons */}
         <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border sticky bottom-0 bg-background">
-          <Button 
+          <Button
             type="button"
-            variant="outline" 
-            size="lg" 
-            className="flex-1 h-12" 
+            variant="outline"
+            size="lg"
+            className="flex-1 h-12"
             onClick={() => onOpenChange(false)}
           >
             Cancel
           </Button>
-          <Button 
-            type="button"
-            size="lg" 
-            className="flex-1 h-12" 
-            onClick={handleSave}
-          >
+          <Button type="button" size="lg" className="flex-1 h-12" onClick={handleSave}>
             Save Circuit
           </Button>
         </div>

@@ -1,8 +1,14 @@
-import { InputHTMLAttributes, forwardRef, SelectHTMLAttributes } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+import { InputHTMLAttributes, forwardRef, SelectHTMLAttributes } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
 interface CalculatorInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   label: string;
@@ -19,10 +25,7 @@ export const CalculatorInput = forwardRef<HTMLInputElement, CalculatorInputProps
     return (
       <div className="space-y-1.5">
         <div className="flex items-center justify-between">
-          <Label
-            htmlFor={inputId}
-            className="text-sm font-medium text-white/80"
-          >
+          <Label htmlFor={inputId} className="text-sm font-medium text-white/80">
             {label}
           </Label>
           {unit && (
@@ -36,27 +39,23 @@ export const CalculatorInput = forwardRef<HTMLInputElement, CalculatorInputProps
           id={inputId}
           onChange={(e) => onChange?.(e.target.value)}
           className={cn(
-            "calculator-input h-12 bg-white/5 border-white/10 rounded-xl",
-            "text-base placeholder:text-white/30 touch-manipulation",
-            "focus:border-white/20 focus:ring-1 focus:ring-white/10",
-            "transition-all duration-200",
-            error && "border-red-500/50 focus:border-red-500/50",
+            'calculator-input h-12 bg-white/5 border-white/10 rounded-xl',
+            'text-base placeholder:text-white/30 touch-manipulation',
+            'focus:border-white/20 focus:ring-1 focus:ring-white/10',
+            'transition-all duration-200',
+            error && 'border-red-500/50 focus:border-red-500/50',
             className
           )}
           {...props}
         />
-        {hint && !error && (
-          <p className="text-xs text-white/40">{hint}</p>
-        )}
-        {error && (
-          <p className="text-xs text-red-400">{error}</p>
-        )}
+        {hint && !error && <p className="text-xs text-white/40">{hint}</p>}
+        {error && <p className="text-xs text-red-400">{error}</p>}
       </div>
     );
   }
 );
 
-CalculatorInput.displayName = "CalculatorInput";
+CalculatorInput.displayName = 'CalculatorInput';
 
 // Select component for calculator dropdowns
 interface CalculatorSelectOption {
@@ -81,31 +80,28 @@ export const CalculatorSelect = ({
   value,
   onChange,
   options,
-  placeholder = "Select...",
+  placeholder = 'Select...',
   hint,
   error,
   disabled,
-  className
+  className,
 }: CalculatorSelectProps) => {
   const selectId = label.toLowerCase().replace(/\s+/g, '-');
 
   return (
     <div className="space-y-1.5">
-      <Label
-        htmlFor={selectId}
-        className="text-sm font-medium text-white/80"
-      >
+      <Label htmlFor={selectId} className="text-sm font-medium text-white/80">
         {label}
       </Label>
       <Select value={value} onValueChange={onChange} disabled={disabled}>
         <SelectTrigger
           id={selectId}
           className={cn(
-            "calculator-input h-12 bg-white/5 border-white/10 rounded-xl",
-            "text-base touch-manipulation",
-            "focus:ring-1 focus:ring-white/10",
-            "transition-all duration-200",
-            error && "border-red-500/50",
+            'calculator-input h-12 bg-white/5 border-white/10 rounded-xl',
+            'text-base touch-manipulation',
+            'focus:ring-1 focus:ring-white/10',
+            'transition-all duration-200',
+            error && 'border-red-500/50',
             className
           )}
         >
@@ -123,12 +119,8 @@ export const CalculatorSelect = ({
           ))}
         </SelectContent>
       </Select>
-      {hint && !error && (
-        <p className="text-xs text-white/40">{hint}</p>
-      )}
-      {error && (
-        <p className="text-xs text-red-400">{error}</p>
-      )}
+      {hint && !error && <p className="text-xs text-white/40">{hint}</p>}
+      {error && <p className="text-xs text-red-400">{error}</p>}
     </div>
   );
 };
@@ -171,10 +163,7 @@ export const CalculatorNumberInput = ({
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <Label
-          htmlFor={inputId}
-          className="text-sm font-medium text-white/80"
-        >
+        <Label htmlFor={inputId} className="text-sm font-medium text-white/80">
           {label}
         </Label>
         {unit && (
@@ -192,22 +181,18 @@ export const CalculatorNumberInput = ({
         max={max}
         step={step}
         className={cn(
-          "calculator-input h-12 bg-white/5 border-white/10 rounded-xl",
-          "text-base placeholder:text-white/30 touch-manipulation",
-          "focus:border-white/20 focus:ring-1 focus:ring-white/10",
-          "transition-all duration-200",
-          "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
-          error && "border-red-500/50 focus:border-red-500/50",
+          'calculator-input h-12 bg-white/5 border-white/10 rounded-xl',
+          'text-base placeholder:text-white/30 touch-manipulation',
+          'focus:border-white/20 focus:ring-1 focus:ring-white/10',
+          'transition-all duration-200',
+          '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
+          error && 'border-red-500/50 focus:border-red-500/50',
           className
         )}
         {...props}
       />
-      {hint && !error && (
-        <p className="text-xs text-white/40">{hint}</p>
-      )}
-      {error && (
-        <p className="text-xs text-red-400">{error}</p>
-      )}
+      {hint && !error && <p className="text-xs text-white/40">{hint}</p>}
+      {error && <p className="text-xs text-red-400">{error}</p>}
     </div>
   );
 };

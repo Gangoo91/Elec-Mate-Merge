@@ -1,23 +1,28 @@
-
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { 
-  Download, 
-  Upload, 
-  History, 
-  Trash2, 
-  Share2, 
-  Save, 
-  FileText, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+  Download,
+  Upload,
+  History,
+  Trash2,
+  Share2,
+  Save,
+  FileText,
   Database,
   Archive,
   Clock,
-  AlertCircle
-} from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+  AlertCircle,
+} from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface CalculationResult {
   id: string;
@@ -46,7 +51,7 @@ interface CalculatorDataManagerProps {
 
 const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
   currentCalculation,
-  onLoadCalculation
+  onLoadCalculation,
 }) => {
   const [calculationHistory, setCalculationHistory] = useState<CalculationResult[]>([]);
   const [savedCalculations, setSavedCalculations] = useState<SavedCalculation[]>([]);
@@ -60,20 +65,24 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
   const loadDataFromStorage = () => {
     const history = localStorage.getItem('calculator-history');
     const saved = localStorage.getItem('saved-calculations');
-    
+
     if (history) {
-      setCalculationHistory(JSON.parse(history).map((item: any) => ({
-        ...item,
-        timestamp: new Date(item.timestamp)
-      })));
+      setCalculationHistory(
+        JSON.parse(history).map((item: any) => ({
+          ...item,
+          timestamp: new Date(item.timestamp),
+        }))
+      );
     }
-    
+
     if (saved) {
-      setSavedCalculations(JSON.parse(saved).map((item: any) => ({
-        ...item,
-        createdAt: new Date(item.createdAt),
-        lastModified: new Date(item.lastModified)
-      })));
+      setSavedCalculations(
+        JSON.parse(saved).map((item: any) => ({
+          ...item,
+          createdAt: new Date(item.createdAt),
+          lastModified: new Date(item.lastModified),
+        }))
+      );
     }
   };
 
@@ -93,38 +102,38 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
       inputs: currentCalculation.inputs,
       createdAt: new Date(),
       lastModified: new Date(),
-      tags
+      tags,
     };
 
     const newSaved = [saved, ...savedCalculations];
     setSavedCalculations(newSaved);
     localStorage.setItem('saved-calculations', JSON.stringify(newSaved));
-    
+
     toast({
-      title: "Calculation Saved",
-      description: `"${name}" has been saved to your collection.`
+      title: 'Calculation Saved',
+      description: `"${name}" has been saved to your collection.`,
     });
   };
 
   const deleteFromHistory = (id: string) => {
-    const newHistory = calculationHistory.filter(calc => calc.id !== id);
+    const newHistory = calculationHistory.filter((calc) => calc.id !== id);
     setCalculationHistory(newHistory);
     localStorage.setItem('calculator-history', JSON.stringify(newHistory));
-    
+
     toast({
-      title: "Deleted from History",
-      description: "Calculation has been removed from history."
+      title: 'Deleted from History',
+      description: 'Calculation has been removed from history.',
     });
   };
 
   const deleteSavedCalculation = (id: string) => {
-    const newSaved = savedCalculations.filter(calc => calc.id !== id);
+    const newSaved = savedCalculations.filter((calc) => calc.id !== id);
     setSavedCalculations(newSaved);
     localStorage.setItem('saved-calculations', JSON.stringify(newSaved));
-    
+
     toast({
-      title: "Calculation Deleted",
-      description: "Saved calculation has been removed."
+      title: 'Calculation Deleted',
+      description: 'Saved calculation has been removed.',
     });
   };
 
@@ -132,7 +141,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
     const data = {
       history: calculationHistory,
       saved: savedCalculations,
-      exportDate: new Date().toISOString()
+      exportDate: new Date().toISOString(),
     };
 
     let content: string;
@@ -148,24 +157,24 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
       case 'csv':
         const csvRows = [
           ['Type', 'Date', 'Inputs', 'Outputs', 'Project', 'Notes'],
-          ...calculationHistory.map(calc => [
+          ...calculationHistory.map((calc) => [
             calc.calculatorType,
             calc.timestamp.toISOString(),
             JSON.stringify(calc.inputs),
             JSON.stringify(calc.outputs),
             calc.project || '',
-            calc.notes || ''
-          ])
+            calc.notes || '',
+          ]),
         ];
-        content = csvRows.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+        content = csvRows.map((row) => row.map((cell) => `"${cell}"`).join(',')).join('\n');
         filename = `calculator-data-${new Date().toISOString().split('T')[0]}.csv`;
         mimeType = 'text/csv';
         break;
       case 'pdf':
         // For PDF export, we'd typically use a library like jsPDF
         toast({
-          title: "PDF Export",
-          description: "PDF export functionality coming soon!"
+          title: 'PDF Export',
+          description: 'PDF export functionality coming soon!',
         });
         return;
     }
@@ -181,8 +190,8 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
     URL.revokeObjectURL(url);
 
     toast({
-      title: "Export Complete",
-      description: `Data exported as ${format.toUpperCase()}`
+      title: 'Export Complete',
+      description: `Data exported as ${format.toUpperCase()}`,
     });
   };
 
@@ -194,33 +203,37 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
     reader.onload = (e) => {
       try {
         const data = JSON.parse(e.target?.result as string);
-        
+
         if (data.history) {
-          setCalculationHistory(data.history.map((item: any) => ({
-            ...item,
-            timestamp: new Date(item.timestamp)
-          })));
+          setCalculationHistory(
+            data.history.map((item: any) => ({
+              ...item,
+              timestamp: new Date(item.timestamp),
+            }))
+          );
           localStorage.setItem('calculator-history', JSON.stringify(data.history));
         }
-        
+
         if (data.saved) {
-          setSavedCalculations(data.saved.map((item: any) => ({
-            ...item,
-            createdAt: new Date(item.createdAt),
-            lastModified: new Date(item.lastModified)
-          })));
+          setSavedCalculations(
+            data.saved.map((item: any) => ({
+              ...item,
+              createdAt: new Date(item.createdAt),
+              lastModified: new Date(item.lastModified),
+            }))
+          );
           localStorage.setItem('saved-calculations', JSON.stringify(data.saved));
         }
 
         toast({
-          title: "Import Successful",
-          description: "Calculator data has been imported successfully."
+          title: 'Import Successful',
+          description: 'Calculator data has been imported successfully.',
         });
       } catch (error) {
         toast({
-          title: "Import Failed",
-          description: "Failed to import data. Please check the file format.",
-          variant: "destructive"
+          title: 'Import Failed',
+          description: 'Failed to import data. Please check the file format.',
+          variant: 'destructive',
         });
       }
     };
@@ -232,10 +245,10 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
     setSavedCalculations([]);
     localStorage.removeItem('calculator-history');
     localStorage.removeItem('saved-calculations');
-    
+
     toast({
-      title: "Data Cleared",
-      description: "All calculator data has been cleared."
+      title: 'Data Cleared',
+      description: 'All calculator data has been cleared.',
     });
   };
 
@@ -243,15 +256,15 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
     const shareData = {
       calculatorType: calculation.calculatorType,
       inputs: 'inputs' in calculation ? calculation.inputs : (calculation as any).inputs,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     const shareUrl = `${window.location.origin}${window.location.pathname}?shared=${btoa(JSON.stringify(shareData))}`;
-    
+
     navigator.clipboard.writeText(shareUrl).then(() => {
       toast({
-        title: "Share Link Copied",
-        description: "Calculation share link copied to clipboard."
+        title: 'Share Link Copied',
+        description: 'Calculation share link copied to clipboard.',
       });
     });
   };
@@ -278,7 +291,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
               <Save className="h-4 w-4" />
               Save Current
             </Button>
-            
+
             <Dialog open={isExportDialogOpen} onOpenChange={setIsExportDialogOpen}>
               <DialogTrigger asChild>
                 <Button variant="outline" size="sm" className="flex items-center gap-2">
@@ -292,12 +305,14 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
                 </DialogHeader>
                 <div className="space-y-4">
                   <div className="grid grid-cols-3 gap-2">
-                    {(['json', 'csv', 'pdf'] as const).map(format => (
+                    {(['json', 'csv', 'pdf'] as const).map((format) => (
                       <Button
                         key={format}
-                        variant={selectedExportFormat === format ? "default" : "outline"}
+                        variant={selectedExportFormat === format ? 'default' : 'outline'}
                         onClick={() => setSelectedExportFormat(format)}
-                        className={selectedExportFormat === format ? "bg-elec-yellow text-black" : ""}
+                        className={
+                          selectedExportFormat === format ? 'bg-elec-yellow text-black' : ''
+                        }
                       >
                         {format.toUpperCase()}
                       </Button>
@@ -317,12 +332,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
             </Dialog>
 
             <label className="cursor-pointer">
-              <input
-                type="file"
-                accept=".json"
-                onChange={importData}
-                className="hidden"
-              />
+              <input type="file" accept=".json" onChange={importData} className="hidden" />
               <Button variant="outline" size="sm" className="flex items-center gap-2">
                 <Upload className="h-4 w-4" />
                 Import Data
@@ -351,15 +361,17 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-elec-yellow">
-                {new Set(calculationHistory.map(c => c.calculatorType)).size}
+                {new Set(calculationHistory.map((c) => c.calculatorType)).size}
               </div>
               <div className="text-sm text-muted-foreground">Calculator Types</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-elec-yellow">
-                {calculationHistory.filter(c => 
-                  new Date(c.timestamp).toDateString() === new Date().toDateString()
-                ).length}
+                {
+                  calculationHistory.filter(
+                    (c) => new Date(c.timestamp).toDateString() === new Date().toDateString()
+                  ).length
+                }
               </div>
               <div className="text-sm text-muted-foreground">Today's Calculations</div>
             </div>
@@ -386,8 +398,11 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
             </div>
           ) : (
             <div className="space-y-3">
-              {calculationHistory.slice(0, 5).map(calc => (
-                <div key={calc.id} className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg">
+              {calculationHistory.slice(0, 5).map((calc) => (
+                <div
+                  key={calc.id}
+                  className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg"
+                >
                   <div>
                     <div className="font-medium">{calc.calculatorType}</div>
                     <div className="text-sm text-muted-foreground">
@@ -396,11 +411,7 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => shareCalculation(calc)}
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => shareCalculation(calc)}>
                       <Share2 className="h-4 w-4" />
                     </Button>
                     <Button
@@ -438,15 +449,18 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
             </div>
           ) : (
             <div className="space-y-3">
-              {savedCalculations.map(calc => (
-                <div key={calc.id} className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg">
+              {savedCalculations.map((calc) => (
+                <div
+                  key={calc.id}
+                  className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg"
+                >
                   <div>
                     <div className="font-medium">{calc.name}</div>
                     <div className="text-sm text-muted-foreground">
                       {calc.calculatorType} • {calc.createdAt.toLocaleDateString()}
                     </div>
                     <div className="flex gap-1 mt-1">
-                      {calc.tags.map(tag => (
+                      {calc.tags.map((tag) => (
                         <Badge key={tag} variant="outline" className="text-xs">
                           {tag}
                         </Badge>
@@ -454,18 +468,10 @@ const CalculatorDataManager: React.FC<CalculatorDataManagerProps> = ({
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onLoadCalculation(calc)}
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => onLoadCalculation(calc)}>
                       Load
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => shareCalculation(calc)}
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => shareCalculation(calc)}>
                       <Share2 className="h-4 w-4" />
                     </Button>
                     <Button

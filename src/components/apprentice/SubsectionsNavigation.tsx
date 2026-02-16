@@ -1,7 +1,6 @@
-
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Subsection } from "@/data/healthAndSafety/types";
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import type { Subsection } from '@/data/healthAndSafety/types';
 
 interface SubsectionsNavigationProps {
   currentSubsectionId: string;
@@ -14,19 +13,20 @@ const SubsectionsNavigation = ({
   currentSubsectionId,
   subsections,
   navigateToSubsection,
-  parentSectionNumber
+  parentSectionNumber,
 }: SubsectionsNavigationProps) => {
   if (!subsections || subsections.length === 0) {
     return null;
   }
-  
+
   // Find current subsection index
-  const currentIndex = subsections.findIndex(sub => sub.id === currentSubsectionId);
-  
+  const currentIndex = subsections.findIndex((sub) => sub.id === currentSubsectionId);
+
   // Get previous and next subsections
   const previousSubsection = currentIndex > 0 ? subsections[currentIndex - 1] : null;
-  const nextSubsection = currentIndex < subsections.length - 1 ? subsections[currentIndex + 1] : null;
-  
+  const nextSubsection =
+    currentIndex < subsections.length - 1 ? subsections[currentIndex + 1] : null;
+
   return (
     <div className="border-t border-elec-yellow/20 py-4 px-4 md:px-6 flex flex-col sm:flex-row justify-between items-center gap-3 mt-8">
       <Button

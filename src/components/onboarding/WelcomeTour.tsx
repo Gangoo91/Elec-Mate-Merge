@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, X, Camera, FileText, Zap, CheckCircle } from 'lucide-react';
 
@@ -11,24 +17,28 @@ interface WelcomeTourProps {
 const tourSteps = [
   {
     title: 'Welcome to ElecMate Inspect',
-    description: 'Your intelligent EICR assistant for BS 7671 compliance. Let\'s take a quick tour of the key features.',
+    description:
+      "Your intelligent EICR assistant for BS 7671 compliance. Let's take a quick tour of the key features.",
     icon: <FileText className="h-12 w-12 text-yellow-500" />,
   },
   {
     title: 'AI Board Scanning',
-    description: 'Capture photos of electrical boards and let AI automatically detect circuits, devices, and ratings. Save hours of manual data entry.',
+    description:
+      'Capture photos of electrical boards and let AI automatically detect circuits, devices, and ratings. Save hours of manual data entry.',
     icon: <Camera className="h-12 w-12 text-blue-500" />,
   },
   {
     title: 'Intelligent Validation',
-    description: 'Real-time BS 7671 compliance checking as you work. Get instant feedback on test results, calculations, and observations.',
+    description:
+      'Real-time BS 7671 compliance checking as you work. Get instant feedback on test results, calculations, and observations.',
     icon: <CheckCircle className="h-12 w-12 text-green-500" />,
   },
   {
     title: 'Regulation Search',
-    description: 'AI-powered regulation search helps you find relevant BS 7671 clauses instantly. Just describe what you\'re looking for.',
+    description:
+      "AI-powered regulation search helps you find relevant BS 7671 clauses instantly. Just describe what you're looking for.",
     icon: <Zap className="h-12 w-12 text-purple-500" />,
-  }
+  },
 ];
 
 const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
@@ -36,7 +46,7 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
 
   const handleNext = () => {
     if (currentStep < tourSteps.length - 1) {
-      setCurrentStep(prev => prev + 1);
+      setCurrentStep((prev) => prev + 1);
     } else {
       handleComplete();
     }
@@ -44,7 +54,7 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
 
   const handlePrevious = () => {
     if (currentStep > 0) {
-      setCurrentStep(prev => prev - 1);
+      setCurrentStep((prev) => prev - 1);
     }
   };
 
@@ -68,8 +78,15 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
         {/* Header */}
         <div className="relative px-4 sm:px-6 md:px-8 pt-6 md:pt-8 pb-4 border-b border-white/10">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-lg sm:text-xl md:text-2xl font-bold text-white">{step.title}</DialogTitle>
-            <Button variant="ghost" size="icon" onClick={handleSkip} className="h-11 w-11 text-gray-400 hover:text-white active:text-white touch-manipulation">
+            <DialogTitle className="text-lg sm:text-xl md:text-2xl font-bold text-white">
+              {step.title}
+            </DialogTitle>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleSkip}
+              className="h-11 w-11 text-gray-400 hover:text-white active:text-white touch-manipulation"
+            >
               <X className="h-5 w-5" />
             </Button>
           </div>
@@ -96,9 +113,13 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
                 className="h-11 w-11 flex items-center justify-center touch-manipulation"
                 aria-label={`Go to step ${index + 1}`}
               >
-                <span className={`h-2.5 rounded-full transition-all duration-200 ${
-                  index === currentStep ? 'bg-yellow-500 w-6' : 'bg-white/20 w-2.5 hover:bg-white/30 active:bg-white/40'
-                }`} />
+                <span
+                  className={`h-2.5 rounded-full transition-all duration-200 ${
+                    index === currentStep
+                      ? 'bg-yellow-500 w-6'
+                      : 'bg-white/20 w-2.5 hover:bg-white/30 active:bg-white/40'
+                  }`}
+                />
               </button>
             ))}
           </div>

@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -10,10 +9,10 @@ interface ScrollableTabsProps {
   showScrollButtons?: boolean;
 }
 
-export const ScrollableTabsList = ({ 
-  children, 
-  className, 
-  showScrollButtons = true 
+export const ScrollableTabsList = ({
+  children,
+  className,
+  showScrollButtons = true,
 }: ScrollableTabsProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -22,7 +21,7 @@ export const ScrollableTabsList = ({
 
   const checkScrollButtons = () => {
     if (!scrollContainerRef.current) return;
-    
+
     const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
@@ -59,14 +58,14 @@ export const ScrollableTabsList = ({
           <ChevronLeft className="h-4 w-4" />
         </Button>
       )}
-      
+
       <div
         ref={scrollContainerRef}
         className={cn(
-          "flex overflow-x-auto scrollbar-hide gap-2 px-1",
-          showScrollButtons && showButtons && canScrollLeft && "pl-10",
-          showScrollButtons && showButtons && canScrollRight && "pr-10",
-          "min-w-max",
+          'flex overflow-x-auto scrollbar-hide gap-2 px-1',
+          showScrollButtons && showButtons && canScrollLeft && 'pl-10',
+          showScrollButtons && showButtons && canScrollRight && 'pr-10',
+          'min-w-max',
           className
         )}
         onScroll={checkScrollButtons}
@@ -77,7 +76,7 @@ export const ScrollableTabsList = ({
       >
         {children}
       </div>
-      
+
       {showScrollButtons && showButtons && canScrollRight && (
         <Button
           variant="outline"
@@ -92,22 +91,22 @@ export const ScrollableTabsList = ({
   );
 };
 
-export const ScrollableTabsTrigger = ({ 
-  children, 
-  className, 
-  ...props 
+export const ScrollableTabsTrigger = ({
+  children,
+  className,
+  ...props
 }: React.ComponentProps<'button'> & { className?: string }) => {
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-all",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        "disabled:pointer-events-none disabled:opacity-50",
-        "data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
-        "hover:bg-muted/50 min-w-0 flex-shrink-0",
+        'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-all',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+        'disabled:pointer-events-none disabled:opacity-50',
+        'data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm',
+        'hover:bg-muted/50 min-w-0 flex-shrink-0',
         // Mobile optimizations
-        "touch-manipulation select-none",
-        "min-h-[44px] md:min-h-[40px]", // 44px minimum touch target on mobile
+        'touch-manipulation select-none',
+        'min-h-[44px] md:min-h-[40px]', // 44px minimum touch target on mobile
         className
       )}
       {...props}

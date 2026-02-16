@@ -7,40 +7,40 @@ const BS7671Module6 = () => {
   const sections = [
     {
       id: 1,
-      title: "Requirements for Initial Verification",
+      title: 'Requirements for Initial Verification',
       icon: CheckCircle,
-      description: "Mandatory verification procedures for new electrical installations"
+      description: 'Mandatory verification procedures for new electrical installations',
     },
     {
       id: 2,
-      title: "Visual Inspection and Testing Responsibilities",
+      title: 'Visual Inspection and Testing Responsibilities',
       icon: Eye,
-      description: "Systematic visual inspection requirements and testing responsibilities"
+      description: 'Systematic visual inspection requirements and testing responsibilities',
     },
     {
       id: 3,
-      title: "Sequence of Tests and Testing Procedures",
+      title: 'Sequence of Tests and Testing Procedures',
       icon: Lightbulb,
-      description: "Correct testing sequence and step-by-step procedures per BS 7671"
+      description: 'Correct testing sequence and step-by-step procedures per BS 7671',
     },
     {
       id: 4,
-      title: "Model Forms and Certification Overview (EIC, MEIWC, EICR)",
+      title: 'Model Forms and Certification Overview (EIC, MEIWC, EICR)',
       icon: FileText,
-      description: "Understanding and completing electrical installation certificates and reports"
+      description: 'Understanding and completing electrical installation certificates and reports',
     },
     {
       id: 5,
-      title: "Certification Errors and Common Pitfalls",
+      title: 'Certification Errors and Common Pitfalls',
       icon: AlertTriangle,
-      description: "Avoiding mistakes and understanding common certification errors"
+      description: 'Avoiding mistakes and understanding common certification errors',
     },
     {
       id: 6,
-      title: "Recording Limitations and Safety Observations",
+      title: 'Recording Limitations and Safety Observations',
       icon: CheckCircle,
-      description: "Documenting inspection limitations and safety-related observations"
-    }
+      description: 'Documenting inspection limitations and safety-related observations',
+    },
   ];
 
   return (

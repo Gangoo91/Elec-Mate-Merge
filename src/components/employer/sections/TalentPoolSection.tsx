@@ -1,22 +1,26 @@
-import { useState, useMemo, useCallback } from "react";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Label } from "@/components/ui/label";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { BookLabourBankDialog } from "@/components/employer/dialogs/BookLabourBankDialog";
-import { SparkProfileSheet, type EnhancedElectrician, type VerificationTier } from "@/components/employer/SparkProfileSheet";
-import { TalentMapView } from "@/components/employer/TalentMapView";
-import { GoogleMapsProvider } from "@/contexts/GoogleMapsContext";
-import { AvailabilityCalendar } from "@/components/employer/AvailabilityCalendar";
-import { PremiumTalentCard } from "@/components/employer/talent-pool/PremiumTalentCard";
-import { TalentProfileCardSkeletonGrid } from "@/components/employer/talent-pool/TalentProfileCardSkeleton";
-import { MessageDialog } from "@/components/employer/talent-pool/MessageDialog";
-import { InviteToApplyDialog } from "@/components/employer/talent-pool/InviteToApplyDialog";
-import { TalentFilterChips } from "@/components/employer/talent-pool/TalentFilterChips";
+import { useState, useMemo, useCallback } from 'react';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '@/components/ui/label';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { BookLabourBankDialog } from '@/components/employer/dialogs/BookLabourBankDialog';
+import {
+  SparkProfileSheet,
+  type EnhancedElectrician,
+  type VerificationTier,
+} from '@/components/employer/SparkProfileSheet';
+import { TalentMapView } from '@/components/employer/TalentMapView';
+import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
+import { AvailabilityCalendar } from '@/components/employer/AvailabilityCalendar';
+import { PremiumTalentCard } from '@/components/employer/talent-pool/PremiumTalentCard';
+import { TalentProfileCardSkeletonGrid } from '@/components/employer/talent-pool/TalentProfileCardSkeleton';
+import { MessageDialog } from '@/components/employer/talent-pool/MessageDialog';
+import { InviteToApplyDialog } from '@/components/employer/talent-pool/InviteToApplyDialog';
+import { TalentFilterChips } from '@/components/employer/talent-pool/TalentFilterChips';
 import {
   Search,
   Map,
@@ -31,13 +35,13 @@ import {
   Users,
   Sparkles,
   RefreshCw,
-} from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useEmployer } from "@/contexts/EmployerContext";
-import { useTalentPool, type TalentPoolWorker, type ExperienceLevel } from "@/hooks/useTalentPool";
-import { addDays, format } from "date-fns";
-import { Slider } from "@/components/ui/slider";
+} from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useEmployer } from '@/contexts/EmployerContext';
+import { useTalentPool, type TalentPoolWorker, type ExperienceLevel } from '@/hooks/useTalentPool';
+import { addDays, format } from 'date-fns';
+import { Slider } from '@/components/ui/slider';
 
 type ViewMode = 'list' | 'map' | 'calendar';
 type AvailabilityFilter = 'all' | 'now' | 'week';
@@ -61,7 +65,7 @@ const hashCode = (str: string): number => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash;
   }
   return Math.abs(hash);
@@ -79,7 +83,7 @@ const generateStableCoordinates = (id: string, distance: number): { lat: number;
 
   return {
     lat: BASE_LAT + Math.sin(angle) * distanceInDegrees,
-    lng: BASE_LNG + Math.cos(angle) * distanceInDegrees * 1.6
+    lng: BASE_LNG + Math.cos(angle) * distanceInDegrees * 1.6,
   };
 };
 
@@ -115,7 +119,9 @@ const generateAvailabilitySlots = (id: string) => {
 };
 
 // Convert TalentPoolWorker to EnhancedElectrician for UI compatibility
-const convertToEnhancedElectrician = (worker: TalentPoolWorker): EnhancedElectrician & {
+const convertToEnhancedElectrician = (
+  worker: TalentPoolWorker
+): EnhancedElectrician & {
   skills: string[];
   currentRole?: string;
   totalYearsExperience: number;
@@ -134,8 +140,11 @@ const convertToEnhancedElectrician = (worker: TalentPoolWorker): EnhancedElectri
   rating: worker.rating,
   completedJobs: worker.completedJobs,
   verified: worker.isVerified,
-  bio: worker.bio || `Experienced ${worker.role.toLowerCase()} with ${worker.totalYearsExperience || worker.experience} years in the industry.`,
-  qualifications: worker.qualifications.length > 0 ? worker.qualifications : ['18th Edition BS7671'],
+  bio:
+    worker.bio ||
+    `Experienced ${worker.role.toLowerCase()} with ${worker.totalYearsExperience || worker.experience} years in the industry.`,
+  qualifications:
+    worker.qualifications.length > 0 ? worker.qualifications : ['18th Edition BS7671'],
   status: 'Active',
   avatar: worker.avatar || '',
   verificationTier: worker.verificationTier,
@@ -152,19 +161,23 @@ const convertToEnhancedElectrician = (worker: TalentPoolWorker): EnhancedElectri
   totalYearsExperience: worker.totalYearsExperience,
 });
 
-const specialisms = ["Commercial", "Industrial", "Domestic", "EV Charging", "Solar PV", "Fire Alarm", "Smart Home", "Testing"];
+const specialisms = [
+  'Commercial',
+  'Industrial',
+  'Domestic',
+  'EV Charging',
+  'Solar PV',
+  'Fire Alarm',
+  'Smart Home',
+  'Testing',
+];
 
 export function TalentPoolSection() {
   const isMobile = useIsMobile();
-  const {
-    savedCandidates,
-    labourBank,
-    toggleSaveCandidate,
-    addToLabourBank,
-  } = useEmployer();
+  const { savedCandidates, labourBank, toggleSaveCandidate, addToLabourBank } = useEmployer();
 
   const [viewMode, setViewMode] = useState<ViewMode>('list');
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
   const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
@@ -185,14 +198,7 @@ export function TalentPoolSection() {
   const [rateRange, setRateRange] = useState<[number, number]>([150, 500]);
 
   // Fetch real talent pool data from database
-  const {
-    workers,
-    isLoading,
-    error,
-    availableNowCount,
-    totalCount,
-    refetch,
-  } = useTalentPool({
+  const { workers, isLoading, error, availableNowCount, totalCount, refetch } = useTalentPool({
     searchQuery,
     tierFilter,
     availabilityFilter,
@@ -210,19 +216,16 @@ export function TalentPoolSection() {
     await refetch();
     setIsRefreshing(false);
     toast({
-      title: "Refreshed",
-      description: "Talent pool updated with latest availability.",
+      title: 'Refreshed',
+      description: 'Talent pool updated with latest availability.',
     });
   }, [refetch]);
 
   // Convert workers to EnhancedElectrician format for UI components
-  const enhancedElectricians = useMemo(
-    () => workers.map(convertToEnhancedElectrician),
-    [workers]
-  );
+  const enhancedElectricians = useMemo(() => workers.map(convertToEnhancedElectrician), [workers]);
 
   // Get Labour Bank IDs
-  const labourBankIds = labourBank.map(m => m.electricianId);
+  const labourBankIds = labourBank.map((m) => m.electricianId);
 
   // Count active filters
   const activeFilterCount = [
@@ -239,12 +242,12 @@ export function TalentPoolSection() {
   // Apply Labour Bank filter (client-side since it's local state)
   const filteredElectricians = useMemo(() => {
     if (!labourBankOnly) return enhancedElectricians;
-    return enhancedElectricians.filter(e => labourBankIds.includes(e.id));
+    return enhancedElectricians.filter((e) => labourBankIds.includes(e.id));
   }, [enhancedElectricians, labourBankOnly, labourBankIds]);
 
   // Get Labour Bank rate if available
   const getLabourBankRate = (electricianId: string) => {
-    return labourBank.find(r => r.electricianId === electricianId);
+    return labourBank.find((r) => r.electricianId === electricianId);
   };
 
   const clearFilters = () => {
@@ -259,8 +262,8 @@ export function TalentPoolSection() {
   };
 
   const toggleSpecialism = (spec: string) => {
-    setSelectedSpecialisms(prev =>
-      prev.includes(spec) ? prev.filter(s => s !== spec) : [...prev, spec]
+    setSelectedSpecialisms((prev) =>
+      prev.includes(spec) ? prev.filter((s) => s !== spec) : [...prev, spec]
     );
   };
 
@@ -273,7 +276,7 @@ export function TalentPoolSection() {
     const wasSaved = savedCandidates.includes(electrician.id);
     toggleSaveCandidate(electrician.id);
     toast({
-      title: wasSaved ? "Removed from Saved" : "Candidate Saved",
+      title: wasSaved ? 'Removed from Saved' : 'Candidate Saved',
       description: wasSaved
         ? `${electrician.name} removed from your saved list.`
         : `${electrician.name} added to your saved list.`,
@@ -297,16 +300,16 @@ export function TalentPoolSection() {
   };
 
   const handleAddToLabourBank = (electrician: EnhancedElectrician) => {
-    if (labourBank.some(m => m.electricianId === electrician.id)) {
+    if (labourBank.some((m) => m.electricianId === electrician.id)) {
       toast({
-        title: "Already in Labour Bank",
+        title: 'Already in Labour Bank',
         description: `${electrician.name} is already in your Labour Bank.`,
       });
       return;
     }
     addToLabourBank(electrician.id, electrician.name, electrician.dayRate, electrician.hourlyRate);
     toast({
-      title: "Added to Labour Bank",
+      title: 'Added to Labour Bank',
       description: `${electrician.name} has been added at £${electrician.dayRate}/day.`,
     });
   };
@@ -334,7 +337,7 @@ export function TalentPoolSection() {
               <h1 className="text-2xl font-bold text-foreground">Talent Pool</h1>
               <p className="text-sm text-foreground/70">
                 {isLoading ? (
-                  "Loading..."
+                  'Loading...'
                 ) : (
                   <>
                     {totalCount} electricians • {availableNowCount} available now
@@ -371,7 +374,10 @@ export function TalentPoolSection() {
             placeholder="Search sparkies..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("h-12 bg-elec-gray border-border touch-manipulation", !searchQuery && "pl-10")}
+            className={cn(
+              'h-12 bg-elec-gray border-border touch-manipulation',
+              !searchQuery && 'pl-10'
+            )}
           />
         </div>
 
@@ -389,7 +395,11 @@ export function TalentPoolSection() {
         {/* Filter Button */}
         <Sheet open={filterSheetOpen} onOpenChange={setFilterSheetOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="h-12 w-12 shrink-0 relative touch-manipulation">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-12 w-12 shrink-0 relative touch-manipulation"
+            >
               <SlidersHorizontal className="h-5 w-5" />
               {activeFilterCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-elec-yellow text-elec-yellow-foreground text-xs rounded-full flex items-center justify-center font-medium">
@@ -422,7 +432,7 @@ export function TalentPoolSection() {
                   ].map((opt) => (
                     <Button
                       key={opt.value}
-                      variant={availabilityFilter === opt.value ? "default" : "outline"}
+                      variant={availabilityFilter === opt.value ? 'default' : 'outline'}
                       size="sm"
                       className="h-10"
                       onClick={() => setAvailabilityFilter(opt.value as AvailabilityFilter)}
@@ -446,7 +456,7 @@ export function TalentPoolSection() {
                     return (
                       <Button
                         key={opt.value}
-                        variant={tierFilter === opt.value ? "default" : "outline"}
+                        variant={tierFilter === opt.value ? 'default' : 'outline'}
                         size="sm"
                         className="h-10"
                         onClick={() => setTierFilter(opt.value as TierFilter)}
@@ -469,7 +479,7 @@ export function TalentPoolSection() {
                   {specialisms.map((spec) => (
                     <Badge
                       key={spec}
-                      variant={selectedSpecialisms.includes(spec) ? "default" : "outline"}
+                      variant={selectedSpecialisms.includes(spec) ? 'default' : 'outline'}
                       className="cursor-pointer h-9 px-4 text-sm"
                       onClick={() => toggleSpecialism(spec)}
                     >
@@ -492,7 +502,7 @@ export function TalentPoolSection() {
                   ].map((opt) => (
                     <Button
                       key={opt.value}
-                      variant={experienceFilter === opt.value ? "default" : "outline"}
+                      variant={experienceFilter === opt.value ? 'default' : 'outline'}
                       size="sm"
                       className="h-10 flex-1"
                       onClick={() => setExperienceFilter(opt.value as ExperienceLevel)}
@@ -510,17 +520,23 @@ export function TalentPoolSection() {
                   {ECS_CARD_TYPES.map((card) => (
                     <Badge
                       key={card}
-                      variant={selectedEcsCards.includes(card) ? "default" : "outline"}
+                      variant={selectedEcsCards.includes(card) ? 'default' : 'outline'}
                       className={`cursor-pointer h-9 px-4 text-sm ${
                         selectedEcsCards.includes(card)
-                          ? card === 'Gold' ? 'bg-amber-500' :
-                            card === 'Blue' ? 'bg-blue-500' :
-                            card === 'Green' ? 'bg-emerald-500' : 'bg-purple-500'
+                          ? card === 'Gold'
+                            ? 'bg-amber-500'
+                            : card === 'Blue'
+                              ? 'bg-blue-500'
+                              : card === 'Green'
+                                ? 'bg-emerald-500'
+                                : 'bg-purple-500'
                           : ''
                       }`}
-                      onClick={() => setSelectedEcsCards(prev =>
-                        prev.includes(card) ? prev.filter(c => c !== card) : [...prev, card]
-                      )}
+                      onClick={() =>
+                        setSelectedEcsCards((prev) =>
+                          prev.includes(card) ? prev.filter((c) => c !== card) : [...prev, card]
+                        )
+                      }
                     >
                       {selectedEcsCards.includes(card) && <Check className="h-3 w-3 mr-1" />}
                       {card}
@@ -536,11 +552,13 @@ export function TalentPoolSection() {
                   {COMMON_QUALIFICATIONS.map((qual) => (
                     <Badge
                       key={qual}
-                      variant={selectedQualifications.includes(qual) ? "default" : "outline"}
+                      variant={selectedQualifications.includes(qual) ? 'default' : 'outline'}
                       className="cursor-pointer h-9 px-4 text-sm"
-                      onClick={() => setSelectedQualifications(prev =>
-                        prev.includes(qual) ? prev.filter(q => q !== qual) : [...prev, qual]
-                      )}
+                      onClick={() =>
+                        setSelectedQualifications((prev) =>
+                          prev.includes(qual) ? prev.filter((q) => q !== qual) : [...prev, qual]
+                        )
+                      }
                     >
                       {selectedQualifications.includes(qual) && <Check className="h-3 w-3 mr-1" />}
                       {qual}
@@ -554,7 +572,8 @@ export function TalentPoolSection() {
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-medium">Day Rate</Label>
                   <span className="text-sm text-foreground/70">
-                    £{rateRange[0]} - £{rateRange[1]}{rateRange[1] >= 500 ? '+' : ''}
+                    £{rateRange[0]} - £{rateRange[1]}
+                    {rateRange[1] >= 500 ? '+' : ''}
                   </span>
                 </div>
                 <div className="px-2">
@@ -583,11 +602,11 @@ export function TalentPoolSection() {
                   </div>
                 </div>
                 <Button
-                  variant={labourBankOnly ? "default" : "outline"}
+                  variant={labourBankOnly ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setLabourBankOnly(!labourBankOnly)}
                 >
-                  {labourBankOnly ? "On" : "Off"}
+                  {labourBankOnly ? 'On' : 'Off'}
                 </Button>
               </div>
             </div>
@@ -607,7 +626,7 @@ export function TalentPoolSection() {
       {/* Quick Filter Bar - Horizontal Scrollable Chips */}
       <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
         <Badge
-          variant={availabilityFilter === 'now' ? "default" : "outline"}
+          variant={availabilityFilter === 'now' ? 'default' : 'outline'}
           className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation bg-success/10 border-success/30 hover:bg-success/20"
           onClick={() => setAvailabilityFilter(availabilityFilter === 'now' ? 'all' : 'now')}
         >
@@ -616,7 +635,7 @@ export function TalentPoolSection() {
           Available Now
         </Badge>
         <Badge
-          variant={tierFilter === 'verified' ? "default" : "outline"}
+          variant={tierFilter === 'verified' ? 'default' : 'outline'}
           className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
           onClick={() => setTierFilter(tierFilter === 'verified' ? 'all' : 'verified')}
         >
@@ -625,7 +644,7 @@ export function TalentPoolSection() {
           Verified+
         </Badge>
         <Badge
-          variant={tierFilter === 'premium' ? "default" : "outline"}
+          variant={tierFilter === 'premium' ? 'default' : 'outline'}
           className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation bg-amber-500/10 border-amber-500/30 hover:bg-amber-500/20"
           onClick={() => setTierFilter(tierFilter === 'premium' ? 'all' : 'premium')}
         >
@@ -634,7 +653,7 @@ export function TalentPoolSection() {
           Premium
         </Badge>
         <Badge
-          variant={selectedSpecialisms.includes('EV Charging') ? "default" : "outline"}
+          variant={selectedSpecialisms.includes('EV Charging') ? 'default' : 'outline'}
           className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
           onClick={() => toggleSpecialism('EV Charging')}
         >
@@ -642,7 +661,7 @@ export function TalentPoolSection() {
           EV Specialists
         </Badge>
         <Badge
-          variant={selectedSpecialisms.includes('Solar PV') ? "default" : "outline"}
+          variant={selectedSpecialisms.includes('Solar PV') ? 'default' : 'outline'}
           className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
           onClick={() => toggleSpecialism('Solar PV')}
         >
@@ -650,7 +669,7 @@ export function TalentPoolSection() {
           Solar PV
         </Badge>
         <Badge
-          variant={experienceFilter === 'senior' ? "default" : "outline"}
+          variant={experienceFilter === 'senior' ? 'default' : 'outline'}
           className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
           onClick={() => setExperienceFilter(experienceFilter === 'senior' ? 'all' : 'senior')}
         >
@@ -671,11 +690,15 @@ export function TalentPoolSection() {
         rateRange={rateRange}
         onRemoveAvailability={() => setAvailabilityFilter('all')}
         onRemoveTier={() => setTierFilter('all')}
-        onRemoveSpecialism={(spec) => setSelectedSpecialisms(prev => prev.filter(s => s !== spec))}
+        onRemoveSpecialism={(spec) =>
+          setSelectedSpecialisms((prev) => prev.filter((s) => s !== spec))
+        }
         onRemoveLabourBank={() => setLabourBankOnly(false)}
         onRemoveExperience={() => setExperienceFilter('all')}
-        onRemoveEcsCard={(card) => setSelectedEcsCards(prev => prev.filter(c => c !== card))}
-        onRemoveQualification={(qual) => setSelectedQualifications(prev => prev.filter(q => q !== qual))}
+        onRemoveEcsCard={(card) => setSelectedEcsCards((prev) => prev.filter((c) => c !== card))}
+        onRemoveQualification={(qual) =>
+          setSelectedQualifications((prev) => prev.filter((q) => q !== qual))
+        }
         onResetRateRange={() => setRateRange([150, 500])}
         onOpenFilters={() => setFilterSheetOpen(true)}
         totalResults={filteredElectricians.length}
@@ -692,7 +715,10 @@ export function TalentPoolSection() {
             <Map className="h-4 w-4" />
             <span className="hidden sm:inline">Map</span>
           </TabsTrigger>
-          <TabsTrigger value="calendar" className="gap-2 h-9 touch-manipulation active:scale-[0.97]">
+          <TabsTrigger
+            value="calendar"
+            className="gap-2 h-9 touch-manipulation active:scale-[0.97]"
+          >
             <CalendarDays className="h-4 w-4" />
             <span className="hidden sm:inline">Calendar</span>
           </TabsTrigger>
@@ -706,43 +732,44 @@ export function TalentPoolSection() {
           {isLoading && <TalentProfileCardSkeletonGrid count={5} />}
 
           {/* Results */}
-          {!isLoading && filteredElectricians.map((electrician) => {
-            const isSaved = savedCandidates.includes(electrician.id);
-            const labourBankRate = getLabourBankRate(electrician.id);
-            const isInLabourBank = !!labourBankRate;
+          {!isLoading &&
+            filteredElectricians.map((electrician) => {
+              const isSaved = savedCandidates.includes(electrician.id);
+              const labourBankRate = getLabourBankRate(electrician.id);
+              const isInLabourBank = !!labourBankRate;
 
-            return (
-              <PremiumTalentCard
-                key={electrician.id}
-                id={electrician.id}
-                elecIdProfileId={(electrician as any).elecIdProfileId}
-                name={electrician.name}
-                avatar={electrician.avatar}
-                verificationTier={electrician.verificationTier}
-                ecsCardType={electrician.ecsCardType}
-                rating={electrician.rating}
-                distance={electrician.distance}
-                location={electrician.location}
-                dayRate={electrician.dayRate}
-                availability={electrician.availability}
-                verifiedDocsCount={(electrician as any).verifiedDocsCount || 0}
-                specialisms={electrician.specialisms}
-                qualifications={electrician.qualifications}
-                skills={(electrician as any).skills || []}
-                currentRole={(electrician as any).currentRole}
-                totalYearsExperience={(electrician as any).totalYearsExperience}
-                completedJobs={electrician.completedJobs}
-                elecIdNumber={(electrician as any).elecIdNumber}
-                isSaved={isSaved}
-                isInLabourBank={isInLabourBank}
-                labourBankRate={labourBankRate?.agreedDayRate}
-                onClick={() => handleOpenProfile(electrician)}
-                onSave={() => handleSave(electrician)}
-                onMessage={() => handleMessage(electrician)}
-                onBook={() => handleBook(electrician)}
-              />
-            );
-          })}
+              return (
+                <PremiumTalentCard
+                  key={electrician.id}
+                  id={electrician.id}
+                  elecIdProfileId={(electrician as any).elecIdProfileId}
+                  name={electrician.name}
+                  avatar={electrician.avatar}
+                  verificationTier={electrician.verificationTier}
+                  ecsCardType={electrician.ecsCardType}
+                  rating={electrician.rating}
+                  distance={electrician.distance}
+                  location={electrician.location}
+                  dayRate={electrician.dayRate}
+                  availability={electrician.availability}
+                  verifiedDocsCount={(electrician as any).verifiedDocsCount || 0}
+                  specialisms={electrician.specialisms}
+                  qualifications={electrician.qualifications}
+                  skills={(electrician as any).skills || []}
+                  currentRole={(electrician as any).currentRole}
+                  totalYearsExperience={(electrician as any).totalYearsExperience}
+                  completedJobs={electrician.completedJobs}
+                  elecIdNumber={(electrician as any).elecIdNumber}
+                  isSaved={isSaved}
+                  isInLabourBank={isInLabourBank}
+                  labourBankRate={labourBankRate?.agreedDayRate}
+                  onClick={() => handleOpenProfile(electrician)}
+                  onSave={() => handleSave(electrician)}
+                  onMessage={() => handleMessage(electrician)}
+                  onBook={() => handleBook(electrician)}
+                />
+              );
+            })}
 
           {/* Empty State */}
           {!isLoading && filteredElectricians.length === 0 && (
@@ -750,7 +777,9 @@ export function TalentPoolSection() {
               <CardContent className="p-8 text-center">
                 <Search className="h-12 w-12 text-foreground/70 mx-auto mb-4" />
                 <h3 className="font-semibold text-foreground mb-2">No sparkies found</h3>
-                <p className="text-sm text-foreground/70 mb-4">Try adjusting your search or filters</p>
+                <p className="text-sm text-foreground/70 mb-4">
+                  Try adjusting your search or filters
+                </p>
                 {activeFilterCount > 0 && (
                   <Button variant="outline" onClick={clearFilters}>
                     <X className="h-4 w-4 mr-2" />
@@ -813,8 +842,12 @@ export function TalentPoolSection() {
         onOpenChange={setProfileSheetOpen}
         electrician={selectedElectrician}
         isSaved={selectedElectrician ? savedCandidates.includes(selectedElectrician.id) : false}
-        isInLabourBank={selectedElectrician ? labourBankIds.includes(selectedElectrician.id) : false}
-        labourBankRate={selectedElectrician ? getLabourBankRate(selectedElectrician.id)?.agreedDayRate : undefined}
+        isInLabourBank={
+          selectedElectrician ? labourBankIds.includes(selectedElectrician.id) : false
+        }
+        labourBankRate={
+          selectedElectrician ? getLabourBankRate(selectedElectrician.id)?.agreedDayRate : undefined
+        }
         onSave={() => selectedElectrician && handleSave(selectedElectrician)}
         onContact={() => selectedElectrician && handleMessage(selectedElectrician)}
         onBook={() => selectedElectrician && handleBook(selectedElectrician)}
@@ -825,41 +858,57 @@ export function TalentPoolSection() {
       <MessageDialog
         open={messageDialogOpen}
         onOpenChange={setMessageDialogOpen}
-        electrician={selectedElectrician ? {
-          id: selectedElectrician.id,
-          elecIdProfileId: (selectedElectrician as any).elecIdProfileId || selectedElectrician.id,
-          name: selectedElectrician.name,
-          avatar: selectedElectrician.avatar,
-          location: selectedElectrician.location,
-          verificationTier: selectedElectrician.verificationTier,
-        } : null}
+        electrician={
+          selectedElectrician
+            ? {
+                id: selectedElectrician.id,
+                elecIdProfileId:
+                  (selectedElectrician as any).elecIdProfileId || selectedElectrician.id,
+                name: selectedElectrician.name,
+                avatar: selectedElectrician.avatar,
+                location: selectedElectrician.location,
+                verificationTier: selectedElectrician.verificationTier,
+              }
+            : null
+        }
       />
 
       {/* Invite to Apply Dialog */}
       <InviteToApplyDialog
         open={inviteDialogOpen}
         onOpenChange={setInviteDialogOpen}
-        electrician={selectedElectrician ? {
-          id: selectedElectrician.id,
-          elecIdProfileId: (selectedElectrician as any).elecIdProfileId || selectedElectrician.id,
-          name: selectedElectrician.name,
-          avatar: selectedElectrician.avatar,
-          location: selectedElectrician.location,
-        } : null}
+        electrician={
+          selectedElectrician
+            ? {
+                id: selectedElectrician.id,
+                elecIdProfileId:
+                  (selectedElectrician as any).elecIdProfileId || selectedElectrician.id,
+                name: selectedElectrician.name,
+                avatar: selectedElectrician.avatar,
+                location: selectedElectrician.location,
+              }
+            : null
+        }
       />
 
       {/* Booking Dialog */}
       <BookLabourBankDialog
         open={bookingDialogOpen}
         onOpenChange={setBookingDialogOpen}
-        electrician={selectedElectrician ? {
-          id: selectedElectrician.id,
-          name: selectedElectrician.name,
-          ecsCardType: selectedElectrician.ecsCardType,
-          dayRate: selectedElectrician.dayRate,
-          hourlyRate: selectedElectrician.hourlyRate,
-        } : null}
-        preAgreedRate={selectedElectrician ? getLabourBankRate(selectedElectrician.id)?.agreedDayRate : undefined}
+        electrician={
+          selectedElectrician
+            ? {
+                id: selectedElectrician.id,
+                name: selectedElectrician.name,
+                ecsCardType: selectedElectrician.ecsCardType,
+                dayRate: selectedElectrician.dayRate,
+                hourlyRate: selectedElectrician.hourlyRate,
+              }
+            : null
+        }
+        preAgreedRate={
+          selectedElectrician ? getLabourBankRate(selectedElectrician.id)?.agreedDayRate : undefined
+        }
       />
     </div>
   );

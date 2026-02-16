@@ -1,201 +1,210 @@
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Polarity Testing Methods - Module 7 Section 1";
-const DESCRIPTION = "Master polarity testing techniques to verify correct connection of line, neutral and protective conductors throughout electrical installations.";
+const TITLE = 'Polarity Testing Methods - Module 7 Section 1';
+const DESCRIPTION =
+  'Master polarity testing techniques to verify correct connection of line, neutral and protective conductors throughout electrical installations.';
 
 const quickCheckQuestions = [
   {
-    id: "polarity-switch",
-    question: "Why must single-pole switches be connected in the line conductor?",
+    id: 'polarity-switch',
+    question: 'Why must single-pole switches be connected in the line conductor?',
     options: [
-      "To save cable costs",
-      "So the load is dead when switched off",
-      "To improve circuit efficiency",
-      "For better dimming control"
+      'To save cable costs',
+      'So the load is dead when switched off',
+      'To improve circuit efficiency',
+      'For better dimming control',
     ],
     correctIndex: 1,
-    explanation: "If the switch was in neutral, the line would remain connected to the load, creating a shock hazard even with the switch off."
+    explanation:
+      'If the switch was in neutral, the line would remain connected to the load, creating a shock hazard even with the switch off.',
   },
   {
-    id: "polarity-continuity",
-    question: "During a polarity test, continuity is found between the line terminal at the CU and the neutral socket of a socket outlet. What does this indicate?",
+    id: 'polarity-continuity',
+    question:
+      'During a polarity test, continuity is found between the line terminal at the CU and the neutral socket of a socket outlet. What does this indicate?',
     options: [
-      "Correct wiring",
-      "A broken neutral",
-      "Reversed polarity - dangerous condition",
-      "Normal for radial circuits"
+      'Correct wiring',
+      'A broken neutral',
+      'Reversed polarity - dangerous condition',
+      'Normal for radial circuits',
     ],
     correctIndex: 2,
-    explanation: "This indicates reversed polarity - the line conductor at the CU is connected to the neutral terminal at the socket. This is a dangerous condition requiring immediate rectification."
+    explanation:
+      'This indicates reversed polarity - the line conductor at the CU is connected to the neutral terminal at the socket. This is a dangerous condition requiring immediate rectification.',
   },
   {
-    id: "polarity-eicr",
-    question: "What observation code should be assigned on an EICR for reversed polarity at a socket outlet?",
+    id: 'polarity-eicr',
+    question:
+      'What observation code should be assigned on an EICR for reversed polarity at a socket outlet?',
     options: [
-      "Code C3 - improvement recommended",
-      "Code C2 - potentially dangerous",
-      "Code C1 - danger present",
-      "Code FI - further investigation"
+      'Code C3 - improvement recommended',
+      'Code C2 - potentially dangerous',
+      'Code C1 - danger present',
+      'Code FI - further investigation',
     ],
     correctIndex: 2,
-    explanation: "Code C1 (danger present) - reversed polarity creates immediate risk of electric shock as equipment may remain live when apparently isolated. Immediate remedial action is required."
-  }
+    explanation:
+      'Code C1 (danger present) - reversed polarity creates immediate risk of electric shock as equipment may remain live when apparently isolated. Immediate remedial action is required.',
+  },
 ];
 
 const quizQuestions = [
   {
     id: 1,
-    question: "What is the primary purpose of polarity testing?",
+    question: 'What is the primary purpose of polarity testing?',
     options: [
-      "To measure voltage levels",
-      "To verify line, neutral, and CPC are correctly connected throughout",
-      "To test insulation resistance",
-      "To verify earth electrode resistance"
+      'To measure voltage levels',
+      'To verify line, neutral, and CPC are correctly connected throughout',
+      'To test insulation resistance',
+      'To verify earth electrode resistance',
     ],
     correctAnswer: 1,
-    explanation: "Polarity testing confirms that line, neutral, and circuit protective conductors are correctly connected at all points, ensuring safe operation and proper protective device function."
+    explanation:
+      'Polarity testing confirms that line, neutral, and circuit protective conductors are correctly connected at all points, ensuring safe operation and proper protective device function.',
   },
   {
     id: 2,
-    question: "Single-pole switches must be connected in which conductor?",
+    question: 'Single-pole switches must be connected in which conductor?',
     options: [
-      "Neutral conductor",
-      "Line conductor",
-      "Circuit protective conductor",
-      "Either line or neutral"
+      'Neutral conductor',
+      'Line conductor',
+      'Circuit protective conductor',
+      'Either line or neutral',
     ],
     correctAnswer: 1,
-    explanation: "Single-pole switches must always be connected in the line conductor. If connected in neutral, the circuit would remain live when switched off, creating a serious shock hazard."
+    explanation:
+      'Single-pole switches must always be connected in the line conductor. If connected in neutral, the circuit would remain live when switched off, creating a serious shock hazard.',
   },
   {
     id: 3,
-    question: "What instrument is commonly used for polarity testing on de-energised circuits?",
+    question: 'What instrument is commonly used for polarity testing on de-energised circuits?',
     options: [
-      "Clamp meter",
-      "Low-resistance ohmmeter (continuity tester)",
-      "Insulation resistance tester",
-      "Power quality analyser"
+      'Clamp meter',
+      'Low-resistance ohmmeter (continuity tester)',
+      'Insulation resistance tester',
+      'Power quality analyser',
     ],
     correctAnswer: 1,
-    explanation: "A low-resistance ohmmeter (continuity tester) is used on de-energised circuits to verify correct connections between known reference points and circuit conductors."
+    explanation:
+      'A low-resistance ohmmeter (continuity tester) is used on de-energised circuits to verify correct connections between known reference points and circuit conductors.',
   },
   {
     id: 4,
-    question: "When testing polarity on a lighting circuit with the switch open, continuity between L and the lamp should be:",
+    question:
+      'When testing polarity on a lighting circuit with the switch open, continuity between L and the lamp should be:',
     options: [
-      "Zero ohms",
-      "Open circuit (infinite)",
-      "Approximately 1 ohm",
-      "High resistance (megohms)"
+      'Zero ohms',
+      'Open circuit (infinite)',
+      'Approximately 1 ohm',
+      'High resistance (megohms)',
     ],
     correctAnswer: 1,
-    explanation: "With the switch open (off), there should be no continuity between line at the origin and the lamp terminal, proving the switch is correctly connected in the line conductor."
+    explanation:
+      'With the switch open (off), there should be no continuity between line at the origin and the lamp terminal, proving the switch is correctly connected in the line conductor.',
   },
   {
     id: 5,
-    question: "At a socket outlet, the line terminal is marked with which letter?",
-    options: [
-      "N",
-      "E",
-      "L",
-      "P"
-    ],
+    question: 'At a socket outlet, the line terminal is marked with which letter?',
+    options: ['N', 'E', 'L', 'P'],
     correctAnswer: 2,
-    explanation: "Socket outlet terminals are marked L (line), N (neutral), and E or the earth symbol for the protective conductor."
+    explanation:
+      'Socket outlet terminals are marked L (line), N (neutral), and E or the earth symbol for the protective conductor.',
   },
   {
     id: 6,
-    question: "What is the consequence of reversed polarity at a socket outlet?",
+    question: 'What is the consequence of reversed polarity at a socket outlet?',
     options: [
       "Equipment won't work",
-      "The fuse protects the wrong conductor, making disconnection unsafe",
-      "Voltage will be doubled",
-      "No consequence - polarity doesn't matter for AC"
+      'The fuse protects the wrong conductor, making disconnection unsafe',
+      'Voltage will be doubled',
+      "No consequence - polarity doesn't matter for AC",
     ],
     correctAnswer: 1,
-    explanation: "Reversed polarity means the fuse/switch is in the neutral, so equipment remains live even when the fuse blows or switch is off, creating a serious shock hazard."
+    explanation:
+      'Reversed polarity means the fuse/switch is in the neutral, so equipment remains live even when the fuse blows or switch is off, creating a serious shock hazard.',
   },
   {
     id: 7,
-    question: "In a radial circuit, polarity should be verified at:",
+    question: 'In a radial circuit, polarity should be verified at:',
     options: [
-      "Only the first and last socket",
-      "Only the consumer unit",
-      "Every socket outlet and switch",
-      "Randomly selected points"
+      'Only the first and last socket',
+      'Only the consumer unit',
+      'Every socket outlet and switch',
+      'Randomly selected points',
     ],
     correctAnswer: 2,
-    explanation: "Polarity must be verified at all points in the circuit including every socket outlet, switch, and accessory, as wiring errors can occur at any point."
+    explanation:
+      'Polarity must be verified at all points in the circuit including every socket outlet, switch, and accessory, as wiring errors can occur at any point.',
   },
   {
     id: 8,
-    question: "Which conductor should be identified by a BROWN sleeve or marking?",
-    options: [
-      "Neutral",
-      "Line",
-      "Circuit protective conductor",
-      "Earth"
-    ],
+    question: 'Which conductor should be identified by a BROWN sleeve or marking?',
+    options: ['Neutral', 'Line', 'Circuit protective conductor', 'Earth'],
     correctAnswer: 1,
-    explanation: "Brown identifies the line conductor. Blue is neutral, and green/yellow stripes identify the protective conductor (CPC)."
+    explanation:
+      'Brown identifies the line conductor. Blue is neutral, and green/yellow stripes identify the protective conductor (CPC).',
   },
   {
     id: 9,
-    question: "For an Edison screw (ES) lamp holder, correct polarity requires the outer contact to be connected to:",
-    options: [
-      "Line conductor",
-      "Neutral conductor",
-      "Earth conductor",
-      "Either line or neutral"
-    ],
+    question:
+      'For an Edison screw (ES) lamp holder, correct polarity requires the outer contact to be connected to:',
+    options: ['Line conductor', 'Neutral conductor', 'Earth conductor', 'Either line or neutral'],
     correctAnswer: 1,
-    explanation: "For Edison screw lamp holders, the outer screwed contact must be neutral and the centre contact must be line, reducing shock risk when changing lamps."
+    explanation:
+      'For Edison screw lamp holders, the outer screwed contact must be neutral and the centre contact must be line, reducing shock risk when changing lamps.',
   },
   {
     id: 10,
-    question: "What does a live polarity tester indicate?",
+    question: 'What does a live polarity tester indicate?',
     options: [
-      "Continuity between conductors",
-      "Insulation condition",
-      "Which conductor is line when circuit is energised",
-      "Earth fault loop impedance"
+      'Continuity between conductors',
+      'Insulation condition',
+      'Which conductor is line when circuit is energised',
+      'Earth fault loop impedance',
     ],
     correctAnswer: 2,
-    explanation: "A live polarity tester (socket tester or voltage indicator with phase indication) identifies which conductor is line when the circuit is energised, without needing to isolate."
-  }
+    explanation:
+      'A live polarity tester (socket tester or voltage indicator with phase indication) identifies which conductor is line when the circuit is energised, without needing to isolate.',
+  },
 ];
 
 const faqs = [
   {
-    question: "Why is polarity testing so important?",
-    answer: "Incorrect polarity creates serious safety hazards. If a single-pole switch is in the neutral conductor, the circuit remains live even when switched off. If socket polarity is reversed, equipment fuses disconnect the neutral, leaving equipment live. These errors can cause fatal electric shocks."
+    question: 'Why is polarity testing so important?',
+    answer:
+      'Incorrect polarity creates serious safety hazards. If a single-pole switch is in the neutral conductor, the circuit remains live even when switched off. If socket polarity is reversed, equipment fuses disconnect the neutral, leaving equipment live. These errors can cause fatal electric shocks.',
   },
   {
-    question: "Can I use a socket tester to verify polarity?",
-    answer: "Socket testers provide a quick indication of polarity and common wiring faults on energised circuits. However, they have limitations and can miss certain fault conditions. Full polarity verification during initial verification should use continuity testing from known reference points."
+    question: 'Can I use a socket tester to verify polarity?',
+    answer:
+      'Socket testers provide a quick indication of polarity and common wiring faults on energised circuits. However, they have limitations and can miss certain fault conditions. Full polarity verification during initial verification should use continuity testing from known reference points.',
   },
   {
-    question: "Does polarity matter for AC circuits?",
-    answer: "Yes, absolutely. While AC voltage alternates, correct polarity ensures protective devices (fuses, MCBs) and single-pole switches are in the line conductor. This is essential for safe isolation and protection. Reversed polarity is a serious defect requiring immediate rectification."
+    question: 'Does polarity matter for AC circuits?',
+    answer:
+      'Yes, absolutely. While AC voltage alternates, correct polarity ensures protective devices (fuses, MCBs) and single-pole switches are in the line conductor. This is essential for safe isolation and protection. Reversed polarity is a serious defect requiring immediate rectification.',
   },
   {
-    question: "How do I test polarity on a lighting circuit?",
-    answer: "With the circuit isolated and switch off, test continuity from the line conductor at the origin to the switch common terminal, then from the switch switched terminal to the lamp holder line terminal. With the switch on, continuity should exist from origin line to lamp line terminal."
+    question: 'How do I test polarity on a lighting circuit?',
+    answer:
+      'With the circuit isolated and switch off, test continuity from the line conductor at the origin to the switch common terminal, then from the switch switched terminal to the lamp holder line terminal. With the switch on, continuity should exist from origin line to lamp line terminal.',
   },
   {
-    question: "What faults can a socket tester detect?",
-    answer: "Most socket testers can detect: line-neutral reversal, line-earth reversal, missing earth, missing neutral, and missing line. However, they cannot detect a bootleg earth (neutral connected to earth terminal) or confirm CPC continuity back to the origin."
+    question: 'What faults can a socket tester detect?',
+    answer:
+      'Most socket testers can detect: line-neutral reversal, line-earth reversal, missing earth, missing neutral, and missing line. However, they cannot detect a bootleg earth (neutral connected to earth terminal) or confirm CPC continuity back to the origin.',
   },
   {
-    question: "Is polarity testing required at every socket on an EICR?",
-    answer: "Yes. Regulation 643.8 requires polarity to be verified at the point of utilisation (every outlet) and at switchgear devices to confirm single-pole devices are in the line conductor. This applies to both initial verification and periodic inspection."
-  }
+    question: 'Is polarity testing required at every socket on an EICR?',
+    answer:
+      'Yes. Regulation 643.8 requires polarity to be verified at the point of utilisation (every outlet) and at switchgear devices to confirm single-pole devices are in the line conductor. This applies to both initial verification and periodic inspection.',
+  },
 ];
 
 const InspectionTestingModule7Section1 = () => {
@@ -206,7 +215,12 @@ const InspectionTestingModule7Section1 = () => {
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-7">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -217,7 +231,6 @@ const InspectionTestingModule7Section1 = () => {
 
       {/* Main Content - Full width, minimal padding */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -237,18 +250,32 @@ const InspectionTestingModule7Section1 = () => {
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Rule:</strong> Single-pole switches must be in LINE only</li>
-              <li><strong>Check:</strong> Verify polarity at EVERY socket and switch</li>
-              <li><strong>Danger:</strong> Reversed polarity = C1 dangerous condition</li>
-              <li><strong>Method:</strong> Continuity from CU to each outlet terminal</li>
+              <li>
+                <strong>Rule:</strong> Single-pole switches must be in LINE only
+              </li>
+              <li>
+                <strong>Check:</strong> Verify polarity at EVERY socket and switch
+              </li>
+              <li>
+                <strong>Danger:</strong> Reversed polarity = C1 dangerous condition
+              </li>
+              <li>
+                <strong>Method:</strong> Continuity from CU to each outlet terminal
+              </li>
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
-              <li><strong>Spot:</strong> Brown=Line, Blue=Neutral, G/Y=CPC</li>
-              <li><strong>Use:</strong> Long wandering lead for efficient testing</li>
-              <li><strong>Apply:</strong> Test L→L, N→N, E→E from CU to outlet</li>
+              <li>
+                <strong>Spot:</strong> Brown=Line, Blue=Neutral, G/Y=CPC
+              </li>
+              <li>
+                <strong>Use:</strong> Long wandering lead for efficient testing
+              </li>
+              <li>
+                <strong>Apply:</strong> Test L→L, N→N, E→E from CU to outlet
+              </li>
             </ul>
           </div>
         </div>
@@ -258,12 +285,12 @@ const InspectionTestingModule7Section1 = () => {
           <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understand the importance of correct polarity",
-              "Use appropriate instruments for polarity verification",
-              "Apply different polarity testing methods",
-              "Identify consequences of reversed polarity",
-              "Document polarity test results correctly",
-              "Verify polarity at all relevant locations"
+              'Understand the importance of correct polarity',
+              'Use appropriate instruments for polarity verification',
+              'Apply different polarity testing methods',
+              'Identify consequences of reversed polarity',
+              'Document polarity test results correctly',
+              'Verify polarity at all relevant locations',
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -284,9 +311,9 @@ const InspectionTestingModule7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Correct polarity is fundamental to electrical safety. While AC voltage alternates direction,
-              the protection system relies on switches and protective devices being in specific conductors
-              to function safely.
+              Correct polarity is fundamental to electrical safety. While AC voltage alternates
+              direction, the protection system relies on switches and protective devices being in
+              specific conductors to function safely.
             </p>
 
             <div className="my-6">
@@ -321,7 +348,9 @@ const InspectionTestingModule7Section1 = () => {
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Points Requiring Polarity Verification</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Points Requiring Polarity Verification
+              </p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Single-pole devices are in the line conductor</li>
                 <li>Centre contact of ES lamp holders is connected to line</li>
@@ -341,12 +370,15 @@ const InspectionTestingModule7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              There are two main approaches to polarity testing, each suitable for different situations:
+              There are two main approaches to polarity testing, each suitable for different
+              situations:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">1. Continuity Method (De-energised)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  1. Continuity Method (De-energised)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Uses low-resistance ohmmeter</li>
                   <li>Requires circuit isolation</li>
@@ -356,7 +388,9 @@ const InspectionTestingModule7Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">2. Live Testing Method (Energised)</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                  2. Live Testing Method (Energised)
+                </p>
                 <ul className="text-sm text-white space-y-1">
                   <li>Uses approved voltage indicators or socket testers</li>
                   <li>Quick verification of energised circuits</li>
@@ -371,91 +405,370 @@ const InspectionTestingModule7Section1 = () => {
 
         {/* Polarity Test Points Diagram */}
         <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 my-6">
-          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">Diagram</p>
-          <h4 className="text-sm font-bold text-white mb-4">Polarity Test Points — Socket, Switch &amp; Luminaire</h4>
-          <svg viewBox="0 0 800 380" className="w-full h-auto" role="img" aria-label="Polarity test points diagram showing correct conductor connections at socket outlets, light switches, and Edison screw lamp holders">
+          <p className="text-xs font-semibold text-elec-yellow/60 uppercase tracking-wider mb-3">
+            Diagram
+          </p>
+          <h4 className="text-sm font-bold text-white mb-4">
+            Polarity Test Points — Socket, Switch &amp; Luminaire
+          </h4>
+          <svg
+            viewBox="0 0 800 380"
+            className="w-full h-auto"
+            role="img"
+            aria-label="Polarity test points diagram showing correct conductor connections at socket outlets, light switches, and Edison screw lamp holders"
+          >
             {/* Consumer Unit origin reference */}
-            <rect x="320" y="5" width="160" height="30" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-            <text x="400" y="25" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">From Consumer Unit (known reference)</text>
+            <rect
+              x="320"
+              y="5"
+              width="160"
+              height="30"
+              rx="6"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1.5"
+            />
+            <text x="400" y="25" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10">
+              From Consumer Unit (known reference)
+            </text>
 
             {/* Connection lines down */}
-            <line x1="360" y1="35" x2="140" y2="75" stroke="#EF4444" strokeWidth="1.5" opacity="0.4" />
-            <line x1="400" y1="35" x2="400" y2="75" stroke="#EF4444" strokeWidth="1.5" opacity="0.4" />
-            <line x1="440" y1="35" x2="660" y2="75" stroke="#EF4444" strokeWidth="1.5" opacity="0.4" />
+            <line
+              x1="360"
+              y1="35"
+              x2="140"
+              y2="75"
+              stroke="#EF4444"
+              strokeWidth="1.5"
+              opacity="0.4"
+            />
+            <line
+              x1="400"
+              y1="35"
+              x2="400"
+              y2="75"
+              stroke="#EF4444"
+              strokeWidth="1.5"
+              opacity="0.4"
+            />
+            <line
+              x1="440"
+              y1="35"
+              x2="660"
+              y2="75"
+              stroke="#EF4444"
+              strokeWidth="1.5"
+              opacity="0.4"
+            />
 
             {/* SOCKET OUTLET */}
-            <rect x="30" y="75" width="220" height="180" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-            <text x="140" y="95" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11" fontWeight="bold">SOCKET OUTLET</text>
+            <rect
+              x="30"
+              y="75"
+              width="220"
+              height="180"
+              rx="10"
+              fill="rgba(255,255,255,0.03)"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1.5"
+            />
+            <text
+              x="140"
+              y="95"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.7)"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              SOCKET OUTLET
+            </text>
 
             {/* Socket face */}
-            <rect x="70" y="110" width="140" height="80" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            <rect
+              x="70"
+              y="110"
+              width="140"
+              height="80"
+              rx="8"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1.5"
+            />
             {/* Earth pin (top) */}
-            <rect x="128" y="118" width="24" height="14" rx="3" fill="rgba(34,197,94,0.15)" stroke="#22C55E" strokeWidth="1.5" />
-            <text x="140" y="129" textAnchor="middle" fill="#22C55E" fontSize="8" fontWeight="bold">E</text>
+            <rect
+              x="128"
+              y="118"
+              width="24"
+              height="14"
+              rx="3"
+              fill="rgba(34,197,94,0.15)"
+              stroke="#22C55E"
+              strokeWidth="1.5"
+            />
+            <text x="140" y="129" textAnchor="middle" fill="#22C55E" fontSize="8" fontWeight="bold">
+              E
+            </text>
             {/* Line pin (right when viewed from front) */}
-            <rect x="164" y="152" width="24" height="14" rx="3" fill="rgba(239,68,68,0.15)" stroke="#EF4444" strokeWidth="1.5" />
-            <text x="176" y="163" textAnchor="middle" fill="#EF4444" fontSize="8" fontWeight="bold">L</text>
+            <rect
+              x="164"
+              y="152"
+              width="24"
+              height="14"
+              rx="3"
+              fill="rgba(239,68,68,0.15)"
+              stroke="#EF4444"
+              strokeWidth="1.5"
+            />
+            <text x="176" y="163" textAnchor="middle" fill="#EF4444" fontSize="8" fontWeight="bold">
+              L
+            </text>
             {/* Neutral pin (left) */}
-            <rect x="92" y="152" width="24" height="14" rx="3" fill="rgba(59,130,246,0.15)" stroke="#3B82F6" strokeWidth="1.5" />
-            <text x="104" y="163" textAnchor="middle" fill="#3B82F6" fontSize="8" fontWeight="bold">N</text>
+            <rect
+              x="92"
+              y="152"
+              width="24"
+              height="14"
+              rx="3"
+              fill="rgba(59,130,246,0.15)"
+              stroke="#3B82F6"
+              strokeWidth="1.5"
+            />
+            <text x="104" y="163" textAnchor="middle" fill="#3B82F6" fontSize="8" fontWeight="bold">
+              N
+            </text>
 
-            <text x="140" y="210" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">Viewed from front:</text>
-            <text x="140" y="224" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">E=top, L=right, N=left</text>
-            <text x="140" y="245" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">Check: L→L, N→N, E→E</text>
+            <text x="140" y="210" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              Viewed from front:
+            </text>
+            <text x="140" y="224" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">
+              E=top, L=right, N=left
+            </text>
+            <text x="140" y="245" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">
+              Check: L→L, N→N, E→E
+            </text>
 
             {/* LIGHT SWITCH */}
-            <rect x="290" y="75" width="220" height="180" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-            <text x="400" y="95" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11" fontWeight="bold">LIGHT SWITCH</text>
+            <rect
+              x="290"
+              y="75"
+              width="220"
+              height="180"
+              rx="10"
+              fill="rgba(255,255,255,0.03)"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1.5"
+            />
+            <text
+              x="400"
+              y="95"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.7)"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              LIGHT SWITCH
+            </text>
 
             {/* Switch diagram */}
-            <rect x="350" y="110" width="100" height="70" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            <rect
+              x="350"
+              y="110"
+              width="100"
+              height="70"
+              rx="6"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1.5"
+            />
             {/* Common terminal */}
-            <rect x="365" y="118" width="30" height="14" rx="3" fill="rgba(239,68,68,0.15)" stroke="#EF4444" strokeWidth="1.5" />
-            <text x="380" y="129" textAnchor="middle" fill="#EF4444" fontSize="7" fontWeight="bold">COM</text>
-            <text x="410" y="129" fill="rgba(255,255,255,0.4)" fontSize="7">← Line IN</text>
+            <rect
+              x="365"
+              y="118"
+              width="30"
+              height="14"
+              rx="3"
+              fill="rgba(239,68,68,0.15)"
+              stroke="#EF4444"
+              strokeWidth="1.5"
+            />
+            <text x="380" y="129" textAnchor="middle" fill="#EF4444" fontSize="7" fontWeight="bold">
+              COM
+            </text>
+            <text x="410" y="129" fill="rgba(255,255,255,0.4)" fontSize="7">
+              ← Line IN
+            </text>
             {/* Switched live */}
-            <rect x="365" y="153" width="30" height="14" rx="3" fill="rgba(239,68,68,0.15)" stroke="#EF4444" strokeWidth="1.5" />
-            <text x="380" y="164" textAnchor="middle" fill="#EF4444" fontSize="7" fontWeight="bold">L1</text>
-            <text x="410" y="164" fill="rgba(255,255,255,0.4)" fontSize="7">← Line OUT</text>
+            <rect
+              x="365"
+              y="153"
+              width="30"
+              height="14"
+              rx="3"
+              fill="rgba(239,68,68,0.15)"
+              stroke="#EF4444"
+              strokeWidth="1.5"
+            />
+            <text x="380" y="164" textAnchor="middle" fill="#EF4444" fontSize="7" fontWeight="bold">
+              L1
+            </text>
+            <text x="410" y="164" fill="rgba(255,255,255,0.4)" fontSize="7">
+              ← Line OUT
+            </text>
             {/* Switch contact */}
-            <line x1="380" y1="132" x2="380" y2="153" stroke="#FBBF24" strokeWidth="2" strokeDasharray="4,3" />
+            <line
+              x1="380"
+              y1="132"
+              x2="380"
+              y2="153"
+              stroke="#FBBF24"
+              strokeWidth="2"
+              strokeDasharray="4,3"
+            />
 
-            <text x="400" y="205" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">Switch must be in LINE</text>
-            <text x="400" y="219" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">conductor (not neutral)</text>
-            <text x="400" y="245" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">Switch OFF: no continuity L→lamp</text>
+            <text x="400" y="205" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              Switch must be in LINE
+            </text>
+            <text x="400" y="219" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">
+              conductor (not neutral)
+            </text>
+            <text x="400" y="245" textAnchor="middle" fill="#22C55E" fontSize="9" fontWeight="bold">
+              Switch OFF: no continuity L→lamp
+            </text>
 
             {/* EDISON SCREW LAMP */}
-            <rect x="550" y="75" width="220" height="180" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-            <text x="660" y="95" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11" fontWeight="bold">ES LAMP HOLDER</text>
+            <rect
+              x="550"
+              y="75"
+              width="220"
+              height="180"
+              rx="10"
+              fill="rgba(255,255,255,0.03)"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1.5"
+            />
+            <text
+              x="660"
+              y="95"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.7)"
+              fontSize="11"
+              fontWeight="bold"
+            >
+              ES LAMP HOLDER
+            </text>
 
             {/* Lamp holder cross-section */}
-            <path d="M640,130 Q640,110 660,110 Q680,110 680,130 L680,165 Q680,175 660,175 Q640,175 640,165 Z" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+            <path
+              d="M640,130 Q640,110 660,110 Q680,110 680,130 L680,165 Q680,175 660,175 Q640,175 640,165 Z"
+              fill="rgba(255,255,255,0.05)"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1.5"
+            />
             {/* Centre contact */}
-            <rect x="652" y="155" width="16" height="10" rx="2" fill="rgba(239,68,68,0.2)" stroke="#EF4444" strokeWidth="1.5" />
-            <text x="660" y="163" textAnchor="middle" fill="#EF4444" fontSize="6" fontWeight="bold">L</text>
+            <rect
+              x="652"
+              y="155"
+              width="16"
+              height="10"
+              rx="2"
+              fill="rgba(239,68,68,0.2)"
+              stroke="#EF4444"
+              strokeWidth="1.5"
+            />
+            <text x="660" y="163" textAnchor="middle" fill="#EF4444" fontSize="6" fontWeight="bold">
+              L
+            </text>
             {/* Screw contact (outer) */}
             <path d="M640,130 L640,165" stroke="#3B82F6" strokeWidth="3" />
             <path d="M680,130 L680,165" stroke="#3B82F6" strokeWidth="3" />
-            <text x="628" y="150" textAnchor="end" fill="#3B82F6" fontSize="8">N</text>
-            <text x="692" y="150" fill="#3B82F6" fontSize="8">N</text>
+            <text x="628" y="150" textAnchor="end" fill="#3B82F6" fontSize="8">
+              N
+            </text>
+            <text x="692" y="150" fill="#3B82F6" fontSize="8">
+              N
+            </text>
 
-            <text x="660" y="205" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">Centre contact = LINE</text>
-            <text x="660" y="219" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">Outer screw = NEUTRAL</text>
-            <text x="660" y="245" textAnchor="middle" fill="#EF4444" fontSize="9" fontWeight="bold">Prevents shock changing lamps</text>
+            <text x="660" y="205" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9">
+              Centre contact = LINE
+            </text>
+            <text x="660" y="219" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">
+              Outer screw = NEUTRAL
+            </text>
+            <text x="660" y="245" textAnchor="middle" fill="#EF4444" fontSize="9" fontWeight="bold">
+              Prevents shock changing lamps
+            </text>
 
             {/* Key */}
-            <rect x="100" y="280" width="600" height="90" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-            <text x="400" y="300" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10" fontWeight="bold">Polarity Verification Requirements (BS 7671 Reg 643.6)</text>
-            <circle cx="160" cy="325" r="6" fill="rgba(239,68,68,0.2)" stroke="#EF4444" strokeWidth="1" />
-            <text x="175" y="329" fill="rgba(255,255,255,0.5)" fontSize="9">Single-pole devices in Line only</text>
-            <circle cx="160" cy="348" r="6" fill="rgba(59,130,246,0.2)" stroke="#3B82F6" strokeWidth="1" />
-            <text x="175" y="352" fill="rgba(255,255,255,0.5)" fontSize="9">ES centre contact = Line</text>
-            <circle cx="450" cy="325" r="6" fill="rgba(34,197,94,0.2)" stroke="#22C55E" strokeWidth="1" />
-            <text x="465" y="329" fill="rgba(255,255,255,0.5)" fontSize="9">Verify at every socket &amp; switch</text>
-            <circle cx="450" cy="348" r="6" fill="rgba(251,191,36,0.2)" stroke="#FBBF24" strokeWidth="1" />
-            <text x="465" y="352" fill="rgba(255,255,255,0.5)" fontSize="9">Reversed polarity = C1 (danger)</text>
+            <rect
+              x="100"
+              y="280"
+              width="600"
+              height="90"
+              rx="8"
+              fill="rgba(255,255,255,0.03)"
+              stroke="rgba(255,255,255,0.1)"
+              strokeWidth="1"
+            />
+            <text
+              x="400"
+              y="300"
+              textAnchor="middle"
+              fill="rgba(255,255,255,0.6)"
+              fontSize="10"
+              fontWeight="bold"
+            >
+              Polarity Verification Requirements (BS 7671 Reg 643.6)
+            </text>
+            <circle
+              cx="160"
+              cy="325"
+              r="6"
+              fill="rgba(239,68,68,0.2)"
+              stroke="#EF4444"
+              strokeWidth="1"
+            />
+            <text x="175" y="329" fill="rgba(255,255,255,0.5)" fontSize="9">
+              Single-pole devices in Line only
+            </text>
+            <circle
+              cx="160"
+              cy="348"
+              r="6"
+              fill="rgba(59,130,246,0.2)"
+              stroke="#3B82F6"
+              strokeWidth="1"
+            />
+            <text x="175" y="352" fill="rgba(255,255,255,0.5)" fontSize="9">
+              ES centre contact = Line
+            </text>
+            <circle
+              cx="450"
+              cy="325"
+              r="6"
+              fill="rgba(34,197,94,0.2)"
+              stroke="#22C55E"
+              strokeWidth="1"
+            />
+            <text x="465" y="329" fill="rgba(255,255,255,0.5)" fontSize="9">
+              Verify at every socket &amp; switch
+            </text>
+            <circle
+              cx="450"
+              cy="348"
+              r="6"
+              fill="rgba(251,191,36,0.2)"
+              stroke="#FBBF24"
+              strokeWidth="1"
+            />
+            <text x="465" y="352" fill="rgba(255,255,255,0.5)" fontSize="9">
+              Reversed polarity = C1 (danger)
+            </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">Three key polarity test points: socket outlets (L=right, N=left, E=top viewed from front), light switches (must break line conductor), and Edison screw lamp holders (centre contact must be line, outer screw must be neutral).</p>
+          <p className="text-xs text-white/40 mt-3">
+            Three key polarity test points: socket outlets (L=right, N=left, E=top viewed from
+            front), light switches (must break line conductor), and Edison screw lamp holders
+            (centre contact must be line, outer screw must be neutral).
+          </p>
         </div>
 
         <InlineCheck {...quickCheckQuestions[1]} />
@@ -468,19 +781,26 @@ const InspectionTestingModule7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The preferred method for initial verification uses continuity testing from known reference points:
+              The preferred method for initial verification uses continuity testing from known
+              reference points:
             </p>
 
             <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Socket Outlet Polarity Test</p>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+                Socket Outlet Polarity Test
+              </p>
               <div className="grid grid-cols-1 gap-3 text-sm">
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 1</p>
-                  <p className="text-white/90 text-xs">Isolate circuit at consumer unit, prove dead</p>
+                  <p className="text-white/90 text-xs">
+                    Isolate circuit at consumer unit, prove dead
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 2</p>
-                  <p className="text-white/90 text-xs">Connect long test lead between line terminal at CU and socket line (L)</p>
+                  <p className="text-white/90 text-xs">
+                    Connect long test lead between line terminal at CU and socket line (L)
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 3</p>
@@ -488,11 +808,15 @@ const InspectionTestingModule7Section1 = () => {
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 4</p>
-                  <p className="text-white/90 text-xs">Repeat for neutral (N) and earth (E) terminals</p>
+                  <p className="text-white/90 text-xs">
+                    Repeat for neutral (N) and earth (E) terminals
+                  </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 5</p>
-                  <p className="text-white/90 text-xs">Confirm no continuity between wrong terminals</p>
+                  <p className="text-white/90 text-xs">
+                    Confirm no continuity between wrong terminals
+                  </p>
                 </div>
               </div>
             </div>
@@ -506,9 +830,7 @@ const InspectionTestingModule7Section1 = () => {
             Conductor Identification
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Correct identification of conductors using harmonised colours:
-            </p>
+            <p>Correct identification of conductors using harmonised colours:</p>
 
             <div className="space-y-3 my-6">
               <div className="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
@@ -535,8 +857,8 @@ const InspectionTestingModule7Section1 = () => {
             </div>
 
             <p className="text-sm text-amber-400/70">
-              <strong>Old colours:</strong> Installations pre-2006 may use Red (L), Black (N).
-              The CPC has always been green/yellow.
+              <strong>Old colours:</strong> Installations pre-2006 may use Red (L), Black (N). The
+              CPC has always been green/yellow.
             </p>
           </div>
         </section>
@@ -551,8 +873,8 @@ const InspectionTestingModule7Section1 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Polarity verification must be recorded on the Schedule of Test Results.
-              The result is recorded as either a tick for correct polarity or a cross for incorrect.
+              Polarity verification must be recorded on the Schedule of Test Results. The result is
+              recorded as either a tick for correct polarity or a cross for incorrect.
             </p>
 
             <div className="my-6">
@@ -598,10 +920,18 @@ const InspectionTestingModule7Section1 = () => {
             <div>
               <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
               <ul className="text-sm text-white space-y-1 ml-4">
-                <li><strong>Trusting colours alone</strong> - always test, wiring errors happen</li>
-                <li><strong>Skipping sockets</strong> - errors can occur at any point</li>
-                <li><strong>Not testing switches</strong> - verify they break the line</li>
-                <li><strong>Forgetting ES lamp holders</strong> - outer must be neutral</li>
+                <li>
+                  <strong>Trusting colours alone</strong> - always test, wiring errors happen
+                </li>
+                <li>
+                  <strong>Skipping sockets</strong> - errors can occur at any point
+                </li>
+                <li>
+                  <strong>Not testing switches</strong> - verify they break the line
+                </li>
+                <li>
+                  <strong>Forgetting ES lamp holders</strong> - outer must be neutral
+                </li>
               </ul>
             </div>
           </div>
@@ -652,28 +982,33 @@ const InspectionTestingModule7Section1 = () => {
 
         {/* Quiz */}
         <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge"
-            questions={quizQuestions}
-          />
+          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-6/section-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/inspection-testing/module-7/section-2">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-
       </article>
     </div>
   );

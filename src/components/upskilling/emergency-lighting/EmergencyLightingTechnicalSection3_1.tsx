@@ -8,39 +8,46 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
   const quickChecks = [
     {
       id: 1,
-      question: "What is the minimum lux requirement for open area (anti-panic) lighting?",
-      answer: "0.5 lux across the floor area"
+      question: 'What is the minimum lux requirement for open area (anti-panic) lighting?',
+      answer: '0.5 lux across the floor area',
     },
     {
       id: 2,
-      question: "Why is uniformity just as important as meeting the minimum lux requirement?",
-      answer: "To avoid shadows or dark patches that could cause panic or disorientation. Uneven lighting can create confusion during evacuation."
+      question: 'Why is uniformity just as important as meeting the minimum lux requirement?',
+      answer:
+        'To avoid shadows or dark patches that could cause panic or disorientation. Uneven lighting can create confusion during evacuation.',
     },
     {
       id: 3,
-      question: "How long must emergency lighting operate in public assembly buildings?",
-      answer: "Minimum 3 hours duration for public spaces, workplaces, or premises where re-entry is required."
+      question: 'How long must emergency lighting operate in public assembly buildings?',
+      answer:
+        'Minimum 3 hours duration for public spaces, workplaces, or premises where re-entry is required.',
     },
     {
       id: 4,
-      question: "Why must designers allow for battery ageing when specifying emergency lighting systems?",
-      answer: "Systems must still achieve required lux levels at the end of battery life, not just when new. Battery capacity degrades over time."
+      question:
+        'Why must designers allow for battery ageing when specifying emergency lighting systems?',
+      answer:
+        'Systems must still achieve required lux levels at the end of battery life, not just when new. Battery capacity degrades over time.',
     },
     {
       id: 5,
-      question: "What factors can affect emergency lighting performance during testing?",
-      answer: "Temperature, humidity, dust accumulation, vibration, and ambient light can all affect performance. Testing should account for these environmental factors and be conducted under realistic operating conditions."
+      question: 'What factors can affect emergency lighting performance during testing?',
+      answer:
+        'Temperature, humidity, dust accumulation, vibration, and ambient light can all affect performance. Testing should account for these environmental factors and be conducted under realistic operating conditions.',
     },
     {
       id: 6,
-      question: "Why do high-risk premises require higher lux levels and longer durations?",
-      answer: "High-risk premises often house vulnerable occupants who may need assistance evacuating, have complex layouts, or contain hazardous processes requiring safe shutdown. Higher illumination and longer duration ensure adequate time and visibility for these critical activities."
+      question: 'Why do high-risk premises require higher lux levels and longer durations?',
+      answer:
+        'High-risk premises often house vulnerable occupants who may need assistance evacuating, have complex layouts, or contain hazardous processes requiring safe shutdown. Higher illumination and longer duration ensure adequate time and visibility for these critical activities.',
     },
     {
       id: 7,
-      question: "Why is maintenance factor critical in emergency lighting calculations?",
-      answer: "Maintenance factor accounts for the inevitable degradation of system performance over time due to lamp ageing, dirt accumulation, and component wear. Without proper maintenance factors, the system may fall below compliance levels before its intended service life."
-    }
+      question: 'Why is maintenance factor critical in emergency lighting calculations?',
+      answer:
+        'Maintenance factor accounts for the inevitable degradation of system performance over time due to lamp ageing, dirt accumulation, and component wear. Without proper maintenance factors, the system may fall below compliance levels before its intended service life.',
+    },
   ];
 
   return (
@@ -68,14 +75,12 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
                 </p>
               </div>
             </div>
-            
+
             <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-green-400 mb-3">Open Areas (Anti-Panic)</h4>
               <div className="text-center">
                 <div className="text-3xl font-bold text-green-400">0.5 lux</div>
-                <p className="text-sm text-foreground mt-2">
-                  Across the floor area
-                </p>
+                <p className="text-sm text-foreground mt-2">Across the floor area</p>
               </div>
             </div>
 
@@ -92,17 +97,20 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
 
           <div className="bg-elec-dark/40 p-4 rounded-lg border border-gray-600">
             <p className="text-foreground">
-              <strong>Important:</strong> These values are measured at floor level and must be achieved consistently across the designated space.
+              <strong>Important:</strong> These values are measured at floor level and must be
+              achieved consistently across the designated space.
             </p>
           </div>
 
           {/* Quick Check 1 */}
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-            <div 
+            <div
               className="cursor-pointer flex items-center justify-between"
               onClick={() => setActiveCheck(activeCheck === 1 ? null : 1)}
             >
-              <h4 className="font-semibold text-yellow-400">✅ Quick Check: {quickChecks[0].question}</h4>
+              <h4 className="font-semibold text-yellow-400">
+                ✅ Quick Check: {quickChecks[0].question}
+              </h4>
               <AlertCircle className="h-4 w-4 text-yellow-400" />
             </div>
             {activeCheck === 1 && (
@@ -124,7 +132,8 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-lg leading-relaxed">
-            It is not enough to meet the minimum lux in one spot; lighting must be evenly distributed.
+            It is not enough to meet the minimum lux in one spot; lighting must be evenly
+            distributed.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -133,11 +142,16 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Ratios of maximum to minimum illuminance should not exceed recommended limits (often 40:1 for escape routes)</span>
+                  <span>
+                    Ratios of maximum to minimum illuminance should not exceed recommended limits
+                    (often 40:1 for escape routes)
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Avoid shadows or "dark patches" that could cause panic or disorientation</span>
+                  <span>
+                    Avoid shadows or "dark patches" that could cause panic or disorientation
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
@@ -159,11 +173,13 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
 
           {/* Quick Check 2 */}
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-            <div 
+            <div
               className="cursor-pointer flex items-center justify-between"
               onClick={() => setActiveCheck(activeCheck === 2 ? null : 2)}
             >
-              <h4 className="font-semibold text-yellow-400">✅ Quick Check: {quickChecks[1].question}</h4>
+              <h4 className="font-semibold text-yellow-400">
+                ✅ Quick Check: {quickChecks[1].question}
+              </h4>
               <AlertCircle className="h-4 w-4 text-yellow-400" />
             </div>
             {activeCheck === 2 && (
@@ -196,7 +212,7 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
                 <p className="text-sm text-foreground mt-2">Minimum duration</p>
               </div>
             </div>
-            
+
             <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
               <h4 className="font-semibold text-green-400 mb-3">Public Spaces & Workplaces</h4>
               <div className="text-center">
@@ -207,7 +223,9 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
           </div>
 
           <div className="bg-elec-dark/40 p-4 rounded-lg border border-gray-600">
-            <h4 className="text-elec-yellow font-semibold mb-3">Battery Technology Considerations</h4>
+            <h4 className="text-elec-yellow font-semibold mb-3">
+              Battery Technology Considerations
+            </h4>
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <h5 className="text-cyan-400 font-medium mb-2">NiCd Batteries</h5>
@@ -226,11 +244,13 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
 
           {/* Quick Check 3 */}
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-            <div 
+            <div
               className="cursor-pointer flex items-center justify-between"
               onClick={() => setActiveCheck(activeCheck === 3 ? null : 3)}
             >
-              <h4 className="font-semibold text-yellow-400">✅ Quick Check: {quickChecks[2].question}</h4>
+              <h4 className="font-semibold text-yellow-400">
+                ✅ Quick Check: {quickChecks[2].question}
+              </h4>
               <AlertCircle className="h-4 w-4 text-yellow-400" />
             </div>
             {activeCheck === 3 && (
@@ -251,9 +271,7 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
-          <p className="text-lg leading-relaxed">
-            When applying lux and duration requirements:
-          </p>
+          <p className="text-lg leading-relaxed">When applying lux and duration requirements:</p>
 
           <div className="space-y-4">
             <div className="flex items-start gap-4">
@@ -262,7 +280,10 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
               </div>
               <div>
                 <h4 className="text-blue-400 font-semibold mb-1">Consider Evacuation Time</h4>
-                <p className="text-sm">Large, multi-storey premises often require 3 hours based on building type and usage patterns.</p>
+                <p className="text-sm">
+                  Large, multi-storey premises often require 3 hours based on building type and
+                  usage patterns.
+                </p>
               </div>
             </div>
 
@@ -271,8 +292,12 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
                 <span className="text-green-400 font-bold text-sm">2</span>
               </div>
               <div>
-                <h4 className="text-green-400 font-semibold mb-1">Maintain Output Throughout Period</h4>
-                <p className="text-sm">Ensure luminaires are designed to maintain output throughout the rated period.</p>
+                <h4 className="text-green-400 font-semibold mb-1">
+                  Maintain Output Throughout Period
+                </h4>
+                <p className="text-sm">
+                  Ensure luminaires are designed to maintain output throughout the rated period.
+                </p>
               </div>
             </div>
 
@@ -282,7 +307,10 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
               </div>
               <div>
                 <h4 className="text-orange-400 font-semibold mb-1">Allow for Battery Ageing</h4>
-                <p className="text-sm">Systems must still achieve required lux levels at the end of battery life, not just when new.</p>
+                <p className="text-sm">
+                  Systems must still achieve required lux levels at the end of battery life, not
+                  just when new.
+                </p>
               </div>
             </div>
 
@@ -292,18 +320,22 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
               </div>
               <div>
                 <h4 className="text-purple-400 font-semibold mb-1">Document Design Calculations</h4>
-                <p className="text-sm">Maintain detailed records to prove compliance with all requirements.</p>
+                <p className="text-sm">
+                  Maintain detailed records to prove compliance with all requirements.
+                </p>
               </div>
             </div>
           </div>
 
           {/* Quick Check 4 */}
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-            <div 
+            <div
               className="cursor-pointer flex items-center justify-between"
               onClick={() => setActiveCheck(activeCheck === 4 ? null : 4)}
             >
-              <h4 className="font-semibold text-yellow-400">✅ Quick Check: {quickChecks[3].question}</h4>
+              <h4 className="font-semibold text-yellow-400">
+                ✅ Quick Check: {quickChecks[3].question}
+              </h4>
               <AlertCircle className="h-4 w-4 text-yellow-400" />
             </div>
             {activeCheck === 4 && (
@@ -379,11 +411,13 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
           </div>
 
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-            <div 
+            <div
               className="cursor-pointer flex items-center justify-between"
               onClick={() => setActiveCheck(activeCheck === 5 ? null : 5)}
             >
-              <h4 className="font-semibold text-yellow-400">✅ Quick Check: {quickChecks[4].question}</h4>
+              <h4 className="font-semibold text-yellow-400">
+                ✅ Quick Check: {quickChecks[4].question}
+              </h4>
               <AlertCircle className="h-4 w-4 text-yellow-400" />
             </div>
             {activeCheck === 5 && (
@@ -405,7 +439,8 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-lg leading-relaxed">
-            Different building types require specific approaches to illumination and duration planning:
+            Different building types require specific approaches to illumination and duration
+            planning:
           </p>
 
           <div className="grid md:grid-cols-3 gap-4">
@@ -418,10 +453,15 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
                 </div>
                 <div>
                   <h5 className="text-foreground font-medium text-sm mb-1">Requirements</h5>
-                  <p className="text-xs">3-hour duration mandatory, higher lux levels (2-5 lux on escape routes), additional signage</p>
+                  <p className="text-xs">
+                    3-hour duration mandatory, higher lux levels (2-5 lux on escape routes),
+                    additional signage
+                  </p>
                 </div>
                 <div>
-                  <h5 className="text-foreground font-medium text-sm mb-1">Special Considerations</h5>
+                  <h5 className="text-foreground font-medium text-sm mb-1">
+                    Special Considerations
+                  </h5>
                   <p className="text-xs">Assisted evacuation, multiple exit routes, refuge areas</p>
                 </div>
               </div>
@@ -436,11 +476,17 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
                 </div>
                 <div>
                   <h5 className="text-foreground font-medium text-sm mb-1">Requirements</h5>
-                  <p className="text-xs">Task area lighting up to 50 lux, 3-hour duration, hazardous area ratings</p>
+                  <p className="text-xs">
+                    Task area lighting up to 50 lux, 3-hour duration, hazardous area ratings
+                  </p>
                 </div>
                 <div>
-                  <h5 className="text-foreground font-medium text-sm mb-1">Special Considerations</h5>
-                  <p className="text-xs">Safe shutdown procedures, ATEX compliance, robust fittings</p>
+                  <h5 className="text-foreground font-medium text-sm mb-1">
+                    Special Considerations
+                  </h5>
+                  <p className="text-xs">
+                    Safe shutdown procedures, ATEX compliance, robust fittings
+                  </p>
                 </div>
               </div>
             </div>
@@ -454,11 +500,17 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
                 </div>
                 <div>
                   <h5 className="text-foreground font-medium text-sm mb-1">Requirements</h5>
-                  <p className="text-xs">Standard 1 lux escape routes, 1-3 hour options available</p>
+                  <p className="text-xs">
+                    Standard 1 lux escape routes, 1-3 hour options available
+                  </p>
                 </div>
                 <div>
-                  <h5 className="text-foreground font-medium text-sm mb-1">Special Considerations</h5>
-                  <p className="text-xs">Sleeping accommodation, accessible routes, cost optimization</p>
+                  <h5 className="text-foreground font-medium text-sm mb-1">
+                    Special Considerations
+                  </h5>
+                  <p className="text-xs">
+                    Sleeping accommodation, accessible routes, cost optimization
+                  </p>
                 </div>
               </div>
             </div>
@@ -489,11 +541,13 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
           </div>
 
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-            <div 
+            <div
               className="cursor-pointer flex items-center justify-between"
               onClick={() => setActiveCheck(activeCheck === 6 ? null : 6)}
             >
-              <h4 className="font-semibold text-yellow-400">✅ Quick Check: {quickChecks[5].question}</h4>
+              <h4 className="font-semibold text-yellow-400">
+                ✅ Quick Check: {quickChecks[5].question}
+              </h4>
               <AlertCircle className="h-4 w-4 text-yellow-400" />
             </div>
             {activeCheck === 6 && (
@@ -515,7 +569,8 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
         </CardHeader>
         <CardContent className="text-foreground space-y-6">
           <p className="text-lg leading-relaxed">
-            Professional emergency lighting design requires sophisticated calculation methods and tools:
+            Professional emergency lighting design requires sophisticated calculation methods and
+            tools:
           </p>
 
           <div className="space-y-6">
@@ -553,7 +608,10 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
                   <p className="text-sm mb-2">For precise calculations at specific locations:</p>
                   <div className="bg-gray-800 p-3 rounded text-xs font-mono">
                     <p>E = (I × cos³θ) / d²</p>
-                    <p className="mt-1 text-gray-400">Where: E = illuminance (lux), I = luminous intensity (cd), θ = angle from vertical, d = distance (m)</p>
+                    <p className="mt-1 text-gray-400">
+                      Where: E = illuminance (lux), I = luminous intensity (cd), θ = angle from
+                      vertical, d = distance (m)
+                    </p>
                   </div>
                 </div>
 
@@ -562,7 +620,10 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
                   <p className="text-sm mb-2">For uniform distribution planning:</p>
                   <div className="bg-gray-800 p-3 rounded text-xs font-mono">
                     <p>SHR = S / Hm</p>
-                    <p className="mt-1 text-gray-400">Where: S = spacing between luminaires, Hm = mounting height above working plane</p>
+                    <p className="mt-1 text-gray-400">
+                      Where: S = spacing between luminaires, Hm = mounting height above working
+                      plane
+                    </p>
                   </div>
                 </div>
               </div>
@@ -574,10 +635,18 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
                 <div>
                   <h5 className="text-foreground font-medium mb-2">Component Factors</h5>
                   <ul className="text-sm space-y-1">
-                    <li>• <strong>LLMF:</strong> Lamp Lumen Maintenance Factor (0.7-0.9)</li>
-                    <li>• <strong>LSF:</strong> Lamp Survival Factor (0.8-1.0)</li>
-                    <li>• <strong>LMF:</strong> Luminaire Maintenance Factor (0.8-0.95)</li>
-                    <li>• <strong>RMF:</strong> Room Maintenance Factor (0.85-0.95)</li>
+                    <li>
+                      • <strong>LLMF:</strong> Lamp Lumen Maintenance Factor (0.7-0.9)
+                    </li>
+                    <li>
+                      • <strong>LSF:</strong> Lamp Survival Factor (0.8-1.0)
+                    </li>
+                    <li>
+                      • <strong>LMF:</strong> Luminaire Maintenance Factor (0.8-0.95)
+                    </li>
+                    <li>
+                      • <strong>RMF:</strong> Room Maintenance Factor (0.85-0.95)
+                    </li>
                   </ul>
                 </div>
                 <div>
@@ -597,11 +666,13 @@ export const EmergencyLightingTechnicalSection3_1 = () => {
           </div>
 
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-            <div 
+            <div
               className="cursor-pointer flex items-center justify-between"
               onClick={() => setActiveCheck(activeCheck === 7 ? null : 7)}
             >
-              <h4 className="font-semibold text-yellow-400">✅ Quick Check: {quickChecks[6].question}</h4>
+              <h4 className="font-semibold text-yellow-400">
+                ✅ Quick Check: {quickChecks[6].question}
+              </h4>
               <AlertCircle className="h-4 w-4 text-yellow-400" />
             </div>
             {activeCheck === 7 && (

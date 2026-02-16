@@ -1,6 +1,6 @@
-import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import React from 'react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ToolCategoriesSkeletonProps {
   count?: number;
@@ -17,7 +17,7 @@ const ToolCategoriesSkeleton = ({ count = 6 }: ToolCategoriesSkeletonProps) => {
               <Skeleton className="h-4 w-4 rounded" />
             </div>
           )}
-          
+
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               {/* Icon skeleton */}
@@ -31,17 +31,17 @@ const ToolCategoriesSkeleton = ({ count = 6 }: ToolCategoriesSkeletonProps) => {
               </div>
             </div>
           </CardHeader>
-          
+
           <CardContent>
             {/* Description skeleton */}
             <div className="space-y-2 mb-2">
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-3/4" />
             </div>
-            
+
             {/* Price range skeleton */}
             <Skeleton className="h-3 w-20 mb-3" />
-            
+
             {/* Browse button skeleton */}
             <Skeleton className="h-8 w-full rounded" />
           </CardContent>

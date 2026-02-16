@@ -16,28 +16,32 @@ const testimonials: Testimonial[] = [
     role: 'Electrician',
     company: 'Manchester',
     rating: 5,
-    quote: 'Actually use this every day now. The EICR forms are dead easy and the calcs just work. Saves me messing about with spreadsheets.',
+    quote:
+      'Actually use this every day now. The EICR forms are dead easy and the calcs just work. Saves me messing about with spreadsheets.',
   },
   {
     name: 'Liam T.',
     role: '3rd Year Apprentice',
     company: 'Birmingham',
     rating: 5,
-    quote: 'Passed my 2391 with this. The questions are proper helpful and you can do them on the bus to site. Sound app.',
+    quote:
+      'Passed my 2391 with this. The questions are proper helpful and you can do them on the bus to site. Sound app.',
   },
   {
     name: 'Kev B.',
     role: 'Sole Trader',
     company: 'Leeds',
     rating: 5,
-    quote: 'The quote builder is class. Just talk into it and it does the rest. Sent one from site the other day, customer paid same day.',
+    quote:
+      'The quote builder is class. Just talk into it and it does the rest. Sent one from site the other day, customer paid same day.',
   },
   {
     name: 'Dan P.',
     role: 'Electrician',
     company: 'Bristol',
     rating: 5,
-    quote: 'Mental health stuff is actually really good. Nice to have something that gets the pressure of the job. Not just another cert app.',
+    quote:
+      'Mental health stuff is actually really good. Nice to have something that gets the pressure of the job. Not just another cert app.',
   },
 ];
 
@@ -110,9 +114,11 @@ export const TestimonialCarousel = () => {
                     className="w-11 h-11 flex items-center justify-center touch-manipulation"
                     aria-label={`Go to testimonial ${index + 1}`}
                   >
-                    <span className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                      index === currentIndex ? 'bg-yellow-400' : 'bg-white/30'
-                    }`} />
+                    <span
+                      className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                        index === currentIndex ? 'bg-yellow-400' : 'bg-white/30'
+                      }`}
+                    />
                   </button>
                 ))}
               </div>
@@ -160,9 +166,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => (
     </div>
 
     {/* Quote */}
-    <p className="text-white/80 text-sm leading-relaxed flex-1 mb-4">
-      "{testimonial.quote}"
-    </p>
+    <p className="text-white/80 text-sm leading-relaxed flex-1 mb-4">"{testimonial.quote}"</p>
 
     {/* Author */}
     <div className="pt-4 border-t border-white/10">

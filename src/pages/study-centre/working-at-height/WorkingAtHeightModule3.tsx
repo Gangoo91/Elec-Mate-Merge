@@ -1,51 +1,45 @@
-import {
-  ArrowLeft,
-  ShieldCheck,
-  User,
-  AlertTriangle,
-  ClipboardCheck,
-} from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { SectionCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ShieldCheck, User, AlertTriangle, ClipboardCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { SectionCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: "Collective Fall Prevention",
+    title: 'Collective Fall Prevention',
     icon: ShieldCheck,
     description:
-      "Guard rails, edge protection, safety netting, safety decking, airbags, and catch platforms",
+      'Guard rails, edge protection, safety netting, safety decking, airbags, and catch platforms',
   },
   {
     id: 2,
-    title: "Personal Fall Protection Systems",
+    title: 'Personal Fall Protection Systems',
     icon: User,
     description:
-      "Full body harnesses, lanyards, shock absorbers, inertia reels, anchor points, and fall arrest vs restraint",
+      'Full body harnesses, lanyards, shock absorbers, inertia reels, anchor points, and fall arrest vs restraint',
   },
   {
     id: 3,
-    title: "Fragile Surfaces & Roof Work",
+    title: 'Fragile Surfaces & Roof Work',
     icon: AlertTriangle,
     description:
-      "Fragile surface definition, common materials, controls, crawling boards, staging, and HSG33",
+      'Fragile surface definition, common materials, controls, crawling boards, staging, and HSG33',
   },
   {
     id: 4,
-    title: "Harness Inspection & Equipment Checks",
+    title: 'Harness Inspection & Equipment Checks',
     icon: ClipboardCheck,
     description:
-      "Pre-use visual checks, 6-monthly thorough examination, when to discard, and correct storage",
+      'Pre-use visual checks, 6-monthly thorough examination, when to discard, and correct storage',
   },
 ];
 
 export default function WorkingAtHeightModule3() {
   useSEO({
-    title: "Module 3: Fall Protection & Prevention | Working at Height",
+    title: 'Module 3: Fall Protection & Prevention | Working at Height',
     description:
-      "Collective fall prevention, personal fall protection systems, fragile surfaces, and harness inspection for safe working at height.",
+      'Collective fall prevention, personal fall protection systems, fragile surfaces, and harness inspection for safe working at height.',
   });
 
   return (
@@ -72,9 +66,7 @@ export default function WorkingAtHeightModule3() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 mb-3">
-              <span className="text-amber-400 text-xs font-semibold">
-                MODULE 3
-              </span>
+              <span className="text-amber-400 text-xs font-semibold">MODULE 3</span>
               <span className="text-white/40 text-xs">&bull;</span>
               <span className="text-white/60 text-xs">4 Sections</span>
               <span className="text-white/40 text-xs">&bull;</span>
@@ -84,8 +76,8 @@ export default function WorkingAtHeightModule3() {
               Fall Protection & Prevention
             </h1>
             <p className="text-white/60 text-sm sm:text-base">
-              Collective and personal fall protection, fragile surface hazards,
-              and harness inspection for working at height
+              Collective and personal fall protection, fragile surface hazards, and harness
+              inspection for working at height
             </p>
           </div>
 

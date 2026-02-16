@@ -1,12 +1,11 @@
-
-import React, { useState, useRef, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, MapPin, X, ExternalLink, Phone } from "lucide-react";
-import { ApiErrorDisplay } from "../electrician-pricing/merchant-finder/ApiErrorDisplay";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { toast } from "sonner";
+import React, { useState, useRef, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search, MapPin, X, ExternalLink, Phone } from 'lucide-react';
+import { ApiErrorDisplay } from '../electrician-pricing/merchant-finder/ApiErrorDisplay';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { toast } from 'sonner';
 
 interface TrainingProvider {
   id: string;
@@ -27,7 +26,7 @@ interface TrainingProviderMapProps {
 const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapRef = useRef<google.maps.Map | null>(null);
-  const [postcode, setPostcode] = useState<string>("");
+  const [postcode, setPostcode] = useState<string>('');
   const [providers, setProviders] = useState<TrainingProvider[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -41,13 +40,13 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
   useEffect(() => {
     const initMap = () => {
       if (!window.google?.maps || !mapRef.current) {
-        console.error("Google Maps not loaded or map container not found");
-        setApiError("Google Maps could not be initialized. Please reload the page.");
+        console.error('Google Maps not loaded or map container not found');
+        setApiError('Google Maps could not be initialized. Please reload the page.');
         return;
       }
-      
+
       try {
-        console.log("Initializing Google Maps...");
+        console.log('Initializing Google Maps...');
         googleMapRef.current = new window.google.maps.Map(mapRef.current, {
           center: { lat: 54.7023545, lng: -3.2765753 }, // Default to UK center
           zoom: 7,
@@ -56,48 +55,50 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
           fullscreenControl: true,
           zoomControl: true,
         });
-        
+
         geocoderRef.current = new window.google.maps.Geocoder();
         setMapInitialized(true);
-        console.log("Map initialized successfully");
-        
+        console.log('Map initialized successfully');
+
         // Try to get user's location for better initial positioning
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               const userLocation = {
                 lat: position.coords.latitude,
-                lng: position.coords.longitude
+                lng: position.coords.longitude,
               };
-              
+
               if (googleMapRef.current) {
                 googleMapRef.current.setCenter(userLocation);
                 googleMapRef.current.setZoom(10);
-                
+
                 // Create a marker for user's location
                 new window.google.maps.Marker({
                   position: userLocation,
                   map: googleMapRef.current,
                   icon: {
-                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                    scaledSize: new window.google.maps.Size(24, 24)
+                    url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                    scaledSize: new window.google.maps.Size(24, 24),
                   },
-                  title: "Your approximate location"
+                  title: 'Your approximate location',
                 });
               }
             },
             (error) => {
-              console.log("Geolocation error:", error);
-              toast.error("Location access denied", {
-                description: "Using default UK map view"
+              console.log('Geolocation error:', error);
+              toast.error('Location access denied', {
+                description: 'Using default UK map view',
               });
             }
           );
         }
-        
       } catch (error) {
-        console.error("Error initializing Google Maps:", error);
-        setApiError("Failed to initialize Google Maps: " + (error instanceof Error ? error.message : "Unknown error"));
+        console.error('Error initializing Google Maps:', error);
+        setApiError(
+          'Failed to initialize Google Maps: ' +
+            (error instanceof Error ? error.message : 'Unknown error')
+        );
       }
     };
 
@@ -116,152 +117,158 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
       setTimeout(() => {
         clearInterval(checkGoogleMaps);
         if (!window.google?.maps) {
-          console.error("Google Maps failed to load after timeout");
-          setApiError("Google Maps could not be loaded. Please check your internet connection and reload the page.");
+          console.error('Google Maps failed to load after timeout');
+          setApiError(
+            'Google Maps could not be loaded. Please check your internet connection and reload the page.'
+          );
         }
       }, 10000);
     }
 
     return () => {
       // Clean up markers
-      markersRef.current.forEach(marker => marker.setMap(null));
+      markersRef.current.forEach((marker) => marker.setMap(null));
     };
   }, []);
 
   const searchProviders = async () => {
     if (!mapInitialized) {
-      toast.error("Map not initialized", {
-        description: "Please wait for the map to load or reload the page"
+      toast.error('Map not initialized', {
+        description: 'Please wait for the map to load or reload the page',
       });
       return;
     }
 
     if (!googleMapRef.current || !geocoderRef.current) {
-      setApiError("Map services are not available. Please reload the page.");
+      setApiError('Map services are not available. Please reload the page.');
       return;
     }
-    
+
     if (!postcode.trim()) {
-      toast.error("Postcode required", {
-        description: "Please enter a valid UK postcode"
+      toast.error('Postcode required', {
+        description: 'Please enter a valid UK postcode',
       });
       return;
     }
-    
+
     setIsLoading(true);
     setApiError(null);
     setApiStatus(null);
     setSelectedProvider(null);
-    
+
     // Clear existing markers
-    markersRef.current.forEach(marker => marker.setMap(null));
+    markersRef.current.forEach((marker) => marker.setMap(null));
     markersRef.current = [];
-    
+
     try {
-      console.log("Searching for providers with postcode:", postcode);
+      console.log('Searching for providers with postcode:', postcode);
       // Geocode the postcode to get coordinates
       geocoderRef.current.geocode({ address: `${postcode}, UK` }, async (results, status) => {
-        if (status === "OK" && results && results[0]) {
+        if (status === 'OK' && results && results[0]) {
           const location = results[0].geometry.location;
-          console.log("Geocoded location:", location.toString());
-          
+          console.log('Geocoded location:', location.toString());
+
           if (googleMapRef.current) {
             googleMapRef.current.setCenter(location);
             googleMapRef.current.setZoom(12);
-            
+
             // Use Places API to find training providers
             const service = new window.google.maps.places.PlacesService(googleMapRef.current);
-            
+
             service.nearbySearch(
               {
                 location: location,
                 radius: 15000, // 15km radius
-                keyword: "electrical training provider college apprenticeship",
-                type: "school"
+                keyword: 'electrical training provider college apprenticeship',
+                type: 'school',
               },
               (results, status) => {
                 setIsLoading(false);
-                
-                if (status === "OK" && results && results.length > 0) {
-                  console.log("Found providers:", results.length);
-                  const trainingProviders = results.map(place => ({
+
+                if (status === 'OK' && results && results.length > 0) {
+                  console.log('Found providers:', results.length);
+                  const trainingProviders = results.map((place) => ({
                     id: place.place_id || `place-${Math.random().toString(36).substr(2, 9)}`,
-                    name: place.name || "Unknown Provider",
-                    vicinity: place.vicinity || "Address not available",
+                    name: place.name || 'Unknown Provider',
+                    vicinity: place.vicinity || 'Address not available',
                     rating: place.rating,
-                    place_id: place.place_id || ""
+                    place_id: place.place_id || '',
                   }));
-                  
+
                   setProviders(trainingProviders);
-                  
+
                   // Create markers for each provider
-                  trainingProviders.forEach(provider => {
-                    const place = results.find(p => p.place_id === provider.place_id);
+                  trainingProviders.forEach((provider) => {
+                    const place = results.find((p) => p.place_id === provider.place_id);
                     if (!place || !place.geometry?.location) return;
-                    
+
                     const marker = new window.google.maps.Marker({
                       position: place.geometry.location,
                       map: googleMapRef.current as google.maps.Map,
                       title: provider.name,
                       animation: window.google.maps.Animation.DROP,
                       icon: {
-                        url: "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
-                      }
+                        url: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+                      },
                     });
-                    
+
                     // Add click listener to marker
-                    marker.addListener("click", () => {
+                    marker.addListener('click', () => {
                       setSelectedProvider(provider);
-                      
+
                       // Get more details about this place
                       service.getDetails(
                         { placeId: provider.place_id },
                         (placeResult, detailsStatus) => {
-                          if (detailsStatus === "OK" && placeResult) {
+                          if (detailsStatus === 'OK' && placeResult) {
                             setSelectedProvider({
                               ...provider,
                               phone: placeResult.formatted_phone_number,
                               website: placeResult.website,
                               address: placeResult.formatted_address,
-                              photos: placeResult.photos
+                              photos: placeResult.photos,
                             });
                           }
                         }
                       );
                     });
-                    
+
                     markersRef.current.push(marker);
                   });
-                  
-                  toast.success(`Found ${trainingProviders.length} training providers near ${postcode}`);
+
+                  toast.success(
+                    `Found ${trainingProviders.length} training providers near ${postcode}`
+                  );
                 } else {
-                  console.error("Places API error:", status);
+                  console.error('Places API error:', status);
                   setApiStatus(status);
-                  setApiError("Failed to find training providers. Please try another postcode.");
-                  toast.error("Unable to find training providers", {
-                    description: "Try another postcode or search term"
+                  setApiError('Failed to find training providers. Please try another postcode.');
+                  toast.error('Unable to find training providers', {
+                    description: 'Try another postcode or search term',
                   });
                 }
               }
             );
           }
         } else {
-          console.error("Geocoder error:", status);
+          console.error('Geocoder error:', status);
           setIsLoading(false);
           setApiStatus(status);
-          setApiError("Invalid postcode or location not found. Please try again.");
-          toast.error("Invalid postcode", {
-            description: "Please enter a valid UK postcode"
+          setApiError('Invalid postcode or location not found. Please try again.');
+          toast.error('Invalid postcode', {
+            description: 'Please enter a valid UK postcode',
           });
         }
       });
     } catch (error) {
-      console.error("Error searching for training providers:", error);
+      console.error('Error searching for training providers:', error);
       setIsLoading(false);
-      setApiError("An error occurred while searching for training providers: " + 
-        (error instanceof Error ? error.message : "Unknown error"));
-      toast.error("Service error", {
-        description: "There was a problem with the mapping service"
+      setApiError(
+        'An error occurred while searching for training providers: ' +
+          (error instanceof Error ? error.message : 'Unknown error')
+      );
+      toast.error('Service error', {
+        description: 'There was a problem with the mapping service',
       });
     }
   };
@@ -271,16 +278,16 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       searchProviders();
     }
   };
 
   const handleProviderClick = (provider: TrainingProvider) => {
     setSelectedProvider(provider);
-    
+
     // Find the marker for this provider and center the map on it
-    const marker = markersRef.current.find(m => m.getTitle() === provider.name);
+    const marker = markersRef.current.find((m) => m.getTitle() === provider.name);
     if (marker && googleMapRef.current) {
       googleMapRef.current.panTo(marker.getPosition() as google.maps.LatLng);
       googleMapRef.current.setZoom(14);
@@ -289,20 +296,17 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
     // If we haven't loaded detailed info yet, load it now
     if (googleMapRef.current && !provider.phone) {
       const service = new window.google.maps.places.PlacesService(googleMapRef.current);
-      service.getDetails(
-        { placeId: provider.place_id },
-        (placeResult, status) => {
-          if (status === "OK" && placeResult) {
-            setSelectedProvider({
-              ...provider,
-              phone: placeResult.formatted_phone_number,
-              website: placeResult.website,
-              address: placeResult.formatted_address,
-              photos: placeResult.photos
-            });
-          }
+      service.getDetails({ placeId: provider.place_id }, (placeResult, status) => {
+        if (status === 'OK' && placeResult) {
+          setSelectedProvider({
+            ...provider,
+            phone: placeResult.formatted_phone_number,
+            website: placeResult.website,
+            address: placeResult.formatted_address,
+            photos: placeResult.photos,
+          });
         }
-      );
+      });
     }
   };
 
@@ -318,7 +322,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
             <X className="h-4 w-4" />
           </Button>
         </div>
-        
+
         <div className="p-4 border-b border-elec-yellow/20">
           <div className="flex gap-2">
             <Input
@@ -328,8 +332,8 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
               onKeyDown={handleKeyDown}
               className="bg-white/10"
             />
-            <Button 
-              onClick={searchProviders} 
+            <Button
+              onClick={searchProviders}
               disabled={isLoading || !mapInitialized}
               className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark"
             >
@@ -364,12 +368,16 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
               </div>
             ) : providers.length > 0 ? (
               <div className="space-y-2">
-                <p className="text-xs text-white p-2">Found {providers.length} training providers</p>
-                {providers.map(provider => (
+                <p className="text-xs text-white p-2">
+                  Found {providers.length} training providers
+                </p>
+                {providers.map((provider) => (
                   <div
                     key={provider.id}
                     className={`p-3 rounded-md cursor-pointer transition-all touch-manipulation ${
-                      selectedProvider?.id === provider.id ? "bg-elec-yellow/20" : "hover:bg-white/10 active:bg-white/20"
+                      selectedProvider?.id === provider.id
+                        ? 'bg-elec-yellow/20'
+                        : 'hover:bg-white/10 active:bg-white/20'
                     }`}
                     onClick={() => handleProviderClick(provider)}
                   >
@@ -380,7 +388,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                         <div className="text-yellow-500 text-xs">
                           {Array.from({ length: 5 }).map((_, i) => (
                             <span key={i}>
-                              {i < Math.floor(provider.rating as number) ? "★" : "☆"}
+                              {i < Math.floor(provider.rating as number) ? '★' : '☆'}
                             </span>
                           ))}
                         </div>
@@ -399,7 +407,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
               )
             )}
           </div>
-          
+
           <div className="md:col-span-2 h-[60vh] md:h-[70vh] relative">
             <div ref={mapRef} className="w-full h-full"></div>
             {!mapInitialized && (
@@ -416,8 +424,10 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
         {selectedProvider && (
           <div className="p-4 border-t border-elec-yellow/20 bg-white/10">
             <h3 className="font-medium">{selectedProvider.name}</h3>
-            <p className="text-sm text-white">{selectedProvider.address || selectedProvider.vicinity}</p>
-            
+            <p className="text-sm text-white">
+              {selectedProvider.address || selectedProvider.vicinity}
+            </p>
+
             <div className="flex flex-wrap justify-between items-center mt-3 gap-2">
               <div className="flex flex-col gap-2">
                 {selectedProvider.rating && (
@@ -425,7 +435,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                     <div className="text-yellow-500">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <span key={i}>
-                          {i < Math.floor(selectedProvider.rating as number) ? "★" : "☆"}
+                          {i < Math.floor(selectedProvider.rating as number) ? '★' : '☆'}
                         </span>
                       ))}
                     </div>
@@ -434,8 +444,8 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                 )}
                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
                   {selectedProvider.phone && (
-                    <a 
-                      href={`tel:${selectedProvider.phone}`} 
+                    <a
+                      href={`tel:${selectedProvider.phone}`}
                       className="flex items-center gap-1 text-elec-yellow hover:underline"
                     >
                       <Phone className="h-3 w-3" />
@@ -443,9 +453,9 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                     </a>
                   )}
                   {selectedProvider.website && (
-                    <a 
-                      href={selectedProvider.website} 
-                      target="_blank" 
+                    <a
+                      href={selectedProvider.website}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-1 text-elec-yellow hover:underline"
                     >
@@ -455,10 +465,14 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                   )}
                 </div>
               </div>
-              
+
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  >
                     Enquire About Apprenticeships
                   </Button>
                 </PopoverTrigger>
@@ -466,13 +480,17 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                   <div className="space-y-3">
                     <h4 className="font-medium">Contact {selectedProvider.name}</h4>
                     <p className="text-xs text-white">
-                      Get in touch with this training provider to discuss apprenticeship opportunities.
+                      Get in touch with this training provider to discuss apprenticeship
+                      opportunities.
                     </p>
                     <div className="grid gap-2">
                       <Button className="w-full bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark">
                         Send Enquiry
                       </Button>
-                      <Button variant="outline" className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+                      <Button
+                        variant="outline"
+                        className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                      >
                         Save Contact Information
                       </Button>
                     </div>

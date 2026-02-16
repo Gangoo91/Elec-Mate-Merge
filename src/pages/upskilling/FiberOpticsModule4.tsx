@@ -7,34 +7,34 @@ const FiberOpticsModule4 = () => {
   const sections = [
     {
       id: 1,
-      title: "Mechanical vs Fusion Splicing",
+      title: 'Mechanical vs Fusion Splicing',
       icon: Wrench,
-      description: "Comparing splicing methods and applications"
+      description: 'Comparing splicing methods and applications',
     },
     {
       id: 2,
-      title: "Cleaving and Fibre Prep",
+      title: 'Cleaving and Fibre Prep',
       icon: Scissors,
-      description: "Fiber preparation and cleaving techniques"
+      description: 'Fiber preparation and cleaving techniques',
     },
     {
       id: 3,
-      title: "Splicing Equipment Overview",
+      title: 'Splicing Equipment Overview',
       icon: Settings,
-      description: "Tools and equipment for splicing operations"
+      description: 'Tools and equipment for splicing operations',
     },
     {
       id: 4,
-      title: "Connectorisation Techniques",
+      title: 'Connectorisation Techniques',
       icon: LinkIcon,
-      description: "Field and factory connector installation methods"
+      description: 'Field and factory connector installation methods',
     },
     {
       id: 5,
-      title: "Inspection Microscopes and Cleaning Tools",
+      title: 'Inspection Microscopes and Cleaning Tools',
       icon: Eye,
-      description: "Quality control and maintenance equipment"
-    }
+      description: 'Quality control and maintenance equipment',
+    },
   ];
 
   return (

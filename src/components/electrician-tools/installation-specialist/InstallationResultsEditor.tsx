@@ -1,21 +1,25 @@
-import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Plus, RotateCcw, Download, AlertCircle, Wrench, CheckCircle2 } from "lucide-react";
-import { InstallationStepCard } from "./InstallationStepCard";
-import { InstallationStep, InstallationMethodSummary, InstallationProjectDetails } from "@/types/installation-method";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { ProjectMetadataForm } from "./ProjectMetadataForm";
-import { InstallationHeroSummary } from "./InstallationHeroSummary";
-import { TestingProceduresSection } from "./TestingProceduresSection";
-import { EquipmentScheduleSection } from "./EquipmentScheduleSection";
-import { SiteLogisticsSection } from "./SiteLogisticsSection";
-import { ConditionalProceduresSection } from "./ConditionalProceduresSection";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { RegulatoryComplianceSection } from "./RegulatoryComplianceSection";
+import { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Plus, RotateCcw, Download, AlertCircle, Wrench, CheckCircle2 } from 'lucide-react';
+import { InstallationStepCard } from './InstallationStepCard';
+import {
+  InstallationStep,
+  InstallationMethodSummary,
+  InstallationProjectDetails,
+} from '@/types/installation-method';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { ProjectMetadataForm } from './ProjectMetadataForm';
+import { InstallationHeroSummary } from './InstallationHeroSummary';
+import { TestingProceduresSection } from './TestingProceduresSection';
+import { EquipmentScheduleSection } from './EquipmentScheduleSection';
+import { SiteLogisticsSection } from './SiteLogisticsSection';
+import { ConditionalProceduresSection } from './ConditionalProceduresSection';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { RegulatoryComplianceSection } from './RegulatoryComplianceSection';
 
 interface ProjectMetadata {
   documentRef: string;
@@ -63,11 +67,13 @@ export const InstallationResultsEditor = ({
   projectDetails,
   projectMetadata: initialMetadata,
   fullMethodStatement,
-  onReset
+  onReset,
 }: InstallationResultsEditorProps) => {
   const [steps, setSteps] = useState<InstallationStep[]>(initialSteps);
   const [showMetadataForm, setShowMetadataForm] = useState(false);
-  const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(initialMetadata);
+  const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(
+    initialMetadata
+  );
 
   // Extract comprehensive data from fullMethodStatement
   const testingProcedures = fullMethodStatement?.testingProcedures || [];
@@ -90,15 +96,13 @@ export const InstallationResultsEditor = ({
   }, 0);
 
   // Aggregate all unique BS references from steps
-  const allStepBsReferences = steps.flatMap((step: any) => 
-    (step.bsReferences || [])
-  );
+  const allStepBsReferences = steps.flatMap((step: any) => step.bsReferences || []);
   const uniqueStepBsReferences = [...new Set(allStepBsReferences)];
 
   const riskColors = {
     low: 'bg-success/10 text-success border-success/20',
     medium: 'bg-warning/10 text-warning border-warning/20',
-    high: 'bg-destructive/10 text-destructive border-destructive/20'
+    high: 'bg-destructive/10 text-destructive border-destructive/20',
   };
 
   const updateStep = (index: number, updated: InstallationStep) => {
@@ -106,8 +110,8 @@ export const InstallationResultsEditor = ({
     newSteps[index] = updated;
     setSteps(newSteps);
     toast({
-      title: "Step Updated",
-      description: "Your changes have been saved.",
+      title: 'Step Updated',
+      description: 'Your changes have been saved.',
     });
   };
 
@@ -116,12 +120,12 @@ export const InstallationResultsEditor = ({
     // Re-number remaining steps
     const renumberedSteps = newSteps.map((step, i) => ({
       ...step,
-      stepNumber: i + 1
+      stepNumber: i + 1,
     }));
     setSteps(renumberedSteps);
     toast({
-      title: "Step Deleted",
-      description: "The step has been removed.",
+      title: 'Step Deleted',
+      description: 'The step has been removed.',
     });
   };
 
@@ -132,7 +136,7 @@ export const InstallationResultsEditor = ({
     // Re-number
     const renumberedSteps = newSteps.map((step, i) => ({
       ...step,
-      stepNumber: i + 1
+      stepNumber: i + 1,
     }));
     setSteps(renumberedSteps);
   };
@@ -140,30 +144,32 @@ export const InstallationResultsEditor = ({
   const addNewStep = () => {
     const newStep: InstallationStep = {
       stepNumber: steps.length + 1,
-      title: "New Step",
-      content: "Enter step description here...",
+      title: 'New Step',
+      content: 'Enter step description here...',
       safety: [],
-      riskLevel: 'low'
+      riskLevel: 'low',
     };
     setSteps([...steps, newStep]);
     toast({
-      title: "Step Added",
-      description: "New step created. Click edit to customize it.",
+      title: 'Step Added',
+      description: 'New step created. Click edit to customize it.',
     });
   };
 
   const handleExportPDF = async () => {
     try {
       toast({
-        title: "Generating PDF",
-        description: "Creating your installation method document...",
+        title: 'Generating PDF',
+        description: 'Creating your installation method document...',
       });
 
       // Parse step bsReferences into structured format
       // Format: "BS 7671 Reg 132.10 - Safe isolation" → { number: "132.10", description: "Safe isolation" }
       const parsedStepReferences = uniqueStepBsReferences
-        .map(ref => {
-          const match = ref.match(/(?:BS 7671 Reg |Regulation )?(\d+\.?\d*\.?\d*\.?\d*)\s*[-–—]\s*(.+)/i);
+        .map((ref) => {
+          const match = ref.match(
+            /(?:BS 7671 Reg |Regulation )?(\d+\.?\d*\.?\d*\.?\d*)\s*[-–—]\s*(.+)/i
+          );
           if (match) {
             return { number: match[1], description: match[2].trim() };
           }
@@ -175,7 +181,7 @@ export const InstallationResultsEditor = ({
       const existingRefs = fullMethodStatement?.regulatoryReferences || [];
       const allRefs = [...existingRefs, ...parsedStepReferences];
       const mergedRegulatoryReferences = Array.from(
-        new Map(allRefs.map(ref => [ref.number, ref])).values()
+        new Map(allRefs.map((ref) => [ref.number, ref])).values()
       ).sort((a, b) => {
         const aNum = parseFloat(a.number) || 0;
         const bNum = parseFloat(b.number) || 0;
@@ -191,7 +197,7 @@ export const InstallationResultsEditor = ({
           location: projectDetails?.location || 'Site Location',
           clientName: projectDetails?.clientName || 'N/A',
           electricianName: projectDetails?.electricianName || 'N/A',
-          installationType: projectDetails?.installationType || 'General'
+          installationType: projectDetails?.installationType || 'General',
         },
         steps: steps.map((step) => ({
           id: `step-${step.stepNumber}`,
@@ -204,14 +210,16 @@ export const InstallationResultsEditor = ({
           equipmentNeeded: (step as any).toolsRequired || step.toolsRequired || [],
           qualifications: summary.requiredQualifications || [],
           estimatedDuration: step.estimatedDuration || 'Not specified',
-          riskLevel: step.riskLevel || 'medium'
+          riskLevel: step.riskLevel || 'medium',
         })),
         toolsRequired: summary.toolsRequired || [],
         materialsRequired: summary.materialsRequired || [],
         overallRiskLevel: summary.overallRiskLevel || 'medium',
         estimatedDuration: summary.estimatedDuration || 'Not specified',
-        requiredQualifications: summary.requiredQualifications || ['18th Edition BS 7671:2018+A3:2024'],
-        
+        requiredQualifications: summary.requiredQualifications || [
+          '18th Edition BS 7671:2018+A3:2024',
+        ],
+
         // NEW: Comprehensive data from all 3 agents (extracted from fullMethodStatement)
         testingProcedures: fullMethodStatement?.testingProcedures || [],
         equipmentSchedule: fullMethodStatement?.equipmentSchedule || [],
@@ -222,33 +230,35 @@ export const InstallationResultsEditor = ({
           materialStorage: 'Secure compound',
           wasteManagement: 'Segregated waste bins',
           welfareFacilities: 'On-site facilities',
-          siteRestrictions: 'Working hours: 08:00-17:00'
+          siteRestrictions: 'Working hours: 08:00-17:00',
         },
         conditionalFlags: fullMethodStatement?.conditionalFlags || {},
         competencyRequirements: fullMethodStatement?.competencyRequirements || {
           competencyRequirements: '18th Edition BS 7671:2018+A3:2024, ECS Gold Card',
           trainingRequired: 'Site induction, Manual Handling, Working at Height',
           supervisionLevel: 'Continuous supervision by qualified electrician',
-          additionalCertifications: 'N/A'
+          additionalCertifications: 'N/A',
         },
         workAtHeightEquipment: fullMethodStatement?.workAtHeightEquipment || [],
-        
+
         // Regulatory References - merged from AI + per-step references
         regulatoryReferences: mergedRegulatoryReferences,
-        
+
         // User-provided metadata
-        projectMetadata: projectMetadata ? {
-          ...projectMetadata,
-          siteManagerName: projectMetadata.siteManagerName || '',
-          firstAiderName: projectMetadata.firstAiderName || '',
-          safetyOfficerName: projectMetadata.safetyOfficerName || ''
-        } : undefined
+        projectMetadata: projectMetadata
+          ? {
+              ...projectMetadata,
+              siteManagerName: projectMetadata.siteManagerName || '',
+              firstAiderName: projectMetadata.firstAiderName || '',
+              safetyOfficerName: projectMetadata.safetyOfficerName || '',
+            }
+          : undefined,
       };
 
       console.log('📄 Sending PDF generation request:', methodStatementPayload);
 
       const { data, error } = await supabase.functions.invoke('generate-method-statement-pdf', {
-        body: { methodStatement: methodStatementPayload }
+        body: { methodStatement: methodStatementPayload },
       });
 
       if (error) {
@@ -269,27 +279,27 @@ export const InstallationResultsEditor = ({
       document.body.removeChild(link);
 
       toast({
-        title: "PDF Generated Successfully",
-        description: "Your installation method document has been downloaded.",
+        title: 'PDF Generated Successfully',
+        description: 'Your installation method document has been downloaded.',
       });
     } catch (error) {
       console.error('PDF export error:', error);
-      
-      let errorMessage = "Could not generate PDF. Please try again.";
+
+      let errorMessage = 'Could not generate PDF. Please try again.';
       if (error instanceof Error) {
         if (error.message.includes('timeout')) {
-          errorMessage = "PDF generation timed out. Please try again.";
+          errorMessage = 'PDF generation timed out. Please try again.';
         } else if (error.message.includes('publicUrl')) {
-          errorMessage = "PDF was created but download link failed. Please contact support.";
+          errorMessage = 'PDF was created but download link failed. Please contact support.';
         } else {
           errorMessage = error.message;
         }
       }
-      
+
       toast({
-        title: "PDF Export Failed",
+        title: 'PDF Export Failed',
         description: errorMessage,
-        variant: "destructive",
+        variant: 'destructive',
       });
     }
   };
@@ -312,7 +322,10 @@ export const InstallationResultsEditor = ({
                 <div className="flex flex-wrap gap-2">
                   {installationType && (
                     <Badge className="bg-gradient-to-r from-elec-yellow/20 to-primary/20 text-foreground border-elec-yellow/40 px-3 py-1 text-sm font-semibold">
-                      {installationType ? `${installationType.charAt(0).toUpperCase()}${installationType.slice(1)}` : 'General'} Installation
+                      {installationType
+                        ? `${installationType.charAt(0).toUpperCase()}${installationType.slice(1)}`
+                        : 'General'}{' '}
+                      Installation
                     </Badge>
                   )}
                   <Badge className="bg-gradient-to-r from-success/20 to-emerald-500/20 text-success border-success/40 px-3 py-1 text-sm font-semibold animate-pulse">
@@ -344,9 +357,12 @@ export const InstallationResultsEditor = ({
               <AlertCircle className="h-6 w-6 text-warning" />
             </div>
             <div className="flex-1">
-              <h4 className="font-bold text-lg text-foreground mb-2">Complete Project Details for Professional PDF</h4>
+              <h4 className="font-bold text-lg text-foreground mb-2">
+                Complete Project Details for Professional PDF
+              </h4>
               <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                Add emergency contacts and site information to generate a comprehensive, regulation-compliant method statement
+                Add emergency contacts and site information to generate a comprehensive,
+                regulation-compliant method statement
               </p>
               <MobileButton
                 onClick={() => setShowMetadataForm(true)}
@@ -365,30 +381,32 @@ export const InstallationResultsEditor = ({
       {/* Project Metadata Form (conditional) */}
       {showMetadataForm && (
         <ProjectMetadataForm
-          metadata={projectMetadata || {
-            documentRef: '',
-            issueDate: '',
-            reviewDate: '',
-            companyName: '',
-            contractor: '',
-            siteManagerName: '',
-            siteManagerPhone: '',
-            firstAiderName: '',
-            firstAiderPhone: '',
-            safetyOfficerName: '',
-            safetyOfficerPhone: '',
-            assemblyPoint: '',
-            startDate: '',
-            completionDate: '',
-            siteSupervisor: '',
-            clientContact: '',
-            preparedByName: '',
-            preparedByPosition: '',
-            preparedDate: '',
-            authorisedByName: '',
-            authorisedByPosition: '',
-            authorisedDate: ''
-          }}
+          metadata={
+            projectMetadata || {
+              documentRef: '',
+              issueDate: '',
+              reviewDate: '',
+              companyName: '',
+              contractor: '',
+              siteManagerName: '',
+              siteManagerPhone: '',
+              firstAiderName: '',
+              firstAiderPhone: '',
+              safetyOfficerName: '',
+              safetyOfficerPhone: '',
+              assemblyPoint: '',
+              startDate: '',
+              completionDate: '',
+              siteSupervisor: '',
+              clientContact: '',
+              preparedByName: '',
+              preparedByPosition: '',
+              preparedDate: '',
+              authorisedByName: '',
+              authorisedByPosition: '',
+              authorisedDate: '',
+            }
+          }
           onChange={setProjectMetadata}
         />
       )}
@@ -402,8 +420,15 @@ export const InstallationResultsEditor = ({
       {/* Installation Steps - Timeline View */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-foreground">Installation Procedure ({steps.length} Steps)</h3>
-          <MobileButton onClick={addNewStep} variant="outline" size="sm" icon={<Plus className="h-4 w-4" />}>
+          <h3 className="text-lg font-semibold text-foreground">
+            Installation Procedure ({steps.length} Steps)
+          </h3>
+          <MobileButton
+            onClick={addNewStep}
+            variant="outline"
+            size="sm"
+            icon={<Plus className="h-4 w-4" />}
+          >
             Add Step
           </MobileButton>
         </div>
@@ -428,13 +453,10 @@ export const InstallationResultsEditor = ({
       <EquipmentScheduleSection equipment={equipmentSchedule} />
 
       {/* Site Logistics & Competency */}
-      <SiteLogisticsSection
-        logistics={siteLogistics}
-        competency={competencyRequirements}
-      />
+      <SiteLogisticsSection logistics={siteLogistics} competency={competencyRequirements} />
 
       {/* 📖 BS 7671 Regulatory Compliance Section */}
-      <RegulatoryComplianceSection 
+      <RegulatoryComplianceSection
         regulatoryReferences={fullMethodStatement?.regulatoryReferences}
         stepBsReferences={uniqueStepBsReferences}
         sectionNumber={6}
@@ -443,24 +465,24 @@ export const InstallationResultsEditor = ({
       {/* Enhanced Action Buttons - Frosted glass sticky footer */}
       <div className="sticky bottom-0 left-0 right-0 z-20 p-4 sm:p-6 bg-gradient-to-t from-background via-background/98 to-background/90 border-t border-primary/20 backdrop-blur-xl shadow-2xl shadow-primary/10 md:static md:p-0 md:bg-transparent md:border-0 md:shadow-none">
         <div className="flex flex-wrap gap-3">
-          <MobileButton 
-            onClick={handleExportPDF} 
-            variant="elec" 
+          <MobileButton
+            onClick={handleExportPDF}
+            variant="elec"
             size="wide"
             className="shadow-xl hover:shadow-2xl transition-all text-base font-bold"
           >
             <Download className="h-5 w-5 mr-2" />
             Generate PDF
           </MobileButton>
-          <MobileButton 
-            onClick={() => setShowMetadataForm(!showMetadataForm)} 
-            variant={showMetadataForm ? "default" : "outline"}
+          <MobileButton
+            onClick={() => setShowMetadataForm(!showMetadataForm)}
+            variant={showMetadataForm ? 'default' : 'outline'}
             className="flex-1 md:flex-none min-h-[48px] font-semibold"
           >
             {showMetadataForm ? 'Hide' : 'Edit'} Metadata
           </MobileButton>
-          <MobileButton 
-            onClick={onReset} 
+          <MobileButton
+            onClick={onReset}
             variant="outline"
             className="min-h-[48px] font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50"
           >

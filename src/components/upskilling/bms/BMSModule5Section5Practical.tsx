@@ -23,28 +23,29 @@ export const BMSModule5Section5Practical = () => {
                 Mount gateways in control panels or equipment rooms, close to the systems they link.
               </p>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
               <h4 className="font-semibold text-foreground mb-2">Cabling</h4>
               <p className="text-foreground text-sm">
-                Wire each protocol to its own terminal — e.g., RS-485 for Modbus, twisted pair for KNX, Ethernet for BACnet/IP.
+                Wire each protocol to its own terminal — e.g., RS-485 for Modbus, twisted pair for
+                KNX, Ethernet for BACnet/IP.
               </p>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
               <h4 className="font-semibold text-foreground mb-2">Power</h4>
               <p className="text-foreground text-sm">
                 Provide correct voltage supply (often 24V DC) with protection.
               </p>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
               <h4 className="font-semibold text-foreground mb-2">Addressing</h4>
               <p className="text-foreground text-sm">
                 Assign the correct device address/IP address for each protocol side.
               </p>
             </div>
-            
+
             <div className="bg-elec-dark p-4 rounded-lg border border-gray-600">
               <h4 className="font-semibold text-foreground mb-2">Labelling</h4>
               <p className="text-foreground text-sm">
@@ -65,11 +66,12 @@ export const BMSModule5Section5Practical = () => {
               <div>
                 <h4 className="font-medium text-foreground">Document everything</h4>
                 <p className="text-foreground text-sm">
-                  Provide clear drawings showing what protocols are linked and through which gateways.
+                  Provide clear drawings showing what protocols are linked and through which
+                  gateways.
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
               <div>
@@ -79,17 +81,18 @@ export const BMSModule5Section5Practical = () => {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
               <div>
                 <h4 className="font-medium text-foreground">Test both sides</h4>
                 <p className="text-foreground text-sm">
-                  Verify data is visible on both the "source" (e.g., Modbus meter) and the "target" (e.g., BACnet workstation).
+                  Verify data is visible on both the "source" (e.g., Modbus meter) and the "target"
+                  (e.g., BACnet workstation).
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3">
               <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
               <div>
@@ -113,19 +116,19 @@ export const BMSModule5Section5Practical = () => {
                 Forgetting to wire the shield correctly on RS-485 connections, causing noise.
               </p>
             </div>
-            
+
             <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-3">
               <p className="text-foreground text-sm">
                 Overloading gateways by trying to convert too many devices at once.
               </p>
             </div>
-            
+
             <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-3">
               <p className="text-foreground text-sm">
                 Poor labelling, making it unclear which devices are linked through which gateway.
               </p>
             </div>
-            
+
             <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-3">
               <p className="text-foreground text-sm">
                 Not coordinating with IT teams when gateways are connected to BACnet/IP networks.

@@ -3,14 +3,14 @@ import { Target, CheckCircle } from 'lucide-react';
 
 export const BMSModule4Section3LearningOutcomes = () => {
   const outcomes = [
-    "Explain how access control systems integrate with a BMS",
-    "Describe the role of door relays in secure entry and exit",
-    "Identify different devices used in access control (readers, locks, exit devices)",
-    "Apply best-practice wiring and testing methods for safe, reliable operation",
-    "Distinguish between fail-safe and fail-secure locking mechanisms",
-    "Understand integration requirements with fire alarm systems",
-    "Implement proper cable routing and device mounting procedures",
-    "Ensure compliance with safety regulations and emergency egress requirements"
+    'Explain how access control systems integrate with a BMS',
+    'Describe the role of door relays in secure entry and exit',
+    'Identify different devices used in access control (readers, locks, exit devices)',
+    'Apply best-practice wiring and testing methods for safe, reliable operation',
+    'Distinguish between fail-safe and fail-secure locking mechanisms',
+    'Understand integration requirements with fire alarm systems',
+    'Implement proper cable routing and device mounting procedures',
+    'Ensure compliance with safety regulations and emergency egress requirements',
   ];
 
   return (

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,12 +21,14 @@ interface ProcedurePhaseProps {
 }
 
 const ProcedurePhase = ({ isolationSteps, onStepToggle, onProceed }: ProcedurePhaseProps) => {
-  const completedSteps = isolationSteps.filter(step => step.completed).length;
+  const completedSteps = isolationSteps.filter((step) => step.completed).length;
   const totalSteps = isolationSteps.length;
   const progressPercentage = (completedSteps / totalSteps) * 100;
-  
-  const criticalStepsCompleted = isolationSteps.filter(step => step.critical && step.completed).length;
-  const totalCriticalSteps = isolationSteps.filter(step => step.critical).length;
+
+  const criticalStepsCompleted = isolationSteps.filter(
+    (step) => step.critical && step.completed
+  ).length;
+  const totalCriticalSteps = isolationSteps.filter((step) => step.critical).length;
   const canProceedToTesting = criticalStepsCompleted === totalCriticalSteps;
 
   return (
@@ -45,19 +46,17 @@ const ProcedurePhase = ({ isolationSteps, onStepToggle, onProceed }: ProcedurePh
         <CardContent>
           <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-foreground">Progress: {completedSteps}/{totalSteps} steps</span>
+              <span className="text-foreground">
+                Progress: {completedSteps}/{totalSteps} steps
+              </span>
               <span className="text-elec-yellow">{Math.round(progressPercentage)}%</span>
             </div>
             <Progress value={progressPercentage} className="w-full" />
           </div>
-          
+
           <div className="space-y-4">
             {isolationSteps.map((step) => (
-              <IsolationStepCard
-                key={step.id}
-                step={step}
-                onToggle={onStepToggle}
-              />
+              <IsolationStepCard key={step.id} step={step} onToggle={onStepToggle} />
             ))}
           </div>
 
@@ -67,12 +66,12 @@ const ProcedurePhase = ({ isolationSteps, onStepToggle, onProceed }: ProcedurePh
               <span className="font-medium text-orange-400">Critical Steps Status</span>
             </div>
             <p className="text-gray-300 text-sm">
-              {criticalStepsCompleted}/{totalCriticalSteps} critical steps completed. 
-              All critical steps must be completed before proceeding to testing phase.
+              {criticalStepsCompleted}/{totalCriticalSteps} critical steps completed. All critical
+              steps must be completed before proceeding to testing phase.
             </p>
           </div>
 
-          <Button 
+          <Button
             onClick={onProceed}
             className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 mt-4"
             disabled={!canProceedToTesting}

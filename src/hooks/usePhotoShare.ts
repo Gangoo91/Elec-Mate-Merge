@@ -39,7 +39,9 @@ export interface SharePhotoData {
 
 export interface CreateShareOptions {
   projectReference: string;
+  projectId?: string;
   photos: SafetyPhoto[];
+  photoTypes?: string[];
   title?: string;
   message?: string;
   companyName?: string;

@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 // Types
 export interface Tender {
@@ -109,11 +109,7 @@ export function useTender(id: string | undefined) {
     queryFn: async (): Promise<Tender | null> => {
       if (!id) return null;
 
-      const { data, error } = await supabase
-        .from('tenders')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data, error } = await supabase.from('tenders').select('*').eq('id', id).single();
 
       if (error) throw error;
       return data as Tender;
@@ -164,15 +160,15 @@ export function useCreateTender() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tenders'] });
       toast({
-        title: "Tender Created",
-        description: "The tender has been added to your tracking list.",
+        title: 'Tender Created',
+        description: 'The tender has been added to your tracking list.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -199,15 +195,15 @@ export function useUpdateTender() {
       queryClient.invalidateQueries({ queryKey: ['tenders'] });
       queryClient.invalidateQueries({ queryKey: ['tenders', id] });
       toast({
-        title: "Tender Updated",
-        description: "The tender has been updated successfully.",
+        title: 'Tender Updated',
+        description: 'The tender has been updated successfully.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -219,7 +215,15 @@ export function useUpdateTenderStatus() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ id, status, resultDate }: { id: string; status: Tender['status']; resultDate?: string }): Promise<Tender> => {
+    mutationFn: async ({
+      id,
+      status,
+      resultDate,
+    }: {
+      id: string;
+      status: Tender['status'];
+      resultDate?: string;
+    }): Promise<Tender> => {
       const updateData: UpdateTenderData = { status };
 
       if (status === 'Submitted') {
@@ -244,23 +248,23 @@ export function useUpdateTenderStatus() {
       queryClient.invalidateQueries({ queryKey: ['tenders'] });
 
       const messages: Record<Tender['status'], string> = {
-        'Open': 'Tender reopened',
-        'Submitted': 'Tender marked as submitted',
-        'Won': 'Congratulations! Tender won!',
-        'Lost': 'Tender marked as lost',
-        'Withdrawn': 'Tender withdrawn',
+        Open: 'Tender reopened',
+        Submitted: 'Tender marked as submitted',
+        Won: 'Congratulations! Tender won!',
+        Lost: 'Tender marked as lost',
+        Withdrawn: 'Tender withdrawn',
       };
 
       toast({
-        title: "Status Updated",
+        title: 'Status Updated',
         description: messages[data.status],
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -273,25 +277,22 @@ export function useDeleteTender() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from('tenders')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('tenders').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tenders'] });
       toast({
-        title: "Tender Deleted",
-        description: "The tender has been removed.",
+        title: 'Tender Deleted',
+        description: 'The tender has been removed.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -302,9 +303,7 @@ export function useTenderEstimates(tenderId?: string) {
   return useQuery({
     queryKey: ['tender-estimates', tenderId],
     queryFn: async (): Promise<TenderEstimate[]> => {
-      let query = supabase
-        .from('tender_estimates')
-        .select('*, tender:tenders(*)');
+      let query = supabase.from('tender_estimates').select('*, tender:tenders(*)');
 
       if (tenderId) {
         query = query.eq('tender_id', tenderId);
@@ -361,15 +360,15 @@ export function useCreateTenderEstimate() {
       queryClient.invalidateQueries({ queryKey: ['tender-estimates'] });
       queryClient.invalidateQueries({ queryKey: ['tender-estimates', variables.tender_id] });
       toast({
-        title: "Estimate Created",
-        description: "The tender estimate has been saved.",
+        title: 'Estimate Created',
+        description: 'The tender estimate has been saved.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -382,25 +381,22 @@ export function useDeleteTenderEstimate() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase
-        .from('tender_estimates')
-        .delete()
-        .eq('id', id);
+      const { error } = await supabase.from('tender_estimates').delete().eq('id', id);
 
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tender-estimates'] });
       toast({
-        title: "Estimate Deleted",
-        description: "The estimate has been removed.",
+        title: 'Estimate Deleted',
+        description: 'The estimate has been removed.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: 'Error',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -411,15 +407,22 @@ export function useTenderStats() {
   const { data: tenders = [] } = useTenders();
 
   const stats = {
-    open: tenders.filter(t => t.status === 'Open').length,
-    submitted: tenders.filter(t => t.status === 'Submitted').length,
-    won: tenders.filter(t => t.status === 'Won').length,
-    lost: tenders.filter(t => t.status === 'Lost').length,
-    openValue: tenders.filter(t => t.status === 'Open').reduce((sum, t) => sum + Number(t.value), 0),
-    wonValue: tenders.filter(t => t.status === 'Won').reduce((sum, t) => sum + Number(t.value), 0),
-    winRate: tenders.filter(t => t.status === 'Won' || t.status === 'Lost').length > 0
-      ? (tenders.filter(t => t.status === 'Won').length / tenders.filter(t => t.status === 'Won' || t.status === 'Lost').length) * 100
-      : 0,
+    open: tenders.filter((t) => t.status === 'Open').length,
+    submitted: tenders.filter((t) => t.status === 'Submitted').length,
+    won: tenders.filter((t) => t.status === 'Won').length,
+    lost: tenders.filter((t) => t.status === 'Lost').length,
+    openValue: tenders
+      .filter((t) => t.status === 'Open')
+      .reduce((sum, t) => sum + Number(t.value), 0),
+    wonValue: tenders
+      .filter((t) => t.status === 'Won')
+      .reduce((sum, t) => sum + Number(t.value), 0),
+    winRate:
+      tenders.filter((t) => t.status === 'Won' || t.status === 'Lost').length > 0
+        ? (tenders.filter((t) => t.status === 'Won').length /
+            tenders.filter((t) => t.status === 'Won' || t.status === 'Lost').length) *
+          100
+        : 0,
   };
 
   return stats;
@@ -440,7 +443,13 @@ export function useUploadTenderDocument() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ tenderId, file }: { tenderId: string; file: File }): Promise<TenderDocument> => {
+    mutationFn: async ({
+      tenderId,
+      file,
+    }: {
+      tenderId: string;
+      file: File;
+    }): Promise<TenderDocument> => {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) throw new Error('Not authenticated');
 
@@ -461,9 +470,7 @@ export function useUploadTenderDocument() {
       if (uploadError) throw uploadError;
 
       // Get public URL
-      const { data: urlData } = supabase.storage
-        .from('tender-documents')
-        .getPublicUrl(storagePath);
+      const { data: urlData } = supabase.storage.from('tender-documents').getPublicUrl(storagePath);
 
       const newDoc: TenderDocument = {
         id: `doc-${timestamp}`,
@@ -499,15 +506,15 @@ export function useUploadTenderDocument() {
       queryClient.invalidateQueries({ queryKey: ['tenders'] });
       queryClient.invalidateQueries({ queryKey: ['tenders', tenderId] });
       toast({
-        title: "Document Uploaded",
-        description: "The document has been added to the tender.",
+        title: 'Document Uploaded',
+        description: 'The document has been added to the tender.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Upload Failed",
+        title: 'Upload Failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -519,7 +526,15 @@ export function useDeleteTenderDocument() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ tenderId, documentId, url }: { tenderId: string; documentId: string; url: string }): Promise<void> => {
+    mutationFn: async ({
+      tenderId,
+      documentId,
+      url,
+    }: {
+      tenderId: string;
+      documentId: string;
+      url: string;
+    }): Promise<void> => {
       // Try to delete from storage (extract path from URL)
       try {
         const urlObj = new URL(url);
@@ -556,15 +571,15 @@ export function useDeleteTenderDocument() {
       queryClient.invalidateQueries({ queryKey: ['tenders'] });
       queryClient.invalidateQueries({ queryKey: ['tenders', tenderId] });
       toast({
-        title: "Document Deleted",
-        description: "The document has been removed.",
+        title: 'Document Deleted',
+        description: 'The document has been removed.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Delete Failed",
+        title: 'Delete Failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -576,7 +591,11 @@ export function useGenerateTenderEstimate() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async ({ tenderId, documentUrls, description }: {
+    mutationFn: async ({
+      tenderId,
+      documentUrls,
+      description,
+    }: {
       tenderId: string;
       documentUrls: string[];
       description?: string;
@@ -592,15 +611,15 @@ export function useGenerateTenderEstimate() {
       queryClient.invalidateQueries({ queryKey: ['tender-estimates'] });
       queryClient.invalidateQueries({ queryKey: ['tender-estimates', tenderId] });
       toast({
-        title: "Estimate Generated",
-        description: "AI has generated a cost estimate for this tender.",
+        title: 'Estimate Generated',
+        description: 'AI has generated a cost estimate for this tender.',
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Estimation Failed",
+        title: 'Estimation Failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });

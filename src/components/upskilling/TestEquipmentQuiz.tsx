@@ -13,64 +13,69 @@ export const TestEquipmentQuiz = () => {
   const questions = [
     {
       id: 1,
-      question: "What is the purpose of GS38-compliant test leads?",
+      question: 'What is the purpose of GS38-compliant test leads?',
       options: [
-        "To increase test accuracy",
-        "To prevent contact with live parts during testing",
-        "To reduce test time",
-        "To comply with manufacturer warranties"
+        'To increase test accuracy',
+        'To prevent contact with live parts during testing',
+        'To reduce test time',
+        'To comply with manufacturer warranties',
       ],
       correctAnswer: 1,
-      explanation: "GS38-compliant leads have finger barriers and fused probes to prevent accidental contact with live parts, protecting the user from electric shock."
+      explanation:
+        'GS38-compliant leads have finger barriers and fused probes to prevent accidental contact with live parts, protecting the user from electric shock.',
     },
     {
       id: 2,
-      question: "Why use non-trip mode on an RCD-protected circuit?",
+      question: 'Why use non-trip mode on an RCD-protected circuit?',
       options: [
-        "To get more accurate readings",
-        "To avoid nuisance tripping during testing",
-        "To reduce test current",
-        "To protect the test equipment"
+        'To get more accurate readings',
+        'To avoid nuisance tripping during testing',
+        'To reduce test current',
+        'To protect the test equipment',
       ],
       correctAnswer: 1,
-      explanation: "Non-trip mode reduces test current below RCD operating levels to prevent unwanted disconnection during loop impedance testing."
+      explanation:
+        'Non-trip mode reduces test current below RCD operating levels to prevent unwanted disconnection during loop impedance testing.',
     },
     {
       id: 3,
-      question: "What does a calibration certificate verify?",
+      question: 'What does a calibration certificate verify?',
       options: [
         "The test equipment's accuracy within specified tolerances",
         "The equipment manufacturer's warranty",
         "The user's competency",
-        "The installation's compliance"
+        "The installation's compliance",
       ],
       correctAnswer: 0,
-      explanation: "Calibration certificates verify that test equipment meets specified accuracy requirements and can provide reliable measurements."
+      explanation:
+        'Calibration certificates verify that test equipment meets specified accuracy requirements and can provide reliable measurements.',
     },
     {
       id: 4,
-      question: "How often should insulation resistance testers be calibrated?",
+      question: 'How often should insulation resistance testers be calibrated?',
       options: [
-        "Every month",
-        "Annually or as per manufacturer recommendations",
-        "Only when they appear faulty",
-        "Every five years"
+        'Every month',
+        'Annually or as per manufacturer recommendations',
+        'Only when they appear faulty',
+        'Every five years',
       ],
       correctAnswer: 1,
-      explanation: "Test equipment should be calibrated annually or according to manufacturer recommendations to ensure measurement accuracy."
+      explanation:
+        'Test equipment should be calibrated annually or according to manufacturer recommendations to ensure measurement accuracy.',
     },
     {
       id: 5,
-      question: "What should you check before using any test equipment?",
+      question: 'What should you check before using any test equipment?',
       options: [
-        "Only the battery level",
-        "Calibration date, condition of leads, and proper operation",
-        "Just the display readout",
-        "Only the manufacturer's label"
+        'Only the battery level',
+        'Calibration date, condition of leads, and proper operation',
+        'Just the display readout',
+        "Only the manufacturer's label",
       ],
       correctAnswer: 1,
-      explanation: "Before testing, always verify calibration validity, check leads for damage, and ensure the equipment operates correctly."
-    }
+      explanation:
+        'Before testing, always verify calibration validity, check leads for damage, and ensure the equipment operates correctly.',
+    },
   ];
 
   const handleAnswerSelect = (answerIndex: string) => {
@@ -123,9 +128,7 @@ export const TestEquipmentQuiz = () => {
               <h3 className="text-2xl font-bold text-elec-yellow mb-2">
                 {score} out of {questions.length}
               </h3>
-              <p className="text-foreground">
-                You scored {percentage.toFixed(0)}%
-              </p>
+              <p className="text-foreground">You scored {percentage.toFixed(0)}%</p>
             </div>
 
             <div className="space-y-4">
@@ -159,7 +162,7 @@ export const TestEquipmentQuiz = () => {
               })}
             </div>
 
-            <Button 
+            <Button
               onClick={resetQuiz}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-500"
             >
@@ -185,21 +188,21 @@ export const TestEquipmentQuiz = () => {
         <div className="space-y-6">
           <div className="bg-elec-dark p-4 rounded-md">
             <h3 className="text-foreground font-medium mb-4">{currentQ.question}</h3>
-            
+
             <RadioGroup
-              value={selectedAnswers[currentQuestion] || ""}
+              value={selectedAnswers[currentQuestion] || ''}
               onValueChange={handleAnswerSelect}
               className="space-y-3"
             >
               {currentQ.options.map((option, index) => (
                 <div key={index} className="flex items-center space-x-2">
-                  <RadioGroupItem 
-                    value={index.toString()} 
+                  <RadioGroupItem
+                    value={index.toString()}
                     id={`option-${index}`}
                     className="border-gray-400 text-elec-yellow"
                   />
-                  <Label 
-                    htmlFor={`option-${index}`} 
+                  <Label
+                    htmlFor={`option-${index}`}
                     className="text-foreground cursor-pointer flex-1 text-sm sm:text-base"
                   >
                     {option}

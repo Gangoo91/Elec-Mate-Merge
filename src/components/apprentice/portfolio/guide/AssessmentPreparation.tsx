@@ -1,145 +1,148 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { 
-  Target, 
-  CheckCircle, 
-  Clock, 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Target,
+  CheckCircle,
+  Clock,
   Users,
   FileText,
   AlertTriangle,
   Star,
   BookOpen,
   Award,
-  TrendingUp
-} from "lucide-react";
+  TrendingUp,
+} from 'lucide-react';
 
 const AssessmentPreparation = () => {
   const assessmentTypes = [
     {
-      type: "Portfolio Review",
-      description: "Comprehensive review of your complete portfolio",
-      duration: "2-3 hours",
-      format: "Face-to-face with assessor",
+      type: 'Portfolio Review',
+      description: 'Comprehensive review of your complete portfolio',
+      duration: '2-3 hours',
+      format: 'Face-to-face with assessor',
       preparation: [
-        "Organise portfolio with clear contents page",
-        "Prepare summary of key achievements",
-        "Practice explaining your evidence",
-        "Have backup evidence ready"
-      ]
+        'Organise portfolio with clear contents page',
+        'Prepare summary of key achievements',
+        'Practice explaining your evidence',
+        'Have backup evidence ready',
+      ],
     },
     {
-      type: "Professional Discussion",
-      description: "Structured conversation about your learning and development",
-      duration: "45-90 minutes",
-      format: "One-to-one discussion",
+      type: 'Professional Discussion',
+      description: 'Structured conversation about your learning and development',
+      duration: '45-90 minutes',
+      format: 'One-to-one discussion',
       preparation: [
-        "Review learning outcomes and competency criteria",
-        "Prepare examples of problem-solving scenarios",
-        "Think about challenges overcome",
-        "Consider future development goals"
-      ]
+        'Review learning outcomes and competency criteria',
+        'Prepare examples of problem-solving scenarios',
+        'Think about challenges overcome',
+        'Consider future development goals',
+      ],
     },
     {
-      type: "Practical Assessment",
-      description: "Demonstration of practical skills and knowledge",
-      duration: "Half day",
-      format: "Workplace observation",
+      type: 'Practical Assessment',
+      description: 'Demonstration of practical skills and knowledge',
+      duration: 'Half day',
+      format: 'Workplace observation',
       preparation: [
-        "Ensure workplace access is arranged",
-        "Prepare tools and equipment",
-        "Review safety procedures",
-        "Practice explaining your work process"
-      ]
-    }
+        'Ensure workplace access is arranged',
+        'Prepare tools and equipment',
+        'Review safety procedures',
+        'Practice explaining your work process',
+      ],
+    },
   ];
 
   const assessmentCriteria = [
     {
-      category: "Knowledge",
-      weight: "30%",
-      description: "Understanding of electrical principles, regulations, and standards",
+      category: 'Knowledge',
+      weight: '30%',
+      description: 'Understanding of electrical principles, regulations, and standards',
       evidence: [
-        "Technical explanations in portfolio commentary",
-        "Correct application of calculations",
-        "Reference to relevant standards and regulations",
-        "Problem-solving approaches documented"
-      ]
+        'Technical explanations in portfolio commentary',
+        'Correct application of calculations',
+        'Reference to relevant standards and regulations',
+        'Problem-solving approaches documented',
+      ],
     },
     {
-      category: "Skills",
-      weight: "40%",
-      description: "Practical electrical skills and competencies",
+      category: 'Skills',
+      weight: '40%',
+      description: 'Practical electrical skills and competencies',
       evidence: [
-        "Quality of practical work demonstrated",
-        "Correct use of tools and equipment",
-        "Testing and inspection competency",
-        "Installation techniques and methods"
-      ]
+        'Quality of practical work demonstrated',
+        'Correct use of tools and equipment',
+        'Testing and inspection competency',
+        'Installation techniques and methods',
+      ],
     },
     {
-      category: "Behaviours",
-      weight: "30%",
-      description: "Professional behaviours and work ethic",
+      category: 'Behaviours',
+      weight: '30%',
+      description: 'Professional behaviours and work ethic',
       evidence: [
-        "Health and safety awareness",
-        "Communication with customers and colleagues",
-        "Initiative and problem-solving",
-        "Continuous learning and development"
-      ]
-    }
+        'Health and safety awareness',
+        'Communication with customers and colleagues',
+        'Initiative and problem-solving',
+        'Continuous learning and development',
+      ],
+    },
   ];
 
   const preparationTimeline = [
     {
-      timeframe: "3 Months Before",
+      timeframe: '3 Months Before',
       tasks: [
-        "Complete portfolio gap analysis",
-        "Identify any missing evidence",
-        "Schedule additional workplace opportunities",
-        "Begin preparing assessment documentation"
+        'Complete portfolio gap analysis',
+        'Identify any missing evidence',
+        'Schedule additional workplace opportunities',
+        'Begin preparing assessment documentation',
       ],
-      priority: "high"
+      priority: 'high',
     },
     {
-      timeframe: "6 Weeks Before",
+      timeframe: '6 Weeks Before',
       tasks: [
-        "Submit draft portfolio for review",
-        "Incorporate feedback from supervisor",
-        "Practice professional discussion scenarios",
-        "Confirm assessment dates and logistics"
+        'Submit draft portfolio for review',
+        'Incorporate feedback from supervisor',
+        'Practice professional discussion scenarios',
+        'Confirm assessment dates and logistics',
       ],
-      priority: "high"
+      priority: 'high',
     },
     {
-      timeframe: "2 Weeks Before",
+      timeframe: '2 Weeks Before',
       tasks: [
-        "Finalise portfolio organisation",
-        "Prepare presentation materials",
-        "Review all evidence one final time",
-        "Confirm assessment venue and requirements"
+        'Finalise portfolio organisation',
+        'Prepare presentation materials',
+        'Review all evidence one final time',
+        'Confirm assessment venue and requirements',
       ],
-      priority: "medium"
+      priority: 'medium',
     },
     {
-      timeframe: "1 Week Before",
+      timeframe: '1 Week Before',
       tasks: [
-        "Print and bind portfolio copies",
-        "Prepare assessment day kit",
-        "Review learning outcomes one last time",
-        "Get good rest and prepare mentally"
+        'Print and bind portfolio copies',
+        'Prepare assessment day kit',
+        'Review learning outcomes one last time',
+        'Get good rest and prepare mentally',
       ],
-      priority: "low"
-    }
+      priority: 'low',
+    },
   ];
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "high": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "medium": return "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
-      case "low": return "bg-green-500/20 text-green-400 border-green-500/30";
-      default: return "bg-white/10 text-white border-white/30";
+      case 'high':
+        return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'medium':
+        return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
+      case 'low':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/30';
     }
   };
 
@@ -155,8 +158,8 @@ const AssessmentPreparation = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white">
-            Prepare thoroughly for your end-point assessment with this comprehensive guide covering portfolio review, 
-            professional discussion, and practical assessment components.
+            Prepare thoroughly for your end-point assessment with this comprehensive guide covering
+            portfolio review, professional discussion, and practical assessment components.
           </p>
         </CardContent>
       </Card>
@@ -179,7 +182,7 @@ const AssessmentPreparation = () => {
                     {assessment.duration}
                   </Badge>
                 </div>
-                
+
                 <div>
                   <span className="text-sm text-white">Format: {assessment.format}</span>
                 </div>
@@ -281,19 +284,27 @@ const AssessmentPreparation = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">Practice explaining your work to others</span>
+                  <span className="text-sm text-white">
+                    Practice explaining your work to others
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">Ensure all evidence is clearly labelled and dated</span>
+                  <span className="text-sm text-white">
+                    Ensure all evidence is clearly labelled and dated
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">Prepare specific examples for each competency</span>
+                  <span className="text-sm text-white">
+                    Prepare specific examples for each competency
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <TrendingUp className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">Get feedback from supervisors and mentors</span>
+                  <span className="text-sm text-white">
+                    Get feedback from supervisors and mentors
+                  </span>
                 </li>
               </ul>
             </div>
@@ -302,19 +313,27 @@ const AssessmentPreparation = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">Be confident and speak clearly about your work</span>
+                  <span className="text-sm text-white">
+                    Be confident and speak clearly about your work
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">Reference specific evidence when answering questions</span>
+                  <span className="text-sm text-white">
+                    Reference specific evidence when answering questions
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">Admit when you don't know something - it's professional</span>
+                  <span className="text-sm text-white">
+                    Admit when you don't know something - it's professional
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white">Ask for clarification if you don't understand a question</span>
+                  <span className="text-sm text-white">
+                    Ask for clarification if you don't understand a question
+                  </span>
                 </li>
               </ul>
             </div>

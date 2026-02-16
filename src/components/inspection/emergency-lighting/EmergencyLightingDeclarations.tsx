@@ -102,7 +102,12 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
       formData.monthlyFunctionalTest?.date || formData.testDate,
       formData.annualDurationTest?.date || formData.testDate
     );
-  }, [formData.testDate, formData.monthlyFunctionalTest?.date, formData.annualDurationTest?.date, calculateTestDates]);
+  }, [
+    formData.testDate,
+    formData.monthlyFunctionalTest?.date,
+    formData.annualDurationTest?.date,
+    calculateTestDates,
+  ]);
 
   // Calculate next test dates
   const calculateNextMonthly = () => {
@@ -120,9 +125,9 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
   };
 
   return (
-    <div className={cn(isMobile ? "space-y-0" : "space-y-6")}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
       {/* Tester Declaration */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.tester} onOpenChange={() => toggleSection('tester')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -134,10 +139,12 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   <h3 className="font-semibold text-foreground">Tester Declaration</h3>
                   <span className="text-xs text-muted-foreground">Name, quals & signature</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.tester && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.tester && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -147,26 +154,26 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   </div>
                   <span className="text-white font-semibold">Tester Declaration</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.tester && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.tester && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* Load Tester Details Button */}
-              <LoadTesterButton
-                onLoad={handleLoadTesterDetails}
-                className="h-11 border-white/30"
-              />
+              <LoadTesterButton onLoad={handleLoadTesterDetails} className="h-11 border-white/30" />
 
               <Alert className="border-amber-500/30 bg-amber-500/10">
                 <Shield className="h-4 w-4 text-amber-500" />
                 <AlertDescription className="text-amber-200 text-sm">
-                  <strong>Declaration:</strong> I certify that the emergency lighting system has been
-                  inspected and tested in accordance with BS 5266, and the results are as recorded in this certificate.
+                  <strong>Declaration:</strong> I certify that the emergency lighting system has
+                  been inspected and tested in accordance with BS 5266, and the results are as
+                  recorded in this certificate.
                 </AlertDescription>
               </Alert>
 
@@ -229,7 +236,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
       </div>
 
       {/* Service Schedule */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.service} onOpenChange={() => toggleSection('service')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -241,10 +248,12 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   <h3 className="font-semibold text-foreground">Service Schedule</h3>
                   <span className="text-xs text-muted-foreground">Next test dates</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.service && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.service && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -254,17 +263,21 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   </div>
                   <span className="text-white font-semibold">Service Schedule</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.service && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.service && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="bg-muted/30 rounded-lg p-4 space-y-2 text-sm">
-                <p><strong>BS 5266 Test Schedule:</strong></p>
+                <p>
+                  <strong>BS 5266 Test Schedule:</strong>
+                </p>
                 <ul className="list-disc list-inside space-y-1 text-muted-foreground">
                   <li>Daily - visual inspection (where practical)</li>
                   <li>Monthly - brief functional test (flick test)</li>
@@ -278,7 +291,10 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   <div className="flex items-center gap-2">
                     <Label htmlFor="nextMonthlyTestDue">Next Monthly Test Due</Label>
                     {testDates.monthlyOverdue && (
-                      <OverdueBadge daysOverdue={Math.abs(testDates.daysUntilMonthly)} testType="monthly" />
+                      <OverdueBadge
+                        daysOverdue={Math.abs(testDates.daysUntilMonthly)}
+                        testType="monthly"
+                      />
                     )}
                   </div>
                   <Input
@@ -287,8 +303,8 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                     value={formData.nextMonthlyTestDue || calculateNextMonthly()}
                     onChange={(e) => onUpdate('nextMonthlyTestDue', e.target.value)}
                     className={cn(
-                      "h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
-                      testDates.monthlyOverdue && "border-red-500/50"
+                      'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                      testDates.monthlyOverdue && 'border-red-500/50'
                     )}
                   />
                   {!testDates.monthlyOverdue && testDates.daysUntilMonthly > 0 && (
@@ -301,7 +317,10 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   <div className="flex items-center gap-2">
                     <Label htmlFor="nextAnnualTestDue">Next Annual Test Due</Label>
                     {testDates.annualOverdue && (
-                      <OverdueBadge daysOverdue={Math.abs(testDates.daysUntilAnnual)} testType="annual" />
+                      <OverdueBadge
+                        daysOverdue={Math.abs(testDates.daysUntilAnnual)}
+                        testType="annual"
+                      />
                     )}
                   </div>
                   <Input
@@ -310,8 +329,8 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                     value={formData.nextAnnualTestDue || calculateNextAnnual()}
                     onChange={(e) => onUpdate('nextAnnualTestDue', e.target.value)}
                     className={cn(
-                      "h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
-                      testDates.annualOverdue && "border-red-500/50"
+                      'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                      testDates.annualOverdue && 'border-red-500/50'
                     )}
                   />
                   {!testDates.annualOverdue && testDates.daysUntilAnnual > 0 && (
@@ -338,7 +357,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
       </div>
 
       {/* Overall Result */}
-      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.result} onOpenChange={() => toggleSection('result')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -350,10 +369,12 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   <h3 className="font-semibold text-foreground">Overall Result</h3>
                   <span className="text-xs text-muted-foreground">Satisfactory/Unsatisfactory</span>
                 </div>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
-                  openSections.result && "rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    openSections.result && 'rotate-180'
+                  )}
+                />
               </div>
             ) : (
               <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
@@ -363,15 +384,17 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   </div>
                   <span className="text-white font-semibold">Overall Result</span>
                 </div>
-                <ChevronDown className={cn("h-5 w-5 text-white/40 transition-transform", openSections.result && "rotate-180")} />
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white/40 transition-transform',
+                    openSections.result && 'rotate-180'
+                  )}
+                />
               </div>
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn(
-              "space-y-4",
-              isMobile ? "px-4 py-4" : "px-4 pb-4"
-            )}>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               <div className="space-y-2">
                 <Label>Overall Result</Label>
                 <Select
@@ -412,20 +435,21 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
       </div>
 
       {/* Final Status */}
-      <div className={cn(isMobile ? "px-4 py-4" : "")}>
+      <div className={cn(isMobile ? 'px-4 py-4' : '')}>
         {isComplete ? (
           <Alert className="border-green-500/30 bg-green-500/10">
             <CheckCircle2 className="h-4 w-4 text-green-400" />
             <AlertDescription className="text-green-200 text-xs sm:text-sm">
-              <strong>Certificate ready for generation.</strong> All required fields have been completed.
+              <strong>Certificate ready for generation.</strong> All required fields have been
+              completed.
             </AlertDescription>
           </Alert>
         ) : (
           <Alert className="border-amber-500/30 bg-amber-500/10">
             <AlertTriangle className="h-4 w-4 text-amber-400" />
             <AlertDescription className="text-amber-200 text-xs sm:text-sm">
-              <strong>Incomplete declaration.</strong> Tester name and signature are required
-              before the certificate can be generated.
+              <strong>Incomplete declaration.</strong> Tester name and signature are required before
+              the certificate can be generated.
             </AlertDescription>
           </Alert>
         )}

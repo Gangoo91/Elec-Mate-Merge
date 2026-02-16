@@ -1,10 +1,18 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Calculator, Zap, Shield, AlertTriangle, Search, BookOpen, Clock, TrendingUp } from 'lucide-react';
+import {
+  Calculator,
+  Zap,
+  Shield,
+  AlertTriangle,
+  Search,
+  BookOpen,
+  Clock,
+  TrendingUp,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
@@ -20,7 +28,7 @@ const QuickReferenceTools = () => {
       color: 'bg-blue-500/10 text-blue-400',
       usage: 'Most Used',
       category: 'Testing',
-      route: '/tools/zs-calculator'
+      route: '/tools/zs-calculator',
     },
     {
       title: 'RCD Requirements',
@@ -29,7 +37,7 @@ const QuickReferenceTools = () => {
       color: 'bg-green-500/10 text-green-400',
       usage: 'Essential',
       category: 'Safety',
-      route: '/tools/rcd-requirements'
+      route: '/tools/rcd-requirements',
     },
     {
       title: 'Cable Capacity',
@@ -38,7 +46,7 @@ const QuickReferenceTools = () => {
       color: 'bg-yellow-500/10 text-yellow-400',
       usage: 'Daily Use',
       category: 'Installation',
-      route: '/tools/cable-capacity'
+      route: '/tools/cable-capacity',
     },
     {
       title: 'Test Sequence',
@@ -47,7 +55,7 @@ const QuickReferenceTools = () => {
       color: 'bg-purple-500/10 text-purple-400',
       usage: 'Reference',
       category: 'Testing',
-      route: '/tools/test-sequence'
+      route: '/tools/test-sequence',
     },
     {
       title: 'Fault Finding',
@@ -56,7 +64,7 @@ const QuickReferenceTools = () => {
       color: 'bg-red-500/10 text-red-400',
       usage: 'Emergency',
       category: 'Diagnosis',
-      route: '/tools/fault-finding'
+      route: '/tools/fault-finding',
     },
     {
       title: 'Regulation Search',
@@ -65,14 +73,15 @@ const QuickReferenceTools = () => {
       color: 'bg-cyan-500/10 text-cyan-400',
       usage: 'Frequent',
       category: 'Reference',
-      route: '/tools/regulation-search'
-    }
+      route: '/tools/regulation-search',
+    },
   ];
 
-  const filteredTools = quickTools.filter(tool =>
-    tool.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    tool.category.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredTools = quickTools.filter(
+    (tool) =>
+      tool.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tool.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleToolClick = (route: string) => {
@@ -103,7 +112,10 @@ const QuickReferenceTools = () => {
             placeholder="Search tools..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn("bg-muted border-border text-foreground placeholder-gray-400", !searchQuery && "pl-10")}
+            className={cn(
+              'bg-muted border-border text-foreground placeholder-gray-400',
+              !searchQuery && 'pl-10'
+            )}
           />
         </div>
       </div>
@@ -113,8 +125,8 @@ const QuickReferenceTools = () => {
         {filteredTools.map((tool, index) => {
           const IconComponent = tool.icon;
           return (
-            <Card 
-              key={index} 
+            <Card
+              key={index}
               className="bg-card border-border hover:border-elec-yellow/50 transition-all duration-300 cursor-pointer group hover:scale-105"
               onClick={() => handleToolClick(tool.route)}
             >
@@ -130,17 +142,15 @@ const QuickReferenceTools = () => {
                 <CardTitle className="text-foreground group-hover:text-elec-yellow transition-colors text-lg">
                   {tool.title}
                 </CardTitle>
-                <CardDescription className="text-gray-400">
-                  {tool.description}
-                </CardDescription>
+                <CardDescription className="text-gray-400">{tool.description}</CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="flex items-center justify-between">
                   <Badge variant="outline" className="text-xs text-gray-400 border-gray-600">
                     {tool.category}
                   </Badge>
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     className="bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs"
                     onClick={(e) => {
                       e.stopPropagation();

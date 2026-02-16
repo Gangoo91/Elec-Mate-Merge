@@ -8,75 +8,55 @@ const EmergencyLightingStandardsQuiz = () => {
   const questions: QuizQuestion[] = [
     {
       id: 1,
-      question: 'What is the primary British Standard governing emergency lighting design and installation?',
-      options: [
-        'BS 7671',
-        'BS 5266-1',
-        'BS 9999',
-        'BS 5839-1'
-      ],
+      question:
+        'What is the primary British Standard governing emergency lighting design and installation?',
+      options: ['BS 7671', 'BS 5266-1', 'BS 9999', 'BS 5839-1'],
       correctAnswer: 1,
-      explanation: 'BS 5266-1 is the Code of practice for the emergency lighting of premises, providing comprehensive guidance on design and installation.'
+      explanation:
+        'BS 5266-1 is the Code of practice for the emergency lighting of premises, providing comprehensive guidance on design and installation.',
     },
     {
       id: 2,
-      question: 'Which document provides guidance on fire safety engineering and emergency lighting integration?',
-      options: [
-        'Approved Document B',
-        'BS 9999',
-        'Building Regulations',
-        'All of the above'
-      ],
+      question:
+        'Which document provides guidance on fire safety engineering and emergency lighting integration?',
+      options: ['Approved Document B', 'BS 9999', 'Building Regulations', 'All of the above'],
       correctAnswer: 3,
-      explanation: 'All these documents provide guidance on fire safety and emergency lighting integration, with BS 9999 focusing on fire safety engineering.'
+      explanation:
+        'All these documents provide guidance on fire safety and emergency lighting integration, with BS 9999 focusing on fire safety engineering.',
     },
     {
       id: 3,
       question: 'What is the minimum duration for emergency lighting in escape routes?',
-      options: [
-        '30 minutes',
-        '1 hour',
-        '3 hours',
-        'Variable depending on occupancy'
-      ],
+      options: ['30 minutes', '1 hour', '3 hours', 'Variable depending on occupancy'],
       correctAnswer: 1,
-      explanation: 'BS 5266-1 typically requires 1 hour minimum duration for escape lighting, though some applications may require 3 hours.'
+      explanation:
+        'BS 5266-1 typically requires 1 hour minimum duration for escape lighting, though some applications may require 3 hours.',
     },
     {
       id: 4,
-      question: 'Which standard covers the electrical installation requirements for emergency lighting systems?',
-      options: [
-        'BS 5266-1',
-        'BS 7671',
-        'BS 9999',
-        'BS EN 1838'
-      ],
+      question:
+        'Which standard covers the electrical installation requirements for emergency lighting systems?',
+      options: ['BS 5266-1', 'BS 7671', 'BS 9999', 'BS EN 1838'],
       correctAnswer: 1,
-      explanation: 'BS 7671 (IET Wiring Regulations) covers electrical installation requirements, including those for emergency lighting systems.'
+      explanation:
+        'BS 7671 (IET Wiring Regulations) covers electrical installation requirements, including those for emergency lighting systems.',
     },
     {
       id: 5,
       question: 'What is the recommended illuminance level for escape route lighting?',
-      options: [
-        '0.2 lux',
-        '1 lux',
-        '5 lux',
-        '15 lux'
-      ],
+      options: ['0.2 lux', '1 lux', '5 lux', '15 lux'],
       correctAnswer: 1,
-      explanation: 'BS EN 1838 specifies 1 lux minimum along the centre line of escape routes at floor level.'
+      explanation:
+        'BS EN 1838 specifies 1 lux minimum along the centre line of escape routes at floor level.',
     },
     {
       id: 6,
-      question: 'Which European standard specifically addresses photometric requirements for emergency lighting?',
-      options: [
-        'BS EN 1838',
-        'BS EN 50172',
-        'BS EN 60598',
-        'BS EN 12464'
-      ],
+      question:
+        'Which European standard specifically addresses photometric requirements for emergency lighting?',
+      options: ['BS EN 1838', 'BS EN 50172', 'BS EN 60598', 'BS EN 12464'],
       correctAnswer: 0,
-      explanation: 'BS EN 1838 covers lighting applications and specifies photometric requirements and measurement methods for emergency lighting.'
+      explanation:
+        'BS EN 1838 covers lighting applications and specifies photometric requirements and measurement methods for emergency lighting.',
     },
     {
       id: 7,
@@ -85,51 +65,54 @@ const EmergencyLightingStandardsQuiz = () => {
         'Weekly brief test, monthly longer test',
         'Monthly brief test, annual full test',
         'Daily brief test, weekly longer test',
-        'Quarterly brief test, annual full test'
+        'Quarterly brief test, annual full test',
       ],
       correctAnswer: 1,
-      explanation: 'BS 5266-1 requires monthly brief functional tests and annual full-duration tests of emergency lighting systems.'
+      explanation:
+        'BS 5266-1 requires monthly brief functional tests and annual full-duration tests of emergency lighting systems.',
     },
     {
       id: 8,
       question: 'Which standard covers emergency lighting luminaires and control gear?',
-      options: [
-        'BS EN 50172',
-        'BS EN 60598',
-        'BS 5266-1',
-        'Both A and B'
-      ],
+      options: ['BS EN 50172', 'BS EN 60598', 'BS 5266-1', 'Both A and B'],
       correctAnswer: 3,
-      explanation: 'BS EN 50172 covers emergency escape lighting systems, while BS EN 60598 covers luminaire safety requirements.'
+      explanation:
+        'BS EN 50172 covers emergency escape lighting systems, while BS EN 60598 covers luminaire safety requirements.',
     },
     {
       id: 9,
-      question: 'What does the Regulatory Reform (Fire Safety) Order 2005 require regarding emergency lighting?',
+      question:
+        'What does the Regulatory Reform (Fire Safety) Order 2005 require regarding emergency lighting?',
       options: [
         'Monthly testing only',
         'Risk assessment and appropriate provision',
         'Annual certification',
-        'Specific luminaire types'
+        'Specific luminaire types',
       ],
       correctAnswer: 1,
-      explanation: 'The RR(FS)O requires responsible persons to conduct risk assessments and provide appropriate emergency lighting based on the premises use and occupancy.'
+      explanation:
+        'The RR(FS)O requires responsible persons to conduct risk assessments and provide appropriate emergency lighting based on the premises use and occupancy.',
     },
     {
       id: 10,
-      question: 'Which factor is NOT typically considered when determining emergency lighting requirements under BS 5266-1?',
+      question:
+        'Which factor is NOT typically considered when determining emergency lighting requirements under BS 5266-1?',
       options: [
         'Building occupancy type',
         'Escape route complexity',
         'External weather conditions',
-        'Occupant familiarity with premises'
+        'Occupant familiarity with premises',
       ],
       correctAnswer: 2,
-      explanation: 'External weather conditions are not a primary factor in BS 5266-1 requirements, which focus on internal building characteristics and occupancy factors.'
-    }
+      explanation:
+        'External weather conditions are not a primary factor in BS 5266-1 requirements, which focus on internal building characteristics and occupancy factors.',
+    },
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(undefined as unknown as number));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
+    Array(questions.length).fill(undefined as unknown as number)
+  );
   const [showResults, setShowResults] = useState(false);
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -180,7 +163,7 @@ const EmergencyLightingStandardsQuiz = () => {
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
               const isCorrect = userAnswer === question.correctAnswer;
-              
+
               return (
                 <div key={question.id} className="p-4 border border-gray-700 rounded-lg">
                   <p className="font-semibold text-foreground mb-2">
@@ -195,9 +178,7 @@ const EmergencyLightingStandardsQuiz = () => {
                         Correct answer: {question.options[question.correctAnswer]}
                       </p>
                     )}
-                    <p className="text-gray-400 text-sm mt-1">
-                      {question.explanation}
-                    </p>
+                    <p className="text-gray-400 text-sm mt-1">{question.explanation}</p>
                   </div>
                 </div>
               );
@@ -205,8 +186,8 @@ const EmergencyLightingStandardsQuiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
-              onClick={resetQuiz} 
+            <Button
+              onClick={resetQuiz}
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
             >
               Retake Quiz
@@ -224,15 +205,13 @@ const EmergencyLightingStandardsQuiz = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
-        
+
         <div>
           <h3 className="text-lg font-semibold text-foreground mb-4">
             Question {currentQuestion + 1} of {questions.length}
           </h3>
-          <p className="text-foreground mb-4">
-            {questions[currentQuestion].question}
-          </p>
-          
+          <p className="text-foreground mb-4">{questions[currentQuestion].question}</p>
+
           <div className="space-y-2">
             {questions[currentQuestion].options.map((option, index) => (
               <button
@@ -245,11 +224,13 @@ const EmergencyLightingStandardsQuiz = () => {
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                    selectedAnswers[currentQuestion] === index
-                      ? 'border-elec-yellow bg-elec-yellow'
-                      : 'border-gray-600'
-                  }`}>
+                  <div
+                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      selectedAnswers[currentQuestion] === index
+                        ? 'border-elec-yellow bg-elec-yellow'
+                        : 'border-gray-600'
+                    }`}
+                  >
                     {selectedAnswers[currentQuestion] === index && (
                       <div className="w-2 h-2 rounded-full bg-black"></div>
                     )}
@@ -270,7 +251,7 @@ const EmergencyLightingStandardsQuiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={selectedAnswers[currentQuestion] === undefined}

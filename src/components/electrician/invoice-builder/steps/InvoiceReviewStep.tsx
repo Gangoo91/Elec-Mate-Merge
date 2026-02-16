@@ -23,16 +23,11 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
   const totalAmount = invoice.total || 0;
 
   // Combine all items for display
-  const allItems = [
-    ...(invoice.items || []),
-    ...(invoice.additional_invoice_items || [])
-  ];
+  const allItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
 
   const toggleSection = (section: string) => {
-    setExpandedSections(prev =>
-      prev.includes(section)
-        ? prev.filter(s => s !== section)
-        : [...prev, section]
+    setExpandedSections((prev) =>
+      prev.includes(section) ? prev.filter((s) => s !== section) : [...prev, section]
     );
   };
 
@@ -49,11 +44,15 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
             </div>
             <div>
               <p className="text-[12px] text-white">Client</p>
-              <p className="text-[15px] font-semibold text-white truncate">{invoice.client?.name || 'N/A'}</p>
+              <p className="text-[15px] font-semibold text-white truncate">
+                {invoice.client?.name || 'N/A'}
+              </p>
             </div>
             <div>
               <p className="text-[12px] text-white">Date</p>
-              <p className="text-[15px] font-semibold text-white">{formatDate(invoice.createdAt)}</p>
+              <p className="text-[15px] font-semibold text-white">
+                {formatDate(invoice.createdAt)}
+              </p>
             </div>
             <div>
               <p className="text-[12px] text-white">Total</p>
@@ -74,17 +73,23 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[12px] text-white">Name</p>
-                <p className="text-[14px] font-medium text-white">{invoice.client?.name || 'N/A'}</p>
+                <p className="text-[14px] font-medium text-white">
+                  {invoice.client?.name || 'N/A'}
+                </p>
               </div>
             </div>
             <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
               <div className="p-4">
                 <p className="text-[12px] text-white">Email</p>
-                <p className="text-[14px] font-medium text-white truncate">{invoice.client?.email || 'N/A'}</p>
+                <p className="text-[14px] font-medium text-white truncate">
+                  {invoice.client?.email || 'N/A'}
+                </p>
               </div>
               <div className="p-4">
                 <p className="text-[12px] text-white">Phone</p>
-                <p className="text-[14px] font-medium text-white">{invoice.client?.phone || 'N/A'}</p>
+                <p className="text-[14px] font-medium text-white">
+                  {invoice.client?.phone || 'N/A'}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3 p-4">
@@ -93,7 +98,9 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[12px] text-white">Address</p>
-                <p className="text-[14px] font-medium text-white">{invoice.client?.address || 'N/A'}</p>
+                <p className="text-[14px] font-medium text-white">
+                  {invoice.client?.address || 'N/A'}
+                </p>
               </div>
             </div>
           </div>
@@ -109,10 +116,16 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               {allItems.slice(0, 5).map((item, index) => (
                 <div key={item.id || index} className="flex justify-between items-center p-4">
                   <div className="flex-1 min-w-0">
-                    <p className="text-[14px] font-medium text-white truncate">{item.description}</p>
-                    <p className="text-[12px] text-white/50">{item.quantity} × {formatCurrency(item.unitPrice)}</p>
+                    <p className="text-[14px] font-medium text-white truncate">
+                      {item.description}
+                    </p>
+                    <p className="text-[12px] text-white/50">
+                      {item.quantity} × {formatCurrency(item.unitPrice)}
+                    </p>
                   </div>
-                  <p className="text-[14px] font-semibold text-elec-yellow ml-4">{formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}</p>
+                  <p className="text-[14px] font-semibold text-elec-yellow ml-4">
+                    {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
+                  </p>
                 </div>
               ))}
               {allItems.length > 5 && (
@@ -125,21 +138,29 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               {/* Subtotal */}
               <div className="flex items-center justify-between">
                 <span className="text-[12px] text-white/70">Subtotal</span>
-                <span className="text-[13px] font-medium text-white">{formatCurrency(invoice.subtotal || 0)}</span>
+                <span className="text-[13px] font-medium text-white">
+                  {formatCurrency(invoice.subtotal || 0)}
+                </span>
               </div>
 
               {/* VAT - only show if VAT registered */}
               {invoice.settings?.vatRegistered && (
                 <div className="flex items-center justify-between">
-                  <span className="text-[12px] text-white/70">VAT ({invoice.settings?.vatRate || 20}%)</span>
-                  <span className="text-[13px] font-medium text-white">{formatCurrency(invoice.vatAmount || 0)}</span>
+                  <span className="text-[12px] text-white/70">
+                    VAT ({invoice.settings?.vatRate || 20}%)
+                  </span>
+                  <span className="text-[13px] font-medium text-white">
+                    {formatCurrency(invoice.vatAmount || 0)}
+                  </span>
                 </div>
               )}
 
               {/* Total */}
               <div className="flex items-center justify-between pt-1 border-t border-elec-yellow/30">
                 <span className="text-[14px] font-medium text-white">Total</span>
-                <span className="text-lg font-bold text-elec-yellow">{formatCurrency(totalAmount)}</span>
+                <span className="text-lg font-bold text-elec-yellow">
+                  {formatCurrency(totalAmount)}
+                </span>
               </div>
             </div>
           </div>
@@ -155,15 +176,21 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
         <div className="grid grid-cols-2 gap-4">
           <div>
             <p className="text-[12px] text-white">Invoice No.</p>
-            <p className="text-[15px] font-semibold text-white">{invoice.invoice_number || invoice.quoteNumber || 'Draft'}</p>
+            <p className="text-[15px] font-semibold text-white">
+              {invoice.invoice_number || invoice.quoteNumber || 'Draft'}
+            </p>
           </div>
           <div>
             <p className="text-[12px] text-white">Client</p>
-            <p className="text-[15px] font-semibold text-white truncate">{invoice.client?.name || 'N/A'}</p>
+            <p className="text-[15px] font-semibold text-white truncate">
+              {invoice.client?.name || 'N/A'}
+            </p>
           </div>
           <div>
             <p className="text-[12px] text-white">Due Date</p>
-            <p className="text-[15px] font-semibold text-white">{formatDate(invoice.invoice_due_date || invoice.createdAt)}</p>
+            <p className="text-[15px] font-semibold text-white">
+              {formatDate(invoice.invoice_due_date || invoice.createdAt)}
+            </p>
           </div>
           <div>
             <p className="text-[12px] text-white">Total</p>
@@ -198,20 +225,28 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
                 <div className="p-4">
                   <p className="text-[12px] text-white">Name</p>
-                  <p className="text-[14px] font-medium text-white">{invoice.client?.name || 'N/A'}</p>
+                  <p className="text-[14px] font-medium text-white">
+                    {invoice.client?.name || 'N/A'}
+                  </p>
                 </div>
                 <div className="p-4">
                   <p className="text-[12px] text-white">Phone</p>
-                  <p className="text-[14px] font-medium text-white">{invoice.client?.phone || 'N/A'}</p>
+                  <p className="text-[14px] font-medium text-white">
+                    {invoice.client?.phone || 'N/A'}
+                  </p>
                 </div>
               </div>
               <div className="p-4">
                 <p className="text-[12px] text-white">Email</p>
-                <p className="text-[14px] font-medium text-white break-all">{invoice.client?.email || 'N/A'}</p>
+                <p className="text-[14px] font-medium text-white break-all">
+                  {invoice.client?.email || 'N/A'}
+                </p>
               </div>
               <div className="p-4">
                 <p className="text-[12px] text-white">Address</p>
-                <p className="text-[14px] font-medium text-white">{invoice.client?.address || 'N/A'}</p>
+                <p className="text-[14px] font-medium text-white">
+                  {invoice.client?.address || 'N/A'}
+                </p>
               </div>
             </div>
           )}
@@ -241,7 +276,9 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
                 <div className="p-4">
                   <p className="text-[12px] text-white">Reference</p>
-                  <p className="text-[14px] font-medium text-white">{invoice.quoteNumber || 'N/A'}</p>
+                  <p className="text-[14px] font-medium text-white">
+                    {invoice.quoteNumber || 'N/A'}
+                  </p>
                 </div>
                 <div className="p-4">
                   <p className="text-[12px] text-white">Status</p>
@@ -261,11 +298,15 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
                 <div className="p-4">
                   <p className="text-[12px] text-white">Invoice Date</p>
-                  <p className="text-[14px] font-medium text-white">{formatDate(invoice.invoice_date || invoice.createdAt)}</p>
+                  <p className="text-[14px] font-medium text-white">
+                    {formatDate(invoice.invoice_date || invoice.createdAt)}
+                  </p>
                 </div>
                 <div className="p-4">
                   <p className="text-[12px] text-white">Due Date</p>
-                  <p className="text-[14px] font-medium text-white">{formatDate(invoice.invoice_due_date || invoice.expiryDate)}</p>
+                  <p className="text-[14px] font-medium text-white">
+                    {formatDate(invoice.invoice_due_date || invoice.expiryDate)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -283,7 +324,8 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                 <Banknote className="h-4 w-4 text-elec-yellow" />
               </div>
               <span className="text-[14px] font-medium text-white">
-                Invoice Items {invoice.settings?.showSummaryView ? '(Summary)' : `(${allItems.length})`}
+                Invoice Items{' '}
+                {invoice.settings?.showSummaryView ? '(Summary)' : `(${allItems.length})`}
               </span>
             </div>
             {expandedSections.includes('items') ? (
@@ -296,65 +338,71 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
           {expandedSections.includes('items') && (
             <div className="border-t border-white/[0.06]">
               <div className="divide-y divide-white/[0.06]">
-                {invoice.settings?.showSummaryView ? (
-                  // Summary View: Group by category
-                  (() => {
-                    const categoryTotals = allItems.reduce((acc, item) => {
-                      const qty = item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
-                      const total = qty * item.unitPrice;
-                      const category = item.category || 'manual';
-                      if (!acc[category]) acc[category] = 0;
-                      acc[category] += total;
-                      return acc;
-                    }, {} as Record<string, number>);
+                {invoice.settings?.showSummaryView
+                  ? // Summary View: Group by category
+                    (() => {
+                      const categoryTotals = allItems.reduce(
+                        (acc, item) => {
+                          const qty =
+                            item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
+                          const total = qty * item.unitPrice;
+                          const category = item.category || 'manual';
+                          if (!acc[category]) acc[category] = 0;
+                          acc[category] += total;
+                          return acc;
+                        },
+                        {} as Record<string, number>
+                      );
 
-                    const categoryLabels: Record<string, string> = {
-                      labour: 'Labour',
-                      materials: 'Materials',
-                      equipment: 'Equipment Hire',
-                      manual: 'Other'
-                    };
+                      const categoryLabels: Record<string, string> = {
+                        labour: 'Labour',
+                        materials: 'Materials',
+                        equipment: 'Equipment Hire',
+                        manual: 'Other',
+                      };
 
-                    const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
+                      const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
 
-                    return categoryOrder
-                      .filter(cat => categoryTotals[cat] && categoryTotals[cat] > 0)
-                      .map((category) => (
-                        <div key={category} className="p-4 space-y-2">
-                          <div className="flex justify-between items-start gap-3">
-                            <div className="flex-1 min-w-0">
-                              <p className="text-[14px] font-medium text-white">{categoryLabels[category]}</p>
+                      return categoryOrder
+                        .filter((cat) => categoryTotals[cat] && categoryTotals[cat] > 0)
+                        .map((category) => (
+                          <div key={category} className="p-4 space-y-2">
+                            <div className="flex justify-between items-start gap-3">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-[14px] font-medium text-white">
+                                  {categoryLabels[category]}
+                                </p>
+                              </div>
+                              <p className="text-[14px] font-bold text-elec-yellow shrink-0">
+                                {formatCurrency(categoryTotals[category])}
+                              </p>
                             </div>
-                            <p className="text-[14px] font-bold text-elec-yellow shrink-0">
-                              {formatCurrency(categoryTotals[category])}
-                            </p>
                           </div>
+                        ));
+                    })()
+                  : // Detailed View: Show all items
+                    allItems.map((item, index) => (
+                      <div key={item.id || index} className="p-4 space-y-2">
+                        <div className="flex justify-between items-start gap-3">
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[14px] font-medium text-white">{item.description}</p>
+                            {item.notes && (
+                              <p className="text-[12px] text-white/50 mt-0.5">{item.notes}</p>
+                            )}
+                          </div>
+                          <p className="text-[14px] font-bold text-elec-yellow shrink-0">
+                            {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
+                          </p>
                         </div>
-                      ));
-                  })()
-                ) : (
-                  // Detailed View: Show all items
-                  allItems.map((item, index) => (
-                    <div key={item.id || index} className="p-4 space-y-2">
-                      <div className="flex justify-between items-start gap-3">
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[14px] font-medium text-white">{item.description}</p>
-                          {item.notes && (
-                            <p className="text-[12px] text-white/50 mt-0.5">{item.notes}</p>
-                          )}
+                        <div className="flex items-center gap-4 text-[12px] text-white/50">
+                          <span>
+                            {item.quantity} {item.unit}
+                          </span>
+                          <span>×</span>
+                          <span>{formatCurrency(item.unitPrice)}</span>
                         </div>
-                        <p className="text-[14px] font-bold text-elec-yellow shrink-0">
-                          {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
-                        </p>
                       </div>
-                      <div className="flex items-center gap-4 text-[12px] text-white/50">
-                        <span>{item.quantity} {item.unit}</span>
-                        <span>×</span>
-                        <span>{formatCurrency(item.unitPrice)}</span>
-                      </div>
-                    </div>
-                  ))
-                )}
+                    ))}
               </div>
 
               {/* Totals Breakdown */}
@@ -362,21 +410,29 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                 {/* Subtotal */}
                 <div className="flex items-center justify-between">
                   <span className="text-[13px] text-white/70">Subtotal</span>
-                  <span className="text-[14px] font-medium text-white">{formatCurrency(invoice.subtotal || 0)}</span>
+                  <span className="text-[14px] font-medium text-white">
+                    {formatCurrency(invoice.subtotal || 0)}
+                  </span>
                 </div>
 
                 {/* VAT - only show if VAT registered */}
                 {invoice.settings?.vatRegistered && (
                   <div className="flex items-center justify-between">
-                    <span className="text-[13px] text-white/70">VAT ({invoice.settings?.vatRate || 20}%)</span>
-                    <span className="text-[14px] font-medium text-white">{formatCurrency(invoice.vatAmount || 0)}</span>
+                    <span className="text-[13px] text-white/70">
+                      VAT ({invoice.settings?.vatRate || 20}%)
+                    </span>
+                    <span className="text-[14px] font-medium text-white">
+                      {formatCurrency(invoice.vatAmount || 0)}
+                    </span>
                   </div>
                 )}
 
                 {/* Total */}
                 <div className="flex items-center justify-between pt-2 border-t border-elec-yellow/30">
                   <span className="text-[15px] font-semibold text-white">Total</span>
-                  <span className="text-xl font-bold text-elec-yellow">{formatCurrency(totalAmount)}</span>
+                  <span className="text-xl font-bold text-elec-yellow">
+                    {formatCurrency(totalAmount)}
+                  </span>
                 </div>
               </div>
             </div>

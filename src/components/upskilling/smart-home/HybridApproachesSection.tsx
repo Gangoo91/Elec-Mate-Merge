@@ -12,13 +12,15 @@ export const HybridApproachesSection = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-gray-300">
-          Some ecosystems use both hub-based and hubless devices, combining the reliability of local hubs 
-          with the convenience of cloud integration and voice control.
+          Some ecosystems use both hub-based and hubless devices, combining the reliability of local
+          hubs with the convenience of cloud integration and voice control.
         </p>
 
         <div className="p-4 bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-600/30 rounded-lg">
-          <h4 className="font-semibold text-foreground mb-3">Example: Philips Hue + Amazon Alexa</h4>
-          
+          <h4 className="font-semibold text-foreground mb-3">
+            Example: Philips Hue + Amazon Alexa
+          </h4>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-3 bg-elec-dark border border-blue-600/20 rounded">
               <h5 className="font-medium text-blue-200 mb-2">Local Hub Component</h5>
@@ -29,7 +31,7 @@ export const HybridApproachesSection = () => {
                 <li>• Fast response times</li>
               </ul>
             </div>
-            
+
             <div className="p-3 bg-elec-dark border border-purple-600/20 rounded">
               <h5 className="font-medium text-purple-200 mb-2">Cloud Integration</h5>
               <ul className="text-purple-100 text-sm space-y-1">

@@ -1,17 +1,27 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Card, CardContent } from '@/components/ui/card';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card, CardContent } from "@/components/ui/card";
-import { useUnreadCount, useNotifications, useMarkAsRead, useMarkAllAsRead } from "@/hooks/useEmployerNotifications";
-import { Bell, BellRing, Check, CheckCheck, Briefcase, AlertTriangle, MessageSquare, Clock } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { formatDistanceToNow } from "date-fns";
+  useUnreadCount,
+  useNotifications,
+  useMarkAsRead,
+  useMarkAllAsRead,
+} from '@/hooks/useEmployerNotifications';
+import {
+  Bell,
+  BellRing,
+  Check,
+  CheckCheck,
+  Briefcase,
+  AlertTriangle,
+  MessageSquare,
+  Clock,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { formatDistanceToNow } from 'date-fns';
 
 const getNotificationIcon = (type: string) => {
   switch (type) {
@@ -46,20 +56,14 @@ export function NotificationBell() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="relative h-10 w-10"
-        >
+        <Button variant="ghost" size="icon" className="relative h-10 w-10">
           {unreadCount > 0 ? (
             <BellRing className="h-5 w-5 text-elec-yellow" />
           ) : (
             <Bell className="h-5 w-5" />
           )}
           {unreadCount > 0 && (
-            <Badge
-              className="absolute -top-1 -right-1 h-5 min-w-5 px-1 flex items-center justify-center text-xs bg-destructive text-destructive-foreground border-0"
-            >
+            <Badge className="absolute -top-1 -right-1 h-5 min-w-5 px-1 flex items-center justify-center text-xs bg-destructive text-destructive-foreground border-0">
               {unreadCount > 99 ? '99+' : unreadCount}
             </Badge>
           )}
@@ -83,9 +87,7 @@ export function NotificationBell() {
 
         <ScrollArea className="max-h-[400px]">
           {isLoading ? (
-            <div className="p-4 text-center text-muted-foreground text-sm">
-              Loading...
-            </div>
+            <div className="p-4 text-center text-muted-foreground text-sm">Loading...</div>
           ) : notifications.length === 0 ? (
             <div className="p-8 text-center">
               <Bell className="h-8 w-8 mx-auto mb-2 text-muted-foreground/50" />
@@ -97,8 +99,8 @@ export function NotificationBell() {
                 <div
                   key={notification.id}
                   className={cn(
-                    "p-4 hover:bg-muted/50 transition-colors cursor-pointer",
-                    !notification.read_at && "bg-elec-yellow/5"
+                    'p-4 hover:bg-muted/50 transition-colors cursor-pointer',
+                    !notification.read_at && 'bg-elec-yellow/5'
                   )}
                   onClick={() => {
                     if (!notification.read_at) {
@@ -107,15 +109,15 @@ export function NotificationBell() {
                   }}
                 >
                   <div className="flex gap-3">
-                    <div className="shrink-0 mt-0.5">
-                      {getNotificationIcon(notification.type)}
-                    </div>
+                    <div className="shrink-0 mt-0.5">{getNotificationIcon(notification.type)}</div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2">
-                        <p className={cn(
-                          "text-sm leading-tight",
-                          !notification.read_at && "font-medium"
-                        )}>
+                        <p
+                          className={cn(
+                            'text-sm leading-tight',
+                            !notification.read_at && 'font-medium'
+                          )}
+                        >
                           {notification.title}
                         </p>
                         {!notification.read_at && (
@@ -126,7 +128,9 @@ export function NotificationBell() {
                         {notification.message}
                       </p>
                       <p className="text-xs text-muted-foreground/70 mt-1.5">
-                        {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
+                        {formatDistanceToNow(new Date(notification.created_at), {
+                          addSuffix: true,
+                        })}
                       </p>
                     </div>
                   </div>

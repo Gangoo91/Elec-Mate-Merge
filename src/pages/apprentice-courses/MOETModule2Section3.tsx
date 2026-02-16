@@ -1,51 +1,51 @@
-import { ArrowLeft, Zap, Cog, RotateCw, Battery, Play } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, Cog, RotateCw, Battery, Play } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import useSEO from '@/hooks/useSEO';
 
 const MOETModule2Section3 = () => {
   useSEO(
-    "Electrical Machines - MOET Module 2",
-    "Transformers, induction motors, synchronous machines and motor starting"
+    'Electrical Machines - MOET Module 2',
+    'Transformers, induction motors, synchronous machines and motor starting'
   );
 
   const subsections = [
     {
-      number: "2.3.1",
-      title: "Transformers: principles and applications",
-      description: "Transformer operation, types and practical applications",
+      number: '2.3.1',
+      title: 'Transformers: principles and applications',
+      description: 'Transformer operation, types and practical applications',
       icon: Zap,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section3-1"
+      href: '/study-centre/apprentice/m-o-e-t-module2-section3-1',
     },
     {
-      number: "2.3.2", 
-      title: "Induction Motors (single & three-phase)",
-      description: "Induction motor principles, construction and characteristics",
+      number: '2.3.2',
+      title: 'Induction Motors (single & three-phase)',
+      description: 'Induction motor principles, construction and characteristics',
       icon: Cog,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section3-2"
+      href: '/study-centre/apprentice/m-o-e-t-module2-section3-2',
     },
     {
-      number: "2.3.3",
-      title: "Synchronous Motors and Generators", 
-      description: "Synchronous machine operation and applications",
+      number: '2.3.3',
+      title: 'Synchronous Motors and Generators',
+      description: 'Synchronous machine operation and applications',
       icon: RotateCw,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section3-3"
+      href: '/study-centre/apprentice/m-o-e-t-module2-section3-3',
     },
     {
-      number: "2.3.4",
-      title: "DC Motors and Their Control",
-      description: "DC motor types, characteristics and control methods",
+      number: '2.3.4',
+      title: 'DC Motors and Their Control',
+      description: 'DC motor types, characteristics and control methods',
       icon: Battery,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section3-4"
+      href: '/study-centre/apprentice/m-o-e-t-module2-section3-4',
     },
     {
-      number: "2.3.5",
-      title: "Motor Starting Methods",
-      description: "Various motor starting techniques and protection",
+      number: '2.3.5',
+      title: 'Motor Starting Methods',
+      description: 'Various motor starting techniques and protection',
       icon: Play,
-      href: "/study-centre/apprentice/m-o-e-t-module2-section3-5"
-    }
+      href: '/study-centre/apprentice/m-o-e-t-module2-section3-5',
+    },
   ];
 
   return (
@@ -53,7 +53,11 @@ const MOETModule2Section3 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            asChild
+          >
             <Link to="/study-centre/apprentice/m-o-e-t-module2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2

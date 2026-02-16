@@ -1,9 +1,8 @@
-
-import React from "react";
-import { TimeEntry } from "@/types/time-tracking";
-import { Card, CardContent } from "@/components/ui/card";
-import TimeEntryCard from "./TimeEntryCard";
-import { Skeleton } from "@/components/ui/skeleton";
+import React from 'react';
+import { TimeEntry } from '@/types/time-tracking';
+import { Card, CardContent } from '@/components/ui/card';
+import TimeEntryCard from './TimeEntryCard';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export interface EntriesListProps {
   entries: TimeEntry[];

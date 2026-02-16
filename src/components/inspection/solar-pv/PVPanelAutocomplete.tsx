@@ -21,11 +21,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -74,20 +70,23 @@ export function PVPanelAutocomplete({
     if (!value) return null;
     // Search through all panels to find match
     const allPanels = Object.values(panelsGrouped).flat();
-    return allPanels.find(p => `${p.make} ${p.model}` === value) || null;
+    return allPanels.find((p) => `${p.make} ${p.model}` === value) || null;
   }, [value, panelsGrouped]);
 
   // Handle panel selection
-  const handleSelect = React.useCallback((panel: SolarPanel) => {
-    const newValue = `${panel.make} ${panel.model}`;
-    const isDeselecting = value === newValue;
+  const handleSelect = React.useCallback(
+    (panel: SolarPanel) => {
+      const newValue = `${panel.make} ${panel.model}`;
+      const isDeselecting = value === newValue;
 
-    onValueChange?.(isDeselecting ? '' : panel.id);
-    onPanelSelect?.(isDeselecting ? null : panel);
+      onValueChange?.(isDeselecting ? '' : panel.id);
+      onPanelSelect?.(isDeselecting ? null : panel);
 
-    setOpen(false);
-    setSearch('');
-  }, [value, onValueChange, onPanelSelect]);
+      setOpen(false);
+      setSearch('');
+    },
+    [value, onValueChange, onPanelSelect]
+  );
 
   // Format display value
   const displayValue = React.useMemo(() => {
@@ -120,10 +119,7 @@ export function PVPanelAutocomplete({
         className
       )}
     >
-      <span className={cn(
-        'truncate',
-        !selectedPanel && 'text-muted-foreground'
-      )}>
+      <span className={cn('truncate', !selectedPanel && 'text-muted-foreground')}>
         {displayValue}
       </span>
       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -138,10 +134,10 @@ export function PVPanelAutocomplete({
         key={panel.id}
         onClick={() => handleSelect(panel)}
         className={cn(
-          "rounded-lg cursor-pointer transition-colors flex items-center",
-          forMobile ? "px-4 py-4 min-h-[56px]" : "px-2 py-2",
-          "hover:bg-elec-yellow/10 active:bg-elec-yellow/20",
-          isSelected && "bg-elec-yellow/20"
+          'rounded-lg cursor-pointer transition-colors flex items-center',
+          forMobile ? 'px-4 py-4 min-h-[56px]' : 'px-2 py-2',
+          'hover:bg-elec-yellow/10 active:bg-elec-yellow/20',
+          isSelected && 'bg-elec-yellow/20'
         )}
       >
         <Check
@@ -152,26 +148,30 @@ export function PVPanelAutocomplete({
           )}
         />
         <div className="flex flex-col flex-1 min-w-0">
-          <span className={cn("font-medium truncate", forMobile && "text-base")}>
+          <span className={cn('font-medium truncate', forMobile && 'text-base')}>
             {showMake ? `${panel.make} ${panel.model}` : panel.model}
           </span>
-          <span className={cn("text-gray-400 truncate", forMobile ? "text-sm" : "text-xs")}>
+          <span className={cn('text-gray-400 truncate', forMobile ? 'text-sm' : 'text-xs')}>
             {panel.wattage}W • {panel.efficiency}%{showMake ? ` • ${panel.cellType}` : ''}
           </span>
         </div>
         {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
-          <span className={cn(
-            "ml-2 px-1.5 py-0.5 font-medium bg-elec-yellow/20 text-elec-yellow rounded",
-            text-xs
-          )}>
+          <span
+            className={cn(
+              'ml-2 px-1.5 py-0.5 font-medium bg-elec-yellow/20 text-elec-yellow rounded',
+              text - xs
+            )}
+          >
             NEW
           </span>
         )}
         {showMake && (
-          <span className={cn(
-            "ml-2 px-1.5 py-0.5 font-medium bg-amber-500/20 text-amber-400 rounded",
-            text-xs
-          )}>
+          <span
+            className={cn(
+              'ml-2 px-1.5 py-0.5 font-medium bg-amber-500/20 text-amber-400 rounded',
+              text - xs
+            )}
+          >
             {panel.wattage}W
           </span>
         )}
@@ -218,7 +218,9 @@ export function PVPanelAutocomplete({
             <div className="flex-1 overflow-y-auto momentum-scroll-y">
               {filteredPanels && filteredPanels.length > 0 ? (
                 <div className="px-2 py-2">
-                  <p className="px-4 py-2 text-sm text-muted-foreground font-medium">Search Results</p>
+                  <p className="px-4 py-2 text-sm text-muted-foreground font-medium">
+                    Search Results
+                  </p>
                   <div className="space-y-1">
                     {filteredPanels.map((panel) => renderPanelItem(panel, true, true))}
                   </div>
@@ -269,9 +271,7 @@ export function PVPanelAutocomplete({
   return (
     <div className="relative">
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          {triggerButton}
-        </PopoverTrigger>
+        <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
         <PopoverContent
           className="w-[var(--radix-popover-trigger-width)] p-0 bg-elec-gray border border-white/20 shadow-lg z-[100]"
           align="start"
@@ -285,9 +285,7 @@ export function PVPanelAutocomplete({
               className="border-none bg-elec-gray text-foreground placeholder:text-gray-400"
             />
             <CommandList className="bg-elec-gray max-h-[300px]">
-              <CommandEmpty className="p-4 text-sm text-gray-400">
-                No panels found.
-              </CommandEmpty>
+              <CommandEmpty className="p-4 text-sm text-gray-400">No panels found.</CommandEmpty>
 
               {/* Show search results if searching */}
               {filteredPanels && filteredPanels.length > 0 ? (
@@ -302,7 +300,9 @@ export function PVPanelAutocomplete({
                       <Check
                         className={cn(
                           'mr-2 h-4 w-4 shrink-0',
-                          selectedPanel?.id === panel.id ? 'opacity-100 text-elec-yellow' : 'opacity-0'
+                          selectedPanel?.id === panel.id
+                            ? 'opacity-100 text-elec-yellow'
+                            : 'opacity-0'
                         )}
                       />
                       <div className="flex flex-col flex-1 min-w-0">
@@ -333,7 +333,9 @@ export function PVPanelAutocomplete({
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4 shrink-0',
-                            selectedPanel?.id === panel.id ? 'opacity-100 text-elec-yellow' : 'opacity-0'
+                            selectedPanel?.id === panel.id
+                              ? 'opacity-100 text-elec-yellow'
+                              : 'opacity-0'
                           )}
                         />
                         <div className="flex flex-col flex-1 min-w-0">
@@ -391,10 +393,7 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
   if (!panel) return null;
 
   return (
-    <div className={cn(
-      'p-3 bg-elec-gray/50 border border-white/10 rounded-lg text-sm',
-      className
-    )}>
+    <div className={cn('p-3 bg-elec-gray/50 border border-white/10 rounded-lg text-sm', className)}>
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="font-medium text-foreground">

@@ -1,12 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import {
-  AlertTriangle,
-  CheckCircle2,
-  Bell,
-  ChevronRight
-} from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Bell, ChevronRight } from 'lucide-react';
 import { useNotifications } from '@/hooks/useNotifications';
 import { getDaysUntilDeadline, getDeadlineUrgency } from '@/utils/notificationHelper';
 import { cn } from '@/lib/utils';
@@ -21,14 +16,19 @@ const formatWorkType = (workType: string): string => {
     .replace(/-/g, ' ')
     .replace(/_/g, ' ')
     .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 };
 
 const getReportTypeBadge = (reportType?: string, certNumber?: string) => {
   const type = reportType?.toLowerCase().replace(/[\s_]/g, '-') || '';
   if (type.includes('minor') || certNumber?.startsWith('MW-')) return 'MW';
-  if (type === 'eic' || (type.includes('eic') && !type.includes('eicr')) || certNumber?.startsWith('EIC-')) return 'EIC';
+  if (
+    type === 'eic' ||
+    (type.includes('eic') && !type.includes('eicr')) ||
+    certNumber?.startsWith('EIC-')
+  )
+    return 'EIC';
   if (type === 'eicr' || type.includes('eicr') || certNumber?.startsWith('EICR-')) return 'EICR';
   return 'CERT';
 };
@@ -37,20 +37,25 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
   const { notifications = [], isLoading } = useNotifications();
 
   const urgentNotifications = notifications
-    .filter(n => n.notification_status !== 'submitted' && n.notification_status !== 'cancelled')
+    .filter((n) => n.notification_status !== 'submitted' && n.notification_status !== 'cancelled')
     .sort((a, b) => {
       if (!a.submission_deadline) return 1;
       if (!b.submission_deadline) return -1;
-      return getDaysUntilDeadline(a.submission_deadline) - getDaysUntilDeadline(b.submission_deadline);
+      return (
+        getDaysUntilDeadline(a.submission_deadline) - getDaysUntilDeadline(b.submission_deadline)
+      );
     })
     .slice(0, 3);
 
   const overdueCount = notifications.filter(
-    n => n.submission_deadline && getDaysUntilDeadline(n.submission_deadline) < 0 && n.notification_status !== 'submitted'
+    (n) =>
+      n.submission_deadline &&
+      getDaysUntilDeadline(n.submission_deadline) < 0 &&
+      n.notification_status !== 'submitted'
   ).length;
 
   const totalPending = notifications.filter(
-    n => n.notification_status !== 'submitted' && n.notification_status !== 'cancelled'
+    (n) => n.notification_status !== 'submitted' && n.notification_status !== 'cancelled'
   ).length;
 
   if (isLoading) {
@@ -85,10 +90,12 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
   }
 
   return (
-    <div className={cn(
-      "bg-[#242428] border rounded-2xl overflow-hidden",
-      overdueCount > 0 ? "border-red-500/30" : "border-elec-yellow/30"
-    )}>
+    <div
+      className={cn(
+        'bg-[#242428] border rounded-2xl overflow-hidden',
+        overdueCount > 0 ? 'border-red-500/30' : 'border-elec-yellow/30'
+      )}
+    >
       {/* Header */}
       <div className="p-4 pb-3">
         <div className="flex items-center justify-between">
@@ -121,16 +128,20 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
 
             const clientName = notification.reports?.client_name;
             const address = notification.reports?.installation_address;
-            const reportLabel = getReportTypeBadge(notification.reports?.report_type, notification.reports?.certificate_number);
+            const reportLabel = getReportTypeBadge(
+              notification.reports?.report_type,
+              notification.reports?.certificate_number
+            );
 
             const isOverdue = urgency === 'overdue';
             const isUrgent = urgency === 'urgent';
 
-            const deadlineText = daysRemaining !== null && daysRemaining < 0
-              ? `${Math.abs(daysRemaining)}d overdue`
-              : daysRemaining === 0
-                ? 'Due today'
-                : `${daysRemaining}d left`;
+            const deadlineText =
+              daysRemaining !== null && daysRemaining < 0
+                ? `${Math.abs(daysRemaining)}d overdue`
+                : daysRemaining === 0
+                  ? 'Due today'
+                  : `${daysRemaining}d left`;
 
             return (
               <motion.div
@@ -140,32 +151,40 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
                 exit={{ opacity: 0 }}
                 transition={{ delay: index * 0.03 }}
                 className={cn(
-                  "relative p-3 rounded-xl cursor-pointer border",
-                  "active:scale-[0.98] transition-all touch-manipulation",
-                  isOverdue ? 'bg-red-500/10 hover:bg-red-500/15 border-red-500/20' :
-                  isUrgent ? 'bg-orange-500/10 hover:bg-orange-500/15 border-orange-500/20' :
-                  'bg-black/40 hover:bg-black/50 border-white/5'
+                  'relative p-3 rounded-xl cursor-pointer border',
+                  'active:scale-[0.98] transition-all touch-manipulation',
+                  isOverdue
+                    ? 'bg-red-500/10 hover:bg-red-500/15 border-red-500/20'
+                    : isUrgent
+                      ? 'bg-orange-500/10 hover:bg-orange-500/15 border-orange-500/20'
+                      : 'bg-black/40 hover:bg-black/50 border-white/5'
                 )}
                 onClick={() => onNavigate?.('notifications')}
               >
                 {/* Top row: Type badge + Work type + Deadline */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className={cn(
-                    "text-[10px] font-bold px-2 py-0.5 rounded-md",
-                    isOverdue ? 'bg-red-500/20 text-red-400' :
-                    isUrgent ? 'bg-orange-500/20 text-orange-400' :
-                    'bg-elec-yellow/20 text-elec-yellow'
-                  )}>
+                  <span
+                    className={cn(
+                      'text-[10px] font-bold px-2 py-0.5 rounded-md',
+                      isOverdue
+                        ? 'bg-red-500/20 text-red-400'
+                        : isUrgent
+                          ? 'bg-orange-500/20 text-orange-400'
+                          : 'bg-elec-yellow/20 text-elec-yellow'
+                    )}
+                  >
                     {reportLabel}
                   </span>
                   <span className="text-[10px] font-medium text-white/50 px-2 py-0.5 rounded-md bg-white/5">
                     {formatWorkType(notification.work_type)}
                   </span>
                   {notification.submission_deadline && (
-                    <span className={cn(
-                      "text-[10px] font-semibold ml-auto",
-                      isOverdue ? "text-red-400" : isUrgent ? "text-orange-400" : "text-green-400"
-                    )}>
+                    <span
+                      className={cn(
+                        'text-[10px] font-semibold ml-auto',
+                        isOverdue ? 'text-red-400' : isUrgent ? 'text-orange-400' : 'text-green-400'
+                      )}
+                    >
                       {deadlineText}
                     </span>
                   )}

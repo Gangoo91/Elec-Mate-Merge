@@ -1,14 +1,14 @@
 import React from 'react';
-import { 
-  Eye, 
-  Zap, 
-  Shield, 
-  TestTube, 
-  AlertCircle, 
+import {
+  Eye,
+  Zap,
+  Shield,
+  TestTube,
+  AlertCircle,
   Target,
   Activity,
   CheckCircle2,
-  LucideIcon 
+  LucideIcon,
 } from 'lucide-react';
 
 interface CategoryIconProps {
@@ -25,12 +25,12 @@ const categoryIconMap: Record<string, LucideIcon> = {
   'RCD Testing': Activity,
   'Prospective Fault': TestTube,
   'Functional Testing': CheckCircle2,
-  'Inspection': Eye,
-  'Testing': TestTube,
-  'Safety': Shield,
-  'Protection': Shield,
-  'Regulations': CheckCircle2,
-  'Design': Target
+  Inspection: Eye,
+  Testing: TestTube,
+  Safety: Shield,
+  Protection: Shield,
+  Regulations: CheckCircle2,
+  Design: Target,
 };
 
 const CategoryIcon = ({ category, className = 'h-6 w-6' }: CategoryIconProps) => {

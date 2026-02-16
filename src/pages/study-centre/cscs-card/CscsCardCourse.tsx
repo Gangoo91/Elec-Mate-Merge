@@ -1,65 +1,83 @@
-import { ArrowLeft, BadgeCheck, BookOpen, Shield, ArrowUpFromLine, FlaskConical, HardHat, GraduationCap, Clock, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ModuleCard } from "@/components/upskilling/cards";
-import useSEO from "@/hooks/useSEO";
+import {
+  ArrowLeft,
+  BadgeCheck,
+  BookOpen,
+  Shield,
+  ArrowUpFromLine,
+  FlaskConical,
+  HardHat,
+  GraduationCap,
+  Clock,
+  FileText,
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ModuleCard } from '@/components/upskilling/cards';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
     moduleNumber: 1,
-    title: "Introduction to CSCS & the HS&E Test",
-    description: "The CSCS scheme, card types, HS&E test format, booking procedures, and study strategies",
+    title: 'Introduction to CSCS & the HS&E Test',
+    description:
+      'The CSCS scheme, card types, HS&E test format, booking procedures, and study strategies',
     icon: BookOpen,
-    duration: "30 mins",
-    link: "../cscs-card-module-1",
+    duration: '30 mins',
+    link: '../cscs-card-module-1',
   },
   {
     moduleNumber: 2,
-    title: "General Health & Safety",
-    description: "Risk assessment, method statements, PPE, workplace welfare, toolbox talks, and accident reporting",
+    title: 'General Health & Safety',
+    description:
+      'Risk assessment, method statements, PPE, workplace welfare, toolbox talks, and accident reporting',
     icon: Shield,
-    duration: "30 mins",
-    link: "../cscs-card-module-2",
+    duration: '30 mins',
+    link: '../cscs-card-module-2',
   },
   {
     moduleNumber: 3,
-    title: "Working at Height & Manual Handling",
-    description: "Height safety regulations, access equipment, fall protection, manual handling assessment, and safe lifting",
+    title: 'Working at Height & Manual Handling',
+    description:
+      'Height safety regulations, access equipment, fall protection, manual handling assessment, and safe lifting',
     icon: ArrowUpFromLine,
-    duration: "30 mins",
-    link: "../cscs-card-module-3",
+    duration: '30 mins',
+    link: '../cscs-card-module-3',
   },
   {
     moduleNumber: 4,
-    title: "Hazardous Substances & Environmental",
-    description: "COSHH, asbestos awareness, noise and vibration exposure, and environmental protection on site",
+    title: 'Hazardous Substances & Environmental',
+    description:
+      'COSHH, asbestos awareness, noise and vibration exposure, and environmental protection on site',
     icon: FlaskConical,
-    duration: "30 mins",
-    link: "../cscs-card-module-4",
+    duration: '30 mins',
+    link: '../cscs-card-module-4',
   },
   {
     moduleNumber: 5,
-    title: "Specialist Knowledge & Site Safety",
-    description: "Excavations, confined spaces, fire safety, electrical safety, demolition, and emergency procedures",
+    title: 'Specialist Knowledge & Site Safety',
+    description:
+      'Excavations, confined spaces, fire safety, electrical safety, demolition, and emergency procedures',
     icon: HardHat,
-    duration: "30 mins",
-    link: "../cscs-card-module-5",
+    duration: '30 mins',
+    link: '../cscs-card-module-5',
   },
   {
     moduleNumber: 6,
-    title: "Mock Exam",
-    description: "200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark",
+    title: 'Mock Exam',
+    description:
+      '200-question bank, 20 random questions per attempt, 30-minute timer, 80% pass mark',
     icon: GraduationCap,
-    duration: "30 mins",
-    link: "../cscs-card-module-6",
+    duration: '30 mins',
+    link: '../cscs-card-module-6',
     isExam: true,
   },
 ];
 
 export default function CscsCardCourse() {
   useSEO({
-    title: "CSCS Card Preparation | General Upskilling",
-    description: "Complete CSCS HS&E test preparation covering general safety, working at height, hazardous substances, specialist knowledge, and mock exam.",
+    title: 'CSCS Card Preparation | General Upskilling',
+    description:
+      'Complete CSCS HS&E test preparation covering general safety, working at height, hazardous substances, specialist knowledge, and mock exam.',
   });
 
   return (

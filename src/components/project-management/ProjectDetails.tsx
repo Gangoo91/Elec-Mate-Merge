@@ -1,5 +1,4 @@
-
-import { ProjectDetailsContainer } from "./details/ProjectDetailsContainer";
+import { ProjectDetailsContainer } from './details/ProjectDetailsContainer';
 
 const ProjectDetails = () => {
   return <ProjectDetailsContainer />;

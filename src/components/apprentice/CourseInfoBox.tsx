@@ -1,5 +1,4 @@
-
-import { BookOpen } from "lucide-react";
+import { BookOpen } from 'lucide-react';
 
 const CourseInfoBox = () => {
   return (
@@ -9,8 +8,9 @@ const CourseInfoBox = () => {
         <p className="font-medium">Off-the-Job Training Info</p>
       </div>
       <p>
-        EAL Level 2 electrical courses require a minimum of 20% off-the-job training, equating to at least 278 hours over a 12-month period. 
-        Your time spent learning on this app is automatically tracked in the Off-the-Job Time Keeping section.
+        EAL Level 2 electrical courses require a minimum of 20% off-the-job training, equating to at
+        least 278 hours over a 12-month period. Your time spent learning on this app is
+        automatically tracked in the Off-the-Job Time Keeping section.
       </p>
     </div>
   );

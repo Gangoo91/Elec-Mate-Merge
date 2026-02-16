@@ -42,30 +42,67 @@ const FireAlarmModule6SectionTemplate = ({
     document.title = `${title} | Fire Alarm Module 6 Section ${sectionNumber} | Elec-Mate`;
     const desc = description;
     let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'description';
+      document.head.appendChild(meta);
+    }
     if (meta) meta.content = desc;
 
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
     if (canonical) canonical.href = window.location.href;
 
-    const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: title, description: desc, about: [title, 'BS 5839-1', 'BS 7671'], author: { '@type': 'Organization', name: 'Elec-Mate' } };
-    const script = document.createElement('script'); script.type = 'application/ld+json'; script.text = JSON.stringify(ld); document.head.appendChild(script);
-    return () => { if (script && script.parentNode) script.parentNode.removeChild(script); };
+    const ld = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description: desc,
+      about: [title, 'BS 5839-1', 'BS 7671'],
+      author: { '@type': 'Organization', name: 'Elec-Mate' },
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(ld);
+    document.head.appendChild(script);
+    return () => {
+      if (script && script.parentNode) script.parentNode.removeChild(script);
+    };
   }, [title, description, sectionNumber]);
 
-  const sequentialQuestions = useMemo(() => quiz.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })), [quiz]);
+  const sequentialQuestions = useMemo(
+    () =>
+      quiz.map((q) => ({
+        id: q.id,
+        question: q.question,
+        options: q.options,
+        correct: q.correctAnswer,
+        explanation: q.explanation,
+      })),
+    [quiz]
+  );
 
-  const summaryText = Array.isArray(summary) && summary.length > 0
-    ? summary.join(' ')
-    : typeof summary === 'string' && summary.trim().length > 0
-    ? summary
-    : 'Key points align with BS 5839-1 and BS 7671 requirements in the UK context.';
+  const summaryText =
+    Array.isArray(summary) && summary.length > 0
+      ? summary.join(' ')
+      : typeof summary === 'string' && summary.trim().length > 0
+        ? summary
+        : 'Key points align with BS 5839-1 and BS 7671 requirements in the UK context.';
 
   const faqs = [
     { q: `What are the key requirements covered in ${title}?`, a: intro },
-    { q: 'How does this relate to BS 5839-1 and BS 7671?', a: 'All fire alarm system commissioning and handover in the UK must comply with BS 5839-1 for fire detection systems and BS 7671 for electrical installation requirements. This section covers specific requirements that support compliant commissioning.' },
-    { q: 'What documentation is required for handover?', a: 'Full commissioning records, test certificates, as-built drawings, operation and maintenance manuals, and handover certificates are required. Keep records for ongoing maintenance and future modifications.' },
+    {
+      q: 'How does this relate to BS 5839-1 and BS 7671?',
+      a: 'All fire alarm system commissioning and handover in the UK must comply with BS 5839-1 for fire detection systems and BS 7671 for electrical installation requirements. This section covers specific requirements that support compliant commissioning.',
+    },
+    {
+      q: 'What documentation is required for handover?',
+      a: 'Full commissioning records, test certificates, as-built drawings, operation and maintenance manuals, and handover certificates are required. Keep records for ongoing maintenance and future modifications.',
+    },
   ];
 
   return (
@@ -94,14 +131,12 @@ const FireAlarmModule6SectionTemplate = ({
           <div className="text-center mb-8 sm:mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-4">
               <Zap className="w-4 h-4 text-elec-yellow" />
-              <span className="text-elec-yellow text-sm font-medium">Module 6 • Section {sectionNumber}</span>
+              <span className="text-elec-yellow text-sm font-medium">
+                Module 6 • Section {sectionNumber}
+              </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-              {title}
-            </h1>
-            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
-              {description}
-            </p>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">{title}</h1>
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">{description}</p>
           </div>
 
           {/* Quick Summary Boxes */}
@@ -143,16 +178,24 @@ const FireAlarmModule6SectionTemplate = ({
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            {typeof intro === 'string' ? intro.split('\n').map((paragraph, i) => (
-              <p key={i} className="text-white leading-relaxed mb-3">{paragraph}</p>
-            )) : <p className="text-white leading-relaxed">{intro}</p>}
+            {typeof intro === 'string' ? (
+              intro.split('\n').map((paragraph, i) => (
+                <p key={i} className="text-white leading-relaxed mb-3">
+                  {paragraph}
+                </p>
+              ))
+            ) : (
+              <p className="text-white leading-relaxed">{intro}</p>
+            )}
           </section>
 
           {/* Content Blocks */}
           {blocks.map((block, index) => (
             <section key={block.heading} className="mb-10">
               <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-                <span className="text-elec-yellow/80 text-sm font-normal">{String(index + 2).padStart(2, '0')}</span>
+                <span className="text-elec-yellow/80 text-sm font-normal">
+                  {String(index + 2).padStart(2, '0')}
+                </span>
                 {block.heading}
               </h2>
               {blocksLayout === 'grid' && blocks.length > 2 ? (
@@ -190,7 +233,9 @@ const FireAlarmModule6SectionTemplate = ({
           {/* Summary */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-elec-yellow/80 text-sm font-normal">{String(blocks.length + 2).padStart(2, '0')}</span>
+              <span className="text-elec-yellow/80 text-sm font-normal">
+                {String(blocks.length + 2).padStart(2, '0')}
+              </span>
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">

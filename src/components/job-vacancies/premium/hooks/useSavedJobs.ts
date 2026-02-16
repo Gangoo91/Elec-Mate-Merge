@@ -3,10 +3,10 @@
  * Persists to localStorage for offline access
  */
 
-import { useState, useEffect, useCallback } from "react";
-import type { UnifiedJob } from "@/hooks/job-vacancies/useUnifiedJobSearch";
+import { useState, useEffect, useCallback } from 'react';
+import type { UnifiedJob } from '@/hooks/job-vacancies/useUnifiedJobSearch';
 
-const STORAGE_KEY = "elecmate-saved-jobs";
+const STORAGE_KEY = 'elecmate-saved-jobs';
 
 interface SavedJobEntry {
   job: UnifiedJob;
@@ -26,7 +26,7 @@ export const useSavedJobs = () => {
         setSavedJobs(parsed);
       }
     } catch (error) {
-      console.error("Error loading saved jobs:", error);
+      console.error('Error loading saved jobs:', error);
     } finally {
       setIsLoading(false);
     }
@@ -38,7 +38,7 @@ export const useSavedJobs = () => {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(savedJobs));
       } catch (error) {
-        console.error("Error saving jobs:", error);
+        console.error('Error saving jobs:', error);
       }
     }
   }, [savedJobs, isLoading]);
@@ -52,27 +52,24 @@ export const useSavedJobs = () => {
   );
 
   // Toggle save status
-  const toggleSave = useCallback(
-    (job: UnifiedJob) => {
-      setSavedJobs((prev) => {
-        const existingIndex = prev.findIndex((entry) => entry.job.id === job.id);
-        if (existingIndex >= 0) {
-          // Remove if already saved
-          return prev.filter((_, index) => index !== existingIndex);
-        } else {
-          // Add to saved
-          return [
-            {
-              job,
-              savedAt: new Date().toISOString(),
-            },
-            ...prev,
-          ];
-        }
-      });
-    },
-    []
-  );
+  const toggleSave = useCallback((job: UnifiedJob) => {
+    setSavedJobs((prev) => {
+      const existingIndex = prev.findIndex((entry) => entry.job.id === job.id);
+      if (existingIndex >= 0) {
+        // Remove if already saved
+        return prev.filter((_, index) => index !== existingIndex);
+      } else {
+        // Add to saved
+        return [
+          {
+            job,
+            savedAt: new Date().toISOString(),
+          },
+          ...prev,
+        ];
+      }
+    });
+  }, []);
 
   // Save a job
   const saveJob = useCallback(

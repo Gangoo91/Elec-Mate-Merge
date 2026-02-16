@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Award, Target, TrendingUp, CheckCircle, Sparkles } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Award, Target, TrendingUp, CheckCircle, Sparkles } from 'lucide-react';
 
 interface AssessmentTool {
   id: string;
@@ -16,22 +15,22 @@ interface AssessmentProgressProps {
 
 const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressProps) => {
   const completionRate = (completedAssessments.length / tools.length) * 100;
-  const essentialCompleted = completedAssessments.filter(id =>
-    tools.find(t => t.id === id)?.difficulty === "Essential"
+  const essentialCompleted = completedAssessments.filter(
+    (id) => tools.find((t) => t.id === id)?.difficulty === 'Essential'
   ).length;
-  const essentialTotal = tools.filter(t => t.difficulty === "Essential").length;
+  const essentialTotal = tools.filter((t) => t.difficulty === 'Essential').length;
 
   const getProgressMessage = () => {
-    if (completionRate === 100) return "All assessments completed!";
-    if (completionRate >= 75) return "Almost there! Great progress!";
-    if (completionRate >= 50) return "Halfway through! Keep going!";
-    if (completionRate >= 25) return "Good start! Continue learning!";
-    return "Begin your assessment journey!";
+    if (completionRate === 100) return 'All assessments completed!';
+    if (completionRate >= 75) return 'Almost there! Great progress!';
+    if (completionRate >= 50) return 'Halfway through! Keep going!';
+    if (completionRate >= 25) return 'Good start! Continue learning!';
+    return 'Begin your assessment journey!';
   };
 
   const getNextRecommendation = () => {
-    const incomplete = tools.filter(t => !completedAssessments.includes(t.id));
-    const essential = incomplete.find(t => t.difficulty === "Essential");
+    const incomplete = tools.filter((t) => !completedAssessments.includes(t.id));
+    const essential = incomplete.find((t) => t.difficulty === 'Essential');
     if (essential) return essential;
     return incomplete[0];
   };
@@ -130,13 +129,10 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
               Recent Achievements
             </h4>
             <div className="flex flex-wrap gap-2">
-              {completedAssessments.slice(-3).map(id => {
-                const tool = tools.find(t => t.id === id);
+              {completedAssessments.slice(-3).map((id) => {
+                const tool = tools.find((t) => t.id === id);
                 return tool ? (
-                  <Badge
-                    key={id}
-                    className="bg-green-500/10 text-green-400 border-green-500/30"
-                  >
+                  <Badge key={id} className="bg-green-500/10 text-green-400 border-green-500/30">
                     {tool.title}
                   </Badge>
                 ) : null;

@@ -1,51 +1,55 @@
-import { ArrowLeft, ArrowRight, HardHat, Building, AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, ArrowRight, HardHat, Building, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import useSEO from '@/hooks/useSEO';
 
-const TITLE = "Site Safety Procedures and Protocols - Module 1.5.4 | Level 2 Electrical Course";
-const DESCRIPTION = "Master essential site safety procedures, emergency protocols, and safety management systems for electrical work environments.";
+const TITLE = 'Site Safety Procedures and Protocols - Module 1.5.4 | Level 2 Electrical Course';
+const DESCRIPTION =
+  'Master essential site safety procedures, emergency protocols, and safety management systems for electrical work environments.';
 
 // Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
-    question: "What should be your first action when arriving on a new construction site?",
+    question: 'What should be your first action when arriving on a new construction site?',
     options: [
-      "Start work immediately",
-      "Attend site induction and safety briefing",
-      "Find the nearest toilet",
-      "Look for the site manager"
+      'Start work immediately',
+      'Attend site induction and safety briefing',
+      'Find the nearest toilet',
+      'Look for the site manager',
     ],
     correctIndex: 1,
-    explanation: "Site induction is mandatory and covers site-specific hazards, emergency procedures, and safety requirements before any work begins."
+    explanation:
+      'Site induction is mandatory and covers site-specific hazards, emergency procedures, and safety requirements before any work begins.',
   },
   {
     id: 2,
-    question: "What does a red prohibition notice on site equipment mean?",
+    question: 'What does a red prohibition notice on site equipment mean?',
     options: [
-      "Equipment needs maintenance",
-      "Equipment is dangerous and must not be used",
-      "Equipment is for supervisors only",
-      "Equipment is new"
+      'Equipment needs maintenance',
+      'Equipment is dangerous and must not be used',
+      'Equipment is for supervisors only',
+      'Equipment is new',
     ],
     correctIndex: 1,
-    explanation: "Red prohibition notices indicate dangerous equipment that must not be used until the hazard is resolved and the notice is removed by a competent person."
+    explanation:
+      'Red prohibition notices indicate dangerous equipment that must not be used until the hazard is resolved and the notice is removed by a competent person.',
   },
   {
     id: 3,
-    question: "When should you report a near miss incident?",
+    question: 'When should you report a near miss incident?',
     options: [
-      "Only if someone was injured",
-      "Only if equipment was damaged",
-      "Immediately, even if no harm occurred",
-      "At the end of the week"
+      'Only if someone was injured',
+      'Only if equipment was damaged',
+      'Immediately, even if no harm occurred',
+      'At the end of the week',
     ],
     correctIndex: 2,
-    explanation: "Near misses should be reported immediately as they help prevent future accidents and identify hazards before someone gets hurt."
-  }
+    explanation:
+      'Near misses should be reported immediately as they help prevent future accidents and identify hazards before someone gets hurt.',
+  },
 ];
 
 const Module1Section5_4 = () => {
@@ -54,147 +58,156 @@ const Module1Section5_4 = () => {
   const quizQuestions = [
     {
       id: 1,
-      question: "What should be your first action when arriving on a new construction site?",
+      question: 'What should be your first action when arriving on a new construction site?',
       options: [
-        "Start work immediately",
-        "Attend site induction and safety briefing",
-        "Find the nearest toilet",
-        "Look for the site manager"
+        'Start work immediately',
+        'Attend site induction and safety briefing',
+        'Find the nearest toilet',
+        'Look for the site manager',
       ],
       correctAnswer: 1,
-      explanation: "Site induction is mandatory and covers site-specific hazards, emergency procedures, and safety requirements."
+      explanation:
+        'Site induction is mandatory and covers site-specific hazards, emergency procedures, and safety requirements.',
     },
     {
       id: 2,
-      question: "What does a red prohibition notice on site equipment mean?",
+      question: 'What does a red prohibition notice on site equipment mean?',
       options: [
-        "Equipment needs maintenance",
-        "Equipment is dangerous and must not be used",
-        "Equipment is for supervisors only",
-        "Equipment is new"
+        'Equipment needs maintenance',
+        'Equipment is dangerous and must not be used',
+        'Equipment is for supervisors only',
+        'Equipment is new',
       ],
       correctAnswer: 1,
-      explanation: "Red prohibition notices indicate dangerous equipment that must not be used until resolved."
+      explanation:
+        'Red prohibition notices indicate dangerous equipment that must not be used until resolved.',
     },
     {
       id: 3,
-      question: "When should you report a near miss incident?",
+      question: 'When should you report a near miss incident?',
       options: [
-        "Only if someone was injured",
-        "Only if equipment was damaged",
-        "Immediately, even if no harm occurred",
-        "At the end of the week"
+        'Only if someone was injured',
+        'Only if equipment was damaged',
+        'Immediately, even if no harm occurred',
+        'At the end of the week',
       ],
       correctAnswer: 2,
-      explanation: "Near misses should be reported immediately to prevent future accidents."
+      explanation: 'Near misses should be reported immediately to prevent future accidents.',
     },
     {
       id: 4,
-      question: "What information must be included in a site safety briefing?",
+      question: 'What information must be included in a site safety briefing?',
       options: [
-        "Only emergency exits",
-        "Site-specific hazards, emergency procedures, and PPE requirements",
-        "Only the weather forecast",
-        "Lunch arrangements"
+        'Only emergency exits',
+        'Site-specific hazards, emergency procedures, and PPE requirements',
+        'Only the weather forecast',
+        'Lunch arrangements',
       ],
       correctAnswer: 1,
-      explanation: "Safety briefings must cover all site-specific hazards, emergency procedures, and required safety measures."
+      explanation:
+        'Safety briefings must cover all site-specific hazards, emergency procedures, and required safety measures.',
     },
     {
       id: 5,
-      question: "Who can remove a prohibition notice from equipment?",
+      question: 'Who can remove a prohibition notice from equipment?',
       options: [
-        "Anyone who finds it",
-        "The person who put it there",
-        "Only a competent person after resolving the hazard",
-        "The site cleaner"
+        'Anyone who finds it',
+        'The person who put it there',
+        'Only a competent person after resolving the hazard',
+        'The site cleaner',
       ],
       correctAnswer: 2,
-      explanation: "Only a competent person can remove prohibition notices after properly resolving the safety hazard."
+      explanation:
+        'Only a competent person can remove prohibition notices after properly resolving the safety hazard.',
     },
     {
       id: 6,
-      question: "What should you do if you discover unsafe working conditions?",
+      question: 'What should you do if you discover unsafe working conditions?',
       options: [
         "Ignore it if it's not your responsibility",
-        "Stop work, make safe, and report to supervisor immediately",
-        "Continue working but more carefully",
-        "Wait until break time to mention it"
+        'Stop work, make safe, and report to supervisor immediately',
+        'Continue working but more carefully',
+        'Wait until break time to mention it',
       ],
       correctAnswer: 1,
-      explanation: "Unsafe conditions require immediate action - stop work, make safe, and report to prevent accidents."
+      explanation:
+        'Unsafe conditions require immediate action - stop work, make safe, and report to prevent accidents.',
     },
     {
       id: 7,
-      question: "How often should site safety procedures be reviewed?",
+      question: 'How often should site safety procedures be reviewed?',
       options: [
         "Never - they're permanent",
-        "Only when accidents happen",
-        "Regularly and when conditions change",
-        "Once per year only"
+        'Only when accidents happen',
+        'Regularly and when conditions change',
+        'Once per year only',
       ],
       correctAnswer: 2,
-      explanation: "Safety procedures must be reviewed regularly and updated when site conditions or activities change."
+      explanation:
+        'Safety procedures must be reviewed regularly and updated when site conditions or activities change.',
     },
     {
       id: 8,
-      question: "What is the purpose of a permit to work system?",
+      question: 'What is the purpose of a permit to work system?',
       options: [
-        "To slow down work",
-        "To control high-risk activities with formal procedures",
-        "To create paperwork",
-        "To identify workers"
+        'To slow down work',
+        'To control high-risk activities with formal procedures',
+        'To create paperwork',
+        'To identify workers',
       ],
       correctAnswer: 1,
-      explanation: "Permit to work systems ensure high-risk activities are properly planned, controlled, and supervised."
+      explanation:
+        'Permit to work systems ensure high-risk activities are properly planned, controlled, and supervised.',
     },
     {
       id: 9,
-      question: "Which colour safety notice indicates mandatory requirements?",
-      options: [
-        "Red",
-        "Yellow",
-        "Blue",
-        "Green"
-      ],
+      question: 'Which colour safety notice indicates mandatory requirements?',
+      options: ['Red', 'Yellow', 'Blue', 'Green'],
       correctAnswer: 2,
-      explanation: "Blue mandatory notices indicate required actions such as PPE requirements or mandatory safety procedures."
+      explanation:
+        'Blue mandatory notices indicate required actions such as PPE requirements or mandatory safety procedures.',
     },
     {
       id: 10,
-      question: "What must be recorded in the accident book?",
+      question: 'What must be recorded in the accident book?',
       options: [
-        "Only fatal accidents",
-        "All accidents and injuries, no matter how minor",
-        "Only accidents involving equipment",
-        "Only accidents requiring hospital treatment"
+        'Only fatal accidents',
+        'All accidents and injuries, no matter how minor',
+        'Only accidents involving equipment',
+        'Only accidents requiring hospital treatment',
       ],
       correctAnswer: 1,
-      explanation: "All accidents and injuries must be recorded in the accident book immediately, regardless of severity."
-    }
+      explanation:
+        'All accidents and injuries must be recorded in the accident book immediately, regardless of severity.',
+    },
   ];
 
   const faqs = [
     {
-      question: "What if I miss the site induction due to urgent work?",
-      answer: "You cannot work on site without completing induction first. This is a legal requirement and essential for your safety. The work must wait until proper induction is completed."
+      question: 'What if I miss the site induction due to urgent work?',
+      answer:
+        'You cannot work on site without completing induction first. This is a legal requirement and essential for your safety. The work must wait until proper induction is completed.',
     },
     {
       question: "Can I remove safety barriers if they're in my way?",
-      answer: "No, safety barriers are there for protection. If they genuinely obstruct essential work, report to your supervisor who can assess and relocate them safely if appropriate."
+      answer:
+        'No, safety barriers are there for protection. If they genuinely obstruct essential work, report to your supervisor who can assess and relocate them safely if appropriate.',
     },
     {
-      question: "What should I do if I disagree with a safety procedure?",
-      answer: "Follow the procedure but raise your concerns with your supervisor. Safety procedures are based on risk assessment and legal requirements, but legitimate concerns should be discussed."
+      question: 'What should I do if I disagree with a safety procedure?',
+      answer:
+        'Follow the procedure but raise your concerns with your supervisor. Safety procedures are based on risk assessment and legal requirements, but legitimate concerns should be discussed.',
     },
     {
-      question: "How do I know if I need a permit to work?",
-      answer: "Your supervisor or the method statement will identify when permits are required. Generally needed for hot work, confined spaces, work at height, live electrical work, and excavations."
+      question: 'How do I know if I need a permit to work?',
+      answer:
+        'Your supervisor or the method statement will identify when permits are required. Generally needed for hot work, confined spaces, work at height, live electrical work, and excavations.',
     },
     {
       question: "What happens if I don't follow safety procedures?",
-      answer: "Consequences can include disciplinary action, removal from site, prosecution for serious breaches, and most importantly, risk of injury to yourself or others."
-    }
+      answer:
+        'Consequences can include disciplinary action, removal from site, prosecution for serious breaches, and most importantly, risk of injury to yourself or others.',
+    },
   ];
 
   return (
@@ -234,7 +247,8 @@ const Module1Section5_4 = () => {
               Site Safety Procedures and Protocols
             </h1>
             <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Master essential site safety procedures, emergency protocols, and safety management systems for electrical work environments.
+              Master essential site safety procedures, emergency protocols, and safety management
+              systems for electrical work environments.
             </p>
           </header>
 
@@ -248,17 +262,34 @@ const Module1Section5_4 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1 text-white/80">
-                  <li>Site safety procedures are mandatory systems that protect all workers on construction sites.</li>
-                  <li>Include induction training, emergency protocols, and hazard management systems.</li>
-                  <li>Understanding and following procedures prevents accidents and ensures legal compliance.</li>
+                  <li>
+                    Site safety procedures are mandatory systems that protect all workers on
+                    construction sites.
+                  </li>
+                  <li>
+                    Include induction training, emergency protocols, and hazard management systems.
+                  </li>
+                  <li>
+                    Understanding and following procedures prevents accidents and ensures legal
+                    compliance.
+                  </li>
                 </ul>
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
                 <ul className="list-disc pl-6 space-y-1 text-white/80">
-                  <li><strong>Spot:</strong> Safety notices, prohibition signs, emergency assembly points, first aid stations.</li>
-                  <li><strong>Use:</strong> Induction procedures, incident reporting systems, permit to work systems.</li>
-                  <li><strong>Check:</strong> PPE requirements, emergency contacts, site-specific hazards.</li>
+                  <li>
+                    <strong>Spot:</strong> Safety notices, prohibition signs, emergency assembly
+                    points, first aid stations.
+                  </li>
+                  <li>
+                    <strong>Use:</strong> Induction procedures, incident reporting systems, permit
+                    to work systems.
+                  </li>
+                  <li>
+                    <strong>Check:</strong> PPE requirements, emergency contacts, site-specific
+                    hazards.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -286,26 +317,38 @@ const Module1Section5_4 = () => {
               Site Induction and Safety Briefings
             </h2>
             <p className="text-white/80 mb-6">
-              Site induction is a legal requirement that ensures all workers understand site-specific hazards and safety procedures.
+              Site induction is a legal requirement that ensures all workers understand
+              site-specific hazards and safety procedures.
             </p>
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50 mb-6">
-              <h3 className="font-semibold text-elec-yellow mb-3">Mandatory Induction Requirements</h3>
-              <p className="text-white/80 mb-2"><strong className="text-white">Legal requirement:</strong> No one can work on site without proper induction.</p>
+              <h3 className="font-semibold text-elec-yellow mb-3">
+                Mandatory Induction Requirements
+              </h3>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Legal requirement:</strong> No one can work on site
+                without proper induction.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
                 <li>Must be completed before any work activities begin</li>
                 <li>Covers site-specific hazards and control measures</li>
                 <li>Explains emergency procedures and assembly points</li>
                 <li>Details PPE requirements and welfare facilities</li>
               </ul>
-              <p className="text-white/80 mb-2"><strong className="text-white">Key induction topics:</strong> Essential information for safe working.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Key induction topics:</strong> Essential information
+                for safe working.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
                 <li>Site layout, access routes, and restricted areas</li>
                 <li>Emergency procedures, first aid, and fire safety</li>
                 <li>Permit to work systems and high-risk activities</li>
                 <li>Environmental hazards and protection measures</li>
               </ul>
-              <p className="text-white/80 mb-2"><strong className="text-white">Documentation and records:</strong> Proof of competence and compliance.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Documentation and records:</strong> Proof of
+                competence and compliance.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-2 list-disc space-y-1">
                 <li>Induction certificates must be carried on site</li>
                 <li>Records kept of all personnel inducted</li>
@@ -313,7 +356,8 @@ const Module1Section5_4 = () => {
                 <li>Site-specific competency cards may be issued</li>
               </ul>
               <div className="text-sm text-white/80 bg-white/5 p-3 rounded mt-4">
-                <strong className="text-elec-yellow">Key principle:</strong> Induction protects workers by ensuring everyone understands site-specific risks
+                <strong className="text-elec-yellow">Key principle:</strong> Induction protects
+                workers by ensuring everyone understands site-specific risks
               </div>
             </div>
 
@@ -333,13 +377,19 @@ const Module1Section5_4 = () => {
               Safety Notices and Warning Systems
             </h2>
             <p className="text-white/80 mb-6">
-              Construction sites use various notice and warning systems to communicate hazards and safety requirements.
+              Construction sites use various notice and warning systems to communicate hazards and
+              safety requirements.
             </p>
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50 mb-6">
-              <h3 className="font-semibold text-elec-yellow mb-3">Types of Safety Notices and Their Meanings</h3>
+              <h3 className="font-semibold text-elec-yellow mb-3">
+                Types of Safety Notices and Their Meanings
+              </h3>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">Prohibition notices (Red):</strong> Activities that are forbidden.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Prohibition notices (Red):</strong> Activities that
+                are forbidden.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
                 <li>Equipment that must not be used due to safety defects</li>
                 <li>Areas that are out of bounds or dangerous</li>
@@ -347,7 +397,10 @@ const Module1Section5_4 = () => {
                 <li>Can only be removed by competent persons after hazard resolution</li>
               </ul>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">Warning notices (Yellow/Orange):</strong> Alert to hazards present.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Warning notices (Yellow/Orange):</strong> Alert to
+                hazards present.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
                 <li>Indicate specific hazards like overhead lines, excavations</li>
                 <li>Warn of temporary dangers during work activities</li>
@@ -355,7 +408,10 @@ const Module1Section5_4 = () => {
                 <li>Must be clearly visible and regularly maintained</li>
               </ul>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">Mandatory notices (Blue):</strong> Required actions or equipment.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Mandatory notices (Blue):</strong> Required actions
+                or equipment.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
                 <li>PPE requirements for specific areas or activities</li>
                 <li>Mandatory safety procedures that must be followed</li>
@@ -363,7 +419,10 @@ const Module1Section5_4 = () => {
                 <li>Safety equipment that must be used</li>
               </ul>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">Information notices (Green):</strong> Safety guidance and emergency information.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Information notices (Green):</strong> Safety guidance
+                and emergency information.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-2 list-disc space-y-1">
                 <li>Emergency assembly points and evacuation routes</li>
                 <li>First aid stations and emergency contact numbers</li>
@@ -372,7 +431,8 @@ const Module1Section5_4 = () => {
               </ul>
 
               <div className="text-sm text-white/80 bg-white/5 p-3 rounded mt-4">
-                <strong className="text-elec-yellow">Key principle:</strong> Safety notices provide critical information - always read and follow them
+                <strong className="text-elec-yellow">Key principle:</strong> Safety notices provide
+                critical information - always read and follow them
               </div>
             </div>
 
@@ -392,21 +452,32 @@ const Module1Section5_4 = () => {
               Emergency Procedures and Incident Management
             </h2>
             <p className="text-white/80 mb-6">
-              Effective emergency procedures and incident management are essential for workplace safety.
+              Effective emergency procedures and incident management are essential for workplace
+              safety.
             </p>
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50 mb-6">
-              <h3 className="font-semibold text-elec-yellow mb-3">Emergency Response and Incident Reporting</h3>
+              <h3 className="font-semibold text-elec-yellow mb-3">
+                Emergency Response and Incident Reporting
+              </h3>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">Emergency procedures:</strong> Clear actions for different emergency types.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Emergency procedures:</strong> Clear actions for
+                different emergency types.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
                 <li>Fire emergency - raise alarm, evacuate, assemble at designated point</li>
-                <li>Medical emergency - secure area, call first aider, contact emergency services</li>
+                <li>
+                  Medical emergency - secure area, call first aider, contact emergency services
+                </li>
                 <li>Electrical emergency - isolate supply if safe, evacuate danger area</li>
                 <li>Structural collapse - evacuate immediately, call emergency services</li>
               </ul>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">Incident reporting:</strong> Legal requirement to report accidents and near misses.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Incident reporting:</strong> Legal requirement to
+                report accidents and near misses.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
                 <li>All accidents must be recorded in accident book immediately</li>
                 <li>Near misses help prevent future accidents and should be reported</li>
@@ -414,7 +485,10 @@ const Module1Section5_4 = () => {
                 <li>Investigation required to identify causes and prevent recurrence</li>
               </ul>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">First aid arrangements:</strong> Ensuring adequate emergency care.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">First aid arrangements:</strong> Ensuring adequate
+                emergency care.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-2 list-disc space-y-1">
                 <li>Qualified first aiders must be available during all working hours</li>
                 <li>First aid equipment maintained and easily accessible</li>
@@ -423,7 +497,8 @@ const Module1Section5_4 = () => {
               </ul>
 
               <div className="text-sm text-white/80 bg-white/5 p-3 rounded mt-4">
-                <strong className="text-elec-yellow">Key principle:</strong> Quick, appropriate emergency response can save lives and prevent serious injuries
+                <strong className="text-elec-yellow">Key principle:</strong> Quick, appropriate
+                emergency response can save lives and prevent serious injuries
               </div>
             </div>
 
@@ -445,25 +520,46 @@ const Module1Section5_4 = () => {
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <div className="flex items-center gap-2 mb-3">
                 <Building className="w-5 h-5 text-elec-yellow" />
-                <h3 className="font-semibold text-white">Hospital Extension Project Safety Management</h3>
+                <h3 className="font-semibold text-white">
+                  Hospital Extension Project Safety Management
+                </h3>
               </div>
               <div className="space-y-3 text-white/80">
-                <p className="font-medium text-white">Situation: Electrical installation in a new hospital wing adjacent to operating areas.</p>
+                <p className="font-medium text-white">
+                  Situation: Electrical installation in a new hospital wing adjacent to operating
+                  areas.
+                </p>
                 <p>
-                  This project required extensive safety procedures due to the sensitive healthcare environment and
-                  potential impact on life-critical systems.
+                  This project required extensive safety procedures due to the sensitive healthcare
+                  environment and potential impact on life-critical systems.
                 </p>
                 <p className="font-medium text-white">Safety procedures implemented:</p>
                 <ul className="list-disc pl-6 space-y-1">
-                  <li><strong>Enhanced induction:</strong> Additional training on healthcare facility hazards and infection control</li>
-                  <li><strong>Special permits:</strong> Hot work permits near oxygen supplies, confined space permits for service tunnels</li>
-                  <li><strong>Noise management:</strong> Time restrictions and sound barriers to protect patient areas</li>
-                  <li><strong>Emergency coordination:</strong> Direct links with hospital security and emergency response teams</li>
-                  <li><strong>Continuous monitoring:</strong> 24/7 safety officer presence during critical phases</li>
+                  <li>
+                    <strong>Enhanced induction:</strong> Additional training on healthcare facility
+                    hazards and infection control
+                  </li>
+                  <li>
+                    <strong>Special permits:</strong> Hot work permits near oxygen supplies,
+                    confined space permits for service tunnels
+                  </li>
+                  <li>
+                    <strong>Noise management:</strong> Time restrictions and sound barriers to
+                    protect patient areas
+                  </li>
+                  <li>
+                    <strong>Emergency coordination:</strong> Direct links with hospital security and
+                    emergency response teams
+                  </li>
+                  <li>
+                    <strong>Continuous monitoring:</strong> 24/7 safety officer presence during
+                    critical phases
+                  </li>
                 </ul>
                 <p className="font-medium text-green-400">
-                  Result: Zero incidents affecting hospital operations, project completed safely without disrupting
-                  patient care, demonstrating the effectiveness of comprehensive safety procedures.
+                  Result: Zero incidents affecting hospital operations, project completed safely
+                  without disrupting patient care, demonstrating the effectiveness of comprehensive
+                  safety procedures.
                 </p>
               </div>
             </div>
@@ -477,9 +573,14 @@ const Module1Section5_4 = () => {
             </h2>
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-              <h3 className="font-semibold text-elec-yellow mb-3">Understanding Permit to Work Systems</h3>
+              <h3 className="font-semibold text-elec-yellow mb-3">
+                Understanding Permit to Work Systems
+              </h3>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">Purpose and scope:</strong> Formal control of high-risk activities.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Purpose and scope:</strong> Formal control of
+                high-risk activities.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
                 <li>Legal document authorising specific high-risk work</li>
                 <li>Ensures proper planning, risk assessment, and control measures</li>
@@ -487,7 +588,10 @@ const Module1Section5_4 = () => {
                 <li>Provides clear start/stop authority for dangerous work</li>
               </ul>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">When permits are required:</strong> High-risk electrical activities.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">When permits are required:</strong> High-risk
+                electrical activities.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
                 <li>Live working on electrical systems above certain voltages</li>
                 <li>Work in confined spaces with electrical hazards</li>
@@ -495,7 +599,10 @@ const Module1Section5_4 = () => {
                 <li>Excavation work near underground electrical cables</li>
               </ul>
 
-              <p className="text-white/80 mb-2"><strong className="text-white">Permit process:</strong> Systematic approach to risk control.</p>
+              <p className="text-white/80 mb-2">
+                <strong className="text-white">Permit process:</strong> Systematic approach to risk
+                control.
+              </p>
               <ul className="text-sm text-white/70 ml-4 mb-2 list-disc space-y-1">
                 <li>Application by competent person details work scope and hazards</li>
                 <li>Assessment by authorised person confirms control measures</li>
@@ -504,7 +611,8 @@ const Module1Section5_4 = () => {
               </ul>
 
               <div className="text-sm text-white/80 bg-white/5 p-3 rounded mt-4">
-                <strong className="text-elec-yellow">Key principle:</strong> Permits ensure high-risk work is properly planned, controlled, and supervised
+                <strong className="text-elec-yellow">Key principle:</strong> Permits ensure
+                high-risk work is properly planned, controlled, and supervised
               </div>
             </div>
           </section>
@@ -547,9 +655,9 @@ const Module1Section5_4 = () => {
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Key takeaway:</p>
                 <p className="text-white/80">
-                  Site safety procedures are not just paperwork - they are essential systems that protect lives and
-                  ensure legal compliance. Following procedures prevents accidents and creates a safer working
-                  environment for everyone on site.
+                  Site safety procedures are not just paperwork - they are essential systems that
+                  protect lives and ensure legal compliance. Following procedures prevents accidents
+                  and creates a safer working environment for everyone on site.
                 </p>
               </div>
             </div>

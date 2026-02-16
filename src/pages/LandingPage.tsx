@@ -961,14 +961,46 @@ const LandingPage = () => {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {[
-              { to: '/tools/eicr-certificate', label: 'EICR Certificate App', desc: 'Digital condition reports' },
-              { to: '/tools/cable-sizing-calculator', label: 'Cable Sizing Calculator', desc: 'BS 7671 compliant' },
-              { to: '/tools/voltage-drop-calculator', label: 'Voltage Drop Calculator', desc: 'Check maximum runs' },
-              { to: '/tools/minor-works-certificate', label: 'Minor Works Certificate', desc: 'Digital EWC forms' },
-              { to: '/tools/electrical-testing-calculators', label: 'Testing Calculators', desc: 'Zs, fault current, RCD' },
-              { to: '/tools/ai-electrician', label: 'AI Electrician Tools', desc: '5 BS 7671 specialists' },
-              { to: '/training/18th-edition-course', label: '18th Edition Course', desc: 'BS 7671 + Amendment 3' },
-              { to: '/training/electrical-apprentice', label: 'Apprentice Training', desc: 'Level 2, 3 & AM2' },
+              {
+                to: '/tools/eicr-certificate',
+                label: 'EICR Certificate App',
+                desc: 'Digital condition reports',
+              },
+              {
+                to: '/tools/cable-sizing-calculator',
+                label: 'Cable Sizing Calculator',
+                desc: 'BS 7671 compliant',
+              },
+              {
+                to: '/tools/voltage-drop-calculator',
+                label: 'Voltage Drop Calculator',
+                desc: 'Check maximum runs',
+              },
+              {
+                to: '/tools/minor-works-certificate',
+                label: 'Minor Works Certificate',
+                desc: 'Digital EWC forms',
+              },
+              {
+                to: '/tools/electrical-testing-calculators',
+                label: 'Testing Calculators',
+                desc: 'Zs, fault current, RCD',
+              },
+              {
+                to: '/tools/ai-electrician',
+                label: 'AI Electrician Tools',
+                desc: '5 BS 7671 specialists',
+              },
+              {
+                to: '/training/18th-edition-course',
+                label: '18th Edition Course',
+                desc: 'BS 7671 + Amendment 3',
+              },
+              {
+                to: '/training/electrical-apprentice',
+                label: 'Apprentice Training',
+                desc: 'Level 2, 3 & AM2',
+              },
             ].map((link) => (
               <Link
                 key={link.to}
@@ -1041,36 +1073,112 @@ const LandingPage = () => {
           <div className="grid sm:grid-cols-3 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2.5 mb-4">
-                <img src="/logo.jpg" alt="Elec-Mate" className="w-7 h-7 rounded-lg" loading="lazy" />
+                <img
+                  src="/logo.jpg"
+                  alt="Elec-Mate"
+                  className="w-7 h-7 rounded-lg"
+                  loading="lazy"
+                />
                 <span className="font-bold text-white">
                   Elec-<span className="text-yellow-400">Mate</span>
                 </span>
               </div>
               <p className="text-sm text-white leading-relaxed">
-                The complete platform for UK electricians. Training, AI tools, certificates, and business management.
+                The complete platform for UK electricians. Training, AI tools, certificates, and
+                business management.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Tools</h4>
               <ul className="space-y-2">
-                <li><Link to="/tools/eicr-certificate" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">EICR Certificate</Link></li>
-                <li><Link to="/tools/cable-sizing-calculator" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Cable Sizing Calculator</Link></li>
-                <li><Link to="/tools/voltage-drop-calculator" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Voltage Drop Calculator</Link></li>
-                <li><Link to="/tools/minor-works-certificate" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Minor Works Certificate</Link></li>
-                <li><Link to="/tools/electrical-testing-calculators" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Testing Calculators</Link></li>
-                <li><Link to="/tools/ai-electrician" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">AI Electrician Tools</Link></li>
+                <li>
+                  <Link
+                    to="/tools/eicr-certificate"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    EICR Certificate
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/tools/cable-sizing-calculator"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    Cable Sizing Calculator
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/tools/voltage-drop-calculator"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    Voltage Drop Calculator
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/tools/minor-works-certificate"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    Minor Works Certificate
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/tools/electrical-testing-calculators"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    Testing Calculators
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/tools/ai-electrician"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    AI Electrician Tools
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Training</h4>
               <ul className="space-y-2">
-                <li><Link to="/training/18th-edition-course" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">18th Edition Course</Link></li>
-                <li><Link to="/training/electrical-apprentice" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Apprentice Training</Link></li>
+                <li>
+                  <Link
+                    to="/training/18th-edition-course"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    18th Edition Course
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/training/electrical-apprentice"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    Apprentice Training
+                  </Link>
+                </li>
               </ul>
               <h4 className="font-semibold text-white mb-3 mt-6">Legal</h4>
               <ul className="space-y-2">
-                <li><Link to="/privacy" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Privacy Policy</Link></li>
-                <li><Link to="/terms" className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation">Terms of Service</Link></li>
+                <li>
+                  <Link
+                    to="/privacy"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/terms"
+                    className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation"
+                  >
+                    Terms of Service
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

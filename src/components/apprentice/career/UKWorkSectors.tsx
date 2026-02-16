@@ -1,18 +1,23 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Briefcase, TrendingUp, PoundSterling, Wrench, Users, Clock, Target } from "lucide-react";
-import { ukWorkSectors } from "./ukCareerProgressionData";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Briefcase, TrendingUp, PoundSterling, Wrench, Users, Clock, Target } from 'lucide-react';
+import { ukWorkSectors } from './ukCareerProgressionData';
 
 const UKWorkSectors = () => {
   const getGrowthColor = (outlook: string) => {
     switch (outlook) {
-      case "Rapid growth": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Strong": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "Growing": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "Stable": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "Cyclical": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      default: return "bg-white/10 text-white border-white/30";
+      case 'Rapid growth':
+        return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'Strong':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'Growing':
+        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'Stable':
+        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      case 'Cyclical':
+        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      default:
+        return 'bg-white/10 text-white border-white/30';
     }
   };
 
@@ -28,38 +33,54 @@ const UKWorkSectors = () => {
             UK Electrical Work Sectors
           </CardTitle>
           <p className="text-sm sm:text-base text-white/80">
-            Comprehensive overview of electrical work sectors in the UK, including pay rates, growth prospects, and career opportunities
+            Comprehensive overview of electrical work sectors in the UK, including pay rates, growth
+            prospects, and career opportunities
           </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {ukWorkSectors.map((sector) => (
-              <Card key={sector.name} className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-all h-full flex flex-col">
+              <Card
+                key={sector.name}
+                className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 hover:border-elec-yellow/40 transition-all h-full flex flex-col"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                    <CardTitle className="text-lg text-white text-center sm:text-left">{sector.name}</CardTitle>
-                    <Badge className={`${getGrowthColor(sector.growth_outlook)} mx-auto sm:mx-0 flex-shrink-0`}>
+                    <CardTitle className="text-lg text-white text-center sm:text-left">
+                      {sector.name}
+                    </CardTitle>
+                    <Badge
+                      className={`${getGrowthColor(sector.growth_outlook)} mx-auto sm:mx-0 flex-shrink-0`}
+                    >
                       {sector.growth_outlook}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4 flex-1">
                   <p className="text-sm text-white leading-relaxed">{sector.description}</p>
-                  
+
                   {/* Enhanced pay information */}
                   <Card className="bg-elec-yellow/10 border-elec-yellow/20">
                     <CardContent className="p-3">
                       <div className="flex items-center gap-2 mb-2">
                         <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                        <span className="text-sm font-medium text-elec-yellow">Typical Daily Rates</span>
+                        <span className="text-sm font-medium text-elec-yellow">
+                          Typical Daily Rates
+                        </span>
                       </div>
-                      <div className="text-lg font-bold text-green-400 mb-2">{sector.typical_pay}</div>
+                      <div className="text-lg font-bold text-green-400 mb-2">
+                        {sector.typical_pay}
+                      </div>
                       <div className="text-xs text-white">
-                        {sector.growth_outlook === "Rapid growth" && "Premium rates due to high demand"}
-                        {sector.growth_outlook === "Strong" && "Competitive rates with good progression"}
-                        {sector.growth_outlook === "Growing" && "Steady rates with growth potential"}
-                        {sector.growth_outlook === "Stable" && "Consistent rates across the sector"}
-                        {sector.growth_outlook === "Cyclical" && "Rates vary with market conditions"}
+                        {sector.growth_outlook === 'Rapid growth' &&
+                          'Premium rates due to high demand'}
+                        {sector.growth_outlook === 'Strong' &&
+                          'Competitive rates with good progression'}
+                        {sector.growth_outlook === 'Growing' &&
+                          'Steady rates with growth potential'}
+                        {sector.growth_outlook === 'Stable' && 'Consistent rates across the sector'}
+                        {sector.growth_outlook === 'Cyclical' &&
+                          'Rates vary with market conditions'}
                       </div>
                     </CardContent>
                   </Card>
@@ -91,24 +112,35 @@ const UKWorkSectors = () => {
                         <div className="flex items-center gap-2">
                           <Users className="h-3 w-3 text-blue-400" />
                           <span>
-                            {sector.name.includes("Renewable") ? "Emerging field with rapid expansion" :
-                             sector.name.includes("Industrial") ? "Large-scale projects and maintenance" :
-                             sector.name.includes("Commercial") ? "Diverse business environments" :
-                             sector.name.includes("Domestic") ? "Direct customer interaction, flexible work" :
-                             sector.name.includes("Data") ? "High-tech, precision work environment" :
-                             sector.name.includes("Rail") ? "Infrastructure projects, strict safety standards" :
-                             sector.name.includes("Emergency") ? "Critical response, high responsibility" :
-                             "Specialised technical expertise required"}
+                            {sector.name.includes('Renewable')
+                              ? 'Emerging field with rapid expansion'
+                              : sector.name.includes('Industrial')
+                                ? 'Large-scale projects and maintenance'
+                                : sector.name.includes('Commercial')
+                                  ? 'Diverse business environments'
+                                  : sector.name.includes('Domestic')
+                                    ? 'Direct customer interaction, flexible work'
+                                    : sector.name.includes('Data')
+                                      ? 'High-tech, precision work environment'
+                                      : sector.name.includes('Rail')
+                                        ? 'Infrastructure projects, strict safety standards'
+                                        : sector.name.includes('Emergency')
+                                          ? 'Critical response, high responsibility'
+                                          : 'Specialised technical expertise required'}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Clock className="h-3 w-3 text-blue-400" />
                           <span>
-                            {sector.growth_outlook === "Rapid growth" ? "Excellent long-term prospects" :
-                             sector.growth_outlook === "Strong" ? "Good career advancement opportunities" :
-                             sector.growth_outlook === "Growing" ? "Steady progression available" :
-                             sector.growth_outlook === "Stable" ? "Reliable, consistent work" :
-                             "Variable demand cycles"}
+                            {sector.growth_outlook === 'Rapid growth'
+                              ? 'Excellent long-term prospects'
+                              : sector.growth_outlook === 'Strong'
+                                ? 'Good career advancement opportunities'
+                                : sector.growth_outlook === 'Growing'
+                                  ? 'Steady progression available'
+                                  : sector.growth_outlook === 'Stable'
+                                    ? 'Reliable, consistent work'
+                                    : 'Variable demand cycles'}
                           </span>
                         </div>
                       </div>
@@ -121,15 +153,18 @@ const UKWorkSectors = () => {
                       <div className="flex items-center gap-2">
                         <TrendingUp className="h-3 w-3 text-elec-yellow" />
                         <span className="text-xs text-white">
-                          Growth: <span className="text-elec-yellow font-medium">{sector.growth_outlook}</span>
+                          Growth:{' '}
+                          <span className="text-elec-yellow font-medium">
+                            {sector.growth_outlook}
+                          </span>
                         </span>
                       </div>
                       <div className="text-xs text-white">
-                        {sector.growth_outlook === "Rapid growth" && "🚀 High demand"}
-                        {sector.growth_outlook === "Strong" && "📈 Growing market"}
-                        {sector.growth_outlook === "Growing" && "🔄 Expanding sector"}
-                        {sector.growth_outlook === "Stable" && "🏗️ Established field"}
-                        {sector.growth_outlook === "Cyclical" && "🌊 Market dependent"}
+                        {sector.growth_outlook === 'Rapid growth' && '🚀 High demand'}
+                        {sector.growth_outlook === 'Strong' && '📈 Growing market'}
+                        {sector.growth_outlook === 'Growing' && '🔄 Expanding sector'}
+                        {sector.growth_outlook === 'Stable' && '🏗️ Established field'}
+                        {sector.growth_outlook === 'Cyclical' && '🌊 Market dependent'}
                       </div>
                     </div>
                   </div>
@@ -137,11 +172,13 @@ const UKWorkSectors = () => {
               </Card>
             ))}
           </div>
-          
+
           {/* Additional sector insights */}
           <Card className="mt-6 bg-gradient-to-br from-elec-gray to-blue-950/20 border-blue-500/20">
             <CardContent className="p-6">
-              <h3 className="font-semibold text-elec-yellow mb-4">Sector Analysis & Career Guidance</h3>
+              <h3 className="font-semibold text-elec-yellow mb-4">
+                Sector Analysis & Career Guidance
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
                 <div>
                   <h4 className="font-medium mb-3 text-green-400">Highest Growth Sectors:</h4>

@@ -1,75 +1,146 @@
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
+import { CheckCircle, ChevronRight, Heart } from 'lucide-react';
+import { SmartBackButton } from '@/components/ui/smart-back-button';
 
-import { SmartBackButton } from "@/components/ui/smart-back-button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PoundSterling, Shield, Phone, Calculator, FileText, Heart, Users } from "lucide-react";
-import WageInformationTab from "@/components/apprentice/rights-pay/WageInformationTab";
-import ApprenticeRightsTab from "@/components/apprentice/rights-pay/ApprenticeRightsTab";
-import SupportResourcesTab from "@/components/apprentice/rights-pay/SupportResourcesTab";
-import InteractiveToolsTab from "@/components/apprentice/rights-pay/InteractiveToolsTab";
+interface Section {
+  title: string;
+  slug: string;
+  icon: string;
+  colour: string;
+  border: string;
+  readTime: string;
+}
+
+const sections: Section[] = [
+  {
+    title: 'Wages & Pay',
+    slug: 'wages',
+    icon: '💷',
+    colour: 'text-green-400',
+    border: 'border-green-500/30',
+    readTime: '8 min read',
+  },
+  {
+    title: 'Your Rights',
+    slug: 'your-rights',
+    icon: '🛡',
+    colour: 'text-blue-400',
+    border: 'border-blue-500/30',
+    readTime: '7 min read',
+  },
+  {
+    title: 'Support & Helplines',
+    slug: 'support',
+    icon: '📞',
+    colour: 'text-orange-400',
+    border: 'border-orange-500/30',
+    readTime: '6 min read',
+  },
+  {
+    title: 'Tools & Templates',
+    slug: 'tools',
+    icon: '🧮',
+    colour: 'text-purple-400',
+    border: 'border-purple-500/30',
+    readTime: '5 min read',
+  },
+];
 
 const RightsAndPay = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 px-2">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 sm:mb-4">Apprenticeship Rights & Pay</h1>
-        <p className="text-sm sm:text-base text-white text-center max-w-2xl mb-3 sm:mb-4">
-          Know your rights, understand wage expectations, and learn where to get help when needed
-        </p>
+    <div className="animate-fade-in max-w-2xl mx-auto px-4 pb-20 space-y-6 text-left">
+      {/* Header */}
+      <div className="flex items-center gap-3">
         <SmartBackButton />
+        <h1 className="text-2xl font-bold tracking-tight text-white">
+          Apprenticeship Rights & Pay
+        </h1>
       </div>
 
-      <Tabs defaultValue="wages" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
-          <TabsTrigger value="wages" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm py-2">
-            <PoundSterling className="h-3 w-3 sm:h-4 sm:w-4" />
-            Wages
-          </TabsTrigger>
-          <TabsTrigger value="rights" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm py-2">
-            <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
-            Rights
-          </TabsTrigger>
-          <TabsTrigger value="support" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm py-2">
-            <Phone className="h-3 w-3 sm:h-4 sm:w-4" />
-            Support
-          </TabsTrigger>
-          <TabsTrigger value="tools" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm py-2">
-            <Calculator className="h-3 w-3 sm:h-4 sm:w-4" />
-            Tools
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="wages">
-          <WageInformationTab />
-        </TabsContent>
-
-        <TabsContent value="rights">
-          <ApprenticeRightsTab />
-        </TabsContent>
-
-        <TabsContent value="support">
-          <SupportResourcesTab />
-        </TabsContent>
-
-        <TabsContent value="tools">
-          <InteractiveToolsTab />
-        </TabsContent>
-      </Tabs>
-
-      <Card className="border-green-500/50 bg-card">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <Heart className="h-5 w-5" />
-            Remember
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-white">
-            Your apprenticeship should be a positive learning experience. While challenges are normal,
-            exploitation, unsafe conditions, or unfair treatment are not. Don't suffer in silence -
-            help is available and using it shows strength, not weakness.
+      {/* Intro Card */}
+      <Card className="border-elec-yellow/20 bg-white/5">
+        <CardContent className="p-4 space-y-4">
+          <h2 className="text-lg font-semibold text-white">Know Your Rights</h2>
+          <p className="text-white text-sm leading-relaxed">
+            Your apprenticeship should be a positive learning experience. Understanding your
+            legal rights, wage entitlements, and where to get help ensures you are treated
+            fairly throughout your{' '}
+            <span className="font-bold text-elec-yellow">entire apprenticeship</span>.
           </p>
+
+          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+            <h3 className="text-green-400 font-semibold text-sm mb-3">Key Facts</h3>
+            <ul className="space-y-2">
+              {[
+                'You should NEVER pay for your apprenticeship training',
+                'Minimum wage: £7.55/hr (2025/26), rising to £8.00 from April 2026',
+                '28 days paid holiday per year (including bank holidays)',
+                'Free training, materials, and End Point Assessment',
+                'Free, confidential support is always available',
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-center gap-2 text-sm text-white"
+                >
+                  <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Section Header */}
+      <div className="flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-elec-yellow" />
+        <h2 className="text-base font-semibold text-white">Explore Sections</h2>
+      </div>
+
+      {/* Section Cards */}
+      <div className="space-y-2">
+        {sections.map((section) => (
+          <button
+            key={section.slug}
+            onClick={() =>
+              navigate(`/apprentice/rights-and-pay/${section.slug}`)
+            }
+            className={`w-full flex items-center gap-3 p-4 rounded-lg bg-white/5 ${section.border} border
+              touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left`}
+          >
+            <span className="text-xl flex-shrink-0">{section.icon}</span>
+            <div className="flex-1 min-w-0">
+              <span className={`font-medium text-sm ${section.colour}`}>
+                {section.title}
+              </span>
+              <p className="text-white text-xs mt-0.5">{section.readTime}</p>
+            </div>
+            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+          </button>
+        ))}
+      </div>
+
+      {/* Footer */}
+      <Card className="border-white/10 bg-white/5">
+        <CardContent className="p-4 space-y-3">
+          <div className="flex items-center gap-2 mb-2">
+            <Heart className="h-4 w-4 text-green-400" />
+            <h3 className="text-sm font-semibold text-green-400">Remember</h3>
+          </div>
+          <p className="text-white text-xs leading-relaxed">
+            Your apprenticeship should be a positive learning experience. While challenges are
+            normal, exploitation, unsafe conditions, or unfair treatment are not. Do not suffer
+            in silence — help is available and using it shows strength, not weakness.
+          </p>
+          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+            <p className="text-white text-xs">
+              <strong className="text-red-400">In immediate danger?</strong> Call 999. For
+              non-emergency support, call ACAS on 0300 123 1100 (free, confidential).
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>

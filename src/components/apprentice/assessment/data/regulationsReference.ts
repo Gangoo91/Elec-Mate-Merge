@@ -11,7 +11,10 @@ export type ReferenceContent =
   | { type: 'steps'; steps: string[] }
   | { type: 'key-points'; points: string[]; source?: string }
   | { type: 'table'; rows: { label: string; value: string }[] }
-  | { type: 'testing-priorities'; tests: { test: string; priority: 'High' | 'Medium' | 'Low'; reason: string }[] };
+  | {
+      type: 'testing-priorities';
+      tests: { test: string; priority: 'High' | 'Medium' | 'Low'; reason: string }[];
+    };
 
 export const referenceCards: ReferenceCard[] = [
   {
@@ -161,11 +164,31 @@ export const referenceCards: ReferenceCard[] = [
     content: {
       type: 'testing-priorities',
       tests: [
-        { test: 'Continuity of protective conductors', priority: 'High', reason: 'Ensures protective conductor integrity for fault protection' },
-        { test: 'Insulation resistance', priority: 'High', reason: 'Prevents dangerous leakage currents and detects cable damage' },
-        { test: 'Polarity', priority: 'Medium', reason: 'Ensures correct connection of line, neutral, and earth' },
-        { test: 'Earth fault loop impedance (Zs)', priority: 'High', reason: 'Ensures protective devices operate within required time' },
-        { test: 'RCD operation', priority: 'High', reason: 'Confirms personal protection against electric shock' },
+        {
+          test: 'Continuity of protective conductors',
+          priority: 'High',
+          reason: 'Ensures protective conductor integrity for fault protection',
+        },
+        {
+          test: 'Insulation resistance',
+          priority: 'High',
+          reason: 'Prevents dangerous leakage currents and detects cable damage',
+        },
+        {
+          test: 'Polarity',
+          priority: 'Medium',
+          reason: 'Ensures correct connection of line, neutral, and earth',
+        },
+        {
+          test: 'Earth fault loop impedance (Zs)',
+          priority: 'High',
+          reason: 'Ensures protective devices operate within required time',
+        },
+        {
+          test: 'RCD operation',
+          priority: 'High',
+          reason: 'Confirms personal protection against electric shock',
+        },
       ],
     },
   },

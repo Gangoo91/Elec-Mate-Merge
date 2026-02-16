@@ -3,11 +3,11 @@ import { Wrench, CheckCircle } from 'lucide-react';
 
 export const EmergencyLightingPracticalSection3_2 = () => {
   const practicalPoints = [
-    "Always walk the escape route during design to identify points requiring extra luminaires",
-    "Place fittings close to potential hazards such as steps, ramps, or door thresholds",
-    "In large buildings, check for obstructions (e.g. partitions, shelving) that may block line of sight to signs or lighting",
-    "Avoid over-reliance on general lighting — escape route lighting must activate automatically during mains failure",
-    "Document placement decisions in the emergency lighting layout drawing for inspection"
+    'Always walk the escape route during design to identify points requiring extra luminaires',
+    'Place fittings close to potential hazards such as steps, ramps, or door thresholds',
+    'In large buildings, check for obstructions (e.g. partitions, shelving) that may block line of sight to signs or lighting',
+    'Avoid over-reliance on general lighting — escape route lighting must activate automatically during mains failure',
+    'Document placement decisions in the emergency lighting layout drawing for inspection',
   ];
 
   return (
@@ -23,7 +23,7 @@ export const EmergencyLightingPracticalSection3_2 = () => {
           <p className="text-gray-300">
             Real-world installation tips for effective escape route lighting coverage:
           </p>
-          
+
           <ul className="space-y-3">
             {practicalPoints.map((point, index) => (
               <li key={index} className="flex items-start gap-3">
@@ -35,8 +35,9 @@ export const EmergencyLightingPracticalSection3_2 = () => {
 
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 mt-4">
             <p className="text-elec-yellow font-medium">
-              Professional Tip: Use a lux meter to verify coverage at floor level along the entire route. 
-              Design calculations don't account for real-world obstructions that may create shadows.
+              Professional Tip: Use a lux meter to verify coverage at floor level along the entire
+              route. Design calculations don't account for real-world obstructions that may create
+              shadows.
             </p>
           </div>
         </div>

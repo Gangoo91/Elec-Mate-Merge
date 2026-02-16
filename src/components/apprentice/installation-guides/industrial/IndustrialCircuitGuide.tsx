@@ -1,7 +1,6 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Zap,
   Settings,
@@ -17,362 +16,362 @@ import {
   Gauge,
   StopCircle,
   Lock,
-  Thermometer
-} from "lucide-react";
+  Thermometer,
+} from 'lucide-react';
 
 const IndustrialCircuitGuide = () => {
   // Motor Starting Methods
   const motorStartingMethods = [
     {
-      method: "Direct On-Line (DOL)",
-      maxPower: "Up to 7.5kW (typical)",
-      startingCurrent: "6-8x Full Load Current",
-      startingTorque: "100% rated torque",
+      method: 'Direct On-Line (DOL)',
+      maxPower: 'Up to 7.5kW (typical)',
+      startingCurrent: '6-8x Full Load Current',
+      startingTorque: '100% rated torque',
       advantages: [
-        "Simple and lowest cost",
-        "High starting torque",
-        "Compact installation",
-        "Easy to maintain"
+        'Simple and lowest cost',
+        'High starting torque',
+        'Compact installation',
+        'Easy to maintain',
       ],
       disadvantages: [
-        "High inrush current",
-        "Mechanical shock to driven equipment",
-        "Voltage dip on supply",
-        "May trip protection devices"
+        'High inrush current',
+        'Mechanical shock to driven equipment',
+        'Voltage dip on supply',
+        'May trip protection devices',
       ],
-      application: "Small pumps, fans, compressors where high starting torque is acceptable",
-      components: "Contactor, overload relay, isolator, start/stop buttons"
+      application: 'Small pumps, fans, compressors where high starting torque is acceptable',
+      components: 'Contactor, overload relay, isolator, start/stop buttons',
     },
     {
-      method: "Star-Delta (Y-D)",
-      maxPower: "7.5kW - 45kW",
-      startingCurrent: "2-3x Full Load Current (1/3 of DOL)",
-      startingTorque: "33% rated torque",
+      method: 'Star-Delta (Y-D)',
+      maxPower: '7.5kW - 45kW',
+      startingCurrent: '2-3x Full Load Current (1/3 of DOL)',
+      startingTorque: '33% rated torque',
       advantages: [
-        "Reduced starting current (1/3 of DOL)",
-        "Lower voltage dip",
-        "Suitable for light starting loads",
-        "Cost-effective for medium motors"
+        'Reduced starting current (1/3 of DOL)',
+        'Lower voltage dip',
+        'Suitable for light starting loads',
+        'Cost-effective for medium motors',
       ],
       disadvantages: [
-        "Reduced starting torque",
-        "Current spike on changeover",
-        "Requires 6-wire motor connection",
-        "Not for high inertia loads"
+        'Reduced starting torque',
+        'Current spike on changeover',
+        'Requires 6-wire motor connection',
+        'Not for high inertia loads',
       ],
-      application: "Centrifugal pumps, fans, compressors with low starting torque requirements",
-      components: "3 contactors, timer, overload relay, star-delta starter unit"
+      application: 'Centrifugal pumps, fans, compressors with low starting torque requirements',
+      components: '3 contactors, timer, overload relay, star-delta starter unit',
     },
     {
-      method: "Soft Starter",
-      maxPower: "5.5kW - 500kW+",
-      startingCurrent: "2-4x Full Load Current (adjustable)",
-      startingTorque: "Adjustable via ramp settings",
+      method: 'Soft Starter',
+      maxPower: '5.5kW - 500kW+',
+      startingCurrent: '2-4x Full Load Current (adjustable)',
+      startingTorque: 'Adjustable via ramp settings',
       advantages: [
-        "Smooth, controlled acceleration",
-        "Adjustable starting parameters",
-        "Reduced mechanical stress",
-        "Soft stop capability",
-        "Built-in motor protection"
+        'Smooth, controlled acceleration',
+        'Adjustable starting parameters',
+        'Reduced mechanical stress',
+        'Soft stop capability',
+        'Built-in motor protection',
       ],
       disadvantages: [
-        "Higher initial cost than DOL/Y-D",
-        "Generates harmonics during start",
-        "Reduced starting torque at low voltage",
-        "Heat generation in thyristors"
+        'Higher initial cost than DOL/Y-D',
+        'Generates harmonics during start',
+        'Reduced starting torque at low voltage',
+        'Heat generation in thyristors',
       ],
-      application: "Conveyors, crushers, pumps, fans requiring smooth acceleration",
-      components: "Soft starter unit, bypass contactor (optional), control circuit"
+      application: 'Conveyors, crushers, pumps, fans requiring smooth acceleration',
+      components: 'Soft starter unit, bypass contactor (optional), control circuit',
     },
     {
-      method: "Variable Frequency Drive (VFD)",
-      maxPower: "0.37kW - 1MW+",
-      startingCurrent: "1-1.5x Full Load Current",
-      startingTorque: "Up to 150% rated torque",
+      method: 'Variable Frequency Drive (VFD)',
+      maxPower: '0.37kW - 1MW+',
+      startingCurrent: '1-1.5x Full Load Current',
+      startingTorque: 'Up to 150% rated torque',
       advantages: [
-        "Full speed control",
-        "Energy savings at partial load",
-        "Lowest starting current",
-        "Built-in protection features",
-        "Process optimisation capability"
+        'Full speed control',
+        'Energy savings at partial load',
+        'Lowest starting current',
+        'Built-in protection features',
+        'Process optimisation capability',
       ],
       disadvantages: [
-        "Highest initial cost",
-        "Generates harmonics (requires filtering)",
-        "EMC considerations required",
-        "Motor cable length limitations",
-        "Requires specialist knowledge"
+        'Highest initial cost',
+        'Generates harmonics (requires filtering)',
+        'EMC considerations required',
+        'Motor cable length limitations',
+        'Requires specialist knowledge',
       ],
-      application: "Pumps, fans, conveyors, cranes, any application needing speed control",
-      components: "VFD unit, line reactor/filter, motor cable (screened), EMC filter"
-    }
+      application: 'Pumps, fans, conveyors, cranes, any application needing speed control',
+      components: 'VFD unit, line reactor/filter, motor cable (screened), EMC filter',
+    },
   ];
 
   // Motor Protection Types
   const motorProtection = [
     {
-      type: "Thermal Overload Relay",
-      function: "Protects against sustained overload conditions",
-      mechanism: "Bimetallic strips or electronic sensing",
-      tripClass: "Class 10, 20, or 30 (time to trip)",
-      settings: "Set to 100-105% of motor FLC",
+      type: 'Thermal Overload Relay',
+      function: 'Protects against sustained overload conditions',
+      mechanism: 'Bimetallic strips or electronic sensing',
+      tripClass: 'Class 10, 20, or 30 (time to trip)',
+      settings: 'Set to 100-105% of motor FLC',
       features: [
-        "Manual or automatic reset",
-        "Adjustable current setting",
-        "Test button for function check",
-        "Phase loss protection (some models)"
+        'Manual or automatic reset',
+        'Adjustable current setting',
+        'Test button for function check',
+        'Phase loss protection (some models)',
       ],
-      notes: "Standard protection for most motor circuits"
+      notes: 'Standard protection for most motor circuits',
     },
     {
-      type: "Electronic Motor Protection Relay",
-      function: "Comprehensive motor protection with multiple functions",
-      mechanism: "Current transformers and microprocessor",
-      tripClass: "Programmable trip characteristics",
-      settings: "Multiple parameters via keypad/software",
+      type: 'Electronic Motor Protection Relay',
+      function: 'Comprehensive motor protection with multiple functions',
+      mechanism: 'Current transformers and microprocessor',
+      tripClass: 'Programmable trip characteristics',
+      settings: 'Multiple parameters via keypad/software',
       features: [
-        "Overload protection",
-        "Phase unbalance detection",
-        "Phase loss/reversal",
-        "Ground fault protection",
-        "Stall protection",
-        "Underload detection"
+        'Overload protection',
+        'Phase unbalance detection',
+        'Phase loss/reversal',
+        'Ground fault protection',
+        'Stall protection',
+        'Underload detection',
       ],
-      notes: "Recommended for critical motors and larger applications"
+      notes: 'Recommended for critical motors and larger applications',
     },
     {
-      type: "Thermistor Protection",
-      function: "Direct motor winding temperature monitoring",
-      mechanism: "PTC thermistors embedded in windings",
-      tripClass: "Instantaneous on temperature threshold",
-      settings: "Fixed threshold (typically 130-155C)",
+      type: 'Thermistor Protection',
+      function: 'Direct motor winding temperature monitoring',
+      mechanism: 'PTC thermistors embedded in windings',
+      tripClass: 'Instantaneous on temperature threshold',
+      settings: 'Fixed threshold (typically 130-155C)',
       features: [
-        "Direct temperature measurement",
-        "Protects against blocked ventilation",
-        "High ambient temperature protection",
-        "Rapid response to overheating"
+        'Direct temperature measurement',
+        'Protects against blocked ventilation',
+        'High ambient temperature protection',
+        'Rapid response to overheating',
       ],
-      notes: "Essential for motors in harsh environments"
+      notes: 'Essential for motors in harsh environments',
     },
     {
-      type: "Phase Failure Relay",
-      function: "Detects loss or severe imbalance of supply phases",
-      mechanism: "Voltage or current monitoring",
-      tripClass: "Instantaneous (typically < 2 seconds)",
-      settings: "Threshold adjustment for sensitivity",
+      type: 'Phase Failure Relay',
+      function: 'Detects loss or severe imbalance of supply phases',
+      mechanism: 'Voltage or current monitoring',
+      tripClass: 'Instantaneous (typically < 2 seconds)',
+      settings: 'Threshold adjustment for sensitivity',
       features: [
-        "Phase loss detection",
-        "Phase reversal detection",
-        "Voltage imbalance monitoring",
-        "Under/over voltage protection"
+        'Phase loss detection',
+        'Phase reversal detection',
+        'Voltage imbalance monitoring',
+        'Under/over voltage protection',
       ],
-      notes: "Critical for preventing single-phasing damage"
+      notes: 'Critical for preventing single-phasing damage',
     },
     {
-      type: "Earth Fault Protection",
-      function: "Detects current leakage to earth",
-      mechanism: "Core balance CT or residual current sensing",
-      tripClass: "Adjustable time delay",
-      settings: "Typically 30mA-30A depending on application",
+      type: 'Earth Fault Protection',
+      function: 'Detects current leakage to earth',
+      mechanism: 'Core balance CT or residual current sensing',
+      tripClass: 'Adjustable time delay',
+      settings: 'Typically 30mA-30A depending on application',
       features: [
-        "Ground fault current detection",
-        "Adjustable sensitivity",
-        "Time delay for discrimination",
-        "Integration with protection scheme"
+        'Ground fault current detection',
+        'Adjustable sensitivity',
+        'Time delay for discrimination',
+        'Integration with protection scheme',
       ],
-      notes: "Essential for personnel and equipment protection"
-    }
+      notes: 'Essential for personnel and equipment protection',
+    },
   ];
 
   // Control Circuits
   const controlCircuits = [
     {
-      voltage: "24V DC",
-      application: "PLC-based Control Systems",
+      voltage: '24V DC',
+      application: 'PLC-based Control Systems',
       advantages: [
-        "Safe voltage - no shock risk",
-        "Compatible with PLCs and sensors",
-        "Fast switching response",
-        "No coil buzz or chatter",
-        "Suitable for intrinsically safe circuits"
+        'Safe voltage - no shock risk',
+        'Compatible with PLCs and sensors',
+        'Fast switching response',
+        'No coil buzz or chatter',
+        'Suitable for intrinsically safe circuits',
       ],
-      cableRequirements: "Multi-core screened cable, typically 0.5-1.5mm2",
-      protection: "Fused at source, typically 2-10A per circuit",
+      cableRequirements: 'Multi-core screened cable, typically 0.5-1.5mm2',
+      protection: 'Fused at source, typically 2-10A per circuit',
       typicalUse: [
-        "PLC I/O connections",
-        "Proximity sensors",
-        "Photoelectric sensors",
-        "Limit switches",
-        "Indicator lamps (LED)"
-      ]
+        'PLC I/O connections',
+        'Proximity sensors',
+        'Photoelectric sensors',
+        'Limit switches',
+        'Indicator lamps (LED)',
+      ],
     },
     {
-      voltage: "110V AC (CTE)",
-      application: "Standard Industrial Control Voltage",
+      voltage: '110V AC (CTE)',
+      application: 'Standard Industrial Control Voltage',
       advantages: [
-        "Reduced shock risk (centre-tapped earth)",
-        "55V to earth maximum",
-        "Industry standard for UK",
-        "Wide range of control devices available"
+        'Reduced shock risk (centre-tapped earth)',
+        '55V to earth maximum',
+        'Industry standard for UK',
+        'Wide range of control devices available',
       ],
-      cableRequirements: "1.5mm2 multi-core, often with pilot cores",
-      protection: "MCB or fuses at control transformer secondary",
+      cableRequirements: '1.5mm2 multi-core, often with pilot cores',
+      protection: 'MCB or fuses at control transformer secondary',
       typicalUse: [
-        "Contactor coils",
-        "Control relays",
-        "Push buttons and switches",
-        "Indicator lamps",
-        "Motor starters"
-      ]
+        'Contactor coils',
+        'Control relays',
+        'Push buttons and switches',
+        'Indicator lamps',
+        'Motor starters',
+      ],
     },
     {
-      voltage: "230V AC",
-      application: "Higher Power Control Devices",
+      voltage: '230V AC',
+      application: 'Higher Power Control Devices',
       advantages: [
-        "Standard supply voltage",
-        "Suitable for larger solenoids",
-        "Direct connection to mains possible"
+        'Standard supply voltage',
+        'Suitable for larger solenoids',
+        'Direct connection to mains possible',
       ],
-      cableRequirements: "1.5mm2 minimum, SWA for external routes",
-      protection: "MCB protection, consider RCD for socket outlets",
+      cableRequirements: '1.5mm2 minimum, SWA for external routes',
+      protection: 'MCB protection, consider RCD for socket outlets',
       typicalUse: [
-        "Large solenoid valves",
-        "Electric actuators",
-        "Heating elements",
-        "240V coil contactors",
-        "Convenience outlets in panels"
-      ]
-    }
+        'Large solenoid valves',
+        'Electric actuators',
+        'Heating elements',
+        '240V coil contactors',
+        'Convenience outlets in panels',
+      ],
+    },
   ];
 
   // Interlock Circuits
   const interlockCircuits = [
     {
-      type: "Electrical Interlock",
-      description: "Prevents simultaneous operation of incompatible equipment",
-      example: "Forward/reverse motor operation",
+      type: 'Electrical Interlock',
+      description: 'Prevents simultaneous operation of incompatible equipment',
+      example: 'Forward/reverse motor operation',
       implementation: [
-        "Auxiliary contacts wired in series with opposing coil",
-        "NC contact of forward contactor in reverse coil circuit",
-        "NC contact of reverse contactor in forward coil circuit",
-        "Ensures only one contactor can operate at a time"
+        'Auxiliary contacts wired in series with opposing coil',
+        'NC contact of forward contactor in reverse coil circuit',
+        'NC contact of reverse contactor in forward coil circuit',
+        'Ensures only one contactor can operate at a time',
       ],
-      diagram: "FWD(NC) -> REV Coil | REV(NC) -> FWD Coil"
+      diagram: 'FWD(NC) -> REV Coil | REV(NC) -> FWD Coil',
     },
     {
-      type: "Mechanical Interlock",
-      description: "Physical barrier preventing simultaneous contact operation",
-      example: "Changeover switches, interlock units",
+      type: 'Mechanical Interlock',
+      description: 'Physical barrier preventing simultaneous contact operation',
+      example: 'Changeover switches, interlock units',
       implementation: [
-        "Mechanical linkage between contactors",
-        "Physical bar prevents both contactors closing",
-        "Used in addition to electrical interlock",
-        "Provides backup protection"
+        'Mechanical linkage between contactors',
+        'Physical bar prevents both contactors closing',
+        'Used in addition to electrical interlock',
+        'Provides backup protection',
       ],
-      diagram: "Mechanical bar between contactor armatures"
+      diagram: 'Mechanical bar between contactor armatures',
     },
     {
-      type: "Guard Interlock",
-      description: "Safety interlock for machinery guards",
-      example: "Machine guard door switches",
+      type: 'Guard Interlock',
+      description: 'Safety interlock for machinery guards',
+      example: 'Machine guard door switches',
       implementation: [
-        "Guard switch in series with start circuit",
-        "Opening guard removes control power",
-        "May include guard locking (prevents opening during cycle)",
-        "Often safety-rated switches (ISO 14119)"
+        'Guard switch in series with start circuit',
+        'Opening guard removes control power',
+        'May include guard locking (prevents opening during cycle)',
+        'Often safety-rated switches (ISO 14119)',
       ],
-      diagram: "Guard Switch -> Safety Relay -> Contactor"
+      diagram: 'Guard Switch -> Safety Relay -> Contactor',
     },
     {
-      type: "Sequence Interlock",
-      description: "Ensures correct operational sequence",
-      example: "Conveyor system startup sequence",
+      type: 'Sequence Interlock',
+      description: 'Ensures correct operational sequence',
+      example: 'Conveyor system startup sequence',
       implementation: [
-        "Downstream equipment starts before upstream",
-        "Auxiliary contacts prove equipment running",
-        "Timer relays for sequence delays",
-        "Prevents material pile-up"
+        'Downstream equipment starts before upstream',
+        'Auxiliary contacts prove equipment running',
+        'Timer relays for sequence delays',
+        'Prevents material pile-up',
       ],
-      diagram: "Conveyor 3 -> Conveyor 2 -> Conveyor 1 (start sequence)"
-    }
+      diagram: 'Conveyor 3 -> Conveyor 2 -> Conveyor 1 (start sequence)',
+    },
   ];
 
   // Emergency Stop Circuits (BS EN 60204-1)
   const emergencyStopCircuits = {
     requirements: [
       {
-        aspect: "Category Selection",
-        description: "Based on risk assessment per BS EN 60204-1",
+        aspect: 'Category Selection',
+        description: 'Based on risk assessment per BS EN 60204-1',
         categories: [
           {
-            category: "Category 0",
-            action: "Immediate removal of power to machine actuators",
-            method: "Uncontrolled stop by immediately removing power",
-            use: "Where fastest possible stop is required"
+            category: 'Category 0',
+            action: 'Immediate removal of power to machine actuators',
+            method: 'Uncontrolled stop by immediately removing power',
+            use: 'Where fastest possible stop is required',
           },
           {
-            category: "Category 1",
-            action: "Controlled stop with power removal after stopping",
-            method: "Power available for braking, then removed",
-            use: "Where controlled deceleration prevents hazard"
+            category: 'Category 1',
+            action: 'Controlled stop with power removal after stopping',
+            method: 'Power available for braking, then removed',
+            use: 'Where controlled deceleration prevents hazard',
           },
           {
-            category: "Category 2",
-            action: "Controlled stop with power maintained",
-            method: "Machine stopped but power remains available",
-            use: "Where power-off would create additional hazard"
-          }
-        ]
-      }
+            category: 'Category 2',
+            action: 'Controlled stop with power maintained',
+            method: 'Machine stopped but power remains available',
+            use: 'Where power-off would create additional hazard',
+          },
+        ],
+      },
     ],
     buttonRequirements: [
-      "Red mushroom head actuator",
-      "Yellow background (where practicable)",
-      "Self-latching (maintained) operation",
-      "Direct opening action contacts",
+      'Red mushroom head actuator',
+      'Yellow background (where practicable)',
+      'Self-latching (maintained) operation',
+      'Direct opening action contacts',
       "Clearly marked 'EMERGENCY STOP' or E-STOP symbol",
-      "Release by rotation, key, or special tool"
+      'Release by rotation, key, or special tool',
     ],
     circuitDesign: [
-      "Hardwired - not software dependent",
-      "Fail-safe design (wire break = safe state)",
-      "Series connection of all E-stop devices",
-      "Monitoring of device function (dual channel for higher categories)",
-      "Must not be used as routine stop method",
-      "Reset required before restart"
+      'Hardwired - not software dependent',
+      'Fail-safe design (wire break = safe state)',
+      'Series connection of all E-stop devices',
+      'Monitoring of device function (dual channel for higher categories)',
+      'Must not be used as routine stop method',
+      'Reset required before restart',
     ],
     safetyCategories: [
       {
-        category: "Category B",
-        description: "Basic safety function, no fault tolerance",
-        mtbf: "Not specified",
-        application: "Low risk applications only"
+        category: 'Category B',
+        description: 'Basic safety function, no fault tolerance',
+        mtbf: 'Not specified',
+        application: 'Low risk applications only',
       },
       {
-        category: "Category 1",
-        description: "Enhanced reliability through component selection",
-        mtbf: "Not specified",
-        application: "Low-medium risk"
+        category: 'Category 1',
+        description: 'Enhanced reliability through component selection',
+        mtbf: 'Not specified',
+        application: 'Low-medium risk',
       },
       {
-        category: "Category 2",
-        description: "Safety function checked at intervals",
-        mtbf: "Not specified",
-        application: "Medium risk with checking"
+        category: 'Category 2',
+        description: 'Safety function checked at intervals',
+        mtbf: 'Not specified',
+        application: 'Medium risk with checking',
       },
       {
-        category: "Category 3",
-        description: "Single fault does not lead to loss of safety function",
-        mtbf: "High",
-        application: "High risk applications"
+        category: 'Category 3',
+        description: 'Single fault does not lead to loss of safety function',
+        mtbf: 'High',
+        application: 'High risk applications',
       },
       {
-        category: "Category 4",
-        description: "Fault accumulation does not lead to loss of safety function",
-        mtbf: "Very High",
-        application: "Highest risk applications"
-      }
-    ]
+        category: 'Category 4',
+        description: 'Fault accumulation does not lead to loss of safety function',
+        mtbf: 'Very High',
+        application: 'Highest risk applications',
+      },
+    ],
   };
 
   // Machine Isolation (LOTO)
@@ -380,385 +379,382 @@ const IndustrialCircuitGuide = () => {
     principles: [
       {
         step: 1,
-        action: "Prepare",
+        action: 'Prepare',
         details: [
-          "Identify all energy sources (electrical, pneumatic, hydraulic, etc.)",
-          "Locate all isolation points",
-          "Notify affected personnel",
-          "Obtain appropriate locks and tags"
-        ]
+          'Identify all energy sources (electrical, pneumatic, hydraulic, etc.)',
+          'Locate all isolation points',
+          'Notify affected personnel',
+          'Obtain appropriate locks and tags',
+        ],
       },
       {
         step: 2,
-        action: "Shut Down",
+        action: 'Shut Down',
         details: [
-          "Use normal stopping procedure",
-          "Operate emergency stop if required",
-          "Wait for machine to stop completely",
-          "Observe any run-down time"
-        ]
+          'Use normal stopping procedure',
+          'Operate emergency stop if required',
+          'Wait for machine to stop completely',
+          'Observe any run-down time',
+        ],
       },
       {
         step: 3,
-        action: "Isolate",
+        action: 'Isolate',
         details: [
-          "Open all energy isolating devices",
-          "Electrical: Open disconnector/isolator",
-          "Pneumatic: Close and vent supply",
-          "Hydraulic: Release pressure, block/prop"
-        ]
+          'Open all energy isolating devices',
+          'Electrical: Open disconnector/isolator',
+          'Pneumatic: Close and vent supply',
+          'Hydraulic: Release pressure, block/prop',
+        ],
       },
       {
         step: 4,
-        action: "Lock and Tag",
+        action: 'Lock and Tag',
         details: [
-          "Apply personal safety lock to each isolator",
-          "Attach personal identification tag",
-          "Each worker applies own lock (multi-lock hasp if needed)",
-          "Keys retained by lock owner only"
-        ]
+          'Apply personal safety lock to each isolator',
+          'Attach personal identification tag',
+          'Each worker applies own lock (multi-lock hasp if needed)',
+          'Keys retained by lock owner only',
+        ],
       },
       {
         step: 5,
-        action: "Prove Dead (Electrical)",
+        action: 'Prove Dead (Electrical)',
         details: [
-          "Use approved voltage indicator (GS38 compliant)",
-          "Prove indicator before and after test",
-          "Test all phases L1-L2, L2-L3, L3-L1, L1-N, L2-N, L3-N, L1-E, L2-E, L3-E",
-          "Confirm zero voltage at work location"
-        ]
+          'Use approved voltage indicator (GS38 compliant)',
+          'Prove indicator before and after test',
+          'Test all phases L1-L2, L2-L3, L3-L1, L1-N, L2-N, L3-N, L1-E, L2-E, L3-E',
+          'Confirm zero voltage at work location',
+        ],
       },
       {
         step: 6,
-        action: "Release Stored Energy",
+        action: 'Release Stored Energy',
         details: [
-          "Discharge capacitors",
-          "Release springs and tensioned parts",
-          "Block or prop raised elements",
-          "Vent pressure systems"
-        ]
-      }
+          'Discharge capacitors',
+          'Release springs and tensioned parts',
+          'Block or prop raised elements',
+          'Vent pressure systems',
+        ],
+      },
     ],
     lockTypes: [
       {
-        type: "Personal Safety Lock",
-        description: "Individual lock, one key only held by owner",
-        use: "Primary isolation lock for each worker"
+        type: 'Personal Safety Lock',
+        description: 'Individual lock, one key only held by owner',
+        use: 'Primary isolation lock for each worker',
       },
       {
-        type: "Department Lock",
-        description: "Controlled by supervisor, multiple keys may exist",
-        use: "Group lockout situations"
+        type: 'Department Lock',
+        description: 'Controlled by supervisor, multiple keys may exist',
+        use: 'Group lockout situations',
       },
       {
-        type: "Multi-lock Hasp",
-        description: "Allows multiple locks on single isolation point",
-        use: "When multiple workers need to lock out same equipment"
-      }
-    ]
+        type: 'Multi-lock Hasp',
+        description: 'Allows multiple locks on single isolation point',
+        use: 'When multiple workers need to lock out same equipment',
+      },
+    ],
   };
 
   // Industrial Cable Types
   const industrialCables = [
     {
-      type: "Steel Wire Armoured (SWA)",
-      construction: "XLPE insulated, steel wire armour, PVC sheath",
-      voltageRating: "600/1000V",
+      type: 'Steel Wire Armoured (SWA)',
+      construction: 'XLPE insulated, steel wire armour, PVC sheath',
+      voltageRating: '600/1000V',
       applications: [
-        "Underground distribution",
-        "Surface mounted power cables",
-        "External cable runs",
-        "Industrial submains"
+        'Underground distribution',
+        'Surface mounted power cables',
+        'External cable runs',
+        'Industrial submains',
       ],
       advantages: [
-        "Mechanical protection from armour",
-        "Can use armour as CPC (with care)",
-        "Suitable for direct burial",
-        "Good current carrying capacity"
+        'Mechanical protection from armour',
+        'Can use armour as CPC (with care)',
+        'Suitable for direct burial',
+        'Good current carrying capacity',
       ],
       installation: [
-        "Terminate with proper cable glands",
-        "Support at regular intervals",
-        "Minimum bend radius 6x diameter",
-        "Earth armour at both ends"
-      ]
+        'Terminate with proper cable glands',
+        'Support at regular intervals',
+        'Minimum bend radius 6x diameter',
+        'Earth armour at both ends',
+      ],
     },
     {
-      type: "Mineral Insulated Copper Clad (MICC)",
-      construction: "Copper conductors, magite insulation, copper sheath",
-      voltageRating: "500V or 750V",
+      type: 'Mineral Insulated Copper Clad (MICC)',
+      construction: 'Copper conductors, magite insulation, copper sheath',
+      voltageRating: '500V or 750V',
       applications: [
-        "Fire survival circuits",
-        "High temperature environments",
-        "Emergency lighting circuits",
-        "Critical power feeds"
+        'Fire survival circuits',
+        'High temperature environments',
+        'Emergency lighting circuits',
+        'Critical power feeds',
       ],
       advantages: [
-        "Completely non-combustible",
-        "Maintains circuit integrity in fire",
-        "Very long life expectancy",
-        "Small diameter for rating"
+        'Completely non-combustible',
+        'Maintains circuit integrity in fire',
+        'Very long life expectancy',
+        'Small diameter for rating',
       ],
       installation: [
-        "Specialist termination required (pots, seals)",
-        "Must seal against moisture ingress",
-        "Requires competent installer training",
-        "Support to prevent strain on terminations"
-      ]
+        'Specialist termination required (pots, seals)',
+        'Must seal against moisture ingress',
+        'Requires competent installer training',
+        'Support to prevent strain on terminations',
+      ],
     },
     {
-      type: "Fire Performance (FP) Cables",
-      construction: "Special fire-resistant insulation, various armour options",
-      voltageRating: "300/500V typical",
+      type: 'Fire Performance (FP) Cables',
+      construction: 'Special fire-resistant insulation, various armour options',
+      voltageRating: '300/500V typical',
       applications: [
-        "Fire alarm circuits",
-        "Emergency lighting",
-        "Smoke ventilation systems",
-        "Voice alarm systems"
+        'Fire alarm circuits',
+        'Emergency lighting',
+        'Smoke ventilation systems',
+        'Voice alarm systems',
       ],
       advantages: [
-        "Maintains circuit integrity in fire",
-        "Easier to install than MICC",
-        "No special termination required",
-        "Good flexibility"
+        'Maintains circuit integrity in fire',
+        'Easier to install than MICC',
+        'No special termination required',
+        'Good flexibility',
       ],
       installation: [
-        "Enhanced fire rated clips required",
-        "Route away from fire hazards where possible",
-        "Follow manufacturer fixing requirements",
-        "Segregate from non-fire rated cables"
-      ]
+        'Enhanced fire rated clips required',
+        'Route away from fire hazards where possible',
+        'Follow manufacturer fixing requirements',
+        'Segregate from non-fire rated cables',
+      ],
     },
     {
-      type: "Armoured Instrumentation Cable",
-      construction: "Screened pairs/triads, overall armour",
-      voltageRating: "300/500V",
+      type: 'Armoured Instrumentation Cable',
+      construction: 'Screened pairs/triads, overall armour',
+      voltageRating: '300/500V',
       applications: [
-        "4-20mA instrument signals",
-        "Thermocouple connections",
-        "RTD circuits",
-        "Communication cables"
+        '4-20mA instrument signals',
+        'Thermocouple connections',
+        'RTD circuits',
+        'Communication cables',
       ],
       advantages: [
-        "EMI/RFI screening",
-        "Mechanical protection",
-        "Low noise pickup",
-        "Accurate signal transmission"
+        'EMI/RFI screening',
+        'Mechanical protection',
+        'Low noise pickup',
+        'Accurate signal transmission',
       ],
       installation: [
-        "Screen earthed at one end only (typically control room)",
-        "Separate from power cables",
-        "Use proper glands maintaining screen continuity",
-        "Label cores clearly"
-      ]
-    }
+        'Screen earthed at one end only (typically control room)',
+        'Separate from power cables',
+        'Use proper glands maintaining screen continuity',
+        'Label cores clearly',
+      ],
+    },
   ];
 
   // Cable Sizing Derating
   const cableDeratingFactors = {
     grouping: [
-      { cables: 1, factor: 1.00 },
-      { cables: 2, factor: 0.80 },
-      { cables: 3, factor: 0.70 },
+      { cables: 1, factor: 1.0 },
+      { cables: 2, factor: 0.8 },
+      { cables: 3, factor: 0.7 },
       { cables: 4, factor: 0.65 },
-      { cables: 5, factor: 0.60 },
+      { cables: 5, factor: 0.6 },
       { cables: 6, factor: 0.57 },
-      { cables: "7-9", factor: 0.50 },
-      { cables: "10-12", factor: 0.45 },
-      { cables: "13-16", factor: 0.41 },
-      { cables: "17-20", factor: 0.38 }
+      { cables: '7-9', factor: 0.5 },
+      { cables: '10-12', factor: 0.45 },
+      { cables: '13-16', factor: 0.41 },
+      { cables: '17-20', factor: 0.38 },
     ],
     ambientTemperature: [
-      { temp: "25C", pvc: 1.03, xlpe: 1.04 },
-      { temp: "30C", pvc: 1.00, xlpe: 1.00 },
-      { temp: "35C", pvc: 0.94, xlpe: 0.96 },
-      { temp: "40C", pvc: 0.87, xlpe: 0.91 },
-      { temp: "45C", pvc: 0.79, xlpe: 0.87 },
-      { temp: "50C", pvc: 0.71, xlpe: 0.82 },
-      { temp: "55C", pvc: 0.61, xlpe: 0.76 },
-      { temp: "60C", pvc: 0.50, xlpe: 0.71 }
+      { temp: '25C', pvc: 1.03, xlpe: 1.04 },
+      { temp: '30C', pvc: 1.0, xlpe: 1.0 },
+      { temp: '35C', pvc: 0.94, xlpe: 0.96 },
+      { temp: '40C', pvc: 0.87, xlpe: 0.91 },
+      { temp: '45C', pvc: 0.79, xlpe: 0.87 },
+      { temp: '50C', pvc: 0.71, xlpe: 0.82 },
+      { temp: '55C', pvc: 0.61, xlpe: 0.76 },
+      { temp: '60C', pvc: 0.5, xlpe: 0.71 },
     ],
     thermalInsulation: [
-      { condition: "Cable touching thermal insulation one side", factor: 0.75 },
-      { condition: "Cable surrounded by thermal insulation < 100mm", factor: 0.63 },
-      { condition: "Cable surrounded by thermal insulation 100-200mm", factor: 0.55 },
-      { condition: "Cable surrounded by thermal insulation 200-400mm", factor: 0.50 },
-      { condition: "Cable surrounded by thermal insulation > 400mm", factor: 0.45 }
-    ]
+      { condition: 'Cable touching thermal insulation one side', factor: 0.75 },
+      { condition: 'Cable surrounded by thermal insulation < 100mm', factor: 0.63 },
+      { condition: 'Cable surrounded by thermal insulation 100-200mm', factor: 0.55 },
+      { condition: 'Cable surrounded by thermal insulation 200-400mm', factor: 0.5 },
+      { condition: 'Cable surrounded by thermal insulation > 400mm', factor: 0.45 },
+    ],
   };
 
   // Busbar Systems
   const busbarSystems = [
     {
-      type: "Rising Main / Busbar Trunking",
-      description: "Prefabricated busbar system for vertical or horizontal distribution",
-      ratings: "100A - 6300A typical",
+      type: 'Rising Main / Busbar Trunking',
+      description: 'Prefabricated busbar system for vertical or horizontal distribution',
+      ratings: '100A - 6300A typical',
       applications: [
-        "High-rise building distribution",
-        "Factory main distribution",
-        "Data centre power distribution",
-        "Easy relocation of tap-off points"
+        'High-rise building distribution',
+        'Factory main distribution',
+        'Data centre power distribution',
+        'Easy relocation of tap-off points',
       ],
       features: [
-        "Factory assembled and tested",
-        "IP rated enclosure (typically IP54+)",
-        "Plug-in tap-off boxes",
-        "Fire barrier options available",
-        "Copper or aluminium conductors"
+        'Factory assembled and tested',
+        'IP rated enclosure (typically IP54+)',
+        'Plug-in tap-off boxes',
+        'Fire barrier options available',
+        'Copper or aluminium conductors',
       ],
       installation: [
-        "Structural support required",
-        "Allow for thermal expansion",
-        "Fire stopping at floor penetrations",
-        "Testing of joints after installation"
-      ]
+        'Structural support required',
+        'Allow for thermal expansion',
+        'Fire stopping at floor penetrations',
+        'Testing of joints after installation',
+      ],
     },
     {
-      type: "LV Switchboard Busbars",
-      description: "Internal distribution within switchboards and panels",
-      ratings: "100A - 6300A",
+      type: 'LV Switchboard Busbars',
+      description: 'Internal distribution within switchboards and panels',
+      ratings: '100A - 6300A',
       applications: [
-        "Main LV switchboards",
-        "Motor control centres",
-        "Distribution boards",
-        "Generator switchgear"
+        'Main LV switchboards',
+        'Motor control centres',
+        'Distribution boards',
+        'Generator switchgear',
       ],
       features: [
-        "Copper (most common) or aluminium",
-        "Various cross-sections for different ratings",
-        "Colour coded: L1=Brown, L2=Black, L3=Grey, N=Blue",
-        "Insulated or bare conductors"
+        'Copper (most common) or aluminium',
+        'Various cross-sections for different ratings',
+        'Colour coded: L1=Brown, L2=Black, L3=Grey, N=Blue',
+        'Insulated or bare conductors',
       ],
       installation: [
-        "Adequate clearances for voltage level",
-        "Joint resistance testing",
-        "Torque settings for connections",
-        "Regular thermographic inspection"
-      ]
-    }
+        'Adequate clearances for voltage level',
+        'Joint resistance testing',
+        'Torque settings for connections',
+        'Regular thermographic inspection',
+      ],
+    },
   ];
 
   // Power Factor Correction
   const powerFactorCorrection = {
     basics: {
-      definition: "Power Factor is the ratio of Real Power (kW) to Apparent Power (kVA)",
-      formula: "Power Factor = kW / kVA = cos(phi)",
-      problem: "Low power factor means higher current for same power, causing losses and charges",
-      target: "Typically aim for 0.95 or higher to avoid utility penalties"
+      definition: 'Power Factor is the ratio of Real Power (kW) to Apparent Power (kVA)',
+      formula: 'Power Factor = kW / kVA = cos(phi)',
+      problem: 'Low power factor means higher current for same power, causing losses and charges',
+      target: 'Typically aim for 0.95 or higher to avoid utility penalties',
     },
     causes: [
-      "Induction motors (especially lightly loaded)",
-      "Welding equipment",
-      "Fluorescent lighting with magnetic ballasts",
-      "Variable frequency drives (input side)",
-      "Transformers (especially lightly loaded)"
+      'Induction motors (especially lightly loaded)',
+      'Welding equipment',
+      'Fluorescent lighting with magnetic ballasts',
+      'Variable frequency drives (input side)',
+      'Transformers (especially lightly loaded)',
     ],
     solutions: [
       {
-        method: "Static Capacitor Banks",
-        description: "Fixed capacitor installation",
-        application: "Constant, predictable loads",
-        advantages: [
-          "Low cost",
-          "No moving parts",
-          "Simple installation"
-        ],
+        method: 'Static Capacitor Banks',
+        description: 'Fixed capacitor installation',
+        application: 'Constant, predictable loads',
+        advantages: ['Low cost', 'No moving parts', 'Simple installation'],
         disadvantages: [
-          "Fixed correction only",
-          "Can cause leading PF if load reduces",
-          "Resonance risk with harmonics"
-        ]
+          'Fixed correction only',
+          'Can cause leading PF if load reduces',
+          'Resonance risk with harmonics',
+        ],
       },
       {
-        method: "Automatic PFC Systems",
-        description: "Switched capacitor stages controlled by PF controller",
-        application: "Variable loads",
+        method: 'Automatic PFC Systems',
+        description: 'Switched capacitor stages controlled by PF controller',
+        application: 'Variable loads',
         advantages: [
-          "Maintains target PF",
-          "Adapts to load changes",
-          "Prevents leading power factor"
+          'Maintains target PF',
+          'Adapts to load changes',
+          'Prevents leading power factor',
         ],
         disadvantages: [
-          "Higher cost",
-          "Requires controller programming",
-          "Capacitor switching transients"
-        ]
+          'Higher cost',
+          'Requires controller programming',
+          'Capacitor switching transients',
+        ],
       },
       {
-        method: "Detuned Filter Systems",
-        description: "Capacitors with series reactors to avoid resonance",
-        application: "Systems with harmonic distortion",
+        method: 'Detuned Filter Systems',
+        description: 'Capacitors with series reactors to avoid resonance',
+        application: 'Systems with harmonic distortion',
         advantages: [
-          "Safe operation with harmonics",
-          "Prevents capacitor damage",
-          "Some harmonic filtering effect"
+          'Safe operation with harmonics',
+          'Prevents capacitor damage',
+          'Some harmonic filtering effect',
         ],
         disadvantages: [
-          "More expensive than plain capacitors",
-          "Larger physical size",
-          "Reduced effective kVAr"
-        ]
-      }
+          'More expensive than plain capacitors',
+          'Larger physical size',
+          'Reduced effective kVAr',
+        ],
+      },
     ],
     equipmentConsiderations: [
-      "Inrush current limiting (switching, soft-start)",
-      "Harmonic voltage distortion assessment",
-      "Short circuit rating of capacitors",
-      "Discharge resistors for safety",
-      "Overcurrent and overvoltage protection"
-    ]
+      'Inrush current limiting (switching, soft-start)',
+      'Harmonic voltage distortion assessment',
+      'Short circuit rating of capacitors',
+      'Discharge resistors for safety',
+      'Overcurrent and overvoltage protection',
+    ],
   };
 
   // Harmonic Filtering
   const harmonicFiltering = {
     basics: {
-      definition: "Harmonics are voltages or currents at frequencies that are multiples of the fundamental (50Hz)",
-      commonHarmonics: "3rd (150Hz), 5th (250Hz), 7th (350Hz), 11th, 13th are most common",
-      sources: "VFDs, UPS systems, LED drivers, switched-mode power supplies, arc furnaces"
+      definition:
+        'Harmonics are voltages or currents at frequencies that are multiples of the fundamental (50Hz)',
+      commonHarmonics: '3rd (150Hz), 5th (250Hz), 7th (350Hz), 11th, 13th are most common',
+      sources: 'VFDs, UPS systems, LED drivers, switched-mode power supplies, arc furnaces',
     },
     effects: [
-      "Overheating of cables and transformers",
-      "Nuisance tripping of protection devices",
-      "Interference with sensitive equipment",
-      "Increased neutral current (triplen harmonics)",
-      "Capacitor bank failures",
-      "Motor heating and noise"
+      'Overheating of cables and transformers',
+      'Nuisance tripping of protection devices',
+      'Interference with sensitive equipment',
+      'Increased neutral current (triplen harmonics)',
+      'Capacitor bank failures',
+      'Motor heating and noise',
     ],
     solutions: [
       {
-        type: "Passive Filters",
-        description: "LC circuits tuned to specific harmonic frequencies",
-        application: "Known harmonic sources, specific frequencies",
-        pros: "Lower cost, no power supply needed",
-        cons: "Fixed frequency, can amplify non-target harmonics"
+        type: 'Passive Filters',
+        description: 'LC circuits tuned to specific harmonic frequencies',
+        application: 'Known harmonic sources, specific frequencies',
+        pros: 'Lower cost, no power supply needed',
+        cons: 'Fixed frequency, can amplify non-target harmonics',
       },
       {
-        type: "Active Filters",
-        description: "Electronic devices injecting anti-phase harmonic currents",
-        application: "Multiple harmonic sources, variable loads",
-        pros: "Broad frequency range, adaptive",
-        cons: "Higher cost, requires power supply"
+        type: 'Active Filters',
+        description: 'Electronic devices injecting anti-phase harmonic currents',
+        application: 'Multiple harmonic sources, variable loads',
+        pros: 'Broad frequency range, adaptive',
+        cons: 'Higher cost, requires power supply',
       },
       {
-        type: "Line Reactors",
-        description: "Series inductors to limit harmonic current",
-        application: "VFD input circuits",
-        pros: "Simple, inexpensive, limits inrush",
-        cons: "Voltage drop, limited effectiveness"
+        type: 'Line Reactors',
+        description: 'Series inductors to limit harmonic current',
+        application: 'VFD input circuits',
+        pros: 'Simple, inexpensive, limits inrush',
+        cons: 'Voltage drop, limited effectiveness',
       },
       {
-        type: "Multi-pulse Rectifiers",
-        description: "12, 18, or 24 pulse rectifier configurations",
-        application: "Large VFDs and UPS",
-        pros: "Very effective reduction, no additional equipment",
-        cons: "Requires special transformer, higher drive cost"
-      }
+        type: 'Multi-pulse Rectifiers',
+        description: '12, 18, or 24 pulse rectifier configurations',
+        application: 'Large VFDs and UPS',
+        pros: 'Very effective reduction, no additional equipment',
+        cons: 'Requires special transformer, higher drive cost',
+      },
     ],
     thd: {
-      definition: "Total Harmonic Distortion - measure of overall harmonic content",
-      limits: "Engineering Recommendation G5/4-1 specifies limits for connection to UK network",
-      planning: "THD assessment required for significant non-linear loads"
-    }
+      definition: 'Total Harmonic Distortion - measure of overall harmonic content',
+      limits: 'Engineering Recommendation G5/4-1 specifies limits for connection to UK network',
+      planning: 'THD assessment required for significant non-linear loads',
+    },
   };
 
   return (
@@ -778,11 +774,21 @@ const IndustrialCircuitGuide = () => {
 
       <Tabs defaultValue="starting" className="w-full">
         <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-1 h-auto">
-          <TabsTrigger value="starting" className="text-xs px-2 py-2">Motor Starting</TabsTrigger>
-          <TabsTrigger value="protection" className="text-xs px-2 py-2">Motor Protection</TabsTrigger>
-          <TabsTrigger value="control" className="text-xs px-2 py-2">Control Circuits</TabsTrigger>
-          <TabsTrigger value="estop" className="text-xs px-2 py-2">E-Stop & LOTO</TabsTrigger>
-          <TabsTrigger value="cables" className="text-xs px-2 py-2">Cables & Sizing</TabsTrigger>
+          <TabsTrigger value="starting" className="text-xs px-2 py-2">
+            Motor Starting
+          </TabsTrigger>
+          <TabsTrigger value="protection" className="text-xs px-2 py-2">
+            Motor Protection
+          </TabsTrigger>
+          <TabsTrigger value="control" className="text-xs px-2 py-2">
+            Control Circuits
+          </TabsTrigger>
+          <TabsTrigger value="estop" className="text-xs px-2 py-2">
+            E-Stop & LOTO
+          </TabsTrigger>
+          <TabsTrigger value="cables" className="text-xs px-2 py-2">
+            Cables & Sizing
+          </TabsTrigger>
         </TabsList>
 
         {/* Motor Starting Methods */}
@@ -794,12 +800,16 @@ const IndustrialCircuitGuide = () => {
                 <CardTitle className="text-blue-300">Motor Starting Methods</CardTitle>
               </div>
               <p className="text-white">
-                Selection of starting method depends on motor size, supply capacity, and application requirements
+                Selection of starting method depends on motor size, supply capacity, and application
+                requirements
               </p>
             </CardHeader>
             <CardContent className="space-y-6">
               {motorStartingMethods.map((method, index) => (
-                <div key={index} className="bg-blue-500/10 p-5 rounded-lg border border-blue-500/20">
+                <div
+                  key={index}
+                  className="bg-blue-500/10 p-5 rounded-lg border border-blue-500/20"
+                >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-4">
                     <h3 className="font-bold text-blue-300 text-lg">{method.method}</h3>
                     <div className="flex flex-wrap gap-2">
@@ -929,7 +939,10 @@ const IndustrialCircuitGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {motorProtection.map((protection, index) => (
-                <div key={index} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                <div
+                  key={index}
+                  className="bg-green-500/10 p-4 rounded-lg border border-green-500/20"
+                >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
                     <h3 className="font-bold text-green-300">{protection.type}</h3>
                     <Badge variant="outline" className="border-green-400 text-green-300 w-fit">
@@ -983,15 +996,24 @@ const IndustrialCircuitGuide = () => {
               <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <Zap className="h-4 w-4 text-orange-400 mt-0.5" />
-                  <span><strong className="text-orange-300">Discrimination:</strong> Motor overload trips before upstream MCB/fuse</span>
+                  <span>
+                    <strong className="text-orange-300">Discrimination:</strong> Motor overload
+                    trips before upstream MCB/fuse
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Zap className="h-4 w-4 text-orange-400 mt-0.5" />
-                  <span><strong className="text-orange-300">Starting Current:</strong> Protection allows for motor starting current (typically up to 30 seconds)</span>
+                  <span>
+                    <strong className="text-orange-300">Starting Current:</strong> Protection allows
+                    for motor starting current (typically up to 30 seconds)
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Zap className="h-4 w-4 text-orange-400 mt-0.5" />
-                  <span><strong className="text-orange-300">Fault Current:</strong> Short circuit protection clears faults before motor/cable damage</span>
+                  <span>
+                    <strong className="text-orange-300">Fault Current:</strong> Short circuit
+                    protection clears faults before motor/cable damage
+                  </span>
                 </li>
               </ul>
             </CardContent>
@@ -1009,7 +1031,10 @@ const IndustrialCircuitGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {controlCircuits.map((circuit, index) => (
-                <div key={index} className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                <div
+                  key={index}
+                  className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20"
+                >
                   <div className="flex items-center justify-between gap-3 mb-3">
                     <h3 className="font-bold text-purple-300 text-lg">{circuit.voltage}</h3>
                     <Badge variant="outline" className="border-purple-400 text-purple-300">
@@ -1070,7 +1095,10 @@ const IndustrialCircuitGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {interlockCircuits.map((interlock, index) => (
-                <div key={index} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                <div
+                  key={index}
+                  className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20"
+                >
                   <h3 className="font-bold text-blue-300 mb-2">{interlock.type}</h3>
                   <p className="text-white text-sm mb-3">{interlock.description}</p>
 
@@ -1103,7 +1131,9 @@ const IndustrialCircuitGuide = () => {
             <CardHeader>
               <div className="flex items-center gap-2">
                 <StopCircle className="h-6 w-6 text-red-400" />
-                <CardTitle className="text-red-300">Emergency Stop Systems (BS EN 60204-1)</CardTitle>
+                <CardTitle className="text-red-300">
+                  Emergency Stop Systems (BS EN 60204-1)
+                </CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -1196,7 +1226,10 @@ const IndustrialCircuitGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {lockoutTagout.principles.map((step, index) => (
-                <div key={index} className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
+                <div
+                  key={index}
+                  className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20"
+                >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center">
                       <span className="text-orange-300 font-bold">{step.step}</span>
@@ -1219,7 +1252,10 @@ const IndustrialCircuitGuide = () => {
                 <h3 className="font-bold text-orange-300 mb-3">Lock Types</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {lockoutTagout.lockTypes.map((lock, index) => (
-                    <div key={index} className="bg-orange-500/5 p-3 rounded border border-orange-500/10">
+                    <div
+                      key={index}
+                      className="bg-orange-500/5 p-3 rounded border border-orange-500/10"
+                    >
                       <h4 className="text-orange-200 font-medium mb-1">{lock.type}</h4>
                       <p className="text-white text-sm mb-2">{lock.description}</p>
                       <p className="text-white text-xs italic">{lock.use}</p>
@@ -1239,10 +1275,24 @@ const IndustrialCircuitGuide = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-white">
-              <p><strong className="text-red-300">Personal Locks Only:</strong> Never remove another person's lock. Each worker must apply and remove their own lock.</p>
-              <p><strong className="text-red-300">Prove Dead:</strong> Always use a voltage indicator to prove dead before touching any conductor. Test the indicator before and after use.</p>
-              <p><strong className="text-red-300">All Energy Sources:</strong> Identify and isolate ALL energy sources - electrical, pneumatic, hydraulic, mechanical (springs, gravity).</p>
-              <p><strong className="text-red-300">Authorisation:</strong> Only authorised and competent persons may perform LOTO procedures.</p>
+              <p>
+                <strong className="text-red-300">Personal Locks Only:</strong> Never remove another
+                person's lock. Each worker must apply and remove their own lock.
+              </p>
+              <p>
+                <strong className="text-red-300">Prove Dead:</strong> Always use a voltage indicator
+                to prove dead before touching any conductor. Test the indicator before and after
+                use.
+              </p>
+              <p>
+                <strong className="text-red-300">All Energy Sources:</strong> Identify and isolate
+                ALL energy sources - electrical, pneumatic, hydraulic, mechanical (springs,
+                gravity).
+              </p>
+              <p>
+                <strong className="text-red-300">Authorisation:</strong> Only authorised and
+                competent persons may perform LOTO procedures.
+              </p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -1259,7 +1309,10 @@ const IndustrialCircuitGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {industrialCables.map((cable, index) => (
-                <div key={index} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                <div
+                  key={index}
+                  className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20"
+                >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-3">
                     <h3 className="font-bold text-blue-300">{cable.type}</h3>
                     <Badge variant="outline" className="border-blue-400 text-blue-300 w-fit">
@@ -1330,7 +1383,9 @@ const IndustrialCircuitGuide = () => {
                       <tr className="border-b border-purple-500/30">
                         <th className="text-left py-2 px-3 text-purple-300">Number of Circuits</th>
                         {cableDeratingFactors.grouping.map((g, i) => (
-                          <th key={i} className="text-center py-2 px-2 text-purple-300">{g.cables}</th>
+                          <th key={i} className="text-center py-2 px-2 text-purple-300">
+                            {g.cables}
+                          </th>
                         ))}
                       </tr>
                     </thead>
@@ -1338,7 +1393,9 @@ const IndustrialCircuitGuide = () => {
                       <tr>
                         <td className="py-2 px-3 text-white font-medium">Derating Factor</td>
                         {cableDeratingFactors.grouping.map((g, i) => (
-                          <td key={i} className="text-center py-2 px-2 text-white">{g.factor}</td>
+                          <td key={i} className="text-center py-2 px-2 text-white">
+                            {g.factor}
+                          </td>
                         ))}
                       </tr>
                     </tbody>
@@ -1350,7 +1407,8 @@ const IndustrialCircuitGuide = () => {
               <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
                 <h3 className="font-bold text-purple-300 mb-3">Ambient Temperature Factor (Ca)</h3>
                 <p className="text-white text-sm mb-3">
-                  Higher ambient temperatures reduce current capacity. Standard ratings assume 30C ambient.
+                  Higher ambient temperatures reduce current capacity. Standard ratings assume 30C
+                  ambient.
                 </p>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -1379,7 +1437,10 @@ const IndustrialCircuitGuide = () => {
                 <h3 className="font-bold text-purple-300 mb-3">Thermal Insulation Factor (Ci)</h3>
                 <div className="space-y-2">
                   {cableDeratingFactors.thermalInsulation.map((t, i) => (
-                    <div key={i} className="flex justify-between items-center py-2 border-b border-purple-500/20 last:border-0">
+                    <div
+                      key={i}
+                      className="flex justify-between items-center py-2 border-b border-purple-500/20 last:border-0"
+                    >
                       <span className="text-white text-sm">{t.condition}</span>
                       <Badge variant="outline" className="border-purple-400 text-purple-300">
                         {t.factor}
@@ -1396,7 +1457,8 @@ const IndustrialCircuitGuide = () => {
                   Minimum Cable Rating = Design Current / (Cg x Ca x Ci x Cc)
                 </p>
                 <p className="text-white text-xs">
-                  Where: Cg = Grouping, Ca = Ambient Temp, Ci = Thermal Insulation, Cc = Semi-enclosed fuse factor (if applicable)
+                  Where: Cg = Grouping, Ca = Ambient Temp, Ci = Thermal Insulation, Cc =
+                  Semi-enclosed fuse factor (if applicable)
                 </p>
               </div>
             </CardContent>
@@ -1412,7 +1474,10 @@ const IndustrialCircuitGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {busbarSystems.map((busbar, index) => (
-                <div key={index} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                <div
+                  key={index}
+                  className="bg-green-500/10 p-4 rounded-lg border border-green-500/20"
+                >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-3">
                     <h3 className="font-bold text-green-300">{busbar.type}</h3>
                     <Badge variant="outline" className="border-green-400 text-green-300 w-fit">
@@ -1426,7 +1491,9 @@ const IndustrialCircuitGuide = () => {
                       <h4 className="text-green-200 font-medium text-sm mb-2">Applications:</h4>
                       <ul className="space-y-1">
                         {busbar.applications.map((app, i) => (
-                          <li key={i} className="text-sm text-white">- {app}</li>
+                          <li key={i} className="text-sm text-white">
+                            - {app}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -1434,7 +1501,9 @@ const IndustrialCircuitGuide = () => {
                       <h4 className="text-green-200 font-medium text-sm mb-2">Features:</h4>
                       <ul className="space-y-1">
                         {busbar.features.map((feat, i) => (
-                          <li key={i} className="text-sm text-white">- {feat}</li>
+                          <li key={i} className="text-sm text-white">
+                            - {feat}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -1442,7 +1511,9 @@ const IndustrialCircuitGuide = () => {
                       <h4 className="text-green-200 font-medium text-sm mb-2">Installation:</h4>
                       <ul className="space-y-1">
                         {busbar.installation.map((inst, i) => (
-                          <li key={i} className="text-sm text-white">- {inst}</li>
+                          <li key={i} className="text-sm text-white">
+                            - {inst}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -1465,16 +1536,30 @@ const IndustrialCircuitGuide = () => {
               <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
                 <h3 className="font-bold text-yellow-300 mb-3">Understanding Power Factor</h3>
                 <div className="space-y-2 text-sm text-white">
-                  <p><strong className="text-yellow-200">Definition:</strong> {powerFactorCorrection.basics.definition}</p>
-                  <p><strong className="text-yellow-200">Formula:</strong> {powerFactorCorrection.basics.formula}</p>
-                  <p><strong className="text-yellow-200">Problem:</strong> {powerFactorCorrection.basics.problem}</p>
-                  <p><strong className="text-yellow-200">Target:</strong> {powerFactorCorrection.basics.target}</p>
+                  <p>
+                    <strong className="text-yellow-200">Definition:</strong>{' '}
+                    {powerFactorCorrection.basics.definition}
+                  </p>
+                  <p>
+                    <strong className="text-yellow-200">Formula:</strong>{' '}
+                    {powerFactorCorrection.basics.formula}
+                  </p>
+                  <p>
+                    <strong className="text-yellow-200">Problem:</strong>{' '}
+                    {powerFactorCorrection.basics.problem}
+                  </p>
+                  <p>
+                    <strong className="text-yellow-200">Target:</strong>{' '}
+                    {powerFactorCorrection.basics.target}
+                  </p>
                 </div>
               </div>
 
               {/* Causes */}
               <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
-                <h3 className="font-bold text-yellow-300 mb-3">Common Causes of Low Power Factor</h3>
+                <h3 className="font-bold text-yellow-300 mb-3">
+                  Common Causes of Low Power Factor
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                   {powerFactorCorrection.causes.map((cause, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm text-white">
@@ -1490,18 +1575,23 @@ const IndustrialCircuitGuide = () => {
                 <h3 className="font-bold text-yellow-300 mb-3">PFC Solutions</h3>
                 <div className="space-y-3">
                   {powerFactorCorrection.solutions.map((sol, index) => (
-                    <div key={index} className="bg-yellow-500/5 p-3 rounded border border-yellow-500/10">
+                    <div
+                      key={index}
+                      className="bg-yellow-500/5 p-3 rounded border border-yellow-500/10"
+                    >
                       <h4 className="text-yellow-200 font-medium mb-1">{sol.method}</h4>
                       <p className="text-white text-sm mb-2">{sol.description}</p>
-                      <p className="text-white text-xs mb-2"><strong>Application:</strong> {sol.application}</p>
+                      <p className="text-white text-xs mb-2">
+                        <strong>Application:</strong> {sol.application}
+                      </p>
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div>
                           <span className="text-green-400">Advantages: </span>
-                          <span className="text-white">{sol.advantages.join(", ")}</span>
+                          <span className="text-white">{sol.advantages.join(', ')}</span>
                         </div>
                         <div>
                           <span className="text-orange-400">Disadvantages: </span>
-                          <span className="text-white">{sol.disadvantages.join(", ")}</span>
+                          <span className="text-white">{sol.disadvantages.join(', ')}</span>
                         </div>
                       </div>
                     </div>
@@ -1524,9 +1614,18 @@ const IndustrialCircuitGuide = () => {
               <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
                 <h3 className="font-bold text-orange-300 mb-3">What are Harmonics?</h3>
                 <div className="space-y-2 text-sm text-white">
-                  <p><strong className="text-orange-200">Definition:</strong> {harmonicFiltering.basics.definition}</p>
-                  <p><strong className="text-orange-200">Common:</strong> {harmonicFiltering.basics.commonHarmonics}</p>
-                  <p><strong className="text-orange-200">Sources:</strong> {harmonicFiltering.basics.sources}</p>
+                  <p>
+                    <strong className="text-orange-200">Definition:</strong>{' '}
+                    {harmonicFiltering.basics.definition}
+                  </p>
+                  <p>
+                    <strong className="text-orange-200">Common:</strong>{' '}
+                    {harmonicFiltering.basics.commonHarmonics}
+                  </p>
+                  <p>
+                    <strong className="text-orange-200">Sources:</strong>{' '}
+                    {harmonicFiltering.basics.sources}
+                  </p>
                 </div>
               </div>
 
@@ -1548,12 +1647,21 @@ const IndustrialCircuitGuide = () => {
                 <h3 className="font-bold text-orange-300 mb-3">Filtering Solutions</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {harmonicFiltering.solutions.map((sol, index) => (
-                    <div key={index} className="bg-orange-500/5 p-3 rounded border border-orange-500/10">
+                    <div
+                      key={index}
+                      className="bg-orange-500/5 p-3 rounded border border-orange-500/10"
+                    >
                       <h4 className="text-orange-200 font-medium mb-1">{sol.type}</h4>
                       <p className="text-white text-sm mb-2">{sol.description}</p>
-                      <p className="text-white text-xs"><strong>Use:</strong> {sol.application}</p>
-                      <p className="text-green-400 text-xs mt-1"><strong>Pros:</strong> {sol.pros}</p>
-                      <p className="text-red-400 text-xs"><strong>Cons:</strong> {sol.cons}</p>
+                      <p className="text-white text-xs">
+                        <strong>Use:</strong> {sol.application}
+                      </p>
+                      <p className="text-green-400 text-xs mt-1">
+                        <strong>Pros:</strong> {sol.pros}
+                      </p>
+                      <p className="text-red-400 text-xs">
+                        <strong>Cons:</strong> {sol.cons}
+                      </p>
                     </div>
                   ))}
                 </div>

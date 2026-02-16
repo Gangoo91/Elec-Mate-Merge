@@ -79,7 +79,11 @@ export const generateModernPDF = async (cvData: CVData): Promise<void> => {
   const nameParts = (cvData.personalInfo.fullName || 'Your Name').split(' ');
   pdf.text(nameParts[0] || '', margin, sidebarY + (cvData.personalInfo.photoUrl ? 8 : 14));
   if (nameParts.length > 1) {
-    pdf.text(nameParts.slice(1).join(' '), margin, sidebarY + (cvData.personalInfo.photoUrl ? 15 : 22));
+    pdf.text(
+      nameParts.slice(1).join(' '),
+      margin,
+      sidebarY + (cvData.personalInfo.photoUrl ? 15 : 22)
+    );
   }
 
   // Professional title in accent bar
@@ -215,8 +219,9 @@ export const generateModernPDF = async (cvData: CVData): Promise<void> => {
   // SIDEBAR - CERTIFICATIONS (categorised)
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const { essential: essentialCerts, additional: additionalCerts } =
-    categoriseCertifications(cvData.certifications);
+  const { essential: essentialCerts, additional: additionalCerts } = categoriseCertifications(
+    cvData.certifications
+  );
 
   if (essentialCerts.length > 0 && sidebarY < 200) {
     pdf.setFont('helvetica', 'bold');

@@ -13,34 +13,64 @@ const BS7671Module8Section2Quiz = () => {
   const questions = [
     {
       question: "What's the purpose of an MEIWC?",
-      options: ["New installations", "Minor electrical works", "Periodic inspection", "Major alterations"],
+      options: [
+        'New installations',
+        'Minor electrical works',
+        'Periodic inspection',
+        'Major alterations',
+      ],
       correct: 1,
-      explanation: "MEIWC (Minor Electrical Installation Works Certificate) is used for minor works like adding sockets or lighting points to existing circuits."
+      explanation:
+        'MEIWC (Minor Electrical Installation Works Certificate) is used for minor works like adding sockets or lighting points to existing circuits.',
     },
     {
-      question: "When do you use a disconnection time chart?",
-      options: ["For voltage drop", "For cable sizing", "For fault protection verification", "For load calculations"],
+      question: 'When do you use a disconnection time chart?',
+      options: [
+        'For voltage drop',
+        'For cable sizing',
+        'For fault protection verification',
+        'For load calculations',
+      ],
       correct: 2,
-      explanation: "Disconnection time charts are used to verify that protective devices provide adequate fault protection within required time limits."
+      explanation:
+        'Disconnection time charts are used to verify that protective devices provide adequate fault protection within required time limits.',
     },
     {
       question: "What's listed on a visual inspection checklist?",
-      options: ["Only test results", "Equipment condition and compliance items", "Load calculations", "Cable specifications"],
+      options: [
+        'Only test results',
+        'Equipment condition and compliance items',
+        'Load calculations',
+        'Cable specifications',
+      ],
       correct: 1,
-      explanation: "Visual inspection checklists include items like equipment condition, proper installation, labelling, and compliance with regulations."
+      explanation:
+        'Visual inspection checklists include items like equipment condition, proper installation, labelling, and compliance with regulations.',
     },
     {
-      question: "Name a chart used for derating cable capacity.",
-      options: ["Zs tables", "Grouping factor (Cg) charts", "Voltage drop tables", "Time/current curves"],
+      question: 'Name a chart used for derating cable capacity.',
+      options: [
+        'Zs tables',
+        'Grouping factor (Cg) charts',
+        'Voltage drop tables',
+        'Time/current curves',
+      ],
       correct: 1,
-      explanation: "Grouping factor (Cg) charts show derating factors when multiple cables are grouped together, reducing their current-carrying capacity."
+      explanation:
+        'Grouping factor (Cg) charts show derating factors when multiple cables are grouped together, reducing their current-carrying capacity.',
     },
     {
-      question: "How do checklists assist with audits?",
-      options: ["They replace testing", "They provide systematic verification", "They reduce costs", "They speed up work"],
+      question: 'How do checklists assist with audits?',
+      options: [
+        'They replace testing',
+        'They provide systematic verification',
+        'They reduce costs',
+        'They speed up work',
+      ],
       correct: 1,
-      explanation: "Checklists provide systematic verification that all required checks have been completed, making audits more thorough and consistent."
-    }
+      explanation:
+        'Checklists provide systematic verification that all required checks have been completed, making audits more thorough and consistent.',
+    },
   ];
 
   const handleAnswerSelect = (value: string) => {
@@ -96,16 +126,14 @@ const BS7671Module8Section2Quiz = () => {
             <div className={`text-4xl font-bold ${getScoreColor(score)}`}>
               {score}/{questions.length}
             </div>
-            <div className={`text-xl ${getScoreColor(score)}`}>
-              {percentage}%
-            </div>
+            <div className={`text-xl ${getScoreColor(score)}`}>{percentage}%</div>
           </div>
 
           <div className="space-y-4">
             {questions.map((question, index) => {
               const userAnswer = parseInt(selectedAnswers[index]);
               const isCorrect = userAnswer === question.correct;
-              
+
               return (
                 <div key={index} className="bg-elec-dark p-4 rounded-md border border-gray-600">
                   <div className="flex items-start gap-3">
@@ -118,7 +146,9 @@ const BS7671Module8Section2Quiz = () => {
                       <h4 className="text-foreground font-medium mb-2">
                         Question {index + 1}: {question.question}
                       </h4>
-                      <p className={`text-sm mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
+                      <p
+                        className={`text-sm mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}
+                      >
                         Your answer: {question.options[userAnswer]}
                       </p>
                       {!isCorrect && (
@@ -126,9 +156,7 @@ const BS7671Module8Section2Quiz = () => {
                           Correct answer: {question.options[question.correct]}
                         </p>
                       )}
-                      <p className="text-xs text-gray-400">
-                        {question.explanation}
-                      </p>
+                      <p className="text-xs text-gray-400">{question.explanation}</p>
                     </div>
                   </div>
                 </div>
@@ -137,7 +165,7 @@ const BS7671Module8Section2Quiz = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button 
+            <Button
               onClick={handleRestart}
               className="bg-elec-yellow text-elec-dark hover:bg-yellow-600"
             >
@@ -155,11 +183,13 @@ const BS7671Module8Section2Quiz = () => {
       <CardHeader>
         <CardTitle className="text-foreground">Knowledge Check</CardTitle>
         <div className="flex justify-between text-sm text-gray-400">
-          <span>Question {currentQuestion + 1} of {questions.length}</span>
+          <span>
+            Question {currentQuestion + 1} of {questions.length}
+          </span>
           <span>{Math.round(((currentQuestion + 1) / questions.length) * 100)}% Complete</span>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
           ></div>
@@ -170,23 +200,23 @@ const BS7671Module8Section2Quiz = () => {
           <h3 className="text-lg font-medium text-foreground mb-4">
             {questions[currentQuestion].question}
           </h3>
-          
-          <RadioGroup 
-            value={selectedAnswers[currentQuestion] || ""} 
+
+          <RadioGroup
+            value={selectedAnswers[currentQuestion] || ''}
             onValueChange={handleAnswerSelect}
             className="space-y-3"
           >
             {questions[currentQuestion].options.map((option, index) => (
-              <div key={index} className="flex items-center space-x-3 p-3 rounded-md hover:bg-elec-dark transition-colors">
-                <RadioGroupItem 
-                  value={index.toString()} 
+              <div
+                key={index}
+                className="flex items-center space-x-3 p-3 rounded-md hover:bg-elec-dark transition-colors"
+              >
+                <RadioGroupItem
+                  value={index.toString()}
                   id={`option-${index}`}
                   className="border-gray-400 text-elec-yellow"
                 />
-                <Label 
-                  htmlFor={`option-${index}`} 
-                  className="text-gray-300 cursor-pointer flex-1"
-                >
+                <Label htmlFor={`option-${index}`} className="text-gray-300 cursor-pointer flex-1">
                   {option}
                 </Label>
               </div>
@@ -203,7 +233,7 @@ const BS7671Module8Section2Quiz = () => {
           >
             Previous
           </Button>
-          
+
           <Button
             onClick={handleNext}
             disabled={!selectedAnswers[currentQuestion]}
